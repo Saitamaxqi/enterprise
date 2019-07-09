@@ -13,7 +13,11 @@ if (mobile.methods.getFCMKey) {
                 rpc('/web/dataset/call_kw/res.config.settings/register_device', {
                     model: 'res.config.settings',
                     method: 'register_device',
-                    args: [response.data.subscription_id, response.data.device_name],
+                    args: [
+                        response.data.subscription_id,
+                        response.data.device_name,
+                        response.data.fcm_token_old,
+                    ],
                     kwargs: {},
                 }).then(function (ocn_token) {
                     if (mobile.methods.setOCNToken) {

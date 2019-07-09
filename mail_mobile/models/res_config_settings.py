@@ -61,13 +61,14 @@ class ResConfigSettings(models.TransientModel):
         return push_uuid
 
     @api.model
-    def register_device(self, device_key, device_name):
+    def register_device(self, fcm_token, device_name, fcm_token_old=None):
         values = {
             'ocn_uuid': self._get_ocn_uuid(),
             'user_name': self.env.user.name or self.env.user.login,
             'user_login': self.env.user.login,
             'device_name': device_name,
-            'device_key': device_key,
+            'device_key': fcm_token,
+            'fcm_token_old': fcm_token_old,
         }
         result = False
         try:
