@@ -30,8 +30,8 @@ class WebsiteVisitor(models.Model):
         if operator == "not in":
             raise UserError(self.env._("Unsupported 'Not In' operation on track push enabled tracks"))
 
-        track_visitors = self.env['event.track.visitor'].sudo().search([
+        subquery = self.env['event.track.visitor'].sudo()._search([
             ('track_id', operator, operand),
             ('is_blacklisted', '=', True)
         ])
-        return [('id', 'not in', track_visitors.visitor_id.ids)]
+        return [('id', 'not in', subquery.subselect('visitor_id'))]
