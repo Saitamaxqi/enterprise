@@ -38,6 +38,17 @@
         padding-left: var(--editor-gutter-size) !important;
         padding-right: calc(var(--editor-gutter-size) + 40px) !important;
     }
+    .o_knowledge_body:has([data-embedded="view"]:first-child) {
+        > span:first-child {
+            display: none;
+        }
+        .o_knowledge_editor {
+            margin-top: 0 !important;
+        }
+        .o_knowledge_icon:first-child {
+            margin-top: 0 !important;
+        }
+    }
     .o_knowledge_article_view_form_dynamic_width ~ .o_knowledge_icon,
     .o_knowledge_article_view_form_dynamic_width ~ .o_knowledge_editor .o_field_html .note-editable,
     .o_knowledge_article_view_form_dynamic_width ~ .o_knowledge_editor .o_field_html .o_readonly,

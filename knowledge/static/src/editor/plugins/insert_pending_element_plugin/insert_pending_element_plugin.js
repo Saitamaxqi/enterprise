@@ -1,5 +1,10 @@
 import { Plugin } from "@html_editor/plugin";
-import { isPhrasingContent } from "@html_editor/utils/dom_info";
+import {
+    isEmptyBlock,
+    isParagraphRelatedElement,
+    isPhrasingContent,
+} from "@html_editor/utils/dom_info";
+import { children } from "@html_editor/utils/dom_traversal";
 
 export class InsertPendingElementPlugin extends Plugin {
     static id = "insertPendingElement";
@@ -30,12 +35,27 @@ export class InsertPendingElementPlugin extends Plugin {
             } else {
                 insert = () => {
                     // insert block content
-                    this.dependencies.selection.setCursorEnd(this.editable);
-                    this.dependencies.dom.insert(embeddedBlueprint);
-                    const paragraph = this.dependencies.baseContainer.createBaseContainer();
-                    paragraph.appendChild(document.createElement("br"));
-                    this.dependencies.selection.setCursorEnd(this.editable);
-                    this.dependencies.dom.insert(paragraph);
+                    const childElements = children(this.editable);
+                    let cursorTarget = null;
+                    if (
+                        childElements.every((child) => {
+                            if (isParagraphRelatedElement(child) && isEmptyBlock(child)) {
+                                cursorTarget ??= child;
+                                return true;
+                            }
+                        })
+                    ) {
+                        this.dependencies.selection.setCursorStart(this.editable);
+                        this.dependencies.dom.insert(embeddedBlueprint);
+                        this.dependencies.selection.setCursorStart(cursorTarget);
+                    } else {
+                        this.dependencies.selection.setCursorEnd(this.editable);
+                        this.dependencies.dom.insert(embeddedBlueprint);
+                        const paragraph = this.dependencies.baseContainer.createBaseContainer();
+                        paragraph.appendChild(this.document.createElement("br"));
+                        this.dependencies.selection.setCursorEnd(this.editable);
+                        this.dependencies.dom.insert(paragraph);
+                    }
                     this.dependencies.history.addStep();
                 };
             }

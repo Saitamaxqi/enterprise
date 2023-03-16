@@ -78,7 +78,6 @@ export class WysiwygArticleHelper extends Component {
                 };
                 const fragment = renderToFragment("knowledge.ArticleItemTemplate", {
                     embeddedProps: JSON.stringify(embeddedProps),
-                    title,
                 });
                 this.props.editor.editable.replaceChildren(...fragment.children);
                 this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);
@@ -116,7 +115,6 @@ export class WysiwygArticleHelper extends Component {
                 ]);
                 const fragment = renderToFragment("knowledge.ArticleItemTemplate", {
                     embeddedProps: JSON.stringify(embeddedProps),
-                    title,
                 });
                 this.props.editor.editable.replaceChildren(...fragment.children);
                 this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);
@@ -150,7 +148,6 @@ export class WysiwygArticleHelper extends Component {
 
                 const fragment = renderToFragment("knowledge.ArticleItemTemplate", {
                     embeddedProps: JSON.stringify(embeddedProps),
-                    title,
                 });
                 this.props.editor.editable.replaceChildren(...fragment.children);
                 this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);

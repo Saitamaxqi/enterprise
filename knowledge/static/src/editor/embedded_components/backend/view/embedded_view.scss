@@ -92,3 +92,8 @@
     margin-left: 0;
     margin-right: 0;
 }
+.o_knowledge_body:has([data-embedded="view"]:first-child) {
+    [data-embedded="view"] {
+        border-bottom: var(--ControlPanel-border-bottom, #{$o-control-panel-border-bottom});
+    }
+}
