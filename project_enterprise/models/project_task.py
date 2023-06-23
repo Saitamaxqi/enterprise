@@ -659,6 +659,16 @@ class Task(models.Model):
             lambda t: (not t.date_deadline, t.date_deadline, t._get_hours_to_plan() <= 0, -int(t.priority))
         )._scheduling(vals)
 
+    def _get_dependencies_dict(self):
+        # contains a task as key and the list of tasks before this one as values
+        return {
+            task:
+                [t for t in task.depend_on_ids if t != task and t in self]
+                if task.depend_on_ids
+                else []
+            for task in self
+        }
+
     def _scheduling(self, vals):
         tasks_to_write = {}
         warnings = {}
@@ -699,14 +709,7 @@ class Task(models.Model):
         # In year scale, cells represent a month, a typical full-time work schedule involves around 160 to 176 hours per month
         delta_hours = 160 if scale == "year" else 24 / cell_part
 
-        dependencies_dict = {  # contains a task as key and the list of tasks before this one as values
-            task:
-                [t for t in self if t != task and t in task.depend_on_ids]
-                if task.depend_on_ids
-                else []
-            for task in self
-        }
-        sorted_tasks = topological_sort(dependencies_dict)
+        sorted_tasks = topological_sort(self._get_dependencies_dict())
         for task in sorted_tasks:
             hours_to_plan = task._get_hours_to_plan()
             if hours_to_plan <= 0:
@@ -1479,3 +1482,53 @@ class Task(models.Model):
             ['name', 'deadline', 'is_deadline_exceeded', 'is_reached', 'project_id'],
         )
         return results
+
+    def _is_task_planned(self):
+        return self.date_deadline and self.planned_date_begin
+
+    def _get_task_duration(self):
+        return self.date_deadline - self.planned_date_begin
+
+    @api.model
+    @api.readonly
+    def get_critical_path(self, domain):
+        """
+        Determines the tasks that forms the critical path of a group of task, i.e. the chain of dependent tasks
+        with the longest duration.
+        :param domain: domain determining the group of task in which a critical path has to be found (in general, all tasks in a given project)
+        :return: List of ordered task ids
+        """
+        tasks = self.env['project.task'].search(domain)
+
+        if not tasks:
+            return []
+
+        dependencies_dict = tasks._get_dependencies_dict()
+        sorted_tasks = topological_sort(dependencies_dict)
+        total_time, task_parent = {}, {}
+        path_last_task = sorted_tasks[0].id
+
+        for task in sorted_tasks:
+            if not task._is_task_planned():
+                continue
+
+            duration = task._get_task_duration()
+            total_time[task.id] = duration
+            for parent_task in dependencies_dict[task]:
+                if not parent_task._is_task_planned():
+                    continue
+
+                parent_task_duration = total_time[parent_task.id]
+                if parent_task_duration + duration > total_time[task.id]:
+                    total_time[task.id] = parent_task_duration + duration
+                    task_parent[task.id] = parent_task.id
+
+            if total_time[task.id] > total_time[path_last_task]:
+                path_last_task = task.id
+
+        path = [path_last_task]
+        while path_last_task in task_parent:
+            path.append(task_parent[path_last_task])
+            path_last_task = task_parent[path_last_task]
+
+        return list(reversed(path))

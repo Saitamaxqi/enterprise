@@ -257,4 +257,19 @@ export class TaskGanttModel extends GanttModel {
         }
         return super.load({ ...searchParams, context: { ...context }, displayUnassigned });
     }
+
+    async toggleCriticalPath() {
+        if (this.criticalTaskIds) {
+            this.criticalTaskIds = false;
+        } else {
+            await this.fetchCriticalPath();
+        }
+        this.notify();
+    }
+
+    async fetchCriticalPath() {
+        this.criticalTaskIds = await this.orm.call(this.metaData.resModel, "get_critical_path", [
+            this.searchParams.domain,
+        ]);
+    }
 }
