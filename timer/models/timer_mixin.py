@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _
@@ -13,11 +12,6 @@ class TimerMixin(models.AbstractModel):
     timer_pause = fields.Datetime(related='user_timer_id.timer_pause', export_string_translation=False)
     is_timer_running = fields.Boolean(related='user_timer_id.is_timer_running', search="_search_is_timer_running", export_string_translation=False)
     user_timer_id = fields.One2many('timer.timer', compute='_compute_user_timer_id', search='_search_user_timer_id', export_string_translation=False)
-
-    display_timer_start_primary = fields.Boolean(compute='_compute_display_timer_buttons', export_string_translation=False)
-    display_timer_stop = fields.Boolean(compute='_compute_display_timer_buttons', export_string_translation=False)
-    display_timer_pause = fields.Boolean(compute='_compute_display_timer_buttons', export_string_translation=False)
-    display_timer_resume = fields.Boolean(compute='_compute_display_timer_buttons', export_string_translation=False)
 
     def _search_is_timer_running(self, operator, value):
         if operator not in ['=', '!='] or not isinstance(value, bool):
@@ -157,20 +151,3 @@ class TimerMixin(models.AbstractModel):
         if timer:
             model = self.env[timer.res_model].browse(timer.res_id)
             model._action_interrupt_user_timers()
-
-    @api.depends('timer_start', 'timer_pause')
-    def _compute_display_timer_buttons(self):
-        for record in self:
-            start_p, stop, pause, resume = True, True, True, True
-            if record.timer_start:
-                start_p = False
-                if record.timer_pause:
-                    pause = False
-                else:
-                    resume = False
-            record.update({
-                'display_timer_start_primary': start_p,
-                'display_timer_stop': stop,
-                'display_timer_pause': pause,
-                'display_timer_resume': resume,
-            })

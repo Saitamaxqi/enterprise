@@ -61,46 +61,16 @@ class TestTimerButtons(TestFsmFlowSaleCommon):
     def test_timer_buttons_01(self):
         # should not be visible if the task is marked as done
         self.task.fsm_done = True
-        self.assertFalse(self.task.display_timer_start_primary)
-        self.assertFalse(self.task.display_timer_start_secondary)
-        self.assertFalse(self.task.display_timer_stop)
-        self.assertFalse(self.task.display_timer_pause)
-        self.assertFalse(self.task.display_timer_resume)
+        self.assertFalse(self.task.display_timesheet_timer)
 
     def test_timer_buttons_02(self):
-        # Start should be visible in non-primary if Time > 0
-        self.env['account.analytic.line'].create({
-            'task_id': self.task.id,
-            'project_id': self.project.id,
-            'date': datetime.now(),
-            'name': 'My Timesheet',
-            'user_id': self.env.uid,
-            'unit_amount': 1,
-        })
-        self.assertTrue(self.task.total_hours_spent)
-        self.assertFalse(self.task.display_timer_start_primary)
-        self.assertTrue(self.task.display_timer_start_secondary)
-
-    def test_timer_buttons_03(self):
-        # Start should be visible in primary if Time = 0
-        self.assertFalse(self.task.total_hours_spent)
-        self.assertTrue(self.task.display_timer_start_primary)
-        self.assertFalse(self.task.display_timer_start_secondary)
-
-    def test_timer_buttons_04(self):
         # When the timer is not running, do not display: pause, stop, resume
         # when the timer is running, do not display the following buttons:
         # Start (Primary and secondary), Create sales Order, Mark as done,
         # Create Invoice, Sign report, Send report
-        self.assertFalse(self.task.display_timer_pause)
-        self.assertFalse(self.task.display_timer_stop)
-        self.assertFalse(self.task.display_timer_resume)
+        self.assertFalse(self.task.timer_start)
         self.task.action_timer_start()
-        self.assertTrue(self.task.display_timer_pause)
-        self.assertTrue(self.task.display_timer_stop)
-        self.assertFalse(self.task.display_timer_resume)
-        self.assertFalse(self.task.display_timer_start_primary)
-        self.assertFalse(self.task.display_timer_start_secondary)
+        self.assertTrue(self.task.timer_start)
         self.assertFalse(self.task.display_sign_report_primary)
         self.assertFalse(self.task.display_sign_report_secondary)
         self.assertFalse(self.task.display_send_report_primary)
@@ -109,20 +79,14 @@ class TestTimerButtons(TestFsmFlowSaleCommon):
         self.assertFalse(self.task.display_mark_as_done_secondary)
         self.assertFalse(self.task.display_create_invoice_primary)
         self.assertFalse(self.task.display_create_invoice_secondary)
-        self.task.action_timer_pause()
-        self.assertFalse(self.task.display_timer_pause)
-        self.assertTrue(self.task.display_timer_resume)
+        self.task.action_timer_stop()
 
-    def test_timer_buttons_05(self):
+    def test_timer_buttons_03(self):
         # only visible if the 'Timesheet Timer' feature is enabled on the project
         self.project.allow_timesheets = False
-        self.assertFalse(self.task.display_timer_start_primary)
-        self.assertFalse(self.task.display_timer_start_secondary)
-        self.assertFalse(self.task.display_timer_stop)
-        self.assertFalse(self.task.display_timer_pause)
-        self.assertFalse(self.task.display_timer_resume)
+        self.assertFalse(self.task.display_timesheet_timer)
 
-    def test_timer_buttons_06(self):
+    def test_timer_buttons_04(self):
         # only visible if the user has an employee in the company or one employee for all companies
         company_2 = self.env['res.company'].create({
             'name': 'Company 2',
@@ -143,18 +107,14 @@ class TestTimerButtons(TestFsmFlowSaleCommon):
         })
 
         # 1 employee for 3 companies must work
-        task._compute_display_timer_buttons()
-        self.assertTrue(task.display_timer_start_primary)
-        self.assertFalse(task.display_timer_start_secondary)
+        self.assertTrue(task.display_timesheet_timer)
 
         # 2 employee for 3 companies must not work
         self.env['hr.employee'].with_company(company_2).create({
             'name': 'Employee 2',
             'user_id': self.env.uid,
         })
-        task._compute_display_timer_buttons()
-        self.assertFalse(task.display_timer_start_primary)
-        self.assertFalse(task.display_timer_start_secondary)
+        self.assertFalse(task.display_timesheet_timer)
 
     def test_send_sign_report_buttons_01(self):
         # Sign/Send not visible if Time = 0 AND Worksheet = 0 AND Products = 0

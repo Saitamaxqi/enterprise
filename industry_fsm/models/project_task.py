@@ -139,17 +139,11 @@ class ProjectTask(models.Model):
                 'display_satisfied_conditions_count': satisfied
             })
 
-    @api.depends('fsm_done', 'display_timesheet_timer', 'timer_start', 'total_hours_spent')
-    def _compute_display_timer_buttons(self):
-        fsm_done_tasks = self.filtered(lambda task: task.fsm_done)
-        fsm_done_tasks.update({
-            'display_timer_start_primary': False,
-            'display_timer_start_secondary': False,
-            'display_timer_stop': False,
-            'display_timer_pause': False,
-            'display_timer_resume': False,
-        })
-        super(ProjectTask, self - fsm_done_tasks)._compute_display_timer_buttons()
+    @api.depends('fsm_done')
+    def _compute_display_timesheet_timer(self):
+        fsm_done_tasks = self.filtered('fsm_done')
+        fsm_done_tasks.display_timesheet_timer = False
+        super(ProjectTask, self - fsm_done_tasks)._compute_display_timesheet_timer()
 
     @api.onchange('date_deadline', 'planned_date_begin')
     def _onchange_planned_dates(self):

@@ -15,8 +15,6 @@ class HelpdeskTicket(models.Model):
     use_helpdesk_timesheet = fields.Boolean('Timesheet activated on Team', related='team_id.use_helpdesk_timesheet', readonly=True)
     display_timesheet_timer = fields.Boolean("Display Timesheet Time", compute='_compute_display_timesheet_timer')
     total_hours_spent = fields.Float("Time Spent", compute='_compute_total_hours_spent', default=0, compute_sudo=True, store=True, aggregator="avg")
-    display_timer_start_secondary = fields.Boolean(compute='_compute_display_timer_buttons', export_string_translation=False)
-    display_timer = fields.Boolean(compute='_compute_display_timer', export_string_translation=False)
     encode_uom_in_days = fields.Boolean(compute='_compute_encode_uom_in_days', export_string_translation=False)
     analytic_account_id = fields.Many2one('account.analytic.account',
         compute='_compute_analytic_account_id', store=True, readonly=False,
@@ -24,37 +22,6 @@ class HelpdeskTicket(models.Model):
 
     def _compute_encode_uom_in_days(self):
         self.encode_uom_in_days = self.env.company.timesheet_encode_uom_id == self.env.ref('uom.product_uom_day')
-
-    @api.depends('display_timesheet_timer', 'timer_start', 'timer_pause', 'total_hours_spent')
-    def _compute_display_timer_buttons(self):
-        for ticket in self:
-            if not ticket.display_timesheet_timer:
-                ticket.update({
-                    'display_timer_start_primary': False,
-                    'display_timer_start_secondary': False,
-                    'display_timer_stop': False,
-                    'display_timer_pause': False,
-                    'display_timer_resume': False,
-                })
-            else:
-                super(HelpdeskTicket, ticket)._compute_display_timer_buttons()
-                ticket.display_timer_start_secondary = ticket.display_timer_start_primary
-                if not ticket.timer_start:
-                    ticket.update({
-                        'display_timer_stop': False,
-                        'display_timer_pause': False,
-                        'display_timer_resume': False,
-                    })
-                    if not ticket.total_hours_spent:
-                        ticket.display_timer_start_secondary = False
-                    else:
-                        ticket.display_timer_start_primary = False
-
-    def _compute_display_timer(self):
-        if self.env.user.has_group('helpdesk.group_helpdesk_user') and self.env.user.has_group('hr_timesheet.group_hr_timesheet_user'):
-            self.display_timer = True
-        else:
-            self.display_timer = False
 
     @api.depends('use_helpdesk_timesheet', 'timesheet_ids', 'encode_uom_in_days')
     def _compute_display_timesheet_timer(self):

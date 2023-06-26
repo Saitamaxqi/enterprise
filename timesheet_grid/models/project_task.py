@@ -9,45 +9,10 @@ class ProjectTask(models.Model):
 
     display_timesheet_timer = fields.Boolean("Display Timesheet Time", compute='_compute_display_timesheet_timer', export_string_translation=False)
 
-    display_timer_start_secondary = fields.Boolean(compute='_compute_display_timer_buttons', export_string_translation=False)
-
-    @api.depends_context('uid')
-    @api.depends('display_timesheet_timer', 'timer_start', 'timer_pause', 'total_hours_spent')
-    def _compute_display_timer_buttons(self):
-        user_has_employee_or_only_one = None
-        for task in self:
-            if not task.display_timesheet_timer:
-                task.update({
-                    'display_timer_start_primary': False,
-                    'display_timer_start_secondary': False,
-                    'display_timer_stop': False,
-                    'display_timer_pause': False,
-                    'display_timer_resume': False,
-                })
-            else:
-                super(ProjectTask, task)._compute_display_timer_buttons()
-                task.display_timer_start_secondary = task.display_timer_start_primary
-                if not task.timer_start:
-                    task.update({
-                        'display_timer_stop': False,
-                        'display_timer_pause': False,
-                        'display_timer_resume': False,
-                    })
-                    if user_has_employee_or_only_one is None:
-                        user_has_employee_or_only_one = bool(self.env.user.employee_id)\
-                                                     or self.env['hr.employee'].sudo().search_count([('user_id', '=', self.env.uid)]) == 1
-                    if not user_has_employee_or_only_one:
-                        task.display_timer_start_primary = False
-                        task.display_timer_start_secondary = False
-                    elif not task.total_hours_spent:
-                        task.display_timer_start_secondary = False
-                    else:
-                        task.display_timer_start_primary = False
-
     @api.depends('allow_timesheets', 'analytic_account_active')
     def _compute_display_timesheet_timer(self):
         for task in self:
-            task.display_timesheet_timer = task.allow_timesheets and task.analytic_account_active
+            task.display_timesheet_timer = task.allow_timesheets and task.analytic_account_active and not task.encode_uom_in_days
 
     def _compute_allocated_hours(self):
         # Only change values when creating a new record from the gantt view

@@ -9,22 +9,12 @@
                 <xpath expr="//field[@name='stage_id']" position='before'>
                     <field name="company_id" invisible="1"/>
                     <field name="display_timesheet_timer" invisible="1"/>
-                    <field name="timer_pause" invisible="1" />
-                    <field name="display_timer_start_primary" invisible="1"/>
-                    <field name="display_timer_start_secondary" invisible="1"/>
-                    <field name="display_timer_stop" invisible="1"/>
-                    <field name="display_timer_pause" invisible="1"/>
-                    <field name="display_timer_resume" invisible="1"/>
                     <button class="btn-primary" name="action_timer_start" type="object" string="Start" data-hotkey="z"
-                        invisible="not display_timer_start_primary or encode_uom_in_days" groups="hr_timesheet.group_hr_timesheet_user"/>
+                        invisible="not display_timesheet_timer or timer_start or total_hours_spent" groups="hr_timesheet.group_hr_timesheet_user"/>
                     <button class="btn-secondary" name="action_timer_start" type="object" string="Start" data-hotkey="z"
-                        invisible="not display_timer_start_secondary or encode_uom_in_days" groups="hr_timesheet.group_hr_timesheet_user"/>
+                        invisible="not display_timesheet_timer or timer_start or not total_hours_spent" groups="hr_timesheet.group_hr_timesheet_user"/>
                     <button class="btn-primary o_fsm_stop" name="action_timer_stop" type="object" string="Stop" data-hotkey="z"
-                        invisible="not display_timer_stop or encode_uom_in_days" groups="hr_timesheet.group_hr_timesheet_user"/>
-                    <button class="btn-secondary" name="action_timer_pause" type="object" string="Pause" data-hotkey="w"
-                        invisible="not display_timer_pause or encode_uom_in_days" groups="hr_timesheet.group_hr_timesheet_user"/>
-                    <button class="btn-secondary" name="action_timer_resume" type="object" string="Resume" data-hotkey="w"
-                        invisible="not display_timer_resume or encode_uom_in_days" groups="hr_timesheet.group_hr_timesheet_user"/>
+                        invisible="not display_timesheet_timer or not timer_start" groups="hr_timesheet.group_hr_timesheet_user"/>
                     <field name="timer_start" widget="timer_start_field" class="align-self-center me-auto ms-2 h2" groups="hr_timesheet.group_hr_timesheet_user"/>
                 </xpath>
             </field>
@@ -67,11 +57,7 @@
                 <xpath expr="//footer/div" position="inside">
                     <field name="display_timesheet_timer" invisible="1"/>
                     <field name="timer_start" invisible="1"/>
-                    <field name="timer_pause" invisible="1"/>
-                    <t t-if="record.display_timesheet_timer &amp;&amp; record.timer_pause.raw_value">
-                        <i class="fa fa-pause text-warning" title="Timer is Paused"></i>
-                    </t>
-                    <t t-elif="record.display_timesheet_timer &amp;&amp; record.timer_start.raw_value">
+                    <t t-if="record.display_timesheet_timer.raw_value and !!record.timer_start.raw_value">
                         <i class="fa fa-play text-success" title="Timer is Running"></i>
                     </t>
                 </xpath>
