@@ -4,7 +4,6 @@ from datetime import date, datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields, Command
-from odoo.tools.float_utils import float_compare
 from odoo.addons.mail.tests.common import MockEmail
 from odoo.addons.hr_timesheet.tests.test_timesheet import TestCommonTimesheet
 from odoo.exceptions import AccessError, UserError
@@ -346,18 +345,20 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
             "timesheet_rounding": 0,
         }).execute()
 
-        self.task1.action_timer_start()
-        act_window_action = self.task1.action_timer_stop()
-        wizard = self.env[act_window_action['res_model']].with_context(act_window_action['context']).new()
-        self.assertEqual(float_compare(wizard.time_spent, 0.38, 0), 0)
+        task = self.task1.with_user(self.user_employee)
+        with freeze_time(datetime.now() - relativedelta(minutes=2)):
+            task.action_timer_start()
+        timesheet = task.user_timer_id._get_related_document()
+        task.action_timer_stop()
         self.env["res.config.settings"].create({
             "timesheet_rounding": 30,
         }).execute()
 
-        self.task1.action_timer_start()
-        act_window_action = self.task1.action_timer_stop()
-        wizard = self.env[act_window_action['res_model']].with_context(act_window_action['context']).new()
-        self.assertEqual(wizard.time_spent, 0.5)
+        with freeze_time(datetime.now() - relativedelta(minutes=2)):
+            task.action_timer_start()
+        timesheet = task.user_timer_id._get_related_document()
+        task.action_timer_stop()
+        self.assertEqual(timesheet.unit_amount, 0.5)
 
     def test_grid_update_cell(self):
         """ Test updating timesheet grid cells.

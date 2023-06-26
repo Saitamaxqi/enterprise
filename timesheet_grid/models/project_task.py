@@ -103,25 +103,8 @@ class ProjectTask(models.Model):
     def action_timer_stop(self):
         # timer was either running or paused
         if self.display_timesheet_timer:
-            rounded_hours = self.env['account.analytic.line'].get_rounded_time(self.user_timer_id._get_minutes_spent())
-            return self._action_open_new_timesheet(rounded_hours)
+            return super().action_timer_stop()
         return False
-
-    def _action_open_new_timesheet(self, time_spent):
-        return {
-            "name": _("Confirm Time Spent"),
-            "type": 'ir.actions.act_window',
-            "res_model": 'project.task.create.timesheet',
-            "views": [[False, "form"]],
-            "target": 'new',
-            "context": {
-                **self.env.context,
-                'active_id': self.id,
-                'active_model': self._name,
-                'default_time_spent': time_spent,
-                'dialog_size': 'medium',
-            },
-        }
 
     def get_allocated_hours_field(self):
         return 'allocated_hours'
