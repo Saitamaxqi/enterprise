@@ -54,6 +54,12 @@
                                 groups="hr_timesheet.group_hr_timesheet_approver"/>
                     </header>
                 </xpath>
+                <xpath expr="//field[@name='employee_id']" position="before">
+                    <field name="is_timer_running" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='employee_id']" position="attributes">
+                    <attribute name="readonly">is_timer_running</attribute>
+                </xpath>
             </field>
         </record>
 

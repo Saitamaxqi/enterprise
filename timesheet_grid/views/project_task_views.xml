@@ -15,7 +15,23 @@
                         invisible="not display_timesheet_timer or timer_start or not total_hours_spent" groups="hr_timesheet.group_hr_timesheet_user"/>
                     <button class="btn-primary o_fsm_stop" name="action_timer_stop" type="object" string="Stop" data-hotkey="z"
                         invisible="not display_timesheet_timer or not timer_start" groups="hr_timesheet.group_hr_timesheet_user"/>
-                    <field name="timer_start" widget="timer_start_field" class="align-self-center me-auto ms-2 h2" groups="hr_timesheet.group_hr_timesheet_user"/>
+                    <field name="timesheet_unit_amount" invisible="1"/>
+                    <field name="timer_start"
+                           class="align-self-center me-auto ms-2 h2"
+                           widget="timer_start_field"
+                           groups="hr_timesheet.group_hr_timesheet_user"
+                    />
+                </xpath>
+                <xpath expr="//field[@name='timesheet_ids']/tree" position="inside">
+                    <field name="is_timer_running" column_invisible="1"/>
+                    <field name="validated" column_invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='timesheet_ids']/tree/field[@name='employee_id']" position="attributes">
+                    <attribute name="readonly">is_timer_running</attribute>
+                </xpath>
+                <xpath expr="//field[@name='timesheet_ids']/tree/field[@name='unit_amount']" position="attributes">
+                    <attribute name="readonly">id and (validated or is_timer_running)</attribute>
+                    <attribute name="widget">timesheet_uom_timer</attribute>
                 </xpath>
             </field>
         </record>

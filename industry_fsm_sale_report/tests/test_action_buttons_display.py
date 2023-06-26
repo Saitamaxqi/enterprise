@@ -114,6 +114,7 @@ class TestTimerButtons(TestFsmFlowSaleCommon):
             'name': 'Employee 2',
             'user_id': self.env.uid,
         })
+        task._compute_display_timesheet_timer()
         self.assertFalse(task.display_timesheet_timer)
 
     def test_send_sign_report_buttons_01(self):

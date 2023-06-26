@@ -229,14 +229,6 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
 
         self.env.company.timesheet_encode_uom_id = current_timesheet_uom
 
-    def test_add_time_from_wizard(self):
-        wizard = self.env['project.task.create.timesheet'].create({
-            'time_spent': 0.15,
-            'task_id': self.task1.id,
-        })
-        wizard.with_user(self.user_employee).save_timesheet()
-        self.assertEqual(self.task1.timesheet_ids[0].unit_amount, 0.15)
-
     def test_action_add_time_to_timer_multi_company(self):
         company = self.env['res.company'].create({'name': 'My_Company'})
         self.env['hr.employee'].with_company(company).create({

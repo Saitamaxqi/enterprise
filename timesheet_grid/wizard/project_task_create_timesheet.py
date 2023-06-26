@@ -12,25 +12,31 @@ class ProjectTaskCreateTimesheet(models.TransientModel):
         "The timesheet's time must be positive",
     )
 
-    time_spent = fields.Float('Time')
-    description = fields.Char('Description')
+    time_spent = fields.Float('Time Spent')
+    description = fields.Char('Description', compute='_compute_description', store=True, readonly=False)
     task_id = fields.Many2one(
         'project.task', "Task", required=True,
         default=lambda self: self.env.context.get('active_id', None),
         help="Task for which we are creating a sales order",
     )
 
+    def _compute_description(self):
+        for wizard in self:
+            if not wizard.description:
+                timesheet = wizard.task_id.user_timer_id._get_related_document()
+                if timesheet and timesheet.name and timesheet.name != '/':
+                    wizard.description = timesheet.name
+
     def save_timesheet(self):
-        values = {
-            'task_id': self.task_id.id,
-            'project_id': self.task_id.project_id.id,
-            'date': fields.Date.context_today(self),
-            'name': self.description,
-            'user_id': self.env.uid,
-            'unit_amount': self.time_spent
-        }
+        timesheet = self.task_id.user_timer_id._get_related_document()
         self.task_id.user_timer_id.unlink()
-        return self.env['account.analytic.line'].create(values)
+        timesheet.write({
+            'name': self.description,
+            'unit_amount': self.time_spent,
+        })
+        return timesheet
 
     def action_delete_timesheet(self):
+        timesheet = self.task_id.user_timer_id._get_related_document()
         self.task_id.user_timer_id.unlink()
+        timesheet.unlink()

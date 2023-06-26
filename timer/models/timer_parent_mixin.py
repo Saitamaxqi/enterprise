@@ -58,7 +58,10 @@ class TimerParentMixin(models.AbstractModel):
             Return the amount of minutes spent
         """
         self.ensure_one()
-        return self._get_record_with_timer_running().action_timer_stop()
+        record = self._get_record_with_timer_running()
+        if record:
+            return record.action_timer_stop()
+        return super().action_timer_stop()
 
     def _create_record_to_start_timer(self):
         """ Create record to start a timer on this record. """

@@ -5,6 +5,7 @@ from typing import Dict, List
 import pytz
 
 from odoo import Command, fields, models, api, _
+from odoo.exceptions import UserError
 from odoo.osv import expression
 from odoo.tools import get_lang
 from odoo.tools.date_intervals import Intervals, sum_intervals
@@ -251,16 +252,10 @@ class ProjectTask(models.Model):
             Create SO confirmed with time and material.
         """
         Timer = self.env['timer.timer']
-        tasks_running_timer_ids = Timer.search([('res_model', '=', 'project.task'), ('res_id', 'in', self.ids)])
-        timesheets = self.env['account.analytic.line'].sudo().search([('task_id', 'in', self.ids)])
-        timesheets_running_timer_ids = None
-        if timesheets:
-            timesheets_running_timer_ids = Timer.search([
-                ('res_model', '=', 'account.analytic.line'),
-                ('res_id', 'in', timesheets.ids)])
-        if tasks_running_timer_ids or timesheets_running_timer_ids:
+        running_timers = Timer.search([('parent_res_model', '=', 'project.task'), ('parent_res_id', 'in', self.ids)])
+        if running_timers:
             if stop_running_timers:
-                self._stop_all_timers_and_create_timesheets(tasks_running_timer_ids, timesheets_running_timer_ids, timesheets)
+                self._stop_all_timers_and_update_timesheets(running_timers)
             else:
                 wizard = self.env['project.task.stop.timers.wizard'].create({
                     'line_ids': [Command.create({'task_id': task.id}) for task in self],
@@ -280,40 +275,31 @@ class ProjectTask(models.Model):
         return True
 
     @api.model
-    def _stop_all_timers_and_create_timesheets(self, tasks_running_timer_ids, timesheets_running_timer_ids, timesheets):
+    def _stop_all_timers_and_update_timesheets(self, running_timers):
         ConfigParameter = self.env['ir.config_parameter'].sudo()
         Timesheet = self.env['account.analytic.line']
 
-        if not tasks_running_timer_ids and not timesheets_running_timer_ids:
+        if not running_timers:
             return Timesheet
+        if any(
+            timer.res_model != 'account.analytic.line'
+            or (timer.parent_res_model and timer.parent_res_model != 'project.task')
+            for timer in running_timers
+        ):
+            raise UserError(_('All running timers should be linked to a timesheet and a task.'))
 
         result = Timesheet
         minimum_duration = int(ConfigParameter.get_param('timesheet_grid.timesheet_min_duration', 0))
         rounding = int(ConfigParameter.get_param('timesheet_grid.timesheet_rounding', 0))
-        if tasks_running_timer_ids:
-            task_dict = {task.id: task for task in self}
-            timesheets_vals = []
-            for timer in tasks_running_timer_ids:
-                minutes_spent = timer._get_minutes_spent()
-                time_spent = round_time_spent(minutes_spent, minimum_duration, rounding) / 60
-                task = task_dict[timer.res_id]
-                timesheets_vals.append({
-                    'task_id': task.id,
-                    'project_id': task.project_id.id,
-                    'user_id': timer.user_id.id,
-                    'unit_amount': time_spent,
-                })
-            tasks_running_timer_ids.sudo().unlink()
-            result += Timesheet.sudo().create(timesheets_vals)
-
-        if timesheets_running_timer_ids:
+        if running_timers:
+            timesheets = self.env['account.analytic.line'].sudo().search([('id', 'in', running_timers.mapped('res_id'))])
             timesheets_dict = {timesheet.id: timesheet for timesheet in timesheets}
-            for timer in timesheets_running_timer_ids:
+            for timer in running_timers:
                 timesheet = timesheets_dict[timer.res_id]
                 minutes_spent = timer._get_minutes_spent()
-                timesheet._add_timesheet_time(minutes_spent)
+                timesheet.write({'unit_amount': round_time_spent(minutes_spent, minimum_duration, rounding) / 60})
                 result += timesheet
-            timesheets_running_timer_ids.sudo().unlink()
+            running_timers.sudo().unlink()
 
         return result
 

@@ -42,7 +42,7 @@ class AccountAnalyticLine(models.Model):
             raise UserError(_("You can't encode numbers with more than six digits."))
 
     def _is_readonly(self):
-        return super()._is_readonly() or self.validated
+        return super()._is_readonly() or self.validated or self.timer_start
 
     def _should_not_display_timer(self):
         self.ensure_one()
@@ -327,6 +327,18 @@ class AccountAnalyticLine(models.Model):
                 'is_timesheet': True,
             },
         }
+
+    def _update_existing_timers(self, vals):
+        if 'task_id' in vals:
+            # Check if there are some running timers linked to the timesheets to also update them.
+            timers = self.env['timer.timer'].search([('res_id', 'in', self.ids)])
+            if timers:
+                timers.write({'parent_res_model': 'project.task' if vals['task_id'] else None, 'parent_res_id': vals['task_id']})
+
+    def write(self, vals):
+        res = super().write(vals)
+        self._update_existing_timers(vals)
+        return res
 
     @api.model
     def _get_timesheet_field_and_model_name(self):
@@ -691,3 +703,10 @@ class AccountAnalyticLine(models.Model):
         min_duration = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_min_duration', 0))
         duration = self.unit_amount - (min_duration / 60)
         self.update({'unit_amount': duration if duration > 0 else 0 })
+
+    def _get_timer_vals(self):
+        vals = super()._get_timer_vals()
+        if self.task_id:
+            vals['parent_res_model'] = 'project.task'
+            vals['parent_res_id'] = self.task_id.id
+        return vals

@@ -33,11 +33,11 @@ class TestFsmFlow(TestIndustryFsmCommon):
         result = task_with_george_user.action_fsm_validate()
         self.assertEqual(result['type'], 'ir.actions.act_window', 'As there are still timers to stop, an action is returned')
         Timer = self.env['timer.timer']
-        tasks_running_timer_ids = Timer.search([('res_model', '=', 'project.task'), ('res_id', '=', self.task.id)])
+        tasks_running_timer_ids = Timer.search([('parent_res_model', '=', 'project.task'), ('parent_res_id', '=', self.task.id)])
         timesheets_running_timer_ids = Timer.search([('res_model', '=', 'account.analytic.line'), ('res_id', '=', timesheet.id)])
         self.assertEqual(len(timesheets_running_timer_ids), 1, 'There is still a timer linked to the timesheet')
         self.task.invalidate_model(['timesheet_ids'])
-        self.assertEqual(len(tasks_running_timer_ids), 1, 'There is still a timer linked to the task')
+        self.assertEqual(len(tasks_running_timer_ids), 2, 'The both timers (one from marcel and the other from henri) should be linked to the task.')
         wizard = self.env['project.task.stop.timers.wizard'].create({'line_ids': [Command.create({'task_id': self.task.id})]})
         wizard.action_confirm()
         tasks_running_timer_ids = Timer.search([('res_model', '=', 'project.task'), ('res_id', '=', self.task.id)])
