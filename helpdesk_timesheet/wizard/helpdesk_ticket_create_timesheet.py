@@ -7,7 +7,7 @@ class HelpdeskTicketCreateTimesheet(models.TransientModel):
     _name = 'helpdesk.ticket.create.timesheet'
     _description = "Create Timesheet from ticket"
 
-    time_spent = fields.Float('Time')
+    time_spent = fields.Float('Time Spent')
     description = fields.Char('Description')
     ticket_id = fields.Many2one(
         'helpdesk.ticket', "Ticket", required=True,
@@ -16,22 +16,15 @@ class HelpdeskTicketCreateTimesheet(models.TransientModel):
     )
 
     def action_generate_timesheet(self):
-        values = {
-            'project_id': self.ticket_id.project_id.id,
+        timesheet = self.ticket_id.user_time_id._get_related_document()
+        timesheet.write({
             'name': self.description,
-            'user_id': self.env.uid,
             'unit_amount': self.time_spent,
-        }
-
-        timesheet = self.env['account.analytic.line'].create(values)
-
-        self.ticket_id.write({
-            'timer_start': False,
-            'timer_pause': False
         })
-        self.ticket_id.timesheet_ids = [(4, timesheet.id, None)]
         self.ticket_id.user_timer_id.unlink()
         return timesheet
 
     def action_delete_timesheet(self):
+        timesheet = self.ticket_id.user_timer_id._get_related_document()
         self.ticket_id.user_timer_id.unlink()
+        timesheet.unlink()

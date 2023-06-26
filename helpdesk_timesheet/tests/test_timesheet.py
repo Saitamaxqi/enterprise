@@ -350,3 +350,27 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
         self.assertTrue(timesheet_3.exists(), 'Timesheet 2 should have been merged into 3')
         self.assertAlmostEqual(timesheet_1.unit_amount, 0.25, 2)
         self.assertAlmostEqual(timesheet_3.unit_amount, 0.5, 2)
+
+    def test_change_helpdesk_team_on_ticket_with_timer_running(self):
+        """ Test that changing the helpdesk team of a ticket with a running timer does not stop the timer """
+        timesheet = self.env['account.analytic.line'].with_user(self.user_employee).create({
+            'name': '/',
+            'project_id': self.project.id,
+            'date': date.today(),
+            'helpdesk_ticket_id': self.helpdesk_ticket.id,
+        })
+
+        timesheet.action_timer_start()
+
+        self.helpdesk_ticket.team_id = self.env['helpdesk.team'].create({
+            'name': 'New Team',
+            'use_helpdesk_timesheet': True,
+            'project_id': self.project.id,
+        })
+
+        self.assertTrue(timesheet.is_timer_running, 'The timer should still be running after changing the helpdesk team')
+        self.assertEqual(timesheet.user_timer_id.parent_res_model, 'helpdesk.ticket', 'The timer should still be linked to the ticket')
+        self.assertEqual(timesheet.user_timer_id.parent_res_id, self.helpdesk_ticket.id, 'The timer should still be linked to the ticket')
+
+        ticket = self.helpdesk_ticket.with_user(self.user_employee)
+        self.assertTrue(ticket.is_timer_running)

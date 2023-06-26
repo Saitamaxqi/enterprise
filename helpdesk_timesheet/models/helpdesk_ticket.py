@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 class HelpdeskTicket(models.Model):
     _name = 'helpdesk.ticket'
-    _inherit = ['helpdesk.ticket', 'timer.mixin']
+    _inherit = ['helpdesk.ticket', 'timer.parent.mixin']
 
     project_id = fields.Many2one(
         "project.project", related="team_id.project_id", readonly=True, store=True)
@@ -14,6 +14,7 @@ class HelpdeskTicket(models.Model):
              "Remove the sales order item to make your timesheet entries non billable.")
     use_helpdesk_timesheet = fields.Boolean('Timesheet activated on Team', related='team_id.use_helpdesk_timesheet', readonly=True)
     display_timesheet_timer = fields.Boolean("Display Timesheet Time", compute='_compute_display_timesheet_timer')
+    timesheet_unit_amount = fields.Float(compute='_compute_timesheet_unit_amount')
     total_hours_spent = fields.Float("Time Spent", compute='_compute_total_hours_spent', default=0, compute_sudo=True, store=True, aggregator="avg")
     encode_uom_in_days = fields.Boolean(compute='_compute_encode_uom_in_days', export_string_translation=False)
     analytic_account_id = fields.Many2one('account.analytic.account',
@@ -27,6 +28,28 @@ class HelpdeskTicket(models.Model):
     def _compute_display_timesheet_timer(self):
         for ticket in self:
             ticket.display_timesheet_timer = ticket.use_helpdesk_timesheet and not ticket.encode_uom_in_days
+
+    @api.depends('user_timer_id')
+    def _compute_timesheet_unit_amount(self):
+        if not any(self._ids):
+            for ticket in self:
+                unit_amount = 0.0
+                if ticket.user_timer_id:
+                    unit_amount = ticket.filtered(lambda t: (t.id or t.origin.id) == ticket.user_timer_id.id).unit_amount or 0.0
+                ticket.timesheet_unit_amount = unit_amount
+            return
+        timesheet_id_per_timer_id = {ticket.user_timer_id.id: ticket.user_timer_id.res_id for ticket in self}
+        timesheet_read = self.env['account.analytic.line'].search_read(
+            [('id', 'in', list(timesheet_id_per_timer_id.values()))],
+            ['unit_amount'],
+        )
+        unit_amount_per_timesheet_id = {res['id']: res['unit_amount'] for res in timesheet_read}
+        for ticket in self:
+            timesheet_id = ticket.user_timer_id.id or timesheet_id_per_timer_id.get(ticket.user_timer_id.id, False)
+            if timesheet_id:
+                ticket.timesheet_unit_amount = unit_amount_per_timesheet_id.get(timesheet_id, 0.0)
+            else:
+                ticket.timesheet_unit_amount = 0.0
 
     @api.depends('timesheet_ids.unit_amount')
     def _compute_total_hours_spent(self):
@@ -75,12 +98,12 @@ class HelpdeskTicket(models.Model):
             super()._compute_display_extra_info()
 
     def action_timer_start(self):
-        if not self.user_timer_id.timer_start and self.display_timesheet_timer:
+        if self.display_timesheet_timer:
             super().action_timer_start()
 
     def action_timer_stop(self):
         # timer was either running or paused
-        if self.user_timer_id.timer_start and self.display_timesheet_timer:
+        if self.display_timesheet_timer and self.user_timer_id:
             minutes_spent = self.user_timer_id._get_minutes_spent()
             minutes_spent = self.env['account.analytic.line'].get_rounded_time(minutes_spent)
             return self._action_open_new_timesheet(minutes_spent / 60)
@@ -101,3 +124,19 @@ class HelpdeskTicket(models.Model):
                 'dialog_size': 'medium',
             },
         }
+
+    def _create_record_to_start_timer(self):
+        """ Create a timesheet to launch a timer """
+        return self.env['account.analytic.line'].create({
+            'helpdesk_ticket_id': self.id,
+            'project_id': self.project_id.id,
+            'date': fields.Date.context_today(self),
+            'name': '/',
+            'user_id': self.env.uid,
+        })
+
+    def _action_interrupt_user_timers(self):
+        """ Call action interrupt user timers to launch a new one
+            Stop the existing runnning timer before launching a new one.
+        """
+        self.action_timer_stop()
