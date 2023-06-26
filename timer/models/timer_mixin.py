@@ -70,12 +70,29 @@ class TimerMixin(models.AbstractModel):
     def unlink(self):
         if not self:
             return True
-        timers = self.env['timer.timer'].search([
-            ('res_model', '=', self._name), ('res_id', 'in', self.ids), ('user_id', '!=', self.env.user.id)])
+        timers = self._get_timers_from_other_users()
         if timers:
             self.check_access('unlink')
             timers.sudo().unlink()
         return super().unlink()
+
+    def _get_timer_vals(self):
+        return {
+            'timer_start': False,
+            'timer_pause': False,
+            'is_timer_running': False,
+            'res_model': self._name,
+            'res_id': self.id,
+            'user_id': self.env.user.id,
+        }
+
+    def _create_timer(self, vals=None):
+        if not vals:
+            vals = {}
+        return self.env['timer.timer'].create({
+            **self._get_timer_vals(),
+            **vals,
+        })
 
     def action_timer_start(self):
         """ Start the timer of the current record
@@ -87,14 +104,7 @@ class TimerMixin(models.AbstractModel):
         self._stop_timer_in_progress()
         timer = self.user_timer_id
         if not timer:
-            timer = self.env['timer.timer'].create({
-                'timer_start': False,
-                'timer_pause': False,
-                'is_timer_running': False,
-                'res_model': self._name,
-                'res_id': self.id,
-                'user_id': self.env.user.id,
-            })
+            timer = self._create_timer()
             timer.action_timer_start()
         else:
             # Check if it is in pause then resume it or start it
@@ -125,6 +135,13 @@ class TimerMixin(models.AbstractModel):
         self._stop_timer_in_progress()
         timer = self.user_timer_id
         timer.action_timer_resume()
+
+    def _get_timers_from_other_users(self):
+        return self.env['timer.timer'].search([
+            ('res_model', '=', self._name),
+            ('res_id', 'in', self.ids),
+            ('user_id', '!=', self.env.user.id),
+        ])
 
     def _action_interrupt_user_timers(self):
         # Interruption is the action called when the timer is stoped by the start of another one

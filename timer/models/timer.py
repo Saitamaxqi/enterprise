@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api
-from odoo.exceptions import ValidationError
+
 
 
 class TimerTimer(models.Model):
@@ -15,6 +14,8 @@ class TimerTimer(models.Model):
     res_model = fields.Char(required=True, export_string_translation=False)
     res_id = fields.Integer(required=True, export_string_translation=False)
     user_id = fields.Many2one('res.users', export_string_translation=False)
+    parent_res_model = fields.Char('Parent Document Model', export_string_translation=False)
+    parent_res_id = fields.Integer('Parent Document', export_string_translation=False)
 
     _unique_timer = models.Constraint(
         'UNIQUE(res_model, res_id, user_id)',
@@ -73,3 +74,12 @@ class TimerTimer(models.Model):
             and not 23:59 and so on.
         """
         return fields.Datetime.now()
+
+    @api.model
+    def _get_timers(self):
+        """ Get timers from the current user """
+        return self.env['timer.timer'].search([('user_id', '=', self.env.user.id)])
+
+    def _get_related_document(self):
+        self.ensure_one()
+        return self.env[self.res_model].browse(self.res_id)
