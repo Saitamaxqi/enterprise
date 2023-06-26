@@ -115,10 +115,8 @@ class HelpdeskTicket(models.Model):
         # timer was either running or paused
         if self.user_timer_id.timer_start and self.display_timesheet_timer:
             minutes_spent = self.user_timer_id._get_minutes_spent()
-            minimum_duration = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_min_duration', 0))
-            rounding = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_rounding', 0))
-            minutes_spent = self._timer_rounding(minutes_spent, minimum_duration, rounding)
-            return self._action_open_new_timesheet(minutes_spent * 60 / 3600)
+            minutes_spent = self.env['account.analytic.line'].get_rounded_time(minutes_spent)
+            return self._action_open_new_timesheet(minutes_spent / 60)
         return False
 
     def _action_open_new_timesheet(self, time_spent):

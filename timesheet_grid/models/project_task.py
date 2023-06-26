@@ -109,15 +109,9 @@ class ProjectTask(models.Model):
     def action_timer_stop(self):
         # timer was either running or paused
         if self.user_timer_id.timer_start and self.display_timesheet_timer:
-            rounded_hours = self._get_rounded_hours(self.user_timer_id._get_minutes_spent())
+            rounded_hours = self.env['account.analytic.line'].get_rounded_time(self.user_timer_id._get_minutes_spent())
             return self._action_open_new_timesheet(rounded_hours)
         return False
-
-    def _get_rounded_hours(self, minutes):
-        minimum_duration = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_min_duration', 0))
-        rounding = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_rounding', 0))
-        rounded_minutes = self._timer_rounding(minutes, minimum_duration, rounding)
-        return rounded_minutes / 60
 
     def _action_open_new_timesheet(self, time_spent):
         return {

@@ -8,6 +8,7 @@ from odoo import Command, fields, models, api, _
 from odoo.osv import expression
 from odoo.tools import get_lang
 from odoo.tools.date_intervals import Intervals, sum_intervals
+from odoo.addons.timer.utils.timer_utils import round_time_spent
 
 
 class ProjectTask(models.Model):
@@ -300,7 +301,7 @@ class ProjectTask(models.Model):
             timesheets_vals = []
             for timer in tasks_running_timer_ids:
                 minutes_spent = timer._get_minutes_spent()
-                time_spent = self._timer_rounding(minutes_spent, minimum_duration, rounding) / 60
+                time_spent = round_time_spent(minutes_spent, minimum_duration, rounding) / 60
                 task = task_dict[timer.res_id]
                 timesheets_vals.append({
                     'task_id': task.id,

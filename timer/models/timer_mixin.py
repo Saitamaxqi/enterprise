@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api, _
-from math import ceil
+
 
 
 class TimerMixin(models.AbstractModel):
@@ -174,10 +174,3 @@ class TimerMixin(models.AbstractModel):
                 'display_timer_pause': pause,
                 'display_timer_resume': resume,
             })
-
-    @api.model
-    def _timer_rounding(self, minutes_spent, minimum, rounding):
-        minutes_spent = max(minimum, minutes_spent)
-        if rounding and ceil(minutes_spent % rounding) != 0:
-            minutes_spent = ceil(minutes_spent / rounding) * rounding
-        return minutes_spent

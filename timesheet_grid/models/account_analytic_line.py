@@ -11,6 +11,8 @@ from odoo.osv import expression
 from odoo.tools import format_date
 from odoo.tools.date_intervals import make_aware
 
+from odoo.addons.timer.utils.timer_utils import round_time_spent
+
 
 class AccountAnalyticLine(models.Model):
     _name = 'account.analytic.line'
@@ -473,10 +475,8 @@ class AccountAnalyticLine(models.Model):
             # if yes, then remove the timesheet
             self.unlink()
             return 0
-        minimum_duration = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_min_duration', 0))
-        rounding = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_rounding', 0))
-        minutes_spent = self._timer_rounding(minutes_spent, minimum_duration, rounding)
-        amount = self.unit_amount + minutes_spent * 60 / 3600
+        minutes_spent = self.get_rounded_time(minutes_spent)
+        amount = self.unit_amount + minutes_spent
         if not try_to_match or self.name != '/':
             self.write({'unit_amount': amount})
             return amount
@@ -567,7 +567,7 @@ class AccountAnalyticLine(models.Model):
     def get_rounded_time(self, timer):
         minimum_duration = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_min_duration', 0))
         rounding = int(self.env['ir.config_parameter'].sudo().get_param('timesheet_grid.timesheet_rounding', 0))
-        rounded_minutes = self._timer_rounding(timer, minimum_duration, rounding)
+        rounded_minutes = round_time_spent(timer, minimum_duration, rounding)
         return rounded_minutes / 60
 
     @api.model
