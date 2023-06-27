@@ -34,7 +34,7 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.tools.misc import hmac
 from odoo.tools.pdf import reshape_text
 
-TTFSearchPath.append(os.path.join(config["root_path"], "..", "addons", "web", "static", "fonts", "sign"))
+TTFSearchPath.append(os.path.join(config.root_path, "../addons/web/static/fonts/sign"))
 
 
 def _fix_image_transparency(image):
