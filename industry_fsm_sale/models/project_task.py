@@ -332,7 +332,7 @@ class ProjectTask(models.Model):
     def action_project_sharing_view_invoices(self):
         """ Action used only in project sharing feature """
         return {
-            "name": "Portal Invoices",
+            "name": self.env._("Portal Invoices"),
             "type": "ir.actions.act_url",
             "url":
                 self.env['account.move'].search([('id', 'in', self.sale_order_id.sudo().invoice_ids.ids)], limit=1).get_portal_url()
@@ -377,7 +377,7 @@ class ProjectTask(models.Model):
         """ Action used only in project sharing feature """
         self.ensure_one()
         return {
-            "name": "Portal Quotations",
+            "name": self.env._("Portal Quotations"),
             "type": "ir.actions.act_url",
             "url":
                 self.env['sale.order'].search([('task_id', '=', self.id)], limit=1).get_portal_url()

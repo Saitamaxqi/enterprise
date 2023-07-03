@@ -30,7 +30,7 @@ class ProjectTask(models.Model):
         if not self.display_helpdesk_ticket_button:
             return {}
         return {
-            "name": "Portal Ticket",
+            "name": self.env._("Portal Ticket"),
             "type": "ir.actions.act_url",
             "url": self.helpdesk_ticket_id.get_portal_url(),
         }

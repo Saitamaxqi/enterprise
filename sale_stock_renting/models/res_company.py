@@ -35,7 +35,7 @@ class ResCompany(models.Model):
         for company in self.sudo():
             if not company.rental_loc_id:
                 rental_loc_values.append({
-                    "name": "Rental",
+                    "name": self.env._("Rental"),
                     "usage": "internal",
                     "company_id": company.id,
                     "location_id": self.env.ref('stock.stock_location_customers').id,

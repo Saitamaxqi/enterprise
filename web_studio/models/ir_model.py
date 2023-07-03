@@ -557,7 +557,7 @@ class IrModel(models.Model):
                 'type': view_type,
                 'model': self.model,
                 'arch': arch,
-                'name': "Default %s view for %s" % (view_type, self),
+                'name': self.env._("Default %(view_type)s view for %(model)s", view_type=view_type, model=self),
             })
         else:
             view = View.browse(View.default_view(self.model, view_type))

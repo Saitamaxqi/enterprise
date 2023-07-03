@@ -25,7 +25,7 @@ class AccountAnalyticAccount(models.Model):
             "views": [[False, "list"], [False, "form"]],
             "domain": [["id", "in", subscription_ids]],
             "context": {"create": False},
-            "name": "Subscriptions",
+            "name": self.env._("Subscriptions"),
         }
         if len(subscription_ids) == 1:
             result['views'] = [(False, "form")]
