@@ -1,5 +1,6 @@
 /** @odoo-module **/
 
+import { FormViewDialog } from '@web/views/view_dialogs/form_view_dialog';
 import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";
 import { ProjectRightSidePanel } from '@project/components/project_right_side_panel/project_right_side_panel';
@@ -23,7 +24,7 @@ patch(ProjectRightSidePanel.prototype, {
             default_project_id: this.projectId,
             default_company_id:this.state.data.budget_items.company_id,
         };
-        this.openFormViewDialog({
+        this.dialog.add(FormViewDialog, {
             context,
             title: _t('New Budget'),
             resModel: 'budget.analytic',
