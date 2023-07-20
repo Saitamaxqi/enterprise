@@ -40,7 +40,13 @@ class TestTimesheetTimer(TestCommonTimesheet):
         self.assertTrue(task.display_timesheet_timer, 'The timer should be available in that task.')
         task.action_timer_start()
         self.assertTrue(task.is_timer_running, 'The timer should be running and so the stop button appears on the task')
-        task.action_timer_stop()
+        action = task.action_timer_stop()
+        self.assertEqual(action['res_model'], 'hr.timesheet.stop.timer.confirmation.wizard')
+        wizard = self.env['hr.timesheet.stop.timer.confirmation.wizard'] \
+            .with_context(action['context']) \
+            .with_user(self.user_employee) \
+            .new({})
+        wizard.action_save_timesheet()
         self.assertFalse(task.timer_start, 'The stop button on the task is invisible')
         self.assertFalse(task.is_timer_running, 'The timer should be removed and so it is obviously no longer running.')
 
@@ -62,8 +68,13 @@ class TestTimesheetTimer(TestCommonTimesheet):
         # Stop the timer from the task through the wizard
         task = self.task1.with_user(self.user_employee)
         self.assertTrue(task.user_timer_id, 'The timer in the task should be the one of the timesheet.')
-        task.action_timer_stop()
-
+        action = task.action_timer_stop()
+        self.assertEqual(action['res_model'], 'hr.timesheet.stop.timer.confirmation.wizard')
+        wizard = self.env['hr.timesheet.stop.timer.confirmation.wizard'] \
+            .with_context(action['context']) \
+            .with_user(self.user_employee) \
+            .new({})
+        wizard.action_save_timesheet()
         self.assertFalse(timesheet.is_timer_running, 'Timer should be stoped on Timesheet')
 
     def test_timer_sync_task_to_timesheet(self):

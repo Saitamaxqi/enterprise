@@ -4,6 +4,7 @@ from datetime import date, datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields, Command
+from odoo.tools.float_utils import float_compare
 from odoo.addons.mail.tests.common import MockEmail
 from odoo.addons.hr_timesheet.tests.test_timesheet import TestCommonTimesheet
 from odoo.exceptions import AccessError, UserError
@@ -348,17 +349,26 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
         task = self.task1.with_user(self.user_employee)
         with freeze_time(datetime.now() - relativedelta(minutes=2)):
             task.action_timer_start()
-        timesheet = task.user_timer_id._get_related_document()
-        task.action_timer_stop()
+        act_window_action = task.action_timer_stop()
+        wizard = self.env[act_window_action['res_model']].with_context(act_window_action['context']).new()
+        self.assertEqual(float_compare(wizard.time_spent, 0.38, 0), 0)
         self.env["res.config.settings"].create({
             "timesheet_rounding": 30,
         }).execute()
 
         with freeze_time(datetime.now() - relativedelta(minutes=2)):
             task.action_timer_start()
+        act_window_action = task.action_timer_stop()
         timesheet = task.user_timer_id._get_related_document()
-        task.action_timer_stop()
+        wizard = self.env[act_window_action['res_model']].with_user(self.user_employee).with_context(act_window_action['context']).new()
+        self.assertEqual(float_compare(wizard.time_spent, 0.5, 0), 0)
+        self.assertEqual(timesheet.unit_amount, 0.0, 'The timer is not yet stopped since the wizard has not been validated')
+        self.assertTrue(task.user_timer_id)
+        self.assertTrue(timesheet.user_timer_id)
+        wizard.action_save_timesheet()
         self.assertEqual(timesheet.unit_amount, 0.5)
+        self.assertFalse(task.user_timer_id)
+        self.assertFalse(timesheet.user_timer_id)
 
     def test_grid_update_cell(self):
         """ Test updating timesheet grid cells.

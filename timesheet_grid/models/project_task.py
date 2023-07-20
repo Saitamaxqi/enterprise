@@ -102,8 +102,22 @@ class ProjectTask(models.Model):
 
     def action_timer_stop(self):
         # timer was either running or paused
-        if self.display_timesheet_timer:
-            return super().action_timer_stop()
+        if self.display_timesheet_timer and self.user_timer_id:
+            timesheet = self._get_record_with_timer_running()
+            if timesheet:
+                return {
+                    "name": _("Confirm Time Spent"),
+                    "type": "ir.actions.act_window",
+                    "res_model": 'hr.timesheet.stop.timer.confirmation.wizard',
+                    'context': {
+                        'default_timesheet_id': timesheet.id,
+                        'dialog_size': 'medium',
+                    },
+                    "views": [[self.env.ref('timesheet_grid.hr_timesheet_stop_timer_confirmation_wizard_view_form').id, "form"]],
+                    "target": 'new',
+                }
+            else:
+                return super().action_timer_stop()
         return False
 
     def get_allocated_hours_field(self):

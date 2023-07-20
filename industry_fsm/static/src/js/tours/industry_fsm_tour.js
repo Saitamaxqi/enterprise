@@ -59,8 +59,17 @@ registry.category("web_tour.tours").add("industry_fsm_tour", {
     trigger: 'button[name="action_timer_stop"]',
     content: markup(_t('Stop the <b>timer</b> when you are done.')),
     tooltipPosition: 'bottom',
-            id: "action_timer_stop",
             run: "click",
+        },
+        {
+            trigger: 'button[name="action_save_timesheet"]',
+    content: markup(_t('Confirm the <b>time spent</b> on your task. <i>Tip: note that the duration has automatically been rounded to 15 minutes.</i>')),
+    tooltipPosition: 'bottom',
+            id: "fsm_save_timesheet",
+            run: "click",
+        },
+        {
+            trigger: ".o_form_project_tasks",
         },
         {
     trigger: "button[name='action_fsm_validate']",

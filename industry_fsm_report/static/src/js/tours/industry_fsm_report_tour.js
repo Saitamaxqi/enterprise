@@ -53,7 +53,7 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
         );
 
         const fsmTimerStopStepIndex = originalSteps.findIndex(
-            (step) => step.id === "action_timer_stop"
+            (step) => step.id === "fsm_save_timesheet"
         );
         originalSteps.splice(
             fsmTimerStopStepIndex + 1,

@@ -27,6 +27,7 @@
         'views/res_config_settings_views.xml',
         "report/timesheets_analysis_report_views.xml",
         'wizard/hr_timesheet_merge_wizard_views.xml',
+        'wizard/hr_timesheet_stop_timer_confirmation_wizard_views.xml',
     ],
     'demo': [
         'data/account_analytic_line_demo.xml',

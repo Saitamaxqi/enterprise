@@ -59,11 +59,7 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
 
     def test_helpdesk_timesheet_wizard_timezones(self):
         user = self.user_employee
-        wizard = self.env['helpdesk.ticket.create.timesheet'].with_user(user).create({
-            'description': 'Create timesheet wizard',
-            'ticket_id': self.helpdesk_ticket.id,
-            'time_spent': 1.0,
-        })
+        ticket = self.helpdesk_ticket.with_user(user)
         timezones = [
             'Pacific/Niue',        # UTC-11,
             'Europe/Brussels',     # UTC+1
@@ -81,7 +77,15 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
                 expected = (date(2024, 1, day + diff) for diff in day_diffs)
                 for tz, local_date in zip(timezones, expected):
                     user.tz = tz
-                    timesheet = wizard.action_generate_timesheet()
+                    self.assertTrue(ticket.display_timesheet_timer, "The timer should be available in that ticket")
+                    ticket.action_timer_start()
+                    action = ticket.action_timer_stop()
+                    wizard = self.env['hr.timesheet.stop.timer.confirmation.wizard'] \
+                        .with_context(action['context']) \
+                        .with_user(user) \
+                        .new({})
+                    timesheet = wizard.timesheet_id
+                    wizard.action_save_timesheet()
                     self.assertEqual(
                         timesheet.date,
                         local_date,
