@@ -2298,6 +2298,15 @@ class AccountReport(models.Model):
         return new_line
 
     @api.model
+    def _get_line_from_xml_id(self, lines, xml_id):
+        """ Helper function to get a specific account report line from the xmlid """
+        report_line = self.env.ref(xml_id, raise_if_not_found=False)
+        return next(
+            line for line in lines
+            if self._get_model_info_from_id(line['id']) == ('account.report.line', report_line.id)
+        )
+
+    @api.model
     def _get_model_info_from_id(self, line_id):
         """ Parse the provided generic report line id.
 

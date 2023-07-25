@@ -421,14 +421,9 @@ class TestAccountReports(TestAccountReportsCommon):
     # Audit Cell of Reports with Cash Basis Filter Activated
     # ------------------------------------------------------
 
-    def _get_line_from_xml_id(self, lines, report, xml_id):
-        line_id = self.env.ref(xml_id).id
-        line = next(x for x in lines if report._get_model_info_from_id(x['id']) == ('account.report.line', line_id))
-        return line
-
     def _audit_line(self, options, report, line_xml_id):
         lines = report._get_lines(options)
-        line = self._get_line_from_xml_id(lines, report, line_xml_id)
+        line = report._get_line_from_xml_id(lines, line_xml_id)
         return report.action_audit_cell(options, self._get_audit_params_from_report_line(options, self.env.ref(line_xml_id), line))
 
     def _create_misc_entry(self, invoice_date, debit_account_id, credit_account_id):
