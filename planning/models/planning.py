@@ -1598,42 +1598,6 @@ class PlanningSlot(models.Model):
         result = start + delta
         return tz.localize(result).astimezone(pytz.utc).replace(tzinfo=None)
 
-    def _get_half_day_interval(self, values):
-        """
-            This method computes the afternoon and/or the morning whole interval where the planning slot exists.
-            The resulting interval frames the slot in a bigger interval beginning before the slot (max 11:59:59 sooner)
-            and finishing later (max 11:59:59 later)
-
-            :param values: a dict filled in with new planning.slot vals
-            :return an interval
-        """
-        return Intervals([(
-            self._get_half_day_datetime(values['start_datetime']),
-            self._get_half_day_datetime(values['end_datetime'], end=True),
-            self.env['resource.calendar.attendance']
-        )])
-
-    def _get_half_day_datetime(self, dt, end=False):
-        """
-            This method computes a datetime in order to frame the slot in a bigger interval begining at midnight or
-            noon and ending at midnight or noon.
-
-            This method returns :
-            - If end is False : Greatest datetime between midnight and noon that is sooner than the `dt` datetime;
-            - Otherwise : Lowest datetime between midnight and noon that is later than the `dt` datetime.
-
-            :param dt: input datetime
-            :param end: wheter the dt is the end, resp. the start, of the interval if set, resp. not set.
-            :return a datetime
-        """
-        self.ensure_one()
-        tz = pytz.timezone(self._get_tz())
-        localized_dt = pytz.utc.localize(dt).astimezone(tz)
-        midday = localized_dt.replace(hour=12, minute=0, second=0)
-        if end:
-            return midday if midday > localized_dt else (localized_dt.replace(hour=0, minute=0, second=0) + timedelta(days=1))
-        return midday if midday < localized_dt else localized_dt.replace(hour=0, minute=0, second=0)
-
     def _init_remaining_hours_to_plan(self, remaining_hours_to_plan):
         """
             Inits the remaining_hours_to_plan dict for a given slot and returns wether
