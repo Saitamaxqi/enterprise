@@ -4,3 +4,5 @@ from . import l10n_co_reports
 from . import l10n_co_reports_fuente
 from . import l10n_co_reports_ica
 from . import l10n_co_reports_iva
+from . import trial_balance
+from . import general_ledger

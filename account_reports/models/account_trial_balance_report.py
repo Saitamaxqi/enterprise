@@ -46,27 +46,24 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         currency = self.env.company.currency_id
         for line in lines[:-1]:
             # Initial balance
-            res_model = report._get_model_info_from_id(line['id'])[0]
-            if res_model == 'account.account':
-                # Initial balance
-                _update_balance_columns(line, init_balance_debit_index, init_balance_credit_index)
+            _update_balance_columns(line, init_balance_debit_index, init_balance_credit_index)
 
-                # End balance: sum all the previous columns for both debit and credit
-                if end_balance_debit_index is not None:
-                    line['columns'][end_balance_debit_index]['no_format'] = sum(
-                        currency.round(column['no_format'])
-                        for index, column in enumerate(line['columns'])
-                        if column.get('expression_label') == 'debit' and index != end_balance_debit_index and column['no_format'] is not None
-                    )
+            # End balance: sum all the previous columns for both debit and credit
+            if end_balance_debit_index is not None:
+                line['columns'][end_balance_debit_index]['no_format'] = sum(
+                    currency.round(column['no_format'])
+                    for index, column in enumerate(line['columns'])
+                    if column.get('expression_label') == 'debit' and index != end_balance_debit_index and column['no_format'] is not None
+                )
 
-                if end_balance_credit_index is not None:
-                    line['columns'][end_balance_credit_index]['no_format'] = sum(
-                        currency.round(column['no_format'])
-                        for index, column in enumerate(line['columns'])
-                        if column.get('expression_label') == 'credit' and index != end_balance_credit_index and column['no_format'] is not None
-                    )
+            if end_balance_credit_index is not None:
+                line['columns'][end_balance_credit_index]['no_format'] = sum(
+                    currency.round(column['no_format'])
+                    for index, column in enumerate(line['columns'])
+                    if column.get('expression_label') == 'credit' and index != end_balance_credit_index and column['no_format'] is not None
+                )
 
-                _update_balance_columns(line, end_balance_debit_index, end_balance_credit_index)
+            _update_balance_columns(line, end_balance_debit_index, end_balance_credit_index)
 
             line.pop('expand_function', None)
             line.pop('groupby', None)
@@ -85,7 +82,7 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
 
             for index in (init_balance_debit_index, init_balance_credit_index, end_balance_debit_index, end_balance_credit_index):
                 if index is not None:
-                    total_line['columns'][index]['no_format'] = sum(currency.round(line['columns'][index]['no_format']) for line in lines[:-1])
+                    total_line['columns'][index]['no_format'] = sum(currency.round(line['columns'][index]['no_format']) for line in lines[:-1] if report._get_model_info_from_id(line['id'])[0] == 'account.account')
 
         return [(0, line) for line in lines]
 

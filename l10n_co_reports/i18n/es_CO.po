@@ -19,7 +19,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_co_reports/models/general_ledger.py:0
 msgid "(None)"
-msgstr ""
+msgstr "(Ninguno)"
 
 #. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification
@@ -531,19 +531,19 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_co_reports/models/trial_balance.py:0
 msgid "Partner Name"
-msgstr ""
+msgstr "Nombre del socio"
 
 #. module: l10n_co_reports
 #. odoo-python
 #: code:addons/l10n_co_reports/models/trial_balance.py:0
 msgid "Partner VAT"
-msgstr ""
+msgstr "IVA de socio"
 
 #. module: l10n_co_reports
 #. odoo-python
 #: code:addons/l10n_co_reports/models/trial_balance.py:0
 msgid "Partners information"
-msgstr ""
+msgstr "Información de socios"
 
 #. module: l10n_co_reports
 #: model:account.report.line,name:l10n_co_reports.l10n_co_bs_report_previous_year_results
@@ -679,7 +679,7 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_co_reports/models/trial_balance.py:0
 msgid "XLSX (By Partner)"
-msgstr ""
+msgstr "XLSX (por tercero)"
 
 #. module: l10n_co_reports
 #. odoo-python
