@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo import fields
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tests import tagged
 from odoo.tools import file_open
 
@@ -10,7 +10,7 @@ from odoo.tools import file_open
 @tagged('post_install', '-at_install')
 class TestAccountBankStatementImportCSV(AccountTestInvoicingCommon):
 
-    def _import_file(self, csv_file_path):
+    def _import_file(self, csv_file_path, csv_fields=False):
         # Create a bank account and journal corresponding to the CSV file (same currency and account number)
         bank_journal = self.env['account.journal'].create({
             'name': 'Bank 123456',
@@ -44,7 +44,7 @@ class TestAccountBankStatementImportCSV(AccountTestInvoicingCommon):
             'float_decimal_separator': '.',
             'advanced': False,
         }
-        import_wizard_fields = ['date', False, 'payment_ref', 'amount', 'balance']
+        import_wizard_fields = csv_fields or ['date', False, 'payment_ref', 'amount', 'balance']
         import_wizard.execute_import(import_wizard_fields, [], import_wizard_options, dryrun=False)
 
     def test_csv_file_import(self):
@@ -86,3 +86,8 @@ class TestAccountBankStatementImportCSV(AccountTestInvoicingCommon):
     def test_csv_file_empty_date(self):
         with self.assertRaises(UserError):
             self._import_file('account_bank_statement_import_csv/test_csv_file/test_csv_empty_date.csv')
+
+    def test_csv_file_import_without_amount(self):
+        csv_fields = ['date', False, 'payment_ref', 'balance']
+        with self.assertRaisesRegex(ValidationError, "Make sure that an Amount or Debit and Credit is in the file."):
+            self._import_file('account_bank_statement_import_csv/test_csv_file/test_csv_without_amount.csv', csv_fields)

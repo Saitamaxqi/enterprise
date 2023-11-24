@@ -4,7 +4,7 @@
 import psycopg2
 
 from odoo import _, api, fields, models, Command
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.addons.base_import.models.base_import import FIELDS_RECURSION_LIMIT
 
 
@@ -55,6 +55,11 @@ class Base_ImportImport(models.TransientModel):
         if not journal_id or not bank_stmt_import:
             return data
 
+        has_amount = 'amount' in import_fields
+        has_credit = 'credit' in import_fields
+        has_debit = 'debit' in import_fields
+        if (has_debit ^ has_credit) or not (has_amount ^ has_debit):
+            raise ValidationError(_("Make sure that an Amount or Debit and Credit is in the file."))
         statement_vals = options['statement_vals'] = {}
         ret_data = []
 
