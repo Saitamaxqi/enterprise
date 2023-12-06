@@ -2251,6 +2251,15 @@ resource_name          = sale_renting_sign
 replace_edited_strings = false
 keep_translations      = false
 
+[o:odoo:p:odoo-s18-1:r:sale_shopee]
+file_filter            = sale_shopee/i18n/<lang>.po
+source_file            = sale_shopee/i18n/sale_shopee.pot
+type                   = PO
+minimum_perc           = 0
+resource_name          = sale_shopee
+replace_edited_strings = false
+keep_translations      = false
+
 [o:odoo:p:odoo-s18-1:r:sale_stock_renting]
 file_filter            = sale_stock_renting/i18n/<lang>.po
 source_file            = sale_stock_renting/i18n/sale_stock_renting.pot
