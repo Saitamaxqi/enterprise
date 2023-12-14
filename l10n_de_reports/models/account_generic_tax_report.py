@@ -92,9 +92,6 @@ class GermanTaxReportCustomHandler(models.AbstractModel):
                 if line_code in ("21", "35", "41", "42", "43", "44", "45", "46", "48", "49", "50", "60", "73",
                                  "76", "77", "81", "84", "86", "87", "89", "91", "93", "90", "94", "95"):
                     elem.text = float_repr(int(line_value), 0)
-                elif line_code in ("66", "61", "62", "67", "63", "59", "64",):
-                    # These are taxes that are on the wrong sign on the report compared to what should be exported
-                    elem.text = float_repr(- line_value, 2).replace('.', ',')
                 else:
                     elem.text = float_repr(line_value, 2).replace('.', ',')
 
