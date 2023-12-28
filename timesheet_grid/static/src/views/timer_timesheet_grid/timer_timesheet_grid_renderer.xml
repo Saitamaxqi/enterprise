@@ -40,9 +40,12 @@
     <t t-name="timesheet_grid.TimerGridHeader" t-inherit="web_grid.Header">
         <xpath expr="//div[hasclass('o_grid_column_title')]" position="before">
             <div t-if="showTimerButton"
-                 class="o_grid_column_timer_button o_grid_navigation_wrap position-md-sticky top-0 border-bottom bg-100"
+                 class="o_grid_column_timer_button o_grid_navigation_wrap position-md-sticky top-0 start-0 border-bottom bg-100"
                  t-attf-style="grid-row: {{rowsGap}}; grid-column: 1;"
             />
+        </xpath>
+        <xpath expr="//div[hasclass('o_grid_column_title')]" position="attributes">
+            <attribute name="t-attf-class">{{ showTimerButton ? 'o_grid_with_row_timer' : '' }}</attribute>
         </xpath>
     </t>
 
@@ -59,7 +62,11 @@
         <xpath expr="//div[@name='row']" position="before">
             <div t-if="showTimerButton"
                 class="o_grid_row o_grid_row_timer o_grid_highlightable position-relative d-flex align-items-center ps-3 py-1"
-                t-att-class="{'bg-view' : isEven}"
+                t-att-class="{
+                    'position-md-sticky start-0': !props.model.useSampleModel,
+                    'bg-view': isEven,
+                    'bg-100': !isEven,
+                }"
                 t-att-data-row="row.id"
                 t-att-data-grid-row="rowPosition"
                 t-att-data-grid-column="1"
@@ -76,23 +83,40 @@
                 />
             </div>
         </xpath>
+        <xpath expr="//div[@name='row']" position="attributes">
+            <attribute name="t-attf-class">{{ showTimerButton ? 'o_grid_with_row_timer' : '' }}</attribute>
+        </xpath>
     </t>
 
     <t t-name="timesheet_grid.TimerGridAddLine" t-inherit="web_grid.AddLine">
         <xpath expr="//div[@t-if='props.createInline']" position="before">
             <div t-if="showTimerButton"
-                 class="o_grid_row o_grid_row_timer"
-                 t-att-class="{'bg-view' : isEven}"
+                 class="o_grid_row o_grid_row_timer z-index-1 position-md-sticky start-0"
+                 t-att-class="{
+                    'bg-view': isEven,
+                    'bg-100': !isEven,
+                 }"
                  t-attf-style="grid-row: {{rowPosition}}; grid-column: 1;"
             />
+        </xpath>
+        <xpath expr="//div[@t-if='props.createInline']" position="attributes">
+            <attribute name="t-attf-class">{{ showTimerButton ? 'o_grid_with_row_timer' : '' }}</attribute>
         </xpath>
     </t>
 
     <t t-name="timesheet_grid.TimerGridFooter" t-inherit="web_grid.Footer">
+        <xpath expr="//t/div" position="attributes">
+            <attribute name="t-attf-class">{{ showTimerButton ? 'o_grid_with_row_timer' : '' }}</attribute>
+        </xpath>
         <xpath expr="//t/div" position="before">
             <div t-if="showTimerButton"
+                 class="o_grid_column_timer_button"
                  t-attf-style="grid-row: {{rowPosition}}; grid-column: 1;"
-                 t-att-class="{'bg-view': isEven}"
+                 t-att-class="{
+                     'bg-view': isEven,
+                     'bg-100': !isEven,
+                     'z-index-1 position-md-sticky start-0': !props.model.useSampleModel,
+                 }"
             />
         </xpath>
         <xpath expr="//div[hasclass('o_grid_bar_chart_total_title')]/span" position="attributes">
@@ -108,9 +132,17 @@
     <t t-name="timesheet_grid.TimerGridTotal" t-inherit="web_grid.barChart">
         <xpath expr="//t/div" position="before">
             <div t-if="showTimerButton"
+                 class="o_grid_column_timer_button"
                  t-attf-style="grid-row: {{rowPosition + 1}}; grid-column: 1;"
-                 t-att-class="{'bg-view': isEven}"
+                 t-att-class="{
+                     'bg-view': isEven,
+                     'bg-100': !isEven,
+                     'z-index-1 position-md-sticky start-0': !props.model.useSampleModel,
+                 }"
             />
+        </xpath>
+        <xpath expr="//div[hasclass('o_grid_row_barChart')]" position="attributes">
+            <attribute name="t-attf-class">{{ showTimerButton ? 'o_grid_with_row_timer' : '' }}</attribute>
         </xpath>
         <xpath expr="//div[hasclass('o_grid_bar_chart_total_pill')]" position="after">
             <span t-if="column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] gt 0.00001
