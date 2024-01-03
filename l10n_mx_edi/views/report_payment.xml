@@ -27,10 +27,10 @@
                 <table class="table table-sm" t-if="payment_info" name="table_l10n_mx_edi_payment_info">
                     <thead>
                         <tr>
-                            <th t-if="payment_info['from_account_vat']"><t t-out="o.company_id.account_fiscal_country_id.vat_label or 'VAT'"/><span> Emitter Acc. Ord.</span></th>
+                            <th t-if="payment_info['from_account_vat']"><t t-out="o.company_id.account_fiscal_country_id.vat_label or 'VAT'"/><span class="ps-1">Emitter Acc. Ord.</span></th>
                             <th t-if="payment_info['from_account_name']">Bank Name Acc. Ord.</th>
                             <th t-if="payment_info['from_account_number']">Account Ord.</th>
-                            <th t-if="payment_info['to_account_vat']"><t t-out="o.company_id.account_fiscal_country_id.vat_label or 'VAT'"/><span> Emitter Acc. Ben.</span></th>
+                            <th t-if="payment_info['to_account_vat']"><t t-out="o.company_id.account_fiscal_country_id.vat_label or 'VAT'"/><span class="ps-1">Emitter Acc. Ben.</span></th>
                             <th t-if="payment_info['to_account_number']">Account Ben.</th>
                         </tr>
                     </thead>

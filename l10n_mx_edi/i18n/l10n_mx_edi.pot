@@ -92,18 +92,18 @@ msgid "601"
 msgstr ""
 
 #. module: l10n_mx_edi
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_payment_document
+msgid "<span class=\"ps-1\">Emitter Acc. Ben.</span>"
+msgstr ""
+
+#. module: l10n_mx_edi
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_payment_document
+msgid "<span class=\"ps-1\">Emitter Acc. Ord.</span>"
+msgstr ""
+
+#. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document
 msgid "<span> - </span>"
-msgstr ""
-
-#. module: l10n_mx_edi
-#: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_payment_document
-msgid "<span> Emitter Acc. Ben.</span>"
-msgstr ""
-
-#. module: l10n_mx_edi
-#: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_payment_document
-msgid "<span> Emitter Acc. Ord.</span>"
 msgstr ""
 
 #. module: l10n_mx_edi
@@ -296,6 +296,7 @@ msgid "Arrendamiento"
 msgstr ""
 
 #. module: l10n_mx_edi
+#: model:ir.model,name:l10n_mx_edi.model_ir_attachment
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_l10n_mx_edi_document__attachment_id
 msgid "Attachment"
 msgstr ""
@@ -333,6 +334,11 @@ msgstr ""
 #. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_payment_document
 msgid "Bank Name Acc. Ord."
+msgstr ""
+
+#. module: l10n_mx_edi
+#: model:ir.model,name:l10n_mx_edi.model_bank_rec_widget
+msgid "Bank reconciliation widget for a single statement line"
 msgstr ""
 
 #. module: l10n_mx_edi
@@ -490,6 +496,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_res_company__l10n_mx_edi_certificate_ids
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_res_config_settings__l10n_mx_edi_certificate_ids
 msgid "Certificates (MX)"
+msgstr ""
+
+#. module: l10n_mx_edi
+#. odoo-python
+#: code:addons/l10n_mx_edi/wizard/account_move_send.py:0
+msgid "Check Country on Partner(s)"
 msgstr ""
 
 #. module: l10n_mx_edi
@@ -724,13 +736,13 @@ msgid "Download"
 msgstr ""
 
 #. module: l10n_mx_edi
-#: model:ir.model,name:l10n_mx_edi.model_mail_compose_message
-msgid "Email composition wizard"
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document
+msgid "EKU9003173C9"
 msgstr ""
 
 #. module: l10n_mx_edi
-#: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document
-msgid "EKU9003173C9"
+#: model:ir.model,name:l10n_mx_edi.model_mail_compose_message
+msgid "Email composition wizard"
 msgstr ""
 
 #. module: l10n_mx_edi
@@ -1064,6 +1076,11 @@ msgid "L10N Mx Edi Payment Document"
 msgstr ""
 
 #. module: l10n_mx_edi
+#: model:ir.model.fields,field_description:l10n_mx_edi.field_bank_rec_widget_line__l10n_mx_edi_payment_method_id
+msgid "L10N Mx Edi Payment Method"
+msgstr ""
+
+#. module: l10n_mx_edi
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_account_bank_statement_line__l10n_mx_edi_update_payments_needed
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_account_move__l10n_mx_edi_update_payments_needed
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_account_payment__l10n_mx_edi_update_payments_needed
@@ -1075,6 +1092,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_account_move__l10n_mx_edi_update_sat_needed
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_account_payment__l10n_mx_edi_update_sat_needed
 msgid "L10N Mx Edi Update Sat Needed"
+msgstr ""
+
+#. module: l10n_mx_edi
+#: model:ir.model.fields,field_description:l10n_mx_edi.field_account_move_send__l10n_mx_edi_warnings
+msgid "L10N Mx Edi Warnings"
 msgstr ""
 
 #. module: l10n_mx_edi
@@ -1095,6 +1117,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_l10n_mx_edi_invoice_cancel__write_date
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_l10n_mx_edi_payment_method__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_mx_edi
+#: model:ir.model,name:l10n_mx_edi.model_bank_rec_widget_line
+msgid "Line of the bank reconciliation widget"
 msgstr ""
 
 #. module: l10n_mx_edi
@@ -1349,6 +1376,8 @@ msgid "Payment Sent"
 msgstr ""
 
 #. module: l10n_mx_edi
+#. odoo-javascript
+#: code:addons/l10n_mx_edi/static/src/components/bank_reconcilliation/bank_rec_form.xml:0
 #: model:ir.actions.act_window,name:l10n_mx_edi.action_l10n_mx_payment_method
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_account_bank_statement_line__l10n_mx_edi_payment_method_id
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_account_journal__l10n_mx_edi_payment_method_id
@@ -1620,12 +1649,6 @@ msgid "Solucion Factible"
 msgstr ""
 
 #. module: l10n_mx_edi
-#. odoo-python
-#: code:addons/l10n_mx_edi/models/l10n_mx_edi_document.py:0
-msgid "Some documents are being sent by another process already."
-msgstr ""
-
-#. module: l10n_mx_edi
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_account_bank_statement_line__l10n_mx_edi_certificate_id
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_account_move__l10n_mx_edi_certificate_id
 #: model:ir.model.fields,field_description:l10n_mx_edi.field_account_payment__l10n_mx_edi_certificate_id
@@ -1803,7 +1826,6 @@ msgstr ""
 #. module: l10n_mx_edi
 #. odoo-python
 #: code:addons/l10n_mx_edi/wizard/account_move_send.py:0
-#, python-format
 msgid "The following partner(s) have an RFC but no country configured."
 msgstr ""
 
@@ -1945,6 +1967,12 @@ msgid "Validity"
 msgstr ""
 
 #. module: l10n_mx_edi
+#. odoo-python
+#: code:addons/l10n_mx_edi/wizard/account_move_send.py:0
+msgid "View Partner(s)"
+msgstr ""
+
+#. module: l10n_mx_edi
 #: model:ir.model.fields.selection,name:l10n_mx_edi.selection__account_move__l10n_mx_edi_usage__d06
 #: model:ir.model.fields.selection,name:l10n_mx_edi.selection__res_partner__l10n_mx_edi_usage__d06
 msgid "Voluntary contributions to SAR"
@@ -1986,6 +2014,13 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_mx_edi/models/account_move.py:0
 msgid "You can't register a payment for invoices having different RFCs."
+msgstr ""
+
+#. module: l10n_mx_edi
+#. odoo-python
+#: code:addons/l10n_mx_edi/models/ir_attachment.py:0
+msgid ""
+"You can't unlink an attachment being an EDI document sent to the government."
 msgstr ""
 
 #. module: l10n_mx_edi
