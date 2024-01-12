@@ -697,13 +697,27 @@
                                 <field name="name">IV. Retained earnings/accumulated losses brought forward</field>
                                 <field name="name@de">IV. Gewinnvortrag/Verlustvortrag</field>
                                 <field name="code">SKR_BS_LIABILITIES_A4</field>
-                                <field name="groupby">account_id</field>
+                                <field name="groupby" eval="False"/>
                                 <field name="foldable" eval="True"/>
                                 <field name="expression_ids">
                                     <record id="skr_bs_liabilities_a_iv_balance" model="account.report.expression">
                                         <field name="label">balance</field>
+                                        <field name="engine">aggregation</field>
+                                        <field name="formula">SKR_BS_LIABILITIES_A4.balance_liabilities + SKR_BS_LIABILITIES_A4.previous_year</field>
+                                        <field name="subformula" eval="False"/>
+                                    </record>
+                                    <record id="skr_bs_liabilities_a_iv_balance_liabilities" model="account.report.expression">
+                                        <field name="label">balance_liabilities</field>
                                         <field name="engine">domain</field>
                                         <field name="formula" eval="[('account_id.tag_ids', 'in', [ref('l10n_de.tag_de_liabilities_bs_A_IV')])]"/>
+                                        <field name="subformula">-sum</field>
+                                    </record>
+                                    <!-- Profit and loss from previous year -->
+                                    <record id="skr_bs_liabilities_a_iv_previous_year" model="account.report.expression">
+                                        <field name="label">previous_year</field>
+                                        <field name="engine">domain</field>
+                                        <field name="formula" eval="[('account_id.account_type', 'in', ['income', 'income_other', 'expense_direct_cost', 'expense', 'expense_depreciation', 'equity_unaffected'])]"/>
+                                        <field name="date_scope">to_beginning_of_fiscalyear</field>
                                         <field name="subformula">-sum</field>
                                     </record>
                                 </field>
@@ -718,7 +732,9 @@
                                     <record id="skr_bs_liabilities_a_v_balance" model="account.report.expression">
                                         <field name="label">balance</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="[('account_id.account_type', 'in', ['income', 'income_other', 'expense_direct_cost', 'expense', 'expense_depreciation'])]"/>
+                                        <!-- We add `equity_unaffected` to the domain to exclude the closing entry -->
+                                        <field name="formula" eval="[('account_id.account_type', 'in', ['income', 'income_other', 'expense_direct_cost', 'expense', 'expense_depreciation', 'equity_unaffected'])]"/>
+                                        <field name="date_scope">from_fiscalyear</field>
                                         <field name="subformula">-sum</field>
                                     </record>
                                 </field>
