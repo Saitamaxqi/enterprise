@@ -151,6 +151,7 @@ CURRENCY_PROVIDER_SELECTION = [
     (['CZ'], 'cnb', '[CZ] Czech National Bank'),
     (['EG'], 'cbegy', '[EG] Central Bank of Egypt'),
     (['GT'], 'banguat', '[GT] Bank of Guatemala'),
+    (['IT'], 'boi', '[IT] Bank of Italy'),
     (['MX'], 'banxico', '[MX] Bank of Mexico'),
     (['PE'], 'bcrp', '[PE] SUNAT (replaces Bank of Peru)'),
     (['PL'], 'nbp', '[PL] National Bank of Poland'),
@@ -1105,6 +1106,35 @@ class ResCompany(models.Model):
 
         if result and 'THB' in available_currency_names and period:
             result['THB'] = (1.0, period)
+
+        return result
+
+    def _parse_boi_data(self, available_currencies):
+        ''' This method is used to update the currencies by using Bank of Italy service provider.
+            Rates are given against EUR
+        '''
+        # Available languages: en, it
+        url = "https://tassidicambio.bancaditalia.it/terzevalute-wf-web/rest/v1.0/latestRates?lang=en"
+        result = {}
+
+        try:
+            response = requests.get(url, headers={"Accept": "application/json"}, timeout=10)
+            response.raise_for_status()
+        except Exception as e:  # noqa: BLE001
+            _logger.error(e)
+            return result
+
+        curr_iso_codes = available_currencies.mapped("name")
+        curr_list = response.json()["latestRates"]
+
+        for curr in curr_list:
+            if curr["isoCode"] in curr_iso_codes:
+                date = fields.Date.to_date(curr["referenceDate"])
+                try:
+                    # If the rate is not a number, skip it
+                    result[curr["isoCode"]] = (float(curr["eurRate"]), date)
+                except ValueError:
+                    continue
 
         return result
 
