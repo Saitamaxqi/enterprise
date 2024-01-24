@@ -26,9 +26,11 @@
             <field name="users" eval="[(4, ref('base.user_root'))]"/>
         </record>
 
-        <record id="base.default_user" model="res.users">
-            <field name="groups_id" eval="[(4, ref('documents.group_documents_manager'))]"/>
-        </record>
+        <data noupdate="1">
+            <record id="base.default_user" model="res.users">
+                <field name="groups_id" eval="[(4, ref('documents.group_documents_manager'))]"/>
+            </record>
+        </data>
 
         <!-- documents rules -->
         <!-- duplicated for spreadsheetCellThreads in rule documents_spreadsheet.documents_document_thread_global_rule

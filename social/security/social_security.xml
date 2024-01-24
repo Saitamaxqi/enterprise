@@ -13,11 +13,11 @@
         <field name="implied_ids" eval="[(4, ref('group_social_user'))]"/>
     </record>
 
+    <data noupdate="1">
+
     <record id="base.default_user" model="res.users">
         <field name="groups_id" eval="[(4, ref('social.group_social_manager'))]"/>
     </record>
-
-    <data noupdate="1">
 
     <record id="social_post_rule_social_manager" model="ir.rule">
         <field name="name">Social: manager: all</field>
