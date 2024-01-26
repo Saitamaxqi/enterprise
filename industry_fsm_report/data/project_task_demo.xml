@@ -45,15 +45,7 @@
             <field name="worksheet_template_id" ref="industry_fsm_report.fsm_worksheet_template2"/>
         </record>
 
-        <record id="industry_fsm.planning_task_11" model="project.task">
-            <field name="worksheet_template_id" ref="industry_fsm_report.fsm_worksheet_template2"/>
-        </record>
-
         <record id="industry_fsm.planning_task_12" model="project.task">
-            <field name="worksheet_template_id" ref="industry_fsm_report.fsm_worksheet_template2"/>
-        </record>
-
-        <record id="industry_fsm.planning_task_13" model="project.task">
             <field name="worksheet_template_id" ref="industry_fsm_report.fsm_worksheet_template2"/>
         </record>
 
@@ -61,23 +53,11 @@
             <field name="worksheet_template_id" ref="industry_fsm_report.fsm_worksheet_template2"/>
         </record>
 
-        <record id="industry_fsm.planning_task_15" model="project.task">
-            <field name="worksheet_template_id" ref="industry_fsm_report.fsm_worksheet_template2"/>
-        </record>
-
         <record id="industry_fsm.planning_task_16" model="project.task">
             <field name="worksheet_template_id" ref="industry_fsm_report.fsm_worksheet_template2"/>
         </record>
 
-        <record id="industry_fsm.planning_task_17" model="project.task">
-            <field name="worksheet_template_id" ref="industry_fsm_report.fsm_worksheet_template2"/>
-        </record>
-
         <record id="industry_fsm.planning_task_18" model="project.task">
-            <field name="worksheet_template_id" ref="industry_fsm_report.fsm_worksheet_template2"/>
-        </record>
-
-        <record id="industry_fsm.planning_task_19" model="project.task">
             <field name="worksheet_template_id" ref="industry_fsm_report.fsm_worksheet_template2"/>
         </record>
 

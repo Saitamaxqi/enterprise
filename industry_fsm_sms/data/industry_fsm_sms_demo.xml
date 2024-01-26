@@ -8,15 +8,15 @@
 
         <!-- log SMS template message in chatter -->
         <function model="project.task" name="write">
-            <value model="project.task" eval="obj().search([('id', 'in', [ref('industry_fsm.planning_task_17'), ref('industry_fsm.planning_task_18'), ref('industry_fsm.planning_task_19')])]).ids"/>
+            <value model="project.task" eval="obj().search([('id', 'in', [ref('industry_fsm.planning_task_16'), ref('industry_fsm.planning_task_18'), ref('industry_fsm.planning_task_20')])]).ids"/>
             <value eval="{'stage_id': ref('industry_fsm.planning_project_stage_1')}"/>
         </function>
         <function model="project.task" name="write">
-            <value model="project.task" search="[('id', '=', ref('industry_fsm.planning_task_18'))]"/>
+            <value model="project.task" search="[('id', '=', ref('industry_fsm.planning_task_16'))]"/>
             <value eval="{'stage_id': ref('industry_fsm.planning_project_stage_2')}"/>
         </function>
         <function model="project.task" name="write">
-            <value model="project.task" search="[('id', '=', ref('industry_fsm.planning_task_19'))]"/>
+            <value model="project.task" search="[('id', '=', ref('industry_fsm.planning_task_20'))]"/>
             <value eval="{'stage_id': ref('project.project_stage_2')}"/>
         </function>
 
