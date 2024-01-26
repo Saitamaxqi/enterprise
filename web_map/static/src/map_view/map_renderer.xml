@@ -105,7 +105,7 @@
             <t t-set="latitude" t-value="record.partner and record.partner.partner_latitude"/>
             <t t-set="longitude" t-value="record.partner and record.partner.partner_longitude"/>
             <li t-att-data-id="record.id" t-if="latitude and longitude" t-on-click.prevent="() => this.centerAndOpenPin(record)" class="cursor-pointer d-flex align-items-center justify-content-between o-map-renderer--pin-located py-1">
-                <span class="text-truncate"> <t t-if="props.model.metaData.numbering" t-esc="record_index + 1 + '.'"/> <t t-esc="record.display_name"/> </span>
+                <span class="text-truncate flex-grow-1"> <t t-if="props.model.metaData.numbering" t-esc="record_index + 1 + '.'"/> <t t-esc="record.display_name"/> </span>
                 <span class="o_row_handle oi oi-draggable" t-if="this.props.model.canResequence" t-on-click.stop=""/>
             </li>
         </t>

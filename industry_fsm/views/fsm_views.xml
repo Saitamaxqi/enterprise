@@ -142,6 +142,9 @@
         <field name="inherit_id" ref="project_enterprise.project_task_map_view"/>
         <field name="mode">primary</field>
         <field name="arch" type="xml">
+            <map position="attributes">
+                <attribute name="js_class">fsm_task_map</attribute>
+            </map>
             <field name="partner_id" position="after">
                 <field name="partner_phone" string="Contact Number"/>
             </field>
