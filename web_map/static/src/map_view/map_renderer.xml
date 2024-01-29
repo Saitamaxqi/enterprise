@@ -4,22 +4,22 @@
     <t t-name="web_map.MapRenderer">
         <t t-if="env.isSmall">
             <div class="row g-0 o-sm-pin-list-container" t-att-class="{ 'h-100': expendedPinList }">
-                <t t-call="web_map.MapRenderer.PinListContainer"/>
+                <t t-call="{{ subTemplates.PinListContainer }}"/>
             </div>
         </t>
         <div class="o-map-renderer row g-0" t-att-class="{ 'd-none': expendedPinList }">
             <t t-if="!env.isSmall">
-                <t t-call="web_map.MapRenderer.PinListContainer"/>
+                <t t-call="{{ subTemplates.PinListContainer }}"/>
             </t>
             <div class="h-100 col col-md-10">
                 <t t-if="props.model.data.routingError">
-                    <t t-call="web_map.MapRenderer.RountingUnavailable"/>
+                    <t t-call="{{ subTemplates.RountingUnavailable }}"/>
                 </t>
                 <t t-elif="props.model.data.fetchingCoordinates">
-                    <t t-call="web_map.MapRenderer.FetchingCoordinates"/>
+                    <t t-call="{{ subTemplates.FetchingCoordinates }}"/>
                 </t>
                 <t t-elif="props.model.metaData.routing and !props.model.data.useMapBoxAPI">
-                    <t t-call="web_map.MapRenderer.NoMapToken"/>
+                    <t t-call="{{ subTemplates.NoMapToken }}"/>
                 </t>
                 <div class="o-map-renderer--container h-100" t-ref="mapContainer"/>
             </div>
@@ -76,7 +76,7 @@
                             <t t-else="">Undefined</t>
                         </div>
                         <t t-if="!state.closedGroupIds.includes(groupId)">
-                            <t t-call="web_map.MapRenderer.PinList">
+                            <t t-call="{{ subTemplates.PinList }}">
                                 <t t-set="records" t-value="group.records"/>
                             </t>
                         </t>
@@ -84,7 +84,7 @@
                 </t>
             </t>
             <t t-elif="canDisplayPinList">
-                <t t-call="web_map.MapRenderer.PinList">
+                <t t-call="{{ subTemplates.PinList }}">
                     <t t-set="records" t-value="props.model.data.records"/>
                 </t>
             </t>
@@ -96,7 +96,7 @@
            t-att-class="{'o-map-renderer--pin-located': !props.model.metaData.numbering}"
            class="o-map-renderer--pin-list-details ps-0 pb-0 o-map-renderer--handle"
            t-ref="pinList">
-            <t t-call="web_map.MapRenderer.PinListItems"/>
+            <t t-call="{{ subTemplates.PinListItems }}"/>
         </t>
     </t>
 

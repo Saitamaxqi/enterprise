@@ -5,6 +5,10 @@ import { user } from "@web/core/user";
 
 export class ProjectTaskMapRenderer extends MapRenderer {
     static template = "project_enterprise.ProjectTaskMapRenderer";
+    static subTemplates = {
+        ...MapRenderer.subTemplates,
+        PinListItems: "project_enterprise.ProjectTaskMapRenderer.PinListItems",
+    };
 
     setup() {
         super.setup()

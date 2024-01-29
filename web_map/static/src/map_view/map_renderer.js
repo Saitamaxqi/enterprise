@@ -49,6 +49,18 @@ export class MapRenderer extends Component {
         model: Object,
         onMarkerClick: Function,
     };
+    static subTemplates = {
+        PinListContainer: "web_map.MapRenderer.PinListContainer",
+        PinList: "web_map.MapRenderer.PinList",
+        PinListItems: "web_map.MapRenderer.PinListItems",
+        RountingUnavailable: "web_map.MapRenderer.RountingUnavailable",
+        FetchingCoordinates: "web_map.MapRenderer.FetchingCoordinates",
+        NoMapToken: "web_map.MapRenderer.NoMapToken",
+    };
+
+    get subTemplates() {
+        return this.constructor.subTemplates;
+    }
 
     setup() {
         this.leafletMap = null;
@@ -163,7 +175,7 @@ export class MapRenderer extends Component {
                         record: record,
                         ids: [record.id],
                         pinInSamePlace: pinInSamePlace[lat_long],
-                        relatedRecords : [],
+                        relatedRecords: [],
                     };
                 }
             }
@@ -181,9 +193,9 @@ export class MapRenderer extends Component {
                 const groupId = markerInfo.record.groupId;
                 params.color = this.getGroupColor(groupId);
                 params.number =
-                    this.props.model.data.recordGroups[groupId].records.findIndex((record) => {
-                        return record.id === markerInfo.record.id;
-                    }) + 1;
+                    this.props.model.data.recordGroups[groupId].records.findIndex(
+                        (record) => record.id === markerInfo.record.id
+                    ) + 1;
             }
 
             // Icon creation
