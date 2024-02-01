@@ -572,7 +572,6 @@ export class GridRenderer extends Component {
                 context,
             });
         } else {
-            const noActivitiesFound = _t("No activities found");
             // retrieve form and list view ids from the action
             const { views = [] } = this.env.config;
             const openRecordsViews = ["list", "form"].map((viewType) => {
@@ -586,11 +585,17 @@ export class GridRenderer extends Component {
                 views: openRecordsViews,
                 domain,
                 context,
-                help: markup(
-                    `<p class='o_view_nocontent_smiling_face'>${escape(noActivitiesFound)}</p>`
-                ),
+                help: this._getNoContentHelper(),
             });
         }
+    }
+
+    /** Return grid cell action helper when no records are found. */
+    _getNoContentHelper() {
+        const noActivitiesFound = _t("No activities found");
+        return  markup(
+            `<p class='o_view_nocontent_smiling_face'>${escape(noActivitiesFound)}</p>`
+        );
     }
 
     onMagnifierGlassClick(section, column) {
