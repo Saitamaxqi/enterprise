@@ -316,6 +316,14 @@ REPORT_CONFIG = {
         'asset_line_ref': 'l10n_kr_reports.l10n_kr_bs_ta',
         'liability_line_ref': 'l10n_kr_reports.l10n_kr_bs_le',
     },
+    'l10n_cn_reports.l10n_cn_asbe_bs': {
+        'asset_line_ref': 'l10n_cn_reports.l10n_cn_asbe_bs_cn_a',
+        'liability_line_ref': 'l10n_cn_reports.l10n_cn_asbe_bs_cn_l',
+    },
+    'l10n_cn_reports.l10n_cn_assbe_bs': {
+        'asset_line_ref': 'l10n_cn_reports.l10n_cn_assbe_bs_cns_ta',
+        'liability_line_ref': 'l10n_cn_reports.l10n_cn_assbe_bs_cns_tle',
+    },
 }
 
 # === If some accounts should be excluded from the testing, specify them here === #
