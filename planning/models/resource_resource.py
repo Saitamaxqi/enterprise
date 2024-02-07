@@ -1,7 +1,4 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from random import randint
-
 from datetime import datetime, time, timedelta
 from odoo import _, api, fields, models
 
@@ -9,17 +6,6 @@ from odoo import _, api, fields, models
 class ResourceResource(models.Model):
     _inherit = 'resource.resource'
 
-    def _default_color(self):
-        return randint(1, 11)
-
-    @api.model
-    def default_get(self, fields):
-        res = super().default_get(fields)
-        if res.get('resource_type', '') == 'material' and 'calendar_id' in fields and self._context.get('from_planning'):
-            res['calendar_id'] = False
-        return res
-
-    color = fields.Integer(default=_default_color, export_string_translation=False)
     avatar_128 = fields.Image(compute='_compute_avatar_128', export_string_translation=False)
     role_ids = fields.Many2many('planning.role', 'resource_resource_planning_role_rel',
                                 'resource_resource_id', 'planning_role_id', 'Roles',

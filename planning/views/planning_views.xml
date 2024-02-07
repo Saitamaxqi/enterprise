@@ -558,7 +558,7 @@
                     <group>
                         <field name="active" invisible="1" />
                         <field name="name"/>
-                        <field name="resource_ids" widget="many2many_tags" context="{'show_job_title': True, 'from_planning': True}"/>
+                        <field name="resource_ids" widget="many2many_avatar_resource" context="{'show_job_title': True, 'from_planning': True}"/>
                         <field name="color" widget="color_picker"/>
                         <field name="sequence" groups="base.group_no_one"/>
                     </group>
@@ -580,9 +580,9 @@
                     </t>
                     <t t-name="card">
                         <field name="name" class="fw-bold fs-4 ms-1"/>
-                        <footer class="pt-0 mt-0">
-                            <field name="resource_ids" widget="many2many_tags"/>
-                        </footer>
+                        <div class="pt-0 mt-1 ms-1">
+                            <field name="resource_ids" widget="many2many_avatar_resource"/>
+                        </div>
                     </t>
                 </templates>
             </kanban>

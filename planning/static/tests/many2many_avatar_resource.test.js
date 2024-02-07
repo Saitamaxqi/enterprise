@@ -76,6 +76,7 @@ class PlanningRole extends planningModels.PlanningRole {
 }
 
 class ResourceResource extends planningModels.ResourceResource {
+    color = fields.Integer({ default: () => Math.floor(Math.random() * 10)})
     _records = [
         {
             id: 1,
