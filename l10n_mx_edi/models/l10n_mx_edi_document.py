@@ -11,7 +11,7 @@ from collections import defaultdict
 from datetime import datetime
 from json.decoder import JSONDecodeError
 from lxml import etree
-from odoo.tools.zeep import Client
+from odoo.tools.zeep import Client, Transport
 from pytz import timezone
 
 from odoo import _, api, models, modules, fields, tools
@@ -2172,34 +2172,16 @@ Content-Disposition: form-data; name="xml"; filename="xml"
 
     def _fetch_sat_status(self, supplier_rfc, customer_rfc, total, uuid):
         url = 'https://consultaqr.facturaelectronica.sat.gob.mx/ConsultaCFDIService.svc?wsdl'
-        headers = {
-            'SOAPAction': 'http://tempuri.org/IConsultaCFDIService/Consulta',
-            'Content-Type': 'text/xml; charset=utf-8',
-        }
-        params = f'<![CDATA[?id={uuid or ""}' \
+        params = f'?id={uuid or ""}' \
                  f'&re={tools.html_escape(supplier_rfc or "")}' \
                  f'&rr={tools.html_escape(customer_rfc or "")}' \
-                 f'&tt={total or 0.0}]]>'
-        envelope = f"""<?xml version="1.0" encoding="UTF-8"?>
-            <SOAP-ENV:Envelope
-                xmlns:ns0="http://tempuri.org/"
-                xmlns:ns1="http://schemas.xmlsoap.org/soap/envelope/"
-                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/">
-                <SOAP-ENV:Header/>
-                <ns1:Body>
-                    <ns0:Consulta>
-                        <ns0:expresionImpresa>{params}</ns0:expresionImpresa>
-                    </ns0:Consulta>
-                </ns1:Body>
-            </SOAP-ENV:Envelope>
-        """
-        namespace = {'a': 'http://schemas.datacontract.org/2004/07/Sat.Cfdi.Negocio.ConsultaCfdi.Servicio'}
+                 f'&tt={total or 0.0}]'
+        transport = Transport(timeout=20)
 
         try:
-            soap_xml = requests.post(url, data=envelope, headers=headers, timeout=20)
-            response = etree.fromstring(soap_xml.text)
-            fetched_status = response.xpath('//a:Estado', namespaces=namespace)
+            client = Client(wsdl=url, transport=transport)
+            response = client.service.Consulta(params)
+            fetched_status = response['Estado'] if hasattr(response, 'Estado') else ''
             fetched_state = fetched_status[0].text if fetched_status else None
             # pylint: disable=broad-except
         except Exception as e:
