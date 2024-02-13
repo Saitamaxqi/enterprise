@@ -700,7 +700,7 @@ class TestNlXafExport(TestNlXafExportCommon):
             self.env.registry.enter_test_mode(self.cr)
             # Set the batch size to 10 to make sure the generator will iterate more than once.
             self.env['ir.config_parameter'].set_param('l10n_nl_reports.general_ledger_batch_size', 10)
-            xaf_stream = self.env[report.custom_handler_model_name].l10n_nl_get_xaf(options).get('file_content')
+            xaf_stream = self.env[report.custom_handler_model_name].l10n_nl_reports_get_xaf(options).get('file_content')
             generated_xaf = self.get_xml_tree_from_string(b''.join(xaf_stream))
             self.assertXmlTreeEqual(generated_xaf, expected_xaf)
         finally:

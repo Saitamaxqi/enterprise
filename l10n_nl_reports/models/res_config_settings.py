@@ -4,6 +4,7 @@ from odoo import fields, models
 class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
+    l10n_nl_reports_sbr_cert_id = fields.Many2one(related='company_id.l10n_nl_reports_sbr_cert_id', readonly=False)
     l10n_nl_rounding_difference_loss_account_id = fields.Many2one(
         comodel_name='account.account',
         related='company_id.l10n_nl_rounding_difference_loss_account_id',

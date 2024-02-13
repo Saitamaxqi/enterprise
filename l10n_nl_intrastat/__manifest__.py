@@ -5,11 +5,11 @@
     'name': 'Netherlands Intrastat Declaration',
     'category': 'Accounting/Localizations/Reporting',
     'description': """
-Generates Netherlands Intrastat report for declaration based on invoices.
+Generates Netherlands Intrastat report for declaration based on invoices
+and submit your Intracommunity Services to the Dutch tax authorities.
     """,
     'depends': ['l10n_nl_reports', 'account_intrastat'],
     'data': [
-        'data/account_report_ec_sales_list_report.xml',
         'views/res_company_view.xml',
     ],
     'auto_install': True,
