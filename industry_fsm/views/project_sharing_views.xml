@@ -32,6 +32,7 @@
                 <field name="is_fsm" invisible="1"/>
                 <field name="company_id" invisible="1" />
                 <field name="partner_id" invisible="True" required="True" options="{'no_open': True, 'no_create': True, 'no_edit': True}" context="{'res_partner_search_mode': 'customer'}"/>
+                <field name="project_id" invisible="1"/>
             </xpath>
         </field>
     </record>
