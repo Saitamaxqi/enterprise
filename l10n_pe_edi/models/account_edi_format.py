@@ -156,7 +156,12 @@ class AccountEdiFormat(models.Model):
                        "2. Authorize Digiflow as PSE.\n"
                        "Reference: \n"
                        "https://www.odoo.com/documentation/master/applications/finance/accounting/fiscal_localizations/localizations/peru.html#what-do-you-need-to-do"),
-            '98': _lt("The cancellation request has not yet finished processing by SUNAT. Please retry in a few minutes.")
+            '98': _lt("The cancellation request has not yet finished processing by SUNAT. Please retry in a few minutes."),
+            '2640': _lt("The tax application is incorrect for free invoice."),
+            '3020': _lt("Verify that the taxes are configured correctly: for free invoice, make sure to include "
+                        "only the taxes applicable to free operations and the free billing legend in the Peruvian EDI tab."),
+            '3294': _lt("Verify that the taxes are configured correctly: for free invoice, make sure to include "
+                        "only the taxes applicable to free operations and the free billing legend in the Peruvian EDI tab."),
         }
 
     @api.model

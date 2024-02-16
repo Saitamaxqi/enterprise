@@ -1528,6 +1528,14 @@ msgstr "El número de serie para agregar a los documentos electrónicos"
 #. module: l10n_pe_edi
 #. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
+#, python-format
+msgid "The tax application is incorrect for free invoice."
+msgstr "La afectación del impuesto es incorrecta para la factura gratuita."
+
+#. module: l10n_pe_edi
+#. odoo-python
+#: code:addons/l10n_pe_edi/models/account_edi_format.py:0
+#, python-format
 msgid ""
 "The type of identity document used for the client is not valid. Review the "
 "type of document used in the client and change it according to the case of "
@@ -1760,6 +1768,17 @@ msgstr ""
 #. module: l10n_pe_edi
 #. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
+#, python-format
+msgid ""
+"Verify that the taxes are configured correctly: for free invoice, make sure to include only "
+"the taxes applicable to free operations and the free billing legend in the Peruvian EDI tab."
+msgstr ""
+"Verifique que los impuestos estén configurados correctamente: para la factura gratuita, "
+"asegúrese de incluir  solo los impuestos aplicables a operaciones gratuitas y la leyenda de "
+"facturación gratuita en la pestaña EDI peruana."
+
+#. module: l10n_pe_edi
+#. odoo-python
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0
 #: code:addons/l10n_pe_edi/models/account_edi_format.py:0

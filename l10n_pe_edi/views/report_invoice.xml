@@ -14,6 +14,7 @@
             </xpath>
 
             <xpath expr="//div[@t-if='not is_html_empty(o.narration)']" position="before">
+                <p t-if="o.l10n_pe_edi_legend_value" t-out="o.l10n_pe_edi_legend_value"/>
                 <p>
                     <span><b>SON:</b> <t t-out="extra_edi_vals.get('amount_to_text')"/></span>
                 </p>

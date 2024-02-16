@@ -2,6 +2,13 @@ import re
 
 from odoo import models
 
+# These codes correspond to the tax affectation reasons used in Peru for
+# issuing free invoices according to SUNAT regulations. Invoices with these
+# codes are considered "gratuitas" (free), meaning that no payment is expected
+# for the goods or services provided, typically in cases like promotions,
+# donations, or samples.
+FREE_AFFECTATION_REASONS = ['11', '12', '13', '14', '15', '16', '21', '31', '32', '33', '34', '35', '36']
+
 
 class AccountEdiXmlUbl_Pe(models.AbstractModel):
     _name = 'account.edi.xml.ubl_pe'
@@ -126,8 +133,12 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
             line.amount_currency
             for line in invoice.line_ids.filtered(lambda l: l.tax_line_id.tax_group_id.l10n_pe_edi_code == 'ISC')
         ]))
+        vals[0]['tax_amount'] = 0.00 if invoice.l10n_pe_edi_legend == '1002' else vals[0]['tax_amount']
         vals[0]['tax_subtotal_vals'] = []
+
         for grouping_vals in tax_details_grouped['tax_details'].values():
+            if grouping_vals['tax_amount_currency'] < 0 and invoice.l10n_pe_edi_legend == '1002':
+                continue
             vals[0]['tax_subtotal_vals'].append({
                 'currency': invoice.currency_id,
                 'currency_dp': invoice.currency_id.decimal_places,
@@ -152,11 +163,15 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
         vals = {
             'currency': line.currency_id,
             'currency_dp': line.currency_id.decimal_places,
-            'tax_amount': line.price_total - line.price_subtotal,
+            'tax_amount': 0.00 if line.l10n_pe_edi_affectation_reason in FREE_AFFECTATION_REASONS else line.price_total - line.price_subtotal,
             'tax_subtotal_vals': [],
         }
+
         for tax_detail_vals in taxes_vals['tax_details'].values():
             tax = tax_detail_vals['taxes_data'][0]['tax']
+            if tax_detail_vals['tax_amount_currency'] < 0 and line.move_id.l10n_pe_edi_legend == '1002':
+                continue
+
             vals['tax_subtotal_vals'].append({
                 'currency': line.currency_id,
                 'currency_dp': line.currency_id.decimal_places,
@@ -208,7 +223,7 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
         vals = super()._get_invoice_line_price_vals(line)
         # Line discounts are not handled well by the EDI service. That's why we skip them
         # and already subtract the discount from the line in the `PriceAmount` tag.
-        vals['price_amount'] = round(line.price_subtotal / line.quantity, 10) if line.quantity else 0.0
+        vals['price_amount'] = round(line.price_subtotal / line.quantity, 10) if line.quantity and line.l10n_pe_edi_affectation_reason not in FREE_AFFECTATION_REASONS else 0.0
         return vals
 
     def _get_invoice_line_vals(self, line, taxes_vals, idx=None):
@@ -219,9 +234,11 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
         vals['pricing_reference_vals'] = {
             'alternative_condition_price_vals': [{
                 'currency': line.currency_id,
-                'price_amount': line_vals['price_total_unit'],
+                'price_amount': (line_vals['price_subtotal_unit']
+                    if line.l10n_pe_edi_affectation_reason in FREE_AFFECTATION_REASONS
+                    else line_vals['price_total_unit']),
                 'price_amount_dp': self.env['decimal.precision'].precision_get('Product Price'),
-                'price_type_code': '02' if line.currency_id.is_zero(line_vals['price_unit_after_discount']) else '01',
+                'price_type_code': '02' if line.currency_id.is_zero(line_vals['price_unit_after_discount']) or line.l10n_pe_edi_affectation_reason in FREE_AFFECTATION_REASONS else '01'
             }]
         }
         return vals
@@ -230,6 +247,10 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
         # EXTENDS account.edi.xml.ubl_21
         vals = super()._get_invoice_monetary_total_vals(invoice, taxes_vals, line_extension_amount, allowance_total_amount, charge_total_amount)
         vals['payable_amount'] += vals['prepaid_amount']
+        if invoice.l10n_pe_edi_legend == '1002':
+            vals['line_extension_amount'] = 0.0
+            vals['tax_inclusive_amount'] = 0.0
+            vals['payable_amount'] = 0.0
         vals['prepaid_amount'] = 0.0
         return vals
 
