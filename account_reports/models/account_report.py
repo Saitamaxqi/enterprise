@@ -1648,6 +1648,8 @@ class AccountReport(models.Model):
                 'forced_options': column_group_val['forced_options'],
                 'forced_domain': _generate_domain_from_horizontal_group_hash_key_tuple(horizontal_group_key_tuple),
             }
+            if horizontal_group_key_tuple:
+                column_groups[column_group_key]['horizontal_groupby_element'] = horizontal_group_key_tuple
 
             for report_column in self.column_ids:
                 columns.append({
@@ -6897,7 +6899,7 @@ class AccountReportLine(models.Model):
                 'unfoldable': has_children,
                 'unfolded': (has_children and next_groupby and options['unfold_all']) or line_id in options['unfolded_lines'],
                 'groupby': next_groupby,
-                'columns': self.report_id._build_static_line_columns(self, options, group_totals, groupby_model=groupby_model),
+                'columns': columns,
                 'level': self.hierarchy_level + 2 * (prefix_groups_count + len(sub_groupby_domain) + 1) + (group_indent - 1),
                 'parent_id': line_dict_id,
                 'expand_function': '_report_expand_unfoldable_line_with_groupby' if next_groupby else None,

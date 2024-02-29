@@ -18,12 +18,6 @@ msgstr ""
 "X-Generator: Poedit 3.5\n"
 
 #. module: l10n_co_reports
-#. odoo-python
-#: code:addons/l10n_co_reports/models/general_ledger.py:0
-msgid "(None)"
-msgstr "(Ninguno)"
-
-#. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification
 msgid ", practicó en la ciudad de"
 msgstr ", practicó en la ciudad de"
@@ -239,6 +233,11 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: l10n_co_reports
+#: model:account.report.column,name:l10n_co_reports.l10n_co_reports_trial_balance_per_partner_credit
+msgid "Credit"
+msgstr "Crédito"
+
+#. module: l10n_co_reports
 #: model:account.report.line,name:l10n_co_reports.l10n_co_bs_report_assets_current
 msgid "Current Assets"
 msgstr "Activos corrientes"
@@ -252,6 +251,18 @@ msgstr "Pasivos corrientes"
 #: model:account.report.line,name:l10n_co_reports.l10n_co_bs_report_year_earnings
 msgid "Current Year Unallocated Earnings"
 msgstr "Ingresos no asignados del ejercicio en curso"
+
+#. module: l10n_co_reports
+#: model:ir.model,name:l10n_co_reports.model_l10n_co_account_trial_balance_per_partner_report_handler
+msgid ""
+"Custom handler for variant trial balance for Colombia 'Trial balance per "
+"partner'"
+msgstr ""
+
+#. module: l10n_co_reports
+#: model:account.report.column,name:l10n_co_reports.l10n_co_reports_trial_balance_per_partner_debit
+msgid "Debit"
+msgstr "Débito"
 
 #. module: l10n_co_reports
 #: model:account.report.line,name:l10n_co_reports.l10n_co_bs_report_ac_debt
@@ -371,11 +382,6 @@ msgstr "Controlador personalizado del reporte fuente"
 #: model:account.report.line,name:l10n_co_reports.l10n_co_pl_account_report_gains_losses
 msgid "Gains and Losses"
 msgstr "Ganancias y pérdidas"
-
-#. module: l10n_co_reports
-#: model:ir.model,name:l10n_co_reports.model_account_general_ledger_report_handler
-msgid "General Ledger Custom Handler"
-msgstr "Controlador personalizado del Libro mayor"
 
 #. module: l10n_co_reports
 #: model:ir.model,name:l10n_co_reports.model_l10n_co_ica_report_handler
@@ -532,12 +538,6 @@ msgstr "Otros pasivos no corrientes"
 #. module: l10n_co_reports
 #. odoo-python
 #: code:addons/l10n_co_reports/models/trial_balance.py:0
-msgid "Partner Name"
-msgstr "Nombre del tercero"
-
-#. module: l10n_co_reports
-#. odoo-python
-#: code:addons/l10n_co_reports/models/trial_balance.py:0
 msgid "Partner VAT"
 msgstr "NIT del tercero"
 
@@ -664,26 +664,19 @@ msgid "Taxes, Levies and Fees"
 msgstr "Impuestos, gravámenes y tasas"
 
 #. module: l10n_co_reports
-#. odoo-python
-#: code:addons/l10n_co_reports/models/general_ledger.py:0
-msgid "Total"
-msgstr "Total"
+#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_trial_balance_per_partner_all
+msgid "Trial Balance"
+msgstr "Balance general"
 
 #. module: l10n_co_reports
-#: model:ir.model,name:l10n_co_reports.model_account_trial_balance_report_handler
-msgid "Trial Balance Custom Handler"
-msgstr "Controlador personalizado del saldo de prueba"
+#: model:account.report,name:l10n_co_reports.l10n_co_reports_trial_balance_per_partner
+msgid "Trial Balance by Partner"
+msgstr "Balance de sumas y saldos por socio"
 
 #. module: l10n_co_reports
 #: model:account.report.line,name:l10n_co_reports.l10n_co_bs_report_valuations
 msgid "Valuations"
 msgstr "Valorizaciones"
-
-#. module: l10n_co_reports
-#. odoo-python
-#: code:addons/l10n_co_reports/models/trial_balance.py:0
-msgid "XLSX (By Partner)"
-msgstr "XLSX (por tercero)"
 
 #. module: l10n_co_reports
 #. odoo-python

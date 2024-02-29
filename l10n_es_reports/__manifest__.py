@@ -38,6 +38,7 @@ Accounting reports for Spain
         'data/mod347.xml',
         'data/mod349.xml',
         'data/mod390.xml',
+        'data/trial_balance.xml',
         'wizard/aeat_boe_export_wizards.xml',
     ],
     'installable': True,

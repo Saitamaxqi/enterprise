@@ -114,27 +114,30 @@
                     </DropdownItem>
                 </t>
 
-                <div class="dropdown-divider"/>
+                <t t-if="!controller.options.comparison.hide_period_order_filter">
 
-                <div class="dropdown-item period order">
-                    <label class="d-flex align-items-center pe-none">
-                        Period order
-                    </label>
+                    <div class="dropdown-divider"/>
 
-                    <div>
-                        <select name="select_order"
-                                class="o_input pe-3"
-                                t-on-change="(ev) => this.filterClicked({ optionKey: 'comparison.period_order', optionValue: ev.target.value, reload: true})">
-                            <option t-foreach="availablePeriodOrder"
-                                    t-as="order"
-                                    t-key="order_index"
-                                    t-att-value="order"
-                                    t-att-selected="availablePeriodOrder[order] === periodOrder"
-                                    t-out="availablePeriodOrder[order]"
-                            />
-                        </select>
+                    <div class="dropdown-item period order">
+                        <label class="d-flex align-items-center pe-none">
+                            Period order
+                        </label>
+
+                        <div>
+                            <select name="select_order"
+                                    class="o_input pe-3"
+                                    t-on-change="(ev) => this.filterClicked({ optionKey: 'comparison.period_order', optionValue: ev.target.value, reload: true})">
+                                <option t-foreach="availablePeriodOrder"
+                                        t-as="order"
+                                        t-key="order_index"
+                                        t-att-value="order"
+                                        t-att-selected="availablePeriodOrder[order] === periodOrder"
+                                        t-out="availablePeriodOrder[order]"
+                                />
+                            </select>
+                        </div>
                     </div>
-                </div>
+                </t>
             </t>
         </Dropdown>
     </t>

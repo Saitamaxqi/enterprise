@@ -1187,13 +1187,6 @@ msgid "Balance"
 msgstr "Soldul"
 
 #. module: l10n_ro_reports
-#. odoo-python
-#: code:addons/l10n_ro_reports/models/trial_balance.py:0
-#, python-format
-msgid "Balance at %s"
-msgstr "Sold la %s"
-
-#. module: l10n_ro_reports
 #: model:account.report.line,name:l10n_ro_reports.account_financial_report_ro_bs_smle_C_12
 msgid "C. PREPAYMENTS | 12"
 msgstr "C. CHELTUIELI ÎN AVANS | 12"
@@ -1245,9 +1238,10 @@ msgid "Commercial discounts granted | 04"
 msgstr "Reduceri comerciale acordate | 04"
 
 #. module: l10n_ro_reports
-#: model:account.report.column,name:l10n_ro_reports.l10n_trial_balance_report_credit
+#: model:account.report.column,name:l10n_ro_reports.l10n_trial_balance_4_column_report_credit
+#: model:account.report.column,name:l10n_ro_reports.l10n_trial_balance_5_column_report_credit
 msgid "Credit"
-msgstr ""
+msgstr "Credit"
 
 #. module: l10n_ro_reports
 #: model:account.report.line,name:l10n_ro_reports.account_financial_report_ro_bs_large_D
@@ -1260,9 +1254,16 @@ msgid "D. LIABILITIES: AMOUNTS TO BE PAID WITHIN A PERIOD OF UP TO ONE YEAR | 15
 msgstr "DATORII: SUMELE CARE TREBUIE PLĂTITE ÎNTR-O PERIOADĂ DE PÂNĂ LA UN AN | 15"
 
 #. module: l10n_ro_reports
-#: model:account.report.column,name:l10n_ro_reports.l10n_trial_balance_report_debit
+#: model:account.report.column,name:l10n_ro_reports.l10n_trial_balance_4_column_report_debit
+#: model:account.report.column,name:l10n_ro_reports.l10n_trial_balance_5_column_report_debit
 msgid "Debit"
-msgstr ""
+msgstr "Debit"
+
+#. module: l10n_ro_reports
+#: model:ir.model.fields,field_description:l10n_ro_reports.field_l10n_ro_trial_balance_4_column_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_ro_reports.field_l10n_ro_trial_balance_5_column_report_handler__display_name
+msgid "Display Name"
+msgstr "Nume Afișat"
 
 #. module: l10n_ro_reports
 #: model:account.report.line,name:l10n_ro_reports.account_financial_report_ro_bs_smle_E_16
@@ -1288,13 +1289,6 @@ msgstr "CAPITALURI - TOTAL | 51"
 #: model:account.report.line,name:l10n_ro_reports.account_financial_report_ro_bs_smle_J_41
 msgid "Earnings related to equity | 41"
 msgstr "Câștiguri legate de instrumentele de capitaluri proprii | 41"
-
-#. module: l10n_ro_reports
-#. odoo-python
-#: code:addons/l10n_ro_reports/models/trial_balance.py:0
-#, python-format
-msgid "End Balance"
-msgstr "Echilibrul final"
 
 #. module: l10n_ro_reports
 #: model:account.report.line,name:l10n_ro_reports.account_financial_report_ro_bs_smle_F_17
@@ -1401,6 +1395,12 @@ msgstr "I. STOCURI"
 #: model:account.report.line,name:l10n_ro_reports.account_financial_report_ro_bs_smle_B_05
 msgid "I. INVENTORIES | 05"
 msgstr "I. STOCURI | 05"
+
+#. module: l10n_ro_reports
+#: model:ir.model.fields,field_description:l10n_ro_reports.field_l10n_ro_trial_balance_4_column_report_handler__id
+#: model:ir.model.fields,field_description:l10n_ro_reports.field_l10n_ro_trial_balance_5_column_report_handler__id
+msgid "ID"
+msgstr "ID"
 
 #. module: l10n_ro_reports
 #: model:account.report.line,name:l10n_ro_reports.account_financial_report_ro_bs_large_B_02
@@ -1638,6 +1638,16 @@ msgid "Public Patrimony | 49"
 msgstr "Patrimoniul public | 49"
 
 #. module: l10n_ro_reports
+#: model:ir.model,name:l10n_ro_reports.model_l10n_ro_trial_balance_4_column_report_handler
+msgid "Romanian Trial Balance Report (4 Columns)"
+msgstr "Raport de balanță de verificare în limba română (4 coloane)"
+
+#. module: l10n_ro_reports
+#: model:ir.model,name:l10n_ro_reports.model_l10n_ro_trial_balance_5_column_report_handler
+msgid "Romanian Trial Balance Report (5 Columns)"
+msgstr "Raport de balanță de verificare în limba română (5 coloane)"
+
+#. module: l10n_ro_reports
 #: model:account.report.line,name:l10n_ro_reports.account_financial_report_ro_pnl_internat_02_06
 #: model:account.report.line,name:l10n_ro_reports.account_financial_report_ro_pnl_smle_02_06
 msgid "SOLDE C | 06"
@@ -1822,6 +1832,12 @@ msgid "TOTAL | 97"
 msgstr ""
 
 #. module: l10n_ro_reports
+#. odoo-python
+#: code:addons/l10n_ro_reports/models/trial_balance.py:0
+msgid "Total Amount"
+msgstr "Suma totală"
+
+#. module: l10n_ro_reports
 #: model:account.report.line,name:l10n_ro_reports.account_financial_report_ro_pnl_smle_08_20
 msgid "Trade discounts received | 20"
 msgstr "Reduceri comerciale primite | 20"
@@ -1832,9 +1848,14 @@ msgid "Trade discounts received | 24"
 msgstr "Reduceri comerciale primite | 24"
 
 #. module: l10n_ro_reports
-#: model:account.report,name:l10n_ro_reports.l10n_ro_trial_balance
-msgid "Trial Balance"
-msgstr "Balanța de verificare"
+#: model:account.report,name:l10n_ro_reports.l10n_ro_trial_balance_4_column
+msgid "Trial Balance (4 columns)"
+msgstr "Balanța de verificare (4 coloane)"
+
+#. module: l10n_ro_reports
+#: model:account.report,name:l10n_ro_reports.l10n_ro_trial_balance_5_column
+msgid "Trial Balance (5 columns)"
+msgstr "Balanța de verificare (5 coloane)"
 
 #. module: l10n_ro_reports
 #: model:account.report.line,name:l10n_ro_reports.account_financial_report_ro_bs_large_A_05
@@ -1955,8 +1976,3 @@ msgstr "c) Cheltuieli privind mărfurile | 19"
 #: model:account.report.line,name:l10n_ro_reports.account_financial_report_ro_pnl_internat_10_23
 msgid "c) Expenditure on goods | 23"
 msgstr "c) Cheltuieli privind mărfurile | 23"
-
-#. module: l10n_ro_reports
-#: model:ir.model,name:l10n_ro_reports.model_l10n_ro_trial_balance_report_handler
-msgid "l10n.ro.trial.balance.report.handler"
-msgstr ""

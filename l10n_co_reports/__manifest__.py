@@ -26,6 +26,7 @@ Accounting reports for Colombia
         'data/l10n_co_reports_fuente.xml',
         'data/profit_loss_pymes.xml',
         'data/balance_sheet_pymes.xml',
+        'data/trial_balance_per_partner.xml',
         'wizard/retention_report_views.xml',
         'report/certification_report_templates.xml',
     ],

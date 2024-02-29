@@ -137,6 +137,7 @@ class TestL10nMXTrialBalanceReportCommon(TestMxEdiCommon, TestAccountReportsComm
         (cls.extra_deep_code_move + cls.dotted_name_move).action_post()
 
         cls.report = cls.env.ref('account_reports.trial_balance_report')
+        cls.company_data['company'].totals_below_sections = False
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
@@ -313,15 +314,16 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
         options = self._generate_options(self.report, '2021-01-01', '2021-12-31', {'hierarchy': False, 'unfold_all': True})
         self.assertLinesValues(
             self.report._get_lines(options),
-            [   0,                                                            1,         2,         3,       4,        5,         6],
+            #   Name                                                 Initial Balance     Debit    Credit     End Balance
+            [0,                                                                  1,         2,        3,         4],
             [
-                ('201.01.01 National suppliers',                              1000.0,       0.0,     75.0,     0.0,    1075.0,       0.0),
-                ('205.06.01.001 Extra deep code',                                0.0,       0.0,     50.0,   400.0,       0.0,     350.0),
-                ('205.06.02 Dotted name C.V.',                                   0.0,       0.0,    400.0,    50.0,     350.0,       0.0),
-                ('401.01.01 Sales and/or services taxed at the general rate',    0.0,       0.0,      0.0,   325.0,       0.0,     325.0),
-                ('601.84.01 Other overheads',                                    0.0,       0.0,    250.0,     0.0,     250.0,       0.0),
-                ('999999 Undistributed Profits/Losses',                          0.0,    1000.0,      0.0,     0.0,       0.0,    1000.0),
-                ('Total',                                                     1000.0,    1000.0,    775.0,   775.0,    1675.0,    1675.0),
+                ('201.01.01 National suppliers',                              1000.0,      75.0,     0.0,    1075.0),
+                ('205.06.01.001 Extra deep code',                                0.0,      50.0,   400.0,    -350.0),
+                ('205.06.02 Dotted name C.V.',                                   0.0,     400.0,    50.0,     350.0),
+                ('401.01.01 Sales and/or services taxed at the general rate',    0.0,       0.0,   325.0,    -325.0),
+                ('601.84.01 Other overheads',                                    0.0,     250.0,     0.0,     250.0),
+                ('999999 Undistributed Profits/Losses',                      -1000.0,       0.0,     0.0,   -1000.0),
+                ('Total',                                                        0.0,     775.0,   775.0,       0.0),
             ],
             options,
         )
@@ -330,27 +332,28 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
         options['hierarchy'] = True
         self.assertLinesValues(
             self.report._get_lines(options),
-            [   0,                                                            1,         2,         3,       4,        5,         6],
+            #   Name                                                 Initial Balance     Debit    Credit     End Balance
+            [0,                                                                  1,         2,        3,         4],
             [
-                ('2 Passive',                                                 1000.0,       0.0,    525.0,   450.0,    1425.0,      350.0),
-                ('201 Suppliers',                                             1000.0,       0.0,     75.0,     0.0,    1075.0,        0.0),
-                ('201.01 National suppliers',                                 1000.0,       0.0,     75.0,     0.0,    1075.0,        0.0),
-                ('201.01.01 National suppliers',                              1000.0,       0.0,     75.0,     0.0,    1075.0,        0.0),
-                ('205 Short-term sundry creditors',                              0.0,       0.0,    450.0,   450.0,     350.0,      350.0),
-                ('205.06 Other short-term sundry creditors',                     0.0,       0.0,    450.0,   450.0,     350.0,      350.0),
-                ('205.06.01.001 Extra deep code',                                0.0,       0.0,     50.0,   400.0,       0.0,      350.0),
-                ('205.06.02 Dotted name C.V.',                                   0.0,       0.0,    400.0,    50.0,     350.0,        0.0),
-                ('4 Income',                                                     0.0,       0.0,      0.0,   325.0,       0.0,      325.0),
-                ('401 Income',                                                   0.0,       0.0,      0.0,   325.0,       0.0,      325.0),
-                ('401.01 Sales and/or services taxed at the general rate',       0.0,       0.0,      0.0,   325.0,       0.0,      325.0),
-                ('401.01.01 Sales and/or services taxed at the general rate',    0.0,       0.0,      0.0,   325.0,       0.0,      325.0),
-                ('6 Expenditure',                                                0.0,       0.0,    250.0,     0.0,     250.0,        0.0),
-                ('601 Overheads',                                                0.0,       0.0,    250.0,     0.0,     250.0,        0.0),
-                ('601.84 Other overheads',                                       0.0,       0.0,    250.0,     0.0,     250.0,        0.0),
-                ('601.84.01 Other overheads',                                    0.0,       0.0,    250.0,     0.0,     250.0,        0.0),
-                ('(No Group)',                                                   0.0,    1000.0,      0.0,     0.0,       0.0,     1000.0),
-                ('999999 Undistributed Profits/Losses',                          0.0,    1000.0,      0.0,     0.0,       0.0,     1000.0),
-                ('Total',                                                     1000.0,    1000.0,    775.0,   775.0,    1675.0,    1675.0),
+                ('2 Passive',                                                 1000.0,     525.0,   450.0,    1075.0),
+                ('201 Suppliers',                                             1000.0,      75.0,     0.0,    1075.0),
+                ('201.01 National suppliers',                                 1000.0,      75.0,     0.0,    1075.0),
+                ('201.01.01 National suppliers',                              1000.0,      75.0,     0.0,    1075.0),
+                ('205 Short-term sundry creditors',                              0.0,     450.0,   450.0,       0.0),
+                ('205.06 Other short-term sundry creditors',                     0.0,     450.0,   450.0,       0.0),
+                ('205.06.01.001 Extra deep code',                                0.0,      50.0,   400.0,    -350.0),
+                ('205.06.02 Dotted name C.V.',                                   0.0,     400.0,    50.0,     350.0),
+                ('4 Income',                                                     0.0,       0.0,   325.0,    -325.0),
+                ('401 Income',                                                   0.0,       0.0,   325.0,    -325.0),
+                ('401.01 Sales and/or services taxed at the general rate',       0.0,       0.0,   325.0,    -325.0),
+                ('401.01.01 Sales and/or services taxed at the general rate',    0.0,       0.0,   325.0,    -325.0),
+                ('6 Expenditure',                                                0.0,     250.0,     0.0,     250.0),
+                ('601 Overheads',                                                0.0,     250.0,     0.0,     250.0),
+                ('601.84 Other overheads',                                       0.0,     250.0,     0.0,     250.0),
+                ('601.84.01 Other overheads',                                    0.0,     250.0,     0.0,     250.0),
+                ('(No Group)',                                               -1000.0,       0.0,     0.0,   -1000.0),
+                ('999999 Undistributed Profits/Losses',                      -1000.0,       0.0,     0.0,   -1000.0),
+                ('Total',                                                        0.0,     775.0,   775.0,       0.0),
             ],
             options,
         )

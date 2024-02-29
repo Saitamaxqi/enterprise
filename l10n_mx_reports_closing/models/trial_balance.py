@@ -41,7 +41,7 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
 
         # Retrieve the options dictionaries corresponding to each column group.
         initial_col_group_key = options['columns'][0]['column_group_key']
-        current_col_group_key = options['columns'][2]['column_group_key']
+        current_col_group_key = options['columns'][1]['column_group_key']
 
         initial_col_group_data = options['column_groups'][initial_col_group_key]
         current_col_group_data = options['column_groups'][current_col_group_key]

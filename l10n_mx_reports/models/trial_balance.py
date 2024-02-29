@@ -54,6 +54,10 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         return tree
 
     def _l10n_mx_get_sat_values(self, options):
+        def get_column(column_type, external_label):
+            col_group_key = next(group for group, group_vals in options['column_groups'].items() if group_vals['forced_options']['trial_balance_column_type'] == column_type)
+            return next(col for col in cols if col['column_group_key'] == col_group_key and col['expression_label'] == external_label)
+
         report = self.env['account.report'].browse(options['report_id'])
         sat_options = self._l10n_mx_get_sat_options(options)
         report_lines = report._get_lines(sat_options)
@@ -64,19 +68,19 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
 
         account_lines = []
         parents = defaultdict(lambda: defaultdict(int))
-        for line in [line for line in report_lines if line.get('level') == 4]:
-            dummy, res_id = report._get_model_info_from_id(line['id'])
-            account = self.env['account.account'].browse(res_id)
+        for line in report_lines:
+            account_id = report._get_res_id_from_line_id(line['id'], 'account.account')
+            account = self.env['account.account'].browse(account_id)
+            if not account_id or account.account_type == 'equity_unaffected':
+                continue
+
             is_credit_account = any([account.account_type.startswith(acc_type) for acc_type in ['liability', 'equity', 'income']])
             balance_sign = -1 if is_credit_account else 1
             cols = line.get('columns', [])
-            # Initial Debit - Initial Credit = Initial Balance
-            initial = balance_sign * (cols[0].get('no_format', 0.0) - cols[1].get('no_format', 0.0))
-            # Debit and Credit of the selected period
-            debit = cols[2].get('no_format', 0.0)
-            credit = cols[3].get('no_format', 0.0)
-            # End Debit - End Credit = End Balance
-            end = balance_sign * (cols[4].get('no_format', 0.0) - cols[5].get('no_format', 0.0))
+            initial = balance_sign * (get_column('initial_balance', 'balance').get('no_format', 0.0))
+            debit = get_column('period', 'debit').get('no_format', 0.0)
+            credit = get_column('period', 'credit').get('no_format', 0.0)
+            end = balance_sign * (get_column('end_balance', 'balance').get('no_format', 0.0))
             pid_match = sat_code.match(line['name'])
             if not pid_match:
                 raise UserError(_("Invalid SAT code: %s", line['name']))

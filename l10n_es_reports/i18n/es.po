@@ -850,6 +850,7 @@ msgstr "Creado el"
 #. module: l10n_es_reports
 #. odoo-python
 #: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+#: model:account.report.column,name:l10n_es_reports.l10n_es_reports_trial_balance_credit
 msgid "Credit"
 msgstr "Crédito"
 
@@ -908,6 +909,7 @@ msgstr "Fecha"
 #. module: l10n_es_reports
 #. odoo-python
 #: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+#: model:account.report.column,name:l10n_es_reports.l10n_es_reports_trial_balance_debit
 msgid "Debit"
 msgstr "Débito"
 
@@ -1657,6 +1659,11 @@ msgid "Perceived Amount"
 msgstr "Importe percibido"
 
 #. module: l10n_es_reports
+#: model:account.report.column,name:l10n_es_reports.l10n_es_reports_trial_balance_balance
+msgid "Period Total"
+msgstr "Período Total"
+
+#. module: l10n_es_reports
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__contact_person_phone
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__contact_person_phone
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod349_export_wizard__contact_person_phone
@@ -2020,6 +2027,16 @@ msgstr "Número total de operadores intracomunitarios con rectificaciones"
 #: model:account.report.line,name:l10n_es_reports.mod_347_statistics_operations_count
 msgid "Total number of persons and entities"
 msgstr "Número total de personas y entitades"
+
+#. module: l10n_es_reports
+#: model:account.report.line,name:l10n_es_reports.l10n_es_reports_trial_balance_all
+msgid "Trial Balance"
+msgstr "Balance general"
+
+#. module: l10n_es_reports
+#: model:account.report,name:l10n_es_reports.l10n_es_reports_trial_balance
+msgid "Trial Balance with Period Balance"
+msgstr "Balance de Sumas y Saldos"
 
 #. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod349_export_wizard__trimester_2months_report

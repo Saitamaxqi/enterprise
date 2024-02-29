@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import json
+import datetime
+import contextlib
 
 from odoo import api, models, _, fields
-from odoo.tools import float_compare
-from odoo.tools.misc import DEFAULT_SERVER_DATE_FORMAT
-
-
-TRIAL_BALANCE_END_COLUMN_GROUP_KEY = '_trial_balance_end_column_group'
+from odoo.tools import SQL, groupby, frozendict
 
 
 class AccountTrialBalanceReportHandler(models.AbstractModel):
@@ -14,201 +13,565 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
     _inherit = ['account.report.custom.handler']
     _description = 'Trial Balance Custom Handler'
 
-    def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
-        def _update_column(line, column_key, new_value):
-            line['columns'][column_key]['no_format'] = new_value
-            line['columns'][column_key]['is_zero'] = self.env.company.currency_id.is_zero(new_value)
+    ############################
+    #  OPTIONS INITIALIZATION  #
+    ############################
 
-        def _update_balance_columns(line, debit_column_key, credit_column_key):
-            debit_value = line['columns'][debit_column_key]['no_format'] if debit_column_key is not None else False
-            credit_value = line['columns'][credit_column_key]['no_format'] if credit_column_key is not None else False
+    def _custom_options_initializer(self, report, options, previous_options):
+        super()._custom_options_initializer(report, options, previous_options=previous_options)
 
-            if debit_value and credit_value:
-                new_debit_value = 0.0
-                new_credit_value = 0.0
+        if options.get('comparison'):
+            options['comparison']['period_order'] = 'ascending'  # Make comparisons ascending (always)
+            options['comparison']['hide_period_order_filter'] = True
 
-                if self.env.company.currency_id.compare_amounts(debit_value, credit_value) == 1:
-                    new_debit_value = debit_value - credit_value
-                else:
-                    new_credit_value = (debit_value - credit_value) * -1
+        # Modify column headers and group structure
+        column_headers, column_groups, columns = self._get_column_values(report, options)
 
-                _update_column(line, debit_column_key, new_debit_value)
-                _update_column(line, credit_column_key, new_credit_value)
+        options['column_headers'][0] = column_headers
+        options['column_groups'].update(column_groups)
+        options['columns'] = columns
 
-        lines = [line[1] for line in self.env['account.general.ledger.report.handler']._dynamic_lines_generator(report, options, all_column_groups_expression_totals, warnings=warnings)]
+        # CTA
+        for group_vals in options['column_groups'].values():
+            group_vals['forced_options']['date']['currency_table_period_key'] = '_trial_balance_middle_periods'
+            if group_vals['forced_options']['trial_balance_column_type'] in ('initial_balance', 'end_balance'):
+                group_vals['forced_options']['no_impact_on_currency_table'] = True
 
-        # We need to find the index of debit and credit columns for initial and end balance in case of extra custom columns
-        init_balance_debit_index = next((index for index, column in enumerate(options['columns']) if column.get('expression_label') == 'debit'), None)
-        init_balance_credit_index = next((index for index, column in enumerate(options['columns']) if column.get('expression_label') == 'credit'), None)
+    def _get_column_values(self, report, options):
+        """
+        Generate and process column values for the trial balance report.
+        Returns modified column headers, column groups, and columns.
+        """
+        headers = []
+        groups = {}
+        columns = []
 
-        end_balance_debit_index = next((index for index, column in enumerate(options['columns']) if column.get('expression_label') == 'debit' and column.get('column_group_key') == TRIAL_BALANCE_END_COLUMN_GROUP_KEY), None)
-        end_balance_credit_index = next((index for index, column in enumerate(options['columns']) if column.get('expression_label') == 'credit' and column.get('column_group_key') == TRIAL_BALANCE_END_COLUMN_GROUP_KEY), None)
+        original_headers = options['column_headers'][0]
+        original_columns = options['columns']
 
-        currency = self.env.company.currency_id
-        for line in lines[:-1]:
-            # Initial balance
-            _update_balance_columns(line, init_balance_debit_index, init_balance_credit_index)
+        initial_date_from = fields.Date.to_date(
+            options['column_groups'][original_columns[0]['column_group_key']]['forced_options']['date']['date_from']
+        )
+        previous_fiscal_year = self.env.company.compute_fiscalyear_dates(initial_date_from)
+        block_id = 0
 
-            # End balance: sum all the previous columns for both debit and credit
-            if end_balance_debit_index is not None:
-                end_balance_debit_sum = sum(
-                    currency.round(column['no_format'])
-                    for index, column in enumerate(line['columns'])
-                    if column.get('expression_label') == 'debit' and index != end_balance_debit_index and column['no_format'] is not None
-                )
-                _update_column(line, end_balance_debit_index, end_balance_debit_sum)
+        # Add initial balance column
+        initial_date_to = initial_date_from - datetime.timedelta(days=1)
+        headers, groups, columns = self._add_initial_column(
+            report, options, headers, groups, columns, initial_date_to, block_id, previous_fiscal_year['date_from']
+        )
 
-            if end_balance_credit_index is not None:
-                end_balance_credit_sum = sum(
-                    currency.round(column['no_format'])
-                    for index, column in enumerate(line['columns'])
-                    if column.get('expression_label') == 'credit' and index != end_balance_credit_index and column['no_format'] is not None
-                )
-                _update_column(line, end_balance_credit_index, end_balance_credit_sum)
+        last_column = {}
+        nb_columns_per_header = len(original_columns) / len(original_headers)
+        col_number_in_block = 0
+        fiscal_year = {}
 
-            _update_balance_columns(line, end_balance_debit_index, end_balance_credit_index)
+        for column in original_columns:
+            column_group_values = options['column_groups'][column['column_group_key']]
+            fiscal_year = self.env.company.compute_fiscalyear_dates(
+                fields.Date.to_date(column_group_values['forced_options']['date']['date_from'])
+            )
 
-            line.pop('expand_function', None)
-            line.pop('groupby', None)
-            line.update({
-                'unfoldable': False,
-                'unfolded': False,
-            })
+            # Check for fiscal year change
+            if fiscal_year != previous_fiscal_year:
+                headers, groups, columns = self._add_end_column(report, options, headers, groups, columns, last_column, block_id, previous_fiscal_year)
 
-            res_model = report._get_model_info_from_id(line['id'])[0]
-            if res_model == 'account.account':
-                line['caret_options'] = 'trial_balance'
+                block_id += 1
+                initial_date_to = fields.Date.to_date(column_group_values['forced_options']['date']['date_from']) - datetime.timedelta(days=1)
+                headers, groups, columns = self._add_initial_column(report, options, headers, groups, columns, initial_date_to, block_id, fiscal_year['date_from'])
+                previous_fiscal_year = fiscal_year
 
-        # Total line
-        if lines:
-            total_line = lines[-1]
+            # Update column group
+            if column['column_group_key'] != last_column.get('column_group_key'):
+                column_group_values['forced_options'].update({
+                    'trial_balance_column_block_id': str(block_id),
+                    'trial_balance_column_type': 'period',
+                    'trial_balance_block_fiscalyear_start': fields.Date.to_string(fiscal_year['date_from'])
+                })
 
-            for index in (init_balance_debit_index, init_balance_credit_index, end_balance_debit_index, end_balance_credit_index):
-                if index is not None:
-                    total_line['columns'][index]['no_format'] = sum(currency.round(line['columns'][index]['no_format']) for line in lines[:-1] if report._get_model_info_from_id(line['id'])[0] == 'account.account')
+            # Handle column headers
+            col_number_in_block += 1
+            if col_number_in_block % nb_columns_per_header == 0:
+                headers.append(original_headers.pop(0))
 
-        return [(0, line) for line in lines]
+            columns.append(column)
+            last_column = column
+
+        headers, groups, columns = self._add_end_column(report, options, headers, groups, columns, last_column, block_id, fiscal_year)
+
+        return headers, groups, columns
+
+    def _add_initial_column(self, report, options, headers, groups, columns, date_to, block_id, fiscal_year_start):
+        initial_dates = report._get_dates_period(date_from=None, date_to=date_to, mode='single')
+        header, group, col = self._create_column(report, options, _("Initial Balance"), initial_dates, block_id, fiscal_year_start, 'initial_balance')
+        headers.append(header)
+        groups.update(group)
+        columns.extend(col)
+        return headers, groups, columns
+
+    def _add_end_column(self, report, options, headers, groups, columns, last_column, block_id, fiscal_year):
+        last_group = options['column_groups'][last_column['column_group_key']]
+        end_dates = report._get_dates_period(
+            date_from=fields.Date.to_date(last_group['forced_options']['date']['date_from']),
+            date_to=fields.Date.to_date(last_group['forced_options']['date']['date_to']),
+            mode='range'
+        )
+        header, group, col = self._create_column(report, options, _("End Balance"), end_dates, block_id, fiscal_year['date_from'], 'end_balance')
+        headers.append(header)
+        groups.update(group)
+        columns.extend(col)
+        return headers, groups, columns
+
+    def _create_column(self, report, options, header_name, period_dates, block_id, fiscal_year_start, column_type):
+        header, group, cols = self._generate_column_group(
+            report, options,
+            new_header_name=header_name,
+            new_values={
+                'forced_options': {
+                    'date': period_dates,
+                    'trial_balance_column_block_id': str(block_id),
+                    'trial_balance_column_type': column_type,
+                    'trial_balance_block_fiscalyear_start': fields.Date.to_string(fiscal_year_start),
+                },
+            },
+            create_single_column=self._display_single_column_for_initial_and_end_sections(options),
+        )
+        return header, group, cols
+
+    @api.model
+    def _display_single_column_for_initial_and_end_sections(self, options):
+        # Decide whether we want our Initial Balance and End Balance column groups to have a single 'Balance' column.
+        # If there is more than one header level, the front-end can't handle different number of columns depending
+        # on the column header, so we need to use 'debit' and 'credit' columns rather than a 'balance' column.
+        create_single_column = len(options['column_headers']) == 1
+        return create_single_column
+
+    def _generate_column_group(self, report, options, new_header_name, new_values, create_single_column=True):
+        """ Generate column header, column group and columns values for a new column group.
+
+            This is used to insert Initial Balance and End Balance columns before / after
+            the period columns.
+
+            If `create_single_column` is True, we will create a single 'Balance' column instead
+            a column per report column.
+        """
+        default_group_vals = {'horizontal_groupby_element': {}, 'forced_options': {}, **new_values}
+
+        new_column_header_element = {'name': new_header_name, 'forced_options': {}, **new_values}
+
+        if create_single_column:
+            new_column_header_element['colspan'] = 1
+
+        column_headers = [
+            [new_column_header_element],
+            *options['column_headers'][1:],
+        ]
+        new_column_group_vals = report._generate_columns_group_vals_recursively(column_headers, default_group_vals)
+        new_columns, new_column_groups = report._build_columns_from_column_group_vals(new_values['forced_options'], new_column_group_vals)
+
+        if create_single_column:
+            # _build_columns_from_column_group_vals creates a column group with all the columns defined in the report.
+            # But we'd like to have just one 'Balance' column, so we edit columns here.
+            column_name = _("Balance")
+            new_columns = [
+                {
+                    **new_column,
+                    'name': column_name,
+                    'expression_label': 'balance',
+                }
+                for new_column in new_columns
+                if new_column['expression_label'] == 'debit'
+            ]
+
+        return new_column_header_element, new_column_groups, new_columns
 
     def _caret_options_initializer(self):
         return {
-            'trial_balance': [
+            'account.account': [
                 {'name': _("General Ledger"), 'action': 'caret_option_open_general_ledger'},
                 {'name': _("Journal Items"), 'action': 'open_journal_items'},
             ],
         }
 
-    def _get_column_group_creation_data(self, report, options, previous_options=None):
+    ###################
+    #  REPORT ENGINE  #
+    ###################
+
+    def _report_custom_engine_trial_balance(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        """ The custom engine for the Trial Balance.
+
+            Return a list of lines with keys {'balance', 'debit', 'credit'} that are the aggregation
+            of the journal items specified by the options' domain and dates.
+
+            When 'account_or_unaff_id' is in the groupby or in the forced_domain, use the options key
+            'trial_balance_block_fiscalyear_start' as a cutoff date before which journal items
+            in profit and loss accounts are attributed to the unaffected earnings account.
         """
-        Return tuple of tuples containing a reference to the column_group creation function and on which side ('left' | 'right') of the report the column_group goes
-        """
-        return (
-            (self._create_column_group_initial_balance, 'left'),
-            (self._create_column_group_end_balance, 'right'),
+        report = self.env['account.report'].browse(options['report_id'])
+
+        # This is because we want to pass a list of fields via the 'current_groupby' argument when calling this method
+        # from the _custom_unfold_all_batch_data_generator.
+        current_groupbys = [current_groupby] if current_groupby and not isinstance(current_groupby, list) else current_groupby or []
+        report._check_groupby_fields(current_groupbys)
+
+        # Never expand individual AMLs if we are in the Initial Balance.
+        if 'id' in current_groupbys and options['trial_balance_column_type'] == 'initial_balance':
+            return []
+
+        extra_domain = []
+        # Because `_expand_groupby` adds a forced_domain on 'account_id', when coming from it we need to manually add
+        # a domain to restrict income and expense accounts to the current fiscal year.
+        # We know we need to do this if we are grouping by a grouping key that does not include 'account_or_unaff_id'.
+        if current_groupbys and 'account_or_unaff_id' not in current_groupbys and (fiscalyear_start := options.get('trial_balance_block_fiscalyear_start')):
+            extra_domain = [
+                '|',
+                ('account_id.include_initial_balance', '=', True),
+                ('date', '>', fiscalyear_start),
+            ]
+
+        next_groupbys = next_groupby.split(',') if next_groupby else []
+        query = report._get_report_query(options, date_scope, domain=extra_domain)
+
+        if next_groupbys:
+            next_groupby_expression = self._get_sql_expression_for_field(options, query, next_groupbys[0])
+        else:
+            next_groupby_expression = SQL.identifier('account_move_line', 'id')
+
+        select_grouping_key = SQL()
+        if current_groupbys:
+            select_grouping_key = SQL(
+                "(%s) AS grouping_key,",
+                SQL(',').join(self._get_sql_expression_for_field(options, query, groupby_key) for groupby_key in current_groupbys),
+            )
+            query.groupby = SQL("grouping_key")
+
+        fiscalyear_start = options.get('trial_balance_block_fiscalyear_start')
+
+        is_unaffected_earnings = SQL(
+            """ BOOL_AND(%(account_type)s ILIKE ANY(ARRAY[%(income_pattern)s, %(expense_pattern)s]) AND account_move_line.date < %(fiscalyear_start)s OR %(account_type)s = 'equity_unaffected')
+            """,
+            account_type=SQL.identifier('account_move_line__account_id', 'account_type'),
+            income_pattern=r'income%',
+            expense_pattern=r'expense%',
+            fiscalyear_start=fiscalyear_start,
         )
 
-    @api.model
-    def _create_and_append_column_group(self, report, options, header_name, forced_options, side_to_append, group_vals, exclude_initial_balance=False, append_col_groups=True):
-        header_element = [{'name': header_name, 'forced_options': forced_options}]
-        column_headers = [header_element, *options['column_headers'][1:]]
-        column_group_vals = report._generate_columns_group_vals_recursively(column_headers, group_vals)
+        sql_query = SQL(
+            """
+            SELECT
+                %(select_grouping_key)s
+                COALESCE(SUM(%(select_balance)s), 0.0) AS balance,
+                COALESCE(SUM(%(select_debit)s), 0.0) AS debit,
+                COALESCE(SUM(%(select_credit)s), 0.0) AS credit,
+                %(is_unaffected_earnings)s AS is_unaffected_earnings
+            FROM %(table_references)s
+            %(currency_table_join)s
+            WHERE %(search_condition)s
+            %(groupby_clause)s
+            """,
+            select_grouping_key=select_grouping_key,
+            select_balance=report._currency_table_apply_rate(SQL("account_move_line.balance")),
+            select_debit=report._currency_table_apply_rate(SQL("account_move_line.debit")),
+            select_credit=report._currency_table_apply_rate(SQL("account_move_line.credit")),
+            next_groupby_expression=next_groupby_expression,
+            is_unaffected_earnings=is_unaffected_earnings,
+            table_references=query.from_clause,
+            currency_table_join=report._currency_table_aml_join(options),
+            search_condition=query.where_clause,
+            groupby_clause=SQL("GROUP BY %s", query.groupby) if query.groupby else SQL(),
+        )
 
-        if exclude_initial_balance:
-            # This column group must not include initial balance; we use a special option key for that in general ledger
-            for column_group in column_group_vals:
-                column_group['forced_options']['general_ledger_strict_range'] = True
+        self.env.cr.execute(sql_query)
+        query_results = self._cr.dictfetchall()
 
-        columns, column_groups = report._build_columns_from_column_group_vals(forced_options, column_group_vals)
+        # Don't expand individual AMLs in the Initial Balance
+        disable_expand = bool((not next_groupby or next_groupbys[0] == 'id') and options['trial_balance_column_type'] == 'initial_balance')
 
-        side_to_append['column_headers'] += header_element
-        if append_col_groups:
-            side_to_append['column_groups'] |= column_groups
-        side_to_append['columns'] += columns
+        if not current_groupbys:
+            if not query_results:
+                return {
+                    'balance': 0.0,
+                    'debit': 0.0,
+                    'credit': 0.0,
+                    'has_sublines': False,
+                }
 
-    def _custom_options_initializer(self, report, options, previous_options):
-        """ Modifies the provided options to add a column group for initial balance and end balance, as well as the appropriate columns.
-        """
-        default_group_vals = {'horizontal_groupby_element': {}, 'forced_options': {}}
-        left_side = {'column_headers': [], 'column_groups': {}, 'columns': []}
-        right_side = {'column_headers': [], 'column_groups': {}, 'columns': []}
+            query_result = query_results[0]
+            query_result['has_sublines'] = True
+            return query_result
 
-        # Columns between initial and end balance must not include initial balance; we use a special option key for that in general ledger
-        for column_group in options['column_groups'].values():
-            column_group['forced_options']['general_ledger_strict_range'] = True
+        return [
+            (query_result['grouping_key'], {**query_result, 'has_sublines': not disable_expand and not query_result['is_unaffected_earnings']})
+            for query_result in query_results
+        ]
 
-        if options.get('comparison') and not options['comparison'].get('periods'):
-            options['comparison']['period_order'] = 'ascending'
+    def _get_sql_expression_for_field(self, options, query, field):
+        """ Get an SQL expression for the given field on account.move.line. """
+        if field == 'account_or_unaff_id':
+            if fiscalyear_start := options.get('trial_balance_block_fiscalyear_start'):
+                unaffected_earnings_accounts_per_company = self._get_unaffected_earnings_accounts_per_company(options)
 
-        # Create column groups
-        for function, side in self._get_column_group_creation_data(report, options, previous_options):
-            function(report, options, previous_options, default_group_vals, left_side if side == 'left' else right_side)
+                if 'account_move_line__account_id' not in query._joins:
+                    account_alias = query.join("account_move_line", "account_id", "account_account", "id", "account_id")
+                else:
+                    account_alias = 'account_move_line__account_id'
 
-        # Update options
-        options['column_headers'][0] = left_side['column_headers'] + options['column_headers'][0] + right_side['column_headers']
-        options['column_groups'].update(left_side['column_groups'])
-        options['column_groups'].update(right_side['column_groups'])
-        options['columns'] = left_side['columns'] + options['columns'] + right_side['columns']
-        options['ignore_totals_below_sections'] = True  # So that GL does not compute them
+                account_or_unaff_id_expression = SQL(
+                    """ CASE
+                            WHEN %(account_type)s ILIKE ANY(ARRAY[%(income_pattern)s, %(expense_pattern)s])
+                                AND account_move_line.date < %(fiscalyear_start)s
+                            THEN (
+                                    %(unaffected_earnings_accounts_per_company)s::jsonb
+                                    ->>(account_move_line.company_id::text)
+                            )::int
+                            ELSE account_move_line.account_id
+                        END
+                    """,
+                    account_type=SQL.identifier(account_alias, 'account_type'),
+                    income_pattern=r'income%',
+                    expense_pattern=r'expense%',
+                    fiscalyear_start=fiscalyear_start,
+                    unaffected_earnings_accounts_per_company=json.dumps(unaffected_earnings_accounts_per_company)
+                )
+                return account_or_unaff_id_expression
 
-        # All the periods displayed between initial and end balance need to use the same rates, so we manually change the period key.
-        # account.report will then compute the currency table periods accordingly
-        middle_periods_period_key = '_trial_balance_middle_periods'
-        for col_group in options['column_groups'].values():
-            col_group_date = col_group['forced_options'].get('date')
-            if col_group_date:
-                col_group_date['currency_table_period_key'] = middle_periods_period_key
+            else:
+                field = 'account_id'
 
-        report._init_options_order_column(options, previous_options)
+        return SQL.identifier('account_move_line', field)
+
+    def _get_unaffected_earnings_accounts_per_company(self, options):
+        """ Return the unaffected earnings accounts for the report's companies. """
+        unaffected_earnings_accounts = self.env['account.account'].read_group(
+            domain=[
+                *self.env['account.account']._check_company_domain(self.env['account.report'].get_report_company_ids(options)),
+                ('account_type', '=', 'equity_unaffected'),
+            ],
+            fields=['id:recordset'],
+            groupby=['company_ids'],
+        )
+        return {
+            account['company_ids'][0]: account['id'].id
+            for account in unaffected_earnings_accounts
+        }
+
+    def _get_custom_groupby_map(self):
+        return {
+            'account_or_unaff_id': {
+                'model': 'account.account',
+                'domain_builder': lambda account_or_unaff_id: [('account_id', '=', account_or_unaff_id)],
+            }
+        }
 
     def _custom_line_postprocessor(self, report, options, lines):
-        # If the hierarchy is enabled, ensure to add the o_account_coa_column_contrast class to the hierarchy lines
-        if options.get('hierarchy'):
-            for line in lines:
-                model, dummy = report._get_model_info_from_id(line['id'])
-                if model == 'account.group':
-                    line_classes = line.get('class', '')
-                    line['class'] = line_classes + ' o_account_coa_column_contrast_hierarchy'
+        """ Compute the end balance for each column block and each horizontal group,
+            based on the initial balance and the period debits and credits in the same
+            column block and horizontal group.
+            Any value that was already in the end_balance column is ignored.
+        """
+        def get_block_and_group_key(column):
+            column_group = options['column_groups'][column['column_group_key']]
+            block_id = column_group['forced_options'].get('trial_balance_column_block_id')
+            horizontal_group = frozendict(column_group.get('horizontal_groupby_element', {}))
+            return block_id, horizontal_group
+
+        for line in lines:
+
+            # Group by column block ID and horizontal groupby element to sum up end balance
+            grouped_by_block = groupby(line['columns'], key=get_block_and_group_key)
+
+            for _grouping_key, columns_in_block in grouped_by_block:
+                columns_grouped_by_type = dict(groupby(
+                    columns_in_block,
+                    lambda column: options['column_groups'][column['column_group_key']]['forced_options'].get('trial_balance_column_type')
+                ))
+
+                # We do a separate sum for debits and credits since we need to handle both the case where
+                # there is a single Balance column (if there is no horizontal groupby) or separate Debit and
+                # Credit columns in the initial balance and end balance (if there is a horizontal groupby)
+                sum_debit = sum_credit = 0.0
+                for col in columns_grouped_by_type['initial_balance'] + columns_grouped_by_type['period']:
+                    if not col['is_zero']:
+                        if col['expression_label'] == 'debit' or (col['expression_label'] == 'balance' and col in columns_grouped_by_type['initial_balance']):
+                            sum_debit += col['no_format']
+                        elif col['expression_label'] == 'credit':
+                            sum_credit += col['no_format']
+
+                for end_balance_col in columns_grouped_by_type.get('end_balance', []):
+                    match end_balance_col['expression_label']:
+                        case 'debit':
+                            end_balance_col['no_format'] = sum_debit
+                            end_balance_col['is_zero'] = not bool(sum_debit)
+                        case 'credit':
+                            end_balance_col['no_format'] = sum_credit
+                            end_balance_col['is_zero'] = not bool(sum_credit)
+                        case 'balance':
+                            balance = sum_debit - sum_credit
+                            end_balance_col['no_format'] = balance
+                            end_balance_col['is_zero'] = not bool(balance)
+
+        # Total line
+        if lines and not lines[0].get('parent_id'):  # should not affect when unfolding lines
+            # The same behavior is expected with or without totals_below_sections activated
+            # Only the total line should be displayed at the bottom, in bold
+            if self.env.company.totals_below_sections:  # total line already exists
+                lines.pop(0)
+            else:
+                lines.append(lines.pop(0))
+                # To make the style as if totals_below_sections was activated
+                lines[-1]['id'] = report._build_subline_id(lines[-1]['id'], report._build_line_id([('total', None, None)]))
+            lines[-1]['name'] = _("Total")
 
         return lines
 
-    def _create_column_group_initial_balance(self, report, options, previous_options, default_group_vals, side_to_append):
-        initial_balance_options = self.env['account.general.ledger.report.handler']._get_options_initial_balance(options)
-        initial_forced_options = {
-            'date': initial_balance_options['date'],
-            'include_current_year_in_unaff_earnings': initial_balance_options['include_current_year_in_unaff_earnings'],
-            'no_impact_on_currency_table': True,
-        }
+    def _report_expand_unfoldable_line_with_groupby(self, line_dict_id, groupby, options, progress, offset, unfold_all_batch_data=None):
+        """ Shallow the 'account.report' function to prevent displaying move lines that do not belong to the period that is selected """
+        report = self.env['account.report'].browse(options['report_id'])
+        if groupby != 'id':
+            return report._report_expand_unfoldable_line_with_groupby(line_dict_id, groupby, options, progress, offset, unfold_all_batch_data)
 
-        self._create_and_append_column_group(
-            report,
-            options,
-            _("Initial Balance"),
-            initial_forced_options,
-            side_to_append,
-            default_group_vals,
-        )
+        for _col_group_key, col_group_vals in options['column_groups'].items():
+            if col_group_vals['forced_options']['trial_balance_column_type'] == 'initial_balance':
+                col_group_vals['forced_domain'].append(('id', '=', False))
 
-    def _create_column_group_end_balance(self, report, options, previous_options, default_group_vals, side_to_append):
-        end_date_to = options['date']['date_to']
-        end_date_from = options['comparison']['periods'][-1]['date_from'] if options.get('comparison', {}).get('periods') else options['date']['date_from']
-        end_forced_options = {
-            'date': report._get_dates_period(
-                fields.Date.from_string(end_date_from),
-                fields.Date.from_string(end_date_to),
-                'range',
-            ),
-        }
+        return report._report_expand_unfoldable_line_with_groupby(line_dict_id, groupby, options, progress, offset, unfold_all_batch_data)
 
-        self._create_and_append_column_group(
-            report,
-            options,
-            _("End Balance"),
-            end_forced_options,
-            side_to_append,
-            default_group_vals,
-            append_col_groups=False,
-        )
+    def _get_account_ids_type_map(self, report, options):
+        company_ids = report.get_report_company_ids(options)
+        accounts = self.env['account.account'].search_fetch([('company_ids', 'in', company_ids)], ['account_type'])
+        account_dict = {account.id: account.account_type for account in accounts}
+        return account_dict
 
-        # We don't add end_column_groups on purpose: they shouldn't be computed, since we'll just sum the values of other groups in that one.
-        # So, we don't want to run any SQL for it. We also force a dedicated column_group_key on the end columns, to better identify them.
-        for column_data in side_to_append['columns'][-len(report.column_ids):]:
-            column_data['column_group_key'] = TRIAL_BALANCE_END_COLUMN_GROUP_KEY
+    def _get_unaffected_earnings_accounts(self, report, options):
+        return self.env['account.account'].search([
+            ('display_name', 'ilike', options.get('filter_search_bar')),
+            *self.env['account.account']._check_company_domain(report.get_report_company_ids(options)),
+            ('account_type', '=', 'equity_unaffected'),
+        ])
+
+    def _custom_unfold_all_batch_data_generator(self, report, options, lines_to_expand_by_function):
+        """ Generate the custom engine's results for each full-sub-groupby-key that
+            would be created when doing an unfold-all on the report.
+        """
+        def transform_grouping_key(grouping_key_psql):
+            """ Transform the grouping key obtained from Postgres, which can be either an int or a stringified tuple, into a tuple. """
+            def string2int_if_possible(string):
+                with contextlib.suppress(ValueError):
+                    return int(string)
+                return string or None
+            if isinstance(grouping_key_psql, int):
+                return (grouping_key_psql,)
+            return tuple(string2int_if_possible(x) for x in grouping_key_psql.strip('()').split(','))
+
+        def get_sub_groupby_key(report_line_id, groupbys, grouping_key):
+            previous_groupbys, current_groupby = groupbys[:-1], groupbys[-1]
+
+            sub_groupby_key = f'[{report_line_id}]'
+            sub_groupby_key += ','.join(
+                f'{field_name}:{value or None}'
+                for (field_name, value) in zip(previous_groupbys, grouping_key)
+            )
+            sub_groupby_key += f'=>{current_groupby}'
+            return sub_groupby_key
+
+        results = {}  # In the form {full_sub_groupby_key: all_column_group_expression_totals for this groupby computation}
+
+        for line_to_expand in lines_to_expand_by_function.get('_report_expand_unfoldable_line_with_groupby', []):
+            report_line_id = report._get_res_id_from_line_id(line_to_expand['id'], 'account.report.line')
+            report_line = self.env['account.report.line'].browse(report_line_id)
+
+            expressions = report_line.expression_ids.filtered(
+                lambda x: x.engine == 'custom' and x.formula == '_report_custom_engine_trial_balance'
+            )
+            if len(expressions) != len(report_line.expression_ids):
+                continue
+
+            groupby_str = report_line._get_groupby(options)
+            groupbys = groupby_str.replace(' ', '').split(',')
+            next_groupby = 'id'
+
+            # Execute the query once for each groupby level. While we could optimize this further
+            # (execute the query once at the deepest groupby level, and then aggregate the results in Python),
+            # this ensures that the results match exactly what we would get by expanding each line.
+            # But we could change that if there is a performance need.
+            while groupbys:
+                for column_group_key, column_group_options in report._split_options_per_column_group(options).items():
+                    for date_scope, expressions_by_date_scope in groupby(expressions, lambda e: e.date_scope):
+                        # Get the custom engine results for the given groupby level.
+                        engine_lines = self._report_custom_engine_trial_balance(expressions, column_group_options, date_scope, current_groupby=groupbys, next_groupby=next_groupby)
+
+                        # Transform the groupby key of each line into a list
+                        engine_lines = [
+                            (transform_grouping_key(grouping_key), line_values)
+                            for grouping_key, line_values in engine_lines
+                        ]
+                        for parent_line_grouping_key, engine_lines_grouped_by_parent_line in groupby(
+                            engine_lines,
+                            lambda l: tuple(l[0][:-1])
+                        ):
+                            full_sub_groupby_key = get_sub_groupby_key(report_line_id, groupbys, parent_line_grouping_key)
+                            results.setdefault(full_sub_groupby_key, {})
+                            results[full_sub_groupby_key][column_group_key] = {
+                                expression: {
+                                    'value': [
+                                        (grouping_key[-1], line_values[expression.subformula])
+                                        for grouping_key, line_values in engine_lines_grouped_by_parent_line
+                                    ],
+                                    'sublines_info': {
+                                        grouping_key[-1]
+                                        for grouping_key, line_values in engine_lines_grouped_by_parent_line
+                                        if line_values['has_sublines']
+                                    },
+                                }
+                                for expression in expressions_by_date_scope
+                            }
+                next_groupby = groupbys.pop()
+        return results
+
+    def action_audit_cell(self, options, params):
+        report = self.env['account.report'].browse(options['report_id'])
+        column_group_forced_options = options['column_groups'][params['column_group_key']]['forced_options']
+
+        # When generating the end balance column, we didn't specify a date in the forced_options,
+        # to avoid a separate call to the custom engine (instead, the end balance is computed in
+        # the custom lines postprocessor.)
+        # But when auditing an end balance line, we need to retrieve moves from the beginning of time,
+        # so we modify the options here just for the call to report.action_audit_cell.
+        if column_group_forced_options['trial_balance_column_type'] == 'end_balance':
+            column_group_forced_options['date'].update({
+                'mode': 'single',
+                'date_from': None,
+            })
+
+        action = report.action_audit_cell(options, params)
+
+        account_id = report._get_res_id_from_line_id(params['calling_line_dict_id'], 'account.account')
+        account = self.env['account.account'].browse(account_id)
+
+        modified_domain = []
+        if account.account_type == 'equity_unaffected':
+            for condition in action['domain']:
+                match condition:
+                    case ['account_id', '=', account_id]:
+                        modified_domain.extend([
+                            '|', ('account_id', '=', account_id),
+                            '&', ('account_id.include_initial_balance', '=', False),
+                            ('date', '<', column_group_forced_options['trial_balance_block_fiscalyear_start']),
+                        ])
+                    case _:
+                        modified_domain.append(condition)
+            action['domain'] = modified_domain
+
+        elif column_group_forced_options['trial_balance_column_type'] in ('initial_balance', 'end_balance') and account.internal_group in ('income', 'expense'):
+            for condition in action['domain']:
+                match condition:
+                    case ['account_id', '=', account_id]:
+                        modified_domain.extend([
+                            ('account_id', '=', account_id),
+                            ('date', '>=', column_group_forced_options['trial_balance_block_fiscalyear_start']),
+                        ])
+                    case _:
+                        modified_domain.append(condition)
+
+            action['domain'] = modified_domain
+        return action

@@ -11,7 +11,7 @@ class TestL10nROTrialBalanceReport(TestAccountReportsCommon):
         super().setUpClass()
 
         def invoice_move(date, mult=1000.0):
-            cls.env['account.move'].create({
+            cls.env['account.move'].create([{
                 'move_type': 'entry',
                 'date': fields.Date.from_string(date),
                 'journal_id': cls.company_data['default_journal_misc'].id,
@@ -20,7 +20,7 @@ class TestL10nROTrialBalanceReport(TestAccountReportsCommon):
                     Command.create({'debit': 2 * mult, 'credit': 0.0,      'name': 'expense', 'account_id': cls.company_data['default_account_expense'].id}),
                     Command.create({'debit': 0.0,      'credit': 3 * mult, 'name': 'revenue', 'account_id': cls.company_data['default_account_revenue'].id}),
                 ],
-            }).action_post()
+            }]).action_post()
 
         invoice_move('2023-12-31')
 
@@ -41,11 +41,11 @@ class TestL10nROTrialBalanceReport(TestAccountReportsCommon):
             #                                                                    Debit      Credit      Debit       Credit       Debit     Credit        Debit      Credit
             [    0,                                                                 1,          2,         3,           4,          5,          6,          7,          8],
             [
-                ("121000 Profit and loss",                                         0.0,     1000.0,       0.0,         0.0,         0.0,     1000.0,         0.0,     1000.0),
+                ("121000 Profit and loss",                                      2000.0,     3000.0,       0.0,         0.0,      2000.0,     3000.0,         0.0,     1000.0),
                 ("401100 Providers - resumed in a period of up to one year",    2000.0,        0.0,     100.0,         0.0,      2100.0,        0.0,      2100.0,        0.0),
                 ("601000 Raw material expenses",                                2000.0,        0.0,     200.0,         0.0,      2200.0,        0.0,      2200.0,        0.0),
                 ("701500 Revenue from the sale of finished products",              0.0,     3000.0,       0.0,       300.0,         0.0,     3300.0,         0.0,     3300.0),
-                ("Total",                                                       4000.0,     4000.0,     300.0,       300.0,      4300.0,     4300.0,      4300.0,     4300.0),
+                ("Total",                                                       6000.0,     6000.0,     300.0,       300.0,      6300.0,     6300.0,      4300.0,     4300.0),
             ],
             options,
         )
@@ -65,11 +65,11 @@ class TestL10nROTrialBalanceReport(TestAccountReportsCommon):
             #                                                                    Debit      Credit       Debit      Credit       Debit      Credit       Debit      Credit
             [    0,                                                                1,           2,          3,          4,          5,          6,          7,          8],
             [
-                ("121000 Profit and loss",                                       0.0,      1000.0,        0.0,        0.0,        0.0,     1000.0,        0.0,     1000.0),
+                ("121000 Profit and loss",                                    2000.0,      3000.0,        0.0,        0.0,     2000.0,     3000.0,        0.0,     1000.0),
                 ("401100 Providers - resumed in a period of up to one year",  1000.0,         0.0,     1000.0,        0.0,     2000.0,        0.0,     2000.0,        0.0),
                 ("601000 Raw material expenses",                                 0.0,         0.0,     2000.0,        0.0,     2000.0,        0.0,     2000.0,        0.0),
                 ("701500 Revenue from the sale of finished products",            0.0,         0.0,        0.0,     3000.0,        0.0,     3000.0,        0.0,     3000.0),
-                ("Total",                                                     1000.0,      1000.0,     3000.0,     3000.0,     4000.0,     4000.0,     4000.0,     4000.0),
+                ("Total",                                                     3000.0,      3000.0,     3000.0,     3000.0,     6000.0,     6000.0,     4000.0,     4000.0),
             ],
             options,
         )
@@ -86,10 +86,11 @@ class TestL10nROTrialBalanceReport(TestAccountReportsCommon):
             #                                                                   Debit       Credit       Debit      Credit      Debit       Credit       Debit      Credit       Debit      Credit
             [    0,                                                                1,           2,          3,          4,         5,           6,          7,          8,          9,         10],
             [
+                ("121000 Profit and loss",                                    2000.0,      3000.0,        0.0,        0.0,       0.0,         0.0,     2000.0,     3000.0,        0.0,     1000.0),
                 ("401100 Providers - resumed in a period of up to one year",  1000.0,         0.0,     2100.0,        0.0,    1000.0,         0.0,     4100.0,        0.0,     4100.0,        0.0),
-                ("601000 Raw material expenses",                              2000.0,         0.0,     4200.0,        0.0,    2000.0,         0.0,     8200.0,        0.0,     8200.0,        0.0),
-                ("701500 Revenue from the sale of finished products",            0.0,      3000.0,        0.0,     6300.0,       0.0,      3000.0,        0.0,    12300.0,        0.0,    12300.0),
-                ("Total",                                                     3000.0,      3000.0,     6300.0,     6300.0,    3000.0,      3000.0,    12300.0,    12300.0,    12300.0,    12300.0),
+                ("601000 Raw material expenses",                                 0.0,         0.0,     4200.0,        0.0,    2000.0,         0.0,     6200.0,        0.0,     6200.0,        0.0),
+                ("701500 Revenue from the sale of finished products",            0.0,         0.0,        0.0,     6300.0,       0.0,      3000.0,        0.0,     9300.0,        0.0,     9300.0),
+                ("Total",                                                     3000.0,      3000.0,     6300.0,     6300.0,    3000.0,      3000.0,    12300.0,    12300.0,    10300.0,    10300.0),
             ],
             options,
         )

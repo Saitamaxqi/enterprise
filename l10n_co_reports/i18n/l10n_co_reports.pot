@@ -16,12 +16,6 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_co_reports
-#. odoo-python
-#: code:addons/l10n_co_reports/models/general_ledger.py:0
-msgid "(None)"
-msgstr ""
-
-#. module: l10n_co_reports
 #: model_terms:ir.ui.view,arch_db:l10n_co_reports.report_certification
 msgid ", practicó en la ciudad de"
 msgstr ""
@@ -237,6 +231,11 @@ msgid "Created on"
 msgstr ""
 
 #. module: l10n_co_reports
+#: model:account.report.column,name:l10n_co_reports.l10n_co_reports_trial_balance_per_partner_credit
+msgid "Credit"
+msgstr ""
+
+#. module: l10n_co_reports
 #: model:account.report.line,name:l10n_co_reports.l10n_co_bs_report_assets_current
 msgid "Current Assets"
 msgstr ""
@@ -249,6 +248,18 @@ msgstr ""
 #. module: l10n_co_reports
 #: model:account.report.line,name:l10n_co_reports.l10n_co_bs_report_year_earnings
 msgid "Current Year Unallocated Earnings"
+msgstr ""
+
+#. module: l10n_co_reports
+#: model:ir.model,name:l10n_co_reports.model_l10n_co_account_trial_balance_per_partner_report_handler
+msgid ""
+"Custom handler for variant trial balance for Colombia 'Trial balance per "
+"partner'"
+msgstr ""
+
+#. module: l10n_co_reports
+#: model:account.report.column,name:l10n_co_reports.l10n_co_reports_trial_balance_per_partner_debit
+msgid "Debit"
 msgstr ""
 
 #. module: l10n_co_reports
@@ -362,11 +373,6 @@ msgstr ""
 #. module: l10n_co_reports
 #: model:account.report.line,name:l10n_co_reports.l10n_co_pl_account_report_gains_losses
 msgid "Gains and Losses"
-msgstr ""
-
-#. module: l10n_co_reports
-#: model:ir.model,name:l10n_co_reports.model_account_general_ledger_report_handler
-msgid "General Ledger Custom Handler"
 msgstr ""
 
 #. module: l10n_co_reports
@@ -524,12 +530,6 @@ msgstr ""
 #. module: l10n_co_reports
 #. odoo-python
 #: code:addons/l10n_co_reports/models/trial_balance.py:0
-msgid "Partner Name"
-msgstr ""
-
-#. module: l10n_co_reports
-#. odoo-python
-#: code:addons/l10n_co_reports/models/trial_balance.py:0
 msgid "Partner VAT"
 msgstr ""
 
@@ -651,25 +651,18 @@ msgid "Taxes, Levies and Fees"
 msgstr ""
 
 #. module: l10n_co_reports
-#. odoo-python
-#: code:addons/l10n_co_reports/models/general_ledger.py:0
-msgid "Total"
+#: model:account.report.line,name:l10n_co_reports.l10n_co_reports_trial_balance_per_partner_all
+msgid "Trial Balance"
 msgstr ""
 
 #. module: l10n_co_reports
-#: model:ir.model,name:l10n_co_reports.model_account_trial_balance_report_handler
-msgid "Trial Balance Custom Handler"
+#: model:account.report,name:l10n_co_reports.l10n_co_reports_trial_balance_per_partner
+msgid "Trial Balance by Partner"
 msgstr ""
 
 #. module: l10n_co_reports
 #: model:account.report.line,name:l10n_co_reports.l10n_co_bs_report_valuations
 msgid "Valuations"
-msgstr ""
-
-#. module: l10n_co_reports
-#. odoo-python
-#: code:addons/l10n_co_reports/models/trial_balance.py:0
-msgid "XLSX (By Partner)"
 msgstr ""
 
 #. module: l10n_co_reports

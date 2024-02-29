@@ -152,13 +152,15 @@ class TestL10nMXTrialBalanceMonth13(TestAccountReportsCommon, odoo.tests.HttpCas
         options = self._generate_options(self.report, '2022-12-01', '2022-12-31', {'hierarchy': False, 'unfold_all': True})
         self.assertLinesValues(
             self.report._get_lines(options),
-            [   0,                                                            1,       2,       3,       4,        5,         6],
+            #   Name                                                    Initial Balance     Debit    Credit    End Balance
+            [0,                                                                     1,        2,        3,         4],
             [
-                ('105.01.01 Domestic customers',                              1000.0,     0.0,  300.0,    0.0,     1300.0,       0.0),
-                ('305.01.01 Profit for the year',                                0.0,   800.0,    0.0,     0.0,       0.0,     800.0),
-                ('401.01.01 Sales and/or services taxed at the general rate',    0.0,     0.0,    0.0,   300.0,       0.0,     300.0),
-                ('999999 Undistributed Profits/Losses',                          0.0,   200.0,    0.0,     0.0,       0.0,     200.0),
-                ('Total',                                                     1000.0,  1000.0,  300.0,   300.0,    1300.0,    1300.0),
+                ('105.01.01 Domestic customers',                                 1000.0,    300.0,     0.0,     1300.0),
+                ('305.01.01 Profit for the year',                                -800.0,      0.0,     0.0,     -800.0),
+                ('401.01.01 Sales and/or services taxed at the general rate',       0.0,      0.0,   300.0,     -300.0),
+                ('999999 Undistributed Profits/Losses',                          -200.0,      0.0,     0.0,     -200.0),
+                ('Total',                                                           0.0,    300.0,   300.0,        0.0),
+
             ],
             options,
         )
@@ -167,13 +169,14 @@ class TestL10nMXTrialBalanceMonth13(TestAccountReportsCommon, odoo.tests.HttpCas
         options = self._generate_options(self.report, '2022-12-01', '2023-01-01', {'hierarchy': False, 'unfold_all': True})
         self.assertLinesValues(
             self.report._get_lines(options),
-            [   0,                                                            1,         2,         3,       4,        5,         6],
+            #   Name                                                    Initial Balance     Debit    Credit    End Balance
+            [0,                                                                     1,        2,        3,         4],
             [
-                ('105.01.01 Domestic customers',                              1000.0,       0.0,    320.0,     0.0,    1320.0,       0.0),
-                ('305.01.01 Profit for the year',                                0.0,     800.0,      0.0,   250.0,       0.0,    1050.0),
-                ('401.01.01 Sales and/or services taxed at the general rate',    0.0,       0.0,    250.0,   320.0,       0.0,      70.0),
-                ('999999 Undistributed Profits/Losses',                          0.0,     200.0,      0.0,     0.0,       0.0,     200.0),
-                ('Total',                                                     1000.0,    1000.0,    570.0,   570.0,    1320.0,    1320.0),
+                ('105.01.01 Domestic customers',                                 1000.0,    320.0,      0.0,    1320.0),
+                ('305.01.01 Profit for the year',                                -800.0,      0.0,    250.0,   -1050.0),
+                ('401.01.01 Sales and/or services taxed at the general rate',       0.0,    250.0,    320.0,     -70.0),
+                ('999999 Undistributed Profits/Losses',                          -200.0,      0.0,      0.0,    -200.0),
+                ('Total',                                                           0.0,    570.0,    570.0,       0.0),
             ],
             options,
         )
@@ -190,13 +193,15 @@ class TestL10nMXTrialBalanceMonth13(TestAccountReportsCommon, odoo.tests.HttpCas
         options = self._generate_options(self.report, '2022-12-01', '2022-12-31', {'hierarchy': False, 'unfold_all': True, 'l10n_mx_month_13': True})
         self.assertLinesValues(
             self.report._get_lines(options),
-            [   0,                                                            1,         2,         3,       4,        5,         6],
+            #   Name                                                  [ Initial Balance ] [    Month 13   ] [ End Balance ]
+            #   Name                                                           Balance     Debit   Credit      Balance
+            [0,                                                                    1,         2,        3,         4],
             [
-                ('105.01.01 Domestic customers',                              1300.0,       0.0,      0.0,     0.0,    1300.0,       0.0),
-                ('305.01.01 Profit for the year',                                0.0,     800.0,      0.0,   250.0,       0.0,    1050.0),
-                ('401.01.01 Sales and/or services taxed at the general rate',    0.0,     300.0,    250.0,     0.0,       0.0,      50.0),
-                ('999999 Undistributed Profits/Losses',                          0.0,     200.0,      0.0,     0.0,       0.0,     200.0),
-                ('Total',                                                     1300.0,    1300.0,    250.0,   250.0,    1300.0,    1300.0),
+                ('105.01.01 Domestic customers',                                1300.0,       0.0,      0.0,    1300.0),
+                ('305.01.01 Profit for the year',                               -800.0,       0.0,    250.0,   -1050.0),
+                ('401.01.01 Sales and/or services taxed at the general rate',   -300.0,     250.0,      0.0,     -50.0),
+                ('999999 Undistributed Profits/Losses',                         -200.0,       0.0,      0.0,    -200.0),
+                ('Total',                                                          0.0,     250.0,    250.0,       0.0),
             ],
             options,
         )
@@ -216,17 +221,20 @@ class TestL10nMXTrialBalanceMonth13(TestAccountReportsCommon, odoo.tests.HttpCas
             'comparison': {
                 'filter': 'previous_period',
                 'number_period': 1,
+                'period_order': 'ascending',
             },
         })
         self.assertLinesValues(
             self.report._get_lines(options),
-            [   0,                                                            1,       2,      3,    4,    5,      6,      7,       8],
+            #                                                                  [Initial]     [   Nov 2022   ]    [   Dec 2022   ]     [ End ]
+            #    Name                                                           Balance       Debit    Credit     Debit    Credit     Balance
+            [0,                                                                   1,             2,      3,          4,        5,        6],
             [
-                ('105.01.01 Domestic customers',                              1000.0,     0.0, 300.0,   0.0,    0.0,    0.0,  1300.0,   0.0),
-                ('305.01.01 Profit for the year',                                0.0,   800.0,   0.0,   0.0,    0.0,    0.0,     0.0,   800.0),
-                ('401.01.01 Sales and/or services taxed at the general rate',    0.0,     0.0,   0.0, 300.0,    0.0,    0.0,     0.0,   300.0),
-                ('999999 Undistributed Profits/Losses',                          0.0,   200.0,   0.0,   0.0,    0.0,    0.0,     0.0,   200.0),
-                ('Total',                                                     1000.0,  1000.0, 300.0, 300.0,    0.0,    0.0,  1300.0,  1300.0),
+                ('105.01.01 Domestic customers',                               1000.0,          0.0,     0.0,      300.0,       0.0,  1300.0),
+                ('305.01.01 Profit for the year',                              -800.0,          0.0,     0.0,        0.0,       0.0,  -800.0),
+                ('401.01.01 Sales and/or services taxed at the general rate',     0.0,          0.0,     0.0,        0.0,     300.0,  -300.0),
+                ('999999 Undistributed Profits/Losses',                        -200.0,          0.0,     0.0,        0.0,       0.0,  -200.0),
+                ('Total',                                                         0.0,          0.0,     0.0,      300.0,     300.0,     0.0),
             ],
             options,
         )
@@ -238,17 +246,20 @@ class TestL10nMXTrialBalanceMonth13(TestAccountReportsCommon, odoo.tests.HttpCas
             'comparison': {
                 'filter': 'previous_period',
                 'number_period': 1,
+                'period_order': 'ascending',
             },
         })
         self.assertLinesValues(
             self.report._get_lines(options),
-            [   0,                                                            1,         2,         3,       4,      5,     6,     7,       8],
+            #                                                                  [Initial]  [   Dec 2022   ]   [Initial]  [ End ]  [   Jan 2023   ]    [ End ]
+            #    Name                                                           Balance    Debit    Credit    Balance   Balance   Debit   Credit    Balance
+            [0,                                                                    1,         2,        3,        4,       5,       6,       7,         8],
             [
-                ('105.01.01 Domestic customers',                              1000.0,       0.0,     20.0,     0.0, 300.0,   0.0,  1320.0,     0.0),
-                ('305.01.01 Profit for the year',                                0.0,     800.0,      0.0,     0.0,   0.0, 250.0,     0.0,  1050.0),
-                ('401.01.01 Sales and/or services taxed at the general rate',    0.0,       0.0,      0.0,    20.0, 250.0, 300.0,     0.0,    70.0),
-                ('999999 Undistributed Profits/Losses',                          0.0,     200.0,      0.0,     0.0,   0.0,   0.0,     0.0,   200.0),
-                ('Total',                                                     1000.0,    1000.0,     20.0,    20.0, 550.0, 550.0,  1320.0,  1320.0),
+                ('105.01.01 Domestic customers',                               1000.0,     300.0,      0.0,   1300.0,   1300.0,    20.0,      0.0,   1320.0),
+                ('305.01.01 Profit for the year',                              -800.0,       0.0,    250.0,  -1050.0,  -1050.0,     0.0,      0.0,  -1050.0),
+                ('401.01.01 Sales and/or services taxed at the general rate',     0.0,     250.0,    300.0,    -50.0,      0.0,     0.0,     20.0,    -20.0),
+                ('999999 Undistributed Profits/Losses',                        -200.0,       0.0,      0.0,   -200.0,   -250.0,     0.0,      0.0,   -250.0),
+                ('Total',                                                         0.0,     550.0,    550.0,      0.0,      0.0,    20.0,     20.0,      0.0),
             ],
             options,
         )

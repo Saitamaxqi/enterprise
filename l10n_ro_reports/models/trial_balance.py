@@ -1,9 +1,8 @@
-from datetime import timedelta
-
-from odoo import models, _, fields
+from odoo import fields, models, _
 from odoo.tools.misc import format_date
+import datetime
 
-L10N_RO_TRIAL_BALANCE_TOTAL_COLUMN_GROUP_KEY = '_l10n_ro_trial_balance_total_column_group'
+from copy import deepcopy
 
 
 class L10nRoTrialBalance5ColumnReportHandler(models.AbstractModel):
@@ -11,138 +10,104 @@ class L10nRoTrialBalance5ColumnReportHandler(models.AbstractModel):
     _inherit = 'account.trial.balance.report.handler'
     _description = "Romanian Trial Balance Report (5 Columns)"
 
+    def _custom_options_initializer(self, report, options, previous_options):
+
+        if self._show_start_of_year_column(options):
+            self._generate_start_of_year_columns(report, options)
+
+        super()._custom_options_initializer(report, options, previous_options)
+
+        self._generate_total_amounts_columns(options)
+
     def _show_start_of_year_column(self, options):
         options_date_from = fields.Date.from_string(options['date']['date_from'])
         return options_date_from.month != 1 or options_date_from.day != 1
 
-    def _get_start_of_year_date_options(self, report, options):
-        date_to = options['comparison']['periods'][-1]['date_from'] if options.get('comparison', {}).get('periods') else options['date']['date_from']
-        new_date_to = fields.Date.from_string(date_to) - timedelta(days=1)
-        date_to_fiscal_year_dates = self.env.company.compute_fiscalyear_dates(new_date_to)
+    def _generate_start_of_year_columns(self, report, options):
+        # Get date range
+        date_from = self.env.company.compute_fiscalyear_dates(
+            fields.Date.from_string(options['date']['date_to'])
+        )['date_from']
 
-        return {
-            **report._get_dates_period(date_to_fiscal_year_dates['date_from'], new_date_to, 'range'),
-            'currency_table_period_key': '_trial_balance_middle_periods',
-        }
+        date_to = fields.Date.from_string(
+            min(key['forced_options']['date']['date_from']
+                for key in options['column_groups'].values())
+        ) - datetime.timedelta(days=1)
 
-    def _get_column_group_creation_data(self, report, options, previous_options=None):
-        # Override
-        data = super()._get_column_group_creation_data(report, options, previous_options)
+        # Format dates and create header name
+        date_from_str = fields.Date.to_string(date_from)
+        date_to_str = fields.Date.to_string(date_to)
 
-        if self._show_start_of_year_column(options):
-            return (
-                data[0],  # Initial balance
-                (self._create_column_group_start_of_year, 'left'),
-                (self._create_column_group_total, 'right'),
-                data[1],  # End balance
-            )
-        else:
-            return (
-                data[0],  # Initial balance
-                (self._create_column_group_total, 'right'),
-                data[1],  # End balance
-            )
+        month_from, year_from = format_date(self.env, date_from_str, date_format="MMM YYYY").split()
+        month_to, year_to = format_date(self.env, date_to_str, date_format="MMM YYYY").split()
 
-    def _get_initial_balance_forced_options(self, report, options, previous_options):
-        general_ledger_initial_balance_options = self.env['account.general.ledger.report.handler']._get_options_initial_balance(options)
-
-        if self._show_start_of_year_column(options):
-            # If the 'start of year' column is shown we want to exclude it from the initial balance
-            first_day_of_year = fields.Date.from_string(general_ledger_initial_balance_options['date']['date_from'])
-            initial_date = self.env.company.compute_fiscalyear_dates(first_day_of_year - timedelta(days=1))
-        else:
-            initial_date = general_ledger_initial_balance_options['date']
-
-        return {
-            'date': {
-                **general_ledger_initial_balance_options['date'],
-                'date_from': initial_date['date_from'] if isinstance(initial_date['date_from'], str) else fields.Date.to_string(initial_date['date_from']),
-                'date_to': initial_date['date_to'] if isinstance(initial_date['date_to'], str) else fields.Date.to_string(initial_date['date_to']),
-            },
-            'include_current_year_in_unaff_earnings': general_ledger_initial_balance_options['include_current_year_in_unaff_earnings'],
-        }
-
-    def _create_column_group_initial_balance(self, report, options, previous_options, default_group_vals, side_to_append):
-        # Override
-        forced_options = self._get_initial_balance_forced_options(report, options, previous_options)
-
-        self._create_and_append_column_group(
-            report,
-            options,
-            _("Initial Balance"),
-            forced_options,
-            side_to_append,
-            default_group_vals,
+        header_name = (
+            f"{month_from} {year_from} - {month_to} {year_to}" if year_from != year_to
+            else f"{month_from} - {month_to} {year_from}" if month_from != month_to
+            else f"{month_from} {year_from}"
         )
 
-    def _create_column_group_start_of_year(self, report, options, previous_options, default_group_vals, side_to_append):
-        forced_options = {
-            'include_current_year_in_unaff_earnings': False,
-            'date': self._get_start_of_year_date_options(report, options),
-        }
-
-        month_from, year_from = format_date(self.env, forced_options['date']['date_from'], date_format="MMM yyyy").split()
-        month_to, year_to = format_date(self.env, forced_options['date']['date_to'], date_format="MMM yyyy").split()
-
-        if year_from != year_to:
-            header_name = f"{month_from} {year_from} - {month_to} {year_to}"
-        elif month_from != month_to:
-            header_name = f"{month_from} - {month_to} {year_from}"
-        else:
-            header_name = f"{month_from} {year_from}"
-
-        self._create_and_append_column_group(
-            report,
-            options,
-            header_name,
-            forced_options,
-            side_to_append,
-            default_group_vals,
-            exclude_initial_balance=True,
-        )
-
-    def _create_column_group_total(self, report, options, previous_options, default_group_vals, side_to_append):
-        initial_forced_options = self._get_initial_balance_forced_options(report, options, previous_options)
-
-        forced_options = {
-            'date': {
-                **initial_forced_options['date'],
-                'date_to': options['date']['date_to'],
-                'currency_table_period_key': '_trial_balance_middle_periods'
+        # Create column values
+        column_header_values = {
+            'forced_options': {
+                'date': {
+                    'string': header_name,
+                    'period_type': 'custom',
+                    'currency_table_period_key': f"{date_from_str}_{date_to_str}",
+                    'mode': 'range',
+                    'date_from': date_from_str,
+                    'date_to': date_to_str
+                }
             }
         }
 
-        self._create_and_append_column_group(
-            report,
-            options,
-            _("Total Amounts"),
-            forced_options,
-            side_to_append,
-            default_group_vals,
-            exclude_initial_balance=True,
-            append_col_groups=False,  # We do this so the total column_group does not get computed because it is computed in the custom_line_postprocessor
+        # Generate new columns
+        column_headers = [[{'name': header_name, **column_header_values}], *options['column_headers'][1:]]
+        new_column_group_vals = report._generate_columns_group_vals_recursively(
+            column_headers,
+            {'horizontal_groupby_element': {}, **column_header_values}
         )
 
-        # We force a dedicated column_group_key on the total columns, to better identify them in the custom_line_postprocessor
-        for column_data in side_to_append['columns'][-len(report.column_ids):]:
-            column_data['column_group_key'] = L10N_RO_TRIAL_BALANCE_TOTAL_COLUMN_GROUP_KEY
+        new_columns, new_column_groups = report._build_columns_from_column_group_vals(
+            column_header_values['forced_options'],
+            new_column_group_vals
+        )
+
+        options['columns'] = new_columns + options['columns']
+        options['column_headers'][0] = [{'name': header_name, **column_header_values}, *options['column_headers'][0]]
+        options['column_groups'].update(new_column_groups)
+
+    def _generate_total_amounts_columns(self, options):
+        end_balance_columns = deepcopy(options['columns'][-2:])
+        end_balance_column_header = deepcopy(options['column_headers'][0][-1])
+
+        options['columns'].extend(end_balance_columns)
+        options['column_headers'][0].append(end_balance_column_header)
+        options['column_headers'][0][-2]['name'] = _("Total Amount")
+
+    def _display_single_column_for_initial_and_end_sections(self, options):
+        # Override
+        return False
 
     def _custom_line_postprocessor(self, report, options, lines):
-        # OVERRIDE
         lines = super()._custom_line_postprocessor(report, options, lines)
 
-        # To calculate values in the 'total' columns, we exclude the last 2 column groups (total and end balance)
-        sum_excluded_column_group_keys = {options['columns'][i]['column_group_key'] for i in (-1, -1 - len(report.column_ids))}
+        end_balance_debit_index = -2
+        end_balance_credit_index = -1
+        total_debit = 0.0
+        total_credit = 0.0
 
         for line in lines:
-            total_columns = [x for x in line['columns'] if x['column_group_key'] == L10N_RO_TRIAL_BALANCE_TOTAL_COLUMN_GROUP_KEY]
+            balance = line['columns'][end_balance_debit_index]['no_format'] - line['columns'][end_balance_credit_index]['no_format']
+            debit = max(balance, 0.0) or 0.0
+            credit = max(-balance, 0.0) or 0.0
+            line['columns'][end_balance_debit_index]['no_format'] = debit
+            line['columns'][end_balance_credit_index]['no_format'] = credit
+            total_debit += debit
+            total_credit += credit
 
-            for col in report.column_ids:
-                total_sub_column = next(x for x in total_columns if x['expression_label'] == col.expression_label)
-                total_sub_column['no_format'] = sum(x['no_format']
-                                                    for x in line['columns']
-                                                    if x['column_group_key'] not in sum_excluded_column_group_keys
-                                                    and x['expression_label'] == col.expression_label)
+        lines[-1]['columns'][end_balance_debit_index]['no_format'] = self.env.company.currency_id.round(total_debit)
+        lines[-1]['columns'][end_balance_credit_index]['no_format'] = self.env.company.currency_id.round(total_credit)
 
         return lines
 

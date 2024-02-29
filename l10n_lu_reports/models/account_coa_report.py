@@ -122,18 +122,17 @@ class AccountReport(models.AbstractModel):
             # Code of account being reported in the P&L: result for the year
             p_l_code = code[0] in ('6', '7')
             if p_l_code:
-                debit = float(line['columns'][2]['no_format'])
-                credit = float(line['columns'][3]['no_format'])
+                debit = float(line['columns'][1]['no_format'])
+                credit = float(line['columns'][2]['no_format'])
+                balance = debit - credit
             # Code of account being reported in the Balance Sheet: total
             else:
-                debit = float(line['columns'][4]['no_format'])
-                credit = float(line['columns'][5]['no_format'])
+                balance = float(line['columns'][3]['no_format'])
             # 142 (results for the financial year) will be manually calculated to balance as required
             if code[:3] == '142' and year <= 2019:
                 continue
             for i in range(len(code)):
                 acc = account_dict.get(code[:i + 1])
-                balance = debit - credit
                 if acc:
                     if balance > 0.00:
                         account_fields[acc["debit"]] = account_fields.get(acc["debit"], 0.00) + balance
