@@ -42,45 +42,27 @@ class VoipQueueMixin(models.AbstractModel):
             "mail.mail_activity_data_call", raise_if_not_found=False
         )
         if not phonecall_activity_type_id:
-            phonecall_activity_type_id = (
-                self.env["mail.activity.type"]
-                .search(
-                    [
-                        Domain.OR([[("res_model", "=", False)], [("res_model", "=", self._name)]]),
-                        ("category", "=", "phonecall"),
-                    ],
-                    limit=1,
-                )
-                .id
-            )
+            phonecall_activity_type_id = self.env["mail.activity.type"].search([
+                Domain.OR([[("res_model", "=", False)], [("res_model", "=", self._name)]]), ("category", "=", "phonecall"),
+            ], limit=1).id
         if not phonecall_activity_type_id:
-            phonecall_activity_type_id = (
-                self.env["mail.activity.type"]
-                .sudo()
-                .create(
-                    {
-                        "category": "phonecall",
-                        "delay_count": 2,
-                        "icon": "fa-phone",
-                        "name": _("Call"),
-                        "sequence": 999,
-                    }
-                )
-                .id
-            )
+            phonecall_activity_type_id = self.env["mail.activity.type"].sudo().create({
+                "category": "phonecall",
+                "delay_count": 2,
+                "icon": "fa-phone",
+                "name": _("Call"),
+                "sequence": 999,
+            }).id
         date_deadline = fields.Date.today(self)
         res_model_id = self.env["ir.model"]._get_id(self._name)
-        activities = self.env["mail.activity"].create(
-            [
-                {
-                    "activity_type_id": phonecall_activity_type_id,
-                    "date_deadline": date_deadline,
-                    "res_id": record.id,
-                    "res_model_id": res_model_id,
-                    "user_id": self.env.uid,
-                }
-                for record in self
-            ]
+        activities = self.env["mail.activity"].create([
+            {
+                "activity_type_id": phonecall_activity_type_id,
+                "date_deadline": date_deadline,
+                "res_id": record.id,
+                "res_model_id": res_model_id,
+                "user_id": self.env.uid,
+            } for record in self]
         )
         failed_activities = activities.filtered(lambda activity: not activity.phone)
         if failed_activities:
