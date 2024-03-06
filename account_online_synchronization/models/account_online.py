@@ -942,6 +942,7 @@ class AccountOnlineLink(models.Model):
         if data.get('consent_expiring_date'):
             expiring_synchronization_date = fields.Date.to_date(data['consent_expiring_date'])
             if expiring_synchronization_date != self.expiring_synchronization_date:
+                # TDE TODO: master: use generic activity mixin methods instead
                 bank_sync_activity_type_id = self.env.ref('mail.mail_activity_data_todo')
                 account_journal_model_id = self.env['ir.model']._get_id('account.journal')
 

@@ -53,7 +53,12 @@ class TestActivity(SMSCommon, TestSMSRecipients):
             ('activity_type_id', '=', self.phonecall_activity.id),
         ])
         phonecall_activities.write({'activity_type_id': False})
-        self.phonecall_activity.unlink()
+        phonecall_activities.flush_recordset()
+        # it is now protected, but before protection it was possible to have removed
+        # 'Call' activity type (aka you can't do self.phonecall_activity.unlink()
+        # but you may have already removed it)
+        self.env.cr.execute("DELETE FROM mail_activity_type WHERE id IN %s", (tuple(self.phonecall_activity.ids),))
+        self.env['ir.model.data'].sudo().search([('name', '=', 'mail_activity_data_call'), ('module', '=', 'mail')]).unlink()
 
         # no more phonecall activity -> will be dynamically created
         self.assertFalse(self.env['mail.activity.type'].search([('category', '=', 'phonecall')]))

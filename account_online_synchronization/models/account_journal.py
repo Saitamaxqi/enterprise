@@ -189,7 +189,9 @@ class AccountJournal(models.Model):
         self.ensure_one()
         self._portal_ensure_token()
         template = self.env.ref('account_online_synchronization.email_template_sync_reminder')
-        subtype = self.env.ref('account_online_synchronization.bank_sync_consent_renewal')
+        subtype = self.env.ref('account_online_synchronization.bank_sync_consent_renewal', raise_if_not_found=False)
+        if not subtype:
+            subtype = self.env.ref('mail.mt_comment')
         self.message_post_with_source(source_ref=template, subtype_id=subtype.id)
 
     def action_open_missing_transaction_wizard(self):

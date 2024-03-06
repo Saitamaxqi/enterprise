@@ -274,7 +274,10 @@ class HrPayslip(models.Model):
 
     @api.depends('employee_id', 'state')
     def _compute_negative_net_to_report_display(self):
-        activity_type = self.env.ref('hr_payroll.mail_activity_data_hr_payslip_negative_net')
+        activity_type = self.env.ref(
+            'hr_payroll.mail_activity_data_hr_payslip_negative_net',
+            raise_if_not_found=False
+        ) or self.env['mail.activity.type']
         for payslip in self:
             if payslip.state in ['draft', 'verify']:
                 payslips_to_report = self.env['hr.payslip'].search([
@@ -287,7 +290,9 @@ class HrPayslip(models.Model):
                 payslip.negative_net_to_report_message = _(
                     'Note: There are previous payslips with a negative amount for a total of %s to report.',
                     round(payslip.negative_net_to_report_amount, 2))
-                if payslips_to_report and payslip.state == 'verify' and payslip.version_id and not payslip.activity_ids.filtered(lambda a: a.activity_type_id == activity_type):
+                if payslips_to_report and payslip.state == 'verify' and payslip.version_id and (
+                    not activity_type or payslip.activity_ids.filtered(lambda a: a.activity_type_id == activity_type)
+                ):
                     payslip.activity_schedule(
                         'hr_payroll.mail_activity_data_hr_payslip_negative_net',
                         summary=_('Previous Negative Payslip to Report'),
