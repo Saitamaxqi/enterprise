@@ -784,53 +784,88 @@ class TestRecurrencySlotGeneration(TestCommonPlanning):
             'The second slot should be an open shift as the resource has a concurrent shift'
         )
 
-    def test_recurrency_date_change_week(self):
+    def test_recurrency_change_date_subsequent(self):
+        first_slot_start, first_slot_end = (
+            datetime(2020, 11, 22, 8 + i) for i in range(2)
+        )
         first_slot = self.env['planning.slot'].create({
-            'start_datetime': self.random_date + timedelta(hours=8),
-            'end_datetime': self.random_date + timedelta(hours=9),
+            'start_datetime': first_slot_start,
+            'end_datetime': first_slot_end,
             'repeat': True,
             'repeat_type': 'x_times',
             'repeat_number': 3,
             'repeat_interval': 1,
-            'repeat_unit': 'week',
+            'repeat_unit': 'day',
         })
-        first_slot.recurrency_id.slot_ids[1].write({
-            'start_datetime': self.random_date + timedelta(days=9, hours=8),
-            'end_datetime': self.random_date + timedelta(days=9, hours=9),
+        recurrence = first_slot.recurrency_id
+        slots = recurrence.slot_ids
+        slots._compute_repeat_type()  # force it, otherwise it is keeps default value 'forever'
+        second_slot = slots[1]
+
+        # Changing a non-date field
+        second_slot.write({
+            'allocated_hours': 0.5,
+            'recurrence_update': 'subsequent',
         })
-        first_slot.write({
-            'start_datetime': self.random_date + timedelta(days=-1, hours=8),
-            'end_datetime': self.random_date + timedelta(days=-1, hours=9),
-            'recurrence_update': 'all',
-        })
+        self.assertEqual(slots, recurrence.slot_ids, "The recurrence should have kept the same slots")
         self.assertTrue(
-            slot.start_datetime.weekday() == 1
-            for slot in first_slot.recurrency_id.slot_ids
+            all((slots - first_slot).mapped(lambda s: s.allocated_hours == 0.5)),
+            "The change should have been applied to all subsequent slots",
         )
 
-    def test_recurrency_date_change_month(self):
+        # Changing date fields
+        second_slot.write({
+            'start_datetime': first_slot_start,
+            'end_datetime': first_slot_end,
+            'recurrence_update': 'subsequent',
+        })
+        slots = recurrence.slot_ids.sorted('start_datetime')
+        self.assertNotIn(first_slot, slots, "The first slot shouldn't be part of the recurrence anymore")
+        self.assertTrue(all(
+            actual_start == first_slot_start + timedelta(days=i)
+            for i, actual_start in enumerate(slots.mapped('start_datetime'))
+        ), "The changes should have been applied to all subsequent slots")
+
+    def test_recurrency_change_date_all(self):
+        first_slot_start, first_slot_end = (
+            datetime(2020, 11, 22, 8 + i) for i in range(2)
+        )
         first_slot = self.env['planning.slot'].create({
-            'start_datetime': self.random_date + timedelta(hours=8),
-            'end_datetime': self.random_date + timedelta(hours=9),
+            'start_datetime': first_slot_start,
+            'end_datetime': first_slot_end,
             'repeat': True,
             'repeat_type': 'x_times',
             'repeat_number': 3,
             'repeat_interval': 1,
-            'repeat_unit': 'month',
+            'repeat_unit': 'day',
         })
-        first_slot.recurrency_id.slot_ids[1].write({
-            'start_datetime': self.random_date + timedelta(days=2, hours=8),
-            'end_datetime': self.random_date + timedelta(days=2, hours=9),
-        })
-        first_slot.write({
-            'start_datetime': self.random_date + timedelta(days=-10, hours=8),
-            'end_datetime': self.random_date + timedelta(days=-10, hours=9),
+        recurrence = first_slot.recurrency_id
+        slots = recurrence.slot_ids
+        second_slot = slots[1]
+
+        # Changing a non-date field
+        second_slot.write({
+            'allocated_hours': 0.5,
             'recurrence_update': 'all',
         })
+        self.assertEqual(slots, recurrence.slot_ids, "The recurrence should have kept the same slots")
         self.assertTrue(
-            slot.start_datetime.day == 17 and slot._get_slot_duration() == 1
-            for slot in first_slot.recurrency_id.slot_ids
+            all(slots.mapped(lambda s: s.allocated_hours == 0.5)),
+            "The change should have been applied to all slots",
         )
+
+        # Changing date fields
+        second_slot.write({
+            'start_datetime': first_slot_start,
+            'end_datetime': first_slot_end,
+            'recurrence_update': 'all',
+        })
+        self.assertNotEqual(slots, recurrence.slot_ids, "All slots but the first one should have been deleted and recreated")
+        slots = recurrence.slot_ids.sorted('start_datetime')
+        self.assertTrue(all(
+            actual_start == first_slot_start + timedelta(days=i - 1)
+            for i, actual_start in enumerate(slots.mapped('start_datetime'))
+        ), "The changes should have been applied to all slots")
 
     def test_recurrency_with_slot_on_closing_day(self):
         """

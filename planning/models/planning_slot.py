@@ -947,47 +947,45 @@ class PlanningSlot(models.Model):
                 values['request_to_switch'] = False
 
         recurrence_update = values.pop('recurrence_update', 'this')
-        if recurrence_update != 'this':
-            recurrence_domains = []
+        shifts_to_update = self
+        # `self` has no recurrence when we just set it, in which case there's no other slot to update
+        if shifts_to_update.recurrency_id and recurrence_update != 'this':
+            # Updating "all" or "subsequent" slots is only possible on one record at a time
+            shifts_to_update.ensure_one()
+            datetime_keys = values.keys() & {'start_datetime', 'end_datetime'}
             if recurrence_update == 'subsequent':
-                for slot in self:
-                    recurrence_domains.append([
-                        '&', ('recurrency_id', '=', slot.recurrency_id.id), ('start_datetime', '>=', slot.start_datetime),
-                    ])
-                    recurrence_slots = self.search(expression.OR(recurrence_domains))
-                    if any(
-                        field_name in values
-                        for field_name in ('start_datetime', 'end_datetime')
-                    ):
-                        recurrence_slots -= slot
-                        values["repeat_type"] = slot.repeat_type
-                        self -= recurrence_slots
-                        recurrence_slots.unlink()
-                    else:
-                        self |= recurrence_slots
-            else:
-                recurrence_slots = self.search([('recurrency_id', 'in', self.recurrency_id.ids)])
-                datetime_keys = values.keys() & {'start_datetime', 'end_datetime'}
-                if datetime_keys and recurrence_slots:
-                    slot = recurrence_slots[-1]
-                    values["repeat_type"] = slot.repeat_type    # this is to ensure that the subsequent slots are recreated
-                    values.update({
-                        dt_key: fields.Datetime.to_datetime(values[dt_key]) - (self[dt_key] - slot[dt_key])
-                        for dt_key in datetime_keys
-                    })
-                    recurrence_slots -= slot
-                    recurrence_slots.unlink()
-                    self -= recurrence_slots
-                    self |= slot
+                subsequent_slots = self.search([
+                    '&',
+                        ('recurrency_id', '=', shifts_to_update.recurrency_id.id),
+                        ('start_datetime', '>', shifts_to_update.start_datetime),
+                ])
+                if datetime_keys:
+                    values["repeat_type"] = self.repeat_type
+                    values["repeat_number"] = 1 + len(subsequent_slots)
+                    (shifts_to_update.recurrency_id.slot_ids - subsequent_slots - shifts_to_update).recurrency_id = False
+                    subsequent_slots.unlink()
                 else:
-                    self |= recurrence_slots
+                    shifts_to_update |= subsequent_slots
+            else:
+                all_slots = shifts_to_update.recurrency_id.slot_ids.sorted('start_datetime')
+                if datetime_keys:
+                    first_slot = all_slots[0]
+                    values.update({
+                        datetime_key: fields.Datetime.from_string(values[datetime_key]) - (self[datetime_key] - first_slot[datetime_key])
+                        for datetime_key in datetime_keys
+                    })
+                    values["repeat_type"] = first_slot.repeat_type    # this is to ensure that the subsequent slots are recreated
+                    (all_slots - first_slot).unlink()
+                    shifts_to_update = first_slot
+                else:
+                    shifts_to_update |= all_slots
 
-        result = super().write(values)
+        result = super(PlanningSlot, shifts_to_update).write(values)
         # recurrence
         if any(key in ('repeat', 'repeat_unit', 'repeat_type', 'repeat_until', 'repeat_interval', 'repeat_number') for key in values):
             # User is trying to change this record's recurrence so we delete future slots belonging to recurrence A
             # and we create recurrence B from now on w/ the new parameters
-            for slot in self:
+            for slot in shifts_to_update:
                 recurrence = slot.recurrency_id
                 if recurrence and values.get('repeat') is None:
                     repeat_type = values.get('repeat_type') or recurrence.repeat_type
