@@ -40,6 +40,11 @@ class AccountOnlineAccount(models.Model):
     name = fields.Char(string="Account Name", help="Account Name as provided by third party provider")
     online_identifier = fields.Char(help='Id used to identify account by third party provider', readonly=True)
     balance = fields.Float(readonly=True, help='Balance of the account sent by the third party provider')
+    available_balance = fields.Float(
+        readonly=True,
+        help='Available balance of the account sent by the third party provider. This is typically '
+             'the balance plus/minus pending transactions.',
+    )
     account_number = fields.Char(help='Set if third party provider has the full account number')
     account_data = fields.Char(help='Extra information needed by third party provider', readonly=True)
 
@@ -197,7 +202,7 @@ class AccountOnlineAccount(models.Model):
             data['next_data'] = resp_json.get('next_data') or {}
         return {'success': not currently_fetching and success, 'data': resp_json.get('data', {})}
 
-    def _retrieve_transactions(self, date=None, include_pendings=False):
+    def _retrieve_transactions(self, date=None, transactions_type='posted'):
         last_stmt_line = self.env['account.bank.statement.line'].search([
                 ('date', '<=', self.last_sync or fields.Date().today()),
                 ('online_transaction_identifier', '!=', False),
@@ -211,12 +216,10 @@ class AccountOnlineAccount(models.Model):
             # If we are in a new sync, we do not give a start date; We will fetch as much as possible. Otherwise, the last sync is the start date.
             'start_date': start_date and format_date(self.env, start_date, date_format='yyyy-MM-dd'),
             'account_id': self.online_identifier,
-            'last_transaction_identifier': last_stmt_line.online_transaction_identifier if not include_pendings else None,
+            'last_transaction_identifier': last_stmt_line.online_transaction_identifier if transactions_type == 'posted' else None,
             'currency_code': self.currency_id.name or self.journal_ids[0].currency_id.name or self.company_id.currency_id.name,
-            'include_pendings': include_pendings,
             'include_foreign_currency': True,
         }
-        pendings = []
         while True:
             # While this is kind of a bad practice to do, it can happen that provider_data/account_data change between
             # 2 calls, the reason is that those field contains the encrypted information needed to access the provider
@@ -227,22 +230,23 @@ class AccountOnlineAccount(models.Model):
                 'provider_data': self.account_online_link_id.provider_data,
                 'account_data': self.account_data,
             })
-            resp_json = self.account_online_link_id._fetch_odoo_fin('/proxy/v1/transactions', data=data)
+            resp_json = self.account_online_link_id._fetch_odoo_fin(f'/proxy/v2/transactions/{transactions_type}', data=data)
+            sign = -1 if self.inverse_balance_sign else 1
             if resp_json.get('balance'):
-                sign = -1 if self.inverse_balance_sign else 1
+                # If the balance changes, it safe to assume available_balance changed too, so rather set it to None than to a wrong value
+                if self.balance != resp_json.get('balance') and not resp_json.get('available_balance'):
+                    self.available_balance = None
                 self.balance = sign * resp_json['balance']
+            if resp_json.get('available_balance'):
+                self.available_balance = sign * resp_json['available_balance']
             if resp_json.get('account_data'):
                 self.account_data = resp_json['account_data']
             transactions += resp_json.get('transactions', [])
-            pendings += resp_json.get('pendings', [])
             if not resp_json.get('next_data'):
                 break
             data['next_data'] = resp_json.get('next_data') or {}
 
-        return {
-            'transactions': self._format_transactions(transactions),
-            'pendings': self._format_transactions(pendings),
-        }
+        return self._format_transactions(transactions)
 
     def get_formatted_balances(self):
         balances = {}
@@ -806,7 +810,7 @@ class AccountOnlineLink(models.Model):
                 # Committing here so that multiple thread calling this method won't execute in parallel and import duplicates transaction
                 self.env.cr.commit()
                 try:
-                    transactions = online_account._retrieve_transactions().get('transactions', [])
+                    transactions = online_account._retrieve_transactions()
                 except RedirectWarning as redirect_warning:
                     self._notify_connection_update(
                         journal=journal,

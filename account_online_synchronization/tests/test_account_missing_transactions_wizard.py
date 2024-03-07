@@ -11,14 +11,20 @@ class TestAccountMissingTransactionsWizard(AccountOnlineSynchronizationCommon):
     @patch('odoo.addons.account_online_synchronization.models.account_online.AccountOnlineLink._fetch_odoo_fin')
     def test_fetch_missing_transaction(self, patched_fetch_odoofin):
         self.account_online_link.state = 'connected'
-        patched_fetch_odoofin.side_effect = [{
-            'transactions': [
-                self._create_one_online_transaction(transaction_identifier='ABCD01', date='2023-07-06', foreign_currency_code='EGP', amount_currency=8.0),
-            ],
-            'pendings': [
-                self._create_one_online_transaction(transaction_identifier='ABCD02_pending', date='2023-07-25', foreign_currency_code='GBP', amount_currency=8.0),
-            ]
-        }]
+        patched_fetch_odoofin.side_effect = [
+            {
+                'transactions': [self._create_one_online_transaction(
+                    transaction_identifier='ABCD01',
+                    date='2023-07-06', foreign_currency_code='EGP', amount_currency=8.0
+                )],
+            },
+            {
+                'transactions': [self._create_one_online_transaction(
+                    transaction_identifier='ABCD02_pending',
+                    date='2023-07-25', foreign_currency_code='GBP', amount_currency=8.0
+                )],
+            },
+        ]
         start_date = fields.Date.from_string('2023-07-01')
         wizard = self.env['account.missing.transaction.wizard'].new({
             'date': start_date,

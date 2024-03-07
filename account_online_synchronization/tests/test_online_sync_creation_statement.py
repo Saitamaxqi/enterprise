@@ -170,16 +170,15 @@ class TestSynchStatementCreation(AccountOnlineSynchronizationCommon):
             'currency_code': 'EUR',
             'provider_data': False,
             'account_data': False,
-            'include_pendings': False,
             'include_foreign_currency': True,
         }
-        patched_fetch.assert_called_with('/proxy/v1/transactions', data=data)
+        patched_fetch.assert_called_with('/proxy/v2/transactions/posted', data=data)
 
         # No transaction exists in db but we have a value for last_sync on the online_account, we should use that date
         self.account_online_account.last_sync = '2020-03-04'
         data['start_date'] = '2020-03-04'
         self.account_online_account._retrieve_transactions()
-        patched_fetch.assert_called_with('/proxy/v1/transactions', data=data)
+        patched_fetch.assert_called_with('/proxy/v2/transactions/posted', data=data)
 
         # We have transactions, we should use the date of the latest one instead of the last_sync date
         transactions = self._create_online_transactions(['2016-01-01', '2016-01-03'])
@@ -188,7 +187,7 @@ class TestSynchStatementCreation(AccountOnlineSynchronizationCommon):
         data['start_date'] = '2016-01-03'
         data['last_transaction_identifier'] = '2'
         self.account_online_account._retrieve_transactions()
-        patched_fetch.assert_called_with('/proxy/v1/transactions', data=data)
+        patched_fetch.assert_called_with('/proxy/v2/transactions/posted', data=data)
 
     def test_multiple_transaction_identifier_fetched(self):
         # Ensure that if we receive twice the same transaction within the same call, it won't be created twice

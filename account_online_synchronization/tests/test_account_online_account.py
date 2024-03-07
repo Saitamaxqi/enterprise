@@ -192,65 +192,37 @@ class TestAccountOnlineAccount(AccountOnlineSynchronizationCommon):
         self.account_online_link.state = 'connected'
         patched_fetch_odoofin.side_effect = [{
             'transactions': [
-                self._create_one_online_transaction(transaction_identifier='ABCD01', date='2023-07-06'),
-                self._create_one_online_transaction(transaction_identifier='ABCD02', date='2023-07-22'),
-            ],
-            'pendings': [
                 self._create_one_online_transaction(transaction_identifier='ABCD03_pending', date='2023-07-25'),
                 self._create_one_online_transaction(transaction_identifier='ABCD04_pending', date='2023-07-25'),
             ]
         }]
 
         start_date = fields.Date.from_string('2023-07-01')
-        result = self.account_online_account._retrieve_transactions(date=start_date, include_pendings=True)
+        result = self.account_online_account._retrieve_transactions(date=start_date, transactions_type='pending')
         self.assertEqual(
             result,
-            {
-                'transactions': [
-                    {
-                        'payment_ref': 'transaction_ABCD01',
-                        'date': fields.Date.from_string('2023-07-06'),
-                        'online_transaction_identifier': 'ABCD01',
-                        'amount': 10.0,
-                        'partner_name': None,
-                        'online_account_id': self.account_online_account.id,
-                        'journal_id': self.euro_bank_journal.id,
-                        'company_id': self.euro_bank_journal.company_id.id,
-                    },
-                    {
-                        'payment_ref': 'transaction_ABCD02',
-                        'date': fields.Date.from_string('2023-07-22'),
-                        'online_transaction_identifier': 'ABCD02',
-                        'amount': 10.0,
-                        'partner_name': None,
-                        'online_account_id': self.account_online_account.id,
-                        'journal_id': self.euro_bank_journal.id,
-                        'company_id': self.euro_bank_journal.company_id.id,
-                    }
-                ],
-                'pendings': [
-                    {
-                        'payment_ref': 'transaction_ABCD03_pending',
-                        'date': fields.Date.from_string('2023-07-25'),
-                        'online_transaction_identifier': 'ABCD03_pending',
-                        'amount': 10.0,
-                        'partner_name': None,
-                        'online_account_id': self.account_online_account.id,
-                        'journal_id': self.euro_bank_journal.id,
-                        'company_id': self.euro_bank_journal.company_id.id,
-                    },
-                    {
-                        'payment_ref': 'transaction_ABCD04_pending',
-                        'date': fields.Date.from_string('2023-07-25'),
-                        'online_transaction_identifier': 'ABCD04_pending',
-                        'amount': 10.0,
-                        'partner_name': None,
-                        'online_account_id': self.account_online_account.id,
-                        'journal_id': self.euro_bank_journal.id,
-                        'company_id': self.euro_bank_journal.company_id.id,
-                    }
-                ]
-            }
+            [
+                {
+                    'payment_ref': 'transaction_ABCD03_pending',
+                    'date': fields.Date.from_string('2023-07-25'),
+                    'online_transaction_identifier': 'ABCD03_pending',
+                    'amount': 10.0,
+                    'partner_name': None,
+                    'online_account_id': self.account_online_account.id,
+                    'journal_id': self.euro_bank_journal.id,
+                    'company_id': self.euro_bank_journal.company_id.id,
+                },
+                {
+                    'payment_ref': 'transaction_ABCD04_pending',
+                    'date': fields.Date.from_string('2023-07-25'),
+                    'online_transaction_identifier': 'ABCD04_pending',
+                    'amount': 10.0,
+                    'partner_name': None,
+                    'online_account_id': self.account_online_account.id,
+                    'journal_id': self.euro_bank_journal.id,
+                    'company_id': self.euro_bank_journal.company_id.id,
+                }
+            ]
         )
 
     @freeze_time('2023-01-01 01:10:15')

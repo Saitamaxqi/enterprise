@@ -41,9 +41,8 @@ class AccountMissingTransactionWizard(models.TransientModel):
         if self.journal_id.account_online_link_state != 'connected':
             raise UserError(_("You can't find missing transactions for a journal that isn't connected."))
 
-        fetched_transactions = self.journal_id.account_online_account_id._retrieve_transactions(date=self.date, include_pendings=True)
-        transactions = fetched_transactions.get('transactions') or []
-        pendings = fetched_transactions.get('pendings') or []
+        transactions = self.journal_id.account_online_account_id._retrieve_transactions(date=self.date, transactions_type='posted')
+        pendings = self.journal_id.account_online_account_id._retrieve_transactions(date=self.date, transactions_type='pending')
 
         pendings = [{**pending, 'state': 'pending'} for pending in pendings]
         filtered_transactions = self.journal_id.account_online_account_id._get_filtered_transactions(transactions + pendings)

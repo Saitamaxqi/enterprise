@@ -369,3 +369,41 @@ class AccountJournal(models.Model):
         # Extends 'account_accountant'
         self._consume_connection_state_details()
         return super().action_open_bank_transactions()
+
+    def action_open_pending_bank_statement_lines(self):
+        ''' Show the pending transactions bank statement lines.
+        :return: An action showing pending transactions bank statement lines.
+        '''
+        self.ensure_one()
+        account = self.account_online_account_id
+        pendings = account._retrieve_transactions(
+            date=fields.Datetime.now() - relativedelta(days=7),
+            transactions_type='pending',
+        )
+        if not pendings:
+            return {
+                'type': 'ir.actions.client',
+                'tag': 'display_notification',
+                'params': {
+                    'title': _('No Pending Transactions'),
+                    'type': 'warning',
+                    'message': _('There are no pending transactions for this journal.'),
+                },
+            }
+
+        values = [{**pending, 'state': 'pending'} for pending in pendings]
+        pending_transactions = self.env['account.bank.statement.line.transient'].create(values)
+        return {
+            'name': _("Pending Transactions"),
+            'type': 'ir.actions.act_window',
+            'res_model': 'account.bank.statement.line.transient',
+            'view_mode': 'list',
+            'views': [(False, 'list')],
+            'domain': [('id', 'in', pending_transactions.ids)],
+            'context': {
+                'has_manual_entries': False,
+                'is_fetch_before_creation': False,
+                'search_default_filter_posted': False,
+                'disable_import': True,
+            },
+        }

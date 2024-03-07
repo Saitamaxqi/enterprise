@@ -612,6 +612,10 @@ export class BankRecKanbanController extends KanbanController {
             "collect_global_info_data",
             [journalId],
         );
+        this.updateJournalStateFromGlobalInfo(newState, values);
+    }
+
+    updateJournalStateFromGlobalInfo(newState, values) {
         newState.journalBalanceAmount = values.balance_amount;
     }
 

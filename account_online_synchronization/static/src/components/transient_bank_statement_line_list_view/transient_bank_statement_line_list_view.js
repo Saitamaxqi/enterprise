@@ -17,6 +17,10 @@ export class TransientBankStatementLineListController extends ListController {
         const resultAction = await this.orm.call("account.bank.statement.line.transient", "action_import_transactions", [resIds]);
         this.action.doAction(resultAction);
     }
+
+    get allowImportTransaction() {
+        return !this.props.context.disable_import;
+    }
 }
 
 export class TransientBankStatementLineListRenderer extends ListRenderer {
