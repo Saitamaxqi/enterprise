@@ -82,17 +82,17 @@ class MrpEcoApproval(models.Model):
     approval_template_id = fields.Many2one(
         'mrp.eco.approval.template', 'Template',
         ondelete='cascade', required=True)
-    name = fields.Char('Role', related='approval_template_id.name', store=True, readonly=False)
+    name = fields.Char('Role', related='approval_template_id.name')
     user_id = fields.Many2one(
         'res.users', 'Approved by')
     required_user_ids = fields.Many2many(
         'res.users', string='Requested Users', related='approval_template_id.user_ids', readonly=False)
     template_stage_id = fields.Many2one(
         'mrp.eco.stage', 'Approval Stage',
-        related='approval_template_id.stage_id', store=True, readonly=False)
+        related='approval_template_id.stage_id')
     eco_stage_id = fields.Many2one(
         'mrp.eco.stage', 'ECO Stage',
-        related='eco_id.stage_id', store=True, readonly=False)
+        related='eco_id.stage_id')
     status = fields.Selection([
         ('none', 'Not Yet'),
         ('comment', 'Commented'),
@@ -256,7 +256,7 @@ class MrpEco(models.Model):
     new_bom_id = fields.Many2one(
         'mrp.bom', 'New Bill of Materials',
         copy=False)
-    new_bom_revision = fields.Integer('BoM Revision', related='new_bom_id.version', store=True, readonly=False)
+    new_bom_revision = fields.Integer('BoM Revision', related='new_bom_id.version', readonly=False)
     will_update_version = fields.Boolean(
         "Update Version", default=True,
         help="If unchecked, the version of the product/BoM will remain unchanged once the ECO is applied")

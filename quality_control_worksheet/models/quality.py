@@ -15,7 +15,7 @@ class QualityPoint(models.Model):
         domain="[('res_model', '=', 'quality.check'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]")
     # tech field used by quality_field_domain widget
     worksheet_model_name = fields.Char(
-        'Model Name', related='worksheet_template_id.model_id.model', readonly=True, store=True)
+        'Model Name', related='worksheet_template_id.model_id.model')
     worksheet_success_conditions = fields.Char('Success Conditions')
 
 

@@ -190,7 +190,7 @@ class QualityCheck(models.Model):
 
     workorder_id = fields.Many2one(
         'mrp.workorder', 'Operation', check_company=True, index='btree_not_null')
-    workcenter_id = fields.Many2one('mrp.workcenter', related='workorder_id.workcenter_id', store=True, readonly=True)  # TDE: necessary ?
+    workcenter_id = fields.Many2one('mrp.workcenter', related='workorder_id.workcenter_id')
     production_id = fields.Many2one(
         'mrp.production', 'Production Order', check_company=True, index='btree_not_null')
     product_tracking = fields.Selection(related='production_id.product_tracking')
@@ -209,7 +209,7 @@ class QualityCheck(models.Model):
     component_uom_id = fields.Many2one('uom.uom', related='move_id.product_uom', readonly=True)
 
     qty_done = fields.Float('Done', digits='Product Unit of Measure')
-    finished_lot_id = fields.Many2one('stock.lot', 'Finished Lot/Serial', related='production_id.lot_producing_id', store=True)
+    finished_lot_id = fields.Many2one('stock.lot', 'Finished Lot/Serial', related='production_id.lot_producing_id')
     additional = fields.Boolean('Register additional product', compute='_compute_additional')
     component_tracking = fields.Selection(related='component_id.tracking', string="Is Component Tracked")
 
