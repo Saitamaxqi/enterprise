@@ -217,6 +217,10 @@ REPORT_CONFIG = {
         'asset_line_ref': 'l10n_nl_reports.account_financial_report_bs_assets',
         'liability_line_ref': 'l10n_nl_reports.account_financial_report_bs_leq',
     },
+    'l10n_nl_reports.account_financial_report_bs_tags': {
+        'asset_line_ref': 'l10n_nl_reports.account_financial_report_bs_tags_assets',
+        'liability_line_ref': 'l10n_nl_reports.account_financial_report_bs_tags_leq',
+    },
     'l10n_no_reports.account_financial_report_NO_balancesheet': {
         'asset_line_ref': 'l10n_no_reports.account_financial_report_NO_active',
         'liability_line_ref': 'l10n_no_reports.account_financial_report_NO_passive',
