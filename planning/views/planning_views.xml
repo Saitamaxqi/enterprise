@@ -381,6 +381,10 @@
         <field name="inherit_id" ref="planning_view_search_base"/>
         <field name="arch" type="xml">
             <search position="attributes"/>
+            <xpath expr="//group" position="inside">
+                <separator/>
+                <filter name="group_by_properties" string="Properties" context="{'group_by': 'slot_properties'}"/>
+            </xpath>
         </field>
     </record>
 
