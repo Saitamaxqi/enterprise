@@ -15,6 +15,7 @@ Validate stock moves for Field Service
         'views/project_task_views.xml',
         'views/stock_move_views.xml',
         'wizard/fsm_stock_tracking_views.xml',
+        'views/product_product_views.xml',
     ],
     'assets': {
         'web.assets_backend': [
