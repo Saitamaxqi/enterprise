@@ -41,7 +41,7 @@ class HrEmployee(models.Model):
             ])
             for version in versions:
                 version.activity_schedule(
-                    'note.mail_activity_data_reminder',
+                    'mail.mail_activity_data_todo',
                     user_id=version.hr_responsible_id.id,
                     note=_("End date of %(name)s's contract is today.", name=version.employee_id.name),
                 )
