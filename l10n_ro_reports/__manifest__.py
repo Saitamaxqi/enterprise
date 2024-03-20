@@ -17,6 +17,7 @@ Accounting reports for Romania
         "data/profit_loss_micro.xml",
         "data/profit_loss_smle.xml",
         "data/profit_loss_internat.xml",
+        "data/trial_balance.xml",
     ],
     'installable': True,
     'auto_install': True,
