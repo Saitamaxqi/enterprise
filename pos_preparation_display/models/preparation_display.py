@@ -211,6 +211,9 @@ class Pos_Preparation_DisplayDisplay(models.Model):
         for preparation_display in self:
             if len(preparation_display.stage_ids) == 0:
                 raise ValidationError(_("A preparation display must have a minimum of one step."))
+            # If any session is open, the stages cannot be modified.
+            if any(preparation_display.pos_config_ids.mapped('session_ids').filtered(lambda s: s.state =='opened')):
+                raise ValidationError(_("You cannot modify the stages of a preparation display that has an active sessions."))
 
     @api.depends('pos_config_ids')
     def _compute_contains_bar_restaurant(self):

@@ -518,6 +518,15 @@ msgid "Timer after which the order will be highlighted"
 msgstr ""
 
 #. module: pos_preparation_display
+#. odoo-python
+#: code:addons/pos_preparation_display/models/preparation_display.py:0
+#, python-format
+msgid ""
+"You cannot modify the stages of a preparation display that has an active "
+"sessions."
+msgstr ""
+
+#. module: pos_preparation_display
 #: model:ir.actions.server,name:pos_preparation_display.preparation_display_delete_cron_ir_actions_server
 msgid "delete_preparation_display_order"
 msgstr ""
