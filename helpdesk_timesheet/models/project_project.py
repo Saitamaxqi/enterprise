@@ -8,16 +8,13 @@ class ProjectProject(models.Model):
     _inherit = 'project.project'
 
     ticket_ids = fields.One2many('helpdesk.ticket', 'project_id', string='Tickets')
-    ticket_count = fields.Integer('# Tickets', compute='_compute_ticket_count')
+    ticket_count = fields.Integer('# Tickets', compute='_compute_ticket_count', groups='helpdesk.group_helpdesk_user')
 
     helpdesk_team = fields.One2many('helpdesk.team', 'project_id')
     has_helpdesk_team = fields.Boolean('Has Helpdesk Teams', compute='_compute_has_helpdesk_team', search='_search_has_helpdesk_team', compute_sudo=True, export_string_translation=False)
 
     @api.depends('ticket_ids.project_id')
     def _compute_ticket_count(self):
-        if not self.env.user.has_group('helpdesk.group_helpdesk_user'):
-            self.ticket_count = 0
-            return
         result = self.env['helpdesk.ticket']._read_group([
             ('project_id', 'in', self.ids)
         ], ['project_id'], ['__count'])
@@ -64,13 +61,14 @@ class ProjectProject(models.Model):
 
     def _get_stat_buttons(self):
         buttons = super()._get_stat_buttons()
-        buttons.append({
-            'icon': 'life-ring',
-            'text': self.env._('Tickets'),
-            'number': self.sudo().ticket_count,
-            'action_type': 'object',
-            'action': 'action_open_project_tickets',
-            'show': self.sudo().ticket_count > 0,
-            'sequence': 25,
-        })
+        if self.env.user.has_group('helpdesk.group_helpdesk_user'):
+            buttons.append({
+                'icon': 'life-ring',
+                'text': self.env._('Tickets'),
+                'number': self.ticket_count,
+                'action_type': 'object',
+                'action': 'action_open_project_tickets',
+                'show': self.ticket_count > 0,
+                'sequence': 25,
+            })
         return buttons
