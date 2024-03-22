@@ -44,9 +44,8 @@ export class DocumentsKanbanRecord extends KanbanRecord {
             }
         });
 
-        // Pdf Thumbnail
-        this.pdfService = useService("documents_pdf_thumbnail");
-        this.pdfService.enqueueRecords([this.props.record]);
+        this.thumbnailService = useService("documents_client_thumbnail");
+        this.thumbnailService.enqueueRecords([this.props.record]);
     }
 
     /**

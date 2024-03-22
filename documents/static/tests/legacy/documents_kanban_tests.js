@@ -1,4 +1,5 @@
 import { fileUploadService } from "@web/core/file_upload/file_upload_service";
+import { documentsClientThumbnailService } from "@documents/views/helper/documents_client_thumbnail_service";
 import { DocumentsKanbanRenderer } from "@documents/views/kanban/documents_kanban_renderer";
 import {
     createDocumentsView as originalCreateDocumentsView,
@@ -59,7 +60,7 @@ QUnit.module("documents", {}, function () {
         "documents_kanban_tests.js",
         {
             async beforeEach() {
-                loadServices();
+                loadServices({ documents_client_thumbnail: documentsClientThumbnailService });
                 patchWithCleanup(browser, {
                     navigator: {
                         ...browser.navigator,
@@ -226,41 +227,38 @@ QUnit.module("documents", {}, function () {
                     { name: "fake2" },
                 ]);
                 const irAttachmentId1 = mockServer.mockCreate("ir.attachment", {})[0];
-                mockServer.mockCreate(
-                    "documents.document",
-                    [
-                        {
-                            activity_state: "today",
-                            available_embedded_actions_ids: documentsEmbeddedActions,
-                            file_size: 30000,
-                            folder_id: documentsFolderIds[0],
-                            is_editable_attachment: true,
-                            name: "yop",
-                            owner_id: resUsersIds[0],
-                            partner_id: resPartnerIds[1],
-                            res_id: resFakeIds[0],
-                            res_model: "res.fake",
-                            res_model_name: "Task",
-                            res_name: "Write specs",
-                            tag_ids: [documentsTagIds[0], documentsTagIds[1]],
-                        },
-                        {
-                            attachment_id: mockServer.mockCreate("ir.attachment", {})[0],
-                            available_embedded_actions_ids: documentsEmbeddedActions,
-                            file_size: 20000,
-                            folder_id: documentsFolderIds[0],
-                            mimetype: "application/pdf",
-                            name: "blip",
-                            owner_id: resUsersIds[1],
-                            partner_id: resPartnerIds[1],
-                            res_id: resFakeIds[1],
-                            res_model: "res.fake",
-                            res_model_name: "Task",
-                            res_name: "Write tests",
-                            tag_ids: [documentsTagIds[1]],
-                        },
-                    ]
-                );
+                mockServer.mockCreate("documents.document", [
+                    {
+                        activity_state: "today",
+                        available_embedded_actions_ids: documentsEmbeddedActions,
+                        file_size: 30000,
+                        folder_id: documentsFolderIds[0],
+                        is_editable_attachment: true,
+                        name: "yop",
+                        owner_id: resUsersIds[0],
+                        partner_id: resPartnerIds[1],
+                        res_id: resFakeIds[0],
+                        res_model: "res.fake",
+                        res_model_name: "Task",
+                        res_name: "Write specs",
+                        tag_ids: [documentsTagIds[0], documentsTagIds[1]],
+                    },
+                    {
+                        attachment_id: mockServer.mockCreate("ir.attachment", {})[0],
+                        available_embedded_actions_ids: documentsEmbeddedActions,
+                        file_size: 20000,
+                        folder_id: documentsFolderIds[0],
+                        mimetype: "application/pdf",
+                        name: "blip",
+                        owner_id: resUsersIds[1],
+                        partner_id: resPartnerIds[1],
+                        res_id: resFakeIds[1],
+                        res_model: "res.fake",
+                        res_model_name: "Task",
+                        res_name: "Write tests",
+                        tag_ids: [documentsTagIds[1]],
+                    },
+                ]);
                 mockServer.mockCreate("documents.document", [
                     {
                         available_embedded_actions_ids: documentsEmbeddedActions,
@@ -5404,30 +5402,32 @@ QUnit.module("documents", {}, function () {
                 assert.verifySteps(["web_save", "copy"]);
             });
 
-            QUnit.test(
-                "documents kanban: select a range with SHIFT key",
-                async function (assert) {
-                    await createDocumentsView({
-                        type: "kanban",
-                        resModel: "documents.document",
-                        arch: `
+            QUnit.test("documents kanban: select a range with SHIFT key", async function (assert) {
+                await createDocumentsView({
+                    type: "kanban",
+                    resModel: "documents.document",
+                    arch: `
                         <kanban js_class="documents_kanban" draggable="true"><templates><t t-name="card" class="flex-row">
                             <i class="fa fa-circle mt-1 o_record_selector"/>
                             <field name="name"/>
                         </t></templates></kanban>`,
-                    });
+                });
 
-                    await legacyClick(target, ".o_kanban_record:nth-of-type(2)");
-                    assert.hasClass(
-                        target.querySelector(".o_kanban_record:nth-of-type(2)"),
-                        "o_record_selected",
-                    );
-                    await triggerEvent(target.querySelector(".o_kanban_record:nth-of-type(5)"), null, "click", {
+                await legacyClick(target, ".o_kanban_record:nth-of-type(2)");
+                assert.hasClass(
+                    target.querySelector(".o_kanban_record:nth-of-type(2)"),
+                    "o_record_selected"
+                );
+                await triggerEvent(
+                    target.querySelector(".o_kanban_record:nth-of-type(5)"),
+                    null,
+                    "click",
+                    {
                         shiftKey: true,
-                    });
-                    assert.containsN(target, ".o_record_selected", 4)
-                }
-            );
+                    }
+                );
+                assert.containsN(target, ".o_record_selected", 4);
+            });
         }
     );
 });

@@ -31,7 +31,12 @@ export class DocumentsDocument extends models.Model {
     file_extension = fields.Char({ string: "File extension" });
     thumbnail_status = fields.Selection({
         string: "Thumbnail status",
-        selection: [["none", "None"]],
+        selection: [
+            ["present", "Present"],
+            ["error", "Error"],
+            ["client_generated", "Client_Generated"],
+            ["restricted", "Inaccessible"],
+        ],
     });
     lock_uid = fields.Many2one({ relation: "res.users" });
     message_attachment_count = fields.Integer({ string: "Message attachment count" });
@@ -359,3 +364,7 @@ export const DocumentsModels = {
 export function getDocumentsModel(modelName) {
     return Object.values(DocumentsModels).find((model) => model._name === modelName);
 }
+
+export const mimetypeExamplesBase64 = {
+    WEBP: "UklGRjoAAABXRUJQVlA4IC4AAAAwAQCdASoBAAEAAUAmJaAAA3AA/u/uY//8s//2W/7LeM///5Bj/dl/pJxGAAAA",
+};

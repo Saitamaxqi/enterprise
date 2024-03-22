@@ -54,7 +54,7 @@ function makeFakeMailStoreService() {
  */
 export function loadServices(extraServices = {}) {
     const REQUIRED_SERVICES = {
-        documents_pdf_thumbnail: {
+        documents_client_thumbnail: {
             start() {
                 return {
                     enqueueRecords: () => {},

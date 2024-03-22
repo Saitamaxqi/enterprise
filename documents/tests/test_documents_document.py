@@ -12,7 +12,7 @@ from odoo.tests.common import new_test_user
 from odoo.tests import users
 from odoo.tools import mute_logger
 
-from .test_documents_common import TransactionCaseDocuments, GIF, TEXT
+from .test_documents_common import TransactionCaseDocuments, GIF, TEXT, WEBP
 
 DATA = "data:application/zip;base64,R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs="
 file_a = {'name': 'doc.zip', 'datas': 'data:application/zip;base64,R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs='}
@@ -539,23 +539,49 @@ class TestCaseDocuments(TransactionCaseDocuments):
                 self.assertEqual(pdf_document.thumbnail, False)
                 self.assertEqual(pdf_document.thumbnail_status, 'client_generated')
 
-            word_document = self.env['documents.document'].create({
-                'name': 'Test DOC',
-                'mimetype': 'application/msword',
-                'folder_id': self.folder_b.id,
-            })
-            self.assertEqual(word_document.thumbnail, False)
-            self.assertEqual(word_document.thumbnail_status, False)
-        for mimetype in ['image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/svg+xml', 'image/tiff', 'image/x-icon', 'image/webp']:
-            with self.subTest(mimetype=mimetype):
-                image_document = self.env['documents.document'].create({
-                    'name': 'Test image doc',
-                    'mimetype': mimetype,
-                    'datas': GIF,
-                    'folder_id': self.folder_b.id,
-                })
+        word_document = self.env['documents.document'].create({
+            'name': 'Test DOC doc',
+            'mimetype': 'application/msword',
+            'folder_id': self.folder_b.id,
+        })
+        self.assertEqual(word_document.thumbnail, False)
+        self.assertEqual(word_document.thumbnail_status, False)
+
+        webp_document = self.env['documents.document'].create({
+            'name': 'Test WEBP doc',
+            'mimetype': 'image/webp',
+            'datas': WEBP,
+            'folder_id': self.folder_b.id,
+        })
+        self.assertEqual(webp_document.thumbnail, False)
+        self.assertEqual(webp_document.thumbnail_status, 'client_generated')
+
+        image_documents = self.env['documents.document'].create([{
+            'name': 'Test image doc',
+            'mimetype': mimetype,
+            'datas': GIF,
+            'folder_id': self.folder_b.id,
+        } for mimetype in [
+            'image/bmp', 'image/gif', 'image/jpeg', 'image/png', 'image/svg+xml', 'image/tiff', 'image/x-icon'
+        ]])
+        for image_document in image_documents:
+            with self.subTest(mimetype=image_document.mimetype):
                 self.assertEqual(image_document.thumbnail, GIF)
                 self.assertEqual(image_document.thumbnail_status, 'present')
+
+        text_documents = self.env['documents.document'].create([{
+            'name': 'Test Special Case Text doc',
+            'mimetype': mimetype,
+            'datas': TEXT,
+            'folder_id': self.folder_b.id,
+        } for mimetype in [
+            'text/html', 'text/csv', 'text/plain', 'text/javascript', 'text/css', 'text/markdown', 'text/xml',
+            'application/json', 'application/xml', 'text/calendar',
+        ]])
+        for text_document in text_documents:
+            with self.subTest(mimetype=text_document.mimetype):
+                self.assertEqual(text_document.thumbnail, False)
+                self.assertEqual(text_document.thumbnail_status, False)
 
     def test_document_max_upload_limit(self):
         Doc = self.env['documents.document']
