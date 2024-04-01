@@ -24,9 +24,11 @@ Key Features
     'data': [
         'security/ir.model.access.csv',
         'security/sale_amazon_security.xml',
+
         'data/amazon_data.xml',
         'data/amazon_cron.xml',
         'data/mail_template_data.xml',
+
         'views/amazon_account_views.xml',
         'views/amazon_marketplace_views.xml',
         'views/amazon_offer_views.xml',
@@ -35,6 +37,8 @@ Key Features
         'views/res_config_settings_views.xml',
         'views/sale_order_views.xml',
         'views/stock_picking_views.xml',
+        'views/menus.xml',  # Depends on actions defined in view files.
+
         'wizards/recover_order_wizard_views.xml',
     ],
     'license': 'OEEL-1',

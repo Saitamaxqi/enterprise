@@ -14,12 +14,26 @@ _logger = logging.getLogger(__name__)
 class AmazonOffer(models.Model):
     _description = "Amazon Offer"
 
-    def _default_marketplace(self):
-        """ Return the single marketplace of this offer's account if it exists. """
-        account_id = self.env.context.get('default_account_id')
-        if account_id:
-            marketplaces = self.env['amazon.account'].browse([account_id]).active_marketplace_ids
-            return len(marketplaces) == 1 and marketplaces[0]
+    @api.model
+    def default_get(self, default_fields):
+        result = super().default_get(default_fields)
+
+        # Default account_id.
+        if not result.get('account_id'):
+            accounts = self.env['amazon.account'].search([
+                ('refresh_token', '!=', False),
+                *self.env['amazon.account']._check_company_domain(self.env.company),
+            ], limit=2)
+            if len(accounts) == 1:
+                result['account_id'] = accounts.id
+
+        # Default marketplace_id.
+        if (account_id := result.get('account_id')) and not result.get('marketplace_id'):
+            account = self.env['amazon.account'].browse(account_id)
+            if len(marketplaces := account.active_marketplace_ids) == 1:
+                result['marketplace_id'] = marketplaces.id
+
+        return result
 
     account_id = fields.Many2one(
         string="Account",
@@ -34,7 +48,6 @@ class AmazonOffer(models.Model):
         string="Marketplace",
         help="The marketplace of this offer.",
         comodel_name='amazon.marketplace',
-        default=_default_marketplace,
         required=True,
         domain="[('id', 'in', active_marketplace_ids)]",
     )
@@ -44,7 +57,7 @@ class AmazonOffer(models.Model):
     product_template_id = fields.Many2one(
         related="product_id.product_tmpl_id", store=True, readonly=True
     )
-    sku = fields.Char(string="SKU", help="The Stock Keeping Unit.", required=True)
+    sku = fields.Char(string="Amazon SKU", help="The Stock Keeping Unit.", required=True)
     amazon_sync_status = fields.Selection(
         string="Amazon Synchronization Status",
         help="The synchronization status of the product's stock level to Amazon:\n"
