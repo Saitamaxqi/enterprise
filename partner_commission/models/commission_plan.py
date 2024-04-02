@@ -22,10 +22,12 @@ class CommissionPlan(models.Model):
 
     def _match_rules(self, product, template, pricelist):
         self.ensure_one()
-
-        rule = self.env['commission.rule'].search([
+        parent_path = product.categ_id.parent_path
+        ancestor_ids = parent_path and parent_path.split('/') or []
+        ancestor_ids = [int(cat_id) for cat_id in ancestor_ids if cat_id]
+        rules = self.env['commission.rule'].search([
             ('plan_id', '=', self.id),
-            ('category_id', '=', product.categ_id.id),
+            ('category_id', 'in', ancestor_ids),
             '|',
             ('product_id', '=', product.id),
             ('product_id', '=', False),
@@ -35,9 +37,13 @@ class CommissionPlan(models.Model):
             '|',
             ('pricelist_id', '=', pricelist),
             ('pricelist_id', '=', False),
-        ], limit=1, order='sequence')
+        ], order='sequence')
 
-        return rule
+        for cat_id in reversed(ancestor_ids):
+            rule = rules.filtered(lambda r: r.category_id.id == cat_id)
+            if rule:
+                return rule[0]
+        return self.env['commission.rule']
 
 
 class CommissionRule(models.Model):

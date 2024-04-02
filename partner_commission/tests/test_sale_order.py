@@ -128,20 +128,30 @@ class TestSaleOrder(TestCommissionsSetup):
 
     def test_commission_plan_apply_sequence(self):
         """
-            Check that we select the first valid rule following the sequence.
+            1. Check that we select the first valid rule following the sequence.
+            2. Check that if a rule is not present for product category, then it's parent category's
+            rule is applied.
         """
-        category = self.env['product.category'].create({
-            'name': 'Category',
-        })
-        _, product_test = self.env['product.product'].create([
+        category_main = self.env['product.category'].create(
+            {
+                'name': 'All'
+            }
+        )
+        category_sub = self.env['product.category'].create(
+            {
+                'name': 'Category',
+                'parent_id': category_main.id,
+            },
+        )
+        product_other, product_test = self.env['product.product'].create([
             {
                 'name': 'product_other',
-                'categ_id': category.id,
+                'categ_id': category_sub.id,
                 'list_price': 100.0,
             },
             {
                 'name': 'product_test',
-                'categ_id': category.id,
+                'categ_id': category_main.id,
                 'list_price': 100.0,
             }
         ])
@@ -150,13 +160,13 @@ class TestSaleOrder(TestCommissionsSetup):
             'product_id': self.env.ref('partner_commission.product_commission').id,
             'commission_rule_ids': [
                 (0, 0, {
-                            'category_id': category.id,
+                            'category_id': category_main.id,
                             'product_id': None,
                             'rate': 10,
                             'sequence': 1,
                 }),
                 (0, 0, {
-                            'category_id': category.id,
+                            'category_id': category_main.id,
                             'product_id': product_test.id,
                             'rate': 20,
                             'sequence': 0, # First rule to apply
@@ -174,4 +184,13 @@ class TestSaleOrder(TestCommissionsSetup):
             line.product_uom_qty = 1
         so = form.save()
 
-        self.assertEqual(so.commission, 20)
+        self.assertEqual(so.commission, 20)  # Confirms the sequence of rule applied
+
+        old_commission = so.commission
+        with form.order_line.new() as line:
+            line.name = product_other.name
+            line.product_id = product_other
+            line.product_uom_qty = 1
+        so = form.save()
+
+        self.assertEqual(so.commission, 10 + old_commission)  # Confirms that parent rule is applied
