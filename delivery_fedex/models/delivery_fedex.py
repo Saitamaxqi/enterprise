@@ -51,12 +51,12 @@ class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
 
     delivery_type = fields.Selection(selection_add=[
-        ('fedex', "FedEx")
+        ('fedex', "FedEx (Legacy)")
     ], ondelete={'fedex': lambda recs: recs.write({'delivery_type': 'fixed', 'fixed_price': 0})})
 
     fedex_developer_key = fields.Char(string="Developer Key", groups="base.group_system")
     fedex_developer_password = fields.Char(string="Password", groups="base.group_system")
-    fedex_account_number = fields.Char(string="FedEx Account Number", groups="base.group_system")
+    fedex_account_number = fields.Char(string="FedEx Legacy Account Number", groups="base.group_system")
     fedex_meter_number = fields.Char(string="Meter Number", groups="base.group_system")
     fedex_droppoff_type = fields.Selection([('BUSINESS_SERVICE_CENTER', 'BUSINESS_SERVICE_CENTER'),
                                             ('DROP_BOX', 'DROP_BOX'),
@@ -110,9 +110,9 @@ class DeliveryCarrier(models.Model):
     fedex_saturday_delivery = fields.Boolean(string="FedEx Saturday Delivery", help="""Special service:Saturday Delivery, can be requested on following days.
                                                                                  Thursday:\n1.FEDEX_2_DAY.\nFriday:\n1.PRIORITY_OVERNIGHT.\n2.FIRST_OVERNIGHT.
                                                                                  3.INTERNATIONAL_PRIORITY.\n(To Select Countries)""")
-    fedex_extra_data_rate_request = fields.Text('Extra data for rate', help=HELP_EXTRA_DATA)
-    fedex_extra_data_ship_request = fields.Text('Extra data for ship', help=HELP_EXTRA_DATA)
-    fedex_extra_data_return_request = fields.Text('Extra data for return', help=HELP_EXTRA_DATA)
+    fedex_extra_data_rate_request = fields.Text('Extra data for rate (legacy)', help=HELP_EXTRA_DATA)
+    fedex_extra_data_ship_request = fields.Text('Extra data for ship (legacy)', help=HELP_EXTRA_DATA)
+    fedex_extra_data_return_request = fields.Text('Extra data for return (legacy)', help=HELP_EXTRA_DATA)
 
     def _compute_can_generate_return(self):
         super()._compute_can_generate_return()
@@ -457,7 +457,7 @@ class DeliveryCarrier(models.Model):
                 req_price[fdx_currency], order_currency, company, order.date_order or fields.Date.today())
         # finally, attempt to find active currency in the database
         currency_codes = list(req_price.keys())
-        # note, fedex sometimes return the currency as ISO instead of using their own code 
+        # note, fedex sometimes return the currency as ISO instead of using their own code
         # (eg it can return GBP instead of UKL for a UK address)
         # so we'll do the search for both
         currency_codes += [_convert_curr_fdx_iso(c) for c in currency_codes]
@@ -529,5 +529,3 @@ class DeliveryCarrier(models.Model):
     def _fedex_update_srm(self, srm, request_type, order=None, picking=None):
         """ Hook to introduce new custom behaviors in the Fedex request. """
         return srm
-
-
