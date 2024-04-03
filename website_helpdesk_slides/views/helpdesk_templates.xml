@@ -65,7 +65,7 @@
                     | <t t-out="record.total_views"/> Views
                     | <t t-out="record.likes"/> Likes
                     | <t t-out="record.comments_count"/> Comments
-                    | <i class="fa fa-folder-open-o"/> <a class="fw-bold" t-attf-href="{{record.channel_id.website_url}}" t-out="record.channel_id.name"/>
+                    | <i class="fa fa-folder-open-o"/> <a class="fw-bold" t-att-href="record.channel_id.website_absolute_url" t-out="record.channel_id.name"/>
                 </small>
                 <div class="whelpdesk_search_description mt-3 text-break text-muted overflow-hidden" t-if="record.description and (record.is_preview or record.channel_id.is_member)" t-out="record.description"/>
                 <p class="d-flex gap-1 flex-wrap mt-3 mb-0" t-if="record.tag_ids">

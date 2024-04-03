@@ -17,7 +17,7 @@ class WebsiteHelpdeskSlides(WebsiteHelpdesk):
                 'template': 'website_helpdesk_slides.search_result',
                 'record': slide,
                 'score': slide.total_views + slide.comments_count + slide.likes - slide.dislikes,
-                'url': slide.website_url if slide.is_preview or slide.channel_id.is_member else slide.channel_id.website_url,
+                'url': slide.website_absolute_url if slide.is_preview or slide.channel_id.is_member else slide.channel_id.website_absolute_url,
                 'icon': 'fa-graduation-cap',
             } for slide in records]
         # slide.channel
@@ -25,7 +25,7 @@ class WebsiteHelpdeskSlides(WebsiteHelpdesk):
             'template': 'website_helpdesk_slides.channel_search_result',
             'record': channel,
             'score': channel.total_views + channel.total_votes,
-            'url': channel.website_url,
+            'url': channel.website_absolute_url,
             'icon': 'fa-graduation-cap',
         } for channel in records]
 
