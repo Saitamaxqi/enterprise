@@ -11,6 +11,7 @@ import logging
 import base64
 import json
 from markupsafe import Markup
+from requests.exceptions import RequestException, Timeout, ConnectionError, HTTPError
 
 
 _logger = logging.getLogger(__name__)
@@ -300,12 +301,39 @@ class AccountMove(models.Model):
                                   'l10n_ar_afip_auth_code_due': datetime.strptime(result.CAEFchVto, '%Y%m%d').date(),
                                   'l10n_ar_afip_result': result.Resultado}
 
-                if response.Errors:
-                    errors = ''.join(['\n* Code %s: %s' % (err.Code, err.Msg) for err in response.Errors.Err])
-                    return_codes += [str(err.Code) for err in response.Errors.Err]
                 if response.Events:
                     events = ''.join(['\n* Code %s: %s' % (evt.Code, evt.Msg) for evt in response.Events.Evt])
                     return_codes += [str(evt.Code) for evt in response.Events.Evt]
+
+                if response.Errors:
+                    errors = ''.join(['\n* Code %s: %s' % (err.Code, err.Msg) for err in response.Errors.Err])
+                    return_codes += [str(err.Code) for err in response.Errors.Err]
+
+                    # Manage 10016 error origin
+                    if '10016' in return_codes:
+                        try:
+                            client2, _auth2, _transport2 = inv.company_id._l10n_ar_get_connection(inv.journal_id.l10n_ar_afip_ws)._get_client(return_transport=True)
+                            last_number_afip = self.journal_id._l10n_ar_get_afip_last_invoice_number(self.l10n_latam_document_type_id)
+                            response2 = client2.service.FECompConsultar(auth, {
+                                'CbteTipo': self.l10n_latam_document_type_id.code, 'CbteNro': last_number_afip,
+                                'PtoVta': self.journal_id.l10n_ar_afip_pos_number})
+                            odoo_current_invoice_dict = request_data['FeDetReq'][0]['FECAEDetRequest']
+                            odoo_current_invoice_number = odoo_current_invoice_dict['CbteDesde']
+                            # verify if the invoice that is being validated in Odoo has lower date than the last one registered in afip
+                            last_afip_inv_date = response2.ResultGet.CbteFch
+                            odoo_current_invoice_date = odoo_current_invoice_dict['CbteFch']
+                        except (Timeout, ConnectionError, RequestException, HTTPError, KeyError):
+                            return_codes.extend(['10016-1', '10016-2'])
+                        else:
+                            if last_afip_inv_date > odoo_current_invoice_date:
+                                return_codes.remove('10016')
+                                return_codes.append('10016-1')
+                            # verify if the invoice that is being validated in Odoo follows the sequence of the last invoice registered in afip
+                            # if the sequence is reset (number 00000001) then is not necessary to know the last afip number because number 00000000 does
+                            # not exists
+                            elif odoo_current_invoice_number <= last_number_afip and odoo_current_invoice_number != 1:
+                                return_codes.remove('10016')
+                                return_codes.append('10016-2')
 
             elif afip_ws == 'wsfex':
                 ws_method = 'FEXAuthorize'

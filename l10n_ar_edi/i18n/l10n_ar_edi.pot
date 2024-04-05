@@ -1104,12 +1104,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
-"The number or date of the document does not correspond to the next one to be authorized.\n"
-" * The invoice date not be after the last invoice validated in AFIP.\n"
-" * Verify that the next invoice number in the Journal corresponds with the next one in AFIP\n"
-" * If AFIP Concept \"Services\" or \"Products and Services\" could be due to the Invoice Date: this one could be null or need to be in the range N-10 and N+10 days being N the date of dispatch of the authorization request.\n"
+"Please note that if you are trying to validate an invoice with a date other than today, you must verify if it falls within the date range according to the AFIP concept or document type:\n"
+" a) If it is Product: N+5 or N-5 with N being today's date.\n"
+" b) If it is Services or Products and Services: N+10 or N-10 with N being today's date.\n"
+" c) If it is a MiPyme Invoice: N-5 or N+1 with N being today's date. For Debit Note or Credit Note only N-5\n"
 "\n"
-"You can go to \"Consult invoice in AFIP\" menu and get the information about the last invoice."
+"You can go to 'Consult invoice in AFIP' menu and get the information about the last invoice.\n"
 msgstr ""
 
 #. module: l10n_ar_edi
@@ -1144,6 +1144,14 @@ msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
+#: code:addons/l10n_ar_edi/models/afip_errors.py:0
+#, python-format
+msgid ""
+"There may have been a mismatch in the numbering of this type of document "
+"between Odoo and AFIP."
+msgstr ""
+
+#. module: l10n_ar_edi
 #: code:addons/l10n_ar_edi/models/l10n_ar_afipws_connection.py:0
 msgid ""
 "There was a problem with the connection to the %(webservice)s webservice: "
@@ -1296,6 +1304,12 @@ msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
+#: code:addons/l10n_ar_edi/models/afip_errors.py:0
+#, python-format
+msgid "The invoice date cannot be after the last invoice validated in AFIP."
+msgstr ""
+
+#. module: l10n_ar_edi
 #: code:addons/l10n_ar_edi/models/l10n_ar_afipws_connection.py:0
 msgid "Verification of Invoices (WSCDC)"
 msgstr ""

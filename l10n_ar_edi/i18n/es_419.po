@@ -1319,32 +1319,17 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
-"The number or date of the document does not correspond to the next one to be "
-"authorized.\n"
-" * The invoice date not be after the last invoice validated in AFIP.\n"
-" * Verify that the next invoice number in the Journal corresponds with the "
-"next one in AFIP\n"
-" * If AFIP Concept \"Services\" or \"Products and Services\" could be due to "
-"the Invoice Date: this one could be null or need to be in the range N-10 and "
-"N+10 days being N the date of dispatch of the authorization request.\n"
-"\n"
-"You can go to \"Consult invoice in AFIP\" menu and get the information about "
-"the last invoice."
+"Please note that if you are trying to validate an invoice with a date other than today, you must verify if it falls within the date range according to the AFIP concept or document type:\n"
+" a) If it is Product: N+5 or N-5 with N being today's date.\n"
+" b) If it is Services or Products and Services: N+10 or N-10 with N being today's date.\n"
+" c) If it is a MiPyme Invoice: N-5 or N+1 with N being today's date. For Debit Note or Credit Note only N-5\n"
+"You can go to 'Consult invoice in AFIP' menu and get the information about the last invoice.\n"
 msgstr ""
-"El número o la fecha del documento no corresponde al siguiente que se "
-"autorizará.\n"
-" * La fecha de la factura no debe estar después de la última factura "
-"validada en AFIP.\n"
-" * Verifique que el próximo número de factura en el diario corresponde con "
-"la siguiente en AFIP.\n"
-" * Para la factura con concepto AFIP \"Servicios\" o \"Productos y "
-"servicios\" podría deberse a la fecha de factura: esta podría ser nula o "
-"necesitar estar en el rango N-10 y N + 10 días siendo N la fecha de envío de "
-"la solicitud de autorización\n"
-"\n"
-"\n"
-"Puede ir al menú \"Consultar datos de la factura en AFIP\" y obtenga la "
-"información de la última factura."
+"Tenga en cuenta que si esta intentando validar una factura con fecha distinta a hoy, debera verificar si se encuentra comprendida en el rango de fechas segun el concepto de AFIP o tipo de documento:\n"
+" a) Si es Producto: N+5 o N-5 siendo N la fecha de hoy.\n"
+" b) Si es Servicios o Productos y Servicios: N+10 o N-10 siendo N la fecha de hoy.\n"
+" c) Si es Factura MiPyme: N-5 o N+1 siendo N la fecha de hoy. Para Nota de Debito o Nota de Credito solo N-5\n"
+"Puedes ir a menú 'Consultar Datos de la Factura en AFIP' y obtener la información de la última factura\n"
 
 #. module: l10n_ar_edi
 #. odoo-python
@@ -1407,6 +1392,16 @@ msgstr ""
 
 #. module: l10n_ar_edi
 #. odoo-python
+#: code:addons/l10n_ar_edi/models/afip_errors.py:0
+#, python-format
+msgid ""
+"There may have been a mismatch in the numbering of this type of document "
+"between Odoo and AFIP."
+msgstr ""
+"Puede que se haya generado un desfasaje de la numeración de este tipo de documento "
+"entre Odoo y AFIP."
+
+#. module: l10n_ar_edi
 #: code:addons/l10n_ar_edi/models/l10n_ar_afipws_connection.py:0
 msgid ""
 "There was a problem with the connection to the %(webservice)s webservice: "
@@ -1600,10 +1595,10 @@ msgid ""
 "\n"
 "Please make the required corrections and try again"
 msgstr ""
-"Esto es lo que obtenemos:\n"
+"Esto es lo que obtuvimos:\n"
 "%s\n"
 "\n"
-"Haga las correcciones necesarias e inténtelo de nuevo"
+"Por favor realice las correcciones requeridas e intente nuevamente"
 
 #. module: l10n_ar_edi
 #: model:ir.model.fields,help:l10n_ar_edi.field_res_company__l10n_ar_afip_ws_key_id
@@ -1644,6 +1639,13 @@ msgstr "ID único"
 
 #. module: l10n_ar_edi
 #. odoo-python
+#: code:addons/l10n_ar_edi/models/afip_errors.py:0
+#, python-format
+msgid "The invoice date cannot be after the last invoice validated in AFIP."
+msgstr ""
+"La fecha de la factura no puede ser después de la última validada en AFIP."
+
+#. module: l10n_ar_edi
 #: code:addons/l10n_ar_edi/models/l10n_ar_afipws_connection.py:0
 msgid "Verification of Invoices (WSCDC)"
 msgstr "Verificación de facturas (WSCDC)"
