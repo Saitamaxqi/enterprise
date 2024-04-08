@@ -260,7 +260,9 @@ class WhatsappComposer(models.TransientModel):
                 'message_type': 'whatsapp_message',
                 'partner_ids': rec._mail_get_partners()[rec.id].ids or rec._whatsapp_get_responsible().partner_id.ids,
             }
-            if hasattr(records, '_message_log'):
+            if self.res_model == 'discuss.channel':
+                message = rec.message_post(body=body, message_type="comment", subtype_xmlid='mail.mt_comment')
+            elif hasattr(records, '_message_log'):
                 message = rec._message_log(**post_values)
             else:
                 message = self.env['mail.message'].create(

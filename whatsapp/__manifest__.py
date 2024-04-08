@@ -11,6 +11,7 @@
         'data/ir_actions_server_data.xml',
         'data/ir_cron_data.xml',
         'data/ir_module_category_data.xml',
+        'data/whatsapp_template_data.xml',
         'data/whatsapp_templates_preview.xml',
         'security/res_groups.xml',
         'security/ir_rules.xml',

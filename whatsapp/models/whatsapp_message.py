@@ -328,7 +328,8 @@ class WhatsappMessage(models.Model):
                     if not msg_uid:
                         whatsapp_message._handle_error(failure_type='unknown')
                     else:
-                        if message_type == 'template':
+                        # Message already posted for model 'discuss.channel', post message in active channel for other models
+                        if message_type == 'template' and whatsapp_message.wa_template_id.model != 'discuss.channel':
                             whatsapp_message._post_message_in_active_channel()
                         whatsapp_message.write({
                             'state': 'sent',

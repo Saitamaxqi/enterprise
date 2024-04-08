@@ -8,4 +8,11 @@ patch(Thread.prototype, {
         }
         return super.isSquashed(msg, prevMsg);
     },
+
+    get isWhatsAppThreadExpired() {
+        return (
+            this.props.thread.channel_type === "whatsapp" &&
+            this.props.thread.composer.threadExpired
+        );
+    },
 });

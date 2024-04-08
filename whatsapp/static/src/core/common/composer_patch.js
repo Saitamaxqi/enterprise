@@ -1,5 +1,6 @@
 import { Composer } from "@mail/core/common/composer";
 import { _t } from "@web/core/l10n/translation";
+import { useService } from "@web/core/utils/hooks";
 import { patch } from "@web/core/utils/patch";
 
 import { onWillDestroy, useEffect } from "@odoo/owl";
@@ -7,6 +8,7 @@ import { onWillDestroy, useEffect } from "@odoo/owl";
 patch(Composer.prototype, {
     setup() {
         super.setup();
+        this.action = useService("action");
         this.composerDisableCheckTimeout = null;
         useEffect(
             () => {
@@ -18,7 +20,11 @@ patch(Composer.prototype, {
         onWillDestroy(() => clearTimeout(this.composerDisableCheckTimeout));
     },
     get areAllActionsDisabled() {
-        if (this.thread?.channel_type === "whatsapp" && !this.state.active) {
+        if (
+            this.thread?.channel_type === "whatsapp" &&
+            !this.state.active &&
+            this.action.id != "revive-whatsapp-conversation"
+        ) {
             return true;
         }
         return super.areAllActionsDisabled;
@@ -32,15 +38,24 @@ patch(Composer.prototype, {
     get placeholder() {
         if (this.thread?.channel_type === "whatsapp") {
             if (!this.state.active && this.props.composer.threadExpired) {
-                return _t(
-                    "Can't send message as it has been 24 hours since the last message of the User."
-                );
+                return _t("Conversation closed.");
             }
             return _t("Answer as %(whatsapp_account_name)s", {
                 whatsapp_account_name: this.thread.whatsapp_account_name,
             });
         }
         return super.placeholder;
+    },
+    get showQuickAction() {
+        const inactiveActions = ["revive-whatsapp-conversation", "more-actions"];
+        if (
+            this.thread?.channel_type === "whatsapp" &&
+            !this.state.active &&
+            !inactiveActions.includes(this.action.id)
+        ) {
+            return false;
+        }
+        return super.showQuickAction;
     },
 
     checkComposerDisabled() {
@@ -68,6 +83,28 @@ patch(Composer.prototype, {
         const whatsappInactive =
             this.thread && this.thread.channel_type === "whatsapp" && !this.state.active;
         return super.isSendButtonDisabled || whatsappInactive;
+    },
+
+    onclickWhatsAppChat() {
+        this.action.doAction(
+            {
+                type: "ir.actions.act_window",
+                name: _t("Send WhatsApp Message"),
+                res_model: "whatsapp.composer",
+                view_mode: "form",
+                views: [[false, "form"]],
+                target: "new",
+                context: {
+                    active_model: "discuss.channel",
+                    active_id: this.thread.id,
+                },
+            },
+            {
+                onClose: () => {
+                    this.thread.fetchMessages();
+                },
+            }
+        );
     },
 
     onDropFile(ev) {

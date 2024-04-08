@@ -167,20 +167,18 @@ We're always happy to assist!""",
                 'mobile_number': '911234567891',
             },
             mail_message_values={
-                'subtype_id': self.env.ref('mail.mt_note'),
+                'subtype_id': self.env.ref('mail.mt_comment'),  # should be linked to channel post directly
             },
         )
-        # created mail.message: one due to post, one additional log (FIXME) because
-        # he does the post on 'original business document' and create the message on
-        # discussion channel, even when both are the same
-        self.assertEqual(len(self._new_msgs), 2)
-        for msg in self._new_msgs:
-            self.assertEqual(msg.model, 'discuss.channel')
-            self.assertEqual(msg.res_id, channel.id)
-            self.assertEqual(
-                msg.body,
-                "<p>Hello there,<br>Just a quick note to let you know that we're here to help with anything you might need. "
-                "If you have any questions, please don't hesitate to send us a message.<br>We're always happy to assist!</p>")
+        # created mail.message: one due to post, and no additional log, we don't need
+        # two messages on the same document
+        self.assertEqual(len(self._new_msgs), 1)
+        self.assertEqual(self._new_msgs.model, 'discuss.channel')
+        self.assertEqual(self._new_msgs.res_id, channel.id)
+        self.assertEqual(
+            self._new_msgs.body,
+            "<p>Hello there,<br>Just a quick note to let you know that we're here to help with anything you might need. "
+            "If you have any questions, please don't hesitate to send us a message.<br>We're always happy to assist!</p>")
 
     @users('user_wa_admin')
     def test_post_with_whatsapp_inbound_msg_uid(self):
