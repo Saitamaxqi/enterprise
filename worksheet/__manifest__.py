@@ -20,6 +20,12 @@ Create customizable worksheet
         'web.assets_backend': [
             'worksheet/static/src/open_studio_button_widget/*',
         ],
+        'web.assets_frontend': [
+            'worksheet/static/src/scss/worksheet_portal.scss',
+        ],
+        'web.report_assets_common': [
+            'worksheet/static/src/scss/worksheet_portal.scss',
+        ],
         'web_studio.studio_assets_minimal': [
             'worksheet/static/src/client_action/navbar/navbar.js'
         ],

@@ -99,7 +99,7 @@ class TestWorksheet(TransactionCase):
            <div>
              <div>
                <div>
-                 <div class="row mb-2 bg-light bg-opacity-25 border-top border-bottom pt-2 pb-2" style="page-break-inside: avoid">
+                 <div class="row mb-2 o_worksheet_row" style="page-break-inside: avoid">
                    <div t-att-class="('col-5' if report_type == 'pdf' else 'col-lg-3 col-12') + ' fw-bold'">Comments</div>
                    <div placeholder="Add details about your intervention..." t-att-class="'col-7' if report_type == 'pdf' else 'col-lg-9 col-12'" t-field="worksheet.x_comments"/>
                  </div>
@@ -131,6 +131,51 @@ class TestWorksheet(TransactionCase):
              </div>
            </div>
          </t>
+        """)
+
+    def test_report_arch_conditional_invisible_field(self):
+        report_view = self.worksheet_template.report_view_id
+
+        form_view = self.env["ir.ui.view"].search([("model", "=", self.worksheet_template.model_id.model), ("type", "=", "form")], limit=1)[0]
+        self.env["ir.model.fields"].create({
+            "field_description": "New Field",
+            "name": "x_new_field",
+            "ttype": "char",
+            "model": report_view.name,
+            "model_id": self.env["ir.model"]._get(report_view.name).id,
+            "state": "manual",
+        })
+
+        self.env["ir.ui.view"].create({
+            "name": "test inherit",
+            "inherit_id": form_view.id,
+            "model": form_view.model,
+            "mode": "extension",
+            "arch": """
+                <xpath expr="//field[@name='x_comments']" position="after">
+                    <field name="x_new_field" invisible="x_comments"/>
+                </xpath>
+            """
+        })
+
+        self.worksheet_template._generate_qweb_report_template(form_view.id)
+        self.assertXMLEqual(report_view.arch, f"""
+            <t t-name="{report_view.name}">
+                <div>
+                    <div>
+                        <div>
+                            <div class="row mb-2 o_worksheet_row" style="page-break-inside: avoid">
+                                <div t-att-class="('col-5' if report_type == 'pdf' else 'col-lg-3 col-12') + ' fw-bold'">Comments</div>
+                                <div placeholder="Add details about your intervention..." t-att-class="'col-7' if report_type == 'pdf' else 'col-lg-9 col-12'" t-field="worksheet.x_comments"/>
+                            </div>
+                            <div class="row mb-2 o_worksheet_row" style="page-break-inside: avoid" t-if=" 0 if worksheet.x_comments else 1">
+                                <div t-att-class="('col-5' if report_type == 'pdf' else 'col-lg-3 col-12') + ' fw-bold'">New Field</div>
+                                <div invisible="x_comments" t-att-class="'col-7' if report_type == 'pdf' else 'col-lg-9 col-12'" t-field="worksheet.x_new_field"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
         """)
 
     def test_open_worksheet_wizard_condition(self):

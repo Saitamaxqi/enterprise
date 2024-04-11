@@ -5,6 +5,7 @@ from ast import literal_eval
 from collections import defaultdict
 from lxml import etree
 from random import randint
+import re
 
 from odoo import api, fields, models, tools, _
 from odoo.exceptions import ValidationError, UserError
@@ -405,11 +406,12 @@ class WorksheetTemplate(models.Model):
                 description = etree.Element('div', {'t-att-class': "('col-5' if report_type == 'pdf' else 'col-lg-3 col-12') + ' fw-bold'"})
                 description.text = field_node.attrib.pop('string', field_info and field_info.get('string'))
                 # insert all that in a container
-                container = etree.Element('div', {'class': 'row mb-2', 'style': 'page-break-inside: avoid'})
+                container = etree.Element('div', {'class': 'row mb-2 o_worksheet_row', 'style': 'page-break-inside: avoid'})
                 container.append(description)
                 container.append(field_node)
-                if len(new_container_col) % 2 == 0:
-                    container.attrib['class'] += " bg-light bg-opacity-25 border-top border-bottom pt-2 pb-2"
+                if field_node.get('invisible'):
+                    condition = re.sub(r'(?<![\'"])x_\w+', lambda match: 'worksheet.' + match.group(0), field_node.get('invisible'))
+                    container.attrib['t-if'] = f" 0 if { condition } else 1"
                 new_container_col.append(container)
         return new_container_col
 
