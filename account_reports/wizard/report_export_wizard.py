@@ -7,6 +7,7 @@ from odoo.models import check_method_name
 
 import json
 import base64
+import types
 from urllib.parse import urlparse, parse_qs
 
 
@@ -99,6 +100,9 @@ class Account_ReportsExportWizardFormat(models.TransientModel):
             # We use the options from the action, as the action may have added or modified
             # stuff into them (see l10n_es_reports, with BOE wizard)
             file_content = base64.encodebytes(export_result['file_content']) if isinstance(export_result['file_content'], bytes) else export_result['file_content']
+            # We need to unpack the content in case of a generator
+            if isinstance(file_content, types.GeneratorType):
+                file_content = base64.encodebytes(b''.join(file_content))
             file_name = f"{self.export_wizard_id.doc_name or self.export_wizard_id.report_id.name}.{export_result['file_type']}"
             mimetype = self.export_wizard_id.report_id.get_export_mime_type(export_result['file_type'])
 
