@@ -2,11 +2,12 @@ import { Component, useState, onWillUnmount, useRef } from "@odoo/owl";
 import { usePreparationDisplay } from "@pos_preparation_display/app/services/preparation_display_service";
 import { Orderline } from "@pos_preparation_display/app/components/orderline/orderline";
 import { computeFontColor } from "@pos_preparation_display/app/utils/utils";
+import { TagsList } from "@web/core/tags_list/tags_list";
 
 const { DateTime } = luxon;
 
 export class Order extends Component {
-    static components = { Orderline };
+    static components = { Orderline, TagsList };
     static template = "pos_preparation_display.Order";
     static props = {
         order: Object,
@@ -111,5 +112,8 @@ export class Order extends Component {
         } finally {
             this.actionInProgress = false;
         }
+    }
+    get pdisNotes() {
+        return JSON.parse(this.props.order.pdis_internal_note || "[]");
     }
 }

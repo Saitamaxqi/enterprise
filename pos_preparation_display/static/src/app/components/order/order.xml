@@ -71,15 +71,10 @@
                     </div>
                 </div>
             </div>
-            <div t-if="this.props.order.pdis_internal_note"
-                class="list-inline o_pdis_note d-flex ms-4 px-2"
+            <t t-set="notes" t-value="pdisNotes"/>
+            <div t-if="notes.length" class="list-inline o_pdis_note d-flex gap-1 ms-1 py-2"
                 t-att-class="{ 'o_pdis_orderline_blinking': this.props.order.blinkingNote }">
-                <t t-foreach="props.order.pdis_internal_note?.split?.('\n') or []" t-as="note"
-                    t-key="note_index">
-                    <li t-if="note.trim() !== ''" t-esc="note"
-                        class="internal-note badge m-1 px-1 rounded-pill bg-warning text-warning bg-opacity-25 "
-                        style="font-size: 0.85rem;"/>
-                </t>
+                <TagsList tags="notes"/>
             </div>
             <div class="o_pdis_order_card_footer bg-100">
                 <t t-set="o_pdis_last_stage" t-value="this.preparationDisplay.lastStage.id == this.props.order.stageId"/>

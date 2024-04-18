@@ -1,5 +1,7 @@
 import logging
 import uuid
+import random
+import json
 
 from odoo import http, Command
 from odoo.http import request
@@ -97,6 +99,14 @@ class PosUrbanPiperController(http.Controller):
             pos_config.log_xml("Payload - %s. Error - %s" % (data, error), 'urbanpiper_webhook_%s' % (event_type))
             _logger.warning("UrbanPiper: %r", error)
 
+    def reframe_notes(self, notes):
+        notes_array = []
+        for note_name in notes.split("\n"):
+            if note_name := note_name.strip():
+                default_note = request.env['pos.note'].sudo().search([('name', '=', note_name)])
+                notes_array.append({"text": note_name, "colorIndex": default_note["color"] if default_note else 0})
+        return json.dumps(notes_array)
+
     def _create_order(self, data):
         order = data['order']
         customer = data['customer']
@@ -178,7 +188,7 @@ class PosUrbanPiperController(http.Controller):
                 'tax_ids': [Command.set(total_tax.ids)],
                 'price_subtotal': taxes['total_excluded'],
                 'price_subtotal_incl': taxes['total_included'],
-                'note': charge.get('title'),
+                'note': self.reframe_notes(charge.get('title')),
                 'uuid': str(uuid.uuid4())
             }))
         pos_reference, order_sequence_number, tracking_number = pos_config_sudo.current_session_id.get_next_order_refs(ref_prefix=pos_delivery_provider.name)
@@ -206,7 +216,7 @@ class PosUrbanPiperController(http.Controller):
                     'price_unit': -discount.get('value'),
                     'price_subtotal': -discount.get('value'),
                     'price_subtotal_incl': -discount.get('value'),
-                    'note': '\n'.join([discount.get('code', ''), discount.get('title', '')]),
+                    'note': self.reframe_notes('\n'.join([discount.get('code', ''), discount.get('title', '')])),
                     'uuid': str(uuid.uuid4()),
                 }))
         delivery_order = request.env["pos.order"].sudo().create({
@@ -297,9 +307,9 @@ class PosUrbanPiperController(http.Controller):
             'price_subtotal': taxes['total_excluded'],
             'price_subtotal_incl': taxes['total_included'],
             'tax_ids': [Command.set(line_taxes.ids)] if line_taxes else None,
-            'note': "\n".join(
+            'note': self.reframe_notes("\n".join(
                 x for x in [line_data.get('instructions'), note] if x and x.strip()
-            ),
+            )),
             'uuid': str(uuid.uuid4()),
         })
         return lines

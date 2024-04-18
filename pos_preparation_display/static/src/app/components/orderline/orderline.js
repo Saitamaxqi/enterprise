@@ -1,8 +1,10 @@
 import { Component } from "@odoo/owl";
 import { usePreparationDisplay } from "@pos_preparation_display/app/services/preparation_display_service";
 import { useService } from "@web/core/utils/hooks";
+import { TagsList } from "@web/core/tags_list/tags_list";
 
 export class Orderline extends Component {
+    static components = { TagsList };
     static template = "pos_preparation_display.Orderline";
     static props = {
         orderline: Object,
@@ -73,5 +75,8 @@ export class Orderline extends Component {
         if (order.stageId !== this.preparationDisplay.lastStage.id) {
             this.preparationDisplay.changeOrderStage(order);
         }
+    }
+    get internalNotes() {
+        return JSON.parse(this.props.orderline.internal_note || "[]");
     }
 }

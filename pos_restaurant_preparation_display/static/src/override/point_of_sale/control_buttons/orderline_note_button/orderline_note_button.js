@@ -1,7 +1,7 @@
-import { NoteButton } from "@point_of_sale/app/screens/product_screen/control_buttons/note_button/note_button";
+import { InternalNoteButton } from "@point_of_sale/app/screens/product_screen/control_buttons/orderline_note_button/orderline_note_button";
 import { patch } from "@web/core/utils/patch";
 
-patch(NoteButton.prototype, {
+patch(InternalNoteButton.prototype, {
     // Override
     async onClick() {
         const { confirmed, inputNote, oldNote } = await super.onClick();
@@ -31,7 +31,7 @@ patch(NoteButton.prototype, {
             if (!added) {
                 order.uiState.noteHistory[productId].push({
                     old: oldNote,
-                    new: inputNote || "",
+                    new: inputNote || "[]",
                     lineId: selectedOrderline.id,
                     uuid: selectedOrderline.uuid,
                 });

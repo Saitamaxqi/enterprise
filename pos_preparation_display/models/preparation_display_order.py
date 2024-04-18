@@ -139,7 +139,6 @@ class Pos_Preparation_DisplayOrder(models.Model):
 
     def _export_for_ui(self, preparation_display):
         preparation_display_orderlines = []
-
         for orderline in self.preparation_display_order_line_ids:
             if preparation_display._should_include(orderline):
                 preparation_display_orderlines.append({
@@ -163,7 +162,6 @@ class Pos_Preparation_DisplayOrder(models.Model):
                 if stage.preparation_display_id.id == preparation_display.id:
                     current_order_stage = stage
                     break
-
             return {
                 'id': self.id,
                 'pos_order_id': self.pos_order_id.id,
@@ -177,7 +175,7 @@ class Pos_Preparation_DisplayOrder(models.Model):
                 'displayed': self.displayed,
                 'orderlines': preparation_display_orderlines,
                 'tracking_number': self.pos_order_id.tracking_number,
-                'pdis_internal_note': self.pdis_internal_note or '',
+                'pdis_internal_note': self.pdis_internal_note or '[]',
                 'pdis_general_customer_note': self.pdis_general_customer_note or '',
             }
 

@@ -64,7 +64,7 @@ class PosOrder(models.Model):
         order_line_filter = self._context.get('ppc_order_line_filter', lambda x: True)
         # create a dictionary with the key as a tuple of product_id, internal_note and attribute_value_ids
         for pdis_line in pdis_lines:
-            key = (pdis_line.product_id.id, pdis_line.internal_note or '', json.dumps(pdis_line.attribute_value_ids.ids), pdis_line.pos_order_line_uuid)
+            key = (pdis_line.product_id.id, pdis_line.internal_note or '[]', json.dumps(pdis_line.attribute_value_ids.ids), pdis_line.pos_order_line_uuid)
             line_qty = pdis_line.product_quantity - pdis_line.product_cancelled
             # Ensure that when an orderline is merged to another table (e.g., from Table 1 to Table 2), sent to the kitchen,
             # and later unmerged back to its original table, it is not canceled if the order is sent to the kitchen again from Table 2.
@@ -74,7 +74,7 @@ class PosOrder(models.Model):
             if not quantity_data.get(key):
                 quantity_data[key] = {
                     'attribute_value_ids': pdis_line.attribute_value_ids.ids,
-                    'note': pdis_line.internal_note or '',
+                    'note': pdis_line.internal_note or '[]',
                     'product_id': pdis_line.product_id.id,
                     'display': line_qty,
                     'order': 0,
@@ -84,7 +84,7 @@ class PosOrder(models.Model):
                 quantity_data[key]['display'] += line_qty
 
         for line in self.lines:
-            line_note = line.note or ""
+            line_note = line.note or "[]"
             key = (line.product_id.id, line_note, json.dumps(line.attribute_value_ids.ids), line.uuid)
 
             # Prevents quantity increase when an orderline is transferred to another table but was originally ordered in a previous table.
@@ -92,7 +92,7 @@ class PosOrder(models.Model):
             if not quantity_data.get(key):
                 quantity_data[key] = {
                     'attribute_value_ids': line.attribute_value_ids.ids,
-                    'note': line_note or '',
+                    'note': line_note,
                     'product_id': line.product_id.id,
                     'display': 0,
                     'order': line.qty - transferred_qty,
@@ -112,7 +112,7 @@ class PosOrder(models.Model):
                         else:
                             note['used_qty'] += line.product_quantity
 
-                        key = (line.product_id.id, line.internal_note or '', json.dumps(line.attribute_value_ids.ids), line.pos_order_line_uuid)
+                        key = (line.product_id.id, line.internal_note or '[]', json.dumps(line.attribute_value_ids.ids), line.pos_order_line_uuid)
                         key_new = (line.product_id.id, note['new'] or '', json.dumps(line.attribute_value_ids.ids), line.pos_order_line_uuid)
 
                         line.internal_note = note['new']
@@ -144,7 +144,7 @@ class PosOrder(models.Model):
                 'pos_order_id': self.id,
                 'pos_config_id': self.config_id.id,
                 'pdis_general_customer_note': self.general_customer_note or '',
-                'pdis_internal_note': self.internal_note or '',
+                'pdis_internal_note': self.internal_note or '[]',
             })
 
         product_ids = self.env['product.product'].browse([data['product_id'] for data in quantity_data.values()])
@@ -184,7 +184,7 @@ class PosOrder(models.Model):
 
                         self.env['pos_preparation_display.orderline'].create({
                             'todo': True,
-                            'internal_note': line.note or "",
+                            'internal_note': line.note or "[]",
                             'attribute_value_ids': line.attribute_value_ids.ids,
                             'product_id': product_id,
                             'product_quantity': line_qty,
@@ -220,7 +220,7 @@ class PosOrder(models.Model):
         if internal_note is not None:
             for order in pdis_order:
                 if order.pdis_internal_note != internal_note:
-                    order.pdis_internal_note = internal_note or ''
+                    order.pdis_internal_note = internal_note or '[]'
                     flag_change = True
                     category_ids.update(pdis_lines[0].product_id.pos_categ_ids.ids)  # necessary to send when only ordernote changed
 

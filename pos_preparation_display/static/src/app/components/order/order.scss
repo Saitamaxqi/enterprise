@@ -27,6 +27,15 @@ $colors: (
 
 @include card-colors();
 
+// External CSS to wrap long notes coming from another component (TagsList)
+.o_pdis_note span {
+    text-align: start;
+}
+
+.o_pdis_note span > div {
+    white-space: normal;
+}
+
 .o_pdis_no_products {
     background-color: $o-gray-100;
     color: $black;
