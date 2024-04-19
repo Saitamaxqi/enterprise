@@ -7,4 +7,7 @@
     "license": "OEEL-1",
     "auto_install": True,
     "depends": ["website_appointment_sale", "sale_project"],
+    'data': [
+        'views/project_views.xml',
+    ],
 }
