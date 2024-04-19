@@ -62,7 +62,8 @@
 prorata_rate = 1
 total_days = sum([wd.number_of_days for wd in payslip.worked_days_line_ids])
 actual_work_days = payslip._get_number_of_worked_days()
-prorata_rate = actual_work_days / total_days
+if total_days:
+    prorata_rate = actual_work_days / total_days
 result = contract.l10n_hk_internet * prorata_rate
         </field>
         <field name="struct_id" ref="l10n_hk_hr_payroll.hr_payroll_structure_cap57_employee_salary"/>
