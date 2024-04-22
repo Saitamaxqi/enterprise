@@ -8,7 +8,6 @@
     'depends': ['sale_renting', 'sale_management'],
     'data': [
         'views/sale_order_template_views.xml',
-        'views/sale_order_views.xml',
         'views/sale_renting_menus.xml',
     ],
     'demo': [

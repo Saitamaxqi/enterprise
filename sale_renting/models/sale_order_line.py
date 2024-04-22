@@ -16,6 +16,8 @@ from odoo.tools import (
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
 
+    order_is_rental = fields.Boolean(related='order_id.is_rental_order', depends=['order_id'])
+
     # Stored because a product could have been rent_ok when added to the SO but then updated
     is_rental = fields.Boolean(compute='_compute_is_rental', store=True, precompute=True, readonly=False, copy=True)
 
@@ -26,6 +28,10 @@ class SaleOrderLine(models.Model):
         string="Pickup date - padding time", compute='_compute_reservation_begin', store=True)
 
     is_product_rentable = fields.Boolean(related='product_id.rent_ok', depends=['product_id'])
+
+    def _domain_product_id(self):
+        super_part = ','.join(str(leaf) for leaf in super()._domain_product_id())
+        return f"['|', ('rent_ok', '=', order_is_rental), {super_part}]"
 
     @api.depends('order_id.rental_start_date')
     def _compute_reservation_begin(self):

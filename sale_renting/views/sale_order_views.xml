@@ -6,6 +6,9 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
+            <header position="inside">
+                <field name="is_rental_order" invisible="1"/>
+            </header>
             <button name="action_quotation_send" position="before">
                 <button name="action_open_pickup" type="object" class="btn-primary" string="Pickup" data-hotkey="y"
                     invisible="not has_pickable_lines or state != 'sale'"/>
@@ -68,25 +71,9 @@
         <field name="mode">primary</field>
         <field name="priority">999</field>
         <field name="arch" type="xml">
-            <!-- options key for rental app knowledge in the rental configurator -->
-            <xpath expr="//field[@name='order_line']//list//field[@name='product_id']" position="attributes">
-                <attribute name="domain">
-                    ['|', ('sale_ok', '=', True), ('rent_ok', '=', True),
-                        '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]
-                </attribute>
-            </xpath>
-            <xpath expr="//field[@name='order_line']//list//field[@name='product_template_id']" position="attributes">
-                <attribute name="domain">
-                    ['|', ('sale_ok', '=', True), ('rent_ok', '=', True),
-                        '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]
-                </attribute>
-            </xpath>
-            <xpath expr="//field[@name='order_line']//form//field[@name='product_id']" position='attributes'>
-                <attribute name="domain">
-                    ['|', ('sale_ok', '=', True), ('rent_ok', '=', True),
-                        '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]
-                </attribute>
-            </xpath>
+            <data>
+                <!-- empty on purpose, can be dropped once sale_stock_renting override is dropped -->
+            </data>
         </field>
     </record>
 

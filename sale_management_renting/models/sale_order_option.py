@@ -1,11 +1,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models
-from odoo.osv import expression
+from odoo import api, fields, models
 
 
 class SaleOrderOption(models.Model):
     _inherit = 'sale.order.option'
+
+    order_is_rental = fields.Boolean(related='order_id.is_rental_order', depends=['order_id'])
 
     def add_option_to_order(self):
         """ Override to add the rental context so that new SOL can be flagged as rental """
@@ -21,6 +22,7 @@ class SaleOrderOption(models.Model):
         return vals
 
     @api.model
-    def _product_id_domain(self):
-        """ Override to allow users to add a rental product as a sale order option """
-        return expression.OR([super()._product_id_domain(), [('rent_ok', '=', True)]])
+    def _domain_product_id(self):
+        """ Override to allow users to add a rental product if the order is a rental one """
+        super_part = ','.join(str(leaf) for leaf in super()._domain_product_id())
+        return f"['|', ('rent_ok', '=', order_is_rental), {super_part}]"
