@@ -125,6 +125,24 @@ class DiscussChannel(WhatsAppFullCase, MockIncomingWhatsApp):
 
         self.assertEqual(first_valid_date, second_valid_date)
 
+    def test_message_attachment_voice(self):
+        with self.mockWhatsappGateway():
+            self._receive_whatsapp_message(
+                self.whatsapp_account, "test", "32499123456",
+                {
+                    "audio": {
+                        "filename": "audio.ogg",
+                        "id": "dontcare",
+                        "voice": True,
+                    },
+                    "type": "audio",
+                },
+            )
+        discuss_channel = self.assertWhatsAppDiscussChannel("32499123456", wa_msg_count=1, msg_count=1)
+        attachment = discuss_channel.message_ids.attachment_ids
+        self.assertEqual(attachment.name, "audio.ogg")
+        self.assertTrue(attachment.voice_ids)
+
     def test_message_reaction(self):
         """Check a reaction is correctly added on a whatsapp message."""
         with self.mockWhatsappGateway():
