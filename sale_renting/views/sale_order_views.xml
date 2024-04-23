@@ -6,14 +6,6 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <header position="inside">
-                <field name="is_rental_order" invisible="1"/>
-                <field name="has_pickable_lines" invisible="1"/>
-                <field name="has_returnable_lines" invisible="1"/>
-                <field name="is_late" invisible="1"/>
-                <field name="rental_status" invisible="1"/>
-                <field name="has_rented_products" invisible="1"/>
-            </header>
             <button name="action_quotation_send" position="before">
                 <button name="action_open_pickup" type="object" class="btn-primary" string="Pickup" data-hotkey="y"
                     invisible="not has_pickable_lines or state != 'sale'"/>
@@ -22,7 +14,7 @@
                 <button name="action_open_return" type="object" class="btn-secondary" string="Return" data-hotkey="k"
                     invisible="state != 'sale' or not has_returnable_lines or has_returnable_lines and not has_pickable_lines"/>
             </button>
-            <xpath expr="//div[@name='button_box']" position="after">
+            <div name="button_box" position="after">
                 <div class="badge rounded-pill text-bg-success float-end border-0"
                     invisible="not has_rented_products or state != 'sale' or rental_status != 'pickup' or is_late">Booked</div>
                 <div class="badge rounded-pill text-bg-danger float-end border-0"
@@ -33,7 +25,7 @@
                     invisible="not has_rented_products or state != 'sale' or rental_status != 'return' or not is_late">Late Return</div>
                 <div class="badge rounded-pill text-bg-default float-end border-0"
                     invisible="not has_rented_products or state != 'sale' or rental_status != 'returned'">Returned</div>
-            </xpath>
+            </div>
             <field name="payment_term_id" position="after">
                 <field name="rental_return_date" invisible="1" required="has_rented_products"/>
                 <field name="rental_start_date"
@@ -42,7 +34,6 @@
                        options="{'end_date_field': 'rental_return_date'}"
                        invisible="not is_rental_order"
                        required="has_rented_products"/>
-                <field name="show_update_duration" invisible="1"/>
                 <label for="duration_days" string="Duration" invisible="not is_rental_order and not rental_start_date"/>
                 <div class="o_row" invisible="not is_rental_order and not rental_start_date">
                     <field class="oe_inline" style="max-width: 2rem" name="duration_days" invisible="duration_days == 0"/>
@@ -60,12 +51,12 @@
                             invisible="not show_update_duration or state in ['done', 'cancel']"/>
                 </div>
             </field>
-            <xpath expr="//notebook/page[@name='order_lines']/field/list/field[@name='product_uom_qty']" position='after'>
-                <field name="is_rental" column_invisible="True"/>
-                <field name="is_product_rentable" column_invisible="True"/>
-            </xpath>
             <xpath expr="//field[@name='order_line']//list//field[@name='qty_delivered']" position="after">
-                <field name="qty_returned" column_invisible="parent.state != 'sale' or not parent.is_rental_order" invisible="not is_rental or not is_product_rentable"/>
+                <field
+                    name="qty_returned"
+                    column_invisible="parent.state != 'sale' or not parent.is_rental_order"
+                    invisible="not is_rental or not is_product_rentable"
+                />
             </xpath>
         </field>
     </record>
@@ -78,51 +69,17 @@
         <field name="priority">999</field>
         <field name="arch" type="xml">
             <!-- options key for rental app knowledge in the rental configurator -->
-            <xpath expr="//notebook/page[@name='order_lines']/field/list/field[@name='product_id']" position='attributes'>
-                <attribute name="context">{
-                    'partner_id': parent.partner_id,
-                    'quantity': product_uom_qty,
-                    'pricelist': parent.pricelist_id,
-                    'uom':product_uom_id,
-                    'company_id': parent.company_id,
-                    'default_lst_price': price_unit,
-                    'default_description_sale': name,
-                    'default_rent_ok': 1,
-                    'default_uom_id': product_uom_id,
-                    'rental_products': True,
-                }
-                </attribute>
+            <xpath expr="//field[@name='order_line']//list//field[@name='product_id']" position="attributes">
                 <attribute name="domain">
                     ['|', ('sale_ok', '=', True), ('rent_ok', '=', True),
                         '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]
                 </attribute>
-                <attribute name="options">{
-                    'no_open': True,
-                    'rent': True,
-                }</attribute>
             </xpath>
-            <xpath expr="//notebook/page[@name='order_lines']/field/list/field[@name='product_template_id']" position='attributes'>
-                <attribute name="context">{
-                    'partner_id': parent.partner_id,
-                    'quantity': product_uom_qty,
-                    'pricelist': parent.pricelist_id,
-                    'uom':product_uom_id,
-                    'company_id': parent.company_id,
-                    'default_list_price': price_unit,
-                    'default_description_sale': name,
-                    'default_rent_ok': 1,
-                    'default_uom_id': product_uom_id,
-                    'rental_products': True,
-                }
-                </attribute>
+            <xpath expr="//field[@name='order_line']//list//field[@name='product_template_id']" position="attributes">
                 <attribute name="domain">
                     ['|', ('sale_ok', '=', True), ('rent_ok', '=', True),
                         '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]
                 </attribute>
-                <attribute name="options">{
-                    'no_open': True,
-                    'rent': True,
-                }</attribute>
             </xpath>
             <xpath expr="//field[@name='order_line']//form//field[@name='product_id']" position='attributes'>
                 <attribute name="domain">
@@ -139,27 +96,26 @@
         <field name="arch" type="xml">
             <list sample="1"
                 decoration-muted="rental_status == 'cancel'">
-                <field name="has_rented_products" column_invisible="True"/>
-                <field name="is_late" column_invisible="True"/>
-                <field name="invoice_status" column_invisible="True"/>
                 <field name="name" readonly="1" decoration-bf="1"/>
-                <field name="date_order"  options="{'show_time': false}"/>
-                <field name="next_action_date" widget='remaining_days'/>
+                <field name="date_order" options="{'show_time': false}"/>
+                <field name="next_action_date" widget="remaining_days"/>
                 <field name="partner_id" readonly="1"/>
-                <field name="user_id" optional="show" widget='many2one_avatar_user'/>
+                <field name="user_id" optional="show" widget="many2one_avatar_user"/>
                 <field name="team_id" optional="hide"/>
-                <field name="amount_total"
+                <field
+                    name="amount_total"
                     sum="Total Tax Included"
                     widget="monetary"
                     decoration-bf="1"
                     decoration-info="invoice_status == 'to invoice'"/>
-                <field name="rental_status" widget='badge'
+                <field
+                    name="rental_status"
+                    widget="badge"
                     decoration-info="rental_status == 'draft'"
                     decoration-primary="rental_status == 'sent'"
                     decoration-success="rental_status == 'pickup'"
                     decoration-warning="rental_status == 'return'"
                     invisible="not has_rented_products"/>
-                <field name="state" column_invisible="True"/>
                 <field name="currency_id" column_invisible="True"/>
             </list>
         </field>
@@ -172,10 +128,10 @@
         <field name="mode">primary</field>
         <field name="priority">100</field>
         <field name="arch" type="xml">
-            <xpath expr="//kanban" position="attributes">
+            <kanban position="attributes">
                 <attribute name="quick_create">false</attribute>
                 <attribute name="class">o_kanban_mobile align-content-start</attribute>
-            </xpath>
+            </kanban>
             <field name="currency_id" position="after">
                 <field name="is_late"/>
                 <field name="has_rented_products"/>
@@ -198,14 +154,14 @@
                     <field name="next_action_date"/>
                 </div>
             </xpath>
-            <xpath expr="//footer/field[@name='state']" position="attributes">
+            <field name="state" position="attributes">
                 <attribute name="invisible">state == 'sale' and rental_status</attribute>
-            </xpath>
-            <xpath expr="//footer/field[@name='state']" position="after">
+            </field>
+            <field name="state" position="after">
                 <field name="rental_status" widget="label_selection"
                     invisible="state != 'sale' or not rental_status or not has_rented_products"
                     options="{'classes': {'pickup': 'success', 'return': 'warning', 'returned': 'default'}}" class="ms-auto"/>
-            </xpath>
+            </field>
         </field>
     </record>
 
@@ -255,8 +211,8 @@
                 <group expand="0" string="Group By">
                     <filter string="Status" name="groupby_status" context="{'group_by': 'rental_status'}"/>
                     <separator/>
-                    <filter string="Salesperson" name="salesperson" domain="[]" context="{'group_by': 'user_id'}"/>
-                    <filter string="Customer" name="customer" domain="[]" context="{'group_by': 'partner_id'}"/>
+                    <filter string="Salesperson" name="salesperson" context="{'group_by': 'user_id'}"/>
+                    <filter string="Customer" name="customer" context="{'group_by': 'partner_id'}"/>
                 </group>
                 <searchpanel>
                     <field name="rental_status" icon="fa-retweet" enable_counters="1"/>

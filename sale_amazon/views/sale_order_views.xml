@@ -17,9 +17,6 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <header position="inside">
-                <field name="amazon_channel" invisible="1"/>
-            </header>
             <div name="button_box" position="after">
                 <div class="badge rounded-pill text-bg-info fs-6 float-end"
                      invisible="amazon_channel != 'fbm'">

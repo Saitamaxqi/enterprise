@@ -6,10 +6,7 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//button[@name='action_view_invoice']" position="before">
-                <field name="id" invisible="1"/>
-                <field name="planning_first_sale_line_id" invisible="1"/>
-                <field name="planning_initial_date" invisible="1"/>
+            <button name="action_view_invoice" position="before">
                 <button name="action_view_planning" type="object" icon="fa-tasks"
                     invisible="planning_hours_to_plan == 0 or state in ['draft', 'sent', 'cancel'] or locked">
                     <div class="o_field_widget o_stat_info">
@@ -22,12 +19,14 @@
                 </button>
                 <button name="%(planning.planning_action_schedule_by_resource)d"
                     type="action"
-                    context="{'search_default_sale_order_id': id,
-                              'default_sale_line_id': planning_first_sale_line_id,
-                              'search_default_group_by_role': 1,
-                              'search_default_group_by_resource': 2,
-                              'initialDate': planning_initial_date,
-                              'planning_gantt_active_sale_order_id': id}"
+                    context="{
+                        'search_default_sale_order_id': id,
+                        'default_sale_line_id': planning_first_sale_line_id,
+                        'search_default_group_by_role': 1,
+                        'search_default_group_by_resource': 2,
+                        'initialDate': planning_initial_date,
+                        'planning_gantt_active_sale_order_id': id,
+                    }"
                     class="oe_stat_button"
                     icon="fa-tasks"
                     invisible="planning_hours_planned == 0 or state in ['draft', 'sent']">
@@ -39,7 +38,7 @@
                         <span class="o_stat_text">Planned</span>
                     </div>
                 </button>
-            </xpath>
+            </button>
         </field>
     </record>
 

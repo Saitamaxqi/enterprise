@@ -5,9 +5,9 @@
         <field name="model">sale.order.template</field>
         <field name="inherit_id" ref="sale_management.sale_order_template_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='journal_id']" position="after">
+            <field name="journal_id" position="after">
                 <field name="spreadsheet_template_id" widget="many2one_spreadsheet"/>
-            </xpath>
+            </field>
         </field>
     </record>
 </odoo>

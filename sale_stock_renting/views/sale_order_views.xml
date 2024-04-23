@@ -6,18 +6,14 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale_renting.rental_order_primary_form_view"/>
         <field name="arch" type="xml">
-            <xpath expr="//notebook/page[@name='order_lines']/field/list/field[@name='is_product_rentable']" position='after'>
-                <field name="tracking" column_invisible="True"/>
+            <xpath expr="//field[@name='order_line']//list//field[@name='product_uom_qty']" position="after">
                 <field name="available_reserved_lots" column_invisible="True"/>
                 <field name="reserved_lot_ids" optional="hide" widget="many2many_tags" groups="sale_stock_renting.group_rental_stock_picking"/>
             </xpath>
-            <xpath expr="//notebook/page[@name='order_lines']/field/list/field[@name='qty_delivered']" position="attributes">
-                <attribute name="column_invisible">parent.state != 'sale'</attribute>
-                <attribute name="readonly">qty_delivered_method != 'manual' or is_rental and tracking != 'none'</attribute>
+            <xpath expr="//field[@name='order_line']//list//field[@name='qty_delivered']" position="attributes">
+                <attribute name="readonly" add="is_rental and tracking != 'none'" separator="or"/>
             </xpath>
-            <xpath expr="//notebook/page[@name='order_lines']/field/list/field[@name='qty_returned']" position="attributes">
-                <attribute name="column_invisible">parent.state != 'sale' or not parent.is_rental_order</attribute>
-                <attribute name="invisible">not is_rental or not is_product_rentable</attribute>
+            <xpath expr="//field[@name='order_line']//list//field[@name='qty_returned']" position="attributes">
                 <attribute name="readonly">not is_rental or tracking != 'none'</attribute>
             </xpath>
         </field>

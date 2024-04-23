@@ -9,7 +9,7 @@
     'data': [
         'data/ups_package_data.xml',
         'views/delivery_ups.xml',
-        'views/sale_views.xml',
+        'views/sale_order_views.xml',
         'views/res_partner.xml',
     ],
     'author': 'Odoo S.A.',
