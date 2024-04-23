@@ -39,13 +39,16 @@ class TestPayrollWithholdingTaxesWithChildAllowances(TestPayrollCommon):
         withholding_tax_amount = taxable_salary * tax_rate = 877.56
         The employee is not eligible for exoneration nor tax-rate reduction.
         """
-        self.employee_withholding_taxes_payslip['struct_id'] = self.env['hr.payroll.structure'].search(
-            [('name', '=', 'CP200: Employees 13th Month')]
-        )
         date_from = date(2024, 12, 1)
         date_to = date_from + relativedelta(months=+1, day=1, days=-1)
-        self.employee_withholding_taxes_payslip['date_from'] = date_from
-        self.employee_withholding_taxes_payslip['date_to'] = date_to
+        structure = self.env['hr.payroll.structure'].search(
+            [('name', '=', 'CP200: Employees 13th Month')]
+        )
+        self.employee_withholding_taxes_payslip.write({
+            'struct_id': structure.id,
+            'date_from': date_from,
+            'date_to': date_to,
+        })
         self.employee_withholding_taxes_payslip.compute_sheet()
 
         withholding_tax_line = self.employee_withholding_taxes_payslip.line_ids.filtered(
@@ -78,13 +81,16 @@ class TestPayrollWithholdingTaxesWithChildAllowances(TestPayrollCommon):
         """
         self.employee_withholding_taxes.children = 3
 
-        self.employee_withholding_taxes_payslip['struct_id'] = self.env['hr.payroll.structure'].search(
-            [('name', '=', 'CP200: Employees 13th Month')]
-        )
         date_from = date(2024, 12, 1)
         date_to = date_from + relativedelta(months=+1, day=1, days=-1)
-        self.employee_withholding_taxes_payslip['date_from'] = date_from
-        self.employee_withholding_taxes_payslip['date_to'] = date_to
+        structure = self.env['hr.payroll.structure'].search(
+            [('name', '=', 'CP200: Employees 13th Month')]
+        )
+        self.employee_withholding_taxes_payslip.write({
+            'struct_id': structure.id,
+            'date_from': date_from,
+            'date_to': date_to,
+        })
 
         self.employee_withholding_taxes_payslip.compute_sheet()
 
@@ -121,12 +127,14 @@ class TestPayrollWithholdingTaxesWithChildAllowances(TestPayrollCommon):
         self.employee_withholding_taxes.children = 3
         date_from = date(2024, 1, 1)
         date_to = date_from + relativedelta(months=+1, day=1, days=-1)
-        self.employee_withholding_taxes_payslip['date_from'] = date_from
-        self.employee_withholding_taxes_payslip['date_to'] = date_to
-        self.employee_withholding_taxes_payslip['struct_id'] = self.env['hr.payroll.structure'].search(
+        structure = self.env['hr.payroll.structure'].search(
             [('name', '=', 'CP200: Employees Double Holidays')]
         )
-
+        self.employee_withholding_taxes_payslip.write({
+            'date_from': date_from,
+            'date_to': date_to,
+            'struct_id': structure.id,
+        })
         self.employee_withholding_taxes_payslip.compute_sheet()
 
         withholding_tax_line = self.employee_withholding_taxes_payslip.line_ids.filtered(
@@ -164,12 +172,14 @@ class TestPayrollWithholdingTaxesWithChildAllowances(TestPayrollCommon):
 
         date_from = date(2024, 1, 1)
         date_to = date_from + relativedelta(months=+1, day=1, days=-1)
-        self.employee_withholding_taxes_payslip['date_from'] = date_from
-        self.employee_withholding_taxes_payslip['date_to'] = date_to
-        self.employee_withholding_taxes_payslip['struct_id'] = self.env['hr.payroll.structure'].search(
+        structure = self.env['hr.payroll.structure'].search(
             [('name', '=', 'CP200: Employees Termination Fees')]
         )
-
+        self.employee_withholding_taxes_payslip.write({
+            'date_from': date_from,
+            'date_to': date_to,
+            'struct_id': structure.id,
+        })
         notice_period_in_month = self.env['hr.payslip.input'].create({
             'payslip_id': self.employee_withholding_taxes_payslip.id,
             'input_type_id': self.env['hr.payslip.input.type'].search([('name', '=', 'Duration in month')]).id,
@@ -216,14 +226,16 @@ class TestPayrollWithholdingTaxesWithChildAllowances(TestPayrollCommon):
         """
         self.employee_withholding_taxes.children = 3
 
-        self.employee_withholding_taxes_payslip['struct_id'] = self.env['hr.payroll.structure'].search(
+        structure = self.env['hr.payroll.structure'].search(
             [('name', '=', 'CP200: Employees Termination Fees')]
         )
         date_from = date(2023, 1, 1)
         date_to = date_from + relativedelta(months=+1, day=1, days=-1)
-        self.employee_withholding_taxes_payslip['date_from'] = date_from
-        self.employee_withholding_taxes_payslip['date_to'] = date_to
-
+        self.employee_withholding_taxes_payslip.write({
+            'date_from': date_from,
+            'date_from': date_from,
+            'struct_id': structure.id,
+        })
         notice_period_in_month = self.env['hr.payslip.input'].create({
             'payslip_id': self.employee_withholding_taxes_payslip.id,
             'input_type_id': self.env['hr.payslip.input.type'].search([('name', '=', 'Duration in month')]).id,

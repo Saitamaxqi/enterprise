@@ -72,7 +72,7 @@
     <!-- Payslip Admin -->
     <record id="hr_payslip_admin" model="hr.payslip">
         <field name="name" eval="'Mitchell Admin ' + time.strftime('June %Y')"/>
-        <field name="contract_id" ref="hr_contract.hr_contract_admin_new"/>
+        <field name="contract_id" ref="hr_contract.hr_contract_admin"/>
         <field name="date_from" eval="time.strftime('%Y-6-1')"/>
         <field name="date_to" eval="time.strftime('%Y-6-30')"/>
         <field name="employee_id" ref="hr.employee_admin"/>
@@ -106,7 +106,7 @@
     <!-- Payslip Admin  -->
     <record id="hr_payslip_admin_may" model="hr.payslip">
         <field name="name" eval="'Mitchell Admin ' + time.strftime('May %Y')"/>
-        <field name="contract_id" ref="hr_contract.hr_contract_admin_new"/>
+        <field name="contract_id" ref="hr_contract.hr_contract_admin"/>
         <field name="date_from" eval="time.strftime('%Y-5-1')"/>
         <field name="date_to" eval="time.strftime('%Y-5-31')"/>
         <field name="employee_id" ref="hr.employee_admin"/>

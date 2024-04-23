@@ -359,8 +359,8 @@
         <record id="hr_payslip_admin_year_1" model="hr.payslip">
             <field name="name">Mitchell Admin Long Payslip</field>
             <field name="contract_id" ref="hr_contract.hr_contract_admin_new"/>
-            <field name="date_from" eval="(DateTime.today() - relativedelta(years=1, month=1, day=1)).strftime('%Y-%m-%d')"/>
-            <field name="date_to" eval="(DateTime.today() - relativedelta(years=1, month=2, day=1)).strftime('%Y-%m-%d')"/>
+            <field name="date_from" eval="(DateTime.today() + relativedelta(months=1, day=1)).strftime('%Y-%m-%d')"/>
+            <field name="date_to" eval="(DateTime.today() + relativedelta(months=1, day=30)).strftime('%Y-%m-%d')"/>
             <field name="employee_id" ref="hr.employee_admin"/>
             <field name="struct_id" ref="hr_payroll.structure_002"/>
             <field name="payslip_run_id" ref="hr_payslip_batch_year_1"/>
@@ -370,8 +370,8 @@
         <record id="hr_payslip_demo_year_2" model="hr.payslip">
             <field name="name">Marc Demo Long Payslip</field>
             <field name="contract_id" ref="hr_contract.hr_contract_admin_new"/>
-            <field name="date_from" eval="(DateTime.today() - relativedelta(years=2) + relativedelta(day=1)).strftime('%Y-%m-%d')"/>
-            <field name="date_to" eval="(DateTime.today() - relativedelta(years=2) + relativedelta(months=1, day=1)).strftime('%Y-%m-%d')"/>
+            <field name="date_from" eval="(DateTime.today() + relativedelta(months=1, day=1)).strftime('%Y-%m-%d')"/>
+            <field name="date_to" eval="(DateTime.today() + relativedelta(months=1, day=30)).strftime('%Y-%m-%d')"/>
             <field name="employee_id" ref="hr.employee_qdp"/>
             <field name="struct_id" ref="hr_payroll.structure_002"/>
             <field name="payslip_run_id" ref="hr_payslip_batch_year_2"/>

@@ -333,7 +333,6 @@ class TestPayrollCommon(TransactionCase):
         cls.employee_withholding_taxes_contracts.write({'state': 'open'})  # By default, the state is 'draft' when we create a new contract
         cls.employee_withholding_taxes_contracts.generate_work_entries(cls.employee_withholding_taxes_contracts.date_start, today)
         cls.employee_withholding_taxes_payslip = cls.env['hr.payslip'].create({
-
             'name': "EmployeeWithholdingTaxes' Payslip",
             'employee_id': cls.employee_withholding_taxes.id,
             'contract_id': cls.employee_withholding_taxes_contracts.id,

@@ -384,6 +384,15 @@ class HrPayslip(models.Model):
             else:
                 payslip.has_refund_slip = False
 
+    @api.constrains('contract_id', 'date_from', 'date_to')
+    def _check_contract_dates(self):
+        for slip in self:
+            contract = slip.contract_id
+            if not contract or not slip.date_from:
+                continue
+            if (contract.date_end and contract.date_end < slip.date_from) or contract.date_start > slip.date_to:
+                raise ValidationError(_("Employee must have a running contract for payslip duration"))
+
     @api.constrains('date_from', 'date_to')
     def _check_dates(self):
         if any(payslip.date_from > payslip.date_to for payslip in self):

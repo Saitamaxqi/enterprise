@@ -275,8 +275,8 @@ class TestPayslipComputation(TestPayslipContractBase):
         payslip = self.env['hr.payslip'].create({
             'name': 'Payslip of Richard',
             'employee_id': self.richard_emp.id,
-            'date_from': date(2016, 1, 1),
-            'date_to': date(2016, 1, 31)
+            'date_from': date(2015, 11, 1),
+            'date_to': date(2015, 11, 30)
         })
         self.assertTrue(payslip.contract_id)
         payslip.contract_id = False
@@ -418,7 +418,7 @@ class TestPayslipComputation(TestPayslipContractBase):
         payslip = self.env['hr.payslip'].create({
             'name': 'Payslip of Richard',
             'employee_id': self.richard_emp.id,
-            'date_from': date(2016, 1, 1),
-            'date_to': date(2016, 1, 31)
+            'date_from': date(2015, 11, 1),
+            'date_to': date(2015, 11, 30)
         })
         payslip.compute_sheet()
