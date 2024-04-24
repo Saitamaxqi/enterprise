@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2024-04-30 11:48+0000\n"
-"PO-Revision-Date: 2024-04-30 11:48+0000\n"
+"PO-Revision-Date: 2024-11-26 09:02+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -349,7 +349,7 @@ msgstr ""
 
 #. module: l10n_syscohada_reports
 #: model:account.report,name:l10n_syscohada_reports.account_financial_report_syscebnl_bilan_assoc
-msgid "Balance Sheet - Assoc"
+msgid "Balance Sheet - SYSCEBNL"
 msgstr ""
 
 #. module: l10n_syscohada_reports
@@ -470,7 +470,7 @@ msgstr ""
 
 #. module: l10n_syscohada_reports
 #: model:account.report.line,name:l10n_syscohada_reports.account_financial_report_line_syscebnl_assoc_cx
-msgid "CX | Carryover funds"
+msgid "CX | Deferred funds"
 msgstr ""
 
 #. module: l10n_syscohada_reports
@@ -640,8 +640,24 @@ msgid "DZ | Grand total"
 msgstr ""
 
 #. module: l10n_syscohada_reports
+#: model:account.report.column,name:l10n_syscohada_reports.account_financial_report_syscohada_depr_column
+msgid "Depreciation"
+msgstr ""
+
+#. module: l10n_syscohada_reports
+#: model:account.report.column,name:l10n_syscohada_reports.account_financial_report_syscohada_gross_column
+msgid "Gross"
+msgstr ""
+
+#. module: l10n_syscohada_reports
 #: model:account.report.line,name:l10n_syscohada_reports.account_financial_report_line_01_syscohada_cdr_tot
 msgid "INCOME AND EXPENSES"
+msgstr ""
+
+#. module: l10n_syscohada_reports
+#: model:account.report.column,name:l10n_syscohada_reports.account_financial_report_syscohada_bs_note_column
+#: model:account.report.column,name:l10n_syscohada_reports.account_financial_report_syscohada_pl_note_column
+msgid "Note"
 msgstr ""
 
 #. module: l10n_syscohada_reports
@@ -662,7 +678,7 @@ msgstr ""
 
 #. module: l10n_syscohada_reports
 #: model:account.report,name:l10n_syscohada_reports.account_financial_report_syscebnl_pnl_assoc
-msgid "Profit and Loss - Assoc"
+msgid "Profit and Loss - SYSCEBNL"
 msgstr ""
 
 #. module: l10n_syscohada_reports
@@ -793,6 +809,16 @@ msgstr ""
 #. module: l10n_syscohada_reports
 #: model:account.report.line,name:l10n_syscohada_reports.account_financial_report_line_01_syscohada_ir
 msgid "RS | Income taxes"
+msgstr ""
+
+#. module: l10n_syscohada_reports
+#: model:ir.model,name:l10n_syscohada_reports.model_l10n_syscohada_report_bs_custom_handler
+msgid "SYSCOHADA Balance Sheet Custom Handler"
+msgstr ""
+
+#. module: l10n_syscohada_reports
+#: model:ir.model,name:l10n_syscohada_reports.model_l10n_syscohada_report_pl_custom_handler
+msgid "SYSCOHADA Profit & Loss Custom Handler"
 msgstr ""
 
 #. module: l10n_syscohada_reports
