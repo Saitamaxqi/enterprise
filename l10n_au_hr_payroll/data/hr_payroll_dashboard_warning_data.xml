@@ -43,12 +43,12 @@ if self.env.cr.rowcount:
             <field name="country_id" ref="base.au"/>
             <field name="evaluation_code">
 au_companies = self.env.companies.filtered(lambda c: c.country_id.code == "AU")
-proportions = self.env["l10n_au.super.account"].read_group(
+proportions = self.env["l10n_au.super.account"]._read_group(
     [("account_active", "=", True)],
-    ["proportion:sum"],
     ["employee_id"],
+    having=[("proportion:sum", "!=", 1)],
 )
-invalid_employees = self.env['hr.employee'].browse([p["employee_id"][0] for p in proportions if p["proportion"] != 1])
+invalid_employees = self.env['hr.employee'].browse([employee.id for employee, in proportions])
 
 if invalid_employees:
 

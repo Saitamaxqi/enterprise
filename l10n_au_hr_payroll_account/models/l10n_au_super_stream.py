@@ -69,19 +69,15 @@ class L10n_AuSuperStream(models.Model):
         "l10n_au_super_stream_lines.other_third_party_contributions_amount",
     )
     def _compute_amount_total(self):
-        fields = self.env["l10n_au.super.stream.line"]._contribution_fields()
-        amounts = self.env["l10n_au.super.stream.line"].read_group(
+        fields_to_sum = self.env["l10n_au.super.stream.line"]._contribution_fields()
+        amounts = self.env["l10n_au.super.stream.line"]._read_group(
             [("l10n_au_super_stream_id", "in", self.ids)],
-            fields,
             ["l10n_au_super_stream_id"],
+            [f"{fname}:sum" for fname in fields_to_sum],
         )
-        amounts = {
-            amount["l10n_au_super_stream_id"][0]: sum(item[0] in fields and item[1]
-                                                    for item in amount.items())
-                                                    for amount in amounts
-                                                    }
+        amounts = {super_stream: sum(sums) for super_stream, *sums in amounts}
         for rec in self:
-            rec.amount_total = amounts[rec.id]
+            rec.amount_total = amounts.get(rec, 0)
 
     @api.constrains('state', 'journal_id')
     def _check_journal(self):

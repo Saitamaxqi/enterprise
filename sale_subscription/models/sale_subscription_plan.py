@@ -89,25 +89,21 @@ class SaleSubscriptionPlan(models.Model):
         return [('id', 'in', plan_ids.ids)]
 
     def _compute_active_subs_count(self):
-        self.active_subs_count = 0
-        res = self.env['sale.order'].read_group(
+        res = dict(self.env['sale.order']._read_group(
             [('plan_id', 'in', self.ids), ('is_subscription', '=', True), ('subscription_state', 'in', ['3_progress', '4_paused'])],
-            ['__count'], ['plan_id'],
-        )
-        for template in res:
-            if template['plan_id']:
-                self.browse(template['plan_id'][0]).active_subs_count = template['plan_id_count']
+            ['plan_id'], ['__count'],
+        ))
+        for plan in self:
+            plan.active_subs_count = res.get(plan, 0)
 
     def _compute_active_subscription_line_count(self):
-        self.subscription_line_count = 0
-        line_counts = self.env['sale.order.line'].read_group(
-          [('order_id.is_subscription', '=', True), ('subscription_plan_id', 'in', self.ids), ('order_id.subscription_state', 'in', ('3_progress', '4_paused'))],
-          ['__count'],
-          ['subscription_plan_id']
-        )
-        line_counts = {r['subscription_plan_id'][0]: r['subscription_plan_id_count'] for r in line_counts}
+        line_counts = dict(self.env['sale.order.line']._read_group(
+            [('order_id.is_subscription', '=', True), ('subscription_plan_id', 'in', self.ids), ('order_id.subscription_state', 'in', ('3_progress', '4_paused'))],
+            ['subscription_plan_id'],
+            ['__count'],
+        ))
         for plan in self:
-            plan.subscription_line_count = line_counts.get(plan.id, 0)
+            plan.subscription_line_count = line_counts.get(plan, 0)
 
     def action_open_active_sub(self):
         return {

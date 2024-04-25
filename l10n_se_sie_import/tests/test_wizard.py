@@ -74,15 +74,12 @@ class AccountTestSIEImport(AccountTestInvoicingCommon):
         :param list domain: Odoo search domain
         :return tuple: tuple containing an ordered serie of (account_code, balance)
         """
-        aml_balances_per_account = {
-            aml_balance_per_account['account_id'][0]: aml_balance_per_account['balance']
-            for aml_balance_per_account in self.env['account.move.line'].read_group(domain, ['account_id', 'balance:sum'], ['account_id'])
-        }
-        accounts = self.env['account.account'].browse(aml_balances_per_account.keys())
         return [
-            (account.code, aml_balances_per_account[account.id])
-            for account in accounts
-            if not float_is_zero(aml_balances_per_account[account.id], precision_digits=2)
+            (account.code, balance_sum)
+            for account, balance_sum in self.env['account.move.line']._read_group(
+                domain, ['account_id'], ['balance:sum'], order='account_id',
+            )
+            if not float_is_zero(balance_sum, precision_digits=2)
         ]
 
     #############################

@@ -12,20 +12,18 @@ class ProductTemplate(models.Model):
 
     @api.constrains('service_type', 'type', 'invoice_policy')
     def _ensure_service_linked_to_project(self):
-        read_group_args = {
-            'domain': [('timesheet_product_id', 'in', self.product_variant_ids.ids)],
-            'fields': ['timesheet_product_id'],
-            'groupby': ['timesheet_product_id'],
-        }
-        product_group = self.env['project.project'].read_group(**read_group_args) + self.env['project.sale.line.employee.map'].read_group(**read_group_args)
-        product_ids = [next(iter(vals['timesheet_product_id'])) for vals in product_group]
-        templates = self.search([('product_variant_ids', 'in', product_ids)]).filtered(
-            lambda template:
+        service_templates = self.filtered(lambda template:
                 template.service_type != 'timesheet'
                 or template.type != 'service'
-                or template.invoice_policy != 'delivery'
-        )
-        if templates:
+                or template.invoice_policy != 'delivery')
+        read_group_args = {
+            'domain': [('timesheet_product_id', 'in', service_templates.product_variant_ids.ids)],
+            'groupby': ['timesheet_product_id'],
+        }
+        product_groups = self.env['project.project']._read_group(**read_group_args)
+        product_groups += self.env['project.sale.line.employee.map']._read_group(**read_group_args)
+        if product_groups:
             separator = "\n -   "
+            templates = self.browse().union(*(product.product_tmpl_id for [product] in product_groups))
             names = separator + separator.join(templates.mapped('name'))
             raise ValidationError(_("The following products are currently associated with a Field Service project, you cannot change their Invoicing Policy or Type:%s", names))

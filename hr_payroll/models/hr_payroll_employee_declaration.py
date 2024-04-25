@@ -111,12 +111,10 @@ class HrPayrollEmployeeDeclaration(models.Model):
 
     @api.autovacuum
     def _gc_orphan_declarations(self):
-        orphans = self.env['hr.payroll.employee.declaration']
-        grouped_declarations = self.read_group([], ['ids:array_agg(id)', 'res_ids:array_agg(res_id)'], ['res_model'])
-        for gd in grouped_declarations:
-            sheet_ids = self.env[gd['res_model']].browse(set(gd['res_ids'])).exists().ids
-            for declaration in self.browse(gd['ids']):
-                if declaration.res_id not in sheet_ids:
-                    orphans += declaration
-        if orphans:
-            orphans.unlink()
+        orphan_ids = []
+        grouped_declarations = self._read_group([], ['res_model'], ['res_id:array_agg'])
+        for res_model, res_ids in grouped_declarations:
+            existing_ids = set(self.env[res_model].browse(set(res_ids)).exists().ids)
+            orphan_ids.extend(res_id for res_id in res_ids if res_id not in existing_ids)
+        if orphan_ids:
+            self.browse(orphan_ids).unlink()

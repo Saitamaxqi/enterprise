@@ -51,11 +51,11 @@ class Account_FollowupFollowupLine(models.Model):
             company_ids += default['company_id']
 
         highest_delay_per_company_id = {
-            row['company_id'][0]: row['delay']
-            for row in self.read_group(
+            company.id: delay_max
+            for company, delay_max in self._read_group(
                 domain=[('company_id', 'in', company_ids)],
-                fields=['company_id', 'delay:max'],
-                groupby='company_id',
+                groupby=['company_id'],
+                aggregates=['delay:max'],
             )
         }
         for line, vals in zip(self, vals_list):

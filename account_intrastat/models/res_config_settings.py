@@ -38,14 +38,12 @@ class ResConfigSettings(models.TransientModel):
             domain=[('type', '=', 'region'), ('country_id', '=', False)],
             limit=1,
         )
-        regions_counts_groupby_country = {
-            intrastat_regions['country_id'][0]: intrastat_regions['country_id_count']
-            for intrastat_regions in self.env['account.intrastat.code'].read_group(
-                domain=[('type', '=', 'region'), ('country_id', '!=', False)],
-                fields=['id:count'],
-                groupby=['country_id'],
-            )
-        }
-
-        for record in self:
-            record.has_country_regions = regions_without_country or regions_counts_groupby_country.get(record.company_country_id.id)
+        if regions_without_country:
+            self.has_country_regions = True
+        else:
+            regions_counts_groupby_country = dict(self.env['account.intrastat.code']._read_group(
+                domain=[('type', '=', 'region'), ('country_id', 'in', self.company_country_id.ids)],
+                groupby=['country_id'], aggregates=['__count'],
+            ))
+            for record in self:
+                record.has_country_regions = regions_counts_groupby_country.get(record.company_country_id)

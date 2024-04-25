@@ -450,15 +450,14 @@ class HrEmployee(models.Model):
         "l10n_au_super_account_ids.account_active",
     )
     def _compute_proportion_warnings(self):
-        proportions = self.env["l10n_au.super.account"].read_group(
+        proportions = dict(self.env["l10n_au.super.account"]._read_group(
             [("employee_id", "in", self.ids), ("account_active", "=", True)],
-            ["proportion:sum"],
             ["employee_id"],
-        )
-        proportions = {p['employee_id'][0]: p['proportion'] for p in proportions}
+            ["proportion:sum"],
+        ))
         self.super_account_warning = False
         for emp in self:
-            if proportions.get(emp.id) and float_compare(proportions.get(emp.id), 1, precision_digits=2) != 0:
+            if proportions.get(emp) and float_compare(proportions.get(emp), 1, precision_digits=2) != 0:
                 emp.super_account_warning = _(
                     "The proportions of super contributions for this employee do not amount to 100%% across their "
                     "active super accounts! Currently, it is at %d%%!",
