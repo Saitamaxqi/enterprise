@@ -2,11 +2,11 @@ import { expect, test } from "@odoo/hoot";
 import { queryText } from "@odoo/hoot-dom";
 
 import { mountView } from "@web/../tests/web_test_helpers";
-import { definePlanningModels, planningModels } from "@planning/../tests/planning_mock_models";
-
+import { planningModels } from "@planning/../tests/planning_mock_models";
+import { projectModels } from "@project/../tests/project_models";
 import {
     PlanningSlot as ProjectForecastPlanningSlot,
-    ProjectProject as ProjectForecastProjectProject,
+    defineProjectForecastModels,
 } from "./project_forecast_mock_models";
 
 class PlanningSlot extends ProjectForecastPlanningSlot {
@@ -30,14 +30,14 @@ class PlanningSlot extends ProjectForecastPlanningSlot {
     };
 }
 
-class ProjectProject extends ProjectForecastProjectProject {
+class ProjectProject extends projectModels.ProjectProject {
     _records = [{ id: 1, name: "Project 1" }];
 }
 
 planningModels.PlanningSlot = PlanningSlot;
-planningModels.ProjectProject = ProjectProject;
+projectModels.ProjectProject = ProjectProject;
 
-definePlanningModels();
+defineProjectForecastModels();
 
 test("Test the conflict slot message content", async () => {
     await mountView({

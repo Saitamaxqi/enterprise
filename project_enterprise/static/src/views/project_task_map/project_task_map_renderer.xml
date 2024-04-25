@@ -7,6 +7,9 @@
         <xpath expr="//t[@t-if='!env.isSmall']//t[@t-call='web_map.MapRenderer.PinListContainer']" position="attributes">
             <attribute name="t-call">project_enterprise.ProjectTaskMapRenderer.PinListContainer</attribute>
         </xpath>
+        <xpath expr="//t[@t-elif='props.model.metaData.routing and !props.model.data.useMapBoxAPI']" position="attributes">
+            <attribute name="t-elif" add="and isProjectManager" separator=" "/>
+        </xpath>
     </t>
     <t t-name="project_enterprise.ProjectTaskMapRenderer.PinListContainer" t-inherit="web_map.MapRenderer.PinListContainer" t-inherit-mode="primary">
         <xpath expr="//t[@t-elif='canDisplayPinList']/t[@t-call='web_map.MapRenderer.PinList']" position="attributes">
