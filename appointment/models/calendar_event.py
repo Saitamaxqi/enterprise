@@ -103,6 +103,18 @@ class CalendarEvent(models.Model):
             if event.appointment_status and not event.appointment_type_id:
                 raise ValidationError(_("The event %s cannot have an appointment status without being linked to an appointment type.", event.name))
 
+    def _check_organizer_validation_conditions(self, vals_list):
+        res = super()._check_organizer_validation_conditions(vals_list)
+        appointment_type_ids = list({vals["appointment_type_id"] for vals in vals_list if vals.get("appointment_type_id")})
+
+        if appointment_type_ids:
+            appointment_type_ids = self.env['appointment.type'].browse(appointment_type_ids)
+            resource_appointment_type_ids = set(appointment_type_ids.filtered(lambda apt: apt.schedule_based_on == 'resources').ids)
+
+            return [vals.get("appointment_type_id") not in resource_appointment_type_ids for vals in vals_list]
+
+        return res
+
     @api.depends('appointment_type_id')
     def _compute_alarm_ids(self):
         for event in self.filtered('appointment_type_id'):

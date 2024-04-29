@@ -293,6 +293,26 @@ class AppointmentResourceBookingTest(AppointmentCommon):
             with self.assertQueryCount(default=7):
                 appointment._get_appointment_slots('UTC')
 
+    def test_appointment_resources_check_organizer_validation_conditions(self):
+        appointment_vals_list = [{
+            'appointment_type_id': self.apt_type_resource.id,
+            'name': 'Booking',
+            'start': datetime(2022, 2, 15, 14, 0, 0),
+            'stop': datetime(2022, 2, 15, 15, 0, 0),
+        }, {
+            'appointment_type_id': self.apt_type_bxls_2days.id,
+            'name': 'Booking',
+            'start': datetime(2022, 2, 15, 10, 0, 0),
+            'stop': datetime(2022, 2, 15, 11, 0, 0),
+        }, {
+            'appointment_type_id': False,
+            'name': 'Booking',
+            'start': datetime(2022, 2, 15, 10, 0, 0),
+            'stop': datetime(2022, 2, 15, 11, 0, 0),
+        }]
+
+        self.assertEqual(self.env['calendar.event']._check_organizer_validation_conditions(appointment_vals_list), [False, True, True])
+
     @users('apt_manager')
     def test_appointment_resources_combinable(self):
         """ Check that combinable resources are correctly process. """
@@ -990,6 +1010,17 @@ class AppointmentResourceBookingTest(AppointmentCommon):
             resource_slots = self._filter_appointment_slots(slots)
 
         self.assertEqual(len(resource_slots), 0, "Once a resource is booked on a slot, it should not be available anymore to other appointment types.")
+
+    def test_appointment_resources_dont_skip_mail_user_not_attendee(self):
+        # Resource is booked on its slot on appointment_type_resource
+        event = self.env['calendar.event'].with_context(self._test_context).create({
+            'appointment_type_id': self.apt_type_resource.id,
+            'name': 'Booking 1',
+            'start': datetime(2022, 2, 14, 15, 0, 0),
+            'stop': datetime(2022, 2, 14, 15, 0, 0) + timedelta(hours=1),
+        })
+
+        self.assertFalse(event._skip_send_mail_status_update())
 
     @users('apt_manager')
     def test_appointment_resources_multi_edit_capacity(self):
