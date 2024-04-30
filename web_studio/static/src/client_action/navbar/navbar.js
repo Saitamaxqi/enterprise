@@ -60,4 +60,12 @@ export class StudioNavbar extends EnterpriseNavBar {
     get menuButtons() {
         return Object.fromEntries(menuButtonsRegistry.getEntries());
     }
+    _updateMenuAppsIcon() {
+        super._updateMenuAppsIcon();
+        const menuAppsEl = this.menuAppsRef.el;
+        menuAppsEl.classList.toggle(
+            "o_menu_toggle_studio_app_creator_back",
+            this.studio.MODES.APP_CREATOR === this.studio.mode
+        );
+    }
 }
