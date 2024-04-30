@@ -178,7 +178,7 @@ msgstr ""
 #. module: delivery_dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__delivery_carrier__delivery_type__dhl
 #: model:ir.model.fields.selection,name:delivery_dhl.selection__stock_package_type__package_carrier_type__dhl
-msgid "DHL"
+msgid "DHL (Legacy)"
 msgstr ""
 
 #. module: delivery_dhl
@@ -211,7 +211,7 @@ msgstr ""
 
 #. module: delivery_dhl
 #: model:ir.model.fields,field_description:delivery_dhl.field_delivery_carrier__dhl_default_package_type_id
-msgid "DHL Package Type"
+msgid "DHL Leagcy Package Type"
 msgstr ""
 
 #. module: delivery_dhl

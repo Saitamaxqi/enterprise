@@ -14,7 +14,7 @@ class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
 
     delivery_type = fields.Selection(selection_add=[
-        ('dhl', "DHL")
+        ('dhl', "DHL (Legacy)")
     ], ondelete={'dhl': lambda recs: recs.write({'delivery_type': 'fixed', 'fixed_price': 0})})
 
     dhl_SiteID = fields.Char(string="DHL SiteID", groups="base.group_system")
@@ -28,7 +28,7 @@ class DeliveryCarrier(models.Model):
                                                 ('K', 'Kilograms')],
                                                default='K',
                                                string="Package Weight Unit")
-    dhl_default_package_type_id = fields.Many2one('stock.package.type', string='DHL Package Type')
+    dhl_default_package_type_id = fields.Many2one('stock.package.type', string='DHL Legacy Package Type')
     dhl_region_code = fields.Selection([('AP', 'Asia Pacific'),
                                         ('AM', 'America'),
                                         ('EU', 'Europe')],

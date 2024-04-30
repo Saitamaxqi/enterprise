@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name': "DHL Express Shipping",
-    'description': "Send your shippings through DHL and track them online",
+    'name': "DHL Express Shipping (Legacy)",
+    'description': "This is the legacy integration with DHL Express that is no longer supported. \
+        Please install the new \"DHL Express Shipping\" module and uninstall this one as soon as possible.",
     'category': 'Shipping Connectors',
     'sequence': 285,
     'version': '1.0',
