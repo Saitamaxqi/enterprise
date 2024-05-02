@@ -30,9 +30,6 @@ class TestTimesheetGridHolidays(TestCommonTimesheet):
         hr_leave_type = self.env['hr.leave.type'].create({
             'name': 'Leave Type with timesheet generation',
             'requires_allocation': 'no',
-            'timesheet_generate': True,
-            'timesheet_project_id': internal_project.id,
-            'timesheet_task_id': internal_task_leaves.id,
         })
         HrLeave = self.env['hr.leave'].with_context(mail_create_nolog=True, mail_notrack=True)
         # employee creates a leave request
@@ -68,9 +65,6 @@ class TestTimesheetGridHolidays(TestCommonTimesheet):
         hr_leave_type_with_ts = self.env['hr.leave.type'].create({
             'name': 'Leave Type with timesheet generation',
             'requires_allocation': 'no',
-            'timesheet_generate': True,
-            'timesheet_project_id': self.env.company.internal_project_id.id,
-            'timesheet_task_id': self.env.company.leave_timesheet_task_id.id,
         })
         # employee creates a leave request
         holiday = Requests.with_user(self.user_employee).create({

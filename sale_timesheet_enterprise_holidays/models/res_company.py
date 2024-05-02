@@ -20,11 +20,10 @@ class ResCompany(models.Model):
                       SUM(aal.unit_amount) AS total_time,
                       SUM(CASE WHEN aal.date <= %s THEN aal.unit_amount ELSE 0 END) AS total_valid_time
                  FROM account_analytic_line aal
-            LEFT JOIN hr_leave_type hlt ON hlt.timesheet_task_id = aal.task_id
                 WHERE aal.project_id IS NOT NULL
                       AND aal.date BETWEEN %s AND %s
                       AND aal.company_id = %s
-                      AND hlt.timesheet_task_id IS NULL
+                      AND aal.holiday_id is NULL AND aal.global_leave_id is NULL
              GROUP BY aal.employee_id
         )
         SELECT A.id,
