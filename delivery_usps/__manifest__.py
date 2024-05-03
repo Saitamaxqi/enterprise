@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name': "United States Postal Service (USPS) Shipping",
-    'description': "Send your shippings through USPS and track them online",
+    'name': "United States Postal Service (USPS) Shipping (Legacy)",
+    'description': "This is the legacy integration with USPS. Please install the new \"United States Postal Service (USPS) Shipping\" module and uninstall this one as soon as possible.",
     'category': 'Inventory/Delivery',
     'sequence': 305,
     'version': '1.0',

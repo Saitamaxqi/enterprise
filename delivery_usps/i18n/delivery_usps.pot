@@ -418,7 +418,7 @@ msgstr ""
 
 #. module: delivery_usps
 #: model:ir.model.fields.selection,name:delivery_usps.selection__delivery_carrier__delivery_type__usps
-msgid "USPS"
+msgid "USPS (Legacy)"
 msgstr ""
 
 #. module: delivery_usps

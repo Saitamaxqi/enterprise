@@ -13,7 +13,7 @@ class DeliveryCarrier(models.Model):
     _inherit = 'delivery.carrier'
 
     delivery_type = fields.Selection(selection_add=[
-        ('usps', "USPS")
+        ('usps', "USPS (Legacy)")
     ], ondelete={'usps': lambda recs: recs.write({'delivery_type': 'fixed', 'fixed_price': 0})})
     # Fields required to configure
     usps_username = fields.Char(string='USPS User ID', groups="base.group_system")
@@ -35,7 +35,7 @@ class DeliveryCarrier(models.Model):
 
     usps_label_file_type = fields.Selection([('PDF', 'PDF'),
                                              ('TIF', 'TIF')],
-                                            string="USPS Label File Type", default='PDF')
+                                            string="USPS (Legacy) Label File Type", default='PDF')
     usps_service = fields.Selection([('First Class', 'First Class'),
                                      ('Priority', 'Priority'),
                                      ('Express', 'Express')],
