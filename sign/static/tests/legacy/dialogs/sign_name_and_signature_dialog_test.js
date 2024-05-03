@@ -1,4 +1,4 @@
-import { click, getFixture } from "@web/../tests/helpers/utils";
+import { click, getFixture, nextTick } from "@web/../tests/helpers/utils";
 import { makeTestEnv } from "@web/../tests/helpers/mock_env";
 import {
     makeFakeDialogService,
@@ -166,6 +166,31 @@ QUnit.module("Sign Name and Signature Dialog", function (hooks) {
             await mountSignNameAndSignatureDialogSaved();
             await click(target, ".o_web_sign_auto_button");
             assert.verifySteps(["/web/sign/get_fonts/LaBelleAurore-Regular.ttf", "/web/sign/get_fonts/"]);
+        }
+    );
+
+    QUnit.test(
+        "sign name and signature dialog draw mode does not allow to submit sign with no sign drawn",
+        async function (assert) {
+            await mountSignNameAndSignatureDialog();
+            const buttons = document.querySelector("footer.modal-footer > button.btn-primary");
+
+            assert.ok(target.querySelector(".o_web_sign_auto_button").classList.contains("active"));
+            assert.hasAttrValue(
+                buttons,
+                "disabled",
+                undefined,
+                "Buttons should not be disabled on auto when Full name and Signature are filled"
+            );
+
+            await nextTick();
+            await click(target, ".o_web_sign_draw_button");
+            assert.hasAttrValue(
+                buttons,
+                "disabled",
+                "disabled",
+                "Buttons should be disabled on draw if no signature is drawn"
+            );
         }
     );
 });
