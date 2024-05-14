@@ -43,9 +43,8 @@ a periodic and automatic synchronization of their bank statements.
         'web.assets_frontend': [
             'account_online_synchronization/static/src/js/online_sync_portal.js',
         ],
-        'web.qunit_suite_tests': [
-            'account_online_synchronization/static/tests/helpers/*.js',
-            'account_online_synchronization/static/tests/*.js',
+        'web.assets_unit_tests': [
+            'account_online_synchronization/static/tests/**/*',
         ],
     }
 }
