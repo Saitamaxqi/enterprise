@@ -255,6 +255,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         picking_type_production = self.env['stock.picking.type'].search([
             ('code', '=', 'mrp_operation'), ('company_id', '=', self.env.company.id)])
         picking_type_production.restrict_scan_source_location = 'mandatory'
+        picking_type_production.show_reserved_sns = True
         # Prepares a production for 2x final product, then process it in the Barcode App.
         lot_01 = self.env['stock.lot'].create({
             'name': 'lot_01',
