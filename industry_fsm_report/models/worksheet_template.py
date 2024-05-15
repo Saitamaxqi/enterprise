@@ -2,7 +2,7 @@
 
 from ast import literal_eval
 
-from odoo import api, models
+from odoo import Command, api, models
 
 
 class WorksheetTemplate(models.Model):
@@ -40,6 +40,17 @@ class WorksheetTemplate(models.Model):
     @api.model
     def _get_project_task_module_name(self):
         return 'industry_fsm_report'
+
+    def _get_project_task_additional_ir_rule_vals_list(self, name, model_id):
+        res_model = self.res_model.replace('.', '_')
+        return [
+            {
+                'name': f'{name}_user',
+                'model_id': model_id,
+                'domain_force': f"[(f'x_{res_model}_id.user_ids', 'in', user.id)]",
+                'groups': [Command.set(self._get_project_task_user_group().ids)],
+            },
+        ]
 
     def _get_template_action_context(self):
         context = super()._get_template_action_context()

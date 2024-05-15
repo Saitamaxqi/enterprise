@@ -180,6 +180,9 @@ class WorksheetTemplate(models.Model):
             'perm_read': True,
             'perm_unlink': True,
         }]))
+        additional_ir_rule_vals_list = []
+        if hasattr(self, f'_get_{res_model}_additional_ir_rule_vals_list'):
+            additional_ir_rule_vals_list = getattr(self, f'_get_{res_model}_additional_ir_rule_vals_list')(name, model.id)
         register_xids(self.env['ir.rule'].sudo().create([{
             'name': name + '_own',
             'model_id': model.id,
@@ -190,7 +193,7 @@ class WorksheetTemplate(models.Model):
             'model_id': model.id,
             'domain_force': [(1, '=', 1)],
             'groups': [(6, 0, getattr(self, '_get_%s_access_all_groups' % res_model)().ids)],
-        }]))
+        }, *additional_ir_rule_vals_list]))
 
         # create the view to extend by 'studio' and add the user custom fields
         __, __, search_view = register_xids(self.env['ir.ui.view'].sudo().create([
