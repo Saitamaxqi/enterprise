@@ -212,12 +212,20 @@ class CalendarEvent(models.Model):
         return super().create(vals_list)
 
     def write(self, vals):
+        unconfirmed_bookings = self.filtered(lambda event: event.appointment_type_id and event.appointment_status != 'booked')
         if any(event.appointment_type_id for event in self) or vals.get('appointment_type_id'):
             if 'active' in vals and 'appointment_status' not in vals:
                 vals['appointment_status'] = 'booked' if vals['active'] else 'cancelled'
             if 'active' not in vals and 'appointment_status' in vals:
                 vals['active'] = vals['appointment_status'] != 'cancelled'
-        return super().write(vals)
+
+        res = super().write(vals)
+
+        confirmed_bookings = unconfirmed_bookings.filtered(lambda event: event.appointment_status == 'booked')
+        if confirmed_bookings:
+            confirmed_bookings.attendee_ids._send_invitation_emails()
+
+        return res
 
     def _init_column(self, column_name):
         """ Initialize the value of the given column for existing rows.
@@ -397,7 +405,7 @@ class CalendarEvent(models.Model):
         # set 'author_id' and 'email_from' based on the organizer
         vals = {'author_id': self.user_id.partner_id.id, 'email_from': self.user_id.email_formatted} if self.user_id else {}
 
-        if 'appointment_type_id' in changes:
+        if 'appointment_type_id' in changes and self.appointment_status == 'booked':
             try:
                 booked_template = self.env.ref('appointment.appointment_booked_mail_template')
             except ValueError as e:

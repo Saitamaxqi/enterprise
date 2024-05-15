@@ -219,9 +219,17 @@
         Hello <t t-out="object.common_name or ''">Wood Corner</t>,<br/><br/>
 
         <t t-if="target_customer">
-            Your appointment <strong t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</strong> <t t-if="object.event_id.appointment_type_id.category != 'custom' and object.event_id.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.event_id.user_id.name or ''">Ready Mat</t></t> has been booked.
-            <t t-if="object.state != 'accepted' and object.event_id.appointment_type_id.schedule_based_on == 'resources' and object.event_id.appointment_type_id.appointment_manual_confirmation">
-                You will receive a mail of confirmation with more details when your appointment will be confirmed.
+            <t t-if="object.event_id.appointment_type_id.appointment_manual_confirmation">
+                <t t-if="object.event_id.appointment_status == 'booked'">
+                    We're happy to let you know your booking <strong t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</strong><t t-if="object.event_id.appointment_type_id.category != 'custom' and object.event_id.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.event_id.user_id.name or ''">Ready Mat</t></t> has been confirmed.<br/>
+                </t>
+                <t t-elif="object.event_id.appointment_status == 'request'">
+                    We've got your booking <strong t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</strong><t t-if="object.event_id.appointment_type_id.category != 'custom' and object.event_id.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.event_id.user_id.name or ''">Ready Mat</t></t>.<br/>
+                    We'll notify you once it's confirmed.
+                </t>
+            </t>
+            <t t-else="">
+                Your appointment <strong t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</strong> <t t-if="object.event_id.appointment_type_id.category != 'custom' and object.event_id.appointment_type_id.schedule_based_on == 'users'"> with <t t-out="object.event_id.user_id.name or ''">Ready Mat</t></t> has been booked.
             </t>
             <div>
                 Need to reschedule? Use this
@@ -231,6 +239,10 @@
         <t t-elif="target_responsible">
             <t t-if="customer">
                 <t t-out="customer.name or ''"></t> scheduled the following appointment <strong t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</strong> with you.
+                <t t-if="object.event_id.appointment_type_id and object.event_id.appointment_status == 'request'">
+                    <br/>
+                    It is awaiting confirmation.
+                </t>
             </t>
             <t t-else="">
                 Your appointment <strong t-out="object.event_id.appointment_type_id.name or ''">Schedule a Demo</strong> has been booked.

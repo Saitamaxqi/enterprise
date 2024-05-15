@@ -15,6 +15,10 @@
                 <field name="appointment_type_schedule_based_on" invisible="1"/>
                 <field name="appointment_type_manage_capacity" invisible="1"/>
             </field>
+            <xpath expr="//widget[@name='web_ribbon']" position="replace">
+                <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active or appointment_type_id"/>
+                <widget name="web_ribbon" title="Cancelled" bg_color="text-bg-danger" invisible="active or not appointment_type_id"/>
+            </xpath>
             <xpath expr="//page[@name='page_invitations']" position="after">
                 <page name="page_appointment" string="Appointment Details"
                     invisible="not appointment_type_id or appointment_type_schedule_based_on != 'resources' or not appointment_type_manage_capacity">
@@ -108,7 +112,7 @@
         <field name="name">calendar.event.view.list.booking</field>
         <field name="model">calendar.event</field>
         <field name="arch" type="xml">
-            <list sample="1" decoration-danger="not active" js_class="appointment_booking_list">
+            <list sample="1" decoration-danger="not active" js_class="appointment_booking_list" multi_edit="1">
                 <field name="active" column_invisible="True"/>
                 <field name="name" string="Subject"/>
                 <field name="appointment_type_id"/>
@@ -118,6 +122,7 @@
                 <field name="stop"/>
                 <field name="resource_total_capacity_reserved" sum="Total Capacity Reserved"/>
                 <field name="resource_total_capacity_used" optional="show" sum="Total Capacity Used"/>
+                <field name="appointment_status" string="Status"/>
            </list>
         </field>
     </record>

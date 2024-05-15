@@ -299,7 +299,7 @@
                                     <label for="appointment_manual_confirmation"/>
                                     <div class="d-flex">
                                         <field name="appointment_manual_confirmation" class="oe_inline"/>
-                                        <div invisible="not appointment_manual_confirmation or schedule_based_on == 'users'">
+                                        <div invisible="not appointment_manual_confirmation or schedule_based_on == 'users' or not resource_manage_capacity">
                                             <span>
                                                 when over
                                                 <field name="resource_manual_confirmation_percentage" class="oe_inline o_input_5ch mx-1" widget="percentage"/>

@@ -60,11 +60,17 @@ class AppointmentTestTracking(AppointmentCommon, MailCase):
             meeting.active = True
             self.flush_tracking()
 
-        self.assertEqual(len(self._new_msgs), 1, 'Expected a tracking message')
+        self.assertEqual(len(self._new_msgs), 4,
+            'Expected a tracking message and confirmation mails')  # 1 track message + 3 mails(1 apt_manager + 2 customers)
         self.assertTracking(
-            self._new_msgs[0],
+            self._new_msgs[3],
             [('active', 'boolean', False, True)]
         )
+        #  Check all mails are sent after confirming the booking
+        for attendee in meeting.partner_ids:
+            self.assertSentEmail(
+                self.apt_manager.partner_id, attendee, subject='Invitation to Test Tracking Appointment'
+            )
 
     @freeze_time('2017-01-01')
     def test_cancel_meeting_message(self):

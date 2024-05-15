@@ -574,13 +574,13 @@ class AppointmentType(models.Model):
         if self.appointment_manual_confirmation and self.schedule_based_on == 'resources':
             bookings_data = self.env['appointment.booking.line'].sudo()._read_group([
                 ('appointment_type_id', '=', self.id),
-                ('event_start', '<', datetime.combine(stop_dt, time.max)),
-                ('event_stop', '>', datetime.combine(start_dt, time.min))
+                ('event_start', '<', stop_dt),
+                ('event_stop', '>', start_dt)
             ], [], ['capacity_used:sum'])
             capacity_already_used = bookings_data[0][0]
             resource_total_capacity_used = capacity_already_used + capacity_reserved
 
-            if float_compare(resource_total_capacity_used / self.resource_total_capacity, self.resource_manual_confirmation_percentage, 2) >= 0:
+            if float_compare(resource_total_capacity_used / self.resource_total_capacity, self.resource_manual_confirmation_percentage, 2) > 0:
                 default_state = 'request'
         elif self.appointment_manual_confirmation:
             default_state = 'request'
