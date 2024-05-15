@@ -77,7 +77,7 @@
         <record id="product_fee" model="product.product">
             <field name="name">Registration fee</field>
             <field name="recurring_invoice">False</field>
-            <field name="categ_id" ref="product.product_category_3"/>
+            <field name="categ_id" ref="product.product_category_services"/>
             <field name="type">service</field>
             <field name="list_price">25.0</field>
             <field name="invoice_policy">order</field>
@@ -89,7 +89,7 @@
         <record id="product_office_cleaning" model="product.product">
             <field name="name">Office Cleaning Service (SUB)</field>
             <field name="recurring_invoice">True</field>
-            <field name="categ_id" ref="product.product_category_3"/>
+            <field name="categ_id" ref="product.product_category_services"/>
             <field name="type">service</field>
             <field name="list_price">200.0</field>
             <field name="invoice_policy">order</field>
@@ -101,7 +101,7 @@
         <record id="product_car_leasing" model="product.product">
             <field name="name">Car Leasing (SUB)</field>
             <field name="recurring_invoice">True</field>
-            <field name="categ_id" ref="product.product_category_3"/>
+            <field name="categ_id" ref="product.product_category_services"/>
             <field name="type">service</field>
             <field name="list_price">200.0</field>
             <field name="invoice_policy">delivery</field>

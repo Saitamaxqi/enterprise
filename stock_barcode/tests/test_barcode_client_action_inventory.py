@@ -87,7 +87,6 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         product_no_company = self.env['product.product'].create({
             'name': 'Company-less Product',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': 'product_no_company',
         })
         self.start_tour("/odoo", 'test_inventory_adjustment_multi_company', login='admin', timeout=180)
@@ -271,7 +270,7 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         productserial2 = self.env['product.product'].create({
             'name': 'productserial2',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
+            'categ_id': self.env.ref('product.product_category_goods').id,
             'barcode': 'productserial2',
             'tracking': 'serial',
         })
@@ -330,7 +329,6 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         product_weight = self.env['product.product'].create({
             'name': 'product_weight',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '2145631000000',
         })
 
@@ -583,7 +581,6 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         product = self.env['product.product'].create({
             'name': 'PRO_GTIN_8',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '82655853',  # GTIN-8 format
             'uom_id': self.env.ref('uom.product_uom_unit').id
         })
@@ -606,7 +603,6 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         product = self.env['product.product'].create({
             'name': 'PRO_GTIN_8',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '82655853',  # GTIN-8 format
             'uom_id': self.env.ref('uom.product_uom_unit').id
         })
@@ -636,7 +632,6 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         product = self.env['product.product'].create({
             'name': 'PRO_GTIN_8',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '82655853',  # GTIN-8 format
             'uom_id': self.env.ref('uom.product_uom_unit').id
         })
@@ -668,7 +663,6 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         product_lot = self.env['product.product'].create({
             'name': 'PRO_GTIN_12_lot',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '111155555717',  # GTIN-12 format
             'uom_id': self.env.ref('uom.product_uom_unit').id,
             'tracking': 'lot',
@@ -677,7 +671,6 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         product_serial = self.env['product.product'].create({
             'name': 'PRO_GTIN_14_serial',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '15222222222219',  # GTIN-14 format
             'uom_id': self.env.ref('uom.product_uom_unit').id,
             'tracking': 'serial',

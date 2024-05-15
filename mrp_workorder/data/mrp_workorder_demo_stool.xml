@@ -43,7 +43,7 @@
 
         <record id="product_template_stool" model="product.template" forcecreate="0">
             <field name="name">Stool</field>
-            <field name="categ_id" ref="product.product_category_5"/>
+            <field name="categ_id" ref="product.product_category_office"/>
             <field name="standard_price">500.0</field>
             <field name="list_price">500.0</field>
             <field name="is_storable" eval="True"/>
@@ -114,7 +114,7 @@
         <record id="product_template_stool_foot" model="product.template" forcecreate="0">
             <field name="name">Stool Foot</field>
             <field name="default_code">FURN_1145</field>
-            <field name="categ_id" ref="product.product_category_5"/>
+            <field name="categ_id" ref="product.product_category_office"/>
             <field name="standard_price">5</field>
             <field name="is_storable" eval="True"/>
             <field name="weight">2</field>
@@ -189,7 +189,7 @@
         <record id="product_template_stool_top" model="product.template" forcecreate="0">
             <field name="name">Stool Top</field>
             <field name="default_code">FURN_1245</field>
-            <field name="categ_id" ref="product.product_category_5"/>
+            <field name="categ_id" ref="product.product_category_office"/>
             <field name="standard_price">7</field>
             <field name="tracking">lot</field>
             <field name="is_storable" eval="True"/>

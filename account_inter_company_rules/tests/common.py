@@ -19,7 +19,6 @@ class TestInterCompanyRulesCommon(AccountTestInvoicingCommon):
             'name': 'Service',
             'uom_id': cls.env.ref('uom.product_uom_hour').id,
             'uom_po_id': cls.env.ref('uom.product_uom_hour').id,
-            'categ_id': cls.env.ref('product.product_category_all').id,
             'type': 'service',
             'taxes_id': [(6, 0, (cls.company_a.account_sale_tax_id + cls.company_b.account_sale_tax_id).ids)],
             'supplier_taxes_id': [(6, 0, (cls.company_a.account_purchase_tax_id + cls.company_b.account_purchase_tax_id).ids)],

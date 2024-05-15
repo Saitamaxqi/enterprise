@@ -255,7 +255,6 @@ class TestReports(TestAr, TestAccountReportsCommon):
         })
         test_product = self.env['product.product'].create({
             'name': "Test Product",
-            'categ_id': self.env.ref("product.product_category_all").id,
             'lst_price': 100.0,
             'standard_price': 10.0,
             'property_account_income_id': self.company_data["default_account_revenue"].id,

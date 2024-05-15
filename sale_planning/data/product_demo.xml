@@ -27,7 +27,7 @@
 
         <record id="technical_maintainance_product" model="product.product">
             <field name="name">IT Technical Maintenance (Plan services)</field>
-            <field name="categ_id" ref="product.product_category_3"/>
+            <field name="categ_id" ref="product.product_category_services"/>
             <field name="standard_price">14</field>
             <field name="list_price">20</field>
             <field name="type">service</field>
@@ -40,7 +40,7 @@
 
         <record id="developer_product" model="product.product">
             <field name="name">Developer (Plan services)</field>
-            <field name="categ_id" ref="product.product_category_3"/>
+            <field name="categ_id" ref="product.product_category_services"/>
             <field name="standard_price">150</field>
             <field name="list_price">200</field>
             <field name="type">service</field>

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
@@ -16,16 +15,14 @@ class ResConfigSettings(models.TransientModel):
         inverse='_set_property_stock_journal')
     property_account_income_categ_id = fields.Many2one(
         'account.account', "Income Account",
-        check_company=True,
-        domain=ACCOUNT_DOMAIN,
-        compute='_compute_property_stock_account',
-        inverse='_set_property_account_income_categ_id')
+        related="company_id.income_account_id",
+        readonly=False,
+    )
     property_account_expense_categ_id = fields.Many2one(
         'account.account', "Expense Account",
-        check_company=True,
-        domain=ACCOUNT_DOMAIN,
-        compute='_compute_property_stock_account',
-        inverse='_set_property_account_expense_categ_id')
+        related="company_id.expense_account_id",
+        readonly=False,
+    )
     property_stock_valuation_account_id = fields.Many2one(
         'account.account', "Stock Valuation Account",
         check_company=True,
@@ -59,14 +56,6 @@ class ResConfigSettings(models.TransientModel):
         for record in self:
             record._set_property('property_stock_journal')
 
-    def _set_property_account_income_categ_id(self):
-        for record in self:
-            record._set_property('property_account_income_categ_id')
-
-    def _set_property_account_expense_categ_id(self):
-        for record in self:
-            record._set_property('property_account_expense_categ_id')
-
     def _set_property_stock_valuation_account_id(self):
         for record in self:
             record._set_property('property_stock_valuation_account_id')
@@ -86,8 +75,6 @@ class ResConfigSettings(models.TransientModel):
     def _get_account_stock_properties_names(self):
         return [
             'property_stock_journal',
-            'property_account_income_categ_id',
-            'property_account_expense_categ_id',
             'property_stock_valuation_account_id',
             'property_stock_account_input_categ_id',
             'property_stock_account_output_categ_id',

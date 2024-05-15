@@ -105,7 +105,6 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
 
         product_storable = self.env['product.product'].create({
             'name': 'Storable',
-            'categ_id': self.env.ref('product.product_category_all').id,
             'is_storable': True,
             'taxes_id': [(6, 0, (self.company_a.account_sale_tax_id + self.company_b.account_sale_tax_id).ids)],
             'supplier_taxes_id': [(6, 0, (self.company_a.account_purchase_tax_id + self.company_b.account_purchase_tax_id).ids)],
@@ -227,7 +226,6 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         self.env["stock.putaway.rule"].with_company(self.company_a).create({
             "location_in_id": stock_location_a.id,
             "location_out_id": shelf_location.id,
-            'category_id': self.env.ref('product.product_category_all').id,
         })
         # with company B:
         my_product = self.env['product.product'].with_company(self.company_b).create({

@@ -855,7 +855,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         product3 = self.env['product.product'].create({
             'name': 'product3',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': 'product3',
         })
         # Creates a delivery with three different products.
@@ -1135,7 +1134,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.productlot2 = self.env['product.product'].create({
             'name': 'productlot2',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': 'productlot2',
             'tracking': 'lot',
         })
@@ -1275,7 +1273,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         product3 = self.env['product.product'].create({
             'name': 'product3',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': 'product3',
         })
 
@@ -1996,7 +1993,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         product_without_barcode = self.env['product.product'].create({
             'name': 'Barcodeless Product',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
         })
         # Adds products' quantities.
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 8)
@@ -2069,7 +2065,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         product_without_barcode = self.env['product.product'].create({
             'name': 'Barcodeless Product',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
         })
         # Create an empty package.
         package = self.env['stock.quant.package'].create({'name': 'pack-128'})
@@ -2204,7 +2199,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         product_without_barcode = self.env['product.product'].create({
             'name': 'Barcodeless Product',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
         })
 
         # Enables packages, multi-locations and multiple steps routes.
@@ -2350,7 +2344,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env['product.product'].create({
             'name': 'product3',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': 'product3',
         })
 
@@ -2702,7 +2695,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         product3 = self.env['product.product'].create({
             'name': 'product3',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': 'product3',
         })
         # Adds some quantity in stock but not enough to fully complete the delivery.
@@ -3108,7 +3100,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         product_a, product_b = self.env['product.product'].create([{
             'name': name,
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': barcode,
             'tracking': 'lot',
         } for (name, barcode) in [('Product A', '22222220'), ('Product B', '44444440')]])
@@ -3144,7 +3135,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         product_a, product_b = self.env['product.product'].create([{
             'name': f'product{i}',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': barcode,
             'tracking': 'serial',
         } for i, barcode in enumerate(['05711544001952', '05711544001969'])])
@@ -3193,7 +3183,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         product_gtin_8 = self.env['product.product'].create({
             'name': 'PRO_GTIN_8',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '11011019',  # GTIN-8 format.
             'uom_id': self.env.ref('uom.product_uom_unit').id,
         })
@@ -3231,7 +3220,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         product_gtin_8 = self.env['product.product'].create({
             'name': 'PRO_GTIN_8',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '11011019',  # GTIN-8 format -> Will become 00000011011019.
             'uom_id': self.env.ref('uom.product_uom_unit').id,
         })
@@ -3239,7 +3227,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         product_gtin_12 = self.env['product.product'].create({
             'name': 'PRO_GTIN_12',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '000011011019',  # GTIN-12 format -> Will also become 00000011011019.
             'uom_id': self.env.ref('uom.product_uom_unit').id,
         })
@@ -3322,14 +3309,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env['product.product'].create({
             'name': "Product AI 21",
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '21000000000003',  # Can be read as a serial number (AI 21)
             'uom_id': self.env.ref('uom.product_uom_unit').id,
         })
         self.env['product.product'].create({
             'name': "Product AI 30",
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '3000000015',  # Can be read as a quantity (15 units, AI 30)
             'uom_id': self.env.ref('uom.product_uom_unit').id,
         })
@@ -3380,20 +3365,18 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env.user.write({'groups_id': [(4, grp_uom.id)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         # Configures three products using units, kg and g.
-        uom_unit = self.env.ref('product.product_category_all')
+        uom_unit = self.env.ref('uom.product_uom_unit')
         uom_g = self.env.ref('uom.product_uom_gram')
         uom_kg = self.env.ref('uom.product_uom_kgm')
         product_by_units = self.env['product.product'].create({
             'name': 'Product by Units',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '15264329',
             'uom_id': uom_unit.id,
         })
         product_by_g = self.env['product.product'].create({
             'name': 'Product by g',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '15264893',
             'uom_id': uom_g.id,
             'uom_po_id': uom_g.id,
@@ -3401,7 +3384,6 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         product_by_kg = self.env['product.product'].create({
             'name': 'Product by kg',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '15264879',
             'uom_id': uom_kg.id,
             'uom_po_id': uom_kg.id,
@@ -3455,14 +3437,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         product1 = self.env['product.product'].create({
             'name': 'PRO_GTIN_8',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '82655853',  # GTIN-8
             'uom_id': self.env.ref('uom.product_uom_unit').id
         })
         product2 = self.env['product.product'].create({
             'name': 'PRO_GTIN_12',
             'is_storable': True,
-            'categ_id': self.env.ref('product.product_category_all').id,
             'barcode': '584687955629',  # GTIN-12
             'uom_id': self.env.ref('uom.product_uom_unit').id,
         })

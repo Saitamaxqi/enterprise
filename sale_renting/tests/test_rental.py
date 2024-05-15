@@ -23,7 +23,6 @@ class TestRentalCommon(TransactionCase):
 
         cls.product_id = cls.env['product.product'].create({
             'name': 'Projector',
-            'categ_id': cls.env.ref('product.product_category_all').id,
             'type': 'consu',
             'rent_ok': True,
             'extra_hourly': 7.0,

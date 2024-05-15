@@ -17,7 +17,7 @@ class ExpenseSampleReceipt(models.Model):
             'company_id': self.env.company.id,
         })
 
-        expense_categ = self.env.ref('product.cat_expense', raise_if_not_found=False)
+        expense_categ = self.env.ref('product.product_category_expenses', raise_if_not_found=False)
         product = self.env.ref('hr_expense.product_product_no_cost', raise_if_not_found=False) or \
                   self.env['product.product']._load_records([
                       dict(xml_id='hr_expense.product_product_no_cost',
@@ -26,7 +26,7 @@ class ExpenseSampleReceipt(models.Model):
                                 'list_price': 0.0,
                                 'standard_price': 1.0,
                                 'type': 'service',
-                                'categ_id': expense_categ.id if expense_categ else self.env.ref('product.product_category_all').id,
+                                'categ_id': expense_categ.id if expense_categ else False,
                                 'can_be_expensed': True
                            }, noupdate=True)
                   ])

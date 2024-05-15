@@ -219,7 +219,6 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
         self.env["stock.putaway.rule"].create({
             "location_in_id": self.stock_location.id,
             "location_out_id": self.depot_location.id,
-            'category_id': self.env.ref('product.product_category_all').id,
         })
 
         self.env['stock.quant']._update_available_quantity(self.graphics_card, self.stock_location, 20)
@@ -263,7 +262,6 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
         self.env["stock.putaway.rule"].create({
             "location_in_id": self.stock_location.id,
             "location_out_id": self.depot_location.id,
-            'category_id': self.env.ref('product.product_category_all').id,
         })
         self.env['stock.quant']._update_available_quantity(self.graphics_card, self.stock_location, 20)
         self.laptop.tracking = 'serial'

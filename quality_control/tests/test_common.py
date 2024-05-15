@@ -10,22 +10,20 @@ class TestQualityCommon(common.TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.product_category_base = cls.env.ref('product.product_category_1')
-        cls.product_category_1 = cls.env['product.category'].create({
+        cls.product_category_base = cls.env.ref('product.product_category_goods')
+        cls.product_category_office_furnitures = cls.env['product.category'].create({
             'name': 'Office furnitures',
             'parent_id': cls.product_category_base.id
         })
         cls.product = cls.env['product.product'].create({
             'name': 'Office Chair',
-            'categ_id': cls.product_category_1.id
+            'categ_id': cls.product_category_office_furnitures.id
         })
         cls.product_2 = cls.env['product.product'].create({
             'name': 'Test Product',
-            'categ_id': cls.product_category_base.parent_id.id
         })
         cls.product_3 = cls.env['product.product'].create({
             'name': 'Another Test Product',
-            'categ_id': cls.product_category_base.parent_id.id
         })
         cls.product_4 = cls.env['product.product'].create({
             'name': 'Saleable Product',

@@ -15,7 +15,6 @@ class TestWebsiteSaleRenting(TestWebsiteSaleRentingCommon):
     def test_is_add_to_cart_possible(self):
         self.product_id = self.env['product.product'].create({
             'name': 'Projector',
-            'categ_id': self.env.ref('product.product_category_all').id,
             'type': 'consu',
             'rent_ok': True,
             'extra_hourly': 7.0,

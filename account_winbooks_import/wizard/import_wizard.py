@@ -328,9 +328,9 @@ class AccountWinbooksImportWizard(models.TransientModel):
                     'type': journal_type,
                 }
                 if data['type'] == 'sale':
-                    data['default_account_id'] = self.env['product.category']._fields['property_account_income_categ_id'].get_company_dependent_fallback(self.env['product.category']).id
+                    data['default_account_id'] = self.env.company.income_account_id
                 if data['type'] == 'purchase':
-                    data['default_account_id'] = self.env['product.category']._fields['property_account_expense_categ_id'].get_company_dependent_fallback(self.env['product.category']).id
+                    data['default_account_id'] = self.env.company.expense_account_id
                 journal = AccountJournal.create(data)
             journal_data[rec.get('DBKID')] = journal.id
             journals += journal

@@ -12,24 +12,20 @@ class TestBarcodeClientAction(HttpCase):
         searched by its raw barcode even if GS1 nomenclature is used.
         """
         Product = self.env['product.product']
-        product_category_all = self.env.ref('product.product_category_all')
         # Creates three products.
         product1 = Product.create({
             'name': 'product1',
             'barcode': '01304510',
-            'categ_id': product_category_all.id,
             'is_storable': True,
         })
         product2 = Product.create({
             'name': 'product2',
             'barcode': '73411048',
-            'categ_id': product_category_all.id,
             'is_storable': True,
         })
         product3 = Product.create({
             'name': 'product3',
             'barcode': '00000073411048',  # Ambiguous with the product2 barcode.
-            'categ_id': product_category_all.id,
             'is_storable': True,
         })
 
