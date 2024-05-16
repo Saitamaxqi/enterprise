@@ -431,3 +431,10 @@ msgstr ""
 #: code:addons/hr_payroll_account/models/account_journal.py:0
 msgid "You cannot delete the journal linked to a Salary Structure"
 msgstr ""
+
+#. module: hr_payroll_account
+#. odoo-python
+#: code:addons/hr_payroll_account/models/hr_payroll_account.py:0
+#, python-format
+msgid "You can't create a journal entry for a paid payslip."
+msgstr ""
