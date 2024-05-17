@@ -24,7 +24,7 @@ class StockPickingType(models.Model):
     def get_action_picking_tree_ready_kanban(self):
         if self.code == 'mrp_operation':
             res = self._get_action('stock_barcode_mrp.mrp_action_kanban')
-            res['domain'] = ['&', ('picking_type_id', '=', self.id), '|', ('user_id', '=', self.env.user.id), ('user_id', '=', False)]
+            res['domain'] = [('picking_type_id.active', '=', True)]
             return res
         return super().get_action_picking_tree_ready_kanban()
 

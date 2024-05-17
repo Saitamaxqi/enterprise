@@ -104,6 +104,14 @@ patch(MainComponent.prototype, {
         return super.onOpenProductPage(...arguments);
     },
 
+    async onWillStart() {
+        await super.onWillStart();
+        if (this.resModel == "mrp.production") {
+            const { default_picking_type_id } = this.props.action.context;
+            this.env.model.picking_type_id = default_picking_type_id;
+        }
+    },
+
     async saveFormView(lineRecord) {
         if (lineRecord.resModel === "mrp.production") {
             const recordId = lineRecord.resId;

@@ -1182,28 +1182,57 @@ registry.category("web_tour.tours").add("test_always_backorder_mo", {
     ],
 });
 
-registry.category("web_tour.tours").add('test_backorder_partial_completion_save_sensible_split', {
+registry.category("web_tour.tours").add("test_backorder_partial_completion_save_sensible_split", {
     steps: () => [
-        { trigger: '.o_stock_barcode_main_menu', run: 'scan TBPCSNS mo' },
+        { trigger: ".o_stock_barcode_main_menu", run: "scan TBPCSNS mo" },
         {
-            trigger: '.o_barcode_line:has(.o_barcode_line_title .o_product_label:contains("Final Product")) .o_edit',
-            run: 'click'
+            trigger:
+                '.o_barcode_line:has(.o_barcode_line_title .o_product_label:contains("Final Product")) .o_edit',
+            run: "click",
         },
-        { trigger: 'input', run: 'clear' },
-        { trigger: 'input', run: 'edit 5' },
-        { trigger: '.o_save', run: 'click' },
+        { trigger: "input", run: "clear" },
+        { trigger: "input", run: "edit 5" },
+        { trigger: ".o_save", run: "click" },
         {
-            trigger: '.o_barcode_line:has(.o_barcode_line_title .o_product_label:contains("Compo 01")) .o_edit',
-            run: 'click'
+            trigger:
+                '.o_barcode_line:has(.o_barcode_line_title .o_product_label:contains("Compo 01")) .o_edit',
+            run: "click",
         },
-        { trigger: 'input', run: 'clear' },
-        { trigger: 'input', run: 'edit 5' },
-        { trigger: '.o_save', run: 'click' },
-        { trigger: '.o_barcode_line' },
-        { trigger: '.o_exit', run: 'click' },
-        { trigger: '.o_stock_barcode_main_menu', run: 'scan TBPCSNS mo' },
-        { trigger: '.o_validate_page', run: 'click' },
-        { trigger: 'button[name="action_backorder"]', run: 'click' },
-        { trigger: '.o_notification_buttons' },
-    ]
-})
+        { trigger: "input", run: "clear" },
+        { trigger: "input", run: "edit 5" },
+        { trigger: ".o_save", run: "click" },
+        { trigger: ".o_barcode_line" },
+        { trigger: ".o_exit", run: "click" },
+        { trigger: ".o_stock_barcode_main_menu", run: "scan TBPCSNS mo" },
+        { trigger: ".o_validate_page", run: "click" },
+        { trigger: 'button[name="action_backorder"]', run: "click" },
+        { trigger: ".o_notification_buttons" },
+    ],
+});
+
+registry.category("web_tour.tours").add("test_barcode_mo_creation_in_mo2", {
+    steps: () => [
+        { trigger: ".o_kanban_record_title:contains('MO2')", run: "click" },
+        { trigger: ".o-kanban-button-new", run: "click" },
+        {
+            content: "Click on the button to add a product",
+            trigger: "button.o_add_line",
+            run: "click",
+        },
+        { trigger: "input#product_id_0", run: "edit Product4" },
+        { trigger: ".ui-autocomplete a:contains('Product4')", run: "click" },
+        { trigger: "button.o_save", run: "click" },
+        { trigger: "button.o_validate_page:enabled", run: "click" },
+        { trigger: ".o_notification_bar.bg-success" },
+    ],
+});
+
+registry.category("web_tour.tours").add("test_barcode_mo_creation_in_scan_mo2", {
+    steps: () => [
+        { trigger: ".o_kanban_record_title:contains('MO2')", run: "click" },
+        { trigger: ".o-kanban-button-new", run: "click" },
+        { trigger: ".o_barcode_client_action", run: "scan MO2_TEST_PRODUCT" },
+        { trigger: "button.o_validate_page:enabled", run: "click" },
+        { trigger: ".o_notification_bar.bg-success" },
+    ],
+});

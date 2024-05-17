@@ -687,3 +687,55 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
                 'product_uom_qty': 5,
             }]
         )
+
+    def test_barcode_mo_creation_in_mo2(self):
+        """
+        Ensures that MO is created in another manufacturing operation type (MO2)
+        with creating new MO in MO2 operation type and confirm it and Produce it.
+        """
+        self.clean_access_rights()
+
+        mo2_operation_type = self.env['stock.picking.type'].create({
+            'name': 'MO2',
+            'code': 'mrp_operation',
+            'sequence_code': 'MO2',
+            'warehouse_id': self.env.ref('stock.warehouse0').id,
+        })
+
+        product_to_manufacture = self.env['product.product'].create({
+            'name': 'Product4',
+            'is_storable': True,
+            'barcode': 'MO2_TEST_PRODUCT',
+        })
+        url = "/odoo/action-stock_barcode.stock_picking_type_action_kanban"
+        self.start_tour(url, 'test_barcode_mo_creation_in_mo2', login='admin', timeout=180)
+
+        mo = self.env['mrp.production'].search([('product_id', '=', product_to_manufacture.id)], limit=1)
+        self.assertTrue(mo, "The Manufacturing Order was not created.")
+        self.assertEqual(mo.picking_type_id, mo2_operation_type, "The MO was not created with the correct operation type (MO2).")
+
+    def test_barcode_mo_creation_in_scan_mo2(self):
+        """
+        Ensures that MO is created in another manufacturing operation type (MO2)
+        with creating new MO in MO2 operation type by scanning the product and Produce it.
+        """
+        self.clean_access_rights()
+
+        mo2_operation_type = self.env['stock.picking.type'].create({
+            'name': 'MO2',
+            'code': 'mrp_operation',
+            'sequence_code': 'MO2',
+            'warehouse_id': self.env.ref('stock.warehouse0').id,
+        })
+
+        product_to_manufacture = self.env['product.product'].create({
+            'name': 'Test Product',
+            'is_storable': True,
+            'barcode': 'MO2_TEST_PRODUCT',
+        })
+        url = "/odoo/action-stock_barcode.stock_picking_type_action_kanban"
+        self.start_tour(url, 'test_barcode_mo_creation_in_scan_mo2', login='admin', timeout=180)
+
+        mo = self.env['mrp.production'].search([('product_id', '=', product_to_manufacture.id)], limit=1)
+        self.assertTrue(mo, "The Manufacturing Order was not created.")
+        self.assertEqual(mo.picking_type_id, mo2_operation_type, "The MO was not created with the correct operation type (MO2).")
