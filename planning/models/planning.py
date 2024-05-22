@@ -249,7 +249,8 @@ class PlanningSlot(models.Model):
             ._get_valid_work_intervals(start_utc, end_utc, calendars=slots.company_id.resource_calendar_id)
         for slot in slots:
             if (not slot.resource_id and slot.allocation_type == 'planning') or (slot.resource_id and slot.resource_id._is_flexible()):
-                slot.allocated_percentage = 100 * slot.allocated_hours / slot._calculate_slot_duration()
+                duration = slot._calculate_slot_duration()
+                slot.allocated_percentage = 100 * slot.allocated_hours / duration if duration else 100
             else:
                 work_hours = slot._get_working_hours_over_period(start_utc, end_utc, resource_work_intervals, calendar_work_intervals)
                 slot.allocated_percentage = 100 * slot.allocated_hours / work_hours if work_hours else 100
@@ -373,8 +374,20 @@ class PlanningSlot(models.Model):
         """Return the slot (effective) duration expressed in hours.
         """
         self.ensure_one()
+        resource = self.resource_id or self.env.user.employee_id.resource_id
         if not self.start_datetime or not self.end_datetime:
             return False
+
+        if resource and not resource._is_flexible():
+            work_intervals, calendar_intervals = resource._get_valid_work_intervals(
+                pytz.utc.localize(self.start_datetime).astimezone(pytz.timezone(resource.tz)),
+                pytz.utc.localize(self.end_datetime).astimezone(pytz.timezone(resource.tz))
+            )
+            working_intervals = work_intervals[resource.id] \
+                if resource \
+                else calendar_intervals.get(self.company_id.resource_calendar_id.id,
+                                            calendar_intervals[self.company_id.id])
+            return sum_intervals(working_intervals)
         return (self.end_datetime - self.start_datetime).total_seconds() / 3600.0
 
     def _get_domain_template_slots(self):
@@ -609,8 +622,15 @@ class PlanningSlot(models.Model):
                 end = resource.calendar_id.plan_days(template_id.duration_days, start, compute_leaves=True)
             end = end.replace(hour=int(h), minute=int(m))
 
-            start = start.astimezone(pytz.utc).replace(tzinfo=None)
-            end = end.astimezone(pytz.utc).replace(tzinfo=None)
+            if resource and not resource._is_flexible():
+                work_interval, _dummy = resource._get_valid_work_intervals(
+                    start,
+                    end
+                )
+                start = start.astimezone(pytz.utc).replace(tzinfo=None)
+                end = work_interval[resource.id]._items[-1][1].astimezone(pytz.utc).replace(tzinfo=None) \
+                    if work_interval[resource.id]._items \
+                    else end
 
         # Need to remove the tzinfo in start and end as without these it leads to a traceback
         # when the start time is empty
@@ -1493,9 +1513,20 @@ class PlanningSlot(models.Model):
             return 0.0
         period = self.end_datetime - self.start_datetime
         slot_duration = period.total_seconds() / 3600
+        resource = self.resource_id or self.env.user.employee_id.resource_id
         # If resource is fully flexible, return the length of the slot.
         if (self.resource_id and self.resource_id._is_fully_flexible()):
             return slot_duration
+        if resource and not resource._is_flexible():
+            work_intervals, calendar_intervals = resource._get_valid_work_intervals(
+                pytz.utc.localize(self.start_datetime).astimezone(pytz.timezone(resource.tz)),
+                pytz.utc.localize(self.end_datetime).astimezone(pytz.timezone(resource.tz))
+            )
+            working_intervals = work_intervals[resource.id] \
+                if resource \
+                else calendar_intervals.get(self.company_id.resource_calendar_id.id,
+                                            calendar_intervals[self.company_id.id])
+            slot_duration = sum_intervals(working_intervals)
         # if the resource is an employee, the hours_per_day of its calendar is used as max_hours_per_day.
         if self.employee_id:
             max_hours_per_day = self.employee_id.resource_calendar_id.hours_per_day
