@@ -410,6 +410,14 @@ msgid "The companies of the team and the website should match."
 msgstr ""
 
 #. module: website_helpdesk
+#. odoo-javascript
+#: code:addons/website_helpdesk/static/src/js/website_helpdesk_edit_menu.js:0
+#, python-format
+msgid "The %s URL is reserved for the helpdesk team with the same name. "
+"To use it, please enable the 'website form' feature on that team instead."
+msgstr ""
+
+#. module: website_helpdesk
 #: model:ir.model.fields,help:website_helpdesk.field_helpdesk_team__website_url
 msgid "The full URL to access the document through the website."
 msgstr ""

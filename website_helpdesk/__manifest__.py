@@ -25,9 +25,13 @@
         'web.assets_frontend': [
             'website_helpdesk/static/**/*',
             ('remove', 'website_helpdesk/static/src/js/website_helpdesk_form_editor.js'),
+            ('remove', 'website_helpdesk/static/src/js/website_helpdesk_edit_menu.js'),
         ],
         'website.assets_wysiwyg': [
             'website_helpdesk/static/src/js/website_helpdesk_form_editor.js',
         ],
+        'website.assets_editor': [
+            'website_helpdesk/static/src/js/website_helpdesk_edit_menu.js',
+        ]
     }
 }

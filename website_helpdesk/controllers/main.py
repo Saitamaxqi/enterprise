@@ -1,5 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import re
+
 from werkzeug.exceptions import NotFound
 from werkzeug.utils import redirect
 
@@ -8,7 +10,7 @@ from odoo.http import request
 from odoo.osv import expression
 
 from odoo.addons.base.models.ir_qweb_fields import nl2br_enclose
-from odoo.addons.website.controllers import form
+from odoo.addons.website.controllers import form, main
 
 
 class WebsiteHelpdesk(http.Controller):
@@ -185,4 +187,18 @@ class WebsiteForm(form.WebsiteForm):
                 body=nl2br_enclose(ticket[default_field.name], 'p'),
                 message_type='comment',
             )
+        return res
+
+class Website(main.Website):
+
+    @http.route()
+    def get_suggested_link(self, needle, limit=10):
+        # filter matching pages where url of format : /helpdesk/<team-slug>
+        def _is_helpdesk_team_page(page):
+            url = page.get('value', '')
+            pattern = r'^/helpdesk/([a-zA-Z]+-)+\d+$'
+            return re.match(pattern, url)
+
+        res = super(Website, self).get_suggested_link(needle, limit)
+        res['matching_pages'] = [page for page in res['matching_pages'] if not _is_helpdesk_team_page(page)]
         return res
