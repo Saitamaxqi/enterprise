@@ -410,106 +410,52 @@ class L10nInGSTReturnPeriod(models.Model):
                         'cgst': 9.00,
                         'sgst': 9.00,
                         'cess': 3.33,
-                        'line_tax_details': {tax_details}
                     }
                 }
             }
         """
         tax_vals_map = {}
-        tags_id = self._get_l10n_in_taxes_tags_id_by_name(only_gst_tags=True)
-        all_gst_tag = (tags_id['igst'], tags_id['cgst'], tags_id['sgst'])
-        journal_items_ids = set(self.env['account.move.line'].with_context(prefetch_fields=False).search(domain).ids)
-        tax_details_query = self.env['account.move.line']._get_query_tax_details_from_domain(domain=domain)
-        self._cr.execute(SQL(
-            '''
-             WITH RECURSIVE tax_child_tree(id, child_ids) AS (
-                SELECT tax_fil_rel.parent_tax,
-                       ARRAY_AGG(tax_fil_rel.child_tax)
-                  FROM account_tax_filiation_rel tax_fil_rel
-              GROUP BY tax_fil_rel.parent_tax
-             UNION ALL
-                SELECT tax_fil_rel.parent_tax, ARRAY_APPEND(ct.child_ids, tax_fil_rel.parent_tax)
-                  FROM account_tax_filiation_rel tax_fil_rel
-                  JOIN tax_child_tree ct ON ct.id = tax_fil_rel.child_tax
-            ),
-            base_line_with_gst_rate AS (
-                SELECT aml.id, sum(CASE WHEN at.amount_type != 'group' THEN at.amount ELSE 0 END) as gst_rate
-                FROM account_move_line aml
-                JOIN account_move_line_account_tax_rel aml_taxs ON aml_taxs.account_move_line_id = aml.id
-                LEFT JOIN tax_child_tree tax_child ON aml_taxs.account_tax_id = tax_child.id
-                JOIN account_tax at ON at.id = aml_taxs.account_tax_id or at.id = any(tax_child.child_ids)
-                WHERE EXISTS(SELECT 1
-                    FROM account_tax_repartition_line at_rl
-                    JOIN account_account_tag_account_tax_repartition_line_rel tax_tag ON tax_tag.account_tax_repartition_line_id = at_rl.id
-                   where (at_rl.tax_id = at.id OR at_rl.tax_id = aml_taxs.account_tax_id)
-                     and tax_tag.account_account_tag_id in %(all_gst_tag)s
-                )
-                GROUP BY aml.id
-            ),
-            tax_line_with_tags AS (
-                SELECT aml.id, array_agg(aml_tag.account_account_tag_id) as tag_ids
-                FROM account_move_line aml
-                JOIN account_account_tag_account_move_line_rel aml_tag ON aml_tag.account_move_line_id = aml.id
-                GROUP BY aml.id
-            )
-            SELECT
-                COALESCE(aml_gst_rate.gst_rate, 0) as gst_tax_rate,
-                aml_tags.tag_ids,
-                at.l10n_in_reverse_charge,
-                CASE
-                    WHEN %(tags_id_igst)s = any(aml_tags.tag_ids) THEN 'IGST'
-                    WHEN %(tags_id_cgst)s = any(aml_tags.tag_ids) THEN 'CGST'
-                    WHEN %(tags_id_sgst)s = any(aml_tags.tag_ids) THEN 'SGST'
-                    WHEN %(tags_id_cess)s = any(aml_tags.tag_ids) THEN 'CESS'
-                END as tax_type,
-                tax_detail.*
-            FROM (%(tax_details_query)s) AS tax_detail
-       LEFT JOIN account_tax at ON at.id = tax_detail.tax_id
-       LEFT JOIN base_line_with_gst_rate aml_gst_rate ON aml_gst_rate.id = tax_detail.base_line_id
-       LEFT JOIN tax_line_with_tags aml_tags ON aml_tags.id = tax_detail.tax_line_id
-            ''',
-            tax_details_query=tax_details_query,
-            all_gst_tag=all_gst_tag,
-            tags_id_igst=tags_id['igst'],
-            tags_id_cgst=tags_id['cgst'],
-            tags_id_sgst=tags_id['sgst'],
-            tags_id_cess=tags_id['cess'],
-        ))
-        tax_vals_list = self._cr.dictfetchall()
-        base_lines = self.env['account.move.line'].browse(el['base_line_id'] for el in tax_vals_list)
-        base_lines.fetch(['move_id'])
-        for tax_vals in tax_vals_list:
-            journal_items_ids -= {tax_vals.get('base_line_id')}
-            journal_items_ids -= {tax_vals.get('tax_line_id')}
-            base_line = base_lines.browse(tax_vals.get('base_line_id'))
+        gst_tags = {
+            'igst': self.env.ref('l10n_in.tax_tag_igst'),
+            'cgst': self.env.ref('l10n_in.tax_tag_cgst'),
+            'sgst': self.env.ref('l10n_in.tax_tag_sgst'),
+            'cess': self.env.ref('l10n_in.tax_tag_cess'),
+        }
+        journal_items = self.env['account.move.line'].search(domain)
+        tax_details_query, tax_details_params = self.env['account.move.line']._get_query_tax_details_from_domain(domain=[('id', 'in', journal_items.ids)])
+        self._cr.execute(tax_details_query, tax_details_params)
+        tax_details = self._cr.dictfetchall()
+        # Retrieve base lines and tax lines based on tax_details
+        base_lines = self.env['account.move.line'].browse([tax['base_line_id'] for tax in tax_details])
+        tax_lines = self.env['account.move.line'].browse([tax['tax_line_id'] for tax in tax_details])
+        base_lines_map = {line.id: line for line in base_lines}
+        tax_lines_map = {line.id: line for line in tax_lines}
+        for tax_vals in tax_details:
+            base_line = base_lines_map[tax_vals['base_line_id']]
+            tax_line = tax_lines_map[tax_vals['tax_line_id']]
+            journal_items -= base_line
+            journal_items -= tax_line
             move_id = base_line.move_id
-            tax_vals_map.setdefault(move_id, {})
-            tax_vals_map[move_id].setdefault(base_line, {
+            tax_vals_map.setdefault(move_id, {}).setdefault(base_line, {
                 'base_amount': tax_vals['base_amount'],
-                'l10n_in_reverse_charge': tax_vals['l10n_in_reverse_charge'],
-                'gst_tax_rate': tax_vals['gst_tax_rate'],
+                'l10n_in_reverse_charge': False,
+                'gst_tax_rate': 0.00,
                 'igst': 0.00,
                 'cgst': 0.00,
                 'sgst': 0.00,
                 'cess': 0.00,
-                'line_tax_details': [],
             })
-            tax_vals_map[move_id][base_line]['line_tax_details'].append(tax_vals)
-            if tax_vals.get('tax_type') == 'IGST':
-                tax_vals_map[move_id][base_line]['igst'] += (tax_vals['tax_amount'])
-            elif tax_vals.get('tax_type') == 'CGST':
-                tax_vals_map[move_id][base_line]['cgst'] += (tax_vals['tax_amount'])
-            elif tax_vals.get('tax_type') == 'SGST':
-                tax_vals_map[move_id][base_line]['sgst'] += (tax_vals['tax_amount'])
-            elif tax_vals.get('tax_type') == 'CESS':
-                tax_vals_map[move_id][base_line]['cess'] += (tax_vals['tax_amount'])
+            for tax_type, tag_id in gst_tags.items():
+                if tag_id in tax_line.tax_tag_ids:
+                    tax_vals_map[move_id][base_line][tax_type] += tax_vals['tax_amount']
+                    if tax_type in ['igst', 'cgst', 'sgst']:
+                        tax_vals_map[move_id][base_line]['gst_tax_rate'] += tax_line.tax_line_id.amount
+                    if tax_line.tax_line_id.l10n_in_reverse_charge:
+                        tax_vals_map[move_id][base_line]['l10n_in_reverse_charge'] = True
         # IF line have 0% tax or not have tax then we add it manually
-        journal_items = self.env['account.move.line'].browse(list(journal_items_ids))
-        journal_items.fetch(['move_id', 'balance'])
         for journal_item in journal_items:
             move_id = journal_item.move_id
-            tax_vals_map.setdefault(move_id, {})
-            tax_vals_map[move_id].setdefault(journal_item, {
+            tax_vals_map.setdefault(move_id, {}).setdefault(journal_item, {
                 'base_amount': journal_item.balance,
                 'l10n_in_reverse_charge': False,
                 'gst_tax_rate': 0.0,
@@ -517,7 +463,6 @@ class L10nInGSTReturnPeriod(models.Model):
                 'cgst': 0.00,
                 'sgst': 0.00,
                 'cess': 0.00,
-                'line_tax_details': [],
             })
         return tax_vals_map
 
@@ -635,10 +580,8 @@ class L10nInGSTReturnPeriod(models.Model):
                     is_igst_amount = False
                     tax_details = tax_details_by_move.get(move_id)
                     for line_tax_details in tax_details.values():
-                        line_all_tax_type = {line_td['tax_type'] for line_td in line_tax_details['line_tax_details']}
-
                         # Ignore the lines if invoice is not SEZ and GST taxes are not selected
-                        if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not any(tax_type in line_all_tax_type for tax_type in ['IGST', 'CGST', 'SGST']):
+                        if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not line_tax_details['gst_tax_rate']:
                             continue
                         tax_rate = line_tax_details['gst_tax_rate']
                         if line_tax_details['l10n_in_reverse_charge']:
@@ -713,8 +656,7 @@ class L10nInGSTReturnPeriod(models.Model):
                     lines_json = {}
                     tax_details = tax_details_by_move.get(move_id)
                     for line_tax_details in tax_details.values():
-                        line_all_tax_type = {line_td['tax_type'] for line_td in line_tax_details['line_tax_details']}
-                        if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not any(tax_type in line_all_tax_type for tax_type in ['IGST', 'CGST', 'SGST']):
+                        if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not line_tax_details['gst_tax_rate']:
                             continue
                         tax_rate = line_tax_details.get('gst_tax_rate')
                         lines_json.setdefault(tax_rate, {
@@ -762,8 +704,7 @@ class L10nInGSTReturnPeriod(models.Model):
                 # so we need positive value for invoice and nagative for credit note
                 tax_details = tax_details_by_move.get(move_id)
                 for line_tax_details in tax_details.values():
-                    line_all_tax_type = {line_td['tax_type'] for line_td in line_tax_details['line_tax_details']}
-                    if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not any(tax_type in line_all_tax_type for tax_type in ['IGST', 'CGST', 'SGST']):
+                    if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not line_tax_details['gst_tax_rate']:
                         continue
                     tax_rate = line_tax_details.get('gst_tax_rate')
                     group_key = "%s-%s"%(tax_rate, move_id.l10n_in_state_id.l10n_in_tin)
@@ -827,8 +768,7 @@ class L10nInGSTReturnPeriod(models.Model):
                     is_reverse_charge = False
                     tax_details = tax_details_by_move[move_id]
                     for line_tax_details in tax_details.values():
-                        line_all_tax_type = {line_td['tax_type'] for line_td in line_tax_details['line_tax_details']}
-                        if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not any(tax_type in line_all_tax_type for tax_type in ['IGST', 'CGST', 'SGST']):
+                        if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not line_tax_details['gst_tax_rate']:
                             continue
                         tax_rate = line_tax_details['gst_tax_rate']
                         if line_tax_details['l10n_in_reverse_charge']:
@@ -904,18 +844,17 @@ class L10nInGSTReturnPeriod(models.Model):
                 tax_details = tax_details_by_move.get(move_id)
                 lines_json = {}
                 is_igst_amount = False
-                for line_tax_detail in tax_details.values():
-                    line_all_tax_type = {line_td['tax_type'] for line_td in line_tax_detail['line_tax_details']}
-                    if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not any(tax_type in line_all_tax_type for tax_type in ['IGST', 'CGST', 'SGST']):
+                for line_tax_details in tax_details.values():
+                    if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not line_tax_details['gst_tax_rate']:
                         continue
-                    if line_tax_detail['igst']:
+                    if line_tax_details['igst']:
                         is_igst_amount = True
-                    tax_rate = line_tax_detail['gst_tax_rate']
+                    tax_rate = line_tax_details['gst_tax_rate']
                     lines_json.setdefault(tax_rate, {
                         "rt": tax_rate, "txval": 0.00, "iamt": 0.00, "csamt": 0.00})
-                    lines_json[tax_rate]['txval'] += line_tax_detail['base_amount']
-                    lines_json[tax_rate]['iamt'] += line_tax_detail['igst']
-                    lines_json[tax_rate]['csamt'] += line_tax_detail['cess']
+                    lines_json[tax_rate]['txval'] += line_tax_details['base_amount']
+                    lines_json[tax_rate]['iamt'] += line_tax_details['igst']
+                    lines_json[tax_rate]['csamt'] += line_tax_details['cess']
                 if lines_json:
                     invoice_type = 'B2CL'
                     if move_id.l10n_in_gst_treatment == "overseas" and is_igst_amount:
