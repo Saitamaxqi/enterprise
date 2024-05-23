@@ -17,7 +17,7 @@
     <div style="padding: 16px 0px 16px 0px;">
         <a t-attf-href="/salary_package/simulation/offer/{{ctx.get('offer_id')}}"
             target="_blank"
-            style="background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;">Configure your package</a>
+            t-attf-style="background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; padding: 8px 16px 8px 16px; border-radius: 5px;">Configure your package</a>
     </div>
 </div>
         </field>
@@ -41,7 +41,7 @@
     <div style="padding: 16px 0px 16px 0px;">
         <a t-attf-href="/salary_package/simulation/offer/{{ctx.get('offer_id')}}?token={{ctx.get('access_token')}}"
             target="_blank"
-            style="background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;">Configure your package</a>
+            t-attf-style="background-color: {{object.company_id.email_secondary_color or '#875A7B'}}; text-decoration: none; color: {{object.company_id.email_primary_color or '#FFFFFF'}}; padding: 8px 16px 8px 16px; border-radius: 5px;">Configure your package</a>
     </div>
 </div>
         </field>

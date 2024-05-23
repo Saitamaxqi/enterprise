@@ -131,7 +131,7 @@
                     <div style="display: flex; margin: 15px;">
                         <div t-if="ctx.get('planning_url')" style="margin-right: 15px;">
                             <a t-att-href="ctx['planning_url']" target="_blank" class="planning_mail_template_button"
-                                style="color: #FFFFFF; background-color: #875A7B; border: solid #875A7B;">View Your Planning</a>
+                                t-attf-style="color: {{object.company_id.email_primary_color or '#FFFFFF'}}; background-color: {{object.company_id.email_secondary_color or '#875A7B'}};">View Your Planning</a>
                         </div>
                         <div t-if="ctx.get('planning_url_ics')">
                             <a t-att-href="ctx['planning_url_ics']" target="_blank" class="planning_mail_template_button"
