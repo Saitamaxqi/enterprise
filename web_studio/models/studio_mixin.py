@@ -18,18 +18,11 @@ class StudioMixin(models.AbstractModel):
     def create(self, vals):
         res = super(StudioMixin, self).create(vals)
         if self._context.get('studio') and not self._context.get('install_mode'):
-            res._compute_display_name()
             for ob in res:
                 ob.create_studio_model_data(ob.display_name)
         return res
 
     def write(self, vals):
-        if 'display_name' in vals and len(vals) == 1 and not self.env.registry[self._name].display_name.base_field.store:
-            # the call _compute_display_name() above performs an unexpected call
-            # to write with 'display_name', which triggers a costly registry
-            # setup when applied on ir.model or ir.model.fields.
-            return
-
         res = super(StudioMixin, self).write(vals)
 
         if self._context.get('studio') and not self._context.get('install_mode'):
