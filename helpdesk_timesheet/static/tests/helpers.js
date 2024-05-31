@@ -4,7 +4,7 @@ import { patch } from "@web/core/utils/patch";
 
 import { registry } from "@web/core/registry";
 import { timerHelpdeskService } from "@helpdesk_timesheet/services/helpdesk_timer_header_service";
-import { TimesheetGridSetupHelper, timesheetListSetupHelper } from "@timesheet_grid/../tests/helpers";
+import { TimesheetGridSetupHelper, timesheetListSetupHelper } from "@timesheet_grid/../tests/legacy/helpers";
 
 const serviceRegistry = registry.category("services");
 

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { GridTimesheetUOM } from "../components/grid_timesheet_uom/grid_timesheet_uom";
 
@@ -11,10 +9,12 @@ export const timesheetGridUOMService = {
         if (timesheet_uom.timesheetWidget === "float_time") {
             formatter = gridRegistry.get("float_time", { formatter }).formatter;
         }
-        gridRegistry.add("timesheet_uom", {
-            component: GridTimesheetUOM,
-            formatter,
-        });
+        if (!gridRegistry.contains("timesheet_uom")) {
+            gridRegistry.add("timesheet_uom", {
+                component: GridTimesheetUOM,
+                formatter,
+            });
+        }
 
         if (!registry.category("formatters").contains("timesheet_uom_timer")) {
             registry.category("formatters").add("timesheet_uom_timer", formatter);

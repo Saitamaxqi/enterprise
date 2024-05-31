@@ -65,17 +65,11 @@
         ],
         'web.assets_unit_tests': [
             "timesheet_grid/static/tests/**/*.test.js",
-            "timesheet_grid/static/tests/timesheet_mock_models.js",
+            "timesheet_grid/static/tests/hr_timesheet_models.js",
         ],
         'web.qunit_suite_tests': [
-            "timesheet_grid/static/tests/*",
-            ('remove', "timesheet_grid/static/tests/setup_manager_patch.js"),
-            ('remove', "timesheet_grid/static/tests/task_progress_gantt.test.js"),
-            ('remove', "timesheet_grid/static/tests/timesheet_timer_header.test.js"),
-            ('remove', "timesheet_grid/static/tests/timesheet_mock_models.js"),
-        ],
-        'web.tests_assets': [
-            "timesheet_grid/static/tests/setup_manager_patch.js",
+            "timesheet_grid/static/tests/legacy/**/*.js",
+            ('remove', "timesheet_grid/static/tests/legacy/setup_manager_patch.js"),
         ]
     }
 }

@@ -10,10 +10,10 @@ import { getPyEnv } from "@bus/../tests/helpers/mock_python_environment";
 
 import { start } from "@mail/../tests/helpers/test_utils";
 
-import { setupTestEnv } from "@hr_timesheet/../tests/hr_timesheet_common_tests";
+import { setupTestEnv } from "@hr_timesheet/../tests/legacy/hr_timesheet_common_tests";
 import { timesheetGridUOMService } from "@timesheet_grid/services/timesheet_grid_uom_service";
 
-import { TimesheetGridSetupHelper } from "@timesheet_grid/../tests/helpers";
+import { TimesheetGridSetupHelper } from "@timesheet_grid/../tests/legacy/helpers";
 
 const { DateTime } = luxon;
 

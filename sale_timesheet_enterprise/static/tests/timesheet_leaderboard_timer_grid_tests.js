@@ -1,9 +1,9 @@
 import { click, getFixture, getNodesTextContent, patchDate, patchWithCleanup } from "@web/../tests/helpers/utils";
 import { start } from "@mail/../tests/helpers/test_utils";
 
-import { setupTestEnv } from "@hr_timesheet/../tests/hr_timesheet_common_tests";
+import { setupTestEnv } from "@hr_timesheet/../tests/legacy/hr_timesheet_common_tests";
 
-import { TimesheetGridSetupHelper } from "@timesheet_grid/../tests/helpers";
+import { TimesheetGridSetupHelper } from "@timesheet_grid/../tests/legacy/helpers";
 
 import { browser } from "@web/core/browser/browser";
 

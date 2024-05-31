@@ -1,4 +1,4 @@
-import { timesheetListSetupHelper } from "@timesheet_grid/../tests/helpers";
+import { timesheetListSetupHelper } from "@timesheet_grid/../tests/legacy/helpers";
 
 import { getFixture } from "@web/../tests/helpers/utils";
 import { makeView } from "@web/../tests/views/helpers";

@@ -2,7 +2,7 @@
 
 import { startServer } from "@bus/../tests/helpers/mock_python_environment";
 
-import { setupTestEnv } from "@hr_timesheet/../tests/hr_timesheet_common_tests";
+import { setupTestEnv } from "@hr_timesheet/../tests/legacy/hr_timesheet_common_tests";
 
 import { patchDate } from "@web/../tests/helpers/utils";
 
