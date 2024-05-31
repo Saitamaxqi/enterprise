@@ -38,6 +38,6 @@ class WebsiteSlidesHelpdesk(WebsiteSlides):
         channels = team.website_slide_channel_ids
         if len(channels) == 1:
             return request.redirect('/slides/%s' % request.env['ir.http']._slug(channels[0]), code=302)
-        render_values = super().slides_channel_all_values(self, **post)
+        render_values = super().slides_channel_values(self, **post)
         render_values['channels'] = channels
         return request.render('website_helpdesk_slides.helpdesk_courses', render_values)

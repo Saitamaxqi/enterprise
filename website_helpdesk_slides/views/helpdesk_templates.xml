@@ -111,7 +111,13 @@
         </div>
     </template>
 
-    <template id="website_helpdesk_slides.helpdesk_courses" inherit_id="website_slides.courses_all" primary="True">
-        <xpath expr="//nav" position="replace"/>
+    <template id="website_helpdesk_slides.helpdesk_courses">
+        <t t-call="website.layout">
+            <t t-set="body_classname" t-value="'o_wslides_body'"/>
+            <div id="wrap" class="wrap o_wslides_wrap mt-3">
+                <t t-call="website_slides.courses_search_results"/>
+                <t t-call="website_slides.courses_footer"></t>
+            </div>
+        </t>
     </template>
 </odoo>
