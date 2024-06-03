@@ -8,6 +8,7 @@
             signTemplate="signTemplate"
             isPDF="isPDF"
             goBackToKanban.bind="goBackToKanban"
+            signStatus="signStatus"
         />
         <SignTemplateBody 
             isPDF="isPDF"
@@ -22,6 +23,7 @@
             signItemOptions="signItemOptions"
             goBackToKanban.bind="goBackToKanban"
             resModel="resModel"
+            signStatus="signStatus"
         />
     </div>
 </templates>

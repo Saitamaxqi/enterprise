@@ -83,3 +83,11 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
 
     def test_report_modal(self):
         self.start_tour("/odoo", "sign_report_modal_tour", login="admin")
+
+    def test_sign_indicator(self):
+        temp_template = self.env['sign.template'].create({
+            'name': 'temp_template',
+            'attachment_id': self.attachment.id,
+        })
+        self.start_tour("/odoo", "sign_indicator_tour", login="admin", step_delay=1000)
+        self.assertEqual(len(temp_template.sign_item_ids), 2)

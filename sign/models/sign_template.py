@@ -262,6 +262,24 @@ class SignTemplate(models.Model):
         }
         return radio_sets_dict
 
+    def update_attachment_name(self, name):
+        """
+        Updates the attachment's name. If the provided name is empty or None,
+        the current name is retained. This forced update prevents the creation
+        of duplicate sign items during simultaneous RPC requests.
+        :param name: The new name for the attachment.
+        :return:
+            - True: Indicates the attachment name was successfully updated.
+            - False: Indicates the update was skipped because a sign request linked
+                    to the template already exists
+        """
+        self.ensure_one()
+        sign_requests = self.env['sign.request'].search([('template_id', '=', self.id)], limit=1)
+        if not sign_requests:
+            self.attachment_id.name = name or self.attachment_id.name
+            return True
+        return False
+
     def update_from_pdfviewer(self, sign_items=None, deleted_sign_item_ids=None, name=None):
         """ Update a sign.template from the pdfviewer
         :param dict sign_items: {id (str): values (dict)}
@@ -279,9 +297,7 @@ class SignTemplate(models.Model):
         if sign_items is None:
             sign_items = {}
 
-        # The name may be "" and None here. And the attachment_id.name is forcely written here to retry the method and
-        # avoid recreating new sign items when two RPCs arrive at the same time
-        self.attachment_id.name = name if name else self.attachment_id.name
+        self.update_attachment_name(name)
 
         # update new_sign_items to avoid recreating sign items
         new_sign_items = dict(sign_items)

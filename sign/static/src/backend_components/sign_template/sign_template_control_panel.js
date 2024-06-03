@@ -3,11 +3,13 @@ import { useService } from "@web/core/utils/hooks";
 import { Component } from "@odoo/owl";
 import { ControlPanel } from "@web/search/control_panel/control_panel";
 import { multiFileUpload } from "@sign/backend_components/multi_file_upload";
+import { SignStatusIndicator } from "@sign/backend_components/sign_status_indicator/sign_status_indicator";
 
 export class SignTemplateControlPanel extends Component {
     static template = "sign.SignTemplateControlPanel";
     static components = {
         ControlPanel,
+        SignStatusIndicator
     };
     static props = {
         responsibleCount: { type: Number },
@@ -16,6 +18,7 @@ export class SignTemplateControlPanel extends Component {
         actionType: { type: String },
         signTemplate: { type: Object },
         goBackToKanban: { type: Function },
+        signStatus: { type: Object },
     };
 
     setup() {
@@ -29,7 +32,8 @@ export class SignTemplateControlPanel extends Component {
         return this.props.actionType !== "sign_send_request" && this.props.responsibleCount <= 1;
     }
 
-    onSendClick() {
+    async onSendClick() {
+        await this.saveBeforeAction();
         this.action.doAction("sign.action_sign_send_request", {
             additionalContext: {
                 active_id: this.props.signTemplate.id,
@@ -39,7 +43,14 @@ export class SignTemplateControlPanel extends Component {
         });
     }
 
-    onSignNowClick() {
+    async saveBeforeAction() {
+        if (this.props.signStatus.isTemplateChanged) {
+            await this.props.signStatus.save();
+        }
+    }
+
+    async onSignNowClick() {
+        await this.saveBeforeAction();
         this.action.doAction("sign.action_sign_send_request", {
             additionalContext: {
                 active_id: this.props.signTemplate.id,
@@ -49,13 +60,15 @@ export class SignTemplateControlPanel extends Component {
     }
 
     async onShareClick() {
+        await this.saveBeforeAction();
         const action = await this.orm.call("sign.template", "open_shared_sign_request", [
             this.props.signTemplate.id,
         ]);
         this.action.doAction(action);
     }
 
-    onNextDocumentClick() {
+    async onNextDocumentClick() {
+        await this.saveBeforeAction();
         const templateName = this.nextTemplate.name;
         const templateId = parseInt(this.nextTemplate.template);
         multiFileUpload.removeFile(templateId);

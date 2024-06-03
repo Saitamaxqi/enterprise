@@ -41,10 +41,10 @@ export class SignTemplateTopBar extends Component {
     static props = {
         signTemplate: { type: Object },
         hasSignRequests: { type: Boolean },
-        onTemplateNameChange: { type: Function },
         manageTemplateAccess: { type: Boolean },
         resModel: { type: String },
         isPDF: { type: Boolean },
+        signStatus: { type: Object },
     };
 
     setup() {
@@ -56,6 +56,26 @@ export class SignTemplateTopBar extends Component {
         this.state = useState({
             properties: false,
         });
+        this.extension = this.getFileNameAndExtension(this.props.signTemplate.display_name).extension;
+    }
+
+    getFileNameAndExtension(displayName) {
+        const extension = displayName.split('.').pop();
+        return extension === 'pdf' ?
+            {
+                name: displayName.split('.').slice(0, -1).join('.'),
+                extension
+            } :
+            {
+                name: displayName,
+                extension: ''
+            };
+    }
+
+    get templateName() {
+        const displayName = this.props.signTemplate.display_name;
+        const name = this.getFileNameAndExtension(displayName).name;
+        return name;
     }
 
     changeInputSize() {
@@ -88,6 +108,7 @@ export class SignTemplateTopBar extends Component {
     */
     async onTemplateSaveClick() {
         const templateId = this.props.signTemplate.id;
+        this.props.signStatus.isSignTemplateSaved = false;
         this.state.properties = await this.orm.call("sign.template", "write", [[templateId], { active: true }]);
         this.props.signTemplate.active = true;
         this.notification.add(_t("Document saved as Template."), { type: "success" });
@@ -150,4 +171,23 @@ export class SignTemplateTopBar extends Component {
         });
     }
 
+    /**
+     * Updates the template name and synchronizes it with the server.
+     * Reverts to the old name if the server update fails.
+     */
+    async onTemplateNameChange(e) {
+        let templateName = e.target.value;
+        if (templateName) {
+            if (this.extension) {
+                templateName = templateName.concat(".",this.extension);
+            }
+            this.props.signTemplate.display_name = templateName;
+            const res = await this.orm.call("sign.template", "update_attachment_name", [this.props.signTemplate.id, templateName]);
+            if (!res) {
+                e.target.value = this.templateName;
+            }
+        } else {
+            e.target.value = this.templateName;
+        }
+    }
 }

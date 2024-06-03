@@ -318,6 +318,10 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
      * @param {SignItem} signItem
      */
     async openSignItemPopup(signItem) {
+        // Save the item to the backend if it has a negative ID, as it indicates the item is new and not yet linked to the template.
+        if (signItem.data.id < 0) {
+            await this.saveChangesOnBackend();
+        }
         const shouldOpenNewPopover = !(signItem.data.id in this.closePopoverFns);
         this.closePopover();
         if (shouldOpenNewPopover) {
@@ -459,7 +463,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             this.props.selectionTag.isSelectionItemRendered = false;
             this.refreshSignItems();
             this.currentRole = newData.responsible;
-            this.saveChanges();
+            this.saveChangesOnBackend();
         }
     }
 
@@ -603,7 +607,12 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
         }
     }
 
-    async saveChanges() {
+    async setTemplateChanged() {
+        this.props.setTemplateChangedState(true);
+    }
+
+    async saveChangesOnBackend() {
+        this.props.signStatus.isTemplateChanged = false;
         const items = this.signItems;
         for (const page in items) {
             for (const id in items[page]) {
@@ -706,7 +715,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             new_data.updated = true;
         }
         this.refreshSignItems();
-        await this.saveChanges();
+        await this.setTemplateChanged();
     }
 
     /**
@@ -751,7 +760,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
             };
         });
         this.refreshSignItems();
-        await this.saveChanges();
+        await this.setTemplateChanged();
     }
 
     /**

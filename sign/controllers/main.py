@@ -277,10 +277,29 @@ class Sign(http.Controller):
         return {
             'html': request.env['ir.qweb']._render('sign._doc_sign', context),
             'context': {
-                'refusal_allowed': context['current_request_item'] and context['current_request_item'].state == 'sent' and context['sign_request'].state == 'sent',
+                'refusal_allowed': self._check_refusal_conditions(context),
                 'sign_request_token': context['sign_request'].access_token,
             }
         }
+
+    def _check_refusal_conditions(self, context):
+        """
+        Checks if refusal is allowed based on the states and partners of the current request item
+        and the sign request.
+        :return: Boolean indicating whether refusal is allowed.
+        """
+        current_request_item = context.get('current_request_item')
+        sign_request = context.get('sign_request')
+        if not current_request_item or not sign_request:
+            return False
+
+        are_both_in_sent_state = (
+            current_request_item.state == 'sent' and sign_request.state == 'sent'
+        )
+        is_different_partner = (
+            current_request_item.partner_id != current_request_item.create_uid.partner_id
+        )
+        return are_both_in_sent_state and is_different_partner
 
     @http.route(["/sign/update_user_signature"], type="jsonrpc", auth="user")
     def update_signature(self, sign_request_id, role, signature_type=None, datas=None, frame_datas=None):

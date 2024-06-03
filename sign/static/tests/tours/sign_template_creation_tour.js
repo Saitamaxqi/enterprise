@@ -12,7 +12,7 @@ function triggerDragEvent(element, type, data = {}) {
     element.dispatchEvent(event);
 }
 
-function dragAndDropSignItemAtHeight(from, height = 0.5, width = 0.5) {
+export function dragAndDropSignItemAtHeight(from, height = 0.5, width = 0.5) {
     const iframe = document.querySelector("iframe");
     const to = queryFirst(`:iframe .page[data-page-number="1"]`);
     const toPosition = to.getBoundingClientRect();

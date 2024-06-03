@@ -63,7 +63,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             if (end) {
                 this.helperLines.hide();
                 this.setCanvasVisibility("visible");
-                this.saveChanges();
+                this.setTemplateChanged();
             }
         }
 
@@ -367,7 +367,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                 return;
             }
 
-            this.saveChanges();
+            this.setTemplateChanged();
         }
 
         /**
@@ -421,7 +421,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                     el: this.renderSignItem(data, this.getPageContainer(data.page)),
                 };
             }
-            this.saveChanges();
+            this.setTemplateChanged();
         }
 
         /**
@@ -443,10 +443,10 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                 el: this.renderSignItem(signItemData2, this.getPageContainer(data.page)),
             }
             this.refreshSignItems();
-            this.saveChanges();
+            this.setTemplateChanged();
         }
 
-        saveChanges() {}
+        setTemplateChanged() {}
 
         registerDragEventsForSignItem(signItem) {
             const handle = signItem.el.querySelector(".o_sign_config_handle");
@@ -463,7 +463,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             const { id, page } = signItem.data;
             signItem.el.parentElement.removeChild(signItem.el);
             delete this.signItems[page][id];
-            this.saveChanges();
+            this.setTemplateChanged();
         }
 
         /**
@@ -481,6 +481,6 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                         this.radioSets[signItem.data.radio_set_id].radio_item_ids.filter((id) => id != signItem.data.id);
                 }
             })
-            await this.saveChanges();
+            await this.setTemplateChanged();
         }
     };

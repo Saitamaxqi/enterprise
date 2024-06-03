@@ -2,10 +2,11 @@ import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 import { SignTemplateIframe } from "./sign_template_iframe";
 import { SignTemplateTopBar } from "./sign_template_top_bar";
-import { Component, useRef, useEffect, onWillUnmount, useState } from "@odoo/owl";
+import { Component, useRef, useEffect, onWillUnmount, useState, useExternalListener } from "@odoo/owl";
 import { buildPDFViewerURL } from "@sign/components/sign_request/utils";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { hidePDFJSButtons } from "@web/core/utils/pdfjs";
+import { useSetupAction } from "@web/search/action_hook";
 
 export class SignTemplateBody extends Component {
     static template = "sign.SignTemplateBody";
@@ -25,6 +26,7 @@ export class SignTemplateBody extends Component {
         manageTemplateAccess: { type: Boolean },
         isPDF: { type: Boolean },
         resModel: { type: String },
+        signStatus: { type: Object },
     };
 
     setup() {
@@ -33,7 +35,9 @@ export class SignTemplateBody extends Component {
         this.popover = useService("popover");
         this.dialog = useService("dialog");
         this.PDFIframe = useRef("PDFIframe");
+        this.action = useService("action");
         this.PDFViewerURL = buildPDFViewerURL(this.props.attachmentLocation, this.env.isSmall);
+        this.props.signStatus.discardChanges = this.discardChanges.bind(this);
         this.selectionTag = useState({
             isSelectionItemEdited: false,
             isSelectionItemRendered: false,
@@ -57,20 +61,49 @@ export class SignTemplateBody extends Component {
             },
             () => []
         );
+
+        useExternalListener(document, "visibilitychange", () => {
+            if (document.visibilityState === "hidden") {
+                this.props.signStatus.save();
+            }
+        });
+
+        useSetupAction({
+            beforeLeave: async () => {
+                if (this.props.signStatus.isTemplateChanged && !this.props.signStatus.isSignTemplateSaved && this.props.signTemplate.active) {
+                    await this.saveTemplate();
+                    this.notification.add(_t("Saved"), { type: "success" });
+                }
+            }
+        });
+
         onWillUnmount(() => {
             if (this.iframe) {
-                this.saveTemplate();
                 this.iframe.unmount();
                 this.iframe = null;
-                if (this.props.signTemplate.active) {
-                    this.notification.add(_t("Saved"), {type: "success"});
-                }
             }
         });
     }
 
     waitForPDF() {
         this.PDFIframe.el.onload = () => setTimeout(() => this.doPDFPostLoad(), 1);
+    }
+
+    async discardChanges() {
+        const { signTemplate } = this.props;
+        const templateName = signTemplate.display_name;
+        const templateId = parseInt(signTemplate.id, 10);
+        this.props.signStatus.isTemplateChanged = false;
+        await this.action.doAction({
+            type: "ir.actions.client",
+            tag: "sign.Template",
+            name: _t("Template %s", templateName),
+            params: {
+                id: templateId,
+            },
+        }, {
+            stackPosition: "replaceCurrentAction"
+        });
     }
 
     doPDFPostLoad() {
@@ -94,8 +127,11 @@ export class SignTemplateBody extends Component {
                 getRadioSetInfo: (id) => this.getRadioSetInfo(id),
                 rotatePDF: () => this.rotatePDF(),
                 selectionTag: this.selectionTag,
+                signStatus: this.props.signStatus,
+                setTemplateChangedState: (state) => this.props.signStatus.isTemplateChanged = state,
             }
         );
+        this.props.signStatus.save = this.iframe.saveChangesOnBackend.bind(this.iframe);
     }
 
     /**
@@ -114,14 +150,6 @@ export class SignTemplateBody extends Component {
             },
             true
         );
-    }
-
-    onTemplateNameChange(e) {
-        const value = e.target.value;
-        if (value != "") {
-            this.props.signTemplate.display_name = value;
-            this.saveTemplate(value);
-        }
     }
 
     async saveTemplate(newTemplateName) {

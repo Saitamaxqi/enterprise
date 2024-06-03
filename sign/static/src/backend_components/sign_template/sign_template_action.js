@@ -4,7 +4,7 @@ import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { SignTemplateControlPanel } from "./sign_template_control_panel";
 import { SignTemplateBody } from "./sign_template_body";
-import { Component, onWillStart } from "@odoo/owl";
+import { Component, onWillStart, useState } from "@odoo/owl";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
 
 export class SignTemplate extends Component {
@@ -25,6 +25,16 @@ export class SignTemplate extends Component {
         this.templateID = params.id;
         this.actionType = params.sign_edit_call || "";
         this.resModel = params.resModel || "";
+        this.signStatus = useState({
+            isTemplateChanged: false,
+            // isSignTemplateSaved is used as a flag to know if the template is saved or not.
+            // It is used to show a notification when the user tries to edit the uploaded document.
+            // It is set to true when the template is saved from the backend.
+            isSignTemplateSaved: this.resModel === "sign.request" ? true : false,
+            save : () => {},
+            discardChanges : () => {},
+        });
+
         onWillStart(async () => {
             if (!this.templateID) {
                 return this.goBackToKanban();

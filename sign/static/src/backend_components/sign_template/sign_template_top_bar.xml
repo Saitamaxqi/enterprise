@@ -5,13 +5,14 @@
             <div class="o_sign_template_header_document_name align-items-center d-flex me-auto">
                 <span t-if="!props.hasSignRequests" t-on-click="editDisplayName" class="fa fa-pencil me-2" title="Edit template name" role="img" aria-label="Edit template name"/>
                 <input type="text" t-ref="display-name" class="o_sign_template_name_input o_input"
-                    t-att-value="props.signTemplate.display_name"
+                    t-att-value="templateName"
                     t-att-disabled="props.hasSignRequests"
                     t-att-size="displayNameSize"
-                    t-on-change="this.props.onTemplateNameChange"
+                    t-on-change="onTemplateNameChange"
                     t-on-input="changeInputSize"
                     t-on-keydown="onKeyDown"
                 />
+                <span t-if="extension">.<t t-out="extension"/></span>
             </div>
             <Record t-props="recordProps" t-slot-scope="data">
                 <t t-set="record" t-value="data.record"/>
