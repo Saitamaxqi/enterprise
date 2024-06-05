@@ -129,7 +129,9 @@ class TestSEPACreditTransfer(TestSEPACreditTransferCommon):
         - Check that communication (InstrId) is converted and trimmed to the correct unescaped size (max size = 35 characters)
         """
         self.partner_a.name = "ÀÎÑϐН"
+        self.partner_a.bank_ids.sudo().allow_out_payment = False
         self.partner_a.bank_ids.acc_holder_name = "ÀÎÑϐН"
+        self.partner_a.bank_ids.sudo().allow_out_payment = True
         self.partner_a.street = "íċēķθН"
         self.partner_a.city = "City"
         self.partner_a.country_id = self.env.ref('base.be')
@@ -163,7 +165,9 @@ class TestSEPACreditTransfer(TestSEPACreditTransferCommon):
 
     def _check_structured_reference(self, country_code, payment):
         if country_code == 'ch':
+            payment.partner_bank_id.sudo().allow_out_payment = False
             payment.partner_bank_id.sanitized_acc_number = 'CH4731000133285251000'
+            payment.partner_bank_id.sudo().allow_out_payment = True
         payment.action_post()
         batch = self.env['account.batch.payment'].create({
             'journal_id': self.bank_journal.id,
