@@ -55,6 +55,7 @@ export function getOSpreadsheetComponent(actionManager) {
 
 /**
  * Return the o-spreadsheet Model
+ * @return {import("@spreadsheet").OdooSpreadsheetModel} model
  */
 export function getSpreadsheetActionModel(actionManager) {
     return getOSpreadsheetComponent(actionManager).model;
