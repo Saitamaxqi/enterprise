@@ -8,12 +8,12 @@ from dateutil.relativedelta import relativedelta
 from odoo.tools.date_utils import get_timedelta
 
 from odoo import api, fields, models
+from odoo.fields import Domain
 from odoo.osv import expression
 from odoo.exceptions import UserError
 from odoo.tools import _, format_list, topological_sort
 from odoo.tools.sql import SQL
 from odoo.addons.resource.models.utils import filter_domain_leaf
-from odoo.osv.expression import is_leaf
 
 from odoo.addons.resource.models.utils import Intervals, sum_intervals
 
@@ -555,8 +555,7 @@ class ProjectTask(models.Model):
             return additional_users
         start_date = self._context.get('gantt_start_date')
         scale = self._context.get('gantt_scale')
-        if not (start_date and scale) or any(
-                is_leaf(elem) and elem[0] == 'user_ids' for elem in domain):
+        if not (start_date and scale) or any(elem.field_expr == 'user_ids' for elem in Domain(domain).iter_conditions()):
             return additional_users
         domain = filter_domain_leaf(domain, lambda field: field not in ['planned_date_begin', 'date_deadline', 'state'])
         search_on_comodel = self._search_on_comodel(domain, "user_ids", "res.users")

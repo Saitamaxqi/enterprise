@@ -1,7 +1,6 @@
 import json
 from psycopg2.extras import Json
 from lxml import etree
-from psycopg2 import DataError
 
 from odoo import Command
 from odoo.addons.base.models.ir_actions_report import IrActionsReport
@@ -1382,7 +1381,7 @@ class TestReportEditorUIUnit(HttpCase):
             )
         self.assertEqual(len(errors), 2)
         for e in errors:
-            self.assertTrue(isinstance(e, DataError))
+            self.assertTrue(isinstance(e, ValueError))
 
         qweb_html = response.json()["result"]
         tree = html_to_xml_tree(qweb_html)

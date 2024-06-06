@@ -243,7 +243,7 @@ class SpreadsheetMixin(models.AbstractModel):
         snapshot_attachment = self.env['ir.attachment'].with_context(bin_size=False).search([
             ('res_model', '=', self._name),
             ('res_field', '=', 'spreadsheet_snapshot'),
-            ('res_id', '=', self.id),
+            ('res_id', 'in', self.ids),
         ])
         if snapshot_attachment:
             return snapshot_attachment.raw.decode() or '{}'
