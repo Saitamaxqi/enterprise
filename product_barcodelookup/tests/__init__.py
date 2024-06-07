@@ -1,1 +1,1 @@
-from . import test_variant_product_creation
+from . import test_barcodelookup_flow

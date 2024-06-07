@@ -12,6 +12,9 @@
             "product_barcodelookup/static/src/widgets/**/*",
             "pos_barcodelookup/static/src/**/*",
         ],
+        'web.assets_tests': [
+            'pos_barcodelookup/static/tests/**/*',
+        ],
     },
     'installable': True,
     'auto_install': True,

@@ -101,7 +101,6 @@ class ProductTemplate(models.Model):
                 attribute = self.env['product.attribute'].search([
                     ('name', 'ilike', attr_name),
                 ], limit=1)
-                # for rest all attributes don't create if not available
                 if attribute:
                     for attr_value in attr_values.split(','):
                         attribute_value = self.env['product.attribute.value'].search([
