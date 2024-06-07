@@ -312,10 +312,7 @@ class Sign(http.Controller):
         if not sign_request or len(sign_request.request_item_ids) != 1 or sign_request.request_item_ids.partner_id:
             return False
 
-        ResPartner = http.request.env['res.partner'].sudo()
-        partner = ResPartner.search([('email', '=', mail)], limit=1)
-        if not partner:
-            partner = ResPartner.create({'name': name, 'email': mail})
+        partner = self.env['mail.thread'].sudo()._mail_find_partner_from_emails(emails=[mail], records=None, force_create=True)[0]
 
         new_sign_request = sign_request.with_user(sign_request.create_uid).with_context(no_sign_mail=True).copy({
             'reference': sign_request.reference.replace('-%s' % _("Shared"), ''),

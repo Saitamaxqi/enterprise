@@ -2,6 +2,7 @@
 from unittest.mock import patch
 from freezegun import freeze_time
 
+from odoo import Command
 from odoo.exceptions import AccessError, ValidationError
 from odoo.addons.website.tools import MockRequest
 from odoo.http import Request
@@ -203,3 +204,60 @@ class TestSignController(TestSignControllerCommon):
                          "Log partner_id should match partner_1")
         self.assertEqual(sign_cancel_log.sign_request_item_id.id, sign_request_item.id,
                          "Log should reference the correct request item")
+
+    def test_make_public_user_with_duplicate_contact(self):
+        """
+        Test make_public_user behavior with duplicate contacts.
+        Ensures that when a user has a duplicate contact with the same email and name, 
+        the sign request associates the correct partner ID which contains user_ids.
+        """
+        user = self.env['res.users'].create({
+            'name': 'Test User',
+            'login': 'test_user@example.com',
+            'email': 'test_user@example.com',
+        })
+        contact = user.partner_id
+
+        # Duplicate contact and set the user's partner ID to the duplicate contact
+        duplicate_contact = contact.copy()
+        user.partner_id = duplicate_contact
+        self.assertEqual(user.partner_id, duplicate_contact)
+        self.assertEqual(contact.email, duplicate_contact.email)
+
+        # Create a sign request and linked to the user's(Test User) contact
+        sign_request = self.env['sign.request'].with_context(no_sign_mail=False).create({
+            'template_id': self.template_no_item.id,
+            'reference': self.template_no_item.display_name,
+            'state': 'shared',
+            'request_item_ids': [Command.create({
+                'role_id': self.env.ref('sign.sign_item_role_default').id,
+            })],
+        })
+
+        response = self._json_url_open(
+            '/sign/send_public/%s/%s' % (sign_request.id, sign_request.access_token),
+            data={'name': contact.name, 'mail': contact.email}
+        ).json().get('result')
+
+        self.assertTrue(response.get('requestID'), 'Request ID should be returned')
+
+        sign_request_partner_id = self.env['sign.request'].search(
+            [('id', '=', response.get('requestID'))]
+        ).request_item_ids.partner_id
+
+        self.assertEqual(
+            duplicate_contact.id, sign_request_partner_id.id,
+            'The sign request partner ID should match the duplicate contact'
+        )
+        self.assertEqual(
+            sign_request_partner_id.email, contact.email,
+            'The email of the sign request partner should match the original contact email'
+        )
+        self.assertEqual(
+            sign_request_partner_id.name, duplicate_contact.name,
+            'The name of the sign request partner should match the original contact name'
+        )
+        self.assertEqual(
+            len(sign_request.request_item_ids), 1,
+            'There should be exactly one request item in the sign request'
+        )
