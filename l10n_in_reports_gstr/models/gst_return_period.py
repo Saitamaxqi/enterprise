@@ -977,6 +977,8 @@ class L10nInGSTReturnPeriod(models.Model):
                 for line_tax_details in tax_details.values():
                     if line_tax_details['igst']:
                         is_igst_amount = True
+                    elif line_tax_details['sgst'] or line_tax_details['cgst']:
+                        continue
                     tax_rate = line_tax_details['gst_tax_rate']
                     lines_json.setdefault(tax_rate, {"rt": tax_rate, "txval": 0.00, "iamt": 0.00, "csamt": 0.00})
                     lines_json[tax_rate]['txval'] += line_tax_details['base_amount'] * -1
