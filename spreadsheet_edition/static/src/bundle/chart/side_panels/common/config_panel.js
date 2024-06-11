@@ -4,10 +4,11 @@ import { DomainSelector } from "@web/core/domain_selector/domain_selector";
 import { DomainSelectorDialog } from "@web/core/domain_selector_dialog/domain_selector_dialog";
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
-import { components } from "@odoo/o-spreadsheet";
+import { components, constants } from "@odoo/o-spreadsheet";
 
 import { Component, onWillStart, onWillUpdateProps } from "@odoo/owl";
 const { Section, ValidationMessages } = components;
+const { ChartTerms } = constants;
 
 export class CommonOdooChartConfigPanel extends Component {
     static template = "spreadsheet_edition.CommonOdooChartConfigPanel";
@@ -18,6 +19,8 @@ export class CommonOdooChartConfigPanel extends Component {
         updateChart: Function,
         canUpdateChart: Function,
     };
+
+    chartTerms = ChartTerms;
 
     setup() {
         this.dialog = useService("dialog");

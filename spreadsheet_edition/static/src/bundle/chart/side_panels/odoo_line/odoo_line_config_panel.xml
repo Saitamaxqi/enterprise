@@ -14,7 +14,7 @@
                 />
                 <Checkbox
                     name="'cumulative'"
-                    label="cumulativeLabel"
+                    label="chartTerms.CumulativeData"
                     value="props.definition.cumulative"
                     onChange.bind="onUpdateCumulative"
                 />
