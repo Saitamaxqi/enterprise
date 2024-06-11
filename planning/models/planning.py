@@ -573,24 +573,24 @@ class PlanningSlot(models.Model):
                                 or self.env.user.company_id.resource_calendar_id.tz
                                 or 'UTC')
 
-        if start_datetime and end_datetime and not template_id:
+        # start_datetime and end_datetime are from 00:00 to 23:59 in user timezone
+        # Converted in UTC, it gives an offset for any other timezone, _convert_datetime_timezone removes the offset
+        # If start_datetime and end_datetime are None, the resource should follow the company's working calendar and return the work intervals based on the time zone and the company's working calendar.
+        intervals = []
+        start = convert_datetime_timezone(start_datetime, user_tz) if start_datetime else user_tz.localize(self._default_start_datetime())
+        end = convert_datetime_timezone(end_datetime, user_tz) if end_datetime else user_tz.localize(self._default_end_datetime())
+
+        if not template_id:
             # Transform the current column's start/end_datetime to the user's timezone from UTC
-            current_start = convert_datetime_timezone(start_datetime, user_tz)
-            current_end = convert_datetime_timezone(end_datetime, user_tz)
             # Look at the work intervals to examine whether the current start/end_datetimes are inside working hours
-            calendar_id = resource.calendar_id or company.resource_calendar_id
-            work_interval = calendar_id._work_intervals_batch(current_start, current_end)[False]
+            calendar_id = resource.calendar_id if resource else company.resource_calendar_id
+            work_interval = calendar_id._work_intervals_batch(start, end)[False]
             intervals = [(date_start, date_stop) for date_start, date_stop, attendance in work_interval]
             if not intervals:
                 # If we are outside working hours, we do not edit the start/end_datetime
                 # Return the start/end times back at UTC and remove the tzinfo from the object
-                return (current_start.astimezone(pytz.utc).replace(tzinfo=None),
-                        current_end.astimezone(pytz.utc).replace(tzinfo=None))
-
-        # start_datetime and end_datetime are from 00:00 to 23:59 in user timezone
-        # Converted in UTC, it gives an offset for any other timezone, _convert_datetime_timezone removes the offset
-        start = convert_datetime_timezone(start_datetime, user_tz) if start_datetime else user_tz.localize(self._default_start_datetime())
-        end = convert_datetime_timezone(end_datetime, user_tz) if end_datetime else user_tz.localize(self._default_end_datetime())
+                return (start.astimezone(pytz.utc).replace(tzinfo=None),
+                        end.astimezone(pytz.utc).replace(tzinfo=None))
 
         # Get start and end in resource timezone so that it begins/ends at the same hour of the day as it would be in the user timezone
         # This is needed because _adjust_to_calendar takes start as datetime for the start of the day and end as end time for the end of the day
@@ -607,9 +607,10 @@ class PlanningSlot(models.Model):
         # The datetime given to _get_closest_work_time will be 6 AM once shifted in the resource's timezone. This will properly find the start of the morning shift at 8AM
         # For the afternoon shift, _get_closest_work_time will search the end of the shift that is close to 6AM the day after.
         # The closest shift found based on the end datetime will be the morning shift meaning that the work_interval_end will be the end of the morning shift the following day.
-        if resource:
-            work_interval_start, work_interval_end = resource._adjust_to_calendar(start.replace(tzinfo=pytz.timezone(resource.tz)), end.replace(tzinfo=pytz.timezone(resource.tz)), compute_leaves=False)[resource]
-            start, end = (work_interval_start or start, work_interval_end or end)
+        # Determine the start and end dates from _work_intervals_batch and convert them to the resource's time zone.
+        if resource and intervals:
+            start = pytz.timezone(resource.tz).localize(intervals[0][0].replace(tzinfo=None))
+            end = pytz.timezone(resource.tz).localize(intervals[-1][-1].replace(tzinfo=None))
 
         if not previous_template_id and not template_reset:
             start = start.astimezone(pytz.utc).replace(tzinfo=None)

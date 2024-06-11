@@ -808,3 +808,15 @@ class TestPlanning(TestCommonPlanning, MockEmail):
                 self.assertEqual(result['progress_bars']['resource_id'][self.slot.resource_id.id]['value'], 0.0)
             else:
                 self.assertFalse(self.slot.resource_id.id in result['progress_bars']['resource_id'])
+
+    def test_planning_slot_default_datetime(self):
+        """ This test ensures that when selecting the datetime in Gantt view, the default hours are set correctly """
+        self.resource_joseph.tz = 'Europe/Brussels'
+        PlanningSlot = self.env['planning.slot'].with_user(self.env.user).with_context(
+            default_start_datetime='2024-07-04 12:00:00',
+            default_end_datetime='2024-07-04 12:59:59',
+            default_resource_id=self.resource_joseph.id,
+        )
+        slot = PlanningSlot.default_get(['resource_id', 'start_datetime', 'end_datetime'])
+        self.assertEqual(slot.get('start_datetime'), datetime(2024, 7, 4, 10, 0, 0), "The slot start datetime should be matched to the resource's timezone")
+        self.assertEqual(slot.get('end_datetime'), datetime(2024, 7, 4, 10, 59, 59), "The slot end datetime should be matched to the resource's timezone")
