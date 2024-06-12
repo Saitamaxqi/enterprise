@@ -89,7 +89,7 @@ class SocialStream(models.Model):
         result = response.json()
 
         if not response.ok:
-            _logger.error('Failed to fetch social stream posts: %r for account %i.', response.text, self.account_id.id)
+            _logger.warning('Failed to fetch social stream posts: %r for account %i.', response.text, self.account_id.id)
             # an error occurred
             if 'Not authorized' in result.get('title', ''):
                 # no error code is returned by the Twitter API in that case

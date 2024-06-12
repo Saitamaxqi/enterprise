@@ -57,7 +57,7 @@ class SocialLivePost(models.Model):
                 timeout=5
             )
             if not result.ok:
-                _logger.error('Failed to fetch the account (%i) metrics: %r.', account.id, result.text)
+                _logger.warning('Failed to fetch the account (%i) metrics: %r.', account.id, result.text)
 
             result_tweets = result.json().get('data', [])
             if isinstance(result_tweets, dict) and result_tweets.get('errors'):
