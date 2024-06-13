@@ -18,6 +18,7 @@ class SocialStream(models.Model):
 
     twitter_searched_keyword = fields.Char('Search Keyword')
     twitter_followed_account_search = fields.Char('Search User')
+    twitter_account_user_id = fields.Char(related="account_id.twitter_user_id")
     # TODO awa: clean unused 'social.twitter.account' in a cron job
     twitter_followed_account_id = fields.Many2one('social.twitter.account')
 
@@ -192,6 +193,12 @@ class SocialStream(models.Model):
                         f"RT @{username}: "
                         f"{origin_tweet_msg}"
                     )
+                # For retweets, it is more interesting to know the likes number of the actual post
+                # instead of the retweet. As this number is less likely to change a lot, contrary to
+                # the original post.
+                retweet_like_count = quote_and_retweet_per_ids.get(retweets[0].get('id'), {}).get('public_metrics', {}).get('like_count', False)
+                if retweet_like_count is not False:
+                    values['twitter_likes_count'] = retweet_like_count
 
             existing_tweet = existing_tweets_by_tweet_id.get(tweet.get('id'))
             if existing_tweet:
