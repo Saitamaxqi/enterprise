@@ -28,6 +28,7 @@
         <input id="o_sign_input_sign_request_token" type="hidden" t-att-value="sign_request.access_token"/>
         <input id="o_sign_input_sign_request_state" type="hidden" t-att-value="sign_request.state"/>
         <input id="o_sign_input_access_token" type="hidden" t-att-value="token"/>
+        <input id="o_sign_input_today_formatted_date" type="hidden" t-att-value="today_formatted_date"/>
         <t t-if="sign_request.nb_closed == 0">
             <input id="o_sign_input_template_editable" type="hidden"/>
         </t>

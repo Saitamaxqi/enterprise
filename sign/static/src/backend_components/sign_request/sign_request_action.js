@@ -43,6 +43,7 @@ export class SignRequest extends Component {
             signRequestState: context.state,
             requestItemStates: context.request_item_states,
             needToSign: context.need_to_sign,
+            todayFormattedDate: context.today_formatted_date,
         });
 
         this.documentRoot = useRef("sign-document");

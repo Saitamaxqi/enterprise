@@ -41,6 +41,7 @@ export class Document extends Component {
                     signRequestToken: this.requestToken,
                     signRequestState: this.requestState,
                     signRequestItemToken: this.accessToken,
+                    todayFormattedDate: this.todayFormattedDate,
                 });
             },
             () => []

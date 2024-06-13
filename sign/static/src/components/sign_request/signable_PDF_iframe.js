@@ -15,8 +15,6 @@ import {
     NextDirectSignDialog,
 } from "@sign/dialogs/dialogs";
 
-const { DateTime } = luxon;
-
 export class SignablePDFIframe extends PDFIframe {
     /**
      * Renders custom elements inside the PDF.js iframe when signing
@@ -92,7 +90,7 @@ export class SignablePDFIframe extends PDFIframe {
         const { name, item_type: type, auto_value: autoValue } = signItemType;
         if (name === _t("Date")) {
             signItemElement.addEventListener("focus", (e) => {
-                this.fillTextSignItem(e.currentTarget, DateTime.now().toLocaleString());
+                this.fillTextSignItem(e.currentTarget, this.signInfo.get('todayFormattedDate'));
             });
         } else if (type === "signature" || type === "initial") {
             signItemElement.addEventListener("click", (e) => {
