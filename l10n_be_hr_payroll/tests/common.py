@@ -309,3 +309,32 @@ class TestPayrollCommon(TransactionCase):
         cls.employee_with_attestation_contracts = first_contract_employee_with_attestation
 
         cls.employee_with_attestation_contracts.write({'state': 'close'})  # By default, the state is 'draft' when we create a new contract
+
+        cls.employee_withholding_taxes = cls.env['hr.employee'].create({
+            'name': 'EmployeeWithholdingTaxes',
+            'resource_calendar_id': cls.resource_calendar.id,
+            'company_id': cls.belgian_company.id,
+        })
+
+        cls.employee_withholding_taxes_contracts = first_contract_georges.copy({
+            'name': "EmployeeWithholdingTaxes' Contract",
+            'employee_id': cls.employee_withholding_taxes.id,
+            'resource_calendar_id': cls.resource_calendar.id,
+            'date_end': False,
+            'internet': False,
+            'mobile': False,
+            'meal_voucher_amount': 0,
+            'eco_checks': 0,
+            'wage': 2500,
+        })
+        if 'wage_on_signature' in cls.env['hr.contract']:
+            cls.employee_withholding_taxes_contracts['wage_on_signature'] = 2500
+
+        cls.employee_withholding_taxes_contracts.write({'state': 'open'})  # By default, the state is 'draft' when we create a new contract
+        cls.employee_withholding_taxes_contracts.generate_work_entries(cls.employee_withholding_taxes_contracts.date_start, today)
+        cls.employee_withholding_taxes_payslip = cls.env['hr.payslip'].create({
+
+            'name': "EmployeeWithholdingTaxes' Payslip",
+            'employee_id': cls.employee_withholding_taxes.id,
+            'contract_id': cls.employee_withholding_taxes_contracts.id,
+        })

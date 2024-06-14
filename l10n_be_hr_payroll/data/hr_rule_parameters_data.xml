@@ -1137,6 +1137,38 @@
             <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
         </record>
 
+        <!-- Termination Fees - Rates-->
+        <record id="rule_parameter_termination_fees_rates" model="hr.rule.parameter">
+            <field name="name">Termination Fees: Withholding Taxes Rates</field>
+            <field name="code">termination_fees_pp_rates</field>
+            <field name="country_id" ref="base.be"/>
+        </record>
+        <record id="rule_parameter_termination_fees_rates_2024" model="hr.rule.parameter.value">
+            <field name="parameter_value">
+[
+    (    0.00,      11230.00,  0.00),
+    (11230.01,      13485.00,  2.68),
+    (13485.01,      14975.00,  6.57),
+    (14975.01,      17975.00, 10.77),
+    (17975.01,      19480.00, 13.55),
+    (19480.01,      21720.00, 16.55),
+    (21720.01,      25465.00, 19.17),
+    (25465.01,      32950.00, 24.92),
+    (32950.01,      40435.00, 29.93),
+    (40435.01,      52425.00, 31.30),
+    (52425.01,      59160.00, 36.90),
+    (59160.01,      67395.00, 38.96),
+    (67395.01,      78625.00, 40.93),
+    (78625.01,      94360.00, 42.92),
+    (94360.01,     118320.00, 44.99),
+    (118320.01,    136290.00, 46.47),
+    (136290.01,    160250.00, 47.48),
+    (160250.01,  999999999.00,48.00)
+]</field>
+            <field name="rule_parameter_id" ref="rule_parameter_termination_fees_rates"/>
+            <field name="date_from" eval="datetime(2024, 1, 1).date()"/>
+        </record>
+
         <!-- Holiday Pay - PP Exoneration -->
         <record id="rule_parameter_holiday_pay_exoneration" model="hr.rule.parameter">
             <field name="name">Holiday Pay: Withholding Taxes Exoneration</field>

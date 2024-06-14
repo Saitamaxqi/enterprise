@@ -8,3 +8,4 @@ from . import test_payroll_right_to_legal_leaves
 from . import test_payroll_sickness_relapse
 from . import test_payroll_eco_vouchers
 from . import test_hr_leave
+from . import test_payroll_withholding_taxes_with_child_allowances

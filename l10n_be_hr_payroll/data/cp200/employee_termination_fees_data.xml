@@ -558,7 +558,7 @@ result = result_rules['BASIC']['total'] - result_rules['ONSSTOTAL']['total']
         <field name="condition_python">result=not contract.no_withholding_taxes</field>
         <field name="appears_on_payslip" eval="True"/>
         <field name="amount_select">code</field>
-        <field name="amount_python_compute">result = payslip._get_be_withholding_taxes(localdict)
+        <field name="amount_python_compute">result = payslip._get_termination_fees_withholding_taxes(localdict)
         </field>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_termination_fees"/>
     </record>

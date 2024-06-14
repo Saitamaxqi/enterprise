@@ -957,106 +957,91 @@ class HrPayslip(models.Model):
 
         return min(result, -categories['ONSS'])
 
-    def _get_be_double_holiday_withholding_taxes(self, localdict):
-        self.ensure_one()
-        # See: https://www.securex.eu/lex-go.nsf/vwReferencesByCategory_fr/52DA120D5DCDAE78C12584E000721081?OpenDocument
+    def _get_withholding_taxes_after_child_allowances(self, rates, gross, apply_reduction=True):
+
         def find_rates(x, rates):
             for low, high, rate in rates:
                 if low <= x <= high:
                     return rate / 100.0
 
-        categories = localdict['categories']
-        rates = self._rule_parameter('holiday_pay_pp_rates')
         children_exoneration = self._rule_parameter('holiday_pay_pp_exoneration')
         children_reduction = self._rule_parameter('holiday_pay_pp_rate_reduction')
 
         employee = self.contract_id.employee_id
 
+        contract = self.contract_id
+        monthly_revenue = contract._get_contract_wage()
+        # Count ANT in yearly remuneration
+        if contract.internet:
+            monthly_revenue += 5.0
+        if contract.mobile and not contract.internet:
+            monthly_revenue += 4.0 + 5.0
+        if contract.mobile and contract.internet:
+            monthly_revenue += 4.0
+        if contract.has_laptop:
+            monthly_revenue += 7.0
+
+        yearly_revenue = monthly_revenue * (1 - 0.1307) * 12.0
+
+        if contract.transport_mode_car:
+            if 'vehicle_id' in self:
+                yearly_revenue += self.vehicle_id._get_car_atn(date=self.date_from) * 12.0
+            else:
+                yearly_revenue += contract.car_atn * 12.0
+
+        # Exoneration
+        children = employee.dependent_children
+        if children > 0 and yearly_revenue <= children_exoneration.get(children, children_exoneration[12]):
+            yearly_revenue -= children_exoneration.get(children, children_exoneration[12]) - yearly_revenue
+            yearly_revenue = max(yearly_revenue, 0)
+
+        withholding_tax_amount = gross * find_rates(yearly_revenue, rates)
+        # Reduction
+        if (apply_reduction and
+            children > 0 and
+            yearly_revenue <= children_reduction.get(children, children_reduction[5])[1]
+        ):
+            withholding_tax_amount *= (1 - children_reduction.get(children, children_reduction[5])[0] / 100.0)
+
+        return - withholding_tax_amount
+
+    def _get_be_double_holiday_withholding_taxes(self, localdict):
+        self.ensure_one()
+        # See: https://www.securex.eu/lex-go.nsf/vwReferencesByCategory_fr/52DA120D5DCDAE78C12584E000721081?OpenDocument
+
+        rates = self._rule_parameter('holiday_pay_pp_rates')
+
+        categories = localdict['categories']
         if self.struct_id.code == "CP200DOUBLE":
             gross = categories['GROSS']
         elif self.struct_id.code == "CP200MONTHLY":
             gross = categories['DDPG']
 
-        contract = self.contract_id
-        monthly_revenue = contract._get_contract_wage()
-        # Count ANT in yearly remuneration
-        if contract.internet:
-            monthly_revenue += 5.0
-        if contract.mobile and not contract.internet:
-            monthly_revenue += 4.0 + 5.0
-        if contract.mobile and contract.internet:
-            monthly_revenue += 4.0
-        if contract.has_laptop:
-            monthly_revenue += 7.0
-
-        yearly_revenue = monthly_revenue * (1 - 0.1307) * 12.0
-
-        if contract.transport_mode_car:
-            if 'vehicle_id' in self:
-                yearly_revenue += self.vehicle_id._get_car_atn(date=self.date_from) * 12.0
-            else:
-                yearly_revenue += contract.car_atn * 12.0
-
-        # Exoneration
-        children = employee.dependent_children
-        if children > 0 and yearly_revenue <= children_exoneration.get(children, children_exoneration[12]):
-            yearly_revenue -= children_exoneration.get(children, children_exoneration[12]) - yearly_revenue
-
-        # Reduction
-        if children > 0 and yearly_revenue <= children_reduction.get(children, children_reduction[5])[1]:
-            withholding_tax_amount = gross * find_rates(yearly_revenue, rates) * (1 - children_reduction.get(children, children_reduction[5])[0] / 100.0)
-        else:
-            withholding_tax_amount = gross * find_rates(yearly_revenue, rates)
-        return - withholding_tax_amount
+        return self._get_withholding_taxes_after_child_allowances(rates, gross)
 
     def _get_thirteen_month_withholding_taxes(self, localdict):
         self.ensure_one()
         # See: https://www.securex.eu/lex-go.nsf/vwReferencesByCategory_fr/52DA120D5DCDAE78C12584E000721081?OpenDocument
-        def find_rates(x, rates):
-            for low, high, rate in rates:
-                if low <= x <= high:
-                    return rate / 100.0
 
-        categories = localdict['categories']
         rates = self._rule_parameter('exceptional_allowances_pp_rates')
-        children_exoneration = self._rule_parameter('holiday_pay_pp_exoneration')
-        children_reduction = self._rule_parameter('holiday_pay_pp_rate_reduction')
-
-        employee = self.contract_id.employee_id
-
+        categories = localdict['categories']
         gross = categories['GROSS']
 
-        contract = self.contract_id
-        monthly_revenue = contract._get_contract_wage()
-        # Count ANT in yearly remuneration
-        if contract.internet:
-            monthly_revenue += 5.0
-        if contract.mobile and not contract.internet:
-            monthly_revenue += 4.0 + 5.0
-        if contract.mobile and contract.internet:
-            monthly_revenue += 4.0
-        if contract.has_laptop:
-            monthly_revenue += 7.0
+        return self._get_withholding_taxes_after_child_allowances(rates, gross)
 
-        yearly_revenue = monthly_revenue * (1 - 0.1307) * 12.0
+    def _get_termination_fees_withholding_taxes(self, localdict):
+        # See: https://www.securex.eu/lex-go.nsf/vwReferencesByCategory_fr/52DA120D5DCDAE78C12584E000721081?OpenDocument
+        if self.date_from.year >= 2024:
+            self.ensure_one()
 
-        if contract.transport_mode_car:
-            if 'vehicle_id' in self:
-                yearly_revenue += self.vehicle_id._get_car_atn(date=self.date_from) * 12.0
-            else:
-                yearly_revenue += contract.car_atn * 12.0
+            rates = self._rule_parameter('termination_fees_pp_rates')
+            categories = localdict['categories']
+            gross = categories['GROSS']
 
-        # Exoneration
-        children = employee.dependent_children
-        if children > 0 and yearly_revenue <= children_exoneration.get(children, children_exoneration[12]):
-            yearly_revenue -= children_exoneration.get(children, children_exoneration[12]) - yearly_revenue
+            return self._get_withholding_taxes_after_child_allowances(rates, gross, apply_reduction=False)
 
-        # Reduction
-        if children > 0 and yearly_revenue <= children_reduction.get(children, children_reduction[5])[1]:
-            withholding_tax_amount = gross * find_rates(yearly_revenue, rates) * (1 - children_reduction.get(children, children_reduction[5])[0] / 100.0)
         else:
-            withholding_tax_amount = gross * find_rates(yearly_revenue, rates)
-        return - withholding_tax_amount
+            return self._get_be_withholding_taxes(localdict)
 
     def _get_withholding_reduction(self, localdict):
         self.ensure_one()
