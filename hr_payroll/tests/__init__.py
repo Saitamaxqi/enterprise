@@ -17,3 +17,4 @@ from . import test_payroll_dependencies
 from . import test_edit_payslip_lines
 from . import test_headcount
 from . import test_ytd
+from . import test_rule_category

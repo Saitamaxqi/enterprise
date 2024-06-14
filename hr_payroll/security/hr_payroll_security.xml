@@ -148,5 +148,11 @@
         <field name="model_id" ref="model_hr_payroll_headcount"/>
         <field name="domain_force">[('company_id', 'in', company_ids)]</field>
     </record>
+
+    <record id="ir_rule_hr_payroll_salary_rule_category_multi_company" model="ir.rule">
+        <field name="name">HR Salary Rule Category: Multi Company</field>
+        <field name="model_id" ref="model_hr_salary_rule_category"/>
+        <field name="domain_force">['|', ('country_id', '=', False), ('country_id', 'in', user.env.companies.country_id.ids)]</field>
+    </record>
 </data>
 </odoo>

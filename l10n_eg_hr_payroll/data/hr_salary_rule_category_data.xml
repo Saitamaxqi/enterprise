@@ -4,5 +4,6 @@
         <field name="name">Taxtotal</field>
         <field name="code">TXTOTAL</field>
         <field name="parent_id" ref="hr_payroll.DED"/>
+        <field name="country_id" ref="base.eg"/>
     </record>
 </odoo>

@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools.safe_eval import safe_eval
 
 
@@ -24,7 +24,7 @@ class HrSalaryRule(models.Model):
              "E.g. a rule for Meal Voucher having fixed amount of "
              u"1€ per worked day can have its quantity defined in expression "
              "like worked_days['WORK100'].number_of_days.")
-    category_id = fields.Many2one('hr.salary.rule.category', string='Category', required=True)
+    category_id = fields.Many2one('hr.salary.rule.category', string='Category', required=True, domain="['|', ('country_id', '=', False), ('country_id', '=', country_id)]")
     active = fields.Boolean(default=True,
         help="If the active field is set to false, it will allow you to hide the salary rule without removing it.")
     appears_on_payslip = fields.Boolean(string='Appears on Payslip', default=True,
@@ -232,3 +232,9 @@ result = contract.wage * 0.10''')
     def unlink(self):
         self.write({'appears_on_payroll_report': False})
         return super().unlink()
+
+    @api.constrains('category_id', 'struct_id')
+    def _check_category_country(self):
+        for rule in self:
+            if rule.category_id.country_id and rule.country_id and rule.category_id.country_id != rule.country_id:
+                raise ValidationError(_("Rule category and structure should belong to the same country"))
