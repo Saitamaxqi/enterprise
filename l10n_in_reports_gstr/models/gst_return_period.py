@@ -533,7 +533,7 @@ class L10n_InGstReturnPeriod(models.Model):
                 group_key = "%s-%s-%s" %(
                     tax_rate, line.l10n_in_hsn_code, uqc)
                 hsn_json.setdefault(group_key, {
-                    "hsn_sc": self.env["account.edi.format"]._l10n_in_edi_extract_digits(line.l10n_in_hsn_code),
+                    "hsn_sc": self.env["account.move"]._l10n_in_extract_digits(line.l10n_in_hsn_code),
                     "uqc": uqc,
                     "rt": tax_rate,
                     "qty": 0.00, "txval": 0.00, "iamt": 0.00, "samt": 0.00, "camt": 0.00, "csamt": 0.00})
@@ -635,18 +635,18 @@ class L10n_InGstReturnPeriod(models.Model):
                         inv_json = {
                             "inum": move_id.name,
                             "idt": move_id.invoice_date.strftime("%d-%m-%Y"),
-                            "val": AccountEdiFormat._l10n_in_round_value(move_id.amount_total_in_currency_signed),
+                            "val": AccountMove._l10n_in_round_value(move_id.amount_total_in_currency_signed),
                             "pos": move_id.l10n_in_state_id.l10n_in_tin,
                             "rchrg": is_reverse_charge and "Y" or "N",
                             "inv_typ": invoice_type,
                             #"etin": move_id.l10n_in_reseller_partner_id.vat or "",
                             "itms": [
                                 {"num": index, "itm_det": {
-                                    'txval': AccountEdiFormat._l10n_in_round_value(line_json.pop('txval')),
-                                    'iamt': AccountEdiFormat._l10n_in_round_value(line_json.pop('iamt')),
-                                    'camt': AccountEdiFormat._l10n_in_round_value(line_json.pop('camt')),
-                                    'samt': AccountEdiFormat._l10n_in_round_value(line_json.pop('samt')),
-                                    'csamt': AccountEdiFormat._l10n_in_round_value(line_json.pop('csamt')), **line_json}}
+                                    'txval': AccountMove._l10n_in_round_value(line_json.pop('txval')),
+                                    'iamt': AccountMove._l10n_in_round_value(line_json.pop('iamt')),
+                                    'camt': AccountMove._l10n_in_round_value(line_json.pop('camt')),
+                                    'samt': AccountMove._l10n_in_round_value(line_json.pop('samt')),
+                                    'csamt': AccountMove._l10n_in_round_value(line_json.pop('csamt')), **line_json}}
                                 for index, line_json in enumerate(lines_json.values(), start=1)
                             ],
                         }
@@ -697,13 +697,13 @@ class L10n_InGstReturnPeriod(models.Model):
                         inv_json = {
                             "inum": move_id.name,
                             "idt": move_id.invoice_date.strftime("%d-%m-%Y"),
-                            "val": AccountEdiFormat._l10n_in_round_value(move_id.amount_total_in_currency_signed),
+                            "val": AccountMove._l10n_in_round_value(move_id.amount_total_in_currency_signed),
                             #"etin": move_id.l10n_in_reseller_partner_id.vat or "",
                             "itms": [
                                 {"num": index, "itm_det": {
-                                    'txval': AccountEdiFormat._l10n_in_round_value(line_json.pop('txval')),
-                                    'iamt': AccountEdiFormat._l10n_in_round_value(line_json.pop('iamt')),
-                                    'csamt': AccountEdiFormat._l10n_in_round_value(line_json.pop('csamt')), **line_json}}
+                                    'txval': AccountMove._l10n_in_round_value(line_json.pop('txval')),
+                                    'iamt': AccountMove._l10n_in_round_value(line_json.pop('iamt')),
+                                    'csamt': AccountMove._l10n_in_round_value(line_json.pop('csamt')), **line_json}}
                                 for index, line_json in enumerate(lines_json.values(), start=1)
                             ],
                         }
@@ -750,11 +750,11 @@ class L10n_InGstReturnPeriod(models.Model):
                     b2cs_json[group_key]['csamt'] += line_tax_details['cess'] * -1
             return list({
                 **d,
-                "txval": AccountEdiFormat._l10n_in_round_value(d['txval']),
-                "iamt": AccountEdiFormat._l10n_in_round_value(d['iamt']),
-                "samt": AccountEdiFormat._l10n_in_round_value(d['samt']),
-                "camt": AccountEdiFormat._l10n_in_round_value(d['camt']),
-                "csamt": AccountEdiFormat._l10n_in_round_value(d['csamt']),
+                "txval": AccountMove._l10n_in_round_value(d['txval']),
+                "iamt": AccountMove._l10n_in_round_value(d['iamt']),
+                "samt": AccountMove._l10n_in_round_value(d['samt']),
+                "camt": AccountMove._l10n_in_round_value(d['camt']),
+                "csamt": AccountMove._l10n_in_round_value(d['csamt']),
             } for d in b2cs_json.values())
 
         def _get_cdnr_json(journal_items):
@@ -825,18 +825,18 @@ class L10n_InGstReturnPeriod(models.Model):
                             "ntty": is_out_refund and "C" or "D",
                             "nt_num": move_id.name,
                             "nt_dt": move_id.invoice_date.strftime("%d-%m-%Y"),
-                            "val": AccountEdiFormat._l10n_in_round_value(move_id.amount_total_in_currency_signed * -sign),
+                            "val": AccountMove._l10n_in_round_value(move_id.amount_total_in_currency_signed * -sign),
                             "pos": move_id.l10n_in_state_id.l10n_in_tin,
                             "rchrg": is_reverse_charge and "Y" or "N",
                             "inv_typ": invoice_type,
                             "itms": [
                                 {"num": index, "itm_det": {
                                     **line_json,
-                                    "txval": AccountEdiFormat._l10n_in_round_value(line_json['txval'] * sign),
-                                    "iamt": AccountEdiFormat._l10n_in_round_value(line_json['iamt'] * sign),
-                                    "samt": AccountEdiFormat._l10n_in_round_value(line_json['samt'] * sign),
-                                    "camt": AccountEdiFormat._l10n_in_round_value(line_json['camt'] * sign),
-                                    "csamt": AccountEdiFormat._l10n_in_round_value(line_json['csamt'] * sign),
+                                    "txval": AccountMove._l10n_in_round_value(line_json['txval'] * sign),
+                                    "iamt": AccountMove._l10n_in_round_value(line_json['iamt'] * sign),
+                                    "samt": AccountMove._l10n_in_round_value(line_json['samt'] * sign),
+                                    "camt": AccountMove._l10n_in_round_value(line_json['camt'] * sign),
+                                    "csamt": AccountMove._l10n_in_round_value(line_json['csamt'] * sign),
                                 }} for index, line_json in enumerate(lines_json.values(), start=1)
                             ],
                         }
@@ -896,14 +896,14 @@ class L10n_InGstReturnPeriod(models.Model):
                         "ntty": is_out_refund and "C" or "D",
                         "nt_num": move_id.name,
                         "nt_dt": move_id.invoice_date.strftime("%d-%m-%Y"),
-                        "val": AccountEdiFormat._l10n_in_round_value(move_id.amount_total_signed * -sign),
+                        "val": AccountMove._l10n_in_round_value(move_id.amount_total_signed * -sign),
                         "typ": invoice_type,
                         "itms": [
                             {"num": index, "itm_det": {
                                 **line_json,
-                                "txval": AccountEdiFormat._l10n_in_round_value(line_json['txval'] * sign),
-                                "iamt": AccountEdiFormat._l10n_in_round_value(line_json['iamt'] * sign),
-                                "csamt": AccountEdiFormat._l10n_in_round_value(line_json['csamt'] * sign),
+                                "txval": AccountMove._l10n_in_round_value(line_json['txval'] * sign),
+                                "iamt": AccountMove._l10n_in_round_value(line_json['iamt'] * sign),
+                                "csamt": AccountMove._l10n_in_round_value(line_json['csamt'] * sign),
                             }} for index, line_json in enumerate(lines_json.values(), start=1)
                         ],
                     }
@@ -960,12 +960,12 @@ class L10n_InGstReturnPeriod(models.Model):
                     export_inv = {
                         "inum": move_id.name,
                         "idt": move_id.invoice_date.strftime("%d-%m-%Y"),
-                        "val": AccountEdiFormat._l10n_in_round_value(move_id.amount_total_signed),
+                        "val": AccountMove._l10n_in_round_value(move_id.amount_total_signed),
                         "itms": list({
                             **d,
-                            "txval": AccountEdiFormat._l10n_in_round_value(d['txval']),
-                            "iamt": AccountEdiFormat._l10n_in_round_value(d['iamt']),
-                            "csamt": AccountEdiFormat._l10n_in_round_value(d['csamt']),
+                            "txval": AccountMove._l10n_in_round_value(d['txval']),
+                            "iamt": AccountMove._l10n_in_round_value(d['iamt']),
+                            "csamt": AccountMove._l10n_in_round_value(d['csamt']),
                             }
                             for d in lines_json.values()),
                     }
@@ -1027,9 +1027,9 @@ class L10n_InGstReturnPeriod(models.Model):
                         nil_json[supply_type]['ngsup_amt'] += line_tax_detail['base_amount'] * -1
             return nil_json and {'inv': list({
                 **d,
-                "nil_amt": AccountEdiFormat._l10n_in_round_value(d['nil_amt']),
-                "expt_amt": AccountEdiFormat._l10n_in_round_value(d['expt_amt']),
-                "ngsup_amt": AccountEdiFormat._l10n_in_round_value(d['ngsup_amt']),
+                "nil_amt": AccountMove._l10n_in_round_value(d['nil_amt']),
+                "expt_amt": AccountMove._l10n_in_round_value(d['expt_amt']),
+                "ngsup_amt": AccountMove._l10n_in_round_value(d['ngsup_amt']),
             } for d in nil_json.values())} or {}
 
         def _get_supeco_clttx_json(journal_items):
@@ -1066,11 +1066,11 @@ class L10n_InGstReturnPeriod(models.Model):
                     clttx_json[eco_gstin]['cess'] += line_tax['cess'] * -1
             return [{
                 **d,
-                "suppval": AccountEdiFormat._l10n_in_round_value(d['suppval']),
-                "igst": AccountEdiFormat._l10n_in_round_value(d['igst']),
-                "cgst": AccountEdiFormat._l10n_in_round_value(d['cgst']),
-                "sgst": AccountEdiFormat._l10n_in_round_value(d['sgst']),
-                "cess": AccountEdiFormat._l10n_in_round_value(d['cess']),
+                "suppval": AccountMove._l10n_in_round_value(d['suppval']),
+                "igst": AccountMove._l10n_in_round_value(d['igst']),
+                "cgst": AccountMove._l10n_in_round_value(d['cgst']),
+                "sgst": AccountMove._l10n_in_round_value(d['sgst']),
+                "cess": AccountMove._l10n_in_round_value(d['cess']),
             } for d in clttx_json.values()]
 
         def _get_supeco_paytx_json(journal_items):
@@ -1108,15 +1108,15 @@ class L10n_InGstReturnPeriod(models.Model):
 
             return [{
                 **d,
-                "suppval": AccountEdiFormat._l10n_in_round_value(d['suppval']),
-                "igst": AccountEdiFormat._l10n_in_round_value(d['igst']),
-                "cgst": AccountEdiFormat._l10n_in_round_value(d['cgst']),
-                "sgst": AccountEdiFormat._l10n_in_round_value(d['sgst']),
-                "cess": AccountEdiFormat._l10n_in_round_value(d['cess']),
+                "suppval": AccountMove._l10n_in_round_value(d['suppval']),
+                "igst": AccountMove._l10n_in_round_value(d['igst']),
+                "cgst": AccountMove._l10n_in_round_value(d['cgst']),
+                "sgst": AccountMove._l10n_in_round_value(d['sgst']),
+                "cess": AccountMove._l10n_in_round_value(d['cess']),
             } for d in paytx_json.values()]
 
         AccountMoveLine = self.env['account.move.line']
-        AccountEdiFormat = self.env["account.edi.format"]
+        AccountMove = self.env["account.move"]
         tax_details_by_move = self._get_tax_details(self._get_section_domain('hsn'))
         hsn_json = self._get_gstr1_hsn_json(AccountMoveLine.search(self._get_section_domain('hsn')), tax_details_by_move)
         nil_json = _get_nil_json(AccountMoveLine.search(self._get_section_domain('nil')))
@@ -1140,12 +1140,12 @@ class L10n_InGstReturnPeriod(models.Model):
         if hsn_json:
             return_json.update({'hsn':
                 {'data': [{**hsn_dict, 'num': index,
-                    'txval': AccountEdiFormat._l10n_in_round_value(hsn_dict.get('txval')),
-                    'iamt': AccountEdiFormat._l10n_in_round_value(hsn_dict.get('iamt')),
-                    'camt': AccountEdiFormat._l10n_in_round_value(hsn_dict.get('camt')),
-                    'samt': AccountEdiFormat._l10n_in_round_value(hsn_dict.get('samt')),
-                    'csamt': AccountEdiFormat._l10n_in_round_value(hsn_dict.get('csamt')),
-                    'qty': AccountEdiFormat._l10n_in_round_value(hsn_dict.get('qty')),
+                    'txval': AccountMove._l10n_in_round_value(hsn_dict.get('txval')),
+                    'iamt': AccountMove._l10n_in_round_value(hsn_dict.get('iamt')),
+                    'camt': AccountMove._l10n_in_round_value(hsn_dict.get('camt')),
+                    'samt': AccountMove._l10n_in_round_value(hsn_dict.get('samt')),
+                    'csamt': AccountMove._l10n_in_round_value(hsn_dict.get('csamt')),
+                    'qty': AccountMove._l10n_in_round_value(hsn_dict.get('qty')),
                     } for index, hsn_dict in enumerate(hsn_json.values(), start=1)]}})
         return return_json
 
@@ -1189,7 +1189,7 @@ class L10n_InGstReturnPeriod(models.Model):
             error_codes = [e.get('code') for e in response["error"]]
             error_msg = ""
             if 'no-credit' in error_codes:
-                error_msg = self.env["account.edi.format"]._l10n_in_edi_get_iap_buy_credits_message(self.company_id)
+                error_msg = self.env["account.edi.format"]._l10n_in_edi_get_iap_buy_credits_message()
             else:
                 error_msg = "<br/>".join(["[%s] %s" % (e.get("code"), html_escape(e.get("message"))) for e in response["error"]])
             self.sudo().write({
@@ -1292,7 +1292,7 @@ class L10n_InGstReturnPeriod(models.Model):
             error_msg = ""
             error_codes = [e.get('code') for e in response["error"]]
             if 'no-credit' in error_codes:
-                error_msg = self.env["account.edi.format"]._l10n_in_edi_get_iap_buy_credits_message(self.company_id)
+                error_msg = self.env["account.edi.format"]._l10n_in_edi_get_iap_buy_credits_message()
             else:
                 error_msg = "<br/>".join(["[%s] %s" % (e.get("code"), html_escape(e.get("message"))) for e in response["error"]])
             self.sudo().write({
@@ -1538,7 +1538,7 @@ class L10n_InGstReturnPeriod(models.Model):
             error_msg = ""
             error_codes = [e.get('code') for e in response["error"]]
             if 'no-credit' in error_codes:
-                error_msg = self.env["account.edi.format"]._l10n_in_edi_get_iap_buy_credits_message(self.company_id)
+                error_msg = self.env["account.edi.format"]._l10n_in_edi_get_iap_buy_credits_message()
             else:
                 error_msg = "<br/>".join(["[%s] %s" % (e.get("code"), html_escape(e.get("message"))) for e in response["error"]])
             self.sudo().write({

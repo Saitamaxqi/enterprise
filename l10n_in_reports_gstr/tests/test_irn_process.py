@@ -24,8 +24,9 @@ class TestIrnProcess(L10nInTestAccountGstReportsCommon):
             'year': cls.test_date.strftime('%Y'),
             'month': cls.test_date.strftime('%m'),
         })
-        cls.purchase_igst_1 = cls._get_company_tax('igst_purchase_1')
-        cls.purchase_igst_18 = cls._get_company_tax('igst_purchase_18')
+        AccountChartTemplate = cls.env['account.chart.template']
+        cls.purchase_igst_1 = AccountChartTemplate.ref('igst_purchase_1')
+        cls.purchase_igst_18 = AccountChartTemplate.ref('igst_purchase_18')
 
     def test_irn_process(self):
         # Attach list of IRN JSON data as attachments

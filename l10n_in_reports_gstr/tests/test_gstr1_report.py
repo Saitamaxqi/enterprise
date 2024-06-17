@@ -28,12 +28,12 @@ class TestReports(L10nInTestAccountGstReportsCommon):
         cls.uin_holders_partner = cls.partner_a.copy({"l10n_in_gst_treatment": "uin_holders"})
         cls.large_unregistered_partner = cls.consumer_partner.copy({"state_id": cls.state_in_mh.id, "l10n_in_gst_treatment": "unregistered"})
 
+        ChartTemplate = cls.env['account.chart.template']
         cls.partner_foreign.l10n_in_gst_treatment = "overseas"
-
-        cls.comp_sgst_18 = cls._get_company_tax('sgst_sale_18')
-        cls.exempt_tax = cls._get_company_tax('exempt_sale')
-        cls.nil_rated_tax = cls._get_company_tax('nil_rated_sale')
-        cls.non_gst_supplies = cls._get_company_tax('non_gst_supplies_sale')
+        cls.comp_sgst_18 = ChartTemplate.ref('sgst_sale_18')
+        cls.exempt_tax = ChartTemplate.ref('exempt_sale')
+        cls.nil_rated_tax = ChartTemplate.ref('nil_rated_sale')
+        cls.non_gst_supplies = ChartTemplate.ref('non_gst_supplies_sale')
 
     def _setup_moves(self, reverse_inv_func):
         b2b_invoice = self._init_inv(partner=self.partner_b, taxes=self.comp_igst_18, line_vals={'price_unit': 500, 'quantity': 2})
@@ -126,14 +126,15 @@ class TestReports(L10nInTestAccountGstReportsCommon):
         self.assertFalse(reversed_move_2.l10n_in_reversed_entry_warning)
 
     def test_gstr1_sez_zero_rated_tax(self):
+        igst_0 = self.env['account.chart.template'].ref('igst_sale_0')
         b2b_invoice = self._init_inv(
             partner=self.partner_a.copy({'l10n_in_gst_treatment': 'special_economic_zone'}),
-            taxes=self._get_company_tax('igst_sale_0'),
+            taxes=igst_0,
             line_vals={'price_unit': 500, 'quantity': 2}
         )
         self._init_inv(
             partner=self.partner_foreign,
-            taxes=self._get_company_tax('igst_sale_0'),
+            taxes=igst_0,
             line_vals={'price_unit': 500, 'quantity': 2}
         )
         self._create_credit_note(inv=b2b_invoice, line_vals={'quantity': 1})  # Creates and posts credit note for the above invoice

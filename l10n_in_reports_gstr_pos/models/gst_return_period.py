@@ -77,7 +77,7 @@ class L10n_InGstReturnPeriod(models.Model):
                     "price_subtotal": pos_order_line.price_subtotal,
                     "tax_ids": pos_order_line.tax_ids_after_fiscal_position.flatten_taxes_hierarchy().ids,
                     "qty": pos_order_line.qty,
-                    "product_hsn_code": self.env["account.edi.format"]._l10n_in_edi_extract_digits(pos_order_line.l10n_in_hsn_code),
+                    "product_hsn_code": self.env["account.move"]._l10n_in_extract_digits(pos_order_line.l10n_in_hsn_code),
                     "currency_rate": pos_order_line.order_id.currency_rate,
                     "product_uom_code": uom_code
                 }

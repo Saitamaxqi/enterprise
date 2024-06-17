@@ -17,13 +17,7 @@ class L10nInTestAccountReportsCommon(TestAccountReportsCommon, L10nInTestInvoici
         cls.user.company_ids = [cls.default_company.id, cls.company_data_2['company'].id]
 
         # === Taxes === #
-        cls.comp_igst_18 = cls._get_company_tax('igst_sale_18')
-
-    @classmethod
-    def _get_company_tax(cls, xmlid_suffix, company=None):
-        if not company:
-            company = cls.default_company
-        return cls.env.ref(f'account.{company.id}_{xmlid_suffix}')
+        cls.comp_igst_18 = cls.env['account.chart.template'].ref('igst_sale_18')
 
     @classmethod
     def _set_vals_and_post(cls, move, ref=None, line_vals=None, post=True):
