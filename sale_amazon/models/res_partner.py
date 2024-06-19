@@ -1,12 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import _, fields, models
+from odoo import _, models
 
 
 class ResPartner(models.Model):
     _inherit = ['res.partner']
-
-    amazon_email = fields.Char(help="The encrypted email of the customer. Does not forward mails.")
 
     def _amazon_create_activity_set_state(self, user_id, state_code):
         """ Create an activity on the Amazon partner for the salesperson to set the state.

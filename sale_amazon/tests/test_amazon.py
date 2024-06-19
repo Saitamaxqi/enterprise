@@ -694,7 +694,7 @@ class TestAmazon(common.TestAmazonCommon):
                 'phone': '+1 234-567-8910 ext. 12345',
                 'customer_rank': 1,
                 'company_id': self.account.company_id.id,
-                'amazon_email': 'iliketurtles@marketplace.amazon.com',
+                'email': 'iliketurtles@marketplace.amazon.com',
             })
             contacts_count = self.env['res.partner'].search_count([])
             order_data = common.OPERATIONS_RESPONSES_MAP['getOrders']['payload']['Orders'][0]
@@ -702,7 +702,7 @@ class TestAmazon(common.TestAmazonCommon):
             self.assertEqual(self.env['res.partner'].search_count([]), contacts_count)
             self.assertEqual(contact.id, delivery.id)
             self.assertEqual(contact.type, 'contact')
-            self.assertEqual(contact.amazon_email, 'iliketurtles@marketplace.amazon.com')
+            self.assertEqual(contact.email, 'iliketurtles@marketplace.amazon.com')
 
     def test_get_partners_no_creation_different_partners(self):
         """ Test the partners search with different partners for contact and delivery. """
@@ -719,7 +719,7 @@ class TestAmazon(common.TestAmazonCommon):
             'phone': '+1 234-567-8910 ext. 12345',
             'customer_rank': 1,
             'company_id': self.account.company_id.id,
-            'amazon_email': 'iliketurtles@marketplace.amazon.com',
+            'email': 'iliketurtles@marketplace.amazon.com',
         }
         contact = self.env['res.partner'].create(dict(new_partner_vals, name='Gederic Frilson'))
         self.env['res.partner'].create(dict(
@@ -737,7 +737,7 @@ class TestAmazon(common.TestAmazonCommon):
         self.assertNotEqual(contact.id, delivery.id)
         self.assertEqual(delivery.type, 'delivery')
         self.assertEqual(delivery.parent_id.id, contact.id)
-        self.assertEqual(contact.amazon_email, delivery.amazon_email)
+        self.assertEqual(contact.email, delivery.email)
 
     def test_get_partners_creation_delivery(self):
         """ Test the partners search with creation of the delivery. """
@@ -767,7 +767,7 @@ class TestAmazon(common.TestAmazonCommon):
             self.env['res.partner'].create({
                 'name': 'Gederic Frilson',
                 'company_id': self.account.company_id.id,
-                'amazon_email': 'iliketurtles@marketplace.amazon.com',
+                'email': 'iliketurtles@marketplace.amazon.com',
             })
             partners_count = self.env['res.partner'].search_count([])
             order_data = common.OPERATIONS_RESPONSES_MAP['getOrders']['payload']['Orders'][0]
@@ -782,7 +782,7 @@ class TestAmazon(common.TestAmazonCommon):
             self.assertEqual(delivery.type, 'delivery')
             self.assertEqual(delivery.parent_id.id, contact.id)
             self.assertEqual(delivery.company_id.id, self.account.company_id.id)
-            self.assertEqual(contact.amazon_email, delivery.amazon_email)
+            self.assertEqual(contact.email, delivery.email)
 
     def test_get_partners_creation_contact(self):
         """ Test the partners search with creation of the contact. """
@@ -812,7 +812,7 @@ class TestAmazon(common.TestAmazonCommon):
             self.assertEqual(contact.phone, '+1 234-567-8910 ext. 12345')
             self.assertEqual(contact.customer_rank, 1)
             self.assertEqual(contact.company_id.id, self.account.company_id.id)
-            self.assertEqual(contact.amazon_email, 'iliketurtles@marketplace.amazon.com')
+            self.assertEqual(contact.email, 'iliketurtles@marketplace.amazon.com')
 
     def test_get_partners_creation_contact_delivery(self):
         """ Test the partners search with creation of the contact and delivery. """
@@ -832,14 +832,14 @@ class TestAmazon(common.TestAmazonCommon):
         self.assertEqual(delivery.type, 'delivery')
         self.assertEqual(delivery.parent_id.id, contact.id)
         self.assertEqual(contact.company_id.id, delivery.company_id.id)
-        self.assertEqual(contact.amazon_email, delivery.amazon_email)
+        self.assertEqual(contact.email, delivery.email)
 
     def test_get_partners_missing_buyer_name(self):
         """ Test the partners search with missing buyer name. """
         self.env['res.partner'].create({
             'name': 'Gederic Frilson',
             'company_id': self.account.company_id.id,
-            'amazon_email': 'iliketurtles@marketplace.amazon.com',
+            'email': 'iliketurtles@marketplace.amazon.com',
         })
         partners_count = self.env['res.partner'].search_count([])
         order_data = dict(common.ORDER_MOCK, BuyerInfo=dict(
@@ -857,7 +857,7 @@ class TestAmazon(common.TestAmazonCommon):
         self.assertEqual(contact.type, 'contact')
         self.assertEqual(delivery.type, 'delivery')
         self.assertEqual(delivery.parent_id.id, contact.id)
-        self.assertEqual(contact.amazon_email, 'iliketurtles@marketplace.amazon.com')
+        self.assertEqual(contact.email, 'iliketurtles@marketplace.amazon.com')
         self.assertEqual(
             contact.street,
             '123 RainBowMan Street',
@@ -865,12 +865,12 @@ class TestAmazon(common.TestAmazonCommon):
                 "the available personal information.",
         )
 
-    def test_get_partners_missing_amazon_email(self):
+    def test_get_partners_missing_email(self):
         """ Test the partners search with missing amazon email. """
         self.env['res.partner'].create({
             'name': 'Gederic Frilson',
             'company_id': self.account.company_id.id,
-            'amazon_email': 'iliketurtles@marketplace.amazon.com',
+            'email': 'iliketurtles@marketplace.amazon.com',
         })
         partners_count = self.env['res.partner'].search_count([])
         order_data = dict(common.ORDER_MOCK, BuyerInfo=dict(
@@ -882,7 +882,7 @@ class TestAmazon(common.TestAmazonCommon):
             partners_count + 1,
             msg="A contact partner should always be created when the amazon email is missing.",
         )
-        self.assertFalse(contact.amazon_email)
+        self.assertFalse(contact.email)
 
     def test_get_partners_arbitrary_fields(self):
         """ Test the partners search with all PII filled but in arbitrary fields. """
@@ -894,7 +894,7 @@ class TestAmazon(common.TestAmazonCommon):
         self.assertTrue(contact.street2)
         self.assertTrue(contact.phone)
         self.assertTrue(contact.customer_rank)
-        self.assertTrue(contact.amazon_email)
+        self.assertTrue(contact.email)
 
     def _get_activity_count(self, contact):
         """" Return activity count of given the contact. """

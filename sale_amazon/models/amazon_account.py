@@ -700,7 +700,7 @@ class AmazonAccount(models.Model):
             'phone': phone,
             'customer_rank': 1,
             'company_id': self.company_id.id,
-            'amazon_email': anonymized_email,
+            'email': anonymized_email,
         }
 
         # The contact partner is searched based on all the personal information and only if the
@@ -714,7 +714,7 @@ class AmazonAccount(models.Model):
             *self.env['res.partner']._check_company_domain(self.company_id),
             ('type', '=', 'contact'),
             ('name', '=', buyer_name),
-            ('amazon_email', '=', anonymized_email),
+            ('email', '=', anonymized_email),
         ], limit=1) if anonymized_email else None  # Don't match random partners.
         if not contact:
             contact_name = buyer_name or f"Amazon Customer # {amazon_order_ref}"
