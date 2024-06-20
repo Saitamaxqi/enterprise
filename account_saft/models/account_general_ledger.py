@@ -89,6 +89,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         journal_name = self.env['account.journal']._field_to_sql('journal', 'name')
         uom_name = self.env['uom.uom']._field_to_sql('uom', 'name')
         product_name = self.env['product.template']._field_to_sql('product_template', 'name')
+        account_code = self.env['account.account']._field_to_sql('account', 'code')
         query = SQL(
             '''
             SELECT
@@ -124,6 +125,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                 %(journal_name)s                            AS journal_name,
                 journal.type                                AS journal_type,
                 account.account_type                        AS account_type,
+                %(account_code)s                            AS account_code,
                 currency.name                               AS currency_code,
                 %(product_name)s                            AS product_name,
                 product.default_code                        AS product_default_code,
@@ -142,6 +144,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             ''',
             tax_name=tax_name,
             journal_name=journal_name,
+            account_code=account_code,
             product_name=product_name,
             uom_name=uom_name,
             table_references=query.from_clause,
@@ -332,7 +335,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         partner_contacts_map = defaultdict(lambda: self.env['res.partner'])
 
         def _track_address(current_partner, partner):
-            if partner.zip and partner.city:
+            if partner.zip and partner.city or (options.get('saft_allow_empty_address') and partner != values['company'].partner_id):
                 address_key = (partner.zip, partner.city)
                 partner_addresses_map[current_partner][address_key] = partner
 

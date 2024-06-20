@@ -95,7 +95,7 @@ class TestNoSaftReport(TestNoSaftReportCommon):
             self.get_xml_tree_from_string(f'''
                 <AuditFile xmlns="urn:StandardAuditFile-Taxation-Financial:NO">
                     <Header>
-                        <AuditFileVersion>1.10</AuditFileVersion>
+                        <AuditFileVersion>1.30</AuditFileVersion>
                         <AuditFileCountry>NO</AuditFileCountry>
                         <AuditFileDateCreated>2019-12-31</AuditFileDateCreated>
                         <SoftwareCompanyName>Odoo SA</SoftwareCompanyName>
@@ -191,8 +191,11 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                                     <Telephone>+352 24 11 11 11</Telephone>
                                 </Contact>
                                 <CustomerID>___ignore___</CustomerID>
-                                <OpeningDebitBalance>0.00</OpeningDebitBalance>
-                                <ClosingDebitBalance>2500.00</ClosingDebitBalance>
+                                <BalanceAccount>
+                                    <AccountID>___ignore___</AccountID>
+                                    <OpeningDebitBalance>0.00</OpeningDebitBalance>
+                                    <ClosingDebitBalance>2500.00</ClosingDebitBalance>
+                                </BalanceAccount>
                             </Customer>
                         </Customers>
                         <TaxTable>
@@ -204,7 +207,7 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                                     <Description>25%</Description>
                                     <TaxPercentage>25.0</TaxPercentage>
                                     <Country>NO</Country>
-                                    <StandardTaxCode>02</StandardTaxCode>
+                                    <StandardTaxCode>3</StandardTaxCode>
                                     <BaseRate>100</BaseRate>
                                 </TaxCodeDetails>
                             </TaxTableEntry>
@@ -262,9 +265,9 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                                         <TaxCode>___ignore___</TaxCode>
                                         <TaxPercentage>25.0</TaxPercentage>
                                         <TaxBaseDescription>25%</TaxBaseDescription>
-                                        <TaxAmount>
+                                        <CreditTaxAmount>
                                             <Amount>1250.00</Amount>
-                                        </TaxAmount>
+                                        </CreditTaxAmount>
                                     </TaxInformation>
                                 </Line>
                                 <Line>
@@ -315,9 +318,9 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                                         <TaxCode>___ignore___</TaxCode>
                                         <TaxPercentage>25.0</TaxPercentage>
                                         <TaxBaseDescription>25%</TaxBaseDescription>
-                                        <TaxAmount>
+                                        <DebitTaxAmount>
                                             <Amount>750.00</Amount>
-                                        </TaxAmount>
+                                        </DebitTaxAmount>
                                     </TaxInformation>
                                 </Line>
                                 <Line>
@@ -352,7 +355,7 @@ class TestNoSaftReport(TestNoSaftReportCommon):
 
 @tagged('external_l10n', 'post_install', '-at_install', '-standard', 'external')
 class TestNoSaftReportXmlValidity(TestNoSaftReportCommon):
-    @test_xsd(url='https://raw.githubusercontent.com/Skatteetaten/saf-t/master/Norwegian_SAF-T_Financial_Schema_v_1.10.xsd')
+    @test_xsd(url='https://raw.githubusercontent.com/Skatteetaten/saf-t/master/SAF-T_Financial_1.3/Norwegian_SAF-T_Financial_Schema_v_1.30.xsd')
     def test_xml_validity(self):
         report = self.env.ref('account_reports.general_ledger_report')
         options = self._generate_options(report, fields.Date.from_string('2019-01-01'), fields.Date.from_string('2019-12-31'))

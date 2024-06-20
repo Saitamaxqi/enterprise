@@ -130,7 +130,7 @@
                 <GeneralLedgerAccounts t-if="account_vals_list">
                     <Account t-foreach="account_vals_list" t-as="account_vals">
                         <t t-set="account" t-value="account_vals['account']"/>
-                        <AccountID t-out="account.id"/>
+                        <AccountID t-out="account.code"/>
                         <AccountDescription t-out="account.name[:256]"/>
                         <StandardAccountID t-out="account.code"/>
                         <t t-if="account_vals['saft_account_type']">
@@ -238,8 +238,8 @@
                         </t>
                         <Line t-foreach="move_vals['line_vals_list']" t-as="line_vals">
                             <RecordID t-out="line_vals['id']"/>
-                            <AccountID t-out="line_vals['account_id']"/>
-                            <ValueDate t-out="move_vals['invoice_date']"/>
+                            <AccountID t-out="line_vals['account_code']"/>
+                            <ValueDate t-out="move_vals['date']"/>
                             <SourceDocumentID t-out="move_vals['id']"/>
                             <t t-if="line_vals['partner_id']">
                                 <t t-set="partner_vals" t-value="partner_detail_map[line_vals['partner_id']]"/>
