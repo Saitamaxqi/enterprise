@@ -40,11 +40,35 @@ class AccountMove(models.Model):
     def _mod_349_selection_values(self):
         context = self.env.context
         if context.get('move_type') in self.get_sale_types():
-            return[('E', _("E - Supply")), ('T', _("T - Triangular Operation")), ('S', _("S - Services sale")), ('M', _("M - Supply without taxes")), ('H', _("H - Supply without taxes delivered by a legal representative"))]
+            return [
+                ('E', _("E - Supply")),
+                ('T', _("T - Triangular Operation")),
+                ('S', _("S - Services sale")),
+                ('M', _("M - Supply without taxes")),
+                ('H', _("H - Supply without taxes delivered by a legal representative")),
+                ('R', _("R - Transfers of goods made under consignment sales agreements")),
+                ('D', _("D - Returns of goods previously sent from the TAI")),
+                ('C', _("C - Replacements of goods")),
+            ]
         if context.get('move_type') in self.get_purchase_types():
-            return [('A', _("A - Acquisition")), ('T', _("T - Triangular Operation")), ('I', _("I - Services acquisition"))]
+            return [
+                ('A', _("A - Acquisition")),
+                ('T', _("T - Triangular Operation")),
+                ('I', _("I - Services acquisition")),
+            ]
         # If no type is given in context, we give access to every possible value for the field
-        return [('A', _("A - Acquisition")), ('E', _("E - Supply")), ('T', _("T - Triangular Operation")), ('S', _("S - Services sale")), ('I', _("I - Services acquisition")), ('M', _("M - Supply without taxes")), ('H', _("H - Supply without taxes delivered by a legal representative"))]
+        return [
+            ('A', _("A - Acquisition")),
+            ('E', _("E - Supply")),
+            ('T', _("T - Triangular Operation")),
+            ('S', _("S - Services sale")),
+            ('I', _("I - Services acquisition")),
+            ('M', _("M - Supply without taxes")),
+            ('H', _("H - Supply without taxes delivered by a legal representative")),
+            ('R', _("R - Transfers of goods made under consignment sales agreements")),
+            ('D', _("D - Returns of goods previously sent from the TAI")),
+            ('C', _("C - Replacements of goods")),
+        ]
 
     l10n_es_reports_mod347_invoice_type = fields.Selection(string="Type for mod 347", selection=[('regular', "Regular operation"), ('insurance', "Insurance operation")], default=_default_mod_347_invoice_type, help="Defines the category into which this invoice falls for mod 347 report.")
     l10n_es_reports_mod347_available = fields.Boolean(string="Available for Mod347", compute="_compute_l10n_es_reports_mod347_available", help="True if and only if the invoice MIGHT need to be reported on mod 347, i.e. it concerns an operation from a Spanish headquarter.")

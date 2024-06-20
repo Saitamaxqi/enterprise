@@ -33,9 +33,9 @@
                         <field name="expression_ids">
                             <record id="mod_349_statistics_invoices_partners_count_balance" model="account.report.expression">
                                 <field name="label">balance</field>
-                                <field name="engine">domain</field>
-                                <field name="formula" eval="[('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.l10n_es_reports_mod349_invoice_type', '!=', False), ('move_id.move_type','in',['in_invoice','out_invoice']), ('tax_line_id', '=', False), ('account_type', 'in', ('asset_receivable', 'liability_payable'))]"/>
-                                <field name="subformula">count_rows</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_invoice_totals</field>
+                                <field name="subformula">value</field>
                                 <field name="figure_type">integer</field>
                             </record>
                         </field>
@@ -46,9 +46,19 @@
                         <field name="expression_ids">
                             <record id="mod_349_statistics_invoices_total_amount_balance" model="account.report.expression">
                                 <field name="label">balance</field>
-                                <field name="engine">domain</field>
-                                <field name="formula" eval="[('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.l10n_es_reports_mod349_invoice_type', '!=', False), ('move_id.move_type','in',['in_invoice','out_invoice']), ('tax_line_id', '=', False)]"/>
-                                <field name="subformula">sum</field>
+                                <field name="engine">aggregation</field>
+                                <field name="formula">
+                                    aeat_mod_349_supplies.balance +
+                                    aeat_mod_349_acquisitions.balance +
+                                    aeat_mod_349_triangular.balance +
+                                    aeat_mod_349_services_sold.balance +
+                                    aeat_mod_349_services_acquired.balance +
+                                    aeat_mod_349_supplies_without_taxes.balance +
+                                    aeat_mod_349_supplies_without_taxes_legal_representative.balance +
+                                    aeat_mod_349_consignment_sales_agreements.balance +
+                                    aeat_mod_349_returns_goods_consignment.balance +
+                                    aeat_mod_349_substitutions.balance
+                                </field>
                             </record>
                         </field>
                     </record>
@@ -60,9 +70,9 @@
                         <field name="expression_ids">
                             <record id="mod_349_statistics_refunds_partners_count_balance" model="account.report.expression">
                                 <field name="label">balance</field>
-                                <field name="engine">domain</field>
-                                <field name="formula" eval="[('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.l10n_es_reports_mod349_invoice_type', '!=', False), ('move_id.move_type','in',['in_refund','out_refund']), ('tax_line_id', '=', False)]"/>
-                                <field name="subformula">count_rows</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_refund_totals</field>
+                                <field name="subformula">value</field>
                                 <field name="figure_type">integer</field>
                             </record>
                         </field>
@@ -73,9 +83,19 @@
                         <field name="expression_ids">
                             <record id="mod_349_statistics_refunds_total_amount_balance" model="account.report.expression">
                                 <field name="label">balance</field>
-                                <field name="engine">domain</field>
-                                <field name="formula" eval="[('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.l10n_es_reports_mod349_invoice_type', '!=', False), ('move_id.move_type','in',['in_refund','out_refund']), ('tax_line_id', '=', False)]"/>
-                                <field name="subformula">sum</field>
+                                <field name="engine">aggregation</field>
+                                <field name="formula">
+                                    aeat_mod_349_supplies_refunds.balance +
+                                    aeat_mod_349_acquisitions_refunds.balance +
+                                    aeat_mod_349_triangular_refunds.balance +
+                                    aeat_mod_349_services_sold_refunds.balance +
+                                    aeat_mod_349_services_acquired_refunds.balance +
+                                    aeat_mod_349_supplies_without_taxes_refunds.balance +
+                                    aeat_mod_349_supplies_without_taxes_legal_representative_refunds.balance +
+                                    aeat_mod_349_consignment_sales_agreements_refunds.balance +
+                                    aeat_mod_349_returns_goods_consignment_refunds.balance +
+                                    aeat_mod_349_substitutions_refunds.balance
+                                </field>
                             </record>
                         </field>
                     </record>
@@ -91,49 +111,140 @@
                         <field name="code">aeat_mod_349_supplies</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_invoice','out_invoice']), ('move_id.l10n_es_reports_mod349_invoice_type','=','E'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="aeat_mod_349_supplies_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_invoice_e</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                     <record id="mod_349_acquisitions" model="account.report.line">
                         <field name="name">A. Intra-community purchases subject to taxes</field>
                         <field name="code">aeat_mod_349_acquisitions</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_invoice','out_invoice']), ('move_id.l10n_es_reports_mod349_invoice_type','=','A'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="mod_349_acquisitions_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_invoice_a</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                     <record id="mod_349_triangular" model="account.report.line">
                         <field name="name">T. Sales to other member states exempted of intra-community taxes in case of triangular operations</field>
                         <field name="code">aeat_mod_349_triangular</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_invoice','out_invoice']), ('move_id.l10n_es_reports_mod349_invoice_type','=','T'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="mod_349_triangular_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_invoice_t</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                     <record id="mod_349_services_sold" model="account.report.line">
                         <field name="name">S. Intra-community sales of services carried out by the declarant</field>
                         <field name="code">aeat_mod_349_services_sold</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_invoice','out_invoice']), ('move_id.l10n_es_reports_mod349_invoice_type','=','S'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="mod_349_services_sold_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_invoice_s</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                     <record id="mod_349_services_acquired" model="account.report.line">
                         <field name="name">I. Intra-community purchases of services</field>
                         <field name="code">aeat_mod_349_services_acquired</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_invoice','out_invoice']), ('move_id.l10n_es_reports_mod349_invoice_type','=','I'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="mod_349_services_acquired_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_invoice_i</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                     <record id="mod_349_supplies_without_taxes" model="account.report.line">
                         <field name="name">M. Intra-community sales of goods after an importation exempted of taxes</field>
                         <field name="code">aeat_mod_349_supplies_without_taxes</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_invoice','out_invoice']), ('move_id.l10n_es_reports_mod349_invoice_type','=','M'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="mod_349_supplies_without_taxes_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_invoice_m</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                     <record id="mod_349_supplies_without_taxes_legal_representative" model="account.report.line">
                         <field name="name">H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative</field>
                         <field name="code">aeat_mod_349_supplies_without_taxes_legal_representative</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_invoice','out_invoice']), ('move_id.l10n_es_reports_mod349_invoice_type','=','H'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="mod_349_supplies_without_taxes_legal_representative_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_invoice_h</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="mod_349_consignment_sales_agreements" model="account.report.line">
+                        <field name="name">R. Transfers of goods made under consignment sales contracts.</field>
+                        <field name="code">aeat_mod_349_consignment_sales_agreements</field>
+                        <field name="groupby">partner_id</field>
+                        <field name="foldable" eval="True"/>
+                        <field name="expression_ids">
+                            <record id="mod_349_consignment_sales_agreements_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_invoice_r</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="mod_349_returns_goods_consignment" model="account.report.line">
+                        <field name="name">D. Returns of goods previously sent from the TAI</field>
+                        <field name="code">aeat_mod_349_returns_goods_consignment</field>
+                        <field name="groupby">partner_id</field>
+                        <field name="foldable" eval="True"/>
+                        <field name="expression_ids">
+                            <record id="mod_349_returns_goods_consignment_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_invoice_d</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="mod_349_substitutions" model="account.report.line">
+                        <field name="name">C. Replacements of goods</field>
+                        <field name="code">aeat_mod_349_substitutions</field>
+                        <field name="groupby">partner_id</field>
+                        <field name="foldable" eval="True"/>
+                        <field name="expression_ids">
+                            <record id="mod_349_substitutions_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_invoice_c</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                 </field>
             </record>
@@ -147,49 +258,140 @@
                         <field name="code">aeat_mod_349_supplies_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_refund','out_refund']), ('move_id.l10n_es_reports_mod349_invoice_type','=','E'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="mod_349_supplies_refunds_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_refund_e</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                     <record id="mod_349_acquisitions_refunds" model="account.report.line">
                         <field name="name">A. Intra-community purchases subject to taxes</field>
                         <field name="code">aeat_mod_349_acquisitions_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_refund','out_refund']), ('move_id.l10n_es_reports_mod349_invoice_type','=','A'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="mod_349_acquisitions_refunds_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_refund_a</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                     <record id="mod_349_triangular_refunds" model="account.report.line">
                         <field name="name">T. Sales to other member states exempted of intra-community taxes in case of triangular operations</field>
                         <field name="code">aeat_mod_349_triangular_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_refund','out_refund']), ('move_id.l10n_es_reports_mod349_invoice_type','=','T'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="mod_349_triangular_refunds_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_refund_t</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                     <record id="mod_349_services_sold_refunds" model="account.report.line">
                         <field name="name">S. Intra-community sales of services carried out by the declarant</field>
                         <field name="code">aeat_mod_349_services_sold_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_refund','out_refund']), ('move_id.l10n_es_reports_mod349_invoice_type','=','S'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="mod_349_services_sold_refunds_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_refund_s</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                     <record id="mod_349_services_acquired_refunds" model="account.report.line">
                         <field name="name">I. Intra-community purchases of services</field>
                         <field name="code">aeat_mod_349_services_acquired_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_refund','out_refund']), ('move_id.l10n_es_reports_mod349_invoice_type','=','I'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="mod_349_services_acquired_refunds_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_refund_i</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                     <record id="mod_349_supplies_without_taxes_refunds" model="account.report.line">
                         <field name="name">M. Intra-community sales of goods after an importation exempted of taxes</field>
                         <field name="code">aeat_mod_349_supplies_without_taxes_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_refund','out_refund']), ('move_id.l10n_es_reports_mod349_invoice_type','=','M'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="mod_349_supplies_without_taxes_refunds_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_refund_m</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                     <record id="mod_349_supplies_without_taxes_legal_representative_refunds" model="account.report.line">
                         <field name="name">H. Intra-community sales of goods after an import exempted of taxes made for the fiscal representative</field>
                         <field name="code">aeat_mod_349_supplies_without_taxes_legal_representative_refunds</field>
                         <field name="groupby">partner_id</field>
                         <field name="foldable" eval="True"/>
-                        <field name="domain_formula">sum([('account_type', 'in', ('asset_receivable', 'liability_payable')), ('move_id.l10n_es_reports_mod349_available', '=', True), ('move_id.move_type','in',['in_refund','out_refund']), ('move_id.l10n_es_reports_mod349_invoice_type','=','H'), ('tax_line_id', '=', False)])</field>
+                        <field name="expression_ids">
+                            <record id="mod_349_supplies_without_taxes_legal_representative_refunds_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_refund_h</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="mod_349_consignment_sales_agreements_refunds" model="account.report.line">
+                        <field name="name">R. Rectifications of transfers of goods made under consignment sale contracts.</field>
+                        <field name="code">aeat_mod_349_consignment_sales_agreements_refunds</field>
+                        <field name="groupby">partner_id</field>
+                        <field name="foldable" eval="True"/>
+                        <field name="expression_ids">
+                            <record id="mod_349_consignment_sales_agreements_refunds_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_refund_r</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="mod_349_returns_goods_consignment_refunds" model="account.report.line">
+                        <field name="name">D. Rectifications of returned goods previously sent from the TAI</field>
+                        <field name="code">aeat_mod_349_returns_goods_consignment_refunds</field>
+                        <field name="groupby">partner_id</field>
+                        <field name="foldable" eval="True"/>
+                        <field name="expression_ids">
+                            <record id="mod_349_returns_goods_consignment_refunds_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_refund_d</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
+                    </record>
+                    <record id="mod_349_substitutions_refunds" model="account.report.line">
+                        <field name="name">C. Rectifications for replacement of goods</field>
+                        <field name="code">aeat_mod_349_substitutions_refunds</field>
+                        <field name="groupby">partner_id</field>
+                        <field name="foldable" eval="True"/>
+                        <field name="expression_ids">
+                            <record id="mod_349_substitutions_refunds_balance" model="account.report.expression">
+                                <field name="label">balance</field>
+                                <field name="engine">custom</field>
+                                <field name="formula">_report_custom_engine_modelo349_refund_c</field>
+                                <field name="subformula">value</field>
+                            </record>
+                        </field>
                     </record>
                 </field>
             </record>

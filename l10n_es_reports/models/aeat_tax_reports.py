@@ -5,67 +5,66 @@ from odoo import fields, models, _
 from odoo.exceptions import UserError
 import odoo.release
 from odoo.tools import SQL
-from odoo.tools.float_utils import float_split_str
+from odoo.tools.float_utils import float_split_str, float_compare
 
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import re
 import unicodedata
 
-
 SPANISH_PROVINCES_REPORT_CODES = {
-        'VI': '01',
-        'AB': '02',
-        'A': '03',
-        'AL': '04',
-        'AV': '05',
-        'BA': '06',
-        'PM': '07',
-        'B': '08',
-        'BU': '09',
-        'CC': '10',
-        'CA': '11',
-        'CS': '12',
-        'CR': '13',
-        'CO': '14',
-        'C': '15',
-        'CU': '16',
-        'GI': '17',
-        'GR': '18',
-        'GU': '19',
-        'SS': '20',
-        'H': '21',
-        'HU': '22',
-        'J': '23',
-        'LE': '24',
-        'L': '25',
-        'LO': '26',
-        'LU': '27',
-        'M': '28',
-        'MA': '29',
-        'MU': '30',
-        'NA': '31',
-        'OR': '32',
-        'O': '33',
-        'P': '34',
-        'GC': '35',
-        'PO': '36',
-        'SA': '37',
-        'TF': '38',
-        'S': '39',
-        'SG': '40',
-        'SE': '41',
-        'SO': '42',
-        'T': '43',
-        'TE': '44',
-        'TO': '45',
-        'V': '46',
-        'VA': '47',
-        'BI': '48',
-        'ZA': '49',
-        'Z': '50',
-        'CE': '51',
-        'ME': '52',
+    'VI': '01',
+    'AB': '02',
+    'A': '03',
+    'AL': '04',
+    'AV': '05',
+    'BA': '06',
+    'PM': '07',
+    'B': '08',
+    'BU': '09',
+    'CC': '10',
+    'CA': '11',
+    'CS': '12',
+    'CR': '13',
+    'CO': '14',
+    'C': '15',
+    'CU': '16',
+    'GI': '17',
+    'GR': '18',
+    'GU': '19',
+    'SS': '20',
+    'H': '21',
+    'HU': '22',
+    'J': '23',
+    'LE': '24',
+    'L': '25',
+    'LO': '26',
+    'LU': '27',
+    'M': '28',
+    'MA': '29',
+    'MU': '30',
+    'NA': '31',
+    'OR': '32',
+    'O': '33',
+    'P': '34',
+    'GC': '35',
+    'PO': '36',
+    'SA': '37',
+    'TF': '38',
+    'S': '39',
+    'SG': '40',
+    'SE': '41',
+    'SO': '42',
+    'T': '43',
+    'TE': '44',
+    'TO': '45',
+    'V': '46',
+    'VA': '47',
+    'BI': '48',
+    'ZA': '49',
+    'Z': '50',
+    'CE': '51',
+    'ME': '52',
 }
 
 MOD_347_CUSTOM_ENGINES_DOMAINS = {
@@ -92,6 +91,8 @@ MOD_347_CUSTOM_ENGINES_DOMAINS = {
         ('account_type', 'in', ('asset_receivable', 'liability_payable'))
     ],
 }
+
+MOD_349_KEYS = ('A', 'E', 'T', 'S', 'I', 'M', 'H', 'R', 'D', 'C')
 
 
 class AccountReport(models.Model):
@@ -167,7 +168,7 @@ class L10n_EsTaxReportHandler(models.AbstractModel):
             raise UserError(_("Your date range does not cover entire months, please use a start and end date matching respectively the first and last day of a month."))
 
         rslt_period = None
-        rslt_year = str(date_from.year) # Identical to date_to.year thanks to the previous conditions
+        rslt_year = str(date_from.year)  # Identical to date_to.year thanks to the previous conditions
         if date_from.month == date_to.month:
             rslt_period = '%02d' % (date_from.month)
         elif date_from.month == date_to.month - 2 and self._retrieve_period_and_year(date_from, trimester=True)[0] == self._retrieve_period_and_year(date_to, trimester=True)[0]:
@@ -193,7 +194,7 @@ class L10n_EsTaxReportHandler(models.AbstractModel):
         """
         if period[-1] == 'T':
             quarter = int(period[:-1])
-            return datetime(day=1, month= 1 + (quarter - 1) * 3, year=int(year)), (datetime(day=1, month= quarter * 3, year=int(year)) + relativedelta(day=31)) # relativedelta used to force last day of the month without triggering ValueError for months with less than 31 days
+            return datetime(day=1, month=1 + (quarter - 1) * 3, year=int(year)), (datetime(day=1, month=quarter * 3, year=int(year)) + relativedelta(day=31))  # relativedelta used to force last day of the month without triggering ValueError for months with less than 31 days
         else:
             return datetime(day=1, month=int(period), year=int(year)), datetime(day=1, month=int(period), year=int(year)) + relativedelta(day=31)
 
@@ -208,10 +209,10 @@ class L10n_EsTaxReportHandler(models.AbstractModel):
         string = string.upper()
 
         rslt = b''
-        for char in unicodedata.normalize('NFKC', string): # We use a normalized version of the string here so that we are sure accentuated charcaters are each time encoded with only one character (and not a regular character followed by a combining one)
+        for char in unicodedata.normalize('NFKC', string):  # We use a normalized version of the string here so that we are sure accentuated charcaters are each time encoded with only one character (and not a regular character followed by a combining one)
             if not char in ('Ñ', 'Ç'):
-                normalized_char = unicodedata.normalize('NFD', char) # Not NFKD, as the NFKC normalization in the loop already ensures good treatment of compatibility characters. NFD splits accentuated characters in two parts: the original character, and the accent to combine it with
-                rslt += normalized_char.encode('ISO-8859-1', 'ignore') # Combinable accentuation characters are not supported by this encoding, and disappear when transcoding.
+                normalized_char = unicodedata.normalize('NFD', char)  # Not NFKD, as the NFKC normalization in the loop already ensures good treatment of compatibility characters. NFD splits accentuated characters in two parts: the original character, and the accent to combine it with
+                rslt += normalized_char.encode('ISO-8859-1', 'ignore')  # Combinable accentuation characters are not supported by this encoding, and disappear when transcoding.
             else:
                 rslt += char.encode('ISO-8859-1')
 
@@ -219,7 +220,7 @@ class L10n_EsTaxReportHandler(models.AbstractModel):
             rslt = rslt[:length]
             if align == 'left':
                 rslt = rslt.ljust(length, fill_char)
-            elif align =='right':
+            elif align == 'right':
                 rslt = rslt.rjust(length, fill_char)
 
         return rslt
@@ -251,7 +252,7 @@ class L10n_EsTaxReportHandler(models.AbstractModel):
         else:
             str_number = str(abs(number)) + '0' * decimal_places
 
-        negative_amount = in_currency and company.currency_id.compare_amounts(number, 0.0)==-1 or number<0
+        negative_amount = in_currency and company.currency_id.compare_amounts(number, 0.0) == -1 or number < 0
         sign_str = signed and (negative_amount and sign_neg or sign_pos) or ''
 
         # Done in two parts, so that sign str is always in front of the filling characters
@@ -269,7 +270,7 @@ class L10n_EsTaxReportHandler(models.AbstractModel):
             matcher = casilla_pattern.match(line['name'])
             if matcher:
                 casilla = matcher.group('casilla')
-                casilla_value = line['columns'][0]['no_format'] # Element [0] is the current period, in case we are comparing
+                casilla_value = line['columns'][0]['no_format']  # Element [0] is the current period, in case we are comparing
 
                 rslt[casilla] = casilla_value
 
@@ -327,7 +328,7 @@ class L10n_EsTaxReportHandler(models.AbstractModel):
                 if subline_model_id in required_ids_set:
                     required_ids_set.remove(subline_model_id)
 
-        for element in required_ids_set: # These elements are the ones for wich no line was generated, but that were into the original required ids set. So, we still treat them.
+        for element in required_ids_set:  # These elements are the ones for wich no line was generated, but that were into the original required ids set. So, we still treat them.
             rslt += fun_to_call({
                 'line_data': {'id': report._get_generic_line_id('res.partner', element)},
                 'line_xml_id': line_xml_id,
@@ -386,12 +387,12 @@ class L10n_EsTaxReportHandler(models.AbstractModel):
         current_company = self.env.company
         rslt += self._l10n_es_boe_format_string(f"<T{modelo_number}0{year}{period}0000>")
         rslt += self._l10n_es_boe_format_string('<AUX>')
-        rslt += self._l10n_es_boe_format_string(' ' * 70) # Reserved for AEAT
+        rslt += self._l10n_es_boe_format_string(' ' * 70)  # Reserved for AEAT
         odoo_version = odoo.release.version.split('.')
         rslt += self._l10n_es_boe_format_string(str(odoo_version[0]) + str(odoo_version[1]), length=4)
-        rslt += self._l10n_es_boe_format_string(' ' * 4) # Reserved for AEAT
+        rslt += self._l10n_es_boe_format_string(' ' * 4)  # Reserved for AEAT
         rslt += self._l10n_es_boe_format_string(self._extract_spanish_tin(current_company.partner_id), length=9)
-        rslt += self._l10n_es_boe_format_string(' ' * 213) # Reserved for AEAT
+        rslt += self._l10n_es_boe_format_string(' ' * 213)  # Reserved for AEAT
         rslt += self._l10n_es_boe_format_string('</AUX>')
 
         # Fills in the common fields between mod 111 and 115
@@ -400,7 +401,7 @@ class L10n_EsTaxReportHandler(models.AbstractModel):
         rslt += self._l10n_es_boe_format_string(boe_wizard.declaration_type)
         rslt += self._l10n_es_boe_format_string(self._extract_spanish_tin(current_company.partner_id), length=9)
         rslt += self._l10n_es_boe_format_string(current_company.name, length=60)
-        rslt += self._l10n_es_boe_format_string(' ' * 20) # We keep the name of the declaring party blank here, as it is a company
+        rslt += self._l10n_es_boe_format_string(' ' * 20)  # We keep the name of the declaring party blank here, as it is a company
         rslt += self._l10n_es_boe_format_string(year)
         rslt += self._l10n_es_boe_format_string(period)
 
@@ -460,11 +461,11 @@ class L10n_EsMod111TaxReportHandler(models.AbstractModel):
 
         rslt += self._l10n_es_boe_format_string(boe_wizard.complementary_declaration and 'X' or ' ')
         rslt += self._l10n_es_boe_format_string(boe_wizard.complementary_declaration and boe_wizard.previous_report_number or '', length=13)
-        rslt += self._l10n_es_boe_format_string(' ') # Reserved for AEAT
+        rslt += self._l10n_es_boe_format_string(' ')  # Reserved for AEAT
         dummy, iban = self._get_bic_and_iban(boe_wizard.partner_bank_id)
         rslt += self._l10n_es_boe_format_string(iban, length=34)
-        rslt += self._l10n_es_boe_format_string(' ' * 389) # Reserved for AEAT
-        rslt += self._l10n_es_boe_format_string(' ' * 13) # Reserved for AEAT
+        rslt += self._l10n_es_boe_format_string(' ' * 389)  # Reserved for AEAT
+        rslt += self._l10n_es_boe_format_string(' ' * 13)  # Reserved for AEAT
 
         # We close the tags... (They have been opened by _generate_111_115_common_header)
         rslt += self._l10n_es_boe_format_string('</T11101000>')
@@ -507,8 +508,8 @@ class L10n_EsMod115TaxReportHandler(models.AbstractModel):
         rslt += self._l10n_es_boe_format_string(boe_wizard.complementary_declaration and boe_wizard.previous_report_number or '', length=13)
         dummy, iban = self._get_bic_and_iban(boe_wizard.partner_bank_id)
         rslt += self._l10n_es_boe_format_string(iban, length=34)
-        rslt += self._l10n_es_boe_format_string(' ' * 236) # Reserved for AEAT
-        rslt += self._l10n_es_boe_format_string(' ' * 13) # Reserved for AEAT
+        rslt += self._l10n_es_boe_format_string(' ' * 236)  # Reserved for AEAT
+        rslt += self._l10n_es_boe_format_string(' ' * 13)  # Reserved for AEAT
 
         # We close the tags... (They have been opened by _generate_111_115_common_header)
         rslt += self._l10n_es_boe_format_string('</T11501000>')
@@ -576,7 +577,7 @@ class L10n_EsMod303TaxReportHandler(models.AbstractModel):
         rslt += self._l10n_es_boe_format_string(period)
 
         # Identification
-        rslt += self._l10n_es_boe_format_number(options, 2) # Tributación exclusivamente foral => Always "no", for simplicity
+        rslt += self._l10n_es_boe_format_number(options, 2)  # Tributación exclusivamente foral => Always "no", for simplicity
         rslt += self._l10n_es_boe_format_number(options, boe_wizard.monthly_return and 1 or 2)
         rslt += self._l10n_es_boe_format_number(options, 3)
         rslt += self._l10n_es_boe_format_number(options, 2)
@@ -618,7 +619,7 @@ class L10n_EsMod303TaxReportHandler(models.AbstractModel):
             rslt += self._l10n_es_boe_format_number(options, casilla_lines_map.get('152', 0), length=17, decimal_places=2, in_currency=True)
 
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['01'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, 400, length=5) # Casilla 02 is constant
+        rslt += self._l10n_es_boe_format_number(options, 400, length=5)  # Casilla 02 is constant
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['03'], length=17, decimal_places=2, in_currency=True)
 
         if options['date']['date_from'] >= '2023-01-01':
@@ -628,10 +629,10 @@ class L10n_EsMod303TaxReportHandler(models.AbstractModel):
             rslt += self._l10n_es_boe_format_number(options, casilla_lines_map.get('155', 0), length=17, decimal_places=2, in_currency=True)
 
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['04'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, 1000, length=5) # Casilla 05 is constant
+        rslt += self._l10n_es_boe_format_number(options, 1000, length=5)  # Casilla 05 is constant
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['06'], length=17, decimal_places=2, in_currency=True)
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['07'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, 2100, length=5) # Casilla 08 is constant
+        rslt += self._l10n_es_boe_format_number(options, 2100, length=5)  # Casilla 08 is constant
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['09'], length=17, decimal_places=2, in_currency=True)
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['10'], length=17, decimal_places=2, in_currency=True)
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['11'], length=17, decimal_places=2, in_currency=True)
@@ -650,10 +651,10 @@ class L10n_EsMod303TaxReportHandler(models.AbstractModel):
         rslt += self._l10n_es_boe_format_number(options, casilla_17, length=5)
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['18'], length=17, decimal_places=2, in_currency=True)
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['19'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, 140, length=5) # Casilla 20 is constant
+        rslt += self._l10n_es_boe_format_number(options, 140, length=5)  # Casilla 20 is constant
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['21'], length=17, decimal_places=2, in_currency=True)
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['22'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, 520, length=5) # Casilla 23 is constant
+        rslt += self._l10n_es_boe_format_number(options, 520, length=5)  # Casilla 23 is constant
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['24'], length=17, decimal_places=2, in_currency=True)
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['25'], length=17, decimal_places=2, signed=True, in_currency=True)
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['26'], length=17, decimal_places=2, signed=True, in_currency=True)
@@ -711,7 +712,7 @@ class L10n_EsMod303TaxReportHandler(models.AbstractModel):
         for casilla in (62, 63, 74, 75):
             rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, signed=True, in_currency=True)
         rslt += self._l10n_es_boe_format_number(options, 0, length=17)  # Normally casilla 76 (Regularization of quotas art. 80.Cinco.5ª LIVA)
-        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['46'], length=17, decimal_places=2, signed=True, in_currency=True) # Should normally be casilla 64 (= sum of casillas 46, 58 and 76), but only casilla 46 is in our version of the report
+        rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['46'], length=17, decimal_places=2, signed=True, in_currency=True)  # Should normally be casilla 64 (= sum of casillas 46, 58 and 76), but only casilla 46 is in our version of the report
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['65'], length=5, decimal_places=2)
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['66'], length=17, decimal_places=2, signed=True, in_currency=True)
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['77'], length=17, decimal_places=2, signed=True, in_currency=True)
@@ -935,36 +936,36 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
             previous_options={
                 **options,
 
-                'date': {'filter': 'custom', 'string': 'Q4 '+year, 'date_from': year+'-10-01', 'date_to': year+'-12-31', 'mode': 'range'},
+                'date': {'filter': 'custom', 'string': 'Q4 ' + year, 'date_from': year + '-10-01', 'date_to': year + '-12-31', 'mode': 'range'},
 
                 'comparison': {
-                    'date_to': year+'-09-30',
+                    'date_to': year + '-09-30',
                     'periods': [
-                        {'date_to': year+'-09-30', 'date_from': year+'-07-01', 'string': 'Q3 '+year, 'mode': 'range'},
-                        {'date_to': year+'-06-30', 'date_from': year+'-04-01', 'string': 'Q2 '+year, 'mode': 'range'},
-                        {'date_to': year+'-03-31', 'date_from': year+'-01-01', 'string': 'Q1 '+year, 'mode': 'range'}
+                        {'date_to': year + '-09-30', 'date_from': year + '-07-01', 'string': 'Q3 ' + year, 'mode': 'range'},
+                        {'date_to': year + '-06-30', 'date_from': year + '-04-01', 'string': 'Q2 ' + year, 'mode': 'range'},
+                        {'date_to': year + '-03-31', 'date_from': year + '-01-01', 'string': 'Q1 ' + year, 'mode': 'range'}
                     ],
                     'number_period': 3,
                     'string': f'Q3 {year}',
                     'filter': 'previous_period',
                     'date_from': f'{year}-07-01',
                 },
-           }
-       )
+            }
+        )
 
     def _get_required_partner_ids_for_boe(self, mod_invoice_type, date_from, date_to, boe_wizard, operation_key, operation_class):
         cash_basis_manual_data = boe_wizard.cash_basis_mod347_data.filtered(lambda x: x.operation_key == operation_key and x.operation_class == operation_class)
         all_partners = cash_basis_manual_data.mapped('partner_id')
 
-        if operation_key == 'B': # Only for perceived amounts
+        if operation_key == 'B':  # Only for perceived amounts
             # If invoice is not in the current period but cash payment is,
             # we need to inject the partner into BOE so that this cash amount is reported
-            cash_payments_aml = self.env['account.partial.reconcile'].search([('credit_move_id.date', '<=' ,date_to),
+            cash_payments_aml = self.env['account.partial.reconcile'].search([('credit_move_id.date', '<=', date_to),
                                                                               ('credit_move_id.date', '>=', date_from),
                                                                               ('credit_move_id.journal_id.type', '=', 'cash'),
                                                                               ('debit_move_id.move_id.l10n_es_reports_mod347_invoice_type', '=', mod_invoice_type),
                                                                               ('credit_move_id.account_id.account_type', '=', 'asset_receivable'),
-                                                                            ])
+                                                                              ])
             all_partners += cash_payments_aml.mapped('credit_move_id.partner_id')
 
         return set(all_partners.ids)
@@ -1008,9 +1009,9 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
         rslt += self._l10n_es_boe_format_number(yearly_options, real_estates_data['total'], length=16, decimal_places=2, signed=True, sign_pos=' ', in_currency=True)
 
         rslt += self._l10n_es_boe_format_string(' ' * 205)
-        rslt += self._l10n_es_boe_format_string(' ' * 9) # TIN of the legal representant; blank if 14 years or older
+        rslt += self._l10n_es_boe_format_string(' ' * 9)  # TIN of the legal representant; blank if 14 years or older
         rslt += self._l10n_es_boe_format_string(' ' * 88)
-        rslt += self._l10n_es_boe_format_string(' ' * 13) # "Sello Electronico" => for administration
+        rslt += self._l10n_es_boe_format_string(' ' * 13)  # "Sello Electronico" => for administration
         rslt += b'\r\n'
 
         return rslt
@@ -1033,9 +1034,9 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
         rslt += self._l10n_es_boe_format_string(year, length=4)
         rslt += self._l10n_es_boe_format_string(self._extract_spanish_tin(current_company.partner_id), length=9)
         rslt += self._l10n_es_boe_format_string(line_partner.country_id.code == 'ES' and self._extract_spanish_tin(line_partner) or '', length=9)
-        rslt += self._l10n_es_boe_format_string(' ' * 9) # TIN of the legal representant; blank if 14 years or older
+        rslt += self._l10n_es_boe_format_string(' ' * 9)  # TIN of the legal representant; blank if 14 years or older
         rslt += self._l10n_es_boe_format_string(line_partner.display_name, length=40)
-        rslt += self._l10n_es_boe_format_string('D') # 'Tipo de hoja', constant
+        rslt += self._l10n_es_boe_format_string('D')  # 'Tipo de hoja', constant
 
         province_code = line_partner.state_id and SPANISH_PROVINCES_REPORT_CODES.get(line_partner.state_id.code) or '99'
         rslt += self._l10n_es_boe_format_string(province_code, length=2)
@@ -1049,7 +1050,7 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
 
         partner_country_code = line_partner.country_id.code
         rslt += self._l10n_es_boe_format_string(partner_country_code if partner_country_code and partner_country_code != 'ES' else '', length=2)
-        rslt += self._l10n_es_boe_format_string(' ') # Constant
+        rslt += self._l10n_es_boe_format_string(' ')  # Constant
         rslt += self._l10n_es_boe_format_string(operation_key, length=1)
 
         # Total amount of operations over the year
@@ -1080,7 +1081,7 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
         # Context key used for conversion date is set in get_txt.
         curr_eur = self.env["res.currency"].search([('name', '=', 'EUR')], limit=1)
         threshold = curr_eur._convert(6000, currency_id, current_company, options['date']['date_to'])
-        if currency_id.compare_amounts(metalico_amount, threshold) == 1: # We only must report this amount if it is above 6000 €
+        if currency_id.compare_amounts(metalico_amount, threshold) == 1:  # We only must report this amount if it is above 6000 €
             rslt += self._l10n_es_boe_format_number(options, metalico_amount, length=15, decimal_places=2, in_currency=True)
         else:
             rslt += self._l10n_es_boe_format_number(options, 0, length=15)
@@ -1101,9 +1102,9 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
         real_estates_vat_year_total = currency_id.round(real_estates_vat_year_total)
         rslt += self._l10n_es_boe_format_number(options, real_estates_vat_year_total, length=16, decimal_places=2, signed=True, sign_pos=' ', in_currency=True)
 
-        rslt += self._l10n_es_boe_format_string('0000', length=4) # Ejercicio for metalico operations ; automatic computation not supported
+        rslt += self._l10n_es_boe_format_string('0000', length=4)  # Ejercicio for metalico operations ; automatic computation not supported
 
-        for trimester_index in range(3, -1, -1): # 4th trimester is at position 0 ; 1st at position 3
+        for trimester_index in range(3, -1, -1):  # 4th trimester is at position 0 ; 1st at position 3
             trimester_total = report_data['line_data'].get('columns', [{} for i in range(0, 4)])[trimester_index].get('no_format', 0)
             rslt += self._l10n_es_boe_format_number(options, trimester_total, length=16, decimal_places=2, signed=True, sign_pos=' ', in_currency=True)
             rslt += self._l10n_es_boe_format_number(options, real_estates_vat_by_trimester[trimester_index], length=16, decimal_places=2, signed=True, sign_pos=' ', in_currency=True)
@@ -1146,30 +1147,30 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
 
         # Header
         rslt = self._write_type2_header_record(current_company, boe_wizard, boe_report_options, year=year)
-        seguros_required_b = self._get_required_partner_ids_for_boe('insurance', year+'-01-01', year+'-12-31', boe_wizard, 'A', 'seguros')
+        seguros_required_b = self._get_required_partner_ids_for_boe('insurance', year + '-01-01', year + '-12-31', boe_wizard, 'A', 'seguros')
         rslt += self._call_on_partner_sublines(
             boe_report_options,
             'l10n_es_reports.mod_347_operations_insurance_bought',
             lambda report_data: self._write_type2_partner_record(boe_report_options, report_data, year, current_company, 'A',
-                                                                                manual_parameters_map=manual_params, insurance=True),
+                                                                 manual_parameters_map=manual_params, insurance=True),
             required_ids_set=seguros_required_b
         )
 
-        otras_required_a = self._get_required_partner_ids_for_boe('regular', year+'-01-01', year+'-12-31', boe_wizard, 'B', 'otras')
+        otras_required_a = self._get_required_partner_ids_for_boe('regular', year + '-01-01', year + '-12-31', boe_wizard, 'B', 'otras')
         rslt += self._call_on_partner_sublines(
             boe_report_options,
             'l10n_es_reports.mod_347_operations_regular_sold',
             lambda report_data: self._write_type2_partner_record(boe_report_options, report_data, year, current_company, 'B',
-                                                                                manual_parameters_map=manual_params),
+                                                                 manual_parameters_map=manual_params),
             required_ids_set=otras_required_a
         )
 
-        otras_required_b = self._get_required_partner_ids_for_boe('regular', year+'-01-01', year+'-12-31', boe_wizard, 'A', 'otras')
+        otras_required_b = self._get_required_partner_ids_for_boe('regular', year + '-01-01', year + '-12-31', boe_wizard, 'A', 'otras')
         rslt += self._call_on_partner_sublines(
             boe_report_options,
             'l10n_es_reports.mod_347_operations_regular_bought',
             lambda report_data: self._write_type2_partner_record(boe_report_options, report_data, year, current_company, 'A',
-                                                                                manual_parameters_map=manual_params),
+                                                                 manual_parameters_map=manual_params),
             required_ids_set=otras_required_b
         )
 
@@ -1188,6 +1189,175 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
         super()._append_boe_button(options, 349)
 
+    def _report_custom_engine_modelo349_invoice_e(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='E', move_type='invoice')
+
+    def _report_custom_engine_modelo349_invoice_a(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='A', move_type='invoice')
+
+    def _report_custom_engine_modelo349_invoice_t(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='T', move_type='invoice')
+
+    def _report_custom_engine_modelo349_invoice_s(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='S', move_type='invoice')
+
+    def _report_custom_engine_modelo349_invoice_i(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='I', move_type='invoice')
+
+    def _report_custom_engine_modelo349_invoice_m(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='M', move_type='invoice')
+
+    def _report_custom_engine_modelo349_invoice_h(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='H', move_type='invoice')
+
+    def _report_custom_engine_modelo349_invoice_r(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='R', move_type='invoice')
+
+    def _report_custom_engine_modelo349_invoice_d(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='D', move_type='invoice')
+
+    def _report_custom_engine_modelo349_invoice_c(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='C', move_type='invoice')
+
+    def _report_custom_engine_modelo349_refund_e(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='E', move_type='refund')
+
+    def _report_custom_engine_modelo349_refund_a(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='A', move_type='refund')
+
+    def _report_custom_engine_modelo349_refund_t(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='T', move_type='refund')
+
+    def _report_custom_engine_modelo349_refund_s(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='S', move_type='refund')
+
+    def _report_custom_engine_modelo349_refund_i(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='I', move_type='refund')
+
+    def _report_custom_engine_modelo349_refund_m(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='M', move_type='refund')
+
+    def _report_custom_engine_modelo349_refund_h(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='H', move_type='refund')
+
+    def _report_custom_engine_modelo349_refund_r(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='R', move_type='refund')
+
+    def _report_custom_engine_modelo349_refund_d(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='D', move_type='refund')
+
+    def _report_custom_engine_modelo349_refund_c(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, key='C', move_type='refund')
+
+    def _report_custom_engine_modelo349_invoice_totals(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, move_type='invoice')
+
+    def _report_custom_engine_modelo349_refund_totals(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
+        return self._custom_modelo349_common(options, current_groupby, move_type='refund')
+
+    def _custom_modelo349_common(self, options, current_groupby, key=None, move_type=None):
+        def build_result_dict(query_res_lines, reversed_moves_dict):
+            result_dict = {'value': 0}
+            if key:
+                # Manage all the lines with specific keys, either refunds and invoices
+                treated_moves = []
+
+                for res_line in query_res_lines:
+                    if res_line['move_type'] in ('in_refund', 'out_refund') and res_line['reversed_entry_id']:
+                        # If we find a refund, we need the move which is linked to the refund
+                        matching_move = reversed_moves_dict[res_line['reversed_entry_id']]
+
+                        if move_type == 'invoice' and options['date']['date_from'] <= matching_move.invoice_date.strftime('%Y-%m-%d') <= options['date']['date_to']:
+                            # If the linked move invoice date is in the same period as the report, we just need to subtract the refund value
+                            result_dict['value'] -= res_line['amount_total']
+
+                        elif move_type == 'refund' and matching_move.invoice_date.strftime('%Y-%m-%d') < options['date']['date_from']:
+                            # If the linked move is in a previous period, we need to add the amount_residual of the linked move to the result
+                            # To be sure we don't add a move value twice (in case there is multiple refunds for a same move),
+                            # we add it to a list
+                            if matching_move.id not in treated_moves:
+                                result_dict['value'] += matching_move.amount_residual
+                                treated_moves.append(matching_move.id)
+
+                    elif move_type == 'invoice':
+                        # In case the move is in ('in_invoice', 'out_invoice') we always add the value to the result
+                        result_dict['value'] += res_line['amount_total']
+
+            elif current_groupby == 'partner_id':
+                # Compute the sublines for the firsts line (1 & 3)
+                result_dict['value'] = len([line for line in query_res_lines if (line['move_type'] in ('in_refund', 'out_refund') and move_type == 'refund') or (line['move_type'] in ('in_invoice', 'out_invoice') and move_type == 'invoice')])
+            else:
+                # Manage the firsts lines (1 & 3) to display the total number of partners
+                for res_line in query_res_lines:
+                    if ((res_line['move_type'] in ('in_invoice', 'out_invoice') and move_type == 'invoice') or
+                            (res_line['move_type'] in ('in_refund', 'out_refund') and move_type == 'refund')):
+                        result_dict['value'] += 1
+
+            result_dict['has_sublines'] = float_compare(result_dict['value'], 0, precision_rounding=2)
+
+            return result_dict
+
+        report = self.env['account.report'].browse(options['report_id'])
+        report._check_groupby_fields([current_groupby] if current_groupby else [])
+
+        domain = [
+            ('account_type', 'in', ('asset_receivable', 'liability_payable')),
+            ('move_id.l10n_es_reports_mod349_available', '=', True),
+            ('move_id.move_type', 'in', ('in_invoice', 'out_invoice', 'in_refund', 'out_refund')),
+            ('tax_line_id', '=', False),
+        ]
+
+        if key:
+            domain.append(('move_id.l10n_es_reports_mod349_invoice_type', '=', key))
+        else:
+            domain.extend(['|', ('move_id.reversed_entry_id.amount_residual', '>', 0), ('move_id.amount_residual', '>', 0)])
+
+        # Build query
+        query = report._get_report_query(options, 'strict_range', domain=domain)
+
+        query = SQL("""
+            SELECT %(select_from_groupby)s,
+                account_move.l10n_es_reports_mod349_invoice_type AS invoice_type,
+                account_move.move_type AS move_type,
+                account_move.reversed_entry_id AS reversed_entry_id,
+                account_move.partner_id AS partner_id,
+                account_move.id AS move_id,
+                SUM(account_move.amount_total) AS amount_total
+            FROM %(tables)s
+            JOIN account_move on account_move.id = account_move_line.move_id
+            WHERE %(where_clause)s
+            GROUP BY %(group_by)s
+            account_move.id
+        """,
+                    select_from_groupby=SQL("%s AS grouping_key", SQL.identifier('account_move_line', current_groupby)) if current_groupby else SQL('null'),
+                    tables=query.from_clause,
+                    where_clause=query.where_clause,
+                    group_by=SQL("%s,", SQL.identifier('account_move_line', current_groupby)) if current_groupby else SQL('')
+                    )
+
+        self._cr.execute(query)
+        query_res_lines = self._cr.dictfetchall()
+
+        reversed_entry_ids = [res_line['reversed_entry_id'] for res_line in query_res_lines if res_line['reversed_entry_id']]
+        reversed_moves_dict = self.env['account.move'].browse(reversed_entry_ids).grouped('id')
+
+        if not current_groupby:
+            return build_result_dict(query_res_lines, reversed_moves_dict)
+
+        rslt = []
+
+        all_res_per_grouping_key = {}
+        for query_res in query_res_lines:
+            grouping_key = query_res['grouping_key']
+            all_res_per_grouping_key.setdefault(grouping_key, []).append(query_res)
+
+        for grouping_key, query_res_lines in all_res_per_grouping_key.items():
+            result_dict = build_result_dict(query_res_lines, reversed_moves_dict)
+            if float_compare(result_dict['value'], 0, precision_rounding=2):
+                rslt.append((grouping_key, result_dict))
+
+        return rslt
+
     def _write_type1_header_record(self, options, period, year, current_company, boe_wizard):
         rslt = self._l10n_es_boe_format_string('1349')
         rslt += self._l10n_es_boe_format_string(year, length=4)
@@ -1198,8 +1368,8 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
         rslt += self._l10n_es_boe_format_string(boe_wizard.contact_person_name, length=40)
         mod_349_boe_sequence = current_company.sudo()._get_mod_boe_sequence("349")
         rslt += self._l10n_es_boe_format_number(options, 349) + self._l10n_es_boe_format_string(mod_349_boe_sequence.next_by_id(), length=10)
-        rslt += self._l10n_es_boe_format_string(boe_wizard.complementary_declaration and 'X' or ' ')
-        rslt += self._l10n_es_boe_format_string(boe_wizard.substitutive_declaration and 'X' or ' ')
+        rslt += self._l10n_es_boe_format_string(boe_wizard.complementary_declaration and 'C' or ' ')
+        rslt += self._l10n_es_boe_format_string(boe_wizard.substitutive_declaration and 'S' or ' ')
         rslt += self._l10n_es_boe_format_string(boe_wizard.previous_report_number or '', length=13, fill_char=b'0', align='right')
         rslt += self._l10n_es_boe_format_string(period, length=2)
         rslt += self._l10n_es_boe_format_number(options, self._retrieve_report_expression(options, 'l10n_es_reports.mod_349_statistics_invoices_partners_count_balance'), length=9)
@@ -1208,23 +1378,25 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
         rslt += self._l10n_es_boe_format_number(options, self._retrieve_report_expression(options, 'l10n_es_reports.mod_349_statistics_refunds_total_amount_balance'), length=15, in_currency=True, decimal_places=2)
         rslt += self._l10n_es_boe_format_string(boe_wizard.trimester_2months_report and 'X' or ' ')
         rslt += self._l10n_es_boe_format_string(' ' * 204)
-        rslt += self._l10n_es_boe_format_string(' ' * 9) # TIN of the legal representative, if under 14 years old
-        rslt += self._l10n_es_boe_format_string(' ' * 101) # Constant
+        rslt += self._l10n_es_boe_format_string(' ' * 9)  # TIN of the legal representative, if under 14 years old
+        rslt += self._l10n_es_boe_format_string(' ' * 101)  # Constant
         rslt += b'\r\n'
         return rslt
 
     def _write_type2_invoice_record(self, options, report_data, year, key, current_company):
-        line_partner = self.env['res.partner'].browse(self.env['account.report']._get_model_info_from_id(report_data['line_data']['id'])[1])
-        rslt = self._l10n_es_boe_format_string('2349')
-        rslt += self._l10n_es_boe_format_string(year, length=4)
-        rslt += self._l10n_es_boe_format_string(self._extract_spanish_tin(current_company.partner_id), length=9)
-        rslt += self._l10n_es_boe_format_string(' ' * 58)
-        rslt += self._l10n_es_boe_format_string(self._extract_tin(line_partner), length=17)
-        rslt += self._l10n_es_boe_format_string(line_partner.name, length=40)
-        rslt += self._l10n_es_boe_format_string(key, length=1)
-        rslt += self._l10n_es_boe_format_number(options, report_data['line_data']['columns'][0]['no_format'], length=13, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_string(' ' * 354)
-        rslt += b'\r\n'
+        rslt = b''
+        if report_data['line_data']['columns'][0]['no_format'] > 0:
+            line_partner = self.env['res.partner'].browse(self.env['account.report']._get_model_info_from_id(report_data['line_data']['id'])[1])
+            rslt += self._l10n_es_boe_format_string('2349')
+            rslt += self._l10n_es_boe_format_string(year, length=4)
+            rslt += self._l10n_es_boe_format_string(self._extract_spanish_tin(current_company.partner_id), length=9)
+            rslt += self._l10n_es_boe_format_string(' ' * 58)
+            rslt += self._l10n_es_boe_format_string(self._extract_tin(line_partner), length=17)
+            rslt += self._l10n_es_boe_format_string(line_partner.name, length=40)
+            rslt += self._l10n_es_boe_format_string(key, length=1)
+            rslt += self._l10n_es_boe_format_number(options, report_data['line_data']['columns'][0]['no_format'], length=13, decimal_places=2, in_currency=True)
+            rslt += self._l10n_es_boe_format_string(' ' * 354)
+            rslt += b'\r\n'
 
         return rslt
 
@@ -1233,30 +1405,32 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
         report_date_from = options['date']['date_from']
         report_date_to = options['date']['date_to']
 
-        rslt = self._l10n_es_boe_format_string('')
+        matched_moves = []
+        period_dict = {}
         for refund_invoice in self.env['account.move'].search([('date', '<=', report_date_to), ('date', '>=', report_date_from), ('move_type', 'in', ['in_refund', 'out_refund']), ('l10n_es_reports_mod349_invoice_type', '=', mod_349_type), ('partner_id', '=', line_partner.id)]):
             original_invoice = refund_invoice.reversed_entry_id
+
             if not original_invoice:
                 raise UserError(_('Refund Invoice %s was created without a link to the original invoice that was credited, '
                                   'while we need that information for this report. ', refund_invoice.display_name))
 
             invoice_period, invoice_year = self._retrieve_period_and_year(original_invoice.date, trimester=report_period[-1] == 'T')
-            group_key = (invoice_period, invoice_year, refund_invoice.l10n_es_reports_mod349_invoice_type)
 
-            # We compute the total refund for this invoice until the current period
-            all_previous_refunds = self.env['account.move'].search([('reversed_entry_id', '=', original_invoice.id), ('date', '<=', report_date_to)])
-            total_refund = sum(all_previous_refunds.mapped('amount_total'))
+            if f"{invoice_period}{invoice_year}" not in period_dict:
+                period_dict[f"{invoice_period}{invoice_year}"] = {
+                    'old_balance': 0,
+                    'new_balance': 0,
+                }
 
-            # Compute invoice report line at the time of the original invoice
-            line_options = options.copy()
-            line_date_from, line_date_to = self._convert_period_to_dates(invoice_period, invoice_year)
-            line_options['date']['date_from'] =  datetime.strftime(line_date_from, '%Y-%m-%d')
-            line_options['date']['date_to'] =  datetime.strftime(line_date_to, '%Y-%m-%d')
+            if original_invoice.id not in matched_moves:
+                period_dict[f"{invoice_period}{invoice_year}"]['old_balance'] += original_invoice.amount_total
+                period_dict[f"{invoice_period}{invoice_year}"]['new_balance'] += original_invoice.amount_residual
+                matched_moves.append(original_invoice.id)
 
-            invoice_line_data = self._get_partner_subline(line_options, invoice_report_line_xml_id, line_partner.id)
-            previous_report_amount = invoice_line_data['columns'][0]['no_format'] if invoice_line_data else 0.0
+        rslt = self._l10n_es_boe_format_string('')
 
-            # Now, we can report the record!
+        # Now, we can report the record !
+        for period, line_vals in period_dict.items():
             rslt += self._l10n_es_boe_format_string('2349')
             rslt += self._l10n_es_boe_format_string(report_year, length=4)
             rslt += self._l10n_es_boe_format_string(self._extract_spanish_tin(current_company.partner_id), length=9)
@@ -1264,11 +1438,11 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
             rslt += self._l10n_es_boe_format_string(self._extract_tin(line_partner), length=17)
             rslt += self._l10n_es_boe_format_string(line_partner.name, length=40)
             rslt += self._l10n_es_boe_format_string(mod_349_type, length=1)
-            rslt += self._l10n_es_boe_format_string(' ' * 13) # Constant
-            rslt += self._l10n_es_boe_format_string(invoice_year, length=4)
-            rslt += self._l10n_es_boe_format_string(invoice_period, length=2)
-            rslt += self._l10n_es_boe_format_number(options, current_company.currency_id.round(previous_report_amount - total_refund), length=13, decimal_places=2, in_currency=True)
-            rslt += self._l10n_es_boe_format_number(options, previous_report_amount, length=13, decimal_places=2, in_currency=True)
+            rslt += self._l10n_es_boe_format_string(' ' * 13)  # Constant
+            rslt += self._l10n_es_boe_format_string(period[2:6], length=4)
+            rslt += self._l10n_es_boe_format_string(period[0:2], length=2)
+            rslt += self._l10n_es_boe_format_number(options, line_vals['new_balance'], length=13, decimal_places=2, in_currency=True)
+            rslt += self._l10n_es_boe_format_number(options, line_vals['old_balance'], length=13, decimal_places=2, in_currency=True)
             rslt += self._l10n_es_boe_format_string(' ' * 322)
             rslt += b'\r\n'
 
@@ -1280,8 +1454,6 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
 
         # Wizard with manually-entered data
         boe_wizard = self._retrieve_boe_manual_wizard(options, 349)
-
-        rslt = self._l10n_es_boe_format_string('')
 
         if boe_wizard.trimester_2months_report:
             if period[-1] == 'T':
@@ -1302,6 +1474,9 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
         rslt += self._call_on_partner_sublines(options, 'l10n_es_reports.mod_349_services_acquired', lambda report_data: self._write_type2_invoice_record(options, report_data, year, 'I', current_company))
         rslt += self._call_on_partner_sublines(options, 'l10n_es_reports.mod_349_supplies_without_taxes', lambda report_data: self._write_type2_invoice_record(options, report_data, year, 'M', current_company))
         rslt += self._call_on_partner_sublines(options, 'l10n_es_reports.mod_349_supplies_without_taxes_legal_representative', lambda report_data: self._write_type2_invoice_record(options, report_data, year, 'H', current_company))
+        rslt += self._call_on_partner_sublines(options, 'l10n_es_reports.mod_349_consignment_sales_agreements', lambda report_data: self._write_type2_invoice_record(options, report_data, year, 'R', current_company))
+        rslt += self._call_on_partner_sublines(options, 'l10n_es_reports.mod_349_returns_goods_consignment', lambda report_data: self._write_type2_invoice_record(options, report_data, year, 'D', current_company))
+        rslt += self._call_on_partner_sublines(options, 'l10n_es_reports.mod_349_substitutions', lambda report_data: self._write_type2_invoice_record(options, report_data, year, 'C', current_company))
 
         # Refunds lines
         rslt += self._call_on_partner_sublines(options, 'l10n_es_reports.mod_349_supplies_refunds', lambda report_data: self._write_type2_refund_records(options, report_data, current_company, 'E', 'l10n_es_reports.mod_349_supplies', period, year))
@@ -1311,6 +1486,9 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
         rslt += self._call_on_partner_sublines(options, 'l10n_es_reports.mod_349_services_acquired_refunds', lambda report_data: self._write_type2_refund_records(options, report_data, current_company, 'I', 'l10n_es_reports.mod_349_services_acquired', period, year))
         rslt += self._call_on_partner_sublines(options, 'l10n_es_reports.mod_349_supplies_without_taxes_refunds', lambda report_data: self._write_type2_refund_records(options, report_data, current_company, 'M', 'l10n_es_reports.mod_349_supplies_without_taxes', period, year))
         rslt += self._call_on_partner_sublines(options, 'l10n_es_reports.mod_349_supplies_without_taxes_legal_representative_refunds', lambda report_data: self._write_type2_refund_records(options, report_data, current_company, 'H', 'l10n_es_reports.mod_349_supplies_without_taxes_legal_representative', period, year))
+        rslt += self._call_on_partner_sublines(options, 'l10n_es_reports.mod_349_consignment_sales_agreements_refunds', lambda report_data: self._write_type2_refund_records(options, report_data, current_company, 'R', 'l10n_es_reports.mod_349_consignment_sales_agreements', period, year))
+        rslt += self._call_on_partner_sublines(options, 'l10n_es_reports.mod_349_returns_goods_consignment_refunds', lambda report_data: self._write_type2_refund_records(options, report_data, current_company, 'D', 'l10n_es_reports.mod_349_returns_goods_consignment', period, year))
+        rslt += self._call_on_partner_sublines(options, 'l10n_es_reports.mod_349_substitutions_refunds', lambda report_data: self._write_type2_refund_records(options, report_data, current_company, 'C', 'l10n_es_reports.mod_349_substitutions', period, year))
 
         return {
             'file_name': self.env['account.report'].browse(options['report_id']).get_default_report_filename(options, 'txt'),
@@ -1381,15 +1559,15 @@ class L10n_EsMod390TaxReportHandler(models.AbstractModel):
         tax_unit_option = options.get('tax_unit')
         group_of_entities = True if tax_unit_option and tax_unit_option != 'company_only' else False
 
-        rslt += self._l10n_es_boe_format_string('1' if group_of_entities else '0')# Part of a group of entities
+        rslt += self._l10n_es_boe_format_string('1' if group_of_entities else '0')  # Part of a group of entities
         rslt += self._l10n_es_boe_format_string(boe_wizard.group_number, length=7) if boe_wizard.group_number else self._l10n_es_boe_format_string(' ' * 7)
-        rslt += self._l10n_es_boe_format_string('1' if group_of_entities else '0')# Dominant --> True if we're in a tax unit
-        rslt += self._l10n_es_boe_format_string('0')# Dependant --> always False
+        rslt += self._l10n_es_boe_format_string('1' if group_of_entities else '0')  # Dominant --> True if we're in a tax unit
+        rslt += self._l10n_es_boe_format_string('0')  # Dependant --> always False
         rslt += self._l10n_es_boe_format_string('1' if boe_wizard.special_regime_applicable_163 else '0')
         # "NIF de la entidad dominante" must only be filled if the declarant is not the dominant entity
         # see official documentation : https://sede.agenciatributaria.gob.es/static_files/Sede/Procedimiento_ayuda/G412/instr390.pdf
         rslt += self._l10n_es_boe_format_string(' ' * 9)
-        rslt += self._l10n_es_boe_format_string('2')# Bankrupcy
+        rslt += self._l10n_es_boe_format_string('2')  # Bankrupcy
         rslt += self._l10n_es_boe_format_string('1' if boe_wizard.special_cash_basis else '2')
         rslt += self._l10n_es_boe_format_string('1' if boe_wizard.special_cash_basis_beneficiary else '2')
         rslt += self._l10n_es_boe_format_string('1' if boe_wizard.is_substitute_declaration else '0')
@@ -1417,7 +1595,7 @@ class L10n_EsMod390TaxReportHandler(models.AbstractModel):
         rslt += self._l10n_es_boe_format_string(boe_wizard.judicial_person_nif, length=9)
         rslt += self._l10n_es_boe_format_string(datetime.strftime(boe_wizard.judicial_person_procuration_date, "%d%m%Y"), length=8)
         rslt += self._l10n_es_boe_format_string(boe_wizard.judicial_person_notary, length=12)
-        rslt += self._l10n_es_boe_format_string(((' ' * (80 + 9)) + '00000000' + (' ' * 12))*2)
+        rslt += self._l10n_es_boe_format_string(((' ' * (80 + 9)) + '00000000' + (' ' * 12)) * 2)
 
         # Footer of page 1
         rslt += self._l10n_es_boe_format_string(' ' * (21 + 13 + 20 + 150))  # Reserved for AEAT

@@ -668,6 +668,14 @@ msgid "C - Compensation Request"
 msgstr ""
 
 #. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/account_move.py:0
+#: code:addons/l10n_es_reports/models/account_move.py:0
+#, python-format
+msgid "C - Replacements of goods"
+msgstr ""
+
+#. module: l10n_es_reports
 #: model:account.report.line,name:l10n_es_reports.balance_assoc_line_32000
 #: model:account.report.line,name:l10n_es_reports.balance_full_line_32000
 #: model:account.report.line,name:l10n_es_reports.balance_pymes_line_32000
@@ -677,6 +685,16 @@ msgstr ""
 #. module: l10n_es_reports
 #: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_sum_c
 msgid "C) PROFIT/LOSS BEFORE INCOME TAX (A + B)"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:account.report.line,name:l10n_es_reports.mod_349_substitutions_refunds
+msgid "C. Rectificaciones por sustitución de bienes"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:account.report.line,name:l10n_es_reports.mod_349_substitutions
+msgid "C. Sustitución de bienes"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -815,8 +833,28 @@ msgid "D - Return"
 msgstr ""
 
 #. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/account_move.py:0
+#: code:addons/l10n_es_reports/models/account_move.py:0
+#, python-format
+msgid "D - Returns of goods previously sent from the TAI"
+msgstr ""
+
+#. module: l10n_es_reports
 #: model:account.report.line,name:l10n_es_reports.es_profit_and_loss_line_sum_d
 msgid "D) PROFIT/LOSS FOR THE PERIOD (C + 18)"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:account.report.line,name:l10n_es_reports.mod_349_returns_goods_consignment
+msgid "D. Devoluciones de mercancías previamente enviadas desde el TAI"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:account.report.line,name:l10n_es_reports.mod_349_returns_goods_consignment_refunds
+msgid ""
+"D. Rectificaciones de devoluciones de mercancías previamente enviadas desde "
+"el TAI"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1557,6 +1595,28 @@ msgstr ""
 #. module: l10n_es_reports
 #: model:account.report,name:l10n_es_reports.financial_report_es_profit_and_loss
 msgid "Profit and Loss"
+msgstr ""
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/account_move.py:0
+#: code:addons/l10n_es_reports/models/account_move.py:0
+#, python-format
+msgid "R - Transfers of goods made under consignment sales agreements"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:account.report.line,name:l10n_es_reports.mod_349_consignment_sales_agreements_refunds
+msgid ""
+"R. Rectificaciones de las transferencias de bienes realizadas en virtud de "
+"contratos de venta en consignación"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:account.report.line,name:l10n_es_reports.mod_349_consignment_sales_agreements
+msgid ""
+"R. Transferencias de bienes realizadas en virtud de contratos de venta en "
+"consignación"
 msgstr ""
 
 #. module: l10n_es_reports
