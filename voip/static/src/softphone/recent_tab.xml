@@ -3,7 +3,7 @@
     <t t-name="voip.RecentTab">
         <div t-attf-class="o-voip-RecentTab tab-content overflow-y-auto {{ props.extraClass }}" role="tabpanel">
             <t t-if="props.recentCalls.length > 0">
-                <div t-foreach="props.recentCalls" t-as="call" t-key="call.id" class="list-group-item-action p-3 text-truncate cursor-pointer" t-att-class="{ 'border-bottom': !call_last }" t-on-click="(ev) => this.onClickPhoneCall(ev, call)">
+                <div t-foreach="props.recentCalls" t-as="call" t-key="call.id" class="list-group-item-action p-3 text-truncate cursor-pointer" t-att-class="{ 'border-bottom': !call_last }" t-ref="{{ call_last ? 'last-shown-call' : 'dummy' + call_index }}" t-on-click="(ev) => this.onClickPhoneCall(ev, call)">
                     <div class="fw-bold" t-if="call.partner" t-esc="call.partner.name"/>
                     <div t-esc="call.displayName"/>
                     <div class="small text-muted">

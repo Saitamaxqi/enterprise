@@ -1,6 +1,14 @@
-import { describe, test } from "@odoo/hoot";
-import { click, contains, insertText, start, startServer } from "@mail/../tests/mail_test_helpers";
+import {
+    click,
+    contains,
+    insertText,
+    scroll,
+    start,
+    startServer,
+} from "@mail/../tests/mail_test_helpers";
+import { expect, describe, test } from "@odoo/hoot";
 import { setupVoipTests } from "@voip/../tests/voip_test_helpers";
+import { onRpc } from "@web/../tests/web_test_helpers";
 
 describe.current.tags("desktop");
 setupVoipTests();
@@ -33,4 +41,25 @@ test("Typing in the search bar fetches and displays the matching contacts", asyn
     await insertText("input[placeholder=Search]", "Morshu");
     await contains(".o-voip-ContactsTab b", { text: "Morshu RTX" });
     await contains(".o-voip-ContactsTab b", { text: "Gargamel", count: 0 });
+});
+
+test("Scrolling to bottom loads more contacts", async () => {
+    const pyEnv = await startServer();
+    let rpcCount = 0;
+    onRpc("res.partner", "get_contacts", () => { ++rpcCount; });
+    await start();
+    for (let i = 0; i < 10; ++i) {
+        pyEnv["res.partner"].create({ name: `Contact ${i}`, phone: `09225 982 ext. ${i}` });
+    }
+    await click(".o_menu_systray button[title='Open Softphone']");
+    await click(".nav-link", { text: "Contacts" });
+    await contains(".o-voip-ContactsTab b", { count: 10 });
+    expect(rpcCount).toBe(1);
+    for (let i = 0; i < 10; ++i) {
+        pyEnv["res.partner"].create({ name: `Contact ${i + 10}`, phone: `040 2805 ext. ${i}` });
+    }
+    await contains(".o-voip-ContactsTab b", { count: 10 });
+    await scroll(".o-voip-ContactsTab", "bottom");
+    await contains(".o-voip-ContactsTab b", { count: 20 });
+    expect(rpcCount).toBe(2);
 });
