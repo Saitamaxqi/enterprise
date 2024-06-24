@@ -394,7 +394,7 @@ class WorksheetTemplate(models.Model):
                     field_node.attrib['t-options-widget'] = "'image'"
                     field_node.attrib['t-options-qweb_img_raw_data'] = "1"
             # basic form view -> qweb node transformation
-            if field_info and field_info.get('type') != 'binary' or widget in ['image', 'signature']:
+            if field_info:
                 # adapt the field node itself
                 field_name = 'worksheet.' + field_node.attrib['name']
                 field_node.attrib.pop('name')
@@ -407,6 +407,10 @@ class WorksheetTemplate(models.Model):
                     field_node.tag = 'i'
                     field_node.attrib[
                         't-att-class'] = "'col-lg-7 col-12 fa ' + ('fa-check-square' if %s else 'fa-square-o')" % field_name
+                elif field_node.attrib.get('filename'):
+                    field_node.tag = 'div'
+                    field_node.attrib['t-att-class'] = "'col-7' if report_type == 'pdf' else 'col-lg-7 col-12'"
+                    field_node.attrib['t-field'] = 'worksheet.' + field_node.attrib.get('filename')
                 else:
                     field_node.tag = 'div'
                     field_node.attrib['t-att-class'] = "'col-7' if report_type == 'pdf' else 'col-lg-9 col-12'"

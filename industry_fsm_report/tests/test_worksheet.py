@@ -299,3 +299,67 @@ class TestWorksheet(TransactionCase):
             self.assertEqual(project_form.company_id, project_form.worksheet_template_id.company_id)
             project_form.company_id = test_company
             self.assertEqual(project_form.company_id, project_form.worksheet_template_id.company_id)
+
+    def test_report_arch_file_field(self):
+        report_view = self.worksheet_template.report_view_id
+
+        def _create_field(field_name, field_type, field_description):
+            self.env["ir.model.fields"].create({
+                "field_description": field_description,
+                "name": field_name,
+                "ttype": field_type,
+                "model": report_view.name,
+                "model_id": self.env["ir.model"]._get(report_view.name).id,
+                "state": "manual",
+            })
+        _create_field('x_new_file', 'binary', 'New File')
+        _create_field('x_new_file_filename', 'char', 'New File char')
+
+        self.assertXMLEqual(report_view.arch, f"""
+            <t t-name="{report_view.name}">
+                <div>
+                    <div>
+                        <div>
+                            <div class="row mb-2 o_worksheet_row" style="page-break-inside: avoid">
+                                <div t-att-class="('col-5' if report_type == 'pdf' else 'col-lg-3 col-12') + ' fw-bold'">Comments</div>
+                                <div placeholder="Add details about your intervention..." t-att-class="'col-7' if report_type == 'pdf' else 'col-lg-9 col-12'" t-field="worksheet.x_comments"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        """)
+
+        form_view = self.env["ir.ui.view"].search([("model", "=", self.worksheet_template.model_id.model), ("type", "=", "form")], limit=1)[0]
+        self.env["ir.ui.view"].create({
+            "name": "test file field",
+            "inherit_id": form_view.id,
+            "model": form_view.model,
+            "mode": "extension",
+            "arch": """
+                <xpath expr="//field[@name='x_comments']" position="after">
+                    <field name="x_new_file" widget="file" filename="x_new_file_filename"/>
+                    <field name="x_new_file_filename" invisible="1"/>
+                </xpath>
+            """
+        })
+
+        self.worksheet_template._generate_qweb_report_template(form_view.id)
+        self.assertXMLEqual(report_view.arch, f"""
+            <t t-name="{report_view.name}">
+                <div>
+                    <div>
+                        <div>
+                            <div class="row mb-2 o_worksheet_row" style="page-break-inside: avoid">
+                                <div t-att-class="('col-5' if report_type == 'pdf' else 'col-lg-3 col-12') + ' fw-bold'">Comments</div>
+                                <div placeholder="Add details about your intervention..." t-att-class="'col-7' if report_type == 'pdf' else 'col-lg-9 col-12'" t-field="worksheet.x_comments"/>
+                            </div>
+                            <div class="row mb-2 o_worksheet_row" style="page-break-inside: avoid">
+                                <div t-att-class="('col-5' if report_type == 'pdf' else 'col-lg-3 col-12') + ' fw-bold'">New File</div>
+                                <div widget="file" filename="x_new_file_filename" t-att-class="'col-7' if report_type == 'pdf' else 'col-lg-7 col-12'" t-field="worksheet.x_new_file_filename"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        """)
