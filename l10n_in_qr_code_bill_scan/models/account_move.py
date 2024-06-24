@@ -14,19 +14,16 @@ MOVE_TYPE_MAPPING = {
 class AccountMove(models.Model):
     _inherit = ["account.move"]
 
-    def _l10n_in_get_notification_action(self, params):
-        return {
-            'type': 'ir.actions.client',
-            'tag': 'display_notification',
-            'params': params,
-        }
-
     @api.model
     def l10n_in_get_bill_from_qr_raw(self, qr_raw):
+        bill_action = self.env['ir.actions.act_window']._for_xml_id('account.action_move_in_invoice_type')
         try:
             qr_json = jwt.decode(qr_raw, options={'verify_signature': False})
         except jwt.exceptions.DecodeError:
-            return self._l10n_in_get_notification_action({'type': 'danger', 'message': _("Scanned QR it's not E-Invoice QR code. Please scan E-invoice QR code")})
+            res = self._l10n_in_get_bill_from_irn(qr_raw)
+            if res:
+                return res
+            return {'warning': _("Scanned QR/IRN it's not E-Invoice QR/IRN code. Please scan/enter E-invoice QR/IRN code")}
         qr_json_data = json.loads(qr_json.get('data', '{}'))
         is_valid = self._l10n_in_validate_qr_data(qr_json_data)
         if not is_valid:
@@ -41,6 +38,7 @@ class AccountMove(models.Model):
             'context': {
                 'create': False, # If new button is clicked then below default values will be set again.
                 'default_ref': qr_json_data.get('DocNo'),
+                'default_l10n_in_irn_number': qr_json_data.get('Irn'),
                 'default_journal_id': default_journal.id,
                 'default_invoice_date': datetime.strptime(qr_json_data.get('DocDt'), "%d/%m/%Y"),
                 'default_move_type': MOVE_TYPE_MAPPING.get(qr_json_data.get('DocTyp')),
@@ -49,6 +47,7 @@ class AccountMove(models.Model):
                     Command.create(self._l10n_in_get_move_lines_vals_from_qr_data(default_journal, qr_json_data))] or [],
             }
         })
+        bill_action = {'action': bill_action}
         return bill_action
 
     @api.model

@@ -3,6 +3,7 @@
 import contextlib
 import json
 import jwt
+import re
 from datetime import datetime, date
 from markupsafe import Markup
 
@@ -26,6 +27,8 @@ UOM_REF_MAP = {
     "UNT": "uom.product_uom_unit",
     "YDS": "uom.product_uom_yard",
 }
+
+IRN_PATTERN = r'^[a-z0-9]{64}$'
 
 
 class AccountMove(models.Model):
@@ -314,3 +317,23 @@ class AccountMove(models.Model):
             return data
         errors = response.get('error', {})
         raise IrnException(errors)
+
+    def _l10n_in_get_bill_from_irn(self, irn):
+        bill_action = self.env['ir.actions.act_window']._for_xml_id('account.action_move_in_invoice_type')
+        irn_lower = irn and irn.lower() or irn
+        if not re.match(IRN_PATTERN, irn_lower):
+            return super()._l10n_in_get_bill_from_irn(irn)
+        if self.env.company.l10n_in_gstr_activate_einvoice_fetch in ('manual', 'automatic'):
+            match_bill = self.env['account.move'].search([('l10n_in_irn_number', '=', irn_lower)], limit=1)
+            if not match_bill:
+                match_bill = self.env['account.move'].create({
+                    'l10n_in_irn_number': irn_lower,
+                    'move_type': 'in_invoice',
+                })
+                if self.env.company.l10n_in_gstr_activate_einvoice_fetch == "automatic":
+                    match_bill.l10n_in_update_move_using_irn()
+            bill_action['views'] = [(self.env.ref('account.view_move_form').id, 'form')]
+            bill_action['res_id'] = match_bill.id
+            return {'action': bill_action}
+
+        return {'warning': _("To Get Bill by IRN First activate Fetch Vendor E-Invoiced Document in setting.")}

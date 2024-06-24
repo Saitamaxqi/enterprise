@@ -6,7 +6,7 @@ import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_d
 import { registry } from "@web/core/registry";
 import { useBus, useService } from "@web/core/utils/hooks";
 import { Component, onWillStart, useState } from "@odoo/owl";
-import { ManualBarcodeScanner } from "../components/manual_barcode";
+import { ManualBarcodeScanner } from "@barcodes/components/manual_barcode";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
 import { url } from "@web/core/utils/urls";
 

@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
 import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
-import { ManualBarcodeScanner } from "../components/manual_barcode";
+import { ManualBarcodeScanner } from "@barcodes/components/manual_barcode";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { onWillStart } from "@odoo/owl";

@@ -31,7 +31,7 @@ import {
 import { ImportBlockUI } from "@base_import/import_block_ui";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
-import { BarcodeInput } from "./manual_barcode";
+import { BarcodeInput } from "@barcodes/components/manual_barcode";
 import { CountScreenRFID } from "./count_screen_rfid";
 
 // Lets `barcodeGenericHandlers` knows those commands exist so it doesn't warn when scanned.
