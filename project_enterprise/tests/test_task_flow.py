@@ -1,16 +1,17 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details
 
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from markupsafe import Markup
-from odoo.tests import Form
 from freezegun import freeze_time
+from markupsafe import Markup
 
-from odoo.tests import common
+from odoo import Command
+from odoo.tests import Form, TransactionCase
+
 from odoo.addons.mail.tests.common import mail_new_test_user
 
-class TestTaskFlow(common.TransactionCase):
+
+class TestTaskFlow(TransactionCase):
 
     @classmethod
     def setUpClass(cls):
@@ -289,52 +290,93 @@ class TestTaskFlow(common.TransactionCase):
         self.assertEqual(len(progress_bar), 3)  # 2 users + 1 warning
 
     def test_editing_task_planned_date(self):
+        """Check writing dates to a task:
+            - when writing to a single task, write dates as given
+            - when writing to multiple tasks, write dates as given if any task already had dates
+            - otherwise, modify dates according to assignee's or company's schedule
         """
-            Verify that the planned date is based on the resource calendar when the user chooses only one record (task).
-            Flow:
-               1)   - Create task A
-                    - Select the whole week in the planned date
-                    - Check the task_a planned date
-               2)   - Create task A and taks B
-                    - Select the whole week in the planned date
-                    - Check the task_b and task_c planned date
-        """
-        task_A = self.env['project.task'].create([{
-            'name': 'Task B',
-            'user_ids': self.project_user,
-            'project_id': self.project_test.id,
-        }])
+        def get_hours(task):
+            return task.planned_date_begin.hour, task.date_deadline.hour
 
-        # Case 1 : one record.
-        task_A.write({
-            'planned_date_begin': '2024-03-24 06:00:00',
-            'date_deadline': '2024-03-30 15:00:00',
+        self.env.company.resource_calendar_id.tz = 'UTC'
+        self.project_user.resource_calendar_id = self.env.company.resource_calendar_id
+        self.project_test_user.resource_calendar_id = self.env['resource.calendar'].create({
+            'tz': 'UTC',
+            'attendance_ids': [Command.create({
+                'name': day,
+                'dayofweek': day,
+                'day_period': 'afternoon',
+                'hour_from': 12,
+                'hour_to': 19,
+            }) for day in '12345'],
         })
-        self.assertEqual('2024-03-25', task_A.planned_date_begin.strftime('%Y-%m-%d'),
-            'The planned begin date should set according to the resource calendar')
-        self.assertEqual('2024-03-29', task_A.date_deadline.strftime('%Y-%m-%d'),
-            'The planned end date should set according to the resource calendar')
-        # Case 2 : multi record.
-        task_B, task_C = self.env['project.task'].create([{
-            'name': 'Task B',
-            'user_ids': self.project_user,
+
+        tasks = task_A, task_B, task_C = self.env['project.task'].create([{
+            'name': "Task A - Armande",
+            'user_ids': self.project_user.ids,
             'project_id': self.project_test.id,
         }, {
-            'name': 'Task C',
-            'user_ids': self.project_user,
+            'name': "Task B - Armando",
+            'user_ids': self.project_test_user.ids,
             'project_id': self.project_test.id,
+        }, {
+            'name': "Task C - Planned",
+            'user_ids': (self.project_user + self.project_test_user).ids,
+            'project_id': self.project_test.id,
+            # Wednesday 05:00:00 -> 10:00:00
+            'planned_date_begin': '2024-08-27 05:00:00',
+            'date_deadline': '2024-08-27 10:00:00',
         }])
 
-        task_A.write({
-            'planned_date_begin': False,
+        self.assertEqual(
+            get_hours(task_C),
+            (5, 10),
+            "Create shouldn't overwrite hours",
+        )
+
+        (task_A + task_C).write({
+            # Monday 00:00:00 -> 23:59:59 CET
+            'planned_date_begin': '2024-08-26 00:00:00',
+            'date_deadline': '2024-08-26 23:59:59',
+        })
+        self.assertListEqual(
+            [get_hours(task_A), get_hours(task_C)],
+            [(0, 23), (0, 23)],
+            "Write shouldn't modify hours when batch processes includes task with dates",
+        )
+
+        task_B.write({
+            # Tuesday 16:00:00 -> 21:00:00 CET
+            'planned_date_begin': '2024-08-27 16:00:00',
+            'date_deadline': '2024-08-27 21:00:00',
+        })
+        self.assertEqual(get_hours(task_B), (16, 21), "Hand-picked hours shouldn't change")
+
+        tasks.date_deadline = False
+        self.assertFalse(
+            any(task.planned_date_begin for task in tasks),
+            "Removing deadline should also remove planned_date_begin",
+        )
+
+        tasks.write({
+            # Tuesday 16:00:00 -> 22:00:00 CET
+            'planned_date_begin': '2024-08-27 16:00:00',
+            'date_deadline': '2024-08-27 22:00:00',
+        })
+        self.assertListEqual(
+            [get_hours(task) for task in tasks],
+            [(16, 17), (16, 19), (16, 17)],
+            "Batched tasks should be planned using schedule",
+        )
+
+        tasks.write({
             'date_deadline': False,
+            'user_ids': self.project_user.ids,
         })
         (task_B + task_C).write({
             'planned_date_begin': '2024-03-24 06:00:00',
             'date_deadline': '2024-03-30 15:00:00',
         })
-        self.assertFalse(task_A.planned_date_begin, 'the planned date begin should be set to False')
-        self.assertFalse(task_A.date_deadline, 'the planned date end should be set to False')
         self.assertEqual('2024-03-25', task_B.planned_date_begin.strftime('%Y-%m-%d'),
             'the planned date begin should be the first working day found according to the resource calendar of the user assigned and the start datetime selected by the user')
         self.assertEqual('2024-03-29', task_B.date_deadline.strftime('%Y-%m-%d'),
@@ -344,7 +386,7 @@ class TestTaskFlow(common.TransactionCase):
         self.assertEqual('2024-03-29', task_C.date_deadline.strftime('%Y-%m-%d'),
             'the planned date end should be the last working day found according to the resource calendar of the user assigned and the end datetime selected by the user')
 
-        (task_A + task_B + task_C).write({
+        tasks.write({
             'planned_date_begin': '2024-03-24 06:00:00',
             'date_deadline': '2024-03-30 15:00:00',
         })
