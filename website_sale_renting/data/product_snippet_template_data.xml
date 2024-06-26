@@ -12,8 +12,8 @@
         <xpath expr="//del" position="after">
             <span t-if="record.rent_ok" class="fw-bold">
                 <span>/</span>
-                <span t-esc="data.get('rental_duration')"/>
-                <span t-esc="data.get('rental_unit')"/>
+                <span t-out="data.get('rental_duration')"/>
+                <span t-out="data.get('rental_unit')"/>
             </span>
         </xpath>
     </template>

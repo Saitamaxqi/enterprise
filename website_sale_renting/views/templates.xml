@@ -8,7 +8,7 @@
             <t t-if="combination_info.get('is_rental')">
                 <input type="hidden" name="is_rental" t-att-value="combination_info['is_rental']"/>
                 <span class="oe_price o_renting_price text-nowrap"
-                      t-esc="combination_info['current_rental_price_per_unit']"
+                      t-out="combination_info['current_rental_price_per_unit']"
                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
             </t>
         </xpath>
@@ -16,8 +16,8 @@
             <t t-if="combination_info.get('is_rental')">
                 <span>per</span>
                 <span itemprop="rental_duration" t-if="combination_info['rental_duration'] > 1"
-                      t-esc="combination_info['rental_duration']"/>
-                <span itemprop="rental_unit" t-esc="combination_info['rental_unit']"/>
+                      t-out="combination_info['rental_duration']"/>
+                <span itemprop="rental_unit" t-out="combination_info['rental_unit']"/>
             </t>
         </del>
         <xpath expr="//span[hasclass('oe_price')]" position="attributes">
@@ -219,31 +219,31 @@
             <span t-if="product.rent_ok and template_price_vals['rental_duration']
                 and (not website.prevent_zero_price_sale or template_price_vals['price_reduce'])" class="h6">
                 <span>per</span>
-                <span t-if="template_price_vals['rental_duration'] > 1" t-esc="template_price_vals['rental_duration']"/>
-                <span t-esc="template_price_vals['rental_unit']"/>
+                <span t-if="template_price_vals['rental_duration'] > 1" t-out="template_price_vals['rental_duration']"/>
+                <span t-out="template_price_vals['rental_unit']"/>
             </span>
         </t>
     </template>
 
     <template id="rental_search_result_price">
         <small>from</small>
-        <t t-esc="price"
+        <t t-out="price"
            t-options="{'widget': 'monetary', 'display_currency': currency}"/>
         <small>per</small>
-        <small t-if="duration > 1" t-esc="duration"/>
-        <small t-esc="unit"/>
+        <small t-if="duration > 1" t-out="duration"/>
+        <small t-out="unit"/>
     </template>
 
     <template id="cart_lines" inherit_id="website_sale.cart_lines">
         <xpath expr="//t[@t-call='website_sale.cart_line_description_following_lines']" position="before">
-            <div t-if="line.is_rental" t-esc="line._get_rental_pricing_description()" class="text-muted d-md-block small"/>
+            <div t-if="line.is_rental" t-out="line._get_rental_pricing_description()" class="text-muted d-md-block small"/>
         </xpath>
     </template>
 
     <template id="cart_summary" inherit_id="website_sale.cart_summary_content">
         <td name="website_sale_cart_summary_product_name" position="inside">
             <div t-if="line.is_rental"
-                 t-esc="line._get_rental_pricing_description()"
+                 t-out="line._get_rental_pricing_description()"
                  class="d-md-block small text-muted"/>
         </td>
     </template>
@@ -322,8 +322,8 @@
         <span name="suggested_product_price" position="after">
             <span t-if="combination_info.get('is_rental') and combination_info['rental_duration']" class="h6">
                 <span class="ps-1">per</span>
-                <span t-if="combination_info['rental_duration'] > 1" t-esc="combination_info['rental_duration']"/>
-                <span t-esc="combination_info['rental_unit']"/>
+                <span t-if="combination_info['rental_duration'] > 1" t-out="combination_info['rental_duration']"/>
+                <span t-out="combination_info['rental_unit']"/>
             </span>
         </span>
     </template>

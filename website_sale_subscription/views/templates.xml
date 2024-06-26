@@ -5,19 +5,19 @@
               inherit_id="website_sale.price_dynamic_filter_template_product_product">
         <xpath expr="//del" position="after">
             <span t-if="record.recurring_invoice and data.get('is_subscription', False) and data.get('is_plan_possible', False)" class="fw-bold">
-                <span t-esc="data.get('temporal_unit_display')"/>
+                <span t-out="data.get('temporal_unit_display')"/>
             </span>
         </xpath>
     </template>
 
     <template id="subscription_search_result_price">
-        <t t-esc="subscription_default_pricing_price"/>
+        <t t-out="subscription_default_pricing_price"/>
     </template>
 
     <template id="products_item" inherit_id="website_sale.products_item">
         <t name="product_base_price" position="after">
             <span t-if="template_price_vals.get('is_subscription') and template_price_vals['is_plan_possible']" class="h6">
-                <span class="o_subscription_unit" t-esc="template_price_vals['temporal_unit_display']"/>
+                <span class="o_subscription_unit" t-out="template_price_vals['temporal_unit_display']"/>
             </span>
         </t>
     </template>
@@ -71,11 +71,11 @@
                     t-att-value="pricing['plan_id']"
                     t-att-disabled="not pricing['can_be_added']"
                     t-att-selected="pricing['plan_id'] == combination_info['subscription_default_pricing_plan_id']"
-                    t-esc="pricing['price']"
+                    t-out="pricing['price']"
                 />
             </select>
             <h5 t-else="">
-                <span class="o_subscription_price" t-esc="combination_info['subscription_default_pricing_price']"/>
+                <span class="o_subscription_price" t-out="combination_info['subscription_default_pricing_price']"/>
                 <del t-if="combination_info.get('compare_list_price') and combination_info['compare_list_price'] &gt; combination_info['price']">
                     <bdi dir="inherit">
                         <span t-field="product.compare_list_price"/>
@@ -122,7 +122,7 @@
                     >
                         <span class="fw-bold" t-out="combination_info.get('list_price')" t-options="{'widget': 'monetary', 'display_currency': combination_info.get('currency')}"/>
                     </span>
-                    <span class="fw-bold ms-1" id="product_price" t-esc="combination_info.get('pricings')[0]['table_price']" />
+                    <span class="fw-bold ms-1" id="product_price" t-out="combination_info.get('pricings')[0]['table_price']" />
                 </span>
                 <t t-set="discounted_percentage" t-value="combination_info.get('pricings')[0]['discounted_price']"/>
                 <span
@@ -156,7 +156,7 @@
                 </select>
                 <h5 t-else="">
                     <span class="o_subscription_price no_plan_select small"
-                        t-esc="combination_info['subscription_default_pricing_price']"/>
+                        t-out="combination_info['subscription_default_pricing_price']"/>
                     <del t-if="combination_info.get('compare_list_price') and combination_info['compare_list_price'] &gt; combination_info['price']">
                         <bdi dir="inherit">
                             <span t-field="product.compare_list_price" />
@@ -170,7 +170,7 @@
     <template id="cart_summary_inherit_website_sale_subscription" inherit_id="website_sale.cart_summary_content">
         <xpath expr="//table[hasclass('o_cart_products_table')]//td[@name='website_sale_cart_summary_line_price']" position="inside">
             <div t-if="line.recurring_invoice">
-                <span t-esc="line.order_id.plan_id.billing_period_display_sentence"/>
+                <span t-out="line.order_id.plan_id.billing_period_display_sentence"/>
             </div>
         </xpath>
     </template>
@@ -178,7 +178,7 @@
     <template id="cart_lines_subscription" inherit_id="website_sale.cart_lines_price">
         <xpath expr="//h6[@name='website_sale_cart_line_price']" position="after">
             <div t-if="line.recurring_invoice and line.order_id.plan_id" class="text-end" name="recurring_info">
-                <span t-esc="line.order_id.plan_id.billing_period_display_sentence"/>
+                <span t-out="line.order_id.plan_id.billing_period_display_sentence"/>
             </div>
         </xpath>
     </template>
@@ -197,11 +197,11 @@
                     <tr>
                         <td
                             t-attf-class="ps-0 {{hide_border_bottom_classes}}"
-                            t-esc="pricing['table_name']"
+                            t-out="pricing['table_name']"
                         />
                         <td
                             t-attf-class="text-muted text-end {{hide_border_bottom_classes}}"
-                            t-esc="pricing['table_price']"
+                            t-out="pricing['table_price']"
                         />
                         <t t-if="combination_info['allow_one_time_sale']">
                             <t t-value="pricing['discounted_price']" t-set="discounted_percentage"/>
@@ -214,7 +214,7 @@
                         <t t-else="">
                                 <td
                                     t-attf-class="text-muted pe-0 text-end {{hide_border_bottom_classes}}"
-                                    t-esc="pricing['to_minimum_billing_period']"
+                                    t-out="pricing['to_minimum_billing_period']"
                                 />
                         </t>
                     </tr>

@@ -19,7 +19,7 @@
                     <form action="/shop/l10n_mx_invoicing_info" method="post">
                         <h3 class="mb-4">Required additional fields</h3>
                         <t t-if="errors" t-foreach="errors.values()" t-as="err">
-                            <h5 class="text-danger" t-esc="err" />
+                            <h5 class="text-danger" t-out="err" />
                         </t>
                             <div class="col-12 col-lg-6 mb-3">
                                 <p class="mb-3 fw-bold">Do you need an invoice?</p>

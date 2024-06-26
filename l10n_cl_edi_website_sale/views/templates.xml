@@ -22,7 +22,7 @@
                     <form action="/shop/l10n_cl_invoicing_info" method="post">
                         <h5 t-if="errors_empty" class="text-danger">Some required fields are empty</h5>
                         <t t-if="errors_fields" t-foreach="errors_fields.values()" t-as="err">
-                            <h5 class="text-danger" t-esc="err"/>
+                            <h5 class="text-danger" t-out="err"/>
                         </t>
                         <div class="row">
                             <div class="col-12 col-xl-6 mb-3">

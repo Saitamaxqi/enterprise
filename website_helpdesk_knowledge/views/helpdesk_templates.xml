@@ -26,7 +26,7 @@
                                             target="_blank"
                                             t-att-title="article.name"
                                         >
-                                            <t t-esc="article.name"/>
+                                            <t t-out="article.name"/>
                                         </a>
                                     </li>
                                 </t>

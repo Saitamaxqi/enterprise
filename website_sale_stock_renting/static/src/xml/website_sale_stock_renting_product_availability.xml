@@ -12,7 +12,7 @@
             <div id="threshold_message_renting"
                  t-if="!(free_qty lte 0 and !cart_qty) and show_availability and free_qty lte available_threshold and is_rental"
                  t-attf-class="availability_message_#{product_template} text-warning fw-bold">
-                Only <t t-esc='free_qty'/> <t t-esc="uom_name" /> still available during the selected period.
+                Only <t t-out='free_qty'/> <t t-out="uom_name" /> still available during the selected period.
             </div>
         </xpath>
         <xpath expr="//span[@id='already_in_cart_message']" position="attributes">
@@ -25,7 +25,7 @@
                     You already added all the available product in your cart during the selected period.
                 </t>
                 <t t-else=''>
-                    You already added <t t-esc="cart_qty" /> <t t-esc="uom_name" /> in your cart for the selected period.
+                    You already added <t t-out="cart_qty" /> <t t-out="uom_name" /> in your cart for the selected period.
                 </t>
             </div>
         </xpath>
