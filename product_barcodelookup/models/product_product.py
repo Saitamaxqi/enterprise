@@ -1,8 +1,12 @@
-from odoo import api, models
+from odoo import api, fields, models
 
 
 class ProductProduct(models.Model):
     _inherit = 'product.product'
+
+    is_image_fetch_pending = fields.Boolean(
+        help="Whether an image must be fetched for this product. Handled by a cron.",
+    )
 
     @api.onchange('barcode')
     def _onchange_barcode(self):
