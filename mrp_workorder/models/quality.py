@@ -236,15 +236,18 @@ class QualityCheck(models.Model):
 
     @api.model_create_multi
     def create(self, values):
-        points = self.env['quality.point'].search([
-            ('id', 'in', [value.get('point_id') for value in values]),
-            ('component_id', '!=', False)
-        ])
+        quality_points = {value['point_id'] for value in values if value.get('point_id')}
+        quality_points_component_mapping = {
+            point.id: point.component_id.id
+            for point in self.env['quality.point'].browse(list(quality_points))
+            if point.component_id
+        }
         for value in values:
-            if not value.get('component_id') and value.get('point_id'):
-                point = points.filtered(lambda p: p.id == value.get('point_id'))
-                if point:
-                    value['component_id'] = point.component_id.id
+            if value.get('component_id') or not value.get('point_id'):
+                continue
+            component = quality_points_component_mapping.get(value['point_id'])
+            if component:
+                value['component_id'] = component
         return super(QualityCheck, self).create(values)
 
     @api.depends('test_type_id', 'component_id', 'component_id.name', 'workorder_id', 'workorder_id.name')
