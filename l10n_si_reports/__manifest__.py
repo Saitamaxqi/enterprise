@@ -12,6 +12,7 @@
     'data': [
         'data/balance_sheet.xml',
         'data/profit_loss.xml',
+        'data/ec_sales_lists.xml',
     ],
     'auto_install': True,
     'installable': True,
