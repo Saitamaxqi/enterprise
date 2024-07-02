@@ -39,7 +39,7 @@ class HelpdeskTeam(models.Model):
             team.total_timesheet_time = round(total_by_team[team.id])
 
     def _create_project(self, name, allow_billable, other):
-        return self.env['project.project'].create({
+        return self.env['project.project'].with_context(default_use_documents=False).create({
             'name': name,
             'type_ids': [
                 (0, 0, {'name': _('New')}),

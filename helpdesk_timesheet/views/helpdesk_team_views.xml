@@ -21,7 +21,8 @@
             <xpath expr="//field[@name='use_helpdesk_timesheet']" position='after'>
                 <div invisible="not use_helpdesk_timesheet">
                     <label for="project_id"/>
-                    <field name="project_id" class="oe_inline" context="{'default_allow_billable': use_helpdesk_sale_timesheet}"/>
+                    <field name="project_id" class="oe_inline"
+                        context="{'default_allow_billable': use_helpdesk_sale_timesheet, 'default_use_documents': False}"/>
                 </div>
             </xpath>
         </field>
