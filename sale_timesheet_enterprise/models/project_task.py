@@ -115,3 +115,18 @@ class ProjectTask(models.Model):
                 warning=_("This Sale Order Item doesn't have a target value of planned hours.")
             )
         return super()._gantt_progress_bar(field, res_ids, start, stop)
+
+    def _get_portal_total_hours_dict(self):
+        total_hours_dict = super()._get_portal_total_hours_dict()
+        if not (total_hours_dict and self.env['ir.config_parameter'].sudo().get_param('sale.invoiced_timesheet', DEFAULT_INVOICED_TIMESHEET) == 'approved'):
+            return total_hours_dict
+        timesheetable_tasks = self.filtered('allow_timesheets')
+        total_hours_dict['effective_hours'] = self.env['account.analytic.line']._read_group(
+            [
+                ('task_id', 'in', timesheetable_tasks.ids), 
+                ('validated', '=', True),
+            ],
+            [],
+            ['unit_amount']
+        )[0][0] or 0.0
+        return total_hours_dict
