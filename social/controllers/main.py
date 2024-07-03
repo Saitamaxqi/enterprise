@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import http
+from odoo import http, _
+from odoo.exceptions import MissingError
 from odoo.http import request
 from odoo.tools import plaintext2html
-from werkzeug.exceptions import Forbidden
 
 
 class SocialValidationException(Exception):
@@ -42,6 +42,6 @@ class SocialController(http.Controller):
             ('stream_id.account_id.media_id.media_type', '=', media_type),
         ])
         if not stream_post:
-            raise Forbidden()
+            raise MissingError(_("Uh-oh! It looks like this message has been deleted from X."))
 
         return stream_post
