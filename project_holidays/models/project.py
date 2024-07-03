@@ -39,7 +39,7 @@ class Task(models.Model):
             tasks.fetch(['user_ids', 'project_id', 'planned_date_begin', 'date_deadline', 'is_closed'])
 
         assigned_tasks = tasks.filtered(
-            lambda t: t.user_ids._origin.employee_id
+            lambda t: t.user_ids._origin.employee_ids
             and t.project_id
             and t.planned_date_begin
             and t.date_deadline
@@ -56,13 +56,13 @@ class Task(models.Model):
         leaves = self.env['hr.leave']._get_leave_interval(
             date_from=date_from,
             date_to=max(assigned_tasks.mapped('date_deadline')),
-            employee_ids=assigned_tasks.user_ids._origin.employee_id
+            employee_ids=assigned_tasks.user_ids._origin.employee_ids
         )
 
         for task in assigned_tasks:
             leaves_parameters = {"validated": [], "requested": []}
             # Gather leaves parameters for each employee
-            for employee in task.user_ids._origin.employee_id:
+            for employee in task.user_ids._origin.employee_ids:
                 task_leaves = leaves.get(employee.id)
                 if task_leaves:
                     employee_leaves = self.env['hr.leave']._get_leave_warning_parameters(
@@ -116,11 +116,11 @@ class Task(models.Model):
         mapped_leaves = self.env['hr.leave']._get_leave_interval(
             date_from=date_from,
             date_to=max(tasks.mapped('date_deadline')),
-            employee_ids=tasks.mapped('user_ids.employee_id')
+            employee_ids=tasks.user_ids.employee_ids
         )
         task_ids = []
         for task in tasks:
-            employees = tasks.mapped('user_ids.employee_id')
+            employees = tasks.user_ids.employee_ids
             for employee in employees:
                 if employee.id in mapped_leaves:
                     leaves = mapped_leaves[employee.id]

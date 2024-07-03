@@ -188,3 +188,40 @@ class TestProjectLeaves(common.TransactionCase):
 
             task_form.planned_date_begin = datetime.datetime(2020, 1, 2)
             self.assertFalse(task_form.leave_warning)
+
+    def test_multicompany_with_time_off_warnning(self):
+        """
+        Ensure that time-off warnings are displayed if multi-company is activated.
+        Flow:
+            - Create a company(Opoo)
+            - Add company(Opoo) to Allowed Companies
+            - Create a time-off and validate
+            - Create task
+            - Check the time-out alert by My company.
+            - Check the time-out alert by all Companies(My company + Opoo)
+            - Check the time-out alert by Opoo Company.
+        """
+        company_1 = self.env['res.company'].create({'name': 'Opoo'})
+        self.user_hruser.company_ids += company_1
+        self.env['hr.leave'].sudo().create({
+            'holiday_status_id': self.leave_type.id,
+            'employee_id': self.employee_hruser.id,
+            'request_date_from': '2020-1-6',
+            'request_date_to': '2020-1-7',
+        }).action_validate()
+
+        task = self.env['project.task'].create({
+            'name': "Task",
+            'project_id': self.project.id,
+            'user_ids': self.user_hruser,
+            'planned_date_begin': datetime.datetime(2020, 1, 6, 8, 0),
+            'date_deadline': datetime.datetime(2020, 1, 10, 17, 0),
+        })
+        leave_warning = task.with_context(allowed_company_ids=self.user_hruser.company_ids[1].ids).leave_warning
+        self.assertEqual(leave_warning, "Test HrUser is on time off from 01/06/2020 to 01/07/2020. \n",
+                        "should show the start of the 6st leave and end of the 7nd")
+        leave_warning = task.with_context(allowed_company_ids=self.user_hruser.company_ids.ids).leave_warning
+        self.assertEqual(leave_warning, "Test HrUser is on time off from 01/06/2020 to 01/07/2020. \n",
+                        "should show the start of the 6st leave and end of the 7nd")
+        leave_warning = task.with_context(allowed_company_ids=company_1.ids).leave_warning
+        self.assertNotEqual(task.leave_warning, False)
