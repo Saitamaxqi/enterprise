@@ -1,4 +1,4 @@
-from odoo import fields, models
+from odoo import fields, models, api
 
 
 class AssetModify(models.TransientModel):
@@ -7,11 +7,18 @@ class AssetModify(models.TransientModel):
     l10n_in_value_residual = fields.Monetary(
         string='Depreciable Value',
         help="New residual amount for the asset",
-        related='asset_id.l10n_in_value_residual',
+        compute="_compute_l10n_in_value_residual",
         store=True,
         readonly=False,
     )
     l10n_in_fiscal_code = fields.Char(related='company_id.account_fiscal_country_id.code')
+
+    @api.depends('date')
+    def _compute_l10n_in_value_residual(self):
+        for record in self:
+            if record.asset_id._check_degressive_special_asset():
+                record.l10n_in_value_residual = record.asset_id._get_residual_value_at_date(record.date) - record.salvage_value
+            record.value_residual = record.asset_id._get_residual_value_at_date(record.date)
 
     def _get_own_book_value(self):
         if not self.asset_id._check_degressive_special_asset():

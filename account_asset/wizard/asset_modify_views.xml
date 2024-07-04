@@ -49,7 +49,7 @@
                         <field name="value_residual" invisible="modify_action not in ('modify', 'resume')"/>
                         <field name="salvage_value" invisible="modify_action not in ('modify', 'resume')"/>
                         <field name="account_asset_id" invisible="modify_action != 'modify'" required="gain_value"/>
-                        <field name="account_asset_counterpart_id" invisible="modify_action != 'modify'" required="gain_value"/>
+                        <field name="account_asset_counterpart_id" invisible="modify_action != 'modify' or not gain_value" required="gain_value"/>
                         <field name="account_depreciation_id" invisible="modify_action != 'modify'" required="gain_value"/>
                         <field name="account_depreciation_expense_id" invisible="modify_action != 'modify'" required="gain_value"/>
 

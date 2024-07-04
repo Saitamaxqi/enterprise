@@ -307,11 +307,12 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.create_asset(value=60000, periodicity="monthly", periods=12, method="linear", acquisition_date="2022-01-01", prorata_computation_type="constant_periods")
         asset.validate()
 
+        date_modify = fields.Date.to_date("2022-04-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-04-15"),
-            'value_residual': asset.value_residual - 8500,
+            'date':  date_modify,
+            'value_residual': asset._get_residual_value_at_date(date_modify) - 8500,
         }).modify()
 
         self.env['asset.modify'].create({
@@ -347,19 +348,21 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.create_asset(value=60000, periodicity="monthly", periods=12, method="linear", acquisition_date="2022-01-01", prorata_computation_type="constant_periods")
         asset.validate()
 
+        date_modify_1 = fields.Date.to_date("2022-04-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-04-15"),
-            'value_residual': asset.value_residual + 8500,
+            'date':  date_modify_1,
+            'value_residual': asset._get_residual_value_at_date(date_modify_1) + 8500,
             "account_asset_counterpart_id": self.asset_counterpart_account_id.id,
         }).modify()
 
+        date_modify_2 = fields.Date.to_date("2022-06-30")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-06-30"),
-            'value_residual': asset.value_residual + 6000,
+            'date':  date_modify_2,
+            'value_residual': asset._get_residual_value_at_date(date_modify_2) + 6000,
             "account_asset_counterpart_id": self.asset_counterpart_account_id.id,
         }).modify()
 
@@ -407,18 +410,20 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.create_asset(value=60000, periodicity="monthly", periods=12, method="linear", acquisition_date="2022-01-01", prorata_computation_type="constant_periods")
         asset.validate()
 
+        date_modify_1 = fields.Date.to_date("2022-04-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-04-15"),
-            'value_residual': asset.value_residual - 8500,
+            'date':  date_modify_1,
+            'value_residual': asset._get_residual_value_at_date(date_modify_1) - 8500,
         }).modify()
 
+        date_modify_2 = fields.Date.to_date("2022-06-30")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-06-30"),
-            'value_residual': asset.value_residual + 6000,
+            'date':  date_modify_2,
+            'value_residual': asset._get_residual_value_at_date(date_modify_2) + 6000,
             "account_asset_counterpart_id": self.asset_counterpart_account_id.id,
         }).modify()
 
@@ -455,19 +460,21 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.create_asset(value=10000, periodicity="yearly", periods=5, method="linear", acquisition_date="2018-01-01", prorata_computation_type="constant_periods")
         asset.validate()
 
+        date_modify_1 = fields.Date.to_date("2022-06-30")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-06-30"),
-            'value_residual': asset.value_residual + 1000,
+            'date':  date_modify_1,
+            'value_residual': asset._get_residual_value_at_date(date_modify_1) + 1000,
             "account_asset_counterpart_id": self.asset_counterpart_account_id.id,
         }).modify()
 
+        date_modify_2 = fields.Date.to_date("2022-09-30")  # This is 3 month in the future
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-09-30"),  # This is 3 month in the future
-            'value_residual': asset.value_residual - 200,
+            'date':  date_modify_2,
+            'value_residual': asset._get_residual_value_at_date(date_modify_2) - 200,
             'method_period': '1',  # to reflect the change on the child, we go in monthly
             'method_number': 60,
         }).modify()
@@ -502,20 +509,22 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.create_asset(value=60000, periodicity="monthly", periods=12, method="linear", acquisition_date="2022-01-01", prorata_computation_type="constant_periods")
         asset.validate()
 
+        date_modify_1 = fields.Date.to_date("2022-04-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-04-15"),
-            'value_residual': asset.value_residual - 8500,
+            'date':  date_modify_1,
+            'value_residual': asset._get_residual_value_at_date(date_modify_1) - 8500,
         }).modify()
 
         self.company_data['company'].fiscalyear_lock_date = fields.Date.to_date('2022-05-01')
 
+        date_modify_2 = fields.Date.to_date("2022-06-30")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-06-30"),
-            'value_residual': asset.value_residual + 6000,
+            'date':  date_modify_2,
+            'value_residual': asset._get_residual_value_at_date(date_modify_2) + 6000,
             "account_asset_counterpart_id": self.asset_counterpart_account_id.id,
         }).modify()
 
@@ -552,19 +561,21 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.create_asset(value=60000, periodicity="monthly", periods=12, method="linear", acquisition_date="2022-01-01", prorata_computation_type="constant_periods")
         asset.validate()
 
+        date_modify_1 = fields.Date.to_date("2022-04-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-04-15"),
-            'value_residual': asset.value_residual + 8500,
+            'date':  date_modify_1,
+            'value_residual': asset._get_residual_value_at_date(date_modify_1) + 8500,
             "account_asset_counterpart_id": self.asset_counterpart_account_id.id,
         }).modify()
 
+        date_modify_2 = fields.Date.to_date("2022-06-30")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-06-30"),
-            'value_residual': asset.value_residual - 6000,
+            'date':  date_modify_2,
+            'value_residual': asset._get_residual_value_at_date(date_modify_2) - 6000,
         }).modify()
 
         self.assertRecordValues(asset.depreciation_move_ids.sorted(lambda mv: (mv.date, mv.id)), [
@@ -606,11 +617,12 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset.validate()
         self.loss_account_id = self.company_data['default_account_expense'].copy().id
 
+        date_modify = fields.Date.to_date("2022-04-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-04-15"),
-            'value_residual': asset.value_residual - 8500,
+            'date':  date_modify,
+            'value_residual': asset._get_residual_value_at_date(date_modify) - 8500,
         }).modify()
 
         self.env['asset.modify'].create({
@@ -641,11 +653,12 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         self.loss_account_id = self.company_data['default_account_expense'].copy().id
         self.asset_counterpart_account_id = self.company_data['default_account_expense'].copy().id
 
+        date_modify = fields.Date.to_date("2022-04-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-04-15"),
-            'value_residual': asset.value_residual + 8500,
+            'date':  date_modify,
+            'value_residual': asset._get_residual_value_at_date(date_modify) + 8500,
             "account_asset_counterpart_id": self.asset_counterpart_account_id,
         }).modify()
 
@@ -674,12 +687,13 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.create_asset(value=1200, periodicity="monthly", periods=12, method="linear", acquisition_date="2021-10-01", prorata_computation_type="constant_periods")
         asset.validate()
 
+        date_modify = fields.Date.to_date("2022-01-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-01-15"),
+            'date':  date_modify,
             'modify_action': 'modify',
-            'value_residual': 2400,
+            'value_residual': asset._get_residual_value_at_date(date_modify) + 2100,
             'account_asset_counterpart_id': self.company_data['default_account_revenue'].copy().id,
         }).modify()
 
@@ -721,7 +735,7 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
             'name': 'Test reason',
             'date':  fields.Date.to_date("2022-01-15"),
             'modify_action': 'modify',
-            'value_residual': 2400,
+            'value_residual': 2945.75,
             'account_asset_counterpart_id': self.company_data['default_account_revenue'].copy().id,
         }).modify()
 
@@ -759,13 +773,14 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.create_asset(value=1200, periodicity="monthly", periods=10, method="linear", acquisition_date="2022-02-01", prorata_computation_type="constant_periods")
         asset.validate()
 
+        date_modify = fields.Date.to_date("2022-06-30")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
             'method_number': 10 + 3,
-            'date': fields.Date.to_date("2022-06-30"),
+            'date': date_modify,
             'modify_action': 'modify',
-            'value_residual': asset.value_residual + 200,
+            'value_residual': asset._get_residual_value_at_date(date_modify) + 200,
             'account_asset_counterpart_id': self.company_data['default_account_revenue'].copy().id,
         }).modify()
 
@@ -802,13 +817,14 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.create_asset(value=1200, periodicity="monthly", periods=10, method="linear", acquisition_date="2022-02-01", prorata_computation_type="constant_periods")
         asset.validate()
 
+        date_modify = fields.Date.to_date("2022-06-30")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
             'method_number': 10 + 3,
-            'date': fields.Date.to_date("2022-06-30"),
+            'date': date_modify,
             'modify_action': 'modify',
-            'value_residual': asset.value_residual - 200,
+            'value_residual': asset._get_residual_value_at_date(date_modify) - 200,
             'account_asset_counterpart_id': self.company_data['default_account_revenue'].copy().id,
         }).modify()
 
@@ -835,11 +851,12 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.degressive_asset
         asset.validate()
 
+        date_modify = fields.Date.to_date("2022-06-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-06-15"),
-            'value_residual': asset.value_residual + 8500,
+            'date':  date_modify,
+            'value_residual': asset._get_residual_value_at_date(date_modify) + 8500,
             "account_asset_counterpart_id": self.asset_counterpart_account_id.id,
         }).modify()
 
@@ -961,11 +978,12 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset.write({'acquisition_date': '2019-07-01'})
         asset.validate()
 
+        date_modify = fields.Date.to_date("2022-06-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-06-15"),
-            'value_residual': asset.value_residual + 8500,
+            'date':  date_modify,
+            'value_residual': asset._get_residual_value_at_date(date_modify) + 8500,
             "account_asset_counterpart_id": self.asset_counterpart_account_id.id,
         }).modify()
 
@@ -1073,11 +1091,12 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.degressive_asset
         asset.validate()
 
+        date_modify = fields.Date.to_date("2022-06-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-06-15"),
-            'value_residual': asset.value_residual - 500,
+            'date':  date_modify,
+            'value_residual': asset._get_residual_value_at_date(date_modify) - 500,
             "account_asset_counterpart_id": self.asset_counterpart_account_id.id,
         }).modify()
 
@@ -1156,11 +1175,12 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.degressive_then_linear_asset
         asset.validate()
 
+        date_modify = fields.Date.to_date("2021-06-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2021-06-15"),
-            'value_residual': asset.value_residual + 8500,
+            'date':  date_modify,
+            'value_residual': asset._get_residual_value_at_date(date_modify) + 8500,
             "account_asset_counterpart_id": self.asset_counterpart_account_id.id,
         }).modify()
 
@@ -1276,11 +1296,12 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.degressive_then_linear_asset
         asset.validate()
 
+        date_modify = fields.Date.to_date("2022-06-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-06-15"),
-            'value_residual': asset.value_residual + 8500,
+            'date':  date_modify,
+            'value_residual': asset._get_residual_value_at_date(date_modify) + 8500,
             "account_asset_counterpart_id": self.asset_counterpart_account_id.id,
         }).modify()
 
@@ -1381,11 +1402,12 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
         asset = self.degressive_then_linear_asset
         asset.validate()
 
+        date_modify = fields.Date.to_date("2022-06-15")
         self.env['asset.modify'].create({
             'asset_id': asset.id,
             'name': 'Test reason',
-            'date':  fields.Date.to_date("2022-06-15"),
-            'value_residual': asset.value_residual - 500,
+            'date':  date_modify,
+            'value_residual': asset._get_residual_value_at_date(date_modify) - 500,
             "account_asset_counterpart_id": self.asset_counterpart_account_id.id,
         }).modify()
 
@@ -1450,7 +1472,7 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
 
     def test_linear_modify_0_value_residual(self):
         """Set the value residual to 0"""
-        asset = self.create_asset(value=10000, periodicity="monthly", periods=10, method="linear", acquisition_date="2022-02-01", prorata="constant_periods", asset_type='expense')
+        asset = self.create_asset(value=10000, periodicity="monthly", periods=10, method="linear", acquisition_date="2022-02-01", prorata_computation_type="constant_periods")
         asset.validate()
 
         self.env['asset.modify'].create({
@@ -1472,3 +1494,78 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
 
             self._get_depreciation_move_values(date='2022-06-24', depreciation_value=5200, remaining_value=0, depreciated_value=10000, state='posted'),
         ])
+
+    def test_asset_modify_value_residual_after_reversal(self):
+        """ Tests the special case of residual amounts on a board with a reverse entry.
+            It keeps its focus on the computed residual amount in the modify asset wizard as for now,
+            the recomputation after a modify on a board with reverse entries is broken. This should be corrected in a later task."""
+
+        asset = self.create_asset(value=1000, periodicity="yearly", periods=5, method="linear", acquisition_date="2020-01-01", prorata_computation_type="constant_periods")
+        asset.validate()
+
+        self.assertRecordValues(asset.depreciation_move_ids.sorted(lambda mv: (mv.date, mv.id)), [
+            self._get_depreciation_move_values(date='2020-12-31', depreciation_value=200, remaining_value=800, depreciated_value=200, state='posted'),
+            self._get_depreciation_move_values(date='2021-12-31', depreciation_value=200, remaining_value=600, depreciated_value=400, state='posted'),
+            self._get_depreciation_move_values(date='2022-12-31', depreciation_value=200, remaining_value=400, depreciated_value=600, state='draft'),
+            self._get_depreciation_move_values(date='2023-12-31', depreciation_value=200, remaining_value=200, depreciated_value=800, state='draft'),
+            self._get_depreciation_move_values(date='2024-12-31', depreciation_value=200, remaining_value=0, depreciated_value=1000, state='draft'),
+        ])
+
+        move_to_reverse = asset.depreciation_move_ids.sorted(lambda mv: (mv.date, mv.id))[0]
+        self.env['account.move.reversal']\
+            .with_context(active_model="account.move", active_ids=move_to_reverse.ids)\
+            .create({
+                'journal_id': move_to_reverse.journal_id.id
+            }).reverse_moves()
+
+        self.assertRecordValues(asset.depreciation_move_ids.sorted(lambda mv: (mv.date, mv.id)), [
+            self._get_depreciation_move_values(date='2020-12-31', depreciation_value=200, remaining_value=800, depreciated_value=200, state='posted'),
+            self._get_depreciation_move_values(date='2021-12-31', depreciation_value=200, remaining_value=600, depreciated_value=400, state='posted'),
+            self._get_depreciation_move_values(date='2022-06-30', depreciation_value=-200, remaining_value=800, depreciated_value=200, state='posted'),
+            self._get_depreciation_move_values(date='2022-12-31', depreciation_value=400, remaining_value=400, depreciated_value=600, state='draft'),
+            self._get_depreciation_move_values(date='2023-12-31', depreciation_value=200, remaining_value=200, depreciated_value=800, state='draft'),
+            self._get_depreciation_move_values(date='2024-12-31', depreciation_value=200, remaining_value=0, depreciated_value=1000, state='draft'),
+        ])
+
+        asset_modify = self.env['asset.modify'].create({
+            'asset_id': asset.id,
+            'name': 'Test reason',
+            'date': fields.Date.to_date("2022-06-30"),
+            'modify_action': 'modify',
+        })
+
+        # We want to show the actual remaining value of the asset.
+        self.assertEqual(asset_modify.value_residual, 500, "The computation of the value_residual in asset.modify shouldn't care about the reversal.")
+
+    def test_asset_gain_or_loss_account(self):
+        asset = self.create_asset(value=1000, periodicity="yearly", periods=5, method="linear", acquisition_date="2020-01-01", prorata_computation_type="constant_periods")
+        asset.validate()
+
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.env['res.partner'].create({'name': 'Res Partner 12'}).id,
+            'invoice_date': '2022-06-30',
+            'invoice_line_ids': [(0, 0, {
+                'name': 'Asset sold',
+                'tax_ids': [],
+                'price_unit': 500,
+            })],
+        })
+        invoice.action_post()
+
+        asset_modify = self.env['asset.modify'].create({
+            'asset_id': asset.id,
+            'name': 'Test reason',
+            'date': fields.Date.to_date('2022-06-10'),
+            'modify_action': 'sell',
+            'invoice_ids': invoice.ids,
+            'invoice_line_ids': invoice.invoice_line_ids.ids
+        })
+        # The remaining value of the asset on 2022-06-30 is 500: if the asset is sold before that date, it will result in a loss (and a gain if sold after)
+        self.assertEqual(asset_modify.gain_or_loss, 'loss')
+
+        asset_modify.date = fields.Date.from_string('2022-07-15')
+        self.assertEqual(asset_modify.gain_or_loss, 'gain')
+
+        asset_modify.date = fields.Date.from_string('2022-06-30')
+        self.assertEqual(asset_modify.gain_or_loss, 'no')

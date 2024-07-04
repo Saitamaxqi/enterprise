@@ -1186,6 +1186,40 @@ class AccountAsset(models.Model):
             amount = residual_amount
         return amount
 
-    def _get_own_book_value(self):
+    def _get_own_book_value(self, date=None):
         self.ensure_one()
-        return self.value_residual + self.salvage_value
+        return (self._get_residual_value_at_date(date) if date else self.value_residual) + self.salvage_value
+
+    def _get_residual_value_at_date(self, date):
+        """ Computes the theoretical value of the asset at a specific date.
+
+            :param date: the date at which we want the asset's value
+            :return: the value at date of the asset without taking reverse entries into account (as it should be in a "normal" flow of the asset)
+        """
+        current_and_previous_depreciation = self.depreciation_move_ids.filtered(
+            lambda mv:
+            mv.asset_depreciation_beginning_date < date
+            and not mv.reversed_entry_id
+        ).sorted('asset_depreciation_beginning_date', reverse=True)
+        if not current_and_previous_depreciation:
+            return 0
+
+        if len(current_and_previous_depreciation) > 1:
+            previous_value_residual = current_and_previous_depreciation[1].asset_remaining_value
+        else:
+            # If there is only one depreciation, we take the original depreciation value
+            previous_value_residual = self.original_value - self.salvage_value - self.already_depreciated_amount_import
+
+        # We compare the amount_residuals of the depreciations before and during the given date.
+        # It applies the ratio of the period (to-given-date / total-days-of-the-period) to the amount of the depreciation.
+        cur_depr_end_date = self._get_end_period_date(date)
+        current_depreciation = current_and_previous_depreciation[0]
+        cur_depr_beg_date = current_depreciation.asset_depreciation_beginning_date
+
+        rate = self._get_delta_days(cur_depr_beg_date, date) / self._get_delta_days(cur_depr_beg_date, cur_depr_end_date)
+        lost_value_at_date = (previous_value_residual - current_depreciation.asset_remaining_value) * rate
+        residual_value_at_date = self.currency_id.round(previous_value_residual - lost_value_at_date)
+        if self.currency_id.compare_amounts(self.original_value, 0) > 0:
+            return max(residual_value_at_date, 0)
+        else:
+            return min(residual_value_at_date, 0)

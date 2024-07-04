@@ -50,10 +50,10 @@ class AccountAsset(models.Model):
             if not (record.state == 'close' and all(move.state == 'posted' for move in record.depreciation_move_ids)):
                 record.book_value -= record.salvage_value
 
-    def _get_own_book_value(self):
+    def _get_own_book_value(self, date=None):
         self.ensure_one()
         if not self._check_degressive_special_asset():
-            return super()._get_own_book_value()
+            return super()._get_own_book_value(date)
         return self.value_residual
 
     def _get_depreciation_amount_end_of_lifetime(self, residual_amount, amount, days_until_period_end):

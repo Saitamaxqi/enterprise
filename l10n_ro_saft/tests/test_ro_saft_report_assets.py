@@ -4,7 +4,7 @@ from freezegun import freeze_time
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 from odoo.addons.l10n_ro_saft.tests.test_ro_saft_report_monthly import TestRoSaftReport
 from odoo.tests import Form, tagged
-from odoo import Command
+from odoo import Command, fields
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
@@ -73,7 +73,7 @@ class TestRoSaftReportAssets(TestRoSaftReport):
             cls.env['asset.modify'].create({
                 'name': 'New beautiful sticker :D',
                 'asset_id': cls.truck_to_increase.id,
-                'value_residual': cls.truck_to_increase.book_value + 80,
+                'value_residual': cls.truck_to_increase._get_residual_value_at_date(fields.Date.to_date('2023-06-30')) + 80,
                 'salvage_value': 0,
                 'date': '2023-06-30',
                 "account_asset_counterpart_id": counterpart_account_id,
@@ -83,7 +83,7 @@ class TestRoSaftReportAssets(TestRoSaftReport):
         cls.env['asset.modify'].create({
             'name': 'Little scratch :(',
             'asset_id': cls.truck_to_decrease.id,
-            'value_residual': cls.truck_to_decrease.book_value - 50,
+            'value_residual': cls.truck_to_decrease._get_residual_value_at_date(fields.Date.to_date('2023-06-30')) - 50,
             'salvage_value': 0,
             'date': '2023-06-30',
             "account_asset_counterpart_id": counterpart_account_id,

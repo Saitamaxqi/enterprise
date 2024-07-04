@@ -16,7 +16,7 @@ class AssetModify(models.TransientModel):
     asset_id = fields.Many2one(string="Asset", comodel_name='account.asset', required=True, help="The asset to be modified by this wizard", ondelete="cascade")
     method_number = fields.Integer(string='Duration', required=True)
     method_period = fields.Selection([('1', 'Months'), ('12', 'Years')], string='Number of Months in a Period', help="The amount of time between two depreciations")
-    value_residual = fields.Monetary(string="Depreciable Amount", help="New residual amount for the asset")
+    value_residual = fields.Monetary(string="Depreciable Amount", help="New residual amount for the asset", compute="_compute_value_residual", store=True, readonly=False)
     salvage_value = fields.Monetary(string="Not Depreciable Amount", help="New salvage amount for the asset")
     currency_id = fields.Many2one(related='asset_id.currency_id')
     date = fields.Date(default=lambda self: fields.Date.today(), string='Date')
@@ -107,6 +107,11 @@ class AssetModify(models.TransientModel):
             record.gain_account_id = record.company_id.gain_account_id
             record.loss_account_id = record.company_id.loss_account_id
 
+    @api.depends('date')
+    def _compute_value_residual(self):
+        for record in self:
+            record.value_residual = record.asset_id._get_residual_value_at_date(record.date)
+
     def _inverse_gain_account(self):
         for record in self:
             record.company_id.sudo().gain_account_id = record.gain_account_id
@@ -120,7 +125,7 @@ class AssetModify(models.TransientModel):
         if self.modify_action == 'sell' and self.asset_id.children_ids.filtered(lambda a: a.state in ('draft', 'open') or a.value_residual > 0):
             raise UserError(_("You cannot automate the journal entry for an asset that has a running gross increase. Please use 'Dispose' on the increase(s)."))
         if self.modify_action not in ('modify', 'resume'):
-            self.write({'value_residual': self.asset_id.value_residual, 'salvage_value': self.asset_id.salvage_value})
+            self.write({'value_residual': self.asset_id._get_residual_value_at_date(self.date), 'salvage_value': self.asset_id.salvage_value})
 
     @api.onchange('invoice_ids')
     def _onchange_invoice_ids(self):
@@ -128,17 +133,25 @@ class AssetModify(models.TransientModel):
         for invoice in self.invoice_ids.filtered(lambda inv: len(inv.invoice_line_ids) == 1):
             self.invoice_line_ids += invoice.invoice_line_ids
 
-    @api.depends('asset_id', 'invoice_ids', 'invoice_line_ids', 'modify_action')
+    @api.depends('asset_id', 'invoice_ids', 'invoice_line_ids', 'modify_action', 'date')
     def _compute_gain_or_loss(self):
         for record in self:
             balances = abs(sum([invoice.balance for invoice in record.invoice_line_ids]))
-            comparison = record.company_id.currency_id.compare_amounts(record.asset_id._get_own_book_value(), balances)
+            comparison = record.company_id.currency_id.compare_amounts(record.asset_id._get_own_book_value(record.date), balances)
             if record.modify_action in ('sell', 'dispose') and comparison < 0:
                 record.gain_or_loss = 'gain'
             elif record.modify_action in ('sell', 'dispose') and comparison > 0:
                 record.gain_or_loss = 'loss'
             else:
                 record.gain_or_loss = 'no'
+
+    @api.depends('asset_id', 'value_residual', 'salvage_value')
+    def _compute_gain_value(self):
+        for record in self:
+            record.gain_value = record.currency_id.compare_amounts(
+                record._get_own_book_value(),
+                record.asset_id._get_own_book_value(record.date)
+            ) > 1
 
     @api.depends('loss_account_id', 'gain_account_id', 'gain_or_loss', 'modify_action', 'date', 'value_residual', 'salvage_value')
     def _compute_informational_text(self):
@@ -212,8 +225,6 @@ class AssetModify(models.TransientModel):
                     vals.update({'method_period': asset.method_period})
                 if 'salvage_value' not in vals:
                     vals.update({'salvage_value': asset.salvage_value})
-                if 'value_residual' not in vals:
-                    vals.update({'value_residual': asset.value_residual})
                 if 'account_asset_id' not in vals:
                     vals.update({'account_asset_id': asset.account_asset_id.id})
                 if 'account_depreciation_id' not in vals:
@@ -257,7 +268,7 @@ class AssetModify(models.TransientModel):
             asset_vals.update({'state': 'open'})
             self.asset_id.message_post(body=_("Asset unpaused. %s", self.name))
 
-        current_asset_book = self.asset_id._get_own_book_value()
+        current_asset_book = self.asset_id._get_own_book_value(self.date)
         after_asset_book = self._get_own_book_value()
         increase = after_asset_book - current_asset_book
 
@@ -384,11 +395,6 @@ class AssetModify(models.TransientModel):
             raise UserError(_("You cannot select the same account as the Depreciation Account"))
         invoice_lines = self.env['account.move.line'] if self.modify_action == 'dispose' else self.invoice_line_ids
         return self.asset_id.set_to_close(invoice_line_ids=invoice_lines, date=self.date, message=self.name)
-
-    @api.depends('asset_id', 'value_residual', 'salvage_value')
-    def _compute_gain_value(self):
-        for record in self:
-            record.gain_value = record._get_own_book_value() > record.asset_id._get_own_book_value()
 
     def _get_own_book_value(self):
         return self.value_residual + self.salvage_value

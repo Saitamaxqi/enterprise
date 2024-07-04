@@ -1078,7 +1078,7 @@ class TestAccountAsset(TestAccountReportsCommon):
             'name': 'New beautiful sticker :D',
             'asset_id': self.truck.id,
             'date': fields.Date.today() + relativedelta(years=-1, months=-6, days=-1),
-            'value_residual': 4000,
+            'value_residual': 4750,
             'salvage_value': 3000,
             "account_asset_counterpart_id": self.assert_counterpart_account_id,
         }).modify()
