@@ -129,11 +129,7 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
     }
 
     async _onBarcodeScanned(barcode) {
-        if (
-            ["register_consumed_materials", "register_byproducts"].includes(
-                this.recordData.test_type
-            )
-        ) {
+        if (this.recordData.test_type === "register_byproducts") {
             const lot = await this.props.record.model.orm.search("stock.lot", [
                 ["name", "=", barcode],
                 ["product_id", "=", this.recordData.component_id[0]],
@@ -199,6 +195,13 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
             record: this.props.record,
             width: 100,
             height: 100,
+        };
+    }
+
+    get qtyDoneInfo() {
+        return {
+            name: "qty_producing",
+            record: this.props.record,
         };
     }
 

@@ -68,21 +68,17 @@ registry.category("web_tour.tours").add("test_shop_floor", {
             trigger: '.modal:not(.o_inactive_modal) .modal-title:contains("Register legs")',
         },
         {
+            trigger: '.modal:not(.o_inactive_modal) span[data-tooltip="Quantity"]:contains("8.00")',
+            run: "scan PRODUCT_LEG",
+        },
+        {
+            trigger: '.modal:not(.o_inactive_modal) span[data-tooltip="Quantity"]:contains("9.00")',
+            run: "scan PRODUCT_LEG",
+        },
+        {
             content: "Component not tracked registration and continue production",
             trigger:
-                '.modal:not(.o_inactive_modal):contains(Register legs) button[barcode_trigger="CONT"]',
-            run: "click",
-        },
-        {
-            trigger: '.o_field_widget[name="qty_done"] input:value("0.00")',
-        },
-        {
-            content: "Add 2 units",
-            trigger: '.o_field_widget[name="qty_done"] input',
-            run: "edit 2 && click .modal-body",
-        },
-        {
-            trigger: '.o_field_widget[name="qty_done"] input:value("2.00")',
+                '.modal:not(.o_inactive_modal) span[data-tooltip="Quantity"]:contains("10.00")',
         },
         {
             content: 'Click on "Validate"',
@@ -90,23 +86,7 @@ registry.category("web_tour.tours").add("test_shop_floor", {
             run: "click",
         },
         {
-            trigger: '.o_field_widget[name="lot_id"] input:value("NE1")',
-        },
-        {
-            trigger: 'div.o_field_widget[name="lot_id"] input ',
-            tooltipPosition: "bottom",
-            run: "edit NE2",
-        },
-        {
-            trigger: `.ui-menu-item > a:contains("NE2")`,
-            run: "click",
-        },
-        {
-            trigger: 'button[barcode_trigger="CONT"]',
-            run: "click",
-        },
-        {
-            trigger: '.o_field_widget[name="lot_id"] input:value("NE1")',
+            trigger: '.modal:not(.o_inactive_modal) .modal-title:contains("Register necks")',
         },
         {
             trigger: 'button[barcode_trigger="NEXT"]',
@@ -558,252 +538,6 @@ registry.category("web_tour.tours").add("test_change_qty_produced", {
         {
             content: "Check that there are no open work orders",
             trigger: ".o_nocontent_help",
-        },
-    ],
-});
-
-registry.category("web_tour.tours").add("test_updated_quality_checks", {
-    steps: () => [
-        {
-            content: "Make sure workcenter is available",
-            trigger: '.form-check:has(input[name="Assembly Line"])',
-            run: "click",
-        },
-        {
-            trigger: '.form-check:has(input[name="Assembly Line"])',
-        },
-        {
-            content: "Confirm workcenter",
-            trigger: 'button:contains("Confirm")',
-            run: "click",
-        },
-        {
-            content: "Select workcenter",
-            trigger: 'button.btn-light:contains("Assembly Line")',
-            run: "click",
-        },
-        {
-            trigger: '.o_control_panel_actions button.active:contains("Assembly Line")',
-        },
-        {
-            content: "Open quality check dropdown",
-            trigger: ".accordion-button",
-            run: "click",
-        },
-        {
-            content: "Open register production",
-            trigger: '.o_mrp_record_line span:contains("Register Production")',
-            run: "click",
-        },
-        {
-            trigger: '.o_workorder_lot span:contains("serial")',
-        },
-        {
-            content: "Register production check",
-            trigger: ".o_workorder_lot .btn.fa-plus",
-            run: "click",
-        },
-        { trigger: 'button[barcode_trigger="NEXT"]', run: "click" },
-        {
-            trigger: '.o_field_widget[name="qty_done"] input:value("1.00")',
-        },
-        {
-            content: "Quantity shown 1 of 1",
-            trigger: 'span[name="component_remaining_qty"]:contains("1.00")',
-        },
-    ],
-});
-
-registry.category("web_tour.tours").add("test_update_tracked_consumed_materials_in_shopfloor", {
-    steps: () => [
-        {
-            content: "Make sure workcenter is available",
-            trigger: ".form-check:has(input[name='Lovely Workcenter'])",
-            run: "click",
-        },
-        {
-            trigger: ".form-check:has(input[name='Lovely Workcenter'])",
-        },
-        {
-            trigger: "button:contains('Confirm')",
-            run: "click",
-        },
-        {
-            content: "Check that we are in the MO view",
-            trigger: ".o_mrp_display_records button:contains('Lovely Workcenter')",
-        },
-        {
-            content: "Swap to the WO view of the Lovely Workcenter",
-            trigger: "button.btn-light:contains('Lovely Workcenter')",
-            run: "click",
-        },
-        {
-            content: "Open register production",
-            trigger: ".accordion button:contains('Instructions')",
-            run: "click",
-        },
-        {
-            trigger: ".modal-header .modal-title:contains('Register component')",
-        },
-        {
-            trigger: ".modal-header .modal-title:contains('Register component')",
-            run: "click",
-        },
-        {
-            content: "Register SN002",
-            trigger: ".o_workorder_lot input",
-            run: "edit SN002",
-        },
-        {
-            trigger: ".dropdown-item:contains('SN002')",
-            run: "click",
-        },
-        {
-            trigger: ".modal-header .modal-title:contains('Register component')",
-            run: "click",
-        },
-        {
-            content: "Check that SN002 was registered",
-            trigger: ".o_workorder_lot input:value('SN002')",
-        },
-        {
-            trigger: "button:contains('Continue consumption')",
-            run: "click",
-        },
-        {
-            trigger: ".modal-header .modal-title:contains('Register component')",
-            run: "click",
-        },
-        {
-            content: "check that the quantity was correctly updated",
-            trigger: "span[name='component_remaining_qty']:contains('1.00')",
-        },
-        //  Register SN004 => not available so should take from WH/Stock
-        {
-            content: "Register SN004",
-            trigger: ".o_workorder_lot input",
-            run: "edit SN004",
-        },
-        {
-            trigger: ".dropdown-item:contains('SN004')",
-            run: "click",
-        },
-        {
-            trigger: ".modal-header .modal-title:contains('Register component')",
-            run: "click",
-        },
-        {
-            content: "Check that SN004 was registered",
-            trigger: ".o_workorder_lot input:value('SN004')",
-        },
-        {
-            trigger: "button:contains('Continue consumption')",
-            run: "click",
-        },
-        {
-            trigger: ".modal-header .modal-title:contains('Register component')",
-            run: "click",
-        },
-        {
-            trigger: ".modal-content:not(:has(span[name=component_remaining_qty]))",
-        },
-        {
-            content: "Register SN003",
-            trigger: ".o_workorder_lot input",
-            run: "edit SN003",
-        },
-        {
-            trigger: ".dropdown-item:contains('SN003')",
-            run: "click",
-        },
-        {
-            trigger: ".modal-header .modal-title:contains('Register component')",
-            run: "click",
-        },
-        {
-            content: "Check that SN003 was registered",
-            trigger: ".o_workorder_lot input:value('SN003')",
-        },
-        {
-            trigger: "button:contains('Validate')",
-            run: "click",
-        },
-        {
-            content: "Check that 3 registrations were made",
-            trigger: ".accordion button:contains('Instructions'):contains(3/3)",
-        },
-    ],
-});
-
-registry.category("web_tour.tours").add("test_under_consume_materials_in_shopfloor", {
-    steps: () => [
-        {
-            content: "Make sure workcenter is available",
-            trigger: ".form-check:has(input[name='Lovely Workcenter'])",
-            run: "click",
-        },
-        {
-            trigger: ".form-check:has(input[name='Lovely Workcenter'])",
-        },
-        {
-            trigger: "button:contains('Confirm')",
-            run: "click",
-        },
-        {
-            content: "Check that we are in the MO view",
-            trigger: ".o_mrp_display_records button:contains('Lovely Workcenter')",
-        },
-        {
-            content: "Swap to the WO view of the Lovely Workcenter",
-            trigger: "button.btn-light:contains('Lovely Workcenter')",
-            run: "click",
-        },
-        {
-            content: "Open register production",
-            trigger: ".accordion button:contains('Instructions')",
-            run: "click",
-        },
-        {
-            trigger: ".modal-header .modal-title:contains('Register component')",
-        },
-        {
-            trigger: ".o_field_widget[name='qty_done'] input",
-            run: "click",
-        },
-        {
-            trigger: ".o_field_widget[name='qty_done'] input",
-            run: "edit 3",
-        },
-        {
-            trigger: ".modal-header",
-            run: "click",
-        },
-        {
-            trigger: "button:contains('Continue consumption')",
-            run: "click",
-        },
-        {
-            trigger: "span[name='component_remaining_qty']:contains('7.00')",
-        },
-        {
-            trigger: ".o_field_widget[name='qty_done'] input",
-            run: "click",
-        },
-        {
-            trigger: ".o_field_widget[name='qty_done'] input",
-            run: "edit 2",
-        },
-        {
-            trigger: ".modal-header",
-            run: "click",
-        },
-        {
-            trigger: "button:contains('Validate')",
-            run: "click",
-        },
-        {
-            content: "Check that the componenet registration has been completed",
-            trigger: ".btn:contains('Mark as Done')",
         },
     ],
 });

@@ -85,6 +85,7 @@ export class MrpDisplayAction extends Component {
                 "raw_material_production_id",
                 "should_consume_qty",
                 "workorder_id",
+                "check_id",
             ],
             "quality.check": [
                 "id",

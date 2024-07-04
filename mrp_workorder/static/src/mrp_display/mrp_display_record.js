@@ -255,8 +255,22 @@ export class MrpDisplayRecord extends Component {
             clickable: !this.state.underValidation,
             displayUOM: this.displayUOM,
             parent: this.props.record,
-            record: subRecord,
         };
+        if (
+            subRecord.resModel === "quality.check" &&
+            ["register_consumed_materials", "register_byproducts"].includes(
+                subRecord.data.test_type
+            )
+        ) {
+            props.displayInstruction = this.displayInstruction.bind(this, subRecord);
+            const moves =
+                subRecord.data.test_type === "register_consumed_materials"
+                    ? this.props.production.data.move_raw_ids
+                    : this.props.production.data.move_byproduct_ids;
+            subRecord = moves.records.find((m) => m.data.check_id.resIds.includes(subRecord.resId));
+        }
+        props.record = subRecord;
+
         if (subRecord.resModel === "quality.check") {
             props.displayInstruction = this.displayInstruction.bind(this, subRecord);
             props.sessionOwner = this.props.sessionOwner;
@@ -343,21 +357,44 @@ export class MrpDisplayRecord extends Component {
         });
     }
 
+    async displayRegisterConsumedComponent(
+        record,
+        previousQC = false,
+        nextQC = false,
+        fromCheck = false
+    ) {
+        //Display a modal to process the given Quality Check having test_type 'register_consumed_materials'.
+
+        const move = this.props.production.data.move_raw_ids.records.find((m) =>
+            m.data.check_id.resIds.includes(record.resId)
+        );
+        const action = await this.model.orm.call(
+            "stock.move",
+            "action_show_details_quality_check",
+            [move.resId]
+        );
+        this.model.action.doAction(action, {
+            props: {
+                buttonTemplate: "mrp_workorder.ShopFloorDialogButtons",
+                qualityCheckDone: fromCheck && this.qualityCheckDone.bind(this),
+                openNextCheck: nextQC && this.displayInstruction.bind(this, nextQC),
+                openPreviousCheck: previousQC && this.displayInstruction.bind(this, previousQC),
+            },
+            onClose: () => {
+                this.env.reload(this.props.production);
+            },
+        });
+    }
+
     /**
      * Display a dialog to process the given Quality Check.
      * If none are given, try to open the next QC to process.
      * @param {Object} [record] a `quality.check` record object to display.
      */
     async displayInstruction(record) {
-        let previousQC, nextQC;
-        if (record) {
-            const previousId = record.data.previous_check_id[0];
-            const nextId = record.data.next_check_id[0];
-            previousQC = this.record.check_ids.records.find((c) => c.data.id === previousId);
-            nextQC = this.record.check_ids.records.find((c) => c.data.id === nextId);
-        } else if (this.lastOpenedQualityCheck) {
+        if (!record) {
             // Searches the next Quality Check.
-            let lastQC = this.lastOpenedQualityCheck.data;
+            let lastQC = this.lastOpenedQualityCheck?.data;
             const checks = this.props.record.data.check_ids.records;
             while (lastQC?.next_check_id && !record) {
                 const nextCheckId = lastQC.next_check_id[0];
@@ -367,14 +404,25 @@ export class MrpDisplayRecord extends Component {
                 }
                 lastQC = check;
             }
-        }
-        if (record === this.lastOpenedQualityCheck || !record) {
-            // Avoids a QC to re-open itself.
-            delete this.lastOpenedQualityCheck;
-            return;
+            if (!record) {
+                return;
+            }
         }
         this.lastOpenedQualityCheck = record;
-
+        const previousId = record.data.previous_check_id[0];
+        const nextId = record.data.next_check_id[0];
+        const previousQC = this.record.check_ids.records.find((c) => c.data.id === previousId);
+        const nextQC = this.record.check_ids.records.find((c) => c.data.id === nextId);
+        if (
+            ["register_consumed_materials", "register_byproducts"].includes(record.data.test_type)
+        ) {
+            const moves =
+                record.data.test_type === "register_consumed_materials"
+                    ? this.props.production.data.move_raw_ids
+                    : this.props.production.data.move_byproduct_ids;
+            const move = moves.records.find((m) => m.data.check_id.resIds.includes(record.resId));
+            return this.displayRegisterConsumedComponent(move, previousQC, nextQC, true);
+        }
         const worksheetData = await this.getWorksheetData(record);
         if (!worksheetData && !record.data.note.length && record.data.test_type === "worksheet") {
             // if there is no instruction to display, open worksheet form directly
@@ -391,9 +439,6 @@ export class MrpDisplayRecord extends Component {
             title: record.data.title,
             worksheetData,
             checkInstruction: this.record.operation_note,
-            cancel: () => {
-                delete this.lastOpenedQualityCheck;
-            },
             qualityCheckDone: this.qualityCheckDone.bind(this),
             openNextCheck: nextQC && this.displayInstruction.bind(this, nextQC),
             openPreviousCheck: previousQC && this.displayInstruction.bind(this, previousQC),
@@ -520,7 +565,7 @@ export class MrpDisplayRecord extends Component {
             this.validatingEmployee = this.props.sessionOwner.id;
             if (
                 this.props.record.data.employee_ids.records.some(
-                    (emp) => emp.resId == this.validatingEmployee
+                    (emp) => emp.resId === this.validatingEmployee
                 )
             ) {
                 await this.model.orm.call(resModel, "stop_employee", [

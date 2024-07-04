@@ -11,7 +11,6 @@ export class QualityCheck extends MrpWorkorder {
     };
     static props = {
         ...MrpWorkorder.props,
-        displayInstruction: Function,
         quantityToProduce: { optional: true, type: Number },
     };
 
@@ -84,7 +83,6 @@ export class QualityCheck extends MrpWorkorder {
         switch (this.props.record.data.test_type) {
             case "picture":
                 return "fa fa-camera";
-            case "register_consumed_materials":
             case "register_byproduct":
                 return "fa fa-barcode";
             case "instructions":
@@ -124,23 +122,7 @@ export class QualityCheck extends MrpWorkorder {
         this.props.record._parentRecord.model.notify();
     }
 
-    get lotInfo() {
-        const recordData = this.props.record.data;
-        if (
-            recordData.quality_state === "pass" &&
-            recordData.test_type === "register_consumed_materials"
-        ) {
-            if (recordData.component_tracking === "lot") {
-                return recordData.qty_done + " " + recordData.component_uom_id[1];
-            }
-            if (recordData.component_tracking === "serial") {
-                return recordData.lot_id[1];
-            }
-        }
-        return undefined;
-    }
-
     get shouldDisplayCheckmark() {
-        return this.state === "pass" && !(this.showMeasure || this.lotInfo);
+        return this.state === "pass" && !this.showMeasure;
     }
 }

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_stock_move_operations_quality_check" model="ir.ui.view">
+        <field name="name">stock.move.operations.quality.check.form</field>
+        <field name="model">stock.move</field>
+        <field name="priority">1</field>
+        <field name="mode">primary</field>
+        <field name="inherit_id" ref="mrp.view_stock_move_operations_raw" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position="attributes">
+                <attribute name="js_class">move_form_shop_floor</attribute>
+            </xpath>
+            <xpath expr="//field[@name='show_lots_m2o']" position="after">
+                <field name="note" string="Note Text"/>
+            </xpath>
+            <xpath expr="//group[@name='product_qty']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+            <xpath expr="//field[@name='move_line_ids']" position="after">
+                <group>
+                    <field name="worksheet_document" string="" widget="pdf_viewer" invisible="not worksheet_document" readonly="1"/>
+                </group>
+                <group>
+                    <field name="worksheet_note" string="" invisible="not worksheet_note" readonly="1"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

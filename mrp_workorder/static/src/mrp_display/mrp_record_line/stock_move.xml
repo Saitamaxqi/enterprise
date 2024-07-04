@@ -12,7 +12,7 @@
                 'btn-secondary': !isComplete,
                 'text-danger': quantityDone > toConsumeQuantity
                 }">
-                <t t-if="quantityDone &amp;&amp; quantityDone !== toConsumeQuantity">
+                <t t-if="(quantityDone || isComplete) &amp;&amp; quantityDone !== toConsumeQuantity">
                     <t t-out="quantityDone"/> /
                 </t>
                 <t t-esc="toConsumeQuantity"/>

@@ -31,13 +31,6 @@ export class MrpRegisterProductionDialog extends MrpQualityCheckConfirmationDial
         this.props.close();
     }
 
-    get qtyDoneInfo() {
-        return {
-            name: "qty_producing",
-            record: this.props.record,
-        };
-    }
-
     async actionGenerateSerial() {
         await this.props.record.model.orm.call(
             this.props.record.resModel,

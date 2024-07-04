@@ -83,7 +83,8 @@
                     </div>
                     <div t-att-id="props.record.id" class="collapse">
                         <t t-foreach="checks" t-as="check" t-key="check.data.id">
-                            <QualityCheck t-props="subRecordProps(check)"/>
+                            <StockMove t-if="['register_consumed_materials', 'register_byproducts'].includes(check.data.test_type)" t-props="subRecordProps(check)"/>
+                            <QualityCheck t-else="" t-props="subRecordProps(check)"/>
                         </t>
                     </div>
                 </div>

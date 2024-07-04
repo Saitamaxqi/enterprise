@@ -10,6 +10,7 @@ export class StockMove extends Component {
         parent: Object,
         record: Object,
         uom: { optional: true, type: Object },
+        displayInstruction: { optional: true, type: Function },
     };
     static template = "mrp_workorder.StockMove";
 
@@ -75,6 +76,9 @@ export class StockMove extends Component {
     }
 
     async clicked() {
+        if (this.props.displayInstruction) {
+            return this.props.displayInstruction();
+        }
         const action = await this.props.record.model.orm.call(
             this.resModel,
             "action_show_details",
@@ -91,15 +95,14 @@ export class StockMove extends Component {
     async toggleQuantityDone() {
         if (!this.props.clickable) {
             return;
-        } else if (!this.toConsumeQuantity) {
+        } else if (!this.toConsumeQuantity || this.isComplete) {
             return this.clicked();
         }
-        const quantity = this.quantityDone ? this.quantityDone : this.toConsumeQuantity;
-        this.props.record.update({
-            quantity: quantity,
-            picked: !this.isComplete,
-        });
-        this.props.record.save({ reload: false });
+        await this.props.record.model.orm.call("stock.move", "action_pass", [
+            this.props.record.resId,
+            true,
+        ]);
+        await this.env.reload(this.props.parent);
     }
 
     get state() {

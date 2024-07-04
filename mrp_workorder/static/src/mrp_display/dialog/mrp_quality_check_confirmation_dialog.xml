@@ -13,9 +13,22 @@
                 </div>
                 <div t-if="recordData.additional_note" t-out="recordData.additional_note"/>
             </div>
-            <t t-if="['register_consumed_materials', 'register_byproducts', 'register_production'].includes(recordData.test_type)" name="registerQualityCheck">
+            <t t-if="['register_byproducts', 'register_production'].includes(recordData.test_type)" name="registerQualityCheck">
                 <div name="component_id" class="o_workorder_bar_content" t-esc="recordData.component_id[1]"/>
                 <div class="o_workorder_bar_content mt-3">
+                    <div class="o_quantity row">
+                        <span class="col-2">Quantity</span>
+                        <span name="qty_done" class="o_field_widget text-end col-2 pe-2">
+                            <FloatField t-props="qtyDoneInfo"/>
+                        </span>
+                        <span class="col-4 ps-0">
+                            <t t-if="recordData.component_remaining_qty">
+                                /<span name="component_remaining_qty" class="mx-2"
+                                    t-esc="formatFloat(recordData.component_remaining_qty)"/>
+                            </t>
+                            <span t-esc="recordData.component_uom_id[1]"/>
+                        </span>
+                    </div>
                     <div t-if="displayLot" class="o_workorder_lot row">
                         <span class="text-capitalize col-2" t-esc="trackingNumberLabel"/>
                         <div name="lot_id" class="o_field_widget col-4">
@@ -66,17 +79,17 @@
                                 t-att-disabled="state.disabled"
                                 class="btn btn-primary me-2" t-on-click="validate" t-esc="confirmLabel"
                                 t-att-barcode_trigger="recordData.test_type === 'print_label' ? 'PRPL' : 'NEXT'"/>
-                        <button t-if="['register_consumed_materials', 'register_byproducts'].includes(recordData.test_type)"
+                        <button t-if="recordData.test_type === 'register_byproducts'"
                                 t-att-disabled="state.disabled"
                                 class="btn btn-secondary me-2" t-on-click="continueProduction"
                                 barcode_trigger="CONT">Continue consumption</button>
                     </div>
                     <div>
-                        <button t-if="props.previousCheck" t-on-click="back"
+                        <button t-if="props.openPreviousCheck" t-on-click="back"
                                 class="btn btn-secondary me-2"
                                 t-att-disabled="state.disabled"
                                 barcode_trigger="prev">&lt; Back</button>
-                        <button t-if="props.nextCheck" t-on-click="skip"
+                        <button t-if="props.openNextCheck" t-on-click="skip"
                                 class="btn btn-secondary"
                                 t-att-disabled="state.disabled"
                                 barcode_trigger="skip">Skip &gt;</button>

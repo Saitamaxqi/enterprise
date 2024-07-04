@@ -376,15 +376,6 @@ class QualityCheck(models.Model):
                 if not self.lot_id:
                     raise UserError(_('Please enter a Lot/SN.'))
                 self.production_id.lot_producing_id = self.lot_id
-        elif self.test_type in ('register_byproducts', 'register_consumed_materials'):
-            # Form validation
-            # in case we use continue production instead of validate button.
-            # We would like to consume 0 and leave lot_id blank to close the consumption
-            if self.component_tracking != 'none' and not self.lot_id:
-                raise UserError(_('Please enter a Lot/SN.'))
-
-            if continue_production:
-                self.workorder_id._create_subsequent_checks()
 
         if self.test_type == 'picture' and not self.picture:
             raise UserError(_('Please upload a picture.'))
@@ -423,6 +414,8 @@ class QualityCheck(models.Model):
     def do_pass(self):
         res = super().do_pass()
         for check in self:
+            if check.move_id:
+                check.move_id.picked = True
             if check.workorder_id:
                 if check.workorder_id.employee_id:
                     check.employee_id = self.workorder_id.employee_id
