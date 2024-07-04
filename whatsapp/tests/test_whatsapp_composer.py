@@ -243,14 +243,18 @@ class WhatsAppComposerInternals(WhatsAppComposerCase, CronMixinCase):
                     else:
                         composer._send_whatsapp_template(force_send_by_cron=force_cron)
 
-                # in batch mode: three messages ready to be sent if sent with force_cron parameter, else two messages
+                # in batch mode: two messages ready to be sent + one failed
                 if exp_batch:
-                    self.assertEqual(len(self._new_wa_msg), 3 if force_cron else 2)
+                    self.assertEqual(len(self._new_wa_msg), 3)
                     for exp_contacted in self.customers:
                         self.assertWAMessageFromRecord(
                             exp_contacted,
                             status="outgoing",
                         )
+                    self.assertWAMessageFromRecord(
+                        invalid_customer,
+                        status="error",
+                    )
                 if exp_cron_trigger:
                     self.assertEqual(len(captured_triggers.records), 1)
                     self.assertEqual(

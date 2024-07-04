@@ -242,9 +242,6 @@ class WhatsappComposer(models.TransientModel):
                 force_format="WHATSAPP",
                 raise_exception=raise_exception,
             )
-            # Continue to the next iteration if the formatted_number_wa is False and not forced to send by cron parameter.
-            if not (formatted_number_wa or force_create):
-                continue
 
             message_vals = {}
 

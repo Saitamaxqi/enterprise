@@ -27,13 +27,10 @@ class WhatsAppTemplate(WhatsAppFullCase):
                 composer = self._instanciate_wa_composer_from_records(template, test_record)
                 with self.mockWhatsappGateway():
                     composer.action_send_whatsapp_template()
-                if test_record == self.test_base_record_partner:
-                    self.assertWAMessage(
-                        fields_values={
-                            'mobile_number': "0485221100",
-                        },
-                    )
-                # no number found -> no message produced
-                else:
-                    self.assertFalse(self._new_wa_msg)
-                    self.assertFalse(self._new_wa_msg.mobile_number)
+                self.assertWAMessageFromRecord(
+                    test_record,
+                    status='sent' if test_record == self.test_base_record_partner else 'error',
+                    fields_values={
+                        'mobile_number': test_record.customer_id.phone,
+                    },
+                )
