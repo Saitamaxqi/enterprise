@@ -67,6 +67,7 @@ class MockOutgoingWhatsApp(common.BaseCase):
 
         def _upload_whatsapp_document(attachment):
             if attachment:
+                self._wa_uploaded_document_count += 1
                 return {
                     "messaging_product": "whatsapp",
                     "contacts": [{
@@ -74,7 +75,7 @@ class MockOutgoingWhatsApp(common.BaseCase):
                             "wa_id": "1234567890",
                         }],
                     "messages": [{
-                        "id": "qwertyuiop0987654321",
+                        "id": str(self._wa_uploaded_document_count),
                     }]
                 }
             raise WhatsAppError("Please ensure you are using the correct file type and try again.")
@@ -120,6 +121,7 @@ class MockOutgoingWhatsApp(common.BaseCase):
         self._wa_msg_sent = []
         self._wa_msg_sent_vals = []
         self._wa_document_store = {}
+        self._wa_uploaded_document_count = 0
 
 
 class MockIncomingWhatsApp(common.HttpCase):

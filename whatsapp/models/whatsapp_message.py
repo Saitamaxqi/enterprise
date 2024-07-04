@@ -15,7 +15,7 @@ from odoo.addons.whatsapp.tools.bounced_codes import BOUNCED_ERROR_CODES
 from odoo.addons.whatsapp.tools.whatsapp_api import WhatsAppApi
 from odoo.addons.whatsapp.tools.whatsapp_exception import WhatsAppError
 from odoo.exceptions import ValidationError, UserError
-from odoo.tools import groupby, html2plaintext
+from odoo.tools import frozendict, groupby, html2plaintext
 
 _logger = logging.getLogger(__name__)
 
@@ -206,9 +206,10 @@ class WhatsappMessage(models.Model):
 
     def _send_cron(self):
         """ Send all outgoing messages. """
+        # order by template to have more relevant duplicate detection
         records = self.search([
             ('state', '=', 'outgoing'), ('wa_template_id', '!=', False)
-        ], limit=500)
+        ], order='wa_template_id', limit=500)
         records._send_message(with_commit=True)
         if len(records) == 500:  # assumes there are more whenever search hits limit
             self.env.ref('whatsapp.ir_cron_send_whatsapp_queue')._trigger()
@@ -237,6 +238,7 @@ class WhatsappMessage(models.Model):
             for message in messages:
                 message_to_api[message] = wa_api
 
+        sent_message_vals = set()
         for whatsapp_message in self:
             wa_api = message_to_api[whatsapp_message]
             # try to make changes with current user (notably due to ACLs), but limit
@@ -246,6 +248,7 @@ class WhatsappMessage(models.Model):
             if whatsapp_message.state != 'outgoing':
                 _logger.info("Message state in %s state so it will not sent.", whatsapp_message.state)
                 continue
+            is_duplicate = False
             msg_uid = False
             try:
                 parent_message_id = False
@@ -260,7 +263,7 @@ class WhatsappMessage(models.Model):
                     raise WhatsAppError(failure_type='blacklisted')
 
                 # based on template
-                if whatsapp_message.wa_template_id:
+                if template := whatsapp_message.wa_template_id:
                     message_type = 'template'
                     if whatsapp_message.wa_template_id.status != 'approved' or whatsapp_message.wa_template_id.quality == 'red':
                         raise WhatsAppError(failure_type='template')
@@ -281,6 +284,19 @@ class WhatsappMessage(models.Model):
                         record=from_record,
                         whatsapp_message=whatsapp_message,
                     )
+                    # reports are considered always unique
+                    if not template.report_id:
+                        send_vals_without_attachments = dict(send_vals)
+                        # the same attachment re-uploaded will have a different identifier
+                        # TODO MASTER avoid having to upload as part of the "get template values" flow
+                        if template.header_type in ('image', 'video', 'document'):
+                            components = [component_vals for component_vals in send_vals['components'] if component_vals['type'] != 'header']
+                            send_vals_without_attachments['components'] = components
+                        unique_message_vals = (number, frozendict(send_vals_without_attachments))
+                        if unique_message_vals not in sent_message_vals:
+                            sent_message_vals.add(unique_message_vals)
+                        else:
+                            is_duplicate = True
                     if attachment and attachment not in whatsapp_message.mail_message_id.attachment_ids:
                         whatsapp_message.mail_message_id.attachment_ids = [(4, attachment.id)]
                 # no template
@@ -301,22 +317,26 @@ class WhatsappMessage(models.Model):
                     parent_id = whatsapp_message.mail_message_id.parent_id.wa_message_ids
                     if parent_id:
                         parent_message_id = parent_id[0].msg_uid
-                msg_uid = wa_api._send_whatsapp(number=number, message_type=message_type, send_vals=send_vals, parent_message_id=parent_message_id)
+                if not is_duplicate:
+                    msg_uid = wa_api._send_whatsapp(number=number, message_type=message_type, send_vals=send_vals, parent_message_id=parent_message_id)
             except WhatsAppError as we:
                 whatsapp_message._handle_error(whatsapp_error_code=we.error_code, error_message=we.error_message,
                                                failure_type=we.failure_type)
             except (UserError, ValidationError) as e:
                 whatsapp_message._handle_error(failure_type='unknown', error_message=str(e))
             else:
-                if not msg_uid:
-                    whatsapp_message._handle_error(failure_type='unknown')
-                else:
-                    if message_type == 'template':
-                        whatsapp_message._post_message_in_active_channel()
-                    whatsapp_message.write({
-                        'state': 'sent',
-                        'msg_uid': msg_uid
-                    })
+                if is_duplicate:
+                    whatsapp_message.state = 'cancel'
+                elif whatsapp_message.state == 'outgoing':
+                    if not msg_uid:
+                        whatsapp_message._handle_error(failure_type='unknown')
+                    else:
+                        if message_type == 'template':
+                            whatsapp_message._post_message_in_active_channel()
+                        whatsapp_message.write({
+                            'state': 'sent',
+                            'msg_uid': msg_uid
+                        })
                 if with_commit:
                     self._cr.commit()
 
