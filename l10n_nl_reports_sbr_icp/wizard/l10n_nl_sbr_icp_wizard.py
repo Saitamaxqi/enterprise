@@ -105,7 +105,7 @@ class L10nNlICPSBRWizard(models.TransientModel):
             os.unlink(f.name)
 
         if not self.is_test:
-            self.env.company.l10n_nl_reports_sbr_icp_last_sent_date_to = self.date_to
+            self.env.company.sudo().l10n_nl_reports_sbr_icp_last_sent_date_to = self.date_to
             subject = _("ICP report sent")
             body = Markup(_(
                 "The ICP report from %(date_from)s to %(date_to)s was sent to Digipoort.<br/>We will post its processing status in this chatter once received.<br/>Discussion id: %(id)s"
