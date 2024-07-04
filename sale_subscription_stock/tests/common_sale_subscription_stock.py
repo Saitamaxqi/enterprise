@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from freezegun import freeze_time
+from unittest.mock import patch
 
 from odoo.tests import tagged
 from odoo import Command, fields
@@ -127,7 +128,7 @@ class TestSubscriptionStockCommon(TestSubscriptionCommon, ValuationReconciliatio
         # update status
         # cls.subscription_delivery._compute_is_deferred()
 
-        with freeze_time("2022-03-02"):
+        with freeze_time("2022-03-02"), patch.object(cls.env.cr, 'now', fields.Datetime.now):
             cls.subscription_order.write({'start_date': fields.Date.today(), 'next_invoice_date': False})
             cls.subscription_delivery.write({'start_date': fields.Date.today(), 'next_invoice_date': False})
             cls.subscription_order.action_confirm()
@@ -138,12 +139,13 @@ class TestSubscriptionStockCommon(TestSubscriptionCommon, ValuationReconciliatio
             cls.subscription_delivery.picking_ids._action_done()
 
     def simulate_period(self, subscription, date, move_qty=False):
-        with freeze_time(date):
+        with freeze_time(date), patch.object(self.env.cr, 'now', fields.Datetime.now):
+            subscription.picking_ids.create_date = fields.Date.today()
             today = fields.Date.today()
             invoice = subscription._create_recurring_invoice()
             if invoice and invoice.state == 'draft':
                 invoice.action_post()
-            picking = subscription.picking_ids and subscription.picking_ids.filtered(lambda picking: picking.date.date() == today)
+            picking = subscription.picking_ids and subscription.picking_ids.filtered(lambda picking: picking.create_date.date() == today)
             self.validate_picking_moves(picking, move_qty=move_qty)
 
         return invoice, picking

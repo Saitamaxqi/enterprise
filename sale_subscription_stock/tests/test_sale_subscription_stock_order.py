@@ -2,12 +2,14 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import datetime
+from unittest.mock import patch
+
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
 
 from odoo import Command, fields
 from odoo.addons.sale_subscription_stock.tests.common_sale_subscription_stock import TestSubscriptionStockCommon
-from odoo.tests import tagged, Form
+from odoo.tests import Form, tagged
 from odoo.tests.common import new_test_user
 
 
@@ -146,7 +148,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
         sub = self.subscription_order.copy()
         sub.order_line.product_uom_qty = 2
 
-        with freeze_time("2022-03-02"):
+        with freeze_time("2022-03-02"), patch.object(self.env.cr, 'now', fields.Datetime.now):
             sub.write({'start_date': fields.Date.today(), 'next_invoice_date': False})
             sub.action_confirm()
             picking_id = sub.picking_ids  # only one picking
@@ -191,7 +193,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             ]
         })
 
-        with freeze_time("2022-03-02"):
+        with freeze_time("2022-03-02"), patch.object(self.env.cr, 'now', fields.Datetime.now):
             sub.write({'start_date': False, 'next_invoice_date': False})
             sub.action_confirm()
 
@@ -387,7 +389,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             ]
         })
 
-        with freeze_time("2024-02-02"):
+        with freeze_time("2024-02-02"), patch.object(self.env.cr, 'now', fields.Datetime.now):
             self.subscription_order_with_bom.write({'start_date': fields.Date.today(), 'next_invoice_date': False})
             self.subscription_order_with_bom.action_confirm()
             self.assertEqual(self.subscription_order_with_bom.invoice_count, 0,

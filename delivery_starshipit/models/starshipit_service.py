@@ -116,7 +116,7 @@ class Starshipit:
                 from_partner = picking.partner_id
                 to_partner = picking.picking_type_id.warehouse_id.partner_id
             order = {
-                'order_date': format_date(carrier.env, picking.date),
+                'order_date': format_date(carrier.env, picking.create_date),
                 'order_number': starshipit_picking_number,  # Displayed in starshipit
                 'reference': picking.partner_id.display_name[:50],
                 # The shipping method must match a rule in starshipit, so that the carrier will be assigned properly
