@@ -57,6 +57,19 @@ const getProgressBars = () => ({
             employee_id: 1,
             is_material_resource: true,
             display_popover_material_resource: false,
+            is_flexible: false,
+            avg_hours: 8,
+            work_intervals: [
+                ["2022-10-10 06:00:00", "2022-10-10 10:00:00"], //Monday    4h
+                ["2022-10-11 06:00:00", "2022-10-11 10:00:00"], //Tuesday   5h
+                ["2022-10-11 11:00:00", "2022-10-11 12:00:00"],
+                ["2022-10-12 06:00:00", "2022-10-12 10:00:00"], //Wednesday 6h
+                ["2022-10-12 11:00:00", "2022-10-12 13:00:00"],
+                ["2022-10-13 06:00:00", "2022-10-13 10:00:00"], //Thursday  7h
+                ["2022-10-13 11:00:00", "2022-10-13 14:00:00"],
+                ["2022-10-14 06:00:00", "2022-10-14 10:00:00"], //Friday    8h
+                ["2022-10-14 11:00:00", "2022-10-14 15:00:00"],
+            ],
         },
     },
 });
@@ -92,40 +105,8 @@ async function recurrenceDeletionTemplate(mode) {
     expect.verifySteps([`Recurency Delete in mode ${mode}`]);
 }
 
-async function ganttResourceWorkIntervalRPC() {
-    return [
-        {
-            1: [
-                ["2022-10-10 06:00:00", "2022-10-10 10:00:00"], //Monday    4h
-                ["2022-10-11 06:00:00", "2022-10-11 10:00:00"], //Tuesday   5h
-                ["2022-10-11 11:00:00", "2022-10-11 12:00:00"],
-                ["2022-10-12 06:00:00", "2022-10-12 10:00:00"], //Wednesday 6h
-                ["2022-10-12 11:00:00", "2022-10-12 13:00:00"],
-                ["2022-10-13 06:00:00", "2022-10-13 10:00:00"], //Thursday  7h
-                ["2022-10-13 11:00:00", "2022-10-13 14:00:00"],
-                ["2022-10-14 06:00:00", "2022-10-14 10:00:00"], //Friday    8h
-                ["2022-10-14 11:00:00", "2022-10-14 15:00:00"],
-            ],
-            false: [
-                ["2022-10-10 06:00:00", "2022-10-10 10:00:00"],
-                ["2022-10-10 11:00:00", "2022-10-10 15:00:00"],
-                ["2022-10-11 06:00:00", "2022-10-11 10:00:00"],
-                ["2022-10-11 11:00:00", "2022-10-11 15:00:00"],
-                ["2022-10-12 06:00:00", "2022-10-12 10:00:00"],
-                ["2022-10-12 11:00:00", "2022-10-12 15:00:00"],
-                ["2022-10-13 06:00:00", "2022-10-13 10:00:00"],
-                ["2022-10-13 11:00:00", "2022-10-13 15:00:00"],
-                ["2022-10-14 06:00:00", "2022-10-14 10:00:00"],
-                ["2022-10-14 11:00:00", "2022-10-14 15:00:00"],
-            ],
-        },
-        { false: true },
-    ];
-}
-
 function _getCreateViewArgsForGanttViewTotalsTests() {
     mockDate("2022-10-13 00:00:00", +1);
-    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
     ResourceResource._records = [{ id: 1, name: "Resource 1" }];
     PlanningSlot._records.push({
         id: 1,
@@ -160,6 +141,11 @@ beforeEach(() => {
         list: `<list><field name="name"/></list>`,
     };
     onRpc("has_group", () => true);
+    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
+        const result = await parent();
+        result.progress_bars = getProgressBars();
+        return result;
+    })
 });
 
 test("empty gantt view: send schedule", async function () {
@@ -226,7 +212,6 @@ test('add record in empty gantt with sample="1"', async function () {
     };
 
     mockDate("2018-12-10 07:00:00");
-    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
 
     await mountGanttView({
         resModel: "planning.slot",
@@ -478,7 +463,6 @@ test("the grouped gantt view is coloured correctly and the occupancy percentage 
         },
     ];
 
-    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
     onRpc("get_gantt_data", ({ parent }) => {
         const result = parent();
         result.progress_bars = getProgressBars();
@@ -549,8 +533,6 @@ test("Gantt Planning : pill name should not display allocated hours if allocated
         },
     ];
 
-    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
-
     await mountGanttView({
         resModel: "planning.slot",
         arch: `
@@ -581,8 +563,6 @@ test("Resize or Drag-Drop should open recurrence update wizard", async () => {
         allocated_percentage: 100,
         repeat: true,
     });
-
-    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
 
     await mountGanttView({
         resModel: "planning.slot",
@@ -668,7 +648,6 @@ test("Test split tool in gantt view", async function () {
         },
     ];
 
-    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
     onRpc("split_pill", ({ args, kwargs }) => {
         expect(args[0]).toEqual([2]);
         expect(kwargs.values).toEqual({
@@ -735,7 +714,6 @@ test("Test highlight shifts added by executed action", async function () {
         this.env["planning.slot"].write([2], { resource_id: 1 });
         return { open_shift_assigned: [2] };
     });
-    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
 
     await mountGanttView({
         resModel: "planning.slot",
@@ -806,7 +784,6 @@ test("Test highlight shifts added by executed action", async function () {
 
 test("Verify Hours in Planning Dialog When Clicking on cell for Off Days and Working Days in Gantt View", async function () {
     mockDate("2022-10-13 00:00:00", +1);
-    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
     await mountGanttView({
         resModel: "planning.slot",
         arch: `
@@ -850,7 +827,6 @@ test("Verify Hours in Planning Dialog When Clicking 'New' Button for Off Days in
         result.unavailabilities = unavailabilities;
         return result;
     });
-    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
     await mountGanttView({
         resModel: "planning.slot",
         arch: `
@@ -896,8 +872,6 @@ test("The date should take into the account when created through the button in G
             </form>
         `,
     };
-
-    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
 
     await mountGanttView({
         resModel: "planning.slot",
@@ -1047,7 +1021,6 @@ test("publish on gantt view: default end_datetime should cover full range", asyn
         end_datetime: "2018-11-20 17:00:00",
         resource_id: 1,
     });
-    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
 
     await mountGanttView({
         resModel: "planning.slot",

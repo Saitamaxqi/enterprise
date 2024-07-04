@@ -76,6 +76,23 @@ export class PlanningGanttModel extends GanttModel {
         return super.load({ ...searchParams, context: { ...context, show_job_title: true } });
     }
 
+    /**
+     * @override
+     */
+    _processProgressBars(progressBars) {
+        if (!this.orm.isSample) {
+            const resources = Object.values(progressBars.resource_id || []);
+            for (const resource of resources) {
+                if (resource.work_intervals) {
+                    resource.work_intervals = resource.work_intervals.map((work_interval) =>
+                        work_interval.map(deserializeDateTime)
+                    );
+                }
+            }
+        }
+        return super._processProgressBars(progressBars);
+    }
+
     //--------------------------------------------------------------------------
     // Public
     //--------------------------------------------------------------------------
@@ -209,51 +226,6 @@ export class PlanningGanttModel extends GanttModel {
             this.closedRows.add(firstRow.id);
         }
         this.highlightIds = highlightIds;
-    }
-
-    /**
-     * @override
-     */
-    _fetchDataPostProcess(metaData, data) {
-        const proms = [super._fetchDataPostProcess(...arguments)];
-        if (data.records.length && !this.orm.isSample) {
-            proms.push(this._fetchResourceWorkInterval(metaData, data));
-        }
-        return Promise.all(proms);
-    }
-
-    /**
-     * Fetch resources' work intervals.
-     * set key "workIntervals" in data
-     * @param {MetaData} metaData
-     * @param {Data} data
-     */
-    async _fetchResourceWorkInterval(metaData, data) {
-        const [workIntervals, isFlexibleHours, avgWorkHours] = await this.orm.call(
-            metaData.resModel,
-            "gantt_resource_work_interval",
-            [data.records.map((r) => r.id)],
-            {
-                context: {
-                    ...this.searchParams.context,
-                    default_start_datetime: serializeDateTime(metaData.globalStart),
-                    default_end_datetime: serializeDateTime(metaData.globalStop),
-                    current_scale: metaData.scale.id,
-                }
-            }
-        );
-        data.workIntervals = {};
-        for (const resourceId in workIntervals) {
-            const resourceIntervals = [];
-            for (const workInterval of workIntervals[resourceId]) {
-                resourceIntervals.push(workInterval.map(deserializeDateTime));
-            }
-            if (resourceIntervals.length) {
-                data.workIntervals[resourceId] = resourceIntervals;
-            }
-        }
-        data.isFlexibleHours = isFlexibleHours;
-        data.avgWorkHours = avgWorkHours;
     }
 
     /**

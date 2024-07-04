@@ -1,5 +1,5 @@
 import { clickCell } from "@web_gantt/../tests/web_gantt_test_helpers";
-import { defineModels, fields, models, mountView, onRpc } from "@web/../tests/web_test_helpers";
+import { defineModels, fields, models, mountView } from "@web/../tests/web_test_helpers";
 import { definePlanningModels, planningModels } from "@planning/../tests/planning_mock_models";
 import { expect, test } from "@odoo/hoot";
 import { mockDate } from "@odoo/hoot-mock";
@@ -34,9 +34,6 @@ defineModels([SaleOrderLine]);
 
 test("Slot should be instantly created on click when grouped by sale_line_id.", async () => {
     mockDate("2019-03-11 07:00:00", +1);
-    onRpc("planning.slot", "gantt_resource_work_interval", () => {
-        return [{ false: [] }, { false: false }, { false: 0 }];
-    });
     await mountView({
         type: "gantt",
         resModel: "planning.slot",

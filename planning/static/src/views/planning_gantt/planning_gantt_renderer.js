@@ -315,10 +315,11 @@ export class PlanningGanttRenderer extends GanttRenderer {
         const resourceId = record.resource_id && record.resource_id.id;
         const startTime = record.start_datetime;
         const endTime = record.end_datetime;
-        if (!this.model.data.workIntervals) {
+        if (!Object.keys(this.model.data.progressBars.resource_id || {}).length) {
             return [];
         }
-        const resourceIntervals = this.model.data.workIntervals[resourceId];
+        const resourceIntervals =
+            this.model.data.progressBars?.resource_id?.[resourceId]?.work_intervals;
         if (!resourceIntervals) {
             return [];
         }
@@ -331,7 +332,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
      * @returns {boolean}
      */
     isFlexibleHours(resource_id) {
-        return !!this.model.data.isFlexibleHours?.[resource_id];
+        return !!this.model.data.progressBars?.resource_id?.[resource_id]?.is_flexible_hours;
     }
 
     /**
@@ -363,7 +364,7 @@ export class PlanningGanttRenderer extends GanttRenderer {
         }
 
         // A row not having work intervals could mean that a resource doesn't have a contract or the row is the "Total" row
-        const workIntervals = this.model.data.workIntervals?.[row.resId];
+        const workIntervals = this.model.data.progressBars?.resource_id?.[row.resId]?.work_intervals;
         if (!workIntervals) {
             if (row.groupedByField === "resource_id") {  // If there is no contract, don't show aggregate info
                 return false;
@@ -425,9 +426,9 @@ export class PlanningGanttRenderer extends GanttRenderer {
         const resource_id = this.row.resId;
         // If flexible hour contract, colour the gantt view group based on whether the aggregate value > the "average work hours" per day.
         if (this.isFlexibleHours(resource_id)) {
-            workHours = this.model.data.avgWorkHours[resource_id];
+            workHours = this.model.data.progressBars.resource_id[resource_id]?.work_intervals;
         } else {
-            workHours = this.model.data.workIntervals[resource_id].reduce(
+            workHours = this.model.data.progressBars.resource_id[resource_id]?.work_intervals.reduce(
                 (sum, [ intervalStart, intervalEnd ]) => {
                     // Check whether the work interval is of the same date as the grouping pill
                     if (intervalStart >= pill.date_start && intervalEnd <= pill.date_end) {

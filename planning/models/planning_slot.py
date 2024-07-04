@@ -1460,59 +1460,6 @@ class PlanningSlot(models.Model):
         return super(PlanningSlot, self.with_context(scale=scale)).get_gantt_data(domain, groupby, read_specification, limit=limit, offset=offset, unavailability_fields=unavailability_fields, progress_bar_fields=progress_bar_fields, start_date=start_date, stop_date=stop_date, scale=scale)
 
     @api.model
-    def gantt_resource_work_interval(self, slot_ids):
-        """ Returns the work intervals of the resources corresponding to the provided slots
-
-            This method is used in a rpc call
-
-        :param slot_ids: The slots the work intervals have to be returned for.
-        :return: list of dicts { resource_id: [Intervals] } and { resource_id: flexible_hours }.
-        """
-        # Get the oldest start date and latest end date from the slots.
-        domain = [("id", "in", slot_ids)]
-        read_group_fields = ["start_datetime:min", "end_datetime:max", "resource_id:recordset", "__count"]
-        planning_slot_read_group = self.env["planning.slot"]._read_group(domain, [], read_group_fields)
-        start_datetime, end_datetime, resources, count = planning_slot_read_group[0]
-        if not count:
-            return [{}]
-
-        # Get default start/end datetime if any.
-        default_start_datetime = (fields.Datetime.to_datetime(self.env.context.get('default_start_datetime')) or datetime.min).replace(tzinfo=pytz.utc)
-        default_end_datetime = (fields.Datetime.to_datetime(self.env.context.get('default_end_datetime')) or datetime.max).replace(tzinfo=pytz.utc)
-
-        if self.env.context.get('current_scale') not in ['week', 'month']:
-            start_datetime = max(default_start_datetime, start_datetime.replace(tzinfo=pytz.utc))
-            end_datetime = min(default_end_datetime, end_datetime.replace(tzinfo=pytz.utc))
-        else:
-            start_datetime = default_start_datetime
-            end_datetime = default_end_datetime
-
-        # Get slots' resources and current company work intervals.
-        work_intervals_per_resource, _dummy = resources._get_valid_work_intervals(start_datetime, end_datetime)
-        company_calendar = self.env.company.resource_calendar_id
-        company_calendar_work_intervals = company_calendar._work_intervals_batch(start_datetime, end_datetime)
-
-        # Export work intervals in UTC
-        work_intervals_per_resource[False] = company_calendar_work_intervals[False]
-        work_interval_per_resource = defaultdict(list)
-        for resource_id, resource_work_intervals in work_intervals_per_resource.items():
-            for resource_work_interval in resource_work_intervals:
-                work_interval_per_resource[resource_id].append(
-                    (resource_work_interval[0].astimezone(pytz.UTC), resource_work_interval[1].astimezone(pytz.UTC))
-                )
-        # Add the flexible status per resource and the average daily work hours per resource calendar to the output
-        flexible_per_resource = {False: False}
-        avg_hours_per_resource = {False: 0}
-        for resource in set(resources):
-            flexible_per_resource[resource.id] = resource._is_flexible()
-            if resource._is_fully_flexible():
-                avg_hours_per_resource[resource.id] = 24    # set to 24 hours if the resource is fully flexible
-            else:
-                avg_hours_per_resource[resource.id] = (resource.calendar_id or company_calendar).hours_per_day
-
-        return [work_interval_per_resource, flexible_per_resource, avg_hours_per_resource]
-
-    @api.model
     def _gantt_unavailability(self, field, res_ids, start, stop, scale):
         if field != "resource_id":
             return super()._gantt_unavailability(field, res_ids, start, stop, scale)
@@ -2429,6 +2376,27 @@ class PlanningSlot(models.Model):
         for resource_id, work_intervals in resource_work_intervals.items():
             resource = resources.browse(resource_id)
             work_hours[resource_id] = self._get_employee_work_hours_within_interval(resource, work_intervals, start_naive, stop_naive)
+
+        company_calendar = self.env.company.resource_calendar_id
+        # Export work intervals in UTC
+        resource_work_intervals[False] = (
+            calendar_work_intervals.get(company_calendar.id)
+            or company_calendar._work_intervals_batch(start, stop)[False]
+        )
+        work_interval_per_resource = defaultdict(list)
+        for resource_id, resource_work_intervals_per_resource in resource_work_intervals.items():
+            for resource_work_interval in resource_work_intervals_per_resource:
+                work_interval_per_resource[resource_id].append(
+                    (resource_work_interval[0].replace(tzinfo=pytz.UTC), resource_work_interval[1].replace(tzinfo=pytz.UTC))
+                )
+        # Add average daily work hours per resource calendar to the output
+        avg_hours_per_resource = {False: 0}
+        for resource in set(resources):
+            if resource._is_fully_flexible():
+                avg_hours_per_resource[resource.id] = 24    # set to 24 hours if the resource is fully flexible
+            else:
+                avg_hours_per_resource[resource.id] = (resource.calendar_id or company_calendar).hours_per_day
+
         return {
             resource.id: {
                 'is_material_resource': resource.resource_type == 'material',
@@ -2439,6 +2407,8 @@ class PlanningSlot(models.Model):
                 'employee_id': resource.employee_id.id,
                 'is_flexible_hours': resource._is_flexible(),
                 'is_fully_flexible_hours': resource._is_fully_flexible(),
+                'work_intervals': work_interval_per_resource.get(resource.id, 0.0),
+                'avg_hours': avg_hours_per_resource.get(resource.id, 0.0),
             }
             for resource in resources
         }

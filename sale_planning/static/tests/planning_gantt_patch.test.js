@@ -89,10 +89,6 @@ test("Process domain for plan dialog", async function () {
         },
     });
 
-    onRpc("gantt_resource_work_interval", () => [
-        { false: [["2021-10-12 08:00:00", "2022-10-12 12:00:00"]] },
-    ]);
-
     class Parent extends Component {
         static template = xml`<View t-props="state"/>`;
         static components = { View };
@@ -188,8 +184,6 @@ test("check default planned dates on the plan dialog", async function () {
         end_datetime: false,
     });
 
-    onRpc("gantt_resource_work_interval", () => []);
-
     await mountGanttView({
         resModel: "planning.slot",
         arch: `<gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_scale="week"/>`,
@@ -210,9 +204,6 @@ test("Show shift form dialog only when shifts to plan", async function () {
         list: `<list><field name="name"/></list>`,
     };
 
-    onRpc("gantt_resource_work_interval", () => [
-        { false: [["2021-10-12 08:00:00", "2022-10-12 12:00:00"]] },
-    ]);
     await mountGanttView({
         resModel: "planning.slot",
         arch: `<gantt js_class="planning_gantt" date_start="start_datetime" date_stop="end_datetime" default_scale="week"/>`,
