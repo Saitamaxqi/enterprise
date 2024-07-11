@@ -8,6 +8,7 @@
             <field name="subject">Document Request {{ object.name != False and ': '+ object.name or '' }}</field>
             <field name="email_to" eval="False"/>
             <field name="partner_to">{{ object.requestee_partner_id.id or '' }}</field>
+            <field name="use_default_to" eval="False"/>
             <field name="description">Sent to partner when requesting a document from them</field>
             <field name="body_html" type="html">
                 <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
@@ -145,6 +146,7 @@
             <field name="subject">Reminder to upload your document{{ object.name and ' : ' + object.name or '' }}</field>
             <field name="email_to" eval="False"/>
             <field name="partner_to">{{ object.requestee_partner_id.id or '' }}</field>
+            <field name="use_default_to" eval="False"/>
             <field name="description">Set reminders in activities to notify users who didn't upload their requested document</field>
             <field name="body_html" type="html">
                 <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">

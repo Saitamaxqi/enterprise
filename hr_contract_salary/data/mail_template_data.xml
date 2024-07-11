@@ -7,6 +7,7 @@
         <field name="subject">{{ object.company_id.name }}: Job Offer - {{ object.employee_contract_id.name }}</field>
         <field name="partner_to" >{{ ctx.get('partner_to', False) }}</field>
         <field name="email_to"> {{ ctx.get('email_to', False) }}</field>
+        <field name="use_default_to" eval="False"/>
         <field name="description">Sent manually when you generate a simulation link on the employee contract</field>
         <field name="body_html" type="html">
 <div style="margin: 0px; padding: 0px;">
@@ -29,6 +30,7 @@
         <field name="model_id" ref="hr_contract_salary.model_hr_contract_salary_offer"/>
         <field name="subject">{{ object.company_id.name }}: Job Offer - {{ object.applicant_id.partner_name }}</field>
         <field name="partner_to" >{{ ctx.get('partner_to', False) }}</field>
+        <field name="use_default_to" eval="False"/>
         <field name="description">Sent automatically when you generate an offer for an application</field>
         <field name="body_html" type="html">
 <div style="margin: 0px; padding: 0px;">

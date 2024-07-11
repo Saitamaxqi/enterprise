@@ -7,6 +7,7 @@
         <field name="subject">Synchronization of Amazon order {{ ctx.get('amazon_order_ref') }} has failed</field>
         <field name="email_from">{{ (object.company_id.email or object.user_id.email_formatted or user.email_formatted) }}</field>
         <field name="email_to">{{ ctx.get('email_to') }}</field>
+        <field name="use_default_to" eval="False"/>
         <field name="lang">{{ object.lang }}</field>
         <field name="body_html" type="html">
         <div>
@@ -32,6 +33,7 @@
         <field name="subject">Synchronization of delivery orders has failed</field>
         <field name="email_from">{{ (object.company_id.email or object.user_id.email_formatted or user.email_formatted) }}</field>
         <field name="email_to">{{ ctx.get('email_to') }}</field>
+        <field name="use_default_to" eval="False"/>
         <field name="lang">{{ object.lang }}</field>
         <field name="body_html" type="html">
             <style>
@@ -98,6 +100,7 @@
         <field name="subject">Synchronization of Amazon Stock has failed</field>
         <field name="email_from">{{ (object.company_id.email or object.user_id.email_formatted or user.email_formatted) }}</field>
         <field name="email_to">{{ ctx.get('email_to') }}</field>
+        <field name="use_default_to" eval="False"/>
         <field name="lang">{{ object.lang }}</field>
         <field name="body_html" type="html">
             <style>
