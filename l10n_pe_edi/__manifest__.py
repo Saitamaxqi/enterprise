@@ -52,9 +52,6 @@ We support sending and cancelling of customer invoices.
         'demo/l10n_pe_edi_demo.xml',
         'demo/product_product_demo.xml',
     ],
-    'external_dependencies': {
-        'python': ['pyOpenSSL']
-    },
     'post_init_hook': 'post_init_hook',
     'installable': True,
 }
