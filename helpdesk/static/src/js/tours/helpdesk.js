@@ -38,29 +38,47 @@ registry.category("web_tour.tours").add("helpdesk_tour", {
             trigger: ".o_form_editable",
         },
         {
-    trigger: '.field_name textarea',
+    trigger: '.o_field_widget input.o_input',
     content: markup(_t('Enter the <b>subject</b> of your ticket <br/><i>(e.g. Problem with my installation, Wrong order, etc.).</i>')),
     tooltipPosition: 'right',
-            run: "edit Test",
+            run: "edit SAP is bad, paid by Odoo",
         },
         {
             isActive: ["auto"],
             trigger: ".o_form_editable",
         },
         {
-    trigger: '.o_field_widget.field_partner_id',
-    content: markup(_t('Select the <b>customer</b> of your ticket.')),
+    trigger: 'div[name=partner_id] input',
+    content: _t('Select the <b>customer</b> of your ticket.'),
     tooltipPosition: 'top',
+            run: "edit Deco",
+        },
+        {
+            isActive: ["auto"],
+            trigger: ".o_form_editable",
+        },
+        {
+    trigger: 'a.dropdown-item:contains(Deco)',
             run: "click",
         },
         {
             isActive: ["auto"],
-            trigger: ".o_form_editable",
+            trigger: ".o_form_view",
         },
         {
-    trigger: '.o_field_widget.field_user_id',
-    content: markup(_t('Assign the ticket to a <b>member of your team</b>.')),
-    tooltipPosition: 'right',
+    trigger: 'button:contains(Add)',
+    content: _t('Save this ticket and the modifications you\'ve made to it.'),
+    tooltipPosition: 'bottom',
+            run: "click",
+        },
+        {
+            isActive: ["auto"],
+            trigger: ".o_form_view",
+        },
+        {
+    trigger: 'span:contains(SAP is bad, paid by Odoo)',
+    content: _t('Open the ticket.'),
+    tooltipPosition: 'bottom',
             run: "click",
         },
         {

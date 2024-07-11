@@ -287,7 +287,7 @@
         <field name="model">helpdesk.ticket</field>
         <field name="priority">10</field>
         <field name="arch" type="xml">
-            <kanban highlight_color="color" default_group_by="stage_id" class="o_kanban_small_column" quick_create_view="helpdesk.quick_create_ticket_form" sample="1" js_class="helpdesk_ticket_kanban">
+            <kanban highlight_color="color" default_group_by="stage_id" on_create="quick_create" class="o_kanban_small_column" quick_create_view="helpdesk.quick_create_ticket_form" sample="1" js_class="helpdesk_ticket_kanban">
                 <field name="active"/>
                 <field name="activity_ids"/>
                 <field name="activity_state"/>
