@@ -385,6 +385,7 @@ class TestAccountFollowupReports(AccountTestInvoicingCommon):
             'name': 'reminder',
             'model_id': self.env['ir.model']._get_id('res.partner'),
             'email_cc': mail_cc.email,
+            'use_default_to': False,
         })
 
         reminder = self.env['account_followup.manual_reminder'].with_context(
