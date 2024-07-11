@@ -1297,7 +1297,12 @@ class DocumentsDocument(models.Model):
                     'res_model': 'documents.document',
                     'res_id': document.id,
                 })
-                document.message_post(body=msg_vals.get('body', ''), subject=self.name)
+                document.message_post(
+                    message_type='email',
+                    body=msg_vals.get('body', ''),
+                    email_from=msg_vals.get('email_from'),
+                    subject=msg_vals.get('subject') or self.name
+                )
                 # Activity settings set through alias_defaults values has precedence over the activity folder settings
                 if self.create_activity_option:
                     document.documents_set_activity(settings_record=self)
