@@ -146,6 +146,6 @@ export class TimesheetLeaderboardDialog extends Component {
     format(value) {
         return this.timesheetUOMService.formatter(value, {
             noLeadingZeroHour: true,
-        }).replace(/(:00|.00)/g, "");
+        }).replace(/(:|\.)00/g, "");
     }
 }
