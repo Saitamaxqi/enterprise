@@ -27,7 +27,7 @@
                     <div class="row">
                         <div class="col-6">
                             <div><b>Created by:</b> <span t-field="o.create_uid.sudo().partner_id.name">John Doe</span></div>
-                            <div><b>Created on:</b> <span t-field="o.create_date">2023-08-18</span> (UTC)</div>
+                            <div><b>Created on:</b> <span t-out="o._get_user_formatted_datetime(o.create_date)">2023-08-18</span> (UTC)</div>
                             <div><b>Creation IP Address:</b> <span t-out="creation_log and creation_log[0].ip">192.168.1.1</span></div>
                             <div><b>Signers:</b> <span t-out="len(o.sudo().request_item_ids)">5</span></div>
                         </div>
@@ -113,7 +113,7 @@
                                         <span t-field="log.partner_id">Unknown Partner</span>
                                         <span t-if="log.partner_id.email" t-field="log.partner_id.email">demo@email.com</span>
                                     </td>
-                                    <td> <span t-field="log.log_date">20-03-2000</span> </td>
+                                    <td> <span t-out="o._get_user_formatted_datetime(log.log_date)">20-03-2000</span> </td>
                                     <td groups="sign.group_sign_manager">
                                         <t t-if="log.latitude and log.longitude">
                                             <span t-field="log.latitude">Demo Latitude</span>,
@@ -164,7 +164,7 @@
                                     <span t-field="log.partner_id">Demo Partner</span>
                                     <span t-field="log.partner_id.email">demo@email.com</span>
                                 </td>
-                                <td> <span t-field="log.log_date">20-03-2000</span> </td>
+                                <td> <span t-out="o._get_user_formatted_datetime(log.log_date)">20-03-2000</span> </td>
                                 <td> <span t-field="log.request_state">Antwrep</span> </td>
                                 <td groups="sign.group_sign_manager">
                                     <t t-if="log.latitude and log.longitude">

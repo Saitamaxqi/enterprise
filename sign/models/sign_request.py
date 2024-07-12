@@ -571,6 +571,15 @@ class SignRequest(models.Model):
 
         return (width, height) if width and height else None
 
+    def _get_user_formatted_datetime(self, datetime_val):
+        """
+        Get the user's preferred datetime format based on their language settings.
+        """
+        lang = self.env['res.lang']._lang_get(self.create_uid.lang)
+        user_date_format, user_time_format = lang.date_format, lang.time_format
+
+        return datetime_val.strftime(f"{user_date_format} {user_time_format}")
+
     def _generate_completed_document(self, password=""):
         self.ensure_one()
         if self.state != 'signed':
