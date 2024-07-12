@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 from datetime import date, datetime, timedelta
+from unittest.mock import patch
+
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields, Command
@@ -9,11 +10,6 @@ from odoo.addons.mail.tests.common import MockEmail
 from odoo.addons.hr_timesheet.tests.test_timesheet import TestCommonTimesheet
 from odoo.exceptions import AccessError, UserError
 from odoo.tests import Form, freeze_time
-
-try:
-    from unittest.mock import patch
-except ImportError:
-    from mock import patch
 
 
 @freeze_time(datetime(2021, 4, 1) + timedelta(hours=12, minutes=21))

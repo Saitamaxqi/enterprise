@@ -1,12 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+from unittest.mock import patch
 
 from odoo.tests.common import TransactionCase
-
-try:
-    from unittest.mock import patch
-except ImportError:
-    from mock import patch
 
 
 class TestHrReferralBase(TransactionCase):
