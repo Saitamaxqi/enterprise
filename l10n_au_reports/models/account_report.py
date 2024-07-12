@@ -5,11 +5,6 @@ from odoo.exceptions import UserError
 from odoo.release import version
 from odoo.tools import SQL
 
-try:
-    from stdnum.au.abn import is_valid_abn
-except ImportError:
-    is_valid_abn = None
-
 RUN_TYPE = 'P'  # T for test or P for production
 
 VALID_STATES = {'ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA', 'OTH'}
@@ -384,8 +379,6 @@ class L10n_AuReportHandler(models.AbstractModel):
             return [_('The Australian Business Number is not set')]
         try:
             int(abn.replace(' ', ''))  # quick check independant from stdnum
-            if is_valid_abn and not is_valid_abn(abn):
-                raise ValueError()
         except ValueError:
             return [_('The Australian Business Number is not valid')]
         return []
