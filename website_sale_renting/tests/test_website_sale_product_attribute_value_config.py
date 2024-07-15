@@ -2,25 +2,22 @@
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import fields
 from odoo.fields import Command
 from odoo.tests import tagged
 
 from odoo.addons.sale.tests.test_sale_product_attribute_value_config import (
     TestSaleProductAttributeValueCommon,
 )
-from odoo.addons.website.tools import MockRequest
+from odoo.addons.website_sale.tests.common import MockRequest, WebsiteSaleCommon
 
 
 @tagged('post_install', '-at_install', 'product_attribute')
-class TestWebsiteSaleRentingProductAttributeValueConfig(TestSaleProductAttributeValueCommon):
+class TestWebsiteSaleRentingProductAttributeValueConfig(TestSaleProductAttributeValueCommon, WebsiteSaleCommon):
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
         cls.computer.rent_ok = True
-        cls.website = cls.env['website'].get_current_website()
-        cls.website.company_id = cls.env.company
 
         recurrence_3_hour, recurrence_week = cls.env['sale.temporal.recurrence'].create([
             {
@@ -62,10 +59,10 @@ class TestWebsiteSaleRentingProductAttributeValueConfig(TestSaleProductAttribute
             'taxes_id': [Command.set([tax_15_incl.id])],
         })
         factor = 1 + tax_percent / 100
-        price_3_hours = self.website.currency_id.round(self.price_3_hours * factor)
-        price_1_week = self.website.currency_id.round(self.price_1_week * factor)
+        computer = self.computer.with_context(website_id=self.website.id)
         with MockRequest(self.env, website=self.website):
-            computer = self.computer.with_context(website_id=self.website.id)
+            price_3_hours = self.website.currency_id.round(self.price_3_hours * factor)
+            price_1_week = self.website.currency_id.round(self.price_1_week * factor)
             combination_info = computer._get_combination_info()
             self.assertEqual(combination_info['price'], price_3_hours)
             self.assertEqual(combination_info['list_price'], price_3_hours)
@@ -79,31 +76,29 @@ class TestWebsiteSaleRentingProductAttributeValueConfig(TestSaleProductAttribute
             )
 
     def test_product_attribute_value_config_get_combination_info(self):
-        pricelist = self.env['product.pricelist'].create({
-            'name': 'Website Pricelist',
-            'website_id': self.website.id,
-        })
-
         # make sure the pricelist has a 10% discount
         self.env['product.pricelist.item'].create({
             'price_discount': 10,
             'compute_price': 'formula',
-            'pricelist_id': pricelist.id,
+            'pricelist_id': self.pricelist.id,
         })
+        self.assertTrue(self.pricelist._is_available_on_website(self.website))
 
         discount_rate = 1 # No discount should apply on rental products (functional choice)
 
         currency_ratio = 2
-        pricelist.currency_id = self._setup_currency(currency_ratio)
+        self.pricelist.currency_id = self._setup_currency(currency_ratio)
 
         computer = self.computer.with_context(website_id=self.website.id)
-        price_3_hours = self.website.currency_id.round(
-            self.price_3_hours * discount_rate * currency_ratio
-        )
-        price_1_week = self.website.currency_id.round(
-            self.price_1_week * discount_rate * currency_ratio
-        )
-        with MockRequest(self.env, website=self.website):
+        with MockRequest(self.env, website=self.website, website_sale_current_pl=self.pricelist.id) as request:
+            self.assertEqual(request.pricelist, self.pricelist)
+            self.assertEqual(request.website.currency_id, self.pricelist.currency_id)
+            price_3_hours = self.website.currency_id.round(
+                self.price_3_hours * discount_rate * currency_ratio
+            )
+            price_1_week = self.website.currency_id.round(
+                self.price_1_week * discount_rate * currency_ratio
+            )
             combination_info = computer._get_combination_info()
             self.assertEqual(combination_info['price'], price_3_hours)
             self.assertEqual(combination_info['list_price'], price_3_hours)
@@ -112,8 +107,8 @@ class TestWebsiteSaleRentingProductAttributeValueConfig(TestSaleProductAttribute
             self.assertEqual(combination_info['current_rental_duration'], 3)
             self.assertEqual(str(combination_info['current_rental_unit']), 'Hours')
 
-        with MockRequest(self.env, website=self.website):
-            now = fields.Datetime.now()
+        now = self.env.cr.now()
+        with MockRequest(self.env, website=self.website, website_sale_current_pl=self.pricelist.id):
             combination_info = computer.with_context(
                 start_date=now, end_date=now + relativedelta(days=6)
             )._get_combination_info()

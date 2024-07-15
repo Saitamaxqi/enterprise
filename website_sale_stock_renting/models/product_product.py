@@ -1,9 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models
+from odoo.http import request
 from odoo.osv import expression
-
-from odoo.addons.website.models import ir_http
 
 
 class ProductProduct(models.Model):
@@ -68,8 +67,7 @@ class ProductProduct(models.Model):
         rented_quantities, key_dates = self._get_rented_quantities(
             from_date, to_date, domain=wh_domain
         )
-        website = with_cart and ir_http.get_request_website()
-        cart = website and website.sale_get_order()
+        cart = with_cart and request and request.cart or self.env['sale.order']
         if cart:
             common_lines = cart._get_common_product_lines(product=self)
             so_rented_qties, so_key_dates = common_lines._get_rented_quantities(

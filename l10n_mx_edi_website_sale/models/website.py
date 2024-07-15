@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models
+from odoo.http import request
 from odoo.tools import LazyTranslate
 
 _lt = LazyTranslate(__name__)
@@ -32,8 +33,7 @@ class Website(models.Model):
             ]
         """
         checkout_steps = super()._get_checkout_steps(current_step=None)
-        order = self.sale_get_order()
-        l10n_cl_is_extra_info_needed = order.company_id.country_code == 'MX'
+        l10n_cl_is_extra_info_needed = self.company_id.country_code == 'MX'
         if l10n_cl_is_extra_info_needed:
             previous_step = next(
                 step for step in checkout_steps if 'website_sale.checkout' in step[0]
@@ -50,7 +50,8 @@ class Website(models.Model):
                 'back_button_href': '/shop/checkout',
             }))
             checkout_steps[previous_step_index][1]['main_button_href'] = '/shop/l10n_mx_invoicing_info'
-            if order.partner_id and order.partner_id.country_id.code != 'MX':
+            customer = request.cart.partner_id
+            if customer and customer.country_id.code != 'MX':
                 checkout_steps[next_step_index][1]['back_button'] = _lt("Return to invoicing info")
                 checkout_steps[next_step_index][1]['back_button_href'] = '/shop/l10n_mx_invoicing_info'
 

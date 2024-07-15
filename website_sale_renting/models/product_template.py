@@ -44,8 +44,8 @@ class ProductTemplate(models.Model):
             return res
 
         res['list_price'] = res['price']  # No pricelist discount for rental prices
-        currency = website.currency_id
-        pricelist = website.pricelist_id
+        currency = website.currency_id.with_context(self.env.context)
+        pricelist = request.pricelist.with_context(self.env.context)
         ProductPricing = self.env['product.pricing']
 
         pricing = ProductPricing._get_first_suitable_pricing(product_or_template, pricelist)
@@ -53,9 +53,9 @@ class ProductTemplate(models.Model):
             return res
 
         # Compute best pricing rule or set default
-        order = website.sale_get_order() if website and request else self.env['sale.order']
-        start_date = self.env.context.get('start_date') or order.rental_start_date
-        end_date = self.env.context.get('end_date') or order.rental_return_date
+        order_sudo = request and request.cart or self.env['sale.order'].sudo()
+        start_date = order_sudo.rental_start_date or self.env.context.get('start_date')
+        end_date = order_sudo.rental_return_date or self.env.context.get('end_date')
         if start_date and end_date:
             current_pricing = product_or_template._get_best_pricing_rule(
                 start_date=start_date,
@@ -73,6 +73,9 @@ class ProductTemplate(models.Model):
             current_pricing = pricing
 
         # Compute current price
+        start_date, end_date = self._get_default_renting_dates(
+            start_date, end_date, current_duration, current_unit
+        )
 
         # Here we don't add the current_attributes_price_extra nor the
         # no_variant_attributes_price_extra to the context since those prices are not added
@@ -83,10 +86,6 @@ class ProductTemplate(models.Model):
             currency=currency,
             start_date=start_date,
             end_date=end_date,
-        )
-
-        default_start_date, default_end_date = self._get_default_renting_dates(
-            start_date, end_date, current_duration, current_unit
         )
 
         ratio = ceil(current_duration) / pricing.recurrence_id.duration if pricing.recurrence_id.duration else 1
@@ -138,8 +137,8 @@ class ProductTemplate(models.Model):
             'rental_duration': recurrence.duration,
             'rental_duration_unit': recurrence.unit,
             'rental_unit': recurrence._get_unit_label(recurrence.duration),
-            'default_start_date': default_start_date,
-            'default_end_date': default_end_date,
+            'default_start_date': start_date,
+            'default_end_date': end_date,
             'current_rental_duration': ceil(current_duration),
             'current_rental_unit': current_pricing.recurrence_id._get_unit_label(current_duration),
             'current_rental_price': current_price,
@@ -230,7 +229,7 @@ class ProductTemplate(models.Model):
 
     def _get_sales_prices(self, website):
         prices = super()._get_sales_prices(website)
-        pricelist = website.pricelist_id
+        pricelist = request.pricelist
 
         for template in self:
             if not template.rent_ok:

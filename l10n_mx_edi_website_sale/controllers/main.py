@@ -9,8 +9,7 @@ from odoo.addons.website_sale.controllers.main import WebsiteSale
 class WebsiteSaleL10nMX(WebsiteSale):
 
     def _l10n_mx_edi_is_extra_info_needed(self):
-        order = request.website.sale_get_order()
-        return order.company_id.country_code == 'MX'
+        return request.website.company_id.country_code == 'MX'
 
     @route()
     def shop_checkout(self, try_skip_step=False, **query_params):
@@ -25,12 +24,11 @@ class WebsiteSaleL10nMX(WebsiteSale):
         if not self._l10n_mx_edi_is_extra_info_needed():
             return request.redirect("/shop/confirm_order")
 
-        order = request.website.sale_get_order()
-        redirection = self._check_cart(order)
-        if redirection:
+        order_sudo = request.cart
+        if redirection := self._check_cart(order_sudo):
             return redirection
 
-        partner = order.partner_id
+        partner = order_sudo.partner_id
 
         l10n_mx_edi_fields = [
             request.env['ir.model.fields']._get('res.partner', 'l10n_mx_edi_fiscal_regime'),
@@ -43,17 +41,17 @@ class WebsiteSaleL10nMX(WebsiteSale):
         default_vals = {}
         if request.httprequest.method == 'GET':
             default_vals['vat'] = partner.vat
-            default_vals['need_invoice'] = not order.l10n_mx_edi_cfdi_to_public
+            default_vals['need_invoice'] = not order_sudo.l10n_mx_edi_cfdi_to_public
             default_vals['l10n_mx_edi_fiscal_regime'] = partner.l10n_mx_edi_fiscal_regime
-            default_vals['l10n_mx_edi_usage'] = order.l10n_mx_edi_usage
+            default_vals['l10n_mx_edi_usage'] = order_sudo.l10n_mx_edi_usage
             default_vals['l10n_mx_edi_no_tax_breakdown'] = partner.l10n_mx_edi_no_tax_breakdown
-            default_vals['l10n_mx_edi_payment_method_id'] = order.l10n_mx_edi_payment_method_id
+            default_vals['l10n_mx_edi_payment_method_id'] = order_sudo.l10n_mx_edi_payment_method_id
 
         # === POST & possibly redirect ===
         can_edit_vat = partner.can_edit_vat()
         errors = {}
         if request.httprequest.method == 'POST':
-            order.l10n_mx_edi_cfdi_to_public = kw.get('need_invoice') != '1'
+            order_sudo.l10n_mx_edi_cfdi_to_public = kw.get('need_invoice') != '1'
             if kw.get('need_invoice') == '1':
                 default_vals = {
                     'vat': kw.get('vat'),
@@ -73,8 +71,8 @@ class WebsiteSaleL10nMX(WebsiteSale):
                     else:
                         partner_vals['vat'] = default_vals['vat']
                 # Other fields
-                order.l10n_mx_edi_usage = default_vals['l10n_mx_edi_usage']
-                order.l10n_mx_edi_payment_method_id = default_vals['l10n_mx_edi_payment_method_id']
+                order_sudo.l10n_mx_edi_usage = default_vals['l10n_mx_edi_usage']
+                order_sudo.l10n_mx_edi_payment_method_id = default_vals['l10n_mx_edi_payment_method_id']
                 partner_vals.update({
                     'l10n_mx_edi_fiscal_regime': default_vals['l10n_mx_edi_fiscal_regime'],
                     'l10n_mx_edi_no_tax_breakdown': default_vals['l10n_mx_edi_no_tax_breakdown'],
@@ -88,13 +86,13 @@ class WebsiteSaleL10nMX(WebsiteSale):
         # === Render extra_info tab ===
         values = {
             'request': request,
-            'website_sale_order': order,
+            'website_sale_order': order_sudo,
             'post': kw,
             'partner': partner.id,
-            'order': order,
+            'order': order_sudo,
             'l10n_mx_edi_fields': l10n_mx_edi_fields,
             'l10n_mx_edi_payment_methods': request.env['l10n_mx_edi.payment.method'].sudo().search([]),
-            'company_country_code': order.company_id.country_id.code,
+            'company_country_code': order_sudo.company_id.country_id.code,
             'default_vals': default_vals,
             'errors': errors,
             # flag for rendering the 'Extra Info' dot in the wizard_checkout

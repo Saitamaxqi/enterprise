@@ -12,7 +12,7 @@ class WebsiteAppointmentSale(AppointmentAccountPayment):
         """ Override: when using a payment step, we go through the eCommerce flow instead,
             and link the booking to the SOL as one can go through the flow several times and book
             several slots of the same appointment type """
-        order_sudo = request.website.sale_get_order(force_create=True)
+        order_sudo = request.cart or request.website._create_cart()
 
         # Necessary to have a description matching the tz picked by partner.
         # See _prepare_order_line_values on sale.order model.

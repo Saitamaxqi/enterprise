@@ -89,10 +89,9 @@
         <xpath expr="//div[hasclass('js_main_product')]//t[@name='variant_info']" position="after">
             <div t-if="combination_info.get('is_rental') and (not website.prevent_zero_price_sale or combination_info['current_rental_price'])">
                 <div class="mb-3 align-middle input-group-lg o_website_sale_daterange_picker variant_attribute">
-                    <t t-set="wso" t-value="website.sale_get_order()"/>
                     <t
                         t-set="periodIsSet"
-                        t-value="wso.has_rented_products and wso.order_line.filtered('is_rental').product_id != product"
+                        t-value="request.cart.has_rented_products and request.cart.order_line.filtered('is_rental').product_id != product"
                     />
                     <t t-set="disclaimer">
                         The period must be the same for all the products in your cart. Go to your cart to change it or create different orders.
@@ -101,8 +100,8 @@
                         t-set="current_image_cols"
                         t-value="website._get_product_page_proportions()[0]"
                     />
-                    <input type="hidden" name="default_start_date" t-att-value="wso.rental_start_date or combination_info['default_start_date']"/>
-                    <input type="hidden" name="default_end_date" t-att-value="wso.rental_return_date or combination_info['default_end_date']"/>
+                    <input type="hidden" name="default_start_date" t-att-value="combination_info['default_start_date']"/>
+                    <input type="hidden" name="default_end_date" t-att-value="combination_info['default_end_date']"/>
                     <input type="hidden" name="rental_duration_unit" t-att-value="combination_info['rental_duration_unit']"/>
                     <strong class="attribute_name">
                         <span>Rental Period</span>
@@ -119,14 +118,14 @@
                         <div class="s_website_form_datetime date o_daterange_picker">
                             <div t-attf-class="d-flex gap-2 align-items-center flex-column flex-md-row #{current_image_cols == 8 and 'flex-lg-column'} #{(current_image_cols == 0 or current_image_cols == 12) and 'd-lg-inline-flex'}">
                                 <div class="input-group">
-                                    <input id="rental_product_start_date" type="text" name="renting_start_date" placeholder="Start date" t-att-value="wso.rental_start_date or combination_info['default_start_date']" class="o_website_sale_daterange_picker_input form-control" t-att-disabled="periodIsSet"/>
+                                    <input id="rental_product_start_date" type="text" name="renting_start_date" placeholder="Start date" t-att-value="combination_info['default_start_date']" class="o_website_sale_daterange_picker_input form-control" t-att-disabled="periodIsSet"/>
                                     <label for="rental_product_start_date" class="input-group-text input-group-text-subtle d-flex align-items-center">
                                         <i class="fa fa-calendar" role="img"/>
                                     </label>
                                 </div>
                                 <i t-attf-class="oi oi-arrow-right d-none d-md-block #{current_image_cols == 8 and 'd-lg-none'}" role="img"/>
                                 <div class="input-group">
-                                    <input id="rental_product_end_date" type="text" name="renting_end_date" placeholder="End date" t-att-value="wso.rental_return_date or combination_info['default_end_date']" class="o_website_sale_daterange_picker_input form-control" t-att-disabled="periodIsSet"/>
+                                    <input id="rental_product_end_date" type="text" name="renting_end_date" placeholder="End date" t-att-value="combination_info['default_end_date']" class="o_website_sale_daterange_picker_input form-control" t-att-disabled="periodIsSet"/>
                                     <label for="rental_product_end_date" class="input-group-text input-group-text-subtle d-flex align-items-center">
                                         <i class="fa fa-calendar" role="img"/>
                                     </label>
@@ -324,7 +323,7 @@
             class="o_website_sale_daterange_picker o_website_sale_shop_daterange_picker o_not_editable flex-grow-1 mb-sm-3"
         >
             <input type="hidden" name="rental_duration_unit" value="hour"/>
-            <t t-set="wso" t-value="website.sale_get_order()"/>
+            <t t-set="wso" t-value="request.cart"/>
             <input type="hidden" name="default_start_date" t-if="wso and wso.has_rented_products" t-att-value="wso.rental_start_date"/>
             <input type="hidden" name="default_end_date" t-if="wso and wso.has_rented_products" t-att-value="wso.rental_return_date"/>
             <div class="s_website_form_datetime date o_daterange_picker">
@@ -398,7 +397,7 @@
         <!-- Add rental datepicker to left bar -->
         <xpath expr="//aside[@id='products_grid_before']//div//div[1]" position="before">
             <t t-if="is_view_active('website_sale_renting.shop_rental_datepicker_opt')">
-                <t t-set="periodIsSet" t-value="website.sale_get_order() and website.sale_get_order().has_rented_products"/>
+                <t t-set="periodIsSet" t-value="request.cart.has_rented_products"/>
                 <t t-set="disclaimer">The period must be the same for all the products in your cart. Go to your cart to change it or create different orders.</t>
                 <div class="website_sale_renting_wrap">
                     <div

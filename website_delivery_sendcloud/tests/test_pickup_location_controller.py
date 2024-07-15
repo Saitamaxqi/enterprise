@@ -8,11 +8,10 @@ import requests
 
 from odoo.tests import tagged
 
-from odoo.addons.website.tools import MockRequest
 from odoo.addons.website_sale.controllers.cart import Cart
 from odoo.addons.website_sale.controllers.delivery import Delivery
 from odoo.addons.website_sale.controllers.main import WebsiteSale
-from odoo.addons.website_sale.tests.common import WebsiteSaleCommon
+from odoo.addons.website_sale.tests.common import MockRequest, WebsiteSaleCommon
 
 
 @contextmanager
@@ -155,41 +154,40 @@ class TestWebsiteDeliverySendcloudLocationsController(WebsiteSaleCommon):
             'amount': 42
         })
 
-        cls.order = cls.env['sale.order'].create({
-            'carrier_id': cls.sendcloud.id,
-            'partner_id': cls.env.user.partner_id.id,
-            'partner_shipping_id': cls.eu_partner.id,
-            'transaction_ids': [cls.transaction.id]
-        })
-
     def test_controller_pickup_location(self):
-        with MockRequest(self.env, website=self.website, sale_order_id=self.order.id):
-            with _mock_call():
-                response = Delivery().website_sale_get_pickup_locations()
-                self.assertNotEqual({},
-                    Delivery().website_sale_set_pickup_location(
-                        pickup_location_data=json.dumps(response['pickup_locations'][0])
-                    )
+        order = self.env['sale.order'].create({
+            'carrier_id': self.sendcloud.id,
+            'partner_id': self.env.user.partner_id.id,
+            'partner_shipping_id': self.eu_partner.id,
+            'transaction_ids': [self.transaction.id],
+            'website_id': self.website.id,
+        })
+        with MockRequest(self.env, website=self.website, sale_order_id=order.id), _mock_call():
+            response = Delivery().website_sale_get_pickup_locations()
+            self.assertNotEqual({},
+                Delivery().website_sale_set_pickup_location(
+                    pickup_location_data=json.dumps(response['pickup_locations'][0])
                 )
-                self.assertEqual({
-                    'id': 11238037,
-                    'name': 'Station Avia',
-                    'opening_hours': {
-                        '0': ['07:00 - 18:30'],
-                        '1': ['07:00 - 18:30'],
-                        '2': ['07:00 - 18:30'],
-                        '3': ['07:00 - 18:30'],
-                        '4': ['08:00 - 14:00', '15:00 - 18:00'],
-                        '5': ['09:00 - 16:00'],
-                        '6': [],
-                    },
-                    'street': 'Chaussee De Namur 67',
-                    'city': 'Ramillies',
-                    'zip_code': '1367',
-                    'country_code': 'BE',
-                    'latitude': '50.634529',
-                    'longitude': '4.864696',
-                }, self.order.pickup_location_data)
+            )
+            self.assertEqual({
+                'id': 11238037,
+                'name': 'Station Avia',
+                'opening_hours': {
+                    '0': ['07:00 - 18:30'],
+                    '1': ['07:00 - 18:30'],
+                    '2': ['07:00 - 18:30'],
+                    '3': ['07:00 - 18:30'],
+                    '4': ['08:00 - 14:00', '15:00 - 18:00'],
+                    '5': ['09:00 - 16:00'],
+                    '6': [],
+                },
+                'street': 'Chaussee De Namur 67',
+                'city': 'Ramillies',
+                'zip_code': '1367',
+                'country_code': 'BE',
+                'latitude': '50.634529',
+                'longitude': '4.864696',
+            }, order.pickup_location_data)
 
     def test_sendcloud_delivery_partner(self):
         """
@@ -198,13 +196,14 @@ class TestWebsiteDeliverySendcloudLocationsController(WebsiteSaleCommon):
         """
         product = self.product_to_ship1
         website = self.website.with_user(self.public_user)
-        with MockRequest(website.env, website=website):
+        with MockRequest(website.env, website=website) as request:
             self.WebsiteSaleCartController.add_to_cart(
                 product_template_id=product.product_tmpl_id,
                 product_id=product.id,
                 quantity=1,
             )
-            sale_order = website.sale_get_order()
+            sale_order = request.cart
+
         partner_address = {
             'name': 'Bob',
             'email': 'bob@email.com',
@@ -229,7 +228,7 @@ class TestWebsiteDeliverySendcloudLocationsController(WebsiteSaleCommon):
 
         sale_order.action_confirm()
         # the delivery adress of the SO and the delivery should have been updated
-        # to gather the mail and phon number of the partner but the pickup point address
+        # to gather the mail and phone number of the partner but the pickup point address
         delivery = sale_order.picking_ids
         self.assertEqual(sale_order.partner_shipping_id, delivery.partner_id)
         self.assertRecordValues(delivery.partner_id, [{

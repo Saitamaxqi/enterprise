@@ -19,8 +19,7 @@ class Cart(WebsiteSaleCart):
         """ Route to check the cart availability when changing the dates on the cart. """
         if not start_date or not end_date:
             return
-        order_sudo = request.website.sale_get_order()
-        if not order_sudo:
+        if not (order_sudo := request.cart):
             return
         start_date = fields.Datetime.to_datetime(start_date)
         end_date = fields.Datetime.to_datetime(end_date)

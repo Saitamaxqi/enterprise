@@ -1,10 +1,12 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.tests import tagged
-from odoo.addons.website.tools import MockRequest
 from odoo.exceptions import UserError
+from odoo.tests import tagged
+
+from odoo.addons.website_sale.tests.common import MockRequest
+
 from .common import TestWebsiteSaleSubscriptionCommon
+
 
 @tagged('post_install', '-at_install')
 class TestWebsiteSaleSubscription(TestWebsiteSaleSubscriptionCommon):
@@ -17,15 +19,11 @@ class TestWebsiteSaleSubscription(TestWebsiteSaleSubscriptionCommon):
             'list_price': 15,
             'type': 'service',
         })
-        so = self.env['sale.order'].create({
-            'partner_id': self.partner.id,
-            'company_id': self.company.id,
-        })
 
         # Mocking to check if error raised on Website when adding
         # 2 subscription product with different recurrence
-        with MockRequest(self.env, website=self.current_website, sale_order_id=so.id):
-            so = self.current_website.sale_get_order()
+        with MockRequest(self.env, website=self.current_website) as request:
+            so = request.website._create_cart()
             self.assertFalse(so.plan_id)
             so._cart_update(product_id=product.product_variant_ids.id, add_qty=1)
             self.assertFalse(so.plan_id)
@@ -73,7 +71,6 @@ class TestWebsiteSaleSubscription(TestWebsiteSaleSubscriptionCommon):
             combination_info = product._get_combination_info(only_template=True)
             self.assertEqual(combination_info['price'], 111)
 
-        self.current_website.invalidate_recordset(['pricelist_id'])
         with MockRequest(self.env, website=self.current_website, website_sale_current_pl=self.pricelist_222.id):
             combination_info = product._get_combination_info(only_template=True)
             self.assertEqual(combination_info['price'], 222)

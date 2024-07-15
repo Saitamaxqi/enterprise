@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-
-from odoo import models, fields, api, _
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.http import request
 from odoo.tools import format_amount
@@ -43,14 +41,13 @@ class ProductTemplate(models.Model):
         self = product or self
         if not self.recurring_invoice:
             return True
-        website = self.env['website'].get_current_website()
-        so = website and request and website.sale_get_order()
+        so = request and request.cart or self.env['sale.order']
         if not so or not so.plan_id:
             return True
         if pricing:
             return pricing.plan_id == so.plan_id and (not pricing.pricelist_id or pricing.pricelist_id == pricelist)
         return bool(self.env['sale.subscription.pricing'].sudo()._get_first_suitable_recurring_pricing(
-            self, plan=so.plan_id, pricelist=pricelist or website.pricelist_id))
+            self, plan=so.plan_id, pricelist=pricelist or request.pricelist))
 
     def _get_additionnal_combination_info(self, product_or_template, quantity, date, website):
         res = super()._get_additionnal_combination_info(product_or_template, quantity, date, website)
@@ -60,7 +57,7 @@ class ProductTemplate(models.Model):
 
         res['list_price'] = res['price']  # No pricelist discount for subscription prices
         currency = website.currency_id
-        pricelist = website.pricelist_id
+        pricelist = request.pricelist
         requested_plan = request and request.params.get('plan_id')
         requested_plan = requested_plan and requested_plan.isdigit() and int(requested_plan)
         possible_pricing_count = 0
@@ -147,16 +144,17 @@ class ProductTemplate(models.Model):
 
     def _get_sales_prices(self, website):
         prices = super()._get_sales_prices(website)
-        pricelist = website.pricelist_id
-        fiscal_position = website.fiscal_position_id.sudo()
-        currency = pricelist.currency_id or self.env.company.currency_id
+
+        pricelist = request.pricelist
+        currency = website.currency_id
+        fiscal_position_sudo = request.fiscal_position
+        order_sudo = request.cart
+        so_plan = order_sudo.plan_id
         date = fields.Date.context_today(self)
-        website = self.env['website'].get_current_website()
-        so = website and request and website.sale_get_order()
-        plan_id = so and so.plan_id
+
         for template in self.filtered('recurring_invoice'):
             pricing = self.env['sale.subscription.pricing'].sudo()\
-                ._get_first_suitable_recurring_pricing(template, plan=plan_id, pricelist=pricelist)
+                ._get_first_suitable_recurring_pricing(template, plan=so_plan, pricelist=pricelist)
             if not pricing:
                 prices[template.id].update({
                     'is_subscription': True,
@@ -178,7 +176,7 @@ class ProductTemplate(models.Model):
             # taxes application
             product_taxes = template.sudo().taxes_id.filtered(lambda t: t.company_id == t.env.company)
             if product_taxes:
-                taxes = fiscal_position.map_tax(product_taxes)
+                taxes = fiscal_position_sudo.map_tax(product_taxes)
                 unit_price = self.env['product.template']._apply_taxes_to_price(
                     unit_price, currency, product_taxes, taxes, template)
 

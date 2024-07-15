@@ -7,7 +7,6 @@ from odoo import fields
 from odoo.fields import Command
 from odoo.tests import Form, tagged
 
-from odoo.addons.website.tools import MockRequest
 from odoo.addons.website_sale_renting.tests.common import TestWebsiteSaleRentingCommon
 
 
@@ -251,57 +250,51 @@ class TestWebsiteSaleStockRenting(TestWebsiteSaleRentingCommon):
         self._assert_cart_and_free_qty(so2, expected_cart_qty=2, expected_free_qty=2)
 
     def test_add_max_quantity_to_cart(self):
-        with MockRequest(self.env, website=self.current_website, sale_order_id=self.so.id):
-            website_so = self.current_website.with_user(self.user).sale_get_order()
-            values = website_so._cart_update(
-                product_id=self.computer.id, line_id=self.sol.id, add_qty=3,
-            )
-            self.assertEqual(values['quantity'], 5)
-            self.assertTrue(values['warning'])
+        values = self.so._cart_update(
+            product_id=self.computer.id, line_id=self.sol.id, add_qty=3,
+        )
+        self.assertEqual(values['quantity'], 5)
+        self.assertTrue(values['warning'])
 
     def test_add_picked_up_products_not_yet_returned_to_cart_before_return_date(self):
         self.so.action_confirm()
         self._pickup_so(self.so)
-        so2 = self.env['sale.order'].create({
+        website_so = self.env['sale.order'].create({
             'partner_id': self.partner.id,
             'company_id': self.company.id,
             'warehouse_id': self.wh.id,
         })
 
-        with MockRequest(self.env, website=self.current_website, sale_order_id=so2.id):
-            website_so = self.current_website.with_user(self.user).sale_get_order()
-            from_date = self.sol.return_date + relativedelta(days=-1)
-            to_date = self.sol.return_date + relativedelta(days=2)
+        from_date = self.sol.return_date + relativedelta(days=-1)
+        to_date = self.sol.return_date + relativedelta(days=2)
 
-            website_so.update({'rental_start_date': from_date, 'rental_return_date': to_date})
-            self._assert_cart_and_free_qty(website_so, expected_cart_qty=0, expected_free_qty=2)
-            values = website_so._cart_update(
-                product_id=self.computer.id, add_qty=5, start_date=from_date, end_date=to_date,
-            )
-            self.assertEqual(values['quantity'], 2)
-            self.assertTrue(values['warning'])
+        website_so.update({'rental_start_date': from_date, 'rental_return_date': to_date})
+        self._assert_cart_and_free_qty(website_so, expected_cart_qty=0, expected_free_qty=2)
+        values = website_so._cart_update(
+            product_id=self.computer.id, add_qty=5, start_date=from_date, end_date=to_date,
+        )
+        self.assertEqual(values['quantity'], 2)
+        self.assertTrue(values['warning'])
 
     def test_add_picked_up_products_not_yet_returned_to_cart_after_return_date(self):
         self.so.action_confirm()
         self._pickup_so(self.so)
-        so2 = self.env['sale.order'].create({
+        website_so = self.env['sale.order'].create({
             'partner_id': self.partner.id,
             'company_id': self.company.id,
             'warehouse_id': self.wh.id,
         })
 
-        with MockRequest(self.env, website=self.current_website, sale_order_id=so2.id):
-            website_so = self.current_website.with_user(self.user).sale_get_order()
-            from_date = self.sol.return_date + relativedelta(days=1)
-            to_date = self.sol.return_date + relativedelta(days=2)
+        from_date = self.sol.return_date + relativedelta(days=1)
+        to_date = self.sol.return_date + relativedelta(days=2)
 
-            website_so.update({'rental_start_date': from_date, 'rental_return_date': to_date})
-            self._assert_cart_and_free_qty(website_so, expected_cart_qty=0, expected_free_qty=5)
-            values = website_so._cart_update(
-                product_id=self.computer.id, add_qty=5, start_date=from_date, end_date=to_date,
-            )
-            self.assertEqual(values['quantity'], 5)
-            self.assertFalse(values['warning'])
+        website_so.update({'rental_start_date': from_date, 'rental_return_date': to_date})
+        self._assert_cart_and_free_qty(website_so, expected_cart_qty=0, expected_free_qty=5)
+        values = website_so._cart_update(
+            product_id=self.computer.id, add_qty=5, start_date=from_date, end_date=to_date,
+        )
+        self.assertEqual(values['quantity'], 5)
+        self.assertFalse(values['warning'])
 
     def test_show_rental_product_that_will_be_available_in_future(self):
         """
