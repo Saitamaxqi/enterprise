@@ -3,17 +3,21 @@
 
 import base64
 import io
-
 from collections import defaultdict
-from dateutil.relativedelta import relativedelta
 from datetime import date
+
+from dateutil.relativedelta import relativedelta
 from lxml import etree
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools import format_date
-from odoo.tools.misc import file_path, xlsxwriter
 from odoo.osv import expression
+from odoo.tools import format_date
+from odoo.tools.misc import file_path
 
 
 class L10n_Be274_Xx(models.Model):

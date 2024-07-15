@@ -4,9 +4,13 @@ from datetime import datetime
 from io import BytesIO
 from copy import deepcopy
 
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
+
 from odoo import http, _
 from odoo.http import request
-from odoo.tools.misc import xlsxwriter
 
 
 class L10nInSalaryRegisterController(http.Controller):

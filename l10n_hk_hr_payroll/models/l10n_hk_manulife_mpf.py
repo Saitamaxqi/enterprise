@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 import io
-
 from collections import defaultdict
 from datetime import date
+
 from dateutil.relativedelta import relativedelta
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 from odoo.tools import format_date
-from odoo.tools.misc import xlsxwriter
 
 from odoo.addons.l10n_hk_hr_payroll.models.l10n_hk_ird import MONTH_SELECTION
 

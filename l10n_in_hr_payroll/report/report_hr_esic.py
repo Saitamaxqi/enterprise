@@ -3,11 +3,14 @@
 import base64
 import calendar
 import io
-
 from datetime import datetime
 
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
+
 from odoo import api, fields, models, _
-from odoo.tools.misc import xlsxwriter
 from odoo.exceptions import UserError, ValidationError
 
 from .report_hr_epf import MONTH_SELECTION

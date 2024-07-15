@@ -2,10 +2,13 @@
 import contextlib
 import io
 import re
-import xlsxwriter
-
 from importlib import metadata
+
 from PIL import ImageFont
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 from odoo import api, models, _, fields
 from odoo.exceptions import UserError

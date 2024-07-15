@@ -3,13 +3,17 @@
 import base64
 import collections
 import logging
-
 from io import BytesIO
+
 from dateutil.relativedelta import relativedelta
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-from odoo.tools.misc import xlsxwriter, format_date
+from odoo.tools.misc import format_date
 
 _logger = logging.getLogger(__name__)
 

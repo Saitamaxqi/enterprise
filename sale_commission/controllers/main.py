@@ -1,7 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import io
-import xlsxwriter
+
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 from odoo import _
 from odoo.http import Controller, request, route, content_disposition

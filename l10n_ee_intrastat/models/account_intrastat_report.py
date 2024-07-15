@@ -1,14 +1,17 @@
 import copy
 import io
 import zipfile
-
 from datetime import datetime
+
 from dateutil.relativedelta import relativedelta
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 from odoo import _, models, fields, api
 from odoo.exceptions import UserError
 from odoo.tools import SQL
-from odoo.tools.misc import xlsxwriter
 
 
 class IntrastatReportGoodsCustomHandler(models.AbstractModel):

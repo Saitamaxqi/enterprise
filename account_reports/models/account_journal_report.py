@@ -1,14 +1,18 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import io
 import datetime
+from collections import defaultdict
 
-from PIL import ImageFont
 from markupsafe import Markup
+from PIL import ImageFont
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 from odoo import models, _
 from odoo.tools import SQL
-from odoo.tools.misc import xlsxwriter, file_path
-from collections import defaultdict
+from odoo.tools.misc import file_path
 
 XLSX_GRAY_200 = '#EEEEEE'
 XLSX_BORDER_COLOR = '#B4B4B4'

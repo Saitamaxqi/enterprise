@@ -1,10 +1,14 @@
 import io
-import xlsxwriter
+from collections import defaultdict
+
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 from odoo import models, _, api
 from odoo.exceptions import UserError
 from odoo.tools import get_quarter_number, format_date
-from collections import defaultdict
 
 INCOME_FIELDS = (
     'year', 'period', 'activity_code', 'activity_type', 'activity_group', 'invoice_type', 'income_concept',

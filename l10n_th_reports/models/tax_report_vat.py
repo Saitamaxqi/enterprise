@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 import io
-from odoo import _, models
-from odoo.tools.misc import xlsxwriter
-from odoo import fields
+
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
+
+from odoo import _, fields, models
 from odoo.osv import expression
 
 

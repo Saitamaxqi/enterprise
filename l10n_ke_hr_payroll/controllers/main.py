@@ -2,9 +2,14 @@
 
 from io import BytesIO
 from logging import getLogger
+
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
+
 from odoo import http, _
 from odoo.http import request
-from odoo.tools.misc import xlsxwriter
 
 _logger = getLogger(__name__)
 

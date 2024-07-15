@@ -3,12 +3,15 @@
 
 import base64
 import io
-
 from collections import defaultdict
 
-from odoo import api, fields, models, _
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
+
+from odoo import models, _
 from odoo.exceptions import UserError
-from odoo.tools.misc import xlsxwriter
 
 
 class L10nChMonthlySummaryWizard(models.Model):

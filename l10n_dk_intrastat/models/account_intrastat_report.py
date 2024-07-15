@@ -3,10 +3,15 @@
 import copy
 import io
 import zipfile
+
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
+
 from odoo import api, models, _
 from odoo.exceptions import UserError
 from odoo.tools import SQL
-from odoo.tools.misc import xlsxwriter
 
 
 class AccountIntrastatGoodsReportHandler(models.AbstractModel):

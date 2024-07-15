@@ -1,7 +1,10 @@
 import io
 from datetime import datetime
 
-from odoo.tools.misc import xlsxwriter
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 
 class GSTR1SpreadsheetGenerator:

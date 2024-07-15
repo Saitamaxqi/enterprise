@@ -1,8 +1,12 @@
 import io
 
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
+
 from odoo import _, api, models
 from odoo.exceptions import UserError
-from odoo.tools.misc import xlsxwriter
 
 
 class GeneralLedgerCustomHandler(models.AbstractModel):

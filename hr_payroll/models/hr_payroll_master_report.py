@@ -6,10 +6,13 @@ from collections import defaultdict
 from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
-from odoo.tools.misc import xlsxwriter
 
 XLSX_FORMAT = {
     'NUMBER': 0,

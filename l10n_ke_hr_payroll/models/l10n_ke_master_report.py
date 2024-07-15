@@ -1,13 +1,17 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from base64 import b64encode
-from dateutil.relativedelta import relativedelta
 from datetime import date
 from io import BytesIO
 
+from dateutil.relativedelta import relativedelta
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
+
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
-from odoo.tools.misc import xlsxwriter
 
 
 LINE_CODES = [

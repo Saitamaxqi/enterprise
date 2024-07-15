@@ -17,6 +17,10 @@ from itertools import groupby
 import markupsafe
 from dateutil.relativedelta import relativedelta
 from PIL import ImageFont
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 from odoo import models, fields, api, _, osv
 from odoo.addons.web.controllers.utils import clean_action
@@ -25,7 +29,7 @@ from odoo.fields import Domain
 from odoo.service.model import get_public_method
 from odoo.tools import date_utils, get_lang, float_is_zero, float_repr, SQL, parse_version, Query
 from odoo.tools.float_utils import float_round, float_compare
-from odoo.tools.misc import file_path, format_date, formatLang, split_every, xlsxwriter
+from odoo.tools.misc import file_path, format_date, formatLang
 from odoo.tools.safe_eval import expr_eval, safe_eval
 
 _logger = logging.getLogger(__name__)

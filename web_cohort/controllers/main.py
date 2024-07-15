@@ -5,11 +5,14 @@ import io
 import json
 
 from werkzeug.datastructures import FileStorage
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 from odoo import http, _
 from odoo.http import content_disposition, request
 from odoo.tools import osutil
-from odoo.tools.misc import xlsxwriter
 
 
 class WebCohort(http.Controller):

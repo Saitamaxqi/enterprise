@@ -4,8 +4,12 @@ import io
 import base64
 from datetime import datetime, date
 
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
+
 from odoo import api, fields, models, _
-from odoo.tools.misc import xlsxwriter
 from odoo.exceptions import UserError
 
 

@@ -4,8 +4,12 @@ import base64
 import calendar
 import io
 
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
+
 from odoo import api, fields, models, _
-from odoo.tools.misc import xlsxwriter
 from odoo.exceptions import UserError
 
 MONTH_SELECTION = [

@@ -1,16 +1,18 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import contextlib
 import csv
 import io
 import logging
 import re
 
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
+
 from odoo import http, fields
 from odoo.http import request, content_disposition
-from odoo.tools import pycompat
-from odoo.tools.misc import xlsxwriter
 
 _logger = logging.getLogger(__name__)
 

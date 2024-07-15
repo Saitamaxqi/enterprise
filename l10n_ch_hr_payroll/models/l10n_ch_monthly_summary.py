@@ -3,15 +3,18 @@
 
 import base64
 import io
-
 from collections import defaultdict
 from datetime import date
+
 from dateutil.relativedelta import relativedelta
+try:
+    import xlsxwriter
+except ImportError:
+    xlsxwriter = None
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.tools import format_date
-from odoo.tools.misc import xlsxwriter
 
 
 class L10nChMonthlySummary(models.Model):
