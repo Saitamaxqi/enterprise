@@ -676,6 +676,11 @@ class ProjectTask(models.Model):
             if sol.product_id.service_policy != 'delivered_milestones':
                 sol.qty_delivered = sol.product_uom_qty
 
+    def _server_action_project_task_fsm(self, xml_id_multiple_fsm_projects, xml_id_one_fsm_project, default_user_ids=False):
+        action = super()._server_action_project_task_fsm(xml_id_multiple_fsm_projects, xml_id_one_fsm_project, default_user_ids)
+        action['context']['allow_billable'] = bool(self.env['project.project'].search_count([('is_fsm', '=', True), ('allow_billable', '=', True)], limit=1))
+        return action
+
 
 class ProjectTaskRecurrence(models.Model):
     _inherit = 'project.task.recurrence'

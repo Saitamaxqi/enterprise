@@ -331,6 +331,7 @@ class ProjectTask(models.Model):
             project_id = False
         action = self.env['ir.actions.act_window']._for_xml_id(action_id)
         context = literal_eval(action.get('context', '{}'))
+        allow_timesheets = any(project.allow_timesheets for project in project_ids)
         if project_id:
             context['default_project_id'] = project_id
         return {
@@ -338,6 +339,7 @@ class ProjectTask(models.Model):
             'context': {
                 **context,
                 'default_user_ids': default_user_ids,
+                'allow_timesheets': allow_timesheets,
             },
         }
 
