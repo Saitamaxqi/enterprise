@@ -42,7 +42,7 @@
             <xpath expr="//field[@name='rated_partner_id']" position="attributes">
                 <attribute name="name">res_name</attribute>
             </xpath>
-            <field name="create_date" position="replace"/>
+            <field name="rated_on" position="replace"/>
         </field>
     </record>
 
@@ -53,9 +53,9 @@
         <field name="mode">primary</field>
         <field name="priority">80</field>
         <field name="arch" type="xml">
-            <field name="create_date" type="col" position="replace"/>
+            <field name="rated_on" type="col" position="replace"/>
             <xpath expr="//field[@name='rated_partner_id']" position="replace">
-                <field name="create_date" interval="day" type="row"/>
+                <field name="rated_on" interval="day" type="row"/>
             </xpath>
         </field>
     </record>
@@ -83,7 +83,7 @@
         <field name="mode">primary</field>
         <field name="priority">64</field>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='create_date']" position="attributes">
+            <xpath expr="//field[@name='rated_on']" position="attributes">
                 <attribute name="name">res_name</attribute>
             </xpath>
         </field>
@@ -96,7 +96,7 @@
         <field name="mode">primary</field>
         <field name="priority">80</field>
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='create_date']" position="attributes">
+            <xpath expr="//field[@name='rated_on']" position="attributes">
                 <attribute name="interval">day</attribute>
             </xpath>
         </field>
@@ -134,8 +134,8 @@
                 <filter string="Helpdesk Team" name="res_team" context="{'group_by':'parent_res_name'}"/>
                 <filter name="rating_text" position="move"/>
             </filter>
-            <filter name="create_date_last_7_days" position="before">
-                <filter name="create_date_today" string="Today" domain="[('create_date', '&gt;', datetime.datetime.combine(context_today() - datetime.timedelta(days=1), datetime.time(23, 59, 59)).to_utc())]"/>
+            <filter name="rated_on_last_7_days" position="before">
+                <filter name="rated_on_today" string="Today" domain="[('rated_on', '&gt;', datetime.datetime.combine(context_today() - datetime.timedelta(days=1), datetime.time(23, 59, 59)).to_utc())]"/>
             </filter>
         </field>
     </record>
@@ -166,13 +166,13 @@
             <field name="partner_id" position="attributes">
                 <attribute name="readonly">1</attribute>
             </field>
-            <field name="create_date" position="attributes">
+            <field name="rated_on" position="attributes">
                 <attribute name="readonly">1</attribute>
             </field>
             <field name="feedback" position="attributes">
                 <attribute name="readonly">1</attribute>
             </field>
-            <field name="create_date" position="after">
+            <field name="rated_on" position="after">
                 <field name="is_internal" position="move"/>
             </field>
             <div name="rating_image_container" position="replace">

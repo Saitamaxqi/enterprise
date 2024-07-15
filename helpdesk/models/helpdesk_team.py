@@ -728,9 +728,9 @@ class HelpdeskTeam(models.Model):
             domain += [('close_date', '>=', fields.Datetime.to_string((datetime.date.today() - relativedelta.relativedelta(days=6))))]
             update_views[self.env.ref("helpdesk.rating_rating_view_seven_days_pivot_inherit_helpdesk").id] = 'pivot'
             update_views[self.env.ref('helpdesk.rating_rating_view_seven_days_graph_inherit_helpdesk').id] = 'graph'
-            context['search_default_filter_create_date'] = 'custom_create_date_last_7_days'
+            context['search_default_filter_rated_on'] = 'custom_rated_on_last_7_days'
         elif period == 'today':
-            context['search_default_filter_create_date'] = 'custom_create_date_today'
+            context['search_default_filter_rated_on'] = 'custom_rated_on_today'
             if '__count__' in context.get('pivot_measures', {}):
                 context.get('pivot_measures').remove('__count__')
             domain += [('close_date', '>=', fields.Datetime.to_string(datetime.date.today()))]
