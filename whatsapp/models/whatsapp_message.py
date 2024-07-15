@@ -426,7 +426,10 @@ class WhatsAppMessage(models.Model):
         if self.mail_message_id.model != 'discuss.channel':
             return
         channel = self.env['discuss.channel'].browse(self.mail_message_id.res_id)
-        channel_member = channel.channel_member_ids.filtered(lambda cm: cm.partner_id == channel.whatsapp_partner_id)[0]
+        channel_member = channel.channel_member_ids.filtered(lambda cm: cm.partner_id == channel.whatsapp_partner_id)
+        if not channel_member:
+            return
+        channel_member = channel_member[0]
         notification_type = None
         if self.state == 'read':
             channel_member.write({
