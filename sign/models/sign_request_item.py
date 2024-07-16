@@ -173,9 +173,12 @@ class SignRequestItem(models.Model):
                 'timestamp': expiry_link_timestamp,
                 'exp': signer._generate_expiry_signature(signer.id, expiry_link_timestamp)
             })
+            link_sign = url_join(signer.get_base_url(), "sign/document/mail/%(request_id)s/%(access_token)s?%(url_params)s" % {'request_id': signer.sign_request_id.id, 'access_token': signer.sudo().access_token, 'url_params': url_params})
+            link_cancel = link_sign + '&refuseDocument=1'
             body = self.env['ir.qweb']._render('sign.sign_template_mail_request', {
                 'record': signer,
-                'link': url_join(signer.get_base_url(), "sign/document/mail/%(request_id)s/%(access_token)s?%(url_params)s" % {'request_id': signer.sign_request_id.id, 'access_token': signer.sudo().access_token, 'url_params': url_params}),
+                'link': link_sign,
+                'link_cancel': link_cancel,
                 'subject': signer.sign_request_id.subject,
                 'body': signer.sign_request_id.message if not is_html_empty(signer.sign_request_id.message) else False,
                 'use_sign_terms': self.env['ir.config_parameter'].sudo().get_param('sign.use_sign_terms'),
