@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models, api, _
+from odoo import Command, fields, models, api, _
 from odoo.osv import expression
 
 
@@ -76,3 +76,33 @@ class ProjectProject(models.Model):
     @api.model
     def get_create_edit_project_ids(self):
         return self.env['project.project'].search([('is_fsm', '=', True)]).ids
+
+    @api.model
+    def _get_default_task_type_values(self):
+        return [
+            {'name': name, 'sequence': sequence, 'fold': fold, 'project_ids': False}
+            for name, sequence, fold in [
+                (_('New'), 1, False),
+                (_('Planned'), 5, False),
+                (_('In Progress'), 10, False),
+                (_('Done'), 20, True),
+                (_('Cancelled'), 25, True),
+            ]
+        ]
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        fsm_vals_list = [vals for vals in vals_list if vals.get('is_fsm')]
+        if fsm_vals_list:
+            existing_fsm_project = self.env['project.project'].search(
+                [('is_fsm', '=', True)],
+                limit=1,
+                order="sequence"
+            )
+            if not existing_fsm_project.type_ids:
+                task_type_ids = self.env['project.task.type'].create(self._get_default_task_type_values()).ids
+            else:
+                task_type_ids = existing_fsm_project.type_ids.ids
+            for vals in fsm_vals_list:
+                vals.setdefault('type_ids', [(Command.set(task_type_ids))])
+        return super().create(vals_list)

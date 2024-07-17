@@ -12,6 +12,6 @@ class ProjectTaskType(models.Model):
         default_project_ids = super()._get_default_project_ids()
         default_user_id = self._context.get('default_user_id') # To check if it is a personal stage
         if self._context.get('fsm_mode') and not default_project_ids and not default_user_id:
-            default_project = self.env['project.project'].search([('is_fsm', '=', True)], limit=1, order='sequence')
-            default_project_ids = [default_project.id] if default_project else None
+            default_project = self.env['project.project'].search([('is_fsm', '=', True)])
+            default_project_ids = default_project.ids
         return default_project_ids

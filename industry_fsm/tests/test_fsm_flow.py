@@ -90,3 +90,40 @@ class TestFsmFlow(TestIndustryFsmCommon):
             partner.action_partner_navigate()['url'],
             "https://www.google.com/maps/dir/?api=1&destination=Chauss%C3%A9e+de+Namur+40%2C+1367+Ramillies",
         )
+
+    def test_fsm_project_default_task_types(self):
+        self.assertTrue(self.fsm_project.type_ids, "FSM project should have default FSM task types assigned.")
+        # Create a new FSM project
+        new_fsm_project = self.env['project.project'].create({
+            'name': 'New FSM Project',
+            'is_fsm': True,
+            'company_id': self.env.company.id
+        })
+        self.assertEqual(new_fsm_project.type_ids, self.fsm_project.type_ids, "New FSM project should inherit tasks stages from the existing FSM project.")
+
+    def test_new_fsm_stage_linked_with_existing_project(self):
+        """Check whether the new FSM stage is linked to the existing project or not."""
+        Project = self.env['project.project']
+        fsm_stage = self.env['project.task.type'].search([('project_ids.is_fsm', '=', True)])
+        # To create a new stage; otherwise, the old FSM stage is linked.
+        fsm_stage.action_archive()
+        fsm_project_no_stages = Project.create({
+            'name': 'New FSM Project',
+            'is_fsm': True,
+            'company_id': self.env.company.id,
+            'type_ids': False,
+        })
+        fsm_project_with_stages = Project.with_context(fsm_mode=True).create({
+            'name': 'New FSM Project',
+            'is_fsm': True,
+            'company_id': self.env.company.id,
+        })
+        self.assertFalse(
+            fsm_project_no_stages.type_ids,
+            "FSM Project without stages should not have any task stages."
+        )
+        self.assertTrue(
+            fsm_project_with_stages.type_ids,
+            "FSM Project with stages should have default task stages."
+        )
+        fsm_stage.action_unarchive()
