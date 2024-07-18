@@ -14,8 +14,8 @@
                      <ns2:IOSSNumber t-att-issuedBy="IOSSNumber[:2]" t-out="IOSSNumber[2:]"/>
                      <ns2:IntNumber t-att-issuedBy="IntNumber[:2]" t-if="IntNumber" t-out="IntNumber[2:]"/>
                   </ns2:IOSSNumbers>
-                  <ns2:VoesNumber t-elif="VoesNumber" t-att-issuedBy="VoesNumber[:2]" t-out="VoesNumber[2:]"/>
-                  <ns2:VATNumber t-elif="VATNumber" t-att-issuedBy="VATNumber[:2]" t-out="VATNumber[2:]"/>
+                  <ns2:VoesNumber t-elif="VoesNumber" t-att-issuedBy="VoesNumber[:2]" t-esc="VoesNumber[2:]"/>
+                  <ns2:VATNumber t-elif="PartnerVATNumber" t-att-issuedBy="PartnerVATNumber[:2]" t-esc="PartnerVATNumber[2:]"/>
                </ns0:Trader_ID>
                <ns0:Period>
                   <ns2:Year><t t-out="Year"/></ns2:Year>

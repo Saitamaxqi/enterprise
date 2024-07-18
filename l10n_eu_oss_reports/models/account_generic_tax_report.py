@@ -215,10 +215,11 @@ class OSSTaxReportCustomHandlerOss(models.AbstractModel):
             data[current_country].append(get_line_data())
 
         values = {
-            'VATNumber': sender_company.vat if sender_company.account_fiscal_country_id in eu_countries else None,
+            'VATNumber': sender_company.vat if sender_company.account_fiscal_country_id in eu_countries and sender_company.country_id != self.env.company.country_id else None,
             'VoesNumber': sender_company.voes if sender_company.account_fiscal_country_id not in eu_countries else None,
             'IOSSNumber': sender_company.ioss if report == oss_import_report else None,
             'IntNumber': sender_company.intermediary_no if report == oss_import_report else None,
+            'PartnerVATNumber': self.env.company.vat,
             'Year': year,
             'Quarter': quarter,
             'Month': month,

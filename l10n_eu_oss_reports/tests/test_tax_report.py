@@ -13,6 +13,7 @@ class OSSTaxReportTest(TestAccountReportsCommon):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.env.company.country_id = cls.env.ref('base.be')
         cls.env.company.account_fiscal_country_id = cls.env.ref('base.be')
         cls.env.company.vat = 'BE0477472701'
         cls.env.company.currency_id = cls.env.ref('base.EUR')
@@ -174,9 +175,6 @@ class OSSTaxReportTest(TestAccountReportsCommon):
                   <ns2:MemberStateOfConsumption>FR</ns2:MemberStateOfConsumption>
                   <ns2:OSSDeclarationRows SequenceNumber="1">
                     <ns2:SupplyType>GOODS</ns2:SupplyType>
-                    <ns2:FixedEstablishment>
-                        <ns2:VATIdentificationNumber issuedBy="BE">0477472701</ns2:VATIdentificationNumber>
-                    </ns2:FixedEstablishment>
                     <ns2:VatRateType type="STANDARD">20.00</ns2:VatRateType>
                     <ns2:VatAmount currency="EUR">200.0</ns2:VatAmount>
                     <ns2:TaxableAmount currency="EUR">1000.0</ns2:TaxableAmount>
@@ -196,6 +194,92 @@ class OSSTaxReportTest(TestAccountReportsCommon):
                   <ns2:MemberStateOfConsumption>LU</ns2:MemberStateOfConsumption>
                   <ns2:OSSDeclarationRows SequenceNumber="1">
                     <ns2:SupplyType>GOODS</ns2:SupplyType>
+                    <ns2:VatRateType type="REDUCED">16.00</ns2:VatRateType>
+                    <ns2:VatAmount currency="EUR">160.0</ns2:VatAmount>
+                    <ns2:TaxableAmount currency="EUR">1000.0</ns2:TaxableAmount>
+                  </ns2:OSSDeclarationRows>
+                  <ns2:CorrectionsInfo>
+                    <ns2:Period>
+                      <ns2:Year>2021</ns2:Year>
+                      <ns2:Quarter>2</ns2:Quarter>
+                    </ns2:Period>
+                    <ns2:TotalVATAmountCorrection currency="EUR">-35.0</ns2:TotalVATAmountCorrection>
+                  </ns2:CorrectionsInfo>
+                </ns0:OSSDeclarationInfo>
+              </ns0:OSSDeclaration>
+            </ns0:OSSConsignment>
+        """
+
+        self.assertXmlTreeEqual(
+            self.get_xml_tree_from_string(self.env[report.custom_handler_model_name].export_to_xml(options)['file_content']),
+            self.get_xml_tree_from_string(expected_xml)
+        )
+
+    def test_generate_oss_xml_fixed_establishment(self):
+        report = self.env.ref('l10n_eu_oss_reports.oss_sales_report')
+        company_be, company_de = self.env['res.company'].create([{
+            'name': 'TestCompanyBE',
+            'country_id': self.env.ref('base.be').id,
+            'account_fiscal_country_id': self.env.ref('base.be').id,
+            'vat': 'BE0477472701',
+        }, {
+            'name': 'TestCompanyDE',
+            'country_id': self.env.ref('base.de').id,
+            'account_fiscal_country_id': self.env.ref('base.de').id,
+            'vat': 'DE123456788',
+        }])
+        tax_unit = self.env['account.tax.unit'].create({
+            'name': "One unit to rule them all",
+            'country_id': company_be.country_id.id,
+            'vat': "BE0477472701",
+            'company_ids': [Command.set((company_be + company_de).ids)],
+            'main_company_id': company_be.id,
+        })
+
+        self.init_invoice('out_invoice', partner=self.partner_fr, products=self.product_1, invoice_date=fields.Date.from_string('2022-05-23'), post=True)
+        self.init_invoice('out_invoice', partner=self.partner_lu, products=self.product_1, invoice_date=fields.Date.from_string('2022-06-12'), post=True)
+        self.init_invoice('out_refund', partner=self.partner_lu, products=self.product_2, invoice_date=fields.Date.from_string('2022-06-15'), post=True)
+
+        options = self._generate_options(
+            report,
+            fields.Date.from_string('2022-04-01'),
+            fields.Date.from_string('2022-06-30'),
+            {'tax_report': 'generic_oss_no_import'},
+        )
+        options['tax_unit'] = tax_unit.id
+
+        self.env.company.country_id = self.env.ref('base.fr').id
+
+        expected_xml = """
+            <ns0:OSSConsignment
+              xmlns:ns2="urn:minfin.fgov.be:oss:common"
+              xmlns:ns1="http://www.minfin.fgov.be/InputCommon"
+              xmlns:ns0="http://www.minfin.fgov.be/OSSDeclaration"
+              OSSDeclarationNbr="1">
+              <ns0:OSSDeclaration SequenceNumber="1">
+                <ns0:Trader_ID>
+                  <ns2:VATNumber issuedBy="BE">0477472701</ns2:VATNumber>
+                </ns0:Trader_ID>
+                <ns0:Period>
+                  <ns2:Year>2022</ns2:Year>
+                  <ns2:Quarter>2</ns2:Quarter>
+                </ns0:Period>
+                <ns0:OSSDeclarationInfo SequenceNumber="1">
+                  <ns2:MemberStateOfConsumption>FR</ns2:MemberStateOfConsumption>
+                  <ns2:OSSDeclarationRows SequenceNumber="1">
+                    <ns2:SupplyType>GOODS</ns2:SupplyType>
+                    <ns2:FixedEstablishment>
+                        <ns2:VATIdentificationNumber issuedBy="BE">0477472701</ns2:VATIdentificationNumber>
+                    </ns2:FixedEstablishment>
+                    <ns2:VatRateType type="STANDARD">20.00</ns2:VatRateType>
+                    <ns2:VatAmount currency="EUR">200.0</ns2:VatAmount>
+                    <ns2:TaxableAmount currency="EUR">1000.0</ns2:TaxableAmount>
+                  </ns2:OSSDeclarationRows>
+                </ns0:OSSDeclarationInfo>
+                <ns0:OSSDeclarationInfo SequenceNumber="2">
+                  <ns2:MemberStateOfConsumption>LU</ns2:MemberStateOfConsumption>
+                  <ns2:OSSDeclarationRows SequenceNumber="1">
+                    <ns2:SupplyType>GOODS</ns2:SupplyType>
                     <ns2:FixedEstablishment>
                         <ns2:VATIdentificationNumber issuedBy="BE">0477472701</ns2:VATIdentificationNumber>
                     </ns2:FixedEstablishment>
@@ -205,7 +289,7 @@ class OSSTaxReportTest(TestAccountReportsCommon):
                   </ns2:OSSDeclarationRows>
                   <ns2:CorrectionsInfo>
                     <ns2:Period>
-                      <ns2:Year>2021</ns2:Year>
+                      <ns2:Year>2022</ns2:Year>
                       <ns2:Quarter>2</ns2:Quarter>
                     </ns2:Period>
                     <ns2:TotalVATAmountCorrection currency="EUR">-35.0</ns2:TotalVATAmountCorrection>
