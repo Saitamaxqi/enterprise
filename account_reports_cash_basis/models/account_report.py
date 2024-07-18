@@ -196,6 +196,7 @@ class AccountReport(models.Model):
 
     def action_audit_cell(self, options, params):
         action = super().action_audit_cell(options, params)
-        if options.get('report_cash_basis'):
+        # Only add the domain on the correct model (e.g. can be an account.analytic.line).
+        if options.get('report_cash_basis') and action['res_model'] == 'account.move.line':
             action['domain'].append(('move_id.impacting_cash_basis', '=', True))
         return action
