@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from datetime import timedelta
 from werkzeug.urls import url_join
 from markupsafe import Markup
+import pytz
 
 from odoo import models, fields, api, _, SUPERUSER_ID
 
@@ -35,6 +37,12 @@ class FrontdeskVisitor(models.Model):
     visitor_properties = fields.Properties('Properties', definition='station_id.visitor_properties_definition', copy=True)
     served = fields.Boolean(string='Drink Served')
     company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        res = super().create(vals_list)
+        res._check_and_notify_visitor()
+        return res
 
     def write(self, vals):
         if vals.get('state') == 'checked_in':
@@ -147,3 +155,65 @@ class FrontdeskVisitor(models.Model):
 
     def _get_host_name(self):
         return ", ".join(self.host_ids.mapped('name'))
+
+    def _check_resources_leave(self, resources, check_in):
+        if not resources or not check_in:
+            return []
+        start = pytz.utc.localize(check_in)
+        stop = start + timedelta(minutes=1)
+        calendar = self.env.company.resource_calendar_id
+        leaves = calendar._leave_intervals_batch(start, stop, resources=resources)
+        resource_on_leave = [resource.id for resource in resources if leaves[resource.id]._items]
+        return resource_on_leave
+
+    def _check_and_notify_visitor(self):
+        resources = [host.resource_id for host in self.host_ids]
+        odoobot = self.env.ref('base.partner_root')
+        author = self.station_id.company_id.partner_id
+        for visitor in self:
+            resources_on_leave = self._check_resources_leave(resources, visitor.check_in)
+            hosts_on_leave = visitor.host_ids.filtered(lambda host: host.resource_id.id in resources_on_leave)
+            if hosts_on_leave:
+                body = Markup(
+                    """<div>
+                        <p>%(greeting)s</p>
+                        <p>%(message)s</p>
+                        <ul>
+                            %(host_details)s
+                        </ul>
+                        <p>%(footer_contact)s</p>
+                        <p>%(footer)s</p>
+                    </div>"""
+                ) % {
+                    "greeting": _("Dear %(visitor_name)s,", visitor_name=visitor.name),
+                    "message": _(
+                        "We regret to inform you that the following %(host_status)s currently unavailable:",
+                        host_status=_('host is') if len(hosts_on_leave) == 1 else _('hosts are')
+                    ),
+                    "host_details": Markup().join(
+                        Markup("<li><strong>%(host_name)s</strong>%(manager_info)s</li>") % {
+                            "host_name": host.name,
+                            "manager_info": _(' - Manager: %(manager_name)s', manager_name=host.parent_id.name)
+                            if host.parent_id else ''
+                        }
+                        for host in hosts_on_leave
+                    ),
+                    "footer_contact": _(
+                        "You can contact the host's manager or frontdesk responsible for further assistance."
+                    ),
+                    "footer": _("Thanks for your understanding.")
+                }
+                if visitor.email and visitor.station_id.ask_email in ['required', 'optional']:
+                    visitor.message_post(
+                        body=body,
+                        subject=_("Your host isn't available"),
+                        author_id=author.id,
+                        message_type="comment",
+                        subtype_xmlid="mail.mt_comment"
+                    )
+                if visitor.phone and visitor.station_id.ask_phone in ['required', 'optional']:
+                    visitor._message_sms(
+                        author_id=odoobot.id,
+                        body=body,
+                        sms_numbers=[visitor.phone],
+                    )

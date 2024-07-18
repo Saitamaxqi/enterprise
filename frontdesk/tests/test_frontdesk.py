@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from datetime import datetime, timedelta
 from odoo.addons.mail.tests.common import MailCase
+from odoo.addons.sms.tests.common import SMSCase
 from odoo.tests.common import TransactionCase, tagged
+from odoo import Command
 
 
-class TestFrontDesk(MailCase):
+class TestFrontDesk(MailCase, SMSCase):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.company = cls.env['res.company'].create({'name': 'Test Company'})
+        cls.company = cls.env['res.company'].create({'name': 'Test Company', 'email': 'your.company@example.com'})
         cls.env = cls.env(context=dict(cls.env.context, allowed_company_ids=cls.company.ids))
         cls.partner_1, cls.partner_2 = cls.env['res.partner'].create([{
             'name': 'Test Partner 1',
@@ -47,6 +50,9 @@ class TestFrontDesk(MailCase):
             'host_selection': True,
             'drink_offer': True,
             'drink_ids': [(4, cls.drink.id)],
+            'ask_email': 'required',
+            'ask_phone': 'required',
+            'company_id': cls.company.id,
         })
         cls.visitor_1, cls.visitor_2, cls.visitor_3 = cls.env['frontdesk.visitor'].create([{
             'name': 'Visitor_1',
@@ -116,6 +122,35 @@ class TestFrontDesk(MailCase):
         notify_drink_user = self.visitor_2.drink_ids.notify_user_ids.name
         self.visitor_2.state = 'checked_in'
         self.assert_discuss_notification(notify_drink_user)
+
+    def test_check_and_notify_visitor_host_on_leave(self):
+        '''Test that when a visitor's host is on leave, the visitor is notified via email and SMS'''
+
+        check_in_time = datetime.now()
+        self.env['resource.calendar.leaves'].create({
+            'name': 'Host Leave',
+            'date_from': check_in_time - timedelta(hours=1),
+            'date_to': check_in_time + timedelta(hours=1),
+            'resource_id': self.employee_1.resource_id.id,
+            'calendar_id': self.env.company.resource_calendar_id.id,
+            'time_type': 'leave',
+        })
+
+        visitor_data = {
+            'name': 'Visitor_Notify_1',
+            'email': 'visitornotify@example.com',
+            'phone': '1234567890',
+            'station_id': self.station.id,
+            'host_ids': [(Command.link(self.employee_1.id))],
+            'check_in': check_in_time,
+        }
+
+        with (self.mock_mail_gateway(), self.mockSMSGateway()):
+            visitor1 = self.env['frontdesk.visitor'].create(visitor_data)
+
+        visitor_messages = visitor1.message_ids.filtered(lambda m: m.model == 'frontdesk.visitor' and
+            m.record_name == visitor1.name)
+        self.assertEqual(len(visitor_messages), 2, "Visitor should receive 1 email and 1 SMS")
 
 
 @tagged('post_install', '-at_install')  # Run this test after all modules are installed
