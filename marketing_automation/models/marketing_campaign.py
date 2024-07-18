@@ -287,7 +287,7 @@ class MarketingCampaign(models.Model):
 
         # trigger CRON job ASAP so that participants are synced
         cron = self.env.ref('marketing_automation.ir_cron_campaign_sync_participants')
-        cron._trigger(at=Datetime.now())
+        cron._trigger(at=self.env.cr.now())
         self.write({'state': 'running'})
 
     def action_stop_campaign(self):

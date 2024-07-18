@@ -4,7 +4,7 @@
 import json
 import logging
 
-from datetime import timedelta, date, datetime
+from datetime import timedelta, date
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, modules, _
@@ -290,7 +290,7 @@ class MarketingActivity(models.Model):
 
     def _get_graph_statistics(self):
         """ Compute activities statistics based on their traces state for the last fortnight """
-        past_date = (Datetime.from_string(Datetime.now()) + timedelta(days=-14)).strftime('%Y-%m-%d 00:00:00')
+        past_date = (self.env.cr.now() + timedelta(days=-14)).strftime('%Y-%m-%d 00:00:00')
         stat_map = {}
         base = date.today() + timedelta(days=-14)
         date_range = [base + timedelta(days=d) for d in range(0, 15)]
@@ -343,7 +343,7 @@ class MarketingActivity(models.Model):
 
         # organize traces by activity
         trace_domain = [
-            ('schedule_date', '<=', Datetime.now()),
+            ('schedule_date', '<=', self.env.cr.now()),
             ('state', '=', 'scheduled'),
             ('activity_id', 'in', self.ids),
             ('participant_id.state', '=', 'running'),
@@ -371,12 +371,13 @@ class MarketingActivity(models.Model):
         :param traces: record set of traces on which the activity should run
         """
         self.ensure_one()
+        now = self.env.cr.now()
         new_traces = self.env['marketing.trace']
 
         if self.validity_duration:
             duration = relativedelta(**{self.validity_duration_type: self.validity_duration_number})
             invalid_traces = traces.filtered(
-                lambda trace: not trace.schedule_date or trace.schedule_date + duration < datetime.now()
+                lambda trace: not trace.schedule_date or trace.schedule_date + duration < now
             )
             invalid_traces.action_cancel()
             traces = traces - invalid_traces
@@ -419,6 +420,7 @@ class MarketingActivity(models.Model):
 
         # Do a loop here because we have to try / catch each execution separately to ensure other traces are executed
         # and proper state message stored
+        now = self.env.cr.now()
         traces_ok = self.env['marketing.trace']
         for trace in traces:
             action = self.server_action_id.with_context(
@@ -432,7 +434,7 @@ class MarketingActivity(models.Model):
                 _logger.warning('Marketing Automation: activity <%s> encountered server action issue %s', self.id, str(e), exc_info=True)
                 trace.write({
                     'state': 'error',
-                    'schedule_date': Datetime.now(),
+                    'schedule_date': now,
                     'state_msg': _('Exception in server action: %s', e),
                 })
             else:
@@ -441,7 +443,7 @@ class MarketingActivity(models.Model):
         # Update status
         traces_ok.write({
             'state': 'processed',
-            'schedule_date': Datetime.now(),
+            'schedule_date': self.env.cr.now(),
         })
         return True
 
@@ -456,13 +458,15 @@ class MarketingActivity(models.Model):
         res_ids = _uniquify_list(traces.mapped('res_id'))
         ctx = dict(clean_context(self._context), default_marketing_activity_id=self.ids[0], active_ids=res_ids)
         mailing = self.mass_mailing_id.sudo().with_context(ctx)
+        now = self.env.cr.now()
+
         try:
             mailing.action_send_mail(res_ids)
         except Exception as e:
             _logger.warning('Marketing Automation: activity <%s> encountered mass mailing issue %s', self.id, str(e), exc_info=True)
             traces.write({
                 'state': 'error',
-                'schedule_date': Datetime.now(),
+                'schedule_date': now,
                 'state_msg': _('Exception in mass mailing: %s', e),
             })
         else:
@@ -481,21 +485,21 @@ class MarketingActivity(models.Model):
             if canceled_traces:
                 canceled_traces.write({
                     'state': 'canceled',
-                    'schedule_date': Datetime.now(),
+                    'schedule_date': now,
                     'state_msg': _('Email cancelled')
                 })
                 processed_traces = processed_traces - canceled_traces
             if error_traces:
                 error_traces.write({
                     'state': 'error',
-                    'schedule_date': Datetime.now(),
+                    'schedule_date': now,
                     'state_msg': _('Email failed')
                 })
                 processed_traces = processed_traces - error_traces
             if processed_traces:
                 processed_traces.write({
                     'state': 'processed',
-                    'schedule_date': Datetime.now(),
+                    'schedule_date': now,
                 })
         return True
 

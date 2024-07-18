@@ -4,7 +4,6 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
-from odoo.fields import Datetime
 
 
 class MarketingTrace(models.Model):
@@ -54,7 +53,7 @@ class MarketingTrace(models.Model):
         self.action_cancel(message=_('Manually'))
 
     def action_cancel(self, message=None):
-        values = {'state': 'canceled', 'schedule_date': Datetime.now()}
+        values = {'state': 'canceled', 'schedule_date': self.env.cr.now()}
         if message:
             values['state_msg'] = message
         self.write(values)
@@ -77,7 +76,7 @@ class MarketingTrace(models.Model):
         if self.participant_id.campaign_id.state not in ['draft', 'running']:
             return
 
-        now = Datetime.from_string(Datetime.now())
+        now = self.env.cr.now()
         msg = {
             'mail_not_reply': _('Parent activity mail replied'),
             'mail_not_click': _('Parent activity mail clicked'),

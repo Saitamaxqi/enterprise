@@ -1,7 +1,6 @@
 import logging
 
 from odoo import api, fields, models, _
-from odoo.fields import Datetime
 from odoo.tools import SQL
 
 _logger = logging.getLogger(__name__)
@@ -122,6 +121,8 @@ class MarketingActivity(models.Model):
 
     def _execute_whatsapp(self, traces):
         res_ids = [res_id for res_id in set(traces.mapped('res_id')) if res_id]
+        now = self.env.cr.now()
+
         composer_vals = {
             'res_model': self.model_name, 'res_ids': res_ids,
             'wa_template_id': self.whatsapp_template_id.id,
@@ -147,31 +148,30 @@ class MarketingActivity(models.Model):
             _logger.warning('Marketing Automation: activity <%s> encountered WhatsApp message issue %s', self.id, str(e))
             traces.write({
                 'state': 'error',
-                'schedule_date': Datetime.now(),
+                'schedule_date': now,
                 'state_msg': _('Exception in Whatsapp Marketing: %s', e),
             })
         else:
             cancelled_traces = traces.filtered(lambda trace: trace.whatsapp_message_id.state == 'cancel')
             error_traces = traces.filtered(lambda trace: trace.whatsapp_message_id.state == 'error')
-            schedule_date = Datetime.now()
 
             if cancelled_traces:
                 cancelled_traces.write({
                     'state': 'canceled',
-                    'schedule_date': schedule_date,
+                    'schedule_date': now,
                     'state_msg': _('WhatsApp canceled')
                 })
             if error_traces:
                 error_traces.write({
                     'state': 'error',
-                    'schedule_date': schedule_date,
+                    'schedule_date': now,
                     'state_msg': _('WhatsApp failed')
                 })
             processed_traces = traces - (cancelled_traces | error_traces)
             if processed_traces:
                 processed_traces.write({
                     'state': 'processed',
-                    'schedule_date': schedule_date,
+                    'schedule_date': now,
                 })
         return True
 

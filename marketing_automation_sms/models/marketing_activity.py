@@ -53,6 +53,7 @@ class MarketingActivity(models.Model):
 
     def _execute_sms(self, traces):
         res_ids = [r for r in set(traces.mapped('res_id'))]
+        now = self.env.cr.now()
 
         # we only allow to continue if the user has sufficient rights, as a sudo() follows
         if not self.env.is_superuser() and not self.env.user.has_group('marketing_automation.group_marketing_automation_user'):
@@ -65,7 +66,7 @@ class MarketingActivity(models.Model):
             _logger.warning('Marketing Automation: activity <%s> encountered mass mailing issue %s', self.id, str(e), exc_info=True)
             traces.write({
                 'state': 'error',
-                'schedule_date': Datetime.now(),
+                'schedule_date': now,
                 'state_msg': _('Exception in SMS Marketing: %s', e),
             })
         else:
@@ -83,20 +84,20 @@ class MarketingActivity(models.Model):
             if canceled_traces:
                 canceled_traces.write({
                     'state': 'canceled',
-                    'schedule_date': Datetime.now(),
+                    'schedule_date': now,
                     'state_msg': _('SMS cancelled')
                 })
                 processed_traces = processed_traces - canceled_traces
             if error_traces:
                 error_traces.write({
                     'state': 'error',
-                    'schedule_date': Datetime.now(),
+                    'schedule_date': now,
                     'state_msg': _('SMS failed')
                 })
                 processed_traces = processed_traces - error_traces
             if processed_traces:
                 processed_traces.write({
                     'state': 'processed',
-                    'schedule_date': Datetime.now(),
+                    'schedule_date': now,
                 })
         return True
