@@ -74,7 +74,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
         xml_expected_dte = misc.file_open('l10n_cl_edi/tests/expected_dtes/dte_39.xml').read()
 
         self.assertXmlTreeEqual(
-            self.get_xml_tree_from_attachment(invoice.l10n_cl_sii_send_file),
+            self.get_xml_tree_from_attachment(invoice.sudo().l10n_cl_sii_send_file),
             self.get_xml_tree_from_string(xml_expected_dte.encode()),
         )
 
@@ -172,7 +172,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
             'l10n_cl_edi', 'tests', 'expected_dtes', 'dte_33.xml')).read()
 
         self.assertXmlTreeEqual(
-            self.get_xml_tree_from_attachment(invoice.l10n_cl_sii_send_file),
+            self.get_xml_tree_from_attachment(invoice.sudo().l10n_cl_sii_send_file),
             self.get_xml_tree_from_string(xml_expected_dte.encode())
         )
 
@@ -232,7 +232,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
             'l10n_cl_edi', 'tests', 'expected_dtes', 'dte_33_with_reference_ids.xml')).read()
 
         self.assertXmlTreeEqual(
-            self.get_xml_tree_from_attachment(invoice.l10n_cl_sii_send_file),
+            self.get_xml_tree_from_attachment(invoice.sudo().l10n_cl_sii_send_file),
             self.get_xml_tree_from_string(xml_expected_dte.encode()),
         )
 
@@ -321,7 +321,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
             'l10n_cl_edi', 'tests', 'expected_dtes', 'dte_33_with_holding_taxes.xml')).read()
 
         self.assertXmlTreeEqual(
-            self.get_xml_tree_from_attachment(invoice.l10n_cl_sii_send_file),
+            self.get_xml_tree_from_attachment(invoice.sudo().l10n_cl_sii_send_file),
             self.get_xml_tree_from_string(xml_expected_dte.encode()),
         )
 
@@ -375,7 +375,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
         xml_expected_dte = misc.file_open(os.path.join(
             'l10n_cl_edi', 'tests', 'expected_dtes', 'dte_33_with_discounts.xml')).read()
         self.assertXmlTreeEqual(
-            self.get_xml_tree_from_attachment(invoice.l10n_cl_sii_send_file),
+            self.get_xml_tree_from_attachment(invoice.sudo().l10n_cl_sii_send_file),
             self.get_xml_tree_from_string(xml_expected_dte.encode()),
         )
 
@@ -426,7 +426,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
 
         xml_expected_dte = misc.file_open('l10n_cl_edi/tests/expected_dtes/dte_33_usd_with_discounts.xml').read()
         self.assertXmlTreeEqual(
-            self.get_xml_tree_from_attachment(invoice.l10n_cl_sii_send_file),
+            self.get_xml_tree_from_attachment(invoice.sudo().l10n_cl_sii_send_file),
             self.get_xml_tree_from_string(xml_expected_dte.encode()),
         )
 
@@ -472,7 +472,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
             'l10n_cl_edi', 'tests', 'expected_dtes', 'dte_34.xml')).read()
 
         self.assertXmlTreeEqual(
-            self.get_xml_tree_from_attachment(invoice.l10n_cl_sii_send_file),
+            self.get_xml_tree_from_attachment(invoice.sudo().l10n_cl_sii_send_file),
             self.get_xml_tree_from_string(xml_expected_dte.encode()),
         )
 
@@ -569,6 +569,6 @@ class TestL10nClDte(TestL10nClEdiCommon):
             'l10n_cl_edi', 'tests', 'expected_dtes', 'dte_56.xml')).read()
 
         self.assertXmlTreeEqual(
-            self.get_xml_tree_from_attachment(invoice.l10n_cl_dte_file),
+            self.get_xml_tree_from_attachment(invoice.sudo().l10n_cl_dte_file),
             self.get_xml_tree_from_string(xml_expected_dte.encode()),
         )

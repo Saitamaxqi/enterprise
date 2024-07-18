@@ -535,12 +535,20 @@ class StockPicking(models.Model):
                                      'it won\'t be sent to SII.'))
             self.l10n_cl_dte_status = 'accepted'
             return None
+        params = {
+            'rutSender': digital_signature_sudo.subject_serial_number[:-2],
+            'dvSender': digital_signature_sudo.subject_serial_number[-1],
+            'rutCompany': self._l10n_cl_format_vat(self.company_id.vat)[:-2],
+            'dvCompany': self._l10n_cl_format_vat(self.company_id.vat)[-1],
+            'archivo': (
+                self.l10n_cl_sii_send_file.name,
+                base64.b64decode(self.l10n_cl_sii_send_file.datas),
+                'application/xml'),
+        }
         response = self._send_xml_to_sii(
             self.company_id.l10n_cl_dte_service_provider,
             self.company_id.website,
-            self.company_id.vat,
-            self.l10n_cl_sii_send_file.name,
-            base64.b64decode(self.l10n_cl_sii_send_file.datas),
+            params,
             digital_signature_sudo
         )
         if not response:

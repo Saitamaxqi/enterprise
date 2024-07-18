@@ -57,7 +57,7 @@ SII_DETAIL_STATUS_RESULTS_REST = {
 
 TIMEOUT_REST = 5
 
-TIMEOUT = 30 # default timeout for all remote operations
+TIMEOUT = 30  # default timeout for all remote operations
 pool = urllib3.PoolManager(timeout=TIMEOUT)
 
 NS_MAP = {'': 'http://www.w3.org/2000/09/xmldsig#'}
@@ -329,7 +329,8 @@ class L10n_ClEdiUtil(models.AbstractModel):
 
         raise UnexpectedXMLResponse()
 
-    def _sign_full_xml(self, message, digital_signature, uri, xml_type, is_doc_type_voucher=False):
+    def _sign_full_xml(
+            self, message, digital_signature, uri, xml_type, is_doc_type_voucher=False, without_xml_declaration=False):
         """
         Signed the xml following the SII documentation:
         http://www.sii.cl/factura_electronica/factura_mercado/instructivo_emision.pdf
@@ -356,6 +357,8 @@ class L10n_ClEdiUtil(models.AbstractModel):
             'certificate': '\n' + textwrap.fill(digital_signature._get_der_certificate_bytes(formatting='base64').decode(), 64),
         })
         full_doc = self._l10n_cl_append_sig(xml_type, signature, digest_value)
+        if without_xml_declaration:
+            return full_doc
         return Markup('<?xml version="1.0" encoding="ISO-8859-1" ?>'
                       if xml_type != 'token' else '<?xml version="1.0" ?>') + full_doc
 
@@ -397,8 +400,7 @@ class L10n_ClEdiUtil(models.AbstractModel):
     def _get_token_ws(self, mode, signed_token):
         return Client(wsdl=SERVER_URL[mode] + 'GetTokenFromSeed.jws?WSDL', operation_timeout=TIMEOUT).service.getToken(signed_token)
 
-    def _send_xml_to_sii(self, mode, company_website, company_vat, file_name, xml_message, digital_signature,
-                         post='/cgi_dte/UPL/DTEUpload'):
+    def _send_xml_to_sii(self, mode, company_website, params, digital_signature, post='/cgi_dte/UPL/DTEUpload'):
         """
         The header used here is explicitly stated as is, in SII documentation. See
         http://www.sii.cl/factura_electronica/factura_mercado/envio.pdf
@@ -408,7 +410,7 @@ class L10n_ClEdiUtil(models.AbstractModel):
             # mocked response
             return None
         token = self._get_token(mode, digital_signature)
-        if not token:
+        if token is None:
             self._report_connection_err(_('No response trying to get a token'))
             return False
         url = SERVER_URL[mode].replace('/DTEWS/', '')
@@ -418,24 +420,17 @@ class L10n_ClEdiUtil(models.AbstractModel):
             'Accept-Language': 'es-cl',
             'Accept-Encoding': 'gzip, deflate',
             'User-Agent': 'Mozilla/4.0 (compatible; PROG 1.0; Windows NT 5.0; YComp 5.0.2.4)',
-            'Referer': '{}'.format(company_website),
+            'Referer': f'{company_website}',
             'Connection': 'Keep-Alive',
             'Cache-Control': 'no-cache',
-            'Cookie': 'TOKEN={}'.format(token),
+            'Cookie': f'TOKEN={token}',
         }
-        params = collections.OrderedDict({
-            'rutSender': digital_signature.subject_serial_number[:-2],
-            'dvSender': digital_signature.subject_serial_number[-1],
-            'rutCompany': self._l10n_cl_format_vat(company_vat)[:-2],
-            'dvCompany': self._l10n_cl_format_vat(company_vat)[-1],
-            'archivo': (file_name, xml_message, 'text/xml'),
-        })
         multi = urllib3.filepost.encode_multipart_formdata(params)
-        headers.update({'Content-Length': '{}'.format(len(multi[0]))})
+        headers.update({'Content-Length': f'{len(multi[0])}'})
         try:
             response = pool.request_encode_body('POST', url + post, params, headers)
-        except Exception as error:
-            self._report_connection_err(_('Sending DTE to SII failed due to:') + '<br /> %s' % error)
+        except Exception as error:  # noqa: BLE001
+            self._report_connection_err(_('Sending DTE to SII failed due to: \n %s', error))
             digital_signature.last_token = False
             return False
         return response.data

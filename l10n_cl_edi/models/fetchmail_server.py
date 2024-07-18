@@ -296,7 +296,7 @@ class FetchmailServer(models.Model):
                 'type': 'binary',
                 'datas': base64.b64encode(etree.tostring(dte_xml))
             })
-            move.l10n_cl_dte_file = dte_attachment.id
+            move.sudo().l10n_cl_dte_file = dte_attachment.id
 
             for msg in msgs:
                 move.with_context(no_new_invoice=True).message_post(body=msg)

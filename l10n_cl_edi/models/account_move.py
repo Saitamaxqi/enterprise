@@ -85,8 +85,8 @@ services reception has been received as well.
         ('NCA', 'Reception of Cancellation that References Document'),
     ], string='Claim', copy=False, help='The reason why the DTE was accepted or claimed by the customer')
     l10n_cl_claim_description = fields.Char(string='Claim Detail', readonly=True, copy=False)
-    l10n_cl_sii_send_file = fields.Many2one('ir.attachment', string='SII Send file', copy=False)
-    l10n_cl_dte_file = fields.Many2one('ir.attachment', string='DTE file', copy=False)
+    l10n_cl_sii_send_file = fields.Many2one('ir.attachment', string='SII Send file', copy=False, groups='base.group_system')
+    l10n_cl_dte_file = fields.Many2one('ir.attachment', string='DTE file', copy=False, groups='base.group_system')
     l10n_cl_sii_send_ident = fields.Text(string='SII Send Identification(Track ID)', copy=False, tracking=True)
     l10n_cl_journal_point_of_sale_type = fields.Selection(related='journal_id.l10n_cl_point_of_sale_type')
     l10n_cl_reference_ids = fields.One2many('l10n_cl.account.invoice.reference', 'move_id', string='Reference Records')
@@ -159,7 +159,7 @@ services reception has been received as well.
                     'datas': base64.b64encode(dte_signed.encode('ISO-8859-1', 'replace')),
                     'type': 'binary',
                 })
-                move.l10n_cl_sii_send_file = attachment.id
+                move.sudo().l10n_cl_sii_send_file = attachment.id
                 move.with_context(no_new_invoice=True).message_post(
                     body=_('DTE has been created%s', msg_demo),
                     attachment_ids=attachment.ids)
@@ -221,8 +221,8 @@ services reception has been received as well.
         response = self._send_xml_to_sii_rest(
             self.company_id.l10n_cl_dte_service_provider,
             self.company_id.vat,
-            self.l10n_cl_sii_send_file.name,
-            base64.b64decode(self.l10n_cl_sii_send_file.datas),
+            self.sudo().l10n_cl_sii_send_file.name,
+            base64.b64decode(self.sudo().l10n_cl_sii_send_file.datas),
             digital_signature_sudo,
         )
         if not response:
@@ -254,12 +254,20 @@ services reception has been received as well.
                                      'it won\'t be sent to SII.'))
             self.l10n_cl_dte_status = 'accepted'
             return None
+        params = {
+            'rutSender': digital_signature_sudo.subject_serial_number[:-2],
+            'dvSender': digital_signature_sudo.subject_serial_number[-1],
+            'rutCompany': self._l10n_cl_format_vat(self.company_id.vat)[:-2],
+            'dvCompany': self._l10n_cl_format_vat(self.company_id.vat)[-1],
+            'archivo': (
+                self.sudo().l10n_cl_sii_send_file.name,
+                base64.b64decode(self.sudo().l10n_cl_sii_send_file.datas),
+                'application/xml'),
+        }
         response = self._send_xml_to_sii(
             self.company_id.l10n_cl_dte_service_provider,
             self.company_id.website,
-            self.company_id.vat,
-            self.l10n_cl_sii_send_file.name,
-            base64.b64decode(self.l10n_cl_sii_send_file.datas),
+            params,
             digital_signature_sudo
         )
         if not response:
@@ -448,7 +456,7 @@ services reception has been received as well.
             'type': 'binary',
             'datas': base64.b64encode(bytes(signed_response, 'utf-8')),
         })
-        self.l10n_cl_dte_file = dte_attachment.id
+        self.sudo().l10n_cl_dte_file = dte_attachment.id
         # If we are sending a reception of goods or services we must use an envelope and sign it the same
         # way we do with the invoice (DTE / EnvioDTE) in this case we use the tags: DocumentoRecibo / EnvioRecibos
         email_template = self.env.ref('l10n_cl_edi.%s' % status_types[status_type].email_template)
@@ -468,7 +476,7 @@ services reception has been received as well.
         by email to the vendor.
         """
         attch_name = 'DTE_{}.xml'.format(self.l10n_latam_document_number)
-        dte_attachment = self.l10n_cl_dte_file
+        dte_attachment = self.sudo().l10n_cl_dte_file
         if not dte_attachment:
             raise Exception(_('DTE attachment not found => %s') % attch_name)
         xml_dte = base64.b64decode(dte_attachment.datas).decode('utf-8')
@@ -612,7 +620,7 @@ services reception has been received as well.
             'type': 'binary',
             'datas': base64.b64encode(signed_dte.encode('ISO-8859-1', 'replace'))
         })
-        self.l10n_cl_dte_file = dte_attachment.id
+        self.sudo().l10n_cl_dte_file = dte_attachment.id
 
     def _l10n_cl_create_partner_dte(self):
         dte_signed, file_name = self._l10n_cl_create_dte_envelope(
@@ -634,7 +642,7 @@ services reception has been received as well.
         digital_signature_sudo = self.company_id.sudo()._get_digital_signature(user_id=self.env.user.id)
         template = self.l10n_latam_document_type_id._is_doc_type_voucher() and self.env.ref(
             'l10n_cl_edi.envio_boleta') or self.env.ref('l10n_cl_edi.envio_dte')
-        dte = self.l10n_cl_dte_file.raw.decode('ISO-8859-1')
+        dte = self.sudo().l10n_cl_dte_file.raw.decode('ISO-8859-1')
         dte = Markup(dte.replace('<?xml version="1.0" encoding="ISO-8859-1" ?>', ''))
         dte_rendered = self.env['ir.qweb']._render(template.id, {
             'move': self,
