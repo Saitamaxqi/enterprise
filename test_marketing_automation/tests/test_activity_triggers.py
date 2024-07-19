@@ -784,37 +784,24 @@ class TestActivityTriggers(ActivityTriggersCase):
         for sub_activity, expected_schedule_date in [
             # mail
             (self.activity_sa_mail_not_open, date_subaction),
-            (self.activity_sa_mail_open, date_subaction),  # FIXME
-            # (self.activity_sa_mail_open, False),  # mail open: no date, as user input
+            (self.activity_sa_mail_open, False),  # mail open: no date, as user input
             (self.activity_sa_mail_not_reply, date_subaction),
-            (self.activity_sa_mail_reply, date_subaction),  # FIXME
-            # (self.activity_sa_mail_reply, False),  # mail reply: no date, as user input
+            (self.activity_sa_mail_reply, False),  # mail reply: no date, as user input
             (self.activity_sa_mail_not_click, date_subaction),
-            (self.activity_sa_mail_click, date_subaction),  # FIXME
-            # (self.activity_sa_mail_click, False),  # mail click: no date, as user input
-            (self.activity_sa_mail_bounce, date_subaction),  # FIXME
-            # (self.activity_sa_mail_bounce, False),  # mail bounce: no date, as user input
+            (self.activity_sa_mail_click, False),  # mail click: no date, as user input
+            (self.activity_sa_mail_bounce, False),  # mail bounce: no date, as user input
             # sms
             (self.activity_sa_sms_not_click, date_subaction),
-            (self.activity_sa_sms_click, date_subaction),  # FIXME
-            # (self.activity_sa_sms_click, False),  # sms click: no date, as user input
-            (self.activity_sa_sms_bounce, date_subaction),  # FIXME
-            # (self.activity_sa_sms_bounce, False),  # sms bounce: no date, as user input
+            (self.activity_sa_sms_click, False),  # sms click: no date, as user input
+            (self.activity_sa_sms_bounce, False),  # sms bounce: no date, as user input
             # whatsapp
-            (self.activity_sa_wa_not_read, date_subaction + timedelta(hours=2)),  # FIXME: based on now instead of parent
-            # (self.activity_sa_wa_not_read, date_subaction),
-            (self.activity_sa_wa_read, date_subaction + timedelta(hours=2)),  # FIXME
-            # # (self.activity_sa_wa_read, False),  # wa read: no date, as user input
-            (self.activity_sa_wa_not_replied, date_subaction + timedelta(hours=2)),  # FIXME: based on now instead of parent
-            # (self.activity_sa_wa_not_replied, date_subaction),
-            (self.activity_sa_wa_replied, date_subaction + timedelta(hours=2)),  # FIXME
-            # # (self.activity_sa_wa_replied, False),  # wa reply: no date, as user input
-            (self.activity_sa_wa_not_click, date_subaction + timedelta(hours=2)),  # FIXME: based on now instead of parent
-            # (self.activity_sa_wa_not_click, date_subaction),
-            (self.activity_sa_wa_click, date_subaction + timedelta(hours=2)),  # FIXME
-            # (self.activity_sa_wa_click, False),  # wa click: no date, as user input
-            (self.activity_sa_wa_bounced, date_subaction + timedelta(hours=2)),  # FIXME
-            # (self.activity_sa_wa_bounced, False),  # wa bounce: no date, as user input
+            (self.activity_sa_wa_not_read, date_subaction),
+            # (self.activity_sa_wa_read, False),  # wa read: no date, as user input
+            (self.activity_sa_wa_not_replied, date_subaction),
+            # (self.activity_sa_wa_replied, False),  # wa reply: no date, as user input
+            (self.activity_sa_wa_not_click, date_subaction),
+            (self.activity_sa_wa_click, False),  # wa click: no date, as user input
+            (self.activity_sa_wa_bounced, False),  # wa bounce: no date, as user input
             # other
             (self.activity_mail_activity, date_subaction),
             (self.activity_sms_activity, date_subaction),

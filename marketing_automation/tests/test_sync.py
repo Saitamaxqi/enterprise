@@ -172,7 +172,7 @@ class TestSyncing(SyncingCase):
             marketing_campaign,
             act_values={
                 'parent_id': parent_activity.id,
-                'trigger_type': 'mail_open',
+                'trigger_type': 'mail_not_open',
             },
         )
 

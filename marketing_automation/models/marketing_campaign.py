@@ -199,25 +199,16 @@ class MarketingCampaign(models.Model):
           * for 'not' triggers take into account brother traces that could be already processed
         """
         now = self.env.cr.now()
+
         for campaign in self:
             # Action 1: On activity modification
-            modified_activities = campaign.marketing_activity_ids.filtered(lambda activity: activity.require_sync)
+            modified_activities = campaign.marketing_activity_ids.filtered(
+                lambda activity: activity.require_sync
+            )
             traces_to_reschedule = self.env['marketing.trace'].search([
                 ('state', '=', 'scheduled'),
                 ('activity_id', 'in', modified_activities.ids)])
-            for trace in traces_to_reschedule:
-                trace_offset = relativedelta(**{trace.activity_id.interval_type: trace.activity_id.interval_number})
-                trigger_type = trace.activity_id.trigger_type
-                if trigger_type == 'begin':
-                    trace.schedule_date = Datetime.from_string(trace.participant_id.create_date) + trace_offset
-                elif trigger_type in ['activity', 'mail_not_open', 'mail_not_click', 'mail_not_reply'] and trace.parent_id:
-                    trace.schedule_date = Datetime.from_string(trace.parent_id.schedule_date) + trace_offset
-                elif trace.parent_id:
-                    if trace.parent_id.mailing_trace_ids.mapped('write_date'):
-                        process_dt = Datetime.from_string(trace.parent_id.mailing_trace_ids.mapped('write_date')[0])
-                    else:
-                        process_dt = now
-                    trace.schedule_date = process_dt + trace_offset
+            traces_to_reschedule._update_schedule_date()
 
             # Action 2: On activity creation
             created_activities = campaign.marketing_activity_ids.filtered(

@@ -121,3 +121,33 @@ class MarketingTrace(models.Model):
             ).action_cancel(message=msg[action])
 
         return True
+
+    def _update_schedule_date(self):
+        """ Update scheduled date of traces, based on activity interval fields
+        update. Rationale
+
+          * begin activities: offset is based on participant creation e.g.
+            2 days after entering the campaign;
+          * reschedule triggers: based on parent trace scheduled date e.g.
+            mail_not_open triggered 2 days after sending the mailing aka the
+            parent activity;
+          * other triggers: reschedule only if already scheduled, based on a
+            master record e.g. 2 days after opening an email is based on the
+            mailing trace;
+        """
+        reschedule_types = self.env["marketing.activity"]._get_reschedule_trigger_types()
+        for trace in self:
+            base_dt_str = False
+            trace_offset = relativedelta(**{trace.activity_id.interval_type: trace.activity_id.interval_number})
+            # begin: based on participant creation as it is their first one
+            if trace.activity_id.trigger_type == 'begin':
+                base_dt_str = trace.participant_id.create_date
+            # reschedule (mail_not_open, ...) -> based on parent
+            elif trace.trigger_type in reschedule_types:
+                base_dt_str = trace.parent_id.schedule_date or trace.parent_id.mailing_trace_ids[0].write_date or trace.participant_id.create_date
+            # other (mail_open, ...): update only already scheduled traces, other unscheduled should stay as it
+            elif trace.schedule_date and trace.parent_id.mailing_trace_ids:
+                base_dt_str = trace.parent_id.mailing_trace_ids[0].write_date
+
+            if base_dt_str:
+                trace.schedule_date = fields.Datetime.from_string(base_dt_str) + trace_offset

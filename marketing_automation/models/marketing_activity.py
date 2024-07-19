@@ -537,7 +537,7 @@ class MarketingActivity(models.Model):
         The marketing activity will be rescheduled after these triggers are activated.
         :returns set[str]: set of elements, each containing trigger_type
         """
-        return {'activity', 'mail_not_open', 'mail_not_click', 'mail_not_reply'}
+        return {'activity', 'begin', 'mail_not_open', 'mail_not_click', 'mail_not_reply'}
 
     def action_view_sent(self):
         return self._action_view_documents_filtered('sent')
