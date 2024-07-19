@@ -39,7 +39,7 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             {
                 trigger: ".modal .o_form_button_save, .breadcrumb-item.o_back_button",
             content: markup(_t("Use the breadcrumbs to navigate to your <b>list of products</b>.")),
-                tooltipPosition: "bottom",
+                tooltipPosition: "right",
                 run: "click",
             },
             {
@@ -58,7 +58,7 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             {
                 trigger: ".o-kanban-button-back",
             content: markup(_t("Go back to your <b>task</b>.")),
-                tooltipPosition: "bottom",
+                tooltipPosition: "right",
                 run: "click",
             }
         );

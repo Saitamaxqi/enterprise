@@ -131,7 +131,7 @@ registry.category("web_tour.tours").add("helpdesk_tour", {
         {
     trigger: '.o_back_button',
     content: markup(_t("Let's go back to the <b>kanban view</b> to get an overview of your next tickets.")),
-    tooltipPosition: 'bottom',
+    tooltipPosition: 'right',
     run: "click",
         },
         {
