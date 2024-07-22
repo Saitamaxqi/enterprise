@@ -2,6 +2,8 @@
 
 import json
 import logging
+
+from collections import defaultdict
 from datetime import timedelta
 
 import dateutil.parser
@@ -137,10 +139,17 @@ class AmazonAccount(models.Model):
     #=== COMPUTE METHODS ===#
 
     def _compute_order_count(self):
+        orders_per_offer = self.env['sale.order.line']._read_group(
+            domain=[('amazon_offer_id.account_id', 'in', self.ids)],
+            groupby=['amazon_offer_id'],
+            aggregates=['order_id:recordset'],
+        )
+        orders_per_account = defaultdict(lambda: self.env['sale.order'])
+        for offer, orders in orders_per_offer:
+            orders_per_account[offer.account_id] += orders
+
         for account in self:
-            account.order_count = self.env['sale.order.line'].search_count(
-                [('amazon_offer_id.account_id', '=', account.id)]
-            )
+            account.order_count = len(orders_per_account.get(account, []))
 
     def _compute_offer_count(self):
         offers_data = self.env['amazon.offer']._read_group(
