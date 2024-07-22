@@ -51,4 +51,5 @@ export const SIDEBAR_SAFE_FIELDS = [
     "sms_widget",
     "reference",
     "daterange",
+    "google_address_autocomplete",
 ];
