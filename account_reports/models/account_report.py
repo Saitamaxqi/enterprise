@@ -5809,13 +5809,13 @@ class AccountReport(models.Model):
         annotation_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'text_wrap': True})
         title_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'bold': True, 'bottom': 2})
         level_0_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 6, 'font_color': '#666666'})
+        level_1_col1_total_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 1, 'font_color': '#666666'})
+        level_1_col1_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 1, 'font_color': '#666666', 'indent': 1})
         level_1_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 13, 'bottom': 1, 'font_color': '#666666'})
-        level_2_col1_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666', 'indent': 1})
-        level_2_col1_total_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666'})
+        level_2_col1_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666', 'indent': 2})
+        level_2_col1_total_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666', 'indent': 1})
         level_2_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666'})
-        level_3_col1_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'indent': 2})
-        level_3_col1_total_style = workbook.add_format({'font_name': 'Lato', 'bold': True, 'font_size': 12, 'font_color': '#666666', 'indent': 1})
-        level_3_style = workbook.add_format({'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666'})
+        col1_styles = {}
 
         print_mode_self = self.with_context(no_format=True)
         lines = self._filter_out_folded_children(print_mode_self._get_lines(options))
@@ -5892,22 +5892,36 @@ class AccountReport(models.Model):
         counter = 1
         for y in range(0, len(lines)):
             level = lines[y].get('level')
-            if lines[y].get('caret_options'):
-                style = level_3_style
-                col1_style = level_3_col1_style
-            elif level == 0:
+            is_total_line = 'total' in lines[y].get('class', '').split(' ')
+            if level == 0:
                 y_offset += 1
                 style = level_0_style
                 col1_style = style
             elif level == 1:
                 style = level_1_style
-                col1_style = style
+                col1_style = level_1_col1_total_style if is_total_line else level_1_col1_style
             elif level == 2:
                 style = level_2_style
-                col1_style = 'total' in lines[y].get('class', '').split(' ') and level_2_col1_total_style or level_2_col1_style
-            elif level == 3:
-                style = level_3_style
-                col1_style = 'total' in lines[y].get('class', '').split(' ') and level_3_col1_total_style or level_3_col1_style
+                col1_style = level_2_col1_total_style if is_total_line else level_2_col1_style
+            elif level and level >= 3:
+                style = default_style
+                level_col1_styles = col1_styles.get(level)
+                if not level_col1_styles:
+                    level_col1_styles = col1_styles[level] = {
+                        'default': workbook.add_format(
+                            {'font_name': 'Lato', 'font_size': 12, 'font_color': '#666666', 'indent': level}
+                        ),
+                        'total': workbook.add_format(
+                            {
+                                'font_name': 'Lato',
+                                'bold': True,
+                                'font_size': 12,
+                                'font_color': '#666666',
+                                'indent': level - 1,
+                            }
+                        ),
+                    }
+                col1_style = level_col1_styles['total'] if is_total_line else level_col1_styles['default']
             else:
                 style = default_style
                 col1_style = default_col1_style
@@ -5916,11 +5930,11 @@ class AccountReport(models.Model):
             x_offset = original_x_offset + 1
             if lines[y]['id'] in account_lines_split_names:
                 code, name = account_lines_split_names[lines[y]['id']]
-                write_cell(sheet, x_offset - 2, y + y_offset, code, col1_style)
+                write_cell(sheet, x_offset - 2, y + y_offset, code, style)
                 write_cell(sheet, x_offset - 1, y + y_offset, name, col1_style)
             else:
                 if lines[y].get('parent_id') and lines[y]['parent_id'] in account_lines_split_names:
-                    write_cell(sheet, x_offset - 2, y + y_offset, account_lines_split_names[lines[y]['parent_id']][0], col1_style)
+                    write_cell(sheet, x_offset - 2, y + y_offset, account_lines_split_names[lines[y]['parent_id']][0], style)
                 cell_type, cell_value = self._get_cell_type_value(lines[y])
                 if cell_type == 'date':
                     write_cell(sheet, x_offset - 1, y + y_offset, cell_value, date_default_col1_style, datetime=True)
