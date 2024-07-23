@@ -1,14 +1,19 @@
 from lxml import etree, objectify
-from stdnum.cz.dic import compact
 
-from odoo import fields, models, release, _
+from odoo import models, release, _
 from odoo.tools import float_round
+from odoo.addons.l10n_cz_reports.models import l10n_cz_reports_utils as cz_utils
 
 
-class L10n_CzTaxReportHandler(models.AbstractModel):
+class CzechTaxReportCustomHandler(models.AbstractModel):
+    """
+        Generate the VAT report for the Czech Republic.
+        Generated using as a reference the documentation at
+        https://adisspr.mfcr.cz/dpr/adis/idpr_pub/epo2_info/popis_struktury_detail.faces?zkratka=DPHDP3
+    """
     _name = 'l10n_cz.tax.report.handler'
-    _inherit = ["account.tax.report.handler"]
-    _description = "Czech Tax Report Custom Handler"
+    _inherit = 'account.tax.report.handler'
+    _description = 'Czech Tax Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
@@ -24,8 +29,9 @@ class L10n_CzTaxReportHandler(models.AbstractModel):
     def export_to_xml(self, options):
         report = self.env['account.report'].browse(options['report_id'])
         sender_company = report._get_sender_company_for_export(options)
+        cz_utils.validate_czech_company_fields(sender_company)
 
-        report_options = {**report.get_options({}), 'export_mode': 'file'}
+        report_options = report.get_options(previous_options={**options, 'export_mode': 'file'})
         report_lines = report._get_lines(report_options)
 
         values = {}
@@ -38,10 +44,8 @@ class L10n_CzTaxReportHandler(models.AbstractModel):
 
         data = {
             'odoo_version': release.version,
-            'company_name': sender_company.name,
-            'company_vat': compact(sender_company.vat),
-            'sender_company': sender_company,
-            'date': fields.Date.today(),
+            'veta_d': cz_utils.get_veta_d_vals(report, options),
+            'veta_p': cz_utils.get_veta_p_vals(sender_company),
             **values,
         }
         xml_content = self.env['ir.qweb']._render('l10n_cz_reports.cz_tax_report_template', values=data)

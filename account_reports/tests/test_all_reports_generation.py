@@ -42,6 +42,7 @@ class TestAllReportsGeneration(AccountTestInvoicingCommon):
         l10n_pl_reports_tax_office = self.env.ref('l10n_pl.pl_tax_office_0215', raise_if_not_found=False)
         l10n_bd_corporate_tax_liability = self.env['account.account'].search([('account_type', '=', 'liability_current')], limit=1)
         l10n_ae_liability_account = self.env['account.account'].search([('account_type', '=', 'liability_current')], limit=1)
+        l10n_cz_reports_tax_office = self.env.ref('l10n_cz.tax_office_1', raise_if_not_found=False)
         company_test_values = {
             'LU': {'vat': 'LU12345613'},
             'BR': {'vat': '01234567891251'},
@@ -52,6 +53,7 @@ class TestAllReportsGeneration(AccountTestInvoicingCommon):
             'PL': {'l10n_pl_reports_tax_office_id': l10n_pl_reports_tax_office and l10n_pl_reports_tax_office.id},
             'BD': {'l10n_bd_corporate_tax_liability': l10n_bd_corporate_tax_liability, 'l10n_bd_corporate_tax_expense': l10n_bd_corporate_tax_liability},
             'AE': {'l10n_ae_tax_report_liabilities_account': l10n_ae_liability_account, 'l10n_ae_tax_report_counterpart_account': l10n_ae_liability_account},
+            'CZ': {'l10n_cz_tax_office_id': l10n_cz_reports_tax_office and l10n_cz_reports_tax_office.id}
         }
 
         # ecdf_prefix and matr_number only exist in enterprise
