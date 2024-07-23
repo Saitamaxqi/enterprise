@@ -123,6 +123,11 @@ export class ThankYouDialog extends Component {
             });
         }
 
+        this.state.buttons.push({
+            name: this.closeLabel,
+            click: () => this.onClickClose(),
+        });
+
         if (this.suggestSignUp) {
             this.message += _t(" You can safely close this window.");
             this.state.buttons.push({
@@ -136,19 +141,6 @@ export class ThankYouDialog extends Component {
                     );
                 },
             });
-        } else {
-            this.state.buttons.push({
-                name: this.closeLabel,
-                click: () => {
-                    if (session.is_frontend) {
-                        const signatureRequestId = this.signInfo.get("documentId");
-                        window.location.assign(`/my/signature/${signatureRequestId}`);
-                    } else {
-                        this.props.close();
-                        this.env.services.action.doAction(this.closeAction, this.closeContext);
-                    }
-                },
-            });
         }
 
         for (let i = 0; i < this.state.buttons.length; i++) {
@@ -157,6 +149,16 @@ export class ThankYouDialog extends Component {
             }
             const buttonClass = i === 0 ? "btn btn-primary" : "btn btn-secondary";
             this.state.buttons[i].classes = `${this.state.buttons[i].classes} ${buttonClass}`;
+        }
+    }
+
+    onClickClose() {
+        if (session.is_frontend) {
+            const signatureRequestId = this.signInfo.get("documentId");
+            window.location.assign(`/my/signature/${signatureRequestId}`);
+        } else {
+            this.props.close();
+            this.env.services.action.doAction(this.closeAction, this.closeContext);
         }
     }
 

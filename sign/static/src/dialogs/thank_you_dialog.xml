@@ -6,6 +6,7 @@
                 <h4 class="modal-title text-break" t-att-class="{ 'me-auto': scope.isFullscreen }">
                     All done!
                 </h4>
+                <button class="btn btn-close float-end" t-on-click="onClickClose"/>
             </t>
             <h5 t-if="props.subtitle" id="thank-you-subtitle"><t t-esc="props.subtitle"/></h5>
             <div id="thank-you-message" class="o_thankyou_message" t-esc="message"/>
