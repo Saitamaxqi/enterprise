@@ -641,16 +641,29 @@ class IrUiView(models.Model):
 
         new_view_arch_string = self._stringify_view(new_view_tree)
         old_view_arch_string = self._stringify_view(old_view_tree)
-        diff = difflib.ndiff(old_view_arch_string.split('\n'), new_view_arch_string.split('\n'))
 
-        # Format of difflib.ndiff output is:
-        #   unchanged
-        # - removed
-        # + added
-        # ? details
-        # <empty line after details>
-        #   unchanged
+        def get_unified_diff(old, new):
+            """
+            Get all diff lines using unified_diff without the header.
+            Format of difflib.unified_diff output is:
+            ---
+            +++
+            @@  @@
+            unchanged
+            -removed
+            +added
+            """
+            # set n to infinity to get all unchanged lines
+            diff = difflib.unified_diff(old.split('\n'), new.split('\n'), n=float('inf'))
+            for i in range(3):
+                # handle empty diff generator
+                try:
+                    next(diff)
+                except StopIteration:
+                    break
+            return diff
 
+        diff = get_unified_diff(old_view_arch_string, new_view_arch_string)
         old_view_iterator = old_view_tree.iter()
         new_view_iterator = new_view_tree.iter()
 
@@ -678,9 +691,9 @@ class IrUiView(models.Model):
                     added_fields[node.get('name')] = node
 
         for line in diff:
-            if line.strip() and not line.startswith('?'):
+            if line.strip():
                 if line.startswith('-') or line.startswith('+'):
-                    operation, line = line.split(' ', 1)
+                    operation, line = line[0], line[1:]
                     nodes = changes[operation]
 
                     if line.endswith('[@closed]') and nodes and nodes[-1] + '[@closed]' == line:
@@ -749,7 +762,7 @@ class IrUiView(models.Model):
         new_view_iterator = new_view_tree.iter()
         new_view_arch_string = self._stringify_view(new_view_tree, moved_fields)
         old_view_arch_string = self._stringify_view(old_view_tree)
-        diff = difflib.ndiff(old_view_arch_string.split('\n'), new_view_arch_string.split('\n'))
+        diff = get_unified_diff(old_view_arch_string, new_view_arch_string)
 
         # Keep track of nameless elements with more than 1 occurrence
         nameless_count = defaultdict(int)
@@ -761,7 +774,7 @@ class IrUiView(models.Model):
         xpath = etree.Element('xpath')
         for line in diff:
             # Ignore details lines and [@closed] that are used so diff has correct order
-            if line.strip() and not line.startswith('?') and not line.endswith('[@closed]'):
+            if line.strip() and not line.endswith('[@closed]'):
                 line = line.replace('[@moved]', '')
                 if line.startswith('-'):
                     node = next(old_view_iterator)
