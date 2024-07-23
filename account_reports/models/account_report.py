@@ -2222,7 +2222,8 @@ class AccountReport(models.Model):
 
         if options.get('compute_budget'):
             # remove required columns that are not filled from the domain
-            # these qre not in the budget table
+            # these are not in the budget table
+            domain = domain.optimize(self.env['account.move.line'])
             aml_required_columns = {'move_id', 'currency_id', 'journal_id', 'display_type'}
             domain = domain.map_conditions(lambda condition: Domain.TRUE if condition.field_expr in aml_required_columns else condition)
 
