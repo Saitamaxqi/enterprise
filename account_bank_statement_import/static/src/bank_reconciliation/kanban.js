@@ -1,35 +1,25 @@
-import { registry } from "@web/core/registry";
+import { patch } from "@web/core/utils/patch";
 import { AccountFileUploader } from "@account/components/account_file_uploader/account_file_uploader";
-import { UploadDropZone } from "@account/components/upload_drop_zone/upload_drop_zone";
 import { BankRecKanbanView, BankRecKanbanController, BankRecKanbanRenderer } from "@account_accountant/components/bank_reconciliation/kanban";
 import { useState } from "@odoo/owl";
 
-export class BankRecKanbanUploadController extends BankRecKanbanController {
-    static components = {
-        ...BankRecKanbanController.components,
-        AccountFileUploader,
-    }
-}
+patch(BankRecKanbanController,{
+    components: { ...BankRecKanbanController.components, AccountFileUploader },
+})
 
-export class BankRecUploadKanbanRenderer extends BankRecKanbanRenderer {
-    static template = "account.BankRecKanbanUploadRenderer";
-    static components = {
-        ...BankRecKanbanRenderer.components,
-        UploadDropZone,
-    };
+patch(BankRecKanbanRenderer.prototype, {
     setup() {
         super.setup();
         this.dropzoneState = useState({
             visible: false,
         });
-    }
-}
+    },
+})
 
-export const BankRecKanbanUploadView = {
-    ...BankRecKanbanView,
-    Controller: BankRecKanbanUploadController,
-    Renderer: BankRecUploadKanbanRenderer,
+patch(BankRecKanbanRenderer,{
+    components: { ...BankRecKanbanRenderer.components, AccountDropZone },
+})
+
+patch(BankRecKanbanView, {
     buttonTemplate: "account.BankRecKanbanButtons",
-};
-
-registry.category("views").add('bank_rec_widget_kanban', BankRecKanbanUploadView, { force: true });
+})

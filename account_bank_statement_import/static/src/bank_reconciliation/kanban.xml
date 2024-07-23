@@ -5,7 +5,7 @@
         </xpath>
     </t>
 
-    <t t-name="account.BankRecKanbanUploadRenderer" t-inherit="account.BankRecKanbanRenderer" t-inherit-mode="primary">
+    <t t-name="account.BankRecKanbanUploadRenderer" t-inherit="account.BankRecKanbanRenderer" t-inherit-mode="extension">
         <xpath expr="//div[@t-ref='root']" position="before">
             <UploadDropZone
                 visible="dropzoneState.visible"
