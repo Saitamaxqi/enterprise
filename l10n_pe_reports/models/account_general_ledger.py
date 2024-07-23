@@ -99,12 +99,8 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
 
         # Prepare query to get lines
         domain = ledger._get_options_domain(options, "strict_range")
+        query = self.env['account.move.line']._search(domain)
 
-        self.env['account.move.line'].check_access('read')
-        query = self.env['account.move.line']._where_calc(domain)
-
-        # Wrap the query with 'company_id IN (...)' to avoid bypassing company access rights.
-        self.env['account.move.line']._apply_ir_rules(query)
         query.left_join('account_move_line', 'move_id', 'account_move', 'id', 'move')
         query.left_join('account_move_line', 'currency_id', 'res_currency', 'id', 'currency')
         query.left_join('account_move_line', 'account_id', 'account_account', 'id', 'account')

@@ -2162,15 +2162,13 @@ class AccountReport(models.Model):
         """ Get a Query object that references the records needed for this report. """
         domain = self._get_options_domain(options, date_scope) & Domain(domain or Domain.TRUE)
 
-        self.env['account.move.line'].check_access('read')
-
         if options.get('compute_budget'):
             # remove required columns that are not filled from the domain
             # these qre not in the budget table
             aml_required_columns = {'move_id', 'currency_id', 'journal_id', 'display_type'}
             domain = domain.map_conditions(lambda condition: Domain.TRUE if condition.field_expr in aml_required_columns else condition)
 
-        query = self.env['account.move.line']._where_calc(domain)
+        query = self.env['account.move.line']._search(domain)
 
         if options.get('compute_budget'):
             query._tables['account_move_line'] = self._create_aml_shadowing_query_for_budget(options)
@@ -2179,9 +2177,6 @@ class AccountReport(models.Model):
                 query.where_clause,
                 options['compute_budget'],
             ))
-
-        # Wrap the query with 'company_id IN (...)' to avoid bypassing company access rights.
-        self.env['account.move.line']._apply_ir_rules(query)
 
         return query
 

@@ -163,8 +163,7 @@ class ProjectProject(models.Model):
     def _get_additional_quotations_query(self, domain=None):
         domain = Domain(domain or Domain.TRUE) & Domain('task_id', '!=', False)
         SaleOrder = self.env['sale.order']
-        query = SaleOrder._where_calc(domain)
-        SaleOrder._apply_ir_rules(query, 'read')
+        query = SaleOrder._search(domain)
         task_alias = query.make_alias(SaleOrder._table, 'task_id')
         query.add_join("JOIN", task_alias, 'project_task', SQL(
             "%s = %s AND %s IN %s",

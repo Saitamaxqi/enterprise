@@ -628,9 +628,7 @@ class ProductProduct(models.Model):
         the product in common, a product category parent of this product's category or no product/category
         set at all.
         """
-
-        query = self.env['quality.point']._where_calc([('company_id', '=', self.env.company.id)])
-        self.env['quality.point']._apply_ir_rules(query, 'read')
+        query = self.env['quality.point']._search([('company_id', '=', self.env.company.id)])
 
         additional_where_clause = self._additional_quality_point_where_clause()
         if additional_where_clause:

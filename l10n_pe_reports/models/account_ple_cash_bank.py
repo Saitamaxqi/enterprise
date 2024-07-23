@@ -59,14 +59,10 @@ class AccountCashFlowReportHandler(models.AbstractModel):
             Domain('statement_line_id', '!=', False),
             Domain('matching_number', '=', False),
         ))
-        self.env['account.move.line'].check_access('read')
-        query = self.env['account.move.line']._where_calc(domain)
+        query = self.env['account.move.line']._search(domain)
         journal_alias = query.join(lhs_alias='account_move_line', lhs_column='journal_id', rhs_table='account_journal', rhs_column='id', link='journal_id')
         account_alias = query.join(lhs_alias=journal_alias, lhs_column='default_account_id', rhs_table='account_account', rhs_column='id', link='default_account_id')
         account_code = self.env['account.account']._field_to_sql(account_alias, 'code', query)
-
-        # Wrap the query with 'company_id IN (...)' to avoid bypassing company access rights.
-        self.env['account.move.line']._apply_ir_rules(query)
 
         sql = SQL("""
                SELECT bank_statement_line.id,
@@ -183,11 +179,7 @@ class AccountCashFlowReportHandler(models.AbstractModel):
             Domain('statement_line_id', '!=', False),
             Domain('matching_number', '=', False),
         ))
-        self.env['account.move.line'].check_access('read')
-        query = self.env['account.move.line']._where_calc(domain)
-
-        # Wrap the query with 'company_id IN (...)' to avoid bypassing company access rights.
-        self.env['account.move.line']._apply_ir_rules(query)
+        query = self.env['account.move.line']._search(domain)
 
         sql = SQL("""
                SELECT bank_statement_line.id,
