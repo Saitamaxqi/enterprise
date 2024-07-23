@@ -123,7 +123,7 @@ class ProjectTask(models.Model):
         domain = domain.optimize_full(self)
 
         task1 = self._table
-        query = self._where_calc(domain & Domain('id', 'in', self.ids))
+        query = self._search(domain & Domain('id', 'in', self.ids), bypass_access=True)
 
         # join for overlapping tasks (task2)
         task2 = query.make_alias(task1, 'T2')

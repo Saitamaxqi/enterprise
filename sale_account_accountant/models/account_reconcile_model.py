@@ -38,7 +38,7 @@ class AccountReconcileModel(models.Model):
             sale_orders = self.env['sale.order'].search(domain + [('name', 'in', exact_tokens)])
 
         if not sale_orders and text_tokens:
-            query = self.env['sale.order']._where_calc(domain)
+            query = self.env['sale.order']._search(domain, bypass_access=True)
 
             sale_order_ids = [r[0] for r in self.env.execute_query(SQL(
                 r'''

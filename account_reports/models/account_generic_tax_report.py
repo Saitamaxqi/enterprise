@@ -161,7 +161,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
         # If all child taxes have a 'none' type_tax_use, all amounts are aggregated and only the group appears on the report.
         company_ids = report.get_report_company_ids(options)
         company_domain = self.env['account.tax']._check_company_domain(company_ids)
-        company_where_query = self.env['account.tax'].with_context(active_test=False)._where_calc(company_domain)
+        company_where_query = self.env['account.tax'].with_context(active_test=False)._search(company_domain, bypass_access=True)
         self.env.cr.execute(SQL(
             '''
                 SELECT

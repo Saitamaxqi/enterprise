@@ -26,7 +26,7 @@ class SaleCommissionAchievementReport(models.Model):
     related_res_id = fields.Many2oneReference("Related", model_field='related_res_model', readonly=True)
 
     @api.model
-    def _search(self, domain, offset=0, limit=None, order=None):
+    def _search(self, domain, *args, **kwargs):
         """ Extract the currency conversion date form the date_to field.
         It is used to be able to get fixed results not depending on the currency daily rates.
         The date is converted to a string to allow updating the date value in view customizations.
@@ -34,10 +34,11 @@ class SaleCommissionAchievementReport(models.Model):
         # take date_to but not plan_id.date_to
         date_to_domain = domain and filter_domain_leaf(domain, lambda field: 'date_to' in field and not 'plan_id' in field)
         date_to_list = date_to_domain and [datetime.strptime(d[2], '%Y-%m-%d') for d in date_to_domain if len(d) == 3 and d[2]]
+        model = self
         if date_to_list and not 'conversion_date' in self.env.context:
             conversion_date = max(date_to_list)
-            self = self.with_context(conversion_date=conversion_date.strftime('%Y-%m-%d'))
-        return super(SaleCommissionAchievementReport, self)._search(domain, offset, limit, order)
+            model = model.with_context(conversion_date=conversion_date.strftime('%Y-%m-%d'))
+        return super(SaleCommissionAchievementReport, model)._search(domain, *args, **kwargs)
 
     def open_related(self):
         return {

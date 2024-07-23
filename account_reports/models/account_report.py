@@ -2214,7 +2214,7 @@ class AccountReport(models.Model):
                 'debit': SQL("0"),
                 'credit': SQL("0"),
             }, prefix_fields_to_insert=False)
-            accounts_subquery = self.env['account.account']._where_calc([
+            accounts_subquery = self.env['account.account'].sudo()._search([
                 ('company_ids', 'in', self.get_report_company_ids(options)),
                 ('internal_group', 'in', ['income', 'expense']),
             ])
@@ -4092,7 +4092,7 @@ class AccountReport(models.Model):
         external_value_domain.append(('company_id', 'in', self.get_report_company_ids(options)))
 
         # Do the computation
-        where_clause = self.env['account.report.external.value']._where_calc(external_value_domain).where_clause
+        where_clause = self.env['account.report.external.value']._search(external_value_domain, bypass_access=True).where_clause
 
         # We have to execute two separate queries, one for text values and one for numeric values
         num_queries = []
@@ -4413,7 +4413,7 @@ class AccountReport(models.Model):
                 external_values_domain.append(('date', '>=', date_from))
 
             if expression.formula == 'most_recent':
-                query = self.env['account.report.external.value']._where_calc(external_values_domain)
+                query = self.env['account.report.external.value']._search(external_values_domain, bypass_access=True)
                 rows = self.env.execute_query(SQL("""
                     SELECT ARRAY_AGG(id)
                     FROM %s

@@ -2330,7 +2330,7 @@ class KnowledgeArticle(models.Model):
 
         where_clause = SQL()
         if filter_domain:
-            query = self.with_context(active_test=False)._where_calc(filter_domain or [])
+            query = self.with_context(active_test=False)._search(filter_domain or [], bypass_access=True)
             where_clause = query.where_clause
             if where_clause:
                 where_clause = SQL(where_clause.code.replace(query.table, "article_perms"), *where_clause.params)

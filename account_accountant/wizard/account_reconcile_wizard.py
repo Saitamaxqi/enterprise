@@ -453,7 +453,7 @@ class AccountReconcileWizard(models.TransientModel):
                 ('match_amount_min', '<', wizard.amount),
                 ('match_amount_max', '>', wizard.amount),
             ]
-            query = self.env['account.reconcile.model']._where_calc(domain)
+            query = self.env['account.reconcile.model']._search(domain, bypass_access=True)
             reco_model_ids = [r[0] for r in self.env.execute_query(SQL("""
                 SELECT account_reconcile_model.id
                 FROM %s

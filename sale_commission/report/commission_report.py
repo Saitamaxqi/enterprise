@@ -28,7 +28,7 @@ class SaleCommissionReport(models.Model):
     date_to = fields.Date(related='target_id.date_to')
 
     @api.model
-    def _search(self, domain, offset=0, limit=None, order=None):
+    def _search(self, domain, *args, **kwargs):
         """ Extract the currency conversion date form the date_to field.
         It is used to be able to get fixed results not depending on the currency daily rates.
         The date is converted to a string to allow updating the date value in view customizations.
@@ -40,7 +40,7 @@ class SaleCommissionReport(models.Model):
         if date_to_list:
             date_to = max(date_to_list)
             context.update(conversion_date=date_to.strftime('%Y-%m-%d'))
-        return super(SaleCommissionReport, self.with_context(context))._search(domain, offset, limit, order)
+        return super(SaleCommissionReport, self.with_context(context))._search(domain, *args, **kwargs)
 
     def action_achievement_detail(self):
         self.ensure_one()

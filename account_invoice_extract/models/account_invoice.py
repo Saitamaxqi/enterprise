@@ -410,12 +410,12 @@ class AccountMove(models.Model):
         if partner:
             return partner.id if partner.id != self.company_id.partner_id.id else 0
 
-        self.env.cr.execute(self.env['res.partner']._where_calc([
+        self.env.cr.execute(self.env['res.partner']._search([
             *self.env['res.partner']._check_company_domain(self.company_id),
             ('active', '=', True),
             ('name', '!=', False),
             (rank_field, '>', 0),
-        ]).select('res_partner.id', 'res_partner.name'))
+        ], bypass_access=True).select('res_partner.id', 'res_partner.name'))
 
         partners_dict = {name.lower().replace('-', ' '): partner_id for partner_id, name in self.env.cr.fetchall()}
         partner_name = partner_name.lower().strip()

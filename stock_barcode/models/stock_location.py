@@ -9,9 +9,9 @@ class StockLocation(models.Model):
     _barcode_field = 'barcode'
 
     @api.model
-    def _search(self, domain, offset=0, limit=None, order=None):
+    def _search(self, domain, *args, **kwargs):
         domain = self.env.company.nomenclature_id._preprocess_gs1_search_args(domain, ['location', 'location_dest'])
-        return super()._search(domain, offset=offset, limit=limit, order=order)
+        return super()._search(domain, *args, **kwargs)
 
     @api.model
     def _get_fields_stock_barcode(self):

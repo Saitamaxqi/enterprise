@@ -193,7 +193,7 @@ class Data_MergeModel(models.Model):
 
             for rule in dm_model.rule_ids:
                 domain = ast.literal_eval(dm_model.domain or '[]')
-                query = res_model._where_calc(domain)
+                query = res_model._search(domain, bypass_access=True)
                 sql_field = res_model._field_to_sql(table, rule.field_id.name, query)
                 if rule.field_id.relation:
                     related_model = self.env[rule.field_id.relation]

@@ -40,4 +40,4 @@ class AccountJournal(models.Model):
             Domain('payment_state', 'in', ('not_paid', 'partial')),
             Domain.OR([domain_sale, domain_purchase]),
         ])
-        return self.env['account.move']._where_calc(domain)
+        return self.env['account.move']._search(domain, bypass_access=True)

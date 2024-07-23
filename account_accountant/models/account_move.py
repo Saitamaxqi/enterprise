@@ -717,21 +717,21 @@ class AccountMoveLine(models.Model):
 
     @api.model
     def _build_predictive_query(self, move_id, additional_domain=None):
-        move_query = self.env['account.move']._where_calc([
+        move_query = self.env['account.move']._search([
             ('move_type', '=', move_id.move_type),
             ('state', '=', 'posted'),
             ('partner_id', '=', move_id.partner_id.id),
             ('company_id', '=', move_id.journal_id.company_id.id or self.env.company.id),
-        ])
+        ], bypass_access=True)
         move_query.order = 'account_move.invoice_date'
         move_query.limit = int(self.env["ir.config_parameter"].sudo().get_param(
             "account.bill.predict.history.limit",
             '100',
         ))
-        return self.env['account.move.line']._where_calc([
+        return self.env['account.move.line']._search([
             ('move_id', 'in', move_query),
             ('display_type', '=', 'product'),
-        ] + (additional_domain or []))
+        ] + (additional_domain or []), bypass_access=True)
 
     @api.model
     def _predicted_field(self, name, partner_id, field, query=None, additional_queries=None):
@@ -856,11 +856,11 @@ class AccountMoveLine(models.Model):
             excluded_group = 'income'
         else:
             excluded_group = 'expense'
-        account_query = self.env['account.account']._where_calc([
+        account_query = self.env['account.account']._search([
             *self.env['account.account']._check_company_domain(self.move_id.company_id or self.env.company),
             ('internal_group', 'not in', (excluded_group, 'off')),
             ('account_type', 'not in', ('liability_payable', 'asset_receivable')),
-        ])
+        ], bypass_access=True)
         account_name = self.env['account.account']._field_to_sql('account_account', 'name')
         psql_lang = self._get_predict_postgres_dictionary()
         additional_queries = [SQL(account_query.select(

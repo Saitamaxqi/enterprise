@@ -158,19 +158,11 @@ class L10n_PeStockPleWizard(models.TransientModel):
             ('product_id', '=', line['product_id']),
             ('create_date', '<', self.date_from),
         ]
-        where_query = self.env['stock.valuation.layer']._where_calc(domain)
-        self.env.cr.execute(SQL(
-            """
-                SELECT SUM(quantity)
-                FROM %(from_clause)s
-                WHERE %(where_clause)s
-            """,
-            from_clause=where_query.from_clause,
-            where_clause=where_query.where_clause,
-        ))
-
-        valuation_data = self.env.cr.dictfetchall()
-        quantity = valuation_data[0]['sum']
+        quantity = self.env.execute_query(
+            self.env['stock.valuation.layer']
+            ._search(domain, bypass_access=True)
+            .select('SUM(quantity)')
+        )[0][0]
         if not quantity:
             return {}
         values = {
@@ -224,9 +216,9 @@ class L10n_PeStockPleWizard(models.TransientModel):
             ('product_id', 'not in', products),
             ('create_date', '<', self.date_from),
         ]
-        where_query = self.env['stock.valuation.layer']._where_calc(domain)
+        where_query = self.env['stock.valuation.layer']._search(domain, bypass_access=True)
         self.env.cr.execute(SQL(
-            f"""
+            """
                 WITH latest_unit_cost AS (
                     SELECT DISTINCT ON ("stock_valuation_layer"."product_id")
                         "stock_valuation_layer"."product_id",
@@ -329,7 +321,7 @@ class L10n_PeStockPleWizard(models.TransientModel):
             ('location_dest_id.usage', 'in', ('supplier', 'customer', 'inventory', 'production')),
         ]
 
-        query = self.env['stock.move']._where_calc(domain)
+        query = self.env['stock.move']._search(domain, bypass_access=True)
         query.left_join('stock_move', 'picking_id', 'stock_picking', 'id', 'picking')
         query.left_join('stock_move', 'location_id', 'stock_location', 'id', 'location')
         query.left_join('stock_move__location', 'warehouse_id', 'stock_warehouse', 'id', 'warehouse')

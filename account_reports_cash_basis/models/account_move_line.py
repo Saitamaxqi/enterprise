@@ -1,17 +1,18 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import models
+from odoo import api, models
 from odoo.tools import SQL
 
 
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    def _where_calc(self, domain, active_test=True):
+    @api.model
+    def _search(self, *args, **kwargs):
         """ In case of cash basis for reports, we need to shadow the table account_move_line to get amounts
         based on cash.
         We also need to get the analytic amounts in the table if we have the analytic grouping on reports.
         """
-        query = super()._where_calc(domain, active_test)
+        query = super()._search(*args, **kwargs)
         if self.env.context.get('account_report_cash_basis'):
             self.env['account.report']._prepare_lines_for_cash_basis()
             if self.env.context.get('account_report_analytic_groupby'):

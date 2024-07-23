@@ -15,10 +15,10 @@ class ProductProduct(models.Model):
             product.has_image = bool(product.image_128)
 
     @api.model
-    def _search(self, domain, offset=0, limit=None, order=None):
+    def _search(self, domain, *args, **kwargs):
         # sudo is added for external users to get the products
         domain = self.env.company.sudo().nomenclature_id._preprocess_gs1_search_args(domain, ['product'])
-        return super()._search(domain, offset=offset, limit=limit, order=order)
+        return super()._search(domain, *args, **kwargs)
 
     @api.model
     def _get_fields_stock_barcode(self):

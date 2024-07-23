@@ -230,13 +230,14 @@ class AccountReport(models.AbstractModel):
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
-    def _where_calc(self, domain, active_test=True):
+    @api.model
+    def _search(self, *args, **kwargs):
         """ In case we need an analytic column in an account_report, we shadow the account_move_line table
         with a temp table filled with analytic data, that will be used for the analytic columns.
         We do it in this function to only create and fill it once for all computations of a report.
         The following analytic columns and computations will just query the shadowed table instead of the real one.
         """
-        query = super()._where_calc(domain, active_test)
+        query = super()._search(*args, **kwargs)
         if self.env.context.get('account_report_analytic_groupby') and not self.env.context.get('account_report_cash_basis'):
             query._tables['account_move_line'] = self.env['account.report']._create_aml_shadowing_query_for_analytic_groupby()
         return query

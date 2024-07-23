@@ -20,7 +20,7 @@ class AccountReconcileModel(models.Model):
             return
 
         aml_domain = self._get_invoice_matching_amls_domain(st_line, partner)
-        query = self.env['account.move.line']._where_calc(aml_domain)
+        query = self.env['account.move.line']._search(aml_domain, bypass_access=True)
 
         candidate_ids = [r[0] for r in self.env.execute_query(SQL(
             '''

@@ -8,9 +8,9 @@ class StockQuantPackage(models.Model):
     _barcode_field = 'name'
 
     @api.model
-    def _search(self, domain, offset=0, limit=None, order=None):
+    def _search(self, domain, *args, **kwargs):
         domain = self.env.company.nomenclature_id._preprocess_gs1_search_args(domain, ['package'], 'name')
-        return super()._search(domain, offset=offset, limit=limit, order=order)
+        return super()._search(domain, *args, **kwargs)
 
     @api.model
     def action_create_from_barcode(self, vals_list):
