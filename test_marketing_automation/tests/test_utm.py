@@ -24,7 +24,7 @@ class TestUTMConsistencyMassMailing(TestUTMCommon, TestMACommon):
             # unlinking the source would break all the activity statistics
             utm_campaign.unlink()
 
-        marketing_activity = self._create_activity(marketing_campaign)
+        marketing_activity = self._create_activity_mail(marketing_campaign)
         # the source is automatically created when creating a marketing activity
         utm_source = marketing_activity.source_id
 

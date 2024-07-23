@@ -198,7 +198,7 @@ class TestActivityTriggers(ActivityTriggersCase):
         to_open = test_records_ok[:5]
         with freeze_time(date_opened):
             for record in to_open:
-                self.gateway_mail_open(activity_mailing.mass_mailing_id, record)
+                self.gateway_mail_trace_open(activity_mailing.mass_mailing_id, record)
         self.assertMarketAutoTraces(
             [{
                 'records': to_open,
