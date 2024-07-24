@@ -1058,7 +1058,7 @@ class AppointmentType(models.Model):
         )
 
         for slot in slots:
-            if self.assign_method == 'time_resource':
+            if self.assign_method == 'time_resource' or self.env.context.get('slots_check_all_users', False):
                 available_staff_users = available_users_tz.filtered(
                     lambda staff_user: self._slot_availability_is_user_available(
                         slot,
@@ -1077,7 +1077,7 @@ class AppointmentType(models.Model):
                     )),
                     False)
             if available_staff_users:
-                if self.assign_method == 'time_resource':
+                if self.assign_method == 'time_resource' or self.env.context.get('slots_check_all_users', False):
                     slot['available_staff_users'] = available_staff_users
                 else:
                     slot['staff_user_id'] = available_staff_users
@@ -1264,16 +1264,17 @@ class AppointmentType(models.Model):
         # on start_date and allday
         all_events = self.env['calendar.event']
         if related_partners:
-            all_events = self.env['calendar.event'].search(
-                ['&',
-                 ('partner_ids', 'in', related_partners.ids),
-                 '&', '&',
-                 ('show_as', '=', 'busy'),
-                 ('stop', '>=', datetime.combine(start_dt, time.min)),
-                 ('start', '<=', datetime.combine(end_dt, time.max)),
-                ],
-                order='start asc',
-            )
+            domain = Domain([
+                ('partner_ids', 'in', related_partners.ids),
+                ('show_as', '=', 'busy'),
+                ('stop', '>=', datetime.combine(start_dt, time.min)),
+                ('start', '<=', datetime.combine(end_dt, time.max)),
+            ])
+            # todo: clean in master: method arguments?
+            ignore_event_ids = self.env.context.get('ignore_event_ids', False)
+            if ignore_event_ids:
+                domain &= Domain('id', 'not in', ignore_event_ids)
+            all_events = self.env['calendar.event'].search(domain, order='start asc')
         partner_to_events = {}
         for event in all_events:
             for attendee in event.attendee_ids.filtered_domain([
@@ -1533,10 +1534,16 @@ class AppointmentType(models.Model):
 
         resource_to_bookings = {}
         if resources:
-            booking_lines = self.env['appointment.booking.line'].sudo().search([
+            domain = Domain([
                 ('appointment_resource_id', 'in', resources.ids),
                 ('event_stop', '>', datetime.combine(start_dt_utc, time.min)),
-                ('event_start', '<', datetime.combine(end_dt_utc, time.max))])
+                ('event_start', '<', datetime.combine(end_dt_utc, time.max)),
+            ])
+            # todo: clean in master: method arguments?
+            ignore_event_ids = self.env.context.get('ignore_event_ids', False)
+            if ignore_event_ids:
+                domain &= Domain('calendar_event_id', 'not in', ignore_event_ids)
+            booking_lines = self.env['appointment.booking.line'].sudo().search(domain)
             resource_to_bookings = booking_lines.grouped('appointment_resource_id')
 
         return {

@@ -136,7 +136,7 @@ class AppointmentResource(models.Model):
                 new_resource_ids.add(linked_resource.id)
                 linked_resource_capacity = capacity_info.get(linked_resource, {}).get('remaining_capacity', linked_resource.capacity)
                 capacities_to_add.update({
-                    tuple(new_resource_ids): capacity + linked_resource_capacity,
+                    tuple(sorted(new_resource_ids)): capacity + linked_resource_capacity,
                 })
             capacities.update(capacities_to_add)
         return capacities
