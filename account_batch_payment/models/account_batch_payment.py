@@ -188,16 +188,32 @@ class AccountBatchPayment(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         today = fields.Date.context_today(self)
+        all_payment_ids = []
         for vals in vals_list:
             vals['name'] = self._get_batch_name(
                 vals.get('batch_type'),
                 vals.get('date', today),
                 vals)
+            if 'payment_ids' in vals:
+                payments = self.new({'payment_ids': vals['payment_ids']}).payment_ids
+                if payments._origin.batch_payment_id:
+                    raise ValidationError(_('You cannot create a batch with payments that are already in another batch.'))
+                # Collect all payment IDs
+                all_payment_ids.extend(payments.ids)
+
+        if len(all_payment_ids) != len(set(all_payment_ids)):
+            raise ValidationError(_('You cannot create batches with overlapping payments.'))
         return super().create(vals_list)
 
     def write(self, vals):
         if 'batch_type' in vals:
             vals['name'] = self.with_context(default_journal_id=self.journal_id.id)._get_batch_name(vals['batch_type'], self.date, vals)
+        if 'payment_ids' in vals:
+            if len(self) > 1:
+                raise ValidationError(_('You cannot add the same payment to multiple batches.'))
+            original_payments = self.new({'payment_ids': vals['payment_ids']}).payment_ids._origin
+            if original_payments.batch_payment_id - self:
+                raise ValidationError(_('You cannot create a batch with payments that are already in another batch.'))
 
         rslt = super(AccountBatchPayment, self).write(vals)
 

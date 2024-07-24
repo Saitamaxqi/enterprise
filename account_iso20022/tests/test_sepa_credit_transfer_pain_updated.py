@@ -68,7 +68,7 @@ class TestSEPACreditTransferUpdateCommon(AccountTestInvoicingCommon):
 
         cls.batch = cls.env['account.batch.payment'].create({
             'journal_id': cls.bank_journal.id,
-            'payment_ids': [Command.set(cls.payment.id)],
+            'payment_ids': [Command.set(cls.payment.ids)],
             'payment_method_id': cls.sepa_ct.id,
             'batch_type': 'outbound',
         })

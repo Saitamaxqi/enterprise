@@ -221,3 +221,20 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         batch_payment_action = payments.create_batch_payment()
         batch_payment = self.env['account.batch.payment'].browse(batch_payment_action.get('res_id'))
         self.assertEqual(batch_payment.amount, 1100)
+
+    def test_create_batch_from_payment_already_in_batch(self):
+        payment = self.env['account.payment'].create({
+            'amount': 100.0,
+            'payment_type': 'outbound',
+            'partner_type': 'supplier',
+            'partner_id': self.partner_a.id,
+            'destination_account_id': self.partner_a.property_account_payable_id.id,
+            'currency_id': self.other_currency.id,
+            'partner_bank_id': self.partner_bank_account.id,
+        })
+        payment.action_post()
+        batch_payment_action = payment.create_batch_payment()
+        batch_payment_id = self.env['account.batch.payment'].browse(batch_payment_action.get('res_id'))
+        batch_payment_id.validate_batch()
+        with self.assertRaises(ValidationError):
+            payment.create_batch_payment()
