@@ -134,7 +134,8 @@ class ProjectProject(models.Model):
     @api.depends('is_fsm')
     def _compute_display_sales_stat_buttons(self):
         fsm_projects = self.filtered('is_fsm')
-        fsm_projects.display_sales_stat_buttons = False
+        for project in fsm_projects:
+            project.display_sales_stat_buttons = bool(project.sale_order_count)
         super(ProjectProject, self - fsm_projects)._compute_display_sales_stat_buttons()
 
     def _get_profitability_sale_order_items_domain(self, domain=None):
@@ -187,3 +188,14 @@ class ProjectProject(models.Model):
                 employee_mapping_domain,
             ])
         return super()._get_sale_order_items_query(domain_per_model)
+
+    def _update_action_context(self, action):
+        if self.is_fsm:
+            action['context'].update({'create': False, 'edit': False})
+        return action
+
+    def action_view_sols(self):
+        return self._update_action_context(super().action_view_sols())
+
+    def action_view_sos(self):
+        return self._update_action_context(super().action_view_sos())
