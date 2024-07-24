@@ -396,7 +396,7 @@ class SignRequest(models.Model):
         }, lang=partner_lang, minimal_qcontext=True)
 
         self._message_send_mail(
-            body, 'mail.mail_notification_light',
+            body, 'sign.sign_mail_notification_light',
             {'record_name': self.reference},
             {'model_description': 'signature', 'company': self.communication_company_id or self.create_uid.company_id},
             {'email_from': self.create_uid.email_formatted,
@@ -543,7 +543,7 @@ class SignRequest(models.Model):
             }, lang=partner_lang, minimal_qcontext=True)
 
         self.env['sign.request']._message_send_mail(
-            body, 'mail.mail_notification_light',
+            body, 'sign.sign_mail_notification_light',
             {'record_name': self.reference},
             {'model_description': 'signature', 'company': self.communication_company_id or self.create_uid.company_id},
             {'email_from': self.create_uid.email_formatted,

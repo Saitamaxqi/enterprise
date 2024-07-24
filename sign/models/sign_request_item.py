@@ -184,7 +184,7 @@ class SignRequestItem(models.Model):
 
             attachment_ids = signer.sign_request_id.attachment_ids.ids
             self.env['sign.request']._message_send_mail(
-                body, 'mail.mail_notification_light',
+                body, 'sign.sign_mail_notification_light',
                 {'record_name': signer.sign_request_id.reference},
                 {'model_description': _('Signature'), 'company': signer.communication_company_id or signer.sign_request_id.create_uid.company_id},
                 {'email_from': signer.create_uid.email_formatted,
@@ -284,7 +284,7 @@ class SignRequestItem(models.Model):
         }, lang=partner_lang, minimal_qcontext=True)
 
         self.env['sign.request']._message_send_mail(
-            body, 'mail.mail_notification_light',
+            body, 'sign.sign_mail_notification_light',
             {'record_name': self.reference},
             {'model_description': 'signature', 'company': self.communication_company_id or self.create_uid.company_id},
             {
