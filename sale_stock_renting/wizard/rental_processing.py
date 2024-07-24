@@ -190,9 +190,9 @@ class RentalOrderWizardLine(models.TransientModel):
                 msg += Markup("<li> %s") % (order_line.product_id.display_name)
 
                 if old_qty > 0:
-                    msg += Markup(": %s -> <b> %s </b> %s ") % (old_qty, new_qty, order_line.product_uom.name)
+                    msg += Markup(": %s -> <b> %s </b> %s ") % (old_qty, new_qty, order_line.product_uom_id.name)
                 elif new_qty != 1 or order_line.product_uom_qty > 1.0:
-                    msg += ": %s %s " % (new_qty, order_line.product_uom.name)
+                    msg += ": %s %s " % (new_qty, order_line.product_uom_id.name)
                 # If qty = 1, product has been picked up, no need to specify quantity
                 # But if ordered_qty > 1.0: we need to still specify pickedup/returned qty
 

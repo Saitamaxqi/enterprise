@@ -172,7 +172,6 @@
             <field name="product_uom_qty">3</field>
             <field name="price_unit">20.0</field>
             <field name="sequence">-1</field>
-            <field name="product_uom" ref="uom.product_uom_unit"/>
         </record>
 
         <function model="sale.order" name="action_confirm" eval="[[ref('subscription_portal_1')]]" context="{'action_no_send_mail': True}"/>
@@ -205,7 +204,6 @@
             <field name="product_id" ref="sale_subscription.product_office_cleaning"/>
             <field name="product_uom_qty">3</field>
             <field name="price_unit">20.0</field>
-            <field name="product_uom" ref="uom.product_uom_unit"/>
         </record>
 
         <!-- Confirm some Sales Orders-->

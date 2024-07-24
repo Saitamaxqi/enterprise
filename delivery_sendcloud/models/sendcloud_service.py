@@ -516,7 +516,7 @@ class SendCloud:
             return products_values
 
         for line in sale_order.order_line:
-            if line.product_id.type == 'consu' or line.display_type or float_is_zero(line.product_uom_qty, precision_rounding=line.product_uom.rounding):
+            if line.product_id.type == 'consu' or line.display_type or float_is_zero(line.product_uom_qty, precision_rounding=line.product_uom_id.rounding):
                 continue
             if line.product_id.id in products_values:
                 products_values[line.product_id.id]['tot_qty'] += line.product_uom_qty

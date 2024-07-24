@@ -349,13 +349,11 @@ class TestSubscriptionPayments(PaymentCommon, TestSubscriptionCommon, MockEmail)
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 1.0,
-                        'product_uom': self.product.uom_id.id,
                     }),
                     (0, 0, {
                         'name': self.product2.name,
                         'product_id': self.product2.id,
                         'product_uom_qty': 1.0,
-                        'product_uom': self.product.uom_id.id,
                     })
                 ]
             })
@@ -486,7 +484,6 @@ class TestSubscriptionPayments(PaymentCommon, TestSubscriptionCommon, MockEmail)
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 3.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': 12,
                     })],
             })

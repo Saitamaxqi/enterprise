@@ -133,7 +133,6 @@
         <field name="order_id" ref="rental_order_1"/>
         <field name="product_id" ref="rental_product_2"/>
         <field name="product_uom_qty">3</field>
-        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="name" eval="'[RENT002] Meeting Room'"/>
         <field name="price_unit" eval="450.0"/>
     </record>
@@ -167,7 +166,6 @@
         <field name="order_id" ref="rental_order_2"/>
         <field name="product_id" ref="rental_product_1"/>
         <field name="product_uom_qty">3</field>
-        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="name" eval="'[RENT001] Projector'"/>
         <field name="qty_delivered">2</field>
         <field name="price_unit" eval="150.0"/>
@@ -200,7 +198,6 @@
         <field name="order_id" ref="rental_order_3"/>
         <field name="product_id" ref="rental_product_1"/>
         <field name="product_uom_qty">2</field>
-        <field name="product_uom" ref="uom.product_uom_unit"/>
         <field name="name" eval="'[RENT001] Projector'"/>
         <field name="qty_delivered">2</field>
         <field name="price_unit" eval="100.0"/>

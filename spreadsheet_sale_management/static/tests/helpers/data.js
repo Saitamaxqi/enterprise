@@ -77,7 +77,7 @@ const SALE_ORDER_LINE_FIELDS = [
     "qty_delivered",
     "qty_invoiced",
     "qty_to_invoice",
-    "product_uom",
+    "product_uom_id",
     "price_unit",
     "price_tax",
     "price_subtotal",

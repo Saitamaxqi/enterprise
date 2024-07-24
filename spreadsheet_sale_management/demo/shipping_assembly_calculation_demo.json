@@ -3045,64 +3045,64 @@
                 },
                 "C1": {
                     "style": 17,
-                    "content": "=ODOO.LIST.HEADER(1,\"product_uom\")",
+                    "content": "=ODOO.LIST.HEADER(1,\"product_uom_id\")",
                     "border": 10
                 },
                 "C2": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,1,\"product_uom\")"
+                    "content": "=ODOO.LIST(1,1,\"product_uom_id\")"
                 },
                 "C3": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,2,\"product_uom\")"
+                    "content": "=ODOO.LIST(1,2,\"product_uom_id\")"
                 },
                 "C4": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,3,\"product_uom\")"
+                    "content": "=ODOO.LIST(1,3,\"product_uom_id\")"
                 },
                 "C5": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,4,\"product_uom\")"
+                    "content": "=ODOO.LIST(1,4,\"product_uom_id\")"
                 },
                 "C6": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,5,\"product_uom\")"
+                    "content": "=ODOO.LIST(1,5,\"product_uom_id\")"
                 },
                 "C7": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,6,\"product_uom\")"
+                    "content": "=ODOO.LIST(1,6,\"product_uom_id\")"
                 },
                 "C8": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,7,\"product_uom\")"
+                    "content": "=ODOO.LIST(1,7,\"product_uom_id\")"
                 },
                 "C9": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,8,\"product_uom\")"
+                    "content": "=ODOO.LIST(1,8,\"product_uom_id\")"
                 },
                 "C10": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,9,\"product_uom\")"
+                    "content": "=ODOO.LIST(1,9,\"product_uom_id\")"
                 },
                 "C11": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,10,\"product_uom\")"
+                    "content": "=ODOO.LIST(1,10,\"product_uom_id\")"
                 },
                 "C12": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,11,\"product_uom\")"
+                    "content": "=ODOO.LIST(1,11,\"product_uom_id\")"
                 },
                 "C13": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,12,\"product_uom\")"
+                    "content": "=ODOO.LIST(1,12,\"product_uom_id\")"
                 },
                 "C14": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,13,\"product_uom\")"
+                    "content": "=ODOO.LIST(1,13,\"product_uom_id\")"
                 },
                 "C15": {
                     "style": 18,
-                    "content": "=ODOO.LIST(1,14,\"product_uom\")",
+                    "content": "=ODOO.LIST(1,14,\"product_uom_id\")",
                     "border": 11
                 },
                 "D1": {

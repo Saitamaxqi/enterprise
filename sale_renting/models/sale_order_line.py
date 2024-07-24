@@ -193,7 +193,7 @@ class SaleOrderLine(models.Model):
                 self.product_id.with_context(**self._get_product_price_context()),
                 self.product_uom_qty or 1.0,
                 currency=self.currency_id,
-                uom=self.product_uom,
+                uom=self.product_uom_id,
                 date=self.order_id.date_order or fields.Date.today(),
                 start_date=self.start_date,
                 end_date=self.return_date,

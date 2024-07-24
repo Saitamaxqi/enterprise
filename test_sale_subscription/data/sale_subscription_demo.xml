@@ -109,7 +109,6 @@
         <field name="product_id" ref="product_fire_insurance"/>
         <field name="product_uom_qty">10</field>
         <field name="price_unit">200.0</field>
-        <field name="product_uom" ref="uom.product_uom_unit"/>
     </record>
 
     <function  model="sale.order" name="_test_demo_generate_subscriptions"/>

@@ -23,7 +23,7 @@
                             <small> to <span t-out="props.calcData.stock_end_date"/></small>
                         </td>
                         <td class="text-end">
-                            <t t-out="props.record.data.virtual_available_at_date"/> <t t-out="props.record.data.product_uom[1]"/>
+                            <t t-out="props.record.data.virtual_available_at_date"/> <t t-out="props.record.data.product_uom_id[1]"/>
                         </td>
                     </tr>
                 </tbody>

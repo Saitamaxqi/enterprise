@@ -62,7 +62,7 @@ class StockMove(models.Model):
                 if not move.sale_line_id.is_rental or move.product_id != move.sale_line_id.product_id:
                     continue
                 if move.location_id == move.company_id.rental_loc_id:
-                    current_qty_returned = move.product_uom._compute_quantity(move.quantity, move.sale_line_id.product_uom, rounding_method='HALF-UP')
+                    current_qty_returned = move.product_uom._compute_quantity(move.quantity, move.sale_line_id.product_uom_id, rounding_method='HALF-UP')
                     if move.sale_line_id.order_id.is_late:
                         move.sale_line_id._generate_delay_line(current_qty_returned)
                     move.sale_line_id.qty_returned += current_qty_returned

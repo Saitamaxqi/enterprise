@@ -64,7 +64,7 @@ class ApprovalRequest(models.Model):
                 purchase_line = self.env['purchase.order.line'].search([
                     ('order_id', 'in', purchase_orders.ids),
                     ('product_id', '=', line.product_id.id),
-                    ('product_uom', '=', line.product_id.uom_po_id.id),
+                    ('product_uom_id', '=', line.product_id.uom_po_id.id),
                 ], limit=1)
                 purchase_order = self.env['purchase.order']
                 if purchase_line:

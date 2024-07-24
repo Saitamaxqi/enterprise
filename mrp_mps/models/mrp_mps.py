@@ -857,7 +857,7 @@ class MrpProductionSchedule(models.Model):
             while not (date_range[index][0] <= date_planned and
                        date_range[index][1] >= date_planned):
                 index += 1
-            quantity = line.product_uom._compute_quantity(line.product_qty, line.product_id.uom_id)
+            quantity = line.product_uom_id._compute_quantity(line.product_qty, line.product_id.uom_id)
             incoming_qty[date_range[index], line.product_id, line.order_id.picking_type_id.warehouse_id] += quantity
 
         # Get quantity on incoming moves

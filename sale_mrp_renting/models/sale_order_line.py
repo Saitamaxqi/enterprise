@@ -17,7 +17,7 @@ class SaleOrderLine(models.Model):
                 'outgoing_moves': lambda m: m.location_dest_id != m.company_id.rental_loc_id and m.to_refund
             }
             order_qty = previous_product_uom_qty.get(self.id, 0) if previous_product_uom_qty else self.product_uom_qty
-            order_qty = self.product_uom._compute_quantity(order_qty, bom.product_uom_id)
+            order_qty = self.product_uom_id._compute_quantity(order_qty, bom.product_uom_id)
             qty_to_compute = outgoing_moves._compute_kit_quantities(self.product_id, order_qty, bom, filters)
-            qty = bom.product_uom_id._compute_quantity(qty_to_compute, self.product_uom)
+            qty = bom.product_uom_id._compute_quantity(qty_to_compute, self.product_uom_id)
         return qty

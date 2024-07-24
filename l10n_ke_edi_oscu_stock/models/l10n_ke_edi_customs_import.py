@@ -215,7 +215,7 @@ class L10n_Ke_EdiCustomsImport(models.Model):
                 'name': custimp.item_name,
                 'product_id': custimp.product_id.id,
                 'product_qty': custimp.quantity,
-                'product_uom': custimp.uom_id.id or self.env.ref('uom.product_uom_unit').id,
+                'product_uom_id': custimp.uom_id.id or self.env.ref('uom.product_uom_unit').id,
             }))
         po1 = self.env['purchase.order'].create({
             'partner_id': partners[0].id,

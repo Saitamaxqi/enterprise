@@ -275,7 +275,7 @@ class SaleOrderLine(models.Model):
             )
             for invoice_line in related_invoice_lines:
                 line_sign = amount_sign.get(invoice_line.move_id.move_type, 1)
-                qty_invoiced += line_sign * invoice_line.product_uom_id._compute_quantity(invoice_line.quantity, line.product_uom)
+                qty_invoiced += line_sign * invoice_line.product_uom_id._compute_quantity(invoice_line.quantity, line.product_uom_id)
             result[line.id] = qty_invoiced
         return result
 
@@ -298,7 +298,7 @@ class SaleOrderLine(models.Model):
             else:
                 line.recurring_monthly = line.price_subtotal * INTERVAL_FACTOR[line.order_id.plan_id.billing_period_unit] / line.order_id.plan_id.billing_period_value
 
-    @api.depends('order_id.subscription_id', 'product_id', 'product_uom', 'price_unit', 'order_id', 'order_id.plan_id')
+    @api.depends('order_id.subscription_id', 'product_id', 'product_uom_id', 'price_unit', 'order_id', 'order_id.plan_id')
     def _compute_parent_line_id(self):
         """
         Compute the link between a SOL and the line in the parent order. The matching is done based on several
@@ -313,9 +313,9 @@ class SaleOrderLine(models.Model):
             # We use a rounding to avoid -326.40000000000003 != -326.4 for new records.
             matching_line_ids = parent_line_ids.filtered(
                 lambda l:
-                (l.order_id, l.product_id, l.product_uom, l.order_id.currency_id, l.order_id.plan_id,
+                (l.order_id, l.product_id, l.product_uom_id, l.order_id.currency_id, l.order_id.plan_id,
                  l.order_id.currency_id.round(l.price_unit) if l.order_id.currency_id else round(l.price_unit, 2)) ==
-                (line.order_id.subscription_id, line.product_id, line.product_uom, line.order_id.currency_id, line.order_id.plan_id,
+                (line.order_id.subscription_id, line.product_id, line.product_uom_id, line.order_id.currency_id, line.order_id.plan_id,
                  line.order_id.currency_id.round(line.price_unit) if line.order_id.currency_id else round(line.price_unit, 2)
                 ) and l.id in parent_line_ids.ids
             )
@@ -489,7 +489,6 @@ class SaleOrderLine(models.Model):
                 'parent_line_id': line.id,
                 'name': line.name + "(*)" if line in description_needed else line.name,
                 'product_id': product.id,
-                'product_uom': line.product_uom.id,
                 'product_uom_qty': 0 if subscription_state == '7_upsell' else line.product_uom_qty,
                 'price_unit': line.price_unit,
             }))
@@ -533,7 +532,6 @@ class SaleOrderLine(models.Model):
                     'product_id': line.product_id.id,
                     'name': line.name,
                     'product_uom_qty': line.product_uom_qty,
-                    'product_uom': line.product_uom.id,
                     'price_unit': line.price_unit,
                     'discount': 0,
                     'order_id': subscription.id

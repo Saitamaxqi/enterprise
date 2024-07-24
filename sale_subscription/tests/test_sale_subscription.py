@@ -433,7 +433,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                                                 'order_id': self.subscription.id,
                                                 'product_id': self.product3.id,
                                                 'product_uom_qty': 4,
-                                                'product_uom': uom_dozen,
+                                                'product_uom_id': uom_dozen,
                                                 'price_unit': 42})
 
             self.subscription.action_confirm()
@@ -584,14 +584,12 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'order_id': upsell_so.id,
                 'product_id': self.product2.id,
                 'product_uom_qty': 2,
-                'product_uom': self.product2.uom_id.id,
                 'price_unit': self.product2.list_price,
             }), (0, 0, {
                 'name': self.product3.name,
                 'order_id': upsell_so.id,
                 'product_id': self.product3.id,
                 'product_uom_qty': 1,
-                'product_uom': self.product3.uom_id.id,
                 'price_unit': self.product3.list_price,
             })]
             upsell_so.action_confirm()
@@ -692,14 +690,12 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'order_id': upsell_so.id,
                 'product_id': self.product2.id,
                 'product_uom_qty': 1,
-                'product_uom': self.product2.uom_id.id,
                 'price_unit': self.product.list_price,
             }, {
                 'name': 'Upsell added: 2 month',
                 'order_id': upsell_so.id,
                 'product_id': self.product3.id,
                 'product_uom_qty': 1,
-                'product_uom': self.product3.uom_id.id,
                 'price_unit': self.product3.list_price,
             }]
             self.env['sale.order.line'].create(so_line_vals)
@@ -846,7 +842,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'order_id': self.subscription.id,
                 'product_id': self.product2.id,
                 'product_uom_qty': 3,
-                'product_uom': self.product2.uom_id.id,
                 'price_unit': 42})
 
             self.subscription.action_confirm()
@@ -920,7 +915,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'name': 'TestRecurringLine',
             'product_id': self.product.id,
             'product_uom_qty': 1,
-            'product_uom': self.product.uom_id.id})]})
+        })]})
         subscription.action_confirm()
         self.flush_tracking()
         init_nb_log = len(subscription.order_log_ids)
@@ -963,7 +958,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'pricelist_id': self.company_data['default_pricelist'].id,
             'order_line': [Command.create({
                 'product_id': product_tmpl.product_variant_id.id,
-                'product_uom': self.env.ref('uom.product_uom_unit').id,
                 'product_uom_qty': 1
             })]
         })
@@ -1317,7 +1311,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 3.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': 0,
                     })],
             })
@@ -1335,7 +1328,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 1.0,
-                        'product_uom': self.product.uom_id.id,
                     })],
             })
 
@@ -1596,7 +1588,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'name': self.product.name,
                     'product_id': simple_product.id,
                     'product_uom_qty': 2.0,
-                    'product_uom': simple_product.uom_id.id,
                     'price_unit': 12,
                 })],
         })
@@ -1610,7 +1601,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'name': self.product.name,
                     'product_id': self.product.id,
                     'product_uom_qty': 2.0,
-                    'product_uom': self.product.uom_id.id,
                     'price_unit': 12,
                 })],
         })
@@ -1632,7 +1622,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'name': 'TestRecurringLine',
                 'product_id': self.product.id,
                 'product_uom_qty': 1,
-                'product_uom': self.product.uom_id.id,
             })],
         })
         self.assertEqual(self.subscription.currency_id.name, 'USD')
@@ -1692,7 +1681,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'name': self.product.name,
                     'product_id': self.product.id,
                     'product_uom_qty': 2.0,
-                    'product_uom': self.product.uom_id.id,
                     'price_unit': 12,
                 })],
         })
@@ -1757,13 +1745,11 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 1.0,
-                        'product_uom': self.product.uom_id.id,
                     }),
                     (0, 0, {
                         'name': self.product2.name,
                         'product_id': self.product2.id,
                         'product_uom_qty': 1.0,
-                        'product_uom': self.product.uom_id.id,
                     })
                 ]
             })
@@ -1782,7 +1768,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             upsell_so.order_line = [(0, 0, {
                 'product_id': self.product3.id,
                 'product_uom_qty': 1.0,
-                'product_uom': self.product.uom_id.id,
             })]
             self.assertEqual(upsell_so.next_invoice_date, datetime.date(2023, 1, 1), "The end date is the same than the parent sub")
             discounts = upsell_so.order_line.mapped('discount')
@@ -1828,7 +1813,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 1.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': 12,
                     })],
             })
@@ -1862,7 +1846,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 1.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': 12,
                     })],
             })
@@ -1879,7 +1862,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 1.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': 12,
                     })],
             })
@@ -2105,7 +2087,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'order_id': upsell_so.id,
                 'product_id': self.product3.id,
                 'product_uom_qty': 3,
-                'product_uom': self.product.uom_id.id,
             }]
             self.env['sale.order.line'].create(so_line_vals)
             self.assertFalse(upsell_so.order_line[2].parent_line_id, "The new line should not have any parent line")
@@ -2136,14 +2117,12 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'name': self.product.name,
                     'product_id': self.product.id,
                     'product_uom_qty': 1.0,
-                    'product_uom': self.product.uom_id.id,
                     'price_unit': 12,
                 }),
                 (0, 0, {
                     'name': self.product5.name, # non recurring product
                     'product_id': self.product5.id,
                     'product_uom_qty': 1.0,
-                    'product_uom': self.product5.uom_id.id,
                     'price_unit': 12,
                 })
             ],
@@ -2187,12 +2166,10 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'name': "recurring line",
                 'product_id': self.product.id,
                 'product_uom_qty': 1,
-                'product_uom': self.product.uom_id.id
                 }), Command.create({
                 'name': "None recurring line",
                 'product_id': delivered_product_tmpl.product_variant_id.id,
                 'product_uom_qty': 1,
-                'product_uom': delivered_product_tmpl.product_variant_id.uom_id.id
                 }),
             ],
         })
@@ -2204,7 +2181,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'product_id': delivered_product_tmpl.product_variant_id.id,
                     'product_uom_qty': 1,
                     'qty_delivered': 3,
-                    'product_uom': delivered_product_tmpl.product_variant_id.uom_id.id
         })],})
 
     def test_multiple_renew(self):
@@ -2230,7 +2206,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 1.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': 12,
                     })],
             })
@@ -2252,7 +2227,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 3.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': 12,
                     })],
             })
@@ -2383,7 +2357,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'name': sub_product_tmpl.name,
                 'product_id': sub_product_tmpl.product_variant_id.id,
                 'product_uom_qty': 1.0,
-                'product_uom': sub_product_tmpl.uom_id.id,
             })]
         })
         self.assertEqual(self.subscription.amount_untaxed, 0, "The price shot be 0")
@@ -2429,7 +2402,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'name': self.product.name,
                     'product_id': self.product.id,
                     'product_uom_qty': 3.0,
-                    'product_uom': self.product.uom_id.id,
                     'price_unit': 12,
                 })],
         })
@@ -2444,7 +2416,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 'name': self.product.name,
                 'product_id': self.product.id,
                 'product_uom_qty': 3.0,
-                'product_uom': self.product.uom_id.id,
                 'price_unit': 12,
             })]
         self.assertEqual(sub_2.subscription_state, '1_draft')
@@ -2488,13 +2459,11 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': self.product.uom_id.id,
                     }),
                     (0, 0, {
                         'name': self.product.name,
                         'product_id': self.product2.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': -25,
                     })
                 ],
@@ -2509,13 +2478,11 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': self.product.uom_id.id,
                     }),
                     (0, 0, {
                         'name': nr_product.name,
                         'product_id': nr_product.product_variant_id.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': nr_product.uom_id.id,
                         'price_unit': -25,
                     })
                 ],
@@ -2530,19 +2497,16 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': self.product.uom_id.id,
                     }),
                     (0, 0, {
                         'name': self.product.name,
                         'product_id': self.product2.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': self.product2.uom_id.id,
                     }),
                     (0, 0, {
                         'name': nr_product.name,
                         'product_id': nr_product.product_variant_id.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': nr_product.uom_id.id,
                     }),
                 ],
             })
@@ -2556,14 +2520,12 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': -30
                     }),
                     (0, 0, {
                         'name': self.product.name,
                         'product_id': self.product2.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': self.product2.uom_id.id,
                         'price_unit': -10
                     }),
                 ],
@@ -2579,21 +2541,18 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': -30
                     }),
                     (0, 0, {
                         'name': self.product.name,
                         'product_id': self.product2.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': self.product2.uom_id.id,
                         'price_unit': -10
                     }),
                     (0, 0, {
                         'name': nr_product.name,
                         'product_id': nr_product.product_variant_id.id,
                         'product_uom_qty': 4.0,
-                        'product_uom': nr_product.uom_id.id,
                     }),
                 ],
             })
@@ -2796,7 +2755,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'name': self.product.name,
                     'product_id': self.product.id,
                     'product_uom_qty': 3.0,
-                    'product_uom': self.product.uom_id.id,
                     'price_unit': 12,
                 })],
         })
@@ -2825,7 +2783,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 3.0,
-                        'product_uom': self.product.uom_id.id,
                     })],
             })
             sub_mrr_change = sub.copy()
@@ -2875,7 +2832,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'name': self.product.name,
                     'product_id': self.product.id,
                     'product_uom_qty': 3.0,
-                    'product_uom': self.product.uom_id.id,
                 })],
         })
         sub_paused = sub_progress.copy()
@@ -2968,7 +2924,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'name': "Product 1",
                     'product_id': sub_product_tmpl.product_variant_id.id,
                     'product_uom_qty': 1,
-                    'product_uom': sub_product_tmpl.uom_id.id
                 })]
             })
             sub.pricelist_id = default_pricelist.id
@@ -3333,7 +3288,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'name': "Product 1",
                     'product_id': sub_product_tmpl.product_variant_id.id,
                     'product_uom_qty': 1,
-                    'product_uom': sub_product_tmpl.uom_id.id
                 })]
             })
             sub.action_confirm()
@@ -3389,7 +3343,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'name': self.product.name,
             'product_id': simple_product.id,
             'product_uom_qty': 2.0,
-            'product_uom': simple_product.uom_id.id
         }
         sub_product_tmpl = self.env['product.template'].create({
             'name': 'BaseTestProduct',
@@ -3402,7 +3355,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             'name': "Product 1",
             'product_id': sub_product_tmpl.product_variant_id.id,
             'product_uom_qty': 1,
-            'product_uom': sub_product_tmpl.uom_id.id
         }
         sub = self.subscription.create({
             'name': 'Company1 - Currency1',
@@ -3503,7 +3455,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'name': self.product.name,
                     'product_id': self.product.id,
                     'product_uom_qty': 2.0,
-                    'product_uom': self.product.uom_id.id,
                     'price_unit': 12,
                 })],
         })
@@ -3544,13 +3495,11 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'name': self.product.name,
                     'product_id': self.product.id,
                     'product_uom_qty': 2.0,
-                    'product_uom': self.product.uom_id.id,
                 }),
                 (0, 0, {
                     'name': self.product.name,
                     'product_id': self.product2.id,
                     'product_uom_qty': 2.0,
-                    'product_uom': self.product2.uom_id.id,
                 }),
             ],
         })
@@ -3563,19 +3512,16 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'name': self.product.name,
                     'product_id': self.product.id,
                     'product_uom_qty': 2.0,
-                    'product_uom': self.product.uom_id.id,
                 }),
                 (0, 0, {
                     'name': self.product.name,
                     'product_id': self.product2.id,
                     'product_uom_qty': 2.0,
-                    'product_uom': self.product2.uom_id.id,
                 }),
                 (0, 0, {
                     'name': nr_product.name,
                     'product_id': nr_product.product_variant_id.id,
                     'product_uom_qty': 4.0,
-                    'product_uom': nr_product.uom_id.id,
                 }),
             ],
         })
@@ -3699,7 +3645,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': 12,
                     })],
         })
@@ -3918,7 +3863,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 1.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': 100,
                     }),
                     # Non-recurring product
@@ -3926,7 +3870,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': one_shot_product.name,
                         'product_id': one_shot_product.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': one_shot_product.uom_id.id,
                         'price_unit': 50,
                     }),
                 ]
@@ -4288,7 +4231,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 3.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': 12,
                     })],
             })
@@ -4351,7 +4293,6 @@ class TestSubscriptionInvoiceSignature(TestInvoiceSignature, TestSubscription):
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 2.0,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': 12,
                     })],
         })
@@ -4609,14 +4550,12 @@ class TestSubscriptionInvoiceSignature(TestInvoiceSignature, TestSubscription):
                     'name': self.product2.name,
                     'product_id': self.product2.id,
                     'product_uom_qty': 1,
-                    'product_uom': self.env.ref('uom.product_uom_unit').id,
                     'discount': 0,
                 }),
                 Command.create({
                     'name': self.product2.name,
                     'product_id': self.product2.id,
                     'product_uom_qty': 1,
-                    'product_uom': self.env.ref('uom.product_uom_unit').id,
                     'discount': 50,
                 })
             ]

@@ -48,7 +48,7 @@ class SaleRentalSchedule(models.Model):
     pickup_date = fields.Datetime('Pickup Date', readonly=True)
     return_date = fields.Datetime('Return Date', readonly=True)
     product_id = fields.Many2one('product.product', 'Product', readonly=True, group_expand="_read_group_product_ids")
-    product_uom = fields.Many2one('uom.uom', 'Unit of Measure', readonly=True)
+    product_uom_id = fields.Many2one('uom.uom', 'Unit of Measure', readonly=True)
     product_uom_qty = fields.Float('Qty Ordered', readonly=True)
     qty_delivered = fields.Float('Qty Picked-Up', readonly=True)
     qty_returned = fields.Float('Qty Returned', readonly=True)
@@ -124,7 +124,7 @@ class SaleRentalSchedule(models.Model):
         return SQL("""%s,
             %s,
             sol.product_id as product_id,
-            t.uom_id as product_uom,
+            t.uom_id as product_uom_id,
             sol.name as description,
             s.name as name,
             %s,
@@ -158,7 +158,7 @@ class SaleRentalSchedule(models.Model):
                 join res_partner partner on s.partner_id = partner.id
                 left join product_product p on (sol.product_id=p.id)
                 left join product_template t on (p.product_tmpl_id=t.id)
-                left join uom_uom u on (u.id=sol.product_uom)
+                left join uom_uom u on (u.id=sol.product_uom_id)
                 left join uom_uom u2 on (u2.id=t.uom_id)
         """)
 

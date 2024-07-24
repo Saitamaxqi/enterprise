@@ -118,7 +118,6 @@ class TestDeliveryShiprocket(TransactionCase):
         SaleOrder = self.env['sale.order']
         sol_vals = {'product_id': self.product_to_ship1.id,
                     'name': "[AHM1232] Door with wings",
-                    'product_uom': self.product_to_ship1.uom_id.id,
                     'product_uom_qty': 1.0,
                     'price_unit': self.product_to_ship1.lst_price}
 
@@ -180,13 +179,11 @@ class TestDeliveryShiprocket(TransactionCase):
         sol_vals1 = {
             'product_id': self.product_to_ship1.id,
             'name': "[AHM1232] Door with wings",
-            'product_uom': self.product_to_ship1.uom_id.id,
             'product_uom_qty': 3.0,
             'price_unit': self.product_to_ship1.lst_price}
         sol_vals2 = {
             'product_id': self.product_to_ship2.id,
             'name': "[AYD1233] Door with legs",
-            'product_uom': self.product_to_ship2.uom_id.id,
             'product_uom_qty': 2.0,
             'price_unit': self.product_to_ship2.lst_price}
 

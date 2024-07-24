@@ -70,21 +70,18 @@ class TestDeliveryBpost(TransactionCase):
             {
                 "product_id": self.iPadMini.id,
                 "name": "[A1232] Large Cabinet",
-                "product_uom": self.env.ref("uom.product_uom_unit").id,
                 "product_uom_qty": 1.0,
                 "price_unit": self.iPadMini.lst_price,
             },
             {
                 "product_id": self.product2.id,
                 "name": "[E-COM08] Storage Box",
-                "product_uom": self.env.ref("uom.product_uom_unit").id,
                 "product_uom_qty": 1.0,
                 "price_unit": self.product2.lst_price,
             },
             {
                 "product_id": self.product3.id,
                 "name": "[E-COM10] Pedal Bin",
-                "product_uom": self.env.ref("uom.product_uom_unit").id,
                 "product_uom_qty": 1.0,
                 "price_unit": self.product3.lst_price,
             },
@@ -134,7 +131,6 @@ class TestDeliveryBpost(TransactionCase):
 
         sol_vals = {'product_id': self.iPadMini.id,
                     'name': "[A1232] Large Cabinet",
-                    'product_uom': self.env.ref('uom.product_uom_unit').id,
                     'product_uom_qty': 1.0,
                     'price_unit': self.iPadMini.lst_price}
 
@@ -178,7 +174,6 @@ class TestDeliveryBpost(TransactionCase):
         self.env.ref('delivery_bpost.delivery_carrier_bpost_inter').invoice_policy = 'real'
         sol_vals = {'product_id': self.iPadMini.id,
                     'name': "[A1232] Large Cabinet",
-                    'product_uom': self.env.ref('uom.product_uom_unit').id,
                     'product_uom_qty': 1.0,
                     'price_unit': self.iPadMini.lst_price}
 
@@ -229,7 +224,6 @@ class TestDeliveryBpost(TransactionCase):
         order1_vals = {
                     'product_id': self.iPadMini.id,
                     'name': "[A1232] iPad Mini",
-                    'product_uom': self.uom_unit.id,
                     'product_uom_qty': 1.0,
                     'location_id': self.stock_location.id,
                     'location_dest_id': self.customer_location.id}

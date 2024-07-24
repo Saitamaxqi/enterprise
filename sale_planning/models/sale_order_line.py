@@ -12,7 +12,7 @@ class SaleOrderLine(models.Model):
     planning_hours_planned = fields.Float(compute='_compute_planning_hours_planned', store=True, compute_sudo=True, export_string_translation=False)
     planning_hours_to_plan = fields.Float(compute='_compute_planning_hours_to_plan', store=True, compute_sudo=True, export_string_translation=False)
 
-    @api.depends('product_uom', 'product_uom_qty', 'state')
+    @api.depends('product_uom_id', 'product_uom_qty', 'state')
     def _compute_planning_hours_to_plan(self):
         sol_planning = self.filtered_domain([('state', 'not in', ['draft', 'sent'])])
         if sol_planning:
@@ -20,11 +20,11 @@ class SaleOrderLine(models.Model):
             uom_hour = self.env.ref('uom.product_uom_hour')
             uom_unit = self.env.ref('uom.product_uom_unit')
             for sol in sol_planning:
-                if sol.product_uom == uom_hour or sol.product_uom == uom_unit:
+                if sol.product_uom_id == uom_hour or sol.product_uom_id == uom_unit:
                     sol.planning_hours_to_plan = sol.product_uom_qty
                 else:
                     sol.planning_hours_to_plan = float_round(
-                        sol.product_uom._compute_quantity(sol.product_uom_qty, uom_hour, raise_if_failure=False),
+                        sol.product_uom_id._compute_quantity(sol.product_uom_qty, uom_hour, raise_if_failure=False),
                         precision_digits=2
                     )
         for line in self - sol_planning:

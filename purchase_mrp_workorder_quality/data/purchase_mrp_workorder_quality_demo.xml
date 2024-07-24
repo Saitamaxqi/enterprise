@@ -11,7 +11,7 @@
             <field name="product_id" ref="mrp.product_product_computer_desk_head"/>
             <field name="date_planned" eval="(datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
             <field name="product_qty">1</field>
-            <field name="product_uom" ref="uom.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="price_unit">240</field>
             <field name="order_id" ref="purchase_mrp_workorder_quality.purchase_order_1"/>
         </record>
@@ -40,7 +40,7 @@
             <field name="product_id" ref="mrp.product_product_computer_desk_leg"/>
             <field name="date_planned" eval="(datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
             <field name="product_qty">4</field>
-            <field name="product_uom" ref="uom.product_uom_unit"/>
+            <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="price_unit">10</field>
             <field name="order_id" ref="purchase_mrp_workorder_quality.purchase_order_2"/>
         </record>

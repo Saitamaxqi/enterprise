@@ -16,7 +16,7 @@ class TestEdiResults(TestMxExtendedEdiCommon, ValuationReconciliationTestCommon)
             'partner_id': self.customer.id,
             'order_line': [(0, 0, ope) for ope in [{
                 'name': p.name, 'product_id': p.id, 'product_uom_qty': 2,
-                'product_uom': p.uom_id.id, 'price_unit': p.list_price,
+                'price_unit': p.list_price,
                 'tax_id': [(4, self.tax_positive.id)],
             } for (_, p) in self.products.items()]],
         })
@@ -48,7 +48,7 @@ class TestEdiResults(TestMxExtendedEdiCommon, ValuationReconciliationTestCommon)
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_qty': 2,
-                        'product_uom': self.product.uom_id.id,
+                        'product_uom_id': self.product.uom_id.id,
                         'price_unit': self.product.list_price,
                         'taxes_id': [(6, 0, self.product.supplier_taxes_id.filtered_domain(self.env['account.tax']._check_company_domain(self.env.company)).ids)],
                         'date_planned': fields.Datetime.now(),
@@ -82,7 +82,6 @@ class TestEdiResults(TestMxExtendedEdiCommon, ValuationReconciliationTestCommon)
                         'name': self.product.name,
                         'product_id': self.product.id,
                         'product_uom_qty': 2,
-                        'product_uom': self.product.uom_id.id,
                         'price_unit': self.product.list_price,
                         'tax_id': [(6, 0, self.product.taxes_id.filtered_domain(self.env['account.tax']._check_company_domain(self.env.company)).ids)],
                     })

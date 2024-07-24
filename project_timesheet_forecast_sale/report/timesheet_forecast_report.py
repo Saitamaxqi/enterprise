@@ -37,7 +37,7 @@ class ProjectTimesheetForecastReportAnalysis(models.Model):
     def _from(self):
         return super()._from() + """
             LEFT JOIN sale_order_line SOL ON SOL.id = F.sale_line_id
-            LEFT JOIN uom_uom P_UOM ON SOL.product_uom = P_UOM.id,
+            LEFT JOIN uom_uom P_UOM ON SOL.product_uom_id = P_UOM.id,
             (SELECT U.factor FROM uom_uom U WHERE U.id = %s) HOUR_UOM
         """ % (self.env.ref('uom.product_uom_hour').id)
 
@@ -59,7 +59,7 @@ class ProjectTimesheetForecastReportAnalysis(models.Model):
         return super()._from_union() + """
             LEFT JOIN project_task T ON A.task_id = T.id
             LEFT JOIN sale_order_line SOL ON A.so_line = SOL.id
-            LEFT JOIN uom_uom P_UOM ON SOL.product_uom = P_UOM.id
+            LEFT JOIN uom_uom P_UOM ON SOL.product_uom_id = P_UOM.id
         """
 
     @api.model

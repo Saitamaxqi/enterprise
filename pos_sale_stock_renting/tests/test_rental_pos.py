@@ -54,7 +54,6 @@ class TestPoSRental(TestPointOfSaleHttpCommon):
             'order_id': self.sale_order_id.id,
             'product_id': self.tracked_product_id.id,
             'product_uom_qty': 0.0,
-            'product_uom': self.tracked_product_id.uom_id.id,
             'price_unit': 250,
         })
         self.order_line_id2.write({'is_rental': True})

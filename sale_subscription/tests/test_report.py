@@ -24,7 +24,6 @@ class TestSubscription(TestSubscriptionCommon):
                 'name': "Product 1",
                 'product_id': self.product.id,
                 'product_uom_qty': 1,
-                'product_uom': self.product.uom_id.id
             })]
         })
         sub_a.action_confirm()
@@ -36,7 +35,6 @@ class TestSubscription(TestSubscriptionCommon):
                 'name': "Product 1",
                 'product_id': self.product.id,
                 'product_uom_qty': 1,
-                'product_uom': self.product.uom_id.id
             })]
         })
         sub_b.write({
@@ -73,7 +71,6 @@ class TestSubscription(TestSubscriptionCommon):
                 'name': "Product 1",
                 'product_id': self.product.id,
                 'product_uom_qty': 1,
-                'product_uom': self.product.uom_id.id
             })]
         })
         sub_a.action_confirm()
@@ -86,7 +83,6 @@ class TestSubscription(TestSubscriptionCommon):
                 'name': "Product 1",
                 'product_id': self.product.id,
                 'product_uom_qty': 1,
-                'product_uom': self.product.uom_id.id
             })]
         })
         sub_b.action_confirm()
@@ -99,7 +95,6 @@ class TestSubscription(TestSubscriptionCommon):
                 'name': "Product 1",
                 'product_id': self.product.id,
                 'product_uom_qty': 1,
-                'product_uom': self.product.uom_id.id
             })]
         })
         sub_c.write({

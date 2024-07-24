@@ -99,7 +99,6 @@ class TestSaleTimesheetInTicket(TestCommonSaleTimesheet):
             'name': self.product_delivery_timesheet1.name,
             'product_id': self.product_delivery_timesheet1.id,
             'product_uom_qty': 1,
-            'product_uom': self.product_delivery_timesheet1.uom_id.id,
             'price_unit': self.product_delivery_timesheet1.list_price,
             'order_id': sale_order.id,
         })
@@ -177,7 +176,6 @@ class TestSaleTimesheetInTicket(TestCommonSaleTimesheet):
             'name': service.name,
             'product_id': service.id,
             'product_uom_qty': 1,
-            'product_uom': service.uom_id.id,
             'price_unit': service.list_price,
             'order_id': sale_order.id,
             'tax_id': False,

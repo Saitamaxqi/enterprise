@@ -509,7 +509,7 @@
         <td id="quote_qty_td" position="after">
             <td t-if="sale_order.subscription_state == '7_upsell'" class="text-end">
                 <span t-esc="line.upsell_total"/>
-                <span t-field="line.product_uom"/>
+                <span t-field="line.product_uom_id"/>
             </td>
         </td>
         <div t-field="line.price_unit" position="attributes">

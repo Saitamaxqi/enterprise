@@ -503,7 +503,6 @@ class ProjectTask(models.Model):
             # The project and the task are given to prevent the SOL to create a new project or task based on the config of the product.
             'project_id': self.project_id.id,
             'task_id': self.id,
-            'product_uom': self.project_id.timesheet_product_id.uom_id.id,
         }
 
     def _fsm_create_sale_order_line(self):

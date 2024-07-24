@@ -74,7 +74,6 @@ class ProductProduct(models.Model):
                         'order_id': task.sale_order_id.id,
                         'product_id': product.id,
                         'product_uom_qty': diff_qty,
-                        'product_uom': product.uom_id.id,
                         'task_id': task.id
                     }
                     if task.under_warranty:

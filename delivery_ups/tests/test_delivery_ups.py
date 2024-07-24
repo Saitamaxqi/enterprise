@@ -60,7 +60,6 @@ class TestDeliveryUPS(TransactionCase):
 
         sol_vals = {'product_id': self.iPadMini.id,
                     'name': "[A1232] Large Cabinet",
-                    'product_uom': self.uom_unit.id,
                     'product_uom_qty': 1.0,
                     'price_unit': self.iPadMini.lst_price}
 
@@ -119,13 +118,11 @@ class TestDeliveryUPS(TransactionCase):
 
         sol_1_vals = {'product_id': self.iPadMini.id,
                       'name': "[A1232] Large Cabinet",
-                      'product_uom': self.uom_unit.id,
                       'product_uom_qty': 1.0,
                       'price_unit': self.iPadMini.lst_price}
 
         sol_2_vals = {'product_id': self.large_desk.id,
                       'name': "[A1090] Large Desk",
-                      'product_uom': self.uom_unit.id,
                       'product_uom_qty': 1.0,
                       'price_unit': self.large_desk.lst_price}
 

@@ -169,7 +169,7 @@ class TestInterCompanySaleToPurchase(TestInterCompanyRulesCommonSOPO):
         })
         so = self._generate_draft_sale_order(self.company_a, partner_a, self.res_users_company_a)
         so.order_line.product_id = my_service
-        so.order_line.product_uom = my_service.uom_id
+        so.order_line.product_uom_id = my_service.uom_id
         so.with_user(self.res_users_company_a).action_confirm()
         # Check purchase order is created in company B ( for company A )
         purchase_order = self.env['purchase.order'].search([('partner_id', '=', self.company_b.partner_id.id)], limit=1)

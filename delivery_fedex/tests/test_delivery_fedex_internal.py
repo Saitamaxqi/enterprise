@@ -38,7 +38,6 @@ class TestDeliveryFedexInternal(TransactionCase):
         test_customer = self.env['res.partner'].create({'name': 'Vlad the Impaler'})
         sol_vals = {'product_id': test_product.id,
                     'name': test_product.name,
-                    'product_uom': self.uom_unit.id,
                     'product_uom_qty': 1.0,
                     'currency_id': self.currency_usd_id.id,
                     'price_unit': 123}

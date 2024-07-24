@@ -390,7 +390,7 @@ class TestApprovalsPurchase(TestApprovalsCommon):
             request_product_line.product_uom_id.id, self.uom_fortnight.id
         )
         self.assertEqual(
-            purchase_order.order_line[0].product_uom.id, self.uom_unit.id
+            purchase_order.order_line[0].product_uom_id.id, self.uom_unit.id
         )
         self.assertEqual(
             purchase_order.order_line[0].product_qty, 30,
@@ -418,7 +418,7 @@ class TestApprovalsPurchase(TestApprovalsCommon):
             request_product_line.product_uom_id.id, self.uom_unit.id
         )
         self.assertEqual(
-            purchase_order.order_line[0].product_uom.id, self.uom_fortnight.id
+            purchase_order.order_line[0].product_uom_id.id, self.uom_fortnight.id
         )
         self.assertEqual(
             purchase_order.order_line[0].product_qty, 2,
@@ -455,10 +455,10 @@ class TestApprovalsPurchase(TestApprovalsCommon):
         )
         self.assertEqual(len(purchase_order.order_line), 2)
         self.assertEqual(
-            purchase_order.order_line[0].product_uom.id, self.uom_unit.id
+            purchase_order.order_line[0].product_uom_id.id, self.uom_unit.id
         )
         self.assertEqual(
-            purchase_order.order_line[1].product_uom.id, self.uom_fortnight.id
+            purchase_order.order_line[1].product_uom_id.id, self.uom_fortnight.id
         )
         self.assertEqual(purchase_order.order_line[0].product_qty, 7)
         self.assertEqual(

@@ -120,7 +120,7 @@ class TestApprovalsCommon(TransactionCase):
                     'price_unit': line['price'],
                     'product_id': product.id,
                     'product_qty': line.get('quantity', 1),
-                    'product_uom': line.get('uom', product.uom_id.id),
+                    'product_uom_id': line.get('uom', product.uom_id.id),
                 })
                 vals['order_line'].append(order_line_vals)
 

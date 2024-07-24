@@ -129,7 +129,7 @@ class AccountMove(models.Model):
                 'product_id': product.id,
                 'product_qty': 1,
                 'price_unit': total * sign,
-                'product_uom': product.uom_id.id,
+                'product_uom_id': product.uom_id.id,
                 'date_planned': fields.Datetime.now(),
                 'order_id': purchase.id,
                 'qty_received': 1,

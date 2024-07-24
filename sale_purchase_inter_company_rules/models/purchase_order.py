@@ -119,13 +119,13 @@ class PurchaseOrder(models.Model):
         """
         # it may not affected because of parallel company relation
         price = line.price_unit or 0.0
-        quantity = line.product_id and line.product_uom._compute_quantity(line.product_qty, line.product_id.uom_id) or line.product_qty
-        price = line.product_id and line.product_uom._compute_price(price, line.product_id.uom_id) or price
+        quantity = line.product_id and line.product_uom_id._compute_quantity(line.product_qty, line.product_id.uom_id) or line.product_qty
+        price = line.product_id and line.product_uom_id._compute_price(price, line.product_id.uom_id) or price
         return {
             'name': line.name,
             'product_uom_qty': quantity,
             'product_id': line.product_id and line.product_id.id or False,
-            'product_uom': line.product_id and line.product_id.uom_id.id or line.product_uom.id,
+            'product_uom_id': line.product_id and line.product_id.uom_id.id or line.product_uom_id.id,
             'price_unit': price,
             'company_id': company.id,
             'display_type': line.display_type,

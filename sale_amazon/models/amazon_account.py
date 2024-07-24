@@ -1143,7 +1143,7 @@ class AmazonAccount(models.Model):
                 'company_id': self.company_id.id,
                 'product_id': order_line.product_id.id,
                 'product_uom_qty': order_line.product_uom_qty,
-                'product_uom': order_line.product_uom.id,
+                'product_uom': order_line.product_uom_id.id,
                 'location_id': self.location_id.id,
                 'location_dest_id': customers_location.id,
                 'state': 'confirmed',

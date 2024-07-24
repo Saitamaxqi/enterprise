@@ -80,14 +80,12 @@ class TestL10nClEdiStock(TestL10nClEdiStockCommon):
                 'name': self.product_with_taxes_a.name,
                 'product_id': self.product_with_taxes_a.id,
                 'product_uom_qty': 10.0,
-                'product_uom': self.product_with_taxes_a.uom_id.id,
                 'price_unit': self.product_with_taxes_a.list_price
                 }),
                 (0, 0, {
                 'name': self.product_with_taxes_b.name,
                 'product_id': self.product_with_taxes_b.id,
                 'product_uom_qty': 1.0,
-                'product_uom': self.product_with_taxes_b.uom_id.id,
                 'price_unit': self.product_with_taxes_b.list_price
                 })
             ],
@@ -129,7 +127,6 @@ class TestL10nClEdiStock(TestL10nClEdiStockCommon):
                     'name': self.product_without_taxes_a.name,
                     'product_id': self.product_without_taxes_a.id,
                     'product_uom_qty': 5.0,
-                    'product_uom': self.product_without_taxes_a.uom_id.id,
                     'price_unit': self.product_without_taxes_a.list_price,
                     'discount': 10.00,
                     'tax_id': [],
@@ -138,7 +135,6 @@ class TestL10nClEdiStock(TestL10nClEdiStockCommon):
                     'name': self.product_without_taxes_b.name,
                     'product_id': self.product_without_taxes_b.id,
                     'product_uom_qty': 10.0,
-                    'product_uom': self.product_without_taxes_b.uom_id.id,
                     'price_unit': self.product_without_taxes_b.list_price,
                     'tax_id': [],
                 })
@@ -181,7 +177,6 @@ class TestL10nClEdiStock(TestL10nClEdiStockCommon):
                     'name': self.product_with_taxes_a.name,
                     'product_id': self.product_with_taxes_a.id,
                     'product_uom_qty': 3.0,
-                    'product_uom': self.product_with_taxes_a.uom_id.id,
                     'price_unit': self.product_with_taxes_a.list_price,
                     'discount': 10.00,
                 })

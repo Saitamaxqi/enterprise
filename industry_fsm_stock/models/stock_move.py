@@ -34,7 +34,7 @@ class StockMove(models.Model):
             if float_is_zero(need, precision_rounding=self.product_id.uom_id.rounding):
                 return reserved
             lot = so_line.fsm_lot_id
-            sol_qty = so_line.product_uom._compute_quantity(so_line.product_uom_qty, so_line.product_id.uom_id)
+            sol_qty = so_line.product_uom_id._compute_quantity(so_line.product_uom_qty, so_line.product_id.uom_id)
             lot_need = max(0, sol_qty - already_used_by_lots[lot])
             lot_need = min(need, lot_need)
             taken = super()._update_reserved_quantity(lot_need, location_id, lot_id=lot, package_id=package_id, owner_id=owner_id, strict=strict)

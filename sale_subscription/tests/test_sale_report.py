@@ -42,7 +42,6 @@ class TestSaleReport(TestSubscriptionCommon):
                     'name': self.recurring_product.name,
                     'product_id': self.recurring_product.id,
                     'product_uom_qty': 2.0,
-                    'product_uom': self.recurring_product.uom_id.id,
                     'price_unit': self.recurring_product.list_price,
                 })]
             })

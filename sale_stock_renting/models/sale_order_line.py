@@ -417,7 +417,7 @@ class SaleOrderLine(models.Model):
                 for move in outgoing_moves:
                     if move.state != 'done':
                         continue
-                    qty += move.product_uom._compute_quantity(move.quantity, line.product_uom, rounding_method='HALF-UP')
+                    qty += move.product_uom._compute_quantity(move.quantity, line.product_uom_id, rounding_method='HALF-UP')
                 line.qty_delivered = qty
 
     @api.depends('pickedup_lot_ids', 'returned_lot_ids', 'reserved_lot_ids')

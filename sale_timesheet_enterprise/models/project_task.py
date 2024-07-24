@@ -105,7 +105,7 @@ class ProjectTask(models.Model):
         return {
             sol.id: {
                 'value': planned_hours_per_sol_mapped.get(sol.id, 0.0),
-                'max_value': sol.product_uom._compute_quantity(sol.product_uom_qty, uom_hour),
+                'max_value': sol.product_uom_id._compute_quantity(sol.product_uom_qty, uom_hour),
             }
             for sol in self.env['sale.order.line'].search([('id', 'in', res_ids)])
         }
