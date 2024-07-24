@@ -134,6 +134,9 @@ class DeliveryCarrier(models.Model):
             'phone': picking.partner_id.mobile or picking.partner_id.phone or picking.sale_id.partner_id.mobile or picking.sale_id.partner_id.phone,
             'terms_of_shipment': terms_of_shipment.code if terms_of_shipment else None,
             'purchase_order_number': picking.sale_id.name if picking.sale_id else None,
+            'reference_number': [
+                {'Code': 'BM', 'Value': picking.name},  # BM is used for Bill of Lading, cf. https://developer.ups.com/api/reference/shipping/appendix2?loc=en_BE
+            ],
         }
         if picking.sale_id and picking.sale_id.carrier_id != picking.carrier_id:
             ups_service_type = picking.carrier_id.ups_default_service_type or self.ups_default_service_type

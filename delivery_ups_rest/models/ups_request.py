@@ -393,6 +393,7 @@ class UPSRequest:
                     'Service': {
                         'Code': service_type,
                     },
+                    'ReferenceNumber': shipment_info.get('reference_number'),
                     'NumOfPiecesInShipment': int(shipment_info.get('total_qty')) if service_type == '96' else None,
                     'ShipmentServiceOptions': shipment_service_options if shipment_service_options else None,
                     'ShipmentRatingOptions': {
