@@ -3,7 +3,6 @@
 from datetime import timedelta
 
 from odoo import api, fields, models
-from odoo.tools import SQL
 
 
 class BudgetLine(models.Model):
@@ -52,103 +51,18 @@ class BudgetLine(models.Model):
             line.is_above_budget = line.achieved_amount > line.budget_amount
 
     def _compute_all(self):
-        self.env['purchase.order'].flush_model()
-        self.env['purchase.order.line'].flush_model()
-
-        def get_line_query(line):
-            account_ids = {fname: line[fname].id for fname in account_fname if line[fname]}
-            fnames = list(account_ids.keys())
-            budget_type = line.budget_analytic_id.budget_type
-            company_id = line.budget_analytic_id.company_id.id
-            date_from = line.date_from
-            date_to = line.date_to
-            if budget_type == 'expense':
-                aal_amount_condition = SQL('aal.amount < 0')
-            elif budget_type == 'revenue':
-                aal_amount_condition = SQL('aal.amount > 0')
-            else:
-                aal_amount_condition = SQL('TRUE')
-            if budget_type != 'revenue':
-                purchase_order_query = SQL(
-                    """SELECT (pol.product_qty - pol.qty_invoiced) / po.currency_rate * pol.price_unit::FLOAT * (a.rate)::FLOAT AS committed,
-                               0 AS achieved,
-                               %(pod_fields)s
-                          FROM purchase_order_line pol
-                          JOIN purchase_order po ON pol.order_id = po.id
-                    CROSS JOIN JSONB_TO_RECORDSET(pol.analytic_json) AS a(rate FLOAT, %(json_table)s)
-                         WHERE po.date_order >= %(date_from)s
-                           AND po.date_order <= %(date_to)s
-                           AND pol.qty_invoiced < pol.product_qty
-                           AND po.company_id = %(company_id)s
-                           AND po.state in ('purchase', 'done')
-                           AND %(pod_condition)s
-                    """,
-                    date_from=date_from,
-                    date_to=date_to,
-                    company_id=company_id,
-                    json_table=SQL(', ').join(SQL("%s INT", SQL.identifier(fname)) for fname in account_fname),
-                    pod_fields=SQL(', ').join(self._field_to_sql('a', fname) for fname in account_fname),
-                    pod_condition=SQL(' AND ').join(SQL('%s = %s', self._field_to_sql('a', fname), account_ids[fname]) for fname in fnames) or SQL('FALSE'),
-                )
-            else:
-                purchase_order_query = SQL(
-                    """SELECT 0 AS committed,
-                               0 AS achieved
-                    """
-                )
-
-            query = SQL(
-                """(
-                    WITH purchase_order_data AS (%(purchase_order_query)s),
-                    account_analytic_line_data AS (
-                        SELECT 0 AS committed,
-                               aal.amount AS achieved,
-                               %(aal_fields)s
-                          FROM account_analytic_line aal
-                         WHERE aal.date >= %(date_from)s
-                           AND aal.date <= %(date_to)s
-                           AND aal.company_id = %(company_id)s
-                           AND %(all_conditions)s
-                           AND %(aal_amount_condition)s
-                    )
-                    SELECT %(line_id)s as id,
-                           COALESCE(SUM(pod.committed), 0) + COALESCE(SUM(aal.committed), 0) AS committed,
-                           COALESCE(SUM(pod.achieved), 0) + COALESCE(SUM(aal.achieved), 0) AS achieved
-                      FROM purchase_order_data pod
-                 FULL JOIN account_analytic_line_data aal ON %(join_condition)s
-                )""",
-                line_id=line.id,
-                date_from=date_from,
-                date_to=date_to,
-                company_id=company_id,
-                aal_fields=SQL(', ').join(self._field_to_sql('aal', fname) for fname in account_fname),
-                all_conditions=SQL(' AND ').join(SQL('%s = %s', self._field_to_sql('aal', fname), account_ids[fname]) for fname in fnames) or SQL('FALSE'),
-                join_condition=budget_type == 'expense' and SQL(' AND ').join(SQL('%s = %s', self._field_to_sql('pod', fname), self._field_to_sql('aal', fname)) for fname in account_fname) or SQL('FALSE'),
-                aal_amount_condition=aal_amount_condition,
-                purchase_order_query=purchase_order_query
+        grouped = {
+            line: (committed, achieved)
+            for line, committed, achieved in self.env['budget.report']._read_group(
+                domain=[('budget_line_id', 'in', self.ids)],
+                groupby=['budget_line_id'],
+                aggregates=['committed:sum', 'achieved:sum'],
             )
-            return query
-
-        project_plan, other_plans = self.env['account.analytic.plan']._get_all_plans()
-        account_fname = [plan._column_name() for plan in project_plan + other_plans]
-        queries = [get_line_query(line) for line in self.filtered('id')]
-        result = {}
-        if queries:
-            self.env.cr.execute(SQL(
-                "SELECT * FROM (%s) AS combined_results",
-                SQL(" UNION ALL ").join(queries),
-            ))
-            result = {line['id']: line for line in self.env.cr.dictfetchall()}
-
+        }
         for line in self:
-            sign = -1 if line.budget_analytic_id.budget_type == 'expense' else 1
-            if line.id not in result:
-                committed = achieved = 0.0
-            else:
-                committed = result[line.id]['committed']
-                achieved = result[line.id]['achieved']
-            line.committed_amount = committed + achieved * sign
-            line.achieved_amount = achieved * sign
+            committed, achieved = grouped.get(line, (0, 0))
+            line.committed_amount = committed
+            line.achieved_amount = achieved
             line.committed_percentage = line.budget_amount and (line.committed_amount / line.budget_amount)
             line.achieved_percentage = line.budget_amount and (line.achieved_amount / line.budget_amount)
 
