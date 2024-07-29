@@ -22,6 +22,25 @@
                 >
                     Quick Create
                 </Property>
+                <Property
+                    name="'sort_by'"
+                    type="'selection'"
+                    value="defaultOrder.name or null"
+                    onChange.bind="setSortBy"
+                    childProps="{ choices: sortChoices, required: false }"
+                >
+                    Sort By
+                </Property>
+                <Property
+                    t-if="defaultOrder.name"
+                    name="'sort_order'"
+                    type="'selection'"
+                    value="defaultOrder.asc ? 'asc' : 'desc'"
+                    onChange.bind="setOrder"
+                    childProps="{ choices: orderChoices }"
+                >
+                    Order
+                </Property>
                 <t t-call="web_studio.ViewEditor.ShowInvisibleToggler" />
                 <Property
                     name="'default_group_by'"

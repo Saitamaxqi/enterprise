@@ -649,3 +649,47 @@ test("grouped kanban editor cannot add columns or load more", async () => {
     expect(".o_kanban_load_more").toHaveCount(0);
     expect(".o_kanban_add_column").toHaveCount(0);
 });
+
+test("sortby and orderby field in kanban sidebar", async () => {
+    onRpc("/web_studio/edit_view", async (request) => {
+        const { params } = await request.json();
+        const operation = params.operations[0];
+        expect(operation.new_attrs.default_order).toBe("char_field asc");
+        expect(operation.position).toBe("attributes");
+        expect(operation.target.xpath_info).toEqual([{tag: "kanban", indice: 1}]);
+        expect.step("edit_view");
+        const newArch = `
+            <kanban default_order="char_field asc">
+                <templates>
+                    <t t-name="card">
+                        <h3>Card</h3>
+                    </t>
+                </templates>
+            </kanban>
+        `;
+        return createMockViewResult("kanban", newArch, Coucou);
+    });
+    await mountViewEditor({
+        type: "kanban",
+        resModel: "coucou",
+        arch: `<kanban>
+        <templates>
+            <t t-name="card">
+                <h3>Card</h3>
+            </t>
+        </templates>
+    </kanban>
+    `,
+    });
+    await contains(".o_web_studio_view").click();
+    await contains(".o_web_studio_property_sort_by .o_select_menu .o_select_menu_toggler").click();
+    await contains(".o-overlay-item:nth-child(1) .o-dropdown--menu .dropdown-item:eq(0)").click();
+    expect(".o_web_studio_property_sort_by .o_select_menu .text-start").toHaveText("Char field");
+
+    await contains(
+        ".o_web_studio_property_sort_order .o_select_menu .o_select_menu_toggler"
+    ).click();
+    await contains(".o-overlay-item:nth-child(1) .o-dropdown--menu .dropdown-item:eq(0)").click();
+    expect(".o_web_studio_property_sort_order .o_select_menu .text-start").toHaveText("Ascending");
+    expect.verifySteps(["edit_view"]);
+});

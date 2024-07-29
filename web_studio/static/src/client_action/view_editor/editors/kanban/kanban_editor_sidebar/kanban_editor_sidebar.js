@@ -136,6 +136,45 @@ export class KanbanEditorSidebar extends Component {
         };
     }
 
+    get defaultOrder() {
+        if (this.archInfo.defaultOrder.length >= 1) {
+            return this.archInfo.defaultOrder[0];
+        } else {
+            return { name: "", asc: true };
+        }
+    }
+
+    get sortChoices() {
+        return fieldsToChoices(
+            this.viewEditorModel.fields,
+            this.viewEditorModel.GROUPABLE_TYPES,
+            (field) => field.store
+        );
+    }
+
+    get orderChoices() {
+        return [
+            { value: "asc", label: _t("Ascending") },
+            { value: "desc", label: _t("Descending") },
+        ];
+    }
+
+    setSortBy(value) {
+        this.onSortingChanged(value, this.defaultOrder.asc ? "asc" : "desc");
+    }
+
+    setOrder(value) {
+        this.onSortingChanged(this.defaultOrder.name, value);
+    }
+
+    onSortingChanged(sortBy, order) {
+        if (sortBy) {
+            this.editAttribute(`${sortBy} ${order}`, "default_order");
+        } else {
+            this.editAttribute("", "default_order");
+        }
+    }
+
     editAttribute(value, name) {
         return this.editArchAttributes({ [name]: value });
     }

@@ -9,6 +9,7 @@ import { KanbanCoverProperties } from "@web_studio/client_action/view_editor/edi
 import { useEditNodeAttributes } from "@web_studio/client_action/view_editor/view_editor_model";
 import { fieldsToChoices } from "@web_studio/client_action/view_editor/editors/utils";
 import { getFieldsInArch } from "@web_studio/client_action/utils";
+import { _t } from "@web/core/l10n/translation";
 
 class KanbanFieldProperties extends FieldProperties {
     onChangeAttribute(value, name) {
@@ -69,6 +70,45 @@ export class KanbanEditorSidebarLegacy extends Component {
         // the actual template. Those must be present in the sidebar
         const kanbanXmlDoc = this.viewEditorModel.xmlDoc.querySelector("[t-name=kanban-box]");
         return getFieldsInArch(kanbanXmlDoc);
+    }
+
+    get defaultOrder() {
+        if (this.archInfo.defaultOrder.length >= 1) {
+            return this.archInfo.defaultOrder[0];
+        } else {
+            return { name: "", asc: true };
+        }
+    }
+
+    get sortChoices() {
+        return fieldsToChoices(
+            this.viewEditorModel.fields,
+            this.viewEditorModel.GROUPABLE_TYPES,
+            (field) => field.store
+        );
+    }
+
+    get orderChoices() {
+        return [
+            { value: "asc", label: _t("Ascending") },
+            { value: "desc", label: _t("Descending") },
+        ];
+    }
+
+    setSortBy(value) {
+        this.onSortingChanged(value, this.defaultOrder.asc ? "asc" : "desc");
+    }
+
+    setOrder(value) {
+        this.onSortingChanged(this.defaultOrder.name, value);
+    }
+
+    onSortingChanged(sortBy, order) {
+        if (sortBy) {
+            this.editAttribute(`${sortBy} ${order}`, "default_order");
+        } else {
+            this.editAttribute("", "default_order");
+        }
     }
 
     editAttribute(value, name) {
