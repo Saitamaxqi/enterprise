@@ -280,16 +280,22 @@ class AccountMove(models.Model):
         invoices_not_ec = (self - invoices_ec)
         invoices_not_ec.l10n_ec_withhold_ids = False
         invoices_not_ec.l10n_ec_withhold_count = False
+
+        withhold_invoice_line_data = dict(self.env['account.move.line']._read_group(
+            [('l10n_ec_withhold_invoice_id', 'in', invoices_ec.ids)],
+            groupby = ['l10n_ec_withhold_invoice_id'],
+            aggregates = ['move_id:recordset']
+        ))
         for invoice in invoices_ec:
             withhold_ids = False
             withhold_count = False
-            if invoice.is_invoice():
-                withhold_ids = self.env['account.move.line'].search([('l10n_ec_withhold_invoice_id', '=', invoice.id)]).mapped('move_id')
+            if invoice.is_invoice() and withhold_invoice_line_data.get(invoice):
+                withhold_ids = withhold_invoice_line_data.get(invoice)
                 withhold_count = len(withhold_ids)
             invoice.l10n_ec_withhold_ids = withhold_ids
             invoice.l10n_ec_withhold_count = withhold_count
 
-    @api.onchange('l10n_latam_document_type_id', 'l10n_latam_document_number')
+    @api.onchange('l10n_latam_document_type_id', 'l10n_latam_document_number', 'partner_id')
     def _inverse_l10n_latam_document_number(self):
         super()._inverse_l10n_latam_document_number()
         self._l10n_ec_check_number_prefix()
