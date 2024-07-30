@@ -27,12 +27,13 @@ class HrPayrollDeclarationMixin(models.AbstractModel):
         current_year = datetime.now().year
         return [(str(i), i) for i in range(1990, current_year + 1)]
 
+    create_date = fields.Datetime(string='Created on', readonly=True)
     year = fields.Selection(
         selection='_get_year_selection', string='Year', required=True,
         default=lambda x: str(datetime.now().year - 1))
     line_ids = fields.One2many(
         'hr.payroll.employee.declaration', 'res_id', string='Declarations')
-    lines_count = fields.Integer(compute='_compute_lines_count')
+    lines_count = fields.Integer(compute='_compute_lines_count', string="Eligible Employees")
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
     pdf_error = fields.Text('PDF Error Message')
 

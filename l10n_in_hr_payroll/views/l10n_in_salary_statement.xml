@@ -3,28 +3,17 @@
     <record id="l10n_in_hr_payroll_salary_statement_view_form" model="ir.ui.view">
         <field name="name">l10n_in_hr_payroll.salary.statement.form</field>
         <field name="model">l10n_in_hr_payroll.salary.statement</field>
+        <field name="inherit_id" ref="hr_payroll.hr_payroll_declaration_mixin_view_form"/>
+        <field name="mode">primary</field>
         <field name="arch" type="xml">
-            <form string="Salary Statement">
-                <header>
-                    <button name="action_generate_declarations" string="Populate" type="object" class="btn-primary" invisible="lines_count"/>
-                    <button name="action_generate_declarations" string="Populate" type="object" class="btn-secondary" invisible="not lines_count"/>
-                </header>
-                <sheet>
-                    <div class="oe_button_box" name="button_box">
-                        <button name="action_open_declarations" type="object" class="oe_stat_button" icon="fa-users" invisible="not lines_count">
-                            <div class="o_field_widget o_stat_info">
-                                <span class="o_stat_value"><field name="lines_count"/></span>
-                                <span class="o_stat_text">Eligible Employees</span>
-                            </div>
-                        </button>
-                    </div>
-                    <group>
-                        <field name="year" class="o_hr_narrow_field"/>
-                        <field name="month" class="o_hr_narrow_field"/>
-                        <field name="name"/>
-                    </group>
-                </sheet>
+            <form position="attributes">
+                <attribute name="string">Salary Statement</attribute>
             </form>
+            <field name="year" position="after">
+                <field name="month" class="o_hr_narrow_field"/>
+                <field name="name"/>
+            </field>
+            <p name="save_warning" position="replace"/>
         </field>
     </record>
 

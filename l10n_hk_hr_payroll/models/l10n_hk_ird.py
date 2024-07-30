@@ -40,6 +40,7 @@ class L10n_HkIrd(models.AbstractModel):
             raise UserError(_("Please configure the Employer's Name and the Employer's File Number in the company settings."))
         return super().default_get(field_list)
 
+    display_name = fields.Char()
     state = fields.Selection([('draft', 'Draft'), ('waiting', 'Waiting'), ('done', 'Done')], default='draft')
     currency_id = fields.Many2one('res.currency', related='company_id.currency_id')
     start_year = fields.Integer(required=True, default=lambda self: fields.Date.today().year - 1)

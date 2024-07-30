@@ -8,7 +8,7 @@
                 <header>
                     <button name="action_generate_pdf" string="Generate PDFs" type="object"/>
                 </header>
-                <field name="employee_id" options="{'no_create': True, 'no_create_edit': True}" widget="many2one_avatar_user"/>
+                <field name="employee_id" options="{'no_create': True, 'no_create_edit': True}" readonly="pdf_file" widget="many2one_avatar_user"/>
                 <field name="res_model" column_invisible="True"/>
                 <field name="res_id" column_invisible="True"/>
                 <field name="pdf_filename" column_invisible="True"/>

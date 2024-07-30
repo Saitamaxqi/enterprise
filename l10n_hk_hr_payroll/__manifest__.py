@@ -45,6 +45,7 @@ Hong Kong Payroll Rules.
         "views/hr_payslip_views.xml",
         "views/hr_work_entry_views.xml",
         "views/l10n_hk_manulife_mpf_views.xml",
+        "views/l10n_hk_ird_views.xml",
         "views/l10n_hk_ir56b_views.xml",
         "views/l10n_hk_ir56e_views.xml",
         "views/l10n_hk_ir56f_views.xml",
