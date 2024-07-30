@@ -12,6 +12,8 @@ from odoo.tests.common import new_test_user, tagged
 from odoo.tools import mute_logger
 from odoo.tools.misc import get_lang
 
+from odoo.addons.http_routing.tests.common import MockRequest
+from odoo.addons.sale.controllers.portal import CustomerPortal
 from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
 from odoo.addons.payment.tests.common import PaymentCommon
@@ -335,15 +337,12 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
                 subscription._portal_ensure_token()
                 # test customized /payment/pay route with sale_order_id param
                 # partial amount specified
+                subscription.prepayment_percent = 0.5
                 self.amount = subscription.amount_total / 2.0 # self.amount is used to create the right transaction
-                pay_route_values = self._prepare_pay_values(
-                    amount=self.amount,
-                    currency=subscription.currency_id,
-                    partner=subscription.partner_id,
-                )
-                pay_route_values['sale_order_id'] = subscription.id
-                tx_context = self._get_portal_pay_context(**pay_route_values)
-
+                with MockRequest(self.env):
+                    tx_context = CustomerPortal()._get_payment_values(
+                        subscription, is_down_payment=True, payment_amount=self.amount
+                    )
                 tx_route_values = {
                     'provider_id': self.provider.id,
                     'payment_method_id': self.payment_method_id,
@@ -368,8 +367,7 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
                 tx_sudo._set_done()
                 with mute_logger('odoo.addons.sale.models.payment_transaction'):
                     tx_sudo._post_process()
-                self.assertEqual(subscription.state, 'sent')  # Only a partial amount was paid
-                subscription.action_confirm()
+                self.assertEqual(subscription.state, 'sale')  # The prepayment amount was paid
                 self.assertEqual(subscription.next_invoice_date, datetime.date.today())
                 self.assertEqual(subscription.state, 'sale')
                 self.assertEqual(subscription.invoice_count, 0, "No invoice should be created")
@@ -379,17 +377,14 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
                 subscription._create_recurring_invoice()
                 action = subscription.prepare_renewal_order()
                 renewal_so = self.env['sale.order'].browse(action['res_id'])
+                renewal_so.prepayment_percent = 0.5
                 self.amount = renewal_so.amount_total / 2.0
 
                 # Prepare renewal subscription's payment values.
-                pay_route_values = self._prepare_pay_values(
-                    amount=self.amount,
-                    currency=renewal_so.currency_id,
-                    partner=renewal_so.partner_id,
-                )
-                pay_route_values['sale_order_id'] = renewal_so.id
-                tx_context = self._get_portal_pay_context(**pay_route_values)
-
+                with MockRequest(self.env):
+                    tx_context = CustomerPortal()._get_payment_values(
+                        renewal_so, is_down_payment=True, payment_amount=self.amount
+                    )
                 tx_route_values = {
                     'provider_id': self.provider.id,
                     'payment_method_id': self.payment_method_id,
@@ -412,10 +407,9 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
                 with mute_logger('odoo.addons.sale.models.payment_transaction'):
                     tx_sudo._post_process()
 
-                # Confirm renewal. Assert that no token was saved, renewal was sent and only one invoice was registered.
-                renewal_so.action_confirm()
+                # Assert that no token was saved, renewal was sent and only one invoice was registered.
                 self.assertFalse(renewal_so.payment_token_id, "No token should be saved")
-                self.assertEqual(renewal_so.state, 'sale')
+                self.assertEqual(renewal_so.state, 'sale')  # The prepayment amount was paid
                 self.assertEqual(renewal_so.invoice_count, 1, "Only one invoice from previous subscription should be registered")
                 self.assertEqual(renewal_so.next_invoice_date, datetime.date.today() + datetime.timedelta(days=31))
 
@@ -520,13 +514,10 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
                 'provider_ref': 'test'
             })
             # Create transaction and process payment while assigning token to subscription.
-            pay_route_values = self._prepare_pay_values(
-                amount=self.amount,
-                currency=subscription.currency_id,
-                partner=subscription.partner_id,
-            )
-            pay_route_values['sale_order_id'] = subscription.id
-            tx_context = self._get_portal_pay_context(**pay_route_values)
+            tx_context = self._get_payment_context(self._make_http_get_request(
+                f'/my/subscriptions/{subscription.id}',
+                params={'access_token': subscription.access_token},
+            ))
             tx_route_values = {
                 'provider_id': self.provider.id,
                 'payment_method_id': self.payment_method_id,

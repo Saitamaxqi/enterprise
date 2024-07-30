@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="subscription_so_portal_template" inherit_id="sale.sale_order_portal_template">
+        <a id="o_sale_portal_paynow" position="attributes">
+            <attribute name="t-elif" add="sale_order.subscription_state != '5_renewed'" separator="and"/>
+        </a>
         <div id="portal_sale_content" position="before">
             <div class="alert alert-info text-center" role="alert" t-if="sale_order.subscription_id and sale_order.subscription_state in ['2_renewal', '7_upsell']">
                 <a class="alert-info alert-link" t-att-href="sale_order.subscription_id.get_portal_url()"><i class="oi oi-arrow-right me-1"/>Back to your subscription</a>
@@ -322,7 +325,7 @@
         </t>
         <!-- ======  Subscription closed ====== -->
         <div id="content" position="inside">
-            <section t-if="display_payment_message" id="payment_message" class="mt-5">
+            <section t-if="display_payment_message and not payment_amount" id="payment_message" class="mt-5">
                 <div t-if="company_mismatch">
                     <t t-call="payment.company_mismatch_warning"/>
                 </div>
@@ -452,6 +455,9 @@
                         <a role="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#wc-modal-close-init" href="#"
                            t-if="display_close">
                             Close Subscription
+                        </a>
+                        <a t-if="payment_amount and sale_order.subscription_state != '5_renewed'" id="o_sale_portal_paynow" role="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalaccept" href="#">
+                            <i class="fa fa-check"/><t>Pay</t>
                         </a>
                         <!-- Download -->
                         <div class="o_download_pdf d-flex flex-lg-column flex-xl-row flex-wrap gap-2">

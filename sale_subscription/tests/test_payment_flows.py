@@ -286,7 +286,7 @@ class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon, Mo
         res = self.url_open(pay_url)
         self.assertEqual(res.status_code, 200, "Response should = OK")
         content = res.content.decode("utf-8")
-        self.assertTrue("There is nothing to pay." in content, "There is nothing to pay for payment link of renewed order")
+        self.assertFalse("o_sale_portal_paynow" in content, "There is nothing to pay for payment link of renewed order")
 
     def test_check_mandate_no_start_date(self):
         now = fields.Datetime.now()

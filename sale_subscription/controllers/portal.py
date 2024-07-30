@@ -144,13 +144,14 @@ class CustomerPortal(payment_portal.PaymentPortal):
     @http.route(['/my/subscriptions/<int:order_id>', '/my/subscriptions/<int:order_id>/<access_token>',
                  '/my/subscription/<int:order_id>', '/my/subscription/<int:order_id>/<access_token>'],
                 type='http', auth='public', website=True)
-    def subscription(self, order_id, access_token=None, message='', report_type=None, download=False, **kw):
+    def subscription(self, order_id, access_token=None, message='', report_type=None, download=False, payment_amount=None, **kw):
         order_sudo, redirection = self._get_subscription(access_token, order_id)
         if redirection:
             return redirection
         if report_type in ('html', 'pdf', 'text'):
             return self._show_report(model=order_sudo, report_type=report_type, report_ref='sale.action_report_saleorder', download=download)
 
+        payment_amount = self._cast_as_float(payment_amount)
         enable_token_management = request.env.user.partner_id in (order_sudo.partner_id.child_ids | order_sudo.partner_id)
         closable = order_sudo.user_closable and order_sudo.subscription_state in ['3_progress', '4_paused']
         display_close = closable and (not order_sudo.end_date or order_sudo.end_date > order_sudo.next_invoice_date)
@@ -217,13 +218,10 @@ class CustomerPortal(payment_portal.PaymentPortal):
         }
 
         payment_context = {
-            # Used only for fetching the PMs with Stripe Elements; the final amount is determined by
-            # the generated invoice.
-            'amount': order_sudo.amount_total,
             'partner_id': order_sudo.partner_id.id,
         }
         rendering_context = {
-            **SalePortal._get_payment_values(self, order_sudo, is_subscription=True, subscription_anticipate=True),
+            **SalePortal._get_payment_values(self, order_sudo, is_subscription=True, subscription_anticipate=True, payment_amount=payment_amount),
             **portal_page_values,
             **payment_form_values,
             **payment_context,
