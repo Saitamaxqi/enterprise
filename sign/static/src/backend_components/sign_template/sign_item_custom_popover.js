@@ -5,8 +5,8 @@ import {
     Many2ManyTagsField,
 } from "@web/views/fields/many2many_tags/many2many_tags_field";
 import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
-
-import { Component, useState } from "@odoo/owl";
+import { useService } from "@web/core/utils/hooks";
+import { Component, useState, useExternalListener } from "@odoo/owl";
 
 const actionFieldsGet = {
     option_ids: { type: "many2many", relation: "sign.item.option", string: "Selected Options" },
@@ -57,6 +57,7 @@ export class SignItemCustomPopover extends Component {
         debug: { type: String },
         roles: { type: Object },
         close: { type: Function },
+        onCopyItem: { type: Function },
         num_options: {type: Number, optional: true},
         radio_set_id: {type: Number, optional: true},
     };
@@ -76,8 +77,19 @@ export class SignItemCustomPopover extends Component {
             num_options: this.props.num_options,
             radio_set_id: this.props.radio_set_id,
         });
+        this.notification = useService("notification");
         this.signItemFieldsGet = getActionActiveFields();
         this.typesWithAlignment = new Set(["text", "textarea"]);
+        useExternalListener(window, "keydown", this.onGlobalKeyDown, { capture: true });
+    }
+
+    onGlobalKeyDown(event) {
+        if(event.key == 'c' && (event.ctrlKey || event.metaKey)) {
+            this.notification.add(("Sign Item Copied"), {type: "success"});
+            this.props.onCopyItem(this.props.id);
+        } else if (event.key == 'Delete') {
+            this.props.onDelete();
+        }
     }
 
     handleNumOptionsChange(value) {

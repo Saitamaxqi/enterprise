@@ -354,6 +354,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                     },
                     updateSelectionOptions: (ids) => this.updateSelectionOptions(ids),
                     updateRoles: (id) => this.updateRoles(id),
+                    onCopyItem: (id) => this.onCopyItem(id),
                 },
                 {
                     position: "right",
@@ -368,6 +369,18 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
                 close: closeFn,
                 signItem,
             };
+        }
+    }
+
+    onCopyItem(id) {
+        const data = this.getSignItemById(id).data;
+        const { type, radio_set_id } = data;
+        if (type == 'radio') {
+            this.copiedItems = this.radioSets[radio_set_id]
+                .radio_item_ids
+                .map((radio_item_id) => Object.assign({}, this.getSignItemById(radio_item_id).data));
+        } else {
+            this.copiedItems = [Object.assign({}, this.getSignItemById(id).data)]
         }
     }
 

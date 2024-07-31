@@ -21,6 +21,15 @@ import { isMobileOS } from "@web/core/browser/feature_detection";
 export const EditablePDFIframeMixin = (pdfClass) =>
     class extends pdfClass {
         /**
+         * @override
+         */
+        start() {
+            super.start();
+            this.root.addEventListener("mousemove", (e) => this.onMouseMove(e));
+            this.root.addEventListener("keydown", (e) => this.handleKeyDown(e));
+        }
+
+        /**
          * Callback executed when a sign item is resized
          * @param {SignItem} signItem
          * @param {Object} change object with new width and height of sign item
@@ -95,6 +104,100 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                 }
             }
             return signItem;
+        }
+
+        onMouseMove(e) {
+            e.preventDefault();
+            this.mousePosition = {
+                x: e.clientX,
+                y: e.clientY,
+            }
+        }
+
+        /**
+         * Given the (x, y) position with respect to the root document
+         * @param {Number} x 
+         * @param {Number} y 
+         * @returns the document page which contain the (x, y) position 
+         * and the ratio of the (x, y) position inside the page.
+         */
+        getPositionData(x, y) {
+            for (let page = 1; page <= this.pageCount; page++) {
+                const rect = this.getPageContainer(page).getBoundingClientRect();
+                if (rect.left <= x && x <= rect.right
+                    && rect.top <= y &&  y <= rect.bottom) {
+                        const width = rect.right - rect.left;
+                        const height = rect.bottom - rect.top;
+                        const x1 = x - rect.left;
+                        const y1 = y - rect.top;
+                        const posX = x1 / width;
+                        const posY = y1 / height;
+                        return {
+                            page: page,
+                            posX: posX,
+                            posY: posY,
+                        }
+                    }
+            }
+            return {page: -1};
+        }
+
+        onPasteItems() {
+            // Sorts copiedItems based on page, then position within the page (y-axis), then position on the x-axis
+            this.copiedItems.sort((a, b) => {
+                return (
+                    100 * (a.page - b.page) + // Sort primarily by page number
+                    10 * (a.posY - b.posY) +  // Secondary sort by y-axis position
+                    (a.posX - b.posX)         // Tertiary sort by x-axis position
+                );
+            });
+            const head = this.copiedItems[0];
+            const headPage = this.getPageContainer(head.page);
+            const headPageRect = headPage.getBoundingClientRect();
+            const headX = headPageRect.left + (headPageRect.right - headPageRect.left) * head.posX;
+            const headY = headPageRect.top + (headPageRect.bottom - headPageRect.top) * head.posY;
+            this.copiedItems.forEach((data) => {
+                const page = this.getPageContainer(data.page);
+                const rect = page.getBoundingClientRect();
+                const x = rect.left + (rect.right - rect.left) * data.posX;
+                const y = rect.top + (rect.bottom - rect.top) * data.posY;
+                Object.assign(data, {
+                    dx: x - headX,
+                    dy: y - headY,
+                })
+            });
+            this.copiedItems.forEach((data) => {
+                const X = this.mousePosition.x + data['dx'];
+                const Y = this.mousePosition.y + data['dy'];
+                const {page, posX, posY} = this.getPositionData(X, Y);
+                if (page == -1) {
+                    return;
+                }
+                const newItemData = { ...data };
+                const id = generateRandomId();
+                Object.assign(newItemData, {
+                    page: page,
+                    posX: posX,
+                    posY: posY,
+                    id: id,
+                    updated: true,
+                    radio_set_id: undefined,
+                });
+                this.signItems[page][id] = {
+                    data: newItemData,
+                    el: this.renderSignItem(newItemData, this.getPageContainer(page)),
+                };
+            });
+            this.saveChanges();
+            this.refreshSignItems();
+            this.mousePosition.x += 10;
+            this.mousePosition.y += 10;
+        }
+
+        handleKeyDown(event) {
+            if ((event.ctrlKey || event.metaKey) && event.key == 'v' && this.copiedItems) {
+                this.onPasteItems();
+            }
         }
 
         renderSignItems() {
