@@ -28,7 +28,6 @@
                 <field name="name" optional="hide" />
                 <field name="state" decoration-success="state == 'published'" widget="badge" optional="hide" groups="planning.group_planning_manager" readonly="1"/>
                 <field name="recurrency_id" column_invisible="True"/>
-                <field name="is_assigned_to_me" column_invisible="1"/>
                 <field name="is_users_role" column_invisible="1"/>
                 <field name="allow_self_unassign" column_invisible="1"/>
                 <field name="is_past" column_invisible="1"/>
@@ -41,7 +40,7 @@
                     title="I Am Unavailable"
                     string="I Am Unavailable"
                     class="btn btn-link float-end"
-                    invisible="not context.get('my_planning_action') or not is_assigned_to_me or not allow_self_unassign or is_past or is_unassign_deadline_passed or resource_type == 'material'"
+                    invisible="not context.get('my_planning_action') or user_id != uid or not allow_self_unassign or is_past or is_unassign_deadline_passed or resource_type == 'material'"
                     groups="!planning.group_planning_manager"
                 />
                 <button name="action_self_assign"
@@ -63,7 +62,7 @@
                     type="object"
                     string="Ask To Switch"
                     groups="!planning.group_planning_manager"
-                    invisible="not context.get('my_planning_action') or not is_assigned_to_me or is_past or request_to_switch or allow_self_unassign"
+                    invisible="not context.get('my_planning_action') or user_id != uid or is_past or request_to_switch or allow_self_unassign"
                 />
             </list>
         </field>
@@ -82,12 +81,12 @@
                     <button name="action_self_assign" class="btn btn-secondary" type="object" string="I Take It" groups="!planning.group_planning_manager"
                         close="1" invisible="context.get('my_planning_action') or (is_users_role or is_past or not start_datetime or not end_datetime or resource_id and not request_to_switch or user_id == uid and (allow_self_unassign or request_to_switch))"/>
                     <button name="action_switch_shift" class="btn btn-secondary" type="object" string="Ask To Switch" groups="!planning.group_planning_manager"
-                        invisible="not is_assigned_to_me or is_past or request_to_switch or allow_self_unassign"/>
+                        invisible="user_id != uid or is_past or request_to_switch or allow_self_unassign"/>
                     <button name="action_cancel_switch" class="btn btn-secondary" type="object" string="Cancel Switch" groups="!planning.group_planning_manager"
                         invisible="not start_datetime or not end_datetime or not request_to_switch or allow_self_unassign or user_id != uid and request_to_switch" close="1"/>
 
                     <button name="action_self_unassign" class="btn btn-secondary" type="object" string="I Am Unavailable"
-                        invisible="not context.get('my_planning_action') or (not is_assigned_to_me or not allow_self_unassign or is_past or is_unassign_deadline_passed or resource_type == 'material')"/>
+                        invisible="not context.get('my_planning_action') or (user_id != uid or not allow_self_unassign or is_past or is_unassign_deadline_passed or resource_type == 'material')"/>
                     <button string="Send" type="object" name="action_send" class="btn btn-secondary" close="1"
                         groups="planning.group_planning_manager" data-hotkey="v" invisible="context.get('my_planning_action') or (state == 'draft' or resource_type == 'material')"/>
                     <button string="Reset to Draft" type="object" name="action_unpublish"
@@ -129,7 +128,6 @@
                     <div class="oe_button_box" name="button_box">
                         <!-- Used by other modules-->
                     </div>
-                    <field name="is_assigned_to_me" invisible="1"/>
                     <field name="allow_self_unassign" invisible="1"/>
                     <field name="template_id"
                         domain="[['id', 'in', template_autocomplete_ids]]"
@@ -288,12 +286,12 @@
                     <button name="action_self_assign" class="btn btn-secondary float-end" type="object" string="I Take It" groups="!planning.group_planning_manager"
                         invisible="is_users_role or is_past or not start_datetime or not end_datetime or resource_id and not request_to_switch or user_id == uid and (allow_self_unassign or request_to_switch)" close="1"/>
                     <button name="action_switch_shift" class="btn btn-secondary float-end" type="object" string="Ask To Switch" close="1" groups="!planning.group_planning_manager"
-                        invisible="not is_assigned_to_me or is_past or request_to_switch or allow_self_unassign"/>
+                        invisible="user_id != uid or is_past or request_to_switch or allow_self_unassign"/>
                     <button name="action_cancel_switch" class="btn btn-secondary" type="object" string="Cancel Switch" groups="!planning.group_planning_manager"
                         invisible="not start_datetime or not end_datetime or not request_to_switch or allow_self_unassign or user_id != uid and request_to_switch" close="1"/>
 
                     <button name="action_self_unassign" class="btn btn-secondary float-end" type="object" string="I Am Unavailable" data-hotkey="w" close="1"
-                        invisible="not is_assigned_to_me or not allow_self_unassign or is_past or is_unassign_deadline_passed or not context.get('my_planning_action')"/>
+                        invisible="user_id != uid or not allow_self_unassign or is_past or is_unassign_deadline_passed or not context.get('my_planning_action')"/>
                     <button name="action_save_template" class="btn btn-secondary" type="object" icon="fa-cloud-upload" string="Save Template" invisible="not allow_template_creation" groups="planning.group_planning_manager"/>
                     <button string="Discard" special="cancel" data-hotkey="x" class="btn-secondary float-end" close="1" fullscreen="True" groups="planning.group_planning_manager"/>
                     <button name="unlink" type="object" icon="fa-trash" title="Remove" class="btn-secondary float-end d-none d-md-inline" close="1" invisible="not id" groups="planning.group_planning_manager" data-hotkey="d"/>

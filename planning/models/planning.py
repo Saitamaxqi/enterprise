@@ -76,7 +76,6 @@ class Planning(models.Model):
     )
     unassign_deadline = fields.Datetime('Deadline for unassignment', compute="_compute_unassign_deadline", export_string_translation=False)
     is_unassign_deadline_passed = fields.Boolean(compute="_compute_is_unassign_deadline_passed", export_string_translation=False)
-    is_assigned_to_me = fields.Boolean(compute='_compute_is_assigned_to_me', export_string_translation=False)
     conflicting_slot_ids = fields.Many2many('planning.slot', compute='_compute_overlap_slot_count', export_string_translation=False)
     overlap_slot_count = fields.Integer(compute='_compute_overlap_slot_count', search='_search_overlap_slot_count', export_string_translation=False)
     is_past = fields.Boolean('Is This Shift In The Past?', compute='_compute_past_shift', export_string_translation=False)
@@ -206,11 +205,6 @@ class Planning(models.Model):
     def _compute_is_hatched(self):
         for slot in self:
             slot.is_hatched = slot.state == 'draft'
-
-    @api.depends('user_id')
-    def _compute_is_assigned_to_me(self):
-        for slot in self:
-            slot.is_assigned_to_me = slot.user_id == self.env.user
 
     @api.depends('role_id')
     def _compute_is_users_role(self):
