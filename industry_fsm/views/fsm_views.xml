@@ -1638,6 +1638,18 @@
         <field name="context">{'module' : 'industry_fsm', 'bin_size': False}</field>
     </record>
 
+    <record id="view_project_fsm" model="ir.ui.view">
+        <field name="name">project.view.tree.fsm</field>
+        <field name="model">project.project</field>
+        <field name="inherit_id" ref="project.view_project"/>
+        <field name="arch" type="xml">
+            <field name="name" position="replace">
+                <field name="display_name" string="Name" class="fw-bold" column_invisible="context.get('allowed_company_ids', []).length &lt; 2"/>
+                <field name="name" class="fw-bold" column_invisible="context.get('allowed_company_ids', []).length &gt;= 2"/>
+            </field>
+        </field>
+    </record>
+
     <record id="project_view_tree_primary" model="ir.ui.view">
         <field name="name">project.view.list.primary</field>
         <field name="model">project.project</field>
