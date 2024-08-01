@@ -182,3 +182,11 @@ class CurrencyTestCase(TransactionCase):
         self.assertEqual(len(myr.rate_ids), myr_rates_count + 1)
         self.assertEqual(myr.rate_ids[-1].rate, 1.0)
         self.assertEqual(len(usd.rate_ids), usd_rates_count + 1)
+
+    def test_live_currency_update_bot(self):
+        self.test_company.currency_provider = 'bot'
+        self.env.ref('base.THB').write({'active': True})
+        rates_count = len(self.currency_usd.rate_ids)
+        res = self.test_company.update_currency_rates()
+        self.assertTrue(res)
+        self.assertEqual(len(self.currency_usd.rate_ids), rates_count + 1)

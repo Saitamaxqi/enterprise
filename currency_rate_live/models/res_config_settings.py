@@ -161,6 +161,7 @@ CURRENCY_PROVIDER_SELECTION = [
     (['MY'], 'bnm', '[MY] Bank Negara Malaysia'),
     (['ID'], 'bi', '[ID] Bank Indonesia'),
     (['UY'], 'bcu', '[UY] Uruguayan Central Bank'),
+    (['TH'], 'bot', '[TH] Bank of Thailand'),
 ]
 
 
@@ -584,8 +585,9 @@ class ResCompany(models.Model):
                 'method': 'call',
                 'params': {'provider': 'banxico'},
             }
+            # Send request to Odoo proxy
             response = requests.get(
-                f'{PROXY_URL}/api/currency_rate/1/get_currency_rates',  # Send request to Odoo proxy
+                f'{PROXY_URL}/api/currency_rate/1/get_currency_rates',
                 json=payload,
                 headers={'content-type': 'application/json'},
                 timeout=30,
@@ -1065,6 +1067,45 @@ class ResCompany(models.Model):
 
         if result and 'BGN' in available_currency_names:
             result['BGN'] = (1.0, curr_date)
+        return result
+
+    def _parse_bot_data(self, available_currencies):
+        """ Bank of Thailand provider.
+            Rates are given against Thai Baht.
+        """
+        try:
+            payload = {
+                'jsonrpc': '2.0',
+                'method': 'call',
+                'params': {
+                    'provider': 'Bank of Thailand',
+                },
+            }
+            response = requests.post(
+                f'{PROXY_URL}/api/currency_rate/1/get_currency_rates',
+                json=payload,
+                timeout=30,
+            ).json()
+
+            if response.get('error'):
+                return False
+            series = response['result']
+        except requests.RequestException as e:
+            _logger.error(e)
+            return False
+
+        available_currency_names = available_currencies.mapped('name')
+        result = {}
+
+        for currency, data_detail in series.items():
+            period = data_detail['period']
+            rate = float(data_detail['rate'])
+            if currency in available_currency_names and rate:
+                result[currency] = (1.0 / rate, period)
+
+        if result and 'THB' in available_currency_names and period:
+            result['THB'] = (1.0, period)
+
         return result
 
     @api.model
