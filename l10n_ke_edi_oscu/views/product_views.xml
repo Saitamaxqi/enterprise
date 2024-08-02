@@ -51,6 +51,7 @@
                 <list editable="top" multi_edit="1" default_order="is_favorite desc, default_code, name, id">
                     <field name="display_name"/>
                     <field name="standard_price"/>
+                    <field name="taxes_id" widget="many2many_tags"/>
                     <field name="l10n_ke_packaging_unit_id" readonly="l10n_ke_item_code"/>
                     <field name="l10n_ke_packaging_quantity"/>
                     <field name="l10n_ke_origin_country_id" readonly="l10n_ke_item_code"/>

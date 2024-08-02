@@ -117,4 +117,9 @@ class StockPicking(models.Model):
                     'message': _("The invoice/customs import must be confirmed first before sending this picking."),
                     'blocking': True,
                 }
+            if pick.l10n_ke_state == 'waiting_pos_order':
+                pick_msg['waiting_pos_order'] = {
+                    'message': _("The pos order must be confirmed first before sending this picking."),
+                    'blocking': True,
+                }
             pick.l10n_ke_validation_msg = pick_msg

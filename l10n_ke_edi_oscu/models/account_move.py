@@ -141,16 +141,30 @@ class AccountMove(models.Model):
 
     # === Sending to eTIMS: common helpers === #
 
-    def _l10n_ke_oscu_json_from_move(self):
-        """ Get the json content of the TrnsSalesSaveWr/TrnsPurchaseSave request from a move. """
-        self.ensure_one()
+    def _update_receipt_content(self, content, confirmation_datetime, invoice_date, partner):
+        receipt_part = {
+            'custTin': (partner.vat or '')[:11],  # Partner VAT
+            'rcptPbctDt': confirmation_datetime,  # Receipt published date
+            'prchrAcptcYn': 'N',  # Purchase accepted Yes/No
+        }
+        if partner.mobile:
+            receipt_part.update({
+                'custMblNo': (partner.mobile or '')[:20]  # Mobile number, not required
+            })
+        if partner.contact_address_inline:
+            receipt_part.update({
+                'adrs': (partner.contact_address_inline or '')[:200],  # Address, not required
+            })
+        content.update({
+            'custTin': (partner.vat or '')[:11],  # Partner VAT
+            'custNm': (partner.name or '')[:60],  # Partner name
+            'salesSttsCd': '02',  # Transaction status code (same as pchsSttsCd)
+            'salesDt': invoice_date,  # Sales date
+            'prchrAcptcYn': 'Y',
+            'receipt': receipt_part,
+        })
 
-        confirmation_datetime = format_etims_datetime(self.l10n_ke_oscu_confirmation_datetime)
-        invoice_date = (self.invoice_date and self.invoice_date.strftime('%Y%m%d')) or ''
-        original_invoice_number = (self.reversed_entry_id and self.reversed_entry_id.l10n_ke_oscu_invoice_number) or 0
-        tax_details = self._prepare_invoice_aggregated_taxes()
-        line_items = self._l10n_ke_oscu_get_json_from_lines(tax_details)
-
+    def _get_taxes_data(self, line_items):
         tax_codes = {item['code']: item['tax_rate'] for item in self.env['l10n_ke_edi_oscu.code'].search([('code_type', '=', '04')])}
         tax_rates = {f'taxRt{letter}': tax_codes.get(letter, 0) for letter in TAX_CODE_LETTERS}
 
@@ -164,6 +178,19 @@ class AccountMove(models.Model):
                 item['taxAmt'] for item in line_items if item['taxTyCd'] == letter
             ), 2) for letter in TAX_CODE_LETTERS
         }
+
+        return tax_codes, tax_rates, taxable_amounts, tax_amounts
+
+    def _l10n_ke_oscu_json_from_move(self):
+        """ Get the json content of the TrnsSalesSaveWr/TrnsPurchaseSave request from a move. """
+        self.ensure_one()
+
+        confirmation_datetime = format_etims_datetime(self.l10n_ke_oscu_confirmation_datetime)
+        invoice_date = (self.invoice_date and self.invoice_date.strftime('%Y%m%d')) or ''
+        original_invoice_number = (self.reversed_entry_id and self.reversed_entry_id.l10n_ke_oscu_invoice_number) or 0
+        tax_details = self._prepare_invoice_aggregated_taxes()
+        line_items = self._l10n_ke_oscu_get_json_from_lines(tax_details)
+        tax_codes, tax_rates, taxable_amounts, tax_amounts = self._get_taxes_data(line_items)
 
         content = {
             'invcNo':           '',                                        # KRA Invoice Number (set at the point of sending)
@@ -199,27 +226,8 @@ class AccountMove(models.Model):
                 # "spplrInvcNo": None,
             })
         else:
-            receipt_part = {
-                'custTin':      (self.partner_id.vat or '')[:11],          # Partner VAT
-                'rcptPbctDt':   confirmation_datetime,                     # Receipt published date
-                'prchrAcptcYn': 'N',                                       # Purchase accepted Yes/No
-            }
-            if self.partner_id.mobile:
-                receipt_part.update({
-                    'custMblNo': (self.partner_id.mobile or '')[:20]       # Mobile number, not required
-                })
-            if self.partner_id.contact_address_inline:
-                receipt_part.update({
-                    'adrs': (self.partner_id.contact_address_inline or '')[:200],  # Address, not required
-                })
-            content.update({
-                'custTin':      (self.partner_id.vat or '')[:11],          # Partner VAT
-                'custNm':       (self.partner_id.name or '')[:60],         # Partner name
-                'salesSttsCd':  '02',                                      # Transaction status code (same as pchsSttsCd)
-                'salesDt':      invoice_date,                              # Sales date
-                'prchrAcptcYn': 'Y',
-                'receipt':      receipt_part,
-            })
+            self._update_receipt_content(content, confirmation_datetime, invoice_date, self.partner_id)
+
         if self.move_type in ('out_refund', 'in_refund'):
             content.update({'rfdRsnCd': self.l10n_ke_reason_code_id.code})
         return content

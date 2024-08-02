@@ -203,6 +203,7 @@ class ProductProduct(models.Model):
                         or not p.l10n_ke_product_type_code
                     )
                 )
+                or not p.taxes_id
             )
         )
 
@@ -210,12 +211,12 @@ class ProductProduct(models.Model):
             if for_invoice:
                 message = _(
                     "When sending to eTIMS, the products used must have a defined Packaging Unit, "
-                    "Packaging Quantity and UNSPSC Code."
+                    "Packaging Quantity, Sales Taxes and UNSPSC Code."
                 )
             else:
                 message = _(
                     "When sending to eTIMS, the products used must have a defined Cost, Product Type, "
-                    "Origin Country, Packaging Unit, Packaging Quantity and UNSPSC Code."
+                    "Origin Country, Packaging Unit, Packaging Quantity, Sales Taxes and UNSPSC Code."
                 )
 
             messages['product_fields_missing'] = {
