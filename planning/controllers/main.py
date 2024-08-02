@@ -115,6 +115,7 @@ class ShiftController(http.Controller):
                 ],
             ])
         planning_slots = request.env['planning.slot'].sudo().search(domain, order='start_datetime asc')
+        planning_slots.filtered(lambda s: s.is_past and s.request_to_switch).request_to_switch = False
 
         datetime_start = pytz.utc.localize(planning_sudo.start_datetime)
         datetime_end = pytz.utc.localize(planning_sudo.end_datetime)

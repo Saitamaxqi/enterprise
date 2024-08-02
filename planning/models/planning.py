@@ -172,16 +172,13 @@ class PlanningSlot(models.Model):
         for slot in self:
             slot.company_id = slot.resource_id.company_id or slot.company_id or slot.env.company
 
-    @api.depends('start_datetime')
+    @api.depends('end_datetime')
     def _compute_past_shift(self):
         now = fields.Datetime.now()
         for slot in self:
             if slot.end_datetime:
                 if slot.end_datetime < now:
                     slot.is_past = True
-                    # We have to do this (below), for the field to be set automatically to False when the shift is in the past
-                    if slot.request_to_switch:
-                        slot.sudo().request_to_switch = False
                 else:
                     slot.is_past = False
             else:
@@ -970,6 +967,10 @@ class PlanningSlot(models.Model):
             raise AccessError(_("You don't have the right to assign yourself to shifts."))
         if self.resource_id and not self.request_to_switch:
             raise UserError(_("You can not assign yourself to an already assigned shift."))
+        if self.is_past:
+            if self.request_to_switch:
+                self.sudo().write({'request_to_switch': False})
+            raise UserError(_("You cannot assign yourself to a shift in the past."))
         return self.sudo().write({'resource_id': self.env.user.employee_id.resource_id.id if self.env.user.employee_id else False})
 
     def action_self_unassign(self):
@@ -983,6 +984,8 @@ class PlanningSlot(models.Model):
             raise UserError(_("The deadline for unassignment has passed."))
         if self.employee_id != self.env.user.employee_id:
             raise UserError(_("You can not unassign another employee than yourself."))
+        if self.is_past:
+            raise UserError(_("You cannot unassign yourself from a shift in the past."))
         return self.sudo().write({'resource_id': False})
 
     def action_switch_shift(self):

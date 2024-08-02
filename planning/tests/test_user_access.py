@@ -252,6 +252,7 @@ class TestUserAccess(HttpCase):
         unpublished_count = self.env['planning.slot'].with_user(self.planning_user).search_count([('state', '=', 'draft')])
         self.assertEqual(unpublished_count, 0, "A planning user shouldn't see unpublished slots")
 
+    @freeze_time("2019-5-28 08:00:00")
     def test_planning_user_can_take_unassigned_slots(self):
         """ Planning user can take unassigned slots. """
         test_slot = self.env['planning.slot'].create({
@@ -457,3 +458,38 @@ class TestUserAccess(HttpCase):
         with Form(planning_slots[0].with_user(self.planning_mgr)) as slot:
             self.assertEqual(slot.record.overlap_slot_count, 1)
             self.assertEqual(slot.record.conflicting_slot_ids, planning_slots[1])
+
+    def test_user_cannot_self_assign_shift_in_past(self):
+        assigned_shift, open_shift = self.env['planning.slot'].create([
+            {
+                'resource_id': self.res_internal_user.id,
+                'request_to_switch': True,
+                'start_datetime': datetime(2019, 6, 6, 8, 0, 0),
+                'end_datetime': datetime(2019, 6, 6, 12, 0, 0),
+                'state': 'published',
+            },
+            {
+                'resource_id': False,
+                'start_datetime': datetime(2019, 6, 6, 8, 0, 0),
+                'end_datetime': datetime(2019, 6, 6, 12, 0, 0),
+                'state': 'published',
+            },
+        ])
+        with self.assertRaises(UserError, msg="The user cannot assign himself to a shift in the past"):
+            assigned_shift.with_user(self.planning_user).action_self_assign()
+        with self.assertRaises(UserError, msg="The user cannot assign himself to a shift in the past"):
+            open_shift.with_user(self.planning_user).action_self_assign()
+
+    def test_user_cannot_self_unassign_shift_in_past(self):
+        self.env['res.config.settings'].create({
+            'planning_employee_unavailabilities': 'unassign',
+        }).execute()
+        assigned_shift = self.env['planning.slot'].create({
+            'resource_id': self.planning_user.employee_id.resource_id.id,
+            'request_to_switch': True,
+            'start_datetime': datetime(2019, 6, 6, 8, 0, 0),
+            'end_datetime': datetime(2019, 6, 6, 12, 0, 0),
+            'state': 'published',
+        })
+        with self.assertRaises(UserError, msg="The user cannot unassign himself from a shift in the past"):
+            assigned_shift.with_user(self.planning_user).action_self_unassign()

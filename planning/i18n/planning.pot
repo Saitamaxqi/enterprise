@@ -2607,6 +2607,12 @@ msgstr ""
 #. module: planning
 #. odoo-python
 #: code:addons/planning/models/planning.py:0
+msgid "You cannot assign yourself to a shift in the past."
+msgstr ""
+
+#. module: planning
+#. odoo-python
+#: code:addons/planning/models/planning.py:0
 msgid "You cannot cancel a request to switch made by another user."
 msgstr ""
 
@@ -2640,6 +2646,12 @@ msgstr ""
 msgid ""
 "You don't have any shifts planned yet. You can assign yourself some of the "
 "available open shifts."
+msgstr ""
+
+#. module: planning
+#. odoo-python
+#: code:addons/planning/models/planning.py:0
+msgid "You cannot unassign yourself from a shift in the past."
 msgstr ""
 
 #. module: planning
