@@ -125,5 +125,13 @@
                 </t>
             </t>
         </template>
+
+        <template id="worksheet_custom_preview">
+            <t t-call="web.html_preview_container">
+                <t t-call="web.external_layout">
+                    <t t-call="industry_fsm.worksheet_custom_page"/>
+                </t>
+            </t>
+        </template>
     </data>
 </odoo>
