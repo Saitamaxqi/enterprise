@@ -57,24 +57,24 @@ class WhatsappComposer(models.TransientModel):
     wa_template_id = fields.Many2one(comodel_name="whatsapp.template", string="Template")
     preview_whatsapp = fields.Html(compute="_compute_preview_whatsapp", string="Message Preview")
 
-    #free texts
+    # free texts
     number_of_free_text = fields.Integer(string="Number of free text", compute='_compute_number_of_free_text')
     number_of_free_text_button = fields.Integer(string="Number of free text Buttons", compute='_compute_number_of_free_text_button')
     is_header_free_text = fields.Boolean(compute='_compute_is_header_free_text')
     is_button_dynamic = fields.Boolean(compute='_compute_is_button_dynamic')
-    header_text_1 = fields.Char(string="Header Free Text", compute='_compute_free_text', store=True)
-    free_text_1 = fields.Char(string="Free Text 1", compute='_compute_free_text', store=True)
-    free_text_2 = fields.Char(string="Free Text 2", compute='_compute_free_text', store=True)
-    free_text_3 = fields.Char(string="Free Text 3", compute='_compute_free_text', store=True)
-    free_text_4 = fields.Char(string="Free Text 4", compute='_compute_free_text', store=True)
-    free_text_5 = fields.Char(string="Free Text 5", compute='_compute_free_text', store=True)
-    free_text_6 = fields.Char(string="Free Text 6", compute='_compute_free_text', store=True)
-    free_text_7 = fields.Char(string="Free Text 7", compute='_compute_free_text', store=True)
-    free_text_8 = fields.Char(string="Free Text 8", compute='_compute_free_text', store=True)
-    free_text_9 = fields.Char(string="Free Text 9", compute='_compute_free_text', store=True)
-    free_text_10 = fields.Char(string="Free Text 10", compute='_compute_free_text', store=True)
-    button_dynamic_url_1 = fields.Char(string="Button Url 1", compute='_compute_button_dynamic_url', store=True)
-    button_dynamic_url_2 = fields.Char(string="Button Url 2", compute='_compute_button_dynamic_url', store=True)
+    header_text_1 = fields.Char(string="Header Free Text", compute='_compute_free_text', readonly=False, store=True)
+    free_text_1 = fields.Char(string="Free Text 1", compute='_compute_free_text', readonly=False, store=True)
+    free_text_2 = fields.Char(string="Free Text 2", compute='_compute_free_text', readonly=False, store=True)
+    free_text_3 = fields.Char(string="Free Text 3", compute='_compute_free_text', readonly=False, store=True)
+    free_text_4 = fields.Char(string="Free Text 4", compute='_compute_free_text', readonly=False, store=True)
+    free_text_5 = fields.Char(string="Free Text 5", compute='_compute_free_text', readonly=False, store=True)
+    free_text_6 = fields.Char(string="Free Text 6", compute='_compute_free_text', readonly=False, store=True)
+    free_text_7 = fields.Char(string="Free Text 7", compute='_compute_free_text', readonly=False, store=True)
+    free_text_8 = fields.Char(string="Free Text 8", compute='_compute_free_text', readonly=False, store=True)
+    free_text_9 = fields.Char(string="Free Text 9", compute='_compute_free_text', readonly=False, store=True)
+    free_text_10 = fields.Char(string="Free Text 10", compute='_compute_free_text', readonly=False, store=True)
+    button_dynamic_url_1 = fields.Char(string="Button Url 1", compute='_compute_button_dynamic_url', readonly=False, store=True)
+    button_dynamic_url_2 = fields.Char(string="Button Url 2", compute='_compute_button_dynamic_url', readonly=False, store=True)
 
     # ------------------------------------------------------------
     # COMPUTES
@@ -187,27 +187,22 @@ class WhatsappComposer(models.TransientModel):
         for rec in self:
             freetext_btn_vars = rec.wa_template_id.variable_ids.filtered(lambda line: line.line_type == 'button' and line.field_type == 'free_text')
             freetext_btn_vars = freetext_btn_vars.sorted(key=lambda var: var.button_id.sequence)
-            if not rec._origin.button_dynamic_url_1:
-                rec.button_dynamic_url_1 = freetext_btn_vars[0].demo_value if len(freetext_btn_vars) > 0 else ''
-            if not rec._origin.button_dynamic_url_2:
-                rec.button_dynamic_url_2 = freetext_btn_vars[1].demo_value if len(freetext_btn_vars) > 1 else ''
+            if len(freetext_btn_vars) > 0:
+                rec.button_dynamic_url_1 = freetext_btn_vars[0].demo_value
+            if len(freetext_btn_vars) > 1:
+                rec.button_dynamic_url_2 = freetext_btn_vars[1].demo_value
 
     @api.depends('wa_template_id')
     def _compute_free_text(self):
         for rec in self:
             if rec.wa_template_id.header_type == 'text':
-                header_params = rec.wa_template_id.variable_ids.filtered(lambda line: line.line_type == 'header')
-                if rec.wa_template_id.variable_ids and header_params:
-                    header_param = header_params[0]
-                    if header_param.field_type == 'free_text' and not rec.header_text_1:
-                        rec.header_text_1 = header_param.demo_value
+                header_param = rec.wa_template_id.variable_ids.filtered(lambda line: line.line_type == 'header' and line.field_type == 'free_text')
+                if rec.wa_template_id.variable_ids and header_param:
+                    rec.header_text_1 = header_param[0].demo_value
             if rec.wa_template_id.variable_ids:
                 free_text_count = 1
                 for param in rec.wa_template_id.variable_ids.filtered(lambda line: line.line_type == 'body' and line.field_type == 'free_text'):
-                    # This is just a hack to work on stable version as we can't force view update on stable.
-                    # As we need to change view, it will be done properly on master.
-                    if not rec._origin[f"free_text_{free_text_count}"]:
-                        rec[f"free_text_{free_text_count}"] = param.demo_value
+                    rec[f"free_text_{free_text_count}"] = param.demo_value
                     free_text_count += 1
 
     def _extract_digits(self, string):
