@@ -11,7 +11,7 @@
         </xpath>
         <t t-call="web.ActionHelper" position="replace">
             <t t-if="showNoContentHelper">
-                <SignActionHelper noContentHelp="props.noContentHelp" resModel="props.list.resModel"/>
+                <SignActionHelper resModel="props.list.resModel"/>
             </t>
         </t>
     </t>

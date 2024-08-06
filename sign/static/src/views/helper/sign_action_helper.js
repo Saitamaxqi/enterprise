@@ -5,7 +5,7 @@ import { useRef, Component } from "@odoo/owl";
 export class SignActionHelper extends Component {
     static template = "sign.SignActionHelper";
     static props = [
-        "noContentHelp", "resModel"
+        "resModel"
     ];
 
     setup() {
