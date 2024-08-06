@@ -73,7 +73,7 @@ class PaymentTransaction(models.Model):
             return
         self._cancel_draft_invoices()
         self._invoice_sale_orders()
-        self.invoice_ids._post()
+        self.invoice_ids.with_company(self.company_id)._post()
         if not self.subscription_action:
             self.invoice_ids.transaction_ids._send_invoice()
 

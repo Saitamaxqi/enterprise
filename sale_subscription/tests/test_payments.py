@@ -886,3 +886,34 @@ class TestSubscriptionPayments(PaymentCommon, TestSubscriptionCommon, MockEmail)
         )
         invoice._post()
         self.assertFalse(self.subscription.pending_transaction, "The pending transaction flag should not remain")
+
+    def test_manual_invoice_from_other_company_website(self):
+        company = self.env['res.company'].create({'name': "Website Company"})
+        public_user = self.env.ref('base.public_user')
+        public_user.sudo().write({
+            'company_id': company.id,
+            'company_ids': [Command.set([company.id])]})
+
+        with freeze_time('2024-01-01'):
+            subscription = self.subscription
+            subscription.action_confirm()
+            test_payment_token = self.env['payment.token'].create({
+                'payment_details': 'Test',
+                'partner_id': subscription.partner_id.id,
+                'provider_id': self.dummy_provider.id,
+                'payment_method_id': self.payment_method_id,
+                'provider_ref': 'test'
+            })
+            payment_with_token = self.env['account.payment'].create({
+                'amount': subscription.amount_total,
+                'currency_id': subscription.currency_id.id,
+                'partner_id': self.user_portal.partner_id.id,
+                'payment_token_id': test_payment_token.id
+            })
+            inv = subscription._create_invoices()
+            payment_with_token.move_id = inv.id
+            payment_with_token.write({'state': 'paid'})
+            tx = payment_with_token._create_payment_transaction()
+            subscription.write({'transaction_ids': [Command.set(tx.ids)]})
+            tx._set_done()
+            tx.with_user(public_user).sudo()._post_process()
