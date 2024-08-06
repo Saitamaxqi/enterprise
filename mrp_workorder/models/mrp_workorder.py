@@ -739,7 +739,7 @@ class MrpWorkorder(models.Model):
             loss_type_times[time.loss_id.loss_type] |= time
         duration = 0
         for times in loss_type_times.values():
-            duration += self._intervals_duration([(t.date_start, t.date_end or now, t) for t in times])
+            duration += self._intervals_duration([(t.date_start or now, t.date_end or now, t) for t in times])
         return duration
 
     def get_working_duration(self):
