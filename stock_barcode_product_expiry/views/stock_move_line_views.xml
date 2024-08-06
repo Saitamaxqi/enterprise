@@ -15,7 +15,7 @@
                     invisible="not use_expiration_date">
                     <i class="fa fa-fw fa-lg fa-calendar me-3" title="Expiration Date"/>
                     <field name="expiration_date" force_save="1"
-                    readonly="picking_type_use_existing_lots"/>
+                    readonly="picking_type_use_existing_lots and lot_id"/>
                     <span class="fa fa-exclamation-triangle text-danger ms-4"
                         invisible="not is_expired or not picking_type_use_existing_lots">
                         This lot is expired
