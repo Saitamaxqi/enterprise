@@ -630,6 +630,11 @@ msgid "BOE Export Wizard for (mod115)"
 msgstr ""
 
 #. module: l10n_es_reports
+#: model:ir.model,name:l10n_es_reports.model_l10n_es_reports_aeat_boe_mod130_export_wizard
+msgid "BOE Export Wizard for (mod130)"
+msgstr ""
+
+#. module: l10n_es_reports
 #: model:ir.model,name:l10n_es_reports.model_l10n_es_reports_aeat_boe_mod303_export_wizard
 msgid "BOE Export Wizard for (mod303)"
 msgstr ""
@@ -714,6 +719,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__calling_export_wizard_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__calling_export_wizard_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__calling_export_wizard_id
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__calling_export_wizard_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__calling_export_wizard_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__calling_export_wizard_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__calling_export_wizard_id
@@ -725,6 +731,7 @@ msgstr ""
 #. module: l10n_es_reports
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod111_boe_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod115_boe_wizard
+#: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod130_boe_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod303_boe_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod347_boe_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod349_boe_wizard
@@ -752,6 +759,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__company_partner_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__company_partner_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__company_partner_id
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__company_partner_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__company_partner_id
 msgid "Company Partner"
 msgstr ""
@@ -795,6 +803,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__create_uid
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__create_uid
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__create_uid
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__create_uid
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__create_uid
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__create_uid
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__create_uid
@@ -809,6 +818,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__create_date
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__create_date
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__create_date
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__create_date
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__create_date
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__create_date
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__create_date
@@ -841,6 +851,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__company_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__company_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__company_id
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__company_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__company_id
 msgid "Current Company"
 msgstr ""
@@ -889,6 +900,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__declaration_type
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__declaration_type
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__declaration_type
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__declaration_type
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__declaration_type
 msgid "Declaration Type"
 msgstr ""
@@ -925,6 +937,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__partner_bank_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__partner_bank_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__partner_bank_id
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__partner_bank_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__partner_bank_id
 msgid "Direct Debit Account"
 msgstr ""
@@ -934,6 +947,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__display_name
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__display_name
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__display_name
@@ -1000,6 +1014,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod111_export_wizard__declaration_type__g
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__declaration_type__g
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod115_export_wizard__declaration_type__g
+#: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod130_export_wizard__declaration_type__g
 msgid "G - Income to enter on CCT"
 msgstr ""
 
@@ -1022,6 +1037,7 @@ msgstr ""
 #. module: l10n_es_reports
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod111_boe_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod115_boe_wizard
+#: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod130_boe_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod303_boe_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod347_boe_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod349_boe_wizard
@@ -1057,6 +1073,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod111_export_wizard__declaration_type__i
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__declaration_type__i
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod115_export_wizard__declaration_type__i
+#: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod130_export_wizard__declaration_type__i
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod303_export_wizard__declaration_type__i
 msgid "I - Income"
 msgstr ""
@@ -1135,6 +1152,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__id
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__id
@@ -1404,6 +1422,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__write_uid
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__write_uid
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__write_uid
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__write_uid
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__write_uid
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__write_uid
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__write_uid
@@ -1418,6 +1437,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__write_date
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__write_date
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__write_date
@@ -1479,6 +1499,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod111_export_wizard__declaration_type__n
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__declaration_type__n
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod115_export_wizard__declaration_type__n
+#: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod130_export_wizard__declaration_type__n
 msgid "N - To return"
 msgstr ""
 
@@ -1512,6 +1533,7 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__previous_report_number
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__previous_report_number
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__previous_report_number
+#: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__previous_report_number
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__previous_report_number
 msgid "Number of the report previously submitted"
 msgstr ""
@@ -1536,6 +1558,7 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__calling_export_wizard_id
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__calling_export_wizard_id
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__calling_export_wizard_id
+#: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__calling_export_wizard_id
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__calling_export_wizard_id
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__calling_export_wizard_id
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__calling_export_wizard_id
@@ -1627,6 +1650,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__previous_report_number
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__previous_report_number
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__previous_report_number
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__previous_report_number
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__previous_report_number
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__previous_report_number
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__previous_report_number
@@ -1715,6 +1739,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__report_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__report_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__report_id
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__report_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__report_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__report_id
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__report_id
@@ -1773,6 +1798,11 @@ msgstr ""
 #. module: l10n_es_reports
 #: model:ir.model,name:l10n_es_reports.model_l10n_es_mod115_tax_report_handler
 msgid "Spanish Tax Report Custom Handler (Mod115)"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:ir.model,name:l10n_es_reports.model_l10n_es_mod130_tax_report_handler
+msgid "Spanish Tax Report Custom Handler (Mod130)"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1877,6 +1907,21 @@ msgid "Tax Report (Mod 349)"
 msgstr ""
 
 #. module: l10n_es_reports
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__taxpayer_id
+msgid "Taxpayer ID"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__taxpayer_first_name
+msgid "Taxpayer first name"
+msgstr ""
+
+#. module: l10n_es_reports
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__taxpayer_last_name
+msgid "Taxpayer last name"
+msgstr ""
+
+#. module: l10n_es_reports
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__exempted_from_mod_390_available
 msgid ""
 "Technical field used to only make exempted_from_mod_390 avilable in the last"
@@ -1887,6 +1932,7 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__partner_bank_id
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__partner_bank_id
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__partner_bank_id
+#: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod130_export_wizard__partner_bank_id
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__partner_bank_id
 msgid ""
 "The IBAN account number to use for direct debit. Leave blank if you don't "
@@ -1961,6 +2007,7 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod111_export_wizard__declaration_type__u
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__declaration_type__u
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod115_export_wizard__declaration_type__u
+#: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod130_export_wizard__declaration_type__u
 msgid "U - Direct debit"
 msgstr ""
 

@@ -94,6 +94,18 @@ class L10n_Es_ReportsAeatBoeMod115ExportWizard(models.TransientModel):
     # No field, but keeping it so is mandatory for the genericity of the modelling
 
 
+class L10n_Es_ReportsAeatBoeMod130ExportWizard(models.TransientModel):
+    _name = 'l10n_es_reports.aeat.boe.mod130.export.wizard'
+    _inherit = ['l10n_es_reports.aeat.boe.mod111and115and303.export.wizard']
+    _description = "BOE Export Wizard for (mod130)"
+
+    MODELO_NUMBER = 130
+
+    taxpayer_id = fields.Char(string="Taxpayer ID")
+    taxpayer_first_name = fields.Char(string="Taxpayer first name")
+    taxpayer_last_name = fields.Char(string="Taxpayer last name")
+
+
 class L10n_Es_ReportsAeatBoeMod303ExportWizard(models.TransientModel):
     _name = 'l10n_es_reports.aeat.boe.mod303.export.wizard'
     _inherit = ['l10n_es_reports.aeat.boe.mod111and115and303.export.wizard']

@@ -95,6 +95,10 @@ class TestBOEGeneration(TestAccountReportsCommon):
         self._check_boe_111_to_303('115')
 
     @freeze_time('2020-12-22')
+    def test_boe_mod_130(self):
+        self._check_boe_111_to_303('130')
+
+    @freeze_time('2020-12-22')
     def test_boe_mod_303(self):
         self._check_boe_111_to_303('303')
 

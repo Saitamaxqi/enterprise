@@ -33,6 +33,7 @@ Accounting reports for Spain
         'data/account_tags.xml',
         'data/mod111.xml',
         'data/mod115.xml',
+        'data/mod130.xml',
         'data/mod303.xml',
         'data/mod347.xml',
         'data/mod349.xml',
