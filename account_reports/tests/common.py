@@ -3,6 +3,7 @@
 import copy
 import io
 import unittest
+from collections import Counter
 from datetime import datetime, date
 
 try:
@@ -187,7 +188,7 @@ class TestAccountReportsCommon(AccountTestInvoicingCommon):
 
     def assertLinesValues(self, lines, columns, expected_values, options, currency_map=None, ignore_folded=True):
         ''' Helper to compare the lines returned by the _get_lines method
-        with some expected results.
+        with some expected results and ensuring the 'id' key of each line holds a unique value.
         :param lines:               See _get_lines.
         :param columns:             The columns index.
         :param expected_values:     A list of iterables.
@@ -254,6 +255,20 @@ class TestAccountReportsCommon(AccountTestInvoicingCommon):
                     "Current Values:  %s" % str(to_compare[0]),
                     "Expected Values: %s" % str(to_compare[1]),
                 ]
+
+        id_counts = Counter(line['id'] for line in lines)
+        duplicate_ids = {k: v for k, v in id_counts.items() if v > 1}
+        if duplicate_ids:
+            index_to_id = [
+                f"index={index:<6} name={line.get('name', 'no line name?!')} \tline_id={line.get('id', 'no line id?!')}"
+                for index, line in enumerate(lines)
+                if line.get('id', 'no line id?!') in duplicate_ids
+            ]
+            errors += [
+                "\n==== There are lines sharing the same id ====",
+                "\n".join(index_to_id)
+            ]
+
         if errors:
             self.fail('\n'.join(errors))
 
