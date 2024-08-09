@@ -478,7 +478,7 @@ class DocumentsDocument(models.Model):
     def _inverse_res_model(self):
         for record in self:
             attachment = record.attachment_id.with_context(no_document=True)
-            if attachment:
+            if attachment and (attachment.res_model, attachment.res_id) != (record.res_model, record.res_id):
                 # Avoid inconsistency in the data, write both at the same time.
                 # In case a check_access is done between res_id and res_model modification,
                 # an access error can be received. (Mail causes this check_access)
@@ -1734,14 +1734,12 @@ class DocumentsDocument(models.Model):
                 if attachment_id and attachment_id != record.attachment_id.id:
                     # Link the new attachment to the related record and link the previous one
                     # to the document.
-                    self.env["ir.attachment"].browse(attachment_id).with_context(
-                        no_document=True
-                    ).write(
-                        {
+                    attachment = self.env["ir.attachment"].browse(attachment_id)
+                    if (attachment.res_model, attachment.res_id) != (record.res_model, record.res_id):
+                        attachment.with_context(no_document=True).write({
                             "res_model": record.res_model or "documents.document",
                             "res_id": record.res_id if record.res_model else record.id,
-                        }
-                    )
+                        })
                     related_record = self.env[record.res_model].browse(record.res_id)
                     if (
                         not hasattr(related_record, "message_main_attachment_id")
