@@ -163,6 +163,7 @@ class AppraisalAskFeedback(models.TransientModel):
             'message': self.env['mail.message'].sudo().new(dict(body=mail_values['body_html'], record_name=self.survey_template_id.title)),
             'model_description': self.env['ir.model']._get('appraisal.ask.feedback').display_name,
             'company': self.env.company,
+            'record': self,
         }
         body = self.env['ir.qweb']._render('mail.mail_notification_light', template_ctx, minimal_qcontext=True, raise_if_not_found=False)
         if body:
