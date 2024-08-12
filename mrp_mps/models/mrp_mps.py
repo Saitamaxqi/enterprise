@@ -54,7 +54,7 @@ class MrpProductionSchedule(models.Model):
     max_to_replenish_qty = fields.Float(
         'Maximum to Replenish',
         help="The maximum replenishment you would like to launch for each period in the MPS. Note that if the demand is higher than that amount, the remaining quantity will be transferred to the next period automatically.")
-    enable_max_replenish = fields.Boolean(default=False)
+    enable_max_replenish = fields.Boolean(compute='_compute_enable_max_replenish', store=True, readonly=False)
     replenish_trigger = fields.Selection([
         ('manual', "Manual"),
         ('automated', "Automatic"),
@@ -87,6 +87,11 @@ class MrpProductionSchedule(models.Model):
     def _compute_is_manufacture_route(self):
         for mps in self:
             mps.is_manufacture_route = mps.route_id and mps.route_id.rule_ids and 'manufacture' in mps.route_id.rule_ids.mapped('action')
+
+    @api.depends('max_to_replenish_qty')
+    def _compute_enable_max_replenish(self):
+        for mps in self:
+            mps.enable_max_replenish = bool(mps.max_to_replenish_qty)
 
     def _search_replenish_state(self, operator, value):
         productions_schedules = self.search([])
