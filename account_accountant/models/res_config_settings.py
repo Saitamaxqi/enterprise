@@ -22,6 +22,7 @@ class ResConfigSettings(models.TransientModel):
         related='company_id.signing_user',
         help="Select a user here to override every signature on invoice by this user's signature"
     )
+    module_sign = fields.Boolean(string='Sign', compute='_compute_module_sign_status')
 
     # Deferred expense management
     deferred_expense_journal_id = fields.Many2one(
@@ -71,6 +72,12 @@ class ResConfigSettings(models.TransientModel):
         help='Method used to compute the amount of deferred entries',
     )
 
+    @api.depends('sign_invoice')
+    def _compute_module_sign_status(self):
+        sign_installed = 'sign' in self.env['ir.module.module']._installed()
+        for settings in self:
+            settings.module_sign = sign_installed or settings.company_id.sign_invoice
+
     @api.constrains('fiscalyear_last_day', 'fiscalyear_last_month')
     def _check_fiscalyear(self):
         # We try if the date exists in 2020, which is a leap year.
@@ -102,8 +109,3 @@ class ResConfigSettings(models.TransientModel):
             if vals:
                 self.env.company.write(vals)
         return super().create(vals_list)
-
-    def execute(self):
-        if self.sign_invoice and (sign_module := self.env['ir.module.module'].search([('name', '=', 'sign'), ('state', '!=', 'installed')])):
-            sign_module.sudo().button_immediate_install()
-        return super().execute()
