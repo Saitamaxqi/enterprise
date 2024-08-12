@@ -166,7 +166,7 @@ QUnit.module("Timesheet Leaderboard Grid View", (hooks) => {
     QUnit.test("Check that billing and total time indicators are displayed if user's company has the feature on.", async function (assert) {
         await initAndOpenView(true, false); // init view without the leaderboard feature
         assert.containsOnce(leaderboard, "span > span:contains('Billing:')");
-        assert.containsOnce(leaderboard, "span > span:contains('Total:')");
+        assert.containsOnce(leaderboard, "span > span:contains('Timesheets')");
     });
 
     QUnit.test("Check that confettis are not displayed if current employee is not first in the leaderboard (or not in the leaderboard).", async function (assert) {

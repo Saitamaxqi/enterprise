@@ -119,9 +119,7 @@ export class TimesheetLeaderboardDialog extends Component {
     }
 
     getTotalTimeText(employee) {
-        return _t("Total: %(totalTime)s", {
-            totalTime: this.format(employee.total_time),
-        });
+        return this.timesheetUOMService.formatter(employee.total_time);
     }
 
     getTitle(type) {

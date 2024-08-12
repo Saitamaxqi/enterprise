@@ -27,7 +27,7 @@
                         <span t-if="!isMobile" t-esc="currentBillingText"/>
                         <span t-attf-class="{{ props.leaderboard.current_employee.billing_rate &gt;= 100 ? 'text-success' : 'text-danger' }}" t-esc="currentBillingRateText"/>
                         <br/>
-                        <span>Total: </span>
+                        <span> Timesheets <t t-out="props.date.monthShort"/>: </span>
                         <span t-att-class="{'text-danger': props.leaderboard.current_employee.total_valid_time &lt; props.leaderboard.total_time_target}">
                             <t t-esc="currentTotalTimeText"/>
                         </span>

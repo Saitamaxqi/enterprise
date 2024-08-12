@@ -71,24 +71,7 @@ export class TimesheetLeaderboard extends Component {
     }
 
     get currentTotalTimeText() {
-        if (this.timesheetUOMService.timesheetWidget === "float_toggle") {
-            if (this.isMobile) {
-                return _t("%(totalTime)s d", {
-                    totalTime: this.format(this.props.leaderboard.current_employee.total_time),
-                });
-            }
-            return _t("%(totalTime)s days", {
-                totalTime: this.format(this.props.leaderboard.current_employee.total_time),
-            });
-        }
-        if (this.isMobile) {
-            return _t("%(totalTime)s h", {
-                totalTime: this.format(this.props.leaderboard.current_employee.total_time),
-            });
-        }
-        return _t("%(totalTime)s hours", {
-            totalTime: this.format(this.props.leaderboard.current_employee.total_time),
-        });
+       return this.timesheetUOMService.formatter(this.props.leaderboard.current_employee.total_time);
     }
 
     get currentTargetTotalTimeText() {
