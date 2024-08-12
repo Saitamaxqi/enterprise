@@ -92,3 +92,12 @@ class WorksheetTemplate(models.Model):
             'selection': "[('short','1.80m ~ 1.85m'), ('medium','1.86m ~ 1.90m'), ('long', '1.91m ~ 2.00m')]",
             'model_id': model_id,
         }])
+
+    def get_x_model_form_action(self):
+        action = super().get_x_model_form_action()
+        if self.res_model == 'quality.check':
+            action['context'].update({
+                'action_xml_id': 'quality_control_worksheet.quality_control_worksheet_template_action_settings',
+                'worksheet_template_id': self.id,
+            })
+        return action
