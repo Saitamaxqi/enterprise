@@ -18,7 +18,7 @@ registry.category("web_tour.tours").add("helpdesk_tour", {
             trigger: ".o_helpdesk_ticket_btn",
         },
         {
-    trigger: 'button.oe_kanban_action',
+    trigger: 'button.oe_kanban_action, .o_kanban_record',
     content: markup(_t('Let\'s view your <b>team\'s tickets</b>.')),
     tooltipPosition: 'bottom',
             run: "click",
