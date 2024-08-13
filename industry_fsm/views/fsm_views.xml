@@ -67,11 +67,11 @@
             <filter name="my_tasks" position="before">
                 <field string="Properties" name="task_properties"/>
             </filter>
-            <filter name="inactive" position="before">
+            <filter name="show_subtasks" position="after">
+                <separator/>
                 <filter string="Unread Messages" name="message_needaction" domain="[('message_needaction', '=', True)]" groups="mail.group_mail_notification_type_inbox"/>
                 <separator/>
-            </filter>
-            <filter name="inactive" position="after">
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
                 <separator invisible="1"/>
                 <filter string="To Schedule/Assign" name="schedule" domain="[
                     '|',
