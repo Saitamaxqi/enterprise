@@ -75,7 +75,7 @@
                                             <span t-options='{"widget": "monetary"}' t-if="(is_task and line.delivered_price_total != 0) or (not use_qty_delivered and line.price_total != 0) or (not is_task and line.price_total != 0) or is_total_discount" t-field="line.price_unit"/>
                                         </td>
                                         <td t-if="final_tax" class="text-end">
-                                            <span t-esc="', '.join(map(lambda x: (x.description or x.name), line.tax_id))"/>
+                                            <span t-esc="', '.join(map(lambda x: x._get_description_plaintext() or x.name, line.tax_id))"/>
                                         </td>
                                         <td t-if="display_discount" class="text-end">
                                             <span t-field="line.discount"/>
