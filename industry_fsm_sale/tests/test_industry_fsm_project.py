@@ -188,3 +188,22 @@ class TestIndustryFsmProject(TestFsmFlowSaleCommon):
         self.assertTrue(quotation.company_id, 'the company on the sales order must be set')
         self.assertEqual(quotation.task_id, task)
         self.assertEqual(quotation.partner_id, task.partner_id)
+
+    def test_sale_order_creation(self):
+        project = self.env['project.project'].create({
+            'name': 'Test Project',
+            'partner_id': self.partner_1.id,
+            'allow_billable': True,
+            'allow_material': True,
+        })
+        task = self.env['project.task'].create({
+            'name': 'Test Task',
+            'project_id': project.id,
+            'partner_id': self.partner_1.id,
+        })
+        task.with_user(self.project_user).action_fsm_view_material()
+
+        self.consu_product_ordered.with_user(self.project_user).with_context({'fsm_task_id': task.id}).set_fsm_quantity(5)
+        self.assertEqual(task.material_line_product_count, 5, "5 products should be linked to the task")
+
+        self.assertTrue(task.sale_order_id, 'A sale order should be created on tasks if allow_material is true')
