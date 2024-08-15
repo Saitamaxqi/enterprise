@@ -8,7 +8,7 @@ from uuid import uuid4
 from lxml import etree
 from markupsafe import Markup, escape
 
-from odoo import _, models
+from odoo import _, api, models
 from odoo.addons.l10n_ec_edi.models.account_move import L10N_EC_VAT_SUBTAXES
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 from odoo.tools import float_compare, float_is_zero, float_repr, float_round, html_escape
@@ -202,7 +202,7 @@ class AccountEdiFormat(models.Model):
                     ).format(Markup('<strong>'), Markup('</strong><br/>'), Markup('<br/>')),
                 )
             else:
-                _auth_state, auth_num, auth_date, errors, warnings = self._l10n_ec_get_authorization_status(move)
+                _auth_state, auth_num, auth_date, errors, warnings = self._l10n_ec_get_authorization_status_new(move.company_id, move.l10n_ec_authorization_number)
                 if auth_num:
                     errors.append(
                         _("You cannot cancel a document that is still authorized (%(authorization_num)s, %(authorization_date)s), check the SRI portal",
@@ -347,51 +347,53 @@ class AccountEdiFormat(models.Model):
         xml_content = cleanup_xml_node(xml_content)
 
         # Sign the document
-        if move.company_id._l10n_ec_is_demo_environment():  # unless we're in a test environment without certificate
-            xml_signed = etree.tostring(xml_content, encoding='unicode')
-        else:
-            xml_signed = self.sudo()._l10n_ec_generate_signed_xml(move.company_id, xml_content)
+        xml_signed = self.sudo()._l10n_ec_generate_signed_xml(move.company_id, xml_content)
 
-        xml_signed = '<?xml version="1.0" encoding="utf-8" standalone="no"?>' + xml_signed
         return xml_signed, errors
 
+    @api.model
     def _l10n_ec_generate_signed_xml(self, company_id, xml_node_or_string):
-        self.ensure_one()
+        if company_id._l10n_ec_is_demo_environment():  # unless we're in a test environment without certificate
+            xml_node_or_string = etree.tostring(xml_node_or_string, encoding='UTF-8', xml_declaration=True, pretty_print=True)
+        else:
+            certificate_sudo = company_id.sudo().l10n_ec_edi_certificate_id
 
-        certificate_sudo = company_id.sudo().l10n_ec_edi_certificate_id
+            # Signature rendering: prepare reference identifiers
+            signature_id = f"Signature{uuid4()}"
+            qweb_values = {
+                'signature_id': signature_id,
+                'signature_property_id': f'{signature_id}-SignedPropertiesID{uuid4()}',
+                'certificate_id': f'Certificate{uuid4()}',
+                'reference_uri': f'Reference-ID-{uuid4()}',
+                'signed_properties_id': f'SignedPropertiesID{uuid4()}',
+            }
 
-        # Signature rendering: prepare reference identifiers
-        signature_id = f"Signature{uuid4()}"
-        qweb_values = {
-            'signature_id': signature_id,
-            'signature_property_id': f'{signature_id}-SignedPropertiesID{uuid4()}',
-            'certificate_id': f'Certificate{uuid4()}',
-            'reference_uri': f'Reference-ID-{uuid4()}',
-            'signed_properties_id': f'SignedPropertiesID{uuid4()}',
-        }
+            # Signature rendering: prepare certificate values
+            e, n = certificate_sudo._get_public_key_numbers_bytes()
+            qweb_values.update({
+                'sig_certif_digest': certificate_sudo._get_fingerprint_bytes(hashing_algorithm='sha1', formatting='base64').decode(),
+                'x509_certificate': certificate_sudo._get_der_certificate_bytes().decode(),
+                'rsa_modulus': n.decode(),
+                'rsa_exponent': e.decode(),
+                'x509_issuer_description': certificate_sudo._l10n_ec_edi_get_issuer_rfc_string(),
+                'x509_serial_number': int(certificate_sudo.serial_number),
+            })
 
-        # Signature rendering: prepare certificate values
-        e, n = certificate_sudo._get_public_key_numbers_bytes()
-        qweb_values.update({
-            'sig_certif_digest': certificate_sudo._get_fingerprint_bytes(hashing_algorithm='sha1', formatting='base64').decode(),
-            'x509_certificate': certificate_sudo._get_der_certificate_bytes().decode(),
-            'rsa_modulus': n.decode(),
-            'rsa_exponent': e.decode(),
-            'x509_issuer_description': certificate_sudo._l10n_ec_edi_get_issuer_rfc_string(),
-            'x509_serial_number': int(certificate_sudo.serial_number),
-        })
+            # Parse document, append rendered signature and process references
+            doc = cleanup_xml_node(xml_node_or_string)
+            signature_str = self.env['ir.qweb']._render('l10n_ec_edi.ec_edi_signature', qweb_values)
+            signature = cleanup_xml_signature(signature_str)
+            doc.append(signature)
+            calculate_references_digests(signature.find('SignedInfo', namespaces=NS_MAP), base_uri='#comprobante')
 
-        # Parse document, append rendered signature and process references
-        doc = cleanup_xml_node(xml_node_or_string)
-        signature_str = self.env['ir.qweb']._render('l10n_ec_edi.ec_edi_signature', qweb_values)
-        signature = cleanup_xml_signature(signature_str)
-        doc.append(signature)
-        calculate_references_digests(signature.find('SignedInfo', namespaces=NS_MAP), base_uri='#comprobante')
+            # Sign (writes into SignatureValue)
+            fill_signature(signature, certificate_sudo)
 
-        # Sign (writes into SignatureValue)
-        fill_signature(signature, certificate_sudo)
+            xml_node_or_string = etree.tostring(doc, encoding='UTF-8', xml_declaration=True, pretty_print=True)
 
-        return etree.tostring(doc, encoding='unicode')
+        # Decode the byte string to a Unicode string
+        xml_string = xml_node_or_string.decode('UTF-8')
+        return xml_string
 
     def _l10n_ec_generate_demo_xml_attachment(self, move, xml_string):
         """
@@ -425,43 +427,15 @@ class AccountEdiFormat(models.Model):
         if move.company_id._l10n_ec_is_demo_environment():
             return self._l10n_ec_generate_demo_xml_attachment(move, xml_string)
 
-        # === STEP 1 ===
-        errors, warnings = [], []
-        if not move.l10n_ec_authorization_date:
-            # Submit the generated XML
-            response, zeep_errors, warnings = self._l10n_ec_get_client_service_response(move, 'reception', xml=xml_string.encode())
-            if zeep_errors:
-                return zeep_errors, 'error', None
-            try:
-                response_state = response.estado
-                response_checks = response.comprobantes and response.comprobantes.comprobante or []
-            except AttributeError as err:
-                return warnings or [_("SRI response unexpected: %s", err)], 'warning' if warnings else 'error', None
-
-            # Parse govt's response for errors or response state
-            if response_state == 'DEVUELTA':
-                for check in response_checks:
-                    for msg in check.mensajes.mensaje:
-                        if msg.identificador != '43':  # 43 means Authorization number already registered
-                            errors.append(' - '.join(
-                                filter(None, [msg.identificador, msg.informacionAdicional, msg.mensaje, msg.tipo])
-                            ))
-            elif response_state != 'RECIBIDA':
-                errors.append(_("SRI response state: %s", response_state))
-
-            # If any errors have been found (other than those indicating already-authorized document)
-            if errors:
-                return errors, 'error', None
-
-        # === STEP 2 ===
-        # Get authorization status, store response & raise any errors
+        # === Try sending and getting authorization status === #
+        errors, error_type, auth_date, auth_num = self._l10n_ec_send_document(
+            move.company_id,
+            move.l10n_ec_authorization_number,
+            xml_string,
+            already_sent=move.l10n_ec_authorization_date,
+        )
         attachment = False
-        auth_state, auth_num, auth_date, auth_errors, auth_warnings = self._l10n_ec_get_authorization_status(move)
-        errors.extend(auth_errors)
-        warnings.extend(auth_warnings)
         if auth_num and auth_date:
-            if move.l10n_ec_authorization_number != auth_num:
-                warnings.append(_("Authorization number %(authorization_number)s does not match document's %(document_number)s", authorization_number=auth_num, document_number=move.l10n_ec_authorization_number))
             move.l10n_ec_authorization_date = auth_date.replace(tzinfo=None)
             attachment = self.env['ir.attachment'].create({
                 'name': move.display_name + '.xml',
@@ -481,33 +455,74 @@ class AccountEdiFormat(models.Model):
                 ).format(Markup('<br/><strong>'), Markup('</strong><br/>'), Markup('<br/><strong>'), Markup('</strong><br/>')),
                 attachment_ids=attachment.ids,
             )
-        elif move.edi_state == 'to_cancel' and not move.company_id.l10n_ec_production_env:
-            # In test environment, we act as if invoice had already been cancelled for the govt
-            warnings.append(_("Document with access key %s has been cancelled", move.l10n_ec_authorization_number))
+
+        return errors, error_type, attachment
+
+    def _l10n_ec_send_document(self, company_id, authorization_num, xml_string, already_sent=False):
+        # === STEP 1 ===
+        errors, warnings = [], []
+        if not already_sent:
+            # Submit the generated XML
+            response, zeep_errors, warnings = self._l10n_ec_get_client_service_response_new(company_id, 'reception', xml=xml_string.encode())
+            if zeep_errors:
+                return zeep_errors, 'error', None, None
+            try:
+                response_state = response['estado']
+                response_checks = response['comprobantes'] and response['comprobantes']['comprobante'] or []
+            except AttributeError as err:
+                return warnings or [_("SRI response unexpected: %s", err)], 'warning' if warnings else 'error', None, None
+
+            # Parse govt's response for errors or response state
+            if response_state == 'DEVUELTA':
+                for check in response_checks:
+                    for msg in check['mensajes']['mensaje']:
+                        if msg['identificador'] != '43':  # 43 means Authorization number already registered
+                            errors.append(' - '.join(
+                                filter(None, [msg['identificador'], msg['informacionAdicional'], msg['mensaje'], msg['tipo']])
+                            ))
+            elif response_state != 'RECIBIDA':
+                errors.append(_("SRI response state: %s", response_state))
+
+            # If any errors have been found (other than those indicating already-authorized document)
+            if errors:
+                return errors, 'error', None, None
+
+        # === STEP 2 ===
+        # Get authorization status, store response & raise any errors
+        auth_state, auth_num, auth_date, auth_errors, auth_warnings = self._l10n_ec_get_authorization_status_new(company_id, authorization_num)
+        errors.extend(auth_errors)
+        warnings.extend(auth_warnings)
+        if auth_num and auth_date:
+            if authorization_num != auth_num:
+                warnings.append(_("Authorization number %(authorization_number)s does not match document's %(document_number)s", authorization_number=auth_num, document_number=authorization_num))
         elif not auth_num and auth_state == 'EN PROCESO':
             # No authorization number means the invoice was no authorized yet
             warnings.append(_("Document with access key %s received by government and pending authorization",
-                              move.l10n_ec_authorization_number))
+                              authorization_num))
         else:
             # SRI unexpected error
             errors.append(_("Document not authorized by SRI, please try again later"))
 
-        return errors or warnings, 'error' if errors else 'warning', attachment
+        return errors or warnings, 'error' if errors else 'warning', auth_date, auth_num
 
     def _l10n_ec_get_authorization_status(self, move):
         """
         Government interaction: retrieves status of previously sent document.
         """
+        return self._l10n_ec_get_authorization_status_new(move.company_id, move.l10n_ec_authorization_number)
+
+    def _l10n_ec_get_authorization_status_new(self, company_id, l10n_ec_authorization_number):
+        # TODO master: merge this with `_l10n_ec_get_authorization_status`
         auth_state, auth_num, auth_date = None, None, None
 
-        response, zeep_errors, zeep_warnings = self._l10n_ec_get_client_service_response(
-            move, "authorization",
-            claveAccesoComprobante=move.l10n_ec_authorization_number
+        response, zeep_errors, zeep_warnings = self._l10n_ec_get_client_service_response_new(
+            company_id, "authorization",
+            claveAccesoComprobante=l10n_ec_authorization_number
         )
         if zeep_errors:
             return auth_state, auth_num, auth_date, zeep_errors, zeep_warnings
         try:
-            response_auth_list = response.autorizaciones and response.autorizaciones.autorizacion or []
+            response_auth_list = response['autorizaciones'] and response['autorizaciones']['autorizacion'] or []
         except AttributeError as err:
             return auth_state, auth_num, auth_date, [_("SRI response unexpected: %s", err)], zeep_warnings
 
@@ -516,19 +531,19 @@ class AccountEdiFormat(models.Model):
             response_auth_list = [response_auth_list]
 
         for doc in response_auth_list:
-            auth_state = doc.estado
-            if doc.estado == "AUTORIZADO":
-                auth_num = doc.numeroAutorizacion
-                auth_date = doc.fechaAutorizacion
+            auth_state = doc['estado']
+            if doc['estado'] == "AUTORIZADO":
+                auth_num = doc['numeroAutorizacion']
+                auth_date = doc['fechaAutorizacion']
             else:
-                messages = doc.mensajes
+                messages = doc['mensajes']
                 if messages:
-                    messages_list = messages.mensaje
+                    messages_list = messages['mensaje']
                     if not isinstance(messages_list, list):
                         messages_list = messages
                     for msg in messages_list:
                         errors.append(' - '.join(
-                            filter(None, [msg.identificador, msg.informacionAdicional, msg.mensaje, msg.tipo])
+                            filter(None, [msg['identificador'], msg['informacionAdicional'], msg['mensaje'], msg['tipo']])
                         ))
         return auth_state, auth_num, auth_date, errors, zeep_warnings
 
@@ -536,7 +551,11 @@ class AccountEdiFormat(models.Model):
         """
         Government interaction: SOAP Transport and Client management.
         """
-        if move.company_id.l10n_ec_production_env:
+        return self._l10n_ec_get_client_service_response_new(move.company_id, mode, **kwargs)
+
+    def _l10n_ec_get_client_service_response_new(self, company_id, mode, **kwargs):
+        # TODO: in master, merge this with `_l10n_ec_get_client_service_response`
+        if company_id.l10n_ec_production_env:
             wsdl_url = PRODUCTION_URL.get(mode)
         else:
             wsdl_url = TEST_URL.get(mode)
@@ -560,9 +579,13 @@ class AccountEdiFormat(models.Model):
     # ===== Helper methods =====
 
     def _l10n_ec_create_authorization_file(self, move, xml_string, authorization_number, authorization_date):
+        return self._l10n_ec_create_authorization_file_new(move.company_id, xml_string, authorization_number, authorization_date)
+
+    def _l10n_ec_create_authorization_file_new(self, company_id, xml_string, authorization_number, authorization_date):
+        # TODO master: merge with `_l10n_ec_create_authorization_file`
         xml_values = {
             'xml_file_content': Markup(xml_string[xml_string.find('?>') + 2:]),  # remove header to embed sent xml
-            'mode': 'PRODUCCION' if move.company_id.l10n_ec_production_env else 'PRUEBAS',
+            'mode': 'PRODUCCION' if company_id.l10n_ec_production_env else 'PRUEBAS',
             'authorization_number': authorization_number,
             'authorization_date': authorization_date.strftime(DTF),
         }
