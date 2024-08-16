@@ -562,6 +562,9 @@ class BankRecWidget(models.Model):
             }
         return None
 
+    def _do_amounts_apply_for_early_payment(self, open_amount_currency, total_early_payment_discount):
+        return self.transaction_currency_id.compare_amounts(open_amount_currency, total_early_payment_discount) == 0
+
     def _lines_check_apply_early_payment_discount(self):
         """ Try to apply the early payment discount on the currently mounted journal items.
         :return: True if applied, False otherwise.
@@ -605,7 +608,7 @@ class BankRecWidget(models.Model):
 
         if is_same_currency \
             and at_least_one_aml_for_early_payment \
-            and self.transaction_currency_id.compare_amounts(open_amount_currency, total_early_payment_discount) == 0:
+            and self._do_amounts_apply_for_early_payment(open_amount_currency, total_early_payment_discount):
             # == Compute the early payment discount lines ==
             # Remove the partials on existing lines.
             for aml_line in all_aml_lines:
