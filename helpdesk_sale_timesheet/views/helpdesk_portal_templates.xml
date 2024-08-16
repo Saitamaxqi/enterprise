@@ -75,14 +75,14 @@
 
     <template id="portal_helpdesk_ticket_timesheet" name="Helpdesk Ticket timesheet" inherit_id="helpdesk.portal_helpdesk_ticket">
         <xpath expr="//th[@id='ticket_user_header']" position="after">
-            <t t-set="show_spent_hours" t-value="[ticket.mapped('use_helpdesk_sale_timesheet') for ticket in grouped_tickets][0]"/>
-            <th class="text-end" t-if="any(show_spent_hours)">
+            <t t-set="show_spent_hours" t-value="any(ticket.use_helpdesk_sale_timesheet for group in grouped_tickets for ticket in group)"/>
+            <th class="text-end" t-if="show_spent_hours">
                 <t t-esc="display_tickets"/>
                 Time Spent
             </th>
         </xpath>
         <xpath expr="//td[@id='ticket_user_body']" position="after">
-            <td class="text-end" t-if="any(show_spent_hours)">
+            <td class="text-end" t-if="show_spent_hours">
                 <t t-if="ticket.use_helpdesk_sale_timesheet">
                     <t t-set='timesheet_lines' t-value='ticket.sudo().timesheet_ids._get_portal_helpdesk_timesheet()'/>
                     <t t-if="timesheet_lines">
