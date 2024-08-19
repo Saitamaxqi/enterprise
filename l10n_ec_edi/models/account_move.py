@@ -989,16 +989,22 @@ class AccountMoveLine(models.Model):
         results = super()._prepare_edi_vals_to_export()
         currency_rate = self.balance / self.amount_currency if self.amount_currency != 0 else 1
 
-        sign = -1 if self.move_id.is_inbound() else 1
-        price_subtotal = self.balance * sign
-        if self.quantity and self.discount != 100.0:
-            price_unit = price_subtotal / ((1 - (self.discount or 0.0) / 100.0) * abs(self.quantity))
+        included_taxes = self.tax_ids.filtered(lambda t: t.price_include)
+        if self.quantity and self.discount != 100.0 and included_taxes:
+            base_line = self.move_id._prepare_product_base_line_for_taxes_computation(self)
+            # We need price unit before discount
+            base_line.update({
+                'quantity': 1,
+                'discount': 0,
+            })
+            self.env['account.tax']._add_tax_details_in_base_line(base_line, self.company_id, rounding_method='round_globally')
+            price_unit = base_line['tax_details']['raw_total_excluded_currency']
         else:
             price_unit = self.price_unit
 
         return {
             'price_discount': float_round(results['price_discount'] * currency_rate, precision_digits=6),
-            'price_unit': float_round(price_unit, precision_digits=6),  # balance is already in company currency
+            'price_unit': float_round(price_unit * currency_rate, precision_digits=6),
         }
 
     # ============================================
