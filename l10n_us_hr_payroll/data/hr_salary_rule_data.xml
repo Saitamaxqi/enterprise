@@ -24,6 +24,18 @@
         <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
     </record>
 
+    <record id="l10n_us_employee_salary_bonus" model="hr.salary.rule">
+        <field name="name">Bonus</field>
+        <field name="code">BONUS</field>
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="sequence">6</field>
+        <field name="condition_select">input</field>
+        <field name="condition_other_input_id" ref="l10n_us_hr_payroll.input_bonus"/>
+        <field name="amount_select">input</field>
+        <field name="amount_other_input_id" ref="l10n_us_hr_payroll.input_bonus"/>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+    </record>
+
     <record id="l10n_us_employee_salary_pre_tax_401" model="hr.salary.rule">
         <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_pre_tax_benefits"/>
         <field name="name">Contributions to retirement Plans</field>
@@ -1403,6 +1415,21 @@ composite_rate = contract.l10n_us_worker_compensation_id.composite_rate
 payroll_deduction = contract.l10n_us_worker_compensation_id.payroll_deduction
 xp_factor = payslip._rule_parameter('l10n_us_business_experience_factor')
 result = (composite_rate - payroll_deduction) * payslip.sum_worked_hours * xp_factor
+        </field>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+    </record>
+
+    <record id="l10n_us_employee_salary_expenses_reimbursement" model="hr.salary.rule">
+        <field name="name">Expenses Reimbursement</field>
+        <field name="code">EXPENSES</field>
+        <field name="category_id" ref="hr_payroll.ALW"/>
+        <field name="sequence">177</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = 'EXPENSES' in inputs</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = inputs['EXPENSES'].amount
+result_name = inputs['EXPENSES'].name
         </field>
         <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
     </record>

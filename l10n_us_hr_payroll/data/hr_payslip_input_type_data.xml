@@ -20,4 +20,11 @@
         <field name="country_id" ref="base.us"/>
         <field name="struct_ids" eval="[(4, ref('l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary'))]"/>
     </record>
+
+    <record id="input_bonus" model="hr.payslip.input.type">
+        <field name="name">Bonus</field>
+        <field name="code">BONUS</field>
+        <field name="country_id" ref="base.us"/>
+        <field name="struct_ids" eval="[(4, ref('l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary'))]"/>
+    </record>
 </odoo>
