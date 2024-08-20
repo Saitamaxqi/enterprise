@@ -325,6 +325,12 @@ export function assertLineSourceLocation(lineOrIndex, location) {
     );
 }
 
+export function assertLineDescription(lineOrIndex, description) {
+    const line = _getLineOrFail(lineOrIndex, "Can't check the line's description");
+    const descriptionElement = line.querySelector("div[name='description']");
+    assert(descriptionElement.innerText, description, "Wrong description");
+}
+
 export function assertFormLocationSrc(expected) {
     const location = document.querySelector('.o_field_widget[name="location_id"] input');
     assert(location.value, expected, "Wrong source location");

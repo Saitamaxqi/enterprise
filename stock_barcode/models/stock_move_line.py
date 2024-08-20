@@ -113,6 +113,7 @@ class StockMoveLine(models.Model):
             'move_id',
             'packaging_uom_id',
             'packaging_uom_qty',
+            'description_picking',
         ]
 
     def _compute_electronic_product_code(self):

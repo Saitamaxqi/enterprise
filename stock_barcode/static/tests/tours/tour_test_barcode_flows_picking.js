@@ -615,6 +615,8 @@ registry.category("web_tour.tours").add("test_receipt_reserved_1", {
                 helper.assertValidateVisible(true);
                 helper.assertValidateIsHighlighted(false);
                 helper.assertValidateEnabled(true);
+                helper.assertLineDescription(0, "First Item\nMove carefully\nABC [123]");
+                helper.assertLineDescription(1, "Second Item\nMove carefully\nDEF [456]");
             },
         },
 

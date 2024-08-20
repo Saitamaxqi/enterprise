@@ -348,6 +348,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'product_uom': self.uom_unit.id,
             'product_uom_qty': 4,
             'picking_id': receipt_picking.id,
+            'description_picking': 'First Item\nMove carefully\nABC [123]',
         })
         move2 = self.env['stock.move'].create({
             'location_id': self.supplier_location.id,
@@ -356,6 +357,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'product_uom': self.uom_unit.id,
             'product_uom_qty': 4,
             'picking_id': receipt_picking.id,
+            'description_picking': 'Second Item\nMove carefully\nDEF [456]',
         })
         receipt_picking.action_confirm()
         receipt_picking.action_assign()
