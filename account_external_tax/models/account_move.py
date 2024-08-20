@@ -52,19 +52,18 @@ class AccountMove(models.Model):
 
     def _filtered_external_tax_moves(self):
         return self.filtered(lambda move: move.is_tax_computed_externally and
-                                          move.move_type in ('out_invoice', 'out_refund'))
+                                          move.move_type in ('out_invoice', 'out_refund') and
+                                          not move._is_downpayment())
 
     def _get_and_set_external_taxes_on_eligible_records(self):
         """ account.external.tax.mixin override. """
-        eligible_moves = self._filtered_external_tax_moves().filtered(
-            lambda move: move.state != 'posted' and not move._is_downpayment()
-        )
+        eligible_moves = self._filtered_external_tax_moves().filtered(lambda move: move.state != 'posted')
         eligible_moves._set_external_taxes(*eligible_moves._get_external_taxes())
         return super()._get_and_set_external_taxes_on_eligible_records()
 
     def _get_lines_eligible_for_external_taxes(self):
         """ account.external.tax.mixin override. """
-        return self.invoice_line_ids.filtered(lambda line: line.display_type == 'product')
+        return self.invoice_line_ids.filtered(lambda line: line.display_type == 'product' and not line._get_downpayment_lines())
 
     def _get_date_for_external_taxes(self):
         """ account.external.tax.mixin override. """

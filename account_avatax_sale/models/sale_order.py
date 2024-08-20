@@ -19,11 +19,3 @@ class SaleOrder(models.Model):
         if self.filtered('fiscal_position_id.is_avatax'):
             res += ['partner_shipping_id']
         return res
-
-
-class SaleOrderLine(models.Model):
-    _inherit = ['sale.order.line']
-
-    def _without_invoice_line_taxes(self):
-        without = super()._without_invoice_line_taxes()
-        return without and not self.order_id.fiscal_position_id.is_avatax

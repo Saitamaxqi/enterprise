@@ -1,4 +1,4 @@
-from odoo import Command, fields
+from odoo import fields
 from odoo.tests.common import tagged
 from odoo.tools.misc import formatLang
 from odoo.addons.account_avatax.tests.common import TestAccountAvataxCommon
@@ -145,124 +145,53 @@ class TestSaleAvalara(TestAccountAvataxCommon):
         self.assertEqual(order.amount_total, 2.98)
 
     def test_sale_order_downpayment(self):
-        """Ensure that the taxes on the down payment are the same as the ones
-        on the SO.
+        """ Test the expected down payment flow. Down payments are not sent to Avalara. We invoice everything on the final "regular"
+        invoice, as if the down payments never happened.
         """
-        lines = [{
-            'costInsuranceFreight': 0.0,
-            'customerUsageType': '',
-            'description': 'Odoo User',
-            'details': [{
-                'country': 'US',
-                'exemptAmount': 0.0,
-                'id': 0,
-                'isFee': False,
-                'isNonPassThru': False,
-                'jurisCode': '06',
-                'jurisName': 'CALIFORNIA',
-                'jurisType': 'STA',
-                'jurisdictionType': 'State',
-                'liabilityType': 'Seller',
-                'nonTaxableAmount': 0.0,
-                'rate': 0.08,
-                'rateType': 'General',
-                'rateTypeCode': 'G',
-                'region': 'CA',
-                'reportingExemptUnits': 0.0,
-                'reportingNonTaxableUnits': 0.0,
-                'reportingTax': 2.8,
-                'reportingTaxCalculated': 2.8,
-                'reportingTaxableUnits': 35.0,
-                'stateAssignedNo': '',
-                'tax': 2.8,
-                'taxAuthorityTypeId': 45,
-                'taxCalculated': 2.8,
-                'taxName': 'CA STATE TAX',
-                'taxSubTypeId': 'S',
-                'taxType': 'Sales',
-                'taxableAmount': 35.0,
-                'transactionId': 0,
-                'transactionLineId': 0,
-                'unitOfBasis': 'PerCurrencyUnit',
-            }],
-            'discountAmount': 0.0,
-            'entityUseCode': '',
-            'exemptAmount': 0.0,
-            'exemptCertId': 0,
-            'exemptNo': '',
-            'hsCode': '',
-            'id': 0,
-            'isItemTaxable': True,
-            'itemCode': '',
-            'lineAmount': 35.0,
-            'nonPassthroughDetails': [],
-            'quantity': 1.0,
-            'ref1': '',
-            'ref2': '',
-            'reportingDate': '2021-01-01',
-            'tax': 2.8,
-            'taxCalculated': 2.8,
-            'taxCode': 'DC010000',
-            'taxCodeId': 8575,
-            'taxDate': '2021-01-01',
-            'taxIncluded': False,
-            'taxableAmount': 35.0,
-            'transactionId': 0,
-            'vatCode': '',
-            'vatNumberTypeId': 0,
-        }]
-        summary = [{
-            'country': 'US',
-            'exemption': 0.0,
-            'jurisCode': '06',
-            'jurisName': 'CALIFORNIA',
-            'jurisType': 'State',
-            'nonTaxable': 0.0,
-            'rate': 0.08,
-            'rateType': 'General',
-            'region': 'CA',
-            'stateAssignedNo': '',
-            'tax': 2.8,
-            'taxAuthorityType': 45,
-            'taxCalculated': 2.8,
-            'taxName': 'CA STATE TAX',
-            'taxSubType': 'S',
-            'taxType': 'Sales',
-            'taxable': 35.0,
-        }]
-        order = self.env['sale.order'].create({
-            'partner_id': self.partner.id,
-            'fiscal_position_id': self.fp_avatax.id,
-            'date_order': '2021-01-01',
-            'order_line': [
-                Command.create({
-                    'product_id': self.product_user.id,
-                    'price_unit': self.product_user.list_price,
-                }),
-            ],
-        })
-        lines[0]['lineNumber'] = 'sale.order.line,%s' % order.order_line[0].id
-        with self._capture_request(return_value={'lines': lines, 'summary': summary}):
+        order = self._create_sale_order()
+        mocked_response = generate_response(order.order_line)
+        with self._capture_request(return_value=mocked_response):
             order.action_confirm()
-            # create a 50% downpayment
-            payment_ctx = {
-                "active_model": "sale.order",
-                "active_ids": [order.id],
-                "active_id": order.id,
-            }
-            payment = (
-                self.env["sale.advance.payment.inv"]
-                    .with_context(**payment_ctx)
-                    .create({
-                        'advance_payment_method': 'percentage',
-                        'amount': 50,
-                    })
-            )
-            payment.sudo().create_invoices()
-            downpayment_invoice = order.invoice_ids
+
+        downpayment_pct = 50
+        payment_ctx = {
+            "active_model": "sale.order",
+            "active_ids": [order.id],
+            "active_id": order.id,
+        }
+        wizard = (
+            self.env["sale.advance.payment.inv"]
+                .with_context(**payment_ctx)
+                .create({
+                    'advance_payment_method': 'percentage',
+                    'amount': downpayment_pct,
+                })
+        )
+        wizard.sudo().create_invoices()
+        downpayment_invoice = order.invoice_ids
+
+        with self._capture_request(return_value={'lines': [], 'summary': []}) as capture:
             downpayment_invoice.sudo().action_post()
-        self.assertEqual(downpayment_invoice.invoice_line_ids.tax_ids, order.order_line.tax_id)
-        self.assertAlmostEqual(downpayment_invoice.amount_total, 18.9)
+
+        self.assertIsNone(capture.val, "Shouldn't call Avatax when posting a down payment invoice.")
+        self.assertEqual(len(order.order_line.filtered(lambda line: not line.display_type)), 6, "Should have generated a new down payment line.")
+        self.assertFalse(order.order_line.filtered('is_downpayment').tax_id, "Down payment lines on the quotation shouldn't have taxes.")
+        self.assertAlmostEqual(downpayment_invoice.amount_total, order.amount_total * downpayment_pct / 100, msg="Down payment has the wrong amount.")
+        self.assertEqual(downpayment_invoice.amount_tax, 0, "Down payment shouldn't have taxes.")
+
+        wizard = (
+            self.env["sale.advance.payment.inv"]
+                .with_context(**payment_ctx)
+                .create({
+                    'advance_payment_method': 'delivered',
+                })
+        )
+
+        with self._capture_request(return_value={'lines': [], 'summary': []}) as capture:
+            wizard.sudo().create_invoices()
+
+        sent_lines = capture.val['json']['createTransactionModel']['lines']
+        self.assertEqual(len(sent_lines), 5, "Should send only the regular lines.")
 
 
 @tagged("-at_install", "post_install")

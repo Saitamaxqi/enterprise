@@ -53,6 +53,17 @@ class SaleOrder(models.Model):
             order.amount_total = order.amount_untaxed + order.amount_tax
         super(SaleOrder, self - external_tax_orders)._compute_amounts()
 
+    def _create_account_invoices(self, invoice_vals_list, final):
+        """ Override. Always calculate taxes on final invoices that have down payment lines. We clear tax_ids on
+        invoice lines in _prepare_invoice_line() to avoid confusing users when the tax amount Odoo calculates is
+        different from what Avatax calculated for their SO. But because down payments are based on the total,
+        not subtotal, this can lead to a negative total on the invoice. To avoid the invoice being turned into a
+        credit note, automatically calculate taxes on invoices with a down payment line."""
+        moves = super()._create_account_invoices(invoice_vals_list, final)
+        if final:  # Don't needlessly do this for non-final invoices.
+            moves.filtered(lambda move: any(move.line_ids.sale_line_ids.mapped('is_downpayment')))._get_and_set_external_taxes_on_eligible_records()
+        return moves
+
     def action_confirm(self):
         """ Ensure confirmed orders have the right taxes. """
         self._get_and_set_external_taxes_on_eligible_records()
@@ -71,7 +82,7 @@ class SaleOrder(models.Model):
 
     def _get_lines_eligible_for_external_taxes(self):
         """ account.external.tax.mixin override. """
-        return self.order_line.filtered(lambda l: not l.display_type)
+        return self.order_line.filtered(lambda l: not l.display_type and not l.is_downpayment)
 
     def _get_line_data_for_external_taxes(self):
         """ account.external.tax.mixin override. """
@@ -120,16 +131,12 @@ class SaleOrderLine(models.Model):
 
     def _prepare_invoice_line(self, **optional_values):
         """ Override to clear tax_ids on lines. Brazilian taxes are variable and don't have the right amount set in Odoo (always 1%),
-        so taxes are always unless recomputed with button_external_tax_calculation. Although this automatically happens when needed, clearing the
+        so taxes are always wrong unless recomputed with button_external_tax_calculation. Although this automatically happens when needed, clearing the
         taxes here avoids potential confusion.
         """
         res = super()._prepare_invoice_line(**optional_values)
 
-        if self._without_invoice_line_taxes():
+        if self.order_id.is_tax_computed_externally:
             res['tax_ids'] = False
 
         return res
-
-    def _without_invoice_line_taxes(self):
-        """ Can be overridden by any external tax computation service. """
-        return self.order_id.is_tax_computed_externally

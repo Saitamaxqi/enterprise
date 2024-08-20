@@ -50,6 +50,6 @@ class TestExternalTaxSubscriptionController(TestSaleSubscriptionExternalCommon, 
         )
         self.assertEqual(
             [self.subscription.invoice_ids[0]],
-            [args[0] for args, kwargs in mocked_set.call_args_list],
+            [args[0] for args, kwargs in mocked_set.call_args_list if args[0]],
             "Should have queried avatax on the created invoice when manually initiating a payment.",
         )
