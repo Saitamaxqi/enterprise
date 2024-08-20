@@ -909,7 +909,7 @@ class AccountMove(models.Model):
         :return: A datetime object.
         """
         self.ensure_one()
-        issued_address = cfdi_values['receptor']['issued_address']
+        issued_address = cfdi_values['issued_address']
         tz = issued_address._l10n_mx_edi_get_cfdi_timezone()
         tz_force = self.env['ir.config_parameter'].sudo().get_param(f'l10n_mx_edi_tz_{self.journal_id.id}', default=None)
         if tz_force:
