@@ -23,26 +23,22 @@ class EventMailScheduler(models.Model):
         social_schedulers = self.filtered(lambda scheduler: scheduler.template_ref and scheduler.template_ref._name == 'social.post.template')
         social_schedulers.notification_type = 'social_post'
 
-    def execute(self):
-        social_post_mails = self.filtered(
-            lambda mail:
-                mail.template_ref
-                and mail.notification_type == 'social_post'
-                and not mail.mail_done
-        )
+    def _execute_event_based(self):
+        social_schedulers = self.filtered(lambda scheduler: scheduler.notification_type == 'social_post')
 
         social_posts_values = [
             scheduler.template_ref._prepare_social_post_values()
-            for scheduler in social_post_mails
+            for scheduler in social_schedulers
             if scheduler.template_ref.account_ids
         ]
 
-        self.env['social.post'].sudo().create(social_posts_values)._action_post()
+        if social_posts_values:
+            self.env['social.post'].sudo().create(social_posts_values)._action_post()
 
-        for social_post_mail in social_post_mails:
-            social_post_mails.update({
+        for scheduler in social_schedulers:
+            scheduler.update({
                 'mail_done': True,
-                'mail_count_done': len(social_post_mail.template_ref.account_ids),
+                'mail_count_done': len(scheduler.template_ref.account_ids),
             })
 
-        return super(EventMailScheduler, self - social_post_mails).execute()
+        return super(EventMailScheduler, self - social_schedulers)._execute_event_based()

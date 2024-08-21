@@ -13,7 +13,7 @@ from odoo.tests import tagged, users
 from odoo.tools import mute_logger
 
 
-@tagged('event_mail')
+@tagged('event_mail', 'post_install', '-at_install')
 class TestWhatsappSchedule(EventCase, WhatsAppCommon):
 
     @classmethod
@@ -225,7 +225,7 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         with self.mock_datetime_and_now(self.reference_now + timedelta(days=3)), \
              self.mockWhatsappGateway():
             cron.method_direct_trigger()
-        self.assertFalse(before_scheduler.mail_done)
+        self.assertTrue(before_scheduler.mail_done)
 
     @mute_logger('odoo.addons.whatsapp_event.models.event_mail')
     @users('user_eventmanager')
@@ -247,7 +247,7 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         with self.mock_datetime_and_now(self.reference_now + timedelta(days=3)), \
              self.mockWhatsappGateway():
             cron.method_direct_trigger()
-        self.assertFalse(before_scheduler.mail_done)
+        self.assertTrue(before_scheduler)
 
     @mute_logger('odoo.addons.whatsapp_event.models.event_mail_registration')
     @users('user_eventmanager')

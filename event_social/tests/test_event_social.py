@@ -6,9 +6,10 @@ from dateutil.relativedelta import relativedelta
 
 from odoo.addons.event.tests.common import EventCase
 from odoo.exceptions import UserError
-from odoo.tests import Form, users
+from odoo.tests import Form, tagged, users
 
 
+@tagged('event_mail', 'post_install', '-at_install')
 class EventSocialCase(EventCase):
 
     @classmethod

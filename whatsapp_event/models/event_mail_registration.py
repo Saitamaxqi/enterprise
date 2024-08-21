@@ -3,7 +3,7 @@
 import logging
 from collections import defaultdict
 
-from odoo import models, fields
+from odoo import models
 
 _logger = logging.getLogger(__name__)
 
@@ -11,13 +11,9 @@ _logger = logging.getLogger(__name__)
 class EventMailRegistration(models.Model):
     _inherit = 'event.mail.registration'
 
-    def execute(self):
-        now = fields.Datetime.now()
-        todo = self.filtered(lambda registration:
-            not registration.mail_sent and \
-            registration.registration_id.state in ['open', 'done'] and \
-            (registration.scheduled_date and registration.scheduled_date <= now) and \
-            registration.scheduler_id.notification_type == 'whatsapp'
+    def _execute_on_registrations(self):
+        todo = self.filtered(
+            lambda r: r.scheduler_id.notification_type == "whatsapp"
         )
         # Exclude schedulers linked to invalid/unusable templates
         valid = todo.scheduler_id._filter_wa_template_ref()
@@ -27,6 +23,7 @@ class EventMailRegistration(models.Model):
         for registration in todo.filtered(lambda r: r.scheduler_id in valid):
             tosend_by_template.setdefault(registration.scheduler_id.template_ref.id, [])
             tosend_by_template[registration.scheduler_id.template_ref.id].append(registration.registration_id.id)
+
         # Create whatsapp composer and send message by cron
         failed_registration_ids = []
         for wa_template_id, registration_ids in tosend_by_template.items():
@@ -45,4 +42,4 @@ class EventMailRegistration(models.Model):
         todo.filtered(
             lambda reg: reg.scheduler_id in valid and reg.registration_id.id not in failed_registration_ids
         ).mail_sent = True
-        return super().execute()
+        return super(EventMailRegistration, self - todo)._execute_on_registrations()

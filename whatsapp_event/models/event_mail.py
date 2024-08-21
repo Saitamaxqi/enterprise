@@ -25,26 +25,19 @@ class EventMailScheduler(models.Model):
         social_schedulers = self.filtered(lambda scheduler: scheduler.template_ref and scheduler.template_ref._name == 'whatsapp.template')
         social_schedulers.notification_type = 'whatsapp'
 
-    def execute(self):
-        def send_whatsapp(scheduler, registrations):
-            if registrations:
-                self.env['whatsapp.composer'].with_context({'active_ids': registrations.ids}).create({
-                    'res_model': 'event.registration',
-                    'wa_template_id': scheduler.template_ref.id
-                })._send_whatsapp_template(force_send_by_cron=True)
-            scheduler.update({
-                'mail_done': True,
-                'mail_count_done': scheduler.event_id.seats_taken,
-            })
-        now = self.env.cr.now()
-        wa_schedulers = self.filtered(lambda s: s.notification_type == "whatsapp" and s.interval_type != "after_sub")
+    def _execute_event_based_for_registrations(self, registrations):
         # no template / wrong template -> ill configured, skip and avoid crash
-        for scheduler in wa_schedulers._filter_wa_template_ref():
-            # do not send whatsapp if the whatsapp was scheduled before the event but the event is over
-            if scheduler.scheduled_date <= now and (scheduler.interval_type != 'before_event' or scheduler.event_id.date_end > now):
-                registrations = scheduler.event_id.registration_ids.filtered(lambda r: r.state not in ('cancel', 'draft'))
-                send_whatsapp(scheduler, registrations)
-        return super().execute()
+        if self.notification_type == "whatsapp":
+            if not self._filter_wa_template_ref():
+                return False
+            self.env['whatsapp.composer'].with_context(
+                {'active_ids': registrations.ids}
+            ).create({
+                'res_model': 'event.registration',
+                'wa_template_id': self.template_ref.id
+            })._send_whatsapp_template(force_send_by_cron=True)
+            return True
+        return super()._execute_event_based_for_registrations(registrations)
 
     def _filter_wa_template_ref(self):
         """ Check for valid template reference: existing, working template """
