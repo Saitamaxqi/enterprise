@@ -187,9 +187,6 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
                 cron.method_direct_trigger()
         self.assertFalse(before_scheduler.mail_done)
 
-    @mute_logger('odoo.addons.event.models.event_mail',
-                 'odoo.addons.whatsapp_event.models.event_mail',
-                 'odoo.addons.whatsapp_event.models.event_mail_registration')
     @users('user_eventmanager')
     def test_whatsapp_schedule_fail_global_no_registrations(self):
         """ Be sure no registrations = no crash in wa composer """
@@ -209,9 +206,6 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         before_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "before_event")
 
         # ensure there is a single draft template (crash in composer)
-        self.env["whatsapp.template"].sudo().search(
-            [("model_id", "=", self.env["ir.model"]._get_id("event.registration"))]
-        ).unlink()
         tpl_draft = self.env['whatsapp.template'].sudo().create({
             "body": "Test reminder",
             "model_id": self.env["ir.model"]._get_id("event.registration"),
@@ -221,33 +215,23 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
             "wa_account_id": self.whatsapp_account.id,
         })
         before_scheduler.template_ref = tpl_draft
+        self.env["whatsapp.template"].sudo().search([
+            ("model_id", "=", self.env["ir.model"]._get_id("event.registration")),
+            ("id", "!=", tpl_draft.id)
+        ]).unlink()
 
         with self.mock_datetime_and_now(self.reference_now + timedelta(days=3)), \
              self.mockWhatsappGateway():
             cron.method_direct_trigger()
-        self.assertTrue(before_scheduler.mail_done)
+        self.assertFalse(before_scheduler.mail_done)
 
-    @mute_logger('odoo.addons.whatsapp_event.models.event_mail')
     @users('user_eventmanager')
     def test_whatsapp_schedule_fail_global_template_removed(self):
         """ Test flow where scheduler fails due to template ref being removed
         when sending global event communication (i.e. only through cron). """
-        cron = self.env.ref("event.event_mail_scheduler").sudo()
-        before_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "before_event")
-
-        # make before event scheduler crash, remove linked template
         self.whatsapp_template_rem.sudo().unlink()
-
-        test_event = self.env['event.event'].browse(self.test_event.ids)
-
-        with self.mockWhatsappGateway():
-            _new_regs = self._create_registrations(test_event, 3)
-
-        # execute event reminder scheduler explicitly: should not crash, just skip
-        with self.mock_datetime_and_now(self.reference_now + timedelta(days=3)), \
-             self.mockWhatsappGateway():
-            cron.method_direct_trigger()
-        self.assertTrue(before_scheduler)
+        before_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "before_event")
+        self.assertFalse(before_scheduler)
 
     @mute_logger('odoo.addons.whatsapp_event.models.event_mail_registration')
     @users('user_eventmanager')
@@ -308,7 +292,7 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         sub_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "after_sub")
         self.assertFalse(sub_scheduler.mail_done)
 
-    @mute_logger('odoo.addons.whatsapp_event.models.event_mail')
+    @mute_logger('odoo.addons.event.models.event_mail')
     @users('user_eventmanager')
     def test_whatsapp_schedule_fail_registration_template_removed(self):
         """ Test flow where scheduler fails due to template being removed. """

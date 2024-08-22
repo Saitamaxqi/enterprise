@@ -26,37 +26,32 @@ class EventMailScheduler(models.Model):
         social_schedulers.notification_type = 'whatsapp'
 
     def _execute_event_based_for_registrations(self, registrations):
-        # no template / wrong template -> ill configured, skip and avoid crash
         if self.notification_type == "whatsapp":
-            if not self._filter_wa_template_ref():
-                return False
             self.env['whatsapp.composer'].with_context(
                 {'active_ids': registrations.ids}
             ).create({
                 'res_model': 'event.registration',
                 'wa_template_id': self.template_ref.id
             })._send_whatsapp_template(force_send_by_cron=True)
-            return True
         return super()._execute_event_based_for_registrations(registrations)
 
-    def _filter_wa_template_ref(self):
-        """ Check for valid template reference: existing, working template """
-        wa_schedulers = self.filtered(lambda s: s.notification_type == "whatsapp")
-        if not wa_schedulers:
-            return self.browse()
-        existing_templates = wa_schedulers.template_ref.exists()
-        missing = wa_schedulers.filtered(lambda s: s.template_ref not in existing_templates)
-        for scheduler in missing:
-            _logger.warning(
-                "Cannot process scheduler %s (event %s) as it refers to non-existent whatsapp template %s",
-                scheduler.id, scheduler.event_id.name, scheduler.template_ref.id
-            )
-        invalid = wa_schedulers.filtered(
-            lambda scheduler: scheduler not in missing
-                              and (scheduler.template_ref._name != "whatsapp.template" or scheduler.template_ref.status != 'approved')
+    def _filter_template_ref(self):
+        valid = super()._filter_template_ref()
+        invalid = valid.filtered(
+            lambda scheduler: scheduler.notification_type == "whatsapp" and scheduler.template_ref.status != "approved"
         )
         for scheduler in invalid:
             _logger.warning(
-                "Cannot process scheduler %s (event %s) as it refers to invalid whatsapp template %s (ID %s)",
-                scheduler.id, scheduler.event_id.name, scheduler.template_ref.name, scheduler.template_ref.id)
-        return self - missing - invalid
+                "Cannot process scheduler %s (event %s - ID %s) as it refers to whatsapp template %s (ID %s) that is not approved",
+                scheduler.id, scheduler.event_id.name, scheduler.event_id.id,
+                scheduler.template_ref.name, scheduler.template_ref.id)
+        return valid - invalid
+
+    def _template_model_by_notification_type(self):
+        info = super()._template_model_by_notification_type()
+        info["whatsapp"] = "whatsapp.template"
+        return info
+
+    def _filter_wa_template_ref(self):
+        """ Check for valid template reference: existing, working template """
+        return self._filter_template_ref()

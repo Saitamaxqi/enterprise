@@ -15,12 +15,9 @@ class EventMailRegistration(models.Model):
         todo = self.filtered(
             lambda r: r.scheduler_id.notification_type == "whatsapp"
         )
-        # Exclude schedulers linked to invalid/unusable templates
-        valid = todo.scheduler_id._filter_wa_template_ref()
-
         # Group todo by templates so if one tempalte then we can send in one shot
         tosend_by_template = defaultdict(list)
-        for registration in todo.filtered(lambda r: r.scheduler_id in valid):
+        for registration in todo:
             tosend_by_template.setdefault(registration.scheduler_id.template_ref.id, [])
             tosend_by_template[registration.scheduler_id.template_ref.id].append(registration.registration_id.id)
 
@@ -40,6 +37,6 @@ class EventMailRegistration(models.Model):
 
         # mark as sent only if really sent
         todo.filtered(
-            lambda reg: reg.scheduler_id in valid and reg.registration_id.id not in failed_registration_ids
+            lambda reg: reg.registration_id.id not in failed_registration_ids
         ).mail_sent = True
         return super(EventMailRegistration, self - todo)._execute_on_registrations()
