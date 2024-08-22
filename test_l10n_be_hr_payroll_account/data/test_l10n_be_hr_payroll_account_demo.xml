@@ -55,6 +55,7 @@
         <field name="requires_allocation">no</field>
         <field name="work_entry_type_id" ref="l10n_be_hr_payroll.work_entry_type_training"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="country_id" ref="base.be"/>
         <field name="icon_id" ref="hr_holidays.icon_26"/>
     </record>
 
@@ -1889,6 +1890,7 @@
         <field name="leave_notif_subtype_id" ref="hr_holidays.mt_leave"/>
         <field name="allocation_notif_subtype_id" ref="hr_holidays.mt_leave_allocation"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="country_id" ref="base.be"/>
         <field name="work_entry_type_id" ref="l10n_be_hr_payroll.work_entry_type_phc"/>
     </record>
 
@@ -1899,6 +1901,7 @@
         <field name="leave_notif_subtype_id" ref="hr_holidays.mt_leave"/>
         <field name="allocation_notif_subtype_id" ref="hr_holidays.mt_leave_allocation"/>
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="country_id" ref="base.be"/>
         <field name="work_entry_type_id" ref="l10n_be_hr_payroll.work_entry_type_small_unemployment"/>
     </record>
 

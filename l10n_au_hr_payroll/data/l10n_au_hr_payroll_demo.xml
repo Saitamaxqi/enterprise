@@ -123,6 +123,7 @@
 
     <record id="hr_leave_type_annual_au" model="hr.leave.type">
         <field name="company_id" ref="base.demo_company_au"/>
+        <field name="country_id" ref="base.au"/>
         <field name="name">Annual Leave</field>
         <field name="l10n_au_leave_type">annual</field>
         <field name="leave_validation_type">no_validation</field>
@@ -130,6 +131,7 @@
     </record>
     <record id="hr_leave_type_long_service" model="hr.leave.type">
         <field name="company_id" ref="base.demo_company_au"/>
+        <field name="country_id" ref="base.au"/>
         <field name="name">Long Service Leave</field>
         <field name="l10n_au_leave_type">long_service</field>
         <field name="leave_validation_type">no_validation</field>
@@ -137,6 +139,7 @@
     </record>
     <record id="hr_leave_type_personal_leave" model="hr.leave.type">
         <field name="company_id" ref="base.demo_company_au"/>
+        <field name="country_id" ref="base.au"/>
         <field name="name">Personal Leave</field>
         <field name="l10n_au_leave_type">personal</field>
         <field name="leave_validation_type">both</field>

@@ -22,6 +22,7 @@
 
     <record id="holiday_type_european" model="hr.leave.type">
         <field name="company_id" ref="base.demo_company_be"/>
+        <field name="country_id" ref="base.be"/>
     </record>
 
     <!-- Public Holiday -->

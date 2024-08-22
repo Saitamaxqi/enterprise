@@ -13,5 +13,6 @@
         <field name="color">5</field>
         <field name="work_entry_type_id" ref="work_entry_type_situational_unemployment"/>
         <field name="company_id" eval="False"/>
+        <field name="country_id" ref="base.lu"/>
     </record>
 </odoo>

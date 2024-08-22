@@ -8,6 +8,7 @@
         <field name="leave_notif_subtype_id" ref="hr_holidays.mt_leave"/>
         <field name="work_entry_type_id" ref="work_entry_type_small_unemployment"></field>
         <field name="company_id" eval="False"/>
+        <field name="country_id" ref="base.be"/>
     </record>
 
     <record id="holiday_type_maternity" model="hr.leave.type">
@@ -19,6 +20,7 @@
         <field name="work_entry_type_id" ref="work_entry_type_maternity"></field>
         <field name="icon_id" ref="hr_holidays.icon_11"/>
         <field name="company_id" eval="False"/>
+        <field name="country_id" ref="base.be"/>
     </record>
 
     <record id="holiday_type_unpredictable" model="hr.leave.type">
@@ -28,6 +30,7 @@
         <field name="leave_notif_subtype_id" ref="hr_holidays.mt_leave"/>
         <field name="work_entry_type_id" ref="work_entry_type_unpredictable"></field>
         <field name="company_id" eval="False"/>
+        <field name="country_id" ref="base.be"/>
     </record>
 
     <record id="holiday_type_training" model="hr.leave.type">
@@ -39,6 +42,7 @@
         <field name="work_entry_type_id" ref="work_entry_type_training_time_off"></field>
         <field name="icon_id" ref="hr_holidays.icon_26"/>
         <field name="company_id" eval="False"/>
+        <field name="country_id" ref="base.be"/>
     </record>
 
     <record id="holiday_type_extra_legal" model="hr.leave.type">
@@ -51,6 +55,7 @@
         <field name="icon_id" ref="hr_holidays.icon_9"/>
         <field name="company_id" eval="False"/>
         <field name="sequence">6</field>
+        <field name="country_id" ref="base.be"/>
     </record>
 
     <record id="holiday_type_recovery" model="hr.leave.type">
@@ -61,6 +66,7 @@
         <field name="leave_notif_subtype_id" ref="hr_holidays.mt_leave"/>
         <field name="work_entry_type_id" ref="work_entry_type_recovery"></field>
         <field name="company_id" eval="False"/>
+        <field name="country_id" ref="base.be"/>
     </record>
 
     <record id="holiday_type_european" model="hr.leave.type">
@@ -72,6 +78,7 @@
         <field name="work_entry_type_id" ref="work_entry_type_european"></field>
         <field name="icon_id" ref="hr_holidays.icon_14"/>
         <field name="company_id" eval="False"/>
+        <field name="country_id" ref="base.be"/>
     </record>
 
     <record id="holiday_type_credit_time" model="hr.leave.type">
@@ -81,6 +88,7 @@
         <field name="leave_notif_subtype_id" eval="ref('hr_holidays.mt_leave')"/>
         <field name="work_entry_type_id" ref="work_entry_type_credit_time"></field>
         <field name="company_id" eval="False"/>
+        <field name="country_id" ref="base.be"/>
     </record>
 
     <record id="holiday_status_work_accident" model="hr.leave.type">
@@ -89,6 +97,7 @@
         <field name="leave_notif_subtype_id" ref="hr_holidays.mt_leave"/>
         <field name="work_entry_type_id" ref="work_entry_type_work_accident"/>
         <field name="company_id" eval="False"/>
+        <field name="country_id" ref="base.be"/>
     </record>
 
     <record id="holiday_type_strike" model="hr.leave.type">
@@ -98,5 +107,6 @@
         <field name="leave_notif_subtype_id" ref="hr_holidays.mt_leave"/>
         <field name="work_entry_type_id" ref="work_entry_type_strike"></field>
         <field name="company_id" eval="False"/>
+        <field name="country_id" ref="base.be"/>
     </record>
 </odoo>
