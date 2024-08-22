@@ -2,15 +2,19 @@
 <odoo>
 <data noupdate="0">
     <template id="tickets_followup_timesheet" name="Helpdesk tickets timesheet" inherit_id="helpdesk.tickets_followup" priority="50">
+        <xpath expr="//div[hasclass('o_project_portal_sidebar')]" position="before">
+            <t t-set="show_portal_timesheets" t-value="ticket.env['account.analytic.line']._show_portal_timesheets()"/>
+        </xpath>
         <xpath expr="//li[@id='nav-header']" position="after">
-            <li t-if="timesheets" class="nav-item">
+            <li t-if="timesheets and show_portal_timesheets" class="nav-item">
                 <a class="nav-link p-0" href="#details">
                     Timesheets
                 </a>
             </li>
         </xpath>
         <xpath expr="//div[@name='description']" position="after">
-            <section id="details" style="page-break-inside: auto;" class="mt32" t-if="timesheets and ticket.sale_line_id.product_template_id.service_policy not in ['delivered_milestones', 'delivered_manual']">
+            <t t-set="show_portal_timesheets" t-value="ticket.env['account.analytic.line']._show_portal_timesheets()"/>
+            <section id="details" style="page-break-inside: auto;" class="mt32" t-if="timesheets and show_portal_timesheets and ticket.sale_line_id.product_template_id.service_policy not in ['delivered_milestones', 'delivered_manual']">
                 <h3 id="details">Timesheets</h3>
 
                 <table class="table table-sm table-striped" id="timesheet_table">
@@ -78,7 +82,7 @@
             <t t-set="show_spent_hours" t-value="any(ticket.use_helpdesk_sale_timesheet for group in grouped_tickets for ticket in group)"/>
         </xpath>
         <xpath expr="//th[@id='ticket_user_header']" position="after">
-            <th class="text-end" t-if="show_spent_hours">
+            <th class="text-end" t-if="show_spent_hours and show_portal_timesheets">
                 <t t-esc="display_tickets"/>
                 Time Spent
             </th>
@@ -107,7 +111,7 @@
             </th>
         </xpath>
         <xpath expr="//td[@id='ticket_user_body']" position="after">
-            <td class="text-end" t-if="show_spent_hours">
+            <td class="text-end" t-if="show_spent_hours and show_portal_timesheets">
                 <t t-if="ticket.use_helpdesk_sale_timesheet">
                     <t t-set='timesheet_lines' t-value='ticket.sudo().timesheet_ids._get_portal_helpdesk_timesheet()'/>
                     <t t-if="timesheet_lines">

@@ -36,7 +36,7 @@
             <t t-set="backend_url" t-value="'/odoo/action-%s/%s' % (source_action_id, task.id)"/>
         </xpath>
         <xpath expr="//div[@id='nav-report']" position="attributes">
-            <attribute name="t-if">timesheets and allow_timesheets</attribute>
+            <attribute name="t-if">timesheets and allow_timesheets and show_portal_timesheets</attribute>
         </xpath>
         <xpath expr="//div[@t-field='task.partner_id']" position="attributes">
             <attribute name="t-options">{
