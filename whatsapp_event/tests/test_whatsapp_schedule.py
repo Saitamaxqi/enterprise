@@ -252,8 +252,9 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
                     "phone": "(255)-595-8393",
                 })
         self.assertTrue(registration.exists(), "Registration record should exist after creation.")
-        self.assertEqual(onsub_scheduler.mail_count_done, 2)
-        self.assertFalse(onsub_scheduler.mail_done)
+        self.assertEqual(len(self.test_event.registration_ids), 3)
+        self.assertEqual(onsub_scheduler.mail_count_done, 3)
+        self.assertTrue(onsub_scheduler.mail_done)
 
     @mute_logger('odoo.addons.whatsapp_event.models.event_mail')
     @users('user_eventmanager')

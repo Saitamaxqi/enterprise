@@ -15,25 +15,14 @@ class EventMailRegistration(models.Model):
         todo = self.filtered(
             lambda r: r.scheduler_id.notification_type == "whatsapp"
         )
-        # Group todo by templates so if one tempalte then we can send in one shot
-        tosend_by_template = defaultdict(list)
-        for registration in todo:
-            tosend_by_template.setdefault(registration.scheduler_id.template_ref.id, [])
-            tosend_by_template[registration.scheduler_id.template_ref.id].append(registration.registration_id.id)
-
         # Create whatsapp composer and send message by cron
         failed_registration_ids = []
-        for wa_template_id, registration_ids in tosend_by_template.items():
+        for scheduler, reg_mails in todo.grouped('scheduler_id').items():
             try:
-                self.env['whatsapp.composer'].with_context({
-                    'active_ids': registration_ids,
-                    'active_model': 'event.registration',
-                }).create({
-                    'wa_template_id': wa_template_id,
-                })._send_whatsapp_template(force_send_by_cron=True)
+                scheduler._send_whatsapp(reg_mails.registration_id)
             except Exception as e:  # noqa: BLE001 we should never raise and rollback here
-                _logger.warning('An issue happened when sending WhatsApp template ID %s. Received error %s', wa_template_id, e)
-                failed_registration_ids += registration_ids
+                _logger.warning('An issue happened when sending WhatsApp template ID %s. Received error %s', scheduler.template_ref.id, e)
+                failed_registration_ids += reg_mails.registration_id
 
         # mark as sent only if really sent
         todo.filtered(

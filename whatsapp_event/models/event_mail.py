@@ -27,12 +27,7 @@ class EventMailScheduler(models.Model):
 
     def _execute_event_based_for_registrations(self, registrations):
         if self.notification_type == "whatsapp":
-            self.env['whatsapp.composer'].with_context(
-                {'active_ids': registrations.ids}
-            ).create({
-                'res_model': 'event.registration',
-                'wa_template_id': self.template_ref.id
-            })._send_whatsapp_template(force_send_by_cron=True)
+            self._send_whatsapp(registrations)
         return super()._execute_event_based_for_registrations(registrations)
 
     def _filter_template_ref(self):
@@ -55,3 +50,12 @@ class EventMailScheduler(models.Model):
     def _filter_wa_template_ref(self):
         """ Check for valid template reference: existing, working template """
         return self._filter_template_ref()
+
+    def _send_whatsapp(self, registrations):
+        """ Whatsapp action: send whatsapp to attendees """
+        self.env['whatsapp.composer'].with_context(
+            {'active_ids': registrations.ids}
+        ).create({
+            'res_model': 'event.registration',
+            'wa_template_id': self.template_ref.id
+        })._send_whatsapp_template(force_send_by_cron=True)
