@@ -159,6 +159,10 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         self.assertGreater(self.reference_now, before_scheduler.scheduled_date, 'Scheduler scheduled_date should trigger it.')
         for registration, state in zip_longest(test_event.registration_ids, ['draft', 'open', 'open', 'done'], fillvalue='cancel'):
             registration.state = state
+
+        # reset scheduler
+        before_scheduler.last_registration_id = False
+        before_scheduler.mail_count_done = 0
         before_scheduler.mail_done = False
 
         with self.mock_datetime_and_now(self.reference_now), self.mockWhatsappGateway():
