@@ -233,7 +233,7 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         before_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "before_event")
         self.assertFalse(before_scheduler)
 
-    @mute_logger('odoo.addons.whatsapp_event.models.event_mail_registration')
+    @mute_logger('odoo.addons.event.models.event_registration')
     @users('user_eventmanager')
     def test_whatsapp_schedule_fail_registration_composer(self):
         """ Simulate a fail during composer usage e.g. invalid field path, template
@@ -253,8 +253,8 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
                 })
         self.assertTrue(registration.exists(), "Registration record should exist after creation.")
         self.assertEqual(len(self.test_event.registration_ids), 3)
-        self.assertEqual(onsub_scheduler.mail_count_done, 3)
-        self.assertTrue(onsub_scheduler.mail_done)
+        self.assertEqual(onsub_scheduler.mail_count_done, 2)
+        self.assertFalse(onsub_scheduler.mail_done)
 
     @mute_logger('odoo.addons.whatsapp_event.models.event_mail')
     @users('user_eventmanager')
