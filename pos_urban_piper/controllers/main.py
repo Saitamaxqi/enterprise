@@ -106,14 +106,13 @@ class PosUrbanPiperController(http.Controller):
             ('urbanpiper_store_identifier', '=', order['store']['merchant_ref_id'])
         ])
         customer_sudo = request.env['res.partner'].sudo().search(
-            ['|', ('phone', '=', customer['phone']), ('mobile', '=', customer['phone'])]
+            [('phone', '=', customer['phone'])], limit=1
         )
         if not customer_sudo:
             customer_sudo = request.env['res.partner'].sudo().create({
                 'name': customer['name'],
                 'phone': customer['phone'],
                 'email': customer['email'],
-                'mobile': customer['phone'],
                 'street': customer_address.get('line_1'),
                 'street2': customer_address.get('line_2'),
                 'city': customer_address.get('city'),

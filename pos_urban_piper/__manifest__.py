@@ -15,6 +15,7 @@ This module integrates with UrbanPiper to receive and manage orders from various
         'views/pos_category_views.xml',
         'views/product_views.xml',
         'views/pos_payment_method_views.xml',
+        'wizard/pos_urban_piper_test_order.xml',
     ],
     'post_init_hook': '_urban_piper_post_init',
     'assets': {
@@ -24,7 +25,10 @@ This module integrates with UrbanPiper to receive and manage orders from various
         ],
         'pos_preparation_display.assets': [
             'pos_urban_piper/static/src/pos_preparation_display_override/**/*',
-        ]
+        ],
+        'web.assets_tests': [
+            'pos_urban_piper/static/tests/tours/**/*',
+        ],
     },
     'license': 'OEEL-1',
 }

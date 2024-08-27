@@ -77,11 +77,13 @@ patch(TicketScreen.prototype, {
     },
 
     async _updateOrderStatus(order, status, code = null) {
+        const urban_piper_test = JSON.parse(order.delivery_json)?.order?.urban_piper_test;
         const response = await this.pos.data.call("pos.config", "order_status_update", [
             this.pos.config.id,
             order.id,
             status,
             code,
+            urban_piper_test,
         ]);
         return response;
     },

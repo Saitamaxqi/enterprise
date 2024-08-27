@@ -29,6 +29,8 @@ patch(Order.prototype, {
                 this.props.order.config_id,
                 this.props.order.posOrderId,
                 "Food Ready",
+                null,
+                this.props.order.urban_piper_test,
             ]);
         }
     },

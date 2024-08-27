@@ -21,6 +21,10 @@ class Pos_Preparation_DisplayOrder(models.Model):
                 'order_otp': order_otp,
                 'config_id': self.pos_order_id.session_id.config_id.id,
             })
+            if self.pos_order_id.delivery_json:
+                order.update({
+                    'urban_piper_test': json.loads(self.pos_order_id.delivery_json).get('order', {}).get('urban_piper_test'),
+                })
         return order
 
     def get_preparation_display_order(self, preparation_display_id):

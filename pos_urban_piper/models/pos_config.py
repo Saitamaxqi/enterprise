@@ -207,11 +207,14 @@ class PosConfig(models.Model):
         """
         Activate and Deactivate store
         """
-        up = UrbanPiperClient(self)
-        up.configure_webhook()
-        up.urbanpiper_store_status_update(status=status)
+        user_name = self.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.urbanpiper_username')
+        api_key = self.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.urbanpiper_apikey')
+        if not(user_name == 'demo' or api_key == 'demo'):
+            up = UrbanPiperClient(self)
+            up.configure_webhook()
+            up.urbanpiper_store_status_update(status=status)
 
-    def order_status_update(self, order_id, new_status, code=None):
+    def order_status_update(self, order_id, new_status, code=None, urban_piper_test=False):
         """
         Update order status from urban piper webhook
         """
@@ -221,7 +224,7 @@ class PosConfig(models.Model):
             self._make_order_payment(order)
         up = UrbanPiperClient(self)
         is_success, message = False, ''
-        if order.delivery_provider_id.technical_name in ['careem'] and new_status == 'Food Ready':
+        if urban_piper_test or (order.delivery_provider_id.technical_name in ['careem'] and new_status == 'Food Ready'):
             is_success = True
         else:
             is_success, message = up.request_status_update(order.delivery_identifier, new_status, code)
@@ -229,7 +232,7 @@ class PosConfig(models.Model):
             order.write({
                 'delivery_status': const.ORDER_STATUS_MAPPING[new_status][1],
             })
-        if new_status == 'Acknowledged':
+        if not urban_piper_test and new_status == 'Acknowledged':
             up.urbanpiper_order_reference_update(order)
         self._send_delivery_order_count(order_id)
         return {'is_success': is_success, 'message': message}

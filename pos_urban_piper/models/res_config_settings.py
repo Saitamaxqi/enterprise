@@ -114,3 +114,20 @@ class ResConfigSettings(models.TransientModel):
         up = UrbanPiperClient(self.pos_config_id)
         response_json = up.request_refresh_webhooks()
         return self.pos_config_id._urbanpiper_handle_response(response_json)
+
+    def open_test_order_wizard(self):
+        """
+        Open the test order wizard to create test orders.
+        """
+        return {
+            'name': _('Test Food Delivery Order'),
+            'views': [(self.env.ref('pos_urban_piper.pos_urban_piper_test_order_wizard_view_form').id, 'form')],
+            'res_model': 'pos.urbanpiper.test.order.wizard',
+            'type': 'ir.actions.act_window',
+            'target': 'new',
+            'context': {
+                'dialog_size': 'medium',
+                'delivery_provider_ids': self.pos_urbanpiper_delivery_provider_ids.ids,
+                'config_id': self.pos_config_id.id
+            }
+        }

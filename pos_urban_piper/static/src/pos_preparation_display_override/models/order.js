@@ -10,6 +10,7 @@ patch(Order.prototype, {
         this.prep_time = order.prep_time;
         this.order_otp = order.order_otp;
         this.config_id = order.config_id;
+        this.urban_piper_test = order.urban_piper_test;
     },
 
     computeDuration() {

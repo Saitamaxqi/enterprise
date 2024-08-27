@@ -44,6 +44,7 @@
                     </div>
                     <button name="urbanpiper_create_store" string="Create Store" type="object" class="btn btn-primary my-2 mx-1" icon="fa-plus"/>
                     <button name="urbanpiper_sync_menu" string="Sync Menu" type="object" class="btn btn-secondary my-2 mx-1" icon="fa-upload"/>
+                    <button name="open_test_order_wizard" string="Test Order" groups="base.group_no_one" type="object" class="btn btn-secondary my-2 mx-1" icon="fa-pencil"/>
                     <div class="flex gap-2">
                         <label string="Last Sync on" for="pos_urbanpiper_last_sync_date" class="me-2" invisible="not pos_urbanpiper_last_sync_date"/>
                         <field name="pos_urbanpiper_last_sync_date" readonly="True"/>
