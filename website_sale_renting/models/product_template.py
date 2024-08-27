@@ -251,14 +251,3 @@ class ProductTemplate(models.Model):
         if options.get('rent_only') or (options.get('from_date') and options.get('to_date')):
             search_details['base_domain'].append([('rent_ok', '=', True)])
         return search_details
-
-    def _can_be_added_to_cart(self):
-        """Override to allow rental products to be used in a sale order"""
-        return super()._can_be_added_to_cart() or self.rent_ok
-
-    def _website_show_quick_add(self):
-        self.ensure_one()
-        website = self.env['website'].get_current_website()
-        return super()._website_show_quick_add() or (
-            self.rent_ok and (not website.prevent_zero_price_sale or self._get_contextual_price())
-        )
