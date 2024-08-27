@@ -12,7 +12,7 @@ from .common import TestL10nClEdiCommon, _check_with_xsd_patch, _is_valid_certif
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
 @patch('odoo.tools.xml_utils._check_with_xsd', _check_with_xsd_patch)
-@patch('odoo.addons.certificate.models.certificate.Certificate._compute_is_valid', _is_valid_certificate)
+@patch('odoo.addons.certificate.models.certificate.CertificateCertificate._compute_is_valid', _is_valid_certificate)
 class TestL10nClDte(TestL10nClEdiCommon):
     """
     Summary of the document types to test:
@@ -29,7 +29,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
             - An exportation invoice for services
     """
 
-    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10nClEdiUtilMixin._get_cl_current_strftime')
+    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10n_ClEdiUtil._get_cl_current_strftime')
     def test_l10n_cl_dte_39(self, get_cl_current_strftime):
         get_cl_current_strftime.return_value = '2019-10-24T20:00:00'
 

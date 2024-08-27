@@ -13,13 +13,13 @@ from .common import TestL10nClEdiCommon, _check_with_xsd_patch, _is_valid_certif
 @patch('odoo.tools.xml_utils._check_with_xsd', _check_with_xsd_patch)
 @tagged('post_install', '-at_install')
 class TestL10nClDte(TestL10nClEdiCommon):
-    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10nClEdiUtilMixin._get_seed_ws')
+    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10n_ClEdiUtil._get_seed_ws')
     def test_get_seed_none(self, get_seed_ws):
         get_seed_ws.return_value = None
         with self.assertRaises(Exception):
             self.env['l10n_cl.edi.util']._get_seed('SIITEST')
 
-    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10nClEdiUtilMixin._get_seed_ws')
+    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10n_ClEdiUtil._get_seed_ws')
     def test_get_seed_ok(self, get_seed_ws):
         get_seed_ws.return_value = (
             """<?xml version="1.0" encoding="UTF-8" ?>
@@ -34,7 +34,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
 
         self.assertEqual(self.env['l10n_cl.edi.util']._get_seed('SIITEST'), '00000000064')
 
-    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10nClEdiUtilMixin._get_seed_ws')
+    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10n_ClEdiUtil._get_seed_ws')
     def test_get_seed_no_seed_exception(self, get_seed_ws):
         get_seed_ws.return_value = (
             """<?xml version="1.0" encoding="UTF-8" ?>
@@ -48,7 +48,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
         with self.assertRaises(Exception):
             self.env['l10n_cl.edi.util']._get_seed('SIITEST')
 
-    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10nClEdiUtilMixin._get_seed_ws')
+    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10n_ClEdiUtil._get_seed_ws')
     def test_get_seed_retorno_error_exception(self, get_seed_ws):
         get_seed_ws.return_value = (
             """<?xml version="1.0" encoding="UTF-8" ?>
@@ -63,8 +63,8 @@ class TestL10nClDte(TestL10nClEdiCommon):
             self.env['l10n_cl.edi.util']._get_seed('SIITEST')
 
     @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.Client')
-    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10nClEdiUtilMixin._get_signed_token')
-    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10nClEdiUtilMixin._get_seed_ws')
+    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10n_ClEdiUtil._get_signed_token')
+    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10n_ClEdiUtil._get_seed_ws')
     def get_token_none_error(self, get_seed_ws, get_signed_token, mock_client):
         get_seed_ws.return_value = '1234456'
         get_signed_token.return_value = 'test'
@@ -73,8 +73,8 @@ class TestL10nClDte(TestL10nClEdiCommon):
             self.env['l10n_cl.edi.util']._get_seed('SIITEST', '', '')
 
     @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.Client')
-    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10nClEdiUtilMixin._get_signed_token')
-    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10nClEdiUtilMixin._get_seed')
+    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10n_ClEdiUtil._get_signed_token')
+    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10n_ClEdiUtil._get_seed')
     def get_token_certificate_no_exists(self, get_seed, get_signed_token, mock_client):
         get_seed.return_value = '1234456'
         get_signed_token.return_value = 'test'
@@ -89,8 +89,8 @@ class TestL10nClDte(TestL10nClEdiCommon):
             self.env['l10n_cl.edi.util']._get_seed('SIITEST', '', '')
 
     @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.Client')
-    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10nClEdiUtilMixin._get_signed_token')
-    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10nClEdiUtilMixin._get_seed')
+    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10n_ClEdiUtil._get_signed_token')
+    @patch('odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util.L10n_ClEdiUtil._get_seed')
     def get_token_rut_validation_error(self, get_seed, get_signed_token, mock_client):
         get_seed.return_value = '1234456'
         get_signed_token.return_value = 'test'
@@ -104,7 +104,7 @@ class TestL10nClDte(TestL10nClEdiCommon):
         with self.assertRaises(Exception):
             self.env['l10n_cl.edi.util']._get_seed('SIITEST', '', '')
 
-    @patch('odoo.addons.certificate.models.certificate.Certificate._compute_is_valid', _is_valid_certificate)
+    @patch('odoo.addons.certificate.models.certificate.CertificateCertificate._compute_is_valid', _is_valid_certificate)
     def test_get_token_ok(self):
         seed = '023071972740'
         xml_expected_dte = misc.file_open(os.path.join(

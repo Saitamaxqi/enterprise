@@ -9,7 +9,7 @@ L10N_LT_PAYROLL_WRITABLE_FIELDS = [
 ]
 
 
-class User(models.Model):
+class ResUsers(models.Model):
     _inherit = ['res.users']
 
     l10n_lt_working_capacity = fields.Selection(related='employee_ids.l10n_lt_working_capacity', readonly=False)

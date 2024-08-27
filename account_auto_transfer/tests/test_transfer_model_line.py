@@ -106,7 +106,7 @@ class MoveModelLineTestCase(AccountAutoTransferTestCase):
         ]
         self.assertListEqual(exp, res)
 
-    @patch('odoo.addons.account_auto_transfer.models.transfer_model.TransferModel._get_move_lines_base_domain')
+    @patch('odoo.addons.account_auto_transfer.models.transfer_model.AccountTransferModel._get_move_lines_base_domain')
     def test__get_move_lines_domain(self, patched):
         return_val = [('bla', '=', 42)]
         # we need to copy return val as there are edge effects due to mocking

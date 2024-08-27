@@ -5,42 +5,42 @@ from contextlib import contextmanager
 from unittest.mock import patch
 
 try:
-    from odoo.addons.social_facebook.models.social_account import SocialAccountFacebook
-    from odoo.addons.social_facebook.models.social_live_post import SocialLivePostFacebook
-    from odoo.addons.social_facebook.models.social_stream import SocialStreamFacebook
+    from odoo.addons.social_facebook.models.social_account import SocialAccount as SocialAccountFacebook
+    from odoo.addons.social_facebook.models.social_live_post import SocialLivePost as SocialLivePostFacebook
+    from odoo.addons.social_facebook.models.social_stream import SocialStream as SocialStreamFacebook
     is_facebook_module_installed = True
 except ImportError:
     is_facebook_module_installed = False
 
 try:
-    from odoo.addons.social_instagram.models.social_account import SocialAccountInstagram
-    from odoo.addons.social_instagram.models.social_live_post import SocialLivePostInstagram
-    from odoo.addons.social_instagram.models.social_post import SocialPostInstagram
-    from odoo.addons.social_instagram.models.social_stream import SocialStreamInstagram
+    from odoo.addons.social_instagram.models.social_account import SocialAccount as SocialAccountInstagram
+    from odoo.addons.social_instagram.models.social_live_post import SocialLivePost as SocialLivePostInstagram
+    from odoo.addons.social_instagram.models.social_post import SocialPost as SocialPostInstagram
+    from odoo.addons.social_instagram.models.social_stream import SocialStream as SocialStreamInstagram
     is_instagram_module_installed = True
 except ImportError:
     is_instagram_module_installed = False
 
 try:
-    from odoo.addons.social_linkedin.models.social_account import SocialAccountLinkedin
-    from odoo.addons.social_linkedin.models.social_live_post import SocialLivePostLinkedin
-    from odoo.addons.social_linkedin.models.social_stream import SocialStreamLinkedIn
+    from odoo.addons.social_linkedin.models.social_account import SocialAccount as SocialAccountLinkedin
+    from odoo.addons.social_linkedin.models.social_live_post import SocialLivePost as SocialLivePostLinkedin
+    from odoo.addons.social_linkedin.models.social_stream import SocialStream as SocialStreamLinkedIn
     is_linkedin_module_installed = True
 except ImportError:
     is_linkedin_module_installed = False
 
 try:
-    from odoo.addons.social_twitter.models.social_account import SocialAccountTwitter
-    from odoo.addons.social_twitter.models.social_live_post import SocialLivePostTwitter
-    from odoo.addons.social_twitter.models.social_stream import SocialStreamTwitter
+    from odoo.addons.social_twitter.models.social_account import SocialAccount as SocialAccountTwitter
+    from odoo.addons.social_twitter.models.social_live_post import SocialLivePost as SocialLivePostTwitter
+    from odoo.addons.social_twitter.models.social_stream import SocialStream as SocialStreamTwitter
     is_twitter_module_installed = True
 except ImportError:
     is_twitter_module_installed = False
 
 try:
-    from odoo.addons.social_youtube.models.social_account import SocialAccountYoutube
-    from odoo.addons.social_youtube.models.social_live_post import SocialLivePostYoutube
-    from odoo.addons.social_youtube.models.social_stream import SocialStreamYoutube
+    from odoo.addons.social_youtube.models.social_account import SocialAccount as SocialAccountYoutube
+    from odoo.addons.social_youtube.models.social_live_post import SocialLivePost as SocialLivePostYoutube
+    from odoo.addons.social_youtube.models.social_stream import SocialStream as SocialStreamYoutube
     is_youtube_module_installed = True
 except ImportError:
     is_youtube_module_installed = False

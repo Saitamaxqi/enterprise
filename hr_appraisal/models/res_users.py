@@ -4,7 +4,7 @@
 from odoo import models, fields, api
 
 
-class User(models.Model):
+class ResUsers(models.Model):
     _inherit = ['res.users']
 
     next_appraisal_date = fields.Date(related='employee_id.next_appraisal_date')

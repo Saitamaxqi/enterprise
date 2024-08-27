@@ -11,7 +11,7 @@ from odoo import fields
 from odoo.addons.base.tests.test_ir_cron import CronMixinCase
 from odoo.addons.social.tests.common import SocialCase
 from odoo.addons.social.models.social_post import SocialPost
-from odoo.addons.social_push_notifications.models.social_account import SocialAccountPushNotifications
+from odoo.addons.social_push_notifications.models.social_account import SocialAccount
 
 
 class SocialPushNotificationsCase(SocialCase, CronMixinCase):
@@ -115,7 +115,7 @@ class SocialPushNotificationsCase(SocialCase, CronMixinCase):
                 self.assertEqual(visitors.website_id, self.website_2)
             return visitors.mapped('push_subscription_ids.push_token'), []
 
-        with patch.object(SocialAccountPushNotifications, '_firebase_send_message_from_configuration',
+        with patch.object(SocialAccount, '_firebase_send_message_from_configuration',
              _firebase_send_message_from_configuration):
             live_posts._post_push_notifications()
 
@@ -125,7 +125,7 @@ class SocialPushNotificationsCase(SocialCase, CronMixinCase):
         # simulate that everyone can receive the push notif (because their time >= time of the one who created the post)
         self.visitors.write({'timezone': self.env.user.tz})
 
-        with patch.object(SocialAccountPushNotifications, '_firebase_send_message_from_configuration',
+        with patch.object(SocialAccount, '_firebase_send_message_from_configuration',
              _firebase_send_message_from_configuration):
             live_posts._post_push_notifications()
 

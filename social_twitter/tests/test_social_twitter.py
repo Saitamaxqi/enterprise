@@ -7,8 +7,8 @@ import requests
 from psycopg2 import IntegrityError
 from unittest.mock import patch
 
-from odoo.addons.social_twitter.models.social_account import SocialAccountTwitter
-from odoo.addons.social_twitter.models.social_stream import SocialStreamTwitter
+from odoo.addons.social_twitter.models.social_account import SocialAccount
+from odoo.addons.social_twitter.models.social_stream import SocialStream
 from odoo.addons.social.tests.common import SocialCase
 from odoo.exceptions import ValidationError
 from odoo.tests import tagged
@@ -19,9 +19,9 @@ from odoo.tools import mute_logger
 class SocialTwitterCase(SocialCase):
     @classmethod
     def setUpClass(cls):
-        with patch.object(SocialAccountTwitter, '_compute_statistics', lambda x: None), \
-                patch.object(SocialAccountTwitter, '_create_default_stream_twitter', lambda *args, **kwargs: None), \
-                patch.object(SocialStreamTwitter, '_fetch_stream_data', lambda *args, **kwargs: None):
+        with patch.object(SocialAccount, '_compute_statistics', lambda x: None), \
+                patch.object(SocialAccount, '_create_default_stream_twitter', lambda *args, **kwargs: None), \
+                patch.object(SocialStream, '_fetch_stream_data', lambda *args, **kwargs: None):
             super(SocialTwitterCase, cls).setUpClass()
 
             cls.social_accounts.write({
@@ -86,7 +86,7 @@ class SocialTwitterCase(SocialCase):
                 response.status_code = 404
             return response
 
-        with patch.object(SocialAccountTwitter, '_format_images_twitter', lambda *args, **kwargs: ['media1', 'media2']), \
+        with patch.object(SocialAccount, '_format_images_twitter', lambda *args, **kwargs: ['media1', 'media2']), \
              patch.object(requests, 'post', _patched_post):
                 self.social_post._action_post()
 

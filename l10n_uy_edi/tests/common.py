@@ -103,7 +103,7 @@ class TestUyEdi(AccountTestInvoicingCommon):
             "company_id": cls.company_uy.id,
         })
 
-        cls.utils_path = "odoo.addons.l10n_uy_edi.models.l10n_uy_edi_document.L10nUyEdiDocument"
+        cls.utils_path = "odoo.addons.l10n_uy_edi.models.l10n_uy_edi_document.L10n_Uy_EdiDocument"
 
     @classmethod
     def _create_move(cls, **kwargs):

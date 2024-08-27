@@ -25,9 +25,7 @@ CONTAINER_TYPES = (
 DIFF_KEY = "o-diff-key"
 
 
-class Model(models.AbstractModel):
-    _name = "base"
-
+class Base(models.AbstractModel):
     _inherit = ['base']
 
     @api.model

@@ -11,7 +11,7 @@ from odoo.tests import tagged
 class TestL10AccountMoveReversal(TestL10nClEdiCommon):
     @classmethod
     @patch('odoo.tools.xml_utils._check_with_xsd', _check_with_xsd_patch)
-    @patch('odoo.addons.certificate.models.certificate.Certificate._compute_is_valid', _is_valid_certificate)
+    @patch('odoo.addons.certificate.models.certificate.CertificateCertificate._compute_is_valid', _is_valid_certificate)
     def setUpClass(cls):
         super().setUpClass()
 

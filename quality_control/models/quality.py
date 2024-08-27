@@ -193,7 +193,7 @@ class QualityPoint(models.Model):
         :param product_ids: the products that could require a quality check
         :type product: :class:`~odoo.addons.product.models.product.ProductProduct`
         :param picking_type_id: the products that could require a quality check
-        :type product: :class:`~odoo.addons.stock.models.stock_picking.PickingType`
+        :type product: :class:`~odoo.addons.stock.models.stock_picking.StockPickingType`
         :return: the domain for quality point with given picking_type_id for all the product_ids
         :rtype: list
         """

@@ -1,9 +1,7 @@
 from odoo import api, models
 
 
-class Model(models.AbstractModel):
-    _name = "base"
-
+class Base(models.AbstractModel):
     _inherit = ['base']
 
     @api.model

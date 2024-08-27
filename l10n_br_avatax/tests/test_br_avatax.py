@@ -6,7 +6,7 @@ from unittest import SkipTest
 from unittest.mock import patch
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
-from odoo.addons.l10n_br_avatax.models.account_external_tax_mixin import AccountExternalTaxMixinL10nBR
+from odoo.addons.l10n_br_avatax.models.account_external_tax_mixin import AccountExternalTaxMixin
 from odoo.exceptions import UserError
 from odoo.tests.common import tagged
 from .mocked_invoice_response import generate_response
@@ -139,7 +139,7 @@ class TestAvalaraBrCommon(AccountTestInvoicingCommon):
     @classmethod
     @contextmanager
     def _capture_request_br(cls, return_value=None):
-        with patch(f'{AccountExternalTaxMixinL10nBR.__module__}.AccountExternalTaxMixinL10nBR._l10n_br_iap_request', return_value=return_value):
+        with patch(f'{AccountExternalTaxMixin.__module__}.AccountExternalTaxMixin._l10n_br_iap_request', return_value=return_value):
             yield
 
     @classmethod

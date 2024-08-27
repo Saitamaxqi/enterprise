@@ -1,7 +1,7 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
-from odoo.addons.pos_preparation_display.models.preparation_display_orderline import PosPreparationDisplayOrderline
+from odoo.addons.pos_preparation_display.models.preparation_display_orderline import Pos_Preparation_DisplayOrderline
 
 
 class Pos_Preparation_DisplayDisplay(models.Model):
@@ -40,7 +40,7 @@ class Pos_Preparation_DisplayDisplay(models.Model):
         else:
             return self.category_ids
 
-    def _should_include(self, orderline: PosPreparationDisplayOrderline) -> bool:
+    def _should_include(self, orderline: Pos_Preparation_DisplayOrderline) -> bool:
         """
         Returns whether the orderline should be included in the preparation
         display, based on the categories that are selected for the preparation

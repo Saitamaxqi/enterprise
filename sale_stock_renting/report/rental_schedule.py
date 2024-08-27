@@ -143,12 +143,12 @@ class SaleRentalSchedule(models.Model):
         return SQL("""%s,
             lot_info.lot_id as lot_id,
             s.warehouse_id as warehouse_id
-        """, super(RentalSchedule, self)._select())
+        """, super()._select())
 
     def _from(self) -> SQL:
         return SQL("""%s
             LEFT OUTER JOIN ordered_lots lot_info ON sol.id=lot_info.sol_id
-        """, super(RentalSchedule, self)._from())
+        """, super()._from())
 
     def _groupby(self) -> SQL:
         return SQL("""%s,

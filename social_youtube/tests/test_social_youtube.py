@@ -5,15 +5,15 @@ from dateutil.relativedelta import relativedelta
 from unittest.mock import patch
 
 from odoo import fields
-from odoo.addons.social_youtube.models.social_account import SocialAccountYoutube
-from odoo.addons.social_youtube.models.social_stream import SocialStreamYoutube
+from odoo.addons.social_youtube.models.social_account import SocialAccount
+from odoo.addons.social_youtube.models.social_stream import SocialStream
 from odoo.tests import common
 
 
 class SocialYouTubeCase(common.TransactionCase):
     def test_youtube_data_cleaning(self):
-        with patch.object(SocialAccountYoutube, '_create_default_stream_youtube', lambda *args, **kwargs: None), \
-             patch.object(SocialStreamYoutube, '_fetch_stream_data', lambda x: None):
+        with patch.object(SocialAccount, '_create_default_stream_youtube', lambda *args, **kwargs: None), \
+             patch.object(SocialStream, '_fetch_stream_data', lambda x: None):
 
             SocialStreamPost = self.env['social.stream.post']
             youtube_media = self.env.ref('social_youtube.social_media_youtube')

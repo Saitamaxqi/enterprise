@@ -21,7 +21,7 @@ class TestCoDianCommon(AccountTestInvoicingCommon):
         super().setUpClass()
 
         cls.frozen_today = datetime(year=2024, month=1, day=30)
-        cls.document_path = 'odoo.addons.l10n_co_dian.models.l10n_co_dian_document.L10nCoDianDocument'
+        cls.document_path = 'odoo.addons.l10n_co_dian.models.l10n_co_dian_document.L10n_Co_DianDocument'
         cls.utils_path = 'odoo.addons.l10n_co_dian.xml_utils'
 
         with freeze_time(cls.frozen_today):

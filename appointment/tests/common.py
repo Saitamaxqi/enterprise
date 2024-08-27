@@ -6,8 +6,8 @@ from contextlib import contextmanager
 from datetime import date, datetime
 from unittest.mock import patch
 
-from odoo.addons.appointment.models.res_partner import Partner
-from odoo.addons.calendar.models.calendar_event import Meeting
+from odoo.addons.appointment.models.res_partner import ResPartner
+from odoo.addons.calendar.models.calendar_event import CalendarEvent
 from odoo.addons.resource.models.resource_calendar import ResourceCalendar
 from odoo.addons.mail.tests.common import mail_new_test_user, MailCommon
 from odoo.tests import common, tagged
@@ -262,15 +262,15 @@ class AppointmentCommon(MailCommon, common.HttpCase):
 
     @contextmanager
     def mockAppointmentCalls(self):
-        _original_search = Meeting.search
-        _original_search_count = Meeting.search_count
-        _original_calendar_verify_availability = Partner.calendar_verify_availability
+        _original_search = CalendarEvent.search
+        _original_search_count = CalendarEvent.search_count
+        _original_calendar_verify_availability = ResPartner.calendar_verify_availability
         _original_work_intervals_batch = ResourceCalendar._work_intervals_batch
-        with patch.object(Meeting, 'search',
+        with patch.object(CalendarEvent, 'search',
                           autospec=True, side_effect=_original_search) as mock_ce_search, \
-             patch.object(Meeting, 'search_count',
+             patch.object(CalendarEvent, 'search_count',
                           autospec=True, side_effect=_original_search_count) as mock_ce_sc, \
-             patch.object(Partner, 'calendar_verify_availability',
+             patch.object(ResPartner, 'calendar_verify_availability',
                           autospec=True, side_effect=_original_calendar_verify_availability) as mock_partner_cal, \
              patch.object(ResourceCalendar, '_work_intervals_batch',
                           autospec=True, side_effect=_original_work_intervals_batch) as mock_cal_wit:

@@ -63,7 +63,7 @@ class TestPoSRental(TestPointOfSaleHttpCommon):
                 (4, self.env.ref('stock.group_stock_manager').id),
                 (4, self.env.ref('sales_team.group_sale_manager').id),
                 (4, self.env.ref('account.group_account_user').id),
-                (4, self.env.ref('base.group_system').id), # You are not allowed to access 'Test Inherit Daughter' (test.inherit.daughter) records.
+                (4, self.env.ref('base.group_system').id),  # You are not allowed to access 'Test Inherit Daughter' (test_inherit_daughter) records.
             ]
         })
         self.main_pos_config.with_user(self.pos_user).open_ui()

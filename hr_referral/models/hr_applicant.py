@@ -9,7 +9,7 @@ from odoo.exceptions import AccessError, UserError
 from odoo.tools.misc import str2bool
 
 
-class Applicant(models.Model):
+class HrApplicant(models.Model):
     _inherit = ["hr.applicant"]
 
     ref_user_id = fields.Many2one('res.users', string='Referred By User', tracking=True,
@@ -96,7 +96,7 @@ class Applicant(models.Model):
             applicant.earned_points = sum(applicant.referral_points_ids.mapped('points'))
 
     def write(self, vals):
-        res = super(Applicant, self).write(vals)
+        res = super().write(vals)
         if 'ref_user_id' in vals or 'stage_id' in vals or 'date_closed' in vals:
             for applicant in self.filtered(lambda a: a.ref_user_id):
                 if 'ref_user_id' in vals:
@@ -128,7 +128,7 @@ class Applicant(models.Model):
                     action_value='hr_referral.action_hr_refused_applicant_employee_referral'
                 )
         self.write({'referral_state': 'closed'})
-        return super(Applicant, self).archive_applicant()
+        return super().archive_applicant()
 
     def _send_notification(self, body, action_value='hr_referral.action_hr_applicant_employee_referral'):
         if self.partner_name:

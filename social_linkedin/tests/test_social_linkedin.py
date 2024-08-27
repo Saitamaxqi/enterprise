@@ -9,7 +9,7 @@ from unittest.mock import patch
 from odoo.addons.mail.tools import link_preview
 from odoo.addons.social.tests.common import SocialCase
 from odoo.addons.social.tests.tools import mock_void_external_calls
-from odoo.addons.social_linkedin.models.social_account import SocialAccountLinkedin
+from odoo.addons.social_linkedin.models.social_account import SocialAccount
 from odoo.addons.social_linkedin.utils import urn_to_id, id_to_urn
 from odoo.tools.misc import mute_logger
 
@@ -43,7 +43,7 @@ class SocialLinkedinCase(SocialCase):
             return response
 
         with patch.object(requests, 'request', _patched_request), \
-             patch.object(SocialAccountLinkedin, '_linkedin_upload_image', lambda *a, **kw: 'fake_image_urn'):
+             patch.object(SocialAccount, '_linkedin_upload_image', lambda *a, **kw: 'fake_image_urn'):
             self.social_post._action_post()
 
         self._checkPostedStatus(success)
@@ -131,7 +131,7 @@ class SocialLinkedinCase(SocialCase):
         posts_types = []
         posts_values = []
         with patch.object(requests, 'request', _patched_request), \
-             patch.object(SocialAccountLinkedin, '_linkedin_upload_image', lambda *a, **kw: 'fake_image_urn'):
+             patch.object(SocialAccount, '_linkedin_upload_image', lambda *a, **kw: 'fake_image_urn'):
             self.social_post._action_post()
 
         self.assertTrue(posts_types)

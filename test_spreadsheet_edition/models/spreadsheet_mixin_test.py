@@ -1,7 +1,7 @@
 from odoo import models
 
 
-class SpreadsheetDummy(models.Model):
+class SpreadsheetTest(models.Model):
     _inherit = ['spreadsheet.test']
 
     def action_open_spreadsheet(self):

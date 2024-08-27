@@ -11,7 +11,7 @@ import time
 from odoo import Command, fields
 from odoo.tools.misc import file_open
 from odoo.addons.account.tests.test_account_move_send import TestAccountMoveSendCommon
-from odoo.addons.base.models.ir_cron import ir_cron
+from odoo.addons.base.models.ir_cron import IrCron
 
 _logger = logging.getLogger(__name__)
 
@@ -197,7 +197,7 @@ class TestKeEdiCommon(TestAccountMoveSendCommon):
         def mock_trigger(cron, at=None):
             crons_to_trigger.append(cron)
 
-        with mock.patch.object(ir_cron, '_trigger', side_effect=mock_trigger, autospec=True) as mocked_trigger:
+        with mock.patch.object(IrCron, '_trigger', side_effect=mock_trigger, autospec=True) as mocked_trigger:
             yield mocked_trigger
 
         # Run cron as current user (not superuser) to limit ourselves to the test company

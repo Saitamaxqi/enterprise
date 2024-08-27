@@ -4,7 +4,7 @@ from dateutil.relativedelta import relativedelta
 from unittest.mock import patch
 
 from odoo.addons.l10n_pe_edi.tests.common import TestPeEdiCommon
-from odoo.addons.l10n_pe_edi_stock.models.stock_picking import Picking
+from odoo.addons.l10n_pe_edi_stock.models.stock_picking import StockPicking
 from odoo.tests import tagged
 
 
@@ -229,6 +229,6 @@ class TestPEDeliveryGuideCommon(TestPeEdiCommon):
         """Ensure that delivery guide is generated and sent to the SUNAT."""
 
         self.picking.l10n_latam_document_number = 'T001-%s' % datetime.now().strftime('%H%M%S')
-        with patch.object(Picking, '_l10n_pe_edi_sign', lambda *_args, **_kwargs: {'cdr': '1234567890'}):
+        with patch.object(StockPicking, '_l10n_pe_edi_sign', lambda *_args, **_kwargs: {'cdr': '1234567890'}):
             self.picking.action_send_delivery_guide()
         self.assertEqual(self.picking.l10n_pe_edi_status, 'sent', self.picking.l10n_pe_edi_error)

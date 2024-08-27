@@ -8,10 +8,10 @@ import time
 from contextlib import contextmanager
 from unittest.mock import patch
 
-from odoo.addons.base.models.res_partner import Partner
+from odoo.addons.base.models.res_partner import ResPartner
 from odoo.addons.mail.tests.common import MailCommon, mail_new_test_user
 from odoo.addons.whatsapp.tools.whatsapp_api import WhatsAppApi
-from odoo.addons.whatsapp.models.whatsapp_message import WhatsAppMessage
+from odoo.addons.whatsapp.models.whatsapp_message import WhatsappMessage
 from odoo.addons.whatsapp.tests.template_data import template_data
 from odoo.addons.whatsapp.tools.whatsapp_exception import WhatsAppError
 from odoo.tests import common, Form
@@ -24,8 +24,8 @@ class MockOutgoingWhatsApp(common.BaseCase):
     @contextmanager
     def mockWhatsappGateway(self):
         self._init_wa_mock()
-        wa_msg_origin = WhatsAppMessage.create
-        partner_create_origin = Partner.create
+        wa_msg_origin = WhatsappMessage.create
+        partner_create_origin = ResPartner.create
 
         # ------------------------------------------------------------
         # Whatsapp API
@@ -95,7 +95,7 @@ class MockOutgoingWhatsApp(common.BaseCase):
             return res
 
         try:
-            with patch.object(Partner, 'create', autospec=True, wraps=Partner, side_effect=_res_partner_create), \
+            with patch.object(ResPartner, 'create', autospec=True, wraps=ResPartner, side_effect=_res_partner_create), \
                  patch.object(WhatsAppApi, '_get_all_template', side_effect=_get_all_template), \
                  patch.object(WhatsAppApi, '_get_template_data', side_effect=_get_template_data), \
                  patch.object(WhatsAppApi, '_upload_demo_document', side_effect=_upload_demo_document), \
@@ -103,7 +103,7 @@ class MockOutgoingWhatsApp(common.BaseCase):
                  patch.object(WhatsAppApi, '_send_whatsapp', side_effect=_send_whatsapp), \
                  patch.object(WhatsAppApi, '_submit_template_new', side_effect=_submit_template_new), \
                  patch.object(WhatsAppApi, '_get_header_data_from_handle', side_effect=_get_header_data_from_handle), \
-                 patch.object(WhatsAppMessage, 'create', autospec=True, wraps=WhatsAppMessage, side_effect=_wa_message_create):
+                 patch.object(WhatsappMessage, 'create', autospec=True, wraps=WhatsappMessage, side_effect=_wa_message_create):
                 yield
         finally:
             pass

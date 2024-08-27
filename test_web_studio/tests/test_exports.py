@@ -15,7 +15,7 @@ IR_MODEL_INFO_FIELD = """<field name="info"><![CDATA[ Main super-class for regul
 
     Odoo models are created by inheriting from this class::
 
-        class user(Model):
+        class ResUsers(Model):
             ...
 
     The system will later instantiate the class once per database (on

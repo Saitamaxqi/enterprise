@@ -6,8 +6,7 @@ import requests
 
 from freezegun import freeze_time
 from odoo.addons.social.tests.tools import mock_void_external_calls
-from odoo.addons.social_facebook.models.social_post import SocialPostFacebook
-from odoo.addons.social_facebook.models.social_stream import SocialStreamFacebook
+from odoo.addons.social_facebook.models.social_post import SocialPost
 from odoo.addons.social_facebook.tests.common import SocialFacebookCommon
 from unittest.mock import patch
 
@@ -31,7 +30,7 @@ class SocialFacebookCase(SocialFacebookCommon):
                 response.status_code = 404
             return response
 
-        with patch.object(SocialPostFacebook, '_format_images_facebook', lambda *args, **kwargs: {'media_fbid': 1}), \
+        with patch.object(SocialPost, '_format_images_facebook', lambda *args, **kwargs: {'media_fbid': 1}), \
              patch.object(requests, 'post', _patched_post):
                 self.social_post._action_post()
 

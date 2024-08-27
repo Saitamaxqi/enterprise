@@ -5,7 +5,7 @@ import json
 import requests
 from unittest.mock import Mock, patch
 
-from odoo.addons.delivery_easypost.models.delivery_carrier import DeliverCarrier
+from odoo.addons.delivery_easypost.models.delivery_carrier import DeliveryCarrier
 from odoo.addons.delivery_easypost.models.easypost_request import EasypostRequest
 from odoo.tools import file_open
 from odoo.tests import TransactionCase
@@ -146,7 +146,7 @@ class EasypostTestCommon(TransactionCase):
             response.content = ''
             return response
 
-        with patch.object(DeliverCarrier, '_easypost_get_services_and_package_types', side_effect=_mocked_easypost_get_services_and_package_types), \
+        with patch.object(DeliveryCarrier, '_easypost_get_services_and_package_types', side_effect=_mocked_easypost_get_services_and_package_types), \
              patch.object(EasypostRequest, '_make_api_request', side_effect=_mocked_easypost_request), \
              patch.object(requests.Session, 'get', _mocked_successful_empty_get_response):
             yield

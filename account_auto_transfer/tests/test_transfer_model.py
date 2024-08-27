@@ -92,7 +92,7 @@ class TransferModelTestFunctionalCase(AccountAutoTransferTestCase):
 # ############################################################################ #
 @tagged('post_install', '-at_install')
 class TransferModelTestCase(AccountAutoTransferTestCase):
-    @patch('odoo.addons.account_auto_transfer.models.transfer_model.TransferModel.action_perform_auto_transfer')
+    @patch('odoo.addons.account_auto_transfer.models.transfer_model.AccountTransferModel.action_perform_auto_transfer')
     def test_action_cron_auto_transfer(self, patched):
         TransferModel = self.env['account.transfer.model']
         TransferModel.create({
@@ -104,7 +104,7 @@ class TransferModelTestCase(AccountAutoTransferTestCase):
         TransferModel.action_cron_auto_transfer()
         patched.assert_called_once()
 
-    @patch('odoo.addons.account_auto_transfer.models.transfer_model.TransferModel._create_or_update_move_for_period')
+    @patch('odoo.addons.account_auto_transfer.models.transfer_model.AccountTransferModel._create_or_update_move_for_period')
     @freeze_time('2022-01-01')
     def test_action_perform_auto_transfer(self, patched):
         self.transfer_model.date_start = datetime.strftime(datetime.today() + relativedelta(day=1), "%Y-%m-%d")
@@ -141,7 +141,7 @@ class TransferModelTestCase(AccountAutoTransferTestCase):
         transfer_model.action_perform_auto_transfer()
         self.assertEqual(initial_call_count + 13, patched.call_count, '13 more calls should have been done')
 
-    @patch('odoo.addons.account_auto_transfer.models.transfer_model.TransferModel._get_auto_transfer_move_line_values')
+    @patch('odoo.addons.account_auto_transfer.models.transfer_model.AccountTransferModel._get_auto_transfer_move_line_values')
     def test__create_or_update_move_for_period(self, patched_get_auto_transfer_move_line_values):
         # PREPARATION
         master_ids, slave_ids = self._create_accounts(2, 0)
@@ -290,7 +290,7 @@ class TransferModelTestCase(AccountAutoTransferTestCase):
                 self.assertEqual(next_date, fields.Date.to_date(expected_date_str),
                                  'Next date from %s should be %s' % (str(next_date), expected_date_str))
 
-    @patch('odoo.addons.account_auto_transfer.models.transfer_model.TransferModel._get_non_analytic_transfer_values')
+    @patch('odoo.addons.account_auto_transfer.models.transfer_model.AccountTransferModel._get_non_analytic_transfer_values')
     def test__get_non_filtered_auto_transfer_move_line_values(self, patched_get_values):
         start_date = fields.Date.to_date('2019-01-01')
         self.transfer_model.write({'account_ids': [(6, 0, [ma.id for ma in self.origin_accounts])], })
@@ -358,7 +358,7 @@ class TransferModelTestCase(AccountAutoTransferTestCase):
         self.assertListEqual(exp, res)
 
     @patch(
-        'odoo.addons.account_auto_transfer.models.transfer_model.TransferModelLine._get_destination_account_transfer_move_line_values')
+        'odoo.addons.account_auto_transfer.models.transfer_model.AccountTransferModelLine._get_destination_account_transfer_move_line_values')
     def test__get_non_analytic_transfer_values(self, patched):
         # Just need a transfer model line
         percents = [45, 45]

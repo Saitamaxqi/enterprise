@@ -17,7 +17,7 @@ class TestL10nClExportsDte(TestL10nClEdiCommon):
     """
 
     @freeze_time('2019-10-22T20:23:27', tz_offset=3)
-    @patch('odoo.addons.certificate.models.certificate.Certificate._compute_is_valid', _is_valid_certificate)
+    @patch('odoo.addons.certificate.models.certificate.CertificateCertificate._compute_is_valid', _is_valid_certificate)
     def test_l10n_cl_dte_110(self):
         foreign_partner = self.env['res.partner'].create({
             'name': 'Mitchell Admin',

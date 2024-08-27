@@ -7,9 +7,7 @@ from odoo import exceptions, models, _
 from odoo.tools import format_datetime
 
 
-class BaseModel(models.AbstractModel):
-    _name = "base"
-
+class Base(models.AbstractModel):
     _inherit = ['base']
 
     def _whatsapp_get_portal_url(self):

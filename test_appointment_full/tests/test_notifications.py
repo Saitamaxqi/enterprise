@@ -3,9 +3,9 @@ from freezegun import freeze_time
 from unittest.mock import patch
 
 from odoo.addons.appointment.tests.common import AppointmentCommon
-from odoo.addons.google_calendar.models.res_users import User as GoogleUser
+from odoo.addons.google_calendar.models.res_users import ResUsers as GoogleUser
 from odoo.addons.google_calendar.tests.test_sync_common import TestSyncGoogle
-from odoo.addons.microsoft_calendar.models.res_users import User as MsftUser
+from odoo.addons.microsoft_calendar.models.res_users import ResUsers as MsftUser
 from odoo.addons.microsoft_calendar.tests.common import TestCommon as MsftTestCommon
 from odoo.addons.microsoft_calendar.utils.microsoft_calendar import MicrosoftCalendarService
 
