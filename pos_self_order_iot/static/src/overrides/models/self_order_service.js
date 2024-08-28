@@ -23,6 +23,15 @@ patch(SelfOrder.prototype, {
 
         this.printer.setPrinter(new IoTPrinter({ device }));
     },
+
+    filterPaymentMethods(paymentMethods) {
+        const otherPaymentMethods = super.filterPaymentMethods(...arguments);
+        const iotPaymentMethods = paymentMethods.filter(
+            (paymentMethod) => paymentMethod.iot_device_id != null
+        );
+        return [...new Set([...otherPaymentMethods, ...iotPaymentMethods])];
+    },
+
     createPrinter(printer) {
         if (printer.device_identifier && printer.printer_type === "iot") {
             const device = new DeviceController(this.iot_longpolling, {
