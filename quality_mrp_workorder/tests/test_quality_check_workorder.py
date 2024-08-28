@@ -255,7 +255,7 @@ class TestQualityCheckWorkorder(TestMrpCommon):
         self.assertEqual(len(mo.workorder_ids), 1)
         quality_check = mo.workorder_ids.check_ids
         self.assertEqual(quality_check.component_id, self.product_2)
-        self.assertEqual(quality_check.qty_done, 1)
+        self.assertEqual(quality_check.move_id.quantity, 1)
         self.assertEqual(finished_sn.quality_check_qty, 2)
         domain_sn_qc = ['|', ('lot_id', '=', finished_sn.id), ('finished_lot_id', '=', finished_sn.id)]
         self.assertEqual(finished_sn.action_open_quality_checks()['domain'], domain_sn_qc)

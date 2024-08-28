@@ -46,9 +46,9 @@ class QualityCheck(models.Model):
         return self._next() if self.workorder_id else res
 
 
-    def _next(self, continue_production=False):
+    def _next(self):
         self.ensure_one()
-        result = super()._next(continue_production=continue_production)
+        result = super()._next()
         if self.quality_state == 'fail' and (self.warning_message or self.failure_message):
             return {
                 'name': _('Quality Check Failed'),

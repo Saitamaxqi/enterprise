@@ -43,10 +43,8 @@ class MrpWorkorder(models.Model):
     is_last_unfinished_wo = fields.Boolean('Is Last Work Order To Process', compute='_compute_is_last_unfinished_wo', store=False)
     lot_id = fields.Many2one(related='current_quality_check_id.lot_id', readonly=False)
     move_id = fields.Many2one(related='current_quality_check_id.move_id', readonly=False)
-    move_line_id = fields.Many2one(related='current_quality_check_id.move_line_id', readonly=False)
     move_line_ids = fields.One2many(related='move_id.move_line_ids')
     quality_state = fields.Selection(related='current_quality_check_id.quality_state', string="Quality State", readonly=False)
-    qty_done = fields.Float(related='current_quality_check_id.qty_done', readonly=False)
     test_type_id = fields.Many2one('quality.point.test_type', 'Test Type', related='current_quality_check_id.test_type_id')
     test_type = fields.Char(related='test_type_id.technical_name')
     user_id = fields.Many2one(related='current_quality_check_id.user_id', readonly=False)
@@ -109,15 +107,6 @@ class MrpWorkorder(models.Model):
     def _compute_done_check_ids(self):
         for wo in self:
             wo.done_check_ids = wo.check_ids.filtered(lambda c: c.quality_state != 'none')
-
-    def write(self, values):
-        res = super().write(values)
-        if 'qty_producing' in values:
-            for wo in self:
-                for check in wo.check_ids:
-                    if check.component_id:
-                        check._update_component_quantity()
-        return res
 
     def unlink(self):
         self.check_ids.sudo().unlink()
@@ -231,8 +220,6 @@ class MrpWorkorder(models.Model):
             elif check.quality_state != 'none':
                 self.current_quality_check_id = check
                 return self._change_quality_check(position='next')
-            if check.test_type in ('register_byproducts', 'register_consumed_materials'):
-                check._update_component_quantity()
         elif position == 'previous':
             check = self.current_quality_check_id.previous_check_id
         else:
@@ -285,11 +272,6 @@ class MrpWorkorder(models.Model):
         res = super().button_start(raise_on_invalid_state=raise_on_invalid_state)
 
         for wo in self:
-            if len(wo.time_ids) == 1 or all(wo.time_ids.mapped('date_end')):
-                for check in wo.check_ids:
-                    if check.component_id:
-                        check._update_component_quantity()
-
             if main_employee:
                 if (len(wo.allowed_employees) == 0 or main_employee in [emp.id for emp in wo.allowed_employees]) and wo.state not in ('done', 'cancel'):
                     wo.start_employee(self.env['hr.employee'].browse(main_employee).id)
@@ -484,10 +466,7 @@ class MrpWorkorder(models.Model):
             for wo in (self.production_id | backorder).workorder_ids:
                 if wo.state in ('done', 'cancel'):
                     continue
-                if not wo.current_quality_check_id or not wo.current_quality_check_id.move_line_id:
-                    wo.current_quality_check_id.update(wo._defaults_from_move(wo.move_id))
-                if wo.move_id:
-                    wo.current_quality_check_id._update_component_quantity()
+                wo.current_quality_check_id.update(wo._defaults_from_move(wo.move_id))
             if not self.env.context.get('no_start_next'):
                 next_wo = self.env['mrp.workorder']
                 if self.operation_id:
@@ -506,15 +485,12 @@ class MrpWorkorder(models.Model):
     def _defaults_from_move(self, move):
         self.ensure_one()
         vals = {'move_id': move.id}
-        move_line_id = move.move_line_ids.filtered(lambda sml: sml._without_quality_checks())[:1]
+        move_line_id = move.move_line_ids[:1]
         if move_line_id:
             vals.update({
-                'move_line_id': move_line_id.id,
-                'qty_done': move_line_id.quantity or 1.0
+                'lot_id': move_line_id.lot_id.id,
             })
-            vals['lot_id'] = move_line_id.lot_id.id
         return vals
-
     # --------------------------
     # Buttons from quality.check
     # --------------------------

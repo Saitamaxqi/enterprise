@@ -202,13 +202,6 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
         };
     }
 
-    get qtyDoneInfo() {
-        return {
-            name: "qty_done",
-            record: this.props.record,
-        };
-    }
-
     get recordData() {
         return this.props.record.data;
     }

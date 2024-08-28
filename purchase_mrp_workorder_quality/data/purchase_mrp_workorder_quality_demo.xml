@@ -103,10 +103,6 @@
             <value model="mrp.production" eval="obj().env.ref('purchase_mrp_workorder_quality.mrp_production').workorder_ids.current_quality_check_id.id"/>
             <value model="stock.lot" eval="{'lot_id': obj().search([('name', '=', 'T0002')], limit=1).id}"/>
         </function>
-        <function model="quality.check" name="write">
-            <value model="mrp.production" eval="obj().env.ref('purchase_mrp_workorder_quality.mrp_production').workorder_ids.current_quality_check_id.id"/>
-            <value model="mrp.production" eval="{'qty_done': 1}"/>
-        </function>
         <function model="quality.check" name="_next">
             <value model="mrp.production" eval="obj().env.ref('purchase_mrp_workorder_quality.mrp_production').workorder_ids.current_quality_check_id.id"/>
         </function>
@@ -151,7 +147,7 @@
 
         <function model="quality.check" name="write">
             <value model="mrp.production" eval="obj().env.ref('purchase_mrp_workorder_quality.mrp_production').workorder_ids.current_quality_check_id.id"/>
-            <value model="stock.lot" eval="{'lot_id': obj().search([('name', '=', '0000000000002')], limit=1).id, 'qty_done': 4}"/>
+            <value model="stock.lot" eval="{'lot_id': obj().search([('name', '=', '0000000000002')], limit=1).id}"/>
         </function>
 
         <function model="quality.check" name="_next">

@@ -1872,11 +1872,8 @@ class TestWorkOrderProcess(TestWorkOrderProcessCommon):
         line2 = long_time_assembly.check_ids[1]
         line3 = long_time_assembly.check_ids[2]
         self.assertEqual(line1.component_id, self.product_1)
-        self.assertEqual(line1.qty_done, 1)
         self.assertEqual(line2.component_id, self.product_1)
-        self.assertEqual(line2.qty_done, 4)
         self.assertEqual(line3.component_id, self.product_2)
-        self.assertEqual(line3.qty_done, 1)
 
     def test_conflict_and_replan(self):
         """ TEST Json data conflicted and the replan button of a workorder """

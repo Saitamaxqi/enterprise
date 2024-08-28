@@ -67,11 +67,6 @@
                             </div>
                         </div>
                         <div class="o_workorder_bar_content" invisible="test_type not in ('register_byproducts', 'register_consumed_materials')">
-                            <label for="qty_done" string="Quantity"/>
-                            <field name="qty_done" readonly="component_tracking == 'serial'" string="Quantity" class="oe_inline"/>
-                            <div invisible="additional">
-                                / <field name="component_remaining_qty" readonly="1"/>
-                            </div>
                             <label for="component_uom_id" string=" "/>
                             <field name="component_uom_id" options="{'no_open': True}" readonly="1"/>
                             <div class="o_workorder_lot">
@@ -155,7 +150,6 @@
                     <field name="picture" widget="image" invisible="test_type != 'picture'"/>
                     <field name="product_id" invisible="test_type not in ('register_consumed_materials', 'register_byproducts')"/>
                     <field name="lot_id" context="{'default_product_id': component_id, 'default_company_id': company_id, 'active_mo_id': production_id}" invisible="test_type not in ('register_consumed_materials', 'register_byproducts')"/>
-                    <field name="qty_done" invisible="test_type not in ('register_consumed_materials', 'register_byproducts')"/>
                 </group>
                 <group>
                     <field name="note"/>
