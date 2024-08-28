@@ -918,6 +918,8 @@ class WhatsAppTemplateSync(WhatsAppTemplateCommon):
                 ('{{2}}', 'body', 'user_mobile', {'demo_value': '+91 12345 12345'}),
             ]
         )
+        # Test Whatsapp phone number on sync
+        self.assertEqual(self.whatsapp_account.phone_number, '+91 12345 67890')
 
     def test_synchronize_with_existing_template_from_template_individual(self):
         """ Test template sync with whatsapp where there is existing template from template itself """

@@ -29,6 +29,8 @@ class WhatsappAccount(models.Model):
     app_secret = fields.Char(string="App Secret", groups='whatsapp.group_whatsapp_admin', required=True)
     account_uid = fields.Char(string="Account ID", required=True, tracking=3)
     phone_uid = fields.Char(string="Phone Number ID", required=True, tracking=4)
+    phone_number = fields.Char(string="Phone Number", copy=False, readonly=True,
+        help="The phone number used in the Whatsapp Business Account.")
     token = fields.Char(string="Access Token", required=True, groups='whatsapp.group_whatsapp_admin')
     webhook_verify_token = fields.Char(string="Webhook Verify Token", compute='_compute_verify_token',
                                        groups='whatsapp.group_whatsapp_admin', store=True)
@@ -79,6 +81,9 @@ class WhatsappAccount(models.Model):
         self.ensure_one()
         try:
             response = WhatsAppApi(self)._get_all_template(fetch_all=True)
+            wa_phone_number = WhatsAppApi(self)._get_phone_number(self.phone_uid)
+            if wa_phone_number:
+                self.phone_number = wa_phone_number
         except WhatsAppError as err:
             raise ValidationError(str(err)) from err
 
@@ -117,6 +122,9 @@ class WhatsappAccount(models.Model):
         wa_api = WhatsAppApi(self)
         try:
             wa_api._test_connection()
+            wa_phone_number = wa_api._get_phone_number(self.phone_uid)
+            if wa_phone_number:
+                self.phone_number = wa_phone_number
         except WhatsAppError as e:
             raise UserError(str(e))
         return {
@@ -125,6 +133,7 @@ class WhatsappAccount(models.Model):
             'params': {
                 'type': 'success',
                 'message': _("Credentials look good!"),
+                'next': {'type': 'ir.actions.act_window_close'},
             }
         }
 

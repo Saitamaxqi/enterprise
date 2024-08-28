@@ -70,6 +70,9 @@
                         <setting documentation="https://developers.facebook.com/docs/whatsapp/business-management-api/get-started#system-user-access-tokens">
                             <field name="token" password="True" placeholder="e.g. EGTRWHRTHETHWRBTEJETHGQEGWRHWR"/>
                         </setting>
+                        <setting invisible="not phone_number">
+                            <field name="phone_number"/>
++                        </setting>
                         <div class="content-group">
                             <button name="button_test_connection" type="object" string="Test Credentials" icon="fa-key" class="btn-link p-1"/><br/>
                             <button name="button_sync_whatsapp_account_templates" type="object" string="Synchronize Templates" class="btn-link p-1" icon="fa-refresh"/>

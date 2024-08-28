@@ -118,6 +118,17 @@ class WhatsAppApi:
 
         return final_response_json
 
+    def _get_phone_number(self, phone_uid):
+        """
+            This method is used to get phone number for the WhatsApp Business Account using phone uid
+
+            API Documentation: https://developers.facebook.com/docs/whatsapp/business-management-api/manage-phone-numbers
+        """
+        _logger.info("Get phone number for account %s [%s] using phone uid %s", self.wa_account_id.name, self.wa_account_id.id, phone_uid)
+        response = self.__api_requests("GET", f"/{phone_uid}", auth_type="bearer")
+        phone_number = response.json().get('display_phone_number')
+        return phone_number
+
     def _get_template_data(self, wa_template_uid):
         """
             This method is used to get one template details using template uid from the WhatsApp Business Account
