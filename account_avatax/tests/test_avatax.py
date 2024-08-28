@@ -1,6 +1,7 @@
 from collections import defaultdict
 from unittest.mock import patch
 
+from odoo import Command
 from odoo.exceptions import UserError, ValidationError, RedirectWarning
 from odoo.tests.common import tagged
 from odoo.modules.neutralize import get_neutralization_queries
@@ -324,6 +325,89 @@ class TestAccountAvalaraInternal(TestAccountAvalaraInternalCommon):
         self.assertRecordValues(tax_line, [{'amount_currency': -4.0, 'balance': -2.0, 'debit': 0.0, 'credit': 2.0}])
         exempted_tax_line = invoice.line_ids.filtered(lambda l: l.tax_line_id.name == 'CA COUNTY 6%')
         self.assertRecordValues(exempted_tax_line, [{'amount_currency': 0.0, 'balance': 0.0, 'debit': 0.0, 'credit': 0.0}])
+
+    def test_invoice_multi_taxline(self):
+        """ Test that multiple tax lines having the same tax are not an issue for avatax computation"""
+        self.env['account.fiscal.position'].search([('is_avatax', '=', True)]).write({
+            'avatax_invoice_account_id': False,
+            'avatax_refund_account_id': False,
+        })
+
+        default_plan = self.env['account.analytic.plan'].create({'name': 'Default'})
+        analytic_account_a = self.env['account.analytic.account'].create({
+            'name': 'analytic_account_a',
+            'plan_id': default_plan.id,
+            'company_id': False,
+        })
+        analytic_account_b = self.env['account.analytic.account'].create({
+            'name': 'analytic_account_b',
+            'plan_id': default_plan.id,
+            'company_id': False,
+        })
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner.id,
+            'fiscal_position_id': self.fp_avatax.id,
+            'invoice_date': '2021-01-01',
+            'invoice_line_ids': [
+                Command.create({
+                    'product_id': self.product_accounting.id,
+                    'tax_ids': None,
+                    'price_unit': 295.00,
+                    'analytic_distribution': {
+                        analytic_account_a.id: 100,
+                    },
+                }),
+                Command.create({
+                    'product_id': self.product_accounting.id,
+                    'tax_ids': None,
+                    'price_unit': 295.00,
+                    'analytic_distribution': {
+                        analytic_account_b.id: 100,
+                    },
+                }),
+            ]
+        })
+        response = {
+            'lines': [{'details': [{'jurisCode': '06',
+                                    'rate': 0.06,
+                                    'taxName': 'CA STATE TAX'},
+                                   {'jurisCode': '075',
+                                    'rate': 0.0025,
+                                    'taxName': 'CA COUNTY TAX'},
+                                   {'jurisCode': 'EMAK0',
+                                    'rate': 0.03,
+                                    'taxName': 'CA SPECIAL TAX'},
+                                   {'jurisCode': 'EMTV0',
+                                    'rate': 0.01,
+                                    'taxName': 'CA SPECIAL TAX'}],
+                       'lineAmount': 295.0,
+                       'lineNumber': 'account.move.line,' + str(line.id),
+                       'tax': 30.24} for line in invoice.invoice_line_ids],
+            'summary': [{'jurisCode': '06',
+                         'nonTaxable': 0.0,
+                         'rate': 0.06,
+                         'tax': 35.4,
+                         'taxCalculated': 35.4,
+                         'taxName': 'CA STATE TAX',
+                         'taxable': 590.0},
+                        {'jurisCode': '075',
+                         'nonTaxable': 0.0,
+                         'rate': 0.0025,
+                         'tax': 1.48,
+                         'taxCalculated': 1.48,
+                         'taxName': 'CA COUNTY TAX',
+                         'taxable': 590.0}]}
+
+        with self._capture_request(return_value=response):
+            # ensure this doesn't raise:
+            # odoo.exceptions.ValidationError: Expected singleton:
+            invoice.button_external_tax_calculation()
+        tax_lines = invoice.line_ids.filtered(lambda l: l.tax_line_id.name == 'CA STATE 6%')
+        self.assertEqual(len(tax_lines), 2, "Multiple tax lines should have been created")
+        self.assertRecordValues(invoice, [{'amount_tax': 60.48, 'amount_total': 650.48, 'amount_untaxed': 590.0}])
+        self.assertRecordValues(tax_lines, [{'amount_currency': -17.7}, {'amount_currency': -17.7}])
+
 
 @tagged("external_l10n", "external", "-at_install", "post_install", "-standard")
 class TestAccountAvalaraInternalIntegration(TestAccountAvalaraInternalCommon):

@@ -114,13 +114,20 @@ class AccountMove(models.Model):
             move.line_ids = line_ids_commands
         for move in self:
             for tax, external_amount in summary.get(move, {}).items():
-                tax_line = move.line_ids.filtered(lambda l: l.tax_line_id == tax)
+                tax_lines = move.line_ids.filtered(lambda l: l.tax_line_id == tax)
+                if not tax_lines:
+                    continue
 
                 # Check that the computed taxes are close enough. For exemptions this could not be the case
                 # since some integrations will return the non-exempt rate%. In that case this will manually fix the tax
                 # lines to what the external service says they should be.
-                if tax_line and move.currency_id.compare_amounts(tax_line.amount_currency, external_amount):
-                    accounting_line_ids_commands[move].append(Command.update(tax_line.id, {'amount_currency': external_amount}))
+                computed_taxes = sum(tax_lines.mapped('amount_currency'))
+                if move.currency_id.compare_amounts(computed_taxes, external_amount) != 0:
+                    diff = external_amount - computed_taxes
+                    for i, tax_line in enumerate(tax_lines):
+                        line_diff = move.currency_id.round(diff / (len(tax_lines) - i))
+                        diff -= line_diff
+                        accounting_line_ids_commands[move].append(Command.update(tax_line.id, {'amount_currency': tax_line.amount_currency + line_diff}))
 
         # Force custom values for the accounting side.
         for move, line_ids_commands in accounting_line_ids_commands.items():
