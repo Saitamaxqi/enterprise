@@ -284,7 +284,7 @@ export class PDFIframe {
     }
 
     postRender() {
-        const refreshSignItemsIntervalId = setInterval(() => this.refreshSignItems(), 2000);
+        const refreshSignItemsIntervalId = setInterval(() => this.refreshSignItems(), 1000);
         this.cleanupFns.push(() => clearInterval(refreshSignItemsIntervalId));
     }
 
