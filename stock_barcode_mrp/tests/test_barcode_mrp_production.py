@@ -468,10 +468,14 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour("odoo/barcode/", 'test_split_line_on_exit_for_production', login='admin')
         # Checks production moves raw values.
         self.assertRecordValues(production.move_raw_ids, [
+            {'product_id': self.product1.id, 'quantity': 4, 'picked': True},
+            {'product_id': self.product2.id, 'quantity': 2, 'picked': True},
+        ])
+        self.assertRecordValues(production.move_raw_line_ids, [
             {'product_id': self.product1.id, 'quantity': 3, 'picked': True},
+            {'product_id': self.product1.id, 'quantity': 1, 'picked': False},
             {'product_id': self.product2.id, 'quantity': 1, 'picked': True},
             {'product_id': self.product2.id, 'quantity': 1, 'picked': False},
-            {'product_id': self.product1.id, 'quantity': 1, 'picked': False},
         ])
 
     def test_barcode_production_component_different_uom(self):
@@ -641,3 +645,45 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         self.assertRecordValues(mo, [{'state':  'done', 'qty_produced': 1.0}])
         bo = mo.backorder_ids - mo
         self.assertRecordValues(bo, [{'product_id': product.id, 'product_qty': 2.0}])
+
+    def test_backorder_partial_completion_save_sensible_split(self):
+        """ In a production opened in Barcode, create move lines as opposed to moves when having to
+        split incomplete transfer lines.
+        """
+        self.clean_access_rights()
+
+        self.env['stock.quant']._update_available_quantity(self.component01, self.stock_location, quantity=10)
+
+        manufacturing_order = self.env['mrp.production'].create({
+            'name': 'TBPCSNS mo',
+            'product_id': self.final_product.id,
+            'product_qty': 10,
+            'move_raw_ids': [(0, 0, {
+                'product_id': self.component01.id,
+                'product_uom_qty': 10,
+                'quantity': 10,
+                'picked': False,
+            })],
+        })
+        manufacturing_order.action_confirm()
+
+        action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = f"/web#action={action_id.id}"
+        self.start_tour(url, 'test_backorder_partial_completion_save_sensible_split', login='admin', timeout=180)
+
+        backorder_mo = manufacturing_order.backorder_ids[-1]
+        self.assertRecordValues(
+            backorder_mo.move_raw_ids,
+            [{
+                'quantity': 5,
+                'product_uom_qty': 5,
+                'picked': False,
+            }]
+        )
+        self.assertRecordValues(
+            backorder_mo.move_finished_ids,
+            [{
+                'quantity': 5,
+                'product_uom_qty': 5,
+            }]
+        )

@@ -1203,3 +1203,29 @@ registry.category("web_tour.tours").add("test_always_backorder_mo", {
         { trigger: ".o_kanban_record:contains(Final Product)" },
     ],
 });
+
+registry.category("web_tour.tours").add('test_backorder_partial_completion_save_sensible_split', {
+    test: true, steps: () => [
+        { trigger: '.o_stock_barcode_main_menu', run: 'scan TBPCSNS mo' },
+        {
+            trigger: '.o_barcode_line:has(.o_barcode_line_title .o_product_label:contains("Final Product")) .o_edit',
+            run: 'click'
+        },
+        { trigger: 'input', run: 'clear' },
+        { trigger: 'input', run: 'edit 5' },
+        { trigger: '.o_save', run: 'click' },
+        {
+            trigger: '.o_barcode_line:has(.o_barcode_line_title .o_product_label:contains("Compo 01")) .o_edit',
+            run: 'click'
+        },
+        { trigger: 'input', run: 'clear' },
+        { trigger: 'input', run: 'edit 5' },
+        { trigger: '.o_save', run: 'click' },
+        { trigger: '.o_barcode_line' },
+        { trigger: '.o_exit', run: 'click' },
+        { trigger: '.o_stock_barcode_main_menu', run: 'scan TBPCSNS mo' },
+        { trigger: '.o_validate_page', run: 'click' },
+        { trigger: 'button[name="action_backorder"]', run: 'click' },
+        { trigger: '.o_notification_buttons' },
+    ]
+})
