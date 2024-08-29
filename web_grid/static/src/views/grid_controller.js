@@ -68,7 +68,9 @@ export class GridController extends Component {
             ranges: this.props.archInfo.ranges,
             defaultAnchor,
         });
+        const rootRef = useRef("root");
         useSetupAction({
+            rootRef: rootRef,
             getLocalState: () => {
                 const { anchor, range } = this.model.navigationInfo;
                 return {
@@ -84,7 +86,6 @@ export class GridController extends Component {
                 ? JSON.parse(isWeekendVisible)
                 : true,
         });
-        const rootRef = useRef("root");
         useViewButtons(rootRef, {
             beforeExecuteAction: this.beforeExecuteActionButton.bind(this),
             afterExecuteAction: this.afterExecuteActionButton.bind(this),
