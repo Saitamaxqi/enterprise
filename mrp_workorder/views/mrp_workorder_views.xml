@@ -300,7 +300,7 @@
             (0, 0, {'view_mode': 'kanban', 'view_id': ref('mrp.workcenter_line_kanban')}),
             (0, 0, {'view_mode': 'list', 'view_id': ref('mrp.mrp_production_workorder_tree_editable_view')}) ]"/>
         <field name="target">fullscreen</field>
-        <field name="context">{'search_default_workcenter_id': active_id}</field>
+        <field name="context">{'search_default_workcenter_id': active_id, 'search_default_progress': True, 'search_default_ready': True}</field>
         <field name="help" type="html">
           <p class="o_view_nocontent_workorder">
             No work orders to do!
@@ -329,7 +329,7 @@
             launch a maintenance request, perform quality tests, etc.
           </p>
         </field>
-        <field name="context">{'search_default_my_work_order': 0, 'search_default_ready': 1, 'search_default_waiting': True, 'search_default_progress': True, 'search_default_pending': True}</field>
+        <field name="context">{'search_default_my_work_order': False, 'search_default_ready': True, 'search_default_waiting': True, 'search_default_progress': True, 'search_default_pending': True}</field>
     </record>
 
 

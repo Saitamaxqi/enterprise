@@ -11,27 +11,27 @@ export class MrpDisplaySearchModel extends SearchModel {
                 {
                     name: "ready",
                     string: _t("Ready"),
-                    isActive: !args.show_progress_workorders,
+                    isActive: !!args.search_default_ready,
                 },
                 {
                     name: "progress",
                     string: _t("In Progress"),
-                    isActive: !args.show_ready_workorders,
+                    isActive: !!args.search_default_progress,
                 },
                 {
                     name: "waiting",
                     string: _t("Waiting"),
-                    isActive: false,
+                    isActive: !!args.search_default_waiting,
                 },
                 {
                     name: "pending",
                     string: _t("Pending"),
-                    isActive: false,
+                    isActive: !!args.search_default_pending,
                 },
                 {
                     name: "done",
                     string: _t("Finished"),
-                    isActive: false,
+                    isActive: !!args.search_default_done,
                 },
             ],
         });

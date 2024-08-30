@@ -131,9 +131,12 @@ class MrpWorkorder(models.Model):
             # from workorder on MO
             action = self.env["ir.actions.actions"]._for_xml_id("mrp_workorder.mrp_workorder_action_tablet")
             action['domain'] = domain
-            action['context'] = {
+            action['context'] = literal_eval(action['context']) | {
                 'no_breadcrumbs': True,
                 'search_default_production_id': self.production_id.id,
+                'search_default_workcenter_id': False,
+                'search_default_progress': False,
+                'search_default_ready': False,
                 'from_manufacturing_order': True,
             }
         elif self.env.context.get('from_production_order'):
@@ -145,11 +148,9 @@ class MrpWorkorder(models.Model):
             # from workcenter kanban view
             action = self.env["ir.actions.actions"]._for_xml_id("mrp_workorder.mrp_workorder_action_tablet")
             action['domain'] = domain
-            action['context'] = {
+            action['context'] = literal_eval(action['context'].replace('active_id', str(self.id))) | {
                 'no_breadcrumbs': True,
                 'search_default_workcenter_id': self.workcenter_id.id,
-                'search_default_ready': True,
-                'search_default_progress': True,
             }
         if self.employee_id:
             action['context']['employee_id'] = self.employee_id.id
@@ -348,7 +349,7 @@ class MrpWorkorder(models.Model):
 
     def action_open_mes(self):
         action = self.env['ir.actions.actions']._for_xml_id('mrp_workorder.action_mrp_display')
-        action['context'] = {
+        action['context'] = literal_eval(action['context']) | {
             'workcenter_id': self.workcenter_id.id,
             'search_default_progress': False,
             'search_default_ready': False,

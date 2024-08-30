@@ -216,6 +216,66 @@ registry.category("web_tour.tours").add("test_shop_floor", {
         run: "click",
     },
     {
+        content: "Switch to Manufacturing",
+        trigger: '.o_app[data-menu-xmlid="mrp.menu_mrp_root"]',
+        run: "click",
+    },
+    {
+        content: "Pick Production",
+        trigger: '.o-dropdown[data-menu-xmlid="mrp.menu_mrp_manufacturing"]',
+        run: "click",
+    },
+    {
+        content: "Pick Manufacturing Orders",
+        trigger: '.o-dropdown-item[data-menu-xmlid="mrp.menu_mrp_production_action"]',
+        run: "click",
+    },
+    {
+        content: "Create an MO",
+        trigger: 'button.o_list_button_add',
+        run: "click",
+    },
+    {
+        content: "Pick a product name",
+        trigger: "input#product_id_0",
+        run: "edit test_product",
+    },
+    {
+        content: "Create the product",
+        trigger: 'a#product_id_0_0_0',
+        run: "click",
+    },
+    {
+        content: "Confirm MO creation",
+        trigger: 'button[name="action_confirm"]',
+        run: "click",
+    },
+    {
+        content: "Switch back to Shop Floor",
+        trigger: 'button[name="action_open_shop_floor"]',
+        run: "click",
+    },
+    {
+        content: "Validate the current workcenter and the default search filters",
+        trigger: ".o_mrp_display_records",
+        run: () => {
+            // Get MO name from the breadcrumb.
+            let mo = document.querySelector(".o_breadcrumb .o_back_button").textContent;
+            // Get filters from the search bar as text.
+            let filters = Array.from(document.querySelectorAll("small.o_facet_value")).map((elem) => elem.textContent);
+            // The results must be the MO name, and the WO states for progress and ready, in this exact order.
+            if (filters.length !== 4 || filters[0] !== mo || filters[1] !== 'MO Ready' || filters[2] !== 'Ready' || filters[3] !== 'In Progress')
+            {
+                console.error(`Unexpected search filters: "${filters.join(', ')}"`);
+            }
+        },
+    },
+    {
+        content: "Leave Shop Floor",
+        trigger: ".o_home_menu .fa-sign-out",
+        run: "click",
+    },
+    {
         trigger: ".o_apps",
     },
     ],

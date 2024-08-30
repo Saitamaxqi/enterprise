@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import base64
+
+from ast import literal_eval
 from datetime import datetime
 
 from dateutil.relativedelta import relativedelta
@@ -71,8 +73,7 @@ class MrpProduction(models.Model):
     def action_open_shop_floor(self):
         self.ensure_one()
         action = self.env['ir.actions.actions']._for_xml_id('mrp_workorder.action_mrp_display')
-        action['context'] = {
-            'show_all_workorders': True,
+        action['context'] = literal_eval(action['context']) | {
             'search_default_name': self.name,
             'shouldHideNewWorkcenterButton': True,
         }

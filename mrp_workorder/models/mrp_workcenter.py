@@ -23,11 +23,7 @@ class MrpWorkcenter(models.Model):
             action = super().action_work_order()
         context = action.get('context', '{}')
         if 'active_id' not in context:
-            context = context[:-1] + ",'workcenter_id':active_id}"
-        if 'search_default_ready' in self.env.context:
-            context = context[:-1] + ",'show_ready_workorders':1}"
-        if 'search_default_progress' in self.env.context:
-            context = context[:-1] + ",'show_progress_workorders':1}"
+            context = context[:-1] + ",'workcenter_id': active_id}"
         context = context.replace('active_id', str(self.id))
         action['context'] = dict(literal_eval(context), employee_id=request.session.get('employee_id'), shouldHideNewWorkcenterButton=True)
         return action
