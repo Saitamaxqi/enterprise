@@ -1,4 +1,12 @@
-import { click, hover, queryAll, queryFirst, setInputRange } from "@odoo/hoot-dom";
+import {
+    click,
+    hover,
+    queryAll,
+    queryFirst,
+    queryOne,
+    queryText,
+    setInputRange,
+} from "@odoo/hoot-dom";
 import { advanceTime, animationFrame, runAllTimers } from "@odoo/hoot-mock";
 import { getPickerCell, zoomOut } from "@web/../tests/core/datetime/datetime_test_helpers";
 import { contains, mountView } from "@web/../tests/web_test_helpers";
@@ -175,31 +183,6 @@ export async function selectRange(label) {
     await ganttControlsChanges();
 }
 
-/**
- * @param {string} selector
- * @returns {string | null}
- */
-export function getText(selector) {
-    const texts = getTexts(selector);
-    return texts.length ? texts[0] : null;
-}
-
-/**
- * @param {string} selector
- * @returns {string[]}
- */
-export function getTexts(selector) {
-    const elements = [];
-    if (typeof selector === "string") {
-        elements.push(...queryAll(selector));
-    } else if (selector[Symbol.iterator]) {
-        elements.push(...selector);
-    } else {
-        elements.push(selector);
-    }
-    return elements.map((el) => el.innerText.trim().replace(/\n/g, ""));
-}
-
 export function getActiveScale() {
     return Number(queryFirst(".o_gantt_renderer_controls input").value);
 }
@@ -328,7 +311,7 @@ export function getCellFromPill(pill) {
             return cell;
         }
     }
-    throw new Error(`Could not find hoverable cell for pill "${getText(pill)}".`);
+    throw new Error(`Could not find hoverable cell for pill "${queryText(pill)}".`);
 }
 
 /**
@@ -356,14 +339,14 @@ function getHeaders(selector) {
 export function getGridContent() {
     const columnHeaders = getHeaders(SELECTORS.columnHeader);
     const groupHeaders = getHeaders(SELECTORS.groupHeader);
-    const range = getText(SELECTORS.rangeMenuToggler);
-    const viewTitle = getText(".o_gantt_title");
+    const range = queryText(SELECTORS.rangeMenuToggler);
+    const viewTitle = queryText(".o_gantt_title");
     const colsRange = queryFirst(SELECTORS.columnHeader)
         .style.getPropertyValue("grid-column")
         .split("/");
     const cellParts = parseNumber(colsRange[1]) - parseNumber(colsRange[0]);
     const pillEls = new Set(queryAll(`${SELECTORS.cellContainer} ${SELECTORS.pillWrapper}`));
-    const rowEls = [...queryAll(`.o_gantt_row_headers > ${SELECTORS.rowHeader}`)];
+    const rowEls = queryAll(`.o_gantt_row_headers > ${SELECTORS.rowHeader}`);
     const singleRowMode = rowEls.length === 0;
     if (singleRowMode) {
         rowEls.push(document.createElement("div"));
@@ -378,7 +361,7 @@ export function getGridContent() {
     for (const rowEl of rowEls) {
         const isGroup = rowEl.classList.contains(CLASSES.group);
         const { row: gridRow } = getGridStyle(rowEl);
-        const row = singleRowMode ? {} : { title: getText(rowEl) };
+        const row = singleRowMode ? {} : { title: queryText(rowEl) };
         if (isGroup) {
             row.isGroup = true;
         }
@@ -406,7 +389,7 @@ export function getGridContent() {
                     end += ` (${endPart}/${cellParts})`;
                 }
                 const pill = {
-                    title: getText(pillEl),
+                    title: queryText(pillEl),
                     colSpan: `${start || "Out of bounds (" + gridColumn[0] + ")"} ${
                         start
                             ? groupHeaders.find(
@@ -586,13 +569,7 @@ export async function resizePill(pill, side, deltaOrPosition, shouldDrop = true)
 
 /** @type {PillHelper<HTMLElement>} */
 export function getPill(text, options) {
-    const nth = options?.nth ?? 1;
-    const regex = new RegExp(text, "i");
-    const pill = [...queryAll(SELECTORS.pill)].filter((pill) => regex.test(getText(pill)))[nth - 1];
-    if (!pill) {
-        throw new Error(`Could not find pill with text "${text}" (nth: ${nth})`);
-    }
-    return pill;
+    return queryOne(`${SELECTORS.pill}:contains(${text}):eq(${(options?.nth ?? 1) - 1})`);
 }
 
 /** @type {PillHelper<HTMLElement>} */

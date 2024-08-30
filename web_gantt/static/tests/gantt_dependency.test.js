@@ -1,5 +1,13 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { hover, pointerDown, queryAll, queryFirst, queryOne, resize } from "@odoo/hoot-dom";
+import {
+    hover,
+    pointerDown,
+    queryAll,
+    queryFirst,
+    queryOne,
+    queryRect,
+    resize,
+} from "@odoo/hoot-dom";
 import { advanceFrame, animationFrame, mockDate, runAllTimers } from "@odoo/hoot-mock";
 import {
     contains,
@@ -444,6 +452,7 @@ test("Buttons are displayed when hovering a connector.", async () => {
 
     hover(getConnector(1));
     await animationFrame();
+
     expect(queryAll(SELECTORS.connectorStrokeButton, { root: getConnector(1) })).toHaveCount(3);
 });
 
@@ -453,14 +462,15 @@ test("Buttons are displayed when hovering a connector after a pill has been hove
 
     hover(getPill("Task 1"));
     await animationFrame();
-    const firstConnector = getConnector(1); // (start at task1Pill)
-    expect(queryAll(SELECTORS.connectorStrokeButton, { root: firstConnector })).toHaveCount(0);
-    expect(firstConnector).toHaveClass(CLASSES.highlightedConnector);
 
-    hover(firstConnector);
+    expect(queryAll(SELECTORS.connectorStrokeButton, { root: getConnector(1) })).toHaveCount(0);
+    expect(getConnector(1)).toHaveClass(CLASSES.highlightedConnector);
+
+    hover(getConnector(1));
     await animationFrame();
-    expect(firstConnector).toHaveClass(CLASSES.highlightedConnector);
-    expect(queryAll(SELECTORS.connectorStrokeButton, { root: firstConnector })).toHaveCount(3);
+
+    expect(getConnector(1)).toHaveClass(CLASSES.highlightedConnector);
+    expect(queryAll(SELECTORS.connectorStrokeButton, { root: getConnector(1) })).toHaveCount(3);
 });
 
 test("Connector buttons: remove a dependency", async () => {
@@ -690,7 +700,7 @@ test("Create a connector from the gantt view.", async () => {
     rightWrapper.classList.add("d-block");
 
     await contains(
-        queryFirst(SELECTORS.connectorCreatorBullet, { root: rightWrapper })
+        `${SELECTORS.connectorCreatorWrapper} ${SELECTORS.connectorCreatorBullet}:first`
     ).dragAndDrop(getPill("Task 2"));
     expect.verifySteps([["write", [[2], { depend_on_ids: [[4, 3, false]] }]]]);
 });
@@ -703,11 +713,13 @@ test("Create a connector from the gantt view: going fast", async () => {
 
     // Explicitly shows the connector creator wrapper since its "display: none"
     // disappears on native CSS hover, which cannot be programatically emulated.
-    const rightWrapper = getPillWrapper("Task 1").querySelector(SELECTORS.connectorCreatorWrapper);
+    const rightWrapper = queryFirst(SELECTORS.connectorCreatorWrapper, {
+        root: getPillWrapper("Task 1"),
+    });
     rightWrapper.classList.add("d-block");
 
-    const connectorBullet = rightWrapper.querySelector(SELECTORS.connectorCreatorBullet);
-    const bulletRect = connectorBullet.getBoundingClientRect();
+    const connectorBullet = queryFirst(SELECTORS.connectorCreatorBullet, { root: rightWrapper });
+    const bulletRect = queryRect(connectorBullet);
     const initialPosition = {
         x: Math.floor(bulletRect.left + bulletRect.width / 2), // floor to avoid sub-pixel positioning
         y: Math.floor(bulletRect.top + bulletRect.height / 2), // floor to avoid sub-pixel positioning
@@ -807,8 +819,7 @@ test("Connector creators of initial pill are highlighted when creating a connect
 
     // Explicitly shows the connector creator wrapper since its "display: none"
     // disappears on native CSS hover, which cannot be programatically emulated.
-    const sourceWrapper = queryFirst(SELECTORS.pillWrapper);
-    const rightWrapper = queryFirst(SELECTORS.connectorCreatorWrapper, { root: sourceWrapper });
+    const rightWrapper = queryFirst`${SELECTORS.pillWrapper} ${SELECTORS.connectorCreatorWrapper}`;
     rightWrapper.classList.add("d-block");
 
     // Creating a connector and hover another pill while dragging it
@@ -817,7 +828,7 @@ test("Connector creators of initial pill are highlighted when creating a connect
     }).drag();
     await moveTo(getPill("Task 2"));
 
-    expect(sourceWrapper).toHaveClass(CLASSES.lockedConnectorCreator);
+    expect(`${SELECTORS.pillWrapper}:first`).toHaveClass(CLASSES.lockedConnectorCreator);
 
     await cancel();
 });

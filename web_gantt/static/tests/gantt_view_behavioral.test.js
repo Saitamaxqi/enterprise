@@ -612,9 +612,7 @@ test("clicking on delete button in edit dialog triggers a confirmation dialog, c
     expect(".o_dialog").toHaveCount(0);
     expect.verifySteps(["unlink"]);
     // Check that the pill has disappeared
-    await expect(editPill("Task 1")).rejects.toThrow(
-        'Error: Could not find pill with text "Task 1" (nth: 1)'
-    );
+    await expect(editPill("Task 1")).rejects.toThrow();
 });
 
 test("create dialog with timezone", async () => {

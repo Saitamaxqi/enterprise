@@ -17,7 +17,6 @@ import {
     ganttControlsChanges,
     getActiveScale,
     getGridContent,
-    getTexts,
     mountGanttView,
     selectGanttRange,
     setScale,
@@ -1176,7 +1175,7 @@ test("popover-template with an added footer", async () => {
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover .popover-footer button").toHaveCount(2);
-    expect(getTexts(".o_popover .popover-footer button")).toEqual(["Edit", "Delete"]);
+    expect(queryAllTexts(".o_popover .popover-footer button")).toEqual(["Edit", "Delete"]);
 
     click(".o_popover .popover-footer button:last-child");
     await animationFrame();

@@ -4,27 +4,27 @@ import { contains } from "@web/../tests/web_test_helpers";
 import { SELECTORS } from "./web_gantt_test_helpers";
 
 /**
- * @param {Element} connector
+ * @param {import("@odoo/hoot-dom").Target} target
  * @param {"remove" | "reschedule-forward" | "reschedule-backward"} button
  */
-export async function clickConnectorButton(connector, button) {
-    hover(connector);
+export async function clickConnectorButton(target, button) {
+    await hover(target);
     await runAllTimers();
     let element = null;
     switch (button) {
         case "remove": {
-            element = queryFirst(SELECTORS.connectorRemoveButton, { root: connector });
+            element = queryFirst(SELECTORS.connectorRemoveButton, { root: target });
             break;
         }
         case "reschedule-backward": {
             element = queryFirst(`${SELECTORS.connectorRescheduleButton}:first-of-type`, {
-                root: connector,
+                root: target,
             });
             break;
         }
         case "reschedule-forward": {
             element = queryFirst(`${SELECTORS.connectorRescheduleButton}:last-of-type`, {
-                root: connector,
+                root: target,
             });
             break;
         }
