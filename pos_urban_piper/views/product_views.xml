@@ -27,7 +27,8 @@
         <field name="inherit_id" ref="product.product_template_tree_view"/>
         <field name="arch" type="xml">
             <field name="available_in_pos" position="after">
-                <field name="urbanpiper_pos_config_ids" widget="many2many_tags" groups="point_of_sale.group_pos_user"/>
+                <field name="urbanpiper_pos_config_ids" widget="many2many_tags" groups="point_of_sale.group_pos_user" optional="show"/>
+                <field name="urbanpiper_meal_type" groups="point_of_sale.group_pos_user" optional="show"/>
             </field>
         </field>
     </record>
