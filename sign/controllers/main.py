@@ -531,10 +531,23 @@ class Sign(http.Controller):
             'date': item['create_date'].date(),
         } for item in items]
 
+    @http.route(['/sign/sign_confirm_cancel/<int:item_id>'], type='http', auth='public')
+    def confirm_cancel_sign_request_item(self, item_id, access_token=None):
+        sign_request_item = request.env['sign.request.item'].sudo().browse(item_id)
+        if sign_request_item and consteq(sign_request_item.access_token, access_token):
+            sign_request_item.sign_request_id.cancel()
+            return http.request.render('sign.canceled_sign_request_item')
+        else:
+            return http.request.not_found()
+
     @http.route(['/sign/sign_cancel/<int:item_id>/<token>'], type='http', auth='public')
     def cancel_sign_request_item_from_mail(self, item_id, token):
         sign_request_item = request.env['sign.request.item'].sudo().browse(item_id)
         if sign_request_item and consteq(sign_request_item.access_token, token):
+            if request.env.ref('sign.cancel_sign_request_item_with_confirmation', raise_if_not_found=False):
+                return http.request.render('sign.cancel_sign_request_item_with_confirmation', {
+                    'record': sign_request_item,
+                })
             sign_request_item.sign_request_id.cancel()
             return http.request.render('sign.canceled_sign_request_item')
         else:

@@ -218,6 +218,28 @@
         </t>
     </template>
 
+    <template id="cancel_sign_request_item_with_confirmation" name="Signature Request Canceled">
+        <t t-call="web.basic_layout">
+            <t t-set="title" t-value="'Odoo Sign'"/>
+            <div class="oe_structure oe_empty">
+                <section class="s_text_image pt104 pb104" data-snippet="s_image_text" data-name="Image - Text">
+                    <form method="post" t-attf-action="/sign/sign_confirm_cancel/#{record.id}/">
+                        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                        <input type="hidden" name="access_token" t-att-value="record.access_token"/>
+                        <div class="text-center">
+                            <h1 class="visually-hidden">Cancel Sign Request</h1>
+                            <h2>Are you sure you want to cancel the sign request?</h2>
+                            <span>You won't receive any notification for this signature request anymore.</span>
+                        </div>
+                        <div class="text-center mt-5">
+                            <input class="btn btn-primary" type="submit" value="Cancel Sign Request" />
+                        </div>
+                    </form>
+                </section>
+            </div>
+        </t>
+    </template>
+
     <template id="canceled_sign_request_item" name="Signature Request Canceled">
         <t t-call="web.basic_layout">
             <t t-set="title" t-value="'Odoo Sign'"/>
