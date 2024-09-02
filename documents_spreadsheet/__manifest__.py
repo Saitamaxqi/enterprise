@@ -40,7 +40,6 @@
             'documents_spreadsheet/static/src/spreadsheet_template/**/*',
             'documents_spreadsheet/static/src/helpers.js',
             'documents_spreadsheet/static/src/spreadsheet_action_loader.js',
-            'documents_spreadsheet/static/src/view_insertion.js',
         ],
         'web.assets_backend_lazy': [
             'documents_spreadsheet/static/src/documents_view/activity/**',

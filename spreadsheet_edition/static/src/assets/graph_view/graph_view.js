@@ -1,14 +1,10 @@
-/** @odoo-module **/
-
-import { registry } from "@web/core/registry";
 import { GraphRenderer } from "@web/views/graph/graph_renderer";
 import { user } from "@web/core/user";
+import { session } from "@web/session";
 import { patch } from "@web/core/utils/patch";
 import { useService } from "@web/core/utils/hooks";
 import { SpreadsheetSelectorDialog } from "@spreadsheet_edition/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_dialog";
 import { omit } from "@web/core/utils/objects";
-
-import { onWillStart } from "@odoo/owl";
 
 export const patchGraphSpreadsheet = () => ({
     setup() {
@@ -16,13 +12,7 @@ export const patchGraphSpreadsheet = () => ({
         this.notification = useService("notification");
         this.actionService = useService("action");
         this.menu = useService("menu");
-        onWillStart(async () => {
-            const insertionGroups = registry.category("spreadsheet_view_insertion_groups").getAll();
-            const userGroups = await Promise.all(
-                insertionGroups.map((group) => user.hasGroup(group))
-            );
-            this.canInsertChart = userGroups.some((group) => group);
-        });
+        this.canInsertChart = session.can_insert_in_spreadsheet;
     },
 
     async onInsertInSpreadsheet() {

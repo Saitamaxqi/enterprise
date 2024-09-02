@@ -7,3 +7,4 @@ from . import res_config_settings
 from . import spreadsheet_contributor
 from . import spreadsheet_template
 from . import spreadsheet_cell_thread
+from . import ir_http

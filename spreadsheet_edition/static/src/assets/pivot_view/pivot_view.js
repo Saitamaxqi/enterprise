@@ -1,4 +1,3 @@
-import { registry } from "@web/core/registry";
 import { PivotRenderer } from "@web/views/pivot/pivot_renderer";
 import { user } from "@web/core/user";
 import { intersection, unique } from "@web/core/utils/arrays";
@@ -9,7 +8,7 @@ import { omit } from "@web/core/utils/objects";
 import { _t } from "@web/core/l10n/translation";
 import { SpreadsheetSelectorDialog } from "@spreadsheet_edition/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_dialog";
 
-import { onWillStart } from "@odoo/owl";
+import { session } from "@web/session";
 
 /**
  * This const is defined in o-spreadsheet library, but has to be redefined here
@@ -32,13 +31,7 @@ patch(PivotRenderer.prototype, {
         super.setup(...arguments);
         this.notification = useService("notification");
         this.actionService = useService("action");
-        onWillStart(async () => {
-            const insertionGroups = registry.category("spreadsheet_view_insertion_groups").getAll();
-            const userGroups = await Promise.all(
-                insertionGroups.map((group) => user.hasGroup(group))
-            );
-            this.canInsertPivot = userGroups.some((group) => group);
-        });
+        this.canInsertPivot = session.can_insert_in_spreadsheet;
     },
 
     async onInsertInSpreadsheet() {

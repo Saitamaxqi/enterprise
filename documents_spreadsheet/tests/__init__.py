@@ -7,4 +7,5 @@ from . import test_spreadsheet_share
 from . import test_spreadsheet_template
 from . import test_spreadsheet
 from . import test_share_controllers
+from . import test_session_info
 from .tours import *
