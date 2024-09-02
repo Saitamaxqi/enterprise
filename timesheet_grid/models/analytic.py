@@ -30,9 +30,6 @@ class AnalyticLine(models.Model):
         compute='_compute_is_timesheet', search='_search_is_timesheet',
         help="Set if this analytic line represents a line of timesheet.")
 
-    duration_unit_amount = fields.Float(related="unit_amount", readonly=True, string="Timesheet Init Amount", export_string_translation=False, aggregator=None)
-    unit_amount_validate = fields.Float(related="unit_amount", readonly=True, string="Timesheet Unit Time", export_string_translation=False, aggregator=None)
-
     display_timer = fields.Boolean(
         "Technical field used to display the timer if the encoding unit is 'Hours'.",
         compute='_compute_display_timer', export_string_translation=False)

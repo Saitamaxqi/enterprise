@@ -64,7 +64,6 @@ export const timesheetUOMHourTimer = {
         };
     },
     fieldDependencies: [
-        { name: "duration_unit_amount", type: "float" },
         { name: "display_timer", type: "boolean" },
         { name: "is_timer_running", type: "boolean" },
     ],

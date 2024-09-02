@@ -9,12 +9,10 @@ import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
 defineTimesheetModels();
 beforeEach(() => {
     patchSession();
-    HRTimesheet._fields.duration_unit_amount = fields.Float();
     HRTimesheet._fields.is_timer_running = fields.Boolean();
     HRTimesheet._records = [{
         id: 1,
         unit_amount: 1,
-        duration_unit_amount: 1,
         timer_start: false,
         timer_pause: false,
         display_timer: false,
@@ -22,7 +20,6 @@ beforeEach(() => {
     }, {
         id: 2,
         unit_amount: 1,
-        duration_unit_amount: 1,
         timer_start: "2017-01-24 00:00:00",
         timer_pause: "2017-01-24 23:00:00",
         display_timer: true,
@@ -30,7 +27,6 @@ beforeEach(() => {
     }, {
         id: 3,
         unit_amount: 1,
-        duration_unit_amount: 1,
         timer_start: "2017-01-24 00:00:00",
         timer_pause: false,
         display_timer: true,
@@ -44,7 +40,6 @@ const mountViewArgs = {
         <list editable="bottom">
             <field name="timer_start" />
             <field name="timer_pause" />
-            <field name="duration_unit_amount" />
             <field name="display_timer" />
             <field name="is_timer_running" />
             <field
