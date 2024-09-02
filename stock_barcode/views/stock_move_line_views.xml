@@ -100,8 +100,15 @@
                 </div>
                 <field name="lot_name" placeholder="Serial/Lot Number" invisible="hide_lot_name"/>
                 <field name="lot_id" placeholder="Serial/Lot Number" invisible="hide_lot"
-                       options="{'no_open': True}"
                        context="{'default_product_id': product_id, 'active_picking_id': picking_id}"/>
+            </div>
+            <div name="properties" class="row" groups="stock.group_production_lot"
+                invisible="tracking == 'none' or not lot_id">
+                <div class="text-black-50 mt-2 fs-5">
+                    <span class="fa fa-puzzle-piece me-1"/>
+                    <label for="lot_properties" string="Properties" class="p-0"/>
+                </div>
+                <field name="lot_properties" widget="properties" readonly="1"/>
             </div>
             <div class="row" invisible="not product_stock_quant_ids">
                 <div class="col-12 d-flex mt-2 ms-0 justify-contents-center">

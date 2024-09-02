@@ -73,8 +73,15 @@
                     </div>
                     <field name="lot_id" placeholder="Serial/Lot Number"
                         readonly="id"
-                        options="{'no_open': True}"
                         context="{'default_product_id': product_id}"/>
+                </div>
+                <div name="properties" class="row" groups="stock.group_production_lot"
+                    invisible="tracking == 'none' or (id and not lot_id)">
+                    <div class="text-black-50 mt-2 fs-5">
+                        <span class="fa fa-puzzle-piece me-1"/>
+                        <label for="lot_properties" string="Properties" class="p-0"/>
+                    </div>
+                    <field name="lot_properties" widget="properties" readonly="1"/>
                 </div>
                 <div class="fixed-bottom">
                     <div class="o_barcode_control d-flex justify-content-between p-2 gap-2">

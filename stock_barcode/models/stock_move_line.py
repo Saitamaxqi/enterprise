@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 import re
 
 from odoo import api, fields, models, _
@@ -16,6 +15,7 @@ class StockMoveLine(models.Model):
     parent_location_id = fields.Many2one('stock.location', compute='_compute_parent_location_id')
     parent_location_dest_id = fields.Many2one('stock.location', compute='_compute_parent_location_id')
     product_stock_quant_ids = fields.One2many('stock.quant', compute='_compute_product_stock_quant_ids')
+    lot_properties = fields.Properties(related='lot_id.lot_properties', definition='product_id.lot_properties_definition', readonly=True)
     hide_lot_name = fields.Boolean(compute='_compute_hide_lot_name', default=True)
     hide_lot = fields.Boolean(compute='_compute_hide_lot_name', default=True)
     image_1920 = fields.Image(related="product_id.image_1920")
