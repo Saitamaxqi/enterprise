@@ -10,7 +10,7 @@
                 class="o_field_widget o_readonly_modifier o_field_CopyClipboardChar ms-0 ms-md-2 w-md-auto w-100">
                 <div class="d-grid rounded-2 overflow-hidden">
                     <span t-out="state.tracebackUrl"/>
-                    <CopyButton className="'o_btn_char_copy btn-sm'" content="state.tracebackUrl" icon="'fa-clone'"
+                    <CopyButton className="'o_btn_char_copy btn-sm'" content="state.tracebackUrl" icon="'fa-clipboard'"
                         successText.translate="The document URL has been copied to your clipboard."/>
                 </div>
             </div>

@@ -115,7 +115,7 @@ test("share dashboard from control panel", async function () {
     await animationFrame();
     expect.verifySteps(["dashboard_shared", "share url copied"]);
     expect(".o_field_CopyClipboardChar").toHaveText("localhost:8069/share/url/132465");
-    await contains(".fa-clone").click();
+    await contains(".fa-clipboard").click();
     expect.verifySteps(["share url copied"]);
 });
 

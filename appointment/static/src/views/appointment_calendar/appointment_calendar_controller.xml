@@ -18,7 +18,7 @@
                                 aria-label="Get Share Link"
                                 t-on-click="onClickGetShareLink"
                                 t-ref="copyLinkRef">
-                            <i class="fa fa-copy me-1" role="img" aria-label="Copy Link"/>Copy Link
+                            <i class="fa fa-clipboard me-1" role="img" aria-label="Copy Link"/>Copy Link
                         </button>
                         <button class="o_appointment_open_form btn btn-secondary flex-fill text-nowrap"
                                 t-att-class="{ 'd-none': !this.appointmentState.lastAppointment.id and !this.hasSlotEvents() }"
