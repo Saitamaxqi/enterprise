@@ -23,6 +23,7 @@ class AccountBankStmtImportCSV(models.TransientModel):
                 'required': False,
                 'fields': [],
                 'type': 'monetary',
+                'model_name': model,
             }, {
                 'id': 'debit',
                 'name': 'debit',
@@ -30,6 +31,7 @@ class AccountBankStmtImportCSV(models.TransientModel):
                 'required': False,
                 'fields': [],
                 'type': 'monetary',
+                'model_name': model,
             }, {
                 'id': 'credit',
                 'name': 'credit',
@@ -37,6 +39,7 @@ class AccountBankStmtImportCSV(models.TransientModel):
                 'required': False,
                 'fields': [],
                 'type': 'monetary',
+                'model_name': model,
             }]
             fields_list.extend(add_fields)
         return fields_list
