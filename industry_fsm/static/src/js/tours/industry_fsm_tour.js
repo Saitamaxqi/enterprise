@@ -41,6 +41,8 @@ registry.category("web_tour.tours").add("industry_fsm_tour", {
         },
         {
             trigger: '.o_field_widget[name="partner_id"] input',
+            content: markup(_t('Select the <b>customer</b> for your task.')),
+            tooltipPosition: "right",
             run: "click",
         },
         {
