@@ -143,7 +143,7 @@ class SocialStreamPost(models.Model):
         )
         if not result.ok:
             if result.json().get('errors', [{}])[0].get('parameters', {}).get('since_id'):
-                raise UserError(_("Replies from posts older than 7 days must be accessed on Twitter.com"))
+                raise UserError(_("See older replies on x.com"))
             raise UserError(_("Failed to fetch the posts in the same thread: '%(text)s' using the account %(account)s.", text=result.text, account=self.stream_id.account_id.name))
 
         users = {
