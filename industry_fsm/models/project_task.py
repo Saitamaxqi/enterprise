@@ -501,3 +501,16 @@ class ProjectTask(models.Model):
                 [('is_fsm', '=', True)],
             ])
         return action
+
+    def _prepare_domains_for_all_deadlines(self, date_start, date_end):
+        domain = super()._prepare_domains_for_all_deadlines(date_start, date_end)
+        if self._context.get('fsm_mode'):
+            domain['project'] = expression.AND([
+                domain['project'],
+                [('is_fsm', '=', True)]
+            ])
+            domain['milestone'] = expression.AND([
+                domain['milestone'],
+                [('project_id.is_fsm', '=', True)]
+            ])
+        return domain

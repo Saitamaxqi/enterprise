@@ -1449,6 +1449,18 @@ class ProjectTask(models.Model):
             )
         raise NotImplementedError(_("This Progress Bar is not implemented."))
 
+    def _prepare_domains_for_all_deadlines(self, date_start, date_end):
+        return {
+            'project': [
+                ('date', '>=', date_start),
+                ('date_start', '<=', date_end),
+            ],
+            'milestone': [
+                ('deadline', '>=', date_start),
+                ('deadline', '<=', date_end),
+            ],
+        }
+
     @api.model
     @api.readonly
     def get_all_deadlines(self, date_start, date_end):
@@ -1461,14 +1473,11 @@ class ProjectTask(models.Model):
         """
         results = {}
         project_id = self._context.get('default_project_id', False)
-        project_domain = [
-            ('date', '>=', date_start),
-            ('date_start', '<=', date_end),
-        ]
-        milestone_domain = [
-            ('deadline', '>=', date_start),
-            ('deadline', '<=', date_end),
-        ]
+        # get domains
+        result_domain = self._prepare_domains_for_all_deadlines(date_start, date_end)
+        project_domain = result_domain['project']
+        milestone_domain = result_domain['milestone']
+
         if project_id:
             project_domain = expression.AND([project_domain, [('id', '=', project_id)]])
             milestone_domain = expression.AND([milestone_domain, [('project_id', '=', project_id)]])
