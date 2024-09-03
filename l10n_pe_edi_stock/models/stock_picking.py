@@ -393,7 +393,7 @@ class StockPicking(models.Model):
         }
         data = {
             "grant_type": "password",
-            "scope": "https://api-cpe.sunat.gob.pe/",
+            "scope": "https://api-cpe.sunat.gob.pe",
             "client_id": credentials["access_id"],
             "client_secret": credentials["access_key"],
             "username": credentials["client_id"],
