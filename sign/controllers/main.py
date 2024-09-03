@@ -536,6 +536,8 @@ class Sign(http.Controller):
         sign_request_item = request.env['sign.request.item'].sudo().browse(item_id)
         if sign_request_item and consteq(sign_request_item.access_token, access_token):
             sign_request_item.sign_request_id.cancel()
+            message_post = _("The signature has been canceled by %(partner)s(%(role)s)", partner=sign_request_item.partner_id.name, role=sign_request_item.role_id.name)
+            sign_request_item.sign_request_id.message_post(body=message_post)
             return http.request.render('sign.canceled_sign_request_item')
         else:
             return http.request.not_found()
@@ -549,6 +551,8 @@ class Sign(http.Controller):
                     'record': sign_request_item,
                 })
             sign_request_item.sign_request_id.cancel()
+            message_post = _("The signature has been canceled by %(partner)s(%(role)s)", partner=sign_request_item.partner_id.name, role=sign_request_item.role_id.name)
+            sign_request_item.sign_request_id.message_post(body=message_post)
             return http.request.render('sign.canceled_sign_request_item')
         else:
             return http.request.not_found()
