@@ -1568,8 +1568,10 @@ class Article(models.Model):
 
     def get_user_sorted_articles(self, search_query, limit=40, hidden_mode=False):
         """ Called when using the Command palette to search for articles matching
-            with the given search terms. If no search terms is provided, the
-            function returns the user's favorite articles.
+            with the given search terms. If no search terms are provided, the
+            function returns the user's favorite articles when hidden_mode is False;
+            otherwise, it returns all the hidden articles the user has access to,
+            not exceeding the limit.
 
             To reduce the query runtime, the search method limits the number of
             candidates to consider using the `knowledge.fts_search_cut_off`
@@ -1598,10 +1600,15 @@ class Article(models.Model):
         :param bool hidden_mode: If True, scope the search to the hidden articles.
                                  If False, scope the search to the visible articles.
         """
+        domain = [
+            ('is_template', '=', False),
+            ('is_article_visible', '!=', hidden_mode),
+            ('user_has_access', '=', True),  # Admins won't see other's private articles.
+        ]
         if not search_query:
-            return self.search([
-                ('is_user_favorite', '=', True)
-            ], limit=limit).read([
+            if not hidden_mode:
+                domain = [('is_user_favorite', '=', True)]
+            return self.search(domain, limit=limit).read([
                 'id',
                 'icon',
                 'name',
@@ -1609,11 +1616,7 @@ class Article(models.Model):
                 'root_article_id'
             ])
 
-        query = self._search([
-            ('is_template', '=', False),
-            ('is_article_visible', '!=', hidden_mode),
-            ('user_has_access', '=', True),  # Admins won't see other's private articles.
-        ])
+        query = self._search(domain)
 
         # Escape special characters recognized by the 'ILIKE' keyword
         search_pattern = '%' + re.sub(r'(%|_|\\)', r'\\\1', search_query) + '%'
