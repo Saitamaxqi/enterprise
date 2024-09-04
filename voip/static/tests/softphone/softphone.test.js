@@ -9,8 +9,7 @@ import {
     triggerHotkey,
 } from "@mail/../tests/mail_test_helpers";
 import { setupVoipTests } from "@voip/../tests/voip_test_helpers";
-import { translatedTerms } from "@web/core/l10n/translation";
-import { patchWithCleanup, serverState } from "@web/../tests/web_test_helpers";
+import { serverState } from "@web/../tests/web_test_helpers";
 
 describe.current.tags("desktop");
 setupVoipTests();
@@ -80,43 +79,10 @@ test("Click on the “Numpad button” to open and close the numpad.", async () 
     await contains(".o-voip-Numpad", { count: 0 });
 });
 
-test("The softphone top bar text is “VoIP” as long as there is no missed calls.", async () => {
+test("The softphone top bar text is “VoIP”.", async () => {
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
     await contains(".o-voip-Softphone-topbar", { text: "VoIP" });
-});
-
-test("The softphone automatically opens folded when there is at least 1 missed call.", async () => {
-    const pyEnv = await startServer();
-    pyEnv["voip.call"].create({ state: "missed", user_id: serverState.userId });
-    await start();
-    await contains(".o-voip-Softphone"); // it's displayed…
-    await contains(".o-voip-Softphone-content", { count: 0 }); // but it's folded
-});
-
-test("The softphone top bar text is “1 missed call” when there is 1 missed call.", async () => {
-    const pyEnv = await startServer();
-    pyEnv["voip.call"].create({ state: "missed", user_id: serverState.userId });
-    await start();
-    await contains(".o-voip-Softphone-topbar", { text: "1 missed call" });
-});
-
-test("The softphone top bar text allows a specific translation for the dual grammatical number.", async () => {
-    const pyEnv = await startServer();
-    patchWithCleanup(translatedTerms, { "2 missed calls": "2 مكالمة فائتة" });
-    pyEnv["voip.call"].create({ state: "missed", user_id: serverState.userId });
-    pyEnv["voip.call"].create({ state: "missed", user_id: serverState.userId });
-    await start();
-    await contains(".o-voip-Softphone-topbar", { text: "2 مكالمة فائتة" });
-});
-
-test("The softphone top bar text is “513 missed calls” when there is 513 missed calls", async () => {
-    const pyEnv = await startServer();
-    for (let i = 0; i < 513; i++) {
-        pyEnv["voip.call"].create({ state: "missed", user_id: serverState.userId });
-    }
-    await start();
-    await contains(".o-voip-Softphone-topbar", { text: "513 missed calls" });
 });
 
 test("The cursor when hovering over the top bar has “pointer” style", async () => {

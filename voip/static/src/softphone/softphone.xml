@@ -4,7 +4,7 @@
         <div class="o-voip-Softphone position-absolute d-flex flex-column bottom-0 shadow d-print-none" t-att-class="{ 'w-100 h-100': isOnSmallDevice, 'ms-2': !isOnSmallDevice }">
             <div class="o-voip-Softphone-topbar d-flex align-items-center" t-att-class="{ 'rounded-top-3 cursor-pointer': !isOnSmallDevice }" t-on-click="onClickTopbar">
                 <i class="oi-large ms-3 me-1" t-att-class="icon" role="img"/>
-                <span class="mx-1 text-truncate" t-esc="topbarText" t-att-title="topbarText"/>
+                <span class="mx-1">VoIP</span>
                 <!-- Plain separator. It is its own element to avoid spreading attributes of its siblings over the entire width. -->
                 <span class="flex-grow-1"/>
                 <button class="oi oi-large oi-close btn h-100 opacity-50 opacity-100-hover text-reset" title="Close" t-on-click="onClickClose"/>

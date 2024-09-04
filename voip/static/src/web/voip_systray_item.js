@@ -13,6 +13,15 @@ export class VoipSystrayItem extends Component {
     }
 
     /**
+     * Number of missed calls used to display in systray item icon.
+     *
+     * @returns {number}
+     */
+    get missedCallCount() {
+        return this.voip.missedCalls;
+    }
+
+    /**
      * Translated text used as the title attribute of the systray item.
      *
      * @returns {string}

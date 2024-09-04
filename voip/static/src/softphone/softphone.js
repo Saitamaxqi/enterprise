@@ -126,20 +126,6 @@ export class Softphone extends Component {
         ];
     }
 
-    /** @returns {string} */
-    get topbarText() {
-        switch (this.voip.missedCalls) {
-            case 0:
-                return _t("VoIP");
-            case 1:
-                return _t("1 missed call");
-            case 2:
-                return _t("2 missed calls");
-            default:
-                return _t("%(number)s missed calls", { number: this.voip.missedCalls });
-        }
-    }
-
     /** @param {MouseEvent} ev */
     onClickClose(ev) {
         markEventHandled(ev, "Softphone.close");

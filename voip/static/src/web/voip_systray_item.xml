@@ -5,6 +5,7 @@
         <div>
             <button class="o_nav_entry" t-att-title="titleText" t-on-click="onClick">
                 <i class="oi oi-large oi-voip"/>
+                <span t-if="missedCallCount" class="badge rounded-pill" t-esc="missedCallCount"/>
             </button>
         </div>
     </t>
