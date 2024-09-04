@@ -844,13 +844,13 @@ class ProjectTask(models.Model):
                       JOIN task_dependencies_rel rel
                         ON rel.task_id = task.id
                       JOIN project_task depends_on
-                        ON depends_on.id not in %s
+                        ON depends_on.id != all(%s)
                        AND depends_on.id = rel.depends_on_id
                        AND depends_on.date_deadline is not null
                      WHERE task.id = any(%s)
                   GROUP BY task.id
                 """
-        self.env.cr.execute(query, [tuple(self.ids), self.ids])
+        self.env.cr.execute(query, [self.ids, self.ids])
         return {res['id']: res['date'].astimezone(timezone(tz_info)) for res in self.env.cr.dictfetchall()}
 
     @api.model
@@ -967,13 +967,15 @@ class ProjectTask(models.Model):
         return resource_calendar_validity, resource_validity
 
     def _web_gantt_get_users_unavailable_intervals(self, user_ids, date_begin, date_end, tasks_to_exclude_ids):
-        """ Get the unavailable intervals per user, intervals already occupied by other tasks
+        """
+        Get the unavailable intervals per user, intervals already occupied by other tasks.
 
-            :param user_ids: users ids
-            :param date_begin: date begin
-            :param date_end: date end
-            :param tasks_to_exclude_ids: tasks to exclude ids
-            :return dict = {user_id: List[Interval]}
+        :param user_ids: A list of user IDs for whom the unavailable intervals are being calculated.
+        :param date_begin: The beginning date of the intervals.
+        :param date_end: The end date of the intervals.
+        :param tasks_to_exclude_ids: A list of task IDs to exclude from the already planned tasks.
+        :return: A dictionary where the keys are user IDs and the values are the unavailable intervals.
+        :rtype: dict[int, Intervals]
         """
         domain = [('user_ids', 'in', user_ids),
             ('date_deadline', '>=', date_begin),
@@ -997,14 +999,20 @@ class ProjectTask(models.Model):
         return {user_id: Intervals(vals) for user_id, vals in unavailable_intervals_per_user_id.items()}
 
     def _web_gantt_get_valid_intervals(self, start_date, end_date, users, candidates_ids=[], remove_intervals_with_planned_tasks=True, valid_intervals_per_user=None):
-        """ Get the valid (intervals available for planning)
+        """
+        Get the valid intervals available for planning.
 
-            :param start_date: start date
-            :param end_date: end date end
-            :param users: users
-            :param candidates_ids: candidates to plan ids
-            :param remove_intervals_with_planned_tasks: True to remove the intervals with already planned tasks
-            :return (valid intervals dict = {user_id: List[Interval]}, invalid intervals dict = {user_id: List[Interval]})
+        :param start_date: The start date for the intervals.
+        :param end_date: The end date for the intervals.
+        :param users: A list of users for whom the intervals are being calculated.
+        :param candidates_ids: A list of candidate IDs to plan.
+        :param remove_intervals_with_planned_tasks: Whether to remove intervals with already planned tasks.
+        :return: A tuple containing:
+
+            - valid_intervals: A dictionary where keys are user IDs and values are lists of valid intervals.
+            - invalid_intervals: A dictionary where keys are user IDs and values are lists of invalid intervals.
+
+        :rtype: tuple(dict[int, List[Interval]], dict[int, List[Interval]])
         """
         start_date, end_date = start_date.astimezone(utc), end_date.astimezone(utc)
         users_work_intervals, calendar_work_intervals = users._get_valid_work_intervals(start_date, end_date)
@@ -1238,11 +1246,12 @@ class ProjectTask(models.Model):
             if not users_ids:
                 valid_intervals_per_user[False] -= used_intervals
             else:
+                users_ids_set = set(users_ids)
                 for user in valid_intervals_per_user:
                     if not user:
                         continue
 
-                    if set(user) & set(users_ids):
+                    if not users_ids_set.isdisjoint(user):
                         valid_intervals_per_user[user] -= used_intervals
 
         if candidates_passed_initial_deadline:

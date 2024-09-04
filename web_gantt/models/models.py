@@ -148,26 +148,24 @@ class Base(models.AbstractModel):
         dependency_field_name, dependency_inverted_field_name,
         start_date_field_name, stop_date_field_name
     ):
-        """ Reschedule a record according to the provided parameters.
+        """
+        Reschedule a record according to the provided parameters.
 
-            :param direction: The direction of the rescheduling 'forward' or 'backward'
-            :param master_record_id: The record that the other one is depending on.
-            :param slave_record_id: The record that is depending on the other one.
-            :param dependency_field_name: The field name of the relation between the master and slave records.
-            :param dependency_inverted_field_name: The field name of the relation between the slave and the parent
-                   records.
-            :param start_date_field_name: The start date field used in the gantt view.
-            :param stop_date_field_name: The stop date field used in the gantt view.
-            :return: dict = {
-                type: notification type,
-                message: notification message,
-                old_vals_per_pill_id: dict = {
-                    pill_id: {
-                        start_date_field_name: planned_date_begin before rescheduling
-                        stop_date_field_name: date_deadline before rescheduling
-                    }
-                }
-            }
+        :param direction: The direction of the rescheduling, either 'forward' or 'backward'.
+        :param master_record_id: The record that the dependent record is based on.
+        :param slave_record_id: The record that depends on the master record.
+        :param dependency_field_name: The field name representing the relation between the master and slave records.
+        :param dependency_inverted_field_name: The field name representing the relation between the slave and parent records.
+        :param start_date_field_name: The start date field used in the Gantt view.
+        :param stop_date_field_name: The stop date field used in the Gantt view.
+        :return: A dictionary with the following structure:
+
+            - type: Notification type.
+            - message: Notification message.
+            - old_vals_per_pill_id: A dictionary where the key is the pill ID, and the value is another dictionary
+            containing the start and stop dates before rescheduling.
+
+        :rtype: dict
         """
 
         if direction not in (self._WEB_GANTT_RESCHEDULE_FORWARD, self._WEB_GANTT_RESCHEDULE_BACKWARD):
