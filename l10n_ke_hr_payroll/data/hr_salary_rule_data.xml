@@ -443,6 +443,7 @@ result = - min(
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payroll_report" eval="True"/>
+        <field name="color">#00A09D</field>
     </record>
 
     <record id="l10n_ke_employees_salary_personal_relief" model="hr.salary.rule">
@@ -543,6 +544,7 @@ result = categories['STATUTORY_DED']
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payroll_report" eval="True"/>
+        <field name="color">#00A09D</field>
     </record>
 
     <record id="l10n_ke_employees_helb" model="hr.salary.rule">
@@ -624,6 +626,7 @@ result = categories['OTHER_DED']
         </field>
         <field name="struct_id" ref="l10n_ke_hr_payroll.hr_payroll_structure_ken_employee_salary"/>
         <field name="appears_on_payroll_report" eval="True"/>
+        <field name="color">#00A09D</field>
     </record>
 
     <record id="l10n_ke_employees_salary_pension_contribution" model="hr.salary.rule">

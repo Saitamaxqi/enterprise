@@ -53,7 +53,7 @@
         <field name="name">hr.salary.rule.form</field>
         <field name="model">hr.salary.rule</field>
         <field name="arch" type="xml">
-            <form string="Salary Rules">
+            <form string="Salary Rules" js_class="hr_salary_rule_preview">
             <sheet>
                 <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                 <label for="name" string="Rule Name"/>
@@ -98,8 +98,34 @@
                             </group>
                         </group>
                     </page>
-                    <page name="description" string="Description">
-                        <field name="note"/>
+                    <page name="display" string="Display">
+                        <group name="options" string="Options">
+                            <group>
+                                <field name="color" widget="color"/>
+                                <field name="title"/>
+                            </group>
+                            <group>
+                                <field name="bold"/>
+                                <field name="underline"/>
+                                <field name="italic"/>
+                            </group>
+                            <label for="note" string="Description" class="fw-bold text-900 opacity-100"/>
+                            <field name="note"/>
+                        </group>
+                        <group name="preview" string="Preview">
+                            <group>
+                                <div>
+                                    <field name="name" readonly="1" class="o_preview fs-4"/>
+                                    <field name="note" readonly="1" class="text-truncate o_preview fs-6" invisible="not note"/>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="preview_currency_position" invisible="1"/>
+                                <field name="preview_currency_symbol" class="o_preview fs-4" nolabel="1" invisible="title or preview_currency_position == 'after'"/>
+                                <span class="o_preview fs-4" invisible="title">99.99</span>
+                                <field name="preview_currency_symbol" class="o_preview fs-4" nolabel="1" invisible="title or preview_currency_position == 'before'"/>
+                            </group>
+                        </group>
                     </page>
                 </notebook>
             </sheet>

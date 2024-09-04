@@ -29,7 +29,7 @@
                                 <div id="employee_id">
                                     <strong class="me-2">ID:</strong>
                                     <span t-if="o.employee_id.identification_id" t-field="o.employee_id.identification_id"/>
-                                    <span t-else="" style="color:#875A7B" class="fw-bold">No ID number on the employee !!!</span>
+                                    <span t-else="" class="fw-bold">No ID number on the employee !!!</span>
                                 </div>
                                 <div id="employee_email" t-if="o.employee_id.work_email">
                                     <strong class="me-2">Email:</strong>
@@ -63,7 +63,7 @@
                             <td id="other_infos">
                                 <div id="wage">
                                     <strong class="me-2">Contract Wage (<span class="text-capitalize" t-out="o.contract_id.schedule_pay if o.contract_id.wage_type == 'monthly' else o.contract_id.wage_type"/>):</strong>
-                                    <span t-out="o.contract_id._get_contract_wage()" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}" style="color:#875A7B" class="fw-bold"/>
+                                    <span t-out="o.contract_id._get_contract_wage()" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}" class="fw-bold"/>
                                 </div>
                                 <div id="pay_period">
                                     <strong class="me-2">Pay Period:</strong>
@@ -121,23 +121,22 @@
                                 </tr>
                             </span>
                             <span>
-                                <t t-set="line_style" t-value="'color:#875A7B;'"/>
                                 <t t-set="line_class" t-value="'o_total o_border_bottom fw-bold'"/>
                                 <tr style="color:none">
-                                    <td t-att-class="line_class" t-att-style="line_style">
+                                    <td t-att-class="line_class">
                                         <span>Total</span>
                                     </td>
-                                    <td id="worked_days_total_hours" t-attf-class="#{line_class} text-end" t-att-style="line_style">
+                                    <td id="worked_days_total_hours" t-attf-class="#{line_class} text-end">
                                         <span t-out="round(sum(worked_days_lines.mapped('number_of_hours')), 2)"/>
                                     </td>
-                                    <td id="worked_days_total_days" t-attf-class="#{line_class} text-end" t-att-style="line_style">
+                                    <td id="worked_days_total_days" t-attf-class="#{line_class} text-end">
                                         <span t-out="round(sum(worked_days_lines.mapped('number_of_days')), 2)"/>
                                     </td>
-                                    <td id="worked_days_total_amount" t-attf-class="#{line_class} text-end" t-att-style="line_style">
+                                    <td id="worked_days_total_amount" t-attf-class="#{line_class} text-end">
                                         <span t-out="sum(worked_days_lines.mapped('amount'))" digits="[42, 2]"
                                             t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
                                     </td>
-                                    <td id="worked_days_total_ytd" t-if="o.ytd_computation" t-attf-class="#{line_class} text-end" t-att-style="line_style">
+                                    <td id="worked_days_total_ytd" t-if="o.ytd_computation" t-attf-class="#{line_class} text-end">
                                         <span t-out="sum(worked_days_lines.mapped('ytd'))" digits="[42, 2]"
                                             t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
                                     </td>
@@ -161,37 +160,32 @@
                     <tbody id="payslip_lines">
                         <span t-foreach="o.line_ids.filtered(lambda line: line.appears_on_payslip)" t-as="line">
                             <t t-set="line_styling" t-value="line.get_payslip_styling_dict()"/>
-                            <t t-set="line_style"/>
-                            <t t-set="line_class"/>
-                            <t t-if="line.code in line_styling">
-                                <t t-set="line_style" t-value="line_styling[line.code]['line_style']"/>
-                                <t t-set="line_class" t-value="line_styling[line.code]['line_class']"/>
-                            </t>
+                            <t t-set="line_style" t-value="line_styling['line_style']"/>
+                            <t t-set="line_class" t-value="line_styling['line_class']"/>
+                            <t t-set="o_title" t-value="line_styling['o_title']"/>
                             <tr id="line_display">
-                                <td id="payslip_line_name" t-att-class="line_class" t-att-style="line_style"><span t-field="line.name"/></td>
-                                <td id="payslip_line_amount" t-attf-class="#{line_class} text-end" t-att-style="line_style">
+                                <td id="payslip_line_name" t-att-class="line_class" t-att-style="line_style">
+                                    <span t-field="line.name" class="d-block"/>
+                                    <span t-field="line.salary_rule_id.note" t-attf-class="#{line_class} d-inline-block text-truncate pb-0 mb-0 ps-1" style="max-width: 500px; font-size: 0.875em;"/>
+                                </td>
+                                <td id="payslip_line_amount" t-attf-class="#{line_class} text-end #{o_title}" t-att-style="line_style">
                                     <span t-out="line.amount"
                                         t-if="line.quantity > 1 or line.rate &lt; 100"
-                                        t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
-                                        t-att-style="'color:#875A7B;' if line.amount &lt; 0 else ''"/>
+                                        t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
                                 </td>
-                                <td id="payslip_line_quantity" t-attf-class="#{line_class} text-end" t-att-style="line_style">
-                                    <span t-if="line.quantity > 1" t-out="round(line.quantity, 2)"
-                                        t-att-style="'color:#875A7B;' if line.quantity &lt; 0 else ''"/>
+                                <td id="payslip_line_quantity" t-attf-class="#{line_class} text-end #{o_title}" t-att-style="line_style">
+                                    <span t-if="line.quantity > 1" t-out="round(line.quantity, 2)"/>
                                 </td>
-                                <td id="payslip_line_rate" t-attf-class="#{line_class} text-end" t-att-style="line_style">
-                                    <span t-if="line.rate &lt; 100" t-out="str(round(line.rate, 2)) + ' %'"
-                                        t-att-style="'color:#875A7B;' if line.rate &lt; 0 else ''"></span>
+                                <td id="payslip_line_rate" t-attf-class="#{line_class} text-end #{o_title}" t-att-style="line_style">
+                                    <span t-if="line.rate &lt; 100" t-out="str(round(line.rate, 2)) + ' %'"></span>
                                 </td>
-                                <td id="payslip_line_total" t-attf-class="#{line_class} text-end" t-att-style="line_style">
+                                <td id="payslip_line_total" t-attf-class="#{line_class} text-end #{o_title}" t-att-style="line_style">
                                     <span t-out="line.total"
-                                        t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'
-                                        t-att-style="'color:#875A7B;' if line.total &lt; 0 else ''"/>
+                                        t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
                                 </td>
                                 <td id="payslip_line_ytd" t-if="o.ytd_computation" class="text-end">
                                     <span t-esc="line.ytd"
-                                        t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"
-                                        t-att-style="'color:#875A7B;' if line.ytd &lt; 0 else ''"/>
+                                        t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                                 </td>
                             </tr>
                         </span>

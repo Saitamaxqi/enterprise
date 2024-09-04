@@ -101,6 +101,18 @@ result_rate = 10''')
     partner_id = fields.Many2one('res.partner', string='Partner',
         help="Eventual third party involved in the salary payment of the employees.")
     note = fields.Html(string='Description', translate=True)
+    color = fields.Char('Color', default='#000000')
+    title = fields.Boolean(string="Title", help="When selected, this salary rule will only be displayed as a title with its description, without numeric values.")
+    bold = fields.Boolean(string="Bold")
+    underline = fields.Boolean(string="Underline")
+    italic = fields.Boolean(string="Italic")
+    preview_currency_symbol = fields.Char(compute='_compute_preview_currency')
+    preview_currency_position = fields.Selection([('after', 'After Amount'), ('before', 'Before Amount')], compute='_compute_preview_currency')
+
+    @api.depends_context('company')
+    def _compute_preview_currency(self):
+        self.preview_currency_symbol = self.env.company.currency_id.symbol
+        self.preview_currency_position = self.env.company.currency_id.position
 
     def _raise_error(self, localdict, error_type, e):
         raise UserError(_("""%(error_type)s

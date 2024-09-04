@@ -50,17 +50,17 @@ class HrPayslipLine(models.Model):
         return super(HrPayslipLine, self).create(vals_list)
 
     def get_payslip_styling_dict(self):
+        self.ensure_one()
+        rule = self.salary_rule_id
+        classes = []
+        if rule.bold:
+            classes.append('fw-bold')
+        if rule.italic:
+            classes.append('fst-italic')
+        if rule.underline:
+            classes.append('text-decoration-underline')
         return {
-            'NET': {
-                'line_style': 'color:#875A7B;',
-                'line_class': 'o_total o_border_bottom fw-bold',
-            },
-            'GROSS': {
-                'line_style': 'color:#00A09D;',
-                'line_class': 'o_subtotal o_border_bottom',
-            },
-            'BASIC': {
-                'line_style': 'color:#00A09D;',
-                'line_class': 'o_subtotal o_border_bottom',
-            },
+            'line_style': f'color:{rule.color};',
+            'line_class': ' '.join(classes),
+            'o_title': 'd-none' if rule.title else ''
         }
