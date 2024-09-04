@@ -1061,7 +1061,6 @@ class MrpProductionSchedule(models.Model):
         # Get quantity on incoming moves
 
         domain_moves = self._get_moves_domain(after_date, before_date, 'outgoing')
-        domain_moves = AND([domain_moves, [('raw_material_production_id', '=', False)]])
         stock_moves_by_date = self._get_moves_and_date(domain_moves)
         stock_moves_by_date = sorted(stock_moves_by_date, key=lambda m: m[1])
         index = 0
