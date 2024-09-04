@@ -37,6 +37,7 @@ export class PlanningSlot extends models.Model {
     });
     user_id = fields.Many2one({ relation: "res.users" });
     conflicting_slot_ids = fields.Many2many({ relation: "planning.slot" });
+    resource_roles = fields.Many2many({ relation: "resource.resource" });
 }
 
 export class ResourceResource extends models.Model {
@@ -53,6 +54,13 @@ export class ResourceResource extends models.Model {
     employee_id = fields.Many2one({ relation: "hr.employee" });
     user_id = fields.Many2one({ relation: "res.users" });
     im_status = fields.Char();
+    hr_icon_display = fields.Selection({
+        selection: [
+            ["presence_holiday_absent", "On leave"],
+            ["presence_holiday_present", "Present but on leave"],
+        ],
+    });
+    show_hr_icon_display = fields.Boolean();
 }
 
 export class PlanningRole extends models.Model {
