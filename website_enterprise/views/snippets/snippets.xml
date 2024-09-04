@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <template id="external_snippets" inherit_id="website.snippets">
+    <template id="external_snippets" inherit_id="website.snippets" priority="15">
         <xpath expr="//snippets[@id='snippet_structure']//t[@id='event_upcoming_snippet_hook']" position="after">
             <t id="appointments_hook"/>
         </xpath>
