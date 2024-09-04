@@ -36,9 +36,6 @@ export class AccountReportSearchBar extends Component {
                     linesIDsMatched.push(line.id);
                 }
             }
-        }
-
-        if (linesIDsMatched.length) {
             this.controller.lines_searched = linesIDsMatched;
             this.controller.updateOption("filter_search_bar", query);
         } else {
