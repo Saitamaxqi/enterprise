@@ -34,7 +34,9 @@ class IoTDeviceController extends formView.Controller {
                 return false;
             }
         } else if (record.data.type === "display") {
-            await this.updateDisplayUrl(record.data);
+            this.updateDisplayUrl(record.data).catch((e) => {
+                console.error(e);
+            })
         }
     }
     /**
@@ -62,7 +64,7 @@ class IoTDeviceController extends formView.Controller {
     /**
      * Send an action to the device to update the screen url
      */
-    updateDisplayUrl(data) {
+    async updateDisplayUrl(data) {
         const { display_url } = data;
         return this.getIotDevice(data).action({ action: "update_url", url: display_url });
     }

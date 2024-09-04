@@ -2,12 +2,12 @@ import { registry } from '@web/core/registry';
 import { IoTConnectionErrorDialog } from '@iot/dialogs/iot_connection_error_dialog';
 
 export class IoTLongpolling {
-    static serviceDependencies = ["dialog"];
+    static serviceDependencies = ["dialog", "orm"];
     constructor() {
         this.setup(...arguments);
     }
     // setup to allow patching
-    setup({ dialog }) {
+    setup({ dialog, orm }) {
         // CONSTANTS
         this.POLL_TIMEOUT = 60000;
         this.POLL_ROUTE = '/hw_drivers/event';
@@ -24,6 +24,7 @@ export class IoTLongpolling {
         this._listeners = {};
         this._delayedStartPolling(this.RPC_DELAY);
         this.dialogService = dialog;
+        this.orm = orm;
     }
 
     //--------------------------------------------------------------------------
@@ -152,23 +153,29 @@ export class IoTLongpolling {
     }
 
     /**
-     * Execute a RPC to the box
-     * Used to do polling or an action
+     * Execute an RPC to the box
+     * Used to do both polling or action
      *
-     * @param {String} iot_ip
-     * @param {String} route
+     * @param {String} iot_ip IP of the IoT Box
+     * @param {String} route endpoint to call on the IoT Box
      * @param {Object} data information needed to perform an action or the listener for the polling
-     * @param {Object} options.timeout
+     * @param {Object} options additional options for the request (e.g. timeout)
      */
     async _rpcIoT(iot_ip, route, data, options) {
         this.protocol = window.location.protocol;
         var port = this.protocol === 'http:' ? ':8069' : '';
         var url = this.protocol + '//' + iot_ip + port;
+
+        // Get the id of the IoT Box and sign the request
+        const [{ id }] = await this.orm.call("iot.box", "search_read", [[['ip', '=', iot_ip]]], { fields: [ 'id' ] }, { limit: 1 });
+        const signature = await this.orm.call("iot.box", "hmac_sign", [id, url + route, data.params]);
+
         const requestParams = {
             method: "POST",
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json;charset=utf-8",
+                "Authorization": signature,
             },
         };
         if (options.timeout) {

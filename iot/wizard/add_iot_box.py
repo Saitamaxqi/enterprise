@@ -4,7 +4,7 @@
 from datetime import timedelta
 import random
 import requests
-import time
+import secrets
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
@@ -17,20 +17,32 @@ class AddIotBox(models.TransientModel):
     _description = 'Add IoT Box wizard'
 
     def _default_token(self):
-        web_base_url = self.get_base_url()
-        token = str(random.randint(1000000000, 9999999999))
-        iot_token = self.env['ir.config_parameter'].sudo().search([('key', '=', 'iot_token')], limit=1)
-        if iot_token:
-            # token valable 60 minutes
-            if iot_token.write_date + timedelta(minutes=60) > fields.Datetime.now():
-                token = iot_token.value
+        """Generates the url to provide an IoT Box to connect to the database.
+        This url contains the url of the db, a generated token, the db_uuid and the enterprise_code.
+        The generated token is valid for 15 minutes, enough time to pair an IoT Box with the database.
+        The token is stored in the ir.config_parameter table to be used later by the "iot.box" once a
+        new record is created.
+
+        :return: the url to provide to the IoT Box to connect to the database
+        """
+        ir_config_parameter = self.env['ir.config_parameter'].sudo()
+        generated_token = secrets.token_hex(16)
+        saved_token = ir_config_parameter.search([('key', '=', 'iot_token')], limit=1)
+        if saved_token:
+            # token is valid for 15 minutes (enough to connect an IoT Box)
+            if (
+                saved_token.value
+                and saved_token.write_date + timedelta(minutes=15) > fields.Datetime.now()
+            ):
+                generated_token = saved_token.value  # keep the old token
             else:
-                iot_token.write({'value': token})
+                saved_token.write({'value': generated_token})
         else:
-            self.env['ir.config_parameter'].sudo().create({'key': 'iot_token', 'value': token})
-        db_uuid = self.env['ir.config_parameter'].sudo().get_param('database.uuid', default='')
-        enterprise_code = self.env['ir.config_parameter'].sudo().get_param('database.enterprise_code', default='')
-        return web_base_url + '?token=' + token + '&db_uuid=' + db_uuid + '&enterprise_code=' + enterprise_code
+            ir_config_parameter.create({'key': 'iot_token', 'value': generated_token})
+
+        db_uuid = ir_config_parameter.get_param('database.uuid', default='')
+        enterprise_code = ir_config_parameter.get_param('database.enterprise_code', default='')
+        return f"{self.get_base_url()}?token={generated_token}&db_uuid={db_uuid}&enterprise_code={enterprise_code}"
 
     token = fields.Char(string='Token', default=_default_token, store=False)
     pairing_code = fields.Char(string='Pairing Code')
