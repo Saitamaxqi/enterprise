@@ -212,10 +212,16 @@
                     </div>
                     <group>
                         <group name="left_details">
-                            <label for="appointment_duration" invisible="category == 'custom'"/>
+                            <label for="appointment_duration"/>
                             <div invisible="category == 'custom'">
                                 <field name="appointment_duration" class="oe_inline me-1 o_input_5ch" widget="float_time"/><span> hours</span>
                             </div>
+                            <span class="text-muted" invisible="category != 'custom'">Depending on the Slots</span>
+                            <label for="slot_creation_interval"/>
+                            <div invisible="category == 'custom'">
+                                <field name="slot_creation_interval" class="oe_inline me-1 o_input_5ch" widget="float_time"/><span> hours</span>
+                            </div>
+                            <span class="text-muted" invisible="category != 'custom'">Schedule Line</span>
                             <label for="min_schedule_hours" string="Pre-Booking Time"/>
                             <div>
                                 <field name="min_schedule_hours" class="oe_inline me-1 o_input_5ch" widget="float_time"/><span> hours before the meeting</span>

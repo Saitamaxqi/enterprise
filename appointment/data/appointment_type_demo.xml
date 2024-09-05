@@ -5,6 +5,7 @@
         <field name="name">Dental Care</field>
         <field name="location_id" ref="res_partner_appointment_type_dental_care"/>
         <field name="appointment_duration">0.5</field>
+        <field name="slot_creation_interval">0.5</field>
         <field name="max_schedule_days">45</field>
         <field name="schedule_based_on">users</field>
         <field name="staff_user_ids" eval="[(6, 0, [ref('base.user_admin'), ref('base.user_demo')])]"/>

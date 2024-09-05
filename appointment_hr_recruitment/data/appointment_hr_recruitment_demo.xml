@@ -3,6 +3,7 @@
     <record id="appointment_type_interviews" model="appointment.type">
         <field name="name">Interviews availabilities</field>
         <field name="appointment_duration">0.5</field>
+        <field name="slot_creation_interval">0.5</field>
         <field name="min_schedule_hours">1</field>
         <field name="max_schedule_days">60</field>
         <field name="min_cancellation_hours">1</field>

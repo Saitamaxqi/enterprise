@@ -81,6 +81,7 @@ class AppointmentType(models.Model):
         return {
             'allow_guests': True,
             'appointment_duration': 0.5,
+            'slot_creation_interval': 0.5,
             'assign_method': 'resource_time',
             'avatars_display': 'hide',
             'event_videocall_source': self._get_default_template_videocall_source(),
@@ -96,6 +97,7 @@ class AppointmentType(models.Model):
     def _prepare_table_booking_template_values(self):
         return {
             'appointment_duration': 2.0,
+            'slot_creation_interval': 0.5,
             'assign_method': 'time_auto_assign',
             'event_videocall_source': False,
             'hide_duration': True,
@@ -122,7 +124,7 @@ class AppointmentType(models.Model):
                     'start_hour': start_hour,
                     'end_hour': end_hour,
                 })
-                for (start_hour, end_hour) in [(12, 14.5), (12.5, 14.5), (19, 0), (19.5, 0), (20, 0), (20.5, 0)]
+                for (start_hour, end_hour) in [(12, 14.5), (19, 0)]
                 for weekday in range(2, 7)
             ],
             'schedule_based_on': 'resources',

@@ -137,6 +137,8 @@ class AppointmentType(models.Model):
         ('resources', 'Resources (e.g. Tables, Courts, Rooms, ...)')],
         string="Availability on", default="users", required=True)
     slot_ids = fields.One2many('appointment.slot', 'appointment_type_id', 'Availabilities', copy=True)
+    slot_creation_interval = fields.Float('Create a slot every', default=1.0,
+        help="Starting from the beginning of the time slot, Odoo will create a new slot at regular intervals based on the time specified here.")
 
     # Staff Users Management
     staff_user_ids = fields.Many2many(
@@ -658,8 +660,7 @@ class AppointmentType(models.Model):
             # Adapt local start to not append slot in the past from ref
             # Using ref_start to consider or not the min schedule hours at the beginning of first slot
             while local_start < ref_start:
-                local_start += relativedelta(hours=self.appointment_duration)
-
+                local_start += relativedelta(hours=self.slot_creation_interval)
             local_end = local_start + relativedelta(hours=self.appointment_duration)
             # localized end time for the entire slot on that day
             local_slot_end = appt_tz.localize(
@@ -670,10 +671,7 @@ class AppointmentType(models.Model):
             if end_tz_apt_type and local_start.date() == end_tz_apt_type.date() and local_slot_end > end_tz_apt_type:
                 local_slot_end = end_tz_apt_type
 
-            # if local_start >= local_slot_end, no slot will be appended
-            end_start_delta = ((local_slot_end - local_start).total_seconds() / 3600)
-            n_slot = int(end_start_delta / self.appointment_duration)
-            for _index in range(n_slot):
+            while local_start + relativedelta(hours=self.appointment_duration) <= local_slot_end:
                 slots.append({
                     self.appointment_tz: (
                         local_start,
@@ -689,14 +687,13 @@ class AppointmentType(models.Model):
                     ),
                     'slot': slot,
                 })
-                local_start = local_end
-                local_end += relativedelta(hours=self.appointment_duration)
-
+                local_start += relativedelta(hours=self.slot_creation_interval)
+                local_end = local_start + relativedelta(hours=self.appointment_duration)
         # We use only the recurring slot if it's not a custom appointment type.
         if self.category != 'custom':
 
-            # Don't generate slots if the appointment boundaries are completely in the past
-            if last_day < reference_date.astimezone(pytz.UTC):
+            # Don't generate slots if the appointment boundaries are completely in the past or there is no interval in between the slots.
+            if last_day < reference_date.astimezone(pytz.UTC) or self.slot_creation_interval <= 0:
                 return slots
 
             # Regular recurring slots (not a custom appointment), generate necessary slots using configuration rules

@@ -13,6 +13,7 @@
         <field name="name">Table</field>
         <field name="location_id" ref="booking_table_address"/>
         <field name="appointment_duration">2</field>
+        <field name="slot_creation_interval">0.5</field>
         <field name="max_schedule_days">14</field>
         <field name="schedule_based_on">resources</field>
         <field name="assign_method">time_auto_assign</field>
@@ -26,13 +27,11 @@
         <field name="hide_duration" eval="True"/>
         <!-- Restaurant is open 1) from WED to SUN at 19, 19.30 and 20. 2) on WED, SAT, SUN at 12 and 12.30. -->
         <field name="slot_ids" eval="[(5, 0, 0)] + [
-            (0, 0, {'weekday': weekday, 'start_hour': start_hour, 'end_hour': start_hour + 2.0})
+            (0, 0, {'weekday': weekday, 'start_hour': 19, 'end_hour': 22})
             for weekday in ('3', '4', '5', '6', '7')
-            for start_hour in (19, 19.50, 20)
         ] + [
-            (0, 0, {'weekday': weekday, 'start_hour': start_hour, 'end_hour': start_hour + 2.0})
+            (0, 0, {'weekday': weekday, 'start_hour': 12, 'end_hour': 14.50})
             for weekday in ('3', '6', '7')
-            for start_hour in (12, 12.50)
         ]"/>
     </record>
 

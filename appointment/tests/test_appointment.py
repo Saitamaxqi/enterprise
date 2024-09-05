@@ -176,6 +176,7 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
                 'name': 'Recurring Meeting 3',
                 'staff_user_ids': [(4, employee.id)],
                 'appointment_duration': hour_fifty_float_repr_A,  # float presenting 1h 50min
+                'slot_creation_interval': hour_fifty_float_repr_A,
                 'appointment_tz': 'UTC',
                 'slot_ids': [
                     (0, False, {
@@ -1115,6 +1116,7 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         appointment = self.env['appointment.type'].create({
             'appointment_tz': 'UTC',
             'appointment_duration': 1.2,  # 1h12
+            'slot_creation_interval': 1.2,
             'min_schedule_hours': 47.0,
             'max_schedule_days': 8,
             'name': 'Test',
@@ -1138,6 +1140,99 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
                 "A slot shouldn't be generated before the first_day datetime")
         self.assertEqual(len(slots), 12)  # 2 days of 5 slots and 2 slots on wednesday
 
+    def test_slot_creation_interval(self):
+        """The slot creation interval is equal to the appointment duration.
+        Regular configuration, leading to 1 slot every 'appointment duration'.
+        """
+        self.apt_type_bxls_2days.write({
+            'appointment_tz': 'UTC',
+            'appointment_duration': 2,
+            'slot_creation_interval': 2,
+            'slot_ids': [(0, 0, {
+                'weekday': str(weekday),
+                'start_hour': 9,
+                'end_hour': 19,
+            }) for weekday in range(1, 8)],
+        })
+        expected_slots = {
+            'enddate': self.global_slots_enddate,
+            'startdate': self.reference_now_monthweekstart,
+            'slots_start_hours': list(range(9, 18, 2)),
+            'slots_startdate': self.reference_monday.date(),
+            'slots_enddate': self.reference_monday.date() + timedelta(days=15),
+        }
+        expected_months = [{
+            'name_formated': 'February 2022',
+            'month_date': datetime(2022, 2, 14),
+            'weeks_count': 5,
+        }]
+        with freeze_time(self.reference_now):
+            slots = self.apt_type_bxls_2days._get_appointment_slots('UTC')
+        self.assertSlots(slots, expected_months, expected_slots)
+
+    def test_slot_creation_interval_shorter(self):
+        """ The slot creation interval is shorter than the appointment duration.
+        This configuration will create *more* slots, typically used for a restaurant to allow people
+        coming every 1 hour but staying for a duration of 2 hours.
+        """
+        self.apt_type_bxls_2days.write({
+            'appointment_tz': 'UTC',
+            'appointment_duration': 2,
+            'slot_creation_interval': 1,
+            'slot_ids': [(0, 0, {
+                'weekday': str(weekday),
+                'start_hour': 9,
+                'end_hour': 19,
+            }) for weekday in range(1, 8)],
+        })
+        expected_slots = {
+            'enddate': self.global_slots_enddate,
+            'startdate': self.reference_now_monthweekstart,
+            'slots_start_hours': list(range(9, 18)),
+            'slots_startdate': self.reference_monday.date(),
+            'slots_enddate': self.reference_monday.date() + timedelta(days=15),
+        }
+        expected_months = [{
+            'name_formated': 'February 2022',
+            'month_date': datetime(2022, 2, 14),
+            'weeks_count': 5,
+        }]
+        with freeze_time(self.reference_now):
+            slots = self.apt_type_bxls_2days._get_appointment_slots('UTC')
+        self.assertSlots(slots, expected_months, expected_slots)
+
+    def test_slot_creation_interval_longer(self):
+        """ The slot creation interval is longer than the appointment duration.
+        This configuration will create *less* slots, allowing for example to leave a buffer after the appointment.
+        For example, people will book a 2h session for an escape game but you need 1h to reset the game before
+        the next slot.
+        """
+        self.apt_type_bxls_2days.write({
+            'appointment_tz': 'UTC',
+            'appointment_duration': 2,
+            'slot_creation_interval': 3,
+            'slot_ids': [(0, 0, {
+                'weekday': str(weekday),
+                'start_hour': 9,
+                'end_hour': 19,
+            }) for weekday in range(1, 8)],
+        })
+        expected_slots = {
+            'enddate': self.global_slots_enddate,
+            'startdate': self.reference_now_monthweekstart,
+            'slots_start_hours': [9, 12, 15],
+            'slots_startdate': self.reference_monday.date(),
+            'slots_enddate': self.reference_monday.date() + timedelta(days=15),
+        }
+        expected_months = [{
+            'name_formated': 'February 2022',
+            'month_date': datetime(2022, 2, 14),
+            'weeks_count': 5,
+        }]
+        with freeze_time(self.reference_now):
+            slots = self.apt_type_bxls_2days._get_appointment_slots('UTC')
+        self.assertSlots(slots, expected_months, expected_slots)
+
     @users('apt_manager')
     def test_slots_days_min_schedule_punctual(self):
         """ Test that slots are generated correctly when min_schedule_hours is 47.0 for punctual appointment.
@@ -1147,6 +1242,7 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         appointment = self.env['appointment.type'].create({
             'appointment_tz': 'UTC',
             'appointment_duration': 1.2,  # 1h12
+            'slot_creation_interval': 1.2,
             'category': 'punctual',
             'min_schedule_hours': 47.0,
             'max_schedule_days': False,
@@ -1345,6 +1441,7 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         appointment = self.env['appointment.type'].create({
             'appointment_tz': 'Pacific/Auckland',
             'appointment_duration': 21,
+            'slot_creation_interval': 21,
             'assign_method': 'time_auto_assign',
             'category': 'recurring',
             'location_id': self.staff_user_nz.partner_id.id,

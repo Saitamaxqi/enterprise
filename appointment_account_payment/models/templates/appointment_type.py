@@ -34,6 +34,7 @@ class AppointmentType(models.Model):
         return {
             'allow_guests': True,
             'appointment_duration': 0.5,
+            'slot_creation_interval': 0.5,
             'assign_method': 'time_auto_assign',
             'avatars_display': 'hide',
             'event_videocall_source': False,
