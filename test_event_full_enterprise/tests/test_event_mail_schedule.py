@@ -211,7 +211,6 @@ class TestEventMailSchedule(TestEventMailFullCommon, WhatsAppCase):
         sub_wa = test_event.event_mail_ids.filtered(lambda s: s.interval_type == "after_sub" and s.interval_unit == "now" and s.notification_type == "whatsapp")
         self.assertEqual(len(sub_wa), 1)
         self.assertEqual(sub_wa.mail_count_done, 0)
-        self.assertFalse(sub_wa.mail_done)
 
         # setup batch and cron limit sizes to check iterative behavior
         batch_size, cron_limit = 5, 20
@@ -250,6 +249,5 @@ class TestEventMailSchedule(TestEventMailFullCommon, WhatsAppCase):
 
         # finished sending communications
         self.assertEqual(sub_wa.mail_count_done, 30)
-        self.assertTrue(sub_wa.mail_done)
         self.assertFalse(capture.records)
         self.assertEqual(mock_exec.call_count, 6, "Batch of 5 to make 10 remaining registrations: 2 calls / scheduler (incl. mail and sms)")

@@ -94,7 +94,6 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         sub_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "after_sub")
         self.assertEqual(len(sub_scheduler), 1)
         self.assertEqual(sub_scheduler.mail_count_done, 2)
-        self.assertTrue(sub_scheduler.mail_done)
         self.assertEqual(sub_scheduler.scheduled_date, self.test_event.create_date.replace(microsecond=0),
                          'event: incorrect scheduled date for checking controller')
 
@@ -137,7 +136,6 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         self.assertEqual(len(sub_scheduler.mail_registration_ids), 5, "2 pre-existing + 3 new")
         self.assertTrue(all(m.mail_sent is True for m in sub_scheduler.mail_registration_ids))
         self.assertEqual(sub_scheduler.mapped('mail_registration_ids.registration_id'), test_event.registration_ids)
-        self.assertTrue(sub_scheduler.mail_done)
         self.assertEqual(sub_scheduler.mail_count_done, 5, "2 pre-existing + 3 new")
 
         # verify that message sent correctly after each registration
@@ -258,7 +256,6 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         self.assertTrue(registration.exists(), "Registration record should exist after creation.")
         self.assertEqual(len(self.test_event.registration_ids), 3)
         self.assertEqual(onsub_scheduler.mail_count_done, 2)
-        self.assertFalse(onsub_scheduler.mail_done)
 
     @mute_logger('odoo.addons.whatsapp_event.models.event_mail')
     @users('user_eventmanager')
@@ -295,7 +292,7 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
             })
         self.assertTrue(registration.exists(), "Registration record should exist after creation.")
         sub_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "after_sub")
-        self.assertFalse(sub_scheduler.mail_done)
+        self.assertEqual(sub_scheduler.mail_count_done, 0)
 
     @mute_logger('odoo.addons.event.models.event_mail')
     @users('user_eventmanager')
@@ -312,4 +309,4 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
             })
         self.assertTrue(registration.exists(), "Registration record should exist after creation.")
         sub_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "after_sub")
-        self.assertFalse(sub_scheduler.mail_done)
+        self.assertEqual(sub_scheduler.mail_count_done, 0)
