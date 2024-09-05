@@ -216,6 +216,13 @@ class Picking(models.Model):
                 'transp_internac': "No",
             }
 
+        # Generate QR code of the URL to access the service regarding the current guide document (legal requirement)
+        barcode_value = url_quote_plus(f"https://verificacfdi.facturaelectronica.sat.gob.mx/verificaccp/default.aspx?"
+                                       f"IdCCP={cfdi_values['idccp']}&"
+                                       f"FechaOrig={cfdi_values['cfdi_date']}&"
+                                       f"FechaTimb={cfdi_values['scheduled_date']}")
+        barcode_src = f'/report/barcode/?barcode_type=QR&value={barcode_value}&width=180&height=180'
+
         return {
             **external_trade_vals,
             'idccp': cfdi_values['idccp'] or "-",
@@ -254,6 +261,7 @@ class Picking(models.Model):
                 }
                 for figure in self.l10n_mx_edi_vehicle_id.figure_ids.sorted('type')
             ],
+            'barcode_src': barcode_src,
         }
 
     def _l10n_mx_edi_get_extra_picking_report_values(self):

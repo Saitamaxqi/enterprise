@@ -137,6 +137,12 @@
                     <div class="col-3 cp-data">Res Fiscal: <t t-out="figure['residencia_fiscal_figura']"/></div>
                 </div>
             </div>
+            <hr/>
+            <div class="row">
+                <div class="barcode">
+                    <img alt="Cartaporte Barcode" t-att-src="cartaporte_values['barcode_src']"/>
+                </div>
+            </div>
         </xpath>
     </template>
 
