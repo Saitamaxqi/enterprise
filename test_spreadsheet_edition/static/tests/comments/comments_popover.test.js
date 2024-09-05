@@ -32,7 +32,7 @@ test("Hover cell only shows messages, Composer appears on click", async () => {
     expect(".o-thread-popover .o-mail-Composer").toHaveCount(0);
 
     const popover = fixture.querySelector("div.o-thread-popover");
-    manuallyDispatchProgrammaticEvent(popover, "focusin"); // HOOT FIXM: focusIn not triggered with hoot helpers
+    await manuallyDispatchProgrammaticEvent(popover, "focusin"); // HOOT FIXM: focusIn not triggered with hoot helpers
     await animationFrame();
     expect(".o-mail-Thread").toHaveCount(1);
     expect(".o-mail-Composer").toHaveCount(1);

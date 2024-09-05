@@ -163,7 +163,7 @@ test("Open Ended record spanning multiple days", async () => {
             title: "User 1",
         },
     ]);
-    click(queryOne(SELECTORS.previousButton));
+    await click(queryOne(SELECTORS.previousButton));
     await advanceTime(500);
     await animationFrame();
     gridContent = getGridContent();
@@ -180,7 +180,7 @@ test("Open Ended record spanning multiple days", async () => {
             title: "User 1",
         },
     ]);
-    click(queryOne(SELECTORS.previousButton));
+    await click(queryOne(SELECTORS.previousButton));
     await advanceTime(500);
     await animationFrame();
     gridContent = getGridContent();
@@ -333,10 +333,10 @@ test("Open ended record updated correctly", async () => {
         },
     ]);
     mockDate("2018-12-20 18:00:00");
-    click(queryOne(SELECTORS.previousButton));
+    await click(queryOne(SELECTORS.previousButton));
     await advanceTime(500);
     await animationFrame();
-    click(queryOne(SELECTORS.nextButton));
+    await click(queryOne(SELECTORS.nextButton));
     await advanceTime(500);
     await animationFrame();
     gridContent = getGridContent();
@@ -400,10 +400,10 @@ test("Future Open ended record not shown before it happens and appears after sta
         },
     ]);
     mockDate("2018-11-02 17:00:00");
-    click(queryOne(SELECTORS.previousButton));
+    await click(queryOne(SELECTORS.previousButton));
     await advanceTime(500);
     await animationFrame();
-    click(queryOne(SELECTORS.nextButton));
+    await click(queryOne(SELECTORS.nextButton));
     await advanceTime(500);
     await animationFrame();
     gridContent = getGridContent();

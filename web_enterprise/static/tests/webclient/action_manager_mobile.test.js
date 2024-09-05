@@ -103,7 +103,7 @@ test("lazy load mobile-friendly view", async () => {
     expect(".o_form_view").toHaveCount(1);
 
     // go back to lazy loaded view
-    click(".o_breadcrumb .o_back_button");
+    await click(".o_breadcrumb .o_back_button");
     await animationFrame();
     expect(".o_list_view").toHaveCount(0);
     expect(".o_form_view").toHaveCount(0);
@@ -131,7 +131,7 @@ test("lazy load mobile-friendly view; legacy url", async () => {
     expect(".o_form_view").toHaveCount(1);
 
     // go back to lazy loaded view
-    click(".o_breadcrumb .o_back_button");
+    await click(".o_breadcrumb .o_back_button");
     await animationFrame();
     expect(".o_list_view").toHaveCount(0);
     expect(".o_form_view").toHaveCount(0);
@@ -160,7 +160,7 @@ test("view switcher button should be displayed in dropdown on mobile screens", a
     expect(".o_control_panel .o_cp_switch_buttons button.o_switch_view").toHaveCount(0);
 
     expect(".o_control_panel .o_cp_switch_buttons > button > i").toHaveClass("oi-view-kanban");
-    click(".o_control_panel .o_cp_switch_buttons > button");
+    await click(".o_control_panel .o_cp_switch_buttons > button");
     await animationFrame();
 
     expect(".dropdown-item:has(.oi-view-kanban)").toHaveClass("selected");

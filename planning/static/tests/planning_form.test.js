@@ -37,12 +37,12 @@ test("quit form view when save actually deletes", async () => {
     });
 
     expect(".o_action.o_view_controller.o_list_view").toHaveCount(1);
-    click(".o_data_row .o_data_cell");
+    await click(".o_data_row .o_data_cell");
     await animationFrame();
 
     expect(".o_form_view").toHaveCount(1);
-    click("[name='name'] input");
-    edit("new shift");
+    await click("[name='name'] input");
+    await edit("new shift");
     await clickSave();
 
     expect(".o_action.o_view_controller.o_list_view").toHaveCount(1);

@@ -291,14 +291,14 @@ test("Open a dialog to schedule a plan using Open Shift", async function () {
     });
     await hoverGridCell("13 W41 2021");
     await clickCell("13 W41 2021");
-    click(".modal-footer .o_create_button");
+    await click(".modal-footer .o_create_button");
 
     await selectFieldDropdownItem("resource_id", "Jarvo");
     await contains(`[name='name'] input`).edit("Shift-2");
     await contains(`[name='start_datetime'] input`).edit('2021-10-12 09:00:00');
     await contains(`[name='end_datetime'] input`).edit('2021-10-12 12:00:00');
 
-    click(".o_form_button_save");
+    await click(".o_form_button_save");
     await animationFrame();
 
     const shift2Pill = queryAll(SELECTORS.pill)[1];

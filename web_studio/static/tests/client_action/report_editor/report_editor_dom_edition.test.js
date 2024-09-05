@@ -71,7 +71,7 @@ test("add column", async () => {
         getEditorOptions()
     );
 
-    hover(queryFirst(":iframe q-th"));
+    await hover(queryFirst(":iframe q-th"));
     await contains(".o-overlay-container .o-we-table-menu").click();
     await contains(".o-dropdown-item:contains(Insert Right)").click();
 
@@ -131,7 +131,7 @@ test("remove column", async () => {
         </q-table></div>`,
         getEditorOptions()
     );
-    hover(queryFirst(":iframe q-th"));
+    await hover(queryFirst(":iframe q-th"));
     await contains(".o-overlay-container .o-we-table-menu").click();
     await contains(".o-dropdown-item:contains(Delete)").click();
 
@@ -140,23 +140,23 @@ test("remove column", async () => {
         <q-table>
             <q-thead>
                 <q-tr>
-                    
+${"                    "}
                     <q-th>HEAD2</q-th>
                 </q-tr>
             </q-thead>
             <q-tbody>
                 <q-tr>
                     <t t-if="true">
-                        
+${"                        "}
                         <q-td>2</q-td>
                     </t>
                     <t t-else="">
-                        
+${"                        "}
                         <q-td>4</q-td>
                     </t>
                 </q-tr>
                 <q-tr>
-                    
+${"                    "}
                     <q-td>6</q-td>
                 </q-tr>
             </q-tbody>
@@ -221,7 +221,7 @@ test("remove column colspan", async () => {
             </q-tbody>
         </q-table>`);
 
-    hover(queryAll(":iframe q-th")[1]);
+    await hover(queryAll(":iframe q-th")[1]);
     await contains(".o-overlay-container .o-we-table-menu").click();
     await contains(".o-dropdown-item:contains(Delete)").click();
 
@@ -231,7 +231,7 @@ test("remove column colspan", async () => {
             <q-thead>
                 <q-tr>
                     <q-th>HEAD1</q-th>
-                    
+${"                    "}
                     <q-th>HEAD3</q-th>
                 </q-tr>
             </q-thead>

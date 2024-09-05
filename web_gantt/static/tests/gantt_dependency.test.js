@@ -436,7 +436,7 @@ test("Connector hovered state is triggered and color is set accordingly.", async
         COLORS.default.color
     );
 
-    hover(getConnector(1));
+    await hover(getConnector(1));
     await animationFrame();
 
     expect(getConnector(1)).toHaveClass(CLASSES.highlightedConnector);
@@ -450,7 +450,7 @@ test("Buttons are displayed when hovering a connector.", async () => {
     await mountGanttView(ganttViewParams);
     expect(queryAll(SELECTORS.connectorStrokeButton, { root: getConnector(1) })).toHaveCount(0);
 
-    hover(getConnector(1));
+    await hover(getConnector(1));
     await animationFrame();
 
     expect(queryAll(SELECTORS.connectorStrokeButton, { root: getConnector(1) })).toHaveCount(3);
@@ -460,13 +460,13 @@ test("Buttons are displayed when hovering a connector after a pill has been hove
     await mountGanttView(ganttViewParams);
     expect(queryAll(SELECTORS.connectorStrokeButton, { root: getConnector(1) })).toHaveCount(0);
 
-    hover(getPill("Task 1"));
+    await hover(getPill("Task 1"));
     await animationFrame();
 
     expect(queryAll(SELECTORS.connectorStrokeButton, { root: getConnector(1) })).toHaveCount(0);
     expect(getConnector(1)).toHaveClass(CLASSES.highlightedConnector);
 
-    hover(getConnector(1));
+    await hover(getConnector(1));
     await animationFrame();
 
     expect(getConnector(1)).toHaveClass(CLASSES.highlightedConnector);
@@ -724,7 +724,7 @@ test("Create a connector from the gantt view: going fast", async () => {
         x: Math.floor(bulletRect.left + bulletRect.width / 2), // floor to avoid sub-pixel positioning
         y: Math.floor(bulletRect.top + bulletRect.height / 2), // floor to avoid sub-pixel positioning
     };
-    pointerDown(connectorBullet, {
+    await pointerDown(connectorBullet, {
         position: { clientX: initialPosition.x, clientY: initialPosition.y },
     });
 
@@ -733,7 +733,7 @@ test("Create a connector from the gantt view: going fast", async () => {
         x: Math.floor(initialPosition.x + 123), // floor to avoid sub-pixel positioning
         y: Math.floor(initialPosition.y + 12), // floor to avoid sub-pixel positioning
     };
-    hover(SELECTORS.cellContainer, {
+    await hover(SELECTORS.cellContainer, {
         position: { clientX: currentPosition.x, clientY: currentPosition.y },
     });
     await animationFrame();
@@ -859,7 +859,7 @@ test("Connector creators of hovered pill are highlighted when creating a connect
 });
 
 test("Switch to full-size browser: the connections between pills should be diplayed", async () => {
-    resize({ width: 375, height: 667 });
+    await resize({ width: 375, height: 667 });
 
     await mountGanttView(ganttViewParams);
 
@@ -869,7 +869,7 @@ test("Switch to full-size browser: the connections between pills should be dipla
     });
 
     // Resizing browser to leave mobile view
-    resize({ width: 1366, height: 768 });
+    await resize({ width: 1366, height: 768 });
     await runAllTimers();
 
     expect("svg.o_gantt_connector").toHaveCount(22, {
@@ -913,10 +913,9 @@ test("Connect two very distant pills", async () => {
 
     const selector = `${SELECTORS.pill}:contains('Task 2')`;
     expect(selector).toHaveCount(0);
-    moveTo(queryFirst(SELECTORS.pill), { relative: true, position: { x: 1500 } });
+    await moveTo(SELECTORS.pill, { relative: true, position: { x: 1500 } });
     await advanceFrame(200);
-    await moveTo(selector);
-    await drop();
+    await drop(selector);
     expect.verifySteps([`[[2],{"depend_on_ids":[[4,1,false]]}]`]);
     expect(SELECTORS.connector).toHaveCount(1);
 });

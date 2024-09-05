@@ -138,10 +138,10 @@ test("Marketing Campaign Template Picker - Kanban override", async function () {
         type: "kanban",
         arch: marketingCampaignViews.kanban,
     });
-    click(queryFirst("button.o-kanban-button-new"));
+    await click("button.o-kanban-button-new");
     await animationFrame();
     queryOne("div.modal.o_technical_modal"); // ensure modal has been opened
-    click(queryOne("button.o_ma_campaign_picker_discard")); // close modal
+    await click(queryOne("button.o_ma_campaign_picker_discard")); // close modal
     await animationFrame();
     expect("div.modal.o_technical_modal").toHaveCount(0); // ensure modal has been closed
 });
@@ -156,10 +156,10 @@ test("Marketing Campaign Template Picker - List override", async function () {
         type: "list",
         arch: marketingCampaignViews.list,
     });
-    click(queryFirst("button.o_list_button_add"));
+    await click("button.o_list_button_add");
     await animationFrame();
     queryOne("div.modal.o_technical_modal"); // ensure modal has been opened
-    click(queryOne("button.o_ma_campaign_picker_discard")); // close modal
+    await click(queryOne("button.o_ma_campaign_picker_discard")); // close modal
     await animationFrame();
     expect("div.modal.o_technical_modal").toHaveCount(0); // ensure modal has been closed
 });
@@ -173,10 +173,10 @@ test("Marketing Campaign Template Picker - Form override", async function () {
         type: "form",
         arch: marketingCampaignViews.form,
     });
-    click(queryFirst("button.o_form_button_create"));
+    await click("button.o_form_button_create");
     await animationFrame();
     queryOne("div.modal.o_technical_modal"); // ensure modal has been opened
-    click(queryOne("button.o_ma_campaign_picker_discard")); // close modal
+    await click(queryOne("button.o_ma_campaign_picker_discard")); // close modal
     await animationFrame();
     expect("div.modal.o_technical_modal").toHaveCount(0); // ensure modal has been closed
 });
@@ -190,7 +190,7 @@ test("Marketing Campaign Template Picker - Template picker", async function () {
     await animationFrame();
     await getService("action").doAction("marketing_campaign_action_view");
     expect("button.o_form_button_create").toHaveCount(0);
-    click(queryFirst("button.o-kanban-button-new"));
+    await click("button.o-kanban-button-new");
     await animationFrame();
     // modal is open
 
@@ -205,20 +205,20 @@ test("Marketing Campaign Template Picker - Template picker", async function () {
     // check that there can be only one "active card"
     const [card_from_scratch, card_hot_contacts] = queryAll("div.card.o_ma_campaign_picker_card");
     expect(card_from_scratch).toHaveClass("o_ma_campaign_picker_active");
-    click(card_hot_contacts);
+    await click(card_hot_contacts);
     await animationFrame();
     expect(card_from_scratch).not.toHaveClass("o_ma_campaign_picker_active");
     expect(card_hot_contacts).toHaveClass("o_ma_campaign_picker_active");
     // get to the next page
-    click(queryAll(".o_ma_campaign_template_picker_dialog a.nav-link")[1]);
+    await click(queryAll(".o_ma_campaign_template_picker_dialog a.nav-link")[1]);
     await animationFrame();
     const card_welcome_flow = queryFirst("div.card.o_ma_campaign_picker_card");
-    click(card_welcome_flow);
+    await click(card_welcome_flow);
     await animationFrame();
     expect(card_welcome_flow).toHaveClass("o_ma_campaign_picker_active");
 
     // go back to the first page and ensure all cards are unselected
-    click(queryAll(".o_ma_campaign_template_picker_dialog a.nav-link")[0]);
+    await click(queryAll(".o_ma_campaign_template_picker_dialog a.nav-link")[0]);
     await animationFrame();
     for (const templateCard of queryAll("div.card.o_ma_campaign_picker_card")) {
         expect(templateCard).not.toHaveClass("o_ma_campaign_picker_active");
@@ -226,7 +226,7 @@ test("Marketing Campaign Template Picker - Template picker", async function () {
 
     // load the template
     expect.verifySteps([]);
-    click(queryOne("button.o_ma_campaign_picker_create"));
+    await click(queryOne("button.o_ma_campaign_picker_create"));
     await animationFrame();
     // check that the template is loaded
     expect.verifySteps(["get_template"]);

@@ -173,7 +173,7 @@ test("group pill colors", async () => {
     await mountGanttView({ resModel: "calendar.event", arch: ganttViewArch });
     await selectRange("Today");
     testGroupPillColorsCheckColors();
-    click(SELECTORS.sparse);
+    await click(SELECTORS.sparse);
     await animationFrame();
     testGroupPillColorsCheckColors();
     await selectGroup("appointment_type_id");
@@ -181,7 +181,7 @@ test("group pill colors", async () => {
     expect(document.querySelectorAll(".o_appointment_booking_gantt_color_grey")).toBeEmpty();
     await selectGroup("partner_ids");
     testGroupPillColorsCheckColors();
-    click(SELECTORS.dense);
+    await click(SELECTORS.dense);
     await animationFrame();
     testGroupPillColorsCheckColors();
 });

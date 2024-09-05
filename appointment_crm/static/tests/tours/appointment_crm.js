@@ -11,7 +11,7 @@ registry.category("web_tour.tours").add('appointment_crm_meeting_tour', {
     steps: () => [stepUtils.showAppsMenuItem(), {
         trigger: '.o_app[data-menu-xmlid="crm.crm_menu_root"]',
         run: 'click',
-    }, 
+    },
     {
         trigger: ".o_opportunity_kanban",
     },
@@ -33,8 +33,8 @@ registry.category("web_tour.tours").add('appointment_crm_meeting_tour', {
         },
     }, {
         trigger: '.o_appointment_discard_slots',
-        run(helpers) {
-            helpers.click();
+        async run(helpers) {
+            await helpers.click();
             // Re-patch the function with the previous writeText
             navigator.clipboard.writeText = oldWriteText;
         },

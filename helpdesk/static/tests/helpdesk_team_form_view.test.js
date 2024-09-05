@@ -79,7 +79,7 @@ test("reload the page when use_sla is disabled in all teams", async (assert) => 
         },
     });
 
-    click("div[name='use_sla'] input");
+    await click("div[name='use_sla'] input");
     await clickSave();
 
     expect.verifySteps([
@@ -179,11 +179,11 @@ test("reload when the feature is disabled in all teams", async (assert) => {
         },
     });
 
-    click("div[name='use_alias'] input");
+    await click("div[name='use_alias'] input");
     await clickSave();
-    click(".o_pager_next");
+    await click(".o_pager_next");
     await animationFrame();
-    click("div[name='use_alias'] input");
+    await click("div[name='use_alias'] input");
     await clickSave();
 
     expect.verifySteps([

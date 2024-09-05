@@ -1138,7 +1138,7 @@ test("Test Autofill component", async function () {
     const { model } = await createSpreadsheetFromPivotView();
     selectCell(model, "A3");
     setCellContent(model, "B3", "");
-    pointerDown(".o-autofill-handler");
+    await pointerDown(".o-autofill-handler");
     await animationFrame();
     // dispatching the underlying command by hand because the dragndrop in o_spreadsheet.js
     // does not react well to the events

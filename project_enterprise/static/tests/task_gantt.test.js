@@ -3,6 +3,7 @@ import { beforeEach, describe, destroy, expect, test } from "@odoo/hoot";
 import { hover, keyDown, queryAll, queryAllTexts, queryOne } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import {
+    clickModalButton,
     contains,
     defineModels,
     fields,
@@ -144,7 +145,7 @@ test("not user_ids grouped: empty groups are displayed first and user avatar is 
 
 test("Unschedule button is displayed", async () => {
     onRpc(({ method, model }) => {
-        if (model === "task" && method == 'action_unschedule_task') {
+        if (model === "task" && method == "action_unschedule_task") {
             expect.step("unschedule task");
             return false;
         }
@@ -341,14 +342,14 @@ test("Display milestones deadline in project.task gantt view", async () => {
     expect(".o_project_milestone_diamond").toHaveCount(2);
     expect(".o_project_milestone_diamond .o_milestones_reached").toHaveCount(1);
     expect(".o_project_milestone_diamond.o_unreached_milestones").toHaveCount(1);
-    hover(".o_project_milestone_diamond");
+    await hover(".o_project_milestone_diamond");
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(1);
     expect(".o_popover u").toHaveText("My Project");
     expect(".o_popover .o_milestones_reached").toHaveCount(1);
     expect(".o_popover strong").toHaveText("Milestone 1");
-    hover(".o_project_milestone_diamond.o_unreached_milestones");
+    await hover(".o_project_milestone_diamond.o_unreached_milestones");
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(1);
@@ -384,13 +385,13 @@ test("Display milestones deadline in gantt view of tasks in a project", async ()
     expect(".o_project_milestone_diamond").toHaveCount(2);
     expect(".o_project_milestone_diamond .o_milestones_reached").toHaveCount(1);
     expect(".o_project_milestone_diamond.o_unreached_milestones").toHaveCount(1);
-    hover(".o_project_milestone_diamond");
+    await hover(".o_project_milestone_diamond");
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(0);
     expect(".o_popover .o_milestones_reached").toHaveCount(1);
     expect(".o_popover strong").toHaveText("Milestone 1");
-    hover(".o_project_milestone_diamond.o_unreached_milestones");
+    await hover(".o_project_milestone_diamond.o_unreached_milestones");
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(0);
@@ -425,7 +426,7 @@ test("Display project deadline in the gantt view of task", async () => {
     expect(".o_gantt_header_cell .o_project_startdate_circle").toHaveCount(1);
     expect(".o_gantt_header_cell .o_project_deadline_circle").toHaveCount(2);
     expect(".o_popover").toHaveCount(0);
-    hover(".o_gantt_header_cell .o_project_startdate_circle");
+    await hover(".o_gantt_header_cell .o_project_startdate_circle");
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(1);
@@ -434,14 +435,14 @@ test("Display project deadline in the gantt view of task", async () => {
     const [myProjectDeadlineCircleEl, otherProjectDeadlineCircleEl] = queryAll(
         ".o_gantt_header_cell .o_project_deadline_circle"
     );
-    hover(myProjectDeadlineCircleEl);
+    await hover(myProjectDeadlineCircleEl);
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(1);
     expect(".o_popover u").toHaveText("My Project");
     expect(".o_popover .popover-body em").toHaveText("Project due");
 
-    hover(otherProjectDeadlineCircleEl);
+    await hover(otherProjectDeadlineCircleEl);
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(1);
@@ -483,14 +484,14 @@ test("Display project and milestones deadline in the gantt view of task", async 
     expect(".o_project_milestone_diamond").toHaveCount(2);
     expect(".o_project_milestone_diamond .o_milestones_reached").toHaveCount(1);
     expect(".o_project_milestone_diamond.o_unreached_milestones").toHaveCount(1);
-    hover(".o_project_milestone_diamond");
+    await hover(".o_project_milestone_diamond");
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(1);
     expect(".o_popover u").toHaveText("My Project");
     expect(".o_popover .o_milestones_reached").toHaveCount(1);
     expect(".o_popover strong").toHaveText("Milestone 1");
-    hover(".o_project_milestone_diamond.o_unreached_milestones");
+    await hover(".o_project_milestone_diamond.o_unreached_milestones");
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(1);
@@ -500,7 +501,7 @@ test("Display project and milestones deadline in the gantt view of task", async 
 
     expect(".o_gantt_header_cell .o_project_startdate_circle").toHaveCount(1);
     expect(".o_gantt_header_cell .o_project_deadline_circle").toHaveCount(2);
-    hover(".o_gantt_header_cell .o_project_startdate_circle");
+    await hover(".o_gantt_header_cell .o_project_startdate_circle");
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(1);
@@ -509,14 +510,14 @@ test("Display project and milestones deadline in the gantt view of task", async 
     const [myProjectDeadlineCircleEl, otherProjectDeadlineCircleEl] = queryAll(
         ".o_gantt_header_cell .o_project_deadline_circle"
     );
-    hover(myProjectDeadlineCircleEl);
+    await hover(myProjectDeadlineCircleEl);
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(1);
     expect(".o_popover u").toHaveText("My Project");
     expect(".o_popover .popover-body em").toHaveText("Project due");
 
-    hover(otherProjectDeadlineCircleEl);
+    await hover(otherProjectDeadlineCircleEl);
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(1);
@@ -548,7 +549,7 @@ test("Display project deadline and milestone date in the same date", async () =>
     expect(
         ".o_gantt_header_cell .o_project_milestone_diamond.o_project_deadline_milestone"
     ).toHaveCount(1);
-    hover(".o_gantt_header_cell .o_project_milestone_diamond.o_project_deadline_milestone");
+    await hover(".o_gantt_header_cell .o_project_milestone_diamond.o_project_deadline_milestone");
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(1);
@@ -593,7 +594,7 @@ test("Display 2 milestones in different project at the same date", async () => {
     });
 
     expect(".o_project_milestone_diamond").toHaveCount(1);
-    hover(".o_project_milestone_diamond");
+    await hover(".o_project_milestone_diamond");
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(2);
@@ -635,7 +636,7 @@ test("Display project deadline of 2 projects with the same deadline", async () =
     });
 
     expect(".o_gantt_header_cell .o_project_deadline_circle").toHaveCount(1);
-    hover(".o_gantt_header_cell .o_project_deadline_circle");
+    await hover(".o_gantt_header_cell .o_project_deadline_circle");
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(2);
@@ -674,7 +675,7 @@ test("Display project deadline one day before the start date of the other projec
     });
 
     expect(".o_gantt_header_cell .o_project_deadline_circle").toHaveCount(1);
-    hover(".o_gantt_header_cell .o_project_deadline_circle");
+    await hover(".o_gantt_header_cell .o_project_deadline_circle");
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover u").toHaveCount(2);
@@ -708,7 +709,7 @@ test("Copy pill in another row", async () => {
         },
     ]);
 
-    keyDown("Control");
+    await keyDown("Control");
 
     // move blop to John Doe
     const { drop, moveTo } = await dragPill("Blop");
@@ -772,7 +773,7 @@ test("Smart scheduling", async () => {
     await clickCell("10 June 2021", "Jane Doe");
     expect(".o_dialog").toHaveCount(1);
     await contains(".o_dialog .o_data_row .o-checkbox").click();
-    await contains(".o_dialog .o_auto_plan_button").click();
+    await contains(".o_dialog .o_auto_plan_button:enabled").click();
     expect(getGridContent().rows).toEqual([
         {
             title: "👤 Unassigned",
@@ -824,7 +825,9 @@ test("Smart scheduling: display warnings", async () => {
             expect(options["buttons"][0].name).toBe("Undo");
             notifications.push({ message, options });
             return () => {
-                notifications = notifications.filter(n => n.message !== message || n.options !== options);
+                notifications = notifications.filter(
+                    (n) => n.message !== message || n.options !== options
+                );
             };
         },
     });
@@ -837,10 +840,10 @@ test("Smart scheduling: display warnings", async () => {
     await clickCell("10 June 2021", "Jane Doe");
     expect(".o_dialog").toHaveCount(1);
     await contains(".o_dialog .o_data_row .o-checkbox").click();
-    await contains(".o_dialog .o_auto_plan_button").click();
+    await contains(".o_dialog .o_auto_plan_button:enabled").click();
     expect.verifySteps(["schedule_tasks", "notification added"]);
     expect(notifications).toHaveLength(1);
-    destroy(ganttView)
+    destroy(ganttView);
     expect(notifications).toHaveLength(0);
 });
 
@@ -883,8 +886,8 @@ test("Schedule a task and verify its display in the gantt view", async () => {
 
     await clickCell("10 June 2021", "Jane Doe");
     expect(".o_dialog").toHaveCount(1);
-    await contains(".o_dialog .o_data_row .o-checkbox").click();
-    await contains(".o_dialog .o_select_button").click();
+    await contains(".o_dialog .o_data_row .o-checkbox input").check();
+    await clickModalButton({ text: "Select" });
     expect(getGridContent().rows).toEqual([
         {
             title: "👤 Unassigned",

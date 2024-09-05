@@ -1066,10 +1066,10 @@ test("List cells are highlighted when hovering the list menu item", async functi
     const sheetId = model.getters.getActiveSheetId();
     await contains(".o-topbar-top div[data-id='data']").click();
 
-    hover("div[data-name='item_list_1']");
+    await hover("div[data-name='item_list_1']");
     const zone = getZoneOfInsertedDataSource(model, "list", "1");
     expect(getHighlightsFromStore(env)).toEqual([{ sheetId, zone, noFill: true }]);
 
-    leave("div[data-name='item_list_1']");
+    await leave("div[data-name='item_list_1']");
     expect(getHighlightsFromStore(env)).toEqual([]);
 });

@@ -6,9 +6,9 @@ import { edit, pointerDown } from "@odoo/hoot-dom";
 /**
  * Returns the jQuery selector to find the nth element in the specified depth.
  * e.g: The 50th element of depth 1 would be "Child Article 49".
- * 
- * @param {integer} n 
- * @param {String} depth 
+ *
+ * @param {integer} n
+ * @param {String} depth
  */
 const getNthArticleSelector = (n, depth) => {
     let articleBaseName;
@@ -29,24 +29,24 @@ const getNthArticleSelector = (n, depth) => {
  *
  * The active article is within a hierarchy where itself is not within the 50 first articles
  * of its sub-tree but its ancestors are ALSO not within the 50 first articles of their own sub-tree.
- * 
+ *
  * Check that everything is correctly displayed, notably the fact that we "force" the display
  * of the active article and its ancestors.
- * 
+ *
  * The use case is as follows:
  * - 1 root article
  * - 254 children, all of which are children of "Root Article 0"
  * - 344 grand-children, all of which are children of "Child Article 203" (the 204th child article)
- * 
+ *
  * When opening the tree, "Root Article 103", "Child Article 203" and "Grand-Child Article 218"
  * should all be forcefully displayed, even though outside of 50 first articles of their respective
  * sub-tree.
  */
 const LOAD_MORE_ADVANCED_STEPS = [{
     trigger: 'input.knowledge_search_bar',
-    run(helpers) {
-        pointerDown(this.anchor);
-        edit("Grand-Child Article 218");
+    async run(helpers) {
+        await pointerDown(this.anchor);
+        await edit("Grand-Child Article 218");
     }
 }, {
     trigger: 'ul.o_search_tree .o_article a',

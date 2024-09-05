@@ -191,7 +191,7 @@ test("can remove link between an odoo menu and a chart in the side panel", async
 
     // edit() helper is not working on Many2XAutocomplete for whatever reason
     irMenuField.value = "";
-    manuallyDispatchProgrammaticEvent(irMenuField, "change");
+    await manuallyDispatchProgrammaticEvent(irMenuField, "change");
 
     await animationFrame();
     const odooMenu = model.getters.getChartOdooMenu(chartId);

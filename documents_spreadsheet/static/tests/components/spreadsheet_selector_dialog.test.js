@@ -1,7 +1,7 @@
 import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
 import { mockActionService } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { describe, expect, getFixture, test } from "@odoo/hoot";
-import { dblclick } from "@odoo/hoot-dom";
+import { click, dblclick, press } from "@odoo/hoot-dom";
 import { advanceTime, animationFrame } from "@odoo/hoot-mock";
 import { getBasicServerData } from "@spreadsheet/../tests/helpers/data";
 import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
@@ -271,7 +271,7 @@ test("Can double click an existing spreadsheet", async () => {
         expect(action.params.spreadsheet_id).toEqual(1);
     });
     await mountSpreadsheetSelectorDialog();
-    dblclick(`.o-spreadsheet-grid div[data-id="1"]`);
+    await dblclick(`.o-spreadsheet-grid div[data-id="1"]`);
     await animationFrame();
     expect.verifySteps(["action_open_spreadsheet"]);
 });
@@ -279,7 +279,7 @@ test("Can double click an existing spreadsheet", async () => {
 test("Can double click the empty spreadsheet", async () => {
     mockActionService((action) => expect.step(action.tag));
     await mountSpreadsheetSelectorDialog();
-    dblclick(".o-blank-spreadsheet-grid img");
+    await dblclick(".o-blank-spreadsheet-grid img");
     await animationFrame();
     expect.verifySteps(["action_open_spreadsheet"]);
 });
@@ -339,24 +339,28 @@ test("Offset reset to zero after searching for spreadsheet in spreadsheet select
 });
 
 test("Can navigate through spreadsheets with arrow keys", async () => {
-    const { target } = await mountSpreadsheetSelectorDialog();
-    const defaultSelected = target.querySelector(
-        ".o-spreadsheet-grid.o-blank-spreadsheet-grid .o-spreadsheet-grid-image"
-    );
-    expect(defaultSelected).toHaveClass("o-spreadsheet-grid-selected", {
+    await mountSpreadsheetSelectorDialog();
+
+    const defaultSheet = ".o-spreadsheet-grid.o-blank-spreadsheet-grid .o-spreadsheet-grid-image";
+
+    expect(defaultSheet).toHaveClass("o-spreadsheet-grid-selected", {
         message: "Blank spreadsheet should be selected by default",
     });
 
     // Navigate to the first spreadsheet
-    const firstSpreadsheet = target.querySelector('.o-spreadsheet-grid div[data-id="1"]');
-    await contains(firstSpreadsheet).press("ArrowRight");
-    expect(firstSpreadsheet).toHaveClass("o-spreadsheet-grid-selected", {
+    await click(defaultSheet);
+    await press("ArrowRight");
+    await animationFrame();
+
+    expect('.o-spreadsheet-grid div[data-id="1"]').toHaveClass("o-spreadsheet-grid-selected", {
         message: "First spreadsheet should be selected",
     });
 
     // Navigate back to the blank spreadsheet
-    await contains(firstSpreadsheet).press("ArrowLeft");
-    expect(defaultSelected).toHaveClass("o-spreadsheet-grid-selected", {
+    await press("ArrowLeft");
+    await animationFrame();
+
+    expect(defaultSheet).toHaveClass("o-spreadsheet-grid-selected", {
         message: "Blank spreadsheet should be selected",
     });
 });

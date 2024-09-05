@@ -3690,7 +3690,7 @@ registry.category("web_tour.tours").add('test_reload_flow', {test: true, steps: 
     },
 
     {
-        trigger: '.o_save',    
+        trigger: '.o_save',
         run: "click",
     },
 

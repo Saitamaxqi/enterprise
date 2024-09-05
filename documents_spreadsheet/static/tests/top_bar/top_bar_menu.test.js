@@ -225,7 +225,7 @@ test("Can Insert odoo formulas from Insert > Functions > Odoo", async function (
     await contains(".o-menu-item[title='Odoo']", skipVisibilityChecks).click();
     await contains(".o-menu-item[title='ODOO.CURRENCY.RATE']", skipVisibilityChecks).click();
 
-    press("Enter");
+    await press("Enter");
     await animationFrame();
 
     expect(getCellContent(model, "A1")).toBe("=ODOO.CURRENCY.RATE()");

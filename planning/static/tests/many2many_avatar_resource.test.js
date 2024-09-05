@@ -168,12 +168,12 @@ test("many2many_avatar_resource widget in form view", async () => {
     expect(".fa-wrench").toHaveCount(2);
 
     // 1. Clicking on material resource's icon with only one role
-    click(".many2many_tags_avatar_field_container .o_tag i.fa-wrench");
+    await click(".many2many_tags_avatar_field_container .o_tag i.fa-wrench");
     await animationFrame();
     expect(".o_avatar_card").toHaveCount(0);
 
     // 2. Clicking on material resource's icon with two roles
-    click(queryAll(".many2many_tags_avatar_field_container .o_tag i.fa-wrench")[1]);
+    await click(queryAll(".many2many_tags_avatar_field_container .o_tag i.fa-wrench")[1]);
     await animationFrame();
     expect(".o_avatar_card").toHaveCount(1);
     expect(".o_avatar_card .o_avatar > img").toHaveCount(0, {
@@ -185,7 +185,7 @@ test("many2many_avatar_resource widget in form view", async () => {
     });
 
     // 3. Clicking on human resource's avatar with no user associated
-    click(".many2many_tags_avatar_field_container .o_tag img");
+    await click(".many2many_tags_avatar_field_container .o_tag img");
     await animationFrame();
     expect(".o_card_user_infos span:first").toHaveText("Marie");
     expect(".o_avatar_card").toHaveCount(1, {
@@ -193,7 +193,7 @@ test("many2many_avatar_resource widget in form view", async () => {
     });
 
     // 4. Clicking on human resource's avatar with one user associated
-    click(queryAll(".many2many_tags_avatar_field_container .o_tag img")[1]);
+    await click(queryAll(".many2many_tags_avatar_field_container .o_tag img")[1]);
     await animationFrame();
     expect(".o_card_user_infos span:first").toHaveText("Pierre");
     expect(".o_avatar_card").toHaveCount(1, {

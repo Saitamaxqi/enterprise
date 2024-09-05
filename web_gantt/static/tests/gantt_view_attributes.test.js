@@ -571,7 +571,7 @@ test("Today style of group rows", async () => {
         backgroundImage: "linear-gradient(rgb(249, 250, 251), rgb(234, 237, 241))",
     });
     await contains(SELECTORS.group).click(); // fold group
-    leave();
+    await leave();
     // Normal group cell: closed
     cell4 = getCell("19 W51 2018");
     expect(cell4).not.toHaveClass("o_gantt_today");
@@ -930,7 +930,7 @@ test("default_range attribute", async () => {
     const { columnHeaders, range } = getGridContent();
     expect(range).toBe("12/20/2018");
     expect(columnHeaders).toHaveLength(1);
-    click(SELECTORS.rangeMenuToggler);
+    await click(SELECTORS.rangeMenuToggler);
     await animationFrame();
     const firstRangeMenuItem = queryFirst(`${SELECTORS.rangeMenu} .dropdown-item`);
     expect(firstRangeMenuItem).toHaveClass("selected");

@@ -42,12 +42,12 @@ test("Burger Menu on home menu", async () => {
     expect(queryAllRoot(".o_burger_menu")).toHaveCount(0);
     expect(queryAllRoot(".o_home_menu")).toBeVisible();
 
-    click(queryAllRoot(".o_mobile_menu_toggle"));
+    await click(queryAllRoot(".o_mobile_menu_toggle"));
     await runAllTimers();
     await animationFrame();
     expect(queryAllRoot(".o_burger_menu")).toHaveCount(1);
     expect(queryAllRoot(".o_user_menu_mobile")).toHaveCount(1);
-    click(queryAllRoot(".o_sidebar_close"));
+    await click(queryAllRoot(".o_sidebar_close"));
     await animationFrame();
     expect(".o_burger_menu").toHaveCount(0);
 });
@@ -83,17 +83,17 @@ test("Burger Menu on home menu over an App", async () => {
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
 
-    click(queryAllRoot(".o_draggable:first-of-type .o_app"));
+    await click(queryAllRoot(".o_draggable:first-of-type .o_app"));
     await animationFrame();
-    click(queryAllRoot(".o_menu_toggle"));
+    await click(queryAllRoot(".o_menu_toggle"));
     await animationFrame();
-    click(queryAllRoot(".o_sidebar_topbar a.btn-primary"));
+    await click(queryAllRoot(".o_sidebar_topbar a.btn-primary"));
     await animationFrame();
 
     expect(queryAllRoot(".o_burger_menu")).toHaveCount(0);
     expect(queryAllRoot(".o_home_menu")).toBeVisible();
 
-    click(queryAllRoot(".o_mobile_menu_toggle"));
+    await click(queryAllRoot(".o_mobile_menu_toggle"));
     await animationFrame();
     expect(queryAllRoot(".o_burger_menu")).toHaveCount(1);
     expect(queryAllRoot(".o_burger_menu nav.o_burger_menu_content li")).toHaveCount(0);

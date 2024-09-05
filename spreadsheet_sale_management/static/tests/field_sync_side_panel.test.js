@@ -64,10 +64,9 @@ describe("field sync side panel", () => {
         env.openSidePanel("FieldSyncSidePanel", { position });
         await contains(".o-selection-input input").focus();
         await animationFrame();
-        await contains(".o-selection-input input").clear({ confirm: false });
-        await contains(".o-selection-input input").fill("A2:A3", { confirm: false });
-        expect(".o-selection-input input").toHaveValue("A2");
+        await contains(".o-selection-input input").edit("A2:A3", { confirm: false });
         await contains(".o-selection-ok").click();
+        expect(".o-selection-input input").toHaveValue("A2");
         expect(getFieldSync(model, "A1")).toBe(undefined);
         expect(getFieldSync(model, "A2")).not.toBe(undefined);
     });

@@ -71,7 +71,7 @@ test("FloatToggleGridCell: click to focus", async () => {
         ".o_grid_row:not(.o_grid_row_total,.o_grid_row_title,.o_grid_column_total)"
     );
     expect(cell).toHaveText("0.00", { message: "Initial cell content should be 0.00" });
-    hover(cell);
+    await hover(cell);
     await runAllTimers();
     await contains(".o_grid_cell").click();
     await animationFrame();
@@ -96,7 +96,7 @@ test("FloatToggleGridCell: keyboard navigation", async () => {
     const firstCell = queryOne(".o_grid_row[data-row='1'][data-column='0']");
     expect(firstCell.dataset.gridRow).toBe("2");
     expect(firstCell.dataset.gridColumn).toBe("2");
-    hover(firstCell);
+    await hover(firstCell);
     await runAllTimers();
     expect(".o_grid_cell").toHaveCount(1, {
         message: "The GridCell component should be mounted on the grid cell hovered",
@@ -112,46 +112,46 @@ test("FloatToggleGridCell: keyboard navigation", async () => {
     });
 
     // Go to the next cell
-    press("tab");
+    await press("tab");
     await animationFrame();
     checkGridCellInRightPlace("2", "3");
 
     // Go to the previous cell
-    press("shift+tab");
+    await press("shift+tab");
     await animationFrame();
     checkGridCellInRightPlace("2", "2");
 
     // Go the cell below
-    press("enter");
+    await press("enter");
     await animationFrame();
     checkGridCellInRightPlace("3", "2");
 
     // Go up since it is the cell in the row
-    press("enter");
+    await press("enter");
     await animationFrame();
     checkGridCellInRightPlace("2", "3");
 
-    press("shift+tab");
+    await press("shift+tab");
     await animationFrame();
     checkGridCellInRightPlace("2", "2");
 
     // Go to the last editable cell in the grid view since it is the first cell.
-    press("shift+tab");
+    await press("shift+tab");
     await animationFrame();
     checkGridCellInRightPlace("3", "8");
 
     // Go back to the first cell since it is the last cell in grid view.
-    press("tab");
+    await press("tab");
     await animationFrame();
     checkGridCellInRightPlace("2", "2");
 
     // Go to the last editable cell in the grid view since it is the first cell.
-    press("shift+tab");
+    await press("shift+tab");
     await animationFrame();
     checkGridCellInRightPlace("3", "8");
 
     // Go back to the first cell since it is the last cell in grid view.
-    press("enter");
+    await press("enter");
     await animationFrame();
     checkGridCellInRightPlace("2", "2");
 });
@@ -166,7 +166,7 @@ test("FloatToggleGridCell: click on magnifying glass", async () => {
         ".o_grid_row:not(.o_grid_row_total,.o_grid_row_title,.o_grid_column_total)"
     );
     expect(cell).toHaveText("0.00", { message: "Initial cell content should be 0.00" });
-    hover(cell);
+    await hover(cell);
     await runAllTimers();
     await contains(".o_grid_search_btn").click();
     expect(".o_grid_cell").toHaveText("0.00", {

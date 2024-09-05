@@ -67,7 +67,7 @@ test("check disabling of decrease/remove buttons when quantity of product is equ
         },
     });
 
-    click(".o_kanban_record:nth-of-type(3) .o_product_catalog_quantity button:has(i.fa-minus)");
+    await click(".o_kanban_record:nth-of-type(3) .o_product_catalog_quantity button:has(i.fa-minus)");
     await runAllTimers(); // for skipping the debounce delay
 
     expect(

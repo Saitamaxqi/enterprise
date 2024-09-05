@@ -83,21 +83,21 @@ test("date navigation with timezone (1h)", async () => {
     expect(getGridContent().range).toBe("From: 12/01/2018 to: 02/28/2019");
 
     // switch to day view and check day navigation
-    setScale(5);
+    await setScale(5);
     await ganttControlsChanges();
 
     expect.verifySteps(["&,start,<,2019-02-28 23:00:00,stop,>,2018-11-30 23:00:00"]);
     expect(getGridContent().range).toBe("From: 12/01/2018 to: 02/28/2019");
 
     // switch to week view and check week navigation
-    setScale(1);
+    await setScale(1);
     await ganttControlsChanges();
 
     expect.verifySteps(["&,start,<,2019-02-28 23:00:00,stop,>,2018-11-30 23:00:00"]);
     expect(getGridContent().range).toBe("From: 12/01/2018 to: 02/28/2019");
 
     // switch to year view and check year navigation
-    setScale(5);
+    await setScale(5);
     await ganttControlsChanges();
 
     expect.verifySteps(["&,start,<,2019-02-28 23:00:00,stop,>,2018-11-30 23:00:00"]);
@@ -951,8 +951,8 @@ test.tags("desktop")(
 
         // Here we simulate a resize start on Task 4 and quickly enter Task 7
         // The resize handle should not be added to Task 7
-        pointerDown(SELECTORS.resizeEndHandle);
-        hover(getPillWrapper("Task 7"));
+        await pointerDown(SELECTORS.resizeEndHandle);
+        await hover(getPillWrapper("Task 7"));
 
         expect(getPillWrapper("Task 4").querySelectorAll(SELECTORS.resizeHandle)).toHaveCount(2);
         expect(getPillWrapper("Task 7").querySelectorAll(SELECTORS.resizeHandle)).toHaveCount(0);
@@ -1196,7 +1196,7 @@ test("copy a pill in another row", async () => {
         },
     ]);
 
-    keyDown("Control");
+    await keyDown("Control");
 
     // move a pill (task 7) in the other row and in the the next cell (+1 day)
     const { drop, moveTo } = await dragPill("Task 7");
@@ -1204,11 +1204,11 @@ test("copy a pill in another row", async () => {
 
     expect(SELECTORS.renderer).toHaveClass("o_copying");
 
-    keyUp("Control");
+    await keyUp("Control");
 
     expect(SELECTORS.renderer).toHaveClass("o_grabbing");
 
-    keyDown("Control");
+    await keyDown("Control");
     await drop({ column: "21 December 2018", part: 2 });
 
     expect(getGridContent().rows).toEqual([
@@ -1473,19 +1473,19 @@ test("view reload when scale changes", async () => {
     });
     expect(reloadCount).toBe(1, { message: "view should have loaded" });
 
-    setScale(4);
+    await setScale(4);
     await ganttControlsChanges();
     expect(reloadCount).toBe(2, {
         message: "view should have reloaded when switching scale to week",
     });
 
-    setScale(2);
+    await setScale(2);
     await ganttControlsChanges();
     expect(reloadCount).toBe(3, {
         message: "view should have reloaded when switching scale to month",
     });
 
-    setScale(0);
+    await setScale(0);
     await ganttControlsChanges();
     expect(reloadCount).toBe(4, {
         message: "view should have reloaded when switching scale to year",
@@ -1701,7 +1701,7 @@ test("display mode button", async () => {
 
     expect(getGridContent().rows).toEqual(rowsInSparseMode);
 
-    click(SELECTORS.dense);
+    await click(SELECTORS.dense);
     await animationFrame();
     expect(SELECTORS.dense).toHaveCount(0);
     expect(SELECTORS.sparse).toHaveCount(1);
@@ -1738,7 +1738,7 @@ test("display mode button", async () => {
         },
     ]);
 
-    click(SELECTORS.sparse);
+    await click(SELECTORS.sparse);
     await animationFrame();
     expect(SELECTORS.dense).toHaveCount(1);
     expect(SELECTORS.sparse).toHaveCount(0);
@@ -1757,13 +1757,13 @@ test("unavailabilities fetched with right parameters", async () => {
         arch: `<gantt date_start="start" date_stop="stop" display_unavailability="1" default_scale="day"/>`,
     });
     expect.verifySteps([["2018-12-19 23:00:00", "2018-12-22 23:00:00", "day"]]);
-    setScale(4);
+    await setScale(4);
     await ganttControlsChanges();
     expect.verifySteps([["2018-12-19 23:00:00", "2018-12-22 23:00:00", "week"]]);
-    setScale(2);
+    await setScale(2);
     await ganttControlsChanges();
     expect.verifySteps([["2018-12-19 23:00:00", "2018-12-22 23:00:00", "month"]]);
-    setScale(0);
+    await setScale(0);
     await ganttControlsChanges();
     expect.verifySteps([["2018-11-30 23:00:00", "2018-12-31 23:00:00", "year"]]);
     await selectGanttRange({ startDate: "2018-12-31", stopDate: "2019-06-15" });
@@ -1789,13 +1789,13 @@ test("progress bars fetched with the right start/stop dates", async () => {
         `,
     });
     expect.verifySteps([["2018-12-19 23:00:00", "2018-12-22 23:00:00"]]);
-    setScale(4);
+    await setScale(4);
     await ganttControlsChanges();
     expect.verifySteps([["2018-12-19 23:00:00", "2018-12-22 23:00:00"]]);
-    setScale(2);
+    await setScale(2);
     await ganttControlsChanges();
     expect.verifySteps([["2018-12-19 23:00:00", "2018-12-22 23:00:00"]]);
-    setScale(0);
+    await setScale(0);
     await ganttControlsChanges();
     expect.verifySteps([["2018-11-30 23:00:00", "2018-12-31 23:00:00"]]);
     await selectGanttRange({ startDate: "2018-12-31", stopDate: "2019-06-15" });
@@ -1818,7 +1818,7 @@ test("focus today with scroll (in range & outside)", async () => {
     expect(columnHeaders[0].title).toBe("03"); // December
     expect(columnHeaders.at(-1).title).toBe("05"); // January
 
-    scroll(".o_content", { left: 800 });
+    await scroll(".o_content", { left: 800 });
     await animationFrame();
 
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
@@ -1827,7 +1827,7 @@ test("focus today with scroll (in range & outside)", async () => {
     expect(columnHeaders[0].title).toBe("14"); // December
     expect(columnHeaders.at(-1).title).toBe("16"); // January
 
-    focusToday();
+    await focusToday();
     await ganttControlsChanges();
 
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
@@ -1836,7 +1836,7 @@ test("focus today with scroll (in range & outside)", async () => {
     expect(columnHeaders[0].title).toBe("03"); // December
     expect(columnHeaders.at(-1).title).toBe("05"); // January
 
-    scroll(".o_content", { left: 2000 });
+    await scroll(".o_content", { left: 2000 });
     await animationFrame();
 
     expect(".o_gantt_cell.o_gantt_today").not.toBeVisible();
@@ -1845,7 +1845,7 @@ test("focus today with scroll (in range & outside)", async () => {
     expect(columnHeaders[0].title).toBe("07"); // January
     expect(columnHeaders.at(-1).title).toBe("09"); // February
 
-    focusToday();
+    await focusToday();
     await ganttControlsChanges();
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
     columnHeaders = getGridContent().columnHeaders;
@@ -1880,7 +1880,7 @@ test("focus today with range change (in range & outside)", async () => {
     expect(gridContent.columnHeaders).toHaveLength(34);
     expect(gridContent.columnHeaders[0].title).toBe("03"); // December
     expect(gridContent.columnHeaders.at(-1).title).toBe("05"); // January
-    focusToday();
+    await focusToday();
     await ganttControlsChanges();
     // nothing happens
 
@@ -1889,7 +1889,7 @@ test("focus today with range change (in range & outside)", async () => {
     expect.verifySteps(["get_gantt_data"]);
     expect(".o_gantt_cell.o_gantt_today").not.toBeVisible();
 
-    focusToday();
+    await focusToday();
     await ganttControlsChanges();
     expect.verifySteps(["get_gantt_data"]);
     expect(".o_gantt_cell.o_gantt_today").toBeVisible();
@@ -1902,19 +1902,19 @@ test("set scale: should keep focused date", async () => {
         arch: '<gantt date_start="start" date_stop="stop"/>',
     });
     // set focus around 23 January 2019
-    scroll(".o_content", { left: 2000 });
+    await scroll(".o_content", { left: 2000 });
     await animationFrame();
     expect(getCell("23 January 2019")).toBeVisible();
     // day view
-    setScale(5);
+    await setScale(5);
     await ganttControlsChanges();
     expect(getCell("12pm 23 January 2019")).toBeVisible();
     // week view
-    setScale(4);
+    await setScale(4);
     await ganttControlsChanges();
     expect(getCell("23 W4 2019")).toBeVisible();
     // year view
-    setScale(0);
+    await setScale(0);
     await ganttControlsChanges();
     expect(getCell("January 2019")).toBeVisible();
 });
@@ -1925,7 +1925,7 @@ test("set start/stop date: should keep focused date", async () => {
         arch: '<gantt date_start="start" date_stop="stop"/>',
     });
     // set focus around 23 January 2019
-    scroll(".o_content", { left: 2000 });
+    await scroll(".o_content", { left: 2000 });
     await animationFrame();
     await selectGanttRange({ startDate: "2018-12-01", stopDate: "2019-05-28" });
     expect(getCell("23 January 2019")).toBeVisible();
@@ -1958,11 +1958,11 @@ test("focus first pill on row header click", async () => {
         arch: '<gantt date_start="start" date_stop="stop" default_group_by="user_id"/>',
     });
     // set focus around 23 January 2019
-    scroll(".o_content", { left: 2000 });
+    await scroll(".o_content", { left: 2000 });
     await animationFrame();
     expect(SELECTORS.pill).toHaveCount(0);
 
-    click(SELECTORS.rowHeader);
+    await click(SELECTORS.rowHeader);
     await animationFrame();
     expect(SELECTORS.pill).toHaveCount(1);
     expect(SELECTORS.pill).toHaveText("Task 1");
@@ -2014,9 +2014,9 @@ test("Select range with left/rigth arrows", async () => {
     expect(content.range).toBe("December 2018");
 
     for (let i = 0; i < 3; i++) {
-        click(SELECTORS.nextButton);
+        await click(SELECTORS.nextButton);
     }
-    click(SELECTORS.previousButton);
+    await click(SELECTORS.previousButton);
     await ganttControlsChanges();
 
     expect.verifySteps([
@@ -2025,7 +2025,7 @@ test("Select range with left/rigth arrows", async () => {
     content = getGridContent();
     expect(content.range).toBe("February 2019");
 
-    press("alt+n");
+    await press("alt+n");
     await ganttControlsChanges();
     expect.verifySteps([
         ["&", ["start", "<", "2019-03-31 23:00:00"], ["stop", ">", "2019-02-28 23:00:00"]],
@@ -2050,7 +2050,7 @@ test("Select scale with +/- buttons", async () => {
     expect.verifySteps(["get_gantt_data"]);
 
     for (let i = 0; i < 9; i++) {
-        click(SELECTORS.minusButton);
+        await click(SELECTORS.minusButton);
     }
     await ganttControlsChanges();
 
@@ -2059,8 +2059,8 @@ test("Select scale with +/- buttons", async () => {
     expect(SELECTORS.plusButton).toBeEnabled();
     expect.verifySteps(["get_gantt_data"]);
 
-    click(SELECTORS.plusButton);
-    click(SELECTORS.plusButton);
+    await click(SELECTORS.plusButton);
+    await click(SELECTORS.plusButton);
     await ganttControlsChanges();
 
     expect(getActiveScale()).toBe(2);
@@ -2068,7 +2068,7 @@ test("Select scale with +/- buttons", async () => {
     expect(SELECTORS.plusButton).toBeEnabled();
     expect.verifySteps(["get_gantt_data"]);
 
-    press("alt+i");
+    await press("alt+i");
     await ganttControlsChanges();
     expect(getActiveScale()).toBe(3);
     expect(SELECTORS.minusButton).toBeEnabled();

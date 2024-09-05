@@ -102,19 +102,19 @@ test("Test to check if start button is always in focus", async () => {
 
     // Click on a clickable button/action should be accessible and should not be disturbed
     // Force focus must not disturb other clicks
-    click(".o_grid_row:not(.o_grid_row_title, .o_grid_row_timer)");
+    await click(".o_grid_row:not(.o_grid_row_title, .o_grid_row_timer)");
     await delay(50);
     expect(getActiveElement()).toBe(queryOne(".o_grid_component div input"));
 
     // Click on body which doesn't have any fields/actions must make Start button to come in focus
-    click(document.body);
+    await click(document.body);
     expect(getActiveElement()).toBe(queryOne(".btn_start_timer"));
 });
 
 test("Test to check if stop button is always in focus", async () => {
     await mountView(timesheetgridViewParams);
 
-    click(".btn_start_timer");
+    await click(".btn_start_timer");
     await animationFrame();
     // At each mount and patch Stop Button should be in focus
     expect(".btn_stop_timer").toHaveCount(1);
@@ -122,10 +122,10 @@ test("Test to check if stop button is always in focus", async () => {
 
     // Click on a clickable button/input should be accessible and should not be disturbed
     // Force focus must not disturb other clicks/inputs
-    click('.o_field_many2one[name="project_id"] input');
+    await click('.o_field_many2one[name="project_id"] input');
     expect(getActiveElement()).toBe(queryOne('.o_field_many2one[name="project_id"] input'));
 
     // Click on body which doesn't have any fields/actions must make Stop button to come in focus
-    click(document.body);
+    await click(document.body);
     expect(getActiveElement()).toBe(queryOne(".btn_stop_timer"));
 });

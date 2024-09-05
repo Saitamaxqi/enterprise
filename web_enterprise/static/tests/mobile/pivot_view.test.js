@@ -62,9 +62,9 @@ test("unselecting all measures should not crash pivot rendering", async () => {
         `,
     });
 
-    click(".dropdown-toggle.btn.btn-primary:eq(1)");
+    await click(".dropdown-toggle.btn.btn-primary:eq(1)");
     await animationFrame();
-    click(".dropdown-item.o_menu_item.selected:eq(0)");
+    await click(".dropdown-item.o_menu_item.selected:eq(0)");
     await animationFrame();
     expect("div.o_nocontent_help").toHaveCount(1, {
         message: "Instead of error action helper will appear",

@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, queryAll, queryAllTexts, queryFirst } from "@odoo/hoot-dom";
+import { click, queryAll, queryAllTexts } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import {
     contains,
@@ -722,8 +722,8 @@ test("scale switching", async () => {
     ]);
 
     // switch to day view
-    setScale(5);
-    focusToday();
+    await setScale(5);
+    await focusToday();
     await ganttControlsChanges();
     expect(getActiveScale()).toBe(5);
     expect(SELECTORS.expandCollapseButtons).not.toBeVisible();
@@ -758,8 +758,8 @@ test("scale switching", async () => {
     ]);
 
     // switch to week view
-    setScale(4);
-    focusToday();
+    await setScale(4);
+    await focusToday();
     await ganttControlsChanges();
 
     expect(getActiveScale()).toBe(4);
@@ -783,8 +783,8 @@ test("scale switching", async () => {
     ]);
 
     // switch to month view
-    setScale(2);
-    focusToday();
+    await setScale(2);
+    await focusToday();
     await ganttControlsChanges();
 
     expect(getActiveScale()).toBe(2);
@@ -822,8 +822,8 @@ test("scale switching", async () => {
     ]);
 
     // switch to year view
-    setScale(0);
-    focusToday();
+    await setScale(0);
+    await focusToday();
     await ganttControlsChanges();
 
     expect(getActiveScale()).toBe(0);
@@ -1037,7 +1037,7 @@ test("Scale: scale default is fetched from localStorage", async () => {
         arch: '<gantt date_start="start" date_stop="stop" default_scale="week"/>',
     });
     expect(getActiveScale()).toBe(4);
-    setScale(0);
+    await setScale(0);
     await ganttControlsChanges();
     expect(getActiveScale()).toBe(0);
     expect.verifySteps(["get_scale_week", "set_scale_year"]);
@@ -1108,7 +1108,7 @@ test("data fetched with right domain", async () => {
     expect.verifySteps([
         ["&", ["start", "<", "2018-12-22 23:00:00"], ["stop", ">", "2018-12-19 23:00:00"]],
     ]);
-    setScale(0);
+    await setScale(0);
     await ganttControlsChanges();
     expect.verifySteps([
         ["&", ["start", "<", "2018-12-31 23:00:00"], ["stop", ">", "2018-11-30 23:00:00"]],
@@ -1171,13 +1171,13 @@ test("popover-template with an added footer", async () => {
     expect(SELECTORS.pill).toHaveCount(1);
     expect(".o_popover").toHaveCount(0);
 
-    click(queryFirst(SELECTORS.pill));
+    await click(SELECTORS.pill);
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover .popover-footer button").toHaveCount(2);
     expect(queryAllTexts(".o_popover .popover-footer button")).toEqual(["Edit", "Delete"]);
 
-    click(".o_popover .popover-footer button:last-child");
+    await click(".o_popover .popover-footer button:last-child");
     await animationFrame();
     expect(SELECTORS.pill).toHaveCount(0);
 });
@@ -1208,13 +1208,13 @@ test("popover-template with a replaced footer", async () => {
     expect(SELECTORS.pill).toHaveCount(1);
     expect(".o_popover").toHaveCount(0);
 
-    click(queryFirst(SELECTORS.pill));
+    await click(SELECTORS.pill);
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover .popover-footer button").toHaveCount(1);
     expect(".o_popover .popover-footer button").toHaveText("Delete");
 
-    click(".o_popover .popover-footer button");
+    await click(".o_popover .popover-footer button");
     await animationFrame();
     expect(SELECTORS.pill).toHaveCount(0);
 });
@@ -1242,7 +1242,7 @@ test("popover-template with a button in the body", async () => {
     expect(SELECTORS.pill).toHaveCount(1);
     expect(".o_popover").toHaveCount(0);
 
-    click(queryFirst(SELECTORS.pill));
+    await click(SELECTORS.pill);
     await animationFrame();
     expect(".o_popover").toHaveCount(1);
     expect(".o_popover .popover-body button").toHaveCount(1);
@@ -1250,7 +1250,7 @@ test("popover-template with a button in the body", async () => {
     expect(".o_popover .popover-body button").toHaveText("Delete");
     expect(".o_popover .popover-footer button").toHaveText("Edit");
 
-    click(".o_popover .popover-body button");
+    await click(".o_popover .popover-body button");
     await animationFrame();
     expect(SELECTORS.pill).toHaveCount(0);
 });

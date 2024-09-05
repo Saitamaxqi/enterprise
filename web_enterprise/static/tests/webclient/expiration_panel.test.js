@@ -33,7 +33,7 @@ test("Expiration Panel one app installed", async () => {
     expect(".database_expiration_panel").toHaveClass("alert-info");
 
     // Close the expiration panel
-    click(".oe_instance_hide_panel");
+    await click(".oe_instance_hide_panel");
     await animationFrame();
 
     expect(".database_expiration_panel").toHaveCount(0);
@@ -71,7 +71,7 @@ test("Expiration Panel one app installed, buy subscription", async () => {
     });
 
     // Click on 'buy subscription'
-    click(".oe_instance_buy");
+    await click(".oe_instance_buy");
     await animationFrame();
 
     expect(browser.location.href).toBe("https://www.odoo.com/odoo-enterprise/upgrade?num_users=7");
@@ -149,7 +149,7 @@ test("Expiration Panel one app installed, try several times to register subscrip
     });
 
     // Click on 'buy subscription'
-    click(".oe_instance_register_show");
+    await click(".oe_instance_register_show");
     await animationFrame();
 
     expect(".oe_instance_register_form").toHaveCount(1, {
@@ -163,7 +163,7 @@ test("Expiration Panel one app installed, try several times to register subscrip
     });
     expect(".oe_instance_register_form button").toHaveText("Register");
 
-    click(".oe_instance_register_form button");
+    await click(".oe_instance_register_form button");
     await animationFrame();
 
     expect(".oe_instance_register_form").toHaveCount(1, {
@@ -176,10 +176,10 @@ test("Expiration Panel one app installed, try several times to register subscrip
         message: "and a button 'Register'",
     });
 
-    click(".oe_instance_register_form input");
-    edit("ABCDEF");
+    await click(".oe_instance_register_form input");
+    await edit("ABCDEF");
     await animationFrame();
-    click(".oe_instance_register_form button");
+    await click(".oe_instance_register_form button");
     await animationFrame();
 
     expect(queryFirst(".oe_instance_register")).toHaveText(
@@ -200,10 +200,10 @@ test("Expiration Panel one app installed, try several times to register subscrip
     });
     expect(".oe_instance_register_form button").toHaveText("Retry");
 
-    click(".oe_instance_register_form input");
-    edit("ABC");
+    await click(".oe_instance_register_form input");
+    await edit("ABC");
     await animationFrame();
-    click(".oe_instance_register_form button");
+    await click(".oe_instance_register_form button");
     await animationFrame();
 
     expect(".database_expiration_panel").toHaveCount(0, {
@@ -281,18 +281,18 @@ test("Expiration Panel one app installed, subscription already linked", async ()
         "This database will expire in 5 days. Register your subscription or buy a subscription."
     );
     // Click on 'register your subscription'
-    click(".oe_instance_register_show");
+    await click(".oe_instance_register_show");
     await animationFrame();
-    click(".oe_instance_register_form input");
-    edit("ABC");
-    click(".oe_instance_register_form button");
+    await click(".oe_instance_register_form input");
+    await edit("ABC");
+    await click(".oe_instance_register_form button");
     await animationFrame();
 
     expect(".oe_instance_register.oe_database_already_linked").toHaveText(
         `Your subscription is already linked to a database.\nSend an email to the subscription owner to confirm the change, enter a new code or buy a subscription.`
     );
 
-    click("a.oe_contract_send_mail");
+    await click("a.oe_contract_send_mail");
     await animationFrame();
     expect(".database_expiration_panel").toHaveClass("alert-danger", {
         message: "Color should be red",
@@ -362,11 +362,11 @@ test("One app installed, database expired", async () => {
     expect(".oe_instance_register_form").toHaveCount(0);
 
     // Click on 'Register your subscription'
-    click(".oe_instance_register_show");
+    await click(".oe_instance_register_show");
     await animationFrame();
-    click(".oe_instance_register_form input");
-    edit("ABC");
-    click(".oe_instance_register_form button");
+    await click(".oe_instance_register_form input");
+    await edit("ABC");
+    await click(".oe_instance_register_form button");
     await animationFrame();
 
     expect(".oe_instance_register").toHaveText(
@@ -411,7 +411,7 @@ test("One app installed, renew", async () => {
     expect(".oe_instance_register_form").toHaveCount(0);
 
     // Click on 'Renew your subscription'
-    click(".oe_instance_renew");
+    await click(".oe_instance_renew");
     await animationFrame();
 
     expect.verifySteps(["get_param"]);
@@ -442,7 +442,7 @@ test("One app installed, check status and get success", async () => {
 
     // click on "I paid, please recheck!"
     expect("a.check_enterprise_status").toHaveText("I paid, please recheck!");
-    click("a.check_enterprise_status");
+    await click("a.check_enterprise_status");
     await animationFrame();
 
     expect(".oe_instance_register.oe_subscription_updated").toHaveText(
@@ -476,7 +476,7 @@ test.skip("One app installed, check status and get page reload", async () => {
     await animationFrame();
 
     // click on "I paid, please recheck!"
-    click("a.check_enterprise_status");
+    await click("a.check_enterprise_status");
     await animationFrame();
 
     expect.verifySteps(["update_notification", "get_param", "reloadPage"]);
@@ -514,7 +514,7 @@ test("One app installed, upgrade database", async () => {
     );
 
     // click on "Upgrade your subscription"
-    click("a.oe_instance_upsell");
+    await click("a.oe_instance_upsell");
     await animationFrame();
 
     expect.verifySteps(["get_param", "search_count"]);
@@ -583,7 +583,7 @@ test("One app installed, navigation to renewal page", async () => {
     expect(".oe_instance_register_form").toHaveCount(0);
 
     // Click on 'Renew your subscription'
-    click(".oe_instance_renew");
+    await click(".oe_instance_renew");
     await animationFrame();
 
     expect(browser.location.href).toBe("https://www.odoo.com/odoo-enterprise/renew?contract=ABC");
@@ -610,7 +610,7 @@ test("One app installed, different locale (arabic)", async () => {
     await mountWithCleanup(WebClientEnterprise);
     await animationFrame();
 
-    click("a.check_enterprise_status");
+    await click("a.check_enterprise_status");
     await animationFrame();
 
     expect(".oe_instance_register").toHaveText(

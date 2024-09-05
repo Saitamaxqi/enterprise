@@ -26,10 +26,10 @@ test("can unformat a value when focus and format when blur", async () => {
     });
 
     expect(".o_input").toHaveValue("5,702.22");
-    click(".o_input");
+    await click(".o_input");
     await animationFrame();
     expect(".o_input").toHaveValue("5702.22");
-    press("Enter");
+    await press("Enter");
     await animationFrame();
     expect(".o_input").toHaveValue("5,702.22");
 });

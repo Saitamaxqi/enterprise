@@ -196,10 +196,10 @@ const clickHierarchyArticle = async (articleId) => {
     const articleName = article.name;
     const articleElement = queryFirst(`.o_hierarchy_item:contains(${articleName})`);
     if (articleElement) {
-        click(articleElement.querySelector("a"));
+        await click(articleElement.querySelector("a"));
     } else {
         await openHierarchyDropdown();
-        click(`.o-dropdown-item:contains(${articleName})`);
+        await click(`.o-dropdown-item:contains(${articleName})`);
     }
     return animationFrame();
 };
@@ -212,7 +212,7 @@ const openHierarchyDropdown = async () => {
         // dropdown already opened
         return;
     }
-    click(".o_hierarchy_item a:contains('...')");
+    await click(".o_hierarchy_item a:contains('...')");
     return animationFrame();
 };
 
@@ -283,11 +283,11 @@ test("Hierarchy - Use breadcrumbs", async function () {
         ).toHaveCount(1);
     };
     const clickBack = async () => {
-        click(".o_widget_knowledge_hierarchy .oi-chevron-left");
+        await click(".o_widget_knowledge_hierarchy .oi-chevron-left");
         return animationFrame();
     };
     const clickNext = async () => {
-        click(".o_widget_knowledge_hierarchy .oi-chevron-right");
+        await click(".o_widget_knowledge_hierarchy .oi-chevron-right");
         return animationFrame();
     };
     await mountView({ ...viewParams, resId: 2 });

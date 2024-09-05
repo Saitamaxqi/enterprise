@@ -45,7 +45,7 @@ describe("field sync action", () => {
         const { model } = await mountSaleOrderSpreadsheetAction();
         addFieldSync(model, "A1", "product_uom_qty", 0);
         setCellContent(model, "A1", "1000");
-        click("button:contains(Save in sale.order,1)");
+        await click("button:contains(Save in sale.order,1)");
         await animationFrame();
         expect.verifySteps(["write-sale-order"]);
     });

@@ -133,21 +133,21 @@ test("click on the minus/plus_buttons to decrease/increase the quantity of a pro
         },
     });
 
-    click(".o_kanban_record:nth-of-type(2) .o_product_catalog_quantity button:has(i.fa-plus)");
+    await click(".o_kanban_record:nth-of-type(2) .o_product_catalog_quantity button:has(i.fa-plus)");
     await runAllTimers(); // for skipping the debounce delay
     expect(".o_kanban_record:nth-of-type(2) .o_product_catalog_quantity .o_input").toHaveValue(2, {
         message:
             "Using the plus button should increase the product quantity by 1 unit (expected 2)",
     });
 
-    click(".o_kanban_record.o_product_added");
+    await click(".o_kanban_record.o_product_added");
     await runAllTimers(); // for skipping the debounce delay
     expect(".o_kanban_record:nth-of-type(2) .o_product_catalog_quantity .o_input").toHaveValue(3, {
         message:
             "Clicking on the kanban card should increase the product quantity by 1 unit (expected 3)",
     });
 
-    click(".o_kanban_record:nth-of-type(3) .o_product_catalog_quantity button:has(i.fa-minus)");
+    await click(".o_kanban_record:nth-of-type(3) .o_product_catalog_quantity button:has(i.fa-minus)");
     await runAllTimers(); // for skipping the debounce delay
     expect(".o_kanban_record:nth-of-type(3) .o_product_catalog_quantity .o_input").toHaveValue(2, {
         message:
@@ -184,11 +184,11 @@ test("check the debounce delay", async () => {
         message: "The number of kanban record should be equal to 3 records",
     });
 
-    click(".o_kanban_record:nth-of-type(2) .o_product_catalog_quantity button:has(i.fa-plus)");
+    await click(".o_kanban_record:nth-of-type(2) .o_product_catalog_quantity button:has(i.fa-plus)");
     await advanceTime(100); // click again before the debounce takes effect
-    click(".o_kanban_record:nth-of-type(2) .o_product_catalog_quantity button:has(i.fa-plus)");
+    await click(".o_kanban_record:nth-of-type(2) .o_product_catalog_quantity button:has(i.fa-plus)");
     await advanceTime(100); // click again before the debounce takes effect
-    click(".o_kanban_record:nth-of-type(2) .o_product_catalog_quantity button:has(i.fa-plus)");
+    await click(".o_kanban_record:nth-of-type(2) .o_product_catalog_quantity button:has(i.fa-plus)");
     await advanceTime(510); // wait until the debounce takes effect
 
     expect(".o_kanban_record:nth-of-type(2) .o_product_catalog_quantity .o_input").toHaveValue(4);

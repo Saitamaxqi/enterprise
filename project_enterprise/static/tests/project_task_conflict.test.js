@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, edit, queryAll } from "@odoo/hoot-dom";
+import { click, edit, press, queryAll } from "@odoo/hoot-dom";
 
-import { contains, mailModels, triggerHotkey } from "@mail/../tests/mail_test_helpers";
+import { contains, mailModels } from "@mail/../tests/mail_test_helpers";
 import { ProjectProject, defineProjectModels } from "@project/../tests/project_models";
 import { onRpc, removeFacet } from "@web/../tests/web_test_helpers";
 import { getGridContent, mountGanttView } from "@web_gantt/../tests/web_gantt_test_helpers";
@@ -119,9 +119,9 @@ test("Unassigned tasks will show when search for assignee", async () => {
             ],
         },
     ]);
-    click(".o_searchview_input");
-    edit("User1");
-    triggerHotkey("Enter");
+    await click(".o_searchview_input");
+    await edit("User1");
+    await press("Enter");
     await contains(".o_gantt_row_title", { count: 2 });
     expect(getGridContent().rows).toEqual([
         {

@@ -65,10 +65,10 @@ test("insert link with /Appointment", async () => {
     });
     const paragraph = queryOne(".odoo-editor-editable p");
     setSelection({ anchorNode: paragraph, anchorOffset: 0 });
-    insertText(htmlEditor, "/Appointment");
+    await insertText(htmlEditor, "/Appointment");
     await animationFrame();
     expect(".o-we-powerbox").toHaveCount(1);
-    press("Enter");
+    await press("Enter");
     await animationFrame();
     expect(paragraph).toHaveOuterHTML(`<p><a href="${linkUrl}">Schedule an Appointment</a></p>`);
 
@@ -89,10 +89,10 @@ test("Replace existing link with '/Appointment' link", async () => {
     expect(paragraph.outerHTML).toBe(`<p>\ufeff<a href="http://odoo.com">\ufeffExisting link\ufeff</a>\ufeff</p>`);
 
     setSelection({ anchorNode: paragraph.firstChild.nextSibling.firstChild.nextSibling, anchorOffset: 0 });
-    insertText(htmlEditor, "/Appointment");
+    await insertText(htmlEditor, "/Appointment");
     await animationFrame();
     expect(".o-we-powerbox").toHaveCount(1);
-    press("Enter");
+    await press("Enter");
     await animationFrame();
     expect(paragraph).toHaveOuterHTML(`<p><a href="${linkUrl}">Schedule an Appointment</a></p>`);
 });

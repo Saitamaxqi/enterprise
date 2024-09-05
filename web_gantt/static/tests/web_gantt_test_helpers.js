@@ -2,6 +2,7 @@ import {
     click,
     hover,
     queryAll,
+    queryAllTexts,
     queryFirst,
     queryOne,
     queryText,
@@ -164,7 +165,7 @@ export async function selectGanttRange({ startDate, stopDate }) {
         stopDatePicker: STOP_SELECTOR,
         rangeMenuToggler,
     } = SELECTORS;
-    click(rangeMenuToggler);
+    await click(rangeMenuToggler);
     await animationFrame();
     if (startDate) {
         await selectDateInDatePicker(START_SELECTOR, luxon.DateTime.fromISO(startDate));
@@ -172,14 +173,14 @@ export async function selectGanttRange({ startDate, stopDate }) {
     if (stopDate) {
         await selectDateInDatePicker(STOP_SELECTOR, luxon.DateTime.fromISO(stopDate));
     }
-    click(".dropdown-item button:contains(Apply)");
+    await click(".dropdown-item button:contains(Apply)");
     await ganttControlsChanges();
 }
 
 export async function selectRange(label) {
-    click(SELECTORS.rangeMenuToggler);
+    await click(SELECTORS.rangeMenuToggler);
     await animationFrame();
-    click(`${SELECTORS.rangeMenu} .dropdown-item:contains(/^${label}$/)`);
+    await click(`${SELECTORS.rangeMenu} .dropdown-item:contains(/^${label}$/)`);
     await ganttControlsChanges();
 }
 
@@ -190,12 +191,12 @@ export function getActiveScale() {
 /**
  * @param {Number} scale
  */
-export function setScale(scale) {
-    setInputRange(".o_gantt_renderer_controls input", scale);
+export async function setScale(scale) {
+    await setInputRange(".o_gantt_renderer_controls input", scale);
 }
 
-export function focusToday() {
-    click(SELECTORS.todayButton);
+export async function focusToday() {
+    await click(SELECTORS.todayButton);
 }
 
 /** @type {PillHelper<Promise<DragPillHelpers>>} */
@@ -339,8 +340,8 @@ function getHeaders(selector) {
 export function getGridContent() {
     const columnHeaders = getHeaders(SELECTORS.columnHeader);
     const groupHeaders = getHeaders(SELECTORS.groupHeader);
-    const range = queryText(SELECTORS.rangeMenuToggler);
-    const viewTitle = queryText(".o_gantt_title");
+    const range = queryAllTexts(SELECTORS.rangeMenuToggler)[0] || null;
+    const viewTitle = queryAllTexts(".o_gantt_title")[0] || null;
     const colsRange = queryFirst(SELECTORS.columnHeader)
         .style.getPropertyValue("grid-column")
         .split("/");
@@ -468,7 +469,8 @@ function getCellPositionOffset(cell, part) {
  */
 async function hoverCell(cell, options) {
     const part = options?.part ?? 1;
-    hover(cell, { position: getCellPositionOffset(cell, part), relative: true });
+    await hover(cell, { position: getCellPositionOffset(cell, part), relative: true });
+    await animationFrame();
     await advanceTime(1000);
 }
 
@@ -511,7 +513,7 @@ async function hoverPillCell(pill) {
  * @param {boolean} [shouldDrop=true]
  */
 export async function resizePill(pill, side, deltaOrPosition, shouldDrop = true) {
-    hover(pill);
+    await hover(pill);
 
     const { row, column } = getGridStyle(pill);
 

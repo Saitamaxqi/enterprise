@@ -49,7 +49,7 @@ test("fsm task gantt view", async () => {
 
     expect(".o_gantt_view").toHaveCount(1);
     expect(".modal").toHaveCount(0);
-    click(".o_gantt_button_add.btn-primary");
+    await click(".o_gantt_button_add.btn-primary");
     await animationFrame();
     expect(".modal").toHaveCount(1);
     expect(".modal .o_field_widget[name=planned_date_begin] .o_input").toHaveValue(

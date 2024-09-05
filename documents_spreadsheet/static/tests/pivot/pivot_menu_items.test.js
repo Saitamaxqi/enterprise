@@ -501,13 +501,13 @@ test("Pivot cells are highlighted when hovering their menu item", async function
     await contains(".o-sidePanelClose").click();
     await contains(".o-topbar-top div[data-id='data']").click();
 
-    hover("div[data-name='item_pivot_1']");
+    await hover("div[data-name='item_pivot_1']");
     const pivotId = model.getters.getPivotIds()[0];
     const zone = getZoneOfInsertedDataSource(model, "pivot", pivotId);
     expect(getHighlightsFromStore(env)).toEqual([
         { color: "#37A850", sheetId, zone, noFill: true },
     ]);
 
-    leave("div[data-name='item_pivot_1");
+    await leave("div[data-name='item_pivot_1");
     expect(getHighlightsFromStore(env)).toEqual([]);
 });

@@ -81,18 +81,18 @@ test("add custom field button with other optional columns - studio not installed
     expect(".o_data_row").toHaveCount(4);
     expect(".o_optional_columns_dropdown_toggle").toHaveCount(1);
 
-    click(".o_optional_columns_dropdown_toggle");
+    await click(".o_optional_columns_dropdown_toggle");
     await animationFrame();
     const dropdown = getDropdownMenu(".o_optional_columns_dropdown");
 
     expect(queryAll(".dropdown-item", { root: dropdown })).toHaveCount(2);
     expect(queryAll(".dropdown-item-studio", { root: dropdown })).toHaveCount(1);
 
-    click(".dropdown-item-studio");
+    await click(".dropdown-item-studio");
     await animationFrame();
     expect(".modal-studio").toHaveCount(1);
 
-    click(".modal .o_install_studio");
+    await click(".modal .o_install_studio");
     await animationFrame();
     expect(browser.localStorage.getItem("openStudioOnReload")).toBe("main");
     expect.verifySteps(["studio_module_id", "studio_module_install", "window_reload"]);
@@ -137,18 +137,18 @@ test("add custom field button without other optional columns - studio not instal
     expect(".o_data_row").toHaveCount(4);
     expect(".o_optional_columns_dropdown_toggle").toHaveCount(1);
 
-    click(".o_optional_columns_dropdown_toggle");
+    await click(".o_optional_columns_dropdown_toggle");
     await animationFrame();
     const dropdown = getDropdownMenu(".o_optional_columns_dropdown");
 
     expect(queryAll(".dropdown-item", { root: dropdown })).toHaveCount(1);
     expect(queryAll(".dropdown-item-studio", { root: dropdown })).toHaveCount(1);
 
-    click(".dropdown-item-studio");
+    await click(".dropdown-item-studio");
     await animationFrame();
     expect(".modal-studio").toHaveCount(1);
 
-    click(".modal .o_install_studio");
+    await click(".modal .o_install_studio");
     await animationFrame();
     expect(browser.localStorage.getItem("openStudioOnReload")).toBe("main");
     expect.verifySteps(["studio_module_id", "studio_module_install", "window_reload"]);
@@ -173,7 +173,7 @@ test("add custom field button not shown to non-system users (with opt. col.)", a
 
     expect(".o_optional_columns_dropdown_toggle").toHaveCount(1);
 
-    click(".o_optional_columns_dropdown_toggle");
+    await click(".o_optional_columns_dropdown_toggle");
     await animationFrame();
     const dropdown = getDropdownMenu(".o_optional_columns_dropdown");
     expect(queryAll(".dropdown-item", { root: dropdown })).toHaveCount(1);
@@ -242,9 +242,9 @@ test("x2many should not be editable", async () => {
         `,
     });
     expect(".o_optional_columns_dropdown_toggle").toHaveCount(0);
-    click(".nav-link:eq(1)");
+    await click(".nav-link:eq(1)");
     await animationFrame();
-    click(".nav-link:eq(0)");
+    await click(".nav-link:eq(0)");
     await animationFrame();
     expect(".o_field_widget").toHaveCount(1);
     expect(".o_optional_columns_dropdown_toggle").toHaveCount(0);
@@ -273,7 +273,7 @@ test("upsell studio feature is not polluted by another view", async () => {
         res_model: "partner",
     });
 
-    click(".o_optional_columns_dropdown_toggle");
+    await click(".o_optional_columns_dropdown_toggle");
     await animationFrame();
     expect(".dropdown-item").toHaveCount(2);
     expect(".dropdown-item-studio").toHaveCount(1);
@@ -287,19 +287,19 @@ test("upsell studio feature is not polluted by another view", async () => {
         target: "new",
     });
 
-    click(".modal .o_optional_columns_dropdown_toggle");
+    await click(".modal .o_optional_columns_dropdown_toggle");
     await animationFrame();
     let dropdown = getDropdownMenu(".modal .o_optional_columns_dropdown");
     expect(queryAll(".dropdown-item", { root: dropdown })).toHaveCount(1);
     expect(queryAll(".dropdown-item-studio", { root: dropdown })).toHaveCount(0);
-    click(".modal-header .btn-close");
+    await click(".modal-header .btn-close");
     await animationFrame();
     expect(".modal").toHaveCount(0);
 
-    click(".o_optional_columns_dropdown_toggle");
+    await click(".o_optional_columns_dropdown_toggle");
     await animationFrame();
     expect(".o-dropdown--menu").toHaveCount(0);
-    click(".o_optional_columns_dropdown_toggle");
+    await click(".o_optional_columns_dropdown_toggle");
     await animationFrame();
 
     dropdown = getDropdownMenu(".o_optional_columns_dropdown");

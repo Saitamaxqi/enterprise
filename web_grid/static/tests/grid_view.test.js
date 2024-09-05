@@ -438,7 +438,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
         expect(".o_grid_search_btn").toHaveCount(0, {
             message: "No search button should be displayed in the grid cells.",
         });
-        hover(".o_grid_section.o_grid_highlightable:eq(1)");
+        await hover(".o_grid_section.o_grid_highlightable:eq(1)");
         await contains(".o_grid_cell button.o_grid_search_btn").click();
 
         // Click on next period to have no data
@@ -475,7 +475,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
         expect(".o_grid_search_btn").toHaveCount(0, {
             message: "No search button should be displayed in the grid cells.",
         });
-        hover(".o_grid_section.o_grid_highlightable:eq(1)");
+        await hover(".o_grid_section.o_grid_highlightable:eq(1)");
         await contains(".o_grid_cell button.o_grid_search_btn").click();
     });
 
@@ -855,7 +855,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
         expect(".o_grid_search_btn").toHaveCount(0, {
             message: "No search button should be displayed in the grid cells.",
         });
-        hover(".o_grid_row .o_grid_cell_readonly:eq(1)");
+        await hover(".o_grid_row .o_grid_cell_readonly:eq(1)");
         await contains(".o_grid_cell button.o_grid_search_btn").click();
     });
 
@@ -911,7 +911,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
             (rowTotal.textContent?.length && rowTotal.textContent.split(":")) || [0, 0]
         ).map((value) => Number(value));
         expect(cell).toHaveText("0:00");
-        hover(cell);
+        await hover(cell);
         await runAllTimers();
         expect(".o_grid_cell").toHaveCount(1, {
             message: "The GridCell component should be mounted on the grid cell hovered.",
@@ -1028,7 +1028,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
 
         const cell = queryFirst(".o_grid_row .o_grid_cell_readonly");
         expect(cell).toHaveText("0:00");
-        hover(cell);
+        await hover(cell);
         await contains(".o_grid_cell").click();
         await animationFrame();
         expect(".o_grid_cell input").toHaveCount(1);
@@ -1057,7 +1057,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
         expect(".o_grid_row.o_grid_highlightable.bg-700").toHaveCount(0, {
             message: "No cell should be highlighted",
         });
-        hover(".o_grid_row .o_grid_cell_readonly");
+        await hover(".o_grid_row .o_grid_cell_readonly");
         await runAllTimers();
         expect(
             ".o_grid_row.o_grid_highlightable.o_grid_highlighted.o_grid_row_highlighted"
@@ -1283,13 +1283,13 @@ describe.tags("desktop")("grid_view_desktop", () => {
                 <field name="unit_amount" type="measure" widget="float_time"/>
             </grid>`,
         });
-        hover(".o_grid_row .o_grid_cell_readonly");
+        await hover(".o_grid_row .o_grid_cell_readonly");
         await runAllTimers();
         expect(".o_grid_cell .o_grid_search_btn").toHaveCount(1);
         expect(".o_grid_cell.o_field_cursor_disabled").toHaveCount(0, {
             message: "The cell should not be in readonly",
         });
-        hover(".o_grid_row .o_grid_cell_readonly:eq(1)");
+        await hover(".o_grid_row .o_grid_cell_readonly:eq(1)");
         await runAllTimers();
         expect(".o_grid_cell .o_grid_search_btn").toHaveCount(1);
         expect(".o_grid_cell.o_field_cursor_disabled").toHaveCount(1, {
@@ -1379,7 +1379,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
             arch,
         });
 
-        hover(".o_grid_row .o_grid_cell_readonly:eq(1)");
+        await hover(".o_grid_row .o_grid_cell_readonly:eq(1)");
         await contains(".o_grid_cell").click();
         await animationFrame();
 
@@ -1497,7 +1497,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
 
         // This is to ensure that the virtual rows will not be impacted by
         // sub-pixel calculations.
-        scroll(content, { top: 0 });
+        await scroll(content, { top: 0 });
         await animationFrame();
 
         const initialRows = getCurrentRows();
@@ -1519,7 +1519,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
         });
 
         // Scroll to the middle of the grid
-        scroll(content, { top: content.scrollHeight / 2 });
+        await scroll(content, { top: content.scrollHeight / 2 });
         await animationFrame();
         expect(currentRows).not.toEqual(getCurrentRows(), { message: "rows should be different" });
         expect(getCurrentRows().length).toBeLessThan(tasks.length, {
@@ -1528,7 +1528,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
         currentRows = getCurrentRows();
 
         // Scroll to the end of the grid
-        scroll(content, { top: content.scrollHeight });
+        await scroll(content, { top: content.scrollHeight });
         await animationFrame();
 
         expect(currentRows).not.toEqual(getCurrentRows(), { message: "rows should be different" });
@@ -1537,7 +1537,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
         });
 
         // Scroll back to top
-        scroll(content, { top: 0 });
+        await scroll(content, { top: 0 });
         await animationFrame();
 
         // FIXME: virtual hook: rows are not exactly the same after scrolling once for some reason
@@ -1570,7 +1570,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
         const firstCell = queryOne(".o_grid_row[data-row='1'][data-column='0']");
         expect(firstCell.dataset.gridRow).toBe("2");
         expect(firstCell.dataset.gridColumn).toBe("2");
-        hover(firstCell, ".o_grid_cell_readonly");
+        await hover(firstCell, ".o_grid_cell_readonly");
         await runAllTimers();
         expect(".o_grid_cell").toHaveCount(1, {
             message: "The GridCell component should be mounted on the grid cell hovered.",
@@ -1580,46 +1580,46 @@ describe.tags("desktop")("grid_view_desktop", () => {
         await animationFrame();
 
         // Go to the next cell
-        press("tab");
+        await press("tab");
         await animationFrame();
         checkGridCellInRightPlace("2", "3");
 
         // Go to the previous cell
-        press("shift+tab");
+        await press("shift+tab");
         await animationFrame();
         checkGridCellInRightPlace("2", "2");
 
         // Go the cell below
-        press("enter");
+        await press("enter");
         await animationFrame();
         checkGridCellInRightPlace("3", "2");
 
         // Go up since it is the cell in the row
-        press("enter");
+        await press("enter");
         await animationFrame();
         checkGridCellInRightPlace("2", "3");
 
-        press("shift+tab");
+        await press("shift+tab");
         await animationFrame();
         checkGridCellInRightPlace("2", "2");
 
         // Go to the last editable cell in the grid view since it is the first cell.
-        press("shift+tab");
+        await press("shift+tab");
         await animationFrame();
         checkGridCellInRightPlace("3", "8");
 
         // Go back to the first cell since it is the last cell in grid view.
-        press("tab");
+        await press("tab");
         await animationFrame();
         checkGridCellInRightPlace("2", "2");
 
         // Go to the last editable cell in the grid view since it is the first cell.
-        press("shift+tab");
+        await press("shift+tab");
         await animationFrame();
         checkGridCellInRightPlace("3", "8");
 
         // Go back to the first cell since it is the last cell in grid view.
-        press("enter");
+        await press("enter");
         await animationFrame();
         checkGridCellInRightPlace("2", "2");
     });
@@ -1703,7 +1703,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
             </grid>`,
         });
 
-        hover(".o_grid_row .o_grid_cell_readonly");
+        await hover(".o_grid_row .o_grid_cell_readonly");
         await runAllTimers();
         await contains(".o_grid_cell").click();
         await animationFrame();
@@ -1758,7 +1758,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
         await contains("button.btn-secondary[data-hotkey='t']").click();
         expectScrollLeft(true);
 
-        hover(".o_grid_highlightable:not(.o_grid_column_title):not(.o_grid_row_title)");
+        await hover(".o_grid_highlightable:not(.o_grid_column_title):not(.o_grid_row_title)");
         await contains(".o_grid_cell").click();
         await animationFrame();
         await contains(".o_grid_cell input").edit("2");
@@ -1875,7 +1875,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
             "Fri,\nJan 27",
             "Sat,\nJan 28",
         ]);
-        hover(".o_grid_row .o_grid_cell_readonly:eq(0)");
+        await hover(".o_grid_row .o_grid_cell_readonly:eq(0)");
         await runAllTimers();
         await contains(".o_grid_cell button.o_grid_search_btn").click();
         await contains(".breadcrumb-item.o_back_button").click();
@@ -1904,7 +1904,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
             type: "ir.actions.act_window",
             views: [[false, "grid"]],
         });
-        hover(".o_grid_row .o_grid_cell_readonly:eq(0)");
+        await hover(".o_grid_row .o_grid_cell_readonly:eq(0)");
         await contains(".o_grid_cell button.o_grid_search_btn").click();
         expect(".o_list_view").toHaveCount(1);
     });

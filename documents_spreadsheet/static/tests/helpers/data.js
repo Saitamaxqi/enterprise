@@ -127,6 +127,29 @@ export class DocumentsDocument extends models.Model {
         return 67000000;
     }
 
+    /**
+     * @override
+     */
+    search_panel_select_range(fieldName) {
+        const result = super.search_panel_select_range(...arguments);
+        if (fieldName === "folder_id") {
+            const coModel = this.env[this._fields[fieldName].relation];
+            for (const recordValues of result.values || []) {
+                const [record] = coModel.browse(recordValues.id);
+                for (const fName of [
+                    "display_name",
+                    "description",
+                    "parent_folder_id",
+                    "has_write_access",
+                    "company_id",
+                ]) {
+                    recordValues[fName] ??= record[fName];
+                }
+            }
+        }
+        return result;
+    }
+
     _records = [
         {
             id: 1,

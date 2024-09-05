@@ -1,8 +1,7 @@
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
-import { mountWithCleanup } from "@web/../tests/web_test_helpers";
+import { expect, test } from "@odoo/hoot";
 import { PlanningEmployeeAvatar } from "@planning/views/planning_gantt/planning_employee_avatar";
-import { queryLast } from "@odoo/hoot-dom";
-import { test, expect } from "@odoo/hoot";
+import { mountWithCleanup } from "@web/../tests/web_test_helpers";
 
 defineMailModels();
 
@@ -14,5 +13,5 @@ test("ProgressBar: Default role of material resources should be in muted.", asyn
             displayName: "SuperMarioOnThePs4 (WAHOO)",
         },
     });
-    expect(queryLast("span")).toHaveClass("text-muted");
+    expect("span:last").toHaveClass("text-muted");
 });

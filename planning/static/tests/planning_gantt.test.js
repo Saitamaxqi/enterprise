@@ -128,7 +128,7 @@ test("empty gantt view: send schedule", async function () {
         groupBy: ["resource_id"],
     });
 
-    click(".o_gantt_button_send_all.btn-primary");
+    await click(".o_gantt_button_send_all.btn-primary");
     await animationFrame();
 });
 
@@ -154,7 +154,7 @@ test("empty gantt view with sample data: send schedule", async function () {
     expect(".o_gantt_view .o_content").toHaveClass("o_view_sample_data");
     expect(queryAll(".o_gantt_row_headers .o_gantt_row_header").length).toBeGreaterThan(2);
 
-    click(".o_gantt_button_send_all.btn-primary");
+    await click(".o_gantt_button_send_all.btn-primary");
     await animationFrame();
 });
 
@@ -222,7 +222,7 @@ test("open a dialog to add a new shift", async function () {
     });
     expect(".modal").toHaveCount(0);
 
-    click(".o_gantt_button_add.btn-primary");
+    await click(".o_gantt_button_add.btn-primary");
     await animationFrame();
 
     expect(".modal").toHaveCount(1);
@@ -250,20 +250,20 @@ test("gantt view collapse and expand empty rows in multi groupby", async functio
         return queryAll(".o_gantt_row_headers > .o_gantt_row_header")[index];
     }
 
-    click(getRow(0));
+    await click(getRow(0));
     await animationFrame();
     expect(getRow(0)).not.toHaveClass("o_group_open");
 
-    click(getRow(0));
+    await click(getRow(0));
     await animationFrame();
     expect(getRow(0)).toHaveClass("o_group_open");
     expect(getRow(2)).toHaveText("Open Shifts");
 
-    click(getRow(1));
+    await click(getRow(1));
     await animationFrame();
     expect(getRow(1)).not.toHaveClass("o_group_open");
 
-    click(getRow(1));
+    await click(getRow(1));
     await animationFrame();
     expect(getRow(1)).toHaveClass("o_group_open");
     expect(getRow(2)).toHaveText("Open Shifts");
@@ -336,9 +336,9 @@ test("reload data after having unlink a record in planning_form", async function
     expect(".o_gantt_cells .o_gantt_pill").toHaveCount(1);
 
     await editPill("test");
-    click(".modal footer button[name=unlink]"); // click on trash icon
+    await click(".modal footer button[name=unlink]"); // click on trash icon
     await animationFrame();
-    click(".o-overlay-item:nth-child(2) .modal footer button:nth-child(1)"); // click on "Ok" in confirmation dialog
+    await click(".o-overlay-item:nth-child(2) .modal footer button:nth-child(1)"); // click on "Ok" in confirmation dialog
     await animationFrame();
 
     expect(".o_gantt_cells .o_gantt_pill").toHaveCount(0);
@@ -563,7 +563,7 @@ test("Resize or Drag-Drop should open recurrence update wizard", async () => {
     const { drop } = await dragPill("Shift With Repeat");
     await drop({ row: "Resource 1", column: "12 October 2022" });
     // click on the confirm button
-    click(".modal .btn-primary");
+    await click(".modal .btn-primary");
     await animationFrame();
     expect(getGridContent().rows[3]).toEqual({
         pills: [
@@ -579,7 +579,7 @@ test("Resize or Drag-Drop should open recurrence update wizard", async () => {
     // resize a pill in the next cell (+1 day)
     await resizePill(getPillWrapper("Shift With Repeat"), "end", 1);
     // click on the confirm button
-    click(".modal .btn-primary");
+    await click(".modal .btn-primary");
     await animationFrame();
     expect(getGridContent().rows[3]).toEqual({
         pills: [
@@ -691,7 +691,7 @@ test("Test highlight shifts added by executed action", async function () {
             </search>`,
     });
 
-    click(".o_control_panel_main_buttons .o_gantt_buttons_container button > i.fa-caret-down");
+    await click(".o_control_panel_main_buttons .o_gantt_buttons_container button > i.fa-caret-down");
     await animationFrame();
 
     expect(".o_gantt_button_copy_previous_week").toHaveCount(1, {
@@ -704,7 +704,7 @@ test("Test highlight shifts added by executed action", async function () {
     let { rows } = getGridContent();
     expect(rows.map((r) => r.title)).toEqual(["Open Shifts"]);
 
-    click(".o_popover.dropdown-menu .o_gantt_button_copy_previous_week");
+    await click(".o_popover.dropdown-menu .o_gantt_button_copy_previous_week");
     await animationFrame();
 
     expect(".o_notification .bg-success").toHaveCount(1, {
@@ -720,9 +720,9 @@ test("Test highlight shifts added by executed action", async function () {
     rows = getGridContent().rows;
     expect(rows.map((r) => r.title)).toEqual(["Open Shifts", "Resource 1"]);
 
-    click(".o_control_panel_main_buttons .o_gantt_buttons_container button > i.fa-caret-down");
+    await click(".o_control_panel_main_buttons .o_gantt_buttons_container button > i.fa-caret-down");
     await animationFrame();
-    click(".o_popover.dropdown-menu .o_gantt_button_auto_plan"); // click on copy button in desktop view
+    await click(".o_popover.dropdown-menu .o_gantt_button_auto_plan"); // click on copy button in desktop view
     await animationFrame();
     expect(".o_notification").toHaveCount(2, { message: "2 notifications should be displayed." });
     expect(".o_notification .bg-success").toHaveCount(2, {

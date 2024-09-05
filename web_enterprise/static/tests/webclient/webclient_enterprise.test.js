@@ -43,11 +43,11 @@ async function mountWebClientEnterprise(options) {
 }
 
 async function goToHomeMenu() {
-    click(".o_menu_toggle");
+    await click(".o_menu_toggle");
     await animationFrame();
 
     if (getMockEnv().isSmall) {
-        click(queryFirst(".o_sidebar_topbar a.btn-primary", { root: document.body }));
+        await click(queryFirst(".o_sidebar_topbar a.btn-primary", { root: document.body }));
         await animationFrame();
     }
 }

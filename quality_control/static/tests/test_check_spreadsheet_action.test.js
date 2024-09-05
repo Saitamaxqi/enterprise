@@ -22,7 +22,7 @@ describe("quality check spreadsheet action", () => {
             return true;
         });
         await mountQualitySpreadsheetAction({ check_id: checkId });
-        click("button:contains(Save in The check name)");
+        await click("button:contains(Save in The check name)");
         await animationFrame();
         expect.verifySteps(["do_fail"])
     });
@@ -37,7 +37,7 @@ describe("quality check spreadsheet action", () => {
         });
         const { model } = await mountQualitySpreadsheetAction({ check_id: checkId });
         setCellContent(model, "A1", "1");
-        click("button:contains(Save in The check name)");
+        await click("button:contains(Save in The check name)");
         await animationFrame();
         expect.verifySteps(["do_pass"])
     });
@@ -69,7 +69,7 @@ describe("quality check spreadsheet action", () => {
             quality_check_wizard_id: qualityCheckWizardId
         });
         setCellContent(model, "A1", "1");
-        click("button:contains(Save in The check name)");
+        await click("button:contains(Save in The check name)");
         await animationFrame();
         expect.verifySteps(["do_pass", "join next check"])
     });
@@ -91,7 +91,7 @@ describe("quality check spreadsheet action", () => {
         const { model } = await mountQualitySpreadsheetAction({ check_id: checkId });
         setCellContent(model, "A1", "1");
         addColumns(model, "before", "A", 1)
-        click("button:contains(Save in The check name)");
+        await click("button:contains(Save in The check name)");
         await animationFrame();
         expect.verifySteps(["do_pass"])
         // leave the spreadsheet by going to another
@@ -120,7 +120,7 @@ describe("quality check spreadsheet action", () => {
         });
         const { model } = await mountQualitySpreadsheetAction({ check_id: checkId });
         deleteColumns(model, ["A"])
-        click("button:contains(Save in The check name)");
+        await click("button:contains(Save in The check name)");
         await animationFrame();
         expect.verifySteps(["do_pass"])
         // leave the spreadsheet by going to another
@@ -148,7 +148,7 @@ describe("quality check spreadsheet action", () => {
             return true;
         });
         await mountQualitySpreadsheetAction({ check_id: checkId });
-        click("button:contains(Save in The check name)");
+        await click("button:contains(Save in The check name)");
         await animationFrame();
         expect.verifySteps(["do_pass"])
     });
@@ -166,7 +166,7 @@ describe("quality check spreadsheet action", () => {
             return true;
         });
         await mountQualitySpreadsheetAction({ check_id: checkId });
-        click("button:contains(Save in The check name)");
+        await click("button:contains(Save in The check name)");
         await animationFrame();
         expect.verifySteps(["do_pass"])
     });

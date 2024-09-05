@@ -13,7 +13,7 @@ import { HomeMenu } from "@web_enterprise/webclient/home_menu/home_menu";
 
 async function walkOn(path) {
     for (const step of path) {
-        keyDown(`${step.shiftKey ? "shift+" : ""}${step.key}`);
+        await keyDown(`${step.shiftKey ? "shift+" : ""}${step.key}`);
         await animationFrame();
         expect(`.o_menuitem:eq(${step.index})`).toHaveClass("o_focused", {
             message: `step ${step.number}`,
@@ -67,7 +67,7 @@ test("ESC Support", async () => {
             expect.step(`toggle ${show}`);
         },
     });
-    keyDown("escape");
+    await keyDown("escape");
     expect.verifySteps(["toggle false"]);
 });
 
@@ -80,7 +80,7 @@ test("Click on an app", async () => {
             expect.step(`selectMenu ${menu.id}`);
         },
     });
-    click(".o_menuitem:eq(0)");
+    await click(".o_menuitem:eq(0)");
     await animationFrame();
     expect.verifySteps(["selectMenu 1"]);
 });
@@ -106,7 +106,7 @@ test("Display Expiration Panel (no module installed)", async () => {
     );
 
     // Close the expiration panel
-    click(".database_expiration_panel .oe_instance_hide_panel");
+    await click(".database_expiration_panel .oe_instance_hide_panel");
     await animationFrame();
     expect(".database_expiration_panel").toHaveCount(0);
 });
@@ -204,7 +204,7 @@ test("Navigation and open an app in the home menu", async () => {
         },
     });
     // No app selected so nothing to open
-    keyDown("enter");
+    await keyDown("enter");
     expect.verifySteps([]);
 
     const path = [
@@ -217,7 +217,7 @@ test("Navigation and open an app in the home menu", async () => {
     await walkOn(path);
 
     // open first app (Calendar)
-    keyDown("enter");
+    await keyDown("enter");
 
     expect.verifySteps(["selectMenu 2"]);
 });
@@ -248,19 +248,19 @@ test("Reorder apps in home menu using drag and drop", async () => {
         props: homeMenuProps,
     });
 
-    const { moveTo, drop } = drag(".o_draggable:first-child");
-    advanceTime(250);
+    const { moveTo, drop } = await drag(".o_draggable:first-child");
+    await advanceTime(250);
     expect(".o_draggable:first-child a").not.toHaveClass("o_dragged_app");
-    advanceTime(250);
+    await advanceTime(250);
     expect(".o_draggable:first-child a").toHaveClass("o_dragged_app");
-    moveTo(".o_draggable:first-child", {
+    await moveTo(".o_draggable:first-child", {
         position: {
             x: 70,
             y: 35,
         },
         relative: true,
     });
-    drop(".o_draggable:not(.o_dragged):eq(3)");
+    await drop(".o_draggable:not(.o_dragged):eq(3)");
     await animationFrame();
     expect.verifySteps(["set_res_users_settings"]);
     expect(".o_app:eq(0)").toHaveAttribute("data-menu-xmlid", "app.1", {
@@ -282,16 +282,16 @@ test("The HomeMenu input takes the focus when you press a key only if no other e
     // remove the focus from the input
     const otherInput = document.createElement("input");
     queryFirst(".o_home_menu").appendChild(otherInput);
-    pointerDown(otherInput);
-    pointerDown(document.body);
+    await pointerDown(otherInput);
+    await pointerDown(document.body);
     expect(".o_search_hidden").not.toBeFocused();
 
-    keyDown("a");
+    await keyDown("a");
     await animationFrame();
     expect(".o_search_hidden").not.toBeFocused();
 
     getService("ui").deactivateElement(activeElement);
-    keyDown("a");
+    await keyDown("a");
     await animationFrame();
     expect(".o_search_hidden").toBeFocused();
 });
@@ -304,13 +304,13 @@ test("The HomeMenu input does not take the focus if it is already on another inp
 
     const otherInput = document.createElement("input");
     queryFirst(".o_home_menu").appendChild(otherInput);
-    pointerDown(otherInput);
-    keyDown("a");
+    await pointerDown(otherInput);
+    await keyDown("a");
     await animationFrame();
     expect(".o_search_hidden").not.toBeFocused();
 
     otherInput.remove();
-    keyDown("a");
+    await keyDown("a");
     await animationFrame();
     expect(".o_search_hidden").toBeFocused();
 });
@@ -323,13 +323,13 @@ test("The HomeMenu input does not take the focus if it is already on a textarea"
 
     const textarea = document.createElement("textarea");
     queryFirst(".o_home_menu").appendChild(textarea);
-    pointerDown(textarea);
-    keyDown("a");
+    await pointerDown(textarea);
+    await keyDown("a");
     await animationFrame();
     expect(".o_search_hidden").not.toBeFocused();
 
     textarea.remove();
-    keyDown("a");
+    await keyDown("a");
     await animationFrame();
     expect(".o_search_hidden").toBeFocused();
 });

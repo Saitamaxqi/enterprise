@@ -104,7 +104,7 @@ test("receives collaborative messages when action is restored", async function (
         },
     });
     await animationFrame();
-    click(".o-grid-overlay", { button: 2, position: "top-left" });
+    await click(".o-grid-overlay", { button: 2, position: "top-left" });
     await animationFrame();
     await contains('.o-menu-item[data-name="pivot_see_records"]').click();
     await contains('.o_list_renderer');

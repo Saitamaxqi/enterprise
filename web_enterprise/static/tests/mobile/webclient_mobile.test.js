@@ -94,12 +94,12 @@ test("scroll position is kept", async () => {
     expect(".o_kanban_view").toHaveCount(1);
 
     queryFirst(".o_kanban_view").scrollTo(0, 123);
-    click(".o_kanban_record:eq(20)");
+    await click(".o_kanban_record:eq(20)");
     await animationFrame();
     expect(".o_form_view").toHaveCount(1);
     expect(".o_kanban_view").toHaveCount(0);
 
-    click(".o_breadcrumb .o_back_button");
+    await click(".o_breadcrumb .o_back_button");
     await animationFrame();
     expect(".o_form_view").toHaveCount(0);
     expect(".o_kanban_view").toHaveCount(1);
@@ -118,7 +118,7 @@ test("Share URL item is not present in the user menu when screen is small", asyn
     await mountWithCleanup(UserMenu);
     expect(".o_user_menu").toHaveCount(1);
     queryFirst(".o_user_menu").classList.remove("d-none");
-    click(".o_user_menu button");
+    await click(".o_user_menu button");
     await animationFrame();
     expect(".o_user_menu .dropdown-item").toHaveCount(0, {
         message: "share button is not visible",

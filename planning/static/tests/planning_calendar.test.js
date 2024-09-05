@@ -1,23 +1,22 @@
-import { expect, test, beforeEach, describe } from "@odoo/hoot";
-import { click, queryText, queryFirst } from "@odoo/hoot-dom";
+import { beforeEach, describe, expect, test } from "@odoo/hoot";
+import { click, queryText } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
-
-import {
-    onRpc,
-    mountWithCleanup,
-    getService,
-    patchWithCleanup,
-    defineActions,
-} from "@web/../tests/web_test_helpers";
-import { WebClient } from "@web/webclient/webclient";
-import { resizeEventToTime, clickEvent } from "@web/../tests/views/calendar/calendar_test_helpers";
-
+import { clickEvent, resizeEventToTime } from "@web/../tests/views/calendar/calendar_test_helpers";
 import {
     definePlanningModels,
     planningModels,
-    ResourceResource,
     PlanningRole,
+    ResourceResource,
 } from "./planning_mock_models";
+
+import {
+    defineActions,
+    getService,
+    mountWithCleanup,
+    onRpc,
+    patchWithCleanup,
+} from "@web/../tests/web_test_helpers";
+import { WebClient } from "@web/webclient/webclient";
 
 describe.current.tags("desktop");
 
@@ -103,10 +102,10 @@ test("planning calendar view: copy previous week", async () => {
         expect.step("copy_previous_week()");
         return {};
     });
-    onRpc("auto_plan_ids", async function() {
+    onRpc("auto_plan_ids", async function () {
         await this.env["planning.slot"].write([2], { resource_id: 1 });
         return { open_shift_assigned: [2] };
-    })
+    });
     await mountWithCleanup(WebClient);
     await getService("action").doAction(1);
     patchWithCleanup(getService("action"), {
@@ -117,37 +116,37 @@ test("planning calendar view: copy previous week", async () => {
         },
     });
 
-    click(".o_control_panel_main_buttons .o_button_copy_previous_week");
+    await click(".o_control_panel_main_buttons .o_button_copy_previous_week");
     await animationFrame();
     // verify action_copy_previous_week() invoked
     expect.verifySteps(["copy_previous_week()"]);
 
     // deselect "Maganlal" from Assigned to
-    click(".o_calendar_filter_item[data-value='2'] > input");
+    await click(".o_calendar_filter_item[data-value='2'] > input");
     await animationFrame();
     expect(".fc-event").toHaveCount(1, {
         message: "should display 1 events on the week",
     });
-    click(".o_control_panel_main_buttons .o_button_send_all");
+    await click(".o_control_panel_main_buttons .o_button_send_all");
     await animationFrame();
 
     // Switch the view and verify the notification
     expect(".o_notification_body").toHaveCount(1);
-    click(".o_switch_view.o_list");
+    await click(".o_switch_view.o_list");
     await animationFrame();
-    click(".o_switch_view.o_calendar");
+    await click(".o_switch_view.o_calendar");
     await animationFrame();
     expect(".o_notification_body").toHaveCount(0);
 
     // Check for auto plan
-    click(".btn.btn-secondary[title='Automatically plan open shifts and sales orders']");
+    await click(".btn.btn-secondary[title='Automatically plan open shifts and sales orders']");
     await animationFrame();
 
     // Switch the view and verify the notification
     expect(".o_notification_body").toHaveCount(1);
-    click(".o_switch_view.o_list");
+    await click(".o_switch_view.o_list");
     await animationFrame();
-    click(".o_switch_view.o_calendar");
+    await click(".o_switch_view.o_calendar");
     await animationFrame();
     expect(".o_notification_body").toHaveCount(0);
 });
@@ -161,7 +160,7 @@ test("Resize or Drag-Drop should open recurrence update wizard", async () => {
     await resizeEventToTime(2, "2019-03-13 14:30:00");
 
     // In recurrence update wizard -> Select "This shift" and confirm
-    click(queryFirst(".modal-content .btn-primary"));
+    await click(".modal-content .btn-primary");
     await animationFrame();
 
     // Open popover of the repeat pill

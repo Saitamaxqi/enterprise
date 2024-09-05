@@ -1,8 +1,8 @@
 import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
 import { getEnrichedSearchArch } from "@documents_spreadsheet/../tests/helpers/document_helpers";
 import { mockActionService } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
-import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
-import { click, dblclick } from "@odoo/hoot-dom";
+import { describe, expect, test } from "@odoo/hoot";
+import { click, dblclick, queryFirst } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import { contains, mountView } from "@web/../tests/web_test_helpers";
@@ -83,7 +83,7 @@ async function initTestEnvWithKanban(args = {}) {
         "spreadsheet.template"
     ].records.concat(args.additionalTemplates || []);
     await makeDocumentsSpreadsheetMockEnv({ ...args, serverData: data });
-    return await mountView({
+    return mountView({
         type: "kanban",
         resModel: "documents.document",
         arch: kanbanArch,
@@ -118,20 +118,20 @@ async function initTestEnvWithBlankSpreadsheet(params = {}) {
             },
         ],
     };
-    return await initTestEnvWithKanban({ serverData, ...params });
+    return initTestEnvWithKanban({ serverData, ...params });
 }
 
-let target;
+async function openTemplateDialog() {
+    await contains(`.o_control_panel .btn-group .dropdown-toggle`).click();
+    await contains(`.o_control_panel .btn-group .o_documents_kanban_spreadsheet`).click();
+}
 
-beforeEach(() => {
-    target = getFixture();
-});
+const dialogSelector = ".o-spreadsheet-templates-dialog";
 
 test("Create spreadsheet from kanban view opens a modal", async function () {
     await initTestEnvWithKanban();
-    const menu = target.querySelector(".o_control_panel .btn-group");
-    await contains(menu.querySelector(".dropdown-toggle")).click();
-    await contains(menu.querySelector(".o_documents_kanban_spreadsheet")).click();
+    await openTemplateDialog();
+
     expect(".o-spreadsheet-templates-dialog").toHaveCount(1, {
         message: "should have opened the template modal",
     });
@@ -149,9 +149,8 @@ test("Create spreadsheet from list view opens a modal", async function () {
         arch: `<list js_class="documents_list"></list>`,
         searchViewArch: getEnrichedSearchArch(),
     });
-    const menu = target.querySelector(".o_control_panel .btn-group");
-    await contains(menu.querySelector(".dropdown-toggle")).click();
-    await contains(menu.querySelector(".o_documents_kanban_spreadsheet")).click();
+    await openTemplateDialog();
+
     expect(".o-spreadsheet-templates-dialog").toHaveCount(1, {
         message: "should have opened the template modal",
     });
@@ -162,21 +161,18 @@ test("Create spreadsheet from list view opens a modal", async function () {
 
 test("Can search template in modal with searchbar", async function () {
     await initTestEnvWithKanban();
-    const menu = target.querySelector(".o_control_panel .btn-group");
-    await contains(menu.querySelector(".dropdown-toggle")).click();
-    await contains(menu.querySelector(".o_documents_kanban_spreadsheet")).click();
-    const dialog = target.querySelector(".o-spreadsheet-templates-dialog");
-    expect(
-        dialog.querySelectorAll(".o-spreadsheet-grid:not(.o-spreadsheet-grid-ghost-item)").length
-    ).toBe(3);
-    expect(dialog.querySelector(".o-spreadsheet-grid")).toHaveText("Blank spreadsheet");
+    await openTemplateDialog();
 
-    const searchInput = dialog.querySelector(".o_searchview_input");
-    await contains(searchInput).edit("Template 1");
-    expect(
-        dialog.querySelectorAll(".o-spreadsheet-grid:not(.o-spreadsheet-grid-ghost-item)").length
-    ).toBe(2);
-    expect(dialog.querySelector(".o-spreadsheet-grid")).toHaveText("Blank spreadsheet");
+    expect(`${dialogSelector} .o-spreadsheet-grid:not(.o-spreadsheet-grid-ghost-item)`).toHaveCount(
+        3
+    );
+    expect(`${dialogSelector} .o-spreadsheet-grid:first`).toHaveText("Blank spreadsheet");
+
+    await contains(`${dialogSelector} .o_searchview_input`).edit("Template 1");
+    expect(`${dialogSelector} .o-spreadsheet-grid:not(.o-spreadsheet-grid-ghost-item)`).toHaveCount(
+        2
+    );
+    expect(`${dialogSelector} .o-spreadsheet-grid:first`).toHaveText("Blank spreadsheet");
 });
 
 test("Can fetch next templates", async function () {
@@ -197,35 +193,26 @@ test("Can fetch next templates", async function () {
         }
     };
     await initTestEnvWithKanban({ additionalTemplates: TEST_TEMPLATES, mockRPC });
+    await openTemplateDialog();
 
-    const menu = target.querySelector(".o_control_panel .btn-group");
-    await contains(menu.querySelector(".dropdown-toggle")).click();
-    await contains(menu.querySelector(".o_documents_kanban_spreadsheet")).click();
-    const dialog = document.querySelector(".o-spreadsheet-templates-dialog");
-
-    expect(
-        dialog.querySelectorAll(".o-spreadsheet-grid:not(.o-spreadsheet-grid-ghost-item)").length
-    ).toBe(10);
-    await contains(dialog.querySelector(".o_pager_next")).click();
+    expect(`${dialogSelector} .o-spreadsheet-grid:not(.o-spreadsheet-grid-ghost-item)`).toHaveCount(
+        10
+    );
+    await contains(`${dialogSelector} .o_pager_next`).click();
     expect.verifySteps(["fetch_templates", "fetch_templates"]);
 });
 
 test("Disable create button if no template is selected", async function () {
     await initTestEnvWithKanban({ additionalTemplates: TEST_TEMPLATES });
-    // open template dialog
-    const menu = target.querySelector(".o_control_panel .btn-group");
-    await contains(menu.querySelector(".dropdown-toggle")).click();
-    await contains(menu.querySelector(".o_documents_kanban_spreadsheet")).click();
-    const dialog = document.querySelector(".o-spreadsheet-templates-dialog");
+    await openTemplateDialog();
 
     // select template
-    click(dialog.querySelectorAll(".o-spreadsheet-grid-image")[1]);
+    await click(`${dialogSelector} .o-spreadsheet-grid-image:eq(1)`);
 
     // change page; no template should be selected
-    await contains(dialog.querySelector(".o_pager_next")).click();
+    await contains(`${dialogSelector} .o_pager_next`).click();
     expect(".o-spreadsheet-grid-selected").toHaveCount(0);
-    const createButton = dialog.querySelector(".o-spreadsheet-create");
-    expect(createButton).toHaveProperty("disabled", true);
+    expect(`${dialogSelector} .o-spreadsheet-create`).toHaveAttribute("disabled");
 });
 
 test("Can create a blank spreadsheet from template dialog", async function () {
@@ -247,21 +234,18 @@ test("Can create a blank spreadsheet from template dialog", async function () {
     mockActionService(mockDoAction);
 
     // ### With confirm button
-    const menu = target.querySelector(".o_control_panel .btn-group");
-    await contains(menu.querySelector(".dropdown-toggle")).click();
-    await contains(menu.querySelector(".o_documents_kanban_spreadsheet")).click();
-    let dialog = document.querySelector(".o-spreadsheet-templates-dialog");
+    await openTemplateDialog();
+
     // select blank spreadsheet
-    click(dialog.querySelectorAll(".o-spreadsheet-grid-image")[0]);
-    await contains(dialog.querySelector(".o-spreadsheet-create")).click();
+    await click(`${dialogSelector} .o-spreadsheet-grid-image`);
+    await contains(`${dialogSelector} .o-spreadsheet-create`).click();
     expect.verifySteps(["action_open_new_spreadsheet", "redirect"]);
 
     // ### With double click on image
-    await contains(menu.querySelector(".dropdown-toggle")).click();
-    await contains(menu.querySelector(".o_documents_kanban_spreadsheet")).click();
-    dialog = document.querySelector(".o-spreadsheet-templates-dialog");
-    click(dialog.querySelectorAll(".o-spreadsheet-grid-image")[0]);
-    dblclick(dialog.querySelectorAll(".o-spreadsheet-grid-image")[0]);
+    await openTemplateDialog();
+
+    await click(`${dialogSelector} .o-spreadsheet-grid-image`);
+    await dblclick(`${dialogSelector} .o-spreadsheet-grid-image`);
     await animationFrame();
     expect.verifySteps(["action_open_new_spreadsheet", "redirect"]);
 });
@@ -308,13 +292,11 @@ test("Context is transmitted when creating spreadsheet", async function () {
         arch: kanbanArch,
     });
 
-    const menu = target.querySelector(".o_control_panel .btn-group");
-    await contains(menu.querySelector(".dropdown-toggle")).click();
-    await contains(menu.querySelector(".o_documents_kanban_spreadsheet")).click();
-    const dialog = document.querySelector(".o-spreadsheet-templates-dialog");
+    await openTemplateDialog();
+
     // select blank spreadsheet
-    click(dialog.querySelectorAll(".o-spreadsheet-grid-image")[0]);
-    await contains(dialog.querySelector(".o-spreadsheet-create")).click();
+    await click(`${dialogSelector} .o-spreadsheet-grid-image`);
+    await contains(`${dialogSelector} .o-spreadsheet-create`).click();
     expect.verifySteps(["action_open_new_spreadsheet"]);
 });
 
@@ -343,33 +325,27 @@ test("Can create a spreadsheet from a template", async function () {
     mockActionService(mockDoAction);
 
     // ### With confirm button
-    const menu = target.querySelector(".o_control_panel .btn-group");
-    await contains(menu.querySelector(".dropdown-toggle")).click();
-    await contains(menu.querySelector(".o_documents_kanban_spreadsheet")).click();
-    let dialog = document.querySelector(".o-spreadsheet-templates-dialog");
-    click(dialog.querySelectorAll(".o-spreadsheet-grid-image")[1]);
-    await contains(dialog.querySelector(".o-spreadsheet-create")).click();
+    await openTemplateDialog();
+
+    await click(`${dialogSelector} .o-spreadsheet-grid-image:eq(1)`);
+    await contains(`${dialogSelector} .o-spreadsheet-create`).click();
     expect.verifySteps(["action_create_spreadsheet", "redirect"]);
 
     // ### With double click on image
-    await contains(menu.querySelector(".dropdown-toggle")).click();
-    await contains(menu.querySelector(".o_documents_kanban_spreadsheet")).click();
-    dialog = document.querySelector(".o-spreadsheet-templates-dialog");
-    click(dialog.querySelectorAll(".o-spreadsheet-grid-image")[1]);
-    dblclick(dialog.querySelectorAll(".o-spreadsheet-grid-image")[1]);
+    await openTemplateDialog();
+    await click(`${dialogSelector} .o-spreadsheet-grid-image:eq(1)`);
+    await dblclick(`${dialogSelector} .o-spreadsheet-grid-image:eq(1)`);
     await animationFrame();
     expect.verifySteps(["action_create_spreadsheet", "redirect"]);
 });
 
 test("The workspace selection should not display Trash workspace", async function () {
     await initTestEnvWithKanban();
-    const menu = target.querySelector(".o_control_panel .btn-group");
-    await contains(menu.querySelector(".dropdown-toggle")).click();
-    await contains(menu.querySelector(".o_documents_kanban_spreadsheet")).click();
-    const options = target.querySelectorAll(
-        ".o-spreadsheet-templates-dialog .o-spreadsheet-grid-item-name"
-    );
-    expect([...options].find((option) => option.textContent === "TRASH")).toBe(undefined, {
+    await openTemplateDialog();
+
+    expect(
+        ".o-spreadsheet-templates-dialog .o-spreadsheet-grid-item-name:contains(TRASH)"
+    ).toHaveCount(0, {
         message: "Trash workspace should not be present in the selection",
     });
 });
@@ -387,46 +363,36 @@ test("Offset reset to zero after searching for template in template dialog", asy
     };
 
     await initTestEnvWithKanban({ additionalTemplates: TEST_TEMPLATES, mockRPC });
+    await openTemplateDialog();
 
-    const menu = target.querySelector(".o_control_panel .btn-group");
-    await contains(menu.querySelector(".dropdown-toggle")).click();
-    await contains(menu.querySelector(".o_documents_kanban_spreadsheet")).click();
-    const dialog = document.querySelector(".o-spreadsheet-templates-dialog");
-
-    expect(
-        dialog.querySelectorAll(".o-spreadsheet-grid:not(.o-spreadsheet-grid-ghost-item)").length
-    ).toBe(10);
-    await contains(dialog.querySelector(".o_pager_next")).click();
+    expect(`${dialogSelector} .o-spreadsheet-grid:not(.o-spreadsheet-grid-ghost-item)`).toHaveCount(
+        10
+    );
+    await contains(`${dialogSelector} .o_pager_next`).click();
     expect.verifySteps([
         JSON.stringify({ offset: 0, limit: 9 }),
         JSON.stringify({ offset: 9, limit: 9 }),
     ]);
 
-    const searchInput = dialog.querySelector(".o_searchview_input");
-    await contains(searchInput).edit("Template 1");
+    await contains(`${dialogSelector} .o_searchview_input`).edit("Template 1");
     await animationFrame();
     await animationFrame();
 
-    expect(
-        dialog.querySelectorAll(".o-spreadsheet-grid:not(.o-spreadsheet-grid-ghost-item)").length
-    ).toBe(5); // Blank template, Template 1, Template 10, Template 11, Template 12
+    expect(`${dialogSelector} .o-spreadsheet-grid:not(.o-spreadsheet-grid-ghost-item)`).toHaveCount(
+        5
+    ); // Blank template, Template 1, Template 10, Template 11, Template 12
     expect.verifySteps([JSON.stringify({ offset: 0, limit: 9 })]);
-    expect(dialog.querySelector(".o_pager_value")).toHaveText("1-4", {
+    expect(`${dialogSelector} .o_pager_value `).toHaveText("1-4", {
         message: "Pager should be reset to 1-4 after searching for a template",
     });
 });
 
 test("Can navigate through templates with keyboard", async function () {
     await initTestEnvWithKanban({ additionalTemplates: TEST_TEMPLATES });
+    await openTemplateDialog();
 
-    // Open template dialog
-    const menu = target.querySelector(".o_control_panel .btn-group");
-    await contains(menu.querySelector(".dropdown-toggle")).click();
-    await contains(menu.querySelector(".o_documents_kanban_spreadsheet")).click();
-    const dialog = document.querySelector(".o-spreadsheet-templates-dialog");
-
-    const defaultTemplate = dialog.querySelector(
-        ".o-spreadsheet-grid.o-blank-spreadsheet-grid .o-spreadsheet-grid-image"
+    const defaultTemplate = queryFirst(
+        `${dialogSelector} .o-spreadsheet-grid.o-blank-spreadsheet-grid .o-spreadsheet-grid-image`
     );
     expect(defaultTemplate).toHaveClass("o-spreadsheet-grid-selected");
 
@@ -434,7 +400,7 @@ test("Can navigate through templates with keyboard", async function () {
     await contains(defaultTemplate).press("ArrowRight");
     expect(defaultTemplate).not.toHaveClass("o-spreadsheet-grid-selected");
 
-    const firstTemplate = dialog.querySelector(".o-spreadsheet-grid-image[data-id='1']");
+    const firstTemplate = queryFirst(`${dialogSelector} .o-spreadsheet-grid-image[data-id='1']`);
     expect(firstTemplate).toHaveClass("o-spreadsheet-grid-selected");
 
     // Navigate back to the previous template

@@ -60,7 +60,7 @@ test("concurrent scale switches return in inverse order", async () => {
     // switch to 'week' scale (this rpc will be delayed)
     firstReloadProm = new Deferred();
     reloadProm = firstReloadProm;
-    setScale(4);
+    await setScale(4);
     await ganttControlsChanges();
 
     content = getGridContent();
@@ -71,7 +71,7 @@ test("concurrent scale switches return in inverse order", async () => {
 
     // switch to 'year' scale
     reloadProm = null;
-    setScale(0);
+    await setScale(0);
     await ganttControlsChanges();
 
     content = getGridContent();
@@ -140,7 +140,7 @@ test("concurrent scale switches return with gantt unavailabilities", async () =>
     // switch to 'week' scale (this rpc will be delayed)
     firstReloadProm = new Deferred();
     reloadProm = firstReloadProm;
-    setScale(4);
+    await setScale(4);
     await ganttControlsChanges();
 
     content = getGridContent();
@@ -155,7 +155,7 @@ test("concurrent scale switches return with gantt unavailabilities", async () =>
 
     // switch to 'year' scale
     reloadProm = null;
-    setScale(0);
+    await setScale(0);
     await ganttControlsChanges();
     expect.verifySteps(["patched"]);
     await selectGanttRange({ startDate: "2018-01-01", stopDate: "2018-12-31" });
@@ -398,7 +398,7 @@ test("concurrent display mode change and fetch", async () => {
     expect(content.range).toBe("From: 12/01/2018 to: 06/15/2019");
     expect(content.rows).toEqual(initialRows);
 
-    click(SELECTORS.sparse);
+    await click(SELECTORS.sparse);
     await animationFrame();
     content = getGridContent();
     expect(content.range).toBe("From: 12/01/2018 to: 06/15/2019");

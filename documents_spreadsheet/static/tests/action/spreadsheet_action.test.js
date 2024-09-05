@@ -334,7 +334,7 @@ test("sheetName should not be left empty", async function () {
     const fixture = getFixture();
     await createSpreadsheet();
 
-    dblclick(".o-sheet-list .o-sheet-name");
+    await dblclick(".o-sheet-list .o-sheet-name");
     await animationFrame();
     expect(".o-sheet-name-editable").toHaveCount(1);
 
