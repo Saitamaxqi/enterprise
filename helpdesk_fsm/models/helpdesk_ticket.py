@@ -45,7 +45,7 @@ class HelpdeskTicket(models.Model):
                 'default_user_id': False,
                 'default_partner_id': self.partner_id.id,
                 'default_name': self.name,
-                'default_project_id': self.team_id.fsm_project_id.id,
+                'default_project_id': self.team_id.sudo().fsm_project_id.id,
                 'dialog_size': 'medium',
             }
         }

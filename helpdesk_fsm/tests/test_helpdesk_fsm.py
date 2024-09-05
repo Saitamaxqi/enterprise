@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.addons.helpdesk.tests.common import HelpdeskCommon
@@ -45,3 +44,25 @@ class TestHelpdeskFsm(HelpdeskCommon):
         self.test_team.use_fsm = True
         self.assertEqual(self.test_team.fsm_project_id, fsm_project,
                          "The default fsm project should be from the same company.")
+
+    def test_fsm_task_invited_user(self):
+        invited_team = self.env['helpdesk.team'].create({
+            'name': 'Test team invited internal',
+            'use_fsm': True,
+            'privacy_visibility': 'invited_internal'
+        })
+
+        ticket = self.env['helpdesk.ticket'].with_user(self.helpdesk_manager).create({
+            'name': 'Ticket',
+            'partner_id': self.partner.id,
+            'team_id': invited_team.id,
+            'user_id': self.helpdesk_user.id,
+        })
+
+        ticket_form = Form(ticket)
+        ticket = ticket_form.save()
+
+        action = ticket.with_user(self.helpdesk_user).action_generate_fsm_task()  # should not raise AccessError
+        action_context = action['context']
+        self.assertEqual(action_context['default_project_id'], ticket.team_id.fsm_project_id.id)
+        self.assertEqual(action_context['default_helpdesk_ticket_id'], ticket.id)
