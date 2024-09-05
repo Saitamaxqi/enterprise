@@ -22,6 +22,7 @@ class TestPlanningGanttResourceEmployeeWorkingPeriods(TestPlanningContractCommon
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+        cls.env.user.tz = 'UTC'
 
         cls.contract_start_date = "2024-08-15 00:00:00"
         cls.contract_end_date = "2024-08-16 23:59:59"

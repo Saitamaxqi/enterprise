@@ -53,10 +53,15 @@ class Planning(models.Model):
                 if contract.state == 'draft' and contract.kanban_state != 'done':
                     continue
                 employee = contract.employee_id.id
+                end_datetime = contract.date_end and contract.date_end + relativedelta(hour=23, minute=59, second=59)
+                if end_datetime:
+                    user_tz = pytz.timezone(self.env.user.tz or self.env.context.get('tz') or 'UTC')
+                    end_datetime = user_tz.localize(end_datetime).astimezone(pytz.utc).replace(tzinfo=None)
+                    end_datetime = fields.Datetime.to_string(end_datetime)
                 employees_with_contract_in_current_scale.append(employee)
                 row_per_employee_id[employee]["working_periods"].append({
                     "start": fields.Datetime.to_string(contract.date_start),
-                    "end": contract.date_end and fields.Datetime.to_string(contract.date_end + relativedelta(hour=23, minute=59, second=59)),
+                    "end": end_datetime,
                 })
             for employee in employees_sudo - self.env["hr.employee"].browse(employees_with_contract_in_current_scale):
                 if employees_with_contract.get(employee, 0):
