@@ -204,6 +204,8 @@ class AccountEdiXmlUbl_Pe(models.AbstractModel):
         if vals['description']:
             vals['description'] = vals['description'][:250]
         vals['commodity_classification_vals'] = [{'item_classification_code': line.product_id.unspsc_code_id.code}]
+        vals['classified_tax_category_vals'] = None
+
         return vals
 
     def _get_invoice_line_allowance_vals_list(self, line, tax_values_list=None):

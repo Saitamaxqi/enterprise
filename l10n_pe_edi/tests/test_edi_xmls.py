@@ -395,13 +395,6 @@ class TestEdiXmls(TestPeEdiCommon):
                         <CommodityClassification>
                             <ItemClassificationCode>01010101</ItemClassificationCode>
                         </CommodityClassification>
-                        <ClassifiedTaxCategory>
-                            <ID>S</ID>
-                            <Percent>18.0</Percent>
-                            <TaxScheme>
-                                <ID>VAT</ID>
-                            </TaxScheme>
-                        </ClassifiedTaxCategory>
                     </Item>
                     <Price>
                         <PriceAmount currencyID="PEN">990.0</PriceAmount>
@@ -662,13 +655,6 @@ class TestEdiXmls(TestPeEdiCommon):
                         <CommodityClassification>
                             <ItemClassificationCode>01010101</ItemClassificationCode>
                         </CommodityClassification>
-                        <ClassifiedTaxCategory>
-                            <ID>S</ID>
-                            <Percent>18.0</Percent>
-                            <TaxScheme>
-                                <ID>VAT</ID>
-                            </TaxScheme>
-                        </ClassifiedTaxCategory>
                     </Item>
                     <Price>
                         <PriceAmount currencyID="USD">990.0</PriceAmount>
