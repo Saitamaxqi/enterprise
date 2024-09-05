@@ -3925,7 +3925,7 @@ QUnit.module("View Editors", (hooks) => {
             serverData.views["coucou,false,search"] = `<search></search>`;
 
             const mockRPC = (route, args) => {
-                if (!["/hr_attendance/attendance_user_data", "/mail/action"].includes(route)) {
+                if (!["/hr_attendance/attendance_user_data", "/mail/data"].includes(route)) {
                     assert.step(route);
                 }
                 if (route === "/web_studio/chatter_allowed") {
