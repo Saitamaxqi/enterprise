@@ -16,7 +16,7 @@
                             <field name="date_from"/>
                             <field name="active" invisible="1"/>
                             <field name="date_to"/>
-                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                            <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" placeholder="Visible to all"/>
                         </group>
                         <group name="alert_type">
                             <field name="onclick" widget="radio"/>

@@ -25,7 +25,7 @@
                         <field name="authorization_issuing_entity_number"
                             invisible="is_m1l or not authorization_issuing_entity"/>
                         <field name="operator_id" invisible="is_m1l"/>
-                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="company_id" groups="base.group_multi_company" placeholder="Visible to all"/>
                     </group>
                 </sheet>
             </form>

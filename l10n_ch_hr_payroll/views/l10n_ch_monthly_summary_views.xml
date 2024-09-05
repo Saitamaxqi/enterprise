@@ -26,7 +26,7 @@
                                 From<field name="date_start" class="oe_inline col-sm-5"/>
                                 to<field name="date_end" class="oe_inline col-sm-5"/>
                             </div>
-                            <field name="company_ids" groups="base.group_multi_company" widget="many2many_tags"/>
+                            <field name="company_ids" groups="base.group_multi_company" widget="many2many_tags" placeholder="Visible to all"/>
                             <field name="currency_id" invisible="1"/>
                             <field name="monthly_summary_pdf_filename" invisible="1"/>
                             <field name="monthly_summary_xls_filename" invisible="1"/>

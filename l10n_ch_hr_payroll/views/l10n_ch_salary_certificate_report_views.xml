@@ -13,7 +13,7 @@
                         <group>
                             <field name="year" class="o_hr_narrow_field"/>
                             <field name="name"/>
-                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="company_id" groups="base.group_multi_company" placeholder="Visible to all"/>
                             <field name="xml_filename" invisible="1"/>
                             <field name="xml_file" filename="xml_filename" readonly="1" invisible="not xml_file"/>
                         </group>

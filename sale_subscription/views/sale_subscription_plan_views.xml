@@ -42,7 +42,7 @@
                             <div>
                                 <field name="auto_close_limit" style="width: 3rem;"/>Days
                             </div>
-                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company"/>
+                            <field name="company_id" options="{'no_create': True}" groups="base.group_multi_company" placeholder="Visible to all"/>
                             <field name="invoice_mail_template_id" context="{'default_model': 'sale.order'}" placeholder="No automatic mail"/>
                         </group>
                         <group name="self_service" string="Self-Service">

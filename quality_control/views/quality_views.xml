@@ -634,7 +634,7 @@
             <list editable="bottom">
                 <field name="name"/>
                 <field name="check_cell"/>
-                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}"/>
+                <field name="company_id" groups="base.group_multi_company" options="{'no_create': True}" placeholder="Visible to all"/>
                 <field name="spreadsheet_file_name" column_invisible="True"/>
                 <field name="spreadsheet_binary_data" groups="base.group_no_one" widget="binary_spreadsheet" filename="spreadsheet_file_name" string="Data" />
                 <button string="Edit" class="float-end" icon="fa-pencil" type="object" name="action_open_spreadsheet"/>

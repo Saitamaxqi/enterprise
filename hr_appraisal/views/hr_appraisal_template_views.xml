@@ -14,7 +14,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="company_id" groups="base.group_multi_company" placeholder="Visible to all"/>
                         </group>
                     </group>
                     <div class="o_appraisal_both_feedback d-flex flex-column flex-md-row flex-wrap align-items-stretch">

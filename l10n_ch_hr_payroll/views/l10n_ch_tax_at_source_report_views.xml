@@ -21,7 +21,7 @@
                         <separator string="Work Locations"/>
                     <group>
                         <field name="work_location_ids" widget="many2many_tags" string="Work Locations"/>
-                        <field name="company_id" groups="base.group_multi_company"/>
+                        <field name="company_id" groups="base.group_multi_company" placeholder="Visible to all"/>
                         <field name="currency_id" invisible="1"/>
                     </group>
                     <field name="report_line_ids">

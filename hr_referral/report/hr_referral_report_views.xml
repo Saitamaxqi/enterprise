@@ -39,7 +39,7 @@
                                 <field name="applicant_id"/>
                                 <field name="job_id"/>
                                 <field name="department_id"/>
-                                <field name="company_id" groups="base.group_multi_company"/>
+                                <field name="company_id" groups="base.group_multi_company" placeholder="Visible to all"/>
                             </group>
                             <group>
                                 <field name="ref_user_id" widget="many2one_avatar_user" string="Referer"/>
