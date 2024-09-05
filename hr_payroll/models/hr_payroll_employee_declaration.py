@@ -102,9 +102,11 @@ class HrPayrollEmployeeDeclaration(models.Model):
         if self:
             self.write({'pdf_to_generate': True})
             self.env.ref('hr_payroll.ir_cron_generate_payslip_pdfs')._trigger()
-            message = _("PDF generation started. It will be available shortly.")
         else:
-            message = _("Please select the declarations for which you want to generate a PDF.")
+            not_generated_declaration_pdfs = self.env["hr.payroll.employee.declaration"].search([('state', '=', 'draft')])
+            not_generated_declaration_pdfs.write({'pdf_to_generate': True})
+            self.env.ref('hr_payroll.ir_cron_generate_payslip_pdfs')._trigger()
+        message = _("PDF generation started. It will be available shortly.")
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',

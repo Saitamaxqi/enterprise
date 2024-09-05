@@ -9,9 +9,6 @@
                 <field name="pdf_to_post" optional="hide"/>
                 <field name="document_id" groups="base.group_no_one"/>
             </field>
-            <button name="action_generate_pdf" position="after">
-                <button name="action_post_in_documents" string="Post PDFs" type="object"/>
-            </button>
         </field>
     </record>
 </odoo>

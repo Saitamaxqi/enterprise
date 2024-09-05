@@ -20,10 +20,10 @@ class HrPayrollEmployeeDeclaration(models.Model):
     def _compute_state(self):
         super()._compute_state()
         for declaration in self:
-            if declaration.pdf_to_post:
-                declaration.state = 'pdf_to_post'
-            elif declaration.document_id:
+            if declaration.document_id:
                 declaration.state = 'pdf_posted'
+            elif declaration.pdf_to_post:
+                declaration.state = 'pdf_to_post'
 
     def _get_posted_documents(self):
         document_data = self.env['documents.document']._read_group([
@@ -75,7 +75,7 @@ class HrPayrollEmployeeDeclaration(models.Model):
     def action_post_in_documents(self):
         for company in self.company_id:
             if not company._payroll_documents_enabled():
-                raise UserError(_('Document posting is not properly set in configuration'))
+                raise UserError(_('You must activate file centralization for human resources in the Documents application settings.'))
         self.write({'pdf_to_post': True})
         self.env.ref('hr_payroll.ir_cron_generate_payslip_pdfs')._trigger()
 

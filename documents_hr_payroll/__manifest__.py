@@ -17,6 +17,11 @@ Employee payslips will be automatically integrated to the Document app.
         'views/res_config_settings_views.xml',
         'views/hr_payroll_employee_declaration_views.xml',
     ],
+    'assets': {
+        'web.assets_backend': [
+            'documents_hr_payroll/static/src/**/*',
+        ],
+    },
     'installable': True,
     'auto_install': True,
     'author': 'Odoo S.A.',

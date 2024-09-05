@@ -45,7 +45,6 @@ class HrPayrollDeclarationMixin(models.AbstractModel):
         for sheet in self:
             if not sheet.line_ids:
                 raise UserError(_('There is no declaration to generate for the given period'))
-        return self.action_generate_pdf()
 
     @api.depends('line_ids')
     def _compute_lines_count(self):
