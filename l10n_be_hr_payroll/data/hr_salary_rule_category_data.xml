@@ -177,4 +177,9 @@
         <field name="name">Group Insurance (Employer)</field>
         <field name="code">GROUPINSURANCE</field>
     </record>
+
+    <record id="hr_salary_rule_category_vouchers" model="hr.salary.rule.category">
+        <field name="name">Vouchers</field>
+        <field name="code">VOUCHERS</field>
+    </record>
 </odoo>

@@ -161,8 +161,7 @@ class L10nBeEcoVouchersWizard(models.TransientModel):
         eco_voucher_type = self.env.ref('l10n_be_hr_payroll.cp200_employee_eco_vouchers')
         payslips = self.env['hr.payslip']
         batch = self.env['hr.payslip.run'].browse(self.env.context.get('batch_id', False))
-        payslip_structure_type = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_departure_n_holidays') if batch else \
-                                 self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary')
+        payslip_structure_type = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary')
 
         # If the eco-vouchers are calculated for a batch we only consider the payslips in that batch.
         # Otherwise we consider all open payslips.
@@ -208,12 +207,13 @@ class L10nBeEcoVouchersWizard(models.TransientModel):
                     })],
                     'payslip_run_id': batch.id,
                 })
+                payslip.update({'worked_days_line_ids': payslip._get_new_worked_days_lines()})
                 if not payslip.contract_id:
                     history = self.env['hr.contract.history'].search([('employee_id', '=', payslip.employee_id.id)], limit=1)
                     contracts = history.contract_ids.filtered(lambda c: c.active and c.state in ['open', 'close'])[0]
                     payslip.contract_id = contracts[0] if contracts else False
                 payslips |= payslip
-                payslip.with_context(no_paid_amount=True).compute_sheet()
+            payslip.compute_sheet()
         action = self.env["ir.actions.actions"]._for_xml_id("hr_payroll.action_view_hr_payslip_month_form")
         action.update({'context': {
             "search_default_payslip_run_id": batch.id,

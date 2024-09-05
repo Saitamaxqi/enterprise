@@ -17,7 +17,7 @@ class HrPayslipRun(models.Model):
         # employees
         for batch in self:
             if batch.company_id.country_id.code != "BE" or \
-                    all(slip.struct_id.code != 'CP200HOLN' and slip.state != 'cancel' for slip in batch.slip_ids):
+                    all(slip.struct_id.code not in ('CP200HOLN', 'CP200HOLN1') and slip.state != 'cancel' for slip in batch.slip_ids):
                 batch.l10n_be_display_eco_voucher_button = False
             else:
                 batch.l10n_be_display_eco_voucher_button = True
@@ -26,7 +26,7 @@ class HrPayslipRun(models.Model):
     def action_l10n_be_eco_vouchers(self):
         self.ensure_one()
         res = self.env['ir.actions.act_window']._for_xml_id('l10n_be_hr_payroll.l10n_be_eco_vouchers_wizard_action')
-        out_employees = self.slip_ids.filtered(lambda s: s.struct_id.code == 'CP200HOLN').employee_id
+        out_employees = self.slip_ids.filtered(lambda s: s.struct_id.code in ['CP200HOLN', 'CP200HOLN1']).employee_id
         res['context'] = {
             'employee_ids': out_employees.ids,
             'batch_id': self.id,
