@@ -55,10 +55,10 @@
                         t-att-ClaveUnidad="line_values['clave_unidad']"
                         t-att-Unidad="format_string(line_values['unidad'], 20)"
                         t-att-Descripcion="format_string(line_values['description'], 1000)"
-                        t-att-ValorUnitario="format_float(line_values['valor_unitario'])"
-                        t-att-Importe="format_float(line_values['importe'])"
+                        t-att-ValorUnitario="format_float(line_values['valor_unitario'], precision=line_base_importe_dp)"
+                        t-att-Importe="format_float(line_values['importe'], precision=line_base_importe_dp)"
                         t-att-ObjetoImp="line_values['objeto_imp']"
-                        t-att-Descuento="format_float(line_values['descuento'])">
+                        t-att-Descuento="format_float(line_values['descuento'], precision=line_base_importe_dp)">
                         <cfdi:Impuestos t-if="line_values['traslados_list'] or line_values['retenciones_list']">
                             <cfdi:Traslados t-if="line_values['traslados_list']">
                                 <t t-foreach="line_values['traslados_list']" t-as="tax_values">
@@ -112,13 +112,13 @@
                     </t>
                 </cfdi:Traslados>
             </cfdi:Impuestos>
-            <cfdi:Complemento t-if="local_retenciones_reduced_list or local_traslados_list">
+            <cfdi:Complemento t-if="local_retenciones_list or local_traslados_list">
                 <implocal:ImpuestosLocales
                     t-att-TotaldeRetenciones="format_float(total_local_impuestos_retenidos)"
                     t-att-TotaldeTraslados="format_float(total_local_impuestos_trasladados)"
                     t-att-version="1.0"
                 >
-                    <t t-foreach="local_retenciones_reduced_list" t-as="tax_values">
+                    <t t-foreach="local_retenciones_list" t-as="tax_values">
                         <implocal:RetencionesLocales
                             t-att-ImpLocRetenido="tax_values['local_tax_name']"
                             t-att-Importe="tax_values['importe']"

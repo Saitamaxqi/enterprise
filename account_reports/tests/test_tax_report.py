@@ -202,12 +202,12 @@ class TestTaxReport(TestAccountReportsCommon):
 
         cls.test_fpos_tax_sale = cls._add_basic_tax_for_report(
             cls.basic_tax_report, 50, 'sale', cls.tax_group_1,
-            [(30, cls.tax_account_1, False), (70, cls.tax_account_1, True), (-10, cls.tax_account_2, True)]
+            [(30, cls.tax_account_1, False), (70, cls.tax_account_1, True), (-100, cls.tax_account_2, True)]
         )
 
         cls.test_fpos_tax_purchase = cls._add_basic_tax_for_report(
             cls.basic_tax_report, 50, 'purchase', cls.tax_group_2,
-            [(10, cls.tax_account_1, False), (60, cls.tax_account_1, True), (-5, cls.tax_account_2, True)]
+            [(40, cls.tax_account_1, False), (60, cls.tax_account_1, True), (-100, cls.tax_account_2, True)]
         )
 
         # Create a fiscal_position to automatically map the default tax for partner "Mare Cel" to our test tax
@@ -291,7 +291,7 @@ class TestTaxReport(TestAccountReportsCommon):
             ]
 
             for (factor_percent, account, use_in_tax_closing) in tax_repartition:
-                # Create a report line for the reparition line
+                # Create a report line for the repartition line
                 tax_report_line_name = f"{tax.id}-{move_type_suffix}-{factor_percent}"
                 tax_report_line = cls._create_tax_report_line(tax_report_line_name, tax_report, tag_name=tax_report_line_name, sequence=report_line_sequence)
                 report_line_sequence += 1
@@ -345,16 +345,16 @@ class TestTaxReport(TestAccountReportsCommon):
             self.foreign_vat_fpos: [
                 # sales: 800 * 0.5 * 0.7 - 200 * 0.5 * 0.7
                 {'debit': 210,      'credit': 0.0,      'account_id': self.tax_account_1.id},
-                # sales: 800 * 0.5 * (-0.1) - 200 * 0.5 * (-0.1)
-                {'debit': 0,        'credit': 30,       'account_id': self.tax_account_2.id},
+                # sales: 800 * 0.5 * -1 - 200 * 0.5 * -1
+                {'debit': 0,        'credit': 300,      'account_id': self.tax_account_2.id},
                 # purchases: 1000 * 0.5 * 0.6 - 600 * 0.5 * 0.6
                 {'debit': 0,        'credit': 120,      'account_id': self.tax_account_1.id},
-                # purchases: 1000 * 0.5 * (-0.05) - 600 * 0.5 * (-0.05)
-                {'debit': 10,       'credit': 0,        'account_id': self.tax_account_2.id},
+                # purchases: 1000 * 0.5 * -1 - 600 * 0.5 * -1
+                {'debit': 200,      'credit': 0,        'account_id': self.tax_account_2.id},
                 # For sales operations
-                {'debit': 0,        'credit': 180,      'account_id': self.tax_group_1.tax_payable_account_id.id},
+                {'debit': 90,       'credit': 0,        'account_id': self.tax_group_1.tax_receivable_account_id.id},
                 # For purchase operations
-                {'debit': 110,      'credit': 0,        'account_id': self.tax_group_2.tax_receivable_account_id.id},
+                {'debit': 0,        'credit': 80,       'account_id': self.tax_group_2.tax_payable_account_id.id},
             ]
         })
 
@@ -392,16 +392,16 @@ class TestTaxReport(TestAccountReportsCommon):
             self.env['account.fiscal.position']: [
                 # sales: 200 * 0.5 * 0.7 - 20 * 0.5 * 0.7
                 {'debit': 63,       'credit': 0.0,      'account_id': self.tax_account_1.id},
-                # sales: 200 * 0.5 * (-0.1) - 20 * 0.5 * (-0.1)
-                {'debit': 0,        'credit': 9,        'account_id': self.tax_account_2.id},
+                # sales: 200 * 0.5 * -1 - 20 * 0.5 * -1
+                {'debit': 0,        'credit': 90,       'account_id': self.tax_account_2.id},
                 # purchases: 400 * 0.5 * 0.6 - 60 * 0.5 * 0.6
                 {'debit': 0,        'credit': 102,      'account_id': self.tax_account_1.id},
-                # purchases: 400 * 0.5 * (-0.05) - 60 * 0.5 * (-0.05)
-                {'debit': 8.5,      'credit': 0,        'account_id': self.tax_account_2.id},
+                # purchases: 400 * 0.5 * - 60 * 0.5
+                {'debit': 170,      'credit': 0,        'account_id': self.tax_account_2.id},
                 # For sales operations
-                {'debit': 0,        'credit': 54,       'account_id': self.tax_group_1.tax_payable_account_id.id},
+                {'debit': 27,       'credit': 0,        'account_id': self.tax_group_1.tax_receivable_account_id.id},
                 # For purchase operations
-                {'debit': 93.5,     'credit': 0,        'account_id': self.tax_group_2.tax_receivable_account_id.id},
+                {'debit': 0,        'credit': 68,       'account_id': self.tax_group_2.tax_payable_account_id.id},
             ]
         })
 
@@ -419,32 +419,32 @@ class TestTaxReport(TestAccountReportsCommon):
             self.env['account.fiscal.position']: [
                 # sales: 200 * 0.5 * 0.7 - 20 * 0.5 * 0.7
                 {'debit': 63,       'credit': 0.0,      'account_id': self.tax_account_1.id},
-                # sales: 200 * 0.5 * (-0.1) - 20 * 0.5 * (-0.1)
-                {'debit': 0,        'credit': 9,        'account_id': self.tax_account_2.id},
+                # sales: 200 * 0.5 * -1 - 20 * 0.5 * -1
+                {'debit': 0,        'credit': 90,       'account_id': self.tax_account_2.id},
                 # purchases: 400 * 0.5 * 0.6 - 60 * 0.5 * 0.6
                 {'debit': 0,        'credit': 102,      'account_id': self.tax_account_1.id},
-                # purchases: 400 * 0.5 * (-0.05) - 60 * 0.5 * (-0.05)
-                {'debit': 8.5,      'credit': 0,        'account_id': self.tax_account_2.id},
+                # purchases: 400 * 0.5 * -1 - 60 * 0.5 * -1
+                {'debit': 170,      'credit': 0,        'account_id': self.tax_account_2.id},
                 # For sales operations
-                {'debit': 0,        'credit': 54,       'account_id': self.tax_group_1.tax_payable_account_id.id},
+                {'debit': 27,       'credit': 0,        'account_id': self.tax_group_1.tax_receivable_account_id.id},
                 # For purchase operations
-                {'debit': 93.5,     'credit': 0,        'account_id': self.tax_group_2.tax_receivable_account_id.id},
+                {'debit': 0,        'credit': 68,       'account_id': self.tax_group_2.tax_payable_account_id.id},
             ],
 
             # From test_vat_closing_single_fpos
             self.foreign_vat_fpos: [
                 # sales: 800 * 0.5 * 0.7 - 200 * 0.5 * 0.7
                 {'debit': 210,      'credit': 0.0,      'account_id': self.tax_account_1.id},
-                # sales: 800 * 0.5 * (-0.1) - 200 * 0.5 * (-0.1)
-                {'debit': 0,        'credit': 30,       'account_id': self.tax_account_2.id},
+                # sales: 800 * 0.5 * -1 - 200 * 0.5 * -1
+                {'debit': 0,        'credit': 300,      'account_id': self.tax_account_2.id},
                 # purchases: 1000 * 0.5 * 0.6 - 600 * 0.5 * 0.6
                 {'debit': 0,        'credit': 120,      'account_id': self.tax_account_1.id},
-                # purchases: 1000 * 0.5 * (-0.05) - 600 * 0.5 * (-0.05)
-                {'debit': 10,       'credit': 0,        'account_id': self.tax_account_2.id},
+                # purchases: 1000 * 0.5 * -1 - 600 * 0.5 * -1
+                {'debit': 200,      'credit': 0,        'account_id': self.tax_account_2.id},
                 # For sales operations
-                {'debit': 0,        'credit': 180,      'account_id': self.tax_group_1.tax_payable_account_id.id},
+                {'debit': 90,       'credit': 0,        'account_id': self.tax_group_1.tax_receivable_account_id.id},
                 # For purchase operations
-                {'debit': 110,      'credit': 0,        'account_id': self.tax_group_2.tax_receivable_account_id.id},
+                {'debit': 0,        'credit': 80,       'account_id': self.tax_group_2.tax_payable_account_id.id},
             ],
         })
 
@@ -461,32 +461,32 @@ class TestTaxReport(TestAccountReportsCommon):
                 self.env['account.fiscal.position']: [
                     # sales: 200 * 0.5 * 0.7 - 20 * 0.5 * 0.7
                     {'debit': 63,       'credit': 0.0,      'account_id': self.tax_account_1.id},
-                    # sales: 200 * 0.5 * (-0.1) - 20 * 0.5 * (-0.1)
-                    {'debit': 0,        'credit': 9,        'account_id': self.tax_account_2.id},
+                    # sales: 200 * 0.5 * -1 - 20 * 0.5 * -1
+                    {'debit': 0,        'credit': 90,       'account_id': self.tax_account_2.id},
                     # purchases: 400 * 0.5 * 0.6 - 60 * 0.5 * 0.6
                     {'debit': 0,        'credit': 102,      'account_id': self.tax_account_1.id},
-                    # purchases: 400 * 0.5 * (-0.05) - 60 * 0.5 * (-0.05)
-                    {'debit': 8.5,      'credit': 0,        'account_id': self.tax_account_2.id},
+                    # purchases: 400 * 0.5 * -1 - 60 * 0.5 * -1
+                    {'debit': 170,      'credit': 0,        'account_id': self.tax_account_2.id},
                     # For sales operations
-                    {'debit': 0,        'credit': 54,       'account_id': self.tax_group_1.tax_payable_account_id.id},
+                    {'debit': 27,       'credit': 0,        'account_id': self.tax_group_1.tax_receivable_account_id.id},
                     # For purchase operations
-                    {'debit': 93.5,     'credit': 0,        'account_id': self.tax_group_2.tax_receivable_account_id.id},
+                    {'debit': 0,        'credit': 68,       'account_id': self.tax_group_2.tax_payable_account_id.id},
                 ],
 
                 # From test_vat_closing_single_fpos
                 self.foreign_vat_fpos: [
                     # sales: 800 * 0.5 * 0.7 - 200 * 0.5 * 0.7
                     {'debit': 210,      'credit': 0.0,      'account_id': self.tax_account_1.id},
-                    # sales: 800 * 0.5 * (-0.1) - 200 * 0.5 * (-0.1)
-                    {'debit': 0,        'credit': 30,       'account_id': self.tax_account_2.id},
+                    # sales: 800 * 0.5 * -1 - 200 * 0.5 * -1
+                    {'debit': 0,        'credit': 300,      'account_id': self.tax_account_2.id},
                     # purchases: 1000 * 0.5 * 0.6 - 600 * 0.5 * 0.6
                     {'debit': 0,        'credit': 120,      'account_id': self.tax_account_1.id},
-                    # purchases: 1000 * 0.5 * (-0.05) - 600 * 0.5 * (-0.05)
-                    {'debit': 10,       'credit': 0,        'account_id': self.tax_account_2.id},
+                    # purchases: 1000 * 0.5 * -1 - 600 * 0.5 * -1
+                    {'debit': 200,      'credit': 0,        'account_id': self.tax_account_2.id},
                     # For sales operations
-                    {'debit': 0,        'credit': 180,      'account_id': self.tax_group_1.tax_payable_account_id.id},
+                    {'debit': 90,       'credit': 0,        'account_id': self.tax_group_1.tax_receivable_account_id.id},
                     # For purchase operations
-                    {'debit': 110,      'credit': 0,        'account_id': self.tax_group_2.tax_receivable_account_id.id},
+                    {'debit': 0,        'credit': 80,       'account_id': self.tax_group_2.tax_payable_account_id.id},
                 ],
             })
 
@@ -530,28 +530,28 @@ class TestTaxReport(TestAccountReportsCommon):
             [0,                                                               1],
             [
                 # out_invoice
-                (f'{self.test_fpos_tax_sale.id}-invoice-base',             200 ),
-                (f'{self.test_fpos_tax_sale.id}-invoice-30',                30 ),
-                (f'{self.test_fpos_tax_sale.id}-invoice-70',                70 ),
-                (f'{self.test_fpos_tax_sale.id}-invoice--10',              -10 ),
+                (f'{self.test_fpos_tax_sale.id}-invoice-base',             200),
+                (f'{self.test_fpos_tax_sale.id}-invoice-30',                30),
+                (f'{self.test_fpos_tax_sale.id}-invoice-70',                70),
+                (f'{self.test_fpos_tax_sale.id}-invoice--100',            -100),
 
                 # out_refund
-                (f'{self.test_fpos_tax_sale.id}-refund-base',              -20 ),
-                (f'{self.test_fpos_tax_sale.id}-refund-30',                 -3 ),
-                (f'{self.test_fpos_tax_sale.id}-refund-70',                 -7 ),
-                (f'{self.test_fpos_tax_sale.id}-refund--10',                 1 ),
+                (f'{self.test_fpos_tax_sale.id}-refund-base',              -20),
+                (f'{self.test_fpos_tax_sale.id}-refund-30',                 -3),
+                (f'{self.test_fpos_tax_sale.id}-refund-70',                 -7),
+                (f'{self.test_fpos_tax_sale.id}-refund--100',               10),
 
                 # in_invoice
-                (f'{self.test_fpos_tax_purchase.id}-invoice-base',         400 ),
-                (f'{self.test_fpos_tax_purchase.id}-invoice-10',            20 ),
-                (f'{self.test_fpos_tax_purchase.id}-invoice-60',           120 ),
-                (f'{self.test_fpos_tax_purchase.id}-invoice--5',           -10 ),
+                (f'{self.test_fpos_tax_purchase.id}-invoice-base',         400),
+                (f'{self.test_fpos_tax_purchase.id}-invoice-40',            80),
+                (f'{self.test_fpos_tax_purchase.id}-invoice-60',           120),
+                (f'{self.test_fpos_tax_purchase.id}-invoice--100',        -200),
 
                 # in_refund
-                (f'{self.test_fpos_tax_purchase.id}-refund-base',          -60 ),
-                (f'{self.test_fpos_tax_purchase.id}-refund-10',             -3 ),
-                (f'{self.test_fpos_tax_purchase.id}-refund-60',            -18 ),
-                (f'{self.test_fpos_tax_purchase.id}-refund--5',             1.5),
+                (f'{self.test_fpos_tax_purchase.id}-refund-base',          -60),
+                (f'{self.test_fpos_tax_purchase.id}-refund-40',            -12),
+                (f'{self.test_fpos_tax_purchase.id}-refund-60',            -18),
+                (f'{self.test_fpos_tax_purchase.id}-refund--100',           30),
             ],
             options,
         )
@@ -572,25 +572,25 @@ class TestTaxReport(TestAccountReportsCommon):
                 (f'{self.test_fpos_tax_sale.id}-invoice-base',              800),
                 (f'{self.test_fpos_tax_sale.id}-invoice-30',                120),
                 (f'{self.test_fpos_tax_sale.id}-invoice-70',                280),
-                (f'{self.test_fpos_tax_sale.id}-invoice--10',               -40),
+                (f'{self.test_fpos_tax_sale.id}-invoice--100',             -400),
 
                 # out_refund
                 (f'{self.test_fpos_tax_sale.id}-refund-base',              -200),
                 (f'{self.test_fpos_tax_sale.id}-refund-30',                 -30),
                 (f'{self.test_fpos_tax_sale.id}-refund-70',                 -70),
-                (f'{self.test_fpos_tax_sale.id}-refund--10',                 10),
+                (f'{self.test_fpos_tax_sale.id}-refund--100',               100),
 
                 # in_invoice
                 (f'{self.test_fpos_tax_purchase.id}-invoice-base',         1000),
-                (f'{self.test_fpos_tax_purchase.id}-invoice-10',             50),
+                (f'{self.test_fpos_tax_purchase.id}-invoice-40',            200),
                 (f'{self.test_fpos_tax_purchase.id}-invoice-60',            300),
-                (f'{self.test_fpos_tax_purchase.id}-invoice--5',            -25),
+                (f'{self.test_fpos_tax_purchase.id}-invoice--100',         -500),
 
                 # in_refund
                 (f'{self.test_fpos_tax_purchase.id}-refund-base',          -600),
-                (f'{self.test_fpos_tax_purchase.id}-refund-10',             -30),
+                (f'{self.test_fpos_tax_purchase.id}-refund-40',            -120),
                 (f'{self.test_fpos_tax_purchase.id}-refund-60',            -180),
-                (f'{self.test_fpos_tax_purchase.id}-refund--5',              15),
+                (f'{self.test_fpos_tax_purchase.id}-refund--100',           300),
             ],
             options,
         )
@@ -608,28 +608,28 @@ class TestTaxReport(TestAccountReportsCommon):
             [0,                                                               1],
             [
                 # out_invoice
-                (f'{self.test_fpos_tax_sale.id}-invoice-base',            1000 ),
-                (f'{self.test_fpos_tax_sale.id}-invoice-30',               150 ),
-                (f'{self.test_fpos_tax_sale.id}-invoice-70',               350 ),
-                (f'{self.test_fpos_tax_sale.id}-invoice--10',              -50 ),
+                (f'{self.test_fpos_tax_sale.id}-invoice-base',            1000),
+                (f'{self.test_fpos_tax_sale.id}-invoice-30',               150),
+                (f'{self.test_fpos_tax_sale.id}-invoice-70',               350),
+                (f'{self.test_fpos_tax_sale.id}-invoice--100',            -500),
 
                 # out_refund
-                (f'{self.test_fpos_tax_sale.id}-refund-base',             -220 ),
-                (f'{self.test_fpos_tax_sale.id}-refund-30',                -33 ),
-                (f'{self.test_fpos_tax_sale.id}-refund-70',                -77 ),
-                (f'{self.test_fpos_tax_sale.id}-refund--10',                11 ),
+                (f'{self.test_fpos_tax_sale.id}-refund-base',             -220),
+                (f'{self.test_fpos_tax_sale.id}-refund-30',                -33),
+                (f'{self.test_fpos_tax_sale.id}-refund-70',                -77),
+                (f'{self.test_fpos_tax_sale.id}-refund--100',              110),
 
                 # in_invoice
-                (f'{self.test_fpos_tax_purchase.id}-invoice-base',        1400 ),
-                (f'{self.test_fpos_tax_purchase.id}-invoice-10',            70 ),
-                (f'{self.test_fpos_tax_purchase.id}-invoice-60',           420 ),
-                (f'{self.test_fpos_tax_purchase.id}-invoice--5',           -35 ),
+                (f'{self.test_fpos_tax_purchase.id}-invoice-base',        1400),
+                (f'{self.test_fpos_tax_purchase.id}-invoice-40',           280),
+                (f'{self.test_fpos_tax_purchase.id}-invoice-60',           420),
+                (f'{self.test_fpos_tax_purchase.id}-invoice--100',        -700),
 
                 # in_refund
-                (f'{self.test_fpos_tax_purchase.id}-refund-base',         -660 ),
-                (f'{self.test_fpos_tax_purchase.id}-refund-10',            -33 ),
-                (f'{self.test_fpos_tax_purchase.id}-refund-60',           -198 ),
-                (f'{self.test_fpos_tax_purchase.id}-refund--5',            16.5),
+                (f'{self.test_fpos_tax_purchase.id}-refund-base',         -660),
+                (f'{self.test_fpos_tax_purchase.id}-refund-40',           -132),
+                (f'{self.test_fpos_tax_purchase.id}-refund-60',           -198),
+                (f'{self.test_fpos_tax_purchase.id}-refund--100',          330),
             ],
             options,
         )
@@ -676,7 +676,7 @@ class TestTaxReport(TestAccountReportsCommon):
 
         # We create the lines in a different order from the one they have in report,
         # so that we ensure sequence is taken into account properly when rendering the report
-        tax_section = self._create_tax_report_line('Tax', tax_report, sequence=4, formula="tax_42.balance + tax_11.balance + tax_neg_10.balance")
+        tax_section = self._create_tax_report_line('Tax', tax_report, sequence=4, formula="tax_42.balance + tax_11.balance + tax_neg_100.balance")
         base_section = self._create_tax_report_line('Base', tax_report, sequence=1, formula="base_11.balance + base_42.balance")
         base_42_line = self._create_tax_report_line('Base 42%', tax_report, sequence=2, parent_line=base_section, code='base_42', tag_name='base_42')
         base_11_line = self._create_tax_report_line('Base 11%', tax_report, sequence=3, parent_line=base_section, code='base_11', tag_name='base_11')
@@ -684,13 +684,13 @@ class TestTaxReport(TestAccountReportsCommon):
         tax_31_5_line = self._create_tax_report_line('Tax 31.5%', tax_report, sequence=7, parent_line=tax_42_section, code='tax_31_5', tag_name='tax_31_5')
         tax_10_5_line = self._create_tax_report_line('Tax 10.5%', tax_report, sequence=6, parent_line=tax_42_section, code='tax_10_5', tag_name='tax_10_5')
         tax_11_line = self._create_tax_report_line('Tax 11%', tax_report, sequence=8, parent_line=tax_section, code='tax_11', tag_name='tax_11')
-        tax_neg_10_line = self._create_tax_report_line('Tax -10%', tax_report, sequence=9, parent_line=tax_section, code='tax_neg_10', tag_name='tax_neg_10')
+        tax_neg_100_line = self._create_tax_report_line('Tax -100%', tax_report, sequence=9, parent_line=tax_section, code='tax_neg_100', tag_name='tax_neg_100')
         self._create_tax_report_line('Tax difference (42%-11%)', tax_report, sequence=10, formula='tax_42.balance - tax_11.balance')
 
         # Create two taxes linked to report lines
         tax_11 = self.env['account.tax'].create({
             'name': 'Impôt sur les revenus',
-            'amount': '11',
+            'amount': 11,
             'amount_type': 'percent',
             'type_tax_use': 'sale',
             'invoice_repartition_line_ids': [
@@ -717,7 +717,7 @@ class TestTaxReport(TestAccountReportsCommon):
 
         tax_42 = self.env['account.tax'].create({
             'name': 'Impôt sur les revenants',
-            'amount': '42',
+            'amount': 42,
             'amount_type': 'percent',
             'type_tax_use': 'sale',
             'invoice_repartition_line_ids': [
@@ -739,9 +739,9 @@ class TestTaxReport(TestAccountReportsCommon):
                 }),
 
                 Command.create({
-                    'factor_percent': -10,
+                    'factor_percent': -100,
                     'repartition_type': 'tax',
-                    'tag_ids': self._get_tag_ids("-", tax_neg_10_line.expression_ids),
+                    'tag_ids': self._get_tag_ids("-", tax_neg_100_line.expression_ids),
                 }),
             ],
             'refund_repartition_line_ids': [
@@ -763,9 +763,9 @@ class TestTaxReport(TestAccountReportsCommon):
                 }),
 
                 Command.create({
-                    'factor_percent': -10,
+                    'factor_percent': -100,
                     'repartition_type': 'tax',
-                    'tag_ids': self._get_tag_ids("+", tax_neg_10_line.expression_ids),
+                    'tag_ids': self._get_tag_ids("+", tax_neg_100_line.expression_ids),
                 }),
             ],
         })
@@ -797,22 +797,22 @@ class TestTaxReport(TestAccountReportsCommon):
             #   Name                                        Balance
             [   0,                                             1  ],
             [
-                ('Base',                                    200   ),
-                ('Base 42%',                                100   ),
-                ('Base 11%',                                100   ),
-                ('Total Base',                              200   ),
+                ('Base',                                    200),
+                ('Base 42%',                                100),
+                ('Base 11%',                                100),
+                ('Total Base',                              200),
 
-                ('Tax',                                      57.20),
-                ('Tax 42%',                                  42   ),
-                ('Tax 10.5%',                                10.5 ),
-                ('Tax 31.5%',                                31.5 ),
-                ('Total Tax 42%',                            42   ),
+                ('Tax',                                      95),
+                ('Tax 42%',                                  42),
+                ('Tax 10.5%',                                10.5),
+                ('Tax 31.5%',                                31.5),
+                ('Total Tax 42%',                            42),
 
-                ('Tax 11%',                                  11   ),
-                ('Tax -10%',                                  4.2 ),
-                ('Total Tax',                                57.2 ),
+                ('Tax 11%',                                  11),
+                ('Tax -100%',                                42),
+                ('Total Tax',                                95),
 
-                ('Tax difference (42%-11%)',                 31   ),
+                ('Tax difference (42%-11%)',                 31),
             ],
             options,
         )
@@ -843,7 +843,7 @@ class TestTaxReport(TestAccountReportsCommon):
                 ('Total Tax 42%',                              0.0),
 
                 ('Tax 11%',                                    0.0),
-                ('Tax -10%',                                   0.0),
+                ('Tax -100%',                                  0.0),
                 ('Total Tax',                                  0.0),
 
                 ('Tax difference (42%-11%)',                   0.0),
@@ -1290,21 +1290,21 @@ class TestTaxReport(TestAccountReportsCommon):
             [   0,                             1,                2],
             # Before payment
             [
-                ("Sales",                     '',            42   ),
-                ("Regular (42.0%)",          100,            42   ),
-                ("Total Sales",               '',            42   ),
+                ("Sales",                     '',            42),
+                ("Regular (42.0%)",          100,            42),
+                ("Total Sales",               '',            42),
             ],
             # After paying 30%
             [
                 ("Sales",                     '',            46.26),
-                ("Regular (42.0%)",          100,            42   ),
+                ("Regular (42.0%)",          100,            42),
                 ("Cash Basis (10.0%)",        42.6,           4.26),
                 ("Total Sales",               '',            46.26),
             ],
             # After full payment
             [
                 ("Sales",                     '',             56.2),
-                ("Regular (42.0%)",          100,             42  ),
+                ("Regular (42.0%)",          100,             42),
                 ("Cash Basis (10.0%)",       142,             14.2),
                 ("Total Sales",               '',             56.2),
             ]
@@ -1330,14 +1330,14 @@ class TestTaxReport(TestAccountReportsCommon):
             # After paying 30%
             [
                 ("Sales",                     '',             49.2),
-                ("Cash Basis (10.0%)",        30,              3  ),
+                ("Cash Basis (10.0%)",        30,              3),
                 ("Regular (42.0%)",          110,             46.2),
                 ("Total Sales",               '',             49.2),
             ],
             # After full payment
             [
                 ("Sales",                     '',             56.2),
-                ("Cash Basis (10.0%)",       100,             10  ),
+                ("Cash Basis (10.0%)",       100,             10),
                 ("Regular (42.0%)",          110,             46.2),
                 ("Total Sales",               '',             56.2),
             ]
@@ -1378,39 +1378,39 @@ class TestTaxReport(TestAccountReportsCommon):
             [   0,                                               1],
             # Before payment
             [
-                (f'{regular_tax.id}-invoice-base',          100   ),
-                (f'{regular_tax.id}-invoice-100',            42   ),
-                (f'{regular_tax.id}-refund-base',             0.0 ),
-                (f'{regular_tax.id}-refund-100',              0.0 ),
+                (f'{regular_tax.id}-invoice-base',          100),
+                (f'{regular_tax.id}-invoice-100',            42),
+                (f'{regular_tax.id}-refund-base',             0.0),
+                (f'{regular_tax.id}-refund-100',              0.0),
 
-                (f'{caba_tax.id}-invoice-base',               0.0 ),
-                (f'{caba_tax.id}-invoice-100',                0.0 ),
-                (f'{caba_tax.id}-refund-base',                0.0 ),
-                (f'{caba_tax.id}-refund-100',                 0.0 ),
+                (f'{caba_tax.id}-invoice-base',               0.0),
+                (f'{caba_tax.id}-invoice-100',                0.0),
+                (f'{caba_tax.id}-refund-base',                0.0),
+                (f'{caba_tax.id}-refund-100',                 0.0),
             ],
             # After paying 30%
             [
-                (f'{regular_tax.id}-invoice-base',          100   ),
-                (f'{regular_tax.id}-invoice-100',            42   ),
-                (f'{regular_tax.id}-refund-base',             0.0 ),
-                (f'{regular_tax.id}-refund-100',              0.0 ),
+                (f'{regular_tax.id}-invoice-base',          100),
+                (f'{regular_tax.id}-invoice-100',            42),
+                (f'{regular_tax.id}-refund-base',             0.0),
+                (f'{regular_tax.id}-refund-100',              0.0),
 
-                (f'{caba_tax.id}-invoice-base',              42.6 ),
+                (f'{caba_tax.id}-invoice-base',              42.6),
                 (f'{caba_tax.id}-invoice-100',                4.26),
-                (f'{caba_tax.id}-refund-base',                0.0 ),
-                (f'{caba_tax.id}-refund-100',                 0.0 ),
+                (f'{caba_tax.id}-refund-base',                0.0),
+                (f'{caba_tax.id}-refund-100',                 0.0),
             ],
             # After full payment
             [
-                (f'{regular_tax.id}-invoice-base',          100   ),
-                (f'{regular_tax.id}-invoice-100',            42   ),
-                (f'{regular_tax.id}-refund-base',             0.0 ),
-                (f'{regular_tax.id}-refund-100',              0.0 ),
+                (f'{regular_tax.id}-invoice-base',          100),
+                (f'{regular_tax.id}-invoice-100',            42),
+                (f'{regular_tax.id}-refund-base',             0.0),
+                (f'{regular_tax.id}-refund-100',              0.0),
 
-                (f'{caba_tax.id}-invoice-base',             142   ),
-                (f'{caba_tax.id}-invoice-100',               14.2 ),
-                (f'{caba_tax.id}-refund-base',                0.0 ),
-                (f'{caba_tax.id}-refund-100',                 0.0 ),
+                (f'{caba_tax.id}-invoice-base',             142),
+                (f'{caba_tax.id}-invoice-100',               14.2),
+                (f'{caba_tax.id}-refund-base',                0.0),
+                (f'{caba_tax.id}-refund-100',                 0.0),
             ],
         )
 
@@ -1427,7 +1427,7 @@ class TestTaxReport(TestAccountReportsCommon):
             [   0,                                               1],
             # Before payment
             [
-                (f'{regular_tax.id}-invoice-base',           110  ),
+                (f'{regular_tax.id}-invoice-base',           110),
                 (f'{regular_tax.id}-invoice-100',             46.2),
                 (f'{regular_tax.id}-refund-base',              0.0),
                 (f'{regular_tax.id}-refund-100',               0.0),
@@ -1439,27 +1439,27 @@ class TestTaxReport(TestAccountReportsCommon):
             ],
             # After paying 30%
             [
-                (f'{regular_tax.id}-invoice-base',           110  ),
+                (f'{regular_tax.id}-invoice-base',           110),
                 (f'{regular_tax.id}-invoice-100',             46.2),
                 (f'{regular_tax.id}-refund-base',              0.0),
                 (f'{regular_tax.id}-refund-100',               0.0),
 
-                (f'{caba_tax.id}-invoice-base',               30  ),
-                (f'{caba_tax.id}-invoice-100',                 3  ),
+                (f'{caba_tax.id}-invoice-base',               30),
+                (f'{caba_tax.id}-invoice-100',                 3),
                 (f'{caba_tax.id}-refund-base',                 0.0),
                 (f'{caba_tax.id}-refund-100',                  0.0),
             ],
             # After full payment
             [
-                (f'{regular_tax.id}-invoice-base',          110   ),
-                (f'{regular_tax.id}-invoice-100',            46.2 ),
-                (f'{regular_tax.id}-refund-base',             0.0 ),
-                (f'{regular_tax.id}-refund-100',              0.0 ),
+                (f'{regular_tax.id}-invoice-base',          110),
+                (f'{regular_tax.id}-invoice-100',            46.2),
+                (f'{regular_tax.id}-refund-base',             0.0),
+                (f'{regular_tax.id}-refund-100',              0.0),
 
-                (f'{caba_tax.id}-invoice-base',             100   ),
-                (f'{caba_tax.id}-invoice-100',               10   ),
-                (f'{caba_tax.id}-refund-base',                0.0 ),
-                (f'{caba_tax.id}-refund-100',                 0.0 ),
+                (f'{caba_tax.id}-invoice-base',             100),
+                (f'{caba_tax.id}-invoice-100',               10),
+                (f'{caba_tax.id}-refund-base',                0.0),
+                (f'{caba_tax.id}-refund-100',                 0.0),
             ],
         )
 
@@ -1553,12 +1553,12 @@ class TestTaxReport(TestAccountReportsCommon):
             #   Name                                        Balance
             [   0,                                               1],
             [
-                (f'{regular_tax.id}-invoice-base',           200  ),
-                (f'{regular_tax.id}-invoice-100',             84  ),
+                (f'{regular_tax.id}-invoice-base',           200),
+                (f'{regular_tax.id}-invoice-100',             84),
                 (f'{regular_tax.id}-refund-base',              0.0),
                 (f'{regular_tax.id}-refund-100',               0.0),
 
-                (f'{caba_tax.id}-invoice-base',              242  ),
+                (f'{caba_tax.id}-invoice-base',              242),
                 (f'{caba_tax.id}-invoice-100',                24.2),
                 (f'{caba_tax.id}-refund-base',                 0.0),
                 (f'{caba_tax.id}-refund-100',                  0.0),
@@ -1576,7 +1576,7 @@ class TestTaxReport(TestAccountReportsCommon):
             [   0,                                   1,           2],
             [
                 ("Sales",                           '',       108.2),
-                (f"{regular_tax.name} (42.0%)",    200,        84  ),
+                (f"{regular_tax.name} (42.0%)",    200,        84),
                 (f"{caba_tax.name} (10.0%)",       242,        24.2),
                 ("Total Sales",                     '',       108.2),
             ],
@@ -2082,25 +2082,25 @@ class TestTaxReport(TestAccountReportsCommon):
                     (f'{self.test_fpos_tax_sale.id}-invoice-base',          2000),
                     (f'{self.test_fpos_tax_sale.id}-invoice-30',             150),
                     (f'{self.test_fpos_tax_sale.id}-invoice-70',             350),
-                    (f'{self.test_fpos_tax_sale.id}-invoice--10',            -50),
+                    (f'{self.test_fpos_tax_sale.id}-invoice--100',          -500),
 
                     #out_refund
                     (f'{self.test_fpos_tax_sale.id}-refund-base',           -220),
                     (f'{self.test_fpos_tax_sale.id}-refund-30',              -33),
                     (f'{self.test_fpos_tax_sale.id}-refund-70',              -77),
-                    (f'{self.test_fpos_tax_sale.id}-refund--10',              11),
+                    (f'{self.test_fpos_tax_sale.id}-refund--100',            110),
 
                     #in_invoice
                     (f'{self.test_fpos_tax_purchase.id}-invoice-base',      1400),
-                    (f'{self.test_fpos_tax_purchase.id}-invoice-10',          70),
+                    (f'{self.test_fpos_tax_purchase.id}-invoice-40',         280),
                     (f'{self.test_fpos_tax_purchase.id}-invoice-60',         420),
-                    (f'{self.test_fpos_tax_purchase.id}-invoice--5',         -35),
+                    (f'{self.test_fpos_tax_purchase.id}-invoice--100',      -700),
 
                     #in_refund
                     (f'{self.test_fpos_tax_purchase.id}-refund-base',       -660),
-                    (f'{self.test_fpos_tax_purchase.id}-refund-10',          -33),
+                    (f'{self.test_fpos_tax_purchase.id}-refund-40',         -132),
                     (f'{self.test_fpos_tax_purchase.id}-refund-60',         -198),
-                    (f'{self.test_fpos_tax_purchase.id}-refund--5',         16.5),
+                    (f'{self.test_fpos_tax_purchase.id}-refund--100',        330),
                 ],
                 options,
             )

@@ -419,12 +419,12 @@ class AccountEdiXmlUBLDian(models.AbstractModel):
             })
         return res
 
-    def _get_tax_grouping_key(self, base_line, tax_values):
+    def _get_tax_grouping_key(self, base_line, tax_data):
         """ Group the taxes by colombian type using the (tax.amount, tax.amount_type, tax.l10n_co_edi_type) """
         # OVERRIDE account.edi.xml.ubl_20
         customer = base_line['record'].move_id.commercial_partner_id
         supplier = base_line['record'].move_id.company_id.partner_id.commercial_partner_id
-        tax = tax_values['tax_repartition_line'].tax_id
+        tax = tax_data['tax']
         code_to_filter = ['07', 'ZZ'] if base_line['record'].move_id.move_type in ('in_invoice', 'in_refund') else ['ZZ']
         return {
             'tax_co_type': tax.l10n_co_edi_type.code,
@@ -837,10 +837,14 @@ class AccountEdiXmlUBLDian(models.AbstractModel):
                 if 'percent' in tax_subtotal['tax_category_vals']:
                     tax_subtotal['tax_category_vals'].pop('percent')
                 # Total Volume in mL
-                tax_subtotal['base_unit_measure'] = sum(
-                    line.product_id.l10n_co_edi_ref_nominal_tax * line.quantity
-                    for line in vals['records']
-                )
+                if 'tax_details_per_record' in taxes_vals:
+                    tax_subtotal['base_unit_measure'] = sum(
+                        base_line['product_id'].l10n_co_edi_ref_nominal_tax * base_line['quantity']
+                        for base_line, _taxes_data in vals['base_line_x_taxes_data']
+                    )
+                else:
+                    base_line = taxes_vals['base_line']
+                    tax_subtotal['base_unit_measure'] = base_line['product_id'].l10n_co_edi_ref_nominal_tax * base_line['quantity']
                 # Infer the rate per 100mL
                 rate = vals['tax_amount'] * 100 / tax_subtotal['base_unit_measure']
                 tax_subtotal['per_unit_amount'] = self.format_float(rate, 2)

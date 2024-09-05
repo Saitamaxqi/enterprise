@@ -10,23 +10,11 @@ class BankRecWidget(models.Model):
     # LINES METHODS
     # -------------------------------------------------------------------------
 
-    def _convert_to_tax_base_line_dict(self, line):
-        # EXTENDS account_accountant
-        tax_base_line_dict = super()._convert_to_tax_base_line_dict(line)
-        tax_base_line_dict['vehicle'] = line.vehicle_id
-        return tax_base_line_dict
-
-    def _convert_to_tax_line_dict(self, line):
-        # EXTENDS account_accountant
-        tax_line_dict = super()._convert_to_tax_line_dict(line)
-        tax_line_dict['vehicle'] = line.vehicle_id
-        return tax_line_dict
-
     def _lines_prepare_tax_line(self, tax_line_vals):
         # EXTENDS account_accountant
-        tax_line_data = super()._lines_prepare_tax_line(tax_line_vals)
-        tax_line_data['vehicle_id'] = tax_line_vals.get('vehicle_id', False)
-        return tax_line_data
+        results = super()._lines_prepare_tax_line(tax_line_vals)
+        results['vehicle_id'] = tax_line_vals['vehicle_id']
+        return results
 
     # -------------------------------------------------------------------------
     # LINES UPDATE METHODS

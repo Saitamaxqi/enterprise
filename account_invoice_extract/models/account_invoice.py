@@ -911,12 +911,12 @@ class AccountMove(models.Model):
                                 line.tax_ids = [Command.link(tax_info['tax_record'].id)]
 
             # Check the tax roundings after the tax lines have been synced
-            tax_amount_rounding_error = total_ocr - self.tax_totals['amount_total']
+            tax_amount_rounding_error = total_ocr - self.tax_totals['total_amount_currency']
             threshold = len(vals_invoice_lines) * move_form.currency_id.rounding
             # Check if tax amounts detected by the ocr are correct and
             # replace the taxes that caused the rounding error in case of indian localization
             if not move_form.currency_id.is_zero(tax_amount_rounding_error) and self.is_indian_taxes():
-                fixed_rounding_error = total_ocr - total_tax_amount_ocr - self.tax_totals['amount_untaxed']
+                fixed_rounding_error = total_ocr - total_tax_amount_ocr - self.tax_totals['base_amount_currency']
                 tax_totals = self.tax_totals
                 tax_groups = tax_totals['groups_by_subtotal']['Untaxed Amount']
                 if move_form.currency_id.is_zero(fixed_rounding_error) and tax_groups:

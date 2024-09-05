@@ -10,6 +10,7 @@ from . import account_move
 from . import account_payment
 from . import account_reconcile_model
 from . import account_reconcile_model_line
+from . import account_tax
 from . import digest
 from . import res_config_settings
 from . import res_company

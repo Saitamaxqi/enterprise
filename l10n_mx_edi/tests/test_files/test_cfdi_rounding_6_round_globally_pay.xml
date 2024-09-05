@@ -9,7 +9,7 @@
 		<pago20:Pagos Version="2.0">
 			<pago20:Totales TotalTrasladosBaseIVA16="29822.45" TotalTrasladosImpuestoIVA16="4771.59" MontoTotalPagos="34594.04"/>
 			<pago20:Pago FechaPago="___ignore___" FormaDePagoP="01" MonedaP="MXN" TipoCambioP="1" Monto="34594.04" NumOperacion="___ignore___">
-				<pago20:DoctoRelacionado IdDocumento="___ignore___" Folio="2" Serie="INV/2024/" MonedaDR="MXN" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="34594.04" ImpPagado="34594.04" ObjetoImpDR="02" ImpSaldoInsoluto="0.00">
+				<pago20:DoctoRelacionado IdDocumento="___ignore___" Folio="___ignore___" Serie="___ignore___" MonedaDR="MXN" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="34594.04" ImpPagado="34594.04" ObjetoImpDR="02" ImpSaldoInsoluto="0.00">
 					<pago20:ImpuestosDR>
 						<pago20:TrasladosDR>
 							<pago20:TrasladoDR BaseDR="29822.45" ImporteDR="4771.59" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.160000"/>

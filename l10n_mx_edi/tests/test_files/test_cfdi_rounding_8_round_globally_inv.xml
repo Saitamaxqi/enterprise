@@ -3,7 +3,7 @@
 	<cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601"/>
 	<cfdi:Receptor Rfc="ICV060329BY0" Nombre="INMOBILIARIA CVA" DomicilioFiscalReceptor="33826" RegimenFiscalReceptor="601" UsoCFDI="G03"/>
 	<cfdi:Conceptos>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="244.00" Importe="244.00" ObjetoImp="02">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="244.000000" Importe="244.000000" ObjetoImp="02">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
 					<cfdi:Traslado Base="244.000000" Importe="0.000000" Impuesto="003" TipoFactor="Tasa" TasaOCuota="0.000000"/>
@@ -11,7 +11,7 @@
 				</cfdi:Traslados>
 			</cfdi:Impuestos>
 		</cfdi:Concepto>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="8.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="244.00" Importe="1952.00" ObjetoImp="02">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="8.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="244.000000" Importe="1952.000000" ObjetoImp="02">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
 					<cfdi:Traslado Base="1952.000000" Importe="0.000000" Impuesto="003" TipoFactor="Tasa" TasaOCuota="0.000000"/>
@@ -19,14 +19,14 @@
 				</cfdi:Traslados>
 			</cfdi:Impuestos>
 		</cfdi:Concepto>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="2531.00" Importe="2531.00" ObjetoImp="02">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="2531.000000" Importe="2531.000000" ObjetoImp="02">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
 					<cfdi:Traslado Base="2531.000000" Importe="0.000000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.000000"/>
 				</cfdi:Traslados>
 			</cfdi:Impuestos>
 		</cfdi:Concepto>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="2820.75" Importe="2820.75" ObjetoImp="02">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="2820.750000" Importe="2820.750000" ObjetoImp="02">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
 					<cfdi:Traslado Base="2820.750000" Importe="169.245000" Impuesto="003" TipoFactor="Tasa" TasaOCuota="0.060000"/>
@@ -34,14 +34,14 @@
 				</cfdi:Traslados>
 			</cfdi:Impuestos>
 		</cfdi:Concepto>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="2531.00" Importe="2531.00" ObjetoImp="02">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="2531.000000" Importe="2531.000000" ObjetoImp="02">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
 					<cfdi:Traslado Base="2531.000000" Importe="0.000000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.000000"/>
 				</cfdi:Traslados>
 			</cfdi:Impuestos>
 		</cfdi:Concepto>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="8.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="468.00" Importe="3744.00" ObjetoImp="02">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="8.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="468.000000" Importe="3744.000000" ObjetoImp="02">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
 					<cfdi:Traslado Base="3744.000000" Importe="0.000000" Impuesto="003" TipoFactor="Tasa" TasaOCuota="0.000000"/>
@@ -49,7 +49,7 @@
 				</cfdi:Traslados>
 			</cfdi:Impuestos>
 		</cfdi:Concepto>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="2820.75" Importe="2820.75" ObjetoImp="02">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="2820.750000" Importe="2820.750000" ObjetoImp="02">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
 					<cfdi:Traslado Base="2820.750000" Importe="169.245000" Impuesto="003" TipoFactor="Tasa" TasaOCuota="0.060000"/>
@@ -57,14 +57,14 @@
 				</cfdi:Traslados>
 			</cfdi:Impuestos>
 		</cfdi:Concepto>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="210.28" Importe="210.28" ObjetoImp="02">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="210.280000" Importe="210.280000" ObjetoImp="02">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
 					<cfdi:Traslado Base="210.280000" Importe="14.719600" Impuesto="003" TipoFactor="Tasa" TasaOCuota="0.070000"/>
 				</cfdi:Traslados>
 			</cfdi:Impuestos>
 		</cfdi:Concepto>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="2820.75" Importe="2820.75" ObjetoImp="02">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="2820.750000" Importe="2820.750000" ObjetoImp="02">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
 					<cfdi:Traslado Base="2820.750000" Importe="169.245000" Impuesto="003" TipoFactor="Tasa" TasaOCuota="0.060000"/>

@@ -113,8 +113,8 @@ class AccountEdiXmlUBLPE(models.AbstractModel):
         # EXTENDS account.edi.xml.ubl_21
         vals = super()._get_invoice_tax_totals_vals_list(invoice, taxes_vals)
 
-        def grouping_key_generator(base_line, tax_values):
-            tax = tax_values['tax_repartition_line'].tax_id
+        def grouping_key_generator(base_line, tax_data):
+            tax = tax_data['tax']
             return {
                 'l10n_pe_edi_code': tax.tax_group_id.l10n_pe_edi_code,
                 'l10n_pe_edi_international_code': tax.l10n_pe_edi_international_code,
@@ -156,7 +156,7 @@ class AccountEdiXmlUBLPE(models.AbstractModel):
             'tax_subtotal_vals': [],
         }
         for tax_detail_vals in taxes_vals['tax_details'].values():
-            tax = tax_detail_vals['group_tax_details'][0]['tax']
+            tax = tax_detail_vals['taxes_data'][0]['tax']
             vals['tax_subtotal_vals'].append({
                 'currency': line.currency_id,
                 'currency_dp': line.currency_id.decimal_places,

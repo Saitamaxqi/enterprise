@@ -1396,6 +1396,46 @@ class TestCFDIInvoice(TestMxEdiCommon):
 
         self._test_cfdi_rounding(run)
 
+    def test_cfdi_rounding_10(self):
+        def create_invoice(**kwargs):
+            return self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': price_unit,
+                        'tax_ids': [Command.set(taxes.ids)],
+                    })
+                    for price_unit, taxes in (
+                        (550.0, self.tax_0),
+                        (505.0, self.tax_16),
+                        (495.0, self.tax_16),
+                        (560.0, self.tax_0),
+                        (475.0, self.tax_16),
+                    )
+                ],
+                **kwargs,
+            )
+
+        def run(rounding_method):
+            with self.mx_external_setup(self.frozen_today):
+                invoice = create_invoice()
+                with self.with_mocked_pac_sign_success():
+                    invoice._l10n_mx_edi_cfdi_invoice_try_send()
+                self._assert_invoice_cfdi(invoice, f'test_cfdi_rounding_10_{rounding_method}_inv')
+
+                payment = self._create_payment(invoice)
+                with self.with_mocked_pac_sign_success():
+                    payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+                self._assert_invoice_payment_cfdi(payment.move_id, f'test_cfdi_rounding_10_{rounding_method}_pay')
+
+                invoice = create_invoice(l10n_mx_edi_cfdi_to_public=True)
+                with self.with_mocked_pac_sign_success():
+                    invoice._l10n_mx_edi_cfdi_global_invoice_try_send()
+                self._assert_global_invoice_cfdi_from_invoices(invoice, f'test_cfdi_rounding_10_{rounding_method}_ginvoice')
+
+        self.tax_16.price_include = True
+        self._test_cfdi_rounding(run)
+
     def test_partial_payment_1(self):
         date1 = self.frozen_today - relativedelta(days=2)
         date2 = self.frozen_today - relativedelta(days=1)

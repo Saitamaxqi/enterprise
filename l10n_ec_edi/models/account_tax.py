@@ -20,7 +20,6 @@ L10N_EC_TAXSUPPORTS = [
 
 
 class AccountTax(models.Model):
-
     _inherit = "account.tax"
 
     l10n_ec_code_taxsupport = fields.Selection(
@@ -28,6 +27,46 @@ class AccountTax(models.Model):
         string='Tax Support',
         help='Indicates if the purchase invoice supports tax credit or cost or expenses, conforming table 5 of ATS'
     )
+
+    def _prepare_base_line_for_taxes_computation(self, record, **kwargs):
+        # EXTENDS 'account'
+        results = super()._prepare_base_line_for_taxes_computation(record, **kwargs)
+        if (
+            isinstance(record, models.Model)
+            and record._name == 'account.move.line'
+            and record.l10n_ec_withhold_invoice_id
+        ):
+            results['l10n_ec_withhold_invoice_id'] = record.l10n_ec_withhold_invoice_id
+            results['l10n_ec_code_taxsupport'] = record.l10n_ec_code_taxsupport
+        return results
+
+    def _prepare_tax_line_for_taxes_computation(self, record, **kwargs):
+        # EXTENDS 'account'
+        results = super()._prepare_tax_line_for_taxes_computation(record, **kwargs)
+        if (
+            isinstance(record, models.Model)
+            and record._name == 'account.move.line'
+            and record.l10n_ec_withhold_invoice_id
+        ):
+            results['l10n_ec_withhold_invoice_id'] = record.l10n_ec_withhold_invoice_id
+            results['l10n_ec_code_taxsupport'] = record.l10n_ec_code_taxsupport
+        return results
+
+    def _prepare_base_line_tax_repartition_grouping_key(self, base_line, base_line_grouping_key, tax_data, tax_rep_data):
+        # EXTENDS 'account'
+        results = super()._prepare_base_line_tax_repartition_grouping_key(base_line, base_line_grouping_key, tax_data, tax_rep_data)
+        if 'l10n_ec_withhold_invoice_id' in base_line:
+            results['l10n_ec_withhold_invoice_id'] = base_line['l10n_ec_withhold_invoice_id'].id
+            results['l10n_ec_code_taxsupport'] = base_line['l10n_ec_code_taxsupport']
+        return results
+
+    def _prepare_tax_line_repartition_grouping_key(self, tax_line):
+        # EXTENDS 'account'
+        results = super()._prepare_tax_line_repartition_grouping_key(tax_line)
+        if 'l10n_ec_withhold_invoice_id' in tax_line:
+            results['l10n_ec_withhold_invoice_id'] = tax_line['l10n_ec_withhold_invoice_id'].id
+            results['l10n_ec_code_taxsupport'] = tax_line['l10n_ec_code_taxsupport']
+        return results
 
     def compute_all(self, price_unit, currency=None, quantity=1.0, product=None, partner=None, is_refund=False, handle_price_include=True, include_caba_tags=False, rounding_method=None):
         """

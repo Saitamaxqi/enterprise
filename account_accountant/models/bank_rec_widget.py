@@ -700,7 +700,7 @@ class BankRecWidget(models.Model):
 
         self.line_ids = line_ids_commands
 
-    def _convert_to_tax_base_line_dict(self, line):
+    def _prepare_base_line_for_taxes_computation(self, line):
         """ Convert the current dictionary in order to use the generic taxes computation method defined on account.tax.
         :return: A python dictionary.
         """
@@ -709,48 +709,26 @@ class BankRecWidget(models.Model):
         is_refund = (tax_type == 'sale' and line.balance > 0.0) or (tax_type == 'purchase' and line.balance < 0.0)
 
         if line.force_price_included_taxes and line.tax_ids:
-            handle_price_include = True
-            extra_context = {'force_price_include': True}
+            special_mode = 'total_included'
             base_amount = line.tax_base_amount_currency
         else:
-            handle_price_include = False
-            extra_context = None
+            special_mode = 'total_excluded'
             base_amount = line.amount_currency
 
-        return self.env['account.tax']._convert_to_tax_base_line_dict(
+        return self.env['account.tax']._prepare_base_line_for_taxes_computation(
             line,
-            partner=line.partner_id,
-            currency=line.currency_id,
-            taxes=line.tax_ids,
             price_unit=base_amount,
             quantity=1.0,
-            account=line.account_id,
-            analytic_distribution=line.analytic_distribution,
-            price_subtotal=base_amount,
             is_refund=is_refund,
-            handle_price_include=handle_price_include,
-            extra_context=extra_context,
+            special_mode=special_mode,
         )
 
-    def _convert_to_tax_line_dict(self, line):
+    def _prepare_tax_line_for_taxes_computation(self, line):
         """ Convert the current dictionary in order to use the generic taxes computation method defined on account.tax.
         :return: A python dictionary.
         """
         self.ensure_one()
-
-        return self.env['account.tax']._convert_to_tax_line_dict(
-            line,
-            partner=line.partner_id,
-            currency=line.currency_id,
-            taxes=line.tax_ids,
-            tax_tags=line.tax_tag_ids,
-            tax_repartition_line=line.tax_repartition_line_id,
-            group_tax=line.group_tax_id,
-            account=line.account_id,
-            analytic_distribution=line.analytic_distribution,
-            tax_amount_currency=line.amount_currency,
-            tax_amount=line.balance,
-        )
+        return self.env['account.tax']._prepare_tax_line_for_taxes_computation(line)
 
     def _lines_prepare_tax_line(self, tax_line_vals):
         self.ensure_one()
@@ -759,12 +737,8 @@ class BankRecWidget(models.Model):
         name = tax_rep.tax_id.name
         if self.st_line_id.payment_ref:
             name = f'{name} - {self.st_line_id.payment_ref}'
-        if tax_line_vals['tax_id'] == tax_rep.tax_id.id:
-            group_tax = self.env['account.tax']
-        else:
-            group_tax = self.env['account.tax'].browse(tax_line_vals['tax_id'])
         currency = self.env['res.currency'].browse(tax_line_vals['currency_id'])
-        amount_currency = tax_line_vals['tax_amount']
+        amount_currency = tax_line_vals['amount_currency']
         balance = self.st_line_id._prepare_counterpart_amounts_using_st_line_rate(currency, None, amount_currency)['balance']
 
         return {
@@ -782,27 +756,27 @@ class BankRecWidget(models.Model):
             'tax_repartition_line_id': tax_rep.id,
             'tax_ids': tax_line_vals['tax_ids'],
             'tax_tag_ids': tax_line_vals['tax_tag_ids'],
-            'group_tax_id': group_tax.id,
+            'group_tax_id': tax_line_vals['group_tax_id'],
         }
 
     def _lines_recompute_taxes(self):
         self.ensure_one()
-        base_lines = self.line_ids.filtered(lambda x: x.flag == 'manual' and not x.tax_repartition_line_id)
-        tax_lines = self.line_ids.filtered(lambda x: x.flag == 'tax_line')
-
-        tax_results = self.env['account.tax']._compute_taxes(
-            [self._convert_to_tax_base_line_dict(x) for x in base_lines],
-            self.company_id,
-            tax_lines=[self._convert_to_tax_line_dict(x) for x in tax_lines],
-            include_caba_tags=True,
-        )
+        AccountTax = self.env['account.tax']
+        base_amls = self.line_ids.filtered(lambda x: x.flag == 'manual' and not x.tax_repartition_line_id)
+        base_lines = [self._prepare_base_line_for_taxes_computation(x) for x in base_amls]
+        tax_amls = self.line_ids.filtered(lambda x: x.flag == 'tax_line')
+        tax_lines = [self._prepare_tax_line_for_taxes_computation(x) for x in tax_amls]
+        AccountTax._add_tax_details_in_base_lines(base_lines, self.company_id)
+        AccountTax._round_base_lines_tax_details(base_lines, self.company_id)
+        AccountTax._add_accounting_data_in_base_lines_tax_details(base_lines, self.company_id, include_caba_tags=True)
+        tax_results = AccountTax._prepare_tax_lines(base_lines, self.company_id, tax_lines=tax_lines)
 
         line_ids_commands = []
 
         # Update the base lines.
-        for base_line_vals, to_update in tax_results['base_lines_to_update']:
-            line = base_line_vals['record']
-            amount_currency = to_update['price_subtotal']
+        for base_line, to_update in tax_results['base_lines_to_update']:
+            line = base_line['record']
+            amount_currency = to_update['amount_currency']
             balance = self.st_line_id\
                 ._prepare_counterpart_amounts_using_st_line_rate(line.currency_id, line.source_balance, amount_currency)['balance']
 
@@ -818,17 +792,15 @@ class BankRecWidget(models.Model):
 
         # Newly created tax lines.
         for tax_line_vals in tax_results['tax_lines_to_add']:
-            if tax_line_vals['tax_amount']:
-                line_ids_commands.append(Command.create(self._lines_prepare_tax_line(tax_line_vals)))
+            line_ids_commands.append(Command.create(self._lines_prepare_tax_line(tax_line_vals)))
 
         # Update of existing tax lines.
-        for tax_line_vals, to_update in tax_results['tax_lines_to_update']:
-            if tax_line_vals['tax_amount']:
-                new_line_vals = self._lines_prepare_tax_line(to_update)
-                line_ids_commands.append(Command.update(tax_line_vals['record'].id, {
-                    'amount_currency': new_line_vals['amount_currency'],
-                    'balance': new_line_vals['balance'],
-                }))
+        for tax_line_vals, grouping_key, to_update in tax_results['tax_lines_to_update']:
+            new_line_vals = self._lines_prepare_tax_line({**grouping_key, **to_update})
+            line_ids_commands.append(Command.update(tax_line_vals['record'].id, {
+                'amount_currency': new_line_vals['amount_currency'],
+                'balance': new_line_vals['balance'],
+            }))
 
         self.line_ids = line_ids_commands
 

@@ -493,21 +493,21 @@ class TestCFDIPosOrder(TestMxEdiPosCommon, TestPointOfSaleHttpCommon):
 
     def test_invoiced_order_mx_customer(self):
         with self.mx_external_setup(self.frozen_today):
-            with self.create_and_invoice_order() as order:
+            with self.with_mocked_pac_sign_success(), self.create_and_invoice_order() as order:
                 order.partner_id = self.partner_mx
                 self.assertFalse(order.l10n_mx_edi_cfdi_to_public)
             self._assert_invoice_cfdi(order.account_move, 'test_invoiced_order_mx_customer')
 
     def test_invoiced_order_foreign_customer(self):
         with self.mx_external_setup(self.frozen_today):
-            with self.create_and_invoice_order() as order:
+            with self.with_mocked_pac_sign_success(), self.create_and_invoice_order() as order:
                 order.partner_id = self.partner_us
                 self.assertFalse(order.l10n_mx_edi_cfdi_to_public)
             self._assert_invoice_cfdi(order.account_move, 'test_invoiced_order_foreign_customer')
 
     def test_invoiced_order_customer_with_no_country(self):
         with self.mx_external_setup(self.frozen_today):
-            with self.create_and_invoice_order() as order:
+            with self.with_mocked_pac_sign_success(), self.create_and_invoice_order() as order:
                 self.partner_us.country_id = None
                 order.partner_id = self.partner_us
                 self.assertTrue(order.l10n_mx_edi_cfdi_to_public)

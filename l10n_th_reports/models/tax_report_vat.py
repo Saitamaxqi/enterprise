@@ -128,11 +128,10 @@ class AccountGenericTaxReport(models.AbstractModel):
             amount_untaxed_signed = sign * abs(move.amount_untaxed_signed)
             # Only include tax amount from VAT 7% tax group
             amount_tax = 0.0
-            for taxes in move.tax_totals['groups_by_subtotal'].values():
-                for tax in taxes:
-                    if tax['tax_group_id'] == tax_group_vat_7.id:
-                        is_company_currency = move.currency_id == company.currency_id
-                        amount_tax += sign * (tax['tax_group_amount'] if is_company_currency else tax['tax_group_amount_company_currency'])
+            for subtotal in move.tax_totals['subtotals']:
+                for tax_group in subtotal['tax_groups']:
+                    if tax_group['id'] == tax_group_vat_7.id:
+                        amount_tax += sign * tax_group['tax_amount']
             sheet.write(y_offset, 0, index + 1, default_style)
             sheet.write(y_offset, 1, move.name, default_style)
             sheet.write(y_offset, 2, move.ref or '', default_style)

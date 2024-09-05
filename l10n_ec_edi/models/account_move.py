@@ -280,20 +280,18 @@ class AccountMove(models.Model):
 
     @api.depends('l10n_ec_reimbursement_ids.tax_base', 'l10n_ec_reimbursement_ids.tax_amount', 'l10n_ec_reimbursement_ids.tax_id')
     def _compute_l10n_ec_reimbursement_totals(self):
+        AccountTax = self.env['account.tax']
         for move in self:
-            reference_lines = move.l10n_ec_reimbursement_ids
-            tax_totals = self.env['account.tax']._prepare_tax_totals(
-                [x._prepare_tax_totals() for x in reference_lines],
-                move.currency_id or move.company_id.currency_id, move.company_id
-            )
-
-            if sum(move.l10n_ec_reimbursement_ids.mapped('total')) != tax_totals['amount_total']:
-                name_key = tax_totals['subtotals'][0]['name']
-                for tax_values in tax_totals['groups_by_subtotal'][name_key]:
-                    group_amount = sum(move.l10n_ec_reimbursement_ids.filtered(lambda x: x.tax_id.tax_group_id.id == tax_values['group_key']).mapped('tax_amount'))
-                    tax_values['tax_group_amount'] = group_amount
-                    tax_values['tax_group_amount_company_currency'] = move.currency_id.round(group_amount * move.invoice_currency_rate)
-            move.reimbursement_totals = tax_totals
+            if move.country_code == 'EC':
+                base_lines = [line._prepare_base_line_for_taxes_computation() for line in move.l10n_ec_reimbursement_ids]
+                AccountTax._add_tax_details_in_base_lines(base_lines, move.company_id)
+                move.reimbursement_totals = AccountTax._get_tax_totals_summary(
+                    base_lines=base_lines,
+                    currency=move.currency_id,
+                    company=move.company_id,
+                )
+            else:
+                move.reimbursement_totals = None
 
     # ===== BUTTONS =====
 
@@ -521,18 +519,18 @@ class AccountMove(models.Model):
     def _l10n_ec_get_taxes_grouped(self, extra_group='tax_group'):
         self.ensure_one()
 
-        def group_by(base_line, tax_values):
-            tax_id = tax_values['tax_repartition_line'].tax_id
-            code_percentage = L10N_EC_VAT_SUBTAXES[tax_id.tax_group_id.l10n_ec_type]
+        def group_by(base_line, tax_data):
+            tax = tax_data['tax']
+            code_percentage = L10N_EC_VAT_SUBTAXES[tax.tax_group_id.l10n_ec_type]
             values = {
-                'code': self._l10n_ec_map_tax_groups(tax_id),
+                'code': self._l10n_ec_map_tax_groups(tax),
                 'code_percentage': code_percentage,
                 'rate': L10N_EC_VAT_RATES[code_percentage],
             }
             if extra_group == 'tax_group':
-                values['tax_group_id'] = tax_id.tax_group_id.id
+                values['tax_group_id'] = tax.tax_group_id.id
             elif extra_group == 'tax_support':
-                values['taxsupport'] = tax_id.l10n_ec_code_taxsupport
+                values['taxsupport'] = tax.l10n_ec_code_taxsupport
             return values
 
         return self._prepare_edi_tax_details(grouping_key_generator=group_by)
@@ -718,10 +716,10 @@ class AccountMove(models.Model):
         # Create a grouped tax method to return profit and vat tax details with _prepare_edi_tax_details method
         self.ensure_one()
 
-        def grouping_function(wth_tax_index, base_line, tax_values):
+        def grouping_function(wth_tax_index, base_line, tax_data):
             line = base_line['record']
             # Should return tuple doc sustento + withholding tax
-            tax_support = base_line['taxes'].l10n_ec_code_taxsupport
+            tax_support = base_line['tax_ids'].l10n_ec_code_taxsupport
             # Profit withhold logic
             withhold = line._get_suggested_supplier_withhold_taxes()[wth_tax_index]
             return {'tax_support': tax_support,
@@ -930,24 +928,6 @@ class AccountMoveLine(models.Model):
             currency_rate = line.balance / line.amount_currency if line.amount_currency != 0 else 1
             line.l10n_ec_withhold_tax_amount = line.currency_id.round(
                 currency_rate * abs(line.price_total - line.price_subtotal))
-
-    def _compute_tax_key(self):
-        """ Override to allow extra keys/split in the withholding tax lines"""
-        super()._compute_tax_key()
-        for line in self.filtered('l10n_ec_withhold_invoice_id'):
-            line.tax_key = frozendict(**line.tax_key,
-                                      l10n_ec_withhold_invoice_id=line.l10n_ec_withhold_invoice_id.id,
-                                      l10n_ec_code_taxsupport=line.l10n_ec_code_taxsupport)
-
-    def _compute_all_tax(self):
-        """ Override to allow extra keys/split in the withholding tax lines"""
-        super()._compute_all_tax()
-        for line in self.filtered('l10n_ec_withhold_invoice_id'):
-            for key in list(line.compute_all_tax.keys()):
-                new_key = frozendict(**key,
-                                     l10n_ec_withhold_invoice_id=line.l10n_ec_withhold_invoice_id.id,
-                                     l10n_ec_code_taxsupport=line.l10n_ec_code_taxsupport)
-                line.compute_all_tax[new_key] = line.compute_all_tax.pop(key)
 
     def _get_suggested_supplier_withhold_taxes(self):
         '''

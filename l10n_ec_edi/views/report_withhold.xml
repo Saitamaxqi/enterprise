@@ -101,8 +101,10 @@
                         <!--Tax totals per group-->
                         <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
                             <table class="table table-borderless" style="page-break-inside: avoid; font-size:11px;">
-                                <t t-set="tax_totals" t-value="o.l10n_ec_withhold_subtotals"/>
-                                <t t-if="tax_totals" t-call="l10n_ec_edi.document_tax_totals"/>
+                                <t t-if="tax_totals" t-call="l10n_ec_edi.document_tax_totals">
+                                    <t t-set="tax_totals" t-value="o.l10n_ec_withhold_subtotals"/>
+                                    <t t-set="currency" t-value="o.currency_id"/>
+                                </t>
                             </table>
                         </div>
 
@@ -135,17 +137,10 @@
             </td>
         </template>
 
-        <!-- Prevent tax totals widget from showing base (already inserted in name) -->
-        <template id="tax_groups_totals" inherit_id="account.tax_groups_totals" primary="True">
-            <xpath expr="//tr/t" position="replace">
-                <t t-if="False"/>
-            </xpath>
-        </template>
-
         <!-- Ensure we call our own version of tax_groups_totals -->
         <template id="document_tax_totals" inherit_id="account.document_tax_totals" primary="True">
-            <xpath expr='//t[@t-call="account.tax_groups_totals"]' position="replace">
-                <t t-call="l10n_ec_edi.tax_groups_totals"/>
+            <xpath expr='//t[@t-set="same_tax_base"]' position="replace">
+                <t t-set="same_tax_base" t-value="True"/>
             </xpath>
         </template>
 

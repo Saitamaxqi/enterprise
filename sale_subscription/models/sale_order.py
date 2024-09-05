@@ -1917,11 +1917,16 @@ class SaleOrder(models.Model):
         :rtype: dict
         """
         self.ensure_one()
+        AccountTax = self.env['account.tax']
+
         def get_tax_totals(display_lines):
-            return self.env['account.tax']._prepare_tax_totals(
-               [x._convert_to_tax_base_line_dict() for x in display_lines],
-                self.currency_id or self.company_id.currency_id,
-                self.company_id
+            base_lines = [line._prepare_base_line_for_taxes_computation() for line in display_lines]
+            AccountTax._add_tax_details_in_base_lines(base_lines, self.company_id)
+            AccountTax._round_base_lines_tax_details(base_lines, self.company_id)
+            return AccountTax._get_tax_totals_summary(
+                base_lines=base_lines,
+                currency=self.currency_id or self.company_id.currency_id,
+                company=self.company_id,
             )
 
         display_lines = self._get_invoiceable_lines()

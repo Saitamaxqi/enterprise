@@ -44,14 +44,14 @@
                     <CmnaRecep>Pudahuel</CmnaRecep>
                 </Receptor>
                 <Totales>
-                    <MntNeto>218765</MntNeto>
+                    <MntNeto>218769</MntNeto>
                     <TasaIVA>19.00</TasaIVA>
                     <IVA>41566</IVA>
-                    <MntTotal>260331</MntTotal>
+                    <MntTotal>260335</MntTotal>
                 </Totales>
                 <OtraMoneda>
                     <TpoMoneda>DOLAR USA</TpoMoneda>
-                    <TpoCambio>935.30</TpoCambio>
+                    <TpoCambio>935.31</TpoCambio>
                     <MntNetoOtrMnda>233.90</MntNetoOtrMnda>
                     <IVAOtrMnda>44.44</IVAOtrMnda>
                     <MntTotOtrMnda>278.34</MntTotOtrMnda>
@@ -81,17 +81,17 @@
                 <DscItem>Copla Flexible 1NS 6"</DscItem>
                 <QtyItem>1.000000</QtyItem>
                 <UnmdItem>U</UnmdItem>
-                <PrcItem>11509.473684</PrcItem>
+                <PrcItem>11513.684211</PrcItem>
                 <OtrMnda>
                     <PrcOtrMon>12.31</PrcOtrMon>
                     <Moneda>USD</Moneda>
-                    <FctConv>935.3293</FctConv>
+                    <FctConv>935.6715</FctConv>
                     <DctoOtrMnda>0.62</DctoOtrMnda>
                     <MontoItemOtrMnda>11.69</MontoItemOtrMnda>
                 </OtrMnda>
                 <DescuentoPct>5.00</DescuentoPct>
-                <DescuentoMonto>575</DescuentoMonto>
-                <MontoItem>10934</MontoItem>
+                <DescuentoMonto>576</DescuentoMonto>
+                <MontoItem>10938</MontoItem>
             </Detalle>
             <TED version="1.0">
             <DD>
@@ -101,7 +101,7 @@
                 <FE>2022-11-24</FE>
                 <RR>76086428-5</RR>
                 <RSR>Partner SII</RSR>
-                <MNT>260331</MNT>
+                <MNT>260335</MNT>
                 <IT1>product_a</IT1>
                 <CAF version="1.0">
                     <DA>

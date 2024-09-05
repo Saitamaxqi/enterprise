@@ -245,12 +245,9 @@ class AccountMove(models.Model):
         # NOTE: all amounts to be reported must be in the currency of the receipt not in Uruguayan pesos,
         # that is why we use price_subtotal instead of another field
 
-        for k, line in enumerate(
-            self.invoice_line_ids.filtered(lambda line: line.display_type not in ('line_note', 'line_section')),
-            start=1,
-        ):
+        for k, base_line in enumerate(tax_details['base_lines'], start=1):
+            line = base_line['record']
             values = next(iter(tax_details['tax_details_per_record'][line]['tax_details'].values()))
-            line = values.get('records').pop()
 
             # B4 IndFact
             if self._l10n_uy_edi_is_expo_cfe():
@@ -265,7 +262,7 @@ class AccountMove(models.Model):
                 invoice_ind = ind_code.get(line.tax_ids.amount)
 
             item_description = self._l10n_uy_edi_get_line_desc(line)
-            tax_included = values.get('group_tax_details')[0]['tax'].price_include
+            tax_included = values['_tax_price_include']
             nom_item = (line.product_id.display_name or "-")[:80]
             res.append({
                 "NroLinDet": k,  # B1
@@ -610,11 +607,12 @@ class AccountMove(models.Model):
             :return: string the xml content to send to DGI """
         self.ensure_one()
 
-        def grouping_key_generator(base_line, tax_values):
-            tax = tax_values['tax_repartition_line'].tax_id
+        def grouping_key_generator(base_line, tax_data):
+            tax = tax_data['tax']
             return {
                 'l10n_uy_tax_category': tax.l10n_uy_tax_category,
                 '_tax_amount': tax.amount,
+                '_tax_price_include': tax.price_include,
             }
 
         tax_details = self._prepare_invoice_aggregated_taxes(grouping_key_generator=grouping_key_generator)

@@ -25,6 +25,8 @@ class TestAccountMoveFleet(AccountTestInvoicingCommon):
         })
 
     def test_account_move_line_vehicle_id(self):
+        self.company_data['default_tax_purchase'].invoice_repartition_line_ids.use_in_tax_closing = False
+
         # Create bill with vehicle id on invoice line and tax, will create a tax line with the same vehicle id
         bill = self.env['account.move'].create([{
             'move_type': 'in_invoice',
@@ -47,19 +49,21 @@ class TestAccountMoveFleet(AccountTestInvoicingCommon):
 
         # Remove vehicle id from invoice line, should remove also from the tax line
         bill.invoice_line_ids.write({'vehicle_id': False})
-        self.assertRecordValues(bill.line_ids, [{
-            'balance': 100,
-            'tax_base_amount': 0,
-            'vehicle_id': False,
-            'tax_ids': self.company_data['default_tax_purchase'].ids,
-        }, {
-            'balance': 15.0,
-            'tax_base_amount': 100.0,
-            'tax_ids': [],
-            'vehicle_id': False,
-        }, {
-            'balance': -115.0,
-            'tax_base_amount': 0.0,
-            'tax_ids': [],
-            'vehicle_id': False,
-        }])
+        self.assertRecordValues(bill.line_ids.sorted('balance'), [
+            {
+                'balance': -115.0,
+                'tax_base_amount': 0.0,
+                'tax_ids': [],
+                'vehicle_id': False,
+            }, {
+                'balance': 15.0,
+                'tax_base_amount': 100.0,
+                'tax_ids': [],
+                'vehicle_id': False,
+            }, {
+                'balance': 100,
+                'tax_base_amount': 0,
+                'vehicle_id': False,
+                'tax_ids': self.company_data['default_tax_purchase'].ids,
+            },
+        ])

@@ -5,15 +5,32 @@ from odoo import models
 class AccountTax(models.Model):
     _inherit = 'account.tax'
 
-    def _get_generation_dict_from_base_line(self, line_vals, tax_vals, force_caba_exigibility=False):
-        grouping = super()._get_generation_dict_from_base_line(line_vals, tax_vals, force_caba_exigibility)
-        vehicle = line_vals.get('vehicle')
-        tax_repartition_line = tax_vals['tax_repartition_line']
-        grouping['vehicle_id'] = vehicle.id if vehicle and not tax_repartition_line.use_in_tax_closing else False
-        return grouping
+    def _prepare_base_line_for_taxes_computation(self, record, **kwargs):
+        # EXTENDS 'account'
+        results = super()._prepare_base_line_for_taxes_computation(record, **kwargs)
+        results['vehicle_id'] = self._get_base_line_field_value_from_record(record, 'vehicle_id', kwargs, self.env['fleet.vehicle'])
+        return results
 
-    def _get_generation_dict_from_tax_line(self, line_vals):
-        tax_grouping = super()._get_generation_dict_from_tax_line(line_vals)
-        vehicle = line_vals.get('vehicle')
-        tax_grouping['vehicle_id'] = vehicle.id if vehicle else False
-        return tax_grouping
+    def _prepare_tax_line_for_taxes_computation(self, record, **kwargs):
+        # EXTENDS 'account'
+        results = super()._prepare_tax_line_for_taxes_computation(record, **kwargs)
+        results['vehicle_id'] = self._get_base_line_field_value_from_record(record, 'vehicle_id', kwargs, self.env['fleet.vehicle'])
+        return results
+
+    def _prepare_base_line_grouping_key(self, base_line):
+        # EXTENDS 'account'
+        results = super()._prepare_base_line_grouping_key(base_line)
+        results['vehicle_id'] = base_line['vehicle_id'].id
+        return results
+
+    def _prepare_base_line_tax_repartition_grouping_key(self, base_line, base_line_grouping_key, tax_data, tax_rep_data):
+        # EXTENDS 'account'
+        results = super()._prepare_base_line_tax_repartition_grouping_key(base_line, base_line_grouping_key, tax_data, tax_rep_data)
+        results['vehicle_id'] = base_line_grouping_key['vehicle_id'] if not tax_rep_data['tax_rep'].use_in_tax_closing else False
+        return results
+
+    def _prepare_tax_line_repartition_grouping_key(self, tax_line):
+        # EXTENDS 'account'
+        results = super()._prepare_tax_line_repartition_grouping_key(tax_line)
+        results['vehicle_id'] = tax_line['vehicle_id'].id
+        return results

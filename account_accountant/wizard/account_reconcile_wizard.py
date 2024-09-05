@@ -474,40 +474,39 @@ class AccountReconcileWizard(models.TransientModel):
                 } * nr of repartition lines of the self.tax_id ],
         }
         """
+        AccountTax = self.env['account.tax']
         amount_currency = self.edit_mode_amount_currency or self.amount_currency
         amount = self.edit_mode_amount or self.amount
         rate = abs(amount_currency / amount)
         tax_type = self.tax_id.type_tax_use if self.tax_id else None
         is_refund = (tax_type == 'sale' and amount_currency > 0.0) or (tax_type == 'purchase' and amount_currency < 0.0)
-        tax_data = self.env['account.tax']._convert_to_tax_base_line_dict(
+        base_line = AccountTax._prepare_base_line_for_taxes_computation(
             self,
-            partner=partner,
-            currency=self.reco_currency_id,
-            taxes=self.tax_id,
+            partner_id=partner,
+            currency_id=self.reco_currency_id,
+            tax_ids=self.tax_id,
             price_unit=amount_currency,
             quantity=1.0,
-            account=self.account_id,
+            account_id=self.account_id,
             is_refund=is_refund,
             rate=rate,
-            handle_price_include=True,
-            extra_context={'force_price_include': True},
+            special_mode='total_included',
         )
-        tax_results = self.env['account.tax']._compute_taxes(
-            [tax_data],
-            self.company_id,
-            include_caba_tags=True,
-        )
-
-        _tax_data, base_to_update = tax_results['base_lines_to_update'][0]  # we can only have one baseline
+        base_lines = [base_line]
+        AccountTax._add_tax_details_in_base_lines(base_lines, self.company_id)
+        AccountTax._round_base_lines_tax_details(base_lines, self.company_id)
+        AccountTax._add_accounting_data_in_base_lines_tax_details(base_lines, self.company_id, include_caba_tags=True)
+        tax_results = AccountTax._prepare_tax_lines(base_lines, self.company_id)
+        _base_line, base_to_update = tax_results['base_lines_to_update'][0]  # we can only have one baseline
         tax_lines_data = []
         for tax_line_vals in tax_results['tax_lines_to_add']:
             tax_lines_data.append({
-                'tax_amount': tax_line_vals['tax_amount'],
-                'tax_amount_currency': tax_line_vals['tax_amount_currency'],
+                'tax_amount': tax_line_vals['balance'],
+                'tax_amount_currency': tax_line_vals['amount_currency'],
                 'tax_tag_ids': tax_line_vals['tax_tag_ids'],
                 'tax_account_id': tax_line_vals['account_id'],
             })
-        base_amount_currency = base_to_update['price_subtotal']
+        base_amount_currency = base_to_update['amount_currency']
         base_amount = amount - sum(entry['tax_amount'] for entry in tax_lines_data)
 
         return {

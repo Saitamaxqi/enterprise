@@ -195,11 +195,11 @@ class TestAvalaraBrInvoiceCommon(TestAvalaraBrCommon):
             }
             self.assertRecordValues(invoice, [expected_amounts])
 
-            self.assertEqual(invoice.tax_totals['amount_total'], expected_amounts['amount_total'])
-            self.assertEqual(invoice.tax_totals['amount_untaxed'], expected_amounts['amount_untaxed'])
+            self.assertEqual(invoice.tax_totals['total_amount_currency'], expected_amounts['amount_total'])
+            self.assertEqual(invoice.tax_totals['base_amount_currency'], expected_amounts['amount_untaxed'])
 
             self.assertEqual(len(invoice.tax_totals['subtotals']), 1)
-            self.assertEqual(invoice.tax_totals['subtotals'][0]['amount'], expected_amounts['amount_untaxed'])
+            self.assertEqual(invoice.tax_totals['subtotals'][0]['base_amount_currency'], expected_amounts['amount_untaxed'])
 
             avatax_mapping = {avatax_line['lineCode']: avatax_line for avatax_line in test_exact_response['lines']}
             for line in invoice.invoice_line_ids:

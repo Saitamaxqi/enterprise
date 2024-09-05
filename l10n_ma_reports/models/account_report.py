@@ -72,8 +72,8 @@ class MoroccanTaxReportCustomHandler(models.AbstractModel):
         if prorata_value:
             template_vals['prorata'] = prorata_value.value
 
-        def group_taxes_ma(base_line, tax_values):
-            tax = tax_values['tax_repartition_line'].tax_id
+        def group_taxes_ma(base_line, tax_data):
+            tax = tax_data['tax']
             return {
                 'amount': tax.amount,
                 'amount_type': tax.amount_type,

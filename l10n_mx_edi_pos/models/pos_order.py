@@ -306,14 +306,14 @@ class PosOrder(models.Model):
         negative_lines = [
             x
             for x in base_lines
-            if (x['price_subtotal'] > 0.0 and x['is_refund']) or (x['price_subtotal'] < 0.0 and not x['is_refund'])
+            if (x['record'].price_subtotal > 0.0 and x['is_refund']) or (x['record'].price_subtotal < 0.0 and not x['is_refund'])
         ]
         if negative_lines:
             # Line having a negative amount is not allowed.
             if not self.env['l10n_mx_edi.document']._is_cfdi_negative_lines_allowed():
                 errors.append(_("Order lines having a negative amount are not allowed to generate the CFDI."))
             # Discount line without taxes is not allowed.
-            if [x for x in negative_lines if not x['taxes']]:
+            if [x for x in negative_lines if not x['tax_ids']]:
                 errors.append(_(
                     "Order lines having a negative amount without a tax set is not allowed to "
                     "generate the CFDI.",
@@ -326,21 +326,12 @@ class PosOrder(models.Model):
 
         order_lines = self.lines._l10n_mx_edi_cfdi_lines()
         base_lines = order_lines._prepare_tax_base_line_values()
-
-        # In case of refund, the base lines need to be declared in positive in the CFDI.
-        is_refund = self.amount_total < 0
-        if is_refund and is_refund_gi:
-            for base_line in base_lines:
-                base_line['quantity'] *= -1
-                base_line['price_subtotal'] *= -1
-
         Document._add_base_lines_tax_amounts(base_lines, cfdi_values['company'])
         lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
+        base_lines = lines_dispatching['result_lines'] + lines_dispatching['orphan_negative_lines']
         if lines_dispatching['orphan_negative_lines']:
             cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
             return
-
-        cfdi_lines = lines_dispatching['result_lines']
 
         # When creating a global invoice for both orders and refunds, add the refund to the corresponding order in order to deal with
         # negative lines.
@@ -352,12 +343,15 @@ class PosOrder(models.Model):
                 ._l10n_mx_edi_cfdi_lines()
             has_refunds = bool(refund_order_lines)
             for refund_lines in refund_order_lines.grouped('order_id').values():
-                base_lines = refund_lines._prepare_tax_base_line_values()
-                Document._add_base_lines_tax_amounts(base_lines, cfdi_values['company'])
-                cfdi_lines += base_lines
+                refund_base_lines = refund_lines._prepare_tax_base_line_values()
+                for refund_base_line in refund_base_lines:
+                    refund_base_line['quantity'] *= -1
+                Document._add_base_lines_tax_amounts(refund_base_lines, cfdi_values['company'])
+                lines_dispatching = Document._dispatch_cfdi_base_lines(refund_base_lines)
+                base_lines += lines_dispatching['result_lines'] + lines_dispatching['orphan_negative_lines']
 
         # Add the document to dispatch the negative lines first onto the line belonging to the same document.
-        for base_line in cfdi_lines:
+        for base_line in base_lines:
             base_line['prior_record_ids'] = base_line['record'].refunded_orderline_id.ids
             base_line['record_id'] = base_line['record'].id
             base_line['document_id'] = base_line['record'].order_id.id
@@ -365,7 +359,7 @@ class PosOrder(models.Model):
         # After the distribution of negative lines on each pos order separately, it's time to distribute the negative
         # lines of refund orders on the refunded orders.
         if has_refunds:
-            lines_dispatching = Document._dispatch_cfdi_base_lines(cfdi_lines)
+            lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
         if lines_dispatching['orphan_negative_lines']:
             cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
             return
@@ -377,7 +371,7 @@ class PosOrder(models.Model):
         if is_refund_gi:
             # In case of refund of a CFDI, we need to generate the CFDI as a refund.
             cfdi_values['tipo_de_comprobante'] = 'E'
-            if is_refund:
+            if self.amount_total < 0:
                 # The order is a refund.
                 Document._add_document_origin_cfdi_values(cfdi_values, f"01|{self.refunded_order_id.l10n_mx_edi_cfdi_uuid}")
             else:

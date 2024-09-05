@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import models, _
-from odoo.tools import float_compare, formatLang
+from odoo import models, Command
+from collections import defaultdict
 
 
 class AccountMove(models.Model):
@@ -11,33 +11,31 @@ class AccountMove(models.Model):
         """ super() computes these using account.tax.compute_all(). For price-included taxes this will show the wrong totals
         because it uses the percentage amount on the tax which will always be 1%. This sets the correct totals using
         account.move.line fields set by `_set_external_taxes()`. """
-        res = super()._compute_tax_totals()
+        super()._compute_tax_totals()
         for move in self.filtered(lambda move: move.is_tax_computed_externally and move.tax_totals):
-            currency = move.currency_id
             lines = move.invoice_line_ids.filtered(lambda l: l.display_type == 'product')
-            move.tax_totals['amount_total'] = move.currency_id.round(sum(lines.mapped('price_total')))
-            move.tax_totals['formatted_amount_total'] = formatLang(self.env, move.tax_totals['amount_total'],
-                                                                   currency_obj=currency)
-
-            move.tax_totals['amount_untaxed'] = move.currency_id.round(sum(lines.mapped('price_subtotal')))
-            move.tax_totals['formatted_amount_untaxed'] = formatLang(self.env, move.tax_totals['amount_untaxed'],
-                                                                     currency_obj=currency)
-
-            move.tax_totals['subtotals'] = [
+            tax_totals = move.tax_totals
+            subtotal = tax_totals['subtotals'][0]
+            tax_totals['same_tax_base'] = True
+            tax_totals['total_amount_currency'] = move.currency_id.round(sum(lines.mapped('price_total')))
+            tax_totals['base_amount_currency'] = move.currency_id.round(sum(lines.mapped('price_subtotal')))
+            tax_totals['tax_amount_currency'] = tax_totals['total_amount_currency'] - tax_totals['base_amount_currency']
+            tax_totals['subtotals'] = [
                 {
-                    'amount': move.tax_totals['amount_untaxed'],
-                    'formatted_amount': move.tax_totals['formatted_amount_untaxed'],
-                    'name': move.tax_totals['subtotals'][0]['name'] if len(move.tax_totals['subtotals']) == 1 else _("Untaxed Amount")
+                    **subtotal,
+                    'base_amount_currency': tax_totals['base_amount_currency'],
+                    'tax_amount_currency': tax_totals['tax_amount_currency'],
+                    'tax_groups': [],
                 }
             ]
-
-            for groups in move.tax_totals['groups_by_subtotal'].values():
-                for group in groups:
-                    group['tax_group_base_amount'] = move.tax_totals['amount_untaxed']
-                    group['formatted_tax_group_base_amount'] = move.tax_totals['formatted_amount_untaxed']
-                    group['display_formatted_tax_group_base_amount'] = True
-
-        return res
+            if subtotal['tax_groups']:
+                tax_group = subtotal['tax_groups'][0]
+                tax_totals['subtotals'][0]['tax_groups'].append({
+                    **tax_group,
+                    'base_amount_currency': tax_totals['base_amount_currency'],
+                    'tax_amount_currency': tax_totals['tax_amount_currency'],
+                })
+            move.tax_totals = tax_totals
 
     def button_draft(self):
         res = super().button_draft()
@@ -77,11 +75,6 @@ class AccountMove(models.Model):
         """ account.external.tax.mixin override. """
         res = []
         for line in self._get_lines_eligible_for_external_taxes():
-            # Clear all taxes (e.g. default customer tax). Not every line will be sent to the external tax
-            # calculation service, those lines would keep their default taxes otherwise.
-            if line.parent_state != 'posted':
-                line.tax_ids = False
-
             res.append({
                 "id": line.id,
                 "model_name": line._name,
@@ -97,17 +90,39 @@ class AccountMove(models.Model):
 
     def _set_external_taxes(self, mapped_taxes, summary):
         """ account.external.tax.mixin override. """
+        business_line_ids_commands = defaultdict(list)
+        accounting_line_ids_commands = defaultdict(list)
         for line, detail in mapped_taxes.items():
-            line.tax_ids = detail['tax_ids']
-            line.price_total = detail['tax_amount'] + detail['total']
-            line.price_subtotal = detail['total']
+            move = line.move_id
+            price_subtotal = detail['total']
+            amount_currency = line.move_id.direction_sign * price_subtotal
+            if line.currency_rate:
+                balance = amount_currency / line.currency_rate
+            else:
+                balance = 0.0 if line.currency_id != line.company_currency_id else amount_currency
+            business_line_ids_commands[move].append(Command.update(line.id, {
+                'tax_ids': [Command.set(detail['tax_ids'].ids)],
+            }))
+            accounting_line_ids_commands[move].append(Command.update(line.id, {
+                'price_subtotal': price_subtotal,
+                'price_total': detail['tax_amount'] + detail['total'],
+                'amount_currency': amount_currency,
+                'balance': balance,
+            }))
 
-        for record in self:
-            for tax, external_amount in summary.get(record, {}).items():
-                tax_line = record.line_ids.filtered(lambda l: l.tax_line_id == tax)
+        # Trigger the taxes computation to get the tax lines.
+        for move, line_ids_commands in business_line_ids_commands.items():
+            move.line_ids = line_ids_commands
+        for move in self:
+            for tax, external_amount in summary.get(move, {}).items():
+                tax_line = move.line_ids.filtered(lambda l: l.tax_line_id == tax)
 
                 # Check that the computed taxes are close enough. For exemptions this could not be the case
                 # since some integrations will return the non-exempt rate%. In that case this will manually fix the tax
                 # lines to what the external service says they should be.
-                if float_compare(tax_line.amount_currency, external_amount, precision_rounding=record.currency_id.rounding) != 0:
-                    tax_line.amount_currency = external_amount
+                if tax_line and move.currency_id.compare_amounts(tax_line.amount_currency, external_amount):
+                    accounting_line_ids_commands[move].append(Command.update(tax_line.id, {'amount_currency': external_amount}))
+
+        # Force custom values for the accounting side.
+        for move, line_ids_commands in accounting_line_ids_commands.items():
+            move.line_ids = line_ids_commands

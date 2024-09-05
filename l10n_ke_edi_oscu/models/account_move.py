@@ -65,6 +65,16 @@ class AccountMove(models.Model):
 
     # === Computes === #
 
+    @api.depends('l10n_ke_oscu_invoice_number')
+    def _compute_tax_totals(self):
+        # EXTENDS 'account'
+        super()._compute_tax_totals()
+        for move in self:
+            if move.l10n_ke_oscu_invoice_number and move.tax_totals:
+                # Disable the recap of tax totals in company currency at the bottom right of the invoice,
+                # since this info is already present in our custom tax totals grid.
+                move.tax_totals['display_in_company_currency'] = False
+
     @api.depends('l10n_ke_oscu_attachment_id')
     def _compute_show_reset_to_draft_button(self):
         super()._compute_show_reset_to_draft_button()
@@ -222,10 +232,10 @@ class AccountMove(models.Model):
             product = line.product_id  # for ease of reference
             product_uom_qty = line.product_uom_id._compute_quantity(line.quantity, product.uom_id)
 
-            line_tax_details = next(
-                line_tax_details
-                for tax_grouping_key, line_tax_details in tax_details['tax_details_per_record'][line]['tax_details'].items()
-                if tax_grouping_key['tax'].l10n_ke_tax_type_id  # We only want to report VAT taxes
+            tax, line_tax_details = next(
+                (tax, line_tax_details)
+                for tax, line_tax_details in tax_details['tax_details_per_record'][line]['tax_details'].items()
+                if tax.l10n_ke_tax_type_id  # We only want to report VAT taxes
             )
 
             if line.quantity and line.discount != 100:
@@ -251,7 +261,7 @@ class AccountMove(models.Model):
                 'splyAmt':   price_subtotal_before_discount,
                 'dcRt':      line.discount,
                 'dcAmt':     discount_amount,
-                'taxTyCd':   line_tax_details['tax'].l10n_ke_tax_type_id.code,
+                'taxTyCd':   tax.l10n_ke_tax_type_id.code,
                 'taxblAmt':  line_tax_details['base_amount'],
                 'taxAmt':    line_tax_details['tax_amount'],
                 'totAmt':    line_tax_details['base_amount'] + line_tax_details['tax_amount'],

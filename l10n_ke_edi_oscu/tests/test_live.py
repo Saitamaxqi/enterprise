@@ -46,13 +46,15 @@ class TestKeEdi(TestKeEdiCommon):
 
     def _test_send_invoice_and_credit_note(self):
         """ Test that we're able to send an invoice and a credit note """
-        invoice = self.init_invoice(
-            'out_invoice',
-            partner=self.partner_a,
-            invoice_date='2024-01-28',
-            products=[self.product_service]
-        )
-        invoice.invoice_line_ids[0].discount = 10
+        invoice = self.env['account.move'].create({
+            'move_type': 'out_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2024-01-28',
+            'invoice_line_ids': [Command.create({
+                'product_id': self.product_service.id,
+                'discount': 10.0,
+            })],
+        })
         self.assertFalse(invoice.l10n_ke_validation_message)
 
         invoice.action_post()

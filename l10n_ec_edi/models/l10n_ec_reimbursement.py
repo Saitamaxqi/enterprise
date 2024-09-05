@@ -124,20 +124,13 @@ class L10nEcReimbursement(models.Model):
             else:
                 self.partner_vat_type_id = False
 
-    def _prepare_tax_totals(self):
-        # To fill reimbursement_totals widget in reimbursement document
-        return self.env['account.tax']._convert_to_tax_base_line_dict(
+    def _prepare_base_line_for_taxes_computation(self):
+        return self.env['account.tax']._prepare_base_line_for_taxes_computation(
             self,
-            partner=self.partner_id or self.env['res.partner'],
-            currency=self.move_id.currency_id or self.env['res.currency'],
-            product=self.env['product.product'],
-            taxes=self.tax_id,
-            price_unit=self.tax_base or 0.0,
+            tax_ids=self.tax_id,
+            price_unit=self.tax_base,
             quantity=1,
-            discount=0.0,
-            price_subtotal=self.tax_base,
-            is_refund=False,
-            rate=1.0,
+            currency_id=self.move_id.currency_id,
         )
 
     def _get_tax_amounts_converted(self, amount):

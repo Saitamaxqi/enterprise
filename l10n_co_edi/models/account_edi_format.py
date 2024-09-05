@@ -49,82 +49,165 @@ class AccountEdiFormat(models.Model):
                                                   invoice.company_id.vat,
                                                   int(invoice_number))
 
-    def _l10n_co_edi_get_round_amount(self, amount):
-        if amount == '':
-            return ''
-        if abs(amount - float("%.2f" % amount)) > 0.00001:
-            return "%.3f" % amount
-        return '%.2f' % amount
+    @api.model
+    def _l10n_co_edi_prepare_tii_sections(self, base_line, aggregated_values):
+        is_vendor_bill = base_line['record'].move_id.is_purchase_document()
+        currency_name = 'COP' if not is_vendor_bill else base_line['currency_id'].name
+        base_amount_field = 'base_amount' if not is_vendor_bill else 'base_amount_currency'
+        tax_amount_field = 'tax_amount' if not is_vendor_bill else 'tax_amount_currency'
 
-    def _l10n_co_edi_prepare_tim_sections(self, taxes_dict, invoice_currency, retention, tax_details=None, actual_tax_details=None, in_COP=False):
-        # taxes_dict is no longer used and will be removed in master
-        tax_details = tax_details or {}
-        actual_tax_details = actual_tax_details or {}
+        tii_sections = []
+        for grouping_key, values in aggregated_values.items():
+            if not grouping_key or grouping_key['skip']:
+                continue
 
-        suffix = '' if in_COP else '_currency'
-        currency_name = 'COP' if in_COP else invoice_currency.name
-        base_amount_field = f'base_amount{suffix}'
-        tax_amount_field = f'tax_amount{suffix}'
+            type_name = grouping_key['l10n_co_edi_type'].name
+            type_code = grouping_key['l10n_co_edi_type'].code
+            amount = grouping_key['amount']
+            amount_type = grouping_key['amount_type']
 
-        # Mapping CO tax type -> TIM section
-        new_taxes_dict = defaultdict(lambda: {
-            'TIM_1': bool(retention),
+            iim2 = values[tax_amount_field]
+            if type_code == '05':
+                if amount == -2.85:
+                    iim4 = abs(values[base_amount_field] * 0.19)
+                else:
+                    iim4 = abs(values[base_amount_field] * 0.05)
+            elif type_code == '34':
+                iim4 = base_line['product_id'].l10n_co_edi_ref_nominal_tax * base_line['quantity']
+            else:
+                iim4 = abs(values[base_amount_field])
+
+            if type_code != '34' or not iim2:
+                iim9 = amount
+            else:
+                iim9 = (iim2 * 100 / iim4) if iim4 else 0.0
+
+            iim6 = 15.0 if type_code == '05' else abs(amount)
+            if is_vendor_bill and amount_type != 'fixed':
+                tii4 = (iim6 * iim4 / 100) - iim2
+            else:
+                tii4 = None
+
+            values = {
+                'TII_1': abs(iim2),
+                'TII_2': currency_name,
+                'TII_3': 'true' if grouping_key['l10n_co_edi_type'].retention else 'false',
+                'TII_4': tii4,
+                'TII_5': currency_name if is_vendor_bill else None,
+
+                'IIM_1': type_code,
+                'IIM_2': abs(iim2),
+                'IIM_3': currency_name,
+                'IIM_4': iim4,
+                'IIM_5': currency_name,
+                'IIM_6': iim6,
+                'IIM_7': '',
+                'IIM_8': '',
+                'IIM_9': '',
+                'IIM_10': '',
+                'IIM_11': type_name,
+            }
+            if amount_type == 'fixed':
+                if type_code == '22':
+                    iim8 = 'BO'
+                elif type_code == '34':
+                    iim8 = 'MLT'
+                else:
+                    iim8 = '94'
+
+                values.update({
+                    'IIM_6': None,
+                    'IIM_7': iim4 if type_code == '34' else '1',
+                    'IIM_8': iim8,
+                    'IIM_9': iim9,
+                    'IIM_10': currency_name,
+                })
+            tii_sections.append(values)
+        return tii_sections
+
+    @api.model
+    def _l10n_co_edi_prepare_tim_sections(self, invoice, values_per_grouping_key, is_retention, in_cop):
+        is_vendor_bill = invoice.is_purchase_document()
+        currency_name = 'COP' if in_cop else invoice.currency_id.name
+        base_amount_field = 'base_amount' if in_cop else 'base_amount_currency'
+        tax_amount_field = 'tax_amount' if in_cop else 'tax_amount_currency'
+
+        tim_per_code = defaultdict(lambda: {
+            'TIM_1': 'true' if is_retention else 'false',
             'TIM_2': 0.0,
             'TIM_3': currency_name,
-            'TIM_4': 0.0,
-            'TIM_5': currency_name,
+            'TIM_4': 0.0 if is_vendor_bill else None,
+            'TIM_5': currency_name if is_vendor_bill else None,
             'IMPS': [],
         })
 
-        for grouping_key, tax_detail in actual_tax_details['tax_details'].items():
-            tax_type = grouping_key['l10n_co_edi_type']
-            if tax_type.retention != retention:
+        for grouping_key, values in values_per_grouping_key.items():
+            if not grouping_key or grouping_key['skip'] or grouping_key['is_retention'] != is_retention:
                 continue
-            # Construct the IMP and add it to the TIM section (one IMP per tax *rate*)
-            tim = new_taxes_dict[tax_type.code]
-            if tax_type.code == '05':
-                imp_2 = abs(tax_detail[tax_amount_field] * 100 / 15)
-            elif tax_type.code == '34':
-                imp_2 = sum(line.product_id.l10n_co_edi_ref_nominal_tax * line.quantity
-                            for line in tax_detail['records'])
+
+            type_name = grouping_key['l10n_co_edi_type'].name
+            type_code = grouping_key['l10n_co_edi_type'].code
+            amount = grouping_key['amount']
+            tim = tim_per_code[type_code]
+            tim['type_code'] = type_code
+
+            if type_code == '05':
+                imp2 = abs(amount * 100 / 15)
+            elif type_code == '34':
+                base_line_x_taxes_data = values['base_line_x_taxes_data']
+                imp2 = sum(
+                    base_line['product_id'].l10n_co_edi_ref_nominal_tax * base_line['quantity']
+                    for base_line, _taxes_data in base_line_x_taxes_data
+                )
             else:
-                imp_2 = abs(tax_detail[base_amount_field])
+                imp2 = abs(values[base_amount_field])
+
             imp = {
-                'IMP_1': tax_type.code,
-                'IMP_2': imp_2,
+                'IMP_1': type_code,
+                'IMP_2': imp2,
                 'IMP_3': currency_name,
-                'IMP_4': abs(tax_detail[tax_amount_field]),
+                'IMP_4': abs(values[tax_amount_field]),
                 'IMP_5': currency_name,
-                'IMP_11': tax_type.name,
+                'IMP_11': type_name,
             }
             if grouping_key['amount_type'] == 'fixed':
                 imp.update({
                     'IMP_6': 0,
+                    'IMP_6_dp': 2,
                     'IMP_7': 1,
                     'IMP_8': '94',
                     'IMP_9': grouping_key['amount'],  # Tax rate
                     'IMP_10': currency_name,
                 })
-                if tax_type.code == '22':
+                if type_code == '22':
                     imp['IMP_8'] = 'BO'
-                elif tax_type.code == '34':
+                elif type_code == '34':
                     imp.update({
                         'IMP_7': imp['IMP_2'],
                         'IMP_8': 'MLT',
-                        'IMP_9': imp['IMP_2'] and float_round(abs(tax_detail[tax_amount_field]) * 100 / imp['IMP_2'], 2),
+                        'IMP_9': float_round(abs(values[tax_amount_field]) * 100 / imp['IMP_2'], 2) if imp['IMP_2'] else None,
                     })
             else:
+                imp6_dp = 2
+                if type_code == '05':
+                    imp6 = 15.0
+                else:
+                    imp6 = abs(amount)
+                    if abs(imp6 - float("%.2f" % imp6)) > 0.00001:
+                        imp6_dp = 3
                 imp.update({
-                    'IMP_6': 15.0 if tax_type.code == '05' else abs(grouping_key['amount']),
+                    'IMP_6': imp6,
+                    'IMP_6_dp': imp6_dp,
                     'IMP_7': '',
                     'IMP_8': '',
                     'IMP_9': '',
                     'IMP_10': '',
                 })
-                tim['TIM_4'] += float_round((imp['IMP_6'] / 100.0 * imp['IMP_2']) - imp['IMP_4'], 2)
+                if tim['TIM_4'] is not None:
+                    tim['TIM_4'] += float_round((imp['IMP_6'] / 100.0 * imp['IMP_2']) - imp['IMP_4'], 2)
             tim['TIM_2'] += imp['IMP_4']
             tim['IMPS'].append(imp)
-        return new_taxes_dict
+        return list(tim_per_code.values())
 
     # -------------------------------------------------------------------------
     # Generation
@@ -143,9 +226,11 @@ class AccountEdiFormat(models.Model):
             phone = re.sub(r'^(\+57|0057)', '', phone)
             return phone[:10]
 
+        def format_float(number, dp):
+            return float_repr(number, dp) if number not in (None, '') else number
+
         def format_monetary(number, currency):
-            # Format the monetary values to avoid trailing decimals (e.g. 90.85000000000001).
-            return float_repr(number, currency.decimal_places)
+            return format_float(number, currency.decimal_places)
 
         def get_notas():
             '''This generates notes in a particular format. These notes are pieces
@@ -226,62 +311,89 @@ class AccountEdiFormat(models.Model):
             'out_refund': 'NC',
         }
 
-        def group_tax_retention(base_line, tax_values):
-            tax = tax_values['tax_repartition_line'].tax_id
-            return {'tax': tax, 'l10n_co_edi_type': tax.l10n_co_edi_type}
+        AccountTax = self.env['account.tax']
+        base_amls = invoice.line_ids.filtered(lambda x: x.display_type == 'product')
+        base_lines = [invoice._prepare_product_base_line_for_taxes_computation(x) for x in base_amls]
+        tax_amls = invoice.line_ids.filtered(lambda x: x.display_type == 'tax')
+        tax_lines = [invoice._prepare_tax_line_for_taxes_computation(x) for x in tax_amls]
+        AccountTax._add_tax_details_in_base_lines(base_lines, invoice.company_id)
+        AccountTax._round_base_lines_tax_details(base_lines, invoice.company_id, tax_lines=tax_lines)
 
-        def group_tax_tim(base_line, tax_values):
-            """ Tax details to be used for the TIM section: taxes should be grouped per CO tax type, then per tax rate.
-            """
-            tax = tax_values['tax_repartition_line'].tax_id
+        tax_group_covered_goods = self.env.ref('l10n_co.tax_group_covered_goods', raise_if_not_found=False)
+        for index, base_line in enumerate(base_lines, start=1):
+            price_unit = base_line['price_unit']
+            quantity = base_line['quantity']
+            discount = base_line['discount']
+            rate = base_line['rate']
+            tax_details = base_line['tax_details']
+            base_line['co_edi_index'] = index
+            base_line['co_price_subtotal'] = tax_details['total_excluded'] + tax_details['delta_base_amount']
+
+            if discount == 100:
+                co_price_subtotal_before_discount = (price_unit * quantity) / rate if rate else 0.0
+            else:
+                co_price_subtotal_before_discount = base_line['co_price_subtotal'] / (1 - discount / 100)
+            base_line['co_price_subtotal_before_discount'] = co_price_subtotal_before_discount
+            base_line['co_discount_amount'] = co_price_subtotal_before_discount - base_line['co_price_subtotal']
+
+            if quantity:
+                co_price_unit = co_price_subtotal_before_discount / quantity
+            else:
+                co_price_unit = price_unit / rate if rate else 0.0
+            base_line['co_price_unit'] = co_price_unit
+
+            base_line['co_is_exempt_tax'] = tax_group_covered_goods and tax_group_covered_goods in base_line['tax_ids'].tax_group_id
+
+        def grouping_function_tim_sections(base_line, tax_data):
+            tax = tax_data['tax']
             return {
                 'amount': tax.amount,
                 'amount_type': tax.amount_type,
                 'l10n_co_edi_type': tax.l10n_co_edi_type,
+                'skip': tax_data['tax'].l10n_co_edi_type.code in code_to_filter,
+                'is_retention': tax.l10n_co_edi_type.retention,
             }
 
-        def l10n_co_filter_to_apply(base_line, tax_values):
-            return tax_values['tax_repartition_line'].tax_id.l10n_co_edi_type.code not in code_to_filter
+        base_lines_aggregated_values = AccountTax._aggregate_base_lines_tax_details(base_lines, grouping_function_tim_sections)
+        for base_line, aggregated_values in base_lines_aggregated_values:
+            base_line['co_tii_sections'] = self._l10n_co_edi_prepare_tii_sections(base_line, aggregated_values)
 
-        tax_details_tim = invoice._prepare_edi_tax_details(filter_to_apply=l10n_co_filter_to_apply, grouping_key_generator=group_tax_tim)
-        tax_details = invoice._prepare_edi_tax_details(filter_to_apply=l10n_co_filter_to_apply, grouping_key_generator=group_tax_retention)
-        retention_taxes = [(group, detail) for group, detail in tax_details['tax_details'].items() if detail['l10n_co_edi_type'].retention]
-        regular_taxes = [(group, detail) for group, detail in tax_details['tax_details'].items() if not detail['l10n_co_edi_type'].retention]
-
-        exempt_tax_dict = {}
-        tax_group_covered_goods = self.env.ref('l10n_co.tax_group_covered_goods', raise_if_not_found=False)
-        for line in invoice.invoice_line_ids:
-            if tax_group_covered_goods and tax_group_covered_goods in line.mapped('tax_ids.tax_group_id'):
-                exempt_tax_dict[line.id] = True
-
-        # Remove in master: retention_lines_listdict, regular_lines_listdict no longer used
-        retention_lines = move_lines_with_tax_type.filtered(
-            lambda move: move.tax_line_id.l10n_co_edi_type.retention)
-        retention_lines_listdict = defaultdict(list)
-        for line in retention_lines:
-            retention_lines_listdict[line.tax_line_id.l10n_co_edi_type.code].append(line)
-
-        regular_lines = move_lines_with_tax_type - retention_lines
-        regular_lines_listdict = defaultdict(list)
-        for line in regular_lines:
-            regular_lines_listdict[line.tax_line_id.l10n_co_edi_type.code].append(line)
-
-        zero_tax_details = defaultdict(float)
-        for line, tax_detail in tax_details['tax_details_per_record'].items():
-            for tax, detail in tax_detail.get('tax_details').items():
-                if not detail.get('tax_amount'):
-                    tax = tax.get('tax')
-                    for grouped_tax in detail.get('group_tax_details'):
-                        zero_tax_details[tax.l10n_co_edi_type.code] += abs(grouped_tax.get('base_amount'))
-        retention_taxes_new = self._l10n_co_edi_prepare_tim_sections(retention_lines_listdict, invoice.currency_id, True, None, tax_details_tim)
-        regular_taxes_new = self._l10n_co_edi_prepare_tim_sections(regular_lines_listdict, invoice.currency_id, False, zero_tax_details, tax_details_tim)
-
-        retention_taxes_new_COP = self._l10n_co_edi_prepare_tim_sections(retention_lines_listdict, invoice.currency_id, True, None, tax_details_tim, in_COP=True)
-        regular_taxes_new_COP = self._l10n_co_edi_prepare_tim_sections(retention_lines_listdict, invoice.currency_id, False, zero_tax_details, tax_details_tim, in_COP=True)
+        values_per_grouping_key = AccountTax._aggregate_base_lines_aggregated_values(base_lines_aggregated_values)
+        is_vendor_bill = invoice.is_purchase_document()
+        tim_sections_retention = self._l10n_co_edi_prepare_tim_sections(
+            invoice, values_per_grouping_key, True, not is_vendor_bill)
+        tim_sections_regular = self._l10n_co_edi_prepare_tim_sections(
+            invoice, values_per_grouping_key, False, not is_vendor_bill)
+        vmt_section = {
+            'vmt7': 0.0,
+            'vmt8': 0.0,
+            'vmt16': 0.0,
+            'vmt17': 0.0,
+            'vmt18': 0.0,
+        }
+        if is_vendor_bill or invoice.currency_id == invoice.company_currency_id:
+            vmt_tim_sections = tim_sections_retention + tim_sections_regular
+        else:
+            tim_sections_retention_foreign = self._l10n_co_edi_prepare_tim_sections(
+                invoice, values_per_grouping_key, True, False)
+            tim_sections_regular_foreign = self._l10n_co_edi_prepare_tim_sections(
+                invoice, values_per_grouping_key, False, False)
+            vmt_tim_sections = tim_sections_retention_foreign + tim_sections_regular_foreign
+        for tim_section in vmt_tim_sections:
+            type_code = tim_section['type_code']
+            if type_code == '01':
+                vmt_section['vmt7'] += tim_section['TIM_2']
+            elif type_code == '04':
+                vmt_section['vmt8'] += tim_section['TIM_2']
+            elif type_code == '06':
+                vmt_section['vmt16'] += tim_section['TIM_2']
+            elif type_code == '07':
+                vmt_section['vmt17'] += tim_section['TIM_2']
+            elif type_code == '08':
+                vmt_section['vmt18'] += tim_section['TIM_2']
 
         # The rate should indicate how many pesos is one foreign currency
-        currency_rate_number = tax_details['base_amount'] / tax_details['base_amount_currency'] if tax_details['base_amount_currency'] else 1
-        currency_rate = "%.2f" % currency_rate_number
+        currency_rate = "%.2f" % (1 / invoice.invoice_currency_rate if invoice.invoice_currency_rate else 0.0)
 
         sign = 1 if invoice.is_outbound() else -1
 
@@ -291,20 +403,20 @@ class AccountEdiFormat(models.Model):
         withholding_amount = '%.2f' % (invoice.amount_untaxed + abs(sum(regular_tax_lines.mapped('amount_currency'))))
         withholding_amount_company = '%.2f' % (-sign * invoice.amount_untaxed_signed + sum(sign * line.balance for line in regular_tax_lines))
 
-        # edi_type
+        # ENC_8: validation_time
+        validation_time = fields.Datetime.now()
+        validation_time = pytz.utc.localize(validation_time)
+        bogota_tz = pytz.timezone('America/Bogota')
+        validation_time = validation_time.astimezone(bogota_tz)
+        validation_time = validation_time.strftime(DEFAULT_SERVER_TIME_FORMAT) + "-05:00"
+
+        # ENC_9: edi_type
         if invoice.move_type == 'out_refund':
             edi_type = "91"
         elif invoice.move_type == 'out_invoice' and invoice.l10n_co_edi_debit_note:
             edi_type = "92"
         else:
             edi_type = "{0:0=2d}".format(int(invoice.l10n_co_edi_type))
-
-        # validation_time
-        validation_time = fields.Datetime.now()
-        validation_time = pytz.utc.localize(validation_time)
-        bogota_tz = pytz.timezone('America/Bogota')
-        validation_time = validation_time.astimezone(bogota_tz)
-        validation_time = validation_time.strftime(DEFAULT_SERVER_TIME_FORMAT) + "-05:00"
 
         # description
         description_field = None
@@ -314,27 +426,6 @@ class AccountEdiFormat(models.Model):
             description_field = 'l10n_co_edi_description_code_debit'
         description_code = invoice[description_field] if description_field else None
         description = dict(invoice._fields[description_field].selection).get(description_code) if description_code else None
-
-        invoice_lines = invoice.invoice_line_ids.filtered(lambda line: line.display_type == 'product')
-        invoice_lines_values = {}
-        for line in invoice_lines:
-            price_subtotal = sign * line.balance
-            if line.discount == 100:
-                price_subtotal_before_discount = line.price_unit * line.quantity * currency_rate_number
-            else:
-                price_subtotal_before_discount = price_subtotal / (1 - line.discount / 100)
-            if line.quantity:
-                price_unit = price_subtotal_before_discount / line.quantity
-            else:
-                price_unit = line.price_unit * currency_rate_number
-            line.name = line.product_id.display_name if not line.name else line.name
-            invoice_lines_values[line.id] = {
-                'price_unit': price_unit,
-                'price_subtotal': price_subtotal,
-                'discount_amount': price_subtotal_before_discount - price_subtotal,
-                'price_subtotal_before_discount': price_subtotal_before_discount,
-            }
-
         xml_content = self.env['ir.qweb']._render(self._l10n_co_edi_get_electronic_invoice_template(invoice), {
             'invoice': invoice,
             'sign': sign,
@@ -342,15 +433,7 @@ class AccountEdiFormat(models.Model):
             'company_partner': invoice.company_id.partner_id,
             'sales_partner': invoice.user_id,
             'invoice_partner': invoice.partner_id.commercial_partner_id,
-            'retention_taxes': retention_taxes,
-            'retention_taxes_new': retention_taxes_new,
-            'retention_taxes_new_COP': retention_taxes_new_COP,
-            'regular_taxes': regular_taxes,
-            'regular_taxes_new': regular_taxes_new,
-            'regular_taxes_new_COP': regular_taxes_new_COP,
-            'tax_details': tax_details,
             'tax_types': invoice.mapped('line_ids.tax_ids.l10n_co_edi_type'),
-            'exempt_tax_dict': exempt_tax_dict,
             'currency_rate': currency_rate,
             'shipping_partner': invoice.partner_shipping_id,
             'invoice_type_to_ref_1': invoice_type_to_ref_1,
@@ -359,15 +442,17 @@ class AccountEdiFormat(models.Model):
             'notas': get_notas(),
             'withholding_amount': withholding_amount,
             'withholding_amount_company': withholding_amount_company,
-            'invoice_lines': invoice_lines,
-            'invoice_lines_values': invoice_lines_values,
+            'base_lines': base_lines,
+            'tim_sections_retention': tim_sections_retention,
+            'tim_sections_regular': tim_sections_regular,
+            'vmt_section': vmt_section,
             'validation_time': validation_time,
             'delivery_date': invoice.invoice_date + timedelta(1),
             'description_code': description_code,
             'description': description,
+            'format_float': format_float,
             'format_monetary': format_monetary,
             'format_domestic_phone_number': format_domestic_phone_number,
-            '_l10n_co_edi_get_round_amount': self._l10n_co_edi_get_round_amount
         })
         return b'<?xml version="1.0" encoding="utf-8"?>' + xml_content.encode()
 

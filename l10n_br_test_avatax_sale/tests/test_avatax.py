@@ -1,6 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo.tests.common import tagged
-from odoo.tools.misc import formatLang
 from odoo.addons.l10n_br_avatax.tests.test_br_avatax import TestAvalaraBrCommon
 from .mocked_so_response import generate_response
 
@@ -16,14 +15,12 @@ class TestSaleAvalaraBr(TestAvalaraBrCommon):
                 'amount_tax': amount_tax,
             }])
             totals = order.tax_totals
-            subtotal_group = totals['groups_by_subtotal']['Untaxed Amount']
-            self.assertEqual(len(subtotal_group), 1, 'There should only be one subtotal group (Untaxed Amount)')
-            self.assertEqual(subtotal_group[0]['tax_group_amount'], order.amount_tax,
-                             'The tax on tax_totals is different from amount_tax.')
-            self.assertEqual(totals['amount_total'], order.amount_total)
-            self.assertEqual(totals['formatted_amount_total'],
-                             formatLang(self.env, order.amount_total, currency_obj=order.currency_id))
-
+            subtotals = totals['subtotals']
+            self.assertEqual(len(subtotals), 1)
+            subtotal = subtotals[0]
+            self.assertEqual(subtotal['base_amount_currency'], order.amount_untaxed)
+            self.assertEqual(subtotal['tax_amount_currency'], order.amount_tax)
+            self.assertEqual(totals['total_amount_currency'], order.amount_total)
             for avatax_line in mocked_response['lines']:
                 so_line = order.order_line.filtered(lambda l: l.id == avatax_line['lineCode'])
                 total_tax_amount = sum(detail['tax'] for detail in avatax_line['taxDetails'] if detail['taxImpact']['impactOnNetAmount'] != 'Informative')

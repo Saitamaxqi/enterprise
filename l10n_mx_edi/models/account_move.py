@@ -982,32 +982,38 @@ class AccountMove(models.Model):
 
         base_lines = [
             {
-                **invl._convert_to_tax_base_line_dict(),
-                'uom': invl.product_uom_id,
+                **self._prepare_product_base_line_for_taxes_computation(invl),
+                'uom_id': invl.product_uom_id,
                 'name': invl._l10n_mx_edi_get_cfdi_line_name(),
                 'product_unspsc_code': invl._get_product_unspsc_code(),
                 'uom_unspsc_code': invl._get_uom_unspsc_code(),
             }
             for invl in self._l10n_mx_edi_cfdi_invoice_line_ids()
         ]
-        Document._add_base_lines_tax_amounts(base_lines, cfdi_values['company'])
-        if global_invoice and self.reversal_move_ids:
+        tax_amls = self.line_ids.filtered('tax_repartition_line_id')
+        tax_lines = [self._prepare_tax_line_for_taxes_computation(tax_line) for tax_line in tax_amls]
+        Document._add_base_lines_tax_amounts(base_lines, self.company_id, tax_lines=tax_lines)
+        lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
+        base_lines = lines_dispatching['result_lines'] + lines_dispatching['orphan_negative_lines']
+        has_refunds = global_invoice and self.reversal_move_ids
+        if has_refunds:
             refund_base_lines = [
                 {
-                    **invl._convert_to_tax_base_line_dict(),
-                    'uom': invl.product_uom_id,
+                    **self._prepare_product_base_line_for_taxes_computation(invl),
+                    'uom_id': invl.product_uom_id,
                     'name': invl.name,
                 }
                 for invl in self.reversal_move_ids._l10n_mx_edi_cfdi_invoice_line_ids()
             ]
             for refund_base_line in refund_base_lines:
                 refund_base_line['quantity'] *= -1
-                refund_base_line['price_subtotal'] *= -1
-            Document._add_base_lines_tax_amounts(refund_base_lines, cfdi_values['company'])
-            base_lines += refund_base_lines
+            Document._add_base_lines_tax_amounts(refund_base_lines, self.company_id)
+            lines_dispatching = Document._dispatch_cfdi_base_lines(refund_base_lines)
+            base_lines += lines_dispatching['result_lines'] + lines_dispatching['orphan_negative_lines']
 
         # Manage the negative lines.
-        lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
+        if has_refunds:
+            lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
         if lines_dispatching['orphan_negative_lines']:
             cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
             return
@@ -1124,7 +1130,7 @@ class AccountMove(models.Model):
                 'retenciones_list',
                 'traslados_list',
                 'local_traslados_list',
-                'local_retenciones_reduced_list',
+                'local_retenciones_list',
             ):
                 for tax_values in inv_cfdi_values[key]:
                     for tax_key in ('base', 'importe'):
@@ -1142,10 +1148,14 @@ class AccountMove(models.Model):
                         company.tax_calculation_rounding_method == 'round_per_line'
                         and all(tax_values[key] is not None for key in ('base', 'importe', 'tasa_o_cuota'))
                     ):
-                        total = tax_values['base'] + tax_values['importe']
-                        percent = tax_values['tasa_o_cuota']
-                        tax_values['importe'] = invoice.currency_id.round(total * percent / (1 + percent))
-                        tax_values['base'] = invoice.currency_id.round(total - tax_values['importe'])
+                        post_amounts_map = self.env['l10n_mx_edi.document']._get_post_fix_tax_amounts_map(
+                            base_amount=tax_values['base'],
+                            tax_amount=tax_values['importe'],
+                            tax_rate=tax_values['tasa_o_cuota'],
+                            precision_digits=invoice.currency_id.decimal_places,
+                        )
+                        tax_values['importe'] = post_amounts_map['new_tax_amount']
+                        tax_values['base'] = post_amounts_map['new_base_amount']
 
             # 'equivalencia' (rate) is a conditional attribute used to express the exchange rate according to the currency
             # registered in the document related. It is required when the currency of the related document is different
@@ -1242,7 +1252,7 @@ class AccountMove(models.Model):
 
         withholding_values_map = defaultdict(lambda: {'importe': 0.0})
         transferred_values_map = defaultdict(lambda: {'base': 0.0, 'importe': 0.0})
-        local_retenciones_reduced_values_map = defaultdict(lambda: {'base': 0.0, 'importe': 0.0})
+        local_retenciones_values_map = defaultdict(lambda: {'base': 0.0, 'importe': 0.0})
         local_traslados_values_map = defaultdict(lambda: {'base': 0.0, 'importe': 0.0})
         pay_rate = cfdi_values['tipo_cambio'] or 1.0
         for cfdi_inv_values in invoice_values_list:
@@ -1250,7 +1260,7 @@ class AccountMove(models.Model):
             to_mxn_rate = pay_rate / inv_rate
             for result_dict, key in (
                 (withholding_values_map, 'retenciones_list'),
-                (local_retenciones_reduced_values_map, 'local_retenciones_reduced_list'),
+                (local_retenciones_values_map, 'local_retenciones_list'),
             ):
                 for tax_values in cfdi_inv_values[key]:
                     tax_key = frozendict({
@@ -1302,7 +1312,7 @@ class AccountMove(models.Model):
         for dictionary in (
             withholding_values_map,
             transferred_values_map,
-            local_retenciones_reduced_values_map,
+            local_retenciones_values_map,
             local_traslados_values_map,
         ):
             for values in dictionary.values():
@@ -1330,7 +1340,7 @@ class AccountMove(models.Model):
         for target_key, source_dict in (
             ('retenciones_list', withholding_values_map),
             ('traslados_list', transferred_values_map),
-            ('local_retenciones_reduced_list', local_retenciones_reduced_values_map),
+            ('local_retenciones_list', local_retenciones_values_map),
             ('local_traslados_list', local_traslados_values_map),
         ):
             cfdi_values[target_key] = [

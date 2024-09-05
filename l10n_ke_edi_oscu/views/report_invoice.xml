@@ -131,10 +131,6 @@
             </div>
         </xpath>
 
-        <!-- Disable the recap of tax totals in company currency at the bottom right of the invoice,
-             since this info is already present in our custom tax totals grid. -->
-        <xpath expr="//div[@id='right-elements']/t[@t-call='account.document_tax_totals_company_currency_template']" position="replace"/>
-
         <xpath expr="//th[@name='th_subtotal']" position="replace">
             <th name="th_subtotal" class="text-end">
                 <span>Taxable Amount</span>

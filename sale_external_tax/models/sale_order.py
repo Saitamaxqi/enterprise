@@ -1,6 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import models, _
-from odoo.tools import formatLang
+from odoo import models
 
 
 class SaleOrder(models.Model):
@@ -16,37 +15,30 @@ class SaleOrder(models.Model):
         single tax group using the amount_* fields on the order which
         come from the external tax integration.
         """
-        res = super()._compute_tax_totals()
-        group_name = _('Untaxed Amount')
+        super()._compute_tax_totals()
         for order in self.filtered('is_tax_computed_externally'):
-            currency = order.currency_id
             tax_totals = order.tax_totals
-
-            tax_totals['groups_by_subtotal'] = {
-                group_name: [{
-                    'tax_group_name': _('Taxes'),
-                    'tax_group_amount': order.amount_tax,
-                    'tax_group_base_amount': order.amount_untaxed,
-                    'formatted_tax_group_amount': formatLang(self.env, order.amount_tax, currency_obj=currency),
-                    'formatted_tax_group_base_amount': formatLang(self.env, order.amount_untaxed, currency_obj=currency),
-                    'tax_group_id': 1,
-                    'group_key': 1,
-                    'display_formatted_tax_group_base_amount': True,
-                }]
-            }
-            tax_totals['subtotals'] = [{
-                'name': group_name,
-                'amount': order.amount_untaxed,
-                'formatted_amount': formatLang(self.env, order.amount_untaxed, currency_obj=currency),
-            }]
-            tax_totals['amount_total'] = order.amount_total
-            tax_totals['amount_untaxed'] = order.amount_untaxed
-            tax_totals['formatted_amount_total'] = formatLang(self.env, order.amount_total, currency_obj=currency)
-            tax_totals['subtotals_order'] = [group_name]
-
+            subtotal = tax_totals['subtotals'][0]
+            tax_totals['same_tax_base'] = True
+            tax_totals['total_amount_currency'] = order.amount_total
+            tax_totals['base_amount_currency'] = order.amount_untaxed
+            tax_totals['tax_amount_currency'] = order.amount_tax
+            tax_totals['subtotals'] = [
+                {
+                    **subtotal,
+                    'base_amount_currency': tax_totals['base_amount_currency'],
+                    'tax_amount_currency': tax_totals['tax_amount_currency'],
+                    'tax_groups': [],
+                }
+            ]
+            if subtotal['tax_groups']:
+                tax_group = subtotal['tax_groups'][0]
+                tax_totals['subtotals'][0]['tax_groups'].append({
+                    **tax_group,
+                    'base_amount_currency': tax_totals['base_amount_currency'],
+                    'tax_amount_currency': tax_totals['tax_amount_currency'],
+                })
             order.tax_totals = tax_totals
-
-        return res
 
     def _compute_amounts(self):
         """ This overrides the standard values for orders using external tax calculation. The round_globally option
