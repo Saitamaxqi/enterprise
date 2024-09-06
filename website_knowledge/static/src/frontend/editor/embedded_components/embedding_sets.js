@@ -4,6 +4,7 @@ import { readonlyTableOfContentEmbedding } from "@html_editor/others/embedded_co
 import { videoEmbedding } from "@html_editor/others/embedded_components/core/video/video";
 import { readonlyArticleIndexEmbedding } from "@knowledge/editor/embedded_components/core/article_index/readonly_article_index";
 import { clipboardEmbedding } from "@knowledge/editor/embedded_components/core/clipboard/embedded_clipboard";
+import { viewPlaceholderEmbedding } from "@website_knowledge/frontend/editor/embedded_components/view/view_placeholder";
 
 export const KNOWLEDGE_PUBLIC_EMBEDDINGS = [
     clipboardEmbedding,
@@ -12,4 +13,5 @@ export const KNOWLEDGE_PUBLIC_EMBEDDINGS = [
     readonlyFileEmbedding,
     readonlyTableOfContentEmbedding,
     videoEmbedding,
+    viewPlaceholderEmbedding,
 ];

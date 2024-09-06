@@ -15,8 +15,8 @@ function makeFakeKnowledgeCommandsService() {
                 getBreadcrumbsIdentifier() { return []; },
                 isRecordCompatibleWithMacro() {},
                 unregisterCommandsRecordInfo() {},
-                setPendingBehaviorBlueprint() {},
-                popPendingBehaviorBlueprint() {},
+                setPendingEmbeddedBlueprint() {},
+                popPendingEmbeddedBlueprint() {},
             };
         }
     };

@@ -30,8 +30,8 @@ export class PromptEmbeddedViewNameDialog extends Component {
             }, 0);
         });
     }
-    save () {
-        this.props.save(this.input.el.value);
+    async save () {
+        await this.props.save(this.input.el.value);
         this.props.close();
     }
     /**

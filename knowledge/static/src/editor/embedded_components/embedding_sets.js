@@ -3,15 +3,19 @@ import { macrosFileEmbedding } from "@knowledge/editor/embedded_components/backe
 import { readonlyMacrosFileEmbedding } from "@knowledge/editor/embedded_components/backend/file/readonly_macros_file";
 import { articleIndexEmbedding } from "@knowledge/editor/embedded_components/backend/article_index/article_index";
 import { readonlyArticleIndexEmbedding } from "@knowledge/editor/embedded_components/core/article_index/readonly_article_index";
+import { readonlyViewEmbedding } from "@knowledge/editor/embedded_components/backend/view/readonly_embedded_view";
+import { viewEmbedding } from "@knowledge/editor/embedded_components/backend/view/embedded_view";
 
 export const KNOWLEDGE_EMBEDDINGS = [
     articleIndexEmbedding,
     macrosClipboardEmbedding,
     macrosFileEmbedding,
+    viewEmbedding,
 ];
 
 export const KNOWLEDGE_READONLY_EMBEDDINGS = [
     macrosClipboardEmbedding,
     readonlyArticleIndexEmbedding,
     readonlyMacrosFileEmbedding,
+    readonlyViewEmbedding,
 ];

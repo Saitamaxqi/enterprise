@@ -4,8 +4,8 @@ import { SearchModel } from "@web/search/search_model";
 
 export const KnowledgeSearchModelMixin = (T) => class extends T {
     setup(services, args) {
-        this.onSaveKnowledgeFavorite = args.onSaveKnowledgeFavorite;
-        this.onDeleteKnowledgeFavorite = args.onDeleteKnowledgeFavorite;
+        this.saveEmbeddedViewFavoriteFilter = args.saveEmbeddedViewFavoriteFilter;
+        this.deleteEmbeddedViewFavoriteFilter = args.deleteEmbeddedViewFavoriteFilter;
         super.setup(services, args);
     }
 
@@ -19,8 +19,8 @@ export const KnowledgeSearchModelMixin = (T) => class extends T {
             // If the config contains an imported state that is not directly
             // coming from a view that was embedded in Knowledge, the favorite
             // filters have to be loaded, since they come from the
-            // `data-behavior-props` attribute of the anchor for the
-            // EmbeddedViewBehavior. Otherwise, those are already specified in
+            // `data-embedded-props` attribute of the anchor for the
+            // EmbeddedViewComponent. Otherwise, those are already specified in
             // the state and they should not be duplicated.
             let defaultFavoriteId = null;
             const activateFavorite = "activateFavorite" in config ? config.activateFavorite : true;
@@ -39,7 +39,7 @@ export const KnowledgeSearchModelMixin = (T) => class extends T {
      * @override
      */
     async _createIrFilters(irFilter) {
-        this.onSaveKnowledgeFavorite(irFilter);
+        this.saveEmbeddedViewFavoriteFilter(irFilter);
         return null;
     }
 
@@ -48,7 +48,7 @@ export const KnowledgeSearchModelMixin = (T) => class extends T {
      * @override
      */
     async _deleteIrFilters(searchItem) {
-        this.onDeleteKnowledgeFavorite(searchItem);
+        this.deleteEmbeddedViewFavoriteFilter(searchItem);
     }
 
     /**

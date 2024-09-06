@@ -1197,17 +1197,16 @@ class Article(models.Model):
                 continue
             needs_embed_view_update = False
             fragment = html.fragment_fromstring(article.body, create_parent=True)
-            for element in fragment.findall(".//*[@data-behavior-props]"):
-                if "o_knowledge_behavior_type_embedded_view" in element.get("class"):
-                    behavior_props = json.loads(parse.unquote(element.get("data-behavior-props")))
-                    context = behavior_props.get("context", {})
-                    if context.get("default_is_article_item") and context.get("active_id") == original_article.id:
-                        context.update({
-                            "active_id": article.id,
-                            "default_parent_id": article.id
-                        })
-                        element.set("data-behavior-props", parse.quote(json.dumps(behavior_props), safe="()*!'"))
-                        needs_embed_view_update = True
+            for element in fragment.findall(".//*[@data-embedded='view']"):
+                embedded_props = json.loads(parse.unquote(element.get("data-embedded-props")))
+                context = embedded_props.get("context", {})
+                if context.get("default_is_article_item") and context.get("active_id") == original_article.id:
+                    context.update({
+                        "active_id": article.id,
+                        "default_parent_id": article.id
+                    })
+                    element.set("data-embedded-props", parse.quote(json.dumps(embedded_props), safe="()*!'"))
+                    needs_embed_view_update = True
 
             if needs_embed_view_update:
                 article.write({

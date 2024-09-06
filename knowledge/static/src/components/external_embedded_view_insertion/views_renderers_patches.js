@@ -34,19 +34,10 @@ patch(ListRenderer.prototype, {
      * @override
      * @returns {string}
      */
-    createKeyOptionalFields() {
-        const embeddedViewId = this.env.searchModel
-            ? this.env.searchModel.context.knowledgeEmbeddedViewId
-            : null;
-        if (this.env.searchModel && this.env.searchModel.context.keyOptionalFields) {
-            const searchModelKeyOptionalFields = this.env.searchModel.context.keyOptionalFields;
-            return searchModelKeyOptionalFields.includes(embeddedViewId)
-                ? searchModelKeyOptionalFields
-                : searchModelKeyOptionalFields + (embeddedViewId ? `,${embeddedViewId}` : "");
+    createViewKey() {
+        if (this.env.searchModel?.context.knowledgeEmbeddedViewId) {
+            return `${super.createViewKey()},${this.env.searchModel.context.knowledgeEmbeddedViewId}`;
         }
-        return (
-            super.createKeyOptionalFields(...arguments) +
-            (embeddedViewId ? "," + embeddedViewId : "")
-        );
+        return super.createViewKey();
     },
 });

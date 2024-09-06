@@ -1,4 +1,3 @@
-import { encodeDataBehaviorProps } from "@knowledge/js/knowledge_utils";
 import { Component } from "@odoo/owl";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
@@ -37,38 +36,20 @@ class InsertEmbeddedViewMenu extends Component {
     }
 
     /**
-     * @param {string} isView TODO remove with upgrade, future improvements
-     *                 will use 'display_name' everywhere, currently we have to
-     *                 fetch the right name prop depending on embed type.
-     *                 view_link_behavior uses "name" and embedded_view_behavior
-     *                 uses "display_name".
      * @returns {Object|null} Template props necessary to render an embedded
      *                        view in Knowledge, or null if it is not possible
      *                        to store this view as an embedded view.
      */
-    extractCurrentViewEmbedTemplateProps(isView = true) {
-        const config = this.env.config;
+    extractCurrentViewEmbedTemplateProps() {
+        const viewProps = {
+            context: this.getViewContext(),
+            displayName: this.env.config.getDisplayName(),
+            viewType: this.env.config.viewType,
+        };
         const xmlId = this.actionService.currentController?.action?.xml_id;
-        const context = this.getViewContext();
-        const display_name = config.getDisplayName();
-        const nameProp = isView
-            ? {
-                  // used by embedded view behavior
-                  display_name: display_name,
-              }
-            : {
-                  // used by view link behavior TODO: remove with upgrade
-                  name: display_name,
-              };
         if (xmlId) {
-            return {
-                behaviorProps: encodeDataBehaviorProps({
-                    action_xml_id: xmlId,
-                    context,
-                    view_type: config.viewType,
-                    ...nameProp,
-                }),
-            };
+            viewProps.actionXmlId = xmlId;
+            return { embeddedProps: { viewProps } };
         }
         /**
          * Recover the original action (before the service pre-processing). The
@@ -81,21 +62,9 @@ class InsertEmbeddedViewMenu extends Component {
         const originalAction = this.actionService.currentController?.action?._originalAction;
         if (originalAction) {
             const action = JSON.parse(originalAction);
-            // Don't keep the non-markup help (to not store it in
-            // `data-behavior-props`)
+            // remove action help as it won't be used
             delete action.help;
-            // Recover the markup version of the act_window help field.
-            const help = this.actionService.currentController.action.help;
-            action.display_name = display_name;
-            return {
-                behaviorProps: encodeDataBehaviorProps({
-                    act_window: action,
-                    context,
-                    view_type: config.viewType,
-                    ...nameProp,
-                }),
-                action_help: help,
-            };
+            return { embeddedProps: { viewProps } };
         }
         return null;
     }
@@ -127,27 +96,27 @@ class InsertEmbeddedViewMenu extends Component {
     }
 
     /**
-     * Prepare a Behavior rendered in backend to be inserted in an article by
-     * the KnowledgeCommandsService.
+     * Prepare a Embedded Component rendered in backend to be inserted in an
+     * article by the KnowledgeCommandsService.
      * Allow to choose an article in a modal, redirect to that article and
-     * append the rendered template "blueprint" needed for the desired Behavior
-     *
-     * @param {string} template template name of the Behavior's blueprint to
+     * append the rendered template "blueprint" needed for the desired Embedded
+     * Component
+     * @param {string} template template name of the embedded blueprint to
      *                 render.
      */
     insertCurrentViewInKnowledge(template) {
         const config = this.env.config;
-        const templateProps = this.extractCurrentViewEmbedTemplateProps(
-            template === "knowledge.EmbeddedViewBehaviorBlueprint"
-        );
+        const templateProps = this.extractCurrentViewEmbedTemplateProps();
         if (config.actionType !== "ir.actions.act_window" || !templateProps) {
             throw new Error(
                 'This view can not be embedded in an article: the action is not an "ir.actions.act_window" or is not serializable.'
             );
         }
         this.openArticleSelector(async (id) => {
-            this.knowledgeCommandsService.setPendingBehaviorBlueprint({
-                behaviorBlueprint: renderToElement(template, templateProps),
+            this.knowledgeCommandsService.setPendingEmbeddedBlueprint({
+                embeddedBlueprint: renderToElement(template, {
+                    embeddedProps: JSON.stringify(templateProps.embeddedProps),
+                }),
                 model: "knowledge.article",
                 field: "body",
                 resId: id,
@@ -161,10 +130,10 @@ class InsertEmbeddedViewMenu extends Component {
     }
 
     onInsertEmbeddedViewInArticle() {
-        this.insertCurrentViewInKnowledge("knowledge.EmbeddedViewBehaviorBlueprint");
+        this.insertCurrentViewInKnowledge("knowledge.EmbeddedViewBlueprint");
     }
     onInsertViewLinkInArticle() {
-        this.insertCurrentViewInKnowledge("knowledge.EmbeddedViewLinkBehaviorBlueprint");
+        this.insertCurrentViewInKnowledge("knowledge.EmbeddedViewLinkBlueprint");
     }
 
     /**

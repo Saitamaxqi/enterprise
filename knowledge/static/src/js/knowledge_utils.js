@@ -223,7 +223,7 @@ export function getVideoUrl (platform, videoId, params) {
  * Set an intersection observer on the given element. This function will ensure
  * that the given callback function will be called at most once when the given
  * element becomes visible on screen. This function can be used to load
- * components lazily (see: 'EmbeddedViewBehavior').
+ * components lazily (see: 'EmbeddedViewComponent').
  * @param {HTMLElement} element
  * @param {Function} callback
  * @returns {IntersectionObserver}

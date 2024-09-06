@@ -3,9 +3,9 @@
 import { _t } from "@web/core/l10n/translation";
 import { CalendarCommonPopover } from "@web/views/calendar/calendar_common/calendar_common_popover";
 import { CalendarCommonRenderer } from "@web/views/calendar/calendar_common/calendar_common_renderer";
-import { CalendarController } from '@web/views/calendar/calendar_controller';
-import { CalendarRenderer } from '@web/views/calendar/calendar_renderer';
-import { calendarView } from '@web/views/calendar/calendar_view';
+import { CalendarController } from "@web/views/calendar/calendar_controller";
+import { CalendarRenderer } from "@web/views/calendar/calendar_renderer";
+import { calendarView } from "@web/views/calendar/calendar_view";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { ItemCalendarModel } from "@knowledge/views/item_calendar/item_calendar_model";
 import { registry } from "@web/core/registry";
@@ -17,20 +17,31 @@ export class KnowledgeArticleItemsCalendarController extends CalendarController 
     setup() {
         super.setup();
         // Item creation is not allowed if the user can not edit the parent article.
-        if (!this.env.searchModel.context.knowledgeArticleUserCanWrite) {
+        if (!("isEmbeddedReadonly" in this.env) || this.env.isEmbeddedReadonly) {
             this.model.meta.canCreate = false;
         }
         onMounted(async () => {
             // Show error message if the start date property is invalid (if it
             // has been deleted or its type changed)
             if (!this.model.meta.invalid && Object.keys(this.model.data.records).length === 0) {
-                const propertiesDefinition = await this.orm.read(this.props.resModel, [this.props.context.active_id], ["article_properties_definition"]);
-                this.state.missingConfiguration = !propertiesDefinition[0].article_properties_definition.some(property => property.name === this.props.itemCalendarProps.dateStartPropertyId);
+                const propertiesDefinition = await this.orm.read(
+                    this.props.resModel,
+                    [this.props.context.active_id],
+                    ["article_properties_definition"]
+                );
+                this.state.missingConfiguration =
+                    !propertiesDefinition[0].article_properties_definition.some(
+                        (property) =>
+                            property.name === this.props.itemCalendarProps.dateStartPropertyId
+                    );
             }
         });
         onWillUpdateProps((nextProps) => {
             // Update the model if the itemCalendarProps were updated
-            if (JSON.stringify(this.props.itemCalendarProps) !== JSON.stringify(nextProps.itemCalendarProps)) {
+            if (
+                JSON.stringify(this.props.itemCalendarProps) !==
+                JSON.stringify(nextProps.itemCalendarProps)
+            ) {
                 this.updateModel(nextProps.itemCalendarProps);
                 this.state.isWeekendVisible =
                     nextProps.itemCalendarProps.showWeekEnds ?? this.state.isWeekendVisible;
@@ -60,7 +71,12 @@ export class KnowledgeArticleItemsCalendarController extends CalendarController 
                 const rawRecord = this.model.buildRawRecord(record);
                 Object.assign(createValues, rawRecord);
             }
-            const articleId = await this.orm.call('knowledge.article', 'article_create', [], createValues);
+            const articleId = await this.orm.call(
+                "knowledge.article",
+                "article_create",
+                [],
+                createValues
+            );
             this.selectRecord(articleId);
         }
     }
@@ -73,11 +89,7 @@ export class KnowledgeArticleItemsCalendarController extends CalendarController 
             title: _t("Confirmation"),
             body: _t("Are you sure you want to send this article to the trash?"),
             confirm: async () => {
-                await this.orm.call(
-                    'knowledge.article',
-                    'action_send_to_trash',
-                    [record.id],
-                );
+                await this.orm.call("knowledge.article", "action_send_to_trash", [record.id]);
                 this.model.load();
             },
             confirmLabel: _t("Send to trash"),
@@ -125,7 +137,7 @@ export class KnowledgeArticleItemsCalendarController extends CalendarController 
         } else {
             this.action.doAction(
                 this.orm.call("knowledge.article", "action_home_page", [articleId]),
-                {},
+                {}
             );
         }
     }
@@ -214,7 +226,7 @@ class KnowledgeArticleItemsCalendarRenderer extends CalendarRenderer {
     };
 }
 
-registry.category("views").add('knowledge_article_view_calendar_embedded', {
+registry.category("views").add("knowledge_article_view_calendar_embedded", {
     ...calendarView,
     Controller: KnowledgeArticleItemsCalendarController,
     Model: ItemCalendarModel,
