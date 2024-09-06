@@ -15,8 +15,6 @@ patch(DiscussApp, {
             id: "whatsapp",
             name: _t("WhatsApp"),
             hideWhenEmpty: true,
-            canView: false,
-            canAdd: true,
             addTitle: _t("Search WhatsApp Channel"),
             serverStateKey: "is_discuss_sidebar_category_whatsapp_open",
             sequence: 20,

@@ -16,7 +16,7 @@ import { defineWhatsAppModels } from "@whatsapp/../tests/whatsapp_test_helpers";
 describe.current.tags("desktop");
 defineWhatsAppModels();
 
-test("Join whatsapp channels from add channel button", async () => {
+test("Can join whatsapp channels from search conversation button", async () => {
     const pyEnv = await startServer();
     pyEnv["discuss.channel"].create([
         {
@@ -37,10 +37,10 @@ test("Join whatsapp channels from add channel button", async () => {
     ]);
     await start();
     await openDiscuss();
-    await click(".o-mail-DiscussSidebarCategory-whatsapp .o-mail-DiscussSidebarCategory-add");
-    await insertText(".o-discuss-ChannelSelector input", "WhatsApp 2");
-    await click(".o-mail-ChannelSelector-suggestion", { text: "WhatsApp 2" });
-    await contains(".o-mail-DiscussSidebarChannel", { text: "WhatsApp 2" });
+    await click("input[placeholder='Find or start a conversation']");
+    await insertText("input[placeholder='Search a conversation']", "WhatsApp 2");
+    await click("a", { text: "WhatsApp 2" });
+    await contains(".o-mail-DiscussSidebar-item", { text: "WhatsApp 2" });
 });
 
 test("Clicking on cross icon in whatsapp sidebar category item unpins the channel", async () => {
