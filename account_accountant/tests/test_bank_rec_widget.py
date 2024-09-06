@@ -2940,6 +2940,26 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         result = self.env['bank.rec.widget'].with_user(self.user).collect_global_info_data(99999999)
         self.assertEqual(result['balance_amount'], "", "If no value, the function should return an empty string")
 
+    def test_res_partner_bank_find_create_multi_account(self):
+        """ Make sure that we can save multiple bank accounts for a partner. """
+        partner = self.env['res.partner'].create({'name': "Zitycard"})
+
+        for acc_number in ("123456789", "123456780"):
+            st_line = self._create_st_line(100.0, account_number=acc_number)
+            inv_line = self._create_invoice_line(
+                'out_invoice',
+                partner_id=partner.id,
+                invoice_line_ids=[{'price_unit': 100.0, 'tax_ids': []}],
+            )
+            wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
+            wizard._action_add_new_amls(inv_line)
+            wizard._action_validate()
+
+        bank_accounts = self.env['res.partner.bank'].sudo().with_context(active_test=False).search([
+            ('partner_id', '=', partner.id),
+        ])
+        self.assertEqual(len(bank_accounts), 2, "Second bank account was not registered!")
+
     ####################################################
     # RECO MODEL MOVE CREATION
     ####################################################

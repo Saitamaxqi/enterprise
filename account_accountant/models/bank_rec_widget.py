@@ -1437,8 +1437,8 @@ class BankRecWidget(models.Model):
         st_line_ctx.partner_id = partner_to_set
 
         # Create missing partner bank if necessary.
-        if st_line.account_number and st_line.partner_id and not st_line.partner_bank_id:
-            st_line_ctx.partner_bank_id = st_line._find_or_create_bank_account()
+        if st_line.account_number and st_line.partner_id:
+            st_line_ctx.partner_bank_id = st_line._find_or_create_bank_account() or st_line.partner_bank_id
 
         # Refresh analytic lines.
         move.line_ids.analytic_line_ids.unlink()
