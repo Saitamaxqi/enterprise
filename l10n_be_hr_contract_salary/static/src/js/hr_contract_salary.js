@@ -1,4 +1,5 @@
 /** @odoo-module **/
+import { _t } from "@web/core/l10n/translation";
 
 import hrContractSalary from "@hr_contract_salary/js/hr_contract_salary";
 import { renderToElement } from "@web/core/utils/render";
@@ -79,7 +80,7 @@ hrContractSalary.include({
             anchorEl.dataset.bsBackdrop = "false";
             anchorEl.dataset.bsDismiss = "modal";
             anchorEl.setAttribute("name", "wishlist_simulation_button");
-            anchorEl.textContent = "Simulation";
+            anchorEl.textContent = _t("Simulation");
             const nextToSelectEl = this.el.querySelector(
                 'input[name="wishlist_car_total_depreciated_cost"]'
             ).parentElement;
@@ -150,13 +151,13 @@ hrContractSalary.include({
         const childrenEl = this.el.querySelector("input[name='insured_relative_children_manual']");
         const childrenStrongEl = document.createElement("strong");
         childrenStrongEl.classList.add("mt8");
-        childrenStrongEl.textContent = "# Children < 19";
+        childrenStrongEl.textContent = _t("# Children < 19");
         childrenEl?.parentNode.insertBefore(childrenStrongEl, childrenEl);
 
         const adultsEl = this.el.querySelector("input[name='insured_relative_adults_manual']");
         const adultStrongEl = document.createElement("strong");
         adultStrongEl.classList.add("mt8");
-        adultStrongEl.textContent = "# Children >= 19";
+        adultStrongEl.textContent = _t("# Children >= 19");
         adultsEl?.parentNode.insertBefore(adultStrongEl, adultsEl);
 
         const insuranceEl = this.el.querySelector(
@@ -164,7 +165,7 @@ hrContractSalary.include({
         );
         const insuranceNoteStrongEl = document.createElement("strong");
         insuranceNoteStrongEl.classList.add("mt8");
-        insuranceNoteStrongEl.textContent = "Additional Information";
+        insuranceNoteStrongEl.textContent = _t("Additional Information");
         insuranceEl?.parentNode.insertBefore(insuranceNoteStrongEl, insuranceEl);
         this.onchangeAmbulatory();
         this.el
