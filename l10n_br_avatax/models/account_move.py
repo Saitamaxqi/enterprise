@@ -101,7 +101,7 @@ class AccountMove(models.Model):
     def _l10n_br_get_invoice_refs(self):
         """account.external.tax.mixin override."""
         if origin := self._l10n_br_get_origin_invoice():
-            return self._l10n_br_invoice_refs_for_code("documentCode", f"account.move_{origin.id}")
+            return self._l10n_br_invoice_refs_for_code("documentCode", f"{origin._name}_{origin.id}")
 
         return {}
 

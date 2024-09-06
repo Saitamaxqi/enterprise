@@ -243,7 +243,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
                 record.l10n_br_avatax_warnings = False
                 continue
 
-            lines = self._l10n_br_get_calculate_lines_payload()
+            lines = record._l10n_br_get_calculate_lines_payload()
             record.l10n_br_avatax_warnings = {
                 **record._l10n_br_avatax_check_company(),
                 **record._l10n_br_avatax_check_currency(),
