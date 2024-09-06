@@ -148,6 +148,22 @@ export class PlanningGanttModel extends GanttModel {
         return result;
     }
 
+    async splitPill(start, stop, record) {
+        const values = {
+            start_datetime: serializeDateTime(start),
+            end_datetime: serializeDateTime(stop)
+        };
+        const context = { planning_split_tool: true };
+        const result = await this.orm.call(
+            this.metaData.resModel,
+            'split_pill',
+            [[record.id]],
+            { context, values: values },
+        );
+        await this.fetchData();
+        return result;
+    }
+
     //--------------------------------------------------------------------------
     // Protected
     //--------------------------------------------------------------------------

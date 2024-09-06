@@ -63,6 +63,14 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
     content: "Select filter resource = Porthos",
     run: 'click',
 }, {
+    trigger: ".o_searchview_input",
+    content: "Search planning shifts assigned to Rochefort",
+    run: "fill Rochefort",
+}, {
+    trigger: ".o_menu_item.dropdown-item > a:not(.o_expand)",
+    content: "Select filter resource = Rochefort",
+    run: 'click',
+}, {
     trigger: ".o_gantt_pill_split_tool[data-split-tool-pill-id='__pill__1_0']",
     content: "Split the slot assigned to Aramis after one day",
     run: 'click',
@@ -102,5 +110,15 @@ registry.category("web_tour.tours").add('planning_split_shift_week', {
 }, {
     trigger: ".o_notification_buttons button i[title='Undo']",
     content: "An Undo notification should appear",
-},
+}, {
+    trigger: ".o_gantt_pill_split_tool[data-split-tool-pill-id='__pill__8_0']",
+    content: "Split the first slot assigned to Rochefort on weekend",
+    run: 'click',
+}, {
+    trigger: ".o_gantt_pill_wrapper[data-pill-id='__pill__9']",
+    content: "Wait for the new shift to appear",
+}, {
+    trigger: ".o_notification_buttons button i[title='Undo']",
+    content: "An Undo notification should appear",
+}
 ]});

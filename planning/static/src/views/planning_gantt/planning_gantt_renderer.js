@@ -451,35 +451,70 @@ export class PlanningGanttRenderer extends GanttRenderer {
     }
 
     /**
+     * Given a {start, end} datetime for a resource (row), return whether the resource is on day off.
+     * This is determined by checking if the resource has any unavailabilities that intersect with the given column
+     * 
+     * @param {number} column - Column index
+     * @param {Row} row - Row Object
+     * @returns {boolean} - Whether the resource is on day off
+     */
+    _resourceOnDayoff(column, row) {
+        const { unavailabilities } = row;
+        const { start, stop } = column;
+
+        return unavailabilities.some(unavailability => {
+            const unavailabilityStart = unavailability.start;
+            const unavailabilityEnd = unavailability.stop ? unavailability.stop : null;
+            return unavailabilityStart <= start && 
+                (!unavailabilityEnd || unavailabilityEnd >= stop);
+        });
+    }
+
+    /**
+     * Split a shift (pill) into two shifts.
+     * For shifts with flexible hours or open slots, the split is done without taking into account availabbilities.
+     * For shifts with regular working hours, the split is done taking into account the resource's availabilities.
+     * As an exception, if the shift spans on weekends (where the resource had no availabilities unavailable)
+     * for a regular working schedule, we split the shift but set a 8-17 schedule for the shift in weekends. 
+     * 
      * @param {MouseEvent} ev
      * @param {Pill} pill
      * @param {number} splitIndex - Index of the split tool used on the pill
      */
     async onPillSplitToolClicked(ev, pill, splitIndex) {
         const pillStart = pill.grid.column[0];
-
-        // 1. Create a copy of the current pill after the split tool
+        const resourceId = pill.record.resource_id[0] || false;
         const startColumnId = pillStart + 1 + splitIndex;
-        const { start } = this.getColumnAvailabilitiesLimit(pill, startColumnId, {
-            fixed_stop: pill.record.end_datetime,
-        });
-        const values = { start_datetime: serializeDateTime(start) };
-        const context = { planning_split_tool: true };
-        const [ copiedShiftId ] = await this.model.orm.call(
-            this.model.metaData.resModel,
-            'copy',
-            [[pill.record.id]],
-            { context, default: values },
-        );
+        const splitRightPill = super.getColumnStartStop(startColumnId, startColumnId, false);
+        const splitLeftPill = super.getColumnStartStop(startColumnId - 1, startColumnId - 1, false);
+        let copiedShiftId;
+        if (!resourceId || this.isFlexibleHours(resourceId)) {
+            const start = splitRightPill.start;
+            const stop = splitLeftPill.stop;
+            copiedShiftId = await this.model.splitPill(start, stop, pill.record);
+        } else {
+            let start;
+            let stop;
+            const currentRow = this.getRowFromPill(pill);
+            if (!this._resourceOnDayoff(splitRightPill, currentRow)) {
+                ({ start } = this.getColumnAvailabilitiesLimit(pill, startColumnId, {
+                    fixed_stop: pill.record.end_datetime,
+                }));
+            } else {
+                start = splitRightPill.start.set({ hour: 8, minute: 0, second: 0, millisecond: 0 });
+            }
 
-        // 2. Reduce the size of the current pill down to the split tool
-        const { stop } = this.getColumnAvailabilitiesLimit(pill, startColumnId - 1, {
-            fixed_start: pill.record.start_datetime,
-        });
-        const schedule = { end_datetime: serializeDateTime(stop) };
-        this.model.reschedule(pill.record.id, schedule, this.openPlanDialogCallback);
+            if (!this._resourceOnDayoff(splitLeftPill, currentRow)) {
+                ({ stop } = this.getColumnAvailabilitiesLimit(pill, startColumnId - 1, {
+                    fixed_start: pill.record.start_datetime,
+                }));
+            } else {
+                stop = splitLeftPill.stop.set({ hour: 17, minute: 0, second: 0, millisecond: 0 });
+            }
+            copiedShiftId = await this.model.splitPill(start, stop, pill.record);
+        }
 
-        // 3. Close the last split notification if any and show a new split notification with an Undo button
+        // Close the last split notification if any and show a new split notification with an Undo button
         this.notificationSplit?.();
         this.notificationSplit = this.notificationService.add(
             markup(

@@ -150,6 +150,7 @@ class TestUi(TestUiCommon):
             employee_aramis,
             employee_athos,
             employee_porthos,
+            employee_rochefort
         ) = self.env['hr.employee'].create([
             {
                 'name': 'Aramis',
@@ -163,6 +164,10 @@ class TestUi(TestUiCommon):
                 'name': 'Porthos',
                 'resource_calendar_id': work_schedule_calendar.id,
             },
+            {
+                'name': 'Rochefort',
+                'resource_calendar_id': work_schedule_calendar.id,
+            },
         ])
 
         # 3. Creating shifts for those employees (in UTC)
@@ -174,7 +179,10 @@ class TestUi(TestUiCommon):
         end_date_normal = datetime.combine(end_date, attendance_schedule['end_pm'])
         end_date_early = datetime.combine(end_date, attendance_schedule['start_am']) - relativedelta(hours=2)
 
-        full_slot_aramis, full_slot_athos, _ = PlanningSlot.with_user(hugo).create([
+        weekend_shift_start_date = start_date_normal + relativedelta(days=2)
+        weekend_shift_end_date = end_date_normal + relativedelta(days=1)
+
+        full_slot_aramis, full_slot_athos, *_ = PlanningSlot.with_user(hugo).create([
             {
                 'start_datetime': start_date_normal,
                 'end_datetime': end_date_normal,
@@ -198,6 +206,12 @@ class TestUi(TestUiCommon):
                 'repeat_type': 'x_times',
                 'repeat_number': 3,
             },
+            {
+                'start_datetime': weekend_shift_start_date,
+                'end_datetime': weekend_shift_end_date,
+                'state': 'published',
+                'resource_id': employee_rochefort.resource_id.id,
+            }
         ])
         # Initially 1 slot assigned to Aramis, 1 to Athos and 3 to Porthos
         slot_count_per_resource = dict(PlanningSlot._read_group(
@@ -208,6 +222,7 @@ class TestUi(TestUiCommon):
             employee_aramis.resource_id: 1,
             employee_athos.resource_id: 1,
             employee_porthos.resource_id: 3,
+            employee_rochefort.resource_id: 1,
         })
 
         # 4. Launching tour (Browser in UTC by default)
@@ -223,14 +238,15 @@ class TestUi(TestUiCommon):
         slots_per_resource_id = defaultdict(list)
         for slot in slot_data:
             slots_per_resource_id[slot['resource_id']].append(slot)
-        slots_aramis, slots_athos, slots_porthos = (
+        slots_aramis, slots_athos, slots_porthos, slots_rochefort = (
             slots_per_resource_id[employee.resource_id.id]
             for employee in employees
         )
-        # After splitting: 2 slot assigned to Aramis, 3 to Athos and 4 to Porthos
+        # After splitting: 2 slot assigned to Aramis, 3 to Athos, 4 to Porthos and 2 to Rochefort
         self.assertEqual(len(slots_aramis), 2)
         self.assertEqual(len(slots_athos), 3)
         self.assertEqual(len(slots_porthos), 4, "Splitting a recurrent shift should only split one occurrence")
+        self.assertEqual(len(slots_rochefort), 2)
         self.assertEqual([slots_aramis[0]['start_datetime'], slots_aramis[0]['end_datetime']], [start_date_normal, start_date_normal + relativedelta(hours=9)],
                          "When splitting a shift planned during resource's work schedule, resulting shifts should not start or end outside of this schedule.")
         self.assertEqual([slots_aramis[1]['start_datetime'], slots_aramis[1]['end_datetime']], [start_date_normal + relativedelta(days=1), end_date_normal],
@@ -241,6 +257,8 @@ class TestUi(TestUiCommon):
                          "When splitting a shift ending before the start of resource's work schedule at the end of the penultimate day, last resulting shift should start one second before it ends.")
         self.assertEqual([slots_porthos[2]['start_datetime'], slots_porthos[2]['end_datetime']], [start_date_normal + relativedelta(weeks=1), end_date_normal + relativedelta(weeks=1)],
                          "Splitting a recurrent shift should only split one occurrence")
+        self.assertEqual([slots_rochefort[1]['start_datetime'], slots_rochefort[1]['end_datetime']], [weekend_shift_end_date - relativedelta(hours=9), weekend_shift_end_date],
+                         "When splitting a shift planned in a weekend, resulting shifts should have its start/end set to 8AM/5PM.")
 
         # 6. Undo the splits
         # One split was done on the slot of Aramis, we undo it and check that the dates of the resulting slot correspond to the ones we had before the split

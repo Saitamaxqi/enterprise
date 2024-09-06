@@ -902,6 +902,20 @@ class PlanningSlot(models.Model):
             result._compute_allocated_hours()
         return result
 
+    def split_pill(self, values):
+        """
+            Split the slot in two parts
+            1. Copy the pill and modify the start time (second pill)
+            2. Modify the original pill and modify the end time (first pill)
+
+            values expected:
+            :start_datetime: the start datetime of the second pill
+            :end_datetime: the end datetime of the first pill
+        """
+        result = self.copy({'start_datetime': values.get('start_datetime')})
+        self.write({'end_datetime': values.get('end_datetime')})
+        return result.id
+
     # ----------------------------------------------------
     # Actions
     # ----------------------------------------------------
