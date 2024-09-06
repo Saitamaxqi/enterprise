@@ -13,7 +13,7 @@ import "@website_sale/js/website_sale";
  * @param {object} combination
  */
 VariantMixin._onChangeCombinationSubscription = function (ev, $parent, combination) {
-    if (!this.isWebsite || !combination.is_subscription) {
+    if (!combination.is_subscription) {
         return;
     }
     const parent = $parent.get(0);

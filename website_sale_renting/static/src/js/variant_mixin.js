@@ -15,9 +15,7 @@ const oldGetOptionalCombinationInfoParam = VariantMixin._getOptionalCombinationI
  */
 VariantMixin._getOptionalCombinationInfoParam = function ($product) {
     const result = oldGetOptionalCombinationInfoParam.apply(this, arguments);
-    if (!this.isWebsite) {
-        return result;
-    }
+
     Object.assign(result, this._getSerializedRentingDates($product));
 
     return result;
@@ -34,7 +32,7 @@ const oldOnChangeCombination = VariantMixin._onChangeCombination;
  */
 VariantMixin._onChangeCombination = function (ev, $parent, combination) {
     const result = oldOnChangeCombination.apply(this, arguments);
-    if (!this.isWebsite || !combination.is_rental) {
+    if (!combination.is_rental) {
         return result;
     }
     const $unitListPrice = $parent.find(".o_rental_product_price del .oe_currency_value");

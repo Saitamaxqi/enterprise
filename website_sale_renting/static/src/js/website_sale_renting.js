@@ -157,7 +157,10 @@ WebsiteSale.include({
      */
     _onChangeCombination(ev, $parent, combination) {
         const result = this._super.apply(this, arguments);
-        this._verifyValidRentingPeriod($parent);
+        if (!!combination.is_rental) {
+            // only verify the renting dates if product can be rented
+            this._verifyValidRentingPeriod($parent);
+        }
         return result;
     },
 
