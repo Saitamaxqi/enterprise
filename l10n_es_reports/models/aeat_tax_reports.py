@@ -627,7 +627,8 @@ class SpanishMod303TaxReportCustomHandler(models.AbstractModel):
 
         if options['date']['date_from'] >= '2023-01-01':
             rslt += self._l10n_es_boe_format_number(options, casilla_lines_map.get('153', 0), length=17, decimal_places=2, in_currency=True)
-            rslt += self._l10n_es_boe_format_number(options, 500, length=5)  # Casilla 154 is constant
+            casilla_154 = 750 if options['date']['date_from'] >= '2024-10-01' else 500
+            rslt += self._l10n_es_boe_format_number(options, casilla_154, length=5)
             rslt += self._l10n_es_boe_format_number(options, casilla_lines_map.get('155', 0), length=17, decimal_places=2, in_currency=True)
 
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['04'], length=17, decimal_places=2, in_currency=True)
@@ -649,7 +650,8 @@ class SpanishMod303TaxReportCustomHandler(models.AbstractModel):
             rslt += self._l10n_es_boe_format_number(options, casilla_lines_map.get('158', 0), length=17, decimal_places=2, in_currency=True)
 
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['16'], length=17, decimal_places=2, in_currency=True)
-        rslt += self._l10n_es_boe_format_number(options, 50, length=5) # Casilla 17 is constant (any of 00000, 00050, 00062)
+        casilla_17 = 100 if options['date']['date_from'] >= '2024-10-01' else 50
+        rslt += self._l10n_es_boe_format_number(options, casilla_17, length=5)
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['18'], length=17, decimal_places=2, in_currency=True)
         rslt += self._l10n_es_boe_format_number(options, casilla_lines_map['19'], length=17, decimal_places=2, in_currency=True)
         rslt += self._l10n_es_boe_format_number(options, 140, length=5) # Casilla 20 is constant
@@ -667,9 +669,19 @@ class SpanishMod303TaxReportCustomHandler(models.AbstractModel):
         for casilla in range(40, 47):
             rslt += self._l10n_es_boe_format_number(options, casilla_lines_map[str(casilla)], length=17, decimal_places=2, signed=True, in_currency=True)
 
+        reserved_empty_chars = 600
+        if options['date']['date_from'] >= '2024-10-01':
+            rslt += self._boe_format_number(casilla_lines_map.get('165', 0), length=17, decimal_places=2, in_currency=True)
+            rslt += self._boe_format_number(200, length=5)
+            rslt += self._boe_format_number(casilla_lines_map.get('167', 0), length=17, decimal_places=2, in_currency=True)
+            rslt += self._boe_format_number(casilla_lines_map.get('168', 0), length=17, decimal_places=2, in_currency=True)
+            rslt += self._boe_format_number(26, length=5)
+            rslt += self._boe_format_number(casilla_lines_map.get('170', 0), length=17, decimal_places=2, in_currency=True)
+            reserved_empty_chars = 522
+
         # Footer of page 1
-        rslt += self._l10n_es_boe_format_string(' ' * 600) # Reserved for AEAT
-        rslt += self._l10n_es_boe_format_string(' ' * 13) # Reserved for AEAT
+        rslt += self._l10n_es_boe_format_string(' ' * reserved_empty_chars)  # Reserved for AEAT
+        rslt += self._l10n_es_boe_format_string(' ' * 13)  # Reserved for AEAT
         rslt += self._l10n_es_boe_format_string('</T30301000>')
 
         return rslt
@@ -679,6 +691,7 @@ class SpanishMod303TaxReportCustomHandler(models.AbstractModel):
 
         # Wizard with manually-entered data
         boe_wizard = self._retrieve_boe_manual_wizard(options, 303)
+        boe_wizard_fields = boe_wizard.fields_get()
 
         # Casillas
         to_treat = ['59', '60']
@@ -770,7 +783,15 @@ class SpanishMod303TaxReportCustomHandler(models.AbstractModel):
 
         # Reserved by AEAT
         reserved_empty_chars = 600
-        if options['date']['date_from'] < '2022-01-01':
+        if options['date']['date_to'] >= '2024-09-30':
+            rslt += self._l10n_es_boe_format_string('rectification_direct_debit' in boe_wizard_fields and boe_wizard.rectification_direct_debit and 'X' or ' ')
+            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map.get('108', 0), length=17, decimal_places=2, signed=True, in_currency=True)
+            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map.get('111', 0), length=17, decimal_places=2, in_currency=True)
+            rslt += self._l10n_es_boe_format_string(' ' * 120)
+            rslt += self._l10n_es_boe_format_string('rectification_motive_rectifications' in boe_wizard_fields and boe_wizard.rectification_motive_rectifications and 'X' or ' ')
+            rslt += self._l10n_es_boe_format_string('rectification_motive_discrepancy_adm_crit' in boe_wizard_fields and boe_wizard.rectification_motive_discrepancy_adm_crit and 'X' or ' ')
+            reserved_empty_chars = 443
+        elif options['date']['date_from'] < '2022-01-01':
             reserved_empty_chars = 445
 
         rslt += self._l10n_es_boe_format_string(' ' * reserved_empty_chars)
@@ -804,7 +825,7 @@ class SpanishMod303TaxReportCustomHandler(models.AbstractModel):
             rslt += self._l10n_es_boe_format_string('', length=137)
 
         # Marca SEPA
-        if iban and boe_wizard.declaration_type in ('D', 'X'):
+        if iban and (boe_wizard.declaration_type in ('D', 'X') or casilla_lines_map.get('111')):
             iban_country_code = iban[:2]
             if iban_country_code == 'ES':
                 marca = '1'

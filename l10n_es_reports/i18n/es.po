@@ -573,14 +573,12 @@ msgstr ""
 #. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_bank_statement_line__l10n_es_reports_mod347_available
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_move__l10n_es_reports_mod347_available
-#: model:ir.model.fields,field_description:l10n_es_reports.field_account_payment__l10n_es_reports_mod347_available
 msgid "Available for Mod347"
 msgstr "Disponible para Mod347"
 
 #. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_bank_statement_line__l10n_es_reports_mod349_available
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_move__l10n_es_reports_mod349_available
-#: model:ir.model.fields,field_description:l10n_es_reports.field_account_payment__l10n_es_reports_mod349_available
 msgid "Available for Mod349"
 msgstr "Disponible para Mod349"
 
@@ -749,7 +747,6 @@ msgstr "Contacto de la compañía"
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__complementary_declaration
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__complementary_declaration
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__complementary_declaration
-#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__complementary_declaration
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__complementary_declaration
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347and349_export_wizard__complementary_declaration
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod349_export_wizard__complementary_declaration
@@ -774,6 +771,11 @@ msgstr "Persona de contacto"
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod349_export_wizard__contact_person_phone
 msgid "Contact phone number"
 msgstr "Número de teléfono de contacto"
+
+#. module: l10n_es_reports
+#: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__complementary_declaration
+msgid "Corrective Self-Assessment"
+msgstr "Autoliquidación rectificativa"
 
 #. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_export_wizard__create_uid
@@ -852,7 +854,6 @@ msgstr "Relación de declarados"
 #. module: l10n_es_reports
 #: model:ir.model.fields,help:l10n_es_reports.field_account_bank_statement_line__l10n_es_reports_mod347_invoice_type
 #: model:ir.model.fields,help:l10n_es_reports.field_account_move__l10n_es_reports_mod347_invoice_type
-#: model:ir.model.fields,help:l10n_es_reports.field_account_payment__l10n_es_reports_mod347_invoice_type
 msgid "Defines the category into which this invoice falls for mod 347 report."
 msgstr ""
 "Define la categoría en la que se incluye esta factura para el informe mod 347"
@@ -860,7 +861,6 @@ msgstr ""
 #. module: l10n_es_reports
 #: model:ir.model.fields,help:l10n_es_reports.field_account_bank_statement_line__l10n_es_reports_mod349_invoice_type
 #: model:ir.model.fields,help:l10n_es_reports.field_account_move__l10n_es_reports_mod349_invoice_type
-#: model:ir.model.fields,help:l10n_es_reports.field_account_payment__l10n_es_reports_mod349_invoice_type
 msgid "Defines the category into which this invoice falls for mod 349 report"
 msgstr ""
 "Define la categoría en la que se incluye esta factura para el informe mod 349"
@@ -954,6 +954,11 @@ msgstr "G - Tributaria Cuenta corriente - Ingresos"
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod390_boe_wizard
 msgid "Generate BOE"
 msgstr "Generar BOE"
+
+#. module: l10n_es_reports
+#: model:ir.model,name:l10n_es_reports.model_account_generic_tax_report_handler
+msgid "Generic Tax Report Custom Handler"
+msgstr ""
 
 #. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod390_export_wizard__group_number
@@ -1413,9 +1418,10 @@ msgstr "Personal natural - Nombre"
 #. module: l10n_es_reports
 #. odoo-python
 #: code:addons/l10n_es_reports/models/aeat_tax_reports.py:0
-msgid "No TIN set for partner %s (id %d). Please define one."
+msgid "No TIN set for partner %(name)s (id %(id)d). Please define one."
 msgstr ""
-"No se ha definido un NIF para el partner %s (id %d). Por favor, defina uno."
+"No se ha definido un NIF para el partner %(name)s (id %(id)d). Por favor, "
+"defina uno."
 
 #. module: l10n_es_reports
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod347_export_wizard__previous_report_number
@@ -1495,21 +1501,22 @@ msgstr "Contacto"
 #. odoo-python
 #: code:addons/l10n_es_reports/models/aeat_tax_reports.py:0
 msgid ""
-"Partner %s (id %s) is located in Spain but does not have any province. "
-"Please set one."
+"Partner %(name)s (id %(id)d) is located in Spain but does not have any "
+"province. Please set one."
 msgstr ""
-"El contacto %s (id %s) se encuentra en España pero no tiene ninguna "
-"provincia. Por favor, establezca una."
+"El contacto %(name)s (id %(id)d) se encuentra en España pero no tiene "
+"ninguna provincia. Por favor, establezca una."
 
 #. module: l10n_es_reports
 #. odoo-python
 #: code:addons/l10n_es_reports/models/aeat_tax_reports.py:0
 msgid ""
-"Partner with %s (id %d) is not associated to any Spanish province, and "
+"Partner %(name)s (id %(id)d) is not associated to any Spanish province, and "
 "should hence have a country code. For this, fill in its 'country' field."
 msgstr ""
-"El contacto con %s (id %d) no está asociado a ninguna provincia española, y "
-"debería tener un código de país. Para ello, rellene su campo 'país'."
+"El contacto %(name)s (id %(id)d) no está asociado a ninguna provincia "
+"española, y debería tener un código de país. Para ello, rellene su campo "
+"'país'."
 
 #. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_mod347_manual_partner_data__perceived_amount
@@ -1835,7 +1842,6 @@ msgstr "Informe mensual del trimestre"
 #. module: l10n_es_reports
 #: model:ir.model.fields,help:l10n_es_reports.field_account_bank_statement_line__l10n_es_reports_mod347_available
 #: model:ir.model.fields,help:l10n_es_reports.field_account_move__l10n_es_reports_mod347_available
-#: model:ir.model.fields,help:l10n_es_reports.field_account_payment__l10n_es_reports_mod347_available
 msgid ""
 "True if and only if the invoice MIGHT need to be reported on mod 347, i.e. "
 "it concerns an operation from a Spanish headquarter."
@@ -1846,7 +1852,6 @@ msgstr ""
 #. module: l10n_es_reports
 #: model:ir.model.fields,help:l10n_es_reports.field_account_bank_statement_line__l10n_es_reports_mod349_available
 #: model:ir.model.fields,help:l10n_es_reports.field_account_move__l10n_es_reports_mod349_available
-#: model:ir.model.fields,help:l10n_es_reports.field_account_payment__l10n_es_reports_mod349_available
 msgid ""
 "True if and only if the invoice must be reported on mod 349 report, i.e. it "
 "concerns an intracommunitary operation."
@@ -1857,14 +1862,12 @@ msgstr ""
 #. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_bank_statement_line__l10n_es_reports_mod347_invoice_type
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_move__l10n_es_reports_mod347_invoice_type
-#: model:ir.model.fields,field_description:l10n_es_reports.field_account_payment__l10n_es_reports_mod347_invoice_type
 msgid "Type for mod 347"
 msgstr "Tipo para mod 347"
 
 #. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_bank_statement_line__l10n_es_reports_mod349_invoice_type
 #: model:ir.model.fields,field_description:l10n_es_reports.field_account_move__l10n_es_reports_mod349_invoice_type
-#: model:ir.model.fields,field_description:l10n_es_reports.field_account_payment__l10n_es_reports_mod349_invoice_type
 msgid "Type for mod 349"
 msgstr "Tipo para mod 349"
 
@@ -2055,9 +2058,13 @@ msgstr "Si este archivo BOE corresponde o no a una declaración sustitutiva"
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111_export_wizard__complementary_declaration
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod111and115and303_export_wizard__complementary_declaration
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod115_export_wizard__complementary_declaration
-#: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__complementary_declaration
 msgid "Whether or not this BOE file is a complementary declaration."
-msgstr "Si este archivo BOE es o no una declaración complementaria"
+msgstr "Si este archivo BOE es o no una declaración complementaria."
+
+#. module: l10n_es_reports
+#: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__complementary_declaration
+msgid "Whether or not this BOE file is a corrective self-assessment."
+msgstr "Si este archivo BOE es o no una autoliquidación rectificativa."
 
 #. module: l10n_es_reports
 #: model:ir.model.fields,help:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod349_export_wizard__trimester_2months_report
