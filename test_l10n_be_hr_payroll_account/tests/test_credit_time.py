@@ -108,7 +108,7 @@ class TestCreditTime(AccountTestInvoicingCommon):
             'name': 'Credit Time Calendar',
             'company_id': self.env.company.id,
             'hours_per_day': 0,
-            'full_time_required_hours': 0,
+            'full_time_required_hours': 40,
             'attendance_ids': [(5, 0, 0)],
         })
 

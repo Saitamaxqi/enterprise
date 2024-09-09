@@ -49,7 +49,6 @@
         'views/report_payslip_templates.xml',
         'views/report_light_payslip_templates.xml',
         'views/hr_work_entry_type_views.xml',
-        'views/resource_calendar_views.xml',
         'views/hr_rule_parameter_views.xml',
         'views/hr_payroll_report_views.xml',
         'views/hr_work_entry_report_views.xml',
