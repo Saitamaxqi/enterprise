@@ -14,6 +14,6 @@ class HrDepartureWizard(models.TransientModel):
         super(HrDepartureWizard, self).action_register_departure()
         if self.cancel_appraisal:
             future_appraisals = self.env["hr.appraisal"].search([
-                ('employee_id', '=', self.employee_id.id), 
+                ('employee_id', 'in', self.employee_ids.ids),
                 ('state', 'in', ['new', 'pending'])])
             future_appraisals.action_cancel()
