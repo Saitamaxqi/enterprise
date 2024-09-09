@@ -45,7 +45,7 @@ export function openDeleteConfirmationDialog(model, isPermanent) {
 
 export async function toggleArchive(model, resModel, resIds, doArchive) {
     if (doArchive && !(await openDeleteConfirmationDialog(model, false))) {
-        return;
+        return false;
     }
     const action = await model.orm.call(
         resModel,
@@ -58,6 +58,7 @@ export async function toggleArchive(model, resModel, resIds, doArchive) {
     if (doArchive) {
         await model.env.documentsView.bus.trigger("documents-close-preview");
     }
+    return true;
 }
 
 export function preSuperSetupFolder() {

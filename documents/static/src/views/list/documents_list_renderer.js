@@ -10,7 +10,8 @@ import { DocumentsFileViewer } from "../helper/documents_file_viewer";
 import { DocumentsDetailsPanel } from "@documents/components/documents_details_panel/documents_details_panel";
 import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixin";
 import { useCommand } from "@web/core/commands/command_hook";
-import { useRef } from "@odoo/owl";
+import { useDraggableDocuments } from "../helper/documents_draggable";
+import { useExternalListener, useRef } from "@odoo/owl";
 import { getActiveHotkey } from "@web/core/hotkeys/hotkey_service";
 import { Chatter } from "@mail/chatter/web_portal/chatter";
 
@@ -48,6 +49,31 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
                 hotkey: "control+a",
             }
         );
+
+        useDraggableDocuments({
+            ref: this.root,
+            model: this.env.model,
+            targetSelector: ".o_data_row.o_folder_record",
+            elements: ".o_data_row",
+            preventDrag: () => this.env.searchModel.getSelectedFolderId() === "TRASH",
+            onTargetPointerEnter: ({ addClass, target, isInvalid }) => {
+                addClass(target, isInvalid ? "table-danger" : "table-success");
+            },
+            onTargetPointerLeave: ({ removeClass, target }) => {
+                removeClass(target, "table-danger", "table-success");
+            },
+        });
+
+        useExternalListener(window, "keydown", (ev) => this.onKeyDown(ev));
+        useExternalListener(window, "keyup", (ev) => this.onKeyUp(ev));
+    }
+
+    getRowClass(record) {
+        let classes = super.getRowClass(record);
+        if (record.data.type === "folder") {
+            classes += " o_folder_record";
+        }
+        return classes;
     }
 
     getDocumentsAttachmentViewerProps() {
@@ -72,6 +98,18 @@ export class DocumentsListRenderer extends DocumentsRendererMixin(ListRenderer) 
         ev.stopPropagation();
         ev.preventDefault();
         this.toggleRecordSelection(record);
+    }
+
+    onKeyDown(ev) {
+        if (ev.key === "Control") {
+            this.root.el.classList.add("o_documents_dnd_shortcut");
+        }
+    }
+
+    onKeyUp(ev) {
+        if (ev.key === "Control") {
+            this.root.el.classList.remove("o_documents_dnd_shortcut");
+        }
     }
 
     /**
