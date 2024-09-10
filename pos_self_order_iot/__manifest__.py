@@ -9,6 +9,7 @@
     'auto_install': True,
     "data": [
         "views/iot_views.xml",
+        "views/res_config_settings.xml",
     ],
     "demo": [
         "demo/iot_demo.xml",
@@ -24,7 +25,6 @@
             'pos_self_order_iot/static/src/pages/**/*',
         ],
         'web.assets_backend': [
-            'pos_self_order_iot/static/src/webclient/actions/*',
             'pos_self_order_iot/static/src/views/*',
         ],
     },

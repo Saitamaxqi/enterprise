@@ -1,6 +1,6 @@
 import logging
 
-from odoo import fields, models
+from odoo import _, fields, models
 
 _logger = logging.getLogger(__name__)
 
@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 class PosConfig(models.Model):
     _inherit = 'pos.config'
 
-    available_iot_box_ids = fields.One2many(
+    self_ordering_iot_available_iot_box_ids = fields.One2many(
         'iot.box',
         'pos_id',
         string='Available IoT Boxes',
@@ -29,5 +29,38 @@ class PosConfig(models.Model):
         return models
 
     def get_available_iot_box_ids(self):
-        self.available_iot_box_ids = self.env['iot.box'].search([('can_be_kiosk', '=', True)])
-        return self.available_iot_box_ids.read(['id', 'name', 'ip_url'])
+        self.self_ordering_iot_available_iot_box_ids = self.env['iot.box'].search([('can_be_kiosk', '=', True)])
+        return self.self_ordering_iot_available_iot_box_ids.read(['id', 'name', 'ip_url'])
+
+    def action_open_wizard(self):
+        """Override the ir.action.act_url to open the kiosk on the selected IoT Boxes (if any)."""
+        url_in_new_tab_action = super().action_open_wizard()  # Configure pos session
+
+        # If no IoT Box is selected in the settings, open the kiosk in a new tab
+        if not self.self_ordering_iot_available_iot_box_ids:
+            return url_in_new_tab_action
+
+        display_identifiers = [
+            d.identifier
+            for box in self.self_ordering_iot_available_iot_box_ids
+            for d in box.device_ids if d.type == 'display'
+        ]
+
+        self.env['iot.channel']._send_message({
+            "iotDevice": {
+                "iotIdentifiers": [iot_box.identifier for iot_box in self.self_ordering_iot_available_iot_box_ids],
+                "identifiers": [{"identifier": display_identifier} for display_identifier in display_identifiers],
+            },
+            'action': 'open_kiosk',
+            'pos_id': self.id,
+            'access_token': self.access_token,
+        })
+
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'type': 'info',
+                'message': _("Opening the kiosk on %s", ', '.join(self.self_ordering_iot_available_iot_box_ids.mapped('name'))),
+            }
+        }
