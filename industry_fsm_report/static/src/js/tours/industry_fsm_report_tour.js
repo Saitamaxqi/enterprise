@@ -119,11 +119,11 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             },
             {
                 trigger: "body:not(:has(.modal:contains(sign report)))",
-            content: markup(_t('Go back to your Field Service <b>task</b>.')),
-            tooltipPosition: 'right',
             },
             {
                 trigger: ".alert-info a.alert-link:contains(Back to edit mode)",
+                content: markup(_t('Go back to your Field Service <b>task</b>.')),
+                tooltipPosition: 'right',
                 run: "click",
             },
             {
