@@ -48,7 +48,11 @@ class TestFrontEnd(TestUiCommon):
             'state': 'published',
             'role_id': self.front_end_actor_role.id,
         })
-        front_end_thibault_url = self.employee_thibault.sudo()._planning_get_url(self.front_end_planning)
+        front_end_thibault_url = self.employee_thibault._planning_get_url(
+            self.front_end_planning.start_datetime,
+            self.front_end_planning.end_datetime,
+            self.front_end_planning.access_token
+        )
         self.start_tour(front_end_thibault_url[self.employee_thibault.id], 'planning_front_end_tour')
         self.assertEqual(self.front_end_open_slot.resource_id.id, self.employee_thibault.resource_id.id, 'Thibault should now be assigned to the open shift')
 
@@ -59,7 +63,11 @@ class TestFrontEnd(TestUiCommon):
             'planning_employee_unavailabilities': 'unassign',
             'planning_self_unassign_days_before': 0,
         }).execute()
-        front_end_thibault_url = self.employee_thibault.sudo()._planning_get_url(self.front_end_planning)
+        front_end_thibault_url = self.employee_thibault._planning_get_url(
+            self.front_end_planning.start_datetime,
+            self.front_end_planning.end_datetime,
+            self.front_end_planning.access_token
+        )
         self.start_tour(front_end_thibault_url[self.employee_thibault.id], 'planning_front_end_allow_unassign_tour')
         self.assertFalse(self.front_end_slot.resource_id, "Thibault's shift should now be an open slot")
 

@@ -1994,15 +1994,18 @@ class PlanningSlot(models.Model):
         employee_with_backend = employee_ids.filtered(lambda e: e.user_id)
         employee_without_backend = employee_ids - employee_with_backend
         planning = False
+        employee_url_map = {}
         if employee_without_backend:
             planning = self.env['planning.planning'].create({
                 'start_datetime': start_datetime,
                 'end_datetime': end_datetime,
                 'include_unassigned': include_unassigned,
             })
+            employee_url_map = employee_without_backend.sudo()._planning_get_url(
+                planning.date_start, planning.date_end, planning.access_token)
 
         template = self.env.ref('planning.email_template_slot_single')
-        employee_url_map = {**employee_without_backend.sudo()._planning_get_url(planning), **employee_with_backend._slot_get_url(self)}
+        employee_url_map.update(employee_with_backend._planning_get_url(start_datetime.date(), end_datetime.date()))
 
         cal_url = self._get_slot_resource_urls()
         view_context = dict(self._context)
@@ -2457,7 +2460,7 @@ class PlanningPlanning(models.Model):
         email_from = self.env.user.email or self.env.user.company_id.email or ''
         # extract planning URLs
         employees_sudo = employees.sudo()
-        employee_url_map = employees_sudo._planning_get_url(self)
+        employee_url_map = employees_sudo._planning_get_url(self.date_start, self.date_end, self.access_token)
         ics_url_per_employee_id = {e.id: f'/planning/{self.access_token}/{e.employee_token}.ics' for e in employees_sudo}
 
         # send planning email template with custom domain per employee

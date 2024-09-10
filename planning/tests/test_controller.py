@@ -76,7 +76,11 @@ class TestControllersRoute(HttpCase, TestCommonPlanning):
             ('start_datetime', "=", start),
             ('end_datetime', "=", end)
         ])
-        url_plan = self.employee_bert._planning_get_url(planning_published)[self.employee_bert.id]
+        url_plan = self.employee_bert._planning_get_url(
+            planning_published.start_datetime,
+            planning_published.end_datetime,
+            planning_published.access_token
+        )[self.employee_bert.id]
         req = self.url_open(url_plan+ ".ics")
 
         self.assertEqual(req.status_code, 200, "Response should = OK")
