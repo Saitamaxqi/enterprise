@@ -17,7 +17,7 @@ class SaleOrderLine(models.Model):
 
     def _timesheet_service_generation(self):
         super(SaleOrderLine, self.filtered(
-            lambda sol: sol.order_id._can_generate_service()
+            lambda sol: sol.order_id._can_generate_service() or not sol.recurring_invoice
         ))._timesheet_service_generation()
 
     def _timesheet_create_task(self, project):

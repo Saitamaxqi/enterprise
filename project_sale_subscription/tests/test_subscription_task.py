@@ -213,3 +213,37 @@ class TestSubscriptionTask(TestSubscriptionCommon):
         order = order.copy()
         order.with_user(self.user_portal).sudo().action_confirm()
         self.assertEqual(len(order_line.task_id.recurrence_id), 0)
+
+    def test_task_creation_on_non_recurring_product_upsell(self):
+        subscription = self.env['sale.order'].create({
+            'is_subscription': True,
+            'plan_id': self.plan_month.id,
+            'note': "original subscription description",
+            'partner_id': self.partner.id,
+            'sale_order_template_id': self.subscription_tmpl.id,
+        })
+
+        self.env['sale.order.line'].create([{
+            'order_id': subscription.id,
+            'product_id': self.product_recurrence.product_variant_id.id,
+        }])
+
+        subscription.action_confirm()
+        invoice = subscription._create_invoices(final=True)
+        invoice.action_post()
+        task_domain = [('project_id', '=', self.project.id)]
+        self.assertEqual(len(self.env['project.task'].search(task_domain)), 1, 'Task should be created')
+
+        action = subscription.prepare_upsell_order()
+        upsell = self.env['sale.order'].browse(action['res_id'])
+
+        upsell.order_line.product_uom_qty = 1
+        self.env['sale.order.line'].create([{
+            'order_id': upsell.id,
+            'product_id': self.product_no_recurrence.product_variant_id.id,
+        }])
+
+        upsell.action_confirm()
+        tasks = self.env['project.task'].search(task_domain)
+        self.assertEqual(len(tasks), 2, 'Task should only be created on upsell if the product is non-recurring')
+        self.assertTrue(self.product_no_recurrence.name in tasks[0].name)
