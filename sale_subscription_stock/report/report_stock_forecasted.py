@@ -29,7 +29,8 @@ class StockForecasted(models.AbstractModel):
             domain += [('product_id', 'in', product_variant_ids)]
         warehouse_id = self.env.context.get('warehouse_id', False)
         if warehouse_id:
-            domain += [('warehouse_id', '=', warehouse_id)]
+            warehouse_id = warehouse_id if isinstance(warehouse_id, list) else [warehouse_id]
+            domain += [('warehouse_id', 'in', warehouse_id)]
         return domain
 
     def _product_sale_domain(self, product_template_ids, product_ids):
