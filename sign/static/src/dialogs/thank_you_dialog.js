@@ -47,7 +47,7 @@ export class ThankYouDialog extends Component {
     }
 
     get suggestSignUp() {
-        return user.userId === false;
+        return !user.userId;
     }
 
     get dialogProps() {
