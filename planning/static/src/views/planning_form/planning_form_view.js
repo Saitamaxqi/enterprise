@@ -156,6 +156,7 @@ export class PlanningFormController extends FormController {
 
     async deleteRecord() {
         const shift = this.model.root;
+        this.state.recurrenceUpdate = shift.data.recurrence_update;
         if (shift.data.recurrency_id) {
             this.dialogService.add(AddressRecurrencyConfirmationDialog, {
                 confirm: async () => {
@@ -172,6 +173,7 @@ export class PlanningFormController extends FormController {
                     );
                 },
                 onChangeRecurrenceUpdate: this.planningRecurrenceDeletion._setRecurrenceUpdate.bind(this),
+                selected: this.state.recurrenceUpdate,
             });
         } else {
             await super.deleteRecord(...arguments);

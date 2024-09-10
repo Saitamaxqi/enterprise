@@ -12,6 +12,7 @@ export class PlanningSlot extends models.Model {
     role_id = fields.Many2one({ relation: "planning.role" });
     color = fields.Integer();
     repeat = fields.Boolean();
+    recurrency_id = fields.Many2one({ relation: "planning.recurrency" });
     recurrence_update = fields.Selection({
         selection: [
             ["this", "This shift"],
@@ -39,6 +40,12 @@ export class PlanningSlot extends models.Model {
     conflicting_slot_ids = fields.Many2many({ relation: "planning.slot" });
     resource_roles = fields.Many2many({ relation: "resource.resource" });
     resource_color = fields.Integer({ related: 'resource_id.color' })
+}
+
+export class PlanningRecurrency extends models.Model {
+    _name = "planning.recurrency";
+
+    repeat_interval = fields.Integer();
 }
 
 export class ResourceResource extends models.Model {
@@ -100,6 +107,7 @@ export class HrDepartment extends models.Model {
 
 export const planningModels = {
     PlanningSlot,
+    PlanningRecurrency,
     ResourceResource,
     PlanningRole,
     HrEmployee,

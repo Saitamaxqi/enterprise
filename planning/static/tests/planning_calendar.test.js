@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
+import { beforeEach, describe, expect, test, getFixture } from "@odoo/hoot";
 import { click, queryText } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import { clickEvent, resizeEventToTime, toggleFilter } from "@web/../tests/views/calendar/calendar_test_helpers";
@@ -17,6 +17,9 @@ import {
     onRpc
 } from "@web/../tests/web_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
+import {
+    contains,
+} from "@mail/../tests/mail_test_helpers";
 
 describe.current.tags("desktop");
 
@@ -36,7 +39,10 @@ class PlanningSlot extends planningModels.PlanningSlot {
                             <field name="recurrence_update"/>
                             <field name="end_datetime"/>
                     </calendar>`,
-        list: `<list js_class="planning_tree"><field name="resource_id"/></list>`,
+        list: `<list js_class="planning_tree">
+                    <field name="resource_id"/>
+                    <field name="repeat" column_invisible="True"/>
+                </list>`,
         search: `<search/>`,
     };
 }
@@ -55,6 +61,8 @@ defineActions([
         ],
     },
 ]);
+
+let target;
 
 beforeEach(() => {
     PlanningSlot._records = [
@@ -94,6 +102,7 @@ beforeEach(() => {
     });
 
     mockDate("2019-03-13 00:00:00", +1);
+    target = getFixture();
 });
 
 test("planning calendar view: copy previous week", async () => {
@@ -212,4 +221,30 @@ test("should not display an Edit button in the popover for users without admin a
     expect(".o_cw_popover .o_cw_popover_edit").toHaveCount(0, {
         message: "The popover should not contain an Edit button in the footer.",
     });
+});
+
+test("Display modal to choose recurrence type when deleting recurrent task", async () => {
+    await mountWithCleanup(WebClient);
+    await getService("action").doAction(1);
+
+    await click(".fc-event-main");
+    await contains(".o_cw_popover_delete");
+
+    await click(".o_cw_popover_delete");
+    await contains("h4.modal-title");
+
+    expect(target.querySelector("h4.modal-title")).toHaveText("Delete Recurring Shift")
+});
+
+test("Display confirm delete modal when deleting non recurrent task", async () => {
+    await mountWithCleanup(WebClient);
+    await getService("action").doAction(1);
+
+    await target.querySelectorAll(".fc-event-main")[1].click();
+    await contains(".o_cw_popover_delete");
+
+    await click(".o_cw_popover_delete");
+    await contains("h4.modal-title");
+
+    expect(target.querySelector("h4.modal-title")).toHaveText("Bye-bye, record!");
 });

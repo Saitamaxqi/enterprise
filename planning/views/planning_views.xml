@@ -191,6 +191,7 @@
                 <field name="employee_id"/>
                 <field name="resource_type"/>
                 <field name="resource_color"/>
+                <field name="repeat" invisible="1"/>
                 <templates>
                     <t t-name="menu" groups="planning.group_planning_manager">
                         <t t-if="widget.editable"><a role="menuitem" type="open" class="dropdown-item">Edit</a></t>
