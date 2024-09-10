@@ -159,10 +159,10 @@ class InsertEmbeddedViewMenu extends Component {
                 onSelectCallback(resIds[0]);
             },
             onCreateEdit: async () => {
-                const articleId = await this.orm.call("knowledge.article", "article_create", [], {
+                const articleIds = await this.orm.call("knowledge.article", "article_create", [], {
                     is_private: true,
                 });
-                onSelectCallback(articleId);
+                onSelectCallback(articleIds[0]);
             },
         });
     }

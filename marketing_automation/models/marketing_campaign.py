@@ -141,7 +141,6 @@ class MarketingCampaign(models.Model):
             campaign.total_participant_count = campaign.completed_participant_count + campaign.running_participant_count
             campaign.test_participant_count = campaign_data.get('is_test', 0)
 
-    @api.returns('self')
     def copy(self, default=None):
         """ Copy the activities of the campaign, each parent_id of each child
         activities should be set to the new copied parent activity. """

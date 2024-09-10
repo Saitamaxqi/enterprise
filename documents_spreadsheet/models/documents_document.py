@@ -65,7 +65,6 @@ class DocumentsDocument(models.Model):
         "A frozen spreadsheet can not be editable",
     )
 
-    @api.returns('documents.document', lambda d: {'id': d.id, 'shortcut_document_id': d.shortcut_document_id.id})
     def action_freeze_and_copy(self, spreadsheet_data, excel_files):
         """Render the spreadsheet in JS, and then make a copy to share it.
 
@@ -102,7 +101,7 @@ class DocumentsDocument(models.Model):
         if isinstance(spreadsheet_data, dict):
             spreadsheet_data = json.dumps(spreadsheet_data)
 
-        return self.sudo().copy({
+        document = self.sudo().copy({
             'name': _('Frozen at %(date)s: %(name)s',
                       date=fields.Date.today().strftime(DEFAULT_SERVER_DATE_FORMAT), name=self.name),
             'access_internal': 'none' if self.access_internal == 'none' else 'view',
@@ -117,6 +116,7 @@ class DocumentsDocument(models.Model):
                 'role': 'view' if access.role == 'edit' else access.role,
             }) for access in self.access_ids if access.role],
         })
+        return {'id': document.id, 'shortcut_document_id': document.shortcut_document_id.id}
 
     def _get_access_update_domain(self):
         """Allow to change the access of the frozen folders / spreadsheets only if we open their share panel."""

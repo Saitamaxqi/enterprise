@@ -20,7 +20,6 @@ class SaleOrder(models.Model):
                 sale_order.task_id.message_post(body=message)
         return orders
 
-    @api.returns('mail.message', lambda value: value.id)
     def message_post(self, **kwargs):
         if self.env.context.get('fsm_no_message_post'):
             return False

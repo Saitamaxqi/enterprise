@@ -160,7 +160,7 @@ export class KnowledgeArticleFormController extends FormController {
      * @param {integer} targetParentId - Id of the parent of the new article (optional)
      */
     async createArticle(category, targetParentId) {
-        const articleId = await this.orm.call(
+        const articleIds = await this.orm.call(
             "knowledge.article",
             "article_create",
             [],
@@ -169,7 +169,7 @@ export class KnowledgeArticleFormController extends FormController {
                 parent_id: targetParentId ? targetParentId : false
             }
         );
-        this.openArticle(articleId);
+        this.openArticle(articleIds[0]);
     }
 
     getHtmlTitle() {

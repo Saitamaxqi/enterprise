@@ -1215,7 +1215,6 @@ class KnowledgeArticle(models.Model):
     # ACTIONS
     # ------------------------------------------------------------
 
-    @api.returns('self', lambda value: value.id)
     def action_make_private_copy(self):
         """ Creates a copy of an article. != duplicate article (see `copy`).
         Creates a new private article with the same body, icon and cover,
@@ -1241,7 +1240,6 @@ class KnowledgeArticle(models.Model):
             })
         return article
 
-    @api.returns('self', lambda value: value.id)
     def action_clone(self):
         """Creates a duplicate of an article in the same context as the original.
         This means that this methods create a copy with the same parent,
@@ -1512,7 +1510,6 @@ class KnowledgeArticle(models.Model):
     # ------------------------------------------------------------
 
     @api.model
-    @api.returns('knowledge.article', lambda article: article.id)
     def article_create(self, title=False, parent_id=False, is_private=False, is_article_item=False, article_properties=False):
         """ Helper to create articles, allowing to pre-compute some configuration
         values.

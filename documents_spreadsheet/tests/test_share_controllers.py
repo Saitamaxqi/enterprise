@@ -129,7 +129,8 @@ class TestShareController(SpreadsheetTestCommon, HttpCase):
         self.assertEqual(res.status_code, 404)
 
     def share_spreadsheet(self, spreadsheet):
-        frozen_spreadsheet = spreadsheet.action_freeze_and_copy(b"{}", [])
+        frozen_action = spreadsheet.action_freeze_and_copy(b"{}", [])
+        frozen_spreadsheet = spreadsheet.browse(frozen_action['id'])
         frozen_spreadsheet.excel_export = self.EXCEL_EXPORT
         frozen_spreadsheet.folder_id = spreadsheet.folder_id
         frozen_spreadsheet.is_access_via_link_hidden = False

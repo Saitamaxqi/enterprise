@@ -940,7 +940,6 @@ class AccountOnlineLink(models.Model):
             if not link.account_online_account_ids.filtered('journal_ids'):
                 link.unlink()
 
-    @api.returns('mail.message', lambda value: value.id)
     def message_post(self, **kwargs):
         """Override to log all message to the linked journal as well."""
         for journal in self.journal_ids:

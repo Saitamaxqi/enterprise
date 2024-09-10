@@ -45,12 +45,13 @@ export class ArticleSelectionDialog extends Component {
     }
 
     async createKnowledgeArticle(label) {
-        const articleId = await this.orm.call(
+        const articleIds = await this.orm.call(
             'knowledge.article',
             'article_create',
             [],
             {title: label, parent_id: this.props.parentArticleId}
         );
+        const articleId = articleIds[0];
         this.props.articleSelected({articleId: articleId, displayName: `📄 ${label}`});
         this.props.close();
         if (this.props.parentArticleId) {

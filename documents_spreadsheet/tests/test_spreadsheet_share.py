@@ -35,7 +35,8 @@ class SpreadsheetSharing(SpreadsheetTestCommon):
             'last_access_date': date.today(),
         })
 
-        shared_spreadsheet = document.action_freeze_and_copy({}, b"")
+        shared_spreadsheet_action = document.action_freeze_and_copy({}, b"")
+        shared_spreadsheet = document.browse(shared_spreadsheet_action['id'])
 
         self.assertNotEqual(document.access_token, shared_spreadsheet.access_token)
         self.assertEqual(shared_spreadsheet.folder_id.owner_id, self.env.ref('base.user_root'))
@@ -204,11 +205,13 @@ class SpreadsheetSharing(SpreadsheetTestCommon):
             spreadsheet.flush_recordset()
 
         with self.assertRaises(CheckViolation):
-            frozen = spreadsheet.action_freeze_and_copy({}, b"")
+            frozen_action = spreadsheet.action_freeze_and_copy({}, b"")
+            frozen = spreadsheet.browse(frozen_action['id'])
             frozen.access_via_link = 'edit'
             frozen.flush_recordset()
 
         with self.assertRaises(CheckViolation):
-            frozen = spreadsheet.action_freeze_and_copy({}, b"")
+            frozen_action = spreadsheet.action_freeze_and_copy({}, b"")
+            frozen = spreadsheet.browse(frozen_action['id'])
             frozen.access_internal = 'edit'
             frozen.flush_recordset()

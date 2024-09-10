@@ -191,12 +191,12 @@ class KnowledgeTopbar extends Component {
      */
     async cloneArticle() {
         await this.env._saveIfDirty();
-        const articleId = await this.orm.call(
+        const articleIds = await this.orm.call(
             'knowledge.article',
             'action_clone',
             [this.props.record.resId]
         );
-        this.env.openArticle(articleId, true);
+        this.env.openArticle(articleIds[0], true);
     }
 
     /**

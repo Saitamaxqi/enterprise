@@ -119,7 +119,6 @@ class DiscussChannel(models.Model):
     # CONTROLLERS
     # ------------------------------------------------------------
 
-    @api.returns('self')
     def _get_whatsapp_channel(self, whatsapp_number, wa_account_id, sender_name=False, create_if_not_found=False, related_message=False):
         """ Creates a whatsapp channel.
 

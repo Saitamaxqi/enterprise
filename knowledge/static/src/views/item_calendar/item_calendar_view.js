@@ -69,13 +69,13 @@ export class KnowledgeArticleItemsCalendarController extends CalendarController 
                 const rawRecord = this.model.buildRawRecord(record);
                 Object.assign(createValues, rawRecord);
             }
-            const articleId = await this.orm.call(
+            const articleIds = await this.orm.call(
                 "knowledge.article",
                 "article_create",
                 [],
                 createValues
             );
-            this.selectRecord(articleId);
+            this.selectRecord(articleIds[0]);
         }
     }
 

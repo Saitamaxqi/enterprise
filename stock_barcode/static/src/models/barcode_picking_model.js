@@ -1863,7 +1863,7 @@ export default class BarcodePickingModel extends BarcodeModel {
         const result = await this.orm.call(this.resModel, "action_put_in_pack", [[this.resId]], {
             context,
         });
-        if (typeof result === "object") {
+        if (typeof result === "object" && result.type) {
             this.trigger("process-action", result);
         } else {
             this.trigger("refresh");

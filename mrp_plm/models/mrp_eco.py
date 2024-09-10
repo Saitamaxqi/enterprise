@@ -640,7 +640,6 @@ class MrpEco(models.Model):
         stage_ids = stages.sudo()._search(search_domain, order=stages._order)
         return stages.browse(stage_ids)
 
-    @api.returns('mail.message', lambda value: value.id)
     def message_post(self, **kwargs):
         message = super(MrpEco, self).message_post(**kwargs)
         if message.message_type == 'comment' and message.author_id == self.env.user.partner_id:  # should use message_values to avoid a read

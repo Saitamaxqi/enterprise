@@ -64,7 +64,7 @@ const fn = (hidden) => {
                     return [{
                         Component: Knowledge404Command,
                         async action() {
-                            const articleId = await env.services.orm.call(
+                            const articleIds = await env.services.orm.call(
                                 'knowledge.article',
                                 'article_create',
                                 [options.searchValue],
@@ -75,7 +75,7 @@ const fn = (hidden) => {
 
                             env.services.action.doAction('knowledge.ir_actions_server_knowledge_home_page', {
                                 additionalContext: {
-                                    res_id: articleId,
+                                    res_id: articleIds[0],
                                 }
                             });
                         },

@@ -23,12 +23,12 @@ export const EmbeddedControllersPatch = (T) => class EmbeddedControllersPatch ex
             return super.createRecord(...arguments);
         }
 
-        const articleId = await this.orm.call('knowledge.article', 'article_create', [], {
+        const articleIds = await this.orm.call('knowledge.article', 'article_create', [], {
             is_article_item: true,
             is_private: false,
             parent_id: this.props.context.active_id || false
         });
 
-        this.props.selectRecord(articleId, {});
+        this.props.selectRecord(articleIds[0], {});
     }
 };

@@ -3,7 +3,7 @@
 
 from random import sample
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class StockPickingType(models.Model):
@@ -26,7 +26,6 @@ class StockPickingType(models.Model):
 class StockPicking(models.Model):
     _inherit = "stock.picking"
 
-    @api.returns('mail.message', lambda value: value.id)
     def message_post(self, **kwargs):
         message = super(StockPicking, self).message_post(**kwargs)
         if message.attachment_ids:
