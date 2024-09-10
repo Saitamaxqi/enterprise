@@ -28,6 +28,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 2.0)
+        self.env['stock.quant']._update_available_quantity(self.product2, self.shelf1, 2.0)
         self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
         self.picking_type_internal.restrict_scan_dest_location = 'mandatory'
         self.picking_type_internal.restrict_scan_source_location = 'mandatory'
@@ -3112,6 +3114,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env.user.write({'groups_id': [Command.link(grp_multi_loc.id)]})
         self.picking_type_internal.active = True
 
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10.0)
+
         # Create a sibling stock location to use a destination
         location_dest = self.env['stock.location'].create({
             'name': "Lovely Location",
@@ -3234,6 +3238,91 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         ):
             self.start_tour(url, 'test_barcode_create_serials_in_batch_with_single_scan', login='admin')
             self.assertEqual(self.call_count, 2)
+
+    def test_quant_selection_delivery_picking(self):
+        """ Ensures the stock move's location, package and owner can be updated by clicking on a
+        quant card in the Barcode move line form view accordingly to the selected quant values.
+        """
+        self.clean_access_rights()
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        package = self.env['stock.quant.package'].create({'name': 'package001'})
+        self.env.user.write({'groups_id': [Command.link(grp_multi_loc.id), Command.link(grp_pack.id)]})
+
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10, package_id=package)
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 2)
+        self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 10)
+
+        delivery_picking = self.env['stock.picking'].create({
+            'name': "Delivery with Stock Move",
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'picking_type_id': self.picking_type_out.id,
+            'move_ids': [Command.create({
+                'name': 'test_quant_selection',
+                'location_id': self.stock_location.id,
+                'location_dest_id': self.customer_location.id,
+                'product_id': self.product1.id,
+                'product_uom': self.uom_unit.id,
+                'product_uom_qty': 2
+            })],
+        })
+        delivery_picking.action_confirm()
+        delivery_picking.action_assign()
+
+        url = self._get_client_action_url(delivery_picking.id)
+        self.start_tour(url, 'test_quant_selection_delivery_picking', login='admin', timeout=180)
+        self.assertRecordValues(delivery_picking.move_ids.move_line_ids, [{
+            'product_id': self.product1.id,
+            'qty_done': 2,
+            'location_id': self.stock_location.id,
+            'lot_id': False,
+            'package_id': package.id,
+            'state': 'done'
+        }])
+
+    def test_confirmation_location_delivery_picking(self):
+        """ When a location is selected in the move line form view of the Barcode app,
+        if the product is not available in that location, a confirmation dialog appears
+        to allow the user to verify when applying the change.
+        This test ensures this confirmation dialog is shown when needed.
+        """
+        self.clean_access_rights()
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        package = self.env['stock.quant.package'].create({'name': 'package001'})
+        self.env.user.write({'groups_id': [Command.link(grp_multi_loc.id), Command.link(grp_pack.id)]})
+
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10, package_id=package)
+        self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 5)
+
+        delivery_picking = self.env['stock.picking'].create({
+            'name': "Delivery with Stock Move",
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'picking_type_id': self.picking_type_out.id,
+            'move_ids': [Command.create({
+                'name': 'test_location_confirmation',
+                'location_id': self.stock_location.id,
+                'location_dest_id': self.customer_location.id,
+                'product_id': self.product1.id,
+                'product_uom': self.uom_unit.id,
+                'product_uom_qty': 1
+            })],
+        })
+        delivery_picking.action_confirm()
+        delivery_picking.action_assign()
+
+        url = self._get_client_action_url(delivery_picking.id)
+        self.start_tour(url, 'test_confirmation_location_delivery_picking', login='admin', timeout=180)
+        self.assertRecordValues(delivery_picking.move_ids.move_line_ids, [{
+            'product_id': self.product1.id,
+            'qty_done': 1,
+            'location_id': self.shelf2.id,
+            'lot_id': False,
+            'package_id': package.id,
+            'state': 'done'
+        }])
 
     # === GS1 TESTS ===#
     def test_gs1_delivery_ambiguous_lot_number(self):

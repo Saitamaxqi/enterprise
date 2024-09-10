@@ -5949,3 +5949,247 @@ registry.category("web_tour.tours").add("test_select_with_same_product_and_lot",
         },
     ]
 });
+
+registry.category("web_tour.tours").add("test_quant_selection_delivery_picking", {
+    steps: () => [
+        {
+            trigger: ".o_barcode_line",
+            run: function () {
+                helper.assertLinesCount(1);
+                helper.assertLineProduct(0, "product1");
+                helper.assertLineQty(0, "0/2");
+                helper.assertScanMessage("scan_src");
+                helper.assertValidateVisible(true);
+                helper.assertValidateIsHighlighted(false);
+                helper.assertValidateEnabled(true);
+                helper.assertLineIsHighlighted(0, false);
+                helper.assertLineLocations(0, "WH/Stock", "");
+                helper.assert(
+                    document.querySelector("div[name='package']").innerText,
+                    "package001"
+                );
+            },
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan LOC-01-00-00",
+        },
+        {
+            trigger: ".o_barcode_line:not(.o_selected)",
+            run: "scan product1"
+        },
+        {
+            trigger: ".o_barcode_line[data-barcode='product1'].o_selected .o_edit",
+            run: "click",
+        },
+        {
+            trigger: ".o_field_widget[name='product_id']:contains('product1')",
+        },
+        {
+            trigger: ".o_field_widget[name='product_id']",
+            run: function () {
+                helper.assertFormLocationSrc("WH/Stock");
+                helper.assertFormQuantity("1");
+                helper.assert(
+                    document.querySelector("div[name='package_id'] input").value,
+                    "package001"
+                );
+                helper.assert(
+                    document.querySelector("div[name='result_package_id'] input").value,
+                    ""
+                );
+                helper.assertKanbanRecordsCount(3);
+            },
+        },
+        /**
+         * Select the quant having,
+         * Location: WH/Stock/Section 1
+         * Quantity: 10
+         */
+        {
+            trigger: ".o_field_stock_barcode_quant_one2many .o_kanban_record:nth-child(3)",
+            run: "click"
+        },
+        {
+            trigger: "div[name='location_id'] input:value('WH/Stock/Section 1')",
+            run: function () {
+                helper.assertFormLocationSrc("WH/Stock/Section 1");
+                helper.assertFormQuantity("1");
+                helper.assert(
+                    document.querySelector("div[name='package_id'] input").value,
+                    ""
+                );
+                helper.assert(
+                    document.querySelector("div[name='result_package_id'] input").value,
+                    ""
+                );
+                helper.assertKanbanRecordsCount(3);
+            },
+        },
+        { trigger: ".o_save", run: "click" },
+        {
+            trigger: ".o_barcode_line",
+            run: function () {
+                helper.assertLinesCount(1);
+                helper.assertLineProduct(0, "product1");
+                helper.assertLineQty(0, "1/2");
+                helper.assertValidateVisible(true);
+                helper.assertValidateIsHighlighted(false);
+                helper.assertValidateEnabled(true);
+                helper.assertLineIsHighlighted(0, true);
+                helper.assertLineLocations(0, "WH/Stock/Section 1", "");
+                helper.assert(
+                    document.querySelector("div[name='package']"),
+                    null
+                );
+            },
+        },
+        {
+            trigger: ".o_barcode_line[data-barcode='product1'].o_selected .o_edit",
+            run: "click",
+        },
+        {
+            trigger: "button.o_digipad_increment",
+            run: "click",
+        },
+        {
+            trigger: ".o_field_widget[name='product_id']",
+            run: function () {
+                helper.assertFormLocationSrc("WH/Stock/Section 1");
+                helper.assertFormQuantity("2");
+                helper.assert(
+                    document.querySelector("div[name='package_id'] input").value,
+                    ""
+                );
+                helper.assert(
+                    document.querySelector("div[name='result_package_id'] input").value,
+                    ""
+                );
+                helper.assertKanbanRecordsCount(3);
+            },
+        },
+        /**
+         * Select the quant having,
+         * Location: WH/Stock
+         * Quantity: 10
+         * Package: 'package001'
+         */
+        {
+            trigger: ".o_field_stock_barcode_quant_one2many .o_kanban_record:nth-child(1)",
+            run: "click"
+        },
+        {
+            trigger: "div[name='package_id'] input:value('package001')",
+            run: function () {
+                helper.assertFormLocationSrc("WH/Stock");
+                helper.assertFormQuantity("2");
+                helper.assert(
+                    document.querySelector("div[name='package_id'] input").value,
+                    "package001"
+                );
+                helper.assert(
+                    document.querySelector("div[name='result_package_id'] input").value,
+                    ""
+                );
+                helper.assertKanbanRecordsCount(3);
+            },
+        },
+        { trigger: ".o_save", run: "click" },
+        ...stepUtils.validateBarcodeOperation(),
+    ],
+});
+
+registry.category("web_tour.tours").add("test_confirmation_location_delivery_picking", {
+    steps: () => [
+        {
+            trigger: ".o_barcode_line",
+            run: function () {
+                helper.assertLinesCount(1);
+                helper.assertLineProduct(0, "product1");
+                helper.assertLineQty(0, "0/1");
+                helper.assertScanMessage("scan_src");
+                helper.assertValidateVisible(true);
+                helper.assertValidateIsHighlighted(false);
+                helper.assertValidateEnabled(true);
+                helper.assertLineIsHighlighted(0, false);
+                helper.assertLineLocations(0, "WH/Stock", "");
+                helper.assert(
+                    document.querySelector("div[name='package']").innerText,
+                    "package001"
+                );
+            },
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: "scan LOC-01-00-00",
+        },
+        {
+            trigger: ".o_barcode_line:not(.o_selected)",
+            run: "scan product1"
+        },
+        {
+            trigger: ".o_barcode_line[data-barcode='product1'].o_selected .o_edit",
+            run: "click",
+        },
+        {
+            trigger: ".o_field_widget[name='product_id']:contains('product1')",
+        },
+        {
+            trigger: ".o_field_widget[name='product_id']",
+            run: function () {
+                helper.assertFormLocationSrc("WH/Stock");
+                helper.assertFormQuantity("1");
+                helper.assert(
+                    document.querySelector("div[name='package_id'] input").value,
+                    "package001"
+                );
+                helper.assert(
+                    document.querySelector("div[name='result_package_id'] input").value,
+                    ""
+                );
+                helper.assertKanbanRecordsCount(2);
+            },
+        },
+        {
+            trigger: ".o_field_widget[name='location_id'] input",
+            run: "edit Section 2",
+        },
+
+        {
+            trigger: ".ui-menu-item > a:contains('Section 2')",
+            run: "click",
+        },
+        {
+            trigger: ".o_field_widget[name='product_id']",
+            run: function () {
+                helper.assertFormLocationSrc("WH/Stock/Section 2");
+                helper.assertFormQuantity("1");
+                helper.assert(
+                    document.querySelector("div[name='package_id'] input").value,
+                    "package001"
+                );
+                helper.assert(
+                    document.querySelector("div[name='result_package_id'] input").value,
+                    ""
+                );
+                helper.assertKanbanRecordsCount(2);
+            },
+        },
+        { trigger: ".o_save", run: "click"},
+        // A confirmation dialog should appear to allow the user to verify before proceeding with validation.
+        {
+            trigger: ".modal-dialog",
+            run: function () {
+                helper.assert(
+                    document.querySelector(".modal-dialog .modal-body").innerText,
+                    "Oops! It seems that this product is not located in WH/Stock/Section 2.\nDo you confirm you picked from there?"
+                );
+            },
+        },
+        // Initially discarding will ensure that no values have changed, allowing for confirmation to be performed again.
+        { trigger: ".modal-dialog button.btn-secondary", run: "click" },
+        { trigger: ".o_save", run: "click" },
+        { trigger: ".modal-dialog button.btn-primary", run: "click" },
+        ...stepUtils.validateBarcodeOperation(),
+    ],
+});

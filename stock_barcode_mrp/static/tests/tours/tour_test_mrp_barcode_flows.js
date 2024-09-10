@@ -1193,6 +1193,7 @@ registry.category("web_tour.tours").add("test_kit_bom_decomposition_keeps_locati
         { trigger: '.o_input[placeholder="Destination Location"]', run: "edit LOC-01-02-00" },
         { trigger: '.dropdown-item:contains("Section 2")', run: "click" },
         { trigger: ".btn.o_save", run: "click" },
+        { trigger: ".modal-dialog button.btn-primary", run: "click" },
         { trigger: ".btn.o_validate_page", run: "click" },
         { trigger: ".o_notification_body" },
         { trigger: ".btn.o_validate_page", run: "click" },

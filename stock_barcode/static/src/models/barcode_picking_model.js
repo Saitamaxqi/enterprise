@@ -1051,7 +1051,7 @@ export default class BarcodePickingModel extends BarcodeModel {
     _getNewLineDefaultContext() {
         return {
             default_company_id: this.record.company_id,
-            default_location_id: this._defaultLocation().id,
+            default_location_id: this.lastScanned.sourceLocation.id || this._defaultLocation().id,
             default_location_dest_id: this._defaultDestLocation().id,
             default_picking_id: this.resId,
             default_qty_done: 1,

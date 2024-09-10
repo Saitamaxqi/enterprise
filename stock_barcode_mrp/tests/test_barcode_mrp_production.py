@@ -576,6 +576,9 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         self.env.user.groups_id += self.env.ref('stock.group_stock_multi_locations')
         self.picking_type_internal.active = True
 
+        self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10.0)
+        self.env['stock.quant']._update_available_quantity(self.component01, self.stock_location, 10.0)
+
         final_2 = self.env['product.product'].create({
             'name': 'final2',
             'is_storable': True,

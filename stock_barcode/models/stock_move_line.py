@@ -41,9 +41,18 @@ class StockMoveLine(models.Model):
             line.parent_location_id = line.picking_id.location_id
             line.parent_location_dest_id = line.picking_id.location_dest_id
 
+    @api.depends('product_id', 'parent_location_id')
     def _compute_product_stock_quant_ids(self):
+        domain = [
+            ('product_id', 'in', self.product_id.ids),
+            ('company_id', 'in', self.env.companies.ids),
+            ('location_id.usage', '=', 'internal'),
+            ('quantity', '>', '0'),
+            ('location_id', 'child_of', self.picking_id.location_id.ids),
+        ]
+        quant_ids = dict(self.env['stock.quant']._read_group(domain, groupby=['product_id'], aggregates=['id:recordset']))
         for line in self:
-            line.product_stock_quant_ids = line.product_id.stock_quant_ids.filtered(lambda q: q.company_id in self.env.companies and q.location_id.usage == 'internal')
+            line.product_stock_quant_ids = quant_ids.get(line.product_id, self.env['stock.quant'])
 
     def _compute_dummy_id(self):
         self.dummy_id = ''
@@ -78,7 +87,6 @@ class StockMoveLine(models.Model):
                 # Also delete the default value in the context.
                 self.env.context = frozendict({k: v for k, v in self.env.context.items() if k != 'default_qty_done'})
         return super().create(vals_list)
-
 
     def _get_fields_stock_barcode(self):
         return [

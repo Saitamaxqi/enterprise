@@ -6,7 +6,7 @@
     <field name="model">stock.move.line</field>
     <field name="priority">1000</field>
     <field name="arch" type="xml">
-        <form string="Select a Product" class="o_barcode_line_form flex-column">
+        <form string="Select a Product" class="o_barcode_line_form flex-column" js_class="stock_barcode_sml_form">
             <field name="company_id" force_save="1" invisible="1"/>
             <field name="move_id" invisible="1"/>
             <field name="picked" invisible="1"/>
@@ -15,6 +15,7 @@
             <field name="picking_type_use_create_lots" invisible="1"/>
             <field name="picking_type_use_existing_lots" invisible="1"/>
             <field name="quantity" invisible="1"/>
+            <field name="quant_id" invisible="1"/>
             <div name="product" class="row my-2">
                 <div class="col d-flex align-items-baseline">
                     <div class="flex-column lh-1">
@@ -110,15 +111,20 @@
                 </div>
                 <field name="lot_properties" widget="properties" readonly="1"/>
             </div>
-            <div class="row" invisible="not product_stock_quant_ids">
+            <div class="row mb-5" invisible="not product_stock_quant_ids">
                 <div class="col-12 d-flex mt-2 ms-0 justify-contents-center">
                     <hr class="flex-grow-1"/>
-                    <label for="product_stock_quant_ids" string="Quantity in stock"
+                    <div class="d-flex flex-column">
+                        <label for="product_stock_quant_ids" string="Quantity in stock"
                            class="fs-5 fw-bold text-center text-black-50 mt-1 px-2"/>
+                        <p class="fs-5 fw-bold text-center text-black-25 mt-1 px-2" groups="stock.group_stock_multi_locations">
+                            Select where else to pick the product from
+                        </p>
+                    </div>
                     <hr class="flex-grow-1"/>
                 </div>
                 <div class="col-12 my-2 d-flex">
-                    <field name="product_stock_quant_ids" context="{
+                    <field name="product_stock_quant_ids" widget="stock_barcode_quant_one2many" mode="kanban" context="{
                             'kanban_view_ref': 'stock_barcode.stock_quant_barcode_kanban_2',
                             'list_view_ref': 'stock_barcode.view_stock_quant_tree'}"/>
                 </div>
@@ -160,18 +166,26 @@
     <field name="priority">1000</field>
     <field name="arch" type="xml">
         <kanban class="o_kanban_mobile">
+            <field name="id"/>
             <templates>
                 <t t-name="card">
                     <field name="location_id" class="fw-bolder"/>
-                    <div class="mb4">
-                        <field name="quantity"/> <field name="product_uom_id" groups="uom.group_uom" widget="many2one_uom"/>
-                        <field name="lot_id" class="ms-4" invisible="not lot_id" groups="stock.group_production_lot"/>
+                    <div class="d-flex">
+                        <p class="m-0 me-2">Available: </p>
+                        <div>
+                            <field name="available_quantity"/>
+                            <span invisible="not quantity"> / <field name="quantity"/></span>
+                            <span> <field name="product_uom_id" groups="uom.group_uom"/></span>
+                        </div>
+                    </div>
+                    <div class="mb2" invisible="not lot_id" groups="stock.group_production_lot">
+                        <field name="lot_id"/>
                     </div>
                     <div class="mb4" invisible="not package_id" groups="stock.group_tracking_lot">
-                        <i class="fa fa-lg fa-archive" title="Package"/><field name="package_id"/>
+                        <i class="fa fa-lg fa-archive me-2" title="Package"/><field name="package_id"/>
                     </div>
                     <div class="mb4" invisible="not owner_id" groups="stock.group_tracking_owner">
-                        <i class="fa fa-lg fa-user-o" title="Owner"/><field name="owner_id"/>
+                        <i class="fa fa-lg fa-user-o me-2" title="Owner"/><field name="owner_id"/>
                     </div>
                 </t>
             </templates>
