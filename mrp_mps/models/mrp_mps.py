@@ -101,9 +101,9 @@ class MrpProductionSchedule(models.Model):
             if not value:
                 return not (f['state'] == 'to_launch' and f['to_replenish'] or \
                     f['state'] == 'to_relaunch' or f['state'] == 'to_correct')
-            return value == "to_replenish" and f['state'] == 'to_launch' and f['to_replenish'] or \
-                value == "under_replenishment" and f['state'] == 'to_relaunch' or \
-                value == "excessive_replenishment" and f['state'] == 'to_correct'
+            return value == 'to_replenish' and f['state'] == 'to_launch' and f['to_replenish'] or \
+                value in ['to_replenish', 'under_replenishment'] and f['state'] == 'to_relaunch' or \
+                value == 'excessive_replenishment' and f['state'] == 'to_correct'
 
         ids = []
         for state in productions_schedules_states:
