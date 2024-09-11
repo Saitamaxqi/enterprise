@@ -760,3 +760,9 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         self.assertEqual(slot.start_datetime, datetime(2021, 1, 1, 11, 0))
         self.assertEqual(slot.end_datetime, datetime(2021, 1, 1, 16, 0))
         self.assertEqual(slot.allocated_hours, 4)
+
+    def test_allocated_hours_shift_duplication(self):
+        self.slot.resource_id = self.resource_joseph
+        self.assertEqual(self.slot.allocated_hours, 8)
+        slot2 = self.slot.copy({'resource_id': self.resource_bert.id})
+        self.assertEqual(slot2.allocated_hours, 4, "The allocated hours should have been recomputed with the new resource after copying the shift.")

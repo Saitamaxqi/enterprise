@@ -890,8 +890,8 @@ class PlanningSlot(models.Model):
 
     def copy(self, default=None):
         result = super().copy(default=default)
-        # force recompute of stored computed fields depending on start_datetime
-        if default and "start_datetime" in default:
+        # force recompute of stored computed fields depending on start_datetime and resource_id
+        if default and {'start_datetime', 'resource_id'} & default.keys():
             result._compute_allocated_hours()
         return result
 
