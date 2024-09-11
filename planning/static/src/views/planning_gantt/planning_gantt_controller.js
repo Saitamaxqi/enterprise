@@ -63,13 +63,7 @@ export class PlanningGanttController extends GanttController {
         const today = DateTime.local().startOf("day");
         if (scale.id !== "day" && globalStart <= today.endOf("day") && today <= globalStop) {
             let start = today;
-            let stop;
-            if (["week", "month"].includes(scale.id)) {
-                start = today.set({ hours: 8, minutes: 0, seconds: 0 });
-                stop = today.set({ hours: 17, minutes: 0, seconds: 0 });
-            } else {
-                stop = today.endOf(scale.interval);
-            }
+            let stop = today.endOf(scale.interval);
             const context = this.model.getDialogContext({ start, stop, withDefault: true });
             this.create(context);
             return;

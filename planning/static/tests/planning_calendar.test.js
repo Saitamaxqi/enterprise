@@ -1,7 +1,12 @@
 import { beforeEach, describe, expect, test, getFixture } from "@odoo/hoot";
-import { click, queryText } from "@odoo/hoot-dom";
+import { click, queryText, waitFor } from "@odoo/hoot-dom";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
-import { clickEvent, resizeEventToTime, toggleFilter } from "@web/../tests/views/calendar/calendar_test_helpers";
+import {
+    clickEvent,
+    resizeEventToTime,
+    toggleFilter,
+    clickDate,
+} from "@web/../tests/views/calendar/calendar_test_helpers";
 import {
     definePlanningModels,
     planningModels,
@@ -14,7 +19,8 @@ import {
     getService,
     mockService,
     mountWithCleanup,
-    onRpc
+    onRpc,
+    mountView,
 } from "@web/../tests/web_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
 import {
@@ -44,6 +50,10 @@ class PlanningSlot extends planningModels.PlanningSlot {
                     <field name="repeat" column_invisible="True"/>
                 </list>`,
         search: `<search/>`,
+        form: `<form>
+                    <field name="start_datetime"/>
+                    <field name="end_datetime"/>
+                </form>`,
     };
 }
 
@@ -156,6 +166,46 @@ test("planning calendar view: copy previous week", async () => {
     await click(".o_switch_view.o_calendar");
     await animationFrame();
     expect(".o_notification_body").toHaveCount(0);
+});
+
+test("Verify Hours in Planning Dialog When Clicking on Off Days and Working Days Calendar view", async () => {
+    onRpc("get_unusual_days", () => ({ "2019-03-03": true, "2019-03-09": true }));
+    await mountView({
+        resModel: "planning.slot",
+        type: "calendar",
+        arch: `<calendar class="o_planning_calendar_test"
+                    date_start="start_datetime"
+                    date_stop="end_datetime"
+                    color="color"
+                    mode="month"
+                    show_unusual_days="1"
+                    quick_create="1"
+                    quick_create_view_id="1"
+                    js_class="planning_calendar"
+                />`,
+    });
+
+    // click on dayoff day
+    await clickDate("2019-03-09");
+    await waitFor(".o_dialog .o_form_view");
+    expect(`.o_field_widget[name="start_datetime"] input`).toHaveValue("03/09/2019 00:00", {
+        message: "The start date should be the minimum time for the selected date.",
+    });
+    expect(`.o_field_widget[name="end_datetime"] input`).toHaveValue("03/09/2019 23:59", {
+        message: "The end date should be the maximum time for the selected date.",
+    });
+    await click(".modal-dialog .o_form_button_save");
+
+    // click on working day
+    await clickDate("2019-03-21");
+    await waitFor(".o_dialog .o_form_view");
+    expect(`.o_field_widget[name="start_datetime"] input`).toHaveValue("03/21/2019 00:00", {
+        message: "The start date should be the minimum time for the selected date.",
+    });
+    expect(`.o_field_widget[name="end_datetime"] input`).toHaveValue("03/21/2019 23:59", {
+        message: "The end date should be the maximum time for the selected date.",
+    });
+    await click(".modal-dialog .o_form_button_save");
 });
 
 test("Resize or Drag-Drop should open recurrence update wizard", async () => {

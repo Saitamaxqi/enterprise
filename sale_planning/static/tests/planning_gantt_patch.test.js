@@ -1,6 +1,6 @@
 import { defineMailModels, click } from "@mail/../tests/mail_test_helpers";
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { animationFrame, mockDate } from "@odoo/hoot-mock";
+import { animationFrame, mockDate, mockTimeZone } from "@odoo/hoot-mock";
 import { queryAll, queryAllTexts } from "@odoo/hoot-dom";
 import {
     contains,
@@ -181,11 +181,12 @@ test("Process domain for plan dialog", async function () {
 
 test("check default planned dates on the plan dialog", async function () {
     expect.assertions(4);
+    mockTimeZone(0);
     patchWithCleanup(SelectCreateDialog.prototype, {
         setup() {
             super.setup(...arguments);
             expect(this.props.context.default_start_datetime).toMatch(/^2021-10-11/);
-            expect(this.props.context.default_end_datetime).toMatch(/^2021-10-11/);
+            expect(this.props.context.default_end_datetime).toMatch(/^2021-10-12/);
             expect(this.props.context.focus_date).toMatch(/^2021-10-13/);
             expect(this.props.context.scale).toBe("week");
         },

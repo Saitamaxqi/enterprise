@@ -252,26 +252,6 @@ export class PlanningGanttRenderer extends GanttRenderer {
     /**
      * @override
      */
-    normalizeTimeRange(start, stop) {
-        const { scale } = this.model.metaData;
-        if (["week", "month"].includes(scale.unit)) {
-            return {
-                start:
-                    start.hour < 8
-                        ? start.set({ hours: 8, minutes: 0, seconds: 0, milliseconds: 0 })
-                        : start,
-                stop:
-                    stop.hour > 17
-                        ? stop.set({ hours: 17, minutes: 0, seconds: 0, milliseconds: 0 })
-                        : stop.plus({ second: 1 }),
-            };
-        }
-        return super.normalizeTimeRange(start, stop);
-    }
-
-    /**
-     * @override
-     */
     getGroupPillDisplayName(pill) {
         return formatFloatTime(pill.aggregateValue);
     }

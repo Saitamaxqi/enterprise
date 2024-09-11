@@ -544,6 +544,15 @@ class PlanningSlot(models.Model):
             else:
                 slot.write({'template_id': existing_templates.id})
 
+    def _get_non_working_days_bounds(self, start_datetime, end_datetime, resource=False):
+        timezone = resource.tz if resource else self.env.user.tz
+        start_date_in_user_tz = start_datetime.astimezone(pytz.timezone(timezone))
+        offset = start_date_in_user_tz.utcoffset().total_seconds() / 3600
+        return (
+            (start_datetime.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=None) + timedelta(hours=8 - offset)),
+            (end_datetime.replace(hour=0, minute=0, second=0, microsecond=0, tzinfo=None) + timedelta(hours=17 - offset))
+        )
+
     @api.model
     def _calculate_start_end_dates(self,
                                  start_datetime,
@@ -583,11 +592,15 @@ class PlanningSlot(models.Model):
             calendar_id = resource.calendar_id or company.resource_calendar_id
             work_interval = calendar_id._work_intervals_batch(start, end)[False]
             intervals = [(date_start, date_stop) for date_start, date_stop, attendance in work_interval]
-            if not intervals:
+            if not intervals and not self._context.get('planning_keep_default_datetime', False):
                 # If we are outside working hours, we do not edit the start/end_datetime
                 # Return the start/end times back at UTC and remove the tzinfo from the object
-                return (start.astimezone(pytz.utc).replace(tzinfo=None),
-                        end.astimezone(pytz.utc).replace(tzinfo=None))
+                return self._get_non_working_days_bounds(start, end, resource)
+
+        # start_datetime and end_datetime are from 00:00 to 23:59 in user timezone
+        # Converted in UTC, it gives an offset for any other timezone, _convert_datetime_timezone removes the offset
+        start = convert_datetime_timezone(start_datetime, user_tz) if start_datetime else user_tz.localize(self._default_start_datetime())
+        end = convert_datetime_timezone(end_datetime, user_tz) if end_datetime else user_tz.localize(self._default_end_datetime())
 
         # Get start and end in resource timezone so that it begins/ends at the same hour of the day as it would be in the user timezone
         # This is needed because _adjust_to_calendar takes start as datetime for the start of the day and end as end time for the end of the day
@@ -662,11 +675,15 @@ class PlanningSlot(models.Model):
         company = self.company_id or self.env.company
         work_interval = company.resource_calendar_id._work_intervals_batch(start, end)[False]
         intervals = [(date_start, date_stop) for date_start, date_stop, attendance in work_interval]
+
+        if not intervals:
+            return ()
+
         start_datetime, end_datetime = (start, end)
-        if intervals and (end_datetime-start_datetime).days == 0: # Then we want the first working day and keep the end hours of this day
+        if intervals and (end_datetime - start_datetime).days == 0:  # Then we want the first working day and keep the end hours of this day
             start_datetime = intervals[0][0]
             end_datetime = [stop for start, stop in intervals if stop.date() == start_datetime.date()][-1]
-        elif intervals and (end_datetime-start_datetime).days >= 0:
+        elif intervals and (end_datetime - start_datetime).days > 0:
             start_datetime = intervals[0][0]
             end_datetime = intervals[-1][1]
 
@@ -739,10 +756,14 @@ class PlanningSlot(models.Model):
                 start = pytz.utc.localize(start_datetime)
                 end = pytz.utc.localize(end_datetime) if end_datetime else self._default_end_datetime()
                 opening_hours = self._company_working_hours(start, end)
-                res['start_datetime'] = opening_hours[0].astimezone(pytz.utc).replace(tzinfo=None)
-
-                if 'end_datetime' in fields_list:
-                    res['end_datetime'] = opening_hours[1].astimezone(pytz.utc).replace(tzinfo=None)
+                if opening_hours:
+                    res['start_datetime'] = opening_hours[0].astimezone(pytz.utc).replace(tzinfo=None)
+                    if 'end_datetime' in fields_list:
+                        res['end_datetime'] = opening_hours[1].astimezone(pytz.utc).replace(tzinfo=None)
+                else:
+                    res['start_datetime'], end_datetime = self._get_non_working_days_bounds(start_datetime, end_datetime)
+                    if 'end_datetime' in fields_list:
+                        res['end_datetime'] = end_datetime
 
         return res
 

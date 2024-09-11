@@ -102,4 +102,11 @@ export class PlanningCalendarModel extends CalendarModel {
         }
         return context;
     }
+
+    /**
+     * @override
+     */
+    getAllDayDates(start, end) {
+        return [start.startOf('day'), end.endOf('day')];
+    }
 }

@@ -1,5 +1,5 @@
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
-import { click, hover, queryAll, queryAllTexts, queryFirst } from "@odoo/hoot-dom";
+import { click, hover, queryAll, queryAllTexts, queryFirst, waitFor } from "@odoo/hoot-dom";
 import { animationFrame, mockDate, mockTimeZone } from "@odoo/hoot-mock";
 import {
     clickSave,
@@ -153,6 +153,13 @@ function _getCreateViewArgsForGanttViewTotalsTests() {
 beforeEach(() => {
     ResourceResource._records = [{ id: 1, name: "Resource 1", employee_id: 1 }];
     HrEmployee._records = [{ id: 1, name: "Employee 1" }];
+    PlanningSlot._views = {
+        form: `<form>
+                    <field name="start_datetime"/>
+                    <field name="end_datetime"/>
+                </form>`,
+        list: `<list><field name="name"/></list>`,
+    };
     onRpc("has_group", () => true);
 });
 
@@ -795,6 +802,79 @@ test("Test highlight shifts added by executed action", async function () {
         message: "Shifts Planned facet should be still active.",
     });
     expect(".o_gantt_pill").toHaveCount(2, { message: "2 pills should be in the gantt view." });
+});
+
+test("Verify Hours in Planning Dialog When Clicking on cell for Off Days and Working Days in Gantt View", async function () {
+    mockDate("2022-10-13 00:00:00", +1);
+    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
+    await mountGanttView({
+        resModel: "planning.slot",
+        arch: `
+            <gantt
+                js_class="planning_gantt"
+                default_scale="month"
+                date_start="start_datetime"
+                date_stop="end_datetime"
+                plan="0"
+                display_unavailability="1"
+                default_group_by="resource_id"
+            />
+        `,
+    });
+    await hoverGridCell("14", "October 2022", "Open Shifts");
+    await clickCell("14", "October 2022", "Open Shifts");
+    await waitFor(".o_dialog .o_form_view");
+    expect(`.o_field_widget[name="start_datetime"] input`).toHaveValue("10/14/2022 00:00", {
+        message: "The start date should be the minimum time for the selected date.",
+    });
+    expect(`.o_field_widget[name="end_datetime"] input`).toHaveValue("10/15/2022 00:00", {
+        message: "The end date should be the maximum time for the selected date.",
+    });
+    await contains(`.modal-dialog .o_form_button_save`).click();
+});
+
+test("Verify Hours in Planning Dialog When Clicking 'New' Button for Off Days in Gantt View", async function () {
+    mockDate("2024-10-19 00:00:00", +1);
+    const unavailabilities = {
+        resource_id: {
+            false: [
+                {
+                    start: "2024-10-17 10:00:00",
+                    stop: "2024-10-20 14:00:00",
+                },
+            ],
+        },
+    };
+    onRpc("get_gantt_data", async ({ kwargs, parent }) => {
+        const result = await parent();
+        result.unavailabilities = unavailabilities;
+        return result;
+    });
+    onRpc("gantt_resource_work_interval", ganttResourceWorkIntervalRPC);
+    await mountGanttView({
+        resModel: "planning.slot",
+        arch: `
+            <gantt
+                js_class="planning_gantt"
+                default_scale="week"
+                date_start="start_datetime"
+                date_stop="end_datetime"
+                display_unavailability="1"
+                default_group_by="resource_id"
+            />
+        `,
+    });
+
+    click(".o_gantt_button_add.btn-primary");
+    await animationFrame();
+    await waitFor(".o_dialog .o_form_view");
+    expect(`.o_field_widget[name="start_datetime"] input`).toHaveValue("10/19/2024 00:00", {
+        message: "The start date should be the minimum time for the selected date",
+    });
+    expect(`.o_field_widget[name="end_datetime"] input`).toHaveValue("10/19/2024 23:59", {
+        message: "The end date should be the maximum time for the selected date.",
+    });
+    await contains(`.modal-dialog .o_form_button_save`).click();
 });
 
 test("The date should take into the account when created through the button in Gantt View", async function () {

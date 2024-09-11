@@ -52,9 +52,9 @@ class TestPlanning(TestCommonPlanning, MockEmail):
                 (0, 0, {'name': 'Wednesday Morning', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
                 (0, 0, {'name': 'Wednesday Lunch', 'dayofweek': '2', 'hour_from': 12, 'hour_to': 13, 'day_period': 'lunch'}),
                 (0, 0, {'name': 'Wednesday Afternoon', 'dayofweek': '2', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'}),
-                (0, 0, {'name': 'Thursday Morning', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Thursday Morning', 'dayofweek': '3', 'hour_from': 6, 'hour_to': 12, 'day_period': 'morning'}),
                 (0, 0, {'name': 'Thursday Lunch', 'dayofweek': '3', 'hour_from': 12, 'hour_to': 13, 'day_period': 'lunch'}),
-                (0, 0, {'name': 'Thursday Afternoon', 'dayofweek': '3', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Thursday Afternoon', 'dayofweek': '3', 'hour_from': 13, 'hour_to': 15, 'day_period': 'afternoon'}),
                 (0, 0, {'name': 'Friday Morning', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
                 (0, 0, {'name': 'Friday Lunch', 'dayofweek': '4', 'hour_from': 12, 'hour_to': 13, 'day_period': 'lunch'}),
                 (0, 0, {'name': 'Friday Afternoon', 'dayofweek': '4', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'})
@@ -173,14 +173,34 @@ class TestPlanning(TestCommonPlanning, MockEmail):
     def test_create_with_employee_outside_schedule(self):
         """ This test objective is to test the default values when creating a new shift for an employee when provided defaults are not within employee's calendar workdays """
         self.env.user.tz = 'UTC'
+        # Case 1: Create a planning slot on non-working days with a specific employee resource
         PlanningSlot = self.env['planning.slot'].with_context(
             tz='UTC',
             default_start_datetime='2019-06-26 00:00:00',
             default_end_datetime='2019-06-26 23:59:59',
             default_resource_id=self.resource_joseph.id)
         defaults = PlanningSlot.default_get(['resource_id', 'start_datetime', 'end_datetime'])
-        self.assertEqual(defaults.get('start_datetime'), datetime(2019, 6, 26, 00, 0), 'It should still be the default start_datetime 0am')
-        self.assertEqual(defaults.get('end_datetime'), datetime(2019, 6, 26, 23, 59, 59), 'It should adjust to employee calendar: 0am -> 9pm')
+        self.assertEqual(defaults.get('start_datetime'), datetime(2019, 6, 26, 8, 0), 'It should adjust to employee calendar: 0am -> 8pm')
+        self.assertEqual(defaults.get('end_datetime'), datetime(2019, 6, 26, 17, 0), 'It should adjust to employee calendar: 0am -> 5am')
+
+        # Case 2: Create a planning slot on non-working days without a specific employee resource
+        PlanningSlot = self.env['planning.slot'].with_context(
+            tz='UTC',
+            default_start_datetime='2019-12-07 00:00:00',
+            default_end_datetime='2019-12-08 23:59:59',
+        )
+        defaults = PlanningSlot.default_get(['resource_id', 'start_datetime', 'end_datetime'])
+
+        self.assertEqual(
+            defaults.get('start_datetime'),
+            datetime(2019, 12, 7, 8, 0),
+            'The start time should be adjusted to the default working hours: 8:00 AM on non-working days'
+        )
+        self.assertEqual(
+            defaults.get('end_datetime'),
+            datetime(2019, 12, 8, 17, 0),
+            'The end date should be adjusted to the default working hours: 17:00 on on non-working days'
+        )
 
     def test_create_without_employee(self):
         """ This test objective is to test the default values when creating a new shift when no employee is set """
@@ -191,8 +211,8 @@ class TestPlanning(TestCommonPlanning, MockEmail):
             default_end_datetime='2019-06-27 23:59:59',
             default_resource_id=False)
         defaults = PlanningSlot.default_get(['resource_id', 'start_datetime', 'end_datetime'])
-        self.assertEqual(defaults.get('start_datetime'), datetime(2019, 6, 27, 8, 0), 'It should adjust to employee calendar: 0am -> 9pm')
-        self.assertEqual(defaults.get('end_datetime'), datetime(2019, 6, 27, 17, 0), 'It should adjust to employee calendar: 0am -> 9pm')
+        self.assertEqual(defaults.get('start_datetime'), datetime(2019, 6, 27, 6, 0), 'It should adjust to employee calendar: 0am -> 6pm')
+        self.assertEqual(defaults.get('end_datetime'), datetime(2019, 6, 27, 15, 0), 'It should adjust to employee calendar: 0am -> 3pm')
 
     def test_unassign_employee_with_template(self):
         # we are going to put everybody in EDT, because if the employee has a different timezone from the company this workflow does not work.
