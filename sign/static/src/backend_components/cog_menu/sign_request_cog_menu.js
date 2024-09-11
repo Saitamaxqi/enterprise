@@ -54,12 +54,13 @@ export class SignRequestCogMenu extends Component {
 
 export const SignRequestCogMenuItem = {
     Component: SignRequestCogMenu,
-    isDisplayed: (props) => {
-        const is_mail_thread = props.searchModel.searchViewFields?.['message_ids'];
+    isDisplayed: async ({ config, searchModel }) => {
+        const is_mail_thread = searchModel.searchViewFields?.['message_ids'];
         return (
+            searchModel.resModel !== "sign.request" &&
             is_mail_thread &&
-            props.config.viewType === "form" &&
-            props.config.actionType === "ir.actions.act_window"
+            config.viewType === "form" &&
+            config.actionType === "ir.actions.act_window"
         );
     },
     groupNumber: 1,
