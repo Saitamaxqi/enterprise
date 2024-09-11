@@ -121,7 +121,7 @@
                         </group>
                         <group>
                             <field name="redirect_url" widget="url"/>
-                            <field name="redirect_url_text"  invisible="redirect_url == ''"/>
+                            <field name="redirect_url_text"  invisible="not redirect_url" required="bool(redirect_url)"/>
                             <field name="authorized_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                             <field name="group_ids" groups="sign.manage_template_access" widget="many2many_tags" />
                             <field name="user_id" domain="[('share', '=', False)]" groups="sign.manage_template_access" options="{'no_open': True}"/>

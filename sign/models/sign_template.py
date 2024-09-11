@@ -36,7 +36,7 @@ class SignTemplate(models.Model):
     color = fields.Integer()
     redirect_url = fields.Char(string="Redirect Link", default="",
         help="Optional link for redirection after signature")
-    redirect_url_text = fields.Char(string="Link Label", default="Open Link", translate=True,
+    redirect_url_text = fields.Char(string="Link Label", default="Close", translate=True,
         help="Optional text to display on the button link")
     signed_count = fields.Integer(compute='_compute_signed_in_progress_template')
     in_progress_count = fields.Integer(compute='_compute_signed_in_progress_template')
