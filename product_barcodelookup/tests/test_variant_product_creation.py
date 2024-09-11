@@ -1,3 +1,4 @@
+from odoo import Command
 from odoo.tests import tagged, Form, HttpCase
 
 
@@ -49,7 +50,7 @@ class TestVariantProductCreation(HttpCase):
 
             # check after removing group
             group_product = self.env.ref('product.group_product_variant', False)
-            group_product.write({'user_ids': [(3, self.env.user.id)]})
+            group_product.write({'implied_by_ids': [Command.clear()]})
 
         product = _create_product_lookup('Product without Variant')
         self.assertFalse(product.attribute_line_ids)
