@@ -8,15 +8,15 @@ class StockPicking(models.Model):
     def button_validate(self):
         res = super().button_validate()
         for picking in self:
-            if not picking.sale_id or picking.picking_type_code != 'outgoing':
+            if not picking.sale_id or picking.picking_type_code not in ('outgoing', 'dropship'):
                 continue
-            company_rec = self.env['res.company']._find_company_from_partner(picking.partner_id.id)
+            company_rec = self.env['res.company']._find_company_from_partner(picking.sale_id.partner_id.id)
             if company_rec and company_rec.intercompany_sync_delivery_receipt:
                 # Fetch linked Sale Order
                 sale_order = picking.sale_id
                 purchase_order = self.env['purchase.order'].sudo().search([('name', '=', sale_order.client_order_ref), ('company_id', '=', company_rec.id)])
                 # Find corresponding receipt in other company
-                receipts = purchase_order.picking_ids.filtered(lambda p: p.picking_type_code == 'incoming')
+                receipts = purchase_order.picking_ids.filtered(lambda p: p.picking_type_code in ('incoming', 'dropship'))
                 if not receipts:
                     continue
                 for move in picking.move_ids:

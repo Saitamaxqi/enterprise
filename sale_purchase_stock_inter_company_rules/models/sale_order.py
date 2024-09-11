@@ -26,3 +26,14 @@ class sale_order(models.Model):
         res['picking_type_id'] = picking_type_id.id
 
         return res
+
+
+class SaleOrderLine(models.Model):
+    _inherit = 'sale.order.line'
+
+    def _get_location_final(self):
+        partner_company = self.env['res.company']._find_company_from_partner(self.order_id.partner_id.id)
+        if partner_company and partner_company != self.company_id and self.order_id.partner_id != self.order_id.partner_shipping_id:
+            # Means that's we're in inter-company transaction -> Must sent to inter-company transit.
+            return self.order_id.partner_id.property_stock_customer
+        return super()._get_location_final()

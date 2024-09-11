@@ -35,3 +35,15 @@ class purchase_order(models.Model):
             }))
         res['product_custom_attribute_value_ids'] = pcavs_vals_list
         return res
+
+    def _get_destination_location(self):
+        self.ensure_one()
+        res = super()._get_destination_location()
+
+        if self.dest_address_id and self.sale_order_count:
+            sale_order = self._get_sale_orders()[0]
+            partner_company = self.env['res.company']._find_company_from_partner(sale_order.partner_id.id)
+            if partner_company and partner_company != self.company_id and self.dest_address_id != sale_order.partner_id:
+                # Means that's we're in inter-company transaction -> Must dropship to inter-company transit.
+                return sale_order.partner_id.property_stock_customer.id
+        return res
