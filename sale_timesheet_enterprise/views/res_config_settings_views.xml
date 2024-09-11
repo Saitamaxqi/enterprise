@@ -16,7 +16,7 @@
                 </setting>
                 <setting help="Set a billable time target for your employees. If their current rate falls below their target, it will be highlighted in red." name="timesheet_show_rates" company_dependent="1">
                     <field name="timesheet_show_rates"/>
-                    <button name="%(hr.open_view_employee_list_my)d" context="{'searchpanel_default_company_id': company_id}" string="Set employee billable time targets" type="action" class="btn-link" icon="oi-arrow-right" invisible="not timesheet_show_rates"/>
+                    <button name="%(action_open_view_employee)d" context="{'searchpanel_default_company_id': company_id}" string="Set employee billable time targets" type="action" class="btn-link" icon="oi-arrow-right" invisible="not timesheet_show_rates"/>
                 </setting>
                 <setting help="Boost productivity and competitiveness by displaying a leaderboard based on the billing rates." name="timesheet_show_leaderboard" invisible="not timesheet_show_rates" company_dependent="1">
                     <field name="timesheet_show_leaderboard"/>
