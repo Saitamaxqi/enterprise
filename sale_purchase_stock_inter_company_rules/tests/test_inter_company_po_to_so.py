@@ -7,6 +7,12 @@ from .common import TestInterCompanyRulesCommonStock
 
 @tagged('post_install', '-at_install')
 class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.env['res.currency']._activate_group_multi_currency()
+
     def test_01_inter_company_purchase_order_with_stock_picking(self):
         partner = self.env['res.partner'].create({
             'name': 'Odoo',

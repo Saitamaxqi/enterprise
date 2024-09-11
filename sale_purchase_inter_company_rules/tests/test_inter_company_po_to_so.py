@@ -4,6 +4,11 @@ from odoo.tests import Form, tagged
 
 @tagged('post_install', '-at_install')
 class TestInterCompanyPurchaseToSale(TestInterCompanyRulesCommonSOPO):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+
+        cls.env['res.currency']._activate_group_multi_currency()
 
     def generate_purchase_order(self, company, partner):
         """ Generate purchase order and confirm its state """
