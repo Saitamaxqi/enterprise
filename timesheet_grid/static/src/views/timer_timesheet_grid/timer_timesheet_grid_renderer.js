@@ -149,9 +149,9 @@ export class TimerTimesheetGridRenderer extends TimesheetGridRenderer {
         const weeklyOvertime = this.getWeeklyOvertime();
         if (weeklyOvertime == null) {
             return super.getFooterTotalCellClasses(grandTotal);
-        } else if (weeklyOvertime < 0) {
+        } else if (weeklyOvertime < -0.00001) {
             return "text-bg-danger";
-        } else if (weeklyOvertime === 0) {
+        } else if (weeklyOvertime > -0.00001 && weeklyOvertime < 0.00001) {
             return "text-bg-success";
         } else {
             return "text-bg-warning";

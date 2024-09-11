@@ -97,10 +97,15 @@
         </xpath>
         <xpath expr="//div[hasclass('o_grid_bar_chart_total_title')]/span" position="attributes">
             <attribute name="t-att-class">{
-                'text-success' : column.grandTotal === column._dataPoint.data.workingHours.daily[column.value],
-                'text-danger' : (column.grandTotal lt column._dataPoint.data.workingHours.daily[column.value]) or (getUnavailableClass(column) === 'o_grid_unavailable' and column.grandTotal gt 0),
-                'text-warning' : column.grandTotal gt column._dataPoint.data.workingHours.daily[column.value],
+                'text-success' : column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] lt 0.00001
+                    and column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] gt -0.00001,
+                'text-danger' : (column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] lt -0.00001)
+                    or (getUnavailableClass(column) === 'o_grid_unavailable' and column.grandTotal gt 0),
+                'text-warning' : column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] gt 0.00001,
             }</attribute>
+        </xpath>
+        <xpath expr="//div[hasclass('o_grid_bar_chart_total_title')]/span" position="after">
+            <a t-esc="column.grandTotal - column._dataPoint.data.workingHours.daily[column.value]"/>
         </xpath>
     </t>
     <t t-name="timesheet_grid.TimerGridTotal" t-inherit="web_grid.barChart">
@@ -111,7 +116,8 @@
             />
         </xpath>
         <xpath expr="//div[hasclass('o_grid_bar_chart_total_pill')]" position="after">
-            <span t-if="column.grandTotal !== column.model.data.workingHours.daily[column.value]"
+            <span t-if="column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] gt 0.00001
+                    or column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] lt -0.00001"
                    class="o_grid_bar_chart_overtime position-absolute top-50 start-50 translate-middle px-2 rounded-pill bg-white fw-bolder transition-base"
                    t-att-class="getDailyOvertime(column) &lt; 0 ? 'text-danger':'text-warning'"
                    title="Daily overtime"> <t t-esc="formatDailyOvertime(column)"/>
@@ -119,7 +125,7 @@
         </xpath>
         <xpath expr="//div[hasclass('o_grid_row_total') and hasclass('o_grid_column_total')]/div" position="inside">
             <t t-set="weeklyOvertime" t-value="getWeeklyOvertime()"/>
-            <span t-if="weeklyOvertime !== 0"
+            <span t-if="weeklyOvertime gt 0.00001 or weeklyOvertime lt -0.00001"
                    class="o_grid_bar_chart_overtime position-absolute top-50 start-50 translate-middle px-2 rounded-pill bg-white fw-bolder transition-base"
                    t-att-class="weeklyOvertime > 0 ? 'text-warning':'text-danger'"
                    title="Weekly overtime">
