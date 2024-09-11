@@ -297,7 +297,6 @@ function getInfoFromRootNode(rootNode) {
         createAction: attrs.on_create || null,
         dateStartField: attrs.date_start,
         dateStopField: attrs.date_stop,
-        defaultGroupBy: attrs.default_group_by ? attrs.default_group_by.split(",") : [],
         defaultRange: attrs.default_range,
         defaultScale: attrs.default_scale || "month",
         dependencyEnabled,

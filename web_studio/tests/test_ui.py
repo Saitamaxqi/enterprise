@@ -438,7 +438,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
                     <page>
                         <field name="user_ids" context="{'list_view_ref': '%s'}" />
                     </page>
-                </notebook> 
+                </notebook>
             </sheet>
         </form>''' % (user_view_xml_id.complete_name, user_view_xml_id.complete_name)
         studio_view = _get_studio_view(self.testView)
@@ -917,6 +917,35 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
                 <field name="title" invisible="{title_modifiers}"/>
              </list>
         '''.format(title_modifiers="display_name == &quot;Robert&quot;")
+
+        assertViewArchEqual(self, arch, expected)
+
+    def test_set_view_default_group_by(self):
+        self.testViewList = self.env["ir.ui.view"].create({
+            "name": "simple partner",
+            "model": "res.partner",
+            "type": "list",
+            "arch": '''
+                <list>
+                    <field name="display_name" />
+                    <field name="title" />
+                </list>
+            '''
+        })
+        self.testAction.write({
+            "view_ids": [
+                Command.clear(),
+                Command.create({"view_id": self.testViewList.id, "view_mode": "list"}),
+            ]
+        })
+        self.start_tour("/odoo?debug=tests", 'web_studio_set_view_default_group_by', login="admin", timeout=200)
+        arch = self.env[self.testViewList.model].with_context(studio=True).get_view(self.testViewList.id, self.testViewList.type)["arch"]
+        expected = '''
+            <list default_group_by="active,city">
+                <field name="display_name"/>
+                <field name="title"/>
+             </list>
+        '''
 
         assertViewArchEqual(self, arch, expected)
 

@@ -898,11 +898,7 @@ export class GanttModel extends Model {
             const field = metaData.fields[fieldName];
             return field?.type !== "properties";
         });
-        groupedBy = this._filterDateIngroupedBy(metaData, groupedBy);
-        if (!groupedBy.length) {
-            groupedBy = metaData.defaultGroupBy;
-        }
-        return groupedBy;
+        return this._filterDateIngroupedBy(metaData, groupedBy);
     }
 
     _getDefaultFocusDate(metaData, searchParams, scaleId) {

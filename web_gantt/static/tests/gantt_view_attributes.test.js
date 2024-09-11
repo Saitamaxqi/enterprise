@@ -739,6 +739,8 @@ test("default_group_by attribute", async () => {
         arch: `<gantt date_start="start" date_stop="stop" default_group_by="user_id"/>`,
     });
 
+    expect(`.o_searchview_facet`).toHaveCount(1);
+    expect(`.o_searchview_facet`).toHaveText("Assign To");
     const { rows } = getGridContent();
     expect(rows).toEqual([
         {
@@ -787,6 +789,7 @@ test("default_group_by attribute with groupBy", async () => {
         groupBy: ["project_id"],
     });
 
+    expect(`.o_searchview_facet`).toHaveCount(0);
     const { rows } = getGridContent();
     expect(rows).toEqual([
         {
@@ -833,6 +836,8 @@ test("default_group_by attribute with 2 fields", async () => {
         arch: `<gantt date_start="start" date_stop="stop" default_group_by="user_id,project_id"/>`,
     });
 
+    expect(`.o_searchview_facet`).toHaveCount(1);
+    expect(`.o_searchview_facet`).toHaveText("Assign To\n>\nProject");
     const { rows } = getGridContent();
     expect(rows).toEqual([
         {

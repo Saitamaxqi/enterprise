@@ -2437,7 +2437,7 @@ QUnit.module(
 
             await click(
                 target,
-                ".o_web_studio_property_default_group_by .o_select_menu_toggler_clear"
+                ".o_web_studio_property_default_group_by .o_tag .o_delete i"
             );
 
             assert.containsNone(

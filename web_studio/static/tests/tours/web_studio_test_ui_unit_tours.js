@@ -1,6 +1,6 @@
 import { registry } from "@web/core/registry";
 import { stepNotInStudio, assertEqual } from "@web_studio/../tests/tours/tour_helpers";
-import { queryFirst, drag, waitFor } from "@odoo/hoot-dom";
+import { queryAll, queryFirst, queryOne, drag, waitFor } from "@odoo/hoot-dom";
 
 registry
     .category("web_tour.tours")
@@ -416,6 +416,85 @@ registry.category("web_tour.tours").add("web_studio_set_tree_node_conditional_in
         },
         {
             trigger: ".o_web_studio_list_view_editor th[data-name='title']",
+        },
+    ],
+});
+
+registry.category("web_tour.tours").add("web_studio_set_view_default_group_by", {
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_list_view",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item .o_nav_entry",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_view",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_property[name='default_group_by'] .o_select_menu_toggler",
+            run: "click",
+        },
+        {
+            trigger: ".o-dropdown-item:contains('Active (active)')",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_leave > a",
+            run: "click",
+        },
+        {
+            trigger: ".o_searchview_facet",
+            run() {
+                assertEqual(queryAll(".o_group_name").length, 1);
+                assertEqual(queryAll(".o_searchview_facet").length, 1);
+                assertEqual(queryOne(".o_searchview_facet").textContent, "Active");
+            },
+        },
+        {
+            trigger: ".o_web_studio_navbar_item > .o_nav_entry",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_view",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_property[name='default_group_by'] .o_select_menu_toggler",
+            run: "click",
+        },
+        {
+            trigger: ".o-dropdown-item:contains('City (city)')",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_leave > a",
+            run: "click",
+        },
+        {
+            trigger: ".o_searchview_facet",
+            run() {
+                assertEqual(queryAll(".o_searchview_facet").length, 1);
+                assertEqual(queryOne(".o_searchview_facet").textContent, "Active>City");
+            },
+        },
+        {
+            trigger: ".o_group_name > div",
+            run: "click",
+        },
+        {
+            trigger: ".o_group_name:eq(1)",
+            run() {
+                if (queryAll(".o_group_name").length < 2) {
+                    throw new Error("There should be at least 2 group headers");
+                }
+            },
         },
     ],
 });
@@ -1781,14 +1860,15 @@ registry.category("web_tour.tours").add("web_studio_test_create_related", {
         },
         {
             trigger: ".modal .o_model_field_selector_value",
-            run: "click"
+            run: "click",
         },
         {
             trigger: ".o_model_field_selector_popover_search input",
-            run: "edit Related Company"
+            run: "edit Related Company",
         },
         {
-            trigger: ".o_model_field_selector_popover_item[data-name='parent_id'] .o_model_field_selector_popover_relation_icon",
+            trigger:
+                ".o_model_field_selector_popover_item[data-name='parent_id'] .o_model_field_selector_popover_relation_icon",
             run: "click",
         },
         {
@@ -1796,21 +1876,22 @@ registry.category("web_tour.tours").add("web_studio_test_create_related", {
         },
         {
             trigger: ".o_model_field_selector_popover_search input",
-            run: "edit Contact"
+            run: "edit Contact",
         },
         {
-            trigger: ".o_model_field_selector_popover_item[data-name='child_ids'] .o_model_field_selector_popover_item_name",
-            run: "click"
+            trigger:
+                ".o_model_field_selector_popover_item[data-name='child_ids'] .o_model_field_selector_popover_item_name",
+            run: "click",
         },
         {
             trigger: ".modal footer button.btn-primary",
-            run: "click"
+            run: "click",
         },
         {
             trigger: ".o_web_studio_view_renderer .o_field_widget.o_field_one2many",
-        }
-    ]
-})
+        },
+    ],
+});
 
 registry.category("web_tour.tours").add("web_studio_test_negated_groups", {
     steps: () => [
@@ -1838,14 +1919,16 @@ registry.category("web_tour.tours").add("web_studio_test_negated_groups", {
             run: "click",
         },
         {
-            trigger: ".o_web_studio_sidebar [name='negated_groups_id'] .o_badge:contains(studio has group)",
+            trigger:
+                ".o_web_studio_sidebar [name='negated_groups_id'] .o_badge:contains(studio has group)",
         },
         {
             trigger: ".o_web_studio_sidebar [name='negated_groups_id'] .o_delete",
             run: "click",
         },
         {
-            trigger: ".o_web_studio_sidebar [name='negated_groups_id']:not(:contains(studio has group))",
+            trigger:
+                ".o_web_studio_sidebar [name='negated_groups_id']:not(:contains(studio has group))",
         },
         {
             trigger: ".o_web_studio_sidebar [name='negated_groups_id'] input",
@@ -1856,7 +1939,8 @@ registry.category("web_tour.tours").add("web_studio_test_negated_groups", {
             run: "click",
         },
         {
-            trigger: ".o_web_studio_sidebar [name='negated_groups_id'] .o_badge:contains(Administration / Access Rights)",
-        }
+            trigger:
+                ".o_web_studio_sidebar [name='negated_groups_id'] .o_badge:contains(Administration / Access Rights)",
+        },
     ],
 });

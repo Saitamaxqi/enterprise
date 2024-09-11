@@ -210,6 +210,12 @@ export class ViewEditorModel extends Reactive {
 
             const context = this._subviewInfo ? this._subviewInfo.context : editedAction.context;
             const searchModel = this.editorInfo.editor.SearchModel || SearchModel;
+            let defaultGroupBy = [];
+            if (!this.isEditingSubview) {
+                defaultGroupBy = this.xmlDoc.firstElementChild.hasAttribute("default_group_by")
+                    ? this.xmlDoc.firstElementChild.getAttribute("default_group_by").split(",")
+                    : [];
+            }
             return {
                 context: { ...context, studio: 1 },
                 resModel: this.resModel,
@@ -219,6 +225,7 @@ export class ViewEditorModel extends Reactive {
                     this.mode !== "interactive",
                 display: { controlPanel: false, searchPanel: false },
                 globalState,
+                defaultGroupBy,
             };
         });
 
@@ -301,7 +308,13 @@ export class ViewEditorModel extends Reactive {
     }
 
     get studioViewProps() {
-        const key = buildKey(this.viewType, this.resModel, this.mode, this.isEditingSubview);
+        const key = buildKey(
+            this.viewType,
+            this.resModel,
+            this.mode,
+            this.isEditingSubview,
+            this.isEditingSubview ? false : this.arch
+        );
         return this.__getDefaultStudioViewProps(key);
     }
 

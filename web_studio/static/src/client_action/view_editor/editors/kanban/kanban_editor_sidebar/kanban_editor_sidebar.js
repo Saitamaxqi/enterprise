@@ -133,6 +133,7 @@ export class KanbanEditorSidebar extends Component {
                 (field) => field.store
             ),
             required: false,
+            multiSelect: true,
         };
     }
 
@@ -180,7 +181,7 @@ export class KanbanEditorSidebar extends Component {
     }
 
     editDefaultGroupBy(value) {
-        this.editAttribute(value || "", "default_group_by");
+        this.editAttribute(value.join(","), "default_group_by");
     }
 
     editColor(value) {

@@ -129,4 +129,8 @@ export class ListEditorSidebar extends Component {
     onAttributeChanged(value, name) {
         return this.editArchAttributes({ [name]: value });
     }
+
+    editDefaultGroupBy(value) {
+        this.onAttributeChanged(value.join(","), "default_group_by");
+    }
 }

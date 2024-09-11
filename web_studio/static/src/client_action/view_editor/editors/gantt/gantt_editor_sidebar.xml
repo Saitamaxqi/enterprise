@@ -64,7 +64,7 @@
                 <Property
                     name="'default_group_by'"
                     type="'selection'"
-                    value="modelParams.defaultGroupBy"
+                    value="viewEditorModel.studioViewProps.defaultGroupBy"
                     childProps="{ choices: fieldsChoices, multiSelect: true }"
                     onChange.bind="onDefaultGroupByChanged"
                 >

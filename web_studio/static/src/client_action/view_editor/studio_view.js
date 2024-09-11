@@ -27,6 +27,7 @@ export class StudioView extends Component {
             searchViewFields: this.props.searchViewFields,
             irFilters: this.props.searchViewIrFilters,
             display: this.props.display,
+            defaultGroupBy: this.props.defaultGroupBy,
         };
         this.viewEditorModel = this.env.viewEditorModel;
 

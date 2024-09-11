@@ -195,7 +195,6 @@ const kanbanEditor = {
     prepareForDrag: prepareForKanbanDrag,
     props(genericProps, editor, config) {
         const props = kanbanView.props(genericProps, editor, config);
-        props.defaultGroupBy = props.archInfo.defaultGroupBy;
         props.Model = makeModelErrorResilient(OneRecordModel);
         props.limit = 1;
         props.Renderer = KanbanEditorRenderer;
