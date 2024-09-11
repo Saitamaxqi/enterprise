@@ -15,6 +15,13 @@ class AccountMove(models.Model):
 
         cr = self.env.cr
         create_column(cr, "account_move", "l10n_de_datev_main_account_id", "int4")
+
+        dach_companies = self.env['res.company'].search([
+            ('account_fiscal_country_id.code', 'in', ('DE', 'AT', 'CH')),
+        ])
+        if not dach_companies:
+            return super()._auto_init()
+
         # If move has an invoice, return invoice's account_id
         cr.execute(
             """
@@ -30,9 +37,12 @@ class AccountMove(models.Model):
                               ON a.id = l.account_id
                            WHERE m.move_type in ('out_invoice', 'out_refund', 'in_refund', 'in_invoice', 'out_receipt', 'in_receipt')
                              AND a.account_type in ('asset_receivable', 'liability_payable')
+                             AND m.company_id IN %(dach_company_ids)s
                        ) r
                 WHERE id = r.mid
-            """)
+            """,
+            {'dach_company_ids': tuple(dach_companies.ids)},
+        )
 
         # If move belongs to a bank journal, return the journal's account (debit/credit should normally be the same)
         cr.execute(
@@ -47,10 +57,13 @@ class AccountMove(models.Model):
                        ON m.journal_id = j.id
                     WHERE j.type = 'bank'
                       AND j.default_account_id IS NOT NULL
+                      AND m.company_id IN %(dach_company_ids)s
                    ) r
              WHERE id = r.mid
                AND l10n_de_datev_main_account_id IS NULL
-            """)
+            """,
+            {'dach_company_ids': tuple(dach_companies.ids)},
+        )
 
         # If the move is an automatic exchange rate entry, take the gain/loss account set on the exchange journal
         cr.execute("""
@@ -68,13 +81,16 @@ class AccountMove(models.Model):
                         ON c.currency_exchange_journal_id = j.id
                      WHERE j.type='general'
                        AND l.account_id = j.default_account_id
+                       AND m.company_id IN %(dach_company_ids)s
                      GROUP BY l.move_id,
                               l.account_id
                     HAVING count(*)=1
                    ) r
              WHERE id = r.mid
                AND l10n_de_datev_main_account_id IS NULL
-            """)
+            """,
+            {'dach_company_ids': tuple(dach_companies.ids)},
+        )
 
         # Look for an account used a single time in the move, that has no originator tax
         query = """
@@ -85,16 +101,17 @@ class AccountMove(models.Model):
                            min(l.account_id) AS aid
                       FROM account_move_line l
                      WHERE {}
+                       AND l.company_id IN %(dach_company_ids)s
                      GROUP BY move_id
                     HAVING count(*)=1
                    ) r
              WHERE id = r.mid
                AND m.l10n_de_datev_main_account_id IS NULL
             """
-        cr.execute(query.format("l.debit > 0"))
-        cr.execute(query.format("l.credit > 0"))
-        cr.execute(query.format("l.debit > 0 AND l.tax_line_id IS NULL"))
-        cr.execute(query.format("l.credit > 0 AND l.tax_line_id IS NULL"))
+        cr.execute(query.format("l.debit > 0"), {'dach_company_ids': tuple(dach_companies.ids)})
+        cr.execute(query.format("l.credit > 0"), {'dach_company_ids': tuple(dach_companies.ids)})
+        cr.execute(query.format("l.debit > 0 AND l.tax_line_id IS NULL"), {'dach_company_ids': tuple(dach_companies.ids)})
+        cr.execute(query.format("l.credit > 0 AND l.tax_line_id IS NULL"), {'dach_company_ids': tuple(dach_companies.ids)})
 
         return super()._auto_init()
 
@@ -102,6 +119,8 @@ class AccountMove(models.Model):
     def _get_datev_account(self):
         for move in self:
             move.l10n_de_datev_main_account_id = value = False
+            if move.country_code not in ('DE', 'AT', 'CH'):
+                continue
             # If move has an invoice, return invoice's account_id
             if move.is_invoice(include_receipts=True):
                 payment_term_lines = move.line_ids.filtered(
@@ -122,13 +141,8 @@ class AccountMove(models.Model):
                     continue
 
             # Look for an account used a single time in the move, that has no originator tax
-            aml_debit = self.env['account.move.line']
-            aml_credit = self.env['account.move.line']
-            for aml in move.line_ids:
-                if aml.debit > 0:
-                    aml_debit += aml
-                if aml.credit > 0:
-                    aml_credit += aml
+            aml_debit = move.line_ids.filtered(lambda l: l.debit > 0)
+            aml_credit = move.line_ids.filtered(lambda l: l.credit > 0)
             if len(aml_debit.account_id) == 1:
                 value = aml_debit.account_id
             elif len(aml_credit.account_id) == 1:
