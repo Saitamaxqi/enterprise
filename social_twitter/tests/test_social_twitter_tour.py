@@ -1,20 +1,22 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
-from json import dumps as json_dumps
-import requests
 from contextlib import contextmanager
-from unittest.mock import patch
 from datetime import datetime
+from json import dumps as json_dumps
+from unittest.mock import patch
 
-from odoo.tests.common import tagged, HttpCase
+import requests
 
 from odoo.addons.mail.tests.common import mail_new_test_user
+from odoo.tests.common import tagged, HttpCase
 
 
 @tagged('-at_install', 'post_install')
 class TestSocialTwitter(HttpCase):
     def test_anti_spam_system(self):
+        if self.env['ir.module.module']._get('social_demo').state == 'installed':
+            self.skipTest("social_demo overrides all twitter content with fake data")
+
         self.social_manager = mail_new_test_user(
             self.env, name='Gustave Doré', login='social_manager', email='social.manager@example.com',
             groups='social.group_social_manager,base.group_user', password='social_manager',
