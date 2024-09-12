@@ -23,7 +23,7 @@
                 domain="definition.domain"
                 onUpdate.bind="onDomainUpdate"
             />
-            <div class="o-section" t-if="definition.sortedColumn">
+            <div class="o-section" t-if="hasValidSortedColumn">
                 <div class="o-section-title">Sorting</div>
                 <div t-esc="formatSort()"/>
             </div>

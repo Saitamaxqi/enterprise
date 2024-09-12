@@ -83,6 +83,35 @@ test("Pivot properties panel shows descending sorting", async function () {
     expect(pivotSorting.children[1]).toHaveText("Probability (descending)");
 });
 
+test("Removing the measure removes the sortedColumn", async function () {
+    const { env, pivotId, model } = await createSpreadsheetFromPivotView({
+        actions: async () => {
+            await contains("thead .o_pivot_measure_row").click();
+        },
+    });
+    env.openSidePanel("PivotSidePanel", { pivotId });
+    await animationFrame();
+    expect(model.getters.getPivot(pivotId).definition.sortedColumn).not.toBe(undefined);
+
+
+    await contains(".pivot-measure .fa-trash").click();
+    expect(model.getters.getPivot(pivotId).definition.sortedColumn).toBe(undefined);
+});
+
+test("Removing a column removes the sortedColumn", async function () {
+    const { env, pivotId, model } = await createSpreadsheetFromPivotView({
+        actions: async () => {
+            await contains("thead .o_pivot_measure_row").click();
+        },
+    });
+    env.openSidePanel("PivotSidePanel", { pivotId });
+    await animationFrame();
+
+    expect(model.getters.getPivot(pivotId).definition.sortedColumn).not.toBe(undefined);
+    await contains(".pivot-dimension .fa-trash").click();
+    expect(model.getters.getPivot(pivotId).definition.sortedColumn).toBe(undefined);
+});
+
 test("Open pivot properties properties with non-loaded field", async function () {
     const PivotUIPlugin = coreViewsPluginRegistry.get("pivot_ui");
     const { model, env, pivotId } = await createSpreadsheetFromPivotView();

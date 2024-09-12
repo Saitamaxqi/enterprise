@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
 import { components, helpers, stores, hooks } from "@odoo/o-spreadsheet";
@@ -45,6 +43,14 @@ export class PivotDetailsSidePanel extends Component {
     /** @returns {import("@spreadsheet/pivot/odoo_pivot").default} */
     get pivot() {
         return this.store.pivot;
+    }
+
+    get hasValidSortedColumn() {
+        const definition = this.pivot.definition;
+        return (
+            definition?.sortedColumn &&
+            definition.measures.find((m) => m.fieldName === definition.sortedColumn.measure)
+        );
     }
 
     formatSort() {
