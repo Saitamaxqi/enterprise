@@ -38,7 +38,7 @@ class CustomerPortal(portal.CustomerPortal):
         values = self._prepare_portal_layout_values()
         partner_id = request.env.user.partner_id
         SignRequestItem = request.env['sign.request.item'].sudo()
-        default_domain = [('partner_id', '=', partner_id.id), '|', ('state', '=', 'completed'), ('is_mail_sent', '=', True)]
+        default_domain = [('partner_id', '=', partner_id.id), '|', ('state', '=', 'completed'), ('is_mail_sent', '=', True), ('sign_request_id.state', '!=', 'expired')]
 
         searchbar_sortings = {
             'new': {'label': _('Newest'), 'order': 'sign_request_id desc'},
