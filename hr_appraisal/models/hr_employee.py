@@ -60,10 +60,10 @@ class HrEmployee(models.Model):
         for employee in self:
             employee.goals_count = result.get(employee.id, 0)
 
-    @api.depends('ongoing_appraisal_count', 'company_id.appraisal_plan')
+    @api.depends('ongoing_appraisal_count', 'company_id.appraisal_plan', 'company_id.duration_after_recruitment', 'company_id.duration_first_appraisal', 'company_id.duration_next_appraisal')
     def _compute_next_appraisal_date(self):
         self.filtered('ongoing_appraisal_count').next_appraisal_date = False
-        employees_without_appraisal = self.filtered(lambda e: e.ongoing_appraisal_count == 0)
+        employees_without_appraisal = self.filtered(lambda e: e.ongoing_appraisal_count == 0 and e.company_id.appraisal_plan)
         dates = employees_without_appraisal._upcoming_appraisal_creation_date()
         for employee in employees_without_appraisal:
             employee.next_appraisal_date = dates[employee.id]
