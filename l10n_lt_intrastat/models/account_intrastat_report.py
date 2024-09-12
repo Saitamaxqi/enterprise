@@ -8,8 +8,8 @@ from odoo.exceptions import UserError, RedirectWarning
 from odoo.tools import SQL
 
 
-class AccountIntrastatReportHandler(models.AbstractModel):
-    _inherit = 'account.intrastat.report.handler'
+class AccountIntrastatGoodsReportHandler(models.AbstractModel):
+    _inherit = 'account.intrastat.goods.report.handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)
@@ -50,12 +50,8 @@ class AccountIntrastatReportHandler(models.AbstractModel):
         # Generate XML content
         report = self.env['account.report'].browse(options['report_id'])
         options = report.get_options(previous_options={**options, 'export_mode': 'file'})
-        date_1 = fields.Date.to_date(options['date']['date_from'])
-        date_2 = fields.Date.to_date(options['date']['date_to'])
-        final_day_month = date_1 + relativedelta(day=31)
-        if date_1.day != 1 or date_2 != final_day_month:
-            raise UserError(_('Wrong date range selected. The intrastat declaration export has to be done monthly.'))
-        date = date_1.strftime('%Y-%m')
+        self._check_date_range(options, allow_quarterly=False)
+        date = fields.Date.to_date(options['date']['date_from']).strftime('%Y-%m')
 
         company = self.env.company
         user = self.env.user

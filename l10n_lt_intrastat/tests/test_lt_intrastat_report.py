@@ -17,7 +17,7 @@ class TestLTIntrastatReportCommon(TestAccountReportsCommon):
         cls.company_data['company'].company_registry = '0123456789'
         italy = cls.env.ref('base.it')
         cls.report = cls.env.ref('account_intrastat.intrastat_report')
-        cls.report_handler = cls.env['account.intrastat.report.handler']
+        cls.report_handler = cls.env['account.intrastat.goods.report.handler']
         cls.partner_a = cls.env['res.partner'].create({
             'name': "Miskatonic University",
             'country_id': italy.id,

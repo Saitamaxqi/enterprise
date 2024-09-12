@@ -15,7 +15,7 @@ class TestDKIntrastatReport(TestAccountReportsCommon):
         cls.company_data['company'].country_id = cls.env.ref('base.dk')
         belgium = cls.env.ref('base.be')
         cls.report = cls.env.ref('account_intrastat.intrastat_report')
-        cls.report_handler = cls.env['account.intrastat.report.handler']
+        cls.report_handler = cls.env['account.intrastat.goods.report.handler']
 
         cls.partner_a = cls.env['res.partner'].create({
             'name': 'SUPER BELGIAN PARTNER',

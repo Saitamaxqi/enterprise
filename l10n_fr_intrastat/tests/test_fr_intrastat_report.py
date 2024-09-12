@@ -22,7 +22,7 @@ class TestFRIntrastatReport(TestAccountReportsCommon):
             'intrastat_region_id': cls.env.ref('l10n_fr_intrastat.intrastat_region_01').id,
         })
         cls.report = cls.env.ref('account_intrastat.intrastat_report')
-        cls.report_handler = cls.env['account.intrastat.report.handler']
+        cls.report_handler = cls.env['account.intrastat.goods.report.handler']
         cls.partner_a = cls.env['res.partner'].create({
             'name': "Miskatonic University",
             'country_id': italy.id,

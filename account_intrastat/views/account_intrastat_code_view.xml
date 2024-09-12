@@ -38,6 +38,7 @@
                     <filter string="Transport" domain="[('type','=','transport')]" name="type_transport"/>
                     <filter string="Transaction" domain="[('type','=','transaction')]" name="type_transaction"/>
                     <filter string="Region" domain="[('type','=','region')]" name="type_region"/>
+                    <filter string="Service" domain="[('type','=','service')]" name="type_service"/>
                     <filter name="group_by_type" string="By type" context="{'group_by': 'type'}"/>
                     <filter name="group_by_country" string="By country" context="{'group_by': 'country_id'}"/>
                     <filter name="group_by_supplementary_unit" string="Supplementary Unit" context="{'group_by': 'supplementary_unit'}"/>
@@ -69,6 +70,7 @@
                 <filter name="type_transport" position="replace"/>
                 <filter name="type_transaction" position="replace"/>
                 <filter name="type_region" position="replace"/>
+                <filter name="type_service" position="replace"/>
                 <filter name="group_by_type" position="replace"/>
             </field>
         </record>

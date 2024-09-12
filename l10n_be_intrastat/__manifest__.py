@@ -11,8 +11,11 @@ Adds the possibility to specify the origin country of goods and the partner VAT 
     """,
     'depends': ['l10n_be', 'account_intrastat'],
     'data': [
+        'data/account.intrastat.code.csv',
         'data/code_region_data.xml',
         'data/intrastat_export.xml',
+        'data/intrastat_report_services_f02cms.xml',
+        'data/intrastat_report_services_f01dgs.xml',
     ],
     'auto_install': True,
     'license': 'OEEL-1',

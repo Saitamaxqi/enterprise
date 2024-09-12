@@ -121,7 +121,7 @@ class IntrastatExpiryReportTest(TestAccountReportsCommon):
         )
 
         self.assertEqual(
-            warnings['account_intrastat.intrastat_warning_missing_comm']['ids'],
+            warnings['account_intrastat.intrastat_warning_missing_goods']['ids'],
             invoice.invoice_line_ids.product_id.ids,
         )
         self.assertEqual(
@@ -163,5 +163,5 @@ class IntrastatExpiryReportTest(TestAccountReportsCommon):
         )
 
         self.assertEqual(warnings['account_intrastat.intrastat_warning_missing_trans']['ids'], invoice.invoice_line_ids.ids)
-        self.assertEqual(warnings['account_intrastat.intrastat_warning_expired_comm']['ids'], self.product_b.ids)
-        self.assertEqual(warnings['account_intrastat.intrastat_warning_premature_comm']['ids'], self.product_c.ids)
+        self.assertEqual(warnings['account_intrastat.intrastat_warning_expired_goods']['ids'], self.product_b.ids)
+        self.assertEqual(warnings['account_intrastat.intrastat_warning_premature_goods']['ids'], self.product_c.ids)

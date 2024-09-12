@@ -693,31 +693,6 @@ class TestIntrastatReport(TestAccountReportsCommon):
             options
         )
 
-    def test_intrastat_no_service_product(self):
-        service_product = self.env['product.product'].create({
-            'name': 'Consultancy',
-            'type': 'service',
-            'intrastat_code_id': None,
-            'intrastat_origin_country_id': None,
-        })
-        move = self.env['account.move'].create({
-            'move_type': 'out_invoice',
-            'partner_id': self.partner_a.id,
-            'invoice_date': '2022-01-01',
-            'currency_id': self.env.ref('base.EUR').id,
-            'invoice_line_ids': [
-                Command.create({
-                    'product_id': service_product.id,
-                    'account_id': self.company_data['default_account_revenue'].id,
-                    'price_unit': 20.0,
-                }),
-            ],
-        })
-        move.action_post()
-
-        options = self._generate_options(self.report, '2022-01-01', '2022-01-31')
-        self.assertEqual(len(self.report._get_lines(options)), 1, "Services shouldn't be included in the intrastat report")
-
     def test_no_supplementary_units(self):
         """ Test a report from an invoice with no units """
         no_supplementary_units_invoice = self.env['account.move'].create({
@@ -1110,7 +1085,7 @@ class TestIntrastatReport(TestAccountReportsCommon):
 
         self.assertLinesValues(
             self.report._get_lines(options),
-            [0, 12, 24],  # Name, Value July 2024, Value June 2024
+            [0, 12, 25],  # Name, Value July 2024, Value June 2024
             [
                 ('Intrastat',                                                       40.0,       40.0),
                 ('Dispatch - BE0475646428 - 22042176 - BE',                         0,         20.00),

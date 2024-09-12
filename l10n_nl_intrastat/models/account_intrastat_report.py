@@ -8,8 +8,8 @@ from datetime import datetime, date
 from math import copysign
 
 
-class AccountIntrastatReportHandler(models.AbstractModel):
-    _inherit = 'account.intrastat.report.handler'
+class AccountIntrastatGoodsReportHandler(models.AbstractModel):
+    _inherit = 'account.intrastat.goods.report.handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)

@@ -3,7 +3,9 @@
 import re
 from json import dumps, loads
 
-from odoo import api, models, _
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError
+from odoo.osv import expression
 from odoo.tools import get_lang, SQL
 
 _merchandise_export_code = {
@@ -25,6 +27,23 @@ _unknown_country_code = {
 }
 
 _qn_unknown_individual_vat_country_codes = ('FI', 'SE', 'SK', 'DE', 'AT')
+
+_grouping_keys = [
+    'intrastat_type',
+    'system',
+    'country_code',
+    'transaction_code',
+    'transport_code',
+    'region_code',
+    'commodity_code',
+    'country_name',
+    'partner_vat',
+    'incoterm_code',
+    'intrastat_product_origin_country_code',
+    'intrastat_product_origin_country_name',
+    'invoice_currency_id',
+    'supplementary_units_code',
+]
 
 
 class AccountIntrastatReportHandler(models.AbstractModel):
@@ -145,7 +164,8 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                     supplementary_units = f"{sum(line.get('supplementary_units', 0) for line in query_res_lines)}"
                 else:
                     supplementary_units = None
-
+                value = res['value'] or None if current_groupby == 'intrastat_grouping' else sum(line['value'] for line in query_res_lines if not line['missing_product'])
+                value_currency = res['value_currency'] if res['currency_id_of_value_currency'] != self.env.company.currency_id.id else None
                 result_dict = {
                     'system': f"{res['system']} ({res['intrastat_type']})",
                     'intrastat_type': res['intrastat_type'],
@@ -161,67 +181,94 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                     'incoterm_code': res['incoterm_code'],
                     'weight': res['weight'] or None,
                     'supplementary_units': supplementary_units,
-                    'value': res['value'] or None if current_groupby == 'intrastat_grouping' else sum(line['value'] for line in query_res_lines if not line['missing_product']),
+                    'value': value,
+                    'value_currency': value_currency,
+                    'currency_id_of_value_currency': res['currency_id_of_value_currency'],
                     'has_sublines': True,
                 }
                 if options.get('export_mode') == 'file':
                     return self._get_exporting_dict_data(result_dict, res)
-                else:
-                    return result_dict
+                return result_dict
 
-            else:
-                return {
-                    'system': None,
-                    'country_name': None,
-                    'country_code': None,
-                    'transaction_code': None,
-                    'region_code': None,
-                    'commodity_code': None,
-                    'intrastat_product_origin_country_code': None,
-                    'intrastat_product_origin_country_name': None,
-                    'partner_vat': None,
-                    'transport_code': None,
-                    'incoterm_code': None,
-                    'weight': None,
-                    'supplementary_units': None,
-                    'value': sum(line.get('value', 0) for line in query_res_lines if not line['missing_product']),
-                    'has_sublines': len(query_res_lines) > 0,
-                }
-
-        grouping_keys = [
-            'intrastat_type',
-            'system',
-            'country_code',
-            'transaction_code',
-            'transport_code',
-            'region_code',
-            'commodity_code',
-            'country_name',
-            'partner_vat',
-            'incoterm_code',
-            'intrastat_product_origin_country_code',
-            'intrastat_product_origin_country_name',
-            'invoice_currency_id',
-            'supplementary_units_code',
-        ]
+            return {
+                'system': None,
+                'country_name': None,
+                'country_code': None,
+                'transaction_code': None,
+                'region_code': None,
+                'commodity_code': None,
+                'intrastat_product_origin_country_code': None,
+                'intrastat_product_origin_country_name': None,
+                'partner_vat': None,
+                'transport_code': None,
+                'incoterm_code': None,
+                'weight': None,
+                'supplementary_units': None,
+                'value': sum(line.get('value', 0) for line in query_res_lines if not line['missing_product']),
+                'value_currency': None,
+                'currency_id_of_value_currency': None,
+                'has_sublines': len(query_res_lines) > 0,
+            }
 
         report = self.env['account.report'].browse(options['report_id'])
         report._check_groupby_fields([current_groupby] if current_groupby else [])
 
-        # Build query
-        select_from_groupby = SQL() if not current_groupby or current_groupby == 'intrastat_grouping' else SQL.identifier('account_move_line', current_groupby)
-        query = report._get_report_query(options, 'strict_range')
+        query = self._get_intrastat_report_query(
+            report=report,
+            options=options,
+            current_groupby=current_groupby,
+            warnings=warnings,
+        )
+        self._cr.execute(query)
+        query_res_lines = self._cr.dictfetchall()
+        query_res_lines = self._fill_missing_values(query_res_lines)
 
-        import_merchandise_code = _merchandise_import_code.get(self.env.company.country_id.code, '29')
-        export_merchandise_code = _merchandise_export_code.get(self.env.company.country_id.code, '19')
-        unknown_individual_vat = 'QN999999999999' if self.env.company.country_id.code in _qn_unknown_individual_vat_country_codes else 'QV999999999999'
-        unknown_country_code = _unknown_country_code.get(self.env.company.country_id.code, 'QV')
-        weight_category_id = self.env['ir.model.data']._xmlid_to_res_id('uom.product_uom_categ_kgm')
+        all_res_per_grouping_key = {}
+
+        for line in query_res_lines:
+            if warnings is not None:
+                for key, value in line.items():
+                    if key.startswith('warning_') and value:
+                        warning_params = warnings.setdefault(
+                            f'account_intrastat.intrastat_{key}',
+                            {'ids': [], 'alert_type': 'warning'}
+                        )
+                        warning_params['ids'] += value
+            if current_groupby and not line['missing_product']:
+                if current_groupby == 'intrastat_grouping':
+                    grouping_key = dumps({
+                        key: line[key]
+                        for key in _grouping_keys
+                    })
+                else:
+                    grouping_key = line['grouping_key']
+                all_res_per_grouping_key.setdefault(grouping_key, []).append(line)
+
+        if current_groupby:
+            return [
+                (grouping_key, build_result_dict(query_res_lines)) for
+                grouping_key, query_res_lines in all_res_per_grouping_key.items()
+            ]
+        return build_result_dict(query_res_lines)
+
+    def _get_intrastat_report_query(self, report, options, current_groupby, query_params=None, warnings=None, order_by=True):
+        """ Generates query for intrastat report. """
+
+        assert all(key in query_params for key in ('commodity_warning_suffix', 'product_type_condition')), (
+                "This method must be overridden and query_params arg must be a dict passed by child method"
+                "with 'commodity_warning_suffix' and 'product_type_condition' keys at least."
+            )
+
+        query_params = {
+            'country_table_join': SQL("LEFT JOIN res_country country ON account_move.intrastat_country_id = country.id"),
+            'country_condition': SQL("AND country.intrastat = TRUE AND (country.code != 'GB' OR account_move.date < '2021-01-01')"),
+            'commodity_code': SQL('code.code'),
+            **query_params,
+        }
+        select_from_groupby = SQL() if not current_groupby or current_groupby == 'intrastat_grouping' else SQL.identifier('account_move_line', current_groupby)
         lang = self.env.user.lang or get_lang(self.env).code
         self_lang = self.with_context(lang=lang)
-        country_name = self_lang.env['res.country']._field_to_sql('country', 'name')
-        product_country_name = self_lang.env['res.country']._field_to_sql('product_country', 'name')
-
+        report_query = report._get_report_query(options, 'strict_range')
         query = SQL("""
             SELECT
                 %(select_from_groupby)s AS grouping_key,
@@ -230,7 +277,7 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                 %(country_name)s AS country_name,
                 transaction.code AS transaction_code,
                 company_region.code AS region_code,
-                code.code AS commodity_code,
+                CASE WHEN (code.country_id IS NULL OR code.country_id = %(country_id)s) THEN %(commodity_code)s ELSE NULL END AS commodity_code,
                 account_move.currency_id AS invoice_currency_id,
                 COALESCE(inv_incoterm.code, comp_incoterm.code) AS incoterm_code,
                 COALESCE(inv_transport.code, comp_transport.code) AS transport_code,
@@ -257,6 +304,8 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                 -- Example: An invoice selling 10 items (but one is free 10 - 1), in the intrastat report we'll have 2 lines
                 -- One for 10 items minus one for the free item
                 SUM(SIGN(account_move_line.quantity) * SIGN(account_move_line.price_unit) * ABS(%(balance_select)s)) AS value,
+                SUM(SIGN(account_move_line.quantity) * SIGN(account_move_line.price_unit) * ABS(account_move_line.amount_currency)) AS value_currency,
+                account_move.currency_id AS currency_id_of_value_currency,
                 CASE WHEN product_country.code = 'GB' THEN 'XU' ELSE COALESCE(product_country.code, %(unknown_country_code)s) END AS intrastat_product_origin_country_code,
                 %(product_country_name)s AS intrastat_product_origin_country_name,
                 CASE WHEN partner.vat IS NOT NULL THEN partner.vat
@@ -266,7 +315,8 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                 MAX(CASE WHEN prod.id IS NULL THEN 1 ELSE 0 END) AS missing_product,
                 %(warnings)s
                 %(exporting_data)s
-                COUNT(account_move_line.id) AS amls_count
+                COUNT(account_move_line.id) AS amls_count,
+                invoice_currency.name AS invoice_currency_name
             FROM
                 %(table_references)s
                 %(currency_table_join)s
@@ -275,8 +325,8 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                 LEFT JOIN res_company company ON account_move.company_id = company.id
                 LEFT JOIN account_intrastat_code company_region ON company.intrastat_region_id = company_region.id
                 LEFT JOIN res_partner partner ON account_move_line.partner_id = partner.id
+                %(country_table_join)s
                 LEFT JOIN res_partner comp_partner ON company.partner_id = comp_partner.id
-                LEFT JOIN res_country country ON account_move.intrastat_country_id = country.id
                 LEFT JOIN res_country company_country ON comp_partner.country_id = company_country.id
                 LEFT JOIN product_product prod ON account_move_line.product_id = prod.id
                 LEFT JOIN product_template prodt ON prod.product_tmpl_id = prodt.id
@@ -290,82 +340,61 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                 LEFT JOIN res_country product_country ON product_country.id = account_move_line.intrastat_product_origin_country_id
                 LEFT JOIN res_country partner_country ON partner.country_id = partner_country.id AND partner_country.intrastat IS TRUE
                 LEFT JOIN uom_uom ref_weight_uom on ref_weight_uom.category_id = %(weight_category_id)s and ref_weight_uom.uom_type = 'reference'
+                LEFT JOIN res_currency invoice_currency ON invoice_currency.id = account_move.currency_id
             WHERE
                 %(search_condition)s
                 AND account_move_line.display_type = 'product'
                 AND (account_move_line.price_subtotal != 0 OR account_move_line.price_unit * account_move_line.quantity != 0)
-                AND company_country.id != country.id
-                AND country.intrastat = TRUE AND (country.code != 'GB' OR account_move.date < '2021-01-01')
-                AND (account_move_line.product_id IS NULL OR prodt.type != 'service')
+                AND (company_country.id != country.id OR country.id IS NULL)
                 AND ref_weight_uom.active
+                %(product_type_condition)s
                 %(vat_condition)s
-            GROUP BY %(groupby)s, grouping_key
-            ORDER BY grouping_key
-        """,
-                    import_merchandise_code=import_merchandise_code,
-                    export_merchandise_code=export_merchandise_code,
-                    country_name=country_name,
-                    balance_select=report._currency_table_apply_rate(SQL("account_move_line.balance")),
-                    unknown_country_code=unknown_country_code,
-                    product_country_name=product_country_name,
-                    unknown_individual_vat=unknown_individual_vat,
-                    select_from_groupby=select_from_groupby or '',
-                    table_references=query.from_clause,
-                    currency_table_join=report._currency_table_aml_join(options),
-                    weight_category_id=weight_category_id,
-                    search_condition=query.where_clause,
-                    vat_condition=SQL("AND partner.vat IS NOT NULL") if options['intrastat_with_vat'] else SQL(),
-                    system=SQL("CASE WHEN account_move.move_type IN ('in_invoice', 'out_refund') THEN %s ELSE %s END AS intrastat_type", _('Arrival'), _('Dispatch')),
-                    warnings=SQL("""
-                        ARRAY_AGG(account_move_line.id) FILTER (WHERE transaction.expiry_date <= account_move.invoice_date) AS warning_expired_trans,
-                        ARRAY_AGG(account_move_line.id) FILTER (WHERE transaction.start_date > account_move.invoice_date) AS warning_premature_trans,
-                        ARRAY_AGG(account_move_line.id) FILTER (WHERE transaction.id IS NULL) AS warning_missing_trans,
-                        ARRAY_AGG(account_move_line.id) FILTER (WHERE prod.id IS NULL) AS warning_missing_product,
-                        ARRAY_AGG(prod.id) FILTER (WHERE code.expiry_date <= account_move.invoice_date) AS warning_expired_comm,
-                        ARRAY_AGG(prod.id) FILTER (WHERE code.start_date > account_move.invoice_date) AS warning_premature_comm,
-                        ARRAY_AGG(prod.id) FILTER (WHERE code.id IS NULL AND prod.id IS NOT NULL) AS warning_missing_comm,
-                        ARRAY_AGG(prod.id) FILTER (WHERE COALESCE(prod.intrastat_supplementary_unit_amount, 0) = 0 AND code.supplementary_unit IS NOT NULL) AS warning_missing_unit,
-                        ARRAY_AGG(prod.id) FILTER (WHERE COALESCE(prod.weight, 0) = 0 AND code.supplementary_unit IS NULL AND prod.id IS NOT NULL) AS warning_missing_weight,
-                    """) if warnings is not None else SQL(''),
-                    exporting_data=self._get_exporting_query_data() if options.get('export_mode') == 'file' else SQL(),
-                    groupby=SQL(', ').join(SQL(key) for key in grouping_keys) if options['export_mode'] != 'file' and current_groupby == 'intrastat_grouping' else self._get_export_groupby_clause()
-                    )
-
-        self._cr.execute(query)
-        query_res_lines = self._cr.dictfetchall()
-        query_res_lines = self._fill_missing_values(query_res_lines)
-
-        if warnings is not None:
-            for line in query_res_lines:
-                for key, value in line.items():
-                    if key.startswith('warning_') and value:
-                        warning_params = warnings.setdefault(
-                            f'account_intrastat.intrastat_{key}',
-                            {'ids': [], 'alert_type': 'warning'}
-                        )
-                        warning_params['ids'] += value
-
-        if not current_groupby:
-            return build_result_dict(query_res_lines)
-        else:
-            rslt = []
-
-            all_res_per_grouping_key = {}
-            for query_res in query_res_lines:
-                if not query_res['missing_product']:
-                    if current_groupby == 'intrastat_grouping':
-                        grouping_key = dumps({
-                            key: query_res[key]
-                            for key in grouping_keys
-                        })
-                    else:
-                        grouping_key = query_res['grouping_key']
-                    all_res_per_grouping_key.setdefault(grouping_key, []).append(query_res)
-
-            for grouping_key, query_res_lines in all_res_per_grouping_key.items():
-                rslt.append((grouping_key, build_result_dict(query_res_lines)))
-
-            return rslt
+                %(country_condition)s
+            GROUP BY
+                %(groupby)s, grouping_key, invoice_currency.name
+            """,
+            # select
+            select_from_groupby=select_from_groupby or '',
+            import_merchandise_code=_merchandise_import_code.get(self.env.company.country_id.code, '29'),
+            export_merchandise_code=_merchandise_export_code.get(self.env.company.country_id.code, '19'),
+            country_name=self_lang.env['res.country']._field_to_sql('country', 'name'),
+            country_id=self.env.company.country_id.id,
+            commodity_code=query_params['commodity_code'],
+            balance_select=report._currency_table_apply_rate(SQL("account_move_line.balance")),
+            unknown_country_code=_unknown_country_code.get(self.env.company.country_id.code, 'QV'),
+            product_country_name=self_lang.env['res.country']._field_to_sql('product_country', 'name'),
+            unknown_individual_vat='QN999999999999' if self.env.company.country_id.code in _qn_unknown_individual_vat_country_codes else 'QV999999999999',
+            system=SQL("CASE WHEN account_move.move_type IN ('in_invoice', 'out_refund') THEN %s ELSE %s END AS intrastat_type", _('Arrival'), _('Dispatch')),
+            warnings=SQL("""
+                ARRAY_AGG(account_move_line.id) FILTER (WHERE transaction.expiry_date <= account_move.invoice_date) AS warning_expired_trans,
+                ARRAY_AGG(account_move_line.id) FILTER (WHERE transaction.start_date > account_move.invoice_date) AS warning_premature_trans,
+                ARRAY_AGG(account_move_line.id) FILTER (WHERE transaction.id IS NULL AND prodt.type = 'consu') AS warning_missing_trans,
+                ARRAY_AGG(account_move_line.id) FILTER (WHERE prod.id IS NULL) AS warning_missing_product,
+                ARRAY_AGG(prod.id) FILTER (WHERE COALESCE(prod.intrastat_supplementary_unit_amount, 0) = 0 AND code.supplementary_unit IS NOT NULL) AS warning_missing_unit,
+                ARRAY_AGG(prod.id) FILTER (WHERE COALESCE(prod.weight, 0) = 0 AND code.supplementary_unit IS NULL AND prod.id IS NOT NULL AND prodt.type = 'consu') AS warning_missing_weight,
+                ARRAY_AGG(prod.id) FILTER (WHERE code.expiry_date <= account_move.invoice_date) AS warning_expired_%(commodity_warning_suffix)s,
+                ARRAY_AGG(prod.id) FILTER (WHERE code.start_date > account_move.invoice_date) AS warning_premature_%(commodity_warning_suffix)s,
+                ARRAY_AGG(prod.id) FILTER (WHERE code.id IS NULL AND prod.id IS NOT NULL) AS warning_missing_%(commodity_warning_suffix)s,
+            """,
+                commodity_warning_suffix=query_params['commodity_warning_suffix']
+            ) if warnings is not None else SQL(''),
+            exporting_data=self._get_exporting_query_data() if options.get('export_mode') == 'file' else SQL(),
+            # from
+            table_references=report_query.from_clause,
+            currency_table_join=report._currency_table_aml_join(options),
+            country_table_join=query_params['country_table_join'],
+            weight_category_id=self.env['ir.model.data']._xmlid_to_res_id('uom.product_uom_categ_kgm'),
+            # where
+            search_condition=report_query.where_clause,
+            product_type_condition=query_params['product_type_condition'],
+            vat_condition=SQL("AND partner.vat IS NOT NULL") if options['intrastat_with_vat'] else SQL(),
+            country_condition=query_params['country_condition'],
+            # group by
+            groupby=SQL(', ').join(SQL(key) for key in _grouping_keys) if options['export_mode'] != 'file' and current_groupby == 'intrastat_grouping' else self._get_export_groupby_clause(),
+        )
+        if order_by:
+            query = SQL("\n").join([query, SQL("ORDER BY grouping_key")])
+        return query
 
     def _custom_line_postprocessor(self, report, options, lines):
         for line in lines:
@@ -386,51 +415,81 @@ class AccountIntrastatReportHandler(models.AbstractModel):
         parsed_key = loads(grouping_key)
         return f"{parsed_key['intrastat_type']} - {parsed_key['partner_vat']} - {parsed_key['commodity_code']} - {parsed_key['country_code']}"
 
-    def _build_custom_domain(self, grouping_key):
-        grouping_key_dict = loads(grouping_key)
-
+    def _build_intrastat_custom_domain_blocks(self, grouping_key_dict):
+        """
+        Build custom domain dict for intrastat report.
+        This is a dict to allow easy overrides of domains based on grouping_key_dict keys.
+        """
         if grouping_key_dict['intrastat_product_origin_country_code'] == 'XU':
             grouping_key_dict['intrastat_product_origin_country_code'] = 'GB'
 
-        domain = [
-            ('product_id.intrastat_code_id', '=', False)
-            if grouping_key_dict['commodity_code'] is None
-            else ('product_id.intrastat_code_id.code', '=', grouping_key_dict['commodity_code']),
+        domain_dict = {
+            'country_code': [('move_id.intrastat_country_id.code', '=', grouping_key_dict['country_code'])],
+            'invoice_currency_id': [('currency_id.id', '=', grouping_key_dict['invoice_currency_id'])],
+        }
 
-            ('move_id.intrastat_country_id.code', '=', grouping_key_dict['country_code']),
+        if grouping_key_dict['commodity_code']:
+            domain_dict['commodity_code'] = [(
+                'product_id.intrastat_code_id.code', '=', grouping_key_dict['commodity_code']
+            )]
+        else:
+            domain_dict['commodity_code'] = [('product_id.intrastat_code_id', '=', False)]
 
-            ('intrastat_transaction_id', '=', False)
-            if grouping_key_dict['transaction_code'] is None
-            else ('intrastat_transaction_id.code', '=', grouping_key_dict['transaction_code']),
+        if grouping_key_dict['transaction_code']:
+            domain_dict['transaction_code'] = [(
+                'intrastat_transaction_id.code', '=', grouping_key_dict['transaction_code']
+            )]
+        else:
+            domain_dict['transaction_code'] = [('intrastat_transaction_id', '=', False)]
 
-            ('move_id.company_id.intrastat_region_id', '=', False)
-            if grouping_key_dict['region_code'] is None
-            else ('move_id.company_id.intrastat_region_id.code', '=', grouping_key_dict['region_code']),
+        if grouping_key_dict['region_code']:
+            domain_dict['region_code'] = [(
+                'move_id.company_id.intrastat_region_id.code', '=', grouping_key_dict['region_code']
+            )]
+        else:
+            domain_dict['region_code'] = [('move_id.company_id.intrastat_region_id', '=', False)]
 
-            ('currency_id.id', '=', grouping_key_dict['invoice_currency_id']),
+        if grouping_key_dict['system'] == _merchandise_import_code.get(self.env.company.country_id.code, '29'):
+            domain_dict['system'] = [('move_id.move_type', 'in', ['in_invoice', 'out_refund'])]
+        else:
+            domain_dict['system'] = [('move_id.move_type', 'not in', ['in_invoice', 'out_refund'])]
 
-            ('move_id.move_type', 'in', ['in_invoice', 'out_refund'])
-            if grouping_key_dict['system'] == _merchandise_import_code.get(self.env.company.country_id.code, '29')
-            else ('move_id.move_type', 'not in', ['in_invoice', 'out_refund']),
+        if grouping_key_dict['intrastat_product_origin_country_code'] in ['QU', 'QV']:
+            domain_dict['intrastat_product_origin_country_code'] = [
+                ('intrastat_product_origin_country_id', '=', False)
+            ]
+        else:
+            domain_dict['intrastat_product_origin_country_code'] = [(
+                'intrastat_product_origin_country_id.code',
+                '=',
+                grouping_key_dict['intrastat_product_origin_country_code'],
+            )]
 
-            ('intrastat_product_origin_country_id', '=', False)
-            if grouping_key_dict['intrastat_product_origin_country_code'] in ['QU', 'QV']
-            else ('intrastat_product_origin_country_id.code', '=', grouping_key_dict['intrastat_product_origin_country_code']),
+        if grouping_key_dict['partner_vat'] in ['QN999999999999', 'QV999999999999']:
+            domain_dict['partner_vat'] = [('move_id.partner_id.vat', '=', False)]
+        else:
+            domain_dict['partner_vat'] = [
+                ('move_id.partner_id.vat', '=', grouping_key_dict['partner_vat'])
+            ]
 
-            ('move_id.partner_id.vat', '=', False)
-            if grouping_key_dict['partner_vat'] in ['QN999999999999', 'QV999999999999']
-            else ('move_id.partner_id.vat', '=', grouping_key_dict['partner_vat']),
+        if grouping_key_dict['transport_code']:
+            domain_dict['transport_code'] = [(
+                'move_id.intrastat_transport_mode_id.code', '=', grouping_key_dict['transport_code']
+            )]
+        else:
+            domain_dict['transport_code'] = [('move_id.intrastat_transport_mode_id', '=', False)]
 
-            ('move_id.intrastat_transport_mode_id.code', '=', grouping_key_dict['transport_code'])
-            if grouping_key_dict['transport_code']
-            else ('move_id.intrastat_transport_mode_id', '=', False),
+        if grouping_key_dict['incoterm_code']:
+            domain_dict['incoterm_code'] = [(
+                'move_id.invoice_incoterm_id.code', '=', grouping_key_dict['incoterm_code']
+            )]
+        else:
+            domain_dict['incoterm_code'] = [('move_id.invoice_incoterm_id', '=', False)]
 
-            ('move_id.invoice_incoterm_id', '=', False)
-            if grouping_key_dict['incoterm_code'] is None
-            else ('move_id.invoice_incoterm_id.code', '=', grouping_key_dict['incoterm_code']),
-        ]
+        return domain_dict
 
-        return domain
+    def _build_custom_domain(self, grouping_key):
+        return expression.AND(self._build_intrastat_custom_domain_blocks(loads(grouping_key)).values())
 
     ####################################################
     # REPORT LINES: HELPERS
@@ -571,3 +630,49 @@ class AccountIntrastatReportHandler(models.AbstractModel):
                 'expand': True,
             },
         }
+
+    @api.model
+    def _check_date_range(self, options, allow_quarterly=True):
+        date_from = fields.Date.to_date(options['date']['date_from'])
+        date_to = fields.Date.to_date(options['date']['date_to'])
+        month_last_day = fields.Date.end_of(date_from, 'month')
+        quarter_last_day = fields.Date.end_of(date_from, 'quarter')
+
+        month_ok = date_from.day == 1 and date_to == month_last_day
+        quarter_ok = date_from.day == 1 and date_from.month % 3 == 1 and date_to == quarter_last_day
+
+        if not month_ok and not allow_quarterly:
+            raise UserError(_('The date range must be a full month'))
+
+        if not month_ok and not quarter_ok:
+            raise UserError(_('The date range must be a full month or a full quarter.'))
+
+        return True
+
+
+class AccountIntrastatGoodsReportHandler(models.AbstractModel):
+    _name = 'account.intrastat.goods.report.handler'
+    _inherit = 'account.intrastat.report.handler'
+    _description = 'Intrastat Goods Report Custom Handler'
+
+    def _get_intrastat_report_query(self, report, options, current_groupby, query_params=None, warnings=None, order_by=True):
+        query_params = {
+            **(query_params or {}),
+            'product_type_condition': SQL("AND (account_move_line.product_id IS NULL OR prodt.type != 'service')"),
+            'commodity_warning_suffix': SQL('goods'),
+        }
+        return super()._get_intrastat_report_query(report, options, current_groupby, query_params, warnings, order_by)
+
+
+class AccountIntrastatServicesReportHandler(models.AbstractModel):
+    _name = 'account.intrastat.services.report.handler'
+    _inherit = 'account.intrastat.report.handler'
+    _description = 'Intrastat Services Report Custom Handler'
+
+    def _get_intrastat_report_query(self, report, options, current_groupby, query_params=None, warnings=None, order_by=True):
+        query_params = {
+            **(query_params or {}),
+            'product_type_condition': SQL("AND prodt.type = 'service'"),
+            'commodity_warning_suffix': SQL('services'),
+        }
+        return super()._get_intrastat_report_query(report, options, current_groupby, query_params, warnings, order_by)

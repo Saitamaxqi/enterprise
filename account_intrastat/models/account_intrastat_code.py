@@ -53,7 +53,13 @@ class AccountIntrastatCode(models.Model):
     country_id = fields.Many2one('res.country', string='Country', help='Restrict the applicability of code to a country.', domain="[('intrastat', '=', True)]")
     description = fields.Char(string='Description')
     type = fields.Selection(string='Type', required=True,
-        selection=[('commodity', 'Commodity'), ('transport', 'Transport'), ('transaction', 'Transaction'), ('region', 'Region')],
+        selection=[
+            ('commodity', 'Commodity'),
+            ('service', 'Service'),
+            ('transport', 'Transport'),
+            ('transaction', 'Transaction'),
+            ('region', 'Region'),
+        ],
         default='commodity',
         help='''Type of intrastat code used to filter codes by usage.
             * commodity: Code to be set on invoice lines for European Union statistical purposes.
