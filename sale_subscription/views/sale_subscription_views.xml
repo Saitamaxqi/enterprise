@@ -559,7 +559,11 @@ if records:
         <field name="model">sale.subscription.plan</field>
         <field name="arch" type="xml">
             <search string="Recurring Plan">
-                <filter string="Recurring Plan" name="plan_id"/>
+                <field name="name"/>
+                <field name="auto_close_limit" string="Automatic Closing After" filter_domain="[('auto_close_limit', '=', self)]"/>
+                <filter name="closable" string="Closable" domain="[('user_closable', '=', 'True')]"/>
+                <filter name="renew" string="Renew" domain="[('user_extend', '=', 'True')]"/>
+                <filter name="add_product" string="Add Products" domain="[('user_quantity', '=', 'True')]"/>
             </search>
         </field>
     </record>
