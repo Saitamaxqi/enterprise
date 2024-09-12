@@ -11,9 +11,8 @@
                         string="Publish &amp; Send" type="object" groups="planning.group_planning_manager" invisible="context.get('my_planning_action')"/>
                 </header>
                 <field name="resource_color" column_invisible="1"/>
-                <field name="start_datetime" widget="daterange" options="{'end_date_field': 'end_datetime'}"/>
+                <field name="start_datetime" string="Planned Date" widget="planned_date_range_with_allocated_hours" options="{'end_date_field': 'end_datetime'}" width="425px"/>
                 <field name="end_datetime" column_invisible="True" />
-                <field name="allocated_hours" widget="float_time" sum="Allocated Hours" readonly="1" decoration-danger="allocated_percentage &gt; 100"/>
                 <field name="allocated_percentage" avg="Allocated Percentage" optional="hide" decoration-danger="allocated_percentage &gt; 100" readonly="1" invisible="resource_type == 'material'"/>
                 <field name="resource_id" widget="many2one_avatar_resource" optional="show"
                     readonly="not start_datetime or not end_datetime" placeholder="Open Shift"
