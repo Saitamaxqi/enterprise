@@ -105,10 +105,7 @@ class MrpReport(models.Model):
                 ({self._select_total_cost()}) * (1 - cost_share.byproduct_cost_share) / prod_qty.product_qty * account_currency_table.rate      AS unit_cost,
                 op_cost.total_duration / prod_qty.product_qty                                                                           AS unit_duration,
                 ({self._select_total_cost()}) * cost_share.byproduct_cost_share * account_currency_table.rate                                   AS byproduct_cost,
-                AVG(
-                    COALESCE(product_standard_price.value,0)
-                        / prod_qty.product_qty
-                )                                                          AS expected_component_cost_unit,
+                AVG(COALESCE(product_standard_price.value,0))              AS expected_component_cost_unit,
                 AVG(COALESCE(operation.employee_cost,0))                   AS expected_employee_cost_unit,
                 AVG(COALESCE(operation.workcenter_cost,0))                 AS expected_operation_cost_unit,
                 AVG(
@@ -164,15 +161,20 @@ class MrpReport(models.Model):
                 SELECT
                     SUM(
                         {cr.mogrify(standard_price_sql).decode(cr.connection.encoding)}
-                    )                                                                   AS value,
+                        * bom_line.product_qty
+                    ) / bom.product_qty                                                 AS value,
                     MIN(mo.id)                                                          AS mo_id
                 FROM mrp_production                                                     AS mo
+                JOIN mrp_bom                                                            AS bom
+                    ON bom.id = mo.bom_id
                 JOIN mrp_bom_line                                                       AS bom_line
                     ON bom_line.bom_id = mo.bom_id
                 JOIN product_product                                                    AS product
                     ON product.id = bom_line.product_id
                 WHERE mo.state = 'done'
-                GROUP BY mo.id
+                GROUP BY
+                    mo.id,
+                    bom.product_qty
             ) product_standard_price
                 ON product_standard_price.mo_id = mo.id
         """
