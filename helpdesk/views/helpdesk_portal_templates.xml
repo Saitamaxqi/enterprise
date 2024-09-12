@@ -86,8 +86,8 @@
                                     <span t-field="ticket.create_date" t-options='{"widget": "datetime", "hide_seconds": True}'/>
                                 </td>
                                 <td id="ticket_user_body" t-if="groupby != 'user_id'" class="ps-5 lh-1">
-                                    <img t-if="ticket.user_id" class="o_avatar o_portal_contact_img rounded" t-attf-src="#{image_data_uri(ticket.user_id.sudo().avatar_128)}" alt="Contact"/>
-                                    <span t-field="ticket.user_id"/>
+                                    <img t-if="ticket.user_id" class="o_avatar rounded" t-attf-src="#{image_data_uri(ticket.user_id.sudo().avatar_128)}" alt="Contact"/>
+                                    <span class="align-middle" t-field="ticket.user_id"/>
                                 </td>
                                 <td t-if="groupby != 'stage_id'" class="text-end">
                                     <span t-attf-class="badge rounded-pill fw-normal #{'text-bg-success' if ticket.stage_id.fold else 'text-bg-primary'}" t-esc="ticket.stage_id.name"/>
