@@ -29,10 +29,11 @@
                             <img t-attf-src="/web/image/hr.employee/{{employee.resId}}/avatar_128" class="rounded o_avatar_connected me-1"/>
                         </t>
                         <div
-                            t-if="props.record.resModel === 'mrp.workorder' and record.state !== 'ready' and record.state !== 'pending' and props.groups.timer"
+                            t-if="props.record.resModel === 'mrp.workorder' and record.state === 'progress' and props.groups.timer"
                             class="bg-light rounded p-1 ms-1">
                             <MrpTimerField name="'duration'" record="props.record" readonly="true"/>
                         </div>
+                        <div t-if="(record.state === 'pending' or record.state === 'waiting') and props.groups.timer">Pending</div>
                     </div>
                 </div>
                 <div class="o_finished_product mt-auto mb-0">
