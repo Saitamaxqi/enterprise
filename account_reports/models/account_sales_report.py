@@ -106,7 +106,13 @@ class AccountEcSalesReportHandler(models.AbstractModel):
             ('code', 'in', tuple(self._get_ec_country_codes(options)))
         ]).ids
         other_country_ids = tuple(set(country_ids) - {self.env.company.account_fiscal_country_id.id})
-        options.setdefault('forced_domain', []).append(('partner_id.country_id', 'in', other_country_ids))
+        options.setdefault('forced_domain', []).extend([
+            '|',
+            ('move_id.partner_shipping_id.country_id', 'in', other_country_ids),
+            '&',
+            ('move_id.partner_shipping_id', '=', False),
+            ('partner_id.country_id', 'in', other_country_ids),
+        ])
 
         report._init_options_journals(options, previous_options=previous_options)
 
