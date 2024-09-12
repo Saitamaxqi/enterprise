@@ -13,7 +13,7 @@ import {
 import { _t } from "@web/core/l10n/translation";
 import { useOwnedDialogs } from "@web/core/utils/hooks";
 
-import { Component, useState } from "@odoo/owl";
+import { Component, useState, useRef } from "@odoo/owl";
 import { AddButtonAction } from "../../../interactive_editor/action_button/action_button";
 
 /**
@@ -230,6 +230,8 @@ export class ButtonHook extends Component {
 }
 
 export class ButtonBox extends components.ButtonBox {
+    static template = "web_studio.ButtonBox";
+    static components = {};
     static props = {
         ...components.ButtonBox.props,
         studioIsVisible: { type: Boolean, optional: true },
@@ -237,7 +239,15 @@ export class ButtonBox extends components.ButtonBox {
 
     setup() {
         super.setup();
+        this.togglerRef = useRef("toggleRef");
         this.viewEditorModel = useState(this.env.viewEditorModel);
+        this.expanded = useState({ value: false });
+    }
+
+    toggle() {
+        this.expanded.value = !this.expanded.value;
+        this.togglerRef.el.classList.toggle("show", this.expanded.value);
+        this.togglerRef.el.ariaExpanded = this.expanded.value;
     }
 
     isSlotVisible(slot) {

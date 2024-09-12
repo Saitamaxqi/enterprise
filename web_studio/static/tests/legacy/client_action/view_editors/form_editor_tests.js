@@ -3135,6 +3135,193 @@ QUnit.module("View Editors", (hooks) => {
         await click(target, ".o_dialog .btn-primary");
         assert.verifySteps(["edit_view"]);
     });
+
+    QUnit.module("Form > ButtonBox", () => {
+        function buttons(parent) {
+            return Array.from(parent.querySelectorAll(":scope > .o-form-buttonbox button")).map(
+                (e) => {
+                    return e.classList.contains("o_web_studio_add_element")
+                        ? "add_element"
+                        : e.getAttribute("name") || "o_button_more";
+                }
+            );
+        }
+
+        function checkMainButtons(expected, message) {
+            QUnit.assert.deepEqual(
+                buttons(target.querySelector(".o_form_sheet_bg > div")),
+                expected,
+                message
+            );
+        }
+
+        function checkExtraButtons(expected, message) {
+            QUnit.assert.deepEqual(
+                buttons(target.querySelector(".o_form_sheet_bg")),
+                expected,
+                message
+            );
+        }
+
+        QUnit.test(
+            "button_box: few visible buttons and no invisible buttons",
+            async function (assert) {
+                const editor = await createViewEditor({
+                    type: "form",
+                    resModel: "coucou",
+                    resId: 1,
+                    serverData,
+                    arch: `<form>
+                        <sheet>
+                            <div class="oe_button_box" name="button_box">
+                                <button name="one" type="object" className="oe_stat_button" icon="fa-star">
+                                    <field name="id" widget="statinfo"/>
+                                </button>
+                                <button name="two" type="object" className="oe_stat_button" icon="fa-star">
+                                    <field name="id" widget="statinfo"/>
+                                </button>
+                            </div>
+                            <group><group><field name="id"/></group></group>
+                        </sheet>
+                    </form>`,
+                });
+                assert.equal(
+                    editor.env.services.ui.size,
+                    5,
+                    "This test should be run using a resolution of 1366x768, aka the HttpCase browser_size"
+                );
+                checkMainButtons(["add_element", "one", "two"]);
+                checkExtraButtons([]);
+                await click(selectorContains(target, ".o_web_studio_sidebar .nav-link", "View"));
+                await click(target.querySelector(".o_web_studio_sidebar input#show_invisible"));
+                await nextTick();
+                checkMainButtons(["add_element", "one", "two"]);
+                checkExtraButtons([]);
+            }
+        );
+
+        QUnit.test("button_box: few mixed buttons", async function (assert) {
+            const editor = await createViewEditor({
+                type: "form",
+                resModel: "coucou",
+                resId: 1,
+                serverData,
+                arch: `<form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="one" type="object" className="oe_stat_button" icon="fa-star">
+                                <field name="id" widget="statinfo"/>
+                            </button>
+                            <button name="two" type="object" className="oe_stat_button" icon="fa-star" invisible="id != 5">
+                                <field name="id" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <group><group><field name="id"/></group></group>
+                    </sheet>
+                </form>`,
+            });
+            assert.equal(
+                editor.env.services.ui.size,
+                5,
+                "This test should be run using a resolution of 1366x768, aka the HttpCase browser_size"
+            );
+            checkMainButtons(["add_element", "one"]);
+            checkExtraButtons([]);
+            await click(selectorContains(target, ".o_web_studio_sidebar .nav-link", "View"));
+            await click(target.querySelector(".o_web_studio_sidebar input#show_invisible"));
+            await nextTick();
+            checkMainButtons(["add_element", "one", "two"]);
+            checkExtraButtons([]);
+        });
+
+        QUnit.test("button_box: many visible buttons", async function (assert) {
+            const editor = await createViewEditor({
+                type: "form",
+                resModel: "coucou",
+                resId: 1,
+                serverData,
+                arch: `<form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="one" type="object" className="oe_stat_button" icon="fa-star">
+                                <field name="id" widget="statinfo"/>
+                            </button>
+                            <button name="two" type="object" className="oe_stat_button" icon="fa-star">
+                                <field name="id" widget="statinfo"/>
+                            </button>
+                            <button name="three" type="object" className="oe_stat_button" icon="fa-star">
+                                <field name="id" widget="statinfo"/>
+                            </button>
+                            <button name="four" type="object" className="oe_stat_button" icon="fa-star">
+                                <field name="id" widget="statinfo"/>
+                            </button>
+                            <button name="five" type="object" className="oe_stat_button" icon="fa-star">
+                                <field name="id" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <group><group><field name="id"/></group></group>
+                    </sheet>
+                </form>`,
+            });
+            assert.equal(
+                editor.env.services.ui.size,
+                5,
+                "This test should be run using a resolution of 1366x768, aka the HttpCase browser_size"
+            );
+            checkMainButtons(["add_element", "one", "two", "three", "o_button_more"]);
+            checkExtraButtons([]);
+            await click(target, ".o-form-buttonbox .o_button_more");
+            checkMainButtons(["add_element", "one", "two", "three", "o_button_more"]);
+            checkExtraButtons(["four", "five"]);
+        });
+
+        QUnit.test("button_box: many mixed buttons", async function (assert) {
+            const editor = await createViewEditor({
+                type: "form",
+                resModel: "coucou",
+                resId: 1,
+                serverData,
+                arch: `<form>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                            <button name="one" type="object" className="oe_stat_button" icon="fa-star">
+                                <field name="id" widget="statinfo"/>
+                            </button>
+                            <button name="two" type="object" className="oe_stat_button" icon="fa-star">
+                                <field name="id" widget="statinfo"/>
+                            </button>
+                            <button name="three" type="object" className="oe_stat_button" icon="fa-star" invisible="id != 5">
+                                <field name="id" widget="statinfo"/>
+                            </button>
+                            <button name="four" type="object" className="oe_stat_button" icon="fa-star">
+                                <field name="id" widget="statinfo"/>
+                            </button>
+                            <button name="five" type="object" className="oe_stat_button" icon="fa-star">
+                                <field name="id" widget="statinfo"/>
+                            </button>
+                        </div>
+                        <group><group><field name="id"/></group></group>
+                    </sheet>
+                </form>`,
+            });
+
+            assert.equal(
+                editor.env.services.ui.size,
+                5,
+                "This test should be run using a resolution of 1366x768, aka the HttpCase browser_size"
+            );
+            checkMainButtons(["add_element", "one", "two", "four", "five"]);
+            checkExtraButtons([]);
+            await click(selectorContains(target, ".o_web_studio_sidebar .nav-link", "View"));
+            await click(target.querySelector(".o_web_studio_sidebar input#show_invisible"));
+            await nextTick();
+            checkMainButtons(["add_element", "one", "two", "three", "o_button_more"]);
+            checkExtraButtons([]);
+            await click(target, ".o-form-buttonbox .o_button_more");
+            checkMainButtons(["add_element", "one", "two", "three", "o_button_more"]);
+            checkExtraButtons(["four", "five"]);
+        });
+    });
 });
 
 QUnit.module("View Editors", (hooks) => {

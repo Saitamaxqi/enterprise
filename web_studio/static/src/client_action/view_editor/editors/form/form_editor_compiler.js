@@ -87,17 +87,13 @@ export class FormEditorCompiler extends formView.Compiler {
         // re-add it to the form view
         const buttonBoxXml = xml.querySelector("div[name='button_box']:not(field div)");
         let buttonBox;
-        const buttonBoxContainer = createElement("div", {
-            class: "d-flex justify-content-end my-2",
-        });
         if (buttonBoxXml) {
             buttonBox = this.compileNode(buttonBoxXml, params);
         } else {
             buttonBox = createElement("ButtonBox");
         }
-        buttonBoxContainer.append(buttonBox);
         const el = compiled.querySelector(".o_form_sheet_bg") || compiled;
-        el.prepend(buttonBoxContainer);
+        el.prepend(buttonBox);
 
         const buttonHook = createElement(
             "t",

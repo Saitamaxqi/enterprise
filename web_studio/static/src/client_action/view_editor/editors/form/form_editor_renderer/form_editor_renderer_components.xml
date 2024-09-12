@@ -39,4 +39,22 @@
     </xpath>
   </t>
 
+  <t t-name="web_studio.ButtonBox">
+    <div class="d-flex justify-content-end my-2">
+      <div class="o-form-buttonbox o_menu_item d-flex w-md-auto justify-content-end" t-attf-class="{{this.props.class}}">
+        <t t-slot="{{ button_value }}" t-foreach="visibleButtons" t-as="button" t-key="button_value"/>
+        <button
+          t-ref="toggleRef"
+          t-if="additionalButtons.length" t-on-click="toggle" type="button" aria-expanded="false"
+          class="o_button_more o-dropdown o-dropdown-caret oe_stat_button btn btn-outline-secondary d-flex justify-content-center align-items-center"
+        >
+          More
+        </button>
+      </div>
+    </div>
+    <div t-if="expanded.value and additionalButtons.length" class="o-form-buttonbox d-flex flex-wrap justify-content-end" t-attf-class="{{this.props.class}}">
+      <t t-slot="{{ button_value }}" t-foreach="additionalButtons" t-as="button" t-key="button_value"/>
+    </div>
+</t>
+
 </templates>
