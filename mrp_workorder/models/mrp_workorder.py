@@ -350,6 +350,8 @@ class MrpWorkorder(models.Model):
         action = self.env['ir.actions.actions']._for_xml_id('mrp_workorder.action_mrp_display')
         action['context'] = {
             'workcenter_id': self.workcenter_id.id,
+            'search_default_progress': False,
+            'search_default_ready': False,
             'search_default_name': self.production_id.name,
             'shouldHideNewWorkcenterButton': True,
         }
