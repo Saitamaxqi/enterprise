@@ -94,7 +94,7 @@ class SaleRentalSchedule(models.Model):
 
     def _late(self) -> SQL:
         return SQL("""
-            CASE WHEN sol.state != 'sale' THEN FALSE
+            CASE WHEN s.state != 'sale' THEN FALSE
                 WHEN s.rental_start_date < NOW() AT TIME ZONE 'UTC' AND sol.qty_delivered < sol.product_uom_qty THEN TRUE
                 WHEN s.rental_return_date < NOW() AT TIME ZONE 'UTC' AND sol.qty_returned < sol.qty_delivered THEN TRUE
             ELSE FALSE
@@ -111,9 +111,17 @@ class SaleRentalSchedule(models.Model):
         """)
 
     def _color(self) -> SQL:
-        """2 = orange (pickedup), 4 = blue(reserved), 6 = red(late return), 7 = green(returned)"""
+        """2 = orange (pickedup),
+           3 = yellow (late pickup),
+           4 = blue (reserved),
+           5 = purple (quotation),
+           6 = red (late return),
+           7 = green (returned)
+        """
         return SQL("""
-            CASE WHEN s.rental_start_date < NOW() AT TIME ZONE 'UTC' AND sol.qty_delivered < sol.product_uom_qty THEN 4
+            CASE WHEN s.state IN ('draft', 'sent') THEN 5
+                WHEN s.rental_start_date < NOW() AT TIME ZONE 'UTC' AND sol.qty_delivered < sol.product_uom_qty THEN 3
+                WHEN s.rental_start_date > NOW() AT TIME ZONE 'UTC' AND sol.qty_delivered < sol.product_uom_qty THEN 4
                 WHEN s.rental_return_date < NOW() AT TIME ZONE 'UTC' AND sol.qty_returned < sol.qty_delivered THEN 6
                 WHEN sol.qty_returned = sol.qty_delivered AND sol.qty_delivered = sol.product_uom_qty THEN 7
                 WHEN sol.qty_delivered = sol.product_uom_qty THEN 2

@@ -43,22 +43,25 @@ class SaleRentalSchedule(models.Model):
 
     def _late(self) -> SQL:
         return SQL("""
-            CASE when lot_info.lot_id is NULL then
-                CASE WHEN s.rental_start_date < NOW() AT TIME ZONE 'UTC' AND sol.qty_delivered < sol.product_uom_qty THEN TRUE
-                    WHEN s.rental_return_date < NOW() AT TIME ZONE 'UTC' AND sol.qty_returned < sol.qty_delivered THEN TRUE
-                    ELSE FALSE
-                END
-            ELSE
-                CASE WHEN lot_info.report_line_status = 'returned' THEN FALSE
-                    WHEN lot_info.report_line_status = 'pickedup' THEN
-                        CASE WHEN s.rental_return_date < NOW() AT TIME ZONE 'UTC' THEN TRUE
+            CASE WHEN s.state = 'sale' THEN
+                CASE when lot_info.lot_id is NULL then
+                    CASE WHEN s.rental_start_date < NOW() AT TIME ZONE 'UTC' AND sol.qty_delivered < sol.product_uom_qty THEN TRUE
+                        WHEN s.rental_return_date < NOW() AT TIME ZONE 'UTC' AND sol.qty_returned < sol.qty_delivered THEN TRUE
                         ELSE FALSE
-                        END
-                    ELSE
-                        CASE WHEN s.rental_start_date < NOW() AT TIME ZONE 'UTC' THEN TRUE
-                        ELSE FALSe
-                        END
+                    END
+                ELSE
+                    CASE WHEN lot_info.report_line_status = 'returned' THEN FALSE
+                        WHEN lot_info.report_line_status = 'pickedup' THEN
+                            CASE WHEN s.rental_return_date < NOW() AT TIME ZONE 'UTC' THEN TRUE
+                            ELSE FALSE
+                            END
+                        ELSE
+                            CASE WHEN s.rental_start_date < NOW() AT TIME ZONE 'UTC' THEN TRUE
+                            ELSE FALSe
+                            END
+                    END
                 END
+            ELSE FALSE
             END as late
         """)
 
@@ -74,10 +77,12 @@ class SaleRentalSchedule(models.Model):
         """)
 
     def _color(self) -> SQL:
-        """2 = orange, 4 = blue, 6 = red, 7 = green"""
+        """2 = orange, 3 = yellow, 4 = blue, 5 = purple, 6 = red, 7 = green"""
         return SQL("""
             CASE when lot_info.lot_id is NULL then
-                CASE WHEN s.rental_start_date < NOW() AT TIME ZONE 'UTC' AND sol.qty_delivered < sol.product_uom_qty THEN 4
+                CASE WHEN s.state IN ('draft', 'sent') THEN 5
+                    WHEN s.rental_start_date < NOW() AT TIME ZONE 'UTC' AND sol.qty_delivered < sol.product_uom_qty THEN 3
+                    WHEN s.rental_start_date > NOW() AT TIME ZONE 'UTC' AND sol.qty_delivered < sol.product_uom_qty THEN 4
                     WHEN s.rental_return_date < NOW() AT TIME ZONE 'UTC' AND sol.qty_returned < sol.qty_delivered THEN 6
                     when sol.qty_returned = sol.qty_delivered AND sol.qty_delivered = sol.product_uom_qty THEN 7
                     WHEN sol.qty_delivered = sol.product_uom_qty THEN 2

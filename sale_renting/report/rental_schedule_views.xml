@@ -76,7 +76,10 @@
                         </div>
                         <div>
                             <strong>Status — </strong>
-                            <t t-if="state == 'cancel'">
+                            <t t-if="['draft', 'sent'].includes(state)">
+                                Quotation
+                            </t>
+                            <t t-elif="state == 'cancel'">
                                 Cancelled
                             </t>
                             <t t-elif="late">
