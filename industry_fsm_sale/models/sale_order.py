@@ -94,9 +94,13 @@ class SaleOrderLine(models.Model):
             lambda sol:
                 sol.task_id.is_fsm
                 and float_is_zero(sol.price_unit, precision_rounding=sol.currency_id.rounding)
-                and sol.invoice_status in (None, 'to_invoice')
+                and sol.invoice_status not in ('invoiced', 'upselling')
         )
-        sol_from_task_without_amount.invoice_status = 'no'
+        sol_from_task_with_anglo = sol_from_task_without_amount.filtered(
+            lambda sol: sol.company_id.anglo_saxon_accounting
+        )
+        sol_from_task_with_anglo.invoice_status = 'to invoice'
+        (sol_from_task_without_amount - sol_from_task_with_anglo).invoice_status = 'no'
         super(SaleOrderLine, self - sol_from_task_without_amount)._compute_invoice_status()
 
     @api.depends('price_unit')
@@ -106,5 +110,9 @@ class SaleOrderLine(models.Model):
                 sol.task_id.is_fsm
                 and float_is_zero(sol.price_unit, precision_rounding=sol.currency_id.rounding)
         )
-        sol_from_task_without_amount.qty_to_invoice = 0.0
-        super(SaleOrderLine, self - sol_from_task_without_amount)._compute_qty_to_invoice()
+        sol_from_task_with_anglo = sol_from_task_without_amount.filtered(
+            lambda sol: sol.company_id.anglo_saxon_accounting
+        )
+        sol_from_task_without_anglo = sol_from_task_without_amount - sol_from_task_with_anglo
+        sol_from_task_without_anglo.qty_to_invoice = 0.0
+        super(SaleOrderLine, self - sol_from_task_without_anglo)._compute_qty_to_invoice()
