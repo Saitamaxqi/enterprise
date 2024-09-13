@@ -78,7 +78,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',         640.0),
                 ('tax_20_affect_base (20.0%)',          2000.0,     400.0),
                 ('tax_10 (10.0%)',                      2400.0,     240.0),
-                ('Total Sales',                         '',         640.0),
             ],
             options,
         )
@@ -93,12 +92,9 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('400000 Product Sales',                '',         320.0),
                 ('tax_20_affect_base (20.0%)',          1000.0,     200.0),
                 ('tax_10 (10.0%)',                      1200.0,     120.0),
-                ('Total 400000 Product Sales',          '',         320.0),
                 ('400000.2 Product Sales',            '',         320.0),
                 ('tax_20_affect_base (20.0%)',          1000.0,     200.0),
                 ('tax_10 (10.0%)',                      1200.0,     120.0),
-                ('Total 400000.2 Product Sales',      '',         320.0),
-                ('Total Sales',                         '',         640.0),
             ],
             options,
         )
@@ -114,12 +110,9 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('tax_20_affect_base (20.0%)',          '',         400.0),
                 ('400000 Product Sales',                1000.0,     200.0),
                 ('400000.2 Product Sales',            1000.0,     200.0),
-                ('Total tax_20_affect_base (20.0%)',    '',         400.0),
                 ('tax_10 (10.0%)',                      '',         240.0),
                 ('400000 Product Sales',                1200.0,     120.0),
                 ('400000.2 Product Sales',            1200.0,     120.0),
-                ('Total tax_10 (10.0%)',                '',         240.0),
-                ('Total Sales',                         '',         640.0),
             ],
             options,
         )
@@ -198,7 +191,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',         1100.0),
                 ('tax_group_10_20',                     1000.0,     300.0),
                 ('tax_group_10_30',                     2000.0,     800.0),
-                ('Total Sales',                         '',         1100.0),
             ],
             options,
         )
@@ -213,8 +205,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('400000 Product Sales',                '',         1100.0),
                 ('tax_group_10_20',                     1000.0,     300.0),
                 ('tax_group_10_30',                     2000.0,     800.0),
-                ('Total 400000 Product Sales',          '',         1100.0),
-                ('Total Sales',                         '',         1100.0),
             ],
             options,
         )
@@ -229,11 +219,8 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',         1100.0),
                 ('tax_group_10_20',                     '',         300.0),
                 ('400000 Product Sales',                1000.0,     300.0),
-                ('Total tax_group_10_20',               '',         300.0),
                 ('tax_group_10_30',                     '',         800.0),
                 ('400000 Product Sales',                2000.0,     800.0),
-                ('Total tax_group_10_30',               '',         800.0),
-                ('Total Sales',                         '',         1100.0),
             ],
             options,
         )
@@ -260,7 +247,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ("tax_10 (10.0%)" ,                     3000.0,     300.0),
                 ("tax_20 (20.0%)" ,                     1000.0,     200.0),
                 ("tax_30 (30.0%)" ,                     2000.0,     600),
-                ('Total Sales',                         '',         1100.0),
             ],
             options,
         )
@@ -278,7 +264,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ("tax_10 (10.0%)" ,                     1000.0,     100.0),
                 ("tax_20 (20.0%)" ,                     1000.0,     200.0),
                 ('tax_group_10_30',                     2000.0,     800.0),
-                ('Total Sales',                         '',         1100.0),
             ],
             options,
         )
@@ -337,7 +322,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',         452.0),
                 ('tax_10_affect_base (10.0%)',          1000.0,     100.0),
                 ('tax_group',                           1100.0,     352.0),
-                ('Total Sales',                         '',         452.0),
             ],
             options,
         )
@@ -352,8 +336,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('400000 Product Sales',                '',         452.0),
                 ('tax_10_affect_base (10.0%)',          1000.0,     100.0),
                 ('tax_group',                           1100.0,     352.0),
-                ('Total 400000 Product Sales',          '',         452.0),
-                ('Total Sales',                         '',         452.0),
             ],
             options,
         )
@@ -368,11 +350,8 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',         452.0),
                 ('tax_10_affect_base (10.0%)',          '',         100.0),
                 ('400000 Product Sales',                1000.0,     100.0),
-                ('Total tax_10_affect_base (10.0%)',    '',         100.0),
                 ('tax_group',                           '',         352.0),
                 ('400000 Product Sales',                1100.0,     352.0),
-                ('Total tax_group',                     '',         352.0),
-                ('Total Sales',                         '',         452.0),
             ],
             options,
         )
@@ -433,10 +412,8 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
             [
                 ('Sales',                               '',         -100.0),
                 ('tax_10 (10.0%)',                      -1000.0,    -100.0),
-                ('Total Sales',                         '',         -100.0),
                 ('Purchases',                           '',         200.0),
                 ('tax_20 (20.0%)',                      1000.0,     200.0),
-                ('Total Purchases',                     '',         200.0),
             ],
             options,
         )
@@ -450,13 +427,9 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',         -100.0),
                 ('400000 Product Sales',                '',         -100.0),
                 ('tax_10 (10.0%)',                      -1000.0,    -100.0),
-                ('Total 400000 Product Sales',          '',         -100.0),
-                ('Total Sales',                         '',         -100.0),
                 ('Purchases',                           '',         200.0),
                 ('400000 Product Sales',                '',         200.0),
                 ('tax_20 (20.0%)',                      1000.0,     200.0),
-                ('Total 400000 Product Sales',          '',         200.0),
-                ('Total Purchases',                     '',         200.0),
             ],
             options,
         )
@@ -471,13 +444,9 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',         -100.0),
                 ('tax_10 (10.0%)',                      '',         -100.0),
                 ('400000 Product Sales',                -1000.0,    -100.0),
-                ('Total tax_10 (10.0%)',                '',         -100.0),
-                ('Total Sales',                         '',         -100.0),
                 ('Purchases',                           '',         200.0),
                 ('tax_20 (20.0%)',                      '',         200.0),
                 ('400000 Product Sales',                1000.0,     200.0),
-                ('Total tax_20 (20.0%)',                '',         200.0),
-                ('Total Purchases',                     '',         200.0),
             ],
             options,
         )
@@ -538,10 +507,8 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
             [
                 ('Sales',                               '',         -100.0),
                 ('tax_10 (10.0%)',                      -1000.0,    -100.0),
-                ('Total Sales',                         '',         -100.0),
                 ('Purchases',                           '',         200.0),
                 ('tax_20 (20.0%)',                      1000.0,     200.0),
-                ('Total Purchases',                     '',         200.0),
             ],
             options,
         )
@@ -555,13 +522,9 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',         -100.0),
                 ('400000 Product Sales',                '',         -100.0),
                 ('tax_10 (10.0%)',                      -1000.0,    -100.0),
-                ('Total 400000 Product Sales',          '',         -100.0),
-                ('Total Sales',                         '',         -100.0),
                 ('Purchases',                           '',         200.0),
                 ('400000 Product Sales',                '',         200.0),
                 ('tax_20 (20.0%)',                      1000.0,     200.0),
-                ('Total 400000 Product Sales',          '',         200.0),
-                ('Total Purchases',                     '',         200.0),
             ],
             options,
         )
@@ -576,13 +539,9 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',         -100.0),
                 ('tax_10 (10.0%)',                      '',         -100.0),
                 ('400000 Product Sales',                -1000.0,    -100.0),
-                ('Total tax_10 (10.0%)',                '',         -100.0),
-                ('Total Sales',                         '',         -100.0),
                 ('Purchases',                           '',         200.0),
                 ('tax_20 (20.0%)',                      '',         200.0),
                 ('400000 Product Sales',                1000.0,     200.0),
-                ('Total tax_20 (20.0%)',                '',         200.0),
-                ('Total Purchases',                     '',         200.0),
             ],
             options,
         )
@@ -650,7 +609,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',         301.0),
                 ('tax_10 (10.0%)',                      1000.0,     100.0),
                 ('tax_20 (20.0%)',                      1000.0,     201.0),
-                ('Total Sales',                         '',         301.0),
             ],
             options,
         )
@@ -665,8 +623,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('400000 Product Sales',                '',         301.0),
                 ('tax_10 (10.0%)',                      1000.0,     100.0),
                 ('tax_20 (20.0%)',                      1000.0,     201.0),
-                ('Total 400000 Product Sales',          '',         301.0),
-                ('Total Sales',                         '',         301.0),
             ],
             options,
         )
@@ -681,11 +637,8 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',         301.0),
                 ('tax_10 (10.0%)',                      '',         100.0),
                 ('400000 Product Sales',                1000.0,     100.0),
-                ('Total tax_10 (10.0%)',                '',         100.0),
                 ('tax_20 (20.0%)',                      '',         201.0),
                 ('400000 Product Sales',                1000.0,     201.0),
-                ('Total tax_20 (20.0%)',                '',         201.0),
-                ('Total Sales',                         '',         301.0),
             ],
             options,
         )
@@ -749,7 +702,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('tax_10 (10.0%)',                      1000.0,     100.0,         0.0,       0.0,         0.0,       0.0),
                 ('tax_20 (20.0%)',                         0.0,       0.0,      1000.0,     200.0,         0.0,       0.0),
                 ('tax_30 (30.0%)',                         0.0,       0.0,      1000.0,     300.0,      1000.0,     300.0),
-                ('Total Sales',                             '',     100.0,          '',     500.0,           '',    300.0),
             ],
             options,
         )
@@ -765,12 +717,9 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('400000 Product Sales',                    '',     100.0,          '',       0.0,          '',     300.0),
                 ('tax_10 (10.0%)',                      1000.0,     100.0,         0.0,       0.0,         0.0,       0.0),
                 ('tax_30 (30.0%)',                         0.0,       0.0,         0.0,       0.0,      1000.0,     300.0),
-                ('Total 400000 Product Sales',              '',     100.0,          '',       0.0,          '',     300.0),
                 ('400000.2 Product Sales',                  '',       0.0,          '',     500.0,          '',       0.0),
                 ('tax_20 (20.0%)',                         0.0,       0.0,      1000.0,     200.0,         0.0,       0.0),
                 ('tax_30 (30.0%)',                         0.0,       0.0,      1000.0,     300.0,         0.0,       0.0),
-                ('Total 400000.2 Product Sales',            '',       0.0,          '',     500.0,          '',       0.0),
-                ('Total Sales',                             '',     100.0,          '',     500.0,          '',     300.0),
             ],
             options,
         )
@@ -785,15 +734,11 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                                   '',     100.0,          '',     500.0,          '',     300.0),
                 ('tax_10 (10.0%)',                          '',     100.0,          '',       0.0,          '',       0.0),
                 ('400000 Product Sales',                1000.0,     100.0,         0.0,       0.0,         0.0,       0.0),
-                ('Total tax_10 (10.0%)',                    '',     100.0,          '',       0.0,          '',       0.0),
                 ('tax_20 (20.0%)',                          '',       0.0,          '',     200.0,          '',       0.0),
                 ('400000.2 Product Sales',                 0.0,       0.0,      1000.0,     200.0,         0.0,       0.0),
-                ('Total tax_20 (20.0%)',                    '',       0.0,          '',     200.0,          '',       0.0),
                 ('tax_30 (30.0%)',                          '',       0.0,          '',     300.0,          '',     300.0),
                 ('400000 Product Sales',                   0.0,       0.0,         0.0,       0.0,      1000.0,     300.0),
                 ('400000.2 Product Sales',                 0.0,       0.0,      1000.0,     300.0,         0.0,       0.0),
-                ('Total tax_30 (30.0%)',                    '',       0.0,          '',     300.0,          '',     300.0),
-                ('Total Sales',                             '',     100.0,          '',     500.0,          '',     300.0),
             ],
             options,
         )
@@ -862,7 +807,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ("Sales",                               '',             108.2),
                 ("%s (42.0%%)" % affecting_tax.name,   200,              84),
                 ("%s (10.0%%)" % affected_tax.name,    242,              24.2),
-                ("Total Sales",                         '',             108.2),
             ],
             options,
         )
@@ -924,7 +868,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
             [
                 ('Sales',                               '',         100.0),
                 ('tax (10.0%)',                         1000.0,     100.0),
-                ('Total Sales',                         '',         100.0),
             ],
             options,
         )
@@ -938,8 +881,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',         100.0),
                 ('400000 Product Sales',                '',         100.0),
                 ('tax (10.0%)',                         1000.0,     100.0),
-                ('Total 400000 Product Sales',          '',         100.0),
-                ('Total Sales',                         '',         100.0),
             ],
             options,
         )
@@ -954,8 +895,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',         100.0),
                 ('tax (10.0%)',                         '',         100.0),
                 ('400000 Product Sales',                1000.0,     100.0),
-                ('Total tax (10.0%)',                   '',         100.0),
-                ('Total Sales',                         '',         100.0),
             ],
             options,
         )
@@ -1010,7 +949,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
             [
                 ('Sales',                               '',        0.0),
                 ('tax (10.0%)',                        0.0,        0.0),
-                ('Total Sales',                         '',        0.0),
             ],
             options,
         )
@@ -1024,8 +962,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',        0.0),
                 ('400000 Product Sales',                '',        0.0),
                 ('tax (10.0%)',                        0.0,        0.0),
-                ('Total 400000 Product Sales',          '',        0.0),
-                ('Total Sales',                         '',        0.0),
             ],
             options,
         )
@@ -1040,8 +976,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',        0.0),
                 ('tax (10.0%)',                         '',        0.0),
                 ('400000 Product Sales',               0.0,        0.0),
-                ('Total tax (10.0%)',                   '',        0.0),
-                ('Total Sales',                         '',        0.0),
             ],
             options,
         )
@@ -1094,7 +1028,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
             [
                 ('Sales',                               '',          1.0),
                 ('tax (10.0%)',                       10.0,          1.0),
-                ('Total Sales',                         '',          1.0),
             ],
             options,
         )
@@ -1108,8 +1041,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',          1.0),
                 ('400000 Product Sales',                '',          1.0),
                 ('tax (10.0%)',                       10.0,          1.0),
-                ('Total 400000 Product Sales',          '',          1.0),
-                ('Total Sales',                         '',          1.0),
             ],
             options,
         )
@@ -1124,8 +1055,6 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
                 ('Sales',                               '',           1.0),
                 ('tax (10.0%)',                         '',           1.0),
                 ('400000 Product Sales',              10.0,           1.0),
-                ('Total tax (10.0%)',                   '',           1.0),
-                ('Total Sales',                         '',           1.0),
             ],
             options,
         )

@@ -30,7 +30,6 @@ class IntrastatExpiryReportTest(TestAccountReportsCommon):
             )
         ]
         cls.intrastat_codes = {}
-        cls.env.company.totals_below_sections = False
         for i, vals in enumerate(values, 100):
             vals['code'] = str(i)
             cls.intrastat_codes[vals['name']] = cls.env['account.intrastat.code'].sudo().create(vals)

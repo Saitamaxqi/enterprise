@@ -154,7 +154,6 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
         report = self.env.ref('account_disallowed_expenses.disallowed_expenses_report')
         default_options = {'unfold_all': unfold, 'vehicle_split': split}
         options = self._generate_options(report, '2022-01-01', '2022-12-31', default_options)
-        self.env.company.totals_below_sections = False
         return report, options
 
     def _prepare_column_values(self, lines):

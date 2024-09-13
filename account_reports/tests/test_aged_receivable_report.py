@@ -159,9 +159,7 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('INV/2016/00002',             0.0,        0.0,        0.0,        0.0,      100.0,        0.0,          ''),
                 ('INV/2016/00002',             0.0,        0.0,        0.0,        0.0,        0.0,      100.0,          ''),
                 ('INV/2016/00001',             0.0,        0.0,        0.0,      500.0,        0.0,        0.0,          ''),
-                ('Total partner_a',          100.0,      100.0,      100.0,       600.0,     300.0,      100.0,      1300.0),
                 ('partner_b',                 50.0,      50.0,        50.0,       300.0,     150.0,       50.0,       650.0),
-                ('Total Aged Receivable',    150.0,      150.0,      150.0,      900.0,      450.0,      150.0,      1950.0),
             ],
             options,
         )
@@ -188,9 +186,7 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('INV/2016/00002',             0.0,        0.0,      100.0,        0.0,        0.0,        0.0,          ''),
                 ('INV/2016/00002',             0.0,        0.0,        0.0,        0.0,      100.0,        0.0,          ''),
                 ('INV/2016/00002',             0.0,        0.0,        0.0,        0.0,        0.0,      100.0,          ''),
-                ('Total partner_a',          100.0,      100.0,      100.0,      600.0,      300.0,      100.0,      1300.0),
                 ('partner_b',                 50.0,       50.0,       50.0,      300.0,      150.0,       50.0,       650.0),
-                ('Total Aged Receivable',    150.0,      150.0,      150.0,      900.0,      450.0,      150.0,      1950.0),
             ],
             options,
         )
@@ -218,8 +214,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('INV/2016/00002',             0.0,        0.0,        0.0,         0.0,        0.0,      100.0,          ''),
                 ('INV/2016/00002',             0.0,        0.0,        0.0,       100.0,        0.0,        0.0,          ''),
                 ('INV/2016/00001',             0.0,        0.0,        0.0,       500.0,        0.0,        0.0,          ''),
-                ('Total partner_a',          100.0,      100.0,      100.0,       600.0,      300.0,      100.0,      1300.0),
-                ('Total Aged Receivable',    150.0,      150.0,      150.0,       900.0,      450.0,      150.0,      1950.0),
             ],
             options,
         )
@@ -252,7 +246,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('INV/2016/00002',            0.0,        0.0,        0.0,        0.0,      100.0,        0.0,          ''),
                 ('INV/2016/00002',            0.0,        0.0,        0.0,        0.0,        0.0,      100.0,          ''),
                 ('INV/2016/00001',            0.0,        0.0,        0.0,      500.0,        0.0,        0.0,          ''),
-                ('Total partner_a',         100.0,      100.0,      100.0,       600.0,     300.0,      100.0,      1300.0),
                 ('partner_b',                50.0,       50.0,       50.0,       300.0,     150.0,       50.0,       650.0),
                 ('INV/2016/00002',            0.0,        0.0,        0.0,         0.0,     100.0,        0.0,          ''),
                 ('INV/2016/00002',           50.0,        0.0,        0.0,         0.0,       0.0,        0.0,          ''),
@@ -262,8 +255,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('INV/2016/00002',            0.0,        0.0,        0.0,         0.0,      50.0,        0.0,          ''),
                 ('INV/2016/00002',            0.0,        0.0,        0.0,         0.0,       0.0,       50.0,          ''),
                 ('INV/2016/00001',            0.0,        0.0,        0.0,       250.0,       0.0,        0.0,          ''),
-                ('Total partner_b',          50.0,       50.0,       50.0,       300.0,     150.0,       50.0,       650.0),
-                ('Total Aged Receivable',   150.0,      150.0,      150.0,      900.0,      450.0,      150.0,      1950.0),
             ],
             options
         )
@@ -281,7 +272,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
         misc_move.action_post()
 
         options = self._generate_options(self.report, fields.Date.from_string('2017-03-01'), fields.Date.from_string('2017-04-01'))
-        self.env.company.totals_below_sections = False
 
         self.assertLinesValues(
             # pylint: disable=C0326
@@ -301,7 +291,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
         """ Test the filter on top allowing to filter on res.partner. """
         options = self._generate_options(self.report, fields.Date.from_string('2017-02-01'), fields.Date.from_string('2017-02-01'))
         options['partner_ids'] = self.partner_a.ids
-        self.env.company.totals_below_sections = False
 
         self.assertLinesValues(
             # pylint: disable=C0326
@@ -319,7 +308,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
         """ Test the filter on top allowing to filter on res.partner.category. """
         options = self._generate_options(self.report, fields.Date.from_string('2017-02-01'), fields.Date.from_string('2017-02-01'))
         options['partner_categories'] = self.partner_category_a.ids
-        self.env.company.totals_below_sections = False
 
         self.assertLinesValues(
             # pylint: disable=C0326
@@ -337,7 +325,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
     def test_aged_receivable_reconciliation_date(self):
         """ Check the values at a date before some reconciliations are done. """
         options = self._generate_options(self.report, fields.Date.from_string('2016-10-31'), fields.Date.from_string('2016-10-31'))
-        self.env.company.totals_below_sections = False
 
         self.assertLinesValues(
             # pylint: disable=C0326
@@ -384,7 +371,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('INV/2016/00002',      '10/05/2016',        0.0,        0.0,        0.0,        0.0,      100.0,        0.0,          ''),
                 ('INV/2016/00002',      '10/05/2016',        0.0,        0.0,        0.0,        0.0,        0.0,      100.0,          ''),
                 ('INV/2016/00001',      '11/03/2016',        0.0,        0.0,        0.0,      500.0,        0.0,        0.0,          ''),
-                ('Total partner_a',               '',      100.0,      100.0,      100.0,       600.0,     300.0,      100.0,      1300.0),
                 ('partner_b',                     '',       50.0,       50.0,       50.0,       300.0,     150.0,       50.0,       650.0),
                 ('INV/2016/00002',      '10/05/2016',        0.0,        0.0,        0.0,         0.0,     100.0,        0.0,          ''),
                 ('INV/2016/00002',      '10/05/2016',       50.0,        0.0,        0.0,         0.0,       0.0,        0.0,          ''),
@@ -394,8 +380,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('INV/2016/00002',      '10/05/2016',        0.0,        0.0,        0.0,         0.0,      50.0,        0.0,          ''),
                 ('INV/2016/00002',      '10/05/2016',        0.0,        0.0,        0.0,         0.0,       0.0,       50.0,          ''),
                 ('INV/2016/00001',      '11/03/2016',        0.0,        0.0,        0.0,       250.0,       0.0,        0.0,          ''),
-                ('Total partner_b',               '',       50.0,       50.0,       50.0,       300.0,     150.0,       50.0,       650.0),
-                ('Total Aged Receivable',         '',      150.0,      150.0,      150.0,      900.0,      450.0,      150.0,      1950.0),
             ],
             options,
         )
@@ -422,7 +406,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('INV/2016/00002',              0.0,        0.0,        0.0,      100.0,        0.0,        0.0,          ''),
                 ('INV/2016/00002',              0.0,        0.0,        0.0,        0.0,      100.0,        0.0,          ''),
                 ('INV/2016/00002',              0.0,        0.0,        0.0,        0.0,        0.0,      100.0,          ''),
-                ('Total partner_a',           100.0,      100.0,      100.0,       600.0,     300.0,      100.0,      1300.0),
                 ('partner_b',                  50.0,       50.0,       50.0,       300.0,     150.0,       50.0,       650.0),
                 ('INV/2016/00001',              0.0,        0.0,        0.0,       250.0,       0.0,        0.0,          ''),
                 ('INV/2016/00002',              0.0,        0.0,        0.0,         0.0,     100.0,        0.0,          ''),
@@ -432,8 +415,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('INV/2016/00002',              0.0,        0.0,        0.0,        50.0,       0.0,        0.0,          ''),
                 ('INV/2016/00002',              0.0,        0.0,        0.0,         0.0,      50.0,        0.0,          ''),
                 ('INV/2016/00002',              0.0,        0.0,        0.0,         0.0,       0.0,       50.0,          ''),
-                ('Total partner_b',            50.0,       50.0,       50.0,       300.0,     150.0,       50.0,       650.0),
-                ('Total Aged Receivable',     150.0,      150.0,      150.0,      900.0,      450.0,      150.0,      1950.0),
             ],
             options,
         )
@@ -469,7 +450,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('INV/2016/00002',             0.0,        0.0,        0.0,        0.0,       50.0,        0.0,          ''),
                 ('INV/2016/00002',             0.0,        0.0,        0.0,        0.0,        0.0,       50.0,          ''),
                 ('INV/2016/00002',            50.0,        0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total partner_b',           50.0,       50.0,       50.0,      300.0,      150.0,       50.0,       650.0),
                 ('partner_a',                100.0,      100.0,      100.0,      600.0,      300.0,      100.0,      1300.0),
                 ('INV/2016/00001',             0.0,        0.0,        0.0,      500.0,        0.0,        0.0,          ''),
                 ('INV/2016/00002',             0.0,        0.0,        0.0,        0.0,      200.0,        0.0,          ''),
@@ -479,8 +459,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('INV/2016/00002',             0.0,        0.0,        0.0,        0.0,      100.0,        0.0,          ''),
                 ('INV/2016/00002',             0.0,        0.0,        0.0,        0.0,        0.0,      100.0,          ''),
                 ('INV/2016/00002',           100.0,        0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total partner_a',          100.0,      100.0,      100.0,       600.0,     300.0,      100.0,      1300.0),
-                ('Total Aged Receivable',    150.0,      150.0,      150.0,      900.0,      450.0,      150.0,      1950.0),
             ],
             options,
         )
@@ -507,7 +485,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('INV/2016/00002',          0.0,        0.0,        0.0,      100.0,        0.0,        0.0,          ''),
                 ('INV/2016/00002',          0.0,        0.0,        0.0,        0.0,      100.0,        0.0,          ''),
                 ('INV/2016/00002',          0.0,        0.0,        0.0,        0.0,        0.0,      100.0,          ''),
-                ('Total partner_a',       100.0,      100.0,      100.0,       600.0,     300.0,      100.0,      1300.0),
                 ('partner_b',              50.0,       50.0,       50.0,      300.0,      150.0,       50.0,       650.0),
                 ('INV/2016/00002',         50.0,        0.0,        0.0,        0.0,        0.0,        0.0,          ''),
                 ('INV/2016/00001',          0.0,        0.0,        0.0,      250.0,        0.0,        0.0,          ''),
@@ -517,8 +494,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('INV/2016/00002',          0.0,        0.0,        0.0,       50.0,        0.0,        0.0,          ''),
                 ('INV/2016/00002',          0.0,        0.0,        0.0,        0.0,       50.0,        0.0,          ''),
                 ('INV/2016/00002',          0.0,        0.0,        0.0,        0.0,        0.0,       50.0,          ''),
-                ('Total partner_b',        50.0,       50.0,       50.0,      300.0,      150.0,       50.0,       650.0),
-                ('Total Aged Receivable', 150.0,      150.0,      150.0,      900.0,      450.0,      150.0,      1950.0),
             ],
             options,
         )
@@ -563,8 +538,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('partner_a',                0.0,        0.0,        0.0,        0.0,        0.0,        0.0,         0.0),
                 (f"{refund.name} R",      -100.0,        0.0,        0.0,        0.0,        0.0,        0.0,          ''),
                 (f"{invoice.name} I",      100.0,        0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total partner_a',          0.0,        0.0,        0.0,        0.0,        0.0,        0.0,         0.0),
-                ('Total Aged Receivable',    0.0,        0.0,        0.0,        0.0,        0.0,        0.0,         0.0),
             ],
             options,
         )
@@ -592,8 +565,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('partner_a',                0.0,        0.0,        0.0,        0.0,        0.0,        0.0,         0.0),
                 (f"{refund.name} R",       -58.0,        0.0,        0.0,        0.0,        0.0,        0.0,          ''),
                 (f"{invoice.name} I",       58.0,        0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total partner_a',          0.0,        0.0,        0.0,        0.0,        0.0,        0.0,         0.0),
-                ('Total Aged Receivable',    0.0,        0.0,        0.0,        0.0,        0.0,        0.0,         0.0),
             ],
             options,
         )
@@ -621,8 +592,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('partner_a',                0.0,        0.0,        0.0,        0.0,        0.0,        0.0,         0.0),
                 (f"{refund.name} R",       -58.0,        0.0,        0.0,        0.0,        0.0,        0.0,          ''),
                 (f"{invoice.name} I",       58.0,        0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total partner_a',          0.0,        0.0,        0.0,        0.0,        0.0,        0.0,         0.0),
-                ('Total Aged Receivable',    0.0,        0.0,        0.0,        0.0,        0.0,        0.0,         0.0),
             ],
             options,
         )
@@ -665,7 +634,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('Anonymous partner',      42.0,        0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 ('Another partner',        42.0,        0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 ('Brave partner',          42.0,        0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
-                ('Total Aged Receivable', 378.0,        0.0,        0.0,        0.0,        0.0,        0.0,       378.0),
             ],
             options,
         )
@@ -683,49 +651,30 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('A (8 lines)',                      336.0,      0.0,        0.0,        0.0,        0.0,        0.0,       336.0),
                 ('A',                                 42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 (invoices_map['A'],                   42.0,      0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total A',                           42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 ('A[ ] (3 lines)',                   126.0,      0.0,        0.0,        0.0,        0.0,        0.0,       126.0),
                 ('A N (2 lines)',                     84.0,      0.0,        0.0,        0.0,        0.0,        0.0,        84.0),
                 ('A new partner',                     42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 (invoices_map['A new partner'],       42.0,      0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total A new partner',               42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 ('A nice partner',                    42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 (invoices_map['A nice partner'],      42.0,      0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total A nice partner',              42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
-                ('Total A N (2 lines)',               84.0,      0.0,        0.0,        0.0,        0.0,        0.0,        84.0),
                 ('A P (1 line)',                      42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 ('A partner',                         42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 (invoices_map['A partner'],           42.0,      0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total A partner',                   42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
-                ('Total A P (1 line)',                42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
-                ('Total A[ ] (3 lines)',             126.0,      0.0,        0.0,        0.0,        0.0,        0.0,       126.0),
                 ('AN (4 lines)',                     168.0,      0.0,        0.0,        0.0,        0.0,        0.0,       168.0),
                 ('AN[ ] (1 line)',                    42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 ('An original partner',               42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 (invoices_map['An original partner'], 42.0,      0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total An original partner',         42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
-                ('Total AN[ ] (1 line)',              42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 ('ANN (1 line)',                      42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 ('Annoyed partner',                   42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 (invoices_map['Annoyed partner'],     42.0,      0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total Annoyed partner',             42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
-                ('Total ANN (1 line)',                42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 ('ANO (2 lines)',                     84.0,      0.0,        0.0,        0.0,        0.0,        0.0,        84.0),
                 ('Anonymous partner',                 42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 (invoices_map['Anonymous partner'],   42.0,      0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total Anonymous partner',           42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 ('Another partner',                   42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 (invoices_map['Another partner'],     42.0,      0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total Another partner',             42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
-                ('Total ANO (2 lines)',               84.0,      0.0,        0.0,        0.0,        0.0,        0.0,        84.0),
-                ('Total AN (4 lines)',               168.0,      0.0,        0.0,        0.0,        0.0,        0.0,       168.0),
-                ('Total A (8 lines)',                336.0,      0.0,        0.0,        0.0,        0.0,        0.0,       336.0),
                 ('B (1 line)',                        42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 ('Brave partner',                     42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
                 (invoices_map['Brave partner'],       42.0,      0.0,        0.0,        0.0,        0.0,        0.0,          ''),
-                ('Total Brave partner',               42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
-                ('Total B (1 line)',                  42.0,      0.0,        0.0,        0.0,        0.0,        0.0,        42.0),
-                ('Total Aged Receivable',            378.0,      0.0,        0.0,        0.0,        0.0,        0.0,       378.0),
             ],
             options,
         )
@@ -735,7 +684,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
         foreign_partner = self.env['res.partner'].create({'name': 'foreign_partner'})
         currency = self.other_currency
         currency.active = True
-        self.env.company.totals_below_sections = False
 
         invoice = self.env['account.move'].create({
             'move_type': 'out_invoice',
@@ -812,7 +760,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('Aged Receivable',        150.0,      150.0,       150.0,       900.0,      450.0,      150.0,    1950.0),
                 ('partner_a',              100.0,      100.0,       100.0,       600.0,      300.0,      100.0,    1300.0),
                 ('partner_b',               50.0,       50.0,        50.0,       300.0,      150.0,       50.0,     650.0),
-                ('Total Aged Receivable',  150.0,      150.0,       150.0,       900.0,      450.0,      150.0,    1950.0),
             ],
             options
         )
@@ -829,7 +776,6 @@ class TestAgedReceivableReport(TestAccountReportsCommon):
                 ('Aged Receivable',        150.0,      300.0,     1350.0,         0.0,       0.0,      150.0,      1950.0),
                 ('partner_a',              100.0,      200.0,      900.0,         0.0,       0.0,      100.0,      1300.0),
                 ('partner_b',               50.0,      100.0,      450.0,         0.0,       0.0,       50.0,       650.0),
-                ('Total Aged Receivable',  150.0,      300.0,     1350.0,         0.0,       0.0,      150.0,      1950.0),
             ],
             options
         )

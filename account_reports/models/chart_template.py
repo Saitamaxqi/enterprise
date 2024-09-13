@@ -18,7 +18,6 @@ class AccountChartTemplate(models.AbstractModel):
             raise ValidationError(_("No default miscellaneous journal could be found for the active company"))
 
         company.update({
-            'totals_below_sections': company.anglo_saxon_accounting,
             'account_tax_periodicity_journal_id': default_misc_journal,
             'account_tax_periodicity_reminder_day': 7,
         })

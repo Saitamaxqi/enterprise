@@ -2552,9 +2552,6 @@ class AccountReport(models.Model):
         if options.get('hierarchy'):
             lines = self._create_hierarchy(lines, options)
 
-        # Handle totals below sections for static lines
-        lines = self._add_totals_below_sections(lines, options)
-
         # Unfold lines (static or dynamic) if necessary and add totals below section to dynamic lines
         lines = self._fully_unfold_lines_if_needed(lines, options)
 
@@ -2606,9 +2603,6 @@ class AccountReport(models.Model):
             if options.get('show_horizontal_group_total'):
                 # In case the line has no formula
                 if all(column['no_format'] is None for column in line_dict['columns']):
-                    continue
-                # In case total below section, some line don't have the value displayed
-                if self.env.company.totals_below_sections and not options.get('ignore_totals_below_sections') and line_dict['unfolded']:
                     continue
 
                 figure_type_is_valid = all(column['figure_type'] in {'float', 'integer', 'monetary'} for column in line_dict['columns'])
@@ -2675,19 +2669,6 @@ class AccountReport(models.Model):
 
         return lines
 
-    def _generate_total_below_section_line(self, section_line_dict):
-        return {
-            **section_line_dict,
-            'id': self._get_generic_line_id(None, None, parent_line_id=section_line_dict['id'], markup='total'),
-            'level': section_line_dict['level'] if section_line_dict['level'] != 0 else 1, # Total line should not be level 0
-            'name': _("Total %s", section_line_dict['name']),
-            'parent_id': section_line_dict['id'],
-            'unfoldable': False,
-            'unfolded': False,
-            'caret_options': None,
-            'action_id': None,
-            'page_break': False, # If the section's line possesses a page break, we don't want the total to have it.
-        }
 
     def _get_static_line_dict(self, options, line, all_column_groups_expression_totals, parent_id=None):
         line_id = self._get_generic_line_id('account.report.line', line.id, parent_line_id=parent_id)
@@ -5070,7 +5051,6 @@ class AccountReport(models.Model):
                 'show_draft': self.filter_show_draft,
                 'show_hierarchy': options.get('display_hierarchy_filter', False),
                 'show_period_comparison': self.filter_period_comparison,
-                'show_totals': self.env.company.totals_below_sections and not options.get('ignore_totals_below_sections'),
                 'show_unreconciled': self.filter_unreconciled,
                 'show_hide_0_lines': self.filter_hide_0_lines,
             },
@@ -5215,48 +5195,7 @@ class AccountReport(models.Model):
         if expansion_result.get('after_load_more_lines'):
             rslt.extend(expansion_result['after_load_more_lines'])
 
-        return self._add_totals_below_sections(rslt, options)
-
-    def _add_totals_below_sections(self, lines, options):
-        """ Returns a new list, corresponding to lines with the required total lines added as sublines of the sections it contains.
-        """
-        if not self.env.company.totals_below_sections or options.get('ignore_totals_below_sections'):
-            return lines
-
-        # Gather the lines needing the totals
-        lines_needing_total_below = set()
-        for line_dict in lines:
-            line_markup = self._get_markup(line_dict['id'])
-
-            if line_markup != 'total':
-                # If we are on the first level of an expandable line, we arelady generate its total
-                if line_dict.get('unfoldable') or (line_dict.get('unfolded') and line_dict.get('expand_function')):
-                    lines_needing_total_below.add(line_dict['id'])
-
-                # All lines that are parent of other lines need to receive a total
-                line_parent_id = line_dict.get('parent_id')
-                if line_parent_id:
-                    lines_needing_total_below.add(line_parent_id)
-
-        # Inject the totals
-        if lines_needing_total_below:
-            lines_with_totals_below = []
-            totals_below_stack = []
-            for line_dict in lines:
-                while totals_below_stack and not line_dict['id'].startswith(totals_below_stack[-1]['parent_id'] + LINE_ID_HIERARCHY_DELIMITER):
-                    lines_with_totals_below.append(totals_below_stack.pop())
-
-                lines_with_totals_below.append(line_dict)
-
-                if line_dict['id'] in lines_needing_total_below and any(col.get('no_format') is not None for col in line_dict['columns']):
-                    totals_below_stack.append(self._generate_total_below_section_line(line_dict))
-
-            while totals_below_stack:
-                lines_with_totals_below.append(totals_below_stack.pop())
-
-            return lines_with_totals_below
-
-        return lines
+        return rslt
 
     @api.model
     def _get_load_more_line(self, offset, parent_line_id, expand_function_name, groupby, progress, options):
