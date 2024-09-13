@@ -1158,7 +1158,7 @@ class SaleOrder(models.Model):
         return self._create_recurring_invoice()
 
     def _get_invoiceable_lines(self, final=False):
-        date_from = fields.Date.today()
+        date_from = self.env.context.get('invoiceable_date_from', fields.Date.today())
         res = super()._get_invoiceable_lines(final=final)
         res = res.filtered(lambda l: not l.recurring_invoice or l.order_id.subscription_state == '7_upsell')
         automatic_invoice = self.env.context.get('recurring_automatic')
