@@ -11,6 +11,7 @@ from odoo.addons.whatsapp.tools.whatsapp_exception import WhatsAppError
 _logger = logging.getLogger(__name__)
 
 DEFAULT_ENDPOINT = "https://graph.facebook.com/v17.0"
+MAX_RESPONSE_SIZE = 10 * 1024 * 1024  # 10MB
 
 class WhatsAppApi:
     def __init__(self, wa_account_id):
@@ -76,6 +77,12 @@ class WhatsAppApi:
                     f"Response Text: {response_repr}"
                 )
                 wa_account_id._add_ir_log('WA Response', message, '__api_requests')
+
+        content_length = res.headers.get('Content-Length')
+        if content_length and int(content_length) > MAX_RESPONSE_SIZE:
+            if not res.ok:
+                raise WhatsAppError(failure_type='network')
+            return res
 
         # raise if json-parseable and 'error' in json
         try:
