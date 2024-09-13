@@ -52,6 +52,14 @@ class AccountJournal(models.Model):
             else:
                 record.expiring_synchronization_due_day = 0
 
+    def _fill_bank_cash_dashboard_data(self, dashboard_data):
+        super()._fill_bank_cash_dashboard_data(dashboard_data)
+        # Caching data to avoid one call per journal
+        self.browse(list(dashboard_data.keys())).fetch(['type', 'account_online_account_id'])
+        for journal_id, journal_data in dashboard_data.items():
+            journal = self.browse(journal_id)
+            journal_data['display_connect_bank_in_dashboard'] = journal.type == 'bank' and not journal.account_online_account_id
+
     @api.constrains('account_online_account_id')
     def _check_account_online_account_id(self):
         for journal in self:

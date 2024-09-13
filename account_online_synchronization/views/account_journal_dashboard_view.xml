@@ -36,6 +36,24 @@
                     </div>
                 </xpath>
 
+                <xpath expr="//div[hasclass('o_kanban_card_manage_settings')]/field[@name='show_on_dashboard']" position="attributes">
+                    <attribute name="class" remove="col-4"/>
+                    <attribute name="t-att-class">dashboard.display_connect_bank_in_dashboard ? 'col-4' : 'col-6'</attribute>
+                </xpath>
+
+                <xpath expr="//div[hasclass('o_kanban_card_manage_settings')]/div[hasclass('col-6')]" position="attributes">
+                    <attribute name="class" remove="col-4"/>
+                    <attribute name="t-att-class">dashboard.display_connect_bank_in_dashboard ? 'col-4' : 'col-6'</attribute>
+                </xpath>
+
+                <xpath expr="//div[hasclass('o_kanban_card_manage_settings')]/field[@name='show_on_dashboard']" position="after">
+                    <t t-if="dashboard.display_connect_bank_in_dashboard">
+                        <div class="col-4 text-center">
+                            <a class="dropdown-item px-0" type="object" name="action_configure_bank_journal">Connect bank</a>
+                        </div>
+                    </t>
+                </xpath>
+
                 <xpath expr="//t[@t-name='bank_configuration_placeholder']" position="replace">
                     <t t-if="bank_unconfigured">
                         <widget name="bank_configure" groups="account.group_account_manager"/>
