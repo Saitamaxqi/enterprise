@@ -1,10 +1,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
-import io
 import calendar
-from odoo import api, fields, models
+import io
+
+from odoo import api, fields, models, _
 from odoo.tools.misc import xlsxwriter
+from odoo.exceptions import UserError
 
 MONTH_SELECTION = [
     ('1', 'January'),
@@ -30,6 +32,12 @@ class L10nInHrPayrollEpfReport(models.Model):
     year = fields.Integer(required=True, default=lambda self: fields.Date.context_today(self).year)
     xls_file = fields.Binary(string="XLS file")
     xls_filename = fields.Char()
+
+    @api.model
+    def default_get(self, field_list=None):
+        if self.env.company.country_id.code != "IN":
+            raise UserError(_('You must be logged in a Indian company to use this feature'))
+        return super().default_get(field_list)
 
     @api.depends('month', 'year')
     def _compute_display_name(self):

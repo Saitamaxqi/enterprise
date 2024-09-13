@@ -236,6 +236,7 @@
             <field name="state">open</field>
             <field name="company_id" ref="base.demo_company_in"/>
             <field name="hr_responsible_id" ref="base.user_demo"/>
+            <field name="l10n_in_esic_amount">1200</field>
             <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1))"/>
         </record>
         <record id="l10n_in_hr_contract_shaurya" model="hr.contract">
@@ -409,13 +410,31 @@
             <field name="company_id" ref="base.demo_company_in"/>
             <field name="struct_id" ref="l10n_in_hr_payroll.hr_payroll_structure_in_stipend"/>
         </record>
+        <record id="l10n_in_hr_payslip_in_vihaan_current_month" model="hr.payslip">
+            <field name="employee_id" ref="l10n_in_hr_employee_vihaan"/>
+            <field name="name">Vihaan Payslip</field>
+            <field name="date_from" eval="DateTime.today().replace(day=1)"/>
+            <field name="date_to" eval="(DateTime.today().replace(day=1) + relativedelta(months=1)) - relativedelta(days=1)"/>
+            <field name="company_id" ref="base.demo_company_in"/>
+            <field name="struct_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_ind_emp"/>
+        </record>
+        <record id="l10n_in_hr_payslip_in_alisha_sharma_current_month" model="hr.payslip">
+            <field name="employee_id" ref="l10n_in_hr_employee_alisha_sharma"/>
+            <field name="name">Alisha Sharma Payslip</field>
+            <field name="date_from" eval="DateTime.today().replace(day=1)"/>
+            <field name="date_to" eval="(DateTime.today().replace(day=1) + relativedelta(months=1)) - relativedelta(days=1)"/>
+            <field name="company_id" ref="base.demo_company_in"/>
+            <field name="struct_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_ind_emp"/>
+        </record>
 
         <function model="hr.payslip" name="compute_sheet">
             <value model="hr.payslip" eval="[
                 ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_vihaan_sep'),
                 ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_vihaan_oct'),
                 ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_shaurya_sep'),
-                ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_alisha_sharma')
+                ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_alisha_sharma'),
+                ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_vihaan_current_month'),
+                ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_alisha_sharma_current_month')
             ]"/>
         </function>
 
@@ -423,7 +442,9 @@
             <value model="hr.payslip" eval="[
                 ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_vihaan_sep'),
                 ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_vihaan_oct'),
-                ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_alisha_sharma')
+                ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_alisha_sharma'),
+                ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_vihaan_current_month'),
+                ref('l10n_in_hr_payroll.l10n_in_hr_payslip_in_alisha_sharma_current_month')
             ]"/>
         </function>
     </data>

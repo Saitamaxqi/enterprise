@@ -4,3 +4,4 @@
 from . import report_payroll_advice
 from . import report_hr_yearly_salary_detail
 from . import report_hr_epf
+from . import report_hr_esic
