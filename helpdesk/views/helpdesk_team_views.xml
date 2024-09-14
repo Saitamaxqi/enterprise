@@ -359,7 +359,7 @@
                                 <field name="open_ticket_count" class="fw-bold"/>
                                 <span class="text-muted text-nowrap">Open</span>
                             </a>
-                            <a name="%(helpdesk.helpdesk_ticket_action_unassigned)d" type="action" class="d-flex flex-column align-items-center col border-start">
+                            <a name="%(helpdesk.helpdesk_ticket_action_unassigned)d" type="action" context="{'default_team_id': id}" class="d-flex flex-column align-items-center col border-start">
                                 <field name="unassigned_tickets" class="fw-bold"/>
                                 <span class="text-muted text-nowrap">Unassigned</span>
                             </a>
