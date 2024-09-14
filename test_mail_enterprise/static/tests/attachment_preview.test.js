@@ -14,12 +14,12 @@ import {
     step,
 } from "@mail/../tests/mail_test_helpers";
 import { describe, test } from "@odoo/hoot";
-import { defineTestMailEnterpriseModels } from "@test_mail_enterprise/../tests/test_mail_enterprise_test_helpers";
+import { defineTestMailModels } from "@test_mail/../tests/test_mail_test_helpers";
 import { browser } from "@web/core/browser/browser";
 import { onRpc } from "@web/../tests/web_test_helpers";
 
 describe.current.tags("desktop");
-defineTestMailEnterpriseModels();
+defineTestMailModels();
 
 test("Should not have attachment preview for still uploading attachment", async () => {
     const pyEnv = await startServer();
