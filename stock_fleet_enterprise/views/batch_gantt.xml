@@ -8,7 +8,7 @@
                     decoration-info="state == 'draft'"
                     date_start="scheduled_date"
                     date_stop="end_date"
-                    default_group_by="dock_id,vehicle_id"
+                    default_group_by="picking_type_id,dock_id"
                     color="vehicle_id"
                     total_row="True"
                     default_scale="week"

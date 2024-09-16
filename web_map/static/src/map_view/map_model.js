@@ -250,19 +250,11 @@ export class MapModel extends Model {
             }
         }
         this._addPartnerToRecord(metaData, data);
-
         await this._updatePartnerCoordinate(metaData, data);
-
         return data;
     }
 
-    /**
-     * Fetch the records for a given model.
-     *
-     * @protected
-     * @returns {Promise}
-     */
-    _fetchRecordData(metaData, data) {
+    _getRecordSpecification(metaData, data) {
         const fieldNames = data.groupByKey
             ? metaData.fieldNames.concat(data.groupByKey.split(":")[0])
             : metaData.fieldNames;
@@ -285,6 +277,17 @@ export class MapModel extends Model {
                 }
             }
         }
+        return specification;
+    }
+
+    /**
+     * Fetch the records for a given model.
+     *
+     * @protected
+     * @returns {Promise}
+     */
+    _fetchRecordData(metaData, data) {
+        const specification = this._getRecordSpecification(metaData, data);
         const orderBy = [];
         if (metaData.defaultOrder) {
             orderBy.push(metaData.defaultOrder.name);

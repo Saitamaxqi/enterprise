@@ -17,6 +17,11 @@ Contains the enterprise views for Stock management
         'views/stock_picking_map_views.xml',
         'report/stock_report_views.xml',
     ],
+    'assets': {
+        'web.assets_backend_lazy': [
+            'stock_enterprise/static/src/**/*'
+        ]
+    },
     'installable': True,
     'auto_install': ['stock'],
     'license': 'OEEL-1',
