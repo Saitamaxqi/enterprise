@@ -127,19 +127,21 @@ class SignSendRequest(models.TransientModel):
                 'partner_id': False,
                 'mail_sent_order': default_signing_order + 1 if self.set_sign_order else 1
             }) for default_signing_order, role in enumerate(roles)]
-        if self.env.context.get('sign_directly_without_mail') or self.env.ref('sign.sign_item_role_user').id:
+        sign_item_role_user = self.env.ref('sign.sign_item_role_user', raise_if_not_found=False)
+        if self.env.context.get('sign_directly_without_mail') or sign_item_role_user:
             default_signer = self.env.context.get("default_signer_id", self.env.user.partner_id.id)
             if len(roles) == 1 and signer_ids:
                 signer_ids[0][2]['partner_id'] = default_signer
             elif not roles:
                 self.signer_id = default_signer
-            user_role = self.env.ref('sign.sign_item_role_user').id
-            for signer_val in signer_ids:
-                current_role = signer_val[2].get('role_id')
-                # user_role can't be deleted if already used.
-                if len(signer_val) == 3 and isinstance(current_role, int) and current_role == user_role:
-                    signer_val[2]['partner_id'] = default_signer
-                    break
+            user_role = sign_item_role_user and sign_item_role_user.id
+            if user_role:
+                for signer_val in signer_ids:
+                    current_role = signer_val[2].get('role_id')
+                    # user_role can't be deleted if already used.
+                    if len(signer_val) == 3 and isinstance(current_role, int) and current_role == user_role:
+                        signer_val[2]['partner_id'] = default_signer
+                        break
         self.signer_ids = [(5, 0, 0)] + signer_ids
         self.signers_count = len(roles)
 
