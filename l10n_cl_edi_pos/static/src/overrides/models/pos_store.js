@@ -1,6 +1,8 @@
 import { PosStore } from "@point_of_sale/app/store/pos_store";
 import { patch } from "@web/core/utils/patch";
 import { pick } from "@web/core/utils/objects";
+import { formatDateTime } from "@web/core/l10n/dates";
+import { parseUTCString } from "@point_of_sale/utils";
 
 patch(PosStore.prototype, {
     // @Override
@@ -52,7 +54,7 @@ patch(PosStore.prototype, {
             ];
         result.l10n_latam_document_type = order.account_move.l10n_latam_document_type_id.name;
         result.l10n_latam_document_number = order.account_move.l10n_latam_document_number;
-        result.date = order.receiptDate;
+        result.date = formatDateTime(parseUTCString(order.date_order));
         result.partner = order.isFactura()
             ? pick(
                   order.partner_id,
