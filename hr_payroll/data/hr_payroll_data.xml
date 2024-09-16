@@ -227,6 +227,7 @@ result = categories['BASIC'] + categories['ALW'] + categories['DED']
             <field name="color">0</field>
             <field name="code">OUT</field>
             <field name="is_leave" eval="False"/>
+            <field name="is_unforeseen" eval="False"/>
             <field name="round_days">HALF</field>
             <field name="round_days_type">HALF-UP</field>
         </record>

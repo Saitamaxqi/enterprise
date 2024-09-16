@@ -338,6 +338,7 @@
         <field name="name">Partial Incapacity (due to illness)</field>
         <field name="code">LEAVE281</field>
         <field name="is_leave" eval="False"/>
+        <field name="is_unforeseen" eval="False"/>
         <field name="leave_right" eval="True"/>
         <field name="dmfa_code">30</field>
         <field name="color">4</field>
