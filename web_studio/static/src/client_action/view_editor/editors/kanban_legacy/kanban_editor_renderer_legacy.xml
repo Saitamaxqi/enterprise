@@ -5,14 +5,14 @@
   <xpath expr="//KanbanHeader" position="replace" />
 
   <!--   Demo kanban records ungrouped -->
-  <xpath expr="//div[contains(@class, 'o_kanban_ghost')]" position="before">
+  <xpath expr="//div[hasclass('o_kanban_ghost')]" position="before">
     <t t-call="web_studio.KanbanEditorRenderer.KanbanDemoRecordsLegacy">
       <t t-set="demoAmount" t-value="6" />
     </t>
   </xpath>
 
   <!--   Demo kanban records grouped -->
-  <xpath expr="//div[contains(@class, 'o_kanban_group')]" position="after" >
+  <xpath expr="//div[hasclass('o_kanban_group')]" position="after" >
     <div class="o_kanban_group flex-shrink-0 flex-grow-1 flex-md-grow-0">
       <div class="o_kanban_header top-0 py-3" />
       <t t-call="web_studio.KanbanEditorRenderer.KanbanDemoRecordsLegacy">

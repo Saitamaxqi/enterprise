@@ -33,7 +33,7 @@
       <attribute name="t-ref">tableHead</attribute>
     </xpath>
 
-    <xpath expr="//*[contains(@class, 'o_optional_columns_dropdown_toggle')]" position="attributes">
+    <xpath expr="//*[hasclass('o_optional_columns_dropdown_toggle')]" position="attributes">
       <attribute name="class" add="text-muted" separator=" "/>
     </xpath>
 

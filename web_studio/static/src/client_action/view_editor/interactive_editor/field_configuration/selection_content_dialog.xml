@@ -40,24 +40,24 @@
 </t>
 
 <t t-name="web_studio.InteractiveItemsList.EditableItem" t-inherit="web_studio.InteractiveItemsList.Item">
-    <xpath expr="//span[contains(@class, 'o-web-studio-interactive-list-item-label')]" position="attributes" >
+    <xpath expr="//span[hasclass('o-web-studio-interactive-list-item-label')]" position="attributes" >
         <attribute name="t-if">!item.isInEdition</attribute>
         <attribute name="t-esc">item.label</attribute>
     </xpath>
-    <xpath expr="//span[contains(@class, 'o-web-studio-interactive-list-item-label')]" position="after" >
+    <xpath expr="//span[hasclass('o-web-studio-interactive-list-item-label')]" position="after" >
         <input t-if="item.isInEdition" class="form-control o-web-studio-interactive-list-item-input" placeholder="Add new value" t-on-input="(ev) => this.setItemValue(item, ev.target.value)" t-att-value="item.id === 'new' ? item.name : item.label" t-on-keypress="(ev) => this.onKeyPressed(item, ev.key)" />
     </xpath>
 
-    <xpath expr="//button[contains(@class, 'o-web-studio-interactive-list-edit-item')]" position="attributes">
+    <xpath expr="//button[hasclass('o-web-studio-interactive-list-edit-item')]" position="attributes">
         <attribute name="class" remove="fa-pencil-square-o" separator=" " />
         <attribute name="t-att-class"> { 'fa-pencil-square-o': !item.isInEdition, 'fa-check': item.isInEdition } </attribute>
         <attribute name="t-attf-data-tooltip"> {{ item.isInEdition ? 'Add selection' : 'Edit selection' }} </attribute>
     </xpath>
 
-    <xpath expr="//button[contains(@class, 'o-web-studio-interactive-list-remove-item')]" position="attributes">
+    <xpath expr="//button[hasclass('o-web-studio-interactive-list-remove-item')]" position="attributes">
         <attribute name="t-if">!item.isInEdition</attribute>
     </xpath>
-    <xpath expr="//button[contains(@class, 'o-web-studio-interactive-list-remove-item')]" position="after">
+    <xpath expr="//button[hasclass('o-web-studio-interactive-list-remove-item')]" position="after">
         <button t-if="item.isInEdition" type="button" class="btn btn-secondary fa fa-times o-web-studio-interactive-list-discard-changes" aria-label="Discard changes" data-tooltip="Discard changes" t-on-click="() => this.discardItemChanges(item) " />
     </xpath>
 </t>

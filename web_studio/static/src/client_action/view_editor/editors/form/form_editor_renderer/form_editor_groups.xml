@@ -3,12 +3,12 @@
 
 <!-- OUTERGROUP -->
 <t t-name="web_studio.Form.OuterGroup" t-inherit="web.Form.OuterGroup">
-  <xpath expr="//div[contains(@class,'o_group')]" position="attributes">
+  <xpath expr="//div[hasclass('o_group')]" position="attributes">
     <attribute name="t-att-data-studio-xpath">props.studioXpath</attribute>
     <attribute name="t-ref">rootRef</attribute>
     <attribute name="t-on-click">onGroupClicked</attribute>
   </xpath>
-  <xpath expr="//div[contains(@class,'o_group')]" position="after">
+  <xpath expr="//div[hasclass('o_group')]" position="after">
     <StudioHook xpath="props.studioXpath" position="'after'" type="'afterGroup'"/>
   </xpath>
 </t>

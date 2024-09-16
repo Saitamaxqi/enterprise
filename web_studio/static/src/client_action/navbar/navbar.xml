@@ -6,7 +6,7 @@
         <attribute name="class" add="o_studio_navbar" separator=" "/>
       </xpath>
 
-      <xpath expr="//a[contains(@class, 'o_menu_toggle')]" position="attributes">
+      <xpath expr="//a[hasclass('o_menu_toggle')]" position="attributes">
         <attribute name="t-on-click.prevent">onMenuToggle</attribute>
       </xpath>
 
@@ -15,7 +15,7 @@
         <t t-call="web_studio.masterButtons" />
       </xpath>
 
-      <xpath expr="//div[contains(@class, 'o_menu_systray')]" position="replace"/>
+      <xpath expr="//div[hasclass('o_menu_systray')]" position="replace"/>
   </t>
 
   <t t-name="web_studio.menuButtons">

@@ -15,7 +15,7 @@
         </a>
       </li>
     </xpath>
-    <xpath expr="//div[contains(@class,'tab-pane')]/t[2]" position="after">
+    <xpath expr="//div[hasclass('tab-pane')]/t[2]" position="after">
       <t t-set="studioHookProps" t-value="props.slots[state.currentPage].studioHookProps" />
       <StudioHook t-if="studioHookProps" t-props="studioHookProps" />
     </xpath>

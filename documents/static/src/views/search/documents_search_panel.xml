@@ -20,7 +20,7 @@
         <xpath expr="t[@t-foreach='values']" position="attributes">
             <attribute name="t-foreach">values.filter((v) => !!v)</attribute>
         </xpath>
-        <xpath expr="//li[contains(@class, 'o_search_panel_category_value')]" position="attributes">
+        <xpath expr="//li[hasclass('o_search_panel_category_value')]" position="attributes">
             <attribute name="t-if">["COMPANY", "MY", "RECENT", "SHARED", "TRASH"].includes(valueId) ||
                                    typeof value.folder_id === 'number' ||
                                    value.folder_id === 'MY' ||
@@ -40,7 +40,7 @@
             <attribute name="t-on-dragover.stop.prevent">(ev) => this.onDragOver(section, value, ev)</attribute>
             <attribute name="t-on-drop.stop.prevent">(ev) => this.onDrop(section, value, ev)</attribute>
         </xpath>
-        <xpath expr="//*[contains(@class, 'o_search_panel_label')]" position="inside">
+        <xpath expr="//*[hasclass('o_search_panel_label')]" position="inside">
             <div class="ms-auto">
                 <i t-if="value.shortcut_document_id" class="o_documents_search_panel_section_edit me-1 fa fa-external-link"
                         title="This is a shortcut"/>
@@ -73,14 +73,14 @@
     </t>
 
     <t t-name="documents.SearchPanel.FiltersGroup" t-inherit="web.SearchPanel.FiltersGroup" t-inherit-mode="primary">
-        <xpath expr="//li[contains(@class, 'o_search_panel_filter_value')]" position="attributes">
+        <xpath expr="//li[hasclass('o_search_panel_filter_value')]" position="attributes">
             <attribute name="t-on-dragenter.stop.prevent">(ev) => this.onDragEnter(section, values.get(valueId), ev)</attribute>
             <attribute name="t-on-dragleave.stop.prevent">(ev) => this.onDragLeave(section, ev)</attribute>
             <attribute name="t-on-dragover.stop.prevent"> </attribute>
             <attribute name="t-on-drop.stop.prevent">(ev) => this.onDrop(section, values.get(valueId), ev)</attribute>
             <attribute name="class">o_documents_search_panel_editable</attribute>
         </xpath>
-        <xpath expr="//div//label//span[contains(@class, 'o_search_panel_counter')]" position="replace"/>
+        <xpath expr="//div//label//span[hasclass('o_search_panel_counter')]" position="replace"/>
         <xpath expr="//div//label//span[hasclass('o_search_panel_counter')]" position="attributes">
             <attribute name="class" add="ms-2 me-3" remove="mx-2" separator=" "/>
         </xpath>
@@ -102,7 +102,7 @@
     </t>
 
     <t t-name="documents.SearchPanel.Category.Small" t-inherit="web.SearchPanel.Category" t-inherit-mode="primary">
-        <xpath expr="//li[contains(@class, 'o_search_panel_category_value')]" position="attributes">
+        <xpath expr="//li[hasclass('o_search_panel_category_value')]" position="attributes">
             <attribute name="t-on-touchstart">(ev) => this.onSectionValueTouchStart(ev, section, value.id)</attribute>
             <attribute name="t-on-touchend">(ev) => this.onSectionValueTouchEnd()</attribute>
             <attribute name="t-on-touchmove">(ev) => this.onSectionValueTouchMove()</attribute>
@@ -110,7 +110,7 @@
     </t>
 
     <t t-name="documents.SearchPanel.FiltersGroup.Small" t-inherit="web.SearchPanel.FiltersGroup" t-inherit-mode="primary">
-        <xpath expr="//li[contains(@class, 'o_search_panel_filter_value')]" position="attributes">
+        <xpath expr="//li[hasclass('o_search_panel_filter_value')]" position="attributes">
             <attribute name="t-on-touchstart">(ev) => this.onSectionValueTouchStart(ev, section, valueId)</attribute>
             <attribute name="t-on-touchend">(ev) => this.onSectionValueTouchEnd()</attribute>
             <attribute name="t-on-touchmove">(ev) => this.onSectionValueTouchMove()</attribute>

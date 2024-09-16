@@ -32,13 +32,13 @@
     </t>
 
     <t t-name="planning.PlanningGanttRenderer.GroupPill" t-inherit="web_gantt.GanttRenderer.GroupPill" owl="1">
-        <xpath expr="//div[contains(@class, 'o_gantt_group_pill')]/div" position="before">
+        <xpath expr="//div[hasclass('o_gantt_group_pill')]/div" position="before">
             <t t-set="workHours" t-value="_computeWorkHours(pill)"/>
         </xpath>
-        <xpath expr="//div[contains(@class, 'o_gantt_group_pill')]/div" position="attributes">
+        <xpath expr="//div[hasclass('o_gantt_group_pill')]/div" position="attributes">
             <attribute name="t-attf-class" add="{{ _computeResourceOvertimeColors(pill, workHours) }}"/>
         </xpath>
-        <xpath expr="//span[contains(@class, 'o_gantt_pill_title')]" position="attributes">
+        <xpath expr="//span[hasclass('o_gantt_pill_title')]" position="attributes">
             <attribute name="t-esc">_computeDisplayName(pill, workHours)</attribute>
         </xpath>
     </t>

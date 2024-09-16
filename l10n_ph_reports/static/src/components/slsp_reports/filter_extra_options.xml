@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-name="l10n_ph_reports.SlspReportFilterExtraOptions" t-inherit="account_reports.AccountReportFilterExtraOptions">
-        <xpath expr="//div[contains(@class, 'dropdown-divider')]" position="before">
+        <xpath expr="//div[hasclass('dropdown-divider')]" position="before">
             <DropdownItem
                 class="{ 'selected': controller.options.include_no_tin }"
                 onSelected="() => this.filterClicked({ optionKey: 'include_no_tin'})"
