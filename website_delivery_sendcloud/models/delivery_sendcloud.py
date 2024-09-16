@@ -16,23 +16,16 @@ SERVICE_POINT_H = 'Service point'
 class ProviderSendcloud(models.Model):
     _inherit = 'delivery.carrier'
 
-    def _radius_unit_domain(self):
-        categ_length_id = (self.env.ref("uom.uom_categ_length")).id
-        if categ_length_id:
-            return [('category_id.id', '=', categ_length_id)]
-        return []
-
     sendcloud_can_customize_use_locations = fields.Boolean(default=False, compute='_compute_sendcloud_can_customize_use_locations')
     sendcloud_use_locations = fields.Boolean(string='Use Sendcloud Locations',
                                              help='Allows the ecommerce user to choose a pick-up point as delivery address.',
                                              default=False, compute='_compute_sendcloud_use_locations', store=True)
-    sendcloud_locations_radius_value = fields.Integer(string='Locations Distance Radius',
+    sendcloud_locations_radius_value = fields.Integer(string='Sendcloud Locations Radius',
                                                       help='Maximum locations distance radius.',
-                                                      default=1500, required=True)
-    sendcloud_locations_radius_unit = fields.Many2one('uom.uom',
-                                                      string='Distance Unit',
-                                                      domain=_radius_unit_domain,
-                                                      default=lambda self: self.env.ref("uom.product_uom_meter"))
+                                                      default=10, required=True)
+    sendcloud_locations_radius_unit = fields.Many2one('uom.uom', compute='_compute_sendcloud_locations_radius_unit',
+                                                      default=lambda self: self.env.ref('uom.product_uom_km'), search='_search_sendcloud_locations_radius_unit', store=True)
+    sendcloud_locations_radius_unit_name = fields.Char('Sendcloud Radius Unit Name', related='sendcloud_locations_radius_unit.display_name')
     sendcloud_locations_id = fields.Integer(string='Locations Id')
 
     @api.depends('sendcloud_shipping_id')
@@ -61,7 +54,21 @@ class ProviderSendcloud(models.Model):
             else:
                 sc_carrier.sendcloud_use_locations = False
 
-    @api.constrains("sendcloud_locations_radius_value", "sendcloud_locations_radius_unit")
+    def _compute_sendcloud_locations_radius_unit(self):
+        for carrier in self:
+            carrier.sendcloud_locations_radius_unit = self._get_distance_uom_id_from_ir_config_parameter()
+
+    @api.model
+    def _get_distance_uom_id_from_ir_config_parameter(self):
+        distance_in_miles_param = self.env['ir.config_parameter'].sudo().get_param('product.volume_in_cubic_feet')
+        if distance_in_miles_param == '1':
+            return self.env.ref('uom.product_uom_mile')
+        return self.env.ref('uom.product_uom_km')
+
+    def _search_sendcloud_locations_radius_unit(self, operator, value):
+        return [('sendcloud_locations_radius_value', operator, value)]
+
+    @api.constrains("sendcloud_locations_radius_value")
     def _check_radius_value(self):
         uom_meter = self.env.ref('uom.product_uom_meter')
         for delivery in self:

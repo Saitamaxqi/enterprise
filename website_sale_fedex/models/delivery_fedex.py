@@ -10,18 +10,23 @@ from .fedex_locations_request import FEDEXLocationsRequest
 class ProviderFedex(models.Model):
     _inherit = 'delivery.carrier'
 
-    def _radius_unit_domain(self):
-        radius_units = self.env.ref("uom.product_uom_mile") + self.env.ref("uom.product_uom_km")
-        return [('id', 'in', radius_units.ids)]
-
     fedex_use_locations = fields.Boolean(string='Use Fedex Locations', help='Allows the ecommerce user to choose a pick-up point as delivery address.')
-    fedex_locations_radius_value = fields.Integer(string='Locations Radius', help='Maximum locations distance radius.', default=15, required=True)
-    fedex_locations_radius_unit = fields.Many2one('uom.uom',
-                                                  string='Locations Distance Unit',
-                                                  domain=_radius_unit_domain,
-                                                  required=True,
-                                                  default=lambda self: self.env.ref("uom.product_uom_km")
-                                                  )
+    fedex_locations_radius_value = fields.Integer(string='Fedex Locations Radius', help='Maximum locations distance radius.', default=15, required=True)
+    fedex_locations_radius_unit = fields.Many2one('uom.uom', compute='_compute_fedex_locations_radius_unit', search='_search_fedex_locations_radius_unit', store=True)
+    fedex_locations_radius_unit_name = fields.Char('Fedex Radius Unit Name', related='fedex_locations_radius_unit.display_name')
+
+    def _compute_fedex_locations_radius_unit(self):
+        for carrier in self:
+            carrier.fedex_locations_radius_unit = self._get_distance_uom_id_from_ir_config_parameter()
+
+    def _search_fedex_locations_radius_unit(self, operator, value):
+        return [('name', operator, value)]
+
+    def _get_distance_uom_id_from_ir_config_parameter(self):
+        distance_in_miles_param = self.env['ir.config_parameter'].sudo().get_param('product.volume_in_cubic_feet')
+        if distance_in_miles_param == '1':
+            return self.env.ref('uom.product_uom_mile')
+        return self.env.ref('uom.product_uom_km')
 
     def _fedex_get_close_locations(self, partner_address):
         superself = self.sudo()
