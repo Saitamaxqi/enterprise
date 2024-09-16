@@ -148,59 +148,54 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
             *self.env['account.account']._check_company_domain(self.env.company),
         ])
         self._check_accounts_code_sat_validity(accounts, options, 'action_l10n_mx_generate_coa_sat_xml')
+
         accounts_groups_by_parent = defaultdict(lambda: defaultdict(lambda: self.env['account.account']))
         accounts_template_data = []
         for account in accounts:
             if account.group_id:
                 accounts_groups_by_parent[account.group_id.parent_id][account.group_id] |= account
         no_tag_accounts = self.env['account.account']
-        multi_tag_accounts = self.env['account.account']
-        parent_nature = ''
         for parent, accounts_by_group in accounts_groups_by_parent.items():
             if not parent:
                 continue
-            parent_nature = set()
-            group_lines = []
+            parent_natures = set()
+            group_lines = defaultdict(list)
             for group, accounts in accounts_by_group.items():
-                group_nature = set()
+                natures = set()
                 for account in accounts:
-                    nature = ''
                     if debit_balance_account_tag in account.tag_ids:
-                        nature += 'D'
+                        natures.add('D')
                     if credit_balance_account_tag in account.tag_ids:
-                        nature += 'A'
-                    if not nature:
+                        natures.add('A')
+                    if not natures:
                         no_tag_accounts |= account
-                    elif len(nature) > 1:
-                        multi_tag_accounts |= account
-                    else:
-                        group_nature.add(nature)
-                if len(group_nature) > 1:
-                    multi_tag_accounts |= accounts
 
-                group_nature = len(group_nature) and group_nature.pop()
-                group_lines.append({
-                    'code': group.code_prefix_start,
-                    'number': group.code_prefix_start,
-                    'name': group.name,
-                    'level': 2,
-                    'nature': group_nature,
-                })
-                if group_nature:
-                    parent_nature.add(group_nature)
+                if not natures:
+                    continue
 
-            if len(parent_nature) > 1:
-                for accounts in accounts_by_group.values():
-                    multi_tag_accounts |= accounts
-            parent_nature = len(parent_nature) and parent_nature.pop()
-            parent_line = [{
-                'code': parent.code_prefix_start,
-                'number': parent.code_prefix_start,
-                'name': parent.name,
-                'level': 1,
-                'nature': parent_nature,
-            }]
-            accounts_template_data += parent_line + group_lines
+                for nature in sorted(natures):
+                    group_lines[nature].append({
+                        'code': group.code_prefix_start,
+                        'number': group.code_prefix_start,
+                        'name': group.name,
+                        'level': 2,
+                        'nature': nature,
+                    })
+                    parent_natures.add(nature)
+
+            if not parent_natures:
+                continue
+
+            for parent_nature in sorted(parent_natures):
+                parent_line = {
+                    'code': parent.code_prefix_start,
+                    'number': parent.code_prefix_start,
+                    'name': parent.name,
+                    'level': 1,
+                    'nature': parent_nature,
+                }
+                accounts_template_data += [parent_line] + group_lines[parent_nature]
+
         if no_tag_accounts:
             raise RedirectWarning(
                 _("Some accounts present in your trial balance don't have a Debit or a Credit balance account tag."),
@@ -214,19 +209,7 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
                 },
                 _('Show list')
             )
-        if multi_tag_accounts:
-            raise RedirectWarning(
-                _("Some account prefixes used in your trial balance use both Debit and Credit balance account tags. This is not allowed."),
-                {
-                    'name': _("Accounts with too much tags"),
-                    'type': 'ir.actions.act_window',
-                    'views': [(False, 'list'), (False, 'form')],
-                    'res_model': 'account.account',
-                    'target': 'current',
-                    'domain': [('id', 'in', multi_tag_accounts.ids)],
-                },
-                _('Show list')
-            )
+
         report_date = fields.Date.to_date(coa_options['date']['date_from'])
         return {
             'vat': self.env.company.vat or '',
