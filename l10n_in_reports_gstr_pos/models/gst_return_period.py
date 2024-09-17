@@ -90,9 +90,13 @@ class L10n_InGstReturnPeriod(models.Model):
                 and sorted(details_pos_line['tax_ids']) == sorted(account_move_line.tax_ids.ids)
 
         pos_journal_items = journal_items.filtered(lambda l: l.move_id.pos_session_ids and l.move_id.move_type == "entry")
-        ignore_reversal_pos_jounal_items = journal_items.filtered(lambda l: l.move_id.reversed_pos_order_id and l.move_id.move_type == "entry")
-        hsn_json = super()._get_gstr1_hsn_json(journal_items - pos_journal_items - ignore_reversal_pos_jounal_items, tax_details_by_move)
-        pos_orders = pos_journal_items.move_id.pos_session_ids.order_ids.filtered(lambda l: not l.is_invoiced)
+        # Exclude POS journal items that have product lines with HSN codes,
+        # as these are already accounted for. If after filtering, no POS lines remain.
+        pos_move_ids = pos_journal_items.move_id
+        pos_move_with_hsn = pos_move_ids.filtered(lambda m: any(line.display_type == 'product' and line.l10n_in_hsn_code for line in m.line_ids))
+        pos_move_ids -= pos_move_with_hsn
+        hsn_json = super()._get_gstr1_hsn_json(journal_items - pos_move_ids.line_ids, tax_details_by_move)
+        pos_orders = pos_move_ids.pos_session_ids.order_ids.filtered(lambda l: not l.is_invoiced and not l.reversed_move_ids)
         pos_order_lines = self.env['pos.order.line'].browse(pos_orders.lines.ids)
         pos_order_lines.fetch(['product_id', 'product_uom_id'])
         details_pos_lines_by_move = _set_details_pos_lines(pos_order_lines)

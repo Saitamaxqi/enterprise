@@ -599,18 +599,20 @@ class L10n_InGstReturnPeriod(models.Model):
                 if tax_rate.is_integer():
                     tax_rate = int(tax_rate)
                 uqc = uoms.browse(line.product_uom_id.id).l10n_in_code and uoms.browse(line.product_uom_id.id).l10n_in_code.split("-")[0] or "OTH"
-                if line.product_id.type == 'service':
+                hsn_code = line.l10n_in_hsn_code
+                is_service_line = hsn_code and hsn_code.startswith('99')
+                if is_service_line:
                     # If product is service then UQC is Not Applicable (NA)
                     uqc = "NA"
                 group_key = "%s-%s-%s" %(
-                    tax_rate, line.l10n_in_hsn_code, uqc)
+                    tax_rate, hsn_code, uqc)
                 hsn_json[hsn_section].setdefault(group_key, {
-                    "hsn_sc": self.env["account.move"]._l10n_in_extract_digits(line.l10n_in_hsn_code),
+                    "hsn_sc": self.env["account.move"]._l10n_in_extract_digits(hsn_code),
                     "uqc": uqc,
                     "rt": tax_rate,
                     "qty": 0.00, "txval": 0.00, "iamt": 0.00, "samt": 0.00, "camt": 0.00, "csamt": 0.00})
                 hsn_data = hsn_json[hsn_section][group_key]
-                if line.product_id.type != 'service':
+                if not is_service_line:
                     if move_id.move_type in ('in_refund', 'out_refund'):
                         hsn_data['qty'] -= line.quantity
                     else:
