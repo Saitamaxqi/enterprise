@@ -25,6 +25,8 @@ class HrEmployee(models.Model):
         if not mx_payslip:
             return super()._get_paid_amount()
         if self.struct_id.code == "MXMONTHLY":
+            return self._get_contract_wage()
+        if self.struct_id.code == "MXCHRISTMAS":
             coefficients = {
                 'daily': 1,
                 'weekly': 7,
@@ -33,6 +35,4 @@ class HrEmployee(models.Model):
                 'monthly': 30,
                 'yearly': 365,
             }
-            return self._get_contract_wage() / 30 * coefficients[self.contract_id.l10n_mx_schedule_pay or 'monthly']
-        if self.struct_id.code == "MXCHRISTMAS":
-            return self._get_contract_wage() / 30 * self.contract_id.l10n_mx_christmas_bonus
+            return self._get_contract_wage() / coefficients[self.contract_id.l10n_mx_schedule_pay or 'monthly'] * self.contract_id.l10n_mx_christmas_bonus
