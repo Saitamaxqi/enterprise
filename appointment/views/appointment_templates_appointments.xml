@@ -322,7 +322,7 @@
         </aside>
     </template>
 
-    <!-- Section in details column that gives a summary of the informations about the meeting -->
+    <!-- Section in details column that gives a summary of the informations about the meeting or booking-->
     <template id="appointment_meeting_details" name="Meeting details">
         <div class="o_appointment_details_type d-flex align-items-center mb-3">
             <div t-if="appointment_type.image_1920" t-field="appointment_type.image_1920" role="img"
@@ -330,7 +330,8 @@
                 t-options="{'widget': 'image', 'class': 'o_appointment_avatar_background o_object_fit_cover', 'preview_image': 'image_512'}"/>
             <h5 class="mb-1" t-out="appointment_type.name"/>
         </div>
-        <small class="text-uppercase text-muted">Meeting details</small>
+        <small t-if="appointment_type.schedule_based_on == 'users'" class="text-uppercase text-muted">Meeting details</small>
+        <small t-else="" class="text-uppercase text-muted">Booking details</small>
         <div class="d-flex flex-column gap-1 mt-2">
             <div class="o_appointment_details_location d-flex py-1 px-0 bg-transparent o-cc1-text border-0" t-if="appointment_type.location_id">
                 <i class="fa fa-map-marker fa-fw me-2 mt-1 text-muted"/>

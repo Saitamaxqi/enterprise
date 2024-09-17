@@ -178,7 +178,7 @@
                             <field name="appointment_type_manage_capacity" invisible="1"/>
                             <field name="appointment_type_schedule_based_on" invisible="1"/>
                             <field name="appointment_resource_ids" invisible="1"/>
-                            <field name="resource_ids" string="Resources" options="{'no_create': True}"
+                            <field name="resource_ids" string="Resources" placeholder="Select Resources" options="{'no_create': True}"
                                    invisible="not appointment_type_id or appointment_type_schedule_based_on != 'resources'"
                                    domain="[('appointment_type_ids', 'in', appointment_type_id)]" widget="many2many_tags"/>
                         </group>

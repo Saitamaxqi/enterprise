@@ -163,3 +163,12 @@
         pointer-events: none;
     }
 }
+
+.o_appointment_booking_gantt_view {
+    .o_view_nocontent {
+        top: 200px !important;
+    }
+    .o_nocontent_help {
+        @include gradient-radial($white, rgba($white, 0.2));
+    }
+}

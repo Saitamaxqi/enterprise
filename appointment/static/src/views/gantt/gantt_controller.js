@@ -1,9 +1,15 @@
 import { GanttController } from "@web_gantt/gantt_controller";
+import { AppointmentBookingActionHelper } from "@appointment/components/appointment_booking_action_helper/appointment_booking_action_helper";
 
 const { DateTime } = luxon;
 
 export class AppointmentBookingGanttController extends GanttController {
 
+    static template = "appointment.AppointmentBookingGanttController"
+    static components = {
+        ...GanttController.components,
+        AppointmentBookingActionHelper,
+    };
     /**
      * @override
      */
@@ -13,10 +19,15 @@ export class AppointmentBookingGanttController extends GanttController {
 
     /**
      * @override
+     * In the Gantt view, if accessed via the appointment.type custom helper should appear when no booking is found.
+     * If Gantt view accessed through the schedule views, the helper should appear when no Gantt rows are available.
     */
     get showNoContentHelp() {
-        // show if no named row, as it implies both no record and no forced group from resources
-        return !this.model.data.rows || (this.model.data.rows.length == 1 && !this.model.data.rows[0].name)
+        if (this.props.context.active_model === "appointment.type") {
+            return !this.model.data.records.length;
+        } else {
+            return !this.model.data.rows || (this.model.data.rows.length == 1 && !this.model.data.rows[0].name)
+        }
     }
 
     /**
