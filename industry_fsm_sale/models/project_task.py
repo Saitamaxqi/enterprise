@@ -466,6 +466,16 @@ class Task(models.Model):
             self.sale_order_id.project_id = self.project_id
         return self.sale_order_id
 
+    def _prepare_sale_order_values(self, team):
+        vals = {
+            'partner_id': self.partner_id.id,
+            'company_id': self.company_id.id,
+            'project_id': self.project_id.id,
+            'team_id': team.id if team else False,
+            'origin': _("%(project_name)s - %(task_name)s", project_name=self.project_id.name, task_name=self.name),
+        }
+        return vals
+
     def _fsm_create_sale_order(self):
         """ Create the SO from the task, with the 'service product' sales line and link all timesheet to that line it """
         self.ensure_one()
@@ -478,13 +488,8 @@ class Task(models.Model):
 
         user_id = self.user_ids[0] if self.user_ids else self.env['res.users']
         team = self.env['crm.team'].sudo()._get_default_team_id(user_id=user_id.id, domain=None)
-        sale_order = SaleOrder.create({
-            'partner_id': self.partner_id.id,
-            'company_id': self.company_id.id,
-            'project_id': self.project_id.id,
-            'team_id': team.id if team else False,
-            'origin': _("%(project_name)s - %(task_name)s", project_name=self.project_id.name, task_name=self.name),
-        })
+        vals = self._prepare_sale_order_values(team)
+        sale_order = SaleOrder.create(vals)
         # update after creation since onchange_partner_id sets the current user
         if user_id:
             sale_order.user_id = user_id
