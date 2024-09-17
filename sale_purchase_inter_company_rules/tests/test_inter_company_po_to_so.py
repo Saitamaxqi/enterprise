@@ -10,7 +10,6 @@ class TestInterCompanyPurchaseToSale(TestInterCompanyRulesCommonSOPO):
         purchase_order = Form(self.env['purchase.order'])
         purchase_order.partner_id = partner
         purchase_order.company_id = company
-        purchase_order.currency_id = company.currency_id
         purchase_order = purchase_order.save()
 
         with Form(purchase_order) as po:

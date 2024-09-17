@@ -48,7 +48,6 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
             purchase_order = Form(self.env['purchase.order'])
             purchase_order.partner_id = second_company.partner_id
             purchase_order.company_id = first_company
-            purchase_order.currency_id = second_company.currency_id
             purchase_order = purchase_order.save()
             purchase_order.picking_type_id = stock_picking_type
             with Form(purchase_order) as po:
