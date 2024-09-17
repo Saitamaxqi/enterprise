@@ -115,7 +115,6 @@
                 <field name="origin_order_id" string="First Contract"/>
                 <field name="user_id"/>
                 <field name="team_id" string="Sales Team"/>
-                <field name="health"/>
                 <field name="end_date"/>
                 <field name="partner_id" operator="child_of"/>
                 <filter name="my_subscriptions" string="My Subscriptions" domain="[('user_id','=',uid)]"/>
@@ -127,9 +126,6 @@
                 <filter name="filter_expansion" string="Expansion" domain="[('event_type','=','1_expansion')]"/>
                 <filter name="filter_contraction" string="Contraction" domain="[('event_type','=','15_contraction')]"/>
                 <filter name="filter_churn" string="Churn" domain="[('event_type','=','2_churn')]"/>
-                <separator/>
-                <filter name="filter_bad_health" string="Bad Health" domain="[('health','=','bad')]"/>
-                <filter name="filter_good_health" string="Good Health" domain="[('health','=','done')]"/>
                 <separator/>
                 <filter name="filter_first_contract_date" date="first_contract_date"/>
                 <separator/>

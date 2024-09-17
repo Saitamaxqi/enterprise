@@ -177,9 +177,6 @@
                 <filter string="Recurring" name="recurring" domain="[('product_tmpl_id.recurring_invoice', '=', True)]"/>
                 <filter string="Non-recurring" name="non_recurring" domain="[('product_tmpl_id.recurring_invoice', '!=', True)]"/>
                 <separator/>
-                <filter name="filter_good" string="Good Health" domain="[('health', '=', 'done')]"/>
-                <filter name="filter_bad" string="Bad Health" domain="[('health', '=', 'bad')]"/>
-                <separator/>
                 <filter name="filter_first_contract_date" date="first_contract_date"/>
                 <filter name="filter_next_invoice_date" date="next_invoice_date"/>
                 <filter name="filter_date_end" date="end_date"/>

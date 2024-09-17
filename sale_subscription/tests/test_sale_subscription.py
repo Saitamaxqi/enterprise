@@ -735,27 +735,8 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertAlmostEqual(self.subscription.recurring_monthly, 5.84, msg='70 / 12')
 
     def test_compute_kpi(self):
-        self.env['sale.order.alert'].create([
-            {
-                'name': 'Bad domain Setup',
-                'trigger_condition': 'on_create_or_write',
-                'mrr_min': 0,
-                'mrr_max': 80,
-                'subscription_state': '3_progress',
-                'action': 'set_health_value',
-                'health': 'bad'
-            }, {
-                'name': 'Good domain Setup',
-                'trigger_condition': 'on_create_or_write',
-                'mrr_min': 120,
-                'mrr_max': 9999,
-                'action': 'set_health_value',
-                'health': 'done'
-            },
-        ])
         self.subscription.action_confirm()
         self.env['sale.order']._cron_update_kpi()
-        self.assertEqual(self.subscription.health, 'bad')
 
         # 16 to 6 weeks: 80
         # 6 to 2 weeks: 100
@@ -807,7 +788,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertEqual(self.subscription.kpi_1month_mrr_percentage, 0.2)
         self.assertEqual(self.subscription.kpi_3months_mrr_delta, 40.0)
         self.assertEqual(self.subscription.kpi_3months_mrr_percentage, 0.5)
-        self.assertEqual(self.subscription.health, 'done')
 
     def test_onchange_date_start(self):
         recurring_bound_tmpl = self.env['sale.order.template'].create({
@@ -3653,19 +3633,6 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         action = subscription.with_user(user_sales_salesman).prepare_renewal_order()
         renewal_so = self.env['sale.order'].browse(action['res_id'])
         renewal_so.with_user(user_sales_salesman).action_confirm()
-
-    def test_alert_next_activity(self):
-        ''' Ensure correct functionality of sale order creation. This function validates the process of creating sale orders.
-        Previously, there was an issue of infinite recursion during alert creation.
-        The recursion occurred because calling _configure_alerts led to a call to write, which in turn would call _configure_alerts again.
-        '''
-        self.env['sale.order.alert'].create([{
-            'name': 'Test Alert',
-            'trigger_condition': 'on_create_or_write',
-            'subscription_state_from': '3_progress',
-            'subscription_state': '6_churn',
-            'action': 'next_activity',
-        }])
 
     def test_recurring_plan_price_recalc_adding_optional_product(self):
         """

@@ -47,10 +47,6 @@ class SaleOrderLogReport(models.Model):
     commercial_partner_id = fields.Many2one('res.partner', 'Customer Entity', readonly=True)
     subscription_state = fields.Selection(SUBSCRIPTION_STATES, readonly=True)
     state = fields.Selection(selection=SALE_ORDER_STATE, string="Status", readonly=True)
-    health = fields.Selection([
-        ('normal', 'Neutral'),
-        ('done', 'Good'),
-        ('bad', 'Bad')], string="Health", readonly=True)
     campaign_id = fields.Many2one('utm.campaign', 'Campaign', readonly=True)
     origin_order_id = fields.Many2one('sale.order', 'First Order', readonly=True)
     order_id = fields.Many2one('sale.order', 'Sale Order', readonly=True)
@@ -96,7 +92,6 @@ class SaleOrderLogReport(models.Model):
             partner.industry_id AS industry_id,
             so.sale_order_template_id AS template_id,
             so.plan_id AS plan_id,
-            so.health AS health,
             log.company_id,
             partner.commercial_partner_id AS commercial_partner_id,
             log.subscription_state AS subscription_state,
@@ -164,7 +159,6 @@ class SaleOrderLogReport(models.Model):
             log.origin_order_id,
             so.plan_id,
             so.company_id,
-            so.health,
             so.campaign_id,
             so.pricelist_id,
             so.currency_rate,

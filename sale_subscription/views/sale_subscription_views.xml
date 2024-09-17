@@ -33,9 +33,6 @@
                 <separator/>
                 <filter name="payment_exception" string="Failed Payments" domain="[('payment_exception','=', True)]" help="Contracts whose payment has failed"/>
                 <separator/>
-                <filter name="good" string="Good Health" domain="[('health', '=', 'done')]"/>
-                <filter name="bad" string="Bad Health" domain="[('health', '=', 'bad')]"/>
-                <separator/>
                 <filter name="first_contract_date" date="first_contract_date"/>
                 <separator/>
                 <filter name="recurring_next_date" string="Next invoice Date" date="next_invoice_date"/>
@@ -218,7 +215,6 @@
                                 </b>
                             </div>
                             <div class="ms-auto d-flex align-items-center">
-                                <field name="health" widget="state_selection" readonly="1" invisible="health != 'bad'"/>
                                 <field name="user_id" widget="many2one_avatar_user" class="ms-1"/>
                             </div>
                         </footer>
@@ -611,6 +607,5 @@ if records:
     <menuitem id="menu_sale_subscription_settings" name="Settings" parent="menu_sale_subscription_config" sequence="1" action="sale.action_sale_config_settings" groups="base.group_system"/>
     <menuitem id="menu_sale_subscription_plans" name="Recurring Plans" action="sale_subscription_plan_action" parent="menu_sale_subscription_config" sequence="2"/>
     <menuitem id="menu_template_of_subscription" action="sale_subscription_template_action" parent="menu_sale_subscription_config" sequence="4" groups="sale_management.group_sale_order_template"/>
-    <menuitem id="menu_sale_subscription_alert" name="Automation Rules" parent="menu_sale_subscription_config" action="sale_subscription_alert_action" sequence="8"/>
     <menuitem id="menu_sale_subscription_close_reason_action" action="sale_subscription_close_reason_action" parent="menu_sale_subscription_config" sequence="10"/>
 </odoo>

@@ -23,7 +23,6 @@ Features:
         'portal',
         'web_cohort',
         'rating',
-        'base_automation',
         'sms',
     ],
     'data': [
@@ -37,7 +36,6 @@ Features:
         'views/sale_order_template.xml',
         'views/product_template_views.xml',
         'views/product_pricelist_views.xml',
-        'views/sale_subscription_alert.xml',
         'views/sale_subscription_views.xml',
         'views/sale_order_line_view.xml',
         'views/res_partner_views.xml',

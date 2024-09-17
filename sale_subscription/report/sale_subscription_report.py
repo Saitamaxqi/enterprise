@@ -26,10 +26,6 @@ class SaleSubscriptionReport(models.Model):
     close_reason_id = fields.Many2one('sale.order.close.reason', 'Close Reason', readonly=True)
     margin = fields.Float() # not used but we want to avoid creating a bridge module for nothing
     subscription_state = fields.Selection(SUBSCRIPTION_STATES, readonly=True)
-    health = fields.Selection([
-        ('normal', 'Neutral'),
-        ('done', 'Good'),
-        ('bad', 'Bad')], string="Health", readonly=True)
     next_invoice_date = fields.Date('Next Invoice Date', readonly=True)
     plan_id = fields.Many2one('sale.subscription.plan', 'Plan', readonly=True)
     origin_order_id = fields.Many2one('sale.order', string='First contract', readonly=True)
@@ -40,7 +36,6 @@ class SaleSubscriptionReport(models.Model):
         res['subscription_state'] = "s.subscription_state"
         res['end_date'] = "s.end_date"
         res['first_contract_date'] = "s.first_contract_date"
-        res['health'] = "s.health"
         res['template_id'] = "s.sale_order_template_id"
         res['close_reason_id'] = "s.close_reason_id"
         res['next_invoice_date'] = "s.next_invoice_date"
@@ -97,7 +92,6 @@ class SaleSubscriptionReport(models.Model):
         group_by_str = f"""{group_by_str},
                     s.subscription_state,
                     s.end_date,
-                    s.health,
                     s.subscription_state,
                     s.sale_order_template_id,
                     partner.industry_id,

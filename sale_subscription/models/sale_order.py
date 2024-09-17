@@ -116,8 +116,6 @@ class SaleOrder(models.Model):
         compute="_compute_percentage_satisfaction",
         string="% Happy", store=True, compute_sudo=True, default=-1,
         help="Calculate the ratio between the number of the best ('great') ratings and the total number of ratings")
-    health = fields.Selection([('normal', 'Neutral'), ('done', 'Good'), ('bad', 'Bad')], string="Health", copy=False,
-                              default='normal', help="Show the health status")
 
     ###########
     #  Notes  #
