@@ -10,6 +10,7 @@ from odoo.addons.resource.models.utils import make_aware
 from odoo.addons.resource.models.utils import filter_domain_leaf
 from odoo.exceptions import RedirectWarning, UserError, AccessError
 from odoo.osv import expression
+from odoo.tools import format_date
 
 
 class AccountAnalyticLine(models.Model):
@@ -278,7 +279,7 @@ class AccountAnalyticLine(models.Model):
                             show_access_error = True
 
                 if show_access_error:
-                    last_validated_timesheet_date_str = str(last_validated_timesheet_date.strftime('%m/%d/%Y'))
+                    last_validated_timesheet_date_str = format_date(self.env, last_validated_timesheet_date)
                     if delete:
                         error_message = _('Timesheets before the %(date)s (included) have been validated, and can no longer be deleted.', date=last_validated_timesheet_date_str)
                     else:
