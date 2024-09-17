@@ -765,3 +765,30 @@ class TestRentalPicking(TestRentalCommon):
             'rental_return_date': Datetime.today() + timedelta(days=6),
         })
         self.assertEqual(order_line_id.available_reserved_lots, True)
+
+    def test_disable_rental_transfer(self):
+        """
+        Check that the rental transfers setting can be disabled
+        """
+        warehouse_rental_route = self.env.ref('sale_stock_renting.route_rental')
+        self.env['res.config.settings'].write({
+            "group_rental_stock_picking": True,
+        })
+        rental_stock_rules = warehouse_rental_route.rule_ids
+        rental_order = self.sale_order_id.copy()
+        rental_order.order_line.write({'product_uom_qty': 3, 'is_rental': True})
+        rental_order.action_confirm()
+        picking_out = rental_order.picking_ids.filtered(lambda p: p.picking_type_code == 'outgoing')
+        picking_in = rental_order.picking_ids - picking_out
+        self.assertEqual([len(picking_out), len(picking_in)], [1, 1])
+        picking_out.button_validate()
+        self.assertRecordValues(picking_out.move_ids, [{'state': 'done', 'quantity': 3.0}])
+        picking_in.button_validate()
+        self.assertRecordValues(picking_in.move_ids, [{'state': 'done', 'quantity': 3.0}])
+        # disable the setting
+        self.env.user.groups_id -= self.env.ref('sale_stock_renting.group_rental_stock_picking')
+        settings = self.env['res.config.settings'].with_user(self.env.user).create({})
+        settings.group_rental_stock_picking = False
+        settings.set_values()
+        # check that the rules of the rental route have been updated
+        self.assertFalse(rental_stock_rules & warehouse_rental_route.rule_ids)
