@@ -25,8 +25,6 @@ export class DocumentsKanbanCompiler extends KanbanCompiler {
             const dummyElement = createElement("a");
             dummyElement.classList.add("o_hidden", "o_documents_dummy_action");
             card.prepend(dummyElement);
-            card.setAttribute("t-on-dragstart.stop", `(ev) => __comp__.props.record.onDragStart(ev)`);
-            card.setAttribute("t-on-drop", `(ev) => __comp__.props.record.onDrop(ev)`);
             const fileInput = card.querySelector("input.o_kanban_replace_document");
             if (fileInput) {
                 fileInput.setAttribute("t-on-change.stop.prevent", `(ev) => __comp__.props.record.onReplaceDocument(ev)`);

@@ -1,26 +1,5 @@
 ////// ========== Search Panel ==============
 ////// ======================================
-.o_search_panel > .o_search_panel_section {
-    .o_drag_over_selector {
-        &.o_search_panel_filter_value, > header {
-            background-color: $component-active-bg;
-            font-weight: $font-weight-bold;
-            color: $gray-900;
-
-            .o_search_panel_label_title {
-                padding-left: map-get($spacers, 2);
-            }
-
-            /* Firefox firing dragleave when dragging over text
-            https://bugzilla.mozilla.org/show_bug.cgi?id=1478562 */
-            .o_search_panel_label {
-                pointer-events: none;
-            }
-        }
-
-    }
-}
-
 .o_documents_kanban_view .o_control_panel_actions,
 .o_documents_list_view .o_control_panel_actions {
     justify-content: center !important;

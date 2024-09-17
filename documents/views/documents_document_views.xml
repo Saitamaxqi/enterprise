@@ -80,7 +80,7 @@
                 <field name="alias_tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/> <!-- fetch `color` too -->
                 <templates>
                     <t t-name="card">
-                        <div draggable="true" class="d-flex flex-column o_kanban_attachment o_documents_attachment h-100 pb-2"
+                        <div class="d-flex flex-column o_kanban_attachment o_documents_attachment h-100 pb-2"
                              t-attf-class="#{record.is_multipage.raw_value ? 'o_kanban_stack' : ''}" t-att-data-id="record.id.raw_value">
                             <t t-set="fileRequest" t-value="record.type.raw_value === 'binary' and !record.attachment_id.raw_value and !record.shortcut_document_id.raw_value"/>
                             <div t-if="record.type.raw_value != 'folder'" t-attf-class="#{fileRequest ? 'o_request_image' : ''}">
