@@ -1,3 +1,5 @@
+import json
+from odoo.tools import file_open
 from odoo.addons.spreadsheet_dashboard.tests.common import DashboardTestCommon
 from odoo.addons.spreadsheet_edition.tests.spreadsheet_test_case import SpreadsheetTestCase
 
@@ -74,3 +76,33 @@ class TestSpreadsheetDashboard(DashboardTestCommon, SpreadsheetTestCase):
             revisions[-2]["nextRevisionId"],
             "revisions ids are chained",
         )
+
+    def test_load_sample_dashboard(self):
+        sample_dashboard_path = "spreadsheet_dashboard_edition/tests/data/sample_dashboard.json"
+
+        def get_sample_data():
+            with file_open(sample_dashboard_path, 'rb') as f:
+                return json.load(f)
+        dashboard = self.create_dashboard()
+        dashboard.main_data_model_ids = [(4, self.env.ref("base.model_res_users").id)]
+        dashboard.sample_dashboard_file_path = sample_dashboard_path
+
+        # when no records are available for the main data model and no revisions, the sample data is loaded
+        self.env["res.users"].search([]).action_archive()
+        self.env["spreadsheet.revision"].search([]).unlink()
+        data = dashboard.get_readonly_dashboard()
+        self.assertTrue(data["is_sample"])
+        self.assertEqual(data["snapshot"], get_sample_data())
+
+        # when there are revisions, the sample data is not loaded
+        dashboard.dispatch_spreadsheet_message(self.new_revision_data(dashboard))
+        data = dashboard.get_readonly_dashboard()
+        self.assertFalse(data.get("is_sample"))
+        self.assertNotEqual(data["snapshot"], get_sample_data())
+
+        # when no revisions, but we have records for the main data model, the sample data is not loaded
+        self.env["spreadsheet.revision"].search([]).unlink()
+        self.env["res.users"].create({"login": "new_user", "name": "New User"})
+        data = dashboard.get_readonly_dashboard()
+        self.assertFalse(data.get("is_sample"))
+        self.assertNotEqual(data["snapshot"], get_sample_data())
