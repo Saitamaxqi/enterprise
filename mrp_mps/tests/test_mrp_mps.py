@@ -515,8 +515,29 @@ class TestMpsMps(common.TransactionCase):
         mps_drawer, mps_screw = (self.mps_drawer | self.mps_screw).get_production_schedule_view_state()
         drawer_forecast_1 = mps_drawer['forecast_ids'][0]
         screw_forecast_1 = mps_screw['forecast_ids'][0]
+        screw_forecast_2 = mps_screw['forecast_ids'][1]
         self.assertEqual(drawer_forecast_1['indirect_demand_qty'], 11)
         self.assertEqual(screw_forecast_1['indirect_demand_qty'], 148)
+        self.assertEqual(screw_forecast_2['indirect_demand_qty'], 40)
+
+        # Ensure that a forecast on an intermediate schedule will correctly be added.
+        self.env['mrp.product.forecast'].create({
+            'production_schedule_id': self.mps_table_leg.id,
+            'date': mps_dates[1][0],
+            'forecast_qty': 4
+        })
+        mps_screw = self.mps_screw.get_production_schedule_view_state()[0]
+        screw_forecast_2 = mps_screw['forecast_ids'][1]
+        self.assertEqual(screw_forecast_2['indirect_demand_qty'], 56)
+
+        # Ensure that a manual replenish on an intermediate schedule will correctly
+        # move the difference to the next period
+        self.mps_table_leg.set_replenish_qty(date_index=1, quantity=3)
+        mps_screw = self.mps_screw.get_production_schedule_view_state()[0]
+        screw_forecast_2 = mps_screw['forecast_ids'][1]
+        screw_forecast_3 = mps_screw['forecast_ids'][2]
+        self.assertEqual(screw_forecast_2['indirect_demand_qty'], 20)
+        self.assertEqual(screw_forecast_3['indirect_demand_qty'], 36)
 
     def test_indirect_demand_kit(self):
         """ On changing demand of a product whose BOM contains kit with a

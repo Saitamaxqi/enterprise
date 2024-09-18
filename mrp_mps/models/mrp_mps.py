@@ -537,17 +537,20 @@ class MrpProductionSchedule(models.Model):
                     continue
                 # Set the indirect demand qty for children schedules.
                 for (product, ratio) in indirect_ratio_mps[(production_schedule.warehouse_id, production_schedule.product_id)].items():
+                    subproduct_indirect_demand = 0
                     if indirect_demand_qty.get(((date_start, date_stop), production_schedule.product_id, production_schedule.warehouse_id), False):
                         for (parent_date, parent_quantity) in indirect_demand_qty[((date_start, date_stop), production_schedule.product_id, production_schedule.warehouse_id)].items():
                             related_date = max(subtract(parent_date, days=lead_time_ignore_components), fields.Date.today())
                             index = next(i for i, (dstart, dstop) in enumerate(date_range) if related_date <= dstop)
                             related_key = (date_range[index], product, production_schedule.warehouse_id)
                             indirect_demand_qty[related_key][related_date] += ratio * parent_quantity
-                    else:
-                        related_date = max(subtract(date_start, days=lead_time_ignore_components), fields.Date.today())
+                            subproduct_indirect_demand += ratio * parent_quantity
+                    if (ratio * forecast_values['replenish_qty']) != subproduct_indirect_demand:
+                        parent_date = date_stop if (ratio * forecast_values['replenish_qty']) < subproduct_indirect_demand else date_start
+                        related_date = max(subtract(parent_date, days=lead_time_ignore_components), fields.Date.today())
                         index = next(i for i, (dstart, dstop) in enumerate(date_range) if related_date <= dstop)
                         related_key = (date_range[index], product, production_schedule.warehouse_id)
-                        indirect_demand_qty[related_key][related_date] += ratio * forecast_values['replenish_qty']
+                        indirect_demand_qty[related_key][related_date] += (ratio * forecast_values['replenish_qty']) - subproduct_indirect_demand
 
             if production_schedule in self:
                 # The state is computed after all because it needs the final
