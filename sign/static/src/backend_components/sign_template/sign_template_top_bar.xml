@@ -30,9 +30,9 @@
                     </div>
                 </div>
 
-                <div class="o_sign_template_tags_and_save align-items-center d-flex me-5 gap-2">
+                <div t-attf-class="o_sign_template_tags_and_save align-items-center d-flex me-5 gap-2 {{ !env.isSmall and !props.hasSignRequests ? 'o_sign_tags_format' : ''}}">
                     <span>Tags:</span>
-                    <div class="o_field_widget o_field_many2many_tags">
+                    <div class="o_field_widget o_field_many2many_tags col-lg-12">
                         <Many2ManyTagsFieldColorEditable t-props="getMany2ManyProps(record, 'tag_ids')" colorField="'color'"/>
                     </div>
                 </div>
