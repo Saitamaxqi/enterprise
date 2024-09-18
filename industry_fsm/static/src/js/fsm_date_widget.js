@@ -12,7 +12,7 @@ class FsmDateWidget extends DateTimeField {
      * @override
      */
     getFormattedValue() {
-        const format = localization.timeFormat.search("HH") === 0 ? "HH:mm" : "hh:mm A";
+        const format = localization.timeFormat.search("HH") === 0 ? "HH:mm" : "hh:mm a";
         const { data } = this.props.record;
         if (!data.planned_date_begin){
             return;
