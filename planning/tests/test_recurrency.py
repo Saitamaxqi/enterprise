@@ -1085,3 +1085,32 @@ class TestRecurrencySlotGeneration(TestCommonPlanning):
         # slots in the weekend should have the same allocated hours of the recurring shift
         self.assertEqual(all(slot.allocated_hours == 7 for slot in generated_slots), True,
                          'All the generated slots should have the same allocated hours')
+
+    def test_edit_all_shifts_end_datetime(self):
+        self.configure_recurrency_span(1)
+        self.env.user.tz = 'UTC'
+
+        slot = self.env['planning.slot'].create({
+            'name': 'Full month recurrency',
+            'start_datetime': datetime(2024, 9, 16, 8, 0),
+            'end_datetime': datetime(2024, 9, 20, 17, 0),
+            'resource_id': self.resource_bert.id,
+            'repeat': True,
+            'repeat_type': 'x_times',
+            'repeat_number': 4,
+            'repeat_interval': 1,
+            'repeat_unit': 'week',
+        })
+
+        original_slots = slot.recurrency_id.slot_ids
+        original_end_dates = original_slots.mapped('end_datetime')
+        original_slots[1].write({
+            'recurrence_update': 'all',
+            'end_datetime': '2024-09-27 12:00:00',
+        })
+
+        self.assertTrue(all(
+            modified_end_date == original_end_date - timedelta(hours=5)
+            for original_end_date, modified_end_date
+            in zip(original_end_dates, slot.recurrency_id.slot_ids.mapped('end_datetime'))
+        ))
