@@ -941,6 +941,87 @@ class TestAccountAsset(TestAccountReportsCommon):
             'acquisition_date': min(move_ids.mapped('invoice_date')),
         }])
 
+    def test_asset_from_bill_move_line_form_multicurrency(self):
+        """Test that the asset is correcly created from a move line using a foreign currency"""
+
+        asset_account = self.company_data['default_account_assets']
+        non_deductible_tax = self.env['account.tax'].create({
+            'name': 'Non-deductible Tax',
+            'amount': 21,
+            'amount_type': 'percent',
+            'type_tax_use': 'purchase',
+            'invoice_repartition_line_ids': [
+                Command.create({'repartition_type': 'base'}),
+                Command.create({
+                    'factor_percent': 50,
+                    'repartition_type': 'tax',
+                    'use_in_tax_closing': False
+                }),
+                Command.create({
+                    'factor_percent': 50,
+                    'repartition_type': 'tax',
+                    'use_in_tax_closing': True
+                }),
+            ],
+            'refund_repartition_line_ids': [
+                Command.create({'repartition_type': 'base'}),
+                Command.create({
+                    'factor_percent': 50,
+                    'repartition_type': 'tax',
+                    'use_in_tax_closing': False
+                }),
+                Command.create({
+                    'factor_percent': 50,
+                    'repartition_type': 'tax',
+                    'use_in_tax_closing': True
+                }),
+            ],
+        })
+        asset_account.tax_ids = non_deductible_tax
+
+        asset_account.create_asset = 'no'
+        asset_account.multiple_assets_per_line = False
+
+        vendor_bill = self.env['account.move'].create({
+            'move_type': 'in_invoice',
+            'currency_id': self.other_currency.id,
+            'invoice_date': '2020-01-01',
+            'partner_id': self.partner_a.id,
+            'invoice_line_ids': [
+                Command.create({
+                    'account_id': asset_account.id,
+                    'currency_id': self.other_currency.id,
+                    'name': 'Asus Laptop',
+                    'price_unit': 1000.0,
+                    'quantity': 1,
+                    'tax_ids': [Command.set(non_deductible_tax.ids)]
+                }),
+                Command.create({
+                    'account_id': asset_account.id,
+                    'currency_id': self.other_currency.id,
+                    'name': 'Lenovo Laptop',
+                    'price_unit': 500.0,
+                    'quantity': 1,
+                    'tax_ids': [Command.set(non_deductible_tax.ids)]
+                }),
+            ],
+        })
+        vendor_bill.action_post()
+        self.env.flush_all()
+
+        move_line_ids = vendor_bill.mapped('line_ids').filtered(lambda x: 'Laptop' in x.name)
+        asset_form = Form(self.env['account.asset'].with_context(
+            default_original_move_line_ids=move_line_ids.ids,
+            asset_type='purchase'
+        ))
+        asset_form.original_move_line_ids = move_line_ids
+        asset_form.account_depreciation_expense_id = self.company_data['default_account_expense']
+
+        new_assets = asset_form.save()
+        self.assertEqual(len(new_assets), 1)
+        self.assertEqual(new_assets.original_value, 828.75)
+        self.assertEqual(new_assets.non_deductible_tax_value, 78.75)
+
     def test_asset_modify_value_00(self):
         """Test the values of the asset and value increase 'assets' after a
         modification of residual and/or salvage values.

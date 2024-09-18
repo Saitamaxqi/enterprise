@@ -347,7 +347,8 @@ class AccountAsset(models.Model):
                     account = line.account_id
                     auto_create_multi = account.create_asset != 'no' and account.multiple_assets_per_line
                     quantity = line.quantity if auto_create_multi else 1
-                    record.non_deductible_tax_value += record.currency_id.round(line.non_deductible_tax_value / quantity)
+                    converted_non_deductible_tax_value = line.currency_id._convert(line.non_deductible_tax_value / quantity, record.currency_id, record.company_id, line.date)
+                    record.non_deductible_tax_value += record.currency_id.round(converted_non_deductible_tax_value)
 
     @api.depends('depreciation_move_ids.state', 'parent_id')
     def _compute_counts(self):
