@@ -41,9 +41,6 @@
             </t>
             <group name="order_details" position="inside">
                 <field name="amazon_order_ref"
-                       invisible="1"
-                       groups="!base.group_no_one"/>
-                <field name="amazon_order_ref"
                        invisible="not amazon_order_ref"
                        groups="base.group_no_one"/>
             </group>

@@ -75,7 +75,7 @@ class Data_MergeModel(models.Model):
 
     ### Similarity Threshold for Automatic merge
     merge_threshold = fields.Integer(string='Similarity Threshold', default=75, help='Records with a similarity percentage above this threshold will be automatically merged')
-    create_threshold = fields.Integer(string='Suggestion Threshold', default=0, help='Duplicates with a similarity below this threshold will not be suggested', groups='base.group_no_one')
+    create_threshold = fields.Integer(string='Suggestion Threshold', default=0, help='Duplicates with a similarity below this threshold will not be suggested')
 
     ### Contextual menu action
     is_contextual_merge_action = fields.Boolean(string='Merge action attached', help='If True, this record is used for contextual menu action "Merge" on the target model.')

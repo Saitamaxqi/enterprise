@@ -368,7 +368,7 @@ class TestEditView(TestStudioController):
         and another `groups=` on the field definition in the model.
         e.g.
         `code = fields.Text(string='Python Code', groups='base.group_system',`
-        `<field name="code" groups="base.group_no_one"/>`
+        `<field name="code" groups="base.group_multi_currency"/>`
         For this above case, a temporary technical node is created during the view postprocessing,
         wrapping the `<field groups="..."` node,
         to simulate a AND between the two groups: you must have BOTH groups in order to see the given field node,
@@ -384,8 +384,8 @@ class TestEditView(TestStudioController):
             'arch': """
                 <list>
                     <field name="name"/>
-                    <field name="state" groups="base.group_no_one"/>
-                    <field name="code" groups="base.group_no_one"/>
+                    <field name="state" groups="base.group_multi_currency"/>
+                    <field name="code" groups="base.group_multi_currency"/>
                 </list>"""
         })
         with self.debug_mode():
@@ -398,7 +398,7 @@ class TestEditView(TestStudioController):
             self.assertTrue(state.get('studio_groups'))
             self.assertTrue(code.get('studio_groups'))
             for node in (state, code):
-                self.assertEqual(json.loads(node.get('studio_groups'))[0]['name'], 'Technical Features')
+                self.assertEqual(json.loads(node.get('studio_groups'))[0]['name'], 'Multi Currencies')
 
     def test_edit_field_present_in_multiple_views(self):
         """ a use case where the hack before this fix doesn't work.
