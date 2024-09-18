@@ -3,6 +3,7 @@
 from odoo.tests import tagged
 import logging
 import json
+from dateutil.relativedelta import relativedelta
 
 from odoo.addons.l10n_in_reports_gstr.tests.common import L10nInTestAccountGstReportsCommon
 
@@ -105,3 +106,56 @@ class TestReports(L10nInTestAccountGstReportsCommon):
         self.assertEqual(sez_bill.l10n_in_gstr2b_reconciliation_status, "gstr2_bills_not_in_odoo")
         self.assertEqual(bool(sez_bill.l10n_in_exception), False)
         self.assertEqual(sez_bill.l10n_in_gst_treatment, "special_economic_zone")
+
+    def test_gstr2b_late_reconciliation(self):
+        """
+        Test the GSTR-2B reconciliation process for late received invoices.
+
+        This test verifies that when an invoice arrives with a previous month's date
+        but differs from an existing invoice date, the original invoice remains unchanged.
+        """
+        previous_invoice = self._init_inv(move_type='in_invoice', ref='BILL/001', taxes=self.comp_igst_18, partner=self.partner_b, invoice_date=self.test_date - relativedelta(months=1), line_vals={'price_unit': 100})
+        gstr2b_late_reconciliation_data = self._read_mock_json('gstr2b_late_reconciliation_data.json')
+        self.report.gstr2b_json_from_portal_ids = self.env['ir.attachment'].create({
+            'name': 'gstr2b.json',
+            'mimetype': 'application/json',
+            'raw': json.dumps(gstr2b_late_reconciliation_data),
+        })
+        self.report.gstr2b_match_data()
+
+        self.assertEqual(previous_invoice.l10n_in_gstr2b_reconciliation_status, "matched")
+        self.assertFalse(previous_invoice.l10n_in_exception)
+        self.assertEqual(previous_invoice.l10n_in_gst_return_period_id, self.report)
+
+    def test_gstr2b_reconciliation_different_partner(self):
+        """
+        Test the GSTR-2B reconciliation process for invoices with different partners.
+
+        This test verifies that when multiple invoices with the same reference
+        but different partners are processed, they are correctly matched, and
+        a new bill is created for any additional invoice found in the GSTR-2B data.
+
+        The test checks that:
+        - Three invoices are matched (two existing, one new).
+        - Both bills with different partners are marked as 'matched'.
+        - A new bill is created and labeled as 'gstr2_bills_not_in_odoo' for
+        invoices found in the GSTR-2B data but not present in Odoo.
+        """
+        bill_with_partner_b = self._init_inv(move_type='in_invoice', ref='BILL/001', taxes=self.comp_igst_18, partner=self.partner_b, invoice_date=self.test_date, line_vals={'price_unit': 800})
+        partner_c = self.partner_b.copy({'name': 'Partner_c', 'vat': '24WXYZM1234E1ZE'})
+        bill_with_partner_c = self._init_inv(move_type='in_invoice', ref='BILL/001', taxes=self.comp_igst_18, partner=partner_c, invoice_date=self.test_date, line_vals={'price_unit': 800})
+        gstr2b_reconciliation_different_partner = self._read_mock_json('gstr2b_reconciliation_different_partner.json')
+        self.report.gstr2b_json_from_portal_ids = self.env['ir.attachment'].create({
+            'name': 'gstr2b.json',
+            'mimetype': 'application/json',
+            'raw': json.dumps(gstr2b_reconciliation_different_partner),
+        })
+
+        self.report.gstr2b_match_data()
+        matched_invoices = self.env['account.move'].search([('ref', '=', 'BILL/001'), ('company_id', '=', self.company_data['company'].id)])
+        self.assertEqual(len(matched_invoices), 3)
+        self.assertEqual(bill_with_partner_b.l10n_in_gstr2b_reconciliation_status, "matched")
+        self.assertEqual(bill_with_partner_c.l10n_in_gstr2b_reconciliation_status, "matched")
+
+        new_bill = matched_invoices - bill_with_partner_b - bill_with_partner_c
+        self.assertEqual(new_bill.l10n_in_gstr2b_reconciliation_status, "gstr2_bills_not_in_odoo")

@@ -1617,6 +1617,15 @@ class L10nInGSTReturnPeriod(models.Model):
             tolerance_value = self.env['ir.config_parameter'].sudo().get_param('l10n_in_reports_gstr.gstr2b_matching_tolerance_amount', TOLERANCE_AMOUNT)
             return float(tolerance_value)
 
+        def remove_matched_bill_value(matching_dict, matching_keys_to_remove, matched_bill):
+            for key in matching_keys_to_remove:
+                # only remove matched bill
+                if key in matching_dict:
+                    matching_dict[key] -= matched_bill
+                    # no value then delete key
+                    if not matching_dict[key]:
+                        del matching_dict[key]
+
         def match_bills(gstr2b_streamline_bills, matching_dict):
             create_vals = []
             checked_bills = self.env['account.move']
@@ -1646,6 +1655,7 @@ class L10nInGSTReturnPeriod(models.Model):
                     else:
                         invoice_type = 'Bill'
                     if len(matched_bills) == 1:
+                        remove_matched_bill_value(matching_dict, matching_keys, matched_bills)
                         exception = []
                         if matched_bills.ref == gstr2b_bill.get('bill_number'):
                             if 'bill_taxable_value' in gstr2b_bill and gstr2b_bill['bill_taxable_value'] != matched_bills.amount_untaxed:
@@ -1804,23 +1814,23 @@ class L10nInGSTReturnPeriod(models.Model):
             vals_list = []
             late_vals_list = []
             gstr2b_bills = json_payload.get("data", {}).get('data', {}).get("docdata", {})
-            return_period = json_payload.get("data", {}).get('data', {}).get("rtnprd", {})
             for section_code, bill_datas in gstr2b_bills.items():
                 if section_code in ('b2b', 'cdnr'):
                     for bill_by_vat in bill_datas:
                         key = section_code == 'cdnr' and 'nt' or 'inv'
                         for doc_data in bill_by_vat.get(key):
+                            bill_date = self.convert_to_date(doc_data.get('dt'))
                             vals = {
                                 'vat': bill_by_vat.get('ctin'),
                                 'bill_number': section_code == 'cdnr' and doc_data.get('ntnum') or doc_data.get('inum'),
-                                'bill_date': self.convert_to_date(doc_data.get('dt')),
+                                'bill_date': bill_date,
                                 'bill_total': doc_data.get('val'),
                                 'bill_value_json': doc_data,
                                 'bill_type': section_code == 'cdnr' and 'credit_note' or 'bill',
                                 'section_code': section_code,
                             }
                             vals_list.append(vals)
-                            if return_period != doc_data.get('supprd'):
+                            if bill_date < self.start_date:
                                 late_vals_list.append(vals)
                 if section_code == 'impg':
                     for bill_data in bill_datas:
