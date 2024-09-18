@@ -104,7 +104,7 @@
             'knowledge/static/src/portal_webclient/**/*',
             'web/static/src/start.js',
         ],
-        'knowledge.assets_knowledge_print': [
+        'web.assets_web_print': [
             'knowledge/static/src/scss/knowledge_print.scss',
         ]
     },

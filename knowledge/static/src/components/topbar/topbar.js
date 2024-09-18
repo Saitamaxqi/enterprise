@@ -1,6 +1,5 @@
 /** @odoo-module **/
 
-import { loadBundle } from "@web/core/assets";
 import { formatDateTime } from '@web/core/l10n/dates';
 import { rpc } from "@web/core/network/rpc";
 import { registry } from '@web/core/registry';
@@ -215,7 +214,6 @@ class KnowledgeTopbar extends Component {
      *
      */
     async exportToPdf() {
-        await loadBundle("knowledge.assets_knowledge_print");
         window.print();
     }
 
