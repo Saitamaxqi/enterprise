@@ -2025,6 +2025,15 @@ msgstr ""
 
 #. module: l10n_mx_edi
 #. odoo-python
+#: code:addons/l10n_mx_edi/wizard/account_move_reversal.py:0
+#, python-format
+msgid ""
+"You cannot reverse directly the cash basis entry, reverse the source move "
+"instead."
+msgstr ""
+
+#. module: l10n_mx_edi
+#. odoo-python
 #: code:addons/l10n_mx_edi/models/account_move.py:0
 msgid ""
 "You need to define an 'UNSPSC Product Category' on the following products: "
