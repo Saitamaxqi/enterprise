@@ -146,7 +146,7 @@ export const EditablePDFIframeMixin = (pdfClass) =>
             this.scrollCleanup();
             // Make sign item visible again after dragging ends. It is a mandatory step when
             // moving items out of bounds since in that flow the items don't get re-rendered.
-            let signItem = e.currentTarget.parentElement.parentElement;
+            let signItem = e.currentTarget.parentElement.parentElement.parentElement;
             if (signItem)
                 signItem.style.visibility = "visible";
             this.setCanvasVisibility("visible");

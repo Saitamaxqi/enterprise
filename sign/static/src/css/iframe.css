@@ -97,6 +97,7 @@
     width: 100%;
     height: 100%;
     overflow: hidden;
+    visibility: inherit !important;
 }
 
 .o_sign_sign_item.o_readonly_mode {
