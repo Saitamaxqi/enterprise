@@ -1013,14 +1013,15 @@ class ResCompany(models.Model):
         rate_api_client = Client(wsdl % 'awsbcucotizaciones')
 
         _logger.info("Getting the date of the last currency rate update from the BCU.")
-        last_date = date_api_client.service.Execute()
+        # On the closing date, it gives the rate for the next day
+        last_closing_date = date_api_client.service.Execute()
 
         to_sync_codes = sorted(to_sync_currencies.mapped("name"))
         _logger.info("Getting the currency rates for (%s) from the BCU.", ", ".join(to_sync_codes))
         Entrada = rate_api_client.type_factory('ns0').wsbcucotizacionesin(
             Moneda={'item': to_sync_currencies.mapped(lambda x: iso_to_moneda_map[x.name])},
-            FechaDesde=last_date,
-            FechaHasta=last_date,
+            FechaDesde=last_closing_date,
+            FechaHasta=last_closing_date,
             Grupo=0,
         )
         response = rate_api_client.service.Execute(Entrada)
@@ -1028,11 +1029,12 @@ class ResCompany(models.Model):
             error_message = response.respuestastatus.mensaje
             raise UserError(_('Error updating the currency rates from the BCU: %s.', error_message))
 
-        res = {'UYU': (1.0, last_date)}
+        res = {'UYU': (1.0, last_closing_date)}
+        rate_date = last_closing_date + relativedelta(days=1)
         for rate_values in response.datoscotizaciones['datoscotizaciones.dato']:
             iso_code = moneda_to_iso_map[rate_values.Moneda]
             rate = 1.0 / serialize_object(rate_values.TCV)
-            res[iso_code] = (rate, last_date)
+            res[iso_code] = (rate, rate_date)
 
         _logger.info("Currency rates have been downloaded from the BCU.")
         return res
