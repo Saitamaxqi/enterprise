@@ -4,7 +4,7 @@ import { AccountReportFilters } from "@account_reports/components/account_report
 const { DateTime } = luxon;
 
 export class L10nMXTrialBalanceReportFilters extends AccountReportFilters {
-    static template = "l10n_mx_reports_closing.TrialBalanceFilters";
+    static template = "l10n_mx_reports_closing.L10nMXTrialBalanceReportFilters";
 
     initDateFilters() {
         const filters = super.initDateFilters();
@@ -32,4 +32,4 @@ export class L10nMXTrialBalanceReportFilters extends AccountReportFilters {
     }
 }
 
-AccountReport.registerCustomComponent(L10nMXTrialBalanceReportFilters);
+AccountReport.registerCustomComponent(L10nMXTrialBalanceReportFilters, "l10n_mx_reports_closing");

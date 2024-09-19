@@ -41,7 +41,6 @@ export class AccountReport extends Component {
     static defaultComponentsMap = [];
 
     setup() {
-
         useSetupAction({
             getLocalState: () => {
                 return {
@@ -78,8 +77,8 @@ export class AccountReport extends Component {
     // -----------------------------------------------------------------------------------------------------------------
     // Custom overrides
     // -----------------------------------------------------------------------------------------------------------------
-    static registerCustomComponent(customComponent) {
-        registry.category("account_reports_custom_components").add(customComponent.template, customComponent);
+    static registerCustomComponent(customComponent, moduleName = "account_reports") {
+        registry.category("account_reports_custom_components").add(`${ moduleName }.${ customComponent.name }`, customComponent);
     }
 
     get cssCustomClass() {
