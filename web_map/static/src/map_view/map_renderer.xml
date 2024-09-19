@@ -153,7 +153,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr t-foreach="fields" t-as="field" t-key="field.id">
+                    <tr t-foreach="data" t-as="field" t-key="field.id">
                         <td class="o-map-renderer--popup-table-content-name fw-bold text-nowrap align-baseline">
                             <t t-esc="field.string"/>
                         </td>
