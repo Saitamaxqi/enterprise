@@ -53,7 +53,7 @@
     </record>
 
     <record id="hr_salary_rule_category_meal_vouchers" model="hr.salary.rule.category">
-        <field name="name">Meal Vouches</field>
+        <field name="name">Meal Vouchers</field>
         <field name="code">MEAL_VOUCHERS</field>
         <field name="parent_id" ref="hr_salary_rule_category_removed_from_net"/>
     </record>
@@ -71,12 +71,6 @@
     <record id="hr_salary_rule_category_taxable_amount" model="hr.salary.rule.category">
         <field name="name">Taxable Amount</field>
         <field name="code">TAXABLE_AMOUNT</field>
-    </record>
-
-    <record id="hr_salary_rule_category_ded_net" model="hr.salary.rule.category">
-        <field name="name">Net Deductions</field>
-        <field name="code">DED_NET</field>
-        <field name="parent_id" ref="hr_payroll.DED"/>
     </record>
 
     <record id="hr_salary_rule_category_net_to_pay" model="hr.salary.rule.category">

@@ -18,7 +18,7 @@ class HrEmployee(models.Model):
         ('2', '2'),
         ('without', 'Without')],
         string="Tax Classification",
-        default='1', store=True, readonly=False, required=True,
+        default='1', required=True,
         groups="hr_payroll.group_hr_payroll_user")
     l10n_lu_tax_rate_no_classification = fields.Float(
         string="Tax Rate",

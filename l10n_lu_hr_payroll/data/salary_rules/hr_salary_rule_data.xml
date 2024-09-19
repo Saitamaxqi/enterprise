@@ -222,7 +222,7 @@ result = categories['CONTRIBUTION']
 
     <record id="l10n_lu_employees_fd" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.ALW"/>
-        <field name="name">Transport Fees</field>
+        <field name="name">Travel Expenses</field>
         <field name="code">FD</field>
         <field name="sequence">115</field>
         <field name="condition_select">python</field>
