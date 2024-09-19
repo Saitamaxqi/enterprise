@@ -150,6 +150,7 @@ class L10n_Mx_EdiDocument(models.Model):
     cancel_button_needed = fields.Boolean(compute='_compute_cancel_button_needed')
     retry_button_needed = fields.Boolean(compute='_compute_retry_button_needed')
     show_button_needed = fields.Boolean(compute='_compute_show_button_needed')
+    print_button_needed = fields.Boolean(compute='_compute_print_button_needed')
 
     # -------------------------------------------------------------------------
     # COMPUTE
@@ -275,6 +276,12 @@ class L10n_Mx_EdiDocument(models.Model):
             doc.retry_button_needed = bool(results) and (not results[0] or results[0](doc))
 
     @api.depends('state')
+    def _compute_print_button_needed(self):
+        """ Compute whatever or not the 'print' button should be displayed. """
+        for doc in self:
+            doc.print_button_needed = doc.state == 'payment_sent'
+
+    @api.depends('state')
     def _compute_show_button_needed(self):
         """ Compute whatever or not the 'show' button should be displayed. """
         for doc in self:
@@ -373,6 +380,14 @@ class L10n_Mx_EdiDocument(models.Model):
             'type': 'ir.actions.act_url',
             'url': f'/web/content/{self.attachment_id.id}?download=true',
         }
+
+    def action_download_payment_receipt(self):
+        """ Download the payment receipt linked to the document."""
+        self.ensure_one()
+        if self.move_id.origin_payment_id:
+            return self.env.ref('account.action_report_payment_receipt').report_action(self.move_id.origin_payment_id)
+        else:
+            return self.env.ref('l10n_mx_edi.action_report_bank_transaction_receipt').report_action(self.move_id)
 
     def action_force_payment_cfdi(self):
         """ Force the CFDI for the PUE payment document."""

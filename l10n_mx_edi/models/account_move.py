@@ -2664,3 +2664,18 @@ class AccountMove(models.Model):
                 **self.action_invoice_download_cfdi(),
             })
         return print_items
+
+    def _get_bank_transaction_receipt_report_values(self):
+        """ Get the extra values when rendering the Payment Receipt PDF report from a bank transaction.
+
+        :return: A dictionary:
+            * display_invoices: Display the invoices table.
+            * display_payment_method: Display the payment method value.
+            * cfdi: A dict with all cfdi datas from the record.
+        """
+        self.ensure_one()
+        return {
+            'display_invoices': False,
+            'display_payment_method': False,
+            'cfdi': self._l10n_mx_edi_get_extra_payment_report_values(),
+        }

@@ -41,3 +41,55 @@ class TestCFDIDownload(TestMxEdiCommon, HttpCase):
                 zip_file.namelist(),
                 (invoice_2 | invoice_3).l10n_mx_edi_cfdi_attachment_id.mapped('name'),
             )
+
+    @freeze_time('2017-01-01')
+    def test_payment_download(self):
+        invoice = self._create_invoice()
+        with self.with_mocked_pac_sign_success():
+            invoice._l10n_mx_edi_cfdi_invoice_try_send()
+
+        payment = self.env['account.payment.register']\
+            .with_context(active_model='account.move', active_ids=invoice.ids)\
+            .create([{
+                'payment_date': '2017-06-01',
+                'amount': 1160.0,
+            }])\
+            ._create_payments()
+
+        with freeze_time('2017-01-01'), self.with_mocked_pac_sign_success():
+            invoice.l10n_mx_edi_cfdi_invoice_try_update_payments()
+            payment.l10n_mx_edi_payment_document_ids.action_force_payment_cfdi()
+
+        action_download = payment.l10n_mx_edi_payment_document_ids[0].action_download_file()
+        self.authenticate(self.env.user.login, self.env.user.login)
+        res = self.url_open(action_download['url'])
+
+        self.assertEqual(res.status_code, 200)
+
+    @freeze_time('2017-01-01')
+    def test_bank_transaction_download(self):
+        invoice = self._create_invoice()
+        with self.with_mocked_pac_sign_success():
+            invoice._l10n_mx_edi_cfdi_invoice_try_send()
+
+        bank_statement = self.env['account.bank.statement.line'].create([{
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'payment_ref': 'payment_move_line',
+            'partner_id': invoice.partner_id.id,
+            'amount': 1160,
+            'date': '2017-01-01',
+        }])
+
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=bank_statement.id).new({})
+        wizard._action_add_new_amls(invoice.line_ids.filtered(lambda account: account.account_type == 'asset_receivable'))
+        wizard._action_validate()
+
+        with freeze_time('2017-01-01'), self.with_mocked_pac_sign_success():
+            invoice.l10n_mx_edi_cfdi_invoice_try_update_payments()
+            bank_statement.l10n_mx_edi_payment_document_ids.action_force_payment_cfdi()
+
+        action_download = bank_statement.l10n_mx_edi_payment_document_ids[0].action_download_file()
+        self.authenticate(self.env.user.login, self.env.user.login)
+        res = self.url_open(action_download['url'])
+
+        self.assertEqual(res.status_code, 200)

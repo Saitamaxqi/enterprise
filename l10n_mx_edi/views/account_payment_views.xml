@@ -66,6 +66,10 @@
                                     type="object"
                                     string="Download"
                                     invisible="not attachment_id"/>
+                            <button name="action_download_payment_receipt"
+                                    type="object"
+                                    string="Print"
+                                    invisible="not print_button_needed"/>
                             <button name="action_force_payment_cfdi"
                                     type="object"
                                     string="Force CFDI"
