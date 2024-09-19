@@ -218,7 +218,7 @@ class MaintenanceRequest(models.Model):
                     note=text
                 )
                 if raise_on_schedule_date_already_planned:
-                    raise UserError("Manufacturing Orders are already scheduled for this time slot.")
+                    raise UserError(self.env._("Manufacturing Orders are already scheduled for this time slot."))
 
     def archive_equipment_request(self):
         res = super().archive_equipment_request()

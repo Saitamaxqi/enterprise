@@ -9,7 +9,7 @@ import logging
 import uuid
 
 from odoo.exceptions import UserError
-from odoo import fields
+from odoo import fields, _
 
 _logger = logging.getLogger(__name__)
 
@@ -68,9 +68,11 @@ def _get_uri(uri, reference, base_uri=""):
         if len(results) == 1:
             return _canonicalize_node(results[0], exclusive=exc_c14n, inclusive_ns_prefixes=prefix_list)
         if len(results) > 1:
-            raise UserError(f"Ambiguous reference URI {uri} resolved to {len(results)} nodes")
+            raise UserError(
+                _("Ambiguous reference URI %(uri)s resolved to %(count)d nodes", uri=uri, count=len(results))
+            )
 
-    raise UserError(f'URI {uri} not found')
+    raise UserError(_("URI %(uri)s not found", uri=uri))
 
 
 def _reference_digests(node, base_uri=""):

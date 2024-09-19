@@ -182,7 +182,7 @@ class L10n_InGstReturnPeriod(models.Model):
     @api.onchange('year')
     def _check_isyear(self):
         if self.year and len(self.year) != 4 or not self.year.isnumeric():
-            raise UserError((f"The value [{self.year}] should be year"))
+            raise UserError(self.env._("The value [%(year)s] should be year", year=self.year))
 
     @api.onchange('tax_unit_id')
     def on_chnage_tax_unit_id(self):
@@ -408,7 +408,12 @@ class L10n_InGstReturnPeriod(models.Model):
             if create_if_not_found:
                 tax_units = self.env['account.tax.unit'].search([('main_company_id', '=', company.id)], limit=1)
                 if tax_units and return_period and not return_period.tax_unit_id:
-                    raise UserError(f"GST return period already exists for {period_date.strftime('%b-%Y')}, but it's not associated with the relevant tax unit.")
+                    raise UserError(
+                        self.env._(
+                            "GST return period already exists for %(period)s, but it's not associated with the relevant tax unit.",
+                            period=period_date.strftime("%b-%Y"),
+                        ),
+                    )
             if create_if_not_found and not return_period:
                 return_period = GstReturnPeriod.create({
                     'company_id': company.id,
@@ -1476,7 +1481,7 @@ class L10n_InGstReturnPeriod(models.Model):
                     ]
                 )
 
-        raise UserError("Section %s is unkown" % (section_code))
+        raise UserError(self.env._("Section %(section)s is unknown", section=section_code))
 
     def action_view_gstr1_return_period(self):
         self.ensure_one()

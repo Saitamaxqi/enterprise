@@ -132,7 +132,12 @@ class L10n_Be281_45(models.Model):
     def _check_employees_configuration(self, employees):
         invalid_employees = employees.filtered(lambda e: not (e.company_id and e.company_id.street and e.company_id.zip and e.company_id.city and e.company_id.phone and e.company_id.vat))
         if invalid_employees:
-            raise UserError(_("The company is not correctly configured on your employees. Please be sure that the following pieces of information are set: street, zip, city, phone and vat") + '\n' + '\n'.join(invalid_employees.mapped('name')))
+            raise UserError(
+                self.env._(
+                    "The company is not correctly configured on your employees. Please be sure that the following pieces of information are set: street, zip, city, phone, and VAT:\n%(employees)s",
+                    employees="\n".join(invalid_employees.mapped("name")),
+                )
+            )
 
         invalid_employees = employees.filtered(
             lambda e: not e.private_street or not e.private_zip or not e.private_city or not e.private_country_id)

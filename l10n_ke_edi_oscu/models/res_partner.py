@@ -31,7 +31,7 @@ class ResPartner(models.Model):
             company = partner.company_id or self.env.company
             error, _data, _dummy = company._l10n_ke_call_etims('saveBhfCustomer', content)
             if error:
-                raise UserError(f"[{error['code']}] {error['message']}")
+                raise UserError(self.env._("[%(code)s] %(message)s", code=error["code"], message=error["message"]))
         return {
             'type': 'ir.actions.client',
             'tag': 'display_notification',

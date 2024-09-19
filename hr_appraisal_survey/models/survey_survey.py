@@ -99,9 +99,9 @@ class SurveyUser_Input(models.Model):
 
     def action_ask_feedback(self):
         if len(self.appraisal_id) > 1:
-            raise ValidationError("You can't selected feedback linked to multiples appraisals.")
+            raise ValidationError(self.env._("You can't selected feedback linked to multiples appraisals."))
         if len(self.survey_id) > 1:
-            raise ValidationError("You can't selected multiple feedback template.")
+            raise ValidationError(self.env._("You can't selected multiple feedback template."))
         appraisal_id = self.appraisal_id
         set_emails = set(self.mapped('email'))
         if appraisal_id.employee_feedback_ids:

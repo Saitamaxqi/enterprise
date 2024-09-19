@@ -741,7 +741,7 @@ class DocumentsDocument(models.Model):
         try:
             self.check_access('write')
         except UserError:
-            raise AccessError("You are not allowed to update these access rights.")
+            raise AccessError(self.env._("You are not allowed to update these access rights."))
 
         if len(self.ids) > 1 and notify:
             raise UserError(_("Impossible to invite partners on multiple documents at once."))
@@ -1625,7 +1625,7 @@ class DocumentsDocument(models.Model):
             if vals.get('folder_id'):
                 folder = self.env['documents.document'].browse(vals['folder_id'])
                 if not folder.active:
-                    raise UserError('It is not possible to create documents in an archived folder.')
+                    raise UserError(self.env._('It is not possible to create documents in an archived folder.'))
                 vals_partners_ids = [val[2]['partner_id'] for val in vals_values['access_ids']]
                 folder_access = [
                     Command.create({'partner_id': access.partner_id.id, 'role': access.role})

@@ -172,4 +172,4 @@ class AccountAutoReconcileWizard(models.TransientModel):
                 'domain': [('id', 'in', reconciled_amls_and_related.ids)],
             }
         else:
-            raise UserError("Nothing to reconcile.")
+            raise UserError(self.env._("Nothing to reconcile."))

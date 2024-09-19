@@ -1158,7 +1158,7 @@ Are you sure you want to remove the selection values of those records?""", len(r
         label = operation.get("label")
         button_type = operation.get("button_type")
         if not label:
-            raise UserError('The label string is mandatory.')
+            raise UserError(self.env._('The label string is mandatory.'))
 
         params = {'string': label}
         if button_type is not None and button_type == 'action':
@@ -1172,7 +1172,7 @@ Are you sure you want to remove the selection values of those records?""", len(r
             params['name'] = str(methodId)
             params['type'] = button_type
         else:
-            raise UserError('The type of statusBarButton must be "action" or "method".')
+            raise UserError(self.env._('The type of statusBarButton must be "action" or "method".'))
 
         expression = "//header[1]"
         position = "inside"

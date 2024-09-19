@@ -13,7 +13,7 @@ except ImportError:
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 
-from odoo import Command, fields
+from odoo import Command, fields, _
 from odoo.exceptions import UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
 from odoo.tools.misc import formatLang, file_open
@@ -161,7 +161,7 @@ class TestAccountReportsCommon(AccountTestInvoicingCommon):
             )
 
         if not reports:
-            raise UserError('There are no reports to compare.')
+            raise UserError(self.env._('There are no reports to compare.'))
         visited_line_codes = set()
         for line in reports.line_ids:
             if not line.code or line.code in visited_line_codes:
@@ -300,7 +300,7 @@ class TestAccountReportsCommon(AccountTestInvoicingCommon):
             'expression_ids': [],
         }
         if tag_name and formula:
-            raise UserError("Can't use this helper to create a line with both tags and formula")
+            raise UserError(_("Can't use this helper to create a line with both tags and formula"))
         if tag_name:
             create_vals['expression_ids'].append(Command.create({
                 "label": "balance",

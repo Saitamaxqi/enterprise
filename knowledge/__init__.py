@@ -19,8 +19,8 @@ def pre_init_knowledge(env):
         etree.fromstring("<p>😀</p>")
     except etree.XMLSyntaxError:
         raise UserError(
-            "The version of the lxml package used is not supported. "
-            "Consider reinstalling lxml package using 'pip install --nobinary :all: lxml'")
+            env._("The version of the lxml package used is not supported. "
+            "Consider reinstalling lxml package using 'pip install --nobinary :all: lxml'"))
 
 
 def _uninstall_knowledge(env):

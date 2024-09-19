@@ -66,7 +66,7 @@ class YearlySalaryDetail(models.TransientModel):
         """
         self.ensure_one()
         if not self.employee_ids:
-            raise UserError("There must be at least one employee available to generate a report.")
+            raise UserError(self.env._("There must be at least one employee available to generate a report."))
         data = {'ids': self.env.context.get('active_ids', [])}
         res = self.read()
         res = res and res[0] or {}

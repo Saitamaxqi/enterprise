@@ -233,7 +233,12 @@ class DeliveryCarrier(models.Model):
                     failed_call.append(parcel_id)
         if failed_call:
             details = ",".join(str(p_id) for p_id in failed_call)
-            raise UserError(f"The cancellation was rejected for the parcel(s) with the following id :\n{details}\nEither :\n\t - The parcel is already cancelled\n\t - The parcel has been announced more than 42 days ago\n\t - The parcel has already been delivered")
+            raise UserError(
+                self.env._(
+                    "The cancellation was rejected for the parcel(s) with the following id:\n%(details)s\nEither:\n\t - The parcel is already cancelled\n\t - The parcel has been announced more than 42 days ago\n\t - The parcel has already been delivered",
+                    details=details,
+                ),
+            )
 
     def sendcloud_convert_weight(self, weight, grams=False, reverse=False):
         """

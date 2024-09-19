@@ -515,7 +515,7 @@ class WhatsappTemplate(models.Model):
             else:
                 attachment = self.header_attachment_ids
             if not attachment:
-                raise ValidationError("Header Document is missing")
+                raise ValidationError(self.env._("Header Document is missing"))
         file_handle = False
         if attachment:
             try:

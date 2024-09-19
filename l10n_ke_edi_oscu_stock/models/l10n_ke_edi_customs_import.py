@@ -117,7 +117,8 @@ class L10n_Ke_EdiCustomsImport(models.Model):
         }
         error, _data, _date = self.company_id._l10n_ke_call_etims('updateImportItem', content)
         if error:
-            raise UserError(f"[{error['code']}] {error['message']}")
+            error_msg = f"[{error['code']}] {error['message']}"
+            raise UserError(error_msg)
         else:
             self.state = status
 

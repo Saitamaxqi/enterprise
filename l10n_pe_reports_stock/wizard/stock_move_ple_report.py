@@ -19,7 +19,7 @@ class L10n_PeStockPleWizard(models.TransientModel):
     def default_get(self, fields_list):
         results = super().default_get(fields_list)
         if self.env.company.country_code != 'PE':
-            raise UserError('This option is only available for Peruvian companies.')
+            raise UserError(self.env._('This option is only available for Peruvian companies.'))
         date_from = fields.Date.today().replace(day=1)
         results['date_from'] = date_from
         results['date_to'] = date_from + relativedelta(months=1, days=-1)
