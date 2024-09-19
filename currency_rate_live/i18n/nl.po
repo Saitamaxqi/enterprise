@@ -136,7 +136,7 @@ msgstr "Provider"
 
 #. module: currency_rate_live
 #: model:ir.model.fields.selection,name:currency_rate_live.selection__res_company__currency_provider__tcmb
-msgid "Turkey Republic Central Bank"
+msgid "Türkiye Republic Central Bank"
 msgstr "Centrale bank van de Republiek Turkije"
 
 #. module: currency_rate_live

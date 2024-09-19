@@ -156,7 +156,7 @@ CURRENCY_PROVIDER_SELECTION = [
     (['PL'], 'nbp', '[PL] National Bank of Poland'),
     (['RO'], 'bnr', '[RO] National Bank of Romania'),
     (['SE'], 'srb', '[SE] Sveriges Riksbank'),
-    (['TR'], 'tcmb', '[TR] Central Bank of the Republic of Turkey'),
+    (['TR'], 'tcmb', '[TR] Central Bank of the Republic of Türkiye'),
     (['UK'], 'hmrc', '[UK] HM Revenue & Customs'),
     (['MY'], 'bnm', '[MY] Bank Negara Malaysia'),
     (['ID'], 'bi', '[ID] Bank Indonesia'),

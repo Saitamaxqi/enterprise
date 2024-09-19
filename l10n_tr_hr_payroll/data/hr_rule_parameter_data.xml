@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record id="rule_parameter_l10n_tr_lower_boundary" model="hr.rule.parameter">
-            <field name="name">Turkey Minimum Wage</field>
+            <field name="name">Türkiye Minimum Wage</field>
             <field name="code">l10n_tr_min_wage</field>
             <field name="country_id" ref="base.tr"/>
         </record>
@@ -13,7 +13,7 @@
         </record>
 
         <record id="rule_parameter_l10n_tr_ssi_base_ceiling" model="hr.rule.parameter">
-            <field name="name">Turkey SSI Base Amount Ceiling</field>
+            <field name="name">Türkiye SSI Base Amount Ceiling</field>
             <field name="code">l10n_tr_ssi_base_ceiling</field>
             <field name="country_id" ref="base.tr"/>
         </record>
@@ -24,7 +24,7 @@
         </record>
 
         <record id="rule_parameter_l10n_tr_tax_exempt_amount" model="hr.rule.parameter">
-            <field name="name">Turkey Tax Exemption Amount</field>
+            <field name="name">Türkiye Tax Exemption Amount</field>
             <field name="code">l10n_tr_tax_exempt</field>
             <field name="country_id" ref="base.tr"/>
         </record>
@@ -35,7 +35,7 @@
         </record>
 
         <record id="rule_parameter_l10n_tr_stamp_tax_pcnt" model="hr.rule.parameter">
-            <field name="name">Turkey Stamp Tax Percentage</field>
+            <field name="name">Türkiye Stamp Tax Percentage</field>
             <field name="code">l10n_tr_stamp_tax_pcnt</field>
             <field name="country_id" ref="base.tr"/>
         </record>
@@ -46,7 +46,7 @@
         </record>
 
         <record id="rule_parameter_l10n_tr_stamp_tax_exempt_amount" model="hr.rule.parameter">
-            <field name="name">Turkey Stamp Tax Exemption Amount</field>
+            <field name="name">Türkiye Stamp Tax Exemption Amount</field>
             <field name="code">l10n_tr_stamp_tax_exempt</field>
             <field name="country_id" ref="base.tr"/>
         </record>
@@ -58,7 +58,7 @@
 
         <!-- Tax Rates -->
         <record id="rule_parameter_l10_tr_tax_rates" model="hr.rule.parameter">
-            <field name="name">Turkey Tax Bracket Rates</field>
+            <field name="name">Türkiye Tax Bracket Rates</field>
             <field name="code">l10_tr_tax_rates</field>
             <field name="country_id" ref="base.tr"/>
         </record>

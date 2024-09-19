@@ -1,11 +1,14 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name': 'Turkey - Payroll',
+    'name': 'Türkiye - Payroll',
     'countries': ['tr'],
     'category': 'Human Resources/Payroll',
     'description': """
-Turkey Payroll and Tax Rules
-============================
+Türkiye Payroll and Tax Rules
+=============================
+- Social Security Premium/Insurance calculations for employment and unemployment
+- Income tax calculations
+- Stamp tax deductions
     """,
     'depends': ['hr_payroll'],
     'auto_install': ['hr_payroll'],

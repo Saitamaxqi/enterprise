@@ -1,12 +1,12 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Turkey - Payroll with Accounting',
-    'author': 'Odoo',
+    'name': 'Türkiye - Payroll with Accounting',
     'version': '1.0',
     'category': 'Human Resources',
+    'countries': ['tr'],
     'description': """
-Accounting Data for Turkey Payroll Rules
+Accounting Data for Türkiye Payroll Rules
 ==========================================
     """,
     'depends': ['hr_payroll_account', 'l10n_tr', 'l10n_tr_hr_payroll'],
