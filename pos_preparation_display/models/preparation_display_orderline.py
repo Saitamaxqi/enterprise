@@ -14,6 +14,12 @@ class Pos_Preparation_DisplayOrderline(models.Model):
     preparation_display_order_id = fields.Many2one(
         'pos_preparation_display.order', required=True, index=True, ondelete='cascade')
     pos_order_line_uuid = fields.Char(help="Original pos order line UUID")
+    combo_line_ids = fields.One2many(
+        'pos_preparation_display.orderline',
+        'combo_parent_id',
+        string="Combo Lines"
+    )
+    combo_parent_id = fields.Many2one('pos_preparation_display.orderline', string="Parent Combo Line", help="Indicates the parent line if this is part of a combo")
 
     def change_line_status(self, status):
         orderlines_status = []

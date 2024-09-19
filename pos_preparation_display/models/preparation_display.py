@@ -46,7 +46,14 @@ class Pos_Preparation_DisplayDisplay(models.Model):
         Returns whether the orderline should be included in the preparation
         display, based on the categories that are selected for the preparation
         """
-        return any(categ_id in self._get_pos_category_ids().ids for categ_id in orderline.product_id.pos_categ_ids.ids)
+        if any(categ_id in self._get_pos_category_ids().ids for categ_id in orderline.product_id.pos_categ_ids.ids):
+            return True
+
+        for child in orderline.combo_line_ids:
+            if any(categ_id in self._get_pos_category_ids().ids for categ_id in child.product_id.pos_categ_ids.ids):
+                return True
+
+        return False
 
     def get_pos_config_ids(self):
         self.ensure_one()

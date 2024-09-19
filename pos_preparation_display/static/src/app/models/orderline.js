@@ -12,6 +12,8 @@ export class Orderline extends Reactive {
             product_quantity,
             attribute_ids,
             todo,
+            combo_parent_id,
+            combo_line_ids,
         },
         order,
         blinkingNote
@@ -29,6 +31,8 @@ export class Orderline extends Reactive {
         this.todo = todo;
         this.order = order;
         this.blinkingNote = blinkingNote || false;
+        this.combo_parent_id = combo_parent_id;
+        this.combo_line_ids = combo_line_ids;
 
         if (this.blinkingNote) {
             setTimeout(() => {

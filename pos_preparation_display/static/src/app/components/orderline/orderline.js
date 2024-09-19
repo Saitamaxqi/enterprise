@@ -36,13 +36,40 @@ export class Orderline extends Component {
             }, {})
         );
     }
+    changeChildrenState = (parentOrderline, newState, order) => {
+        if (parentOrderline.combo_line_ids && parentOrderline.combo_line_ids.length > 0) {
+            parentOrderline.combo_line_ids.forEach((childId) => {
+                const childOrderline = order.orderlines.find((line) => line.id === childId);
+                if (childOrderline) {
+                    childOrderline.todo = newState;
+                }
+            });
+        }
+    };
 
+    changeParentState = (childOrderline, newState, order) => {
+        if (childOrderline.combo_parent_id) {
+            const parentOrderline = order.orderlines.find(
+                (line) => line.id === childOrderline.combo_parent_id
+            );
+            if (parentOrderline) {
+                const children = parentOrderline.combo_line_ids
+                    .map((childId) => order.orderlines.find((line) => line.id === childId))
+                    .filter(Boolean);
+                const allChildrenAreFalse = children.every((child) => child.todo === newState);
+                if (allChildrenAreFalse) {
+                    parentOrderline.todo = newState;
+                }
+            }
+        }
+    };
     async changeOrderlineStatus() {
         const orderline = this.props.orderline;
         const newState = !orderline.todo;
-        const order = this.props.orderline.order;
-
+        const order = orderline.order;
         orderline.todo = newState;
+        this.changeChildrenState(orderline, newState, order);
+        this.changeParentState(orderline, newState, order);
         if (order.stageId !== this.preparationDisplay.lastStage.id) {
             this.preparationDisplay.changeOrderStage(order);
         }

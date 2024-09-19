@@ -143,6 +143,8 @@ class Pos_Preparation_DisplayOrder(models.Model):
                     'product_quantity': orderline.product_quantity,
                     'product_cancelled': orderline.product_cancelled,
                     'product_category_ids': orderline.product_id.pos_categ_ids.ids,
+                    'combo_parent_id': orderline.combo_parent_id.id,
+                    'combo_line_ids': orderline.combo_line_ids.ids,
                 })
 
         if preparation_display_orderlines:

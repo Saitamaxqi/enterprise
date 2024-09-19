@@ -3,6 +3,7 @@
     <t t-name="pos_preparation_display.Orderline">
         <section
             class="o_preparation_display_orderline py-2 border-top border-light text-800"
+            t-attf-class="{{ this.props.orderline.combo_parent_id ? 'ms-4 fst-italic' : '' }}"
             t-on-click="() => this.changeOrderlineStatus()"
             t-att-orderlineId="this.props.orderline.id"
         >

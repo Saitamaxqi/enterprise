@@ -158,6 +158,15 @@ class PosOrder(models.Model):
                     if missing_qty == 0 and line_qty > 0:
                         flag_change = True
                         category_ids.update(product.pos_categ_ids.ids)
+
+                        parent = False
+                        if line.combo_parent_id:
+                            parent_line = self.lines.filtered(lambda l: l.id == line.combo_parent_id.id)
+                            parent = self.env['pos_preparation_display.orderline'].search([
+                                ('pos_order_line_uuid', '=', parent_line.uuid),
+                                ('preparation_display_order_id', '=', pdis_ticket.id)
+                            ], limit=1)
+
                         self.env['pos_preparation_display.orderline'].create({
                             'todo': True,
                             'internal_note': line.note or "",
@@ -166,7 +175,9 @@ class PosOrder(models.Model):
                             'product_quantity': line_qty,
                             'preparation_display_order_id': pdis_ticket.id,
                             'pos_order_line_uuid': line.uuid,
+                            'combo_parent_id': parent.id if parent else False
                         })
+
             elif data['order'] < data['display']:
                 qty_to_cancel = data['display'] - data['order']
                 for line in pdis_lines.filtered(lambda li: li.product_id.id == product_id and li.internal_note == data['note'] and li.attribute_value_ids.ids == data['attribute_value_ids']):
