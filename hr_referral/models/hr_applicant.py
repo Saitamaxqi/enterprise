@@ -66,7 +66,7 @@ class Applicant(models.Model):
             applicant.source_id = applicant.ref_user_id.utm_source_id
 
     def check_field_access_rights(self, operation, field_names):
-        referral_fields = {'name', 'partner_name', 'job_id', 'referral_points_ids', 'earned_points', 'max_points', 'active', 'response_id',
+        referral_fields = {'partner_name', 'job_id', 'referral_points_ids', 'earned_points', 'max_points', 'active', 'response_id',
                            'shared_item_infos', 'referral_state', 'user_id', 'friend_id', 'write_date', 'ref_user_id', 'id'}
 
         result = super().check_field_access_rights(operation, field_names)
@@ -124,7 +124,7 @@ class Applicant(models.Model):
         for applicant in self:
             if applicant.ref_user_id:
                 applicant._send_notification(
-                    body=_("Sorry, your referral %s has been refused in the recruitment process.", applicant.name),
+                    body=_("Sorry, your referral %s has been refused in the recruitment process.", applicant.partner_name),
                     action_value='hr_referral.action_hr_refused_applicant_employee_referral'
                 )
         self.write({'referral_state': 'closed'})
@@ -273,14 +273,14 @@ class Applicant(models.Model):
 
         applicant = self.sudo().search([('ref_user_id', '=', user_id.id), ('company_id', 'in', self.env.companies.ids)])
         applicants_hired = applicant.filtered(lambda r: r.referral_state == 'hired')
-        applicant_name = {applicant_hired.friend_id.id: applicant_hired.partner_name or applicant_hired.name for applicant_hired in applicants_hired}
+        applicant_name = {applicant_hired.friend_id.id: applicant_hired.partner_name for applicant_hired in applicants_hired}
         applicant_without_friend = applicants_hired.filtered(lambda r: not r.friend_id)
 
         # If there are applicant hired without friend and available friends.
         available_friend_count = self.env['hr.referral.friend'].search_count([])
         if bool(applicant_without_friend) and (len(applicants_hired) - len(applicant_without_friend) < available_friend_count):
             result['choose_new_friend'] = True
-            result['new_friend_name'] = applicant_without_friend[0].partner_name or applicant_without_friend[0].name
+            result['new_friend_name'] = applicant_without_friend[0].partner_name
             result['new_friend_id'] = applicant_without_friend[0].id
 
             result['friends'] = self._get_friends_head(applicant_name)
