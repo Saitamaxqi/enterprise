@@ -92,7 +92,7 @@
     <div t-name="sign.textareaSignItem" t-att-title="role" t-attf-class="{{classes}} o_sign_sign_item o_sign_sign_textarea" t-att-style="style" t-att-data-id="id">
         <div class="sign_item_body">
             <t t-if="!value">
-                <p class="o_placeholder ps-0 o_sign_field_alignment">
+                <p class="o_placeholder o_sign_field_alignment">
                     <t t-esc="placeholder"/>
                 </p>
             </t>
