@@ -46,7 +46,7 @@ export function insertPivot(pivotData) {
         type: "ODOO",
         domain: new Domain(pivotData.searchParams.domain).toJson(),
         context: pivotData.searchParams.context,
-        sortedColumn: pivotData.metaData.sortedColumn,
+        sortedColumn: getPivotSortedColumn(pivotData),
         measures,
         model: pivotData.metaData.resModel,
         columns: addEmptyGranularity(
@@ -118,5 +118,35 @@ export function insertPivot(pivotData) {
         model.dispatch("AUTORESIZE_COLUMNS", { sheetId, cols: columns });
         const sidePanel = stores.get(SidePanelStore);
         sidePanel.open("PivotSidePanel", { pivotId });
+    };
+}
+
+function getPivotSortedColumn(pivotData) {
+    if (!pivotData.metaData.sortedColumn) {
+        return undefined;
+    }
+
+    const fields = pivotData.metaData.fields;
+    const sortedValues = pivotData.metaData.sortedColumn.groupId[1];
+    const sortColDomain = [];
+
+    for (let i = 0; i < sortedValues.length; i++) {
+        const value = sortedValues[i];
+        const field = pivotData.metaData.fullColGroupBys[i];
+        if (!field) {
+            return undefined;
+        }
+
+        const fieldName = field.split(":")[0];
+        const fieldType = fields[fieldName].type;
+        sortColDomain.push({ value, field, type: fieldType });
+    }
+
+    const sortedColumn = pivotData.metaData.sortedColumn;
+    const measure = sortedColumn.measure;
+    return {
+        domain: sortColDomain,
+        order: sortedColumn.order,
+        measure: fields[measure]?.aggregator ? `${measure}:${fields[measure].aggregator}` : measure,
     };
 }

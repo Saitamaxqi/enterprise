@@ -46,24 +46,6 @@ export class PivotDetailsSidePanel extends Component {
         return this.store.pivot;
     }
 
-    get hasValidSortedColumn() {
-        const definition = this.pivot.definition;
-        return (
-            definition?.sortedColumn &&
-            definition.measures.find((m) => m.fieldName === definition.sortedColumn.measure)
-        );
-    }
-
-    formatSort() {
-        const sortedColumn = this.pivot.definition.sortedColumn;
-        const order = sortedColumn.order === "asc" ? _t("ascending") : _t("descending");
-        const measure = this.pivot.definition.measures.find(
-            (m) => m.fieldName === sortedColumn.measure
-        );
-        const measureDisplayName = this.pivot.getMeasure(measure.id).displayName;
-        return `${measureDisplayName} (${order})`;
-    }
-
     /**
      * Get the last update date, formatted
      *

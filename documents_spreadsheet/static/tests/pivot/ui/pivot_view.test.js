@@ -216,7 +216,6 @@ test("groupby date field without interval defaults to month", async () => {
         model: "partner",
         rows: [{ fieldName: "date", granularity: "month" }],
         name: "Partners by Foo",
-        sortedColumn: null,
         type: "ODOO",
     });
     expect(getCellContent(model, "A3")).toBe('=PIVOT.HEADER(1,"date:month","04/2016")');
@@ -279,7 +278,6 @@ test("groupby date field on row gives correct name", async () => {
         model: "partner",
         rows: [{ fieldName: "date", granularity: "month" }],
         name: "Partners by Date",
-        sortedColumn: null,
         type: "ODOO",
     });
 });
@@ -877,10 +875,9 @@ test("sort first pivot column (ascending)", async () => {
     expect(getCellValue(model, "F3")).toBe(15);
     expect(getCellValue(model, "F4")).toBe(116);
     expect(model.getters.getPivotCoreDefinition(pivotId).sortedColumn).toEqual({
-        groupId: [[], [1]],
-        measure: "probability",
+        domain: [{ field: "foo", value: 1, type: "integer" }],
+        measure: "probability:avg",
         order: "asc",
-        originIndexes: [0],
     });
 });
 
@@ -900,10 +897,9 @@ test("sort first pivot column (descending)", async () => {
     expect(getCellValue(model, "F3")).toBe(116);
     expect(getCellValue(model, "F4")).toBe(15);
     expect(model.getters.getPivotCoreDefinition(pivotId).sortedColumn).toEqual({
-        groupId: [[], [1]],
-        measure: "probability",
+        domain: [{ field: "foo", value: 1, type: "integer" }],
+        measure: "probability:avg",
         order: "desc",
-        originIndexes: [0],
     });
 });
 
@@ -922,10 +918,9 @@ test("sort second pivot column (ascending)", async () => {
     expect(getCellValue(model, "F3")).toBe(116);
     expect(getCellValue(model, "F4")).toBe(15);
     expect(model.getters.getPivotCoreDefinition(pivotId).sortedColumn).toEqual({
-        groupId: [[], [2]],
-        measure: "probability",
+        domain: [{ field: "foo", value: 2, type: "integer" }],
+        measure: "probability:avg",
         order: "asc",
-        originIndexes: [0],
     });
 });
 
@@ -945,10 +940,9 @@ test("sort second pivot column (descending)", async () => {
     expect(getCellValue(model, "F3")).toBe(15);
     expect(getCellValue(model, "F4")).toBe(116);
     expect(model.getters.getPivotCoreDefinition(pivotId).sortedColumn).toEqual({
-        groupId: [[], [2]],
-        measure: "probability",
+        domain: [{ field: "foo", value: 2, type: "integer" }],
+        measure: "probability:avg",
         order: "desc",
-        originIndexes: [0],
     });
 });
 
@@ -977,10 +971,9 @@ test("sort second pivot measure (ascending)", async () => {
     expect(getCellValue(model, "C3")).toBe(12);
     expect(getCellValue(model, "C4")).toBe(20);
     expect(model.getters.getPivotCoreDefinition(pivotId).sortedColumn).toEqual({
-        groupId: [[], []],
-        measure: "foo",
+        domain: [],
+        measure: "foo:sum",
         order: "asc",
-        originIndexes: [0],
     });
 });
 
@@ -1010,10 +1003,9 @@ test("sort second pivot measure (descending)", async () => {
     expect(getCellValue(model, "C3")).toBe(20);
     expect(getCellValue(model, "C4")).toBe(12);
     expect(model.getters.getPivotCoreDefinition(pivotId).sortedColumn).toEqual({
-        groupId: [[], []],
-        measure: "foo",
+        domain: [],
+        measure: "foo:sum",
         order: "desc",
-        originIndexes: [0],
     });
 });
 

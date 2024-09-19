@@ -109,7 +109,6 @@ export async function insertPivot(model, sheetId = model.getters.getActiveSheetI
         context: {},
         name: "Partner",
         type: "ODOO",
-        sortedColumn: null,
     };
     model.dispatch("ADD_PIVOT", {
         pivotId: pivotId,

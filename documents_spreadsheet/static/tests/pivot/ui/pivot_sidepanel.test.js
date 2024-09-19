@@ -1,7 +1,7 @@
 import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheetFromPivotView } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import { getHighlightsFromStore } from "@documents_spreadsheet/../tests/helpers/store_helpers";
-import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
+import { describe, expect, getFixture, test, beforeEach } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { registries } from "@odoo/o-spreadsheet";
 import {
@@ -57,12 +57,12 @@ test("Pivot properties panel shows ascending sorting", async function () {
     env.openSidePanel("PivotSidePanel", { pivotId });
     await animationFrame();
 
-    const sections = target.querySelectorAll(".o_spreadsheet_pivot_side_panel div .o-section");
-    expect(sections.length).toBe(6, { message: "it should have 6 sections" });
-    const pivotSorting = sections[4];
+    expect(".o-pivot-sort").toHaveCount(1);
+    expect(".o-pivot-sort").toHaveText(/ascending/);
 
-    expect(pivotSorting.children[0]).toHaveText("Sorting");
-    expect(pivotSorting.children[1]).toHaveText("Probability (ascending)");
+    const pivotSortingNodes = target.querySelectorAll(".o-sort-card");
+    expect(pivotSortingNodes[0].textContent).toBe("Foo = 1");
+    expect(pivotSortingNodes[1].textContent).toBe("Measure = Probability");
 });
 
 test("Pivot properties panel shows descending sorting", async function () {
@@ -75,12 +75,12 @@ test("Pivot properties panel shows descending sorting", async function () {
     env.openSidePanel("PivotSidePanel", { pivotId });
     await animationFrame();
 
-    const sections = target.querySelectorAll(".o_spreadsheet_pivot_side_panel div .o-section");
-    expect(sections.length).toBe(6, { message: "it should have 6 sections" });
-    const pivotSorting = sections[4];
+    expect(".o-pivot-sort").toHaveCount(1);
+    expect(".o-pivot-sort").toHaveText(/descending/);
 
-    expect(pivotSorting.children[0]).toHaveText("Sorting");
-    expect(pivotSorting.children[1]).toHaveText("Probability (descending)");
+    const pivotSortingNodes = target.querySelectorAll(".o-sort-card");
+    expect(pivotSortingNodes[0].textContent).toBe("Foo = 1");
+    expect(pivotSortingNodes[1].textContent).toBe("Measure = Probability");
 });
 
 test("Removing the measure removes the sortedColumn", async function () {
