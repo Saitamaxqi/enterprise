@@ -31,6 +31,7 @@
 
         <record id="hr_meal_voucher_register" model="res.partner">
             <field name="name">Meal Voucher Register</field>
+            <field name="company_type">company</field>
         </record>
 
         <!-- Salary Rules for Regular Pay-->

@@ -40,6 +40,7 @@
         <field name="phone">256.424.4557</field>
         <field name="email">troy.cruz@example.com</field>
         <field name="company_id" ref="base.main_company"/>
+        <field name="image_1920" type="base64" file="l10n_us_hr_payroll/static/img/hr_employee_troy.jpg"/>
     </record>
 
     <record id="hr_employee_troy" model="hr.employee">
@@ -53,6 +54,7 @@
         <field name="ssnid">876545679</field>
         <field name="l10n_us_filing_status">single</field>
         <field name="l10n_us_state_filing_status">ca_status_1</field>
+        <field name="work_contact_id" ref="l10n_us_hr_payroll.res_partner_troy"/>
     </record>
 
     <record id="res_partner_maggie" model="res.partner">

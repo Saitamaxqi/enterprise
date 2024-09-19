@@ -266,6 +266,7 @@
         <record id="res_partner_aka" model="res.partner">
             <field name="name">Aka Foster</field>
             <field name="email">aka@test.com</field>
+            <field name="image_1920" type="base64" file="planning/static/img/akaforest.jpg"/>
         </record>
 
         <record id="employee_aka" model="hr.employee">
@@ -288,6 +289,7 @@
         <record id="res_partner_cry" model="res.partner">
             <field name="name">Cherry Nelson</field>
             <field name="email">cry@test.com</field>
+            <field name="image_1920" type="base64" file="planning/static/img/cherrynilson.jpg"/>
         </record>
 
         <record id="employee_cry" model="hr.employee">
