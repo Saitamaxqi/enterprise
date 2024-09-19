@@ -913,7 +913,7 @@ class AccountEdiFormat(models.Model):
             taxes = line.tax_ids
             if len(taxes) > 1 and len(taxes.filtered(lambda t: t.tax_group_id.l10n_pe_edi_code == 'IGV')) > 1:
                 res.append(_("You can't have more than one IGV tax per line to generate a legal invoice in Peru"))
-        if any(not line.tax_ids for line in move.invoice_line_ids if line.display_type not in ('line_note', 'line_section')):
+        if any(not line.tax_ids for line in move.invoice_line_ids if line.display_type not in ('line_note', 'line_section') and line._check_edi_line_tax_required()):
             res.append(_("Taxes need to be assigned on all invoice lines"))
 
         # When this condition is met in `_l10n_pe_edi_get_spot` we will need this bank account.
