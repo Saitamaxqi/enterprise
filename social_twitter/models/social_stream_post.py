@@ -216,9 +216,9 @@ class SocialStreamPost(models.Model):
         if not result.ok:
             raise UserError(_('Can not like / unlike the tweet\n%s.', result.text))
 
-        post = request.env['social.stream.post'].search([('twitter_tweet_id', '=', tweet_id)])
-        if post:
-            post.twitter_user_likes = like
+        posts = request.env['social.stream.post'].search([('twitter_tweet_id', '=', tweet_id)])
+        if posts:
+            posts.twitter_user_likes = like
 
         return True
 

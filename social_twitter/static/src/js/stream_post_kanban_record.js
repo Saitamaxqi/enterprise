@@ -93,7 +93,17 @@ patch(StreamPostKanbanRecord.prototype, {
             tweet_id: this.record.twitter_tweet_id.raw_value,
             like: !userLikes
         });
-        await this._updateLikesCount("twitter_user_likes", "twitter_likes_count");
+        const promises = this.props.list.groups.map((group) =>
+            group.list.records
+                .filter(
+                    (record) =>
+                        record.data.twitter_tweet_id === this.props.record.data.twitter_tweet_id
+                )
+                .map((record) =>
+                    this._updateLikesCount("twitter_user_likes", "twitter_likes_count", record)
+                )
+        );
+        await Promise.all(promises.flat());
     },
 
     _onTwitterRetweet(ev) {
