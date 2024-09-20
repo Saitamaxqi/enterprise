@@ -24,7 +24,7 @@ export class orderInfoPopup extends Component {
      */
     getTime(time) {
         const formattedTime = Intl.DateTimeFormat("en-US", {
-            timeZone: user.tz,
+            timeZone: user.tz || luxon.Settings.defaultZone.name,
             year: "numeric",
             month: "2-digit",
             day: "2-digit",

@@ -97,7 +97,7 @@
                                     <div><t t-esc="order.delivery_identifier"/></div>
                                 </div>
                             </div>
-                            <div t-if="this.getOrderDetails().orderOtp" class="col-md-6">
+                            <div t-if="this.getOrderDetails().orderOtp" class="order_otp col-md-6">
                                 <div class="d-flex flex-column">
                                     <div class="text-muted fs-7">Order OTP</div>
                                     <div><t t-esc="this.getOrderDetails().orderOtp"/></div>
