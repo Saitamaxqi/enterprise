@@ -16,11 +16,12 @@ import { View } from "@web/views/view";
 import { BarcodeVideoScanner, isBarcodeScannerSupported } from '@web/core/barcode/barcode_video_scanner';
 import { url } from '@web/core/utils/urls';
 import { utils as uiUtils } from "@web/core/ui/ui_service";
-import { Component, EventBus, onPatched, onWillStart, useState, useSubEnv } from "@odoo/owl";
+import { Component, EventBus, onPatched, onWillStart, onWillUnmount, useState, useSubEnv } from "@odoo/owl";
 import { ImportBlockUI } from "@base_import/import_block_ui";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
 import { BarcodeInput } from "./manual_barcode";
+import { CountScreenRFID } from "./count_screen_rfid";
 
 // Lets `barcodeGenericHandlers` knows those commands exist so it doesn't warn when scanned.
 COMMANDS["OCDMENU"] = () => {};
@@ -57,6 +58,7 @@ class MainComponent extends Component {
         BarcodeInput,
         BarcodeVideoScanner,
         Chatter,
+        CountScreenRFID,
         GroupedLineComponent,
         ImportBlockUI,
         LineComponent,
@@ -87,12 +89,15 @@ class MainComponent extends Component {
             cameraScannedEnabled: false,
             view: "barcodeLines", // Could be also 'printMenu' or 'editFormView'.
             displayNote: false,
+            displayCountRFID: false,
             uiBlocked: false,
             barcodesProcessed: 0,
             barcodesToProcess: 0,
             readyToToggleCamera: true,
         });
         this.bufferedBarcodes = [];
+        this.receivedRFIDs = [];
+        this.totalRFIDs = [];
         this.bufferingTimeout = null;
         this.barcodeService = useService("barcode");
         useBus(this.barcodeService.bus, "barcode_scanned", (ev) =>
@@ -142,6 +147,10 @@ class MainComponent extends Component {
                 }
             });
             this.env.model.addEventListener('history-back', () => this._exit());
+        });
+
+        onWillUnmount(() => {
+            clearTimeout(this.bufferingTimeout);
         });
 
         onPatched(() => {
@@ -332,20 +341,35 @@ class MainComponent extends Component {
     }
 
     onMobileReaderScanned(data) {
+        this.receivedRFIDs.push(...data);
+        this.totalRFIDs.push(...data);
+        this.state.displayCountRFID = true;
+        if (this.RFIDCountTimeout) {
+            clearTimeout(this.RFIDCountTimeout);
+        }
+        this.RFIDCountTimeout = setTimeout(() => this.closeRFIDCount(), 5000);
         if (!this.bufferingTimeout) {
             this.bufferingTimeout = setTimeout(
                 this._onMobileReaderScanned.bind(this),
-                this.config.barcode_rfid_batch_time || 100
+                this.config.barcode_rfid_batch_time
             );
         }
         this.bufferedBarcodes = this.bufferedBarcodes.concat(data);
     }
 
     async _onMobileReaderScanned(ev) {
-        await this.env.model.processBarcode(this.bufferedBarcodes.join(","));
+        await this.env.model.processBarcode(this.bufferedBarcodes.join(","), { readingRFID: true });
         this.bufferedBarcodes = [];
         clearTimeout(this.bufferingTimeout);
         this.bufferingTimeout = null;
+    }
+
+    closeRFIDCount() {
+        if (this.RFIDCountTimeout) {
+            clearTimeout(this.RFIDCountTimeout);
+        }
+        this.state.displayCountRFID = false;
+        this.receivedRFIDs = [];
     }
 
     onBarcodeSubmitted(barcode) {

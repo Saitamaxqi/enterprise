@@ -604,10 +604,11 @@ export default class BarcodeModel extends EventBus {
         if (splitBarcodes.length > 1) {
             return [...splitBarcodes];
         }
-        return [];
+        return [barcode];
     }
 
-    async processBarcode(barcode) {
+    async processBarcode(barcode, options={}) {
+        const { readingRFID } = options;
         const barcodes = this.splitBarcode(barcode);
         if (barcodes.length > 1 && barcode === this._currentBarcode) {
             // Scanning multiple barcodes at once can take some time and the user may be
@@ -630,7 +631,9 @@ export default class BarcodeModel extends EventBus {
         }
 
         const parsedBarcodes = [];
-        this.trigger("addBarcodesCountToProcess", filteredBarcodes.length)
+        if (barcodes.length > 1 && !readingRFID) {
+            this.trigger("addBarcodesCountToProcess", filteredBarcodes.length)
+        }
         // Parse all barcodes.
         for (const bc of filteredBarcodes) {
             const barcodeObject = BarcodeObject.forBarcode(bc);

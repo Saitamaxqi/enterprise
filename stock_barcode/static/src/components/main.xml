@@ -8,6 +8,7 @@
     </t>
 
     <div t-name="stock_barcode.MainComponent" class="o_content o_barcode_client_action h-100 flex-column">
+        <CountScreenRFID t-if="state.displayCountRFID" receivedRFIDs="receivedRFIDs" totalRFIDs="totalRFIDs" close.bind="closeRFIDCount"/>
         <ImportBlockUI t-if="state.uiBlocked" message="blockUIMessage"/>
         <header class="o_barcode_header border-bottom">
             <div class="navbar navbar-expand p-2 m-1">
