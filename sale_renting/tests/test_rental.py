@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import fields
 from odoo.fields import Command
-from odoo.tests import HttpCase, TransactionCase, tagged
+from odoo.tests import Form, HttpCase, TransactionCase, tagged
 from odoo.tools import float_compare
 
 
@@ -545,6 +545,38 @@ class TestRentalCommon(TransactionCase):
 
         # Non-rental order line names aren't recomputed.
         self.assertEqual(non_rental_order_line.name, "My Water Bottle")
+
+    def test_rental_line_change_description_onchange_duration(self):
+        partner = self.env['res.partner'].create({'name': 'A partner'})
+        product = self.env["product.product"].create({
+            "name": "Product A",
+        })
+
+        now = fields.Datetime.now()
+        order = self.env["sale.order"].create({
+            "partner_id": partner.id,
+            "rental_start_date": now,
+            "rental_return_date": now + timedelta(days=2),
+        })
+        order_line = self.env['sale.order.line'].create({
+            'order_id': order.id,
+            'product_id': product.id,
+            'product_uom_qty': 1,
+            'is_rental': True,
+        })
+        old_description = order_line.name
+        with Form(order) as order_form:
+            order_form.rental_start_date = now
+            order_form.rental_return_date = now + timedelta(days=3)
+
+        new_description = order_line.name
+
+        self.assertNotEqual(
+            old_description,
+            new_description,
+            'order line name for rental order_line should change on change of rental duration on'
+            ' sale order form'
+        )
 
     def test_copy_product_variant_pricings(self):
         """Check that product variants on product pricings after copying

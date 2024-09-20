@@ -56,3 +56,7 @@ class TestUi(HttpCase, TestWebsiteSaleRentingCommon):
     def test_website_sale_renting_default_range(self):
         with freeze_time("2023-12-04 08:00"):
             self.start_tour('/shop', 'website_sale_renting_default_duration_from_default_range', login='admin')
+
+    def test_website_sale_update_rental_duration(self):
+        self.computer.website_published = True
+        self.start_tour('/shop', 'rental_cart_update_duration')

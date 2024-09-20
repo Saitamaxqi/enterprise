@@ -172,6 +172,8 @@ class SaleOrder(models.Model):
             rental_lines = self.order_line.filtered('is_rental')
             self.env.add_to_compute(rental_lines._fields['name'], rental_lines)
             self._recompute_rental_prices()
+            rental_lines = self.order_line.filtered('is_rental')
+            rental_lines._compute_name()
 
     def _available_dates_for_renting(self):
         """Hook to override with the stock availability"""
