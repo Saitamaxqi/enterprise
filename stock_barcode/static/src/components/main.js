@@ -107,28 +107,9 @@ class MainComponent extends Component {
         useBus(this.env.model, "playSound", this.playSound.bind(this));
         useBus(this.env.model, "blockUI", this.blockUI.bind(this));
         useBus(this.env.model, "unblockUI", this.unblockUI.bind(this));
-        useBus(this.env.model, "addBarcodesCountToProcess", (ev) => {
-            this.state.barcodesToProcess += ev.detail;
-            if (this.state.barcodesToProcess > this.state.barcodesProcessed) {
-                this.blockUIMessage = _t("Processing %(processed)s/%(toProcess)s barcodes", {
-                    processed: this.state.barcodesProcessed,
-                    toProcess: this.state.barcodesToProcess,
-                });
-                this.blockUI();
-            }
-        });
-        useBus(this.env.model, "updateBarcodesCountProcessed", (ev) => {
-            this.state.barcodesProcessed++;
-            this.blockUIMessage = _t("Processing %(processed)s/%(toProcess)s barcodes", {
-                processed: this.state.barcodesProcessed,
-                toProcess: this.state.barcodesToProcess,
-            });
-            if (this.state.barcodesProcessed >= this.state.barcodesToProcess) {
-                this.state.barcodesProcessed = 0;
-                this.state.barcodesToProcess = 0;
-                this.unblockUI();
-            }
-        });
+        useBus(this.env.model, "addBarcodesCountToProcess", (ev) => this.addBarcodesCountToProcess(ev.detail));
+        useBus(this.env.model, "updateBarcodesCountProcessed", this.updateBarcodesCountProcessed.bind(this));
+        useBus(this.env.model, "clearBarcodesCountProcessed", this.clearBarcodesCountProcessed.bind(this));
         useBus(bus, "refresh", (ev) => this._onRefreshState(ev.detail));
 
         onWillStart(async () => {
@@ -165,6 +146,36 @@ class MainComponent extends Component {
 
         onPatched(() => {
             this._scrollToSelectedLine();
+        });
+    }
+
+    // UI Methods --------------------------------------------------------------
+    addBarcodesCountToProcess(count) {
+        this.state.barcodesToProcess += count;
+        if (this.state.barcodesToProcess > this.state.barcodesProcessed) {
+            this.updateBarcodesCountMessage();
+            this.blockUI();
+        }
+    }
+
+    updateBarcodesCountProcessed() {
+        this.state.barcodesProcessed++;
+        this.updateBarcodesCountMessage();
+        if (this.state.barcodesProcessed >= this.state.barcodesToProcess) {
+            this.clearBarcodesCountProcessed();
+        }
+    }
+
+    clearBarcodesCountProcessed() {
+        this.state.barcodesProcessed = 0;
+        this.state.barcodesToProcess = 0;
+        this.unblockUI();
+    }
+
+    updateBarcodesCountMessage() {
+        this.blockUIMessage = _t("Processing %(processed)s/%(toProcess)s barcodes", {
+            processed: this.state.barcodesProcessed,
+            toProcess: this.state.barcodesToProcess,
         });
     }
 
