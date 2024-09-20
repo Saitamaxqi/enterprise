@@ -3136,6 +3136,33 @@ QUnit.module("View Editors", (hooks) => {
         assert.verifySteps(["edit_view"]);
     });
 
+    QUnit.test("don't show span, fields in button box", async function (assert) {
+        await createViewEditor({
+            serverData,
+            type: "form",
+            resModel: "coucou",
+            resId: 1,
+            arch: `<form><sheet><div class="oe_button_box" name="button_box">
+                <span id="button_worksheet" invisible="1"/>
+                <field name="char_field" invisible="1"/>
+                <button name="action_visible" type="object" invisible="id != 1" class="oe_stat_button" icon="fa-star">
+                    <field name="id" widget="statinfo"/>
+                </button>
+                <button name="action_invisible" type="object" invisible="id == 1" class="oe_stat_button" icon="fa-gear">
+                    <field name="id" widget="statinfo"/>
+                </button>
+            </div></sheet></form>`,
+        });
+        assert.containsOnce(target, ".o-form-buttonbox button[name=action_visible]");
+        assert.containsNone(target, ".o-form-buttonbox button[name=action_invisible]");
+        await click(selectorContains(target, ".o_web_studio_sidebar .nav-link", "View"));
+        await click(target.querySelector(".o_web_studio_sidebar input#show_invisible"));
+        assert.containsOnce(target, ".o-form-buttonbox button[name=action_visible]");
+        assert.containsOnce(target, ".o-form-buttonbox button[name=action_invisible]");
+        assert.containsNone(target, ".o-form-buttonbox span#button_worksheet");
+        assert.containsNone(target, ".o-form-buttonbox .o_field_widget[name=char_field]");
+    });
+
     QUnit.module("Form > ButtonBox", () => {
         function buttons(parent) {
             return Array.from(parent.querySelectorAll(":scope > .o-form-buttonbox button")).map(

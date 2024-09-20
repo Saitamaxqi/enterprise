@@ -88,6 +88,11 @@ export class FormEditorCompiler extends formView.Compiler {
         const buttonBoxXml = xml.querySelector("div[name='button_box']:not(field div)");
         let buttonBox;
         if (buttonBoxXml) {
+            for (const child of [...buttonBoxXml.children]) {
+                if (child.matches("span,field")) {
+                    buttonBoxXml.removeChild(child);
+                }
+            }
             buttonBox = this.compileNode(buttonBoxXml, params);
         } else {
             buttonBox = createElement("ButtonBox");
