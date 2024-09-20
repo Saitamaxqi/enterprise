@@ -172,3 +172,27 @@ class TestTicketConvertToLead(helpdesk_common.HelpdeskCommon):
         # check created lead coherency
         lead = self.env['crm.lead'].sudo().search([('name', '=', ticket.name)])
         self.assertLeadTicketConvertData(lead, ticket, new_partner, test_crm_team, self.env['res.users'])
+
+    def test_helpdesk_ticket_to_lead(self):
+        """ Test to ensure that a helpdesk ticket is converted to a lead when the user has CRM lead access. """
+        self.assertTrue(self.test_ticket.active)
+        self.helpdesk_user.groups_id |= self.env.ref('crm.group_use_lead')
+        action = self.test_ticket.with_user(self.helpdesk_user).action_convert_ticket_to_lead_or_opportunity()
+        self.assertEqual('Convert to Lead', action['name'])
+        convert = self.env['helpdesk.ticket.to.lead'].create({'ticket_id': self.test_ticket.id})
+        convert.with_user(self.helpdesk_user).action_convert_to_lead()
+        self.assertFalse(self.test_ticket.active)
+        lead_count = self.env['crm.lead'].search_count([('name', '=', self.test_ticket.name), ('type', '=', 'lead')], limit=1)
+        self.assertEqual(lead_count, 1)
+
+    def test_helpdesk_ticket_to_opportunity(self):
+        """ Test to ensure that a helpdesk ticket is converted to an opportunity when the user doesn't have CRM lead access. """
+        self.assertTrue(self.test_ticket.active)
+        self.helpdesk_user.groups_id -= self.env.ref('crm.group_use_lead')
+        action = self.test_ticket.with_user(self.helpdesk_user).action_convert_ticket_to_lead_or_opportunity()
+        self.assertEqual('Convert to Opportunity', action['name'])
+        convert = self.env['helpdesk.ticket.to.lead'].create({'ticket_id': self.test_ticket.id})
+        convert.with_user(self.helpdesk_user).action_convert_to_lead()
+        self.assertFalse(self.test_ticket.active)
+        lead_count = self.env['crm.lead'].search_count([('name', '=', self.test_ticket.name), ('type', '=', 'opportunity')], limit=1)
+        self.assertEqual(lead_count, 1)
