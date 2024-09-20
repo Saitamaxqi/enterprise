@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-19 20:33+0000\n"
-"PO-Revision-Date: 2024-08-19 20:33+0000\n"
+"POT-Creation-Date: 2024-09-23 19:27+0000\n"
+"PO-Revision-Date: 2024-09-23 19:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -72,16 +72,18 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
 msgid ""
-"<span> To create your account, ensure you have a valid subscription. Add the"
-" admin's email, click \"Create Uruware Account\", then configure it with WS "
-"password, Commerce Code, and Terminal Code. Test your connection. Note: Only"
-" one test and production environment is allowed per subscription.</span>"
+"<span>To create your account, ensure you have a valid subscription. Click "
+"\"Create Uruware Account\", configure it directly in Uruware's portal, get "
+"the WS password, Commerce Code, and Terminal Code from them, and enter these"
+" parameters here. Test your connection. Note: Only one test and production "
+"environment are allowed per subscription</span>"
 msgstr ""
-"<span> Para crear su cuenta, asegúrese de tener una suscripción válida. "
-"Agregue el correo electrónico del administrador, haga clic en \"Crear cuenta"
-" Uruware\", luego configúrelo con la contraseña de WS, el Código de Comercio"
-" y el Código de Terminal. Pruebe su conexión. Nota: Solo se permite un "
-"entorno de prueba y producción por suscripción.</span>"
+"<span> Para crear su cuenta, asegúrese de tener una suscripción válida. Haga"
+" clic en \"Crear cuenta Uruware\", luego configúrela directamente en el "
+"portal del Uruware, obtenga de ahi la contraseña de WS, el Código de "
+"Comercio y el Código de Terminal, e ingrese estos parámetros acá. Pruebe su "
+"conexión. Nota: Solo se permite un entorno de prueba y producción por "
+"suscripción.</span>"
 
 #. module: l10n_uy_edi
 #: model:ir.model,name:l10n_uy_edi.model_account_move_send
@@ -407,7 +409,7 @@ msgstr "Errores al enviar la factura electrónica:"
 
 #. module: l10n_uy_edi
 #. odoo-python
-#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+#: code:addons/l10n_uy_edi/models/res_config_settings.py:0
 #, python-format
 msgid "Everything is ok"
 msgstr "Todo esta bien"
@@ -510,18 +512,6 @@ msgstr "Emisor"
 #: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_addenda__is_legend
 msgid "It needs to be informed as a Mandatory Disclosure"
 msgstr "Necesista ser informado como una Leyenda Obligatoria"
-
-#. module: l10n_uy_edi
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_cfe_state
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_cfe_state
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_cfe_state
-#: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_document__state
-msgid ""
-"It will reflect the state of the electronic document, it will be "
-"automatically updated when the status of the document changes"
-msgstr ""
-"Reflejará el estado del documento electrónico, será actualizado "
-"automáticamente cuando el estado del documento cambie"
 
 #. module: l10n_uy_edi
 #: model:ir.model,name:l10n_uy_edi.model_account_journal
@@ -781,6 +771,15 @@ msgid "Set your company state"
 msgstr "Configure la provincia de su compañía"
 
 #. module: l10n_uy_edi
+#: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_cfe_state
+#: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_cfe_state
+#: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_cfe_state
+#: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_document__state
+msgid "State of the electronic document"
+msgstr ""
+"Estado del documento electrónico"
+
+#. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
 msgid "Terminal Code"
 msgstr "Código Terminal"
@@ -973,8 +972,8 @@ msgstr "UY: Actualizar Estado DGI"
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_cfe_uuid
 #: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_document__uuid
 msgid ""
-"Unique identification per CFE in UCFE. Currently is formed by the "
-"concatenation of model name initials plus record id"
+"Unique identification per CFE in UCFE: concatenation of the model name "
+"initials plus the record id"
 msgstr ""
 "Identificación única de cada CFE en el UCFE. Actualmente formado por la "
 "concatenación de las iniciales del modelo mas el id del registro"
@@ -1016,14 +1015,6 @@ msgstr "Localización Uruguaya"
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move_send__l10n_uy_edi_warning
 msgid "Uruguay: Warning"
 msgstr "Advertencia"
-
-#. module: l10n_uy_edi
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_error
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_error
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_error
-#: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_document__message
-msgid "Uruguay: error details for CFEs in the 'error' state."
-msgstr "Uruguay: detalle de errores de los CFE en estado 'error'"
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_xml_attachment_id
@@ -1164,3 +1155,11 @@ msgstr ""
 #, python-format
 msgid "You need to have UYI rate before validating invoices"
 msgstr "Necesitas tener una cotización UYI antes de validar facturas"
+
+#. module: l10n_uy_edi
+#: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_error
+#: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_error
+#: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_error
+#: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_document__message
+msgid "error details for CFEs in the 'error' state."
+msgstr "detalle de errores de los CFE en estado 'error'"
