@@ -9,6 +9,17 @@ from odoo.tools.misc import format_amount
 @tagged('post_install', '-at_install')
 class AccountJournalDashboard3WayWatchTest(TestAccountJournalDashboardCommon):
 
+    @classmethod
+    def init_invoice(cls, move_type, partner=None, invoice_date=None, post=False, products=None, amounts=None, taxes=None, company=False, currency=None, journal=None, invoice_date_due=None, release_to_pay=None):
+        move = super().init_invoice(move_type, partner, invoice_date, False, products, amounts, taxes, company, currency, journal)
+        if invoice_date_due:
+            move.invoice_date_due = invoice_date_due
+        if release_to_pay:
+            move.release_to_pay = release_to_pay
+        if post:
+            move.action_post()
+        return move
+
     def test_sale_purchase_journal_for_purchase(self):
         """
         Test different purchase journal setups with or without multicurrency:
@@ -204,3 +215,26 @@ class AccountJournalDashboard3WayWatchTest(TestAccountJournalDashboardCommon):
         dashboard_data = default_journal_sale._get_journal_dashboard_data_batched()[default_journal_sale.id]
         self.assertEqual(format_amount(self.env, 100, company_currency), dashboard_data['sum_waiting'])
         self.assertEqual(format_amount(self.env, 100, company_currency), dashboard_data['sum_late'])
+
+    @freeze_time("2023-03-15")
+    def test_purchase_journal_numbers_and_sums_to_validate(self):
+        company_currency = self.company_data['currency']
+        journal = self.company_data['default_journal_purchase']
+
+        datas = [
+            {'invoice_date_due': '2023-04-30'},
+            {'invoice_date_due': '2023-04-30', 'release_to_pay': 'yes'},
+            {'invoice_date_due': '2023-04-30', 'release_to_pay': 'no'},
+            {'invoice_date_due': '2023-03-01'},
+            {'invoice_date_due': '2023-03-01', 'release_to_pay': 'yes'},
+            {'invoice_date_due': '2023-03-01', 'release_to_pay': 'no'},
+        ]
+
+        for data in datas:
+            self.init_invoice('in_invoice', invoice_date='2023-03-01', post=False, amounts=[4000], journal=journal, invoice_date_due=data['invoice_date_due'], release_to_pay=data.get('release_to_pay'))
+
+        dashboard_data = journal._get_journal_dashboard_data_batched()[journal.id]
+        # Expected behavior is to have six amls waiting for payment for a total amount of 4440$
+        # three of which would be late for a total amount of 140$
+        self.assertEqual(4, dashboard_data['number_draft'])
+        self.assertEqual(format_amount(self.env, 16000, company_currency), dashboard_data['sum_draft'])
