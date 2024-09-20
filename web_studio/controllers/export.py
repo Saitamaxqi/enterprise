@@ -197,9 +197,11 @@ def _serialize_model(module, model, records, fields_to_export, no_update, has_we
             )
         )
 
+    if records_to_export:
+        default_get_result = records_to_export[0].browse().default_get(fields_to_export)
     skipped_records = []
     for record in records_to_export:
-        record_node, record_skipped = _serialize_record(module, model, record, fields_to_export, has_website, get_model_data)
+        record_node, record_skipped = _serialize_record(module, model, record, fields_to_export, has_website, get_model_data, default_get_result)
         if record_node is not None:
             nodes.append(record_node)
         skipped_records.extend(record_skipped)
@@ -232,7 +234,7 @@ def _serialize_model(module, model, records, fields_to_export, no_update, has_we
     return xml, binary_files, depends, skipped_records
 
 
-def _serialize_record(module, model, record, fields_to_export, has_website, get_model_data):
+def _serialize_record(module, model, record, fields_to_export, has_website, get_model_data, default_get_data):
     """ Return an etree Element for the given record, together with a list of
         skipped field values (field value references a record without external id).
     """
@@ -262,7 +264,7 @@ def _serialize_record(module, model, record, fields_to_export, has_website, get_
         field = record._fields[name]
         field_element = None
         try:
-            field_element = _serialize_field(record, field, has_website, get_model_data)
+            field_element = _serialize_field(record, field, has_website, get_model_data, default_get_data)
         except MissingXMLID:
             # the field value contains a record without an xml_id; skip it
             skipped.append((exportid, field, record[name]))
@@ -273,9 +275,9 @@ def _serialize_record(module, model, record, fields_to_export, has_website, get_
     return E.record(*fields_nodes, **kwargs) if fields_nodes else None, skipped
 
 
-def _serialize_field(record, field, has_website, get_model_data):
+def _serialize_field(record, field, has_website, get_model_data, default_get_data):
     """ Serialize the value of ``field`` on ``record`` as an etree Element. """
-    default_value = record.default_get([field.name]).get(field.name)
+    default_value = default_get_data.get(field.name)
     value = record[field.name]
     if (not value and not default_value) or field.convert_to_cache(value, record) == field.convert_to_cache(default_value, record):
         return
