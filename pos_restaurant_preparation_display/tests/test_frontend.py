@@ -46,6 +46,33 @@ class TestUi(TestFrontend):
         self.assertEqual(cancelled_orderline.product_cancelled, 1, "Should have 1 cancelled Minute Maid orderline")
         self.assertEqual(cancelled_orderline.product_id.name, 'Minute Maid', "Cancelled orderline should be Minute Maid")
 
+    def test_02_preparation_display_resto(self):
+        self.env['pos_preparation_display.display'].create({
+            'name': 'Preparation Display (Food only)',
+            'pos_config_ids': [(4, self.pos_config.id)],
+            'category_ids': [(0, 0, {
+                'name': 'Food',
+            })],
+        })
+
+        self.env['pos_preparation_display.display'].create({
+            'name': 'Preparation Display',
+            'pos_config_ids': [(4, self.pos_config.id)],
+        })
+
+        # open a session, the /pos/ui controller will redirect to it
+        self.pos_config.printer_ids.unlink()
+        self.pos_config.with_user(self.pos_user).open_ui()
+        self.start_pos_tour('PreparationDisplayTourResto2')
+
+        # Order 1 should have 1 preparation orderlines (Coca-Cola) with quantity 2
+        order1 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-0001')], limit=1)
+        prep_line = self.env['pos_preparation_display.orderline'].search([
+            ('preparation_display_order_id.pos_order_id', '=', order1.id),
+        ])
+        self.assertEqual(len(prep_line), 2)
+        self.assertEqual(sum(prep_line.mapped('product_quantity')), 2)
+
     def test_preparation_display_with_internal_note(self):
         self.env['pos_preparation_display.display'].create({
             'name': 'Preparation Display',

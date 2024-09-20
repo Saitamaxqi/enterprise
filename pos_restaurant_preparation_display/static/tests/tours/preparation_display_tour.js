@@ -93,3 +93,24 @@ registry.category("web_tour.tours").add("PreparationDisplayTourInternalNotes", {
             }),
         ].flat(),
 });
+
+registry.category("web_tour.tours").add("PreparationDisplayTourResto2", {
+    test: true,
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+
+            // Create first order
+            FloorScreen.clickTable("5"),
+            ProductScreen.orderBtnIsPresent(),
+            ProductScreen.clickDisplayedProduct("Coca-Cola"),
+            ProductScreen.orderlineIsToOrder("Coca-Cola"),
+            ProductScreen.clickOrderButton(),
+            ProductScreen.orderlinesHaveNoChange(),
+            ProductScreen.clickDisplayedProduct("Coca-Cola"),
+            ProductScreen.orderlineIsToOrder("Coca-Cola"),
+            ProductScreen.clickOrderButton(),
+            ProductScreen.orderlinesHaveNoChange(),
+        ].flat(),
+});
