@@ -122,9 +122,10 @@ class AccountMove(models.Model):
         # EXTEND account
         """ If journal configured to auto open the send and print wizard is set then
         will do it. """
+        res = super().action_post()
         if any(self.journal_id.mapped("l10n_uy_edi_send_print")):
             return self.action_send_and_print()
-        return super().action_post()
+        return res
 
     def _is_manual_document_number(self):
         # EXTEND l10n_latam_invoice_document
