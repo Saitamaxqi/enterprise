@@ -81,7 +81,7 @@ class AppointmentGanttTestCommon(AppointmentCommon):
             'name': 'resource apt type',
             'resource_ids': [(4, cls.apt_resource_1.id), (4, cls.apt_resource_2.id)],
             'schedule_based_on': 'resources',
-            'resource_manage_capacity': True,
+            'manage_capacity': True,
         }])
         cls.resource_apt_types = cls.apt_types[2]
 

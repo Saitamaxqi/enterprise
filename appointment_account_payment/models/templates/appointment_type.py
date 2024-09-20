@@ -61,7 +61,7 @@ class AppointmentType(models.Model):
                     'capacity': capacity,
                 }) for number, capacity in enumerate([5, 10, 15, 20], start=1)
             ],
-            'resource_manage_capacity': True,
+            'manage_capacity': True,
             'schedule_based_on': 'resources',
             'staff_user_ids': [],
         }

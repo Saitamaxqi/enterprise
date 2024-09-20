@@ -17,9 +17,9 @@
         <field name="max_schedule_days">14</field>
         <field name="schedule_based_on">resources</field>
         <field name="assign_method">time_auto_assign</field>
-        <field name="resource_manage_capacity" eval="True"/>
+        <field name="manage_capacity" eval="True"/>
         <field name="appointment_manual_confirmation" eval="True"/>
-        <field name="resource_manual_confirmation_percentage">0.8</field>
+        <field name="manual_confirmation_percentage">0.8</field>
         <field name="event_videocall_source" eval="False"/>
         <field name="is_published" eval="True"/>
         <field name="hide_timezone" eval="True"/>

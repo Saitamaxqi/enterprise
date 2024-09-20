@@ -21,7 +21,7 @@
             </xpath>
             <xpath expr="//page[@name='page_invitations']" position="after">
                 <page name="page_appointment" string="Appointment Details"
-                    invisible="not appointment_type_id or appointment_type_schedule_based_on != 'resources' or not appointment_type_manage_capacity">
+                    invisible="not appointment_type_id or not appointment_type_manage_capacity">
                     <field name="booking_line_ids" invisible="not active">
                         <list editable="bottom">
                             <field name="appointment_type_id" column_invisible="True"/>
@@ -120,8 +120,8 @@
                 <field name="appointment_resource_ids" widget="many2many_tags"/>
                 <field name="start"/>
                 <field name="stop"/>
-                <field name="resource_total_capacity_reserved" sum="Total Capacity Reserved"/>
-                <field name="resource_total_capacity_used" optional="show" sum="Total Capacity Used"/>
+                <field name="total_capacity_reserved" sum="Total Capacity Reserved"/>
+                <field name="total_capacity_used" optional="show" sum="Total Capacity Used"/>
                 <field name="appointment_status" string="Status"/>
            </list>
         </field>
@@ -159,9 +159,9 @@
                                 <field name="stop"/>
                             </div>
                             <field name="user_id" widget="many2one_avatar_user" options="{'no_create': True}"/>
-                            <div invisible="not resource_ids or not appointment_type_manage_capacity or appointment_type_schedule_based_on != 'resources'" colspan="2">
-                                <label for="resource_total_capacity_reserved" class="me-5"/>
-                                <field name="resource_total_capacity_reserved" string="Total Reserved" class="oe_inline"/>
+                            <div invisible="not appointment_type_manage_capacity" colspan="2">
+                                <label for="total_capacity_reserved" class="me-5"/>
+                                <field name="total_capacity_reserved" string="Total Reserved" class="oe_inline"/>
                                 <span>people</span>
                             </div>
                         </group>
@@ -215,7 +215,7 @@
                 <field name="appointment_type_manage_capacity"/>
                 <field name="appointment_type_schedule_based_on"/>
                 <field name="booking_line_ids"/>
-                <field name="resource_total_capacity_reserved"/>
+                <field name="total_capacity_reserved"/>
                 <field name="start"/>
                 <field name="stop"/>
                 <field name="user_id"/>
@@ -238,7 +238,7 @@
                                 <strong t-if="appointment_type_id">Booking Details</strong>
                                 <strong t-else="">Event Details</strong>
                             </t>
-                            <li t-if="appointment_type_manage_capacity"><strong>Booked for: </strong> <t t-out="resource_total_capacity_reserved"/></li>
+                            <li t-if="appointment_type_manage_capacity"><strong>Booked for: </strong> <t t-out="total_capacity_reserved"/></li>
                             <li t-if="appointment_type_id"><strong>Type: </strong> <t t-out="appointment_type_id.display_name"/></li>
                             <li><strong>Start Date: </strong> <t t-out="start.toFormat('f')"/></li>
                             <li><strong>Stop Date: </strong> <t t-out="stop.toFormat('f')"/></li>
@@ -293,7 +293,7 @@
         <field name="context">{'appointment_booking_gantt_domain': [('appointment_resource_ids', '!=', False)],
                                'appointment_default_assign_user_attendees': False,
                                'default_partner_ids': [],
-                               'default_resource_total_capacity_reserved': 1}</field>
+                               'default_total_capacity_reserved': 1}</field>
         <field name="domain">['|', ('appointment_resource_ids.company_id', '=', False), ('appointment_resource_ids.company_id', 'in', allowed_company_ids)]</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">

@@ -347,8 +347,14 @@ class AppointmentController(http.Controller):
                 resource_selected = request.env['appointment.resource'].sudo().browse(resource_selected_id)
             elif appointment_type.assign_method == 'resource_time':
                 resource_default = resources_possible[0]
-        possible_combinations = (resource_selected or resource_default or resources_possible)._get_filtered_possible_capacity_combinations(1, {})
-        max_capacity_possible = possible_combinations[-1][1] if possible_combinations else 1
+        if appointment_type.manage_capacity:
+            if appointment_type.schedule_based_on == 'users':
+                max_capacity_possible = appointment_type.user_capacity
+            else:
+                possible_combinations = (resource_selected or resource_default or resources_possible)._get_filtered_possible_capacity_combinations(1, {})
+                max_capacity_possible = possible_combinations[-1][1] if possible_combinations else 1
+        else:
+            max_capacity_possible = 1
 
         return {
             'asked_capacity': int(kwargs['asked_capacity']) if kwargs.get('asked_capacity') else False,
@@ -679,6 +685,7 @@ class AppointmentController(http.Controller):
         resource_ids = None
         asked_capacity = int(asked_capacity)
         resources_remaining_capacity = None
+        users_remaining_capacity = None
         if appointment_type.schedule_based_on == 'resources':
             resource_ids = json.loads(unquote_plus(available_resource_ids))
             # Check if there is still enough capacity (in case someone else booked with a resource in the meantime)
@@ -693,7 +700,9 @@ class AppointmentController(http.Controller):
             staff_user = request.env['res.users'].sudo().search([('id', '=', int(staff_user_id))])
             if staff_user not in appointment_type.staff_user_ids:
                 raise NotFound()
-            if staff_user and not staff_user.partner_id.calendar_verify_availability(date_start, date_end):
+            users_remaining_capacity = appointment_type._get_users_remaining_capacity(staff_user, date_start, date_end)
+            if (staff_user and not staff_user.partner_id.calendar_verify_availability(date_start, date_end, appointment_type)) or \
+                users_remaining_capacity['total_remaining_capacity'] < asked_capacity:
                 return request.redirect('/appointment/%s?%s' % (appointment_type.id, keep_query('*', state='failed-staff-user')))
 
         guests = None
@@ -773,8 +782,16 @@ class AppointmentController(http.Controller):
                 booking_line_values.append({
                     'appointment_resource_id': resource.id,
                     'capacity_reserved': new_capacity_reserved,
-                    'capacity_used': new_capacity_reserved if resource.shareable and appointment_type.resource_manage_capacity else resource.capacity,
+                    'capacity_used': new_capacity_reserved if resource.shareable and appointment_type.manage_capacity else resource.capacity,
                 })
+        else:
+            user_remaining_capacity = users_remaining_capacity['total_remaining_capacity']
+            new_capacity_reserved = min(user_remaining_capacity, asked_capacity, appointment_type.user_capacity)
+            # appointment_user_id is filled with the organizer of the event automatically.
+            booking_line_values.append({
+                'capacity_reserved': new_capacity_reserved,
+                'capacity_used': new_capacity_reserved,
+            })
 
         if invite_token:
             appointment_invite = request.env['appointment.invite'].sudo().search([('access_token', '=', invite_token)])

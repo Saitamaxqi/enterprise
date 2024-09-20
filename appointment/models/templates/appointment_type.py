@@ -117,7 +117,7 @@ class AppointmentType(models.Model):
                     'capacity': capacity,
                 }) for number, capacity in enumerate([2, 2, 4, 6], start=1)
             ],
-            'resource_manage_capacity': True,
+            'manage_capacity': True,
             'slot_ids': [
                 (0, 0, {
                     'weekday': str(weekday),
@@ -148,7 +148,6 @@ class AppointmentType(models.Model):
                     'name': _('Resource %s', number),
                 }) for number in range(1, 5)
             ],
-            'resource_manage_capacity': False,
             'schedule_based_on': 'resources',
             'staff_user_ids': [],
         }

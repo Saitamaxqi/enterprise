@@ -198,7 +198,7 @@
                                                     </select>
                                                 </div>
                                             </form>
-                                            <div t-if="not based_on_users and appointment_type.resource_manage_capacity">
+                                            <div t-if="appointment_type.manage_capacity">
                                                 <div t-if="slots and max_capacity" class="mb-4">
                                                     <input type="hidden" name="max_capacity" t-att-value="max_capacity"/>
                                                     <label class="mb-2 o_editable" for="resourceCapacity">Number of people</label>
@@ -357,7 +357,7 @@
                 <span t-out="appointment_type.appointment_duration if appointment_type.category != 'custom' else duration"
                     t-options="{'widget': 'duration', 'unit': 'hour'}"/>
             </div>
-            <div class="d-flex py-1 px-0 bg-transparent o-cc1-text border-0" t-if="appointment_type.resource_manage_capacity and isDetails">
+            <div class="d-flex py-1 px-0 bg-transparent o-cc1-text border-0" t-if="appointment_type.manage_capacity and isDetails">
                 <i class="fa fa-users fa-fw me-2 mt-1 text-muted"/>
                 <span><t t-out="asked_capacity"/> people</span>
             </div>

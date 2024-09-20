@@ -31,7 +31,7 @@ class AppointmentAccountPaymentCommon(AppointmentCommon, HttpCase):
         }, {
             'appointment_manual_confirmation': False,
             'name': 'Paid Appointment Type - Resource',
-            'resource_manage_capacity': True,
+            'manage_capacity': True,
             'schedule_based_on': 'resources',
             **paid_apt_common_values,
         }])

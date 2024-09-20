@@ -14,7 +14,7 @@
                 >
                 <div class="text-center small p-0 text-truncate">
                     <span class="px-1"><t t-esc="getFormattedDate(firstAppointment.start)"/></span>
-                    <span class="rounded px-2 py-0" style="background-color:rgba(0, 0, 0, 0.3);"><t t-esc="firstAppointment.resource_total_capacity_reserved"/></span>
+                    <span class="rounded px-2 py-0" style="background-color:rgba(0, 0, 0, 0.3);"><t t-esc="firstAppointment.total_capacity_reserved"/></span>
                     <span class="px-1"><t t-esc="firstAppointment.name"/></span>
                 </div>
             </div>

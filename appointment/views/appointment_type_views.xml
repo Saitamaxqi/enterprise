@@ -239,12 +239,26 @@
                                 options="{'no_quick_create': True, 'edit_tags': True}"
                                 invisible="schedule_based_on == 'users'"
                                 placeholder="Select Resources..."/>
-                            <label for="resource_manage_capacity" invisible="schedule_based_on == 'users'"/>
-                            <div invisible="schedule_based_on == 'users'">
-                                <field name="resource_manage_capacity" class="oe_inline"/>
-                                <span invisible="not resource_manage_capacity">
-                                    (Total: <field name="resource_total_capacity" class="oe_inline o_input_5ch"/> persons)
+                            <label for="manage_capacity"/>
+                            <div>
+                                <field name="manage_capacity" class="oe_inline"/>
+                                <div invisible="not manage_capacity or schedule_based_on == 'users'">
+                                    Total: <field name="resource_total_capacity" class="oe_inline o_input_5ch me-1"/>
+                                    <span invisible="not manage_capacity">seats max</span>
+                                    <a type="action" invisible="resource_total_capacity > 0"
+                                       name="appointment.appointment_resource_action_stat" class="btn btn-link ps-0 pb-2 ms-1 oe_inline" role="button">
+                                        <i class="oi oi-fw o_button_icon oi-arrow-right"/> Manage Resources
+                                    </a>
+                                </div>
+                                <span invisible="not manage_capacity or schedule_based_on == 'resources'">
+                                    <field name="user_capacity" class="oe_inline o_appointment_capacity o_input_3ch mx-1"/>
+                                    <span invisible="not manage_capacity">seats max</span>
                                 </span>
+                            </div>
+                            <div invisible="manage_capacity" colspan="2">
+                                Allow <field name="max_bookings" class="oe_inline o_appointment_capacity o_input_3ch mx-1"/> simultaneous appointment(s) 
+                                per <span invisible="schedule_based_on != 'users'">user</span>
+                                <span invisible="schedule_based_on != 'resources'">resource</span>
                             </div>
                             <field name="assign_method" widget="radio" required="1"/>
                         </group>
@@ -285,10 +299,10 @@
                                     <label for="appointment_manual_confirmation"/>
                                     <div class="d-flex">
                                         <field name="appointment_manual_confirmation" class="oe_inline"/>
-                                        <div invisible="not appointment_manual_confirmation or schedule_based_on == 'users' or not resource_manage_capacity">
+                                        <div invisible="not appointment_manual_confirmation or not manage_capacity">
                                             <span>
                                                 when over
-                                                <field name="resource_manual_confirmation_percentage" class="oe_inline o_input_5ch mx-1" widget="percentage"/>
+                                                <field name="manual_confirmation_percentage" class="oe_inline o_input_5ch mx-1" widget="percentage"/>
                                                 total capacity
                                             </span>
                                         </div>

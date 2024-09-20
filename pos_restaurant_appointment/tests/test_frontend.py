@@ -23,8 +23,8 @@ class TestUi(TestFrontend):
             'assign_method': 'time_auto_assign',
             'event_videocall_source': False,
             'name': 'Table Booking Test',
-            'resource_manage_capacity': True,
-            'resource_manual_confirmation_percentage': 0.8,
+            'manage_capacity': True,
+            'manual_confirmation_percentage': 0.8,
             'schedule_based_on': 'resources',
         })
 

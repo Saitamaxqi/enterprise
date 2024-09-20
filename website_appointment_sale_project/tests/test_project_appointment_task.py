@@ -67,7 +67,7 @@ class TestProjectAppointmentTask(TestProjectCommon, AppointmentCommon):
             **paid_apt_common_values,
         }, {
             'name': 'Test Paid Appointment Type - Resource',
-            'resource_manage_capacity': True,
+            'manage_capacity': True,
             'schedule_based_on': 'resources',
             **paid_apt_common_values,
         }])
@@ -164,6 +164,7 @@ class TestProjectAppointmentTask(TestProjectCommon, AppointmentCommon):
                 Command.create(appointment_answer_single_line_text_input_values),
                 Command.create(appointment_answer_dropdown_input_values),
             ] + [Command.create(values) for values in appointment_answer_checkbox_input_values],
+            'booking_line_ids': [Command.create({'appointment_user_id': self.staff_user_bxls.id, 'capacity_reserved': 1, 'capacity_used': 1})],
             'partner_id': self.apt_manager.partner_id.id,   
             'product_id': self.product.id,
             'staff_user_id': self.staff_user_bxls.id,

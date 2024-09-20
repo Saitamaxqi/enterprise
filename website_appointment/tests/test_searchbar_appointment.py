@@ -15,7 +15,7 @@ class TestSearchbarAppointments(HttpCase):
             "max_schedule_days": 8,
             "min_cancellation_hours": 2,
             "name": "yoga session",
-            "resource_manage_capacity": True,
+            "manage_capacity": True,
             "schedule_based_on": "resources",
             "is_published" : True,
         })

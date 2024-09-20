@@ -37,13 +37,13 @@
             <xpath expr='//field[@name="description"]' position="after">
                 <field name="answers"/>
             </xpath>
-            <xpath expr="//group/div/label[@for='resource_total_capacity_reserved']" position="attributes">
+            <xpath expr="//group/div/label[@for='total_capacity_reserved']" position="attributes">
                 <attribute name="class">me-1</attribute>
             </xpath>
-            <field name="resource_total_capacity_reserved" position="attributes">
+            <field name="total_capacity_reserved" position="attributes">
                 <attribute name="string">Reservation for</attribute>
             </field>
-            <field name="resource_total_capacity_reserved" position="attributes">
+            <field name="total_capacity_reserved" position="attributes">
                 <attribute name="class" separator=" " add="ms-1" />
             </field>
             <xpath expr="//group/div[@colspan='2']" position="attributes">

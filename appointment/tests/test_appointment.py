@@ -1567,3 +1567,114 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         (booking_3 + booking_4)._compute_unavailable_resource_ids()
         self.assertEqual(booking_3.unavailable_resource_ids, court3)
         self.assertEqual(booking_4.unavailable_resource_ids, court3)
+
+    @users('apt_manager')
+    def test_appointment_user_remaining_capacity(self):
+        """ Test that the remaining capacity of users are correctly computed """
+        appointment = self.apt_type_manage_capacity_users
+        user_1 = self.staff_user_aust
+        user_2 = self.staff_user_bxls
+
+        start = datetime(2022, 2, 15, 14, 0, 0)
+        end = start + timedelta(hours=1)
+
+        user_1_remaining_capacity = appointment._get_users_remaining_capacity(user_1, start, end)['total_remaining_capacity']
+        user_2_remaining_capacity = appointment._get_users_remaining_capacity(user_2, start, end)['total_remaining_capacity']
+        self.assertTrue(user_1_remaining_capacity == 5)
+        self.assertTrue(user_2_remaining_capacity == 5)
+
+        # Create bookings for users
+        booking_1, booking_2 = self.env['calendar.event'].with_context(self._test_context).create([{
+            'appointment_type_id': appointment.id,
+            'booking_line_ids': [(0, 0, {'capacity_reserved': 2, 'capacity_used': 2})],
+            'name': 'Booking 1',
+            'start': start,
+            'stop': end,
+            'user_id': user_1.id,
+        }, {
+            'appointment_type_id': appointment.id,
+            'booking_line_ids': [(0, 0, {'capacity_reserved': 1})],
+            'name': 'Booking 2',
+            'start': start,
+            'stop': end,
+            'user_id': user_2.id,
+        }])
+
+        user_1_remaining_capacity = appointment._get_users_remaining_capacity(user_1, start, end)['total_remaining_capacity']
+        user_2_remaining_capacity = appointment._get_users_remaining_capacity(user_2, start, end)['total_remaining_capacity']
+
+        self.assertTrue(user_1_remaining_capacity == 3, 'The user should have 3 availabilities left.')
+        self.assertTrue(user_2_remaining_capacity == 4, 'The user should have 4 availabilities left.')
+
+        (booking_1 + booking_2).unlink()
+
+        self.assertDictEqual(
+            appointment._get_users_remaining_capacity(self.env['res.users'], start, end),
+            {'total_remaining_capacity': 0},
+            'No result should give dict with correct accumulated values.'
+        )
+
+    @users('apt_manager')
+    def test_appointment_users_shareable(self):
+        """ Check a user is shareable across only one appointment type """
+
+        apt_type_manage_capacity_other = self.env['appointment.type'].create([{
+            'appointment_tz': 'Europe/Brussels',
+            'appointment_duration': 1,
+            'assign_method': 'time_resource',
+            'category': 'recurring',
+            'location_id': self.staff_user_bxls.partner_id.id,
+            'name': 'Bxls Appt Type with capacity (Other)',
+            'max_schedule_days': 15,
+            'min_cancellation_hours': 1,
+            'min_schedule_hours': 1,
+            'manage_capacity': True,
+            'staff_user_ids': [(6, 0, [self.staff_user_bxls.id, self.staff_user_aust.id])],
+            'slot_ids': [(0, 0, {
+                'weekday': str(self.reference_monday.isoweekday()),
+                'start_hour': 15,
+                'end_hour': 16,
+            })],
+            'user_capacity': 5,
+        }])
+
+        # User has no bookings
+        with freeze_time(self.reference_now):
+            slots = self.apt_type_manage_capacity_users._get_appointment_slots('UTC', asked_capacity=2)
+            user_slots_1 = self._filter_appointment_slots(slots)
+            slots = apt_type_manage_capacity_other._get_appointment_slots('UTC', asked_capacity=3)
+            user_slots_2 = self._filter_appointment_slots(slots)
+        available_users_1 = [user['id'] for user in user_slots_1[0]['available_staff_users']]
+        available_users_2 = [user['id'] for user in user_slots_2[0]['available_staff_users']]
+
+        self.assertIn(self.staff_user_bxls.id, available_users_1)
+        self.assertIn(self.staff_user_bxls.id, available_users_2)
+
+        # Book a user on monday from 14 to 15 for 3 people
+        start = datetime(2022, 2, 14, 14, 0, 0)
+        end = start + timedelta(hours=1)
+        event = self.env['calendar.event'].create([{
+            'appointment_type_id': self.apt_type_manage_capacity_users.id,
+            'booking_line_ids': [(0, 0, {'appointment_user_id': self.staff_user_bxls.id, 'capacity_reserved': 3, 'capacity_used': 3})],
+            'attendee_ids': [(0, 0, {'partner_id': self.staff_user_bxls.partner_id.id, 'state': 'accepted'})],
+            'name': 'Booking 1',
+            'partner_ids': [(4, self.staff_user_bxls.partner_id.id)],
+            'start': start,
+            'stop': end,
+            'user_id': self.staff_user_bxls.id
+        }])
+        # Check if user is available for 2 people again
+        with freeze_time(self.reference_monday):
+            slots = self.apt_type_manage_capacity_users._get_appointment_slots('UTC', asked_capacity=2)
+            user_slots_1 = self._filter_appointment_slots(slots)
+            slots = apt_type_manage_capacity_other._get_appointment_slots('UTC', asked_capacity=3)
+            user_slots_2 = self._filter_appointment_slots(slots)
+        available_user_1 = [user['id'] for user in user_slots_1[0]['available_staff_users']]
+        available_user_2 = [user['id'] for user in user_slots_2[0]['available_staff_users']]
+
+        event.unlink()
+
+        # User is available on the booked appointment until capacity
+        self.assertIn(self.staff_user_bxls.id, available_user_1)
+        # User is not available for other appointment when booking has been made for them.
+        self.assertNotIn(self.staff_user_bxls.id, available_user_2)

@@ -62,36 +62,54 @@ class CalendarBooking(models.Model):
             available when trying to reserving space for all of them. This method will try
             to 'fit' as much as possible availability, in a simple approach. """
         user_bookings = self.filtered("staff_user_id")
-        resource_bookings = self.filtered("booking_line_ids")
+        resource_bookings = self.filtered(lambda b: b.booking_line_ids.appointment_resource_id)
         if not user_bookings and not resource_bookings:
             return self
 
-        available_user_bookings = self.env['calendar.booking']
-        for staff_user, staff_user_bookings in user_bookings.grouped("staff_user_id").items():
-            last_booking_end = datetime.min
-            for booking in staff_user_bookings.sorted('stop'):  # sorting by end allows maximum coverage
-                if (booking.start >= last_booking_end and
-                    staff_user.partner_id.calendar_verify_availability(booking.start, booking.stop)):
-                    available_user_bookings += booking
-                    last_booking_end = booking.stop
+        def filter_available_user_bookings(user_bookings):
+            boundaries = sorted(set(user_bookings.mapped('start') + user_bookings.mapped('stop')))
+            for index, start in enumerate(boundaries[:-1]):
+                stop = boundaries[index + 1]
+                interval_bookings = user_bookings.filtered(lambda booking: booking.start < stop and booking.stop > start)
+                for user, booking_lines in interval_bookings.booking_line_ids.grouped('appointment_user_id').items():
+                    booking_lines &= user_bookings.booking_line_ids
+                    appointment_types = booking_lines.calendar_booking_id.appointment_type_id
+                    if len(appointment_types) > 1 or not user.partner_id.calendar_verify_availability(start, stop, appointment_types):
+                        user_bookings -= booking_lines.calendar_booking_id
+                        continue
+                    total_availability = appointment_types._get_users_remaining_capacity(user, start, stop)['total_remaining_capacity'] if booking_lines else 0
+                    for booking_line in booking_lines:
+                        if total_availability >= booking_line.capacity_used:
+                            total_availability -= booking_line.capacity_used
+                        # Booking is unavailable
+                        else:
+                            user_bookings -= booking_line.calendar_booking_id
+            return user_bookings
 
-        available_resource_bookings = resource_bookings
-        boundaries = sorted(set(resource_bookings.mapped('start') + resource_bookings.mapped('stop')))
-        for index, start in enumerate(boundaries[:-1]):
-            stop = boundaries[index + 1]
-            interval_bookings = available_resource_bookings.filtered(lambda booking: booking.start < stop and booking.stop > start)
-            for resource, booking_lines in interval_bookings.booking_line_ids.grouped("appointment_resource_id").items():
-                booking_lines &= available_resource_bookings.booking_line_ids
-                total_resource_availability = resource.appointment_type_ids[0]._get_resources_remaining_capacity(
-                    resource, start, stop, with_linked_resources=False
-                )['total_remaining_capacity'] if booking_lines and resource.appointment_type_ids else 0
-                for booking_line in booking_lines:
-                    if total_resource_availability >= booking_line.capacity_used:
-                        total_resource_availability -= booking_line.capacity_used
-                    else:
-                        available_resource_bookings -= booking_lines.calendar_booking_id
+        def filter_available_resource_bookings(resource_bookings):
+            boundaries = sorted(set(resource_bookings.mapped('start') + resource_bookings.mapped('stop')))
 
-        return self - (available_user_bookings | available_resource_bookings)
+            for index, start in enumerate(boundaries[:-1]):
+                stop = boundaries[index + 1]
+                interval_bookings = resource_bookings.filtered(lambda booking: booking.start < stop and booking.stop > start)
+                for resource, booking_lines in interval_bookings.booking_line_ids.grouped('appointment_resource_id').items():
+                    booking_lines &= resource_bookings.booking_line_ids
+                    appointment_types = booking_lines.calendar_booking_id.appointment_type_id
+                    if len(appointment_types) > 1 and not all(appointment_types.mapped('manage_capacity')):
+                        resource_bookings -= booking_lines.calendar_booking_id
+                        continue
+                    total_availability = appointment_types[0]._get_resources_remaining_capacity(
+                        resource, start, stop, with_linked_resources=appointment_types[0].manage_capacity
+                    )['total_remaining_capacity'] if booking_lines else 0
+                    for booking_line in booking_lines:
+                        if total_availability >= booking_line.capacity_used:
+                            total_availability -= booking_line.capacity_used
+                        # Booking is unavailable
+                        else:
+                            resource_bookings -= booking_line.calendar_booking_id
+            return resource_bookings
+
+        return self - (filter_available_user_bookings(user_bookings) | filter_available_resource_bookings(resource_bookings))
 
     def _get_description(self):
         """ Returns a multiline description of the booking """
@@ -144,6 +162,7 @@ class CalendarBooking(models.Model):
         for booking in todo - unavailable_bookings:
             booking_line_values = [{
                 'appointment_resource_id': line.appointment_resource_id.id,
+                'appointment_user_id': line.appointment_user_id.id,
                 'capacity_reserved': line.capacity_reserved,
                 'capacity_used': line.capacity_used,
             } for line in booking.booking_line_ids]

@@ -104,13 +104,34 @@ class AppointmentCommon(MailCase, common.HttpCase):
             'staff_user_ids': [(4, cls.staff_user_bxls.id)],
         })
 
+        cls.apt_type_manage_capacity_users = cls.env['appointment.type'].create({
+            'appointment_tz': 'Europe/Brussels',
+            'appointment_duration': 1,
+            'assign_method': 'time_resource',
+            'category': 'recurring',
+            'location_id': cls.staff_user_bxls.partner_id.id,
+            'name': 'Bxls Appt Type with capacity',
+            'max_schedule_days': 15,
+            'min_cancellation_hours': 1,
+            'schedule_based_on': 'users',
+            'manage_capacity': True,
+            'min_schedule_hours': 1,
+            'staff_user_ids': [(6, 0, [cls.staff_user_aust.id, cls.staff_user_bxls.id])],
+            'slot_ids': [(0, 0, {
+                'weekday': str(cls.reference_monday.isoweekday()),
+                'start_hour': 15,
+                'end_hour': 16,
+            })],
+            'user_capacity': 5,
+        })
+
         cls.apt_type_resource = cls.env['appointment.type'].create({
             'appointment_tz': 'UTC',
             'assign_method': 'time_auto_assign',
             'min_schedule_hours': 1.0,
             'max_schedule_days': 5,
             'name': 'Test',
-            'resource_manage_capacity': True,
+            'manage_capacity': True,
             'schedule_based_on': 'resources',
             'slot_ids': [(0, 0, {
                 'weekday': str(cls.reference_monday.isoweekday()),

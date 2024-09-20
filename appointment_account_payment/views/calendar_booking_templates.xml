@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         <div t-if="(appointment_type.assign_method != 'time_auto_assign' or appointment_type.avatars_display == 'show') and
-                                (appointment_type.resource_manage_capacity or
+                                (appointment_type.manage_capacity or
                                     (len(resources) == 1 and appointment_type.avatars_display == 'hide' and is_html_empty(resources[0].description))
                                 )" class="row mb-4">
                             <div class="col-3">

@@ -22,7 +22,7 @@ class AppointmentResource(AppointmentCommon):
             'min_schedule_hours': 1.0,
             'max_schedule_days': 8,
             'name': 'Managed Test',
-            'resource_manage_capacity': True,
+            'manage_capacity': True,
             'schedule_based_on': 'resources',
             'slot_ids': [(0, 0, {
                 'weekday': str(cls.reference_monday.isoweekday()),
@@ -34,7 +34,7 @@ class AppointmentResource(AppointmentCommon):
             'min_schedule_hours': 1.0,
             'max_schedule_days': 8,
             'name': 'Unmanaged Test',
-            'resource_manage_capacity': False,
+            'manage_capacity': False,
             'schedule_based_on': 'resources',
             'slot_ids': [(0, 0, {
                 'weekday': str(cls.reference_monday.isoweekday()),
@@ -270,7 +270,7 @@ class AppointmentResourceBookingTest(AppointmentCommon):
             'min_schedule_hours': 1.0,
             'max_schedule_days': 8,
             'name': 'Test',
-            'resource_manage_capacity': True,
+            'manage_capacity': True,
             'schedule_based_on': 'resources',
             'slot_ids': [(0, 0, {
                 'weekday': str(self.reference_monday.isoweekday()),
@@ -554,7 +554,7 @@ class AppointmentResourceBookingTest(AppointmentCommon):
             'min_schedule_hours': 1.0,
             'max_schedule_days': 8,
             'name': 'Test',
-            'resource_manage_capacity': True,
+            'manage_capacity': True,
             'schedule_based_on': 'resources',
             'slot_ids': [(0, 0, {
                 'weekday': str(self.reference_monday.isoweekday()),
@@ -864,7 +864,7 @@ class AppointmentResourceBookingTest(AppointmentCommon):
             'min_schedule_hours': 1.0,
             'max_schedule_days': 8,
             'name': 'Test',
-            'resource_manage_capacity': True,
+            'manage_capacity': True,
             'schedule_based_on': 'resources',
             'slot_ids': [(0, 0, {
                 'weekday': str(self.reference_monday.isoweekday()),
@@ -898,7 +898,7 @@ class AppointmentResourceBookingTest(AppointmentCommon):
             'min_schedule_hours': 1.0,
             'max_schedule_days': 5,
             'name': 'Test',
-            'resource_manage_capacity': True,
+            'manage_capacity': True,
             'schedule_based_on': 'resources',
             'slot_ids': [(0, 0, {
                 'weekday': str(self.reference_monday.isoweekday()),
@@ -1059,13 +1059,13 @@ class AppointmentResourceBookingTest(AppointmentCommon):
             'start': start + timedelta(hours=2),
             'stop': end + timedelta(hours=2),
         }])
-        self.assertEqual(apt_1.resource_total_capacity_reserved, 5)
-        self.assertEqual(apt_2.resource_total_capacity_reserved, 6)
+        self.assertEqual(apt_1.total_capacity_reserved, 5)
+        self.assertEqual(apt_2.total_capacity_reserved, 6)
 
-        (apt_1 + apt_2).write({'resource_total_capacity_reserved': 7})
+        (apt_1 + apt_2).write({'total_capacity_reserved': 7})
         # Every appointment should be updated with the new value
-        self.assertEqual(apt_1.resource_total_capacity_reserved, 7)
-        self.assertEqual(apt_2.resource_total_capacity_reserved, 7)
+        self.assertEqual(apt_1.total_capacity_reserved, 7)
+        self.assertEqual(apt_2.total_capacity_reserved, 7)
 
     @users('apt_manager')
     def test_appointment_resources_with_resource_calendar(self):
@@ -1125,8 +1125,8 @@ class AppointmentResourceBookingTest(AppointmentCommon):
         duplicate = booking.copy()
         self.assertEqual(booking.name, duplicate.name, "Resource booking should have duplicated correctly")
         self.assertListEqual(booking.resource_ids.ids, duplicate.resource_ids.ids, "Resources should be the same")
-        self.assertEqual(booking.resource_total_capacity_used, duplicate.resource_total_capacity_used, "Capacity used should be the same")
-        self.assertEqual(booking.resource_total_capacity_reserved, duplicate.resource_total_capacity_reserved, "Capacity reserved should be the same")
+        self.assertEqual(booking.total_capacity_used, duplicate.total_capacity_used, "Capacity used should be the same")
+        self.assertEqual(booking.total_capacity_reserved, duplicate.total_capacity_reserved, "Capacity reserved should be the same")
         self.assertListEqual(
             [bl.capacity_reserved for bl in booking.booking_line_ids],
             [bl.capacity_reserved for bl in duplicate.booking_line_ids],
@@ -1137,7 +1137,7 @@ class AppointmentResourceBookingTest(AppointmentCommon):
     def test_appointment_resources_without_capacity_management(self):
         """ Check use case where capacity management is not activated """
 
-        self.apt_type_resource.resource_manage_capacity = False
+        self.apt_type_resource.manage_capacity = False
 
         resource_1, resource_2, resource_3 = self.env['appointment.resource'].create([{
             'appointment_type_ids': self.apt_type_resource.ids,
@@ -1176,8 +1176,8 @@ class AppointmentResourceBookingTest(AppointmentCommon):
         })
 
         self.assertEqual(booking.booking_line_ids.capacity_reserved, 1)
-        self.assertEqual(booking.booking_line_ids.capacity_used, 6,
-            "When we don't manage capacity, the shareable option should be ignored")
+        self.assertEqual(booking.booking_line_ids.capacity_used, 1,
+            "When we don't manage capacity, the bookings should use 1 capacity only.")
 
         with freeze_time(self.reference_now):
             slots = self.apt_type_resource._get_appointment_slots('UTC')

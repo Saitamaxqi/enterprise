@@ -35,7 +35,7 @@ class CalendarEvent(models.Model):
 
     @api.model
     def _load_pos_data_fields(self, config_id):
-        return ['id', 'start', 'duration', 'stop', 'name', 'appointment_type_id', 'appointment_status', 'appointment_resource_ids', 'resource_total_capacity_reserved']
+        return ['id', 'start', 'duration', 'stop', 'name', 'appointment_type_id', 'appointment_status', 'appointment_resource_ids', 'total_capacity_reserved']
 
     def action_open_booking_gantt_view(self):
         return {
@@ -56,7 +56,7 @@ class CalendarEvent(models.Model):
                 'active_model': 'appointment.type',
                 'default_partner_ids': [],
                 'default_duration': 2,
-                'default_resource_total_capacity_reserved': 2,
+                'default_total_capacity_reserved': 2,
                 "search_default_appointment_type_id": self._context.get("appointment_type_id"),
                 "no_breadcrumbs": True,
                 'hide_no_content_helper': True,
@@ -83,7 +83,7 @@ class CalendarEvent(models.Model):
             'views': [(self.env.ref('pos_appointment.calendar_event_view_form_gantt_booking_inherited_pos_appointment').id, 'form')],
             'context': {
                 'default_appointment_type_id': appointment_type_id,
-                'default_resource_total_capacity_reserved': 2,
+                'default_total_capacity_reserved': 2,
             }
         }
 

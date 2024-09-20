@@ -72,8 +72,8 @@
                             </t>
                         </li>
                     </ul></li>
-                    <li t-if="object.appointment_type_id.resource_manage_capacity">
-                        For: <t t-out="object.resource_total_capacity_reserved"/> people
+                    <li t-if="object.appointment_type_id.manage_capacity">
+                        For: <t t-out="object.total_capacity_reserved"/> people
                     </li>
                     <li t-if="object.appointment_type_id.assign_method != 'time_auto_assign' and object.appointment_resource_ids">
                         Resources
@@ -320,8 +320,8 @@
                         </t>
                     </li>
                 </ul></li>
-                <li t-if="object.event_id.appointment_type_id.resource_manage_capacity">
-                    For: <t t-out="object.event_id.resource_total_capacity_reserved"/> people
+                <li t-if="object.event_id.appointment_type_id.manage_capacity">
+                    For: <t t-out="object.event_id.total_capacity_reserved"/> people
                 </li>
                 <li t-if="object.event_id.appointment_type_id.assign_method != 'time_auto_assign' and object.event_id.appointment_resource_ids">
                     Resources

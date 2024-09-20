@@ -84,8 +84,8 @@
                                     <t t-out="event.duration" t-options="{'widget': 'duration', 'unit': 'hour', 'round': 'minute'}"/>
                                 </div>
                             </div>
-                            <div t-if="(appointment_type.assign_method != 'time_auto_assign' or appointment_type.avatars_display == 'show') and
-                                (appointment_type.resource_manage_capacity or
+                            <div t-if="not based_on_users and (appointment_type.assign_method != 'time_auto_assign' or appointment_type.avatars_display == 'show') and
+                                (appointment_type.manage_capacity or
                                     (len(resources) == 1 and appointment_type.avatars_display == 'hide' and is_html_empty(resources[0].description))
                                 )" class="row mb-4">
                                 <div class="col-3">
@@ -146,12 +146,12 @@
                                     </span>
                                 </div>
                             </div>
-                            <div t-if="event.resource_total_capacity_reserved > 1" class="row mb-4">
+                            <div t-if="event.total_capacity_reserved > 1" class="row mb-4">
                                 <div class="col-3">
                                     <span class="text-muted">For</span>
                                 </div>
                                 <div class="col-9 col-lg-6">
-                                    <t t-out="event.resource_total_capacity_reserved"/> people
+                                    <t t-out="event.total_capacity_reserved"/> people
                                 </div>
                             </div>
                             <div t-if="not appointment_type or based_on_users or appointment_type.allow_guests" class="row mb-4">
@@ -238,7 +238,7 @@
                 </main>
             </article>
         </div>
-        <div t-elif="not appointment_type.resource_manage_capacity and
+        <div t-elif="not appointment_type.manage_capacity and
             len(resources) == 1 and (appointment_type.avatars_display == 'show' or not is_html_empty(resources[0].description))">
             <t t-set="resource" t-value="resources[0]"/>
             <article class="card o_appointment_user_short_card card border-0" itemscope="itemscope">

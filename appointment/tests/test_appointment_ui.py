@@ -204,7 +204,7 @@ class AppointmentUITest(AppointmentUICommon):
             'search_default_appointment_type_id': appointment_types[1].id,
             'default_mode': 'month',
             'default_partner_ids': [],
-            'default_resource_total_capacity_reserved': 1,
+            'default_total_capacity_reserved': 1,
             'default_start_date': now,
             'initial_date': datetime(2022, 3, 1),
         }]
@@ -297,7 +297,7 @@ class AppointmentUITest(AppointmentUICommon):
         }])
         self.apt_type_resource.sudo().write({
             "appointment_manual_confirmation": True,
-            "resource_manual_confirmation_percentage": 0.5,  # Set Manual Confirmation at 50%
+            "manual_confirmation_percentage": 0.5,  # Set Manual Confirmation at 50%
         })
         appointment_data = {
             "asked_capacity": 4,
@@ -319,7 +319,7 @@ class AppointmentUITest(AppointmentUICommon):
         self.assertEqual(meeting.appointment_status, "request")
         self.assertEqual(meeting.attendee_ids.state, "accepted",
             "Crossing over the manual confirmation percentage should confirm the attendees immediately.")
-        self.assertEqual(meeting.resource_total_capacity_reserved, 4)
+        self.assertEqual(meeting.total_capacity_reserved, 4)
 
     @freeze_time('2022-02-14')
     @users('apt_manager')

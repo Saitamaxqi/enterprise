@@ -71,12 +71,12 @@ class CalendarEvent(models.Model):
     ], string="Appointment Status", compute='_compute_appointment_status', store=True, readonly=False, tracking=True)
     appointment_type_id = fields.Many2one('appointment.type', 'Appointment', index='btree_not_null', tracking=True)
     appointment_type_schedule_based_on = fields.Selection(related="appointment_type_id.schedule_based_on")
-    appointment_type_manage_capacity = fields.Boolean(related="appointment_type_id.resource_manage_capacity")
+    appointment_type_manage_capacity = fields.Boolean(related="appointment_type_id.manage_capacity")
     appointment_invite_id = fields.Many2one('appointment.invite', 'Appointment Invitation', readonly=True, index='btree_not_null', ondelete='set null')
     appointment_resource_ids = fields.Many2many('appointment.resource', 'appointment_booking_line', 'calendar_event_id', 'appointment_resource_id',
                                                 string="Appointment Resources", group_expand="_read_group_appointment_resource_ids",
                                                 depends=['booking_line_ids'], readonly=True, copy=False)
-    # This field is used in the form view to create/manage the booking lines based on the resource_total_capacity_reserved
+    # This field is used in the form view to create/manage the booking lines based on the total_capacity_reserved
     # selected. This allows to have the appointment_resource_ids field linked to the appointment_booking_line model and
     # thus avoid the duplication of information.
     resource_ids = fields.Many2many('appointment.resource', string="Resources",
@@ -85,8 +85,8 @@ class CalendarEvent(models.Model):
                                     group_expand="_read_group_appointment_resource_ids", copy=False)
     booking_line_ids = fields.One2many('appointment.booking.line', 'calendar_event_id', string="Booking Lines", copy=True)
     partner_ids = fields.Many2many('res.partner', group_expand="_read_group_partner_ids")
-    resource_total_capacity_reserved = fields.Integer('Total Capacity Reserved', compute="_compute_resource_total_capacity", inverse="_inverse_resource_ids_or_capacity", copy=True)
-    resource_total_capacity_used = fields.Integer('Total Capacity Used', compute="_compute_resource_total_capacity")
+    total_capacity_reserved = fields.Integer('Total Capacity Reserved', compute="_compute_total_capacity", inverse="_inverse_resource_ids_or_capacity", copy=True)
+    total_capacity_used = fields.Integer('Total Capacity Used', compute="_compute_total_capacity")
     user_id = fields.Many2one('res.users', group_expand="_read_group_user_id")
     videocall_redirection = fields.Char('Meeting redirection URL', compute='_compute_videocall_redirection')
     appointment_booker_id = fields.Many2one('res.partner', string="Person who is booking the appointment", index='btree_not_null')
@@ -149,9 +149,22 @@ class CalendarEvent(models.Model):
             resource_unavailabilities = availabilities_values['resource_unavailabilities']
             resource_to_bookings = availabilities_values['resource_to_bookings']
 
-            # Exclude resources that are shareable but not fully occupied
-            events_to_check = self.env['calendar.event'].concat(*[bookings.calendar_event_id for resource, bookings in resource_to_bookings.items()
-                if not resource.shareable or not (sum(bookings.mapped('capacity_reserved')) <= resource.capacity)])
+            events_to_check = self.env['calendar.event']
+            for resource, bookings in resource_to_bookings.items():
+                booking_events = bookings.calendar_event_id
+                events_manage_capacity = booking_events.mapped('appointment_type_manage_capacity')
+                isAllCapacityTrue = all(events_manage_capacity)
+                isAllCapacityFalse = not any(events_manage_capacity)
+                # Add events of the bookings to check if:
+                # - There are event appointments with manage capacity True and False
+                # - Manage capacity is all True and resource is not shareable or capacity used > resource capacity
+                # - Manage capacity is all False and more than one appointment type or number of bookings > max_bookings
+                if (
+                    (not isAllCapacityTrue and not isAllCapacityFalse) or
+                    (isAllCapacityTrue and (sum(bookings.mapped('capacity_used')) >= resource.capacity or not resource.shareable)) or
+                    (isAllCapacityFalse and (len(bookings.appointment_type_id) > 1 or len(bookings) > bookings.appointment_type_id.max_bookings))
+                ):
+                    events_to_check |= booking_events
             for event in events:
                 event_resources = event.resource_ids
                 event_interval = (localized(event.start), localized(event.stop))
@@ -167,7 +180,7 @@ class CalendarEvent(models.Model):
                         event.unavailable_resource_ids += resources
 
     @api.depends('booking_line_ids')
-    def _compute_resource_total_capacity(self):
+    def _compute_total_capacity(self):
         booking_data = self.env['appointment.booking.line']._read_group(
             [('calendar_event_id', 'in', self.ids)],
             ['calendar_event_id'],
@@ -181,8 +194,8 @@ class CalendarEvent(models.Model):
 
         for event in self:
             data = mapped_data.get(event.id)
-            event.resource_total_capacity_reserved = data.get('total_capacity_reserved', 0) if data else 0
-            event.resource_total_capacity_used = data.get('total_capacity_used', 0) if data else 0
+            event.total_capacity_reserved = data.get('total_capacity_reserved', 0) if data else 0
+            event.total_capacity_used = data.get('total_capacity_used', 0) if data else 0
 
     @api.depends('videocall_location', 'access_token')
     def _compute_videocall_redirection(self):
@@ -238,6 +251,16 @@ class CalendarEvent(models.Model):
 
         return res
 
+    def _is_partner_unavailable(self, partner, partner_events):
+        self.ensure_one()
+        appointment = self.appointment_type_id
+        if (partner in appointment.staff_user_ids.partner_id and
+            not partner_events.filtered(lambda event: event.appointment_type_id != appointment)):
+            max_capacity = appointment.user_capacity if appointment.manage_capacity else appointment.max_bookings
+            return sum(partner_events.mapped('total_capacity_used')) > max_capacity
+
+        return super()._is_partner_unavailable(partner, partner_events)
+
     def _init_column(self, column_name):
         """ Initialize the value of the given column for existing rows.
             Overridden here because we skip generating unique access tokens
@@ -262,8 +285,8 @@ class CalendarEvent(models.Model):
                 # Ignore the inverse and keep the previous booking lines when we duplicate an event
                 if self.env.context.get('is_appointment_copied'):
                     continue
-                if event.appointment_type_manage_capacity and event.resource_total_capacity_reserved:
-                    capacity_to_reserve = event.resource_total_capacity_reserved
+                if event.appointment_type_manage_capacity and event.total_capacity_reserved:
+                    capacity_to_reserve = event.total_capacity_reserved
                 else:
                     capacity_to_reserve = sum(event.booking_line_ids.mapped('capacity_reserved')) or sum(resources.mapped('capacity'))
                 booking_lines_to_delete |= event.booking_line_ids
@@ -393,8 +416,8 @@ class CalendarEvent(models.Model):
             'appointment_resource_ids',
             'appointment_type_id',
             'resource_ids',
-            'resource_total_capacity_reserved',
-            'resource_total_capacity_used',
+            'total_capacity_reserved',
+            'total_capacity_used',
         }
 
     def _track_template(self, changes):

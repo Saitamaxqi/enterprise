@@ -107,6 +107,7 @@ class WebsiteAppointmentSaleTest(AppointmentAccountPaymentCommon):
         booking_values = {
             'appointment_type_id': appointment_type.id,
             'duration': 1.0,
+            'booking_line_ids': [(0, 0, {'appointment_user_id': self.staff_user_bxls.id, 'capacity_reserved': 1, 'capacity_used': 1})],
             'partner_id': self.apt_manager.partner_id.id,
             'product_id': appointment_type.product_id.id,
             'staff_user_id': self.staff_user_bxls.id,
@@ -221,8 +222,8 @@ class WebsiteAppointmentSaleTest(AppointmentAccountPaymentCommon):
         self.assertTrue(event.active)
         self.assertEqual(event, calendar_booking.calendar_event_id)
         self.assertEqual(event.appointment_type_id, calendar_booking.appointment_type_id)
-        self.assertEqual(event.resource_total_capacity_reserved, calendar_booking.asked_capacity)
-        self.assertEqual(event.resource_total_capacity_used, calendar_booking.asked_capacity)
+        self.assertEqual(event.total_capacity_reserved, calendar_booking.asked_capacity)
+        self.assertEqual(event.total_capacity_used, calendar_booking.asked_capacity)
         self.assertEqual(event.duration, calendar_booking.duration)
         self.assertEqual(event.partner_ids, calendar_booking.partner_id)
         self.assertEqual(event.start, calendar_booking.start)
@@ -257,6 +258,7 @@ class WebsiteAppointmentSaleTest(AppointmentAccountPaymentCommon):
         # Create Calendar Event Booking and Calendar Booking Lines
         booking_values = {
             'appointment_type_id': appointment_type.id,
+            'booking_line_ids': [(0, 0, {'appointment_user_id': self.staff_user_bxls.id, 'capacity_reserved': 1, 'capacity_used': 1})],
             'duration': 1.0,
             'partner_id': self.apt_manager.partner_id.id,
             'product_id': appointment_type.product_id.id,
