@@ -4,7 +4,7 @@ from collections import Counter, OrderedDict, defaultdict
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
-from odoo.tools import create_index, topological_sort
+from odoo.tools import topological_sort
 from odoo.tools.misc import OrderedSet
 
 
@@ -354,14 +354,6 @@ class StudioExportWizardData(models.TransientModel):
         readonly=True,
     )
 
-    def init(self):
-        super().init()
-        create_index(
-            self.env.cr,
-            indexname="studio_export_wizard_data_model_res_id_index",
-            tablename=self._table,
-            expressions=["model", "res_id"])
-
     @api.depends("model")
     def _compute_model_name(self):
         models = self.mapped("model")
@@ -394,10 +386,14 @@ class StudioExportWizardData(models.TransientModel):
             vals["name"] = names[model][res_id]
             vals["xmlid"] = (
                 xmlids[model][res_id]
-                or ["__new__.%s_%s" % (model.replace(".", "_"), res_id)]
+                or ["__export__.%s_%s" % (model.replace(".", "_"), res_id)]
             )[0]
 
         return super().create(vals_list)
+
+    def _xmlid_for_export(self):
+        self.ensure_one()
+        return self.xmlid.replace('__export__.', '').replace('studio_customization.', '')
 
 
 class StudioExportWizard(models.TransientModel):

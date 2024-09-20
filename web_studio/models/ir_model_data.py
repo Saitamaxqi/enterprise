@@ -30,3 +30,7 @@ class IrModelData(models.Model):
         if self._context.get('studio'):
             values['studio'] = 'true'
         return values
+
+    def _xmlid_for_export(self):
+        self.ensure_one()
+        return self.complete_name.replace('__export__.', '').replace('studio_customization.', '')

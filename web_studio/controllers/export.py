@@ -38,7 +38,6 @@ def generate_module(module, export_info):
         Yields:
             tuple: A tuple containing the filename and content.
     """
-    get_xmlid = xmlid_getter()
     has_website = _has_website()
     # Generate xml files and yield them
     filenames = []          # filenames to include in the module to export
@@ -50,8 +49,9 @@ def generate_module(module, export_info):
 
     # Generate xml files for the data to export
     data, export, circular_dependencies = export_info
+    model_data_getter = ir_model_data_getter(data)
     for model, filepath, records, fields, no_update in export:
-        (xml, binary_files, new_dependencies, skipped) = _serialize_model(module, model, records, data, fields, no_update, has_website, get_xmlid)
+        (xml, binary_files, new_dependencies, skipped) = _serialize_model(module, model, records, fields, no_update, has_website, model_data_getter)
         if xml is not None:
             yield from binary_files
             yield (filepath, xml)
@@ -64,7 +64,7 @@ def generate_module(module, export_info):
         filepath = 'demo/sale_order_confirm.xml'
         sale_orders_data = data.filtered(lambda d: d.model == "sale.order")
         sale_orders = request.env["sale.order"].browse(sale_orders_data.mapped("res_id"))
-        xmlids = [get_xmlid(so, sale_orders_data) for so in sale_orders if so.state not in ('cancel', 'draft')]
+        xmlids = [model_data_getter(so)._xmlid_for_export() for so in sale_orders if so.state not in ('cancel', 'draft')]
         nodes = []
 
         # Update sale order stages
@@ -177,8 +177,8 @@ def generate_module(module, export_info):
 
 
 # ============================== Serialization ==================================
-def _serialize_model(module, model, records, data, fields_to_export, no_update, has_website, get_xmlid):
-    records_to_export, depends, binary_files = _prepare_records_to_export(module, model, records, data, fields_to_export, get_xmlid)
+def _serialize_model(module, model, records, fields_to_export, no_update, has_website, get_model_data):
+    records_to_export, depends, binary_files = _prepare_records_to_export(module, model, records, fields_to_export, get_model_data)
 
     # create the XML containing the generated record nodes
     nodes = []
@@ -199,7 +199,7 @@ def _serialize_model(module, model, records, data, fields_to_export, no_update, 
 
     skipped_records = []
     for record in records_to_export:
-        record_node, record_skipped = _serialize_record(module, model, record, data, fields_to_export, has_website, get_xmlid)
+        record_node, record_skipped = _serialize_record(module, model, record, fields_to_export, has_website, get_model_data)
         if record_node is not None:
             nodes.append(record_node)
         skipped_records.extend(record_skipped)
@@ -208,7 +208,7 @@ def _serialize_model(module, model, records, data, fields_to_export, no_update, 
     if model == 'ir.ui.view' and has_website:
         website_views = filter(lambda r: r['website_id'] and r['key'].startswith('website.') and r['create_uid'].id == 1, records_to_export)
         for view in website_views:
-            exportid = get_xmlid(view, data)
+            exportid = get_model_data(view)._xmlid_for_export()
             nodes.append(
                 E.function(
                     E.value(
@@ -232,12 +232,12 @@ def _serialize_model(module, model, records, data, fields_to_export, no_update, 
     return xml, binary_files, depends, skipped_records
 
 
-def _serialize_record(module, model, record, data, fields_to_export, has_website, get_xmlid):
+def _serialize_record(module, model, record, fields_to_export, has_website, get_model_data):
     """ Return an etree Element for the given record, together with a list of
         skipped field values (field value references a record without external id).
     """
-    record_data = data.filtered(lambda r: r.res_id == record.id and r.model == model)
-    exportid = get_xmlid(record, record_data)
+    record_data = get_model_data(record)
+    exportid = record_data._xmlid_for_export()
     skipped = []
 
     # Create the record node
@@ -262,7 +262,7 @@ def _serialize_record(module, model, record, data, fields_to_export, has_website
         field = record._fields[name]
         field_element = None
         try:
-            field_element = _serialize_field(record, field, data, has_website, get_xmlid)
+            field_element = _serialize_field(record, field, has_website, get_model_data)
         except MissingXMLID:
             # the field value contains a record without an xml_id; skip it
             skipped.append((exportid, field, record[name]))
@@ -273,7 +273,7 @@ def _serialize_record(module, model, record, data, fields_to_export, has_website
     return E.record(*fields_nodes, **kwargs) if fields_nodes else None, skipped
 
 
-def _serialize_field(record, field, data, has_website, get_xmlid):
+def _serialize_field(record, field, has_website, get_model_data):
     """ Serialize the value of ``field`` on ``record`` as an etree Element. """
     default_value = record.default_get([field.name]).get(field.name)
     value = record[field.name]
@@ -289,13 +289,13 @@ def _serialize_field(record, field, data, has_website, get_xmlid):
     elif field.type == 'many2one_reference':
         reference_model = record[field.model_field]
         reference_value = reference_model and record.env[reference_model].browse(value) or False
-        xmlid = get_xmlid(reference_value, data)
+        xmlid = get_model_data(reference_value)._xmlid_for_export()
         if reference_value:
             return E.field(name=field.name, ref=xmlid)
         else:
             return E.field(name=field.name, eval="False")
     elif field.type in ('many2many', 'one2many'):
-        xmlids = [get_xmlid(v, data) for v in value]
+        xmlids = [get_model_data(v)._xmlid_for_export() for v in value]
         return E.field(
             name=field.name,
             eval='[(6, 0, [%s])]' % ', '.join("ref('%s')" % xmlid for xmlid in xmlids),
@@ -312,7 +312,7 @@ def _serialize_field(record, field, data, has_website, get_xmlid):
     elif field.type == 'datetime':
         return E.field(field.to_string(value), name=field.name)
     elif field.type in ('many2one', 'reference'):
-        xmlid = get_xmlid(value, data)
+        xmlid = get_model_data(value)._xmlid_for_export()
         return E.field(name=field.name, ref=xmlid)
     elif field.type in ('html', 'text'):
         # Wrap value in <![CDATA[]] to preserve it to be interpreted as XML markup, if any
@@ -419,7 +419,7 @@ def _get_relations(record, field):
         return record.env['ir.model']._get(record.model)
 
 
-def _prepare_records_to_export(module, model, records, data, fields_to_export, get_xmlid):
+def _prepare_records_to_export(module, model, records, fields_to_export, get_model_data):
     """Returns
         - A sorted list of records that satisfies inter-record dependencies
         - Additional module dependencies
@@ -437,8 +437,8 @@ def _prepare_records_to_export(module, model, records, data, fields_to_export, g
     fields = [records._fields[name] for name in fields_to_export]
     record_deps = OrderedDict.fromkeys(records, records.browse())
     for record in records:
-        record_data = data.filtered(lambda r: r.res_id == record.id and r.model == model)
-        exportid = get_xmlid(record, record_data)
+        record_data = get_model_data(record)
+        exportid = record_data._xmlid_for_export()
         module_name = _get_module_name(exportid)
 
         # data depends on a record from another module
@@ -462,7 +462,7 @@ def _prepare_records_to_export(module, model, records, data, fields_to_export, g
 
             for rel_record in rel_records:
                 try:
-                    rel_xmlid = get_xmlid(rel_record, data)
+                    rel_xmlid = get_model_data(rel_record)._xmlid_for_export()
                 except MissingXMLID:
                     # skip records that don't have an xmlid,
                     # as they won't be exported and will
@@ -478,7 +478,7 @@ def _prepare_records_to_export(module, model, records, data, fields_to_export, g
             # add a dependency on the currency field
             rel_record = record._get(record.model, 'currency_id') or record._get(record.model, 'x_currency_id')
             if rel_record:
-                rel_xmlid = get_xmlid(rel_record, data)
+                rel_xmlid = get_model_data(rel_record)._xmlid_for_export()
                 add_dependency(_get_module_name(rel_xmlid))
                 record_deps[record] |= rel_record
 
@@ -492,33 +492,28 @@ def _has_website():
     return request.env['ir.module.module'].search_count([('state', '=', 'installed'), ('name', '=', 'website')]) == 1
 
 
-def xmlid_getter():
-    """ Returns a function that returns the xml_id of a given record """
-    cache = {}
+def ir_model_data_getter(data):
+    """ Returns a function that returns the data (either ir.model.data or studio.export.wizard.data record) of a given record """
+    # {(model_name, record_id): ir_model_data_record(s)}
+    cache = data.grouped(lambda d: (d.model, d.res_id))
 
-    def get(record, data=None):
-        """ Return the xml_id of ``record``.
-            Raise a ``MissingXMLID`` if xml_id does not exist.
+    def get(record):
+        """ Return the ir_model_data linked to the ``record``.
+            Raise a ``MissingXMLID`` if ir_model_data does not exist.
         """
-        if record not in cache or not cache[record]:
-            if data:
-                record_data = data.filtered(lambda r: r.res_id == record.id and r.model == record._name)
-                cache[record] = record_data.xmlid
+        key = (record._name, record.id)
+        if key not in cache or not cache[key]:
+            # prefetch when possible
+            for data in record.env['ir.model.data'].sudo().search(
+                [('model', '=', record._name), ('res_id', 'in', list(record._prefetch_ids))], order='id',
+            ):
+                key_data = (data.model, data.res_id)
+                if key_data not in cache:  # Only one record in the cache
+                    cache[key_data] = data
 
-            if not cache[record]:
-                # prefetch when possible
-                records = record.browse(record._prefetch_ids)
-                for rid, val in records.get_external_id().items():
-                    cache[record.browse(rid)] = val
-
-        res = cache[record]
-        if not res:
+        if key not in cache:
             raise MissingXMLID(record)
-
-        res = res.replace('__export__.', '')
-        res = res.replace('__new__.', '')
-        res = res.replace('studio_customization.', '')
-        return res
+        return cache[key]
 
     return get
 
