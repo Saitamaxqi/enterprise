@@ -12,7 +12,7 @@ function assertNSheetsInGroup(number) {
 }
 
 function focusFirstSheetInModal() {
-    const sheetImg = document.querySelector("img.o-spreadsheet-grid-image");
+    const sheetImg = document.querySelector(".o-spreadsheet-grid-image");
     sheetImg.dispatchEvent(new MouseEvent("focus"));
 }
 
@@ -59,13 +59,18 @@ registry
                 run: "click",
             },
             {
-                trigger: "img.o-spreadsheet-grid-image",
+                trigger: ".o-spreadsheet-grid-image",
                 content: "Focus a spreadsheet",
                 run: focusFirstSheetInModal,
             },
             {
                 trigger: "button.btn-primary",
                 content: "Click confirm button",
+                run: "click",
+            },
+            {
+                trigger: '.o-sp-breadcrumb',
+                content: 'Go back to the dashboard group config',
                 run: "click",
             },
             {
@@ -79,14 +84,19 @@ registry
                 run: "click",
             },
             {
-                trigger: "img.o-spreadsheet-grid-image",
+                trigger: ".o-spreadsheet-grid-image",
                 content: "Focus a spreadsheet",
                 run: focusFirstSheetInModal,
             },
             {
-                trigger: "img.o-spreadsheet-grid-image",
+                trigger: ".o-spreadsheet-grid-image",
                 content: "Double click a spreadsheet",
                 run: "dblclick",
+            },
+            {
+                trigger: '.o-sp-breadcrumb',
+                content: 'Go back to the dashboard group config',
+                run: "click",
             },
             {
                 trigger: `.o_data_row`,
