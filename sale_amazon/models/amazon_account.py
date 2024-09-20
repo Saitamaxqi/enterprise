@@ -653,7 +653,12 @@ class AmazonAccount(models.Model):
         :rtype: record of `sale.order`
         """
         self.ensure_one()
+        order_vals = self._prepare_order_values(order_data)
+        return self.env['sale.order'].with_context(
+            mail_create_nosubscribe=True
+        ).with_company(self.company_id).create(order_vals)
 
+    def _prepare_order_values(self, order_data):
         # Prepare the order line values.
         shipping_code = order_data.get('ShipServiceLevel')
         shipping_product = self._find_matching_product(
@@ -684,7 +689,6 @@ class AmazonAccount(models.Model):
             order_data, currency, fiscal_position, shipping_product
         )
 
-        # Create the sales order.
         fulfillment_channel = order_data['FulfillmentChannel']
         purchase_date = dateutil.parser.parse(order_data['PurchaseDate']).replace(tzinfo=None)
         order_vals = {
@@ -710,9 +714,7 @@ class AmazonAccount(models.Model):
         }
         if fulfillment_channel == 'AFN' and self.location_id.warehouse_id:
             order_vals['warehouse_id'] = self.location_id.warehouse_id.id
-        return self.env['sale.order'].with_context(
-            mail_create_nosubscribe=True
-        ).with_company(self.company_id).create(order_vals)
+        return order_vals
 
     def _find_or_create_partners_from_data(self, order_data):
         """ Find or create the contact and delivery partners based on the provided order data.
@@ -853,27 +855,6 @@ class AmazonAccount(models.Model):
                 items_data_ += items_batch_data_['OrderItems']
             return items_data_
 
-        def convert_to_order_line_values(**kwargs_):
-            """ Convert and complete a dict of values to comply with fields of `sale.order.line`.
-
-            :param dict kwargs_: The values to convert and complete.
-            :return: The completed values.
-            :rtype: dict
-            """
-            subtotal_ = kwargs_.get('subtotal', 0)
-            quantity_ = kwargs_.get('quantity', 1)
-            return {
-                'name': kwargs_.get('description', ''),
-                'product_id': kwargs_.get('product_id'),
-                'price_unit': subtotal_ / quantity_ if quantity_ else 0,
-                'tax_ids': [(6, 0, kwargs_.get('tax_ids', []))],
-                'product_uom_qty': quantity_,
-                'discount': (kwargs_.get('discount', 0) / subtotal_) * 100 if subtotal_ else 0,
-                'display_type': kwargs_.get('display_type', False),
-                'amazon_item_ref': kwargs_.get('amazon_item_ref'),
-                'amazon_offer_id': kwargs_.get('amazon_offer_id'),
-            }
-
         self.ensure_one()
 
         amazon_order_ref = order_data['AmazonOrderId']
@@ -921,7 +902,8 @@ class AmazonAccount(models.Model):
                 original_promo_discount_subtotal, promo_disc_tax, taxes, currency, fiscal_pos
             )
             amazon_item_ref = item_data['OrderItemId']
-            order_lines_values.append(convert_to_order_line_values(
+            order_lines_values.append(self._convert_to_order_line_values(
+                item_data=item_data,
                 product_id=offer.product_id.id,
                 description=description,
                 subtotal=subtotal,
@@ -958,7 +940,8 @@ class AmazonAccount(models.Model):
                         currency,
                         fiscal_pos,
                     )
-                    order_lines_values.append(convert_to_order_line_values(
+                    order_lines_values.append(self._convert_to_order_line_values(
+                        item_data=item_data,
                         product_id=gift_wrap_product.id,
                         description=_(
                             "[%(gift_wrap_code)s] Gift Wrapping Charges for %(product)s",
@@ -969,7 +952,8 @@ class AmazonAccount(models.Model):
                     ))
                 gift_message = item_gift_info.get('GiftMessageText')
                 if gift_message:
-                    order_lines_values.append(convert_to_order_line_values(
+                    order_lines_values.append(self._convert_to_order_line_values(
+                        item_data=item_data,
                         description=_("Gift message:\n%s", gift_message),
                         display_type='line_note',
                     ))
@@ -996,7 +980,8 @@ class AmazonAccount(models.Model):
                 ship_discount_subtotal = self._recompute_subtotal(
                     origin_ship_disc_subtotal, ship_disc_tax, shipping_taxes, currency, fiscal_pos
                 )
-                order_lines_values.append(convert_to_order_line_values(
+                order_lines_values.append(self._convert_to_order_line_values(
+                    item_data=item_data,
                     product_id=shipping_product.id,
                     description=_(
                         "[%(shipping_code)s] Delivery Charges for %(product)s",
@@ -1008,6 +993,27 @@ class AmazonAccount(models.Model):
                 ))
 
         return order_lines_values
+
+    def _convert_to_order_line_values(self, **kwargs):
+        """ Convert and complete a dict of values to comply with fields of `sale.order.line`.
+
+        :param dict kwargs: The values to convert and complete.
+        :return: The completed values.
+        :rtype: dict
+        """
+        subtotal = kwargs.get('subtotal', 0)
+        quantity = kwargs.get('quantity', 1)
+        return {
+            'name': kwargs.get('description', ''),
+            'product_id': kwargs.get('product_id'),
+            'price_unit': subtotal / quantity if quantity else 0,
+            'tax_ids': [(6, 0, kwargs.get('tax_ids', []))],
+            'product_uom_qty': quantity,
+            'discount': (kwargs.get('discount', 0) / subtotal) * 100 if subtotal else 0,
+            'display_type': kwargs.get('display_type', False),
+            'amazon_item_ref': kwargs.get('amazon_item_ref'),
+            'amazon_offer_id': kwargs.get('amazon_offer_id'),
+        }
 
     def _find_or_create_offer(self, sku, marketplace):
         """ Find or create the amazon offer based on the SKU and marketplace.

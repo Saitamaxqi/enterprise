@@ -113,12 +113,13 @@ class AmazonOffer(models.Model):
                 message_ = ElementTree.SubElement(root_, 'Message')
                 inventory_ = ElementTree.SubElement(message_, 'Inventory')
                 ElementTree.SubElement(inventory_, 'SKU').text = offer_.sku
-                # We consider products in the Amazon location to be FBA. Their quantity is set to 0
-                # as we don't add any fulfillment channel to the feed. Amazon won't  change their
-                # quantity on hand, but by forcing the quantity here, we make sure Amazon will not
-                # consider we are selling it through another channel.
-                free_qty_ = offer_.product_id.free_qty
-                quantity_ = free_qty_ if offer_ not in fba_offers_ and free_qty_ > 0 else 0
+                available_qty = offer_._get_available_product_qty()
+                #  We consider products in the Amazon location to be FBA. Their quantity is set to 0
+                #  as we don't add any fulfillment channel to the feed. Amazon won't change their
+                #  quantity on hand, but by forcing the quantity here, we make sure Amazon will not
+                #  consider we are selling it through another channel.
+                is_fbm = offer_ not in fba_offers_
+                quantity_ = available_qty if is_fbm and available_qty > 0 else 0
                 ElementTree.SubElement(inventory_, 'Quantity').text = str(int(quantity_))
 
         xml_feed = amazon_utils.build_feed(account, 'Inventory', build_feed_messages)
@@ -139,3 +140,14 @@ class AmazonOffer(models.Model):
                 ', '.join(self.mapped('sku')),
             )
             self.write({'amazon_sync_status': 'processing', 'amazon_feed_ref': feed_ref})
+
+    def _get_available_product_qty(self):
+        """ Retrieve the current available and free product quantity.
+
+        This hook can be overridden to set a finer quantity.
+
+        :return: The free quantity.
+        :rtype: float
+        """
+        self.ensure_one()
+        return self.product_id.free_qty
