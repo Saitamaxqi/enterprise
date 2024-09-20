@@ -20,6 +20,9 @@ Install this if you are using the Point of Sale app with restaurant in Germany.
         'point_of_sale._assets_pos': [
             'l10n_de_pos_res_cert/static/src/**/*',
         ],
+        'web.assets_tests': [
+            'l10n_de_pos_res_cert/static/tests/tours/**/*',
+        ],
     },
     'license': 'OEEL-1',
 }
