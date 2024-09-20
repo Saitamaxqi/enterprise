@@ -127,6 +127,22 @@ class AccountMove(models.Model):
             return self.action_send_and_print()
         return res
 
+    def button_draft(self):
+        """ When an invoice sent to DGI returns errors (e.g., wrong partner or other data issues), users can reset it
+        to draft and make corrections. However, changing the partner triggers a validation error because the invoice
+        lacks a valid latam document number (only provided by DGI after processing). To avoid this, resetting the
+        invoice to draft clears the invoice name, allowing users to fix any errors without triggering the validation
+        """
+        super().button_draft()
+        self.filtered(
+            lambda x: x.country_code == "UY" and
+            x.journal_id.l10n_uy_edi_type == "electronic" and
+            x.is_sale_document() and (
+                not x.l10n_uy_edi_document_id or
+                x.l10n_uy_edi_document_id.state not in ["received", "accepted", "rejected"]
+            )
+        ).name = "/"
+
     def _is_manual_document_number(self):
         # EXTEND l10n_latam_invoice_document
         """ If we have an UY Sales Manual journal then the document number should always be manually add by the user """
