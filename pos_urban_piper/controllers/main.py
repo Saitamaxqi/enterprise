@@ -167,11 +167,13 @@ class PosUrbanPiperController(http.Controller):
                 'note': charge_product.sudo().name,
                 'uuid': str(uuid.uuid4()),
             }))
+        number = str((pos_config_sudo.current_session_id.id % 10) * 100 + pos_config_sudo.current_session_id.sequence_number % 100).zfill(3)
         delivery_order = request.env["pos.order"].sudo().create({
             'name': order_reference,
             'partner_id': customer_sudo.id,
             'pos_reference': order_reference,
-            'tracking_number': str((pos_config_sudo.current_session_id.id % 10) * 100 + pos_config_sudo.current_session_id.sequence_number % 100).zfill(3),
+            'sequence_number': number,
+            'tracking_number': number,
             'config_id': pos_config_sudo.id,
             'session_id': pos_config_sudo.current_session_id.id,
             'company_id': pos_config_sudo.company_id.id,

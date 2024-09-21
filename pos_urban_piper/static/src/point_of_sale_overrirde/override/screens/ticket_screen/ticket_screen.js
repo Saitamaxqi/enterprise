@@ -191,8 +191,7 @@ patch(TicketScreen.prototype, {
     },
 
     fetchOrderOtp() {
-        return JSON.parse(this.order.delivery_json)?.order?.details?.ext_platforms?.[0].extras
-            ?.order_otp;
+        return JSON.parse(this.order.delivery_json)?.order?.details?.ext_platforms?.[0].id;
     },
 
     /**

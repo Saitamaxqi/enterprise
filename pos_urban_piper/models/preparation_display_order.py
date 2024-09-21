@@ -12,7 +12,7 @@ class PosPreparationDisplayOrder(models.Model):
                 'details', {}).get('ext_platforms') if self.pos_order_id.delivery_json else False
             order_otp = ''
             if platform_data:
-                order_otp = platform_data[0].get('extras', {}).get('order_otp', '')
+                order_otp = platform_data[0].get('id', {})
             order.update({
                 'delivery_status': self.pos_order_id.delivery_status,
                 'delivery_provider_id': self.pos_order_id.delivery_provider_id.id,
