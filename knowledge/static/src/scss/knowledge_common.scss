@@ -73,27 +73,6 @@ $knowledge-bg--hover: $gray-300;
         cursor: col-resize;
         touch-action: none;
     }
-    .o_widget_knowledge_comments_handler {
-        z-index: 1;
-    }
-    // We are applying the style only when the anchors are displayed on the user's screen.
-    // This way when printing the style is not applied.
-    @media screen {
-        .o_widget_knowledge_comments_handler ~ .o_knowledge_body .o_field_knowledge_article_html_field {
-            .knowledge-thread-comment {
-                transition: background-color 0.3s ease-in-out;
-                &.knowledge-thread-highlighted-comment {
-                    background-color: rgba($knowledge-bg--active, 0.171);
-                    .knowledge-thread-comment:not(.focused-comment) {
-                        background-color: initial;
-                    }
-                    &.focused-comment {
-                        background-color: $knowledge-bg--active;
-                    }
-                }
-            }
-        }
-    }
     // = Cover
     // --------------------------------------------------------------------------
     .o_knowledge_cover {

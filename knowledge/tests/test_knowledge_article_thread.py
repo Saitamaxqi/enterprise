@@ -100,3 +100,24 @@ class TestKnowledgeArticleThreadCrud(KnowledgeCommonBusinessCase):
             """
         })
         self.assertEqual("Should be Purified", new_thread.article_anchor_text)
+
+
+class TestKnowledgeArticleThreadMail(KnowledgeCommonBusinessCase):
+
+    def test_knowledge_article_thread_message_post_filtered_partners(self):
+        new_thread = self.env['knowledge.article.thread'].create({
+            'article_id': self.article_workspace.id,
+            'article_anchor_text': """
+                <span data-id="1"
+                    class="knowledge-thread-comment knowledge-thread-highlighted-comment">
+                    <iframe src="www.pwned.com">Anchor</iframe><script src="www.extrapwned.com"/>Text
+                </span>
+            """,
+        })
+        self.env["mail.followers"]._insert_followers("knowledge.article.thread", new_thread.ids, (self.partner_portal + self.env.user.partner_id + self.partner_admin).ids)
+        message_posted = new_thread.message_post(body="Prout")
+
+        self.assertFalse(message_posted.partner_ids, "No specific partners to notify")
+
+        message_posted = new_thread.message_post(body="Prout", partner_ids=(self.partner_portal + self.partner_admin).ids)
+        self.assertEqual(message_posted.partner_ids.ids, (self.partner_portal + self.partner_admin).ids, "Only specifically tagged partners should be notified")

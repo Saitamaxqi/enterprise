@@ -91,12 +91,12 @@ class TestKnowledgeArticleThreadPermissions(KnowledgeArticlePermissionsCase):
 
         # No access to the article
         with self.assertRaises(AccessError):
-            base_thread.toggle_thread()
+            base_thread.write({'is_resolved': True})
 
         base_thread = self.workspace_thread.with_env(self.env)
         # Access to the article
         self.assertFalse(base_thread.is_resolved)
-        base_thread.toggle_thread()
+        base_thread.write({'is_resolved': True})
         self.assertTrue(base_thread.is_resolved)
 
     @users('portal_test')

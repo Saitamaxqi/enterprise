@@ -13,13 +13,12 @@ from werkzeug.exceptions import Forbidden
 class ArticleThreadController(KnowledgeController):
 
     @http.route('/knowledge/thread/create', type='json', auth='user')
-    def create_thread(self, article_id, article_anchor_text=""):
+    def create_thread(self, article_id, article_anchor_text="", fields=["id", "article_anchor_text"]):
         article_thread = request.env['knowledge.article.thread'].create({
             'article_id': article_id,
             'article_anchor_text': article_anchor_text,
         })
-
-        return {'id': article_thread.id, 'article_anchor_text': article_thread.article_anchor_text}
+        return {field: article_thread[field] for field in fields}
 
     @http.route('/knowledge/thread/resolve', type='http', auth='user')
     def resolve_thread(self, res_id, token):
@@ -33,30 +32,27 @@ class ArticleThreadController(KnowledgeController):
 
 class KnowledgeThreadController(ThreadController):
 
-    @http.route()
-    def mail_thread_messages(self, thread_model, thread_id, **kwargs):
-        """Portal users doesn't have access to the mail.message model but we want them to be able to
-        see the messages from a `knowledge.article.thread` on which they can access, if access rules
-        applies to them.
-        So for them, we check if they indeed have access to the article linked to the thread and if
-        that's the case we sudo the search to return the messages.
-        """
-        if request.env.user._is_portal() and thread_model == 'knowledge.article.thread':
-            thread = request.env['knowledge.article.thread'].browse(thread_id).exists()
-            if not thread or not thread.article_id.user_has_access:
-                raise Forbidden()
-            domain = [
-                ("res_id", "=", int(thread_id)),
-                ("model", "=", thread_model),
-                ("message_type", "=", "comment"), # only user input
-                ("subtype_id", "=", request.env.ref('mail.mt_comment').id), # comments in threads are sent as notes
-                ("is_internal", "=", False) # respect internal users only flag
-            ]
-            res = request.env["mail.message"].sudo()._message_fetch(domain, **kwargs)
+    @http.route("/knowledge/threads/messages", methods=["POST"], type="json", auth="user")
+    def mail_threads_messages(self, thread_model, thread_ids, limit=30):
+        thread_ids = [int(thread_id) for thread_id in thread_ids]
+        output = {}
+        for thread_id in thread_ids:
+            domain = self._prepare_thread_messages_domain(thread_model, thread_id)
+            # TODO ABD optimize duration. Currently very slow because of mail.message._to_store
+            res = request.env["mail.message"]._message_fetch(domain, limit=limit)
             messages = res.pop("messages")
-            return {
+            output[thread_id] = {
                 **res,
                 "data": Store(messages, for_current_user=True).get_result(),
                 "messages": Store.many_ids(messages),
             }
-        return super().mail_thread_messages(thread_model, thread_id, **kwargs)
+        return output
+
+    def _prepare_thread_messages_domain(self, thread_model, thread_id):
+        return [
+            ("res_id", "=", int(thread_id)),
+            ("model", "=", thread_model),
+            ("message_type", "=", "comment"),  # only user input
+            ("subtype_id", "=", request.env.ref('mail.mt_comment').id),  # comments in threads are sent as notes
+            ("is_internal", "=", False)  # respect internal users only flag
+        ]

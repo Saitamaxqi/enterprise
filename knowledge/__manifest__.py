@@ -63,8 +63,8 @@
             ('remove', 'knowledge/static/src/components/media_dialog/**/*'),  # to remove
             ('remove', 'knowledge/static/src/components/video_selector_dialog/**/*'),  # to remove
             'knowledge/static/src/editor/**/*',
-            'knowledge/static/src/discuss/**/*',
-            'knowledge/static/src/emoji_picker/**/*',
+            'knowledge/static/src/comments/**/*',
+            'knowledge/static/src/mail/**/*',
             'knowledge/static/src/search_model/**/*',
             ('after', 'web/static/src/views/form/form_controller.js', 'knowledge/static/src/web/form_controller_patch.js'),
             'knowledge/static/src/web/**/*',
