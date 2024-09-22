@@ -1,10 +1,12 @@
 import { Component, onWillStart, useEffect, useRef, useState } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { groupBy } from "@web/core/utils/arrays";
-import { HtmlField } from "@web_editor/js/backend/html_field";
 import { Record } from "@web/model/record";
 import { useService } from "@web/core/utils/hooks";
-
+import { KnowledgeHtmlViewer } from "@knowledge/components/knowledge_html_viewer/knowledge_html_viewer";
+import { WithSubEnv } from "@knowledge/components/with_sub_env/with_sub_env";
+import { READONLY_MAIN_EMBEDDINGS } from "@html_editor/others/embedded_components/embedding_sets";
+import { KNOWLEDGE_READONLY_EMBEDDINGS } from "@knowledge/editor/embedded_components/embedding_sets";
 
 /**
  * This component will display an article template picker. The user will be able
@@ -15,7 +17,8 @@ export class ArticleTemplatePickerDialog extends Component {
     static components = {
         Dialog,
         Record,
-        HtmlField
+        KnowledgeHtmlViewer,
+        WithSubEnv
     };
     static props = {
         onLoadTemplate: { type: Function },
@@ -88,12 +91,12 @@ export class ArticleTemplatePickerDialog extends Component {
      * @param {Record} record
      * @returns {Object}
      */
-    getHtmlFieldProps(record) {
+    getHtmlViewerConfig(record) {
         return {
-            record,
-            readonly: true,
-            name: "template_preview",
-            wysiwygOptions: {},
+            config: {
+                value: record.data.template_preview,
+                embeddedComponents: [...READONLY_MAIN_EMBEDDINGS, ...KNOWLEDGE_READONLY_EMBEDDINGS],
+            },
         };
     }
 

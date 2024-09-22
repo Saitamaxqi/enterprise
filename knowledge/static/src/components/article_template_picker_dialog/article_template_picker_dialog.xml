@@ -39,7 +39,9 @@
                                     t-out="slot.record.data.icon"
                                     class="o_article_template_emoji"/>
                                 <div class="o_article_template_body mt-3 pe-none">
-                                    <HtmlField t-props="this.getHtmlFieldProps(slot.record)"/>
+                                    <WithSubEnv model="slot.record.model">
+                                        <KnowledgeHtmlViewer t-props="this.getHtmlViewerConfig(slot.record)"/>
+                                    </WithSubEnv>
                                 </div>
                             </div>
                         </div>

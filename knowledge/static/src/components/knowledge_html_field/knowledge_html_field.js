@@ -10,6 +10,7 @@ import {
 import { registry } from "@web/core/registry";
 import { useState, useSubEnv } from "@odoo/owl";
 import { KnowledgeHtmlViewer } from "../knowledge_html_viewer/knowledge_html_viewer";
+import { KnowledgeWysiwyg } from "../knowledge_wysiwyg/knowledge_wysiwyg";
 import { CallbackRecorder } from "@web/search/action_hook";
 import { useRecordObserver } from "@web/model/relational_model/utils";
 import { useService } from "@web/core/utils/hooks";
@@ -17,6 +18,7 @@ import { useService } from "@web/core/utils/hooks";
 export class KnowledgeHtmlField extends HtmlField {
     static components = {
         ...HtmlField.components,
+        Wysiwyg: KnowledgeWysiwyg,
         HtmlViewer: KnowledgeHtmlViewer,
     };
     setup() {

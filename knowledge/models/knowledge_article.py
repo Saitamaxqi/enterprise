@@ -2820,22 +2820,26 @@ class Article(models.Model):
             return str(ref(match.group('xml_id')))
 
         fragment = html.fragment_fromstring(self.template_body, create_parent='div')
-        for element in fragment.xpath('//*[@data-behavior-props]'):
-            # When encoding the "behavior props", we find and replace the function
+        for element in fragment.xpath('//*[@data-embedded="view"]'):
+            # When encoding the "embedded props", we find and replace the function
             # calls of `ref` with the ids returned by the given `ref` function for
             # the given xml ids. The generated HTML will then only contain ids.
             # Example:
-            # When the "behavior props" contains `ref('knowledge.article_template_1')`,
+            # When the "embedded props" contains `ref('knowledge.article_template_1')`,
             # we replace that string occurrence with the id returned by the given
             # `ref` function evaluated with the xml_id 'knowledge.article_template_1'.
-            behavior_props = ast.literal_eval(re.sub(
+            embedded_props = ast.literal_eval(re.sub(
                 r'(?<![\w])ref\(\'(?P<xml_id>\w+\.\w+)\'\)',
                 transform_xmlid_to_res_id,
-                element.get('data-behavior-props')))
-            element.set('data-behavior-props',
-                parse.quote(json.dumps(behavior_props), safe="()*!'"))
-            if 'o_knowledge_behavior_type_article' in element.get('class'):
-                element.set('href', '/knowledge/article/%s' % (behavior_props.get('article_id')))
+                element.get('data-embedded-props')))
+            element.set('data-embedded-props', json.dumps(embedded_props))
+        for element in fragment.xpath('//*[contains(@class, "o_knowledge_article_link")]'):
+            article_id = ast.literal_eval(re.sub(
+                r'(?<![\w])ref\(\'(?P<xml_id>\w+\.\w+)\'\)',
+                transform_xmlid_to_res_id,
+                element.get('data-res_id')))
+            element.set('href', '/knowledge/article/%s' % (article_id))
+            element.set('data-res_id', '%s' % (article_id))
 
         return ''.join(html.tostring(child, encoding='unicode', method='html') \
             for child in fragment.getchildren()) # unwrap the elements from the parent node
