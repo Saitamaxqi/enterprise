@@ -344,13 +344,23 @@ class HrPayslip(models.Model):
             return _("This payslip is not validated. This is not a legal document.")
         return False
 
-    @api.depends('worked_days_line_ids', 'input_line_ids')
+    @api.depends(lambda self: self._get_recomputing_fields())
     def _compute_line_ids(self):
         if not self.env.context.get("payslip_no_recompute"):
             return
         payslips = self.filtered(lambda p: p.line_ids and p.state in ['draft', 'verify'])
-        payslips.line_ids.unlink()
-        self.env['hr.payslip.line'].create(payslips._get_payslip_lines())
+        for payslip in payslips:
+            lines_vals = []
+            if payslip.employee_id and payslip.contract_id and payslip.date_from and payslip.date_to and payslip.struct_id:
+                lines_vals = [(0, 0, line_vals) for line_vals in payslip._get_payslip_lines()]
+            payslip.line_ids = [(5, 0, 0)] + lines_vals
+
+    def _get_recomputing_fields(self):
+        return [
+            'employee_id', 'contract_id', 'struct_id',
+            'date_from', 'date_to', 'worked_days_line_ids',
+            'input_line_ids'
+        ]
 
     @api.depends('line_ids.total')
     def _compute_basic_net(self):
