@@ -72,7 +72,7 @@ class AccountOnlineAccount(models.Model):
             if len(online_account.journal_ids) > 1:
                 raise ValidationError(_('You cannot have two journals associated with the same Online Account.'))
 
-    def _assign_journal(self, swift_code=False):
+    def _assign_journal(self, swift_code=False, journal_type='bank'):
         """
         This method allows to link an online account to a journal with the following heuristics
         Also, Create and assign bank & swift/bic code if odoofin returns one
@@ -121,12 +121,13 @@ class AccountOnlineAccount(models.Model):
         elif existing_journal:
             journal = existing_journal
         else:
+            new_journal_code = self.env['account.journal'].get_next_bank_cash_default_code(journal_type, self.env.company)
             journal = self.env['account.journal'].create({
                 'name': self.account_number or self.display_name,
-                'code': self.env['account.journal'].get_next_bank_cash_default_code('bank', self.env.company),
-                'type': 'bank',
+                'code': new_journal_code,
+                'type': journal_type,
                 'company_id': self.env.company.id,
-                'currency_id': currency_id,
+                'currency_id': self.currency_id.id != self.env.company.currency_id.id and self.currency_id.id or False,
             })
 
         self.journal_ids = journal
@@ -380,23 +381,30 @@ class AccountOnlineLink(models.Model):
     ##########################
 
     @api.model
-    def create_new_bank_account_action(self):
-        view_id = self.env.ref('account.setup_bank_account_wizard').id
-        ctx = self.env.context
+    def create_new_bank_account_action(self, journal_type):
+        assert journal_type in ('bank', 'credit')
+        if journal_type == 'bank':
+            view_xml_id = 'account.setup_bank_account_wizard'
+            name = _('Setup Bank Account')
+        else:
+            view_xml_id = 'account.setup_credit_card_account_wizard'
+            name = _('Setup Credit Card Account')
+
+        ctx = {**self.env.context, 'journal_type': journal_type}
         # if this was called from kanban box, active_model is in context
         if self.env.context.get('active_model') == 'account.journal':
             ctx = {**ctx, 'default_linked_journal_id': ctx.get('active_id', False), 'dialog_size': 'medium'}
         return {
             'type': 'ir.actions.act_window',
-            'name': _('Setup Bank Account'),
+            'name': name,
             'res_model': 'account.setup.bank.manual.config',
             'target': 'new',
             'view_mode': 'form',
             'context': ctx,
-            'views': [[view_id, 'form']]
+            'views': [[self.env.ref(view_xml_id).id, 'form']],
         }
 
-    def _link_accounts_to_journals_action(self, swift_code):
+    def _link_accounts_to_journals_action(self, swift_code, journal_type):
         """
         This method opens a wizard allowing the user to link
         his bank accounts with new or existing journal.
@@ -408,13 +416,13 @@ class AccountOnlineLink(models.Model):
         })
 
         return {
-            "name": _("Select a Bank Account"),
+            "name": _("Select a Bank Account") if journal_type == 'bank' else _("Select a Credit Card Account"),
             "type": "ir.actions.act_window",
             "res_model": "account.bank.selection",
             "views": [[False, "form"]],
             "target": "new",
             "res_id": account_bank_selection_wizard.id,
-            'context': dict(self.env.context, swift_code=swift_code),
+            'context': dict(self.env.context, swift_code=swift_code, journal_type=journal_type),
         }
 
     @api.model
@@ -940,7 +948,9 @@ class AccountOnlineLink(models.Model):
     ################################
 
     def success(self, mode, data):
+        journal_type = 'bank'
         if data:
+            journal_type = data.pop('journal_type', None) or 'bank'
             self.write(data)
             # Provider_data is extremely important and must be saved as soon as we received it
             # as it contains encrypted credentials from external provider and if we loose them we
@@ -956,7 +966,7 @@ class AccountOnlineLink(models.Model):
             return {'type': 'ir.actions.client', 'tag': 'reload'}
         try:
             method_name = '_success_%s' % mode
-            method = getattr(self, method_name)
+            method = getattr(self.with_context(journal_type=journal_type), method_name)
         except AttributeError:
             message = _("This version of Odoo appears to be outdated and does not support the '%s' sync mode. "
                         "Installing the latest update might solve this.", mode)
@@ -979,7 +989,7 @@ class AccountOnlineLink(models.Model):
                 return {'type': 'ir.actions.client', 'tag': 'reload'}
             new_account, swift_code = online_link._fetch_accounts(online_identifier=online_identifier)
             if new_account:
-                new_account._assign_journal(swift_code)
+                new_account._assign_journal(swift_code, data.get('journal_type', 'bank'))
                 action = online_link._fetch_transactions(accounts=new_account, check_duplicates=True)
                 return action or self.env['ir.actions.act_window']._for_xml_id('account.open_account_journal_dashboard_kanban')
             raise UserError(_("The consent for the selected account has expired."))
@@ -1007,9 +1017,9 @@ class AccountOnlineLink(models.Model):
         self._log_information(state='connected')
         account_online_accounts, swift_code = self._fetch_accounts()
         if account_online_accounts and len(account_online_accounts) == 1:
-            account_online_accounts._assign_journal(swift_code)
+            account_online_accounts._assign_journal(swift_code, self.env.context.get('journal_type', 'bank'))
             return self._fetch_transactions(accounts=account_online_accounts, check_duplicates=True)
-        return self._link_accounts_to_journals_action(swift_code)
+        return self._link_accounts_to_journals_action(swift_code, self.env.context.get('journal_type'))
 
     def _success_updateCredentials(self):
         self.ensure_one()
@@ -1028,7 +1038,7 @@ class AccountOnlineLink(models.Model):
     # action buttons #
     ##################
 
-    def action_new_synchronization(self, preferred_inst=None, journal_id=False):
+    def action_new_synchronization(self, preferred_inst=None, journal_id=False, journal_type='bank'):
         # Search for an existing link that was not fully connected
         online_link = self
         if not online_link or online_link.provider_data:
@@ -1036,7 +1046,7 @@ class AccountOnlineLink(models.Model):
         # If not found, create a new one
         if not online_link or online_link.provider_data:
             online_link = self.create({})
-        return online_link._open_iframe('link', preferred_institution=preferred_inst, journal_id=journal_id)
+        return online_link._open_iframe('link', preferred_institution=preferred_inst, journal_id=journal_id, journal_type=journal_type)
 
     def action_update_credentials(self):
         return self._open_iframe('updateCredentials')
@@ -1049,7 +1059,7 @@ class AccountOnlineLink(models.Model):
     def action_reconnect_account(self):
         return self._open_iframe('reconnect')
 
-    def _open_iframe(self, mode='link', include_param=None, preferred_institution=False, journal_id=False):
+    def _open_iframe(self, mode='link', include_param=None, preferred_institution=False, journal_id=False, journal_type='bank'):
         self.ensure_one()
         if self.client_id and self.sudo().refresh_token:
             try:
@@ -1077,6 +1087,7 @@ class AccountOnlineLink(models.Model):
                     'redirect_reconnection': self.env.context.get('redirect_reconnection'),
                     'serverVersion': odoo.release.serie,
                     'mfa_type': self.env.user._mfa_type(),
+                    'journal_type': journal_type,
                 }
             },
             'context': {

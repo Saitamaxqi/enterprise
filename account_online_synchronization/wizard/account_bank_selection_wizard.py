@@ -20,7 +20,7 @@ class AccountBankSelection(models.TransientModel):
     def sync_now(self):
         if not self.selected_account:
             self.selected_account = self.account_online_account_ids[0]
-        self.selected_account._assign_journal(self.env.context.get('swift_code'))
+        self.selected_account._assign_journal(self.env.context.get('swift_code'), self.env.context.get('journal_type', 'bank'))
         # Get transactions for that account
         action = self.account_online_link_id._fetch_transactions(accounts=self.selected_account)
         if not action:
