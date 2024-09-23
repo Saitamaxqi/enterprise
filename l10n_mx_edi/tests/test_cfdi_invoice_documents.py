@@ -1319,8 +1319,7 @@ class TestCFDIInvoiceWorkflow(TestMxEdiCommon):
         with self.with_mocked_pac_sign_success():
             invoice.l10n_mx_edi_cfdi_invoice_try_update_payments()
 
-        # We don't want to send 'Publico En General' payments.
-        self.assertEqual(len(invoice.l10n_mx_edi_invoice_document_ids), 1)
+        self.assertEqual(len(invoice.l10n_mx_edi_invoice_document_ids), 2)
 
     @freeze_time('2017-01-01')
     def test_invoice_cancellation_01(self):

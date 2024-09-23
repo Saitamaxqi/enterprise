@@ -622,10 +622,8 @@ class AccountMove(models.Model):
                 # In CFDI 3.3 - rule 2.7.1.43 which establish that
                 # invoice payment term should be PPD as soon as the due date
                 # is after the last day of  the month (the month of the invoice date).
-                # Also, 'to public' invoice should remain PUE.
                 if (
                     move.move_type == 'out_invoice'
-                    and not move.l10n_mx_edi_cfdi_to_public
                     and (
                         move.invoice_date_due.month > move.invoice_date.month
                         or move.invoice_date_due.year > move.invoice_date.year
@@ -2027,7 +2025,7 @@ class AccountMove(models.Model):
                               + pay_rec_lines.matched_credit_ids.credit_move_id
             invoices = reconciled_amls.move_id.filtered(lambda x: x.l10n_mx_edi_is_cfdi_needed and x.is_invoice())
             if any(
-                not invoice.l10n_mx_edi_cfdi_state or invoice.l10n_mx_edi_cfdi_customer_rfc == 'XAXX010101000'
+                not invoice.l10n_mx_edi_cfdi_state
                 for invoice in invoices
             ):
                 continue
