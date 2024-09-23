@@ -15,11 +15,11 @@
                 <t t-if="props.model.data.routingError">
                     <t t-call="web_map.MapRenderer.RountingUnavailable"/>
                 </t>
+                <t t-elif="props.model.data.fetchingCoordinates">
+                    <t t-call="web_map.MapRenderer.FetchingCoordinates"/>
+                </t>
                 <t t-elif="props.model.metaData.routing and !props.model.data.useMapBoxAPI">
                     <t t-call="web_map.MapRenderer.NoMapToken"/>
-                </t>
-                <t t-if="props.model.data.fetchingCoordinates">
-                    <t t-call="web_map.MapRenderer.FetchingCoordinates"/>
                 </t>
                 <div class="o-map-renderer--container h-100" t-ref="mapContainer"/>
             </div>
