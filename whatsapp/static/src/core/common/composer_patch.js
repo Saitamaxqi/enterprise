@@ -30,15 +30,15 @@ patch(Composer.prototype, {
         return super.isMultiUpload;
     },
     get placeholder() {
-        if (
-            this.thread &&
-            this.thread.channel_type === "whatsapp" &&
-            !this.state.active &&
-            this.props.composer.threadExpired
-        ) {
-            return _t(
-                "Can't send message as it has been 24 hours since the last message of the User."
-            );
+        if (this.thread?.channel_type === "whatsapp") {
+            if (!this.state.active && this.props.composer.threadExpired) {
+                return _t(
+                    "Can't send message as it has been 24 hours since the last message of the User."
+                );
+            }
+            return _t("Answer as %(whatsapp_account_name)s", {
+                whatsapp_account_name: this.thread.whatsapp_account_name,
+            });
         }
         return super.placeholder;
     },
