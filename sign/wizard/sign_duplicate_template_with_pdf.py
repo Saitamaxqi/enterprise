@@ -27,13 +27,14 @@ class SignDuplicateTemplatePDF(models.TransientModel):
         if not self._compare_page_templates(self.original_template_id.datas, self.new_pdf):
             raise UserError(_("The template has more pages than the current file, it can't be applied."))
 
+        self.original_template_id.check_access('write')
         pdf = self.env['ir.attachment'].create({
             'name': self.new_template or self.original_template_id.name,
             'datas': self.new_pdf,
             'type': 'binary'
         })
 
-        new_template = self.original_template_id.copy({
+        new_template = self.original_template_id.sudo().copy({
             'name': pdf.name,
             'attachment_id': pdf.id,
             'active': True,

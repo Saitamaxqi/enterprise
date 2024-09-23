@@ -122,7 +122,13 @@ class testAttachmentAccess(TransactionCase):
             'new_template': 'dup template',
         })
 
-        template_dup.duplicate_template_with_pdf()
+        # Current user is not part of authorized users -> duplicate should fail
+        with self.assertRaises(AccessError):
+            template_dup.with_user(self.user).duplicate_template_with_pdf()
+
+        # Add user to authorized users
+        template.write({'authorized_ids': [(4, self.user.id)]})
+        template_dup.with_user(self.user).duplicate_template_with_pdf()
 
         # Modify access rules as admin
         new_template = self.env['sign.template'].search([('name', '=', 'dup template')])
