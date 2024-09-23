@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import ast
@@ -7,7 +6,6 @@ import json
 
 from odoo import api, fields, models
 from odoo.exceptions import UserError
-from odoo.tools import format_list
 
 
 class ProjectProject(models.Model):
@@ -38,11 +36,9 @@ class ProjectProject(models.Model):
             if not different_company_slots:
                 continue
             raise UserError(self.env._(
-                "You cannot update the company for project %(project_name)s as it's linked to shifts in another company.\n"
-                "If you want to change the company for another, leave the project's company blank, transfer shifts %(slots_names)s "
-                "to the destination company and then change the project's company.",
+                "You cannot update the company for the %(project_name)s project because it’s tied to shifts in another company.\n"
+                "To change it, first clear the company field for the project. Then move the shifts to the new company, and update the project's company.",
                 project_name=project.name,
-                slots_names=format_list(self.env, [slot.display_name for slot in different_company_slots]),
             ))
 
     def action_project_forecast_from_project(self):
