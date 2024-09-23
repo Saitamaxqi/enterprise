@@ -194,7 +194,7 @@ class AccountTaxReportHandler(models.AbstractModel):
             for move in company_closing_moves:
                 # When coming from post and that the current move is the closing of the current company we don't want to
                 # write on it again
-                if from_post and move == closing_moves_by_company[self.env.company]:
+                if from_post and move == closing_moves_by_company.get(self.env.company):
                     continue
 
                 # get tax entries by tax_group for the period defined in options
