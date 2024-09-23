@@ -222,6 +222,8 @@ class ExtractMixin(models.AbstractModel):
             for record in records_to_preupdate:
                 record._try_to_check_ocr_status()
 
+        return [(rec.extract_state, rec.extract_error_message) for rec in self]
+
     def _get_user_infos(self):
         user_infos = {
             'user_lang': self.env.user.lang,

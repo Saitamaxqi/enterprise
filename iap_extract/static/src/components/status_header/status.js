@@ -1,9 +1,8 @@
 /** @odoo-module **/
 
-import { Component, onRendered, onWillDestroy, onWillStart, useState } from "@odoo/owl";
+import { Component, onWillDestroy, onWillStart, onWillUpdateProps, useState } from "@odoo/owl";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 
-import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 import { registry } from "@web/core/registry";
 
@@ -15,78 +14,107 @@ export class StatusHeader extends Component {
 
     setup() {
         this.state = useState({
-          status: this.props.record.data.extract_state,
-          error_message: this.props.record.data.extract_error_message,
-          retry_loading: false,
+            status: this.props.record.data.extract_state,
+            errorMessage: this.props.record.data.extract_error_message,
+            retryLoading: false,
+            checkStatusLoading: false,
         });
-        if (this.state.status == "waiting_validation") {
-            this.state.status = "do_not_show";
-        };
         this.orm = useService("orm");
         this.action = useService("action");
         this.busService = this.env.services.bus_service;
 
         onWillStart(() => {
-            const document_uuid = this.props.record.data.extract_document_uuid;
-            this.subscribeToChannel(document_uuid);
+            this.subscribeToChannel(this.props.record.data.extract_document_uuid);
             this.busService.subscribe("state_change", ({status, error_message})=> {
                 this.state.status = status;
-                this.state.error_message = error_message;
+                this.state.errorMessage = error_message;
             });
+            this.enableTimeout();
         });
+
         onWillDestroy(() => {
             this.busService.deleteChannel(this.channelName);
             clearTimeout(this.timeoutId);
         });
-        onRendered(() => this.enableTimeout());
-    };
 
-    subscribeToChannel(document_uuid) {
+        onWillUpdateProps((nextProps) => {
+            if (nextProps.record.id !== this.props.record.id) {
+                this.state.errorMessage = nextProps.record.data.extract_error_message;
+                this.state.status = nextProps.record.data.extract_state;
+                this.subscribeToChannel(nextProps.record.data.extract_document_uuid);
+                this.enableTimeout();
+            }
+        });
+    }
+
+    subscribeToChannel(documentUUID) {
+        if (!documentUUID) {
+            return;
+        }
         this.busService.deleteChannel(this.channelName);
-        this.channelName = `extract.mixin.status#${document_uuid}`;
+        this.channelName = `extract.mixin.status#${documentUUID}`;
         this.busService.addChannel(this.channelName);
     }
 
-    getDocumentType() {
-        const modelToName = {
-            'account.move': _t('invoice'),
-            'account.bank.statement': _t('statement'),
-            'hr.candidate': _t('resume'),
-            'hr.expense': _t('expense'),
-        }
-        return modelToName[this.props.record.resModel] ?? _t("document");
-    }
-
     enableTimeout () {
-        if (!['waiting_extraction', 'extract_not_ready'].includes(this.state.status)) return;
+        if (!['waiting_extraction', 'extract_not_ready'].includes(this.state.status)) {
+            return;
+        }
 
         clearTimeout(this.timeoutId);
 
         this.timeoutId = setTimeout(async () => {
             if (['waiting_extraction', 'extract_not_ready'].includes(this.state.status)) {
-                await this.orm.call(this.props.record.resModel, "check_ocr_status", [this.props.record.resId], {});
-            };
+                const [status, errorMessage] = (await this.orm.call(
+                    this.props.record.resModel,
+                    "check_ocr_status",
+                    [this.props.record.resId],
+                    {}
+                ))[0];
+                this.state.status = status;
+                this.state.errorMessage = errorMessage;
+            }
         }, CHECK_OCR_WAIT_DELAY);
-    };
+    }
 
-    checkOcrStatus = async () => await this.orm.call(this.props.record.resModel, "check_ocr_status", [this.props.record.resId], {});
+    async checkOcrStatus() {
+        this.state.checkStatusLoading = true;
+        const [status, errorMessage] = (await this.orm.call(
+            this.props.record.resModel,
+            "check_ocr_status",
+            [this.props.record.resId],
+            {}
+        ))[0];
+        if (status === "waiting_validation") {
+            await this.refreshPage();
+            return;
+        }
+        this.state.status = status;
+        this.state.errorMessage = errorMessage;
+        this.state.checkStatusLoading = false;
+    }
 
-    refreshPage = () => window.location.reload();
+    async refreshPage() {
+        await this.action.switchView("form", {
+            resId: this.props.record.resId,
+            resIds: this.props.record.resIds
+        });
+    }
 
     async buyCredits() {
         const actionData = await this.orm.call(this.props.record.resModel, "buy_credits", [this.props.record.resId], {});
         this.action.doAction(actionData);
-    };
+    }
 
     async retryDigitalization() {
-        this.state.retry_loading = true;
-        const [status, error_message, document_uuid] = await this.orm.call(this.props.record.resModel, "action_manual_send_for_digitization", [this.props.record.resId], {});
-        this.subscribeToChannel(document_uuid);
+        this.state.retryLoading = true;
+        const [status, errorMessage, documentUUID] = await this.orm.call(this.props.record.resModel, "action_manual_send_for_digitization", [this.props.record.resId], {});
+        this.subscribeToChannel(documentUUID);
         this.state.status = status;
-        this.state.error_message = error_message;
-        this.state.retry_loading = false;
+        this.state.errorMessage = errorMessage;
+        this.state.retryLoading = false;
         this.enableTimeout();
-    };
-};
+    }
+}
 
 registry.category("fields").add("extract_state_header", {component: StatusHeader});

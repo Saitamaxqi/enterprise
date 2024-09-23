@@ -357,7 +357,7 @@ msgstr ""
 #. module: iap_extract
 #. odoo-javascript
 #: code:addons/iap_extract/static/src/components/status_header/status.xml:0
-msgid "You don't have enough credit to extract data from your"
+msgid "You don't have enough credit to extract data from your document."
 msgstr ""
 
 #. module: iap_extract
@@ -371,36 +371,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/iap_extract/models/extract_mixin.py:0
 msgid "Your document contains too many pages"
-msgstr ""
-
-#. module: iap_extract
-#. odoo-javascript
-#: code:addons/iap_extract/static/src/components/status_header/status.js:0
-msgid "document"
-msgstr ""
-
-#. module: iap_extract
-#. odoo-javascript
-#: code:addons/iap_extract/static/src/components/status_header/status.js:0
-msgid "expense"
-msgstr ""
-
-#. module: iap_extract
-#. odoo-javascript
-#: code:addons/iap_extract/static/src/components/status_header/status.js:0
-msgid "invoice"
-msgstr ""
-
-#. module: iap_extract
-#. odoo-javascript
-#: code:addons/iap_extract/static/src/components/status_header/status.js:0
-msgid "resume"
-msgstr ""
-
-#. module: iap_extract
-#. odoo-javascript
-#: code:addons/iap_extract/static/src/components/status_header/status.js:0
-msgid "statement"
 msgstr ""
 
 #. module: iap_extract
