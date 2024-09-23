@@ -252,7 +252,7 @@
             <small t-if="not appointment.website_published" class="o_appointment_unpublished bg-danger position-absolute w-100 text-end o_cc o_cc3" groups="base.group_user">
                 <i class="fa fa-ban me-2"/>Unpublished
             </small>
-            <div t-if="appointment.assign_method != 'time_auto_assign'" class="o_wappointment_card_staff_users position-absolute bottom-0 d-flex align-items-center pb-3 ps-3">
+            <div t-if="appointment.assign_method != 'time_auto_assign'" class="o_wappointment_card_staff_users position-absolute bottom-0 d-flex align-items-center ps-2">
                 <t t-set="booking_count" t-value="len(appointment.staff_user_ids if appointment.schedule_based_on == 'users' else appointment.resource_ids)"/>
                 <t t-if="booking_count" t-call="website_appointment.appointment_booking_resource_description"/>
             </div>

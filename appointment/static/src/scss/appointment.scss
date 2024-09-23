@@ -7,6 +7,9 @@
             bottom: 0;
             padding: $card-spacer-y $card-spacer-x;
         }
+        .o_wappointment_card_staff_users {
+            padding-bottom: $card-spacer-y/1.5;
+        }
     }
     .o_appointment_appointments_list_selection {
         #appointment_type_id {
