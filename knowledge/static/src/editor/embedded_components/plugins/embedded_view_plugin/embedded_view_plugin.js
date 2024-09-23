@@ -61,37 +61,6 @@ export class EmbeddedViewPlugin extends Plugin {
         ],
     });
 
-    handleCommand(command, payload) {
-        switch (command) {
-            case "START_EDITION":
-                this.insertEmbeddedBluePrint();
-                break;
-        }
-    }
-
-    insertEmbeddedBluePrint() {
-        const { resModel, resId } = this.config.getRecordInfo();
-        const embeddedViewBlueprint =
-            this.services.knowledgeCommandsService.popPendingEmbeddedBlueprint({
-                field: "body",
-                resId,
-                model: resModel,
-            });
-        if (embeddedViewBlueprint) {
-            const insert = () => {
-                this.shared.setCursorEnd(this.editable);
-                this.shared.domInsert(embeddedViewBlueprint);
-                const paragraph = document.createElement("p");
-                paragraph.appendChild(document.createElement("br"));
-                this.shared.setCursorEnd(this.editable);
-                this.shared.domInsert(paragraph);
-                this.dispatch("ADD_STEP");
-            };
-            insert();
-            this.editable.addEventListener("onHistoryResetFromPeer", insert, { once: true });
-        }
-    }
-
     insertEmbeddedView(actionXmlId, name, viewType, additionalViewProps = {}) {
         const resId = this.config.getRecordInfo().resId;
         const embeddedViewBlueprint = renderToElement("knowledge.EmbeddedViewBlueprint", {

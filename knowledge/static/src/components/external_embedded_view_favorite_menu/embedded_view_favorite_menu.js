@@ -132,6 +132,7 @@ class InsertEmbeddedViewMenu extends Component {
     onInsertEmbeddedViewInArticle() {
         this.insertCurrentViewInKnowledge("knowledge.EmbeddedViewBlueprint");
     }
+
     onInsertViewLinkInArticle() {
         this.insertCurrentViewInKnowledge("knowledge.EmbeddedViewLinkBlueprint");
     }
