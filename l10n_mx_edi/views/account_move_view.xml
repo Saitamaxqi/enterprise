@@ -52,7 +52,7 @@
                 </xpath>
 
                 <xpath expr="//page[@id='other_tab']//group[@name='sale_info_group']" position="inside">
-                    <field name="l10n_mx_edi_addenda_id" invisible="not l10n_mx_edi_is_cfdi_needed"/>
+                    <field name="l10n_mx_edi_addenda_ids" invisible="not l10n_mx_edi_is_cfdi_needed" widget="many2many_tags"/>
                 </xpath>
 
                 <!-- Publico General -->

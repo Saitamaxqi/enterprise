@@ -2021,6 +2021,21 @@ Content-Disposition: form-data; name="xml"; filename="xml"
             # we need to update both the namespace prefix and its URI to version 3.1.
             cfdi = re.sub(r'([cC]arta[pP]orte)30', r'\g<1>31', str(cfdi))
 
+        # == Append Complementos addenda to send ==
+        if addenda_complementos := cfdi_values \
+                .get('addendas', self.env['l10n_mx_edi.addenda']) \
+                ._filter_addenda_by_xml_node('complemento'):
+            append_values = cfdi_values['move']._l10n_mx_edi_cfdi_invoice_append_addendas(
+                cfdi_str=cfdi,
+                addendas=addenda_complementos,
+            )
+            if append_values.get('errors'):
+                on_failure("\n".join(append_values['errors']))
+                if self._can_commit():
+                    self._cr.commit()
+                return
+            cfdi = append_values['cfdi']
+
         cfdi_infos = self.env['l10n_mx_edi.document']._decode_cfdi_attachment(cfdi)
         cfdi_infos['cfdi_node'].attrib['Sello'] = certificate_sudo._sign(cfdi_infos['cadena'], formatting='base64')
 

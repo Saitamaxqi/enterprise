@@ -11,9 +11,9 @@ from odoo.addons.l10n_mx_edi.models.l10n_mx_edi_document import USAGE_SELECTION
 class ResPartner(models.Model):
     _inherit = 'res.partner'
 
-    l10n_mx_edi_addenda_id = fields.Many2one(
+    l10n_mx_edi_addenda_ids = fields.Many2many(
         comodel_name='l10n_mx_edi.addenda',
-        string='Addenda',
+        string='Addendas & Complementos',
     )
     l10n_mx_edi_fiscal_regime = fields.Selection(
         selection=FISCAL_REGIMES_SELECTION,

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from .common import TestMxEdiCommon, EXTERNAL_MODE
 from odoo import fields, Command
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tests import tagged
 from odoo.tools import misc
 from odoo.tools.misc import file_open
@@ -149,22 +149,159 @@ class TestCFDIInvoice(TestMxEdiCommon):
                     self._assert_invoice_cfdi(invoice, f'test_invoice_taxes_{index}_invoice_no_tax_breakdown')
 
     def test_invoice_addenda(self):
+        # The test data for complementos in this test are not recognized by the SAT as valid.
+        if EXTERNAL_MODE:
+            return
+
         with self.mx_external_setup(self.frozen_today):
-            addenda = self.env['l10n_mx_edi.addenda'].create({
-                'name': 'test_invoice_cfdi_addenda',
+            addenda_1, addenda_2, complementos_1, complementos_2 = self.env['l10n_mx_edi.addenda'].create([
+                {
+                    'name': 'addenda simple',
+                    'arch': """
+                        <t t-xml-node="addenda">
+                            <SimpleAddenda info="this is a simple addenda"/>
+                        </t>
+                    """,
+                },
+                {
+                    'name': 'addenda with complex qweb',
+                    'arch': """
+                        <t><t t-xml-node="addenda"><t>
+                            <t t-set="asdf" t-value="'this is a complex addenda'"/>
+                            <t><t><ComplexAddenda t-att-info="asdf"/></t></t>
+                        </t></t></t>
+                    """,
+                },
+                {
+                    'name': 'complementos simple',
+                    'arch': """
+                        <t t-xml-node="complemento">
+                            <SimpleComplementos info="this is a simple complementos"/>
+                        </t>
+                    """,
+                },
+                {
+                    'name': 'complementos with complex qweb',
+                    'arch': """
+                        <t t-xml-node="complemento"><t>
+                            <t t-set="zxcv" t-value="'this is a complex complementos'"/>
+                            <t><t><t><ComplexComplementos t-att-info="zxcv"/></t></t></t>
+                        </t></t>
+                    """,
+                },
+            ])
+
+            for addenda_file, addenda_ids in (
+                ('test_invoice_addenda_just_addenda', addenda_1 + addenda_2),
+                ('test_invoice_addenda_just_complementos', complementos_1 + complementos_2),
+                ('test_invoice_addenda_complex', addenda_1 + addenda_2 + complementos_1 + complementos_2),
+            ):
+                with self.subTest(addenda_file=addenda_file):
+                    self.partner_mx.l10n_mx_edi_addenda_ids = addenda_ids
+                    invoice = self._create_invoice()
+                    self.assertEqual(invoice.l10n_mx_edi_addenda_ids, addenda_ids)
+                    with self.with_mocked_pac_sign_success():
+                        invoice._l10n_mx_edi_cfdi_invoice_try_send()
+                    self._assert_invoice_cfdi(invoice, addenda_file)
+
+    def test_invoice_addenda_with_namespace(self):
+        with self.mx_external_setup(self.frozen_today):
+            addenda_donat = self.env['l10n_mx_edi.addenda'].create([{
+                'name': 'Donatarias',
                 'arch': """
-                    <t t-name="l10n_mx_edi.test_invoice_cfdi_addenda">
-                        <test info="this is an addenda"/>
+                    <?xml version="1.0"?>
+                    <t>
+                        <t t-xml-node="comprobante">
+                            <t t-namespace-key="donat" t-namespace-url="http://www.sat.gob.mx/donat/"/>
+                            <t t-schema-locations="https://www.schema_url_1.com/ https://www.schema_url_2.com/"/>
+                        </t>
+                        <t t-xml-node="addenda">
+                            <t t-set="my_journal" t-value="record.journal_id"/>
+                            <donat:Donatarias
+                                t-att-testJournalName="my_journal.name"
+                                testCertificate="325-SAT-09-IV-E-77917"
+                                testDate="01/06/2005"
+                                testText="hello world"/>
+                        </t>
                     </t>
-                """
-            })
-            self.partner_mx.l10n_mx_edi_addenda_id = addenda
+                """,
+            }])
 
             invoice = self._create_invoice()
-            self.assertEqual(invoice.l10n_mx_edi_addenda_id, addenda)
+            invoice.l10n_mx_edi_addenda_ids = addenda_donat
             with self.with_mocked_pac_sign_success():
                 invoice._l10n_mx_edi_cfdi_invoice_try_send()
-            self._assert_invoice_cfdi(invoice, 'test_invoice_addenda')
+            self._assert_invoice_cfdi(invoice, 'test_invoice_addenda_with_namespace')
+
+            # Manually check if schema_locations are correctly saved in the document XML
+            # This is done because the previous assertXmlTreeEqual don't check inside the value inside xsi:schemaLocation
+            document = invoice.l10n_mx_edi_invoice_document_ids.filtered(lambda x: x.state == 'invoice_sent')[:1]
+            self.assertTrue(
+                expr=b'xsi:schemaLocation="https://www.schema_url_1.com/ https://www.schema_url_2.com/ ' in document.attachment_id.raw,
+                msg="The schema_locations string must be saved in the generated XML.",
+            )
+
+    def test_invoice_addenda_with_multi_schema_location(self):
+        """ Ensure the schema locations are sorted per groups and included in the end XML result. """
+        with self.mx_external_setup(self.frozen_today):
+            addenda_vals = []
+            schema_locations_list = [
+                "https://abcde.com https://zzzzz.com",
+                "https://zzzzz.com https://abcde.com",
+                "https://zzzzz.com https://zzzzz.com",
+                "https://abcde.com https://abcde.com",
+                "https://iiiii.com https://zzzzz.com",
+                "https://iiiii.com https://zzzzz.com",  # duplicate lines will be removed
+                "https://abcde.com https://abcde.com",
+            ]
+            for i, schema_locations in enumerate(schema_locations_list, start=1):
+                addenda_vals.append({
+                    'name': f'test_addenda_{i}',
+                    'arch': f"""
+                        <t t-xml-node="comprobante">
+                            <t t-schema-locations="{schema_locations}"/>
+                        </t>
+                        <t t-xml-node="addenda">
+                            <TestAddenda{i}/>
+                        </t>
+                    """,
+                })
+
+            invoice = self._create_invoice()
+            invoice.l10n_mx_edi_addenda_ids = self.env['l10n_mx_edi.addenda'].create(addenda_vals)
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+
+            document = invoice.l10n_mx_edi_invoice_document_ids.filtered(lambda x: x.state == 'invoice_sent')[:1]
+            self.assertTrue(
+                expr=b'xsi:schemaLocation="https://abcde.com https://abcde.com https://abcde.com https://zzzzz.com https://iiiii.com https://zzzzz.com '
+                     b'https://zzzzz.com https://abcde.com https://zzzzz.com https://zzzzz.com ' in document.attachment_id.raw,
+                msg="The schema_locations string must be filtered and sorted by line.",
+            )
+
+    def test_invoice_addenda_decode_errors(self):
+        invalid_cases = (
+            ("<InvalidBecauseNotWrapped/>", "Arch must contain `<t t-xml-node="),
+            ("<t t-xml-node='badvalue'><InvalidBecauseNotWrapped/></t>", "Arch value of t-xml-node must be either"),
+            ("""
+                <t t-xml-node="comprobante">
+                    <t t-schema-locations="value_one_have  multiple_space_before_value_two"/>
+                </t>
+                <t t-xml-node="addenda">
+                    <ValidAddendaButBadSchema/>
+                </t>
+            """, "Schema locations must be separated by only one whitespace character."),
+            ("<t/>", "must contain either complemento or addenda"),
+            ("<t t-xml-node='addenda'></t><t t-xml-node='complemento'></t>", "must contain either complemento or addenda"),
+        )
+
+        for (bad_arch, expected_regex) in invalid_cases:
+            with self.subTest(bad_arch=bad_arch):
+                with self.assertRaisesRegex(ValidationError, expected_regex):
+                    self.env['l10n_mx_edi.addenda'].create([{
+                        'name': 'invalid_addenda',
+                        'arch': bad_arch,
+                    }])
 
     def test_invoice_negative_lines_dispatch_same_product(self):
         """ Ensure the distribution of negative lines is done on the same product first. """

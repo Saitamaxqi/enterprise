@@ -3,7 +3,7 @@
     <record id="l10n_mx_edi_standard_addenda_autozone" model="l10n_mx_edi.addenda">
         <field name="name">Autozone</field>
         <field name="arch" type="xml">
-            <t>
+            <t t-xml-node="addenda">
                 <t t-set="sale_model" t-value="'sale_line_ids' in record.invoice_line_ids._fields"/>
                 <t t-set="sale_id" t-value="record.invoice_line_ids.sale_line_ids.order_id[:1] if sale_model else False"/>
                 <ADDENDA10
@@ -24,7 +24,7 @@
     <record id="l10n_mx_edi_standard_addenda_bosh_A_C" model="l10n_mx_edi.addenda">
         <field name="name">Bosh</field>
         <field name="arch" type="xml">
-            <Addenda>
+            <t t-xml-node="addenda">
                 <customized xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                             xmlns="http://repository.edicomnet.com/schemas/mx/cfd/addenda"
                             t-if="record.name and len(record.name.split('|')) >= 2"
@@ -55,7 +55,7 @@
                         </elementos>
                     </EDICOM_GENERICA>
                 </customized>
-            </Addenda>
+            </t>
         </field>
     </record>
 </odoo>

@@ -216,10 +216,10 @@ class AccountMove(models.Model):
         readonly=False,
         help="Send the CFDI with recipient 'publico en general'",
     )
-    l10n_mx_edi_addenda_id = fields.Many2one(
+    l10n_mx_edi_addenda_ids = fields.Many2many(
         comodel_name='l10n_mx_edi.addenda',
-        string='Addenda',
-        compute='_compute_l10n_mx_edi_addenda_id',
+        string="Addendas & Complementos",
+        compute='_compute_l10n_mx_edi_addenda_ids',
         store=True,
         readonly=False,
     )
@@ -245,32 +245,74 @@ class AccountMove(models.Model):
         self.ensure_one()
         return self.origin_payment_id or self.statement_line_id
 
-    def _l10n_mx_edi_cfdi_invoice_append_addenda(self, cfdi, addenda):
-        ''' Append an additional block to the signed CFDI passed as parameter.
-        :param move:    The account.move record.
-        :param cfdi:    The invoice's CFDI as a string.
-        :param addenda: (ir.ui.view) The addenda to add as a string.
-        :return cfdi:   The cfdi including the addenda.
-        '''
+    def _l10n_mx_edi_cfdi_invoice_append_addendas(self, cfdi_str, addendas):
+        """ Helper to handle appending Complementos/Addenda before/after sending the CFDI string.
+        --- Format of returned dictionary ---
+        {
+            <optional> 'error' : <string>,
+            <required> 'cfdi'  : <bytes>,
+        }
+        :param cfdi_str: the CFDI XML string to be appended to
+        :param l10n_mx_edi.addenda addendas: all the ``l10n_mx_edi.addenda`` records to be appended
+        :return: the new CFDI XML string which have been appended with the addenda_ids
+        :rtype: dict[str, str | bytes]
+        """
         self.ensure_one()
-        addenda_values = {'record': self, 'cfdi': cfdi}
+        decoded_data = addendas._decode_multi_addenda_arch()
+        if decoded_data.get('errors'):
+            return {'errors': decoded_data['errors'], 'cfdi': cfdi_str}
 
-        addenda_arch = self.env['ir.qweb']._render(etree.fromstring(addenda.arch), values=addenda_values).strip()
-        if not addenda_arch:
-            return cfdi
+        xml_node = self.env['l10n_mx_edi.addenda']._get_decoded_xml_node(decoded_data)
+        addition_values = {'record': self}
+        addition_title = 'Complemento' if xml_node == 'complemento' else 'Addenda'
 
-        cfdi_node = etree.fromstring(cfdi)
-        addenda_node = etree.fromstring(addenda_arch)
-        version = cfdi_node.get('Version')
+        # Create new Comprobante node with the new namespaces required for the addendas
+        cfdi_node = etree.fromstring(cfdi_str)
+        new_cfdi_node = etree.Element(
+            _tag=cfdi_node.tag,
+            attrib=cfdi_node.attrib,
+            nsmap=cfdi_node.nsmap | decoded_data['comprobante']['nsmap'],
+        )
+        previous_complemento_node = cfdi_node.find("{*}Complemento")
+        need_update_complemento = xml_node == 'complemento' and previous_complemento_node is not None
 
-        # Add a root node Addenda if not specified explicitly by the user.
-        if addenda_node.tag != '{http://www.sat.gob.mx/cfd/%s}Addenda' % version[0]:
-            node = etree.Element(etree.QName('http://www.sat.gob.mx/cfd/%s' % version[0], 'Addenda'))
-            node.append(addenda_node)
-            addenda_node = node
+        # Copy the Complemento/Addenda node without children; or create new one if it's not created yet
+        if need_update_complemento:  # Complemento node already exist
+            empty_addition_node = etree.Element(
+                _tag=previous_complemento_node.tag,
+                attrib=previous_complemento_node.attrib,
+                nsmap=previous_complemento_node.nsmap | decoded_data[xml_node]['nsmap'],
+            )
+        else:  # Complemento/Addenda node has not been created yet; create a new empty node
+            new_node_tag = etree.QName('http://www.sat.gob.mx/cfd/%s' % cfdi_node.get('Version')[0], addition_title)
+            empty_addition_node = etree.Element(new_node_tag, nsmap={'cfdi': "http://www.sat.gob.mx/cfd/4", **decoded_data[xml_node]['nsmap']})
 
-        cfdi_node.append(addenda_node)
-        return etree.tostring(cfdi_node, pretty_print=True, xml_declaration=True, encoding='UTF-8')
+        # Create the new Complemento/Addenda node XML string
+        empty_addition_str = etree.tostring(empty_addition_node, method='c14n').decode('utf-8')
+        replacer_str_list = ['>', decoded_data[xml_node]['arch']]
+        if need_update_complemento:
+            for previous_child in previous_complemento_node.getchildren():  # collect all original XML Complemento children as a string
+                replacer_str_list.append(etree.tostring(previous_child).decode('utf-8'))
+            cfdi_node.remove(previous_complemento_node)
+        replacer_str = ''.join(replacer_str_list)
+        new_addition_str = empty_addition_str.replace('>', replacer_str, 1)
+
+        for child_node in cfdi_node.getchildren():  # add all previous children to the new empty CFDI root node
+            new_cfdi_node.append(child_node)
+
+        # Create the new CFDI XML node string and manually inject the new Complemento/Addenda XML string
+        new_cfdi_str: str = etree.tostring(new_cfdi_node).decode('utf-8')
+        new_cfdi_str = new_cfdi_str.replace('</cfdi:Comprobante>', new_addition_str + '</cfdi:Comprobante>', 1)
+
+        # Manually inject schema locations
+        if schema_locations_str := decoded_data['comprobante']['schema_locations']:
+            new_cfdi_str = new_cfdi_str.replace('xsi:schemaLocation="', f'xsi:schemaLocation="{schema_locations_str} ', 1)
+
+        # Render the new XML with QWeb and return the new XML string
+        new_cfdi_arch = self.env['ir.qweb']._render(etree.fromstring(new_cfdi_str), values=addition_values).strip()
+        new_cfdi_node = etree.fromstring(new_cfdi_arch)
+        new_cfdi = self.env['l10n_mx_edi.document']._convert_xml_to_attachment_data(new_cfdi_node)
+        return {'cfdi': new_cfdi}
 
     def _l10n_mx_edi_cfdi_amount_to_text(self):
         """Method to transform a float amount to text words
@@ -666,13 +708,13 @@ class AccountMove(models.Model):
                 move.l10n_mx_edi_cfdi_to_public = move.l10n_mx_edi_cfdi_to_public
 
     @api.depends('partner_id', 'commercial_partner_id')
-    def _compute_l10n_mx_edi_addenda_id(self):
+    def _compute_l10n_mx_edi_addenda_ids(self):
         for move in self:
             partner = move.partner_id or move.commercial_partner_id
             if move.l10n_mx_edi_is_cfdi_needed:
-                move.l10n_mx_edi_addenda_id = partner.l10n_mx_edi_addenda_id
+                move.l10n_mx_edi_addenda_ids = partner.l10n_mx_edi_addenda_ids
             else:
-                move.l10n_mx_edi_addenda_id = None
+                move.l10n_mx_edi_addenda_ids = False
 
     @api.depends('journal_id', 'statement_line_id', 'partner_id')
     def _compute_l10n_mx_edi_payment_method_id(self):
@@ -1028,6 +1070,10 @@ class AccountMove(models.Model):
             cfdi_values['tipo_cambio'] = None
         else:
             cfdi_values["tipo_cambio"] = 1.0 / self.invoice_currency_rate
+
+        # Additional Addendas and Complementos.
+        cfdi_values['addendas'] = self.l10n_mx_edi_addenda_ids
+        cfdi_values['move'] = self
 
     def _l10n_mx_edi_get_invoice_cfdi_filename(self):
         """ Get the filename of the CFDI.
@@ -1762,8 +1808,15 @@ class AccountMove(models.Model):
                 self._l10n_mx_edi_cfdi_invoice_document_sent_failed(error, cfdi_filename=cfdi_filename, cfdi_str=cfdi_str)
 
         def on_success(_cfdi_values, cfdi_filename, cfdi_str, populate_return=None):
-            if self.l10n_mx_edi_addenda_id:
-                cfdi_str = self._l10n_mx_edi_cfdi_invoice_append_addenda(cfdi_str, self.l10n_mx_edi_addenda_id)
+            if addendas_post_send := self.l10n_mx_edi_addenda_ids._filter_addenda_by_xml_node('addenda'):
+                append_values = self._l10n_mx_edi_cfdi_invoice_append_addendas(
+                    cfdi_str=cfdi_str,
+                    addendas=addendas_post_send,
+                )
+                if append_values.get('errors'):
+                    self.message_post(body=_("Error when decoding the addenda to append after signing:\n%s",
+                                             '\n'.join(append_values['errors'])))
+                cfdi_str = append_values['cfdi']
 
             document = self._l10n_mx_edi_cfdi_invoice_document_sent(cfdi_filename, cfdi_str)
             self \

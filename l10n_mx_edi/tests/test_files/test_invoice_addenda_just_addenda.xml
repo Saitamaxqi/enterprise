@@ -20,6 +20,7 @@
 		<tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="1.1" UUID="___ignore___" FechaTimbrado="___ignore___" NoCertificadoSAT="___ignore___" RfcProvCertif="___ignore___" SelloCFD="___ignore___" SelloSAT="___ignore___"/>
 	</cfdi:Complemento>
 	<cfdi:Addenda>
-		<test info="this is an addenda"/>
+		<SimpleAddenda info="this is a simple addenda"/>
+		<ComplexAddenda info="this is a complex addenda"/>
 	</cfdi:Addenda>
 </cfdi:Comprobante>
