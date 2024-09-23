@@ -21,6 +21,10 @@ export const patchM2oResourceField = {
             name: "resource_roles",
             type: "many2many"
         },
+        {
+            name: "resource_color",
+            type: "integer"
+        },
     ],
 };
 

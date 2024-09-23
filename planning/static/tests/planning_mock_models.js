@@ -38,6 +38,7 @@ export class PlanningSlot extends models.Model {
     user_id = fields.Many2one({ relation: "res.users" });
     conflicting_slot_ids = fields.Many2many({ relation: "planning.slot" });
     resource_roles = fields.Many2many({ relation: "resource.resource" });
+    resource_color = fields.Integer({ related: 'resource_id.color' })
 }
 
 export class ResourceResource extends models.Model {
@@ -61,6 +62,7 @@ export class ResourceResource extends models.Model {
         ],
     });
     show_hr_icon_display = fields.Boolean();
+    color = fields.Integer();
 }
 
 export class PlanningRole extends models.Model {
