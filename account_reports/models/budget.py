@@ -83,6 +83,23 @@ class AccountReportBudget(models.Model):
             # Make sure that the model is flushed before continuing the code and fetching these new items
             self.env['account.report.budget.item'].flush_model()
 
+    def copy_data(self, default=None):
+        vals_list = super().copy_data(default=default)
+        return [dict(vals, name=self.env._("%s (copy)", budget.name)) for budget, vals in zip(self, vals_list)]
+
+    def copy(self, default=None):
+        new_budgets = super().copy(default)
+        for old_budget, new_budget in zip(self, new_budgets):
+            for item in old_budget.item_ids:
+                item.copy({
+                    'budget_id': new_budget.id,
+                    'account_id': item.account_id.id,
+                    'amount': item.amount,
+                    'date': item.date,
+                })
+
+        return new_budgets
+
 
 class AccountReportBudgetItem(models.Model):
     _name = 'account.report.budget.item'
