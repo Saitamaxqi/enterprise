@@ -1684,7 +1684,7 @@ class Planning(models.Model):
                 pytz.utc.localize(slot.end_datetime),
                 self.env['resource.calendar.leaves'])])
         # 2)
-        resource_calendar_validity_intervals = self.resource_id.sudo()._get_calendars_validity_within_period(
+        resource_calendar_validity_intervals = self.resource_id.sudo().filtered(lambda resource: not resource._is_flexible())._get_calendars_validity_within_period(
             start_dt_delta_utc, end_dt_delta_utc)
         for slot in self:
             if slot.resource_id:
@@ -1724,6 +1724,9 @@ class Planning(models.Model):
                 continue
             values['start_datetime'] = slot._add_delta_with_dst(values['start_datetime'], delta)
             values['end_datetime'] = slot._add_delta_with_dst(values['end_datetime'], delta)
+            if slot.allocation_type == 'forecast' and (not slot.resource_id or slot.resource_id._is_fully_flexible()):
+                new_slot_values.append(values)
+                continue
             if any(
                 new_slot['resource_id'] == values['resource_id'] and
                 new_slot['start_datetime'] <= values['end_datetime'] and

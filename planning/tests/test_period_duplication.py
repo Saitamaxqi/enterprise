@@ -163,6 +163,30 @@ class TestPeriodDuplication(TestCommonPlanning):
         self.assertEqual(6, duplicated_slots.filtered(lambda slot: slot.start_datetime.weekday() == 1).allocated_hours, 'Tuesday slot should have 6 allocated hours')
         self.assertEqual(11, duplicated_slots.filtered(lambda slot: slot.start_datetime.weekday() == 4).allocated_hours, 'Friday slot should have 11 allocated hours')
 
+    def test_duplication_open_shift(self):
+        """ Test copy_previous_week with a open shift
+
+            Test Case:
+            =========
+            1) create an open shift planned
+            2) apply `copy_previous_week` for the next week
+            3) make sure the allocated hours for the new shift is the same than the one copied
+        """
+        slot = self.env['planning.slot'].create({
+            'start_datetime': datetime(2020, 10, 12, 8, 0),
+            'end_datetime': datetime(2020, 10, 13, 12, 0),
+            'state': 'published',
+        })
+        # copy the slot to the next week
+        self.env['planning.slot'].action_copy_previous_week('2020-10-19 00:00:00', [['start_datetime', '<=', '2020-10-18 23:59:59'], ['end_datetime', '>=', '2020-10-12 00:00:00']])
+        duplicated_slots = self.env['planning.slot'].search([
+            ('resource_id', '=', False),
+            ('start_datetime', '>', datetime(2020, 10, 19, 0, 0)),
+            ('end_datetime', '<', datetime(2022, 10, 25, 23, 59)),
+        ])
+        self.assertEqual(1, len(duplicated_slots), "One slot should have been copied to this week")
+        self.assertEqual(slot.allocated_hours, duplicated_slots.allocated_hours, "The allocated hours between the original slot and the copied one should be equal")
+
     def test_duplication_on_non_working_days_for_fully_flexible_hours(self):
         """ When applying copy_previous week, it should copy the shifts of flexible resources when they fall on a non-working day.
             (E.g. a shift from Saturday toSunday for a fully flexible employee should be copied to the next week with same allocated hours)
