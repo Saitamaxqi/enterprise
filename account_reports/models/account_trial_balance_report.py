@@ -57,14 +57,14 @@ class TrialBalanceCustomHandler(models.AbstractModel):
                     line['columns'][end_balance_debit_index]['no_format'] = sum(
                         currency.round(column['no_format'])
                         for index, column in enumerate(line['columns'])
-                        if column.get('expression_label') == 'debit' and index != end_balance_debit_index
+                        if column.get('expression_label') == 'debit' and index != end_balance_debit_index and column['no_format'] is not None
                     )
 
                 if end_balance_credit_index is not None:
                     line['columns'][end_balance_credit_index]['no_format'] = sum(
                         currency.round(column['no_format'])
                         for index, column in enumerate(line['columns'])
-                        if column.get('expression_label') == 'credit' and index != end_balance_credit_index
+                        if column.get('expression_label') == 'credit' and index != end_balance_credit_index and column['no_format'] is not None
                     )
 
                 _update_balance_columns(line, end_balance_debit_index, end_balance_credit_index)
