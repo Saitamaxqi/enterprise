@@ -155,6 +155,9 @@ class TestSaleValidatedTimesheet(TestCommonSaleTimesheet):
             are computed on the validated timesheets only and not all the timesheets related to a task.
             Because the portal user will only see the validated timesheets and not all ones.
 
+            Also assures that internal users will see the same results when they access the portal
+            view
+
             Test Case:
             =========
 
@@ -197,11 +200,11 @@ class TestSaleValidatedTimesheet(TestCommonSaleTimesheet):
         ordered_task.invalidate_recordset(fields_to_fetch)
         portal_task_read = ordered_task.with_user(portal_user).read(fields_to_fetch)[0]
 
-        self.assertEqual(basic_task_read['portal_remaining_hours'], 2)
-        self.assertEqual(basic_task_read['portal_effective_hours'], 8)
+        self.assertEqual(basic_task_read['portal_remaining_hours'], 10)
+        self.assertEqual(basic_task_read['portal_effective_hours'], 0)
         self.assertEqual(basic_task_read['portal_subtask_effective_hours'], 0)
-        self.assertEqual(basic_task_read['portal_total_hours_spent'], 8)
-        self.assertEqual(basic_task_read['portal_progress'], 0.8)
+        self.assertEqual(basic_task_read['portal_total_hours_spent'], 0)
+        self.assertEqual(basic_task_read['portal_progress'], 0)
 
         self.assertEqual(portal_task_read['portal_remaining_hours'], 10)
         self.assertEqual(portal_task_read['portal_effective_hours'], 0)
@@ -224,11 +227,11 @@ class TestSaleValidatedTimesheet(TestCommonSaleTimesheet):
         ordered_task.invalidate_recordset(fields_to_fetch)
         portal_task_read = ordered_task.with_user(portal_user).read(fields_to_fetch)[0]
 
-        self.assertEqual(basic_task_read['portal_remaining_hours'], 0)
-        self.assertEqual(basic_task_read['portal_effective_hours'], 10)
+        self.assertEqual(basic_task_read['portal_remaining_hours'], 8)
+        self.assertEqual(basic_task_read['portal_effective_hours'], 2)
         self.assertEqual(basic_task_read['portal_subtask_effective_hours'], 0)
-        self.assertEqual(basic_task_read['portal_total_hours_spent'], 10)
-        self.assertEqual(basic_task_read['portal_progress'], 1)
+        self.assertEqual(basic_task_read['portal_total_hours_spent'], 2)
+        self.assertEqual(basic_task_read['portal_progress'], 0.2)
 
         self.assertEqual(portal_task_read['portal_remaining_hours'], 8)
         self.assertEqual(portal_task_read['portal_effective_hours'], 2)
