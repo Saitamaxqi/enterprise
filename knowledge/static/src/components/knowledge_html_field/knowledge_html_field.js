@@ -1,5 +1,12 @@
 import { HtmlField, htmlField } from "@html_editor/fields/html_field";
-import { KNOWLEDGE_PLUGINS } from "@knowledge/editor/plugin_sets";
+import {
+    KNOWLEDGE_EMBEDDINGS,
+    KNOWLEDGE_READONLY_EMBEDDINGS,
+} from "@knowledge/editor/embedded_components/embedding_sets";
+import {
+    KNOWLEDGE_EMBEDDED_COMPONENT_PLUGINS,
+    KNOWLEDGE_PLUGINS,
+} from "@knowledge/editor/plugin_sets";
 import { registry } from "@web/core/registry";
 import { useState, useSubEnv } from "@odoo/owl";
 import { KnowledgeHtmlViewer } from "../knowledge_html_viewer/knowledge_html_viewer";
@@ -32,6 +39,14 @@ export class KnowledgeHtmlField extends HtmlField {
 
     getConfig() {
         const config = super.getConfig();
+        // TODO @engagement: fill this array with knowledge components
+        if (this.props.embeddedComponents) {
+            config.resources.embeddedComponents = [
+                ...(config.resources.embeddedComponents || []),
+                ...KNOWLEDGE_EMBEDDINGS,
+            ];
+            config.Plugins.push(...KNOWLEDGE_EMBEDDED_COMPONENT_PLUGINS);
+        }
         config.Plugins.push(...KNOWLEDGE_PLUGINS);
         config.onLayoutGeometryChange = () => this.onLayoutGeometryChange();
         return config;
@@ -39,6 +54,12 @@ export class KnowledgeHtmlField extends HtmlField {
 
     getReadonlyConfig() {
         const config = super.getReadonlyConfig();
+        if (this.props.embeddedComponents) {
+            config.embeddedComponents = [
+                ...(config.embeddedComponents || []),
+                ...KNOWLEDGE_READONLY_EMBEDDINGS,
+            ];
+        }
         config.onLayoutGeometryChange = () => this.onLayoutGeometryChange();
         return config;
     }

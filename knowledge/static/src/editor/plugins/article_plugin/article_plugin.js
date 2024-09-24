@@ -1,5 +1,4 @@
 import { Plugin } from "@html_editor/plugin";
-import { MAIN_PLUGINS } from "@html_editor/plugin_sets";
 import { rightPos } from "@html_editor/utils/position";
 import { ArticleSelectionDialog } from "@knowledge/components/article_selection_dialog/article_selection_dialog";
 import { _t } from "@web/core/l10n/translation";
@@ -122,6 +121,3 @@ export class KnowledgeArticlePlugin extends Plugin {
         }
     }
 }
-
-// add KnowledgeArticlePlugin for all standard use cases
-MAIN_PLUGINS.push(KnowledgeArticlePlugin);

@@ -6,3 +6,5 @@ import { KnowledgeCommentsPlugin } from "@knowledge/editor/plugins/comments_plug
 MAIN_PLUGINS.push(KnowledgeArticlePlugin);
 
 export const KNOWLEDGE_PLUGINS = [AutofocusPlugin, KnowledgeCommentsPlugin];
+
+export const KNOWLEDGE_EMBEDDED_COMPONENT_PLUGINS = [];

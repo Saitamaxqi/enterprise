@@ -24,6 +24,8 @@
             'html_editor/static/src/fields/html_viewer.*',
             'html_editor/static/src/others/embedded_component_utils.js',
             'html_editor/static/src/others/embedded_components/core/**/*',
+            'knowledge/static/src/editor/embedded_components/core/**/*',
+            'knowledge/static/src/editor/html_viewer/**/*',
             'website_knowledge/static/src/frontend/**/*',
         ],
         'web.assets_tests': [

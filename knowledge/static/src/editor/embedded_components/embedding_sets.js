@@ -1,0 +1,3 @@
+export const KNOWLEDGE_EMBEDDINGS = [];
+
+export const KNOWLEDGE_READONLY_EMBEDDINGS = [];
