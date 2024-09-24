@@ -50,6 +50,25 @@ class AppointmentHrTest(AppointmentHrCommon):
         })
 
     @users('apt_manager')
+    def test_appointment_duplicate(self):
+        """Test that multiple appointment are duplicated"""
+        appointments = self.env['appointment.type'].create([{
+            'appointment_tz': 'Europe/Brussels',
+            'appointment_duration': 1,
+            'assign_method': 'time_auto_assign',
+            'category': 'recurring',
+            'name': f'Appointment Test {apt_no}',
+            'min_cancellation_hours': 1,
+            'min_schedule_hours': 1,
+            'max_schedule_days': 30,
+            'staff_user_ids': [(4, self.env.uid)],
+        } for apt_no in range(10)])
+        appointments_copy = appointments.copy()
+        self.assertEqual(len(appointments_copy), len(appointments))
+        for appointment, appointment_copy in zip(appointments, appointments_copy):
+            self.assertEqual(appointment_copy.name, f'{appointment.name} (copy)')
+
+    @users('apt_manager')
     def test_generate_slots_recurring(self):
         """ Generates recurring slots, check begin and end slot boundaries. """
         apt_type = self.apt_type_bxls_2days.with_user(self.env.user)

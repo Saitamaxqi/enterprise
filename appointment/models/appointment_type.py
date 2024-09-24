@@ -242,7 +242,8 @@ class AppointmentType(models.Model):
         If the category is 'custom', no need to generate default slots. """
         anytime_appointment_types = self.filtered_domain([('category', '=', 'anytime')])
         anytime_appointment_types.slot_ids = False # Reset slots if existing
-        anytime_appointment_types.slot_ids = self._get_default_slots('anytime')
+        for appointment_type in anytime_appointment_types:
+            appointment_type.slot_ids = appointment_type._get_default_slots('anytime')
 
     @api.depends('category')
     def _compute_category_time_display(self):
