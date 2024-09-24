@@ -74,9 +74,12 @@ class AccountBatchPayment(models.Model):
     @api.constrains('sdd_required_collection_date', 'payment_method_id')
     def _check_minimal_collection_date(self):
         sepa_codes = self.env['account.payment.method']._get_sdd_payment_method_code()
-        related_mandates = self.payment_ids.sdd_mandate_id
-        if self.payment_method_code not in sepa_codes:
+
+        sepa_batch_payment = self.filtered(lambda p: p.payment_method_code in sepa_codes)
+        if not sepa_batch_payment:
             return
+
+        related_mandates = sepa_batch_payment.payment_ids.sdd_mandate_id
         self.env['account.payment'].flush_model(['is_matched', 'batch_payment_id'])
         self.env['sdd.mandate'].flush_model()
 
@@ -99,7 +102,7 @@ class AccountBatchPayment(models.Model):
         ))
         batch_with_new_mandate_ids = {row[0] for row in self.env.cr.fetchall()}
 
-        for batch in self:
+        for batch in sepa_batch_payment:
             minimum_offset = 5 if batch.id in batch_with_new_mandate_ids else 2
             minimum_date = fields.Date.context_today(batch) + timedelta(days=minimum_offset)
             if batch.payment_method_code in sepa_codes and batch.sdd_required_collection_date < minimum_date:
