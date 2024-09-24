@@ -52,16 +52,9 @@
             'knowledge/static/src/scss/knowledge_common.scss',
             'knowledge/static/src/scss/knowledge_views.scss',
             'knowledge/static/src/scss/knowledge_editor.scss',
-            # 'knowledge/static/src/scss/knowledge_blocks.scss',
             ('after', 'web/static/src/views/form/form_controller.xml', 'knowledge/static/src/xml/form_controller.xml'),
             'knowledge/static/src/xml/**/*',
-            ('remove', 'knowledge/static/src/xml/knowledge_wysiwyg.xml'),  # to remove
             'knowledge/static/src/components/**/*',
-            ('remove', 'knowledge/static/src/components/behaviors/**/*'),  # to remove
-            ('remove', 'knowledge/static/src/components/html_field/**/*'),  # to remove
-            ('remove', 'knowledge/static/src/components/knowledge_article_html_field/**/*'),  # to remove
-            ('remove', 'knowledge/static/src/components/media_dialog/**/*'),  # to remove
-            ('remove', 'knowledge/static/src/components/video_selector_dialog/**/*'),  # to remove
             'knowledge/static/src/editor/**/*',
             'knowledge/static/src/comments/**/*',
             'knowledge/static/src/mail/**/*',
@@ -69,17 +62,14 @@
             ('after', 'web/static/src/views/form/form_controller.js', 'knowledge/static/src/web/form_controller_patch.js'),
             'knowledge/static/src/web/**/*',
             'knowledge/static/src/js/knowledge_controller.js',
-            # 'knowledge/static/src/js/knowledge_plugin.js',
             'knowledge/static/src/js/knowledge_utils.js',
             'knowledge/static/src/js/knowledge_renderers.js',
             'knowledge/static/src/js/knowledge_views.js',
-            # 'knowledge/static/src/js/tools/**/*',
             'knowledge/static/src/webclient/**/*',
             'knowledge/static/src/views/**/*',
             ('remove', 'knowledge/static/src/views/hierarchy/**'),
             'knowledge/static/src/services/**/*',
             'knowledge/static/src/macros/**/*',
-            ('remove', 'knowledge/static/src/macros/template_macros.js'),  # to remove
         ],
         'web.assets_backend_lazy': [
             'knowledge/static/src/views/hierarchy/**',
@@ -92,8 +82,6 @@
         ],
         'web.assets_frontend': [
             'knowledge/static/src/scss/knowledge_common.scss',
-            # 'knowledge/static/src/scss/knowledge_blocks.scss',
-            # 'knowledge/static/src/js/tools/**/*',
             'knowledge/static/src/js/knowledge_utils.js',
         ],
         'web.assets_unit_tests': [
@@ -104,23 +92,11 @@
         'web.assets_tests': [
             'knowledge/static/tests/tours/**/*',
         ],
-        'web.qunit_suite_tests': [
-            # 'knowledge/static/tests/legacy/**/*',
-            # ('remove', 'knowledge/static/tests/legacy/mock_services.js'),
-            ('include', 'knowledge.assets_wysiwyg'),
-        ],
+        # 'web.qunit_suite_tests': [
+        #     # 'knowledge/static/tests/legacy/**/*',  # TODO: conversion
+        # ],
         'web.tests_assets': [
             'knowledge/static/tests/legacy/mock_services.js',
-        ],
-        # 'web_editor.backend_assets_wysiwyg': [
-        #     'knowledge/static/src/xml/knowledge_wysiwyg.xml',
-        # ],
-        'knowledge.assets_wysiwyg': [
-            # 'knowledge/static/src/js/wysiwyg.js',
-            # 'knowledge/static/src/js/knowledge_wysiwyg.js',
-            # 'knowledge/static/src/xml/knowledge_editor.xml',
-            # 'knowledge/static/src/xml/knowledge_article_templates.xml',
-            # 'knowledge/static/src/js/knowledge_clipboard_whitelist.js',
         ],
         'knowledge.webclient': [
             ('include', 'web.assets_backend'),

@@ -39,9 +39,8 @@ const articlesIndexSearch = {
  * guarantee that the structure behavior is fully mounted before continuing.
  * @param {HTMLElement} editable
  * @param {HTMLElement} target
- * @param {boolean} childrenOnly
  */
-const insertArticlesStructure = async (editable, target, childrenOnly) => {
+const insertArticlesStructure = async (editable, target) => {
     const articleStructureMounted = makeDeferred();
     const wysiwyg = $(editable).data('wysiwyg');
     const unpatch = patch(ArticlesStructureBehavior.prototype, {
@@ -60,7 +59,7 @@ const insertArticlesStructure = async (editable, target, childrenOnly) => {
     range.setEnd(target, 0);
     selection.addRange(range);
     await nextTick();
-    wysiwyg._insertArticlesStructure(childrenOnly);
+    wysiwyg._insertArticlesStructure();
     await articleStructureMounted;
     await nextTick();
 };
@@ -127,12 +126,12 @@ QUnit.module("Knowledge - Articles Structure Command", (hooks) => {
 
         const editable = fixture.querySelector('.odoo-editor-editable');
         const target = editable.querySelector('p.test_target');
-        await insertArticlesStructure(editable, target, true);
+        await insertArticlesStructure(editable, target);
 
         // /articles_structure only considers the direct children - "Child 1" and "Child 2"
-        assert.containsN(editable, '.o_knowledge_articles_structure_content ol a', 2);
-        assert.containsOnce(editable, '.o_knowledge_articles_structure_content ol a:contains("Child 1")');
-        assert.containsOnce(editable, '.o_knowledge_articles_structure_content ol a:contains("Child 2")');
+        assert.containsN(editable, '.o_embedded_articles_index_content ol a', 2);
+        assert.containsOnce(editable, '.o_embedded_articles_index_content ol a:contains("Child 1")');
+        assert.containsOnce(editable, '.o_embedded_articles_index_content ol a:contains("Child 2")');
     });
     QUnit.skip('Check Articles Index is correctly built - and updated', async function (assert) {
         assert.expect(8);
@@ -163,27 +162,27 @@ QUnit.module("Knowledge - Articles Structure Command", (hooks) => {
 
         const editable = fixture.querySelector('.odoo-editor-editable');
         const target = editable.querySelector('p.test_target');
-        await insertArticlesStructure(editable, target, false);
+        await insertArticlesStructure(editable, target);
 
         // /articles_index considers whole children - "Child 1" and "Child 2" and then their respective children
-        assert.containsN(editable, '.o_knowledge_articles_structure_content ol a', 5);
-        assert.containsOnce(editable, '.o_knowledge_articles_structure_content ol a:contains("Child 1")');
-        assert.containsOnce(editable, '.o_knowledge_articles_structure_content ol a:contains("Child 2")');
+        assert.containsN(editable, '.o_embedded_articles_index_content ol a', 5);
+        assert.containsOnce(editable, '.o_embedded_articles_index_content ol a:contains("Child 1")');
+        assert.containsOnce(editable, '.o_embedded_articles_index_content ol a:contains("Child 2")');
         assert.containsOnce(editable,
-            '.o_knowledge_articles_structure_content ol:contains("Child 1") ol a:contains("Grand-child 1")');
+            '.o_embedded_articles_index_content ol:contains("Child 1") ol a:contains("Grand-child 1")');
         assert.containsOnce(editable,
-            '.o_knowledge_articles_structure_content ol:contains("Child 1") ol a:contains("Grand-child 2")');
+            '.o_embedded_articles_index_content ol:contains("Child 1") ol a:contains("Grand-child 2")');
         assert.containsOnce(editable,
-            '.o_knowledge_articles_structure_content ol:contains("Child 2") ol a:contains("Grand-child 3")');
+            '.o_embedded_articles_index_content ol:contains("Child 2") ol a:contains("Grand-child 3")');
 
         // clicking on update yields an additional Grand-child (see 'mockRPC' here above)
         // make sure our structure is correctly updated
         await click(editable, '[data-embedded="articleIndex"] button[title="Update"]');
         await nextTick();
 
-        assert.containsN(editable, '.o_knowledge_articles_structure_content ol a', 6);
+        assert.containsN(editable, '.o_embedded_articles_index_content ol a', 6);
         assert.containsOnce(editable,
-            '.o_knowledge_articles_structure_content ol:contains("Child 2") ol a:contains("Grand-child 4")');
+            '.o_embedded_articles_index_content ol:contains("Child 2") ol a:contains("Grand-child 4")');
 
     });
 });
@@ -726,10 +725,10 @@ const insertTableOfContent = async (editable, target) => {
  * @param {Array[Object]} expectedHeadings - List of headings that should appear in the toc of the editable
  */
 const assertHeadings = (assert, editable, expectedHeadings) => {
-    const allHeadings = Array.from(editable.querySelectorAll('a.o_knowledge_toc_link'));
+    const allHeadings = Array.from(editable.querySelectorAll('a.o_embedded_toc_link'));
     for (let index = 0; index < expectedHeadings.length; index++) {
         const { title, depth } = expectedHeadings[index];
-        const headingSelector = `a:contains("${title}").o_knowledge_toc_link_depth_${depth}`;
+        const headingSelector = `a:contains("${title}").o_embedded_toc_link_depth_${depth}`;
         // we have the heading in the DOM
         assert.containsOnce(editable, headingSelector);
 
