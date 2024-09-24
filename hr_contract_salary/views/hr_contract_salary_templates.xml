@@ -165,7 +165,8 @@
                                         <select
                                             class="form-control form-select form-select-primary mt16 mb8 benefit_input"
                                             applies-on="contract"
-                                            t-att-name="'select_' + benefit.field">
+                                            t-att-name="'select_' + benefit.field"
+                                            t-att-required="True">
                                             <t t-set="groups" t-value="dropdown_group_options[benefit.field]"/>
                                             <t t-foreach="groups" t-as="group">
                                                 <optgroup t-att-label="group">
@@ -373,7 +374,7 @@
                 t-att-applies-on="personal_info.applies_on"
                 t-att-class="'form-control form-select personal_info' + (' benefit_input' if personal_info.impacts_net_salary else '')"
                 t-att-data-placeholder="personal_info.placeholder"
-                t-att-required="personal_info.is_required and not hidden_children">
+                t-att-required="personal_info.is_required">
                 <option/>
                 <t t-foreach="dropdown_options[personal_info.field]" t-as="dropdown_option">
                     <option
