@@ -39,3 +39,10 @@ class PosOrder(models.Model):
                     # refunding a "Boleta de venta electrónica" is done through a "Nota de Crédito Boleta electrónica"
                     vals['l10n_latam_document_type_id'] = self.env.ref('l10n_pe.document_type07b').id
         return vals
+
+    def _generate_pos_order_invoice(self):
+        """ We can skip the accout_edi cron because it will be trigerred manually in l10n_pe_edi_pos/models/account_move.py _post() """
+        if 'pe_ubl_2_1' in self.config_id.invoice_journal_id.edi_format_ids.mapped('code'):
+            return super(PosOrder, self.with_context(skip_account_edi_cron_trigger=True))._generate_pos_order_invoice()
+        else:
+            return super()._generate_pos_order_invoice()
