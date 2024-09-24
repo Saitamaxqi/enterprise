@@ -190,7 +190,7 @@ QUnit.module("Studio Approval", (hooks) => {
     });
 
     QUnit.test("approval check: method button", async function (assert) {
-        assert.expect(3);
+        assert.expect(4);
 
         await makeView({
             type: "form",
@@ -238,7 +238,7 @@ QUnit.module("Studio Approval", (hooks) => {
 
         await click(target, "#mainButton");
         // first render, handle click, rerender after click
-        assert.verifySteps(["fetch_approval_spec", "someMethod"]);
+        assert.verifySteps(["fetch_approval_spec", "someMethod", "fetch_approval_spec"]);
     });
 
     QUnit.test("approval check: action button", async function (assert) {
@@ -737,7 +737,7 @@ QUnit.module("Studio Approval", (hooks) => {
         assert.containsNone(target, ".o_web_studio_approval_avatar");
         await click(target, ".o_pager_previous");
         assert.containsOnce(target, ".o_web_studio_approval_avatar");
-        assert.verifySteps([]);
+        assert.verifySteps(["get_approval_spec: 1"]);
     });
 
     QUnit.test("approval save a record", async (assert) => {

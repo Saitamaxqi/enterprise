@@ -252,14 +252,113 @@ class StudioApprovalRule(models.Model):
         self._update_registry()
         return res
 
+    def _base_automation_data_for_model(self, model_id):
+        # Careful here, this method implements things specific to actual models
+        # So, be aware that if you put specific code for a model that is not present
+        # in the registry, chances are there will be a crash
+        model_name = model_id.model
+        if model_name == "sale.order":
+            state_field = self.env["ir.model.fields"]._get("sale.order", "state")
+            return {
+                'trigger': 'on_state_set',
+                'trg_selection_field_id': state_field.selection_ids.filtered(lambda s: s.value == "draft").id,
+                'filter_pre_domain': "[('state', '!=', 'draft')]",
+            }
+        if model_name == "account.move":
+            state_field = self.env["ir.model.fields"]._get("account.move", "state")
+            return {
+                'trigger': 'on_state_set',
+                'trg_selection_field_id': state_field.selection_ids.filtered(lambda s: s.value == "draft").id,
+                'filter_pre_domain': "[('state', '!=', 'draft')]",
+            }
+        if model_name == "purchase.order":
+            state_field = self.env["ir.model.fields"]._get("purchase.order", "state")
+            return {
+                'trigger': 'on_state_set',
+                'trg_selection_field_id': state_field.selection_ids.filtered(lambda s: s.value == "draft").id,
+                'filter_pre_domain': "[('state', '!=', 'draft')]",
+            }
+        return None
+
+    def _make_automated_actions(self):
+        def process_xml_id_params(model_name, module_prefix=None):
+            if module_prefix is None:
+                module_prefix = "web_studio"
+            return model_name.replace(".", "_"), module_prefix + "." if module_prefix else ""
+
+        def get_base_automation_xml_id(model_name, module_prefix=None):
+            model_name, module_prefix = process_xml_id_params(model_name, module_prefix)
+            return f"{module_prefix}remove_approval_entries__{model_name}__automation"
+
+        def get_base_action_server_xml_id(model_name, module_prefix=None):
+            model_name, module_prefix = process_xml_id_params(model_name, module_prefix)
+            return f"{module_prefix}remove_approval_entries__{model_name}__action_server"
+
+        self_sudo = self.sudo()
+        new_automations = []
+        for model_id in self_sudo.mapped("model_id"):
+            model = model_id.model
+            base_auto_data = self_sudo._base_automation_data_for_model(model_id)
+            if base_auto_data is None:
+                continue
+
+            specific_ref = get_base_automation_xml_id(model)
+            if self_sudo.env.ref(specific_ref, raise_if_not_found=False):
+                continue
+            automation = {
+                "name": f"Reset approval entries for ({model_id.name})",
+                "model_id": model_id.id,
+                **base_auto_data,
+            }
+            new_automations.append(automation)
+
+        automations = self_sudo.env["base.automation"].create(new_automations)
+
+        actions_server_data = []
+        xml_ids_data = []
+        for base_auto in automations:
+            model_id = base_auto.model_id
+            model = model_id.model
+            xml_ids_data.append({
+                "name": get_base_automation_xml_id(model, module_prefix=""),
+                "model": "base.automation",
+                "res_id": base_auto.id,
+                "module": "web_studio",
+            })
+            server_action = self_sudo.env.ref(get_base_action_server_xml_id(model), raise_if_not_found=False)
+            if server_action:
+                server_action.write({
+                    "base_automation_id": base_auto.id,
+                    "model_id": model_id.id
+                })
+            else:
+                actions_server_data.append({
+                    "name": f"Reset approval entries for ({model_id.name})",
+                    "base_automation_id": base_auto.id,
+                    'state': 'code',
+                    'code': "records.env['studio.approval.entry']._delete_entries(records)",
+                    "model_id": model_id.id,
+                })
+
+        for server_action in self_sudo.env["ir.actions.server"].create(actions_server_data):
+            xml_ids_data.append({
+                "name": get_base_action_server_xml_id(server_action.model_id.model, module_prefix=""),
+                "model": "ir.actions.server",
+                "res_id": server_action.id,
+                "module": "web_studio",
+            })
+
+        self_sudo.env["ir.model.data"].create(xml_ids_data)
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
             if "approver_log_ids" in vals:
                 vals.pop("approver_ids", None)
-        entries = super().create(vals_list)
+        rules = super().create(vals_list)
+        rules._make_automated_actions()
         self._update_registry()
-        return entries
+        return rules
 
     def _update_registry(self):
         """ Update the registry after a modification on approval rules. """
@@ -1111,6 +1210,14 @@ class StudioApprovalEntry(models.Model):
         entries = super().create(vals_list)
         entries._notify_approval()
         return entries
+
+    def _delete_entries(self, records):
+        model_name = records._name
+        existing_entries = self.sudo().env['studio.approval.entry'].search([
+            ('model', '=', model_name),
+            ('res_id', 'in', records.ids)
+        ])
+        existing_entries.unlink()
 
     def write(self, vals):
         res = super().write(vals)

@@ -566,6 +566,63 @@ class TestStudioApprovals(TransactionCase):
         spec = dict(spec["test.studio.model_action"])[model_action.id, "action_step", False]
         self.assertEqual(len(spec["entries"]), 0)
 
+    def test_create_base_automation(self):
+        IrModel = self.env["ir.model"]
+
+        def _mocked__base_automation_data_for_model(self, model_id):
+            if model_id.model == "test.studio.model_action":
+                confirmed_field = self.env["ir.model.fields"]._get("test.studio.model_action", "confirmed")
+                return {
+                    'trigger': 'on_create_or_write',
+                    'trigger_field_ids': [Command.link(confirmed_field.id)],
+                    'filter_pre_domain': "[('confirmed', '=', True)]",
+                    'filter_domain': "[('confirmed', '=', False)]",
+                }
+
+        self.patch(self.env.registry.get("studio.approval.rule"), "_base_automation_data_for_model", _mocked__base_automation_data_for_model)
+
+        model_action = self.env["test.studio.model_action"].create({
+            "name": "test 2"
+        })
+        rules = self.env["studio.approval.rule"].create([
+            {
+                "name": "rule 1",
+                "model_id": IrModel._get("test.studio.model_action").id,
+                "method": "action_step",
+                "approver_ids": [Command.link(self.admin_user.id)],
+            },
+            {
+                "name": "rule 1 - bis",
+                "model_id": IrModel._get("test.studio.model_action").id,
+                "method": "action_step",
+                "approver_ids": [Command.link(self.admin_user.id)],
+            }
+        ])
+        self.assertTrue(self.env.ref("web_studio.remove_approval_entries__test_studio_model_action__automation").exists())
+        self.assertTrue(self.env.ref("web_studio.remove_approval_entries__test_studio_model_action__action_server").exists())
+        # recreate a rule to make sure we don't re-create those two objects
+        self.env["studio.approval.rule"].create({
+            "name": "rule recreate",
+            "model_id": IrModel._get("test.studio.model_action").id,
+            "method": "action_step",
+            "approver_ids": [Command.link(self.admin_user.id)],
+        })
+
+        rules[0].with_user(self.admin_user).set_approval(model_action.id, True)
+        spec = self.env["studio.approval.rule"].get_approval_spec([dict(model="test.studio.model_action", method="action_step", action_id=False, res_id=model_action.id)])
+        spec = dict(spec["test.studio.model_action"])[model_action.id, "action_step", False]
+        self.assertEqual(len(spec["entries"]), 1)
+
+        model_action.action_confirm()
+        spec = self.env["studio.approval.rule"].get_approval_spec([dict(model="test.studio.model_action", method="action_step", action_id=False, res_id=model_action.id)])
+        spec = dict(spec["test.studio.model_action"])[model_action.id, "action_step", False]
+        self.assertEqual(len(spec["entries"]), 1)
+
+        model_action.confirmed = False
+        spec = self.env["studio.approval.rule"].get_approval_spec([dict(model="test.studio.model_action", method="action_step", action_id=False, res_id=model_action.id)])
+        spec = dict(spec["test.studio.model_action"])[model_action.id, "action_step", False]
+        self.assertEqual(len(spec["entries"]), 0)
+
 @tagged("-at_install", "post_install")
 class TestStudioApprovalsUIUnit(HttpCase):
     @classmethod

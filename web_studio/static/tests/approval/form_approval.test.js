@@ -3,11 +3,13 @@ import {
     contains,
     defineModels,
     fields,
+    makeServerError,
     models,
     mountView,
     onRpc,
 } from "@web/../tests/web_test_helpers";
 import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import { animationFrame } from "@odoo/hoot-mock";
 
 class ApprovalModel extends models.Model {
     async get_views() {
@@ -183,4 +185,49 @@ test("reload record when setting/deleting approval", async () => {
     ]);
     await contains(".o_web_approval_cancel").click();
     expect.verifySteps(["delete_approval", "web_read", "get_approval_spec"]);
+});
+
+test("don't reload model when setting approval in error", async () => {
+    expect.errors(1);
+    const error = makeServerError({
+        subType: "Odoo Client Error",
+        message: "Crash",
+        errorName: "crash",
+    });
+    onRpc("studio.approval.rule", "set_approval", async (args) => {
+        expect.step({
+            ruleIds: args.args[0],
+            res_id: args.kwargs.res_id,
+            approved: args.kwargs.approved,
+        });
+        throw error;
+    });
+    onRpc("partner", "web_read", () => {
+        expect.step("web_read");
+    });
+    onRpc("studio.approval.rule", "get_approval_spec", async (args) => {
+        expect.step("get_approval_spec");
+    });
+    await mountView({
+        type: "form",
+        resModel: "partner",
+        arch: `<form>
+            <button type="object" name="my_method" />
+            </form>
+        `,
+        resId: 1,
+    });
+    expect.verifySteps(["web_read", "get_approval_spec"]);
+    await contains(".o_web_studio_approval").click();
+    await contains(".o_web_approval_approve").click();
+    await animationFrame();
+    expect.verifyErrors(['Crash']);
+    expect.verifySteps([
+        {
+            approved: true,
+            res_id: 1,
+            ruleIds: [3],
+        },
+        "get_approval_spec",
+    ]);
 });

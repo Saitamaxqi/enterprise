@@ -193,10 +193,11 @@ class StudioApproval {
                 res_id: this.resId,
                 approved,
             });
-            await this.model.root.load();
-        } finally {
-            await this.fetchApprovals();
+        } catch (e) {
+            this.fetchApprovals();
+            throw e;
         }
+        return await this.model.root.load();
     }
 
     /**
@@ -208,10 +209,11 @@ class StudioApproval {
             await this.orm.call("studio.approval.rule", "delete_approval", [[ruleId]], {
                 res_id: this.resId,
             });
-            await this.model.root.load();
-        } finally {
-            await this.fetchApprovals();
+        } catch (e) {
+            this.fetchApprovals();
+            throw e;
         }
+        return this.model.root.load();
     }
 
     _getState() {
@@ -248,6 +250,17 @@ export function useApproval({ getRecord, method, action }) {
         model.hooks.onRecordSaved = (...args) => {
             approvalModelCache.onRecordSaved.forEach((fn) => fn(args[0]));
             return onRecordSaved(...args);
+        };
+        const onRootLoaded = model.hooks.onRootLoaded;
+        model.hooks.onRootLoaded = (...args) => {
+            // nullify every state. This will trigger a re-render and thus
+            // a fetch of all approval for buttons that ask for it.
+            for (const data of Object.values(approvalModelCache.approval._data)) {
+                data.rules = null;
+            }
+            if (onRootLoaded) {
+                return onRootLoaded(...args);
+            }
         };
     }
 
