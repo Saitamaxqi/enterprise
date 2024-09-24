@@ -17,15 +17,14 @@
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [
-            'website_knowledge/static/src/client_actions/website_preview/website_preview.js',
-            'website_knowledge/static/src/js/components/**/*.xml',
-            'website_knowledge/static/src/js/components/**/*.js',
-            'website_knowledge/static/src/components/**/*',
+            'website_knowledge/static/src/backend/**/*',
         ],
         'web.assets_frontend': [
-            'website_knowledge/static/src/js/knowledge_public.js',
-            'website_knowledge/static/src/scss/knowledge_public.scss',
-            'website_knowledge/static/src/xml/knowledge_public.xml',
+            'html_editor/static/src/utils/url.js',
+            'html_editor/static/src/fields/html_viewer.*',
+            'html_editor/static/src/others/embedded_component_utils.js',
+            'html_editor/static/src/others/embedded_components/core/**/*',
+            'website_knowledge/static/src/frontend/**/*',
         ],
         'web.assets_tests': [
             'website_knowledge/static/tests/tours/**/*',

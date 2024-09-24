@@ -109,9 +109,8 @@
         </ul>
     </li>
 </ul>
-<div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_video"
-    data-behavior-props="%7B%22videoId%22%3A%22uEdaZRqa1FQ%22%2C%22platform%22%3A%22youtube%22%2C%22params%22%3A%7B%22rel%22%3A0%7D%7D"
-    data-oe-protected="true"/>
+<div data-embedded-props='{"videoId":"uEdaZRqa1FQ","platform":"youtube","params":{"rel":0}}'
+    data-embedded="video"/>
 <p><br /></p>
 <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_template" data-oe-protected="true">
     <div class="d-flex">
@@ -147,15 +146,16 @@
         </ul>
     </li>
 </ul>
-<div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_file" data-oe-protected="true">
-    <div class="o_knowledge_file_image" data-prop-name="fileImage">
-        <a href="/knowledge/static/src/demo/Onboarding.pdf?download=true" title="Onboarding.pdf" data-mimetype="application/pdf" class="o_image"></a>
-    </div>
-    <div class="o_knowledge_file_description">
-        <div class="o_knowledge_file_name" data-prop-name="fileName">Odoo Survival Guide</div>
-        <div class="o_knowledge_file_extension" data-prop-name="fileExtension">pdf</div>
-    </div>
-</div>
+<div data-embedded="file" data-embedded-props='{
+    "fileData":{
+        "extension": "pdf",
+        "filename": "Odoo Survival Guide",
+        "mimetype": "application/pdf",
+        "name": "Odoo Survival Guide.pdf",
+        "type": "url",
+        "url": "/knowledge/static/src/demo/Onboarding.pdf?download=true"
+    }
+}'/>
 <p><br /></p>
 <p>
     <span style="font-size: 14px;">

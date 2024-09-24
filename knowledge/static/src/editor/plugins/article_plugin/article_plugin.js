@@ -1,13 +1,13 @@
 import { Plugin } from "@html_editor/plugin";
 import { MAIN_PLUGINS } from "@html_editor/plugin_sets";
 import { rightPos } from "@html_editor/utils/position";
-import { ArticleSelectionBehaviorDialog } from "@knowledge/components/behaviors/article_behavior_dialog/article_behavior_dialog";
-import { encodeDataBehaviorProps } from "@knowledge/js/knowledge_utils";
+import { ArticleSelectionDialog } from "@knowledge/components/article_selection_dialog/article_selection_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { renderToElement } from "@web/core/utils/render";
 
-const ARTICLE_LINKS_SELECTOR = ".o_knowledge_behavior_type_article";
-class KnowledgeArticlePlugin extends Plugin {
+const ARTICLE_LINKS_SELECTOR = ".o_knowledge_article_link";
+export class KnowledgeArticlePlugin extends Plugin {
+    static name = "article";
     static dependencies = ["dom", "selection"];
     static resources = (p) => ({
         powerboxItems: [
@@ -15,7 +15,7 @@ class KnowledgeArticlePlugin extends Plugin {
                 category: "navigation",
                 name: _t("Article"),
                 description: _t("Insert an Article shortcut"),
-                fontawesome: "fa-file",
+                fontawesome: "fa-newspaper-o",
                 action: () => {
                     p.addArticle();
                 },
@@ -23,10 +23,15 @@ class KnowledgeArticlePlugin extends Plugin {
         ],
     });
 
+    setup() {
+        super.setup();
+        this.boundOpenArticle = this.openArticle.bind(this);
+    }
+
     handleCommand(command, payload) {
         switch (command) {
-            case "CLEAN":
-                this.clean(payload.root);
+            case "CLEAN_FOR_SAVE":
+                this.cleanForSave(payload.root);
                 break;
             case "NORMALIZE":
                 this.normalize(payload.node);
@@ -39,35 +44,33 @@ class KnowledgeArticlePlugin extends Plugin {
         let restoreSelection = () => {
             this.shared.setSelection(selection);
         };
+        const recordInfo = this.config.getRecordInfo();
+        let parentArticleId;
+        if (recordInfo.resModel === "knowledge.article" && recordInfo.resId) {
+            parentArticleId = recordInfo.resId;
+        }
         this.services.dialog.add(
-            ArticleSelectionBehaviorDialog,
+            ArticleSelectionDialog,
             {
                 title: _t("Link an Article"),
                 confirmLabel: _t("Insert Link"),
                 articleSelected: (article) => {
-                    const articleLinkBlock = renderToElement("knowledge.ArticleBehaviorBlueprint", {
-                        href: "/knowledge/article/" + article.articleId,
-                        data: encodeDataBehaviorProps({
-                            article_id: article.articleId,
-                            display_name: article.displayName,
-                        }),
+                    const articleLinkBlock = renderToElement("knowledge.ArticleBlueprint", {
+                        href: `/knowledge/article/${article.articleId}`,
+                        articleId: article.articleId,
+                        displayName: article.displayName,
                     });
 
-                    // TODO ABD: textNode and oeProtected management are there for legacy editor
-                    // compatibility, can be refactored once legacy editor is removed.
-                    const nameNode = this.document.createTextNode(article.displayName);
-                    articleLinkBlock.appendChild(nameNode);
-                    delete articleLinkBlock.dataset.oeProtected;
-
                     this.shared.domInsert(articleLinkBlock);
-                    const [anchorNode, anchorOffset] = rightPos(articleLinkBlock);
                     this.dispatch("ADD_STEP");
+                    const [anchorNode, anchorOffset] = rightPos(articleLinkBlock);
                     this.shared.setSelection({ anchorNode, anchorOffset });
 
                     // TODO ABD: onClose is called after articleSelected in the dialog for the
                     // legacy editor, can be refactored once legacy editor is removed.
                     restoreSelection = () => {};
                 },
+                parentArticleId,
             },
             {
                 onClose: () => {
@@ -85,18 +88,37 @@ class KnowledgeArticlePlugin extends Plugin {
         return articleLinks;
     }
 
+    async openArticle(ev) {
+        if (this.config.embeddedComponentInfo?.env?.openArticle) {
+            const articleId = parseInt(ev.target.dataset.res_id);
+            if (articleId) {
+                ev.preventDefault();
+                await this.config.embeddedComponentInfo.env.openArticle(articleId);
+            }
+        }
+    }
+
     normalize(element) {
         const articleLinks = this.scanForArticleLinks(element);
         for (const articleLink of articleLinks) {
             articleLink.setAttribute("target", "_blank");
             articleLink.setAttribute("contenteditable", "false");
+            articleLink.addEventListener("click", this.boundOpenArticle);
         }
     }
 
-    clean(root) {
+    cleanForSave(root) {
         const articleLinks = this.scanForArticleLinks(root);
         for (const articleLink of articleLinks) {
             articleLink.removeAttribute("contenteditable");
+        }
+    }
+
+    destroy() {
+        super.destroy();
+        const articleLinks = this.scanForArticleLinks(this.editable);
+        for (const articleLink of articleLinks) {
+            articleLink.removeEventListener("click", this.boundOpenArticle);
         }
     }
 }

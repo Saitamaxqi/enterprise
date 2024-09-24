@@ -1,5 +1,8 @@
 import { _t } from "@web/core/l10n/translation";
-import { AutoResizeImage, ImageSelector } from '@web_editor/components/media_dialog/image_selector';
+import {
+    AutoResizeImage,
+    ImageSelector,
+} from "@html_editor/main/media/media_dialog/image_selector";
 import { ConfirmationDialog } from '@web/core/confirmation_dialog/confirmation_dialog';
 import { Dialog } from '@web/core/dialog/dialog';
 import { UnsplashError } from '@web_unsplash/unsplash_error/unsplash_error';
@@ -45,6 +48,7 @@ export class KnowledgeCoverSelector extends ImageSelector {
     setup() {
         super.setup();
         // Search for images matching the article name when opening the dialog.
+        this.unsplashService = useService("unsplash");
         this.state.needle = this.props.searchTerm;
         this.searchUnsplash(this.state.needle);
     }
@@ -73,7 +77,7 @@ export class KnowledgeCoverSelector extends ImageSelector {
     onClickRecord(unsplashRecord) {
         this.unsplashService.uploadUnsplashRecords(
             [unsplashRecord],
-            {resModel: this.props.resModel, resId: this.props.resId},
+            {resModel: this.props.resModel, resId: this.props.articleCoverId},
             async (attachments) => this.onUploaded(attachments[0])
         );
     }

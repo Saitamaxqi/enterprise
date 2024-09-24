@@ -43,11 +43,17 @@ class KnowledgeWebsiteController(KnowledgeController):
     def _redirect_to_public_view(self, article, no_sidebar=False):
         # The sidebar is hidden if no_sidebar is True or if there is no article
         # to show in the sidebar (i.e. only one article in the tree is published).
-        show_sidebar = False if no_sidebar else article.parent_id.website_published or article.child_ids.filtered('website_published')
         return request.render('website_knowledge.article_view_public', {
-            'article': article,
+            'article_data': self._prepare_public_article(article),
             'main_object': article,
-            'show_sidebar': show_sidebar
+            'res_id': article.id,
+            'show_sidebar': bool(
+                not no_sidebar
+                and (
+                    article.parent_id.website_published
+                    or article.child_ids.filtered('website_published')
+                )
+            ),
         })
 
     # ------------------------
@@ -244,3 +250,10 @@ class KnowledgeWebsiteController(KnowledgeController):
             "articles_displayed_limit": self._KNOWLEDGE_TREE_ARTICLES_LIMIT,
             'articles': all_visible_articles,
         }
+
+    def _prepare_public_article(self, article):
+        public_fields = {'body', 'cover_image_position', 'cover_image_url', 'display_name',
+            'full_width', 'icon', 'name'}
+        public_article = {field: article[field] for field in public_fields}
+        public_article['cover_image_id'] = article.cover_image_id.id
+        return public_article

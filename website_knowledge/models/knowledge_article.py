@@ -47,14 +47,7 @@ class Article(models.Model):
                 article.summary = False
                 continue
             root = html.fragment_fromstring(article.body, create_parent=True)
-            selector = """//*[
-                contains(@class, 'o_knowledge_behavior_type_articles_structure') or
-                contains(@class, 'o_knowledge_behavior_type_draw') or
-                contains(@class, 'o_knowledge_behavior_type_embedded_view') or
-                contains(@class, 'o_knowledge_behavior_type_file') or
-                contains(@class, 'o_knowledge_behavior_type_toc') or
-                contains(@class, 'o_knowledge_behavior_type_video')
-            ]"""
+            selector = "//*[@data-embedded]"
             for element in root.xpath(selector):
                 element.getparent().remove(element)
             text = re.sub(r'\s+', ' ', root.text_content()).strip()

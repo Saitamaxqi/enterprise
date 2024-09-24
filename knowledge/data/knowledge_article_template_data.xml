@@ -847,7 +847,7 @@
         <field name="template_body" type="html">
             <h1>Account Management Cheat Sheet</h1>
             <hr/>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_toc" contenteditable="false"/>
+            <div data-embedded="tableOfContent"/>
             <blockquote>
                 <font class="text-o-color-2">
                     <strong>Planned Next Step:</strong>
@@ -1089,15 +1089,16 @@
                 <br/>
                 They can also be shared with customers, journalists and resellers.
             </p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_file" data-oe-protected="true">
-                <div class="o_knowledge_file_image" data-prop-name="fileImage">
-                    <a href="https://odoocdn.com/openerp_website/static/src/img/assets/png/odoo_logo.png?download=true" title="logo.jpg" data-mimetype="image/jpeg" class="o_image"></a>
-                </div>
-                <div class="o_knowledge_file_description">
-                    <div class="o_knowledge_file_name" data-prop-name="fileName">Odoo Logo</div>
-                    <div class="o_knowledge_file_extension" data-prop-name="fileExtension">JPG</div>
-                </div>
-            </div>
+            <div data-embedded="file" data-embedded-props='{
+                "fileData":{
+                    "extension": "png",
+                    "filename": "Odoo Logo",
+                    "mimetype": "image/png",
+                    "name": "Odoo Logo.png",
+                    "type": "url",
+                    "url": "https://odoocdn.com/openerp_website/static/src/img/assets/png/odoo_logo.png?download=true"
+                }
+            }'/>
             <p><br/></p>
             <h4>Usage</h4>
             <ul>
@@ -1251,7 +1252,7 @@
         <field name="template_body" type="html">
             <h1>HR FAQ</h1>
             <hr/>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_toc" contenteditable="false"/>
+            <div data-embedded="tableOfContent"/>
             <p><br/></p>
             <h2>Expense Policy</h2>
             <h3>Who do I need to address if I need office supplies?</h3>
@@ -1267,15 +1268,16 @@
             <h2>Car Policy</h2>
             <h3>How do I know which model I can order or not?</h3>
             <p>Our catalog can be found here and is updated every 2 years. If you do not manage to find the specific model you are looking for, <a href="mailto:fleet@company.com" target="_blank">contact our FleetOfficer</a></p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_file" data-oe-protected="true">
-                <div class="o_knowledge_file_image" data-prop-name="fileImage">
-                    <a href="/knowledge/static/src/demo/fleet_icon.png?download=true" title="Car_Catalog.png" data-mimetype="image/png" class="o_image"></a>
-                </div>
-                <div class="o_knowledge_file_description">
-                    <div class="o_knowledge_file_name" data-prop-name="fileName">Car_Catalog.png</div>
-                    <div class="o_knowledge_file_extension" data-prop-name="fileExtension">png</div>
-                </div>
-            </div>
+            <div data-embedded="file" data-embedded-props='{
+                "fileData":{
+                    "extension": "png",
+                    "filename": "Car_Catalog.png",
+                    "mimetype": "image/png",
+                    "name": "Car_Catalog.png",
+                    "type": "url",
+                    "url": "/knowledge/static/src/demo/fleet_icon.png?download=true"
+                }
+            }'/>
             <p><br/></p>
             <h3>Who can drive my car?</h3>
             <p>
@@ -1385,7 +1387,7 @@
         <field name="template_body" type="html">
             <h1>Release Notes 🎉</h1>
             <hr/>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_toc" contenteditable="false"/>
+            <div data-embedded="tableOfContent"/>
             <p><br/></p>
             <h1>VersionName - ReleaseDate</h1>
             <hr/>
@@ -1602,7 +1604,7 @@
         <field name="template_body" type="html">
             <h1>Tiny House Catalog</h1>
             <hr/>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_toc" contenteditable="false"/>
+            <div data-embedded="tableOfContent"/>
             <p><br/></p>
             <h2>Available Models ✅</h2>
             <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_embedded_view"
@@ -2129,7 +2131,7 @@
                 We are very excited to share with you the hottest updates and news! 🤩
             </p>
             <p><br/></p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_toc" contenteditable="false"/>
+            <div data-embedded="tableOfContent"/>
             <p><br/></p>
             <h2>Podcast updates 📻</h2>
             <div class="container o_text_columns">

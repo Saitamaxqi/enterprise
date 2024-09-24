@@ -139,7 +139,7 @@ const FormControllerPatch = {
             // the invisible and readonly modifiers attributes for each field
             // instance in the xmlDoc. Don't consider html fields that are not
             // using the `html` widget (i.e. mass_mailing_html widget).
-            const xmlFields = Array.from(xmlDoc.querySelectorAll(`field[name="${fieldName}"]:is([widget="html_legacy"], :not([widget])`));
+            const xmlFields = Array.from(xmlDoc.querySelectorAll(`field[name="${fieldName}"]:is([widget="html"], :not([widget])`));
             const xmlFieldsCandidates = xmlFields.filter((xmlField) => {
                 return (
                     !(xmlField.parentElement.closest('field')) &&

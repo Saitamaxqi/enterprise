@@ -18,8 +18,8 @@ import KnowledgeHierarchy from '@knowledge/components/hierarchy/hierarchy';
 import MoveArticleDialog from '@knowledge/components/move_article_dialog/move_article_dialog';
 import PermissionPanel from '@knowledge/components/permission_panel/permission_panel';
 import { KnowledgeFormStatusIndicator } from "@knowledge/components/form_status_indicator/form_status_indicator";
-import HistoryDialog from '@web_editor/components/history_dialog/history_dialog';
-
+import { READONLY_MAIN_EMBEDDINGS } from "@html_editor/others/embedded_components/embedding_sets";
+import { HistoryDialog } from "@html_editor/components/history_dialog/history_dialog";
 
 class KnowledgeTopbar extends Component {
     static template = "knowledge.KnowledgeTopbar";
@@ -265,7 +265,10 @@ class KnowledgeTopbar extends Component {
                             restoredData[versionedFieldName] = html;
                             this.props.record.update(restoredData);
                             close();
-                        }
+                        },
+                        embeddedComponents: [
+                            ...READONLY_MAIN_EMBEDDINGS,
+                        ],
                     },
                     {
                         onClose: () => this.state.displayHistory = false
