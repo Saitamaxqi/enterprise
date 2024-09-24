@@ -237,3 +237,10 @@ class TestPlanningContract(TestPlanningContractCommon):
             'resource_id': self.resource_janice.id,
         })
         self.assertEqual(slot_outside.allocated_hours, 6, "The allocated hours should be 6h (the max per day) for the flexible employee")
+
+    def test_allocated_hours_on_open_shift(self):
+        slot = self.env['planning.slot'].create({
+            'start_datetime': datetime(2015, 12, 16, 8, 0, 0),
+            'end_datetime': datetime(2015, 12, 17, 8, 0, 0),
+        })
+        self.assertEqual(slot.allocated_hours, 8, "The allocated hours should be computed without any issue")

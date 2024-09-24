@@ -73,7 +73,7 @@ class Planning(models.Model):
         If the employee has an ongoing contract, we verify that the planned slot is within the contract period.
         If not, we return the working hours within the contract period. If no period overlaps, we return 0.
         """
-        if self.resource_id._is_flexible():
+        if self.resource_id and self.resource_id._is_flexible():
             contract = self.resource_id.employee_id.contract_id
             if contract and contract.state == 'open':
                 start_contract_utc = pytz.utc.localize(datetime.combine(fields.Datetime.to_datetime(contract.date_start), datetime.min.time()))
