@@ -1956,6 +1956,27 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         }
 
     @api.model
+    def _get_pac_method_map(self):
+        """ Returns a dictionary containing the PAC methods for credentials, sign, or cancel. """
+        return {
+            'credentials': {
+                'finkok': self._get_finkok_credentials,
+                'solfact': self._get_solfact_credentials,
+                'sw': self._get_sw_credentials,
+            },
+            'sign': {
+                'finkok': self._finkok_sign,
+                'solfact': self._solfact_sign,
+                'sw': self._sw_sign,
+            },
+            'cancel': {
+                'finkok': self._finkok_cancel,
+                'solfact': self._solfact_cancel,
+                'sw': self._sw_cancel,
+            },
+        }
+
+    @api.model
     def _send_api(self, company, qweb_template, cfdi_filename, on_populate, on_failure, on_success):
         """ Common way to send a document.
 
@@ -2015,7 +2036,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
 
         # == Check credentials ==
         pac_name = root_company.l10n_mx_edi_pac
-        credentials = getattr(self.env['l10n_mx_edi.document'], f'_get_{pac_name}_credentials')(root_company)
+        credentials = self._get_pac_method_map()['credentials'][pac_name](root_company)
         if credentials.get('errors'):
             on_failure(
                 "\n".join(credentials['errors']),
@@ -2027,7 +2048,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
             return
 
         # == Check PAC ==
-        sign_results = getattr(self.env['l10n_mx_edi.document'], f'_{pac_name}_sign')(credentials, cfdi_str)
+        sign_results = self._get_pac_method_map()['sign'][pac_name](credentials, cfdi_str)
         if sign_results.get('errors'):
             on_failure(
                 "\n".join(sign_results['errors']),
@@ -2072,7 +2093,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
 
         # == Check credentials ==
         pac_name = root_company.l10n_mx_edi_pac
-        credentials = getattr(self.env['l10n_mx_edi.document'], f'_get_{pac_name}_credentials')(root_company)
+        credentials = self._get_pac_method_map()['credentials'][pac_name](root_company)
         if credentials.get('errors'):
             on_failure("\n".join(credentials['errors']))
             if self._can_commit():
@@ -2082,7 +2103,7 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         # == Check PAC ==
         substitution_doc = self._get_substitution_document()
         cancel_uuid = substitution_doc.attachment_uuid
-        cancel_results = getattr(self.env['l10n_mx_edi.document'], f'_{pac_name}_cancel')(
+        cancel_results = self._get_pac_method_map()['cancel'][pac_name](
             cfdi_values,
             credentials,
             self.attachment_uuid,
