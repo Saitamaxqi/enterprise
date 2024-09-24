@@ -95,3 +95,82 @@ class ProductTemplate(models.Model):
                     'product_variant_ids': copied_variant_ids,
                 })
         return copied_tmpls
+
+    @api.model
+    def _get_configurator_price(
+        self, product_or_template, quantity, date, currency, pricelist, plan_id=None, **kwargs
+    ):
+        """ Override of `sale` to compute the subscription price.
+
+        :param product.product|product.template product_or_template: The product for which to get
+            the price.
+        :param int quantity: The quantity of the product.
+        :param datetime date: The date to use to compute the price.
+        :param res.currency currency: The currency to use to compute the price.
+        :param product.pricelist pricelist: The pricelist to use to compute the price.
+        :param int|None plan_id: The subscription plan of the product, as a `sale.subscription.plan`
+            id.
+        :param dict kwargs: Locally unused data passed to `super`.
+        :rtype: float
+        :return: The specified product's price.
+        """
+        price = super()._get_configurator_price(
+            product_or_template, quantity, date, currency, pricelist, plan_id=plan_id, **kwargs
+        )
+
+        if (
+            product_or_template.recurring_invoice
+            and (pricing := self._get_pricing(product_or_template, pricelist, plan_id=plan_id))
+        ):
+            return pricing.currency_id._convert(
+                from_amount=pricing.price,
+                to_currency=currency,
+                company=self.env.company,
+                date=date,
+            )
+        return price
+
+    @api.model
+    def _get_additional_configurator_data(
+        self, product_or_template, date, currency, pricelist, plan_id=None, **kwargs
+    ):
+        """ Override of `sale` to append subscription data.
+
+        :param product.product|product.template product_or_template: The product for which to get
+            additional data.
+        :param datetime date: The date to use to compute prices.
+        :param res.currency currency: The currency to use to compute prices.
+        :param product.pricelist pricelist: The pricelist to use to compute prices.
+        :param int|None plan_id: The subscription plan of the product, as a `sale.subscription.plan`
+            id.
+        :param dict kwargs: Locally unused data passed to `super`.
+        :rtype: dict
+        :return: A dict containing additional data about the specified product.
+        """
+        data = super()._get_additional_configurator_data(
+            product_or_template, date, currency, pricelist, plan_id=plan_id, **kwargs
+        )
+
+        if (
+            product_or_template.recurring_invoice
+            and (pricing := self._get_pricing(product_or_template, pricelist, plan_id=plan_id))
+        ):
+            data['price_info'] = pricing.plan_id.billing_period_display_sentence
+        return data
+
+    @api.model
+    def _get_pricing(self, product_or_template, pricelist, plan_id=None):
+        """ Return the specified product's pricing.
+
+        :param product.product|product.template product_or_template: The product for which to get
+            the pricing.
+        :param product.pricelist pricelist: The pricelist to use to compute the pricing.
+        :param int|None plan_id: The subscription plan of the product, as a `sale.subscription.plan`
+            id.
+        :rtype: sale.subscription.pricing
+        :return: The specified product's pricing.
+        """
+        subscription_plan = self.env['sale.subscription.plan'].browse(plan_id)
+        return self.env['sale.subscription.pricing'].sudo()._get_first_suitable_recurring_pricing(
+            product_or_template, plan=subscription_plan, pricelist=pricelist
+        )

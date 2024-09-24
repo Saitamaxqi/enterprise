@@ -8,7 +8,7 @@ patch(SaleOrderLineProductField.prototype, {
         const params = super._getAdditionalRpcParams();
         const saleOrder = this.props.record.model.root;
         if (saleOrder.data.is_subscription) {
-            params.subscription_plan_id = saleOrder.data.plan_id[0];
+            params.plan_id = saleOrder.data.plan_id[0];
         }
         return params;
     },

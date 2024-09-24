@@ -1,5 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from math import ceil
+
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import format_amount
@@ -169,3 +171,54 @@ class ProductTemplate(models.Model):
                     'product_variant_ids': copied_variant_ids,
                 })
         return copied_tmpls
+
+    @api.model
+    def _get_additional_configurator_data(
+        self,
+        product_or_template,
+        date,
+        currency,
+        pricelist,
+        start_date=None,
+        end_date=None,
+        **kwargs,
+    ):
+        """ Override of `sale` to append rental data.
+
+        :param product.product|product.template product_or_template: The product for which to get
+            additional data.
+        :param datetime date: The date to use to compute prices.
+        :param res.currency currency: The currency to use to compute prices.
+        :param product.pricelist pricelist: The pricelist to use to compute prices.
+        :param datetime|None start_date: The rental start date, to compute the rental duration.
+        :param datetime|None end_date: The rental end date, to compute the rental duration.
+        :param dict kwargs: Locally unused data passed to `super`.
+        :rtype: dict
+        :return: A dict containing additional data about the specified product.
+        """
+        data = super()._get_additional_configurator_data(
+            product_or_template,
+            date,
+            currency,
+            pricelist,
+            start_date=start_date,
+            end_date=end_date,
+            **kwargs,
+        )
+
+        if product_or_template.rent_ok and start_date and end_date:
+            pricing = product_or_template._get_best_pricing_rule(
+                start_date=start_date, end_date=end_date, pricelist=pricelist, currency=currency
+            )
+            if pricing:
+                rental_duration = self.env['product.pricing']._compute_duration_vals(
+                    start_date, end_date
+                )[pricing.recurrence_id.unit]
+                # Some locales might swap the duration and the unit, so we need to use the
+                # translation function.
+                data['price_info'] = _(
+                    "%(duration)s %(unit)s",
+                    duration=ceil(rental_duration),
+                    unit=pricing.recurrence_id._get_unit_label(rental_duration),
+                )
+        return data

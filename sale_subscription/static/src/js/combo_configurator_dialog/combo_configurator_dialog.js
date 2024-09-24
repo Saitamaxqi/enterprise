@@ -14,7 +14,7 @@ patch(ComboConfiguratorDialog.prototype, {
     _getAdditionalRpcParams() {
         const params = super._getAdditionalRpcParams();
         if (this.props.subscriptionPlanId) {
-            params.subscription_plan_id = this.props.subscriptionPlanId;
+            params.plan_id = this.props.subscriptionPlanId;
         }
         return params;
     },
