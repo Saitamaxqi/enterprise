@@ -112,11 +112,11 @@
 <div data-embedded-props='{"videoId":"uEdaZRqa1FQ","platform":"youtube","params":{"rel":0}}'
     data-embedded="video"/>
 <p><br /></p>
-<div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_template" data-oe-protected="true">
+<div data-embedded="clipboard">
     <div class="d-flex">
-        <div class="o_knowledge_template_label align-middle">Clipboard</div>
+        <div class="o_embedded_clipboard_label align-middle">Clipboard</div>
     </div>
-    <div class="o_knowledge_content" data-prop-name="content" data-oe-protected="false">
+    <div data-embedded-editable="clipboardContent">
         <p>
             Hello there, I am a template 👋
             <br />

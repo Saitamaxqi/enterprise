@@ -505,11 +505,11 @@
             <p>
                 <strong><font class="text-o-color-2">PRO TIP</font></strong>: From a lead, use the book button in the chatter to find this article and autocomplete your email with this template.
             </p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_template" data-oe-protected="true">
+            <div data-embedded="clipboard">
                 <div class="d-flex">
-                    <div class="o_knowledge_template_label align-middle">Clipboard</div>
+                    <div class="o_embedded_clipboard_label align-middle">Clipboard</div>
                 </div>
-                <div class="o_knowledge_content" data-prop-name="content" data-oe-protected="false">
+                <div data-embedded-editable="clipboardContent">
                     <p>Hey ProspectName,</p>
                     <p>
                         I was doing some research online and found your company.<br/>
@@ -530,11 +530,11 @@
             <p>
                 <strong><font class="text-o-color-2">PRO TIP</font></strong>: From a lead, use the book button in the chatter to find this article and autocomplete your description with this qualification template.
             </p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_template" data-oe-protected="true">
+            <div data-embedded="clipboard">
                 <div class="d-flex">
-                    <div class="o_knowledge_template_label align-middle">Clipboard</div>
+                    <div class="o_embedded_clipboard_label align-middle">Clipboard</div>
                 </div>
-                <div class="o_knowledge_content" data-prop-name="content" data-oe-protected="false">
+                <div data-embedded-editable="clipboardContent">
                     <h2>Prospect Qualification</h2>
                     <p><br/></p>
                     <ol>
@@ -1147,11 +1147,11 @@
             <hr/>
             <p>Use this template whenever you have an announcement to make.</p>
             <p><br/></p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_template" data-oe-protected="true">
+            <div data-embedded="clipboard">
                 <div class="d-flex">
-                    <div class="o_knowledge_template_label align-middle">Clipboard</div>
+                    <div class="o_embedded_clipboard_label align-middle">Clipboard</div>
                 </div>
-                <div class="o_knowledge_content" data-prop-name="content" data-oe-protected="false">
+                <div data-embedded-editable="clipboardContent">
                     <p>
                         250 Executive Park Blvd, Suite 3400 94134
                         <br/>
@@ -1826,8 +1826,8 @@
                     To add more, use the clipboard below 👇🏼
                 </span>
             </p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_template" data-oe-protected="true" contenteditable="false">
-                <div class="o_knowledge_content" data-prop-name="content" data-oe-protected="false" contenteditable="true">
+            <div data-embedded="clipboard">
+                <div data-embedded-editable="clipboardContent">
                     <h2><u>Demographics</u></h2>
                     <ul>
                         <li>Age:</li>
