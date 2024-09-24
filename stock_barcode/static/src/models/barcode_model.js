@@ -1302,7 +1302,10 @@ export default class BarcodeModel extends EventBus {
         if ((barcodeData.lotName || barcodeData.lot) && product) {
             const lotName = barcodeData.lotName || barcodeData.lot.name;
             for (const line of this.currentState.lines) {
-                if (line.product_id.tracking === 'serial' && this.getQtyDone(line) !== 0 &&
+                if (line.product_id.id !== product.id) {
+                    continue; // The same SN can be scanned for different product.
+                }
+                if (line.product_id.tracking === "serial" && this.getQtyDone(line) !== 0 &&
                     this.getlotName(line) === lotName) {
                     return this.notification(
                         _t("The scanned serial number %s is already used.", lotName),
