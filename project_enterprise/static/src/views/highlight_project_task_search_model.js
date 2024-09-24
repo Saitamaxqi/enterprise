@@ -3,7 +3,7 @@ import { Domain } from "@web/core/domain";
 
 export class HighlightProjectTaskSearchModel extends ProjectTaskSearchModel {
     _getDomain(params = {}) {
-        let domain = super._getDomain();
+        let domain = super._getDomain(params);
         if (this.highlightPlannedIds?.length) {
             domain = Domain.and([domain, [["id", "in", this.highlightPlannedIds]]]);
             domain = params.raw ? domain : domain.toList();
