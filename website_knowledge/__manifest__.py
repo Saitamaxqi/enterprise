@@ -26,6 +26,7 @@
             'html_editor/static/src/others/embedded_components/core/**/*',
             'knowledge/static/src/editor/embedded_components/core/**/*',
             'knowledge/static/src/editor/html_viewer/**/*',
+            'knowledge/static/src/editor/html_migrations/**/*',
             'website_knowledge/static/src/frontend/**/*',
         ],
         'web.assets_tests': [

@@ -66,56 +66,7 @@ export const KnowledgeSearchModelMixin = (T) => class extends T {
      */
     _importState(state) {
         super._importState(state);
-        this.upgradeEmbedFilters();
         this.isStateCompleteForEmbeddedView = state.isStateCompleteForEmbeddedView;
-    }
-
-    /**
-     * Upgrade the old generator ids for dateFilters to the new system.
-     * TODO ABD: remove this function once the upgrade procedure for knowledge
-     * articles has been decided.
-     */
-    upgradeEmbedFilters() {
-        // dateFilter generatorIds upgrade mapping
-        const dfOptMap = {
-            this_year: "year",
-            last_year: "year-1",
-            antepenultimate_year: "year-2",
-            this_month: "month",
-            last_month: "month-1",
-            antepenultimate_month: "month-2",
-        };
-        for (const searchItem of Object.values(this.searchItems)) {
-            if (searchItem.type === "dateFilter") {
-                const newDefaults = new Set();
-                for (const generatorId of searchItem.defaultGeneratorIds) {
-                    if (generatorId in dfOptMap) {
-                        newDefaults.add(dfOptMap[generatorId]);
-                    }
-                }
-                if (newDefaults.size) {
-                    searchItem.defaultGeneratorIds = Array.from(newDefaults);
-                }
-                if (!searchItem.optionsParams) {
-                    searchItem.optionsParams = {
-                        startYear: -2,
-                        endYear: 0,
-                        startMonth: -2,
-                        endMonth: 0,
-                        customOptions: [],
-                    }
-                }
-                for (const queryItem of this.query) {
-                    if (
-                        queryItem.searchItemId === searchItem.id &&
-                        queryItem.generatorId &&
-                        queryItem.generatorId in dfOptMap
-                    ) {
-                        queryItem.generatorId = dfOptMap[queryItem.generatorId];
-                    }
-                }
-            }
-        }
     }
 };
 
