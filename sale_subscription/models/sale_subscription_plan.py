@@ -118,10 +118,11 @@ class SaleSubscriptionPlan(models.Model):
         subscription_items_plan = self.env['sale.order'].search([('plan_id', 'in', self.ids), ('is_subscription', '=', True), ('subscription_state', 'in', ['3_progress', '4_paused'])]).order_line
         return {
             'name': _('Subscription Items'),
-            'view_mode': 'list,form',
+            'view_mode': 'list',
             'views': [(self.env.ref('sale_subscription.sale_subscription_sale_order_line_list').id, 'list')],
             'search_view_id': [self.env.ref('sale_subscription.sale_subscription_sales_order_line_filter').id],
             'domain': [('id', 'in', subscription_items_plan.ids)],
+            'context': {'create': False},
             'res_model': 'sale.order.line',
             'type': 'ir.actions.act_window',
         }
