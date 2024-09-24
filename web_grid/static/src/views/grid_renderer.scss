@@ -14,16 +14,6 @@ $o-web-grid-cell-minwidth: 10ch;
     );
 }
 
-.o_view_sample_data .o_grid_highlightable {
-    overflow: hidden;
-    @include o-sample-data-disabled;
-}
-
-.o_view_nocontent {
-    position: fixed;
-    top: 225px;
-}
-
 .o_grid_renderer {
     height: inherit;
 
