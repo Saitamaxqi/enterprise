@@ -166,7 +166,7 @@ class TestKnowledgeArticleTemplate(HttpCase):
         # to refer to the parent article.
 
         fragment = html.fragment_fromstring(child_article_1.body, create_parent="div")
-        embedded_views = [element for element in fragment.xpath("//*[@data-embedded='view']")]
+        embedded_views = list(fragment.xpath("//*[@data-embedded='view']"))
 
         self.assertEqual(len(embedded_views), 1)
         embedded_props = json.loads(embedded_views[0].get("data-embedded-props"))

@@ -18,16 +18,16 @@ class TestKnowledgeArticleTours(HttpCaseWithUserDemo):
 
         cls.test_article = cls.env['knowledge.article'].create([{
             'name': 'Sepultura',
-            'is_article_visible_by_everyone': True
+            'is_article_visible_by_everyone': True,
+            'internal_permission': 'write',
         }])
 
         cls.test_article_thread = cls.env['knowledge.article.thread'].create({
             'article_id': cls.test_article.id,
-            'article_anchor_text': """
-                <span data-id="1"
-                    class="knowledge-thread-comment knowledge-thread-highlighted-comment">
+            'article_anchor_text': f"""
+            <a class="oe_unremovable oe_thread_beacon" data-oe-protected="true" contenteditable="false" data-id="1" data-oe-type="threadBeaconStart" data-res_id="{cls.test_article.id}" data-oe-model="knowledge.article" />
                     Lorem ipsum dolor
-                </span>
+            <a class="oe_unremovable oe_thread_beacon" data-oe-protected="true" contenteditable="false" data-id="1" data-oe-type="threadBeaconEnd" data-res_id="{cls.test_article.id}" data-oe-model="knowledge.article"/>
             """,
         })
         cls.test_article_thread.message_post(
@@ -41,10 +41,9 @@ class TestKnowledgeArticleTours(HttpCaseWithUserDemo):
                     Lorem ipsum dolor sit amet,
                 </p>
                 <p>
-                    <span data-id="{cls.test_article_thread.id}"
-                        class="knowledge-thread-comment knowledge-thread-highlighted-comment">
-                        Lorem ipsum dolor
-                    </span>
+                    <a class="oe_unremovable oe_thread_beacon" data-oe-protected="true" data-id="{cls.test_article_thread.id}" data-oe-type="threadBeaconStart" data-res_id="{cls.test_article.id}" data-oe-model="knowledge.article"></a>
+                    Lorem ipsum dolor commented
+                    <a class="oe_unremovable oe_thread_beacon" data-oe-protected="true" data-id="{cls.test_article_thread.id}" data-oe-type="threadBeaconEnd" data-res_id="{cls.test_article.id}" data-oe-model="knowledge.article"></a>
                 </p>
             """
         })
@@ -82,21 +81,19 @@ class TestKnowledgeArticleThreadCrud(KnowledgeCommonBusinessCase):
     def test_knowledge_article_thread_create_w_unsafe_anchors(self):
         new_thread = self.env['knowledge.article.thread'].create({
             'article_id': self.article_workspace.id,
-            'article_anchor_text': """
-                <span data-id="1"
-                    class="knowledge-thread-comment knowledge-thread-highlighted-comment">
+            'article_anchor_text': f"""
+                <a class="oe_unremovable oe_thread_beacon" data-oe-protected="true" contenteditable="false" data-id="1" data-oe-type="threadBeaconStart" data-res_id="{self.article_workspace.id}" data-oe-model="knowledge.article" />
                     <iframe src="www.pwned.com">Anchor</iframe><script src="www.extrapwned.com"/>Text
-                </span>
+                <a class="oe_unremovable oe_thread_beacon" data-oe-protected="true" contenteditable="false" data-id="1" data-oe-type="threadBeaconEnd" data-res_id="{self.article_workspace.id}" data-oe-model="knowledge.article"/>
             """,
         })
         self.assertEqual("Anchor Text", new_thread.article_anchor_text)
 
         new_thread.write({
-            'article_anchor_text': """
-                <span data-id="3"
-                    class="knowledge-thread-comment knowledge-thread-highlighted-comment">
+            'article_anchor_text': f"""
+                <a class="oe_unremovable oe_thread_beacon" data-oe-protected="true" contenteditable="false" data-id="3" data-oe-type="threadBeaconStart" data-res_id="{self.article_workspace.id}" data-oe-model="knowledge.article" />
                     <iframe src="javascript:alert(1)">Should be</iframe><script src="www.extrapwned.com"/>Purified
-                </span>
+                <a class="oe_unremovable oe_thread_beacon" data-oe-protected="true" contenteditable="false" data-id="3" data-oe-type="threadBeaconEnd" data-res_id="{self.article_workspace.id}" data-oe-model="knowledge.article"/>
             """
         })
         self.assertEqual("Should be Purified", new_thread.article_anchor_text)
@@ -107,11 +104,10 @@ class TestKnowledgeArticleThreadMail(KnowledgeCommonBusinessCase):
     def test_knowledge_article_thread_message_post_filtered_partners(self):
         new_thread = self.env['knowledge.article.thread'].create({
             'article_id': self.article_workspace.id,
-            'article_anchor_text': """
-                <span data-id="1"
-                    class="knowledge-thread-comment knowledge-thread-highlighted-comment">
+            'article_anchor_text': f"""
+                <a class="oe_unremovable oe_thread_beacon" data-oe-protected="true" contenteditable="false" data-id="1" data-oe-type="threadBeaconStart" data-res_id="{self.article_workspace.id}" data-oe-model="knowledge.article" />
                     <iframe src="www.pwned.com">Anchor</iframe><script src="www.extrapwned.com"/>Text
-                </span>
+                <a class="oe_unremovable oe_thread_beacon" data-oe-protected="true" contenteditable="false" data-id="1" data-oe-type="threadBeaconEnd" data-res_id="{self.article_workspace.id}" data-oe-model="knowledge.article"/>
             """,
         })
         self.env["mail.followers"]._insert_followers("knowledge.article.thread", new_thread.ids, (self.partner_portal + self.env.user.partner_id + self.partner_admin).ids)

@@ -31,7 +31,13 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
     trigger: 'section[data-section="private"] .o_article .o_article_name:contains("Untitled")',
 }, {
     // check the autofocus
-    trigger: '.note-editable.odoo-editor-editable:focus',
+    trigger: '.note-editable.odoo-editor-editable',
+    run: function () {
+        const selection = document.getSelection();
+        if (!this.anchor.contains(selection.anchorNode)) {
+            throw new Error("The autofocus doesn't work");
+        }
+    }
 }, {
     trigger: '.note-editable.odoo-editor-editable h1',
     run: "editor My Private Article",  // modify the article content
@@ -56,7 +62,13 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
     trigger: 'section[data-section="workspace"] .o_article .o_article_name:contains("Untitled")',
 }, {
     // check the autofocus
-    trigger: '.note-editable.odoo-editor-editable:focus',
+    trigger: '.note-editable.odoo-editor-editable',
+    run: function () {
+        const selection = document.getSelection();
+        if (!this.anchor.contains(selection.anchorNode)) {
+            throw new Error("The autofocus doesn't work");
+        }
+    }
 }, {
     trigger: '.o_hierarchy_article_name > input',
     run: 'edit My Workspace Article && click body',  // modify the article name
@@ -78,7 +90,13 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
     trigger: 'section[data-section="workspace"] .o_article .o_article_name:contains("Untitled")',
 }, {
     // check the autofocus
-    trigger: '.note-editable.odoo-editor-editable:focus',
+    trigger: '.note-editable.odoo-editor-editable',
+    run: function () {
+        const selection = document.getSelection();
+        if (!this.anchor.contains(selection.anchorNode)) {
+            throw new Error("The autofocus doesn't work");
+        }
+    }
 }, {
     trigger: '.o_hierarchy_article_name > input',
     run: "edit Child Article 1 && click body",  // modify the article name
@@ -93,7 +111,13 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
     trigger: 'section[data-section="workspace"] .o_article .o_article_name:contains("Untitled")',
 }, {
     // check the autofocus
-    trigger: '.note-editable.odoo-editor-editable:focus',
+    trigger: '.note-editable.odoo-editor-editable',
+    run: function () {
+        const selection = document.getSelection();
+        if (!this.anchor.contains(selection.anchorNode)) {
+            throw new Error("The autofocus doesn't work");
+        }
+    }
 }, {
     trigger: '.o_hierarchy_article_name > input',
     run: "edit Child Article 2 && click body",  // modify the article name
@@ -118,7 +142,13 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
   // wait for article to be correctly loaded
 }, {
     // check the autofocus
-    trigger: '.note-editable.odoo-editor-editable:focus',
+    trigger: '.note-editable.odoo-editor-editable',
+    run: function () {
+        const selection = document.getSelection();
+        if (!this.anchor.contains(selection.anchorNode)) {
+            throw new Error("The autofocus doesn't work");
+        }
+    }
 }, {
     // open the share dropdown
     trigger: '.o_knowledge_header .btn:contains("Share")',
@@ -186,7 +216,13 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
   // wait for article to be correctly loaded
 }, {
     // check the autofocus
-    trigger: '.note-editable.odoo-editor-editable:focus',
+    trigger: '.note-editable.odoo-editor-editable',
+    run: function () {
+        const selection = document.getSelection();
+        if (!this.anchor.contains(selection.anchorNode)) {
+            throw new Error("The autofocus doesn't work");
+        }
+    }
 }, {
     // add to favorite
     trigger: '.o_knowledge_toggle_favorite',
@@ -214,7 +250,13 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
     trigger: ':contains("Content of My Workspace Article")',
 }, {
     // check the autofocus
-    trigger: '.note-editable.odoo-editor-editable:focus',
+    trigger: '.note-editable.odoo-editor-editable',
+    run: function () {
+        const selection = document.getSelection();
+        if (!this.anchor.contains(selection.anchorNode)) {
+            throw new Error("The autofocus doesn't work");
+        }
+    }
 }, {
     // click on the main "New" action
     trigger: '.o_knowledge_header .btn:contains("New")',
@@ -224,7 +266,13 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
  // check that the article is correctly created (private section)
 }, {
     // check the autofocus
-    trigger: '.note-editable.odoo-editor-editable:focus',
+    trigger: '.note-editable.odoo-editor-editable',
+    run: function () {
+        const selection = document.getSelection();
+        if (!this.anchor.contains(selection.anchorNode)) {
+            throw new Error("The autofocus doesn't work");
+        }
+    }
 }, {
     trigger: '.o_hierarchy_article_name > input',
     run: "edit Article to be moved && click body",  // modify the article name

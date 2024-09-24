@@ -5,22 +5,24 @@ import { registry } from "@web/core/registry";
 import { patch } from "@web/core/utils/patch";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
 
-import { endKnowledgeTour } from '../knowledge_tour_utils.js';
-import { VideoBehavior } from "@knowledge/components/behaviors/video_behavior/video_behavior";
+import { embeddedViewPatchFunctions, endKnowledgeTour } from '../knowledge_tour_utils.js';
+import { EmbeddedVideoComponent } from "@html_editor/others/embedded_components/core/video/video";
 
-import { VideoSelector } from "@web_editor/components/media_dialog/video_selector";
+import { VideoSelector } from "@html_editor/main/media/media_dialog/video_selector";
 
 //------------------------------------------------------------------------------
 // UTILS
 //------------------------------------------------------------------------------
 
+const embeddedViewPatchUtil = embeddedViewPatchFunctions();
+
 const embedViewSelector = (embedViewName) => {
-    return `.o_knowledge_embedded_view:contains("${embedViewName}")`;
+    return `[data-embedded="view"]:has( .o_last_breadcrumb_item:contains("${embedViewName}"))`;
 };
 
 // This tour follows the 'knowledge_article_commands_tour'.
 // As it contains a video, we re-use the Mock to avoid relying on actual YouTube content
-let unpatchVideoBehavior;
+let unpatchVideoEmbed;
 let unpatchVideoSelector;
 
 class MockedVideoIframe extends Component {
@@ -33,8 +35,8 @@ class MockedVideoIframe extends Component {
 const videoPatchSteps = [{ // patch the components
     trigger: "body",
     run: () => {
-        unpatchVideoBehavior = patch(VideoBehavior.components, {
-            ...VideoBehavior.components,
+        unpatchVideoEmbed = patch(EmbeddedVideoComponent.components, {
+            ...EmbeddedVideoComponent.components,
             VideoIframe: MockedVideoIframe
         });
         unpatchVideoSelector = patch(VideoSelector.components, {
@@ -47,7 +49,7 @@ const videoPatchSteps = [{ // patch the components
 const videoUnpatchSteps = [{ // unpatch the components
     trigger: "body",
     run: () => {
-        unpatchVideoBehavior();
+        unpatchVideoEmbed();
         unpatchVideoSelector();
     },
 }];
@@ -61,7 +63,7 @@ const videoUnpatchSteps = [{ // unpatch the components
  * Checks that a user that has readonly access on an article cannot create items from the item list.
  * Note: this tour follows the 'knowledge_article_commands_tour', so we re-use the list name.
  */
-const embedListName = "List special chars *()!'<>~";
+const embedListName = "New Title";
 const embedListSteps = [{ // scroll to the embedded view to load it
     trigger: embedViewSelector(embedListName),
     run: function () {
@@ -99,8 +101,20 @@ registry.category("web_tour.tours").add('knowledge_article_commands_readonly_tou
     run: "click",
 },
     ...videoPatchSteps,
+{
+    trigger: "body",
+    run: () => {
+        embeddedViewPatchUtil.before();
+    },
+},
     ...embedListSteps,
     ...embedKanbanSteps,
     ...videoUnpatchSteps,
+{
+    trigger: "body",
+    run: () => {
+        embeddedViewPatchUtil.after();
+    },
+},
     ...endKnowledgeTour()
 ]});

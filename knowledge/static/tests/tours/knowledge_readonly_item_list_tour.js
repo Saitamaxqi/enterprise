@@ -15,12 +15,12 @@ registry.category("web_tour.tours").add('knowledge_readonly_item_list_tour', {
     trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
     run: "click",
 }, { // scroll to the embedded view to load it
-    trigger: '.o_knowledge_behavior_type_embedded_view',
+    trigger: '[data-embedded="view"]',
     run: function () {
         this.anchor.scrollIntoView();
     },
 }, { // wait for the list view to be mounted
-    trigger: '.o_knowledge_behavior_type_embedded_view .o_list_renderer',
+    trigger: '[data-embedded="view"] .o_list_renderer',
 }, { // check that the "new" button is not shown
     trigger: '.o_control_panel_main:not(:has(.o_list_button_add))',
 }, ...endKnowledgeTour()

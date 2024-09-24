@@ -1,8 +1,20 @@
 /** @odoo-module */
 
+import { HtmlField } from "@html_editor/fields/html_field";
+import { nodeSize } from "@html_editor/utils/position";
 import { registry } from "@web/core/registry";
-import { endKnowledgeTour, openCommandBar } from '../knowledge_tour_utils.js';
+import { patch } from "@web/core/utils/patch";
+import {
+    embeddedViewPatchFunctions,
+    endKnowledgeTour,
+    openCommandBar,
+} from "../knowledge_tour_utils.js";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
+
+const embeddedViewPatchUtil = embeddedViewPatchFunctions();
+
+let htmlField;
+let unpatchHtmlField;
 
 function clickDate(el) {
     const rect = el.getBoundingClientRect();
@@ -43,6 +55,17 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
     run: "click",
 }, {
+    trigger: "body",
+    run: () => {
+        embeddedViewPatchUtil.before();
+        unpatchHtmlField = patch(HtmlField.prototype, {
+            setup() {
+                super.setup();
+                htmlField = this;
+            },
+        });
+    },
+}, {
     //-----------------------------------------------
     // Insert a new item calendar view in the article
     //-----------------------------------------------
@@ -53,17 +76,20 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
         openCommandBar(this.anchor);
     },
 }, { // Click on the /calendar command
-    trigger: '.oe-powerbox-commandName:contains("Calendar")',
+    trigger: '.o-we-command-name:contains("Calendar")',
     run: 'click',
 }, { // As the article does not have properties definitions, it should create default ones
     trigger: '.modal-footer .btn-primary',
     run: "click",
 }, { // Scroll to the embedded view to load it
-    trigger: '.o_knowledge_behavior_type_embedded_view',
+    trigger: '[data-embedded="view"]',
+    run: function() {
+        this.anchor.scrollIntoView(true);
+    }
 }, 
 {
     trigger:
-        ".o_knowledge_behavior_type_embedded_view .o_knowledge_article_view_calendar_embedded_view",
+        "[data-embedded='view']",
 },
 {
     //---------------------------------------------------
@@ -105,11 +131,18 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     // Remove previous item calendar view
     trigger: '.odoo-editor-editable',
     run: function () {
-        $(this.anchor).data('wysiwyg').odooEditor.resetContent();
+        htmlField.editor.dispatch("HISTORY_STAGE_SELECTION");
+        htmlField.editor.shared.setSelection({
+            anchorNode: htmlField.editor.editable,
+            anchorOffset: 0,
+            focusOffset: nodeSize(htmlField.editor.editable),
+        });
+        htmlField.editor.dispatch("DELETE_SELECTION");
+        htmlField.editor.dispatch("ADD_STEP");
     },
 },
 {
-    trigger: ".odoo-editor-editable:not(:has(.o_knowledge_behavior_type_embedded_view))",
+    trigger: ".odoo-editor-editable:not(:has( [data-embedded='view']))",
 },
 {
     // Click on the "Create Item Calednar" helper
@@ -154,7 +187,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
 },
 {
     trigger:
-        ".o_knowledge_behavior_type_embedded_view .o_knowledge_article_view_calendar_embedded_view",
+        "[data-embedded='view'] .o_knowledge_article_view_calendar_embedded_view",
 }, { // Check that the display options are applied
     trigger: ".fc-timegrid-slot:not(.fc-timegrid-slot-lane[data-time='07:00:00'])",
 }, {
@@ -346,7 +379,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     run: 'click',
 },
 {
-    trigger: ".o_knowledge_behavior_type_embedded_view",
+    trigger: "[data-embedded='view']",
 },
 {
     //----------------------------
@@ -440,5 +473,11 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     run: 'click',
 }, { // Make sure view is not crashed and shows nocontent helper
     trigger: '.o_knowledge_article_view_calendar_embedded_view .o_knowledge_item_calendar_nocontent',
+}, {
+    trigger: 'body',
+    run: () => {
+        embeddedViewPatchUtil.after();
+        unpatchHtmlField();
+    },
 }, ...endKnowledgeTour()
 ]});

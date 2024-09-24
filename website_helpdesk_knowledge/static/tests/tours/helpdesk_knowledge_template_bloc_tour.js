@@ -20,7 +20,7 @@ registry.category("web_tour.tours").add('helpdesk_pick_template_as_message_from_
     trigger: '.o_knowledge_form_view',
     run: "click",
 }, { // click on the "Send as Message" button from the template block
-    trigger: '.o_knowledge_behavior_type_template .o_knowledge_toolbar_button_text:contains("Send as Message")',
+    trigger: '[data-embedded="clipboard"] .o_embedded_toolbar_button_text:contains("Send as Message")',
     run: 'click',
 }, { // check that the content of the template block has been added to the mail composer
     trigger: '.o_mail_composer_form .o_field_html p:contains("Hello world")',
@@ -47,7 +47,7 @@ registry.category("web_tour.tours").add('helpdesk_pick_template_as_description_f
     trigger: '.o_knowledge_form_view',
     run: "click",
 }, { // click on the "Use as Description" button from the template block
-    trigger: '.o_knowledge_behavior_type_template .o_knowledge_toolbar_button_text:contains("Use as Description")',
+    trigger: '[data-embedded="clipboard"] .o_embedded_toolbar_button_text:contains("Use as Description")',
     run: 'click',
 }, { // check that the description contains content of the template block
     trigger: '.o_form_sheet .o_field_html .odoo-editor-editable p:contains("Hello world")',

@@ -31,7 +31,7 @@ registry.category('web_tour.tours').add('knowledge_article_comments', {
             trigger: 'section[data-section="workspace"] .o_article .o_article_name:contains("Sepultura")',
             run: "click",
         }, {
-            trigger: '.o_knowledge_comment_box[data-id] .o_knowledge_comment_small_ui img',
+            trigger: '.o_knowledge_comment_box[data-thread-id], .o_knowledge_comment_small_ui img',
             run: "click",
         }, {
             trigger: '.o-mail-Thread :contains("Marc, can you check this?")',
@@ -53,7 +53,7 @@ registry.category('web_tour.tours').add('knowledge_article_comments', {
                 setSelection(...boundariesIn(this.anchor));
             }
         }, { // Trigger comment creation with the editor toolbar
-            trigger: '.oe-toolbar div[id="comment-line"]',
+            trigger: '.o-we-toolbar button[name="comments"]',
             run: "click",
         }, {
             trigger: '.o_knowledge_comments_popover .o-mail-Composer-input',
@@ -63,10 +63,10 @@ registry.category('web_tour.tours').add('knowledge_article_comments', {
         }, { // Send comment
             trigger: '.o_knowledge_comments_popover .o-mail-Composer-send:not([disabled=""])',
             run: "click",
-        }, { // Wait for the composer to be fully closed
-            trigger: 'body:not(:has(.o-mail-Thread))',
+        }, { // Wait for the comment to be fully created
+            trigger: ".note-editable p.o_knowledge_tour_first_paragraph a:not([data-id='undefined'])",
         }, {
-            trigger: '.o_knowledge_comment_box[data-id] .o_knowledge_comment_small_ui img',
+            trigger: '.o_knowledge_comment_box[data-thread-id] .o_knowledge_comment_small_ui img',
         }, { // Open the comments panel
             trigger: '.btn-comments',
             run: "click",

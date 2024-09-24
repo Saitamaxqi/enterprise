@@ -67,6 +67,7 @@ class TestKnowledgeUI(TestKnowledgeUICommon):
         # Strip collaborative steps ids from the body for content-only
         # comparison
         body = re.sub(r'\s*data-last-history-steps="[^"]*"', '', article.body)
+        body = re.sub(r'\s*data-oe-version="[^"]*"', '', body)
 
         self.assertEqual(template.template_body, body)
         self.assertEqual(template.icon, article.icon)
