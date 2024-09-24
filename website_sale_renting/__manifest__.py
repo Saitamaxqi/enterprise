@@ -27,7 +27,7 @@ appropriate views and selling choices.
             'sale_renting/static/src/js/product_configurator_dialog/*',
             'website_sale_renting/static/src/scss/*.scss',
             'website_sale_renting/static/src/js/website_sale_configurators.js',
-            ('prepend', 'website_sale_renting/static/src/js/*.js'),
+            ('before', 'website_sale/static/src/js/website_sale.js', 'website_sale_renting/static/src/js/*.js'),
         ],
         'web.assets_tests': [
             'website_sale_renting/static/tests/tours/**/*',
