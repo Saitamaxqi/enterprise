@@ -90,6 +90,7 @@ class MainComponent extends Component {
             uiBlocked: false,
             barcodesProcessed: 0,
             barcodesToProcess: 0,
+            readyToToggleCamera: true,
         });
         this.bufferedBarcodes = [];
         this.bufferingTimeout = null;
@@ -252,7 +253,12 @@ class MainComponent extends Component {
     //--------------------------------------------------------------------------
 
     toggleCameraScanner() {
-        this.state.cameraScannedEnabled = !this.state.cameraScannedEnabled;
+        if (!this.state.cameraScannedEnabled) {
+            this.state.cameraScannedEnabled = true;
+            this.state.readyToToggleCamera = false;
+        } else if (this.state.readyToToggleCamera) {
+            this.state.cameraScannedEnabled = false;
+        }
     }
 
     setupCameraScanner() {
@@ -266,11 +272,17 @@ class MainComponent extends Component {
                 const message = error.message;
                 this.notification.add(message, { type: 'warning' });
             },
+            onReady: () => {
+                this.state.readyToToggleCamera = true;
+            },
             cssClass: "o_stock_barcode_camera_video",
         };
     }
 
     get cameraScannerClassState() {
+        if (!this.state.readyToToggleCamera) {
+            return "bg-secondary";
+        }
         return this.state.cameraScannedEnabled ? "bg-success text-white" : "text-primary";
     }
 

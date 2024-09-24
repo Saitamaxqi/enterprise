@@ -28,6 +28,7 @@
                         <button t-if="cameraScannerSupported"
                                 class="o_stock_mobile_barcode btn"
                                 t-att-class="cameraScannerClassState"
+                                t-att-disabled="state.cameraScannedEnabled &amp;&amp; !state.readyToToggleCamera"
                                 t-on-click="toggleCameraScanner">
                             <i class="fa fa-barcode" role="img"/>
                         </button>
