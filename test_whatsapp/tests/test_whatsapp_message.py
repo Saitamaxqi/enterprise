@@ -1,7 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from itertools import product
+from unittest.mock import patch
 
+
+from odoo.addons.base.models.ir_cron import IrCron as IrCronModel
+from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.addons.whatsapp.tests.common import MockIncomingWhatsApp
 from odoo.addons.test_whatsapp.tests.common import WhatsAppFullCase
 from odoo.tests import tagged, users
@@ -14,6 +18,10 @@ class WhatsAppMessage(WhatsAppFullCase, MockIncomingWhatsApp):
     def setUpClass(cls):
         super().setUpClass()
 
+        cls.public_user = mail_new_test_user(
+            cls.env, login='public_test', groups='base.group_public',
+            company_id=cls.company_admin.id, name='Public User'
+        )
         # test records for sending messages
         cls.countries = (
             [cls.env.ref('base.be')] * 4 +
@@ -307,3 +315,46 @@ class WhatsAppMessage(WhatsAppFullCase, MockIncomingWhatsApp):
         self.assertEqual(attachment.datas, self.audio_attachment_wa_admin.datas)
         self.assertEqual(attachment.name, "audio.ogg")
         self.assertTrue(attachment.voice_ids)
+
+    @users('public_test')
+    def test_send_as_public_user(self):
+        """Check that public users creating a message properly sends it afterwards."""
+        test_record = self.test_base_records[0].with_user(self.env.user)
+        # clear cache to force fetch as user
+        test_record.invalidate_recordset()
+
+        original_trigger = IrCronModel._trigger
+
+        def patched_cron_trigger(cron, at=None):
+            """Immediately run the send message cron in the current thread if it is not scheduled."""
+            if at is None and cron == self.env.ref('whatsapp.ir_cron_send_whatsapp_queue'):
+                # clear test record as cron wouldn't have anything cached
+                self.test_base_records.invalidate_recordset()
+                cron.with_user(self.env.ref('base.user_root')).sudo(False).method_direct_trigger()
+                return
+            return original_trigger(cron, at=at)
+
+        self.whatsapp_template.write({
+            'body': 'Hi {{1}}, this is {{2}}',
+            'status': 'approved',
+            'variable_ids': [
+                (5, 0, 0),
+                (0, 0, {'name': '{{1}}', 'line_type': 'body', 'field_type': 'field', 'demo_value': 'Customer', 'field_name': 'name'}),
+                (0, 0, {'name': '{{2}}', 'line_type': 'body', 'field_type': 'user_name', 'demo_value': 'Author'}),
+            ],
+        })
+
+        with self.mockWhatsappGateway(), \
+             patch('odoo.addons.base.models.ir_cron.IrCron._trigger', patched_cron_trigger):
+            self.env['whatsapp.composer'].sudo().create({
+                'wa_template_id': self.whatsapp_template.id,
+                'res_model': test_record._name,
+                'res_ids': str(test_record.id),
+            })._send_whatsapp_template(force_send_by_cron=True)
+        self.assertWAMessageFromRecord(
+            test_record,
+            mail_message_values={
+                'body': '<p>Hi Recipient-BE-0456001122, this is Public User</p>',
+            },
+            status='sent',
+        )
