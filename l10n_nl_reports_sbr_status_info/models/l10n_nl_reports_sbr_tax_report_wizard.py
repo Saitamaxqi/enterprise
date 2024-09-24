@@ -1,22 +1,10 @@
-from odoo import models, fields, api
+from odoo import models, fields
 
 
 class L10nNlTaxReportSBRWizard(models.TransientModel):
     _inherit = 'l10n_nl_reports_sbr.tax.report.wizard'
 
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
-    password = fields.Char(default=lambda self: self.env.company.l10n_nl_reports_sbr_password, store=True)
-
-    def send_xbrl(self):
-        # Extends to write the password on the company if it didn't exist.
-        # TODO change this in master to add the password directly in the base SBR module.
-        sudo_company = self.company_id.sudo()
-        if self.password != sudo_company.l10n_nl_reports_sbr_password:
-            password_bytes = bytes(self.password or '', 'utf-8')
-            # Should raise if the password is not the correct one.
-            sudo_company._l10n_nl_get_certificate_and_key_bytes(password_bytes)
-            sudo_company.l10n_nl_reports_sbr_password = self.password
-        return super().send_xbrl()
 
     def _additional_processing(self, options, kenmerk, closing_move):
         # OVERRIDE
@@ -29,13 +17,3 @@ class L10nNlTaxReportSBRWizard(models.TransientModel):
         })
         status_service_cron = self.env.ref('l10n_nl_reports_sbr_status_info.cron_l10n_nl_reports_status_process')
         status_service_cron._trigger()
-
-    @api.model
-    def _get_view(self, view_id=None, view_type='form', **options):
-        # TODO this needs to be removed in the merge of the SBR modules (the password should just be removed everywhere)
-        arch, view = super()._get_view(view_id, view_type, **options)
-        if view_type == 'form':
-            if self.env.company.l10n_nl_reports_sbr_password:
-                password_node = arch.find(".//field[@name='password']")
-                password_node.set('invisible', '1')
-        return arch, view

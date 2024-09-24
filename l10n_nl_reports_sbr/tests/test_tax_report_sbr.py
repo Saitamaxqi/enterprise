@@ -150,13 +150,14 @@ class TestNlSBRFlow(TestAccountReportsCommon):
         cls.NL_SBR_PWD = os.getenv("NL_SBR_PWD")
 
     def test_sbr_flow(self):
-        # Load the certificate and key in the company
-        config = self.env["res.config.settings"].create({
-            "l10n_nl_reports_sbr_cert_id": self.NL_SBR_CERT,
-            "l10n_nl_reports_sbr_password": self.NL_SBR_PWD
+        certificate = self.env['certificate.certificate'].create({
+            'name': 'SBR NL certificate',
+            'content': self.NL_SBR_CERT.encode(),
+            'pkcs12_password': self.NL_SBR_PWD,
+            'company_id': self.env.company.id,
         })
-        config.execute()
-        self.assertTrue(config.l10n_nl_reports_sbr_cert_id)
+        self.assertTrue(certificate.private_key_id)
+        self.env.company.l10n_nl_reports_sbr_cert_id = certificate
 
         date_from = fields.Date.from_string('2019-01-01')
         date_to = fields.Date.from_string('2019-12-31')
@@ -165,9 +166,6 @@ class TestNlSBRFlow(TestAccountReportsCommon):
 
         wizard = self.env['l10n_nl_reports_sbr.tax.report.wizard']\
             .with_context(default_date_from=date_from, default_date_to=date_to, options=options)\
-            .create({
-                'password': self.NL_SBR_PWD,
-                'is_test': True,
-            })
+            .create({'is_test': True})
         res = wizard.send_xbrl()
         self.assertTrue(res)

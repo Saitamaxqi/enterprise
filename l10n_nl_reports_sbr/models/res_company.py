@@ -45,7 +45,7 @@ class ResCompany(models.Model):
                     'content': base64.b64encode(req_root.content),
                 })
                 self.write({'l10n_nl_reports_sbr_server_root_cert_id': cert.id})
-            except  HTTPError:
+            except HTTPError:
                 raise UserError(_("The server root certificate is not accessible at the moment. Please try again later."))
 
         return base64.b64decode(self.sudo().l10n_nl_reports_sbr_server_root_cert_id.pem_certificate)

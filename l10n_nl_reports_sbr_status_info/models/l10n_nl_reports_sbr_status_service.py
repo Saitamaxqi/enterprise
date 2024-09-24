@@ -5,6 +5,7 @@ from markupsafe import Markup
 from tempfile import NamedTemporaryFile
 from zeep.exceptions import Fault
 from requests.exceptions import ConnectionError
+import base64
 
 
 class L10nNlSBRStatusService(models.Model):
@@ -28,8 +29,8 @@ class L10nNlSBRStatusService(models.Model):
             f.flush()
 
             for process in ongoing_processes:
-                password = bytes(process.company_id.l10n_nl_reports_sbr_password or '', 'utf-8')
-                certificate, private_key = process.company_id._l10n_nl_get_certificate_and_key_bytes(password or None)
+                certificate = base64.b64decode(process.company_id.sudo().l10n_nl_reports_sbr_cert_id.pem_certificate)
+                private_key = base64.b64decode(process.company_id.sudo().l10n_nl_reports_sbr_cert_id.private_key_id.pem_key)
                 ongoing_processes_responses = {}
                 wsdl = 'https://' + ('preprod-' if process.is_test else '') + 'dgp2.procesinfrastructuur.nl/wus/2.0/statusinformatieservice/1.2?wsdl'
 
