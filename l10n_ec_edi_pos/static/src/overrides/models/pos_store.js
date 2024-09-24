@@ -26,7 +26,7 @@ patch(PosStore.prototype, {
     },
     // @Override
     // For EC, if the partner on the refund was End Consumer we need to allow the user to change it.
-    async selectPartner({ missingFields = [] } = {}) {
+    async selectPartner() {
         if (!this.isEcuadorianCompany()) {
             return super.selectPartner(...arguments);
         }
@@ -38,7 +38,6 @@ patch(PosStore.prototype, {
         if (currentPartner && currentPartner.id === this.session._final_consumer_id) {
             this.dialog.add(PartnerList, {
                 partner: currentPartner,
-                missingFields,
                 getPayload: (newPartner) => currentOrder.set_partner(newPartner),
             });
             return currentPartner;
