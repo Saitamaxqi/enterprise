@@ -1,4 +1,5 @@
-from odoo import models, fields, api
+from odoo import Command, _, models, fields, api
+from odoo.exceptions import UserError
 
 
 class AccountPaymentRegister(models.TransientModel):
@@ -13,8 +14,43 @@ class AccountPaymentRegister(models.TransientModel):
         or none if there is no such mandate.
         """
         for wizard in self:
-            wizard.sdd_mandate_usable = bool(wizard.env['sdd.mandate']._sdd_get_usable_mandate(
-                company_id=wizard.company_id.id or wizard.env.company.id,
-                partner_id=wizard.partner_id.commercial_partner_id.id,
-                date=wizard.payment_date,
-            ))
+            partners_with_valid_mandates = self._get_partner_ids_with_valid_mandates()
+            wizard.sdd_mandate_usable = all(partner.id in partners_with_valid_mandates for partner in wizard.line_ids.partner_id)
+
+    def _get_partner_ids_with_valid_mandates(self):
+        """
+        Helper to search all partners that have at least one valid mandates
+        :return: set of partner_ids
+        :rtype: set
+        """
+        self.ensure_one()
+        moves_to_pay = self.line_ids.move_id
+        valid_mandate_ids_per_partner_id = self.env['sdd.mandate']._read_group([
+                ('state', '=', 'active'),
+                ('start_date', '<=', self.payment_date),
+                '|', ('end_date', '=', False), ('end_date', '>=', self.payment_date),
+                ('partner_id', 'in', moves_to_pay.partner_id.ids),
+                *self.env['sdd.mandate']._check_company_domain(moves_to_pay.company_id),
+            ],
+            groupby=['partner_id'],
+        )
+        return {partner.id for (partner,) in valid_mandate_ids_per_partner_id}
+
+    def action_create_payments(self):
+        """ Exclude the payments using SEPA direct debit from being generated if there is no valid mandate for their customer """
+        # EXTENDS account
+        sdd_codes = set(self.env['account.payment.method']._get_sdd_payment_method_code())
+
+        for wizard in self.filtered(lambda wiz: wiz.payment_method_code in sdd_codes):
+            valid_partner_ids = wizard._get_partner_ids_with_valid_mandates()
+            wizard.write({
+                'line_ids': [Command.set(wizard.line_ids.filtered(lambda line: line.partner_id.id in valid_partner_ids).ids)],
+                # Avoid re-computation of this field that depend on line_ids
+                'payment_method_line_id': wizard.payment_method_line_id.id,
+            })
+            if not wizard.line_ids:
+                raise UserError(_(
+                    "You can't pay any of the selected invoices using the SEPA Direct Debit method, as no valid mandate is available"
+                ))
+
+        return super().action_create_payments()

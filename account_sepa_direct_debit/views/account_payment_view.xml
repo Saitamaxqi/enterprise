@@ -26,7 +26,7 @@
                 </xpath>
                 <xpath expr="//header" position="after">
                     <div class="alert alert-info text-center"
-                         invisible="not sdd_mandate_usable or sdd_mandate_id or payment_type != 'inbound' or state != 'draft' or (sdd_mandate_id and payment_method_code not in ('sdd', 'sepa_direct_debit'))"
+                         invisible="not sdd_mandate_usable or payment_type != 'inbound' or state != 'draft'"
                          role="status">Good news! A valid SEPA Mandate is available.</div>
                     <div class="alert alert-warning text-center"
                          invisible="payment_method_code not in ('sdd', 'sepa_direct_debit') or state != 'draft' or sdd_mandate_usable"

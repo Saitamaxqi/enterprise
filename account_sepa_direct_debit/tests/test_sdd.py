@@ -217,3 +217,66 @@ class SDDTest(SDDTestCommon):
             'sdd_required_collection_date': fields.Date.context_today(mandate) + datetime.timedelta(days=2)
         })
         new_batch_payment.validate_batch()
+
+    def test_batch_register_payment_all_valids(self):
+        """ Test the register payment when two invoices belonging to different partners are selected and they all have valid mandates """
+        # China export doesn't have a valid mandate
+        mandate_china_export = self.create_mandate(self.partner_china_export, self.partner_bank_china_export, False, self.sdd_company)
+        mandate_china_export.action_validate_mandate()
+
+        invoices = self.create_invoice(self.partner_agrolait) + self.create_invoice(self.partner_china_export)
+        journal = self.sdd_company_bank_journal
+        wizard = (
+            self.env['account.payment.register']
+            .with_context({'active_ids': invoices.line_ids.ids, 'active_model': 'account.move.line'})
+            .create({
+                'journal_id': journal.id,
+                'payment_method_line_id': journal.inbound_payment_method_line_ids.filtered(lambda l: l.code == 'sdd').id
+            })
+        )
+        wizard.action_create_payments()
+
+        self.assertRecordValues(invoices.matched_payment_ids.sorted('partner_id'), [
+            {'partner_id': self.partner_agrolait.id, 'state': 'in_process'},
+            {'partner_id': self.partner_china_export.id, 'state': 'in_process'},
+        ])
+
+    def test_batch_register_payment_mixed_valids_invalids(self):
+        """
+        Test the register payment when two invoices belonging to different partners are selected and they don't all have valid mandates
+        """
+        # China export doesn't have a valid mandate
+        invoices = self.create_invoice(self.partner_agrolait) + self.create_invoice(self.partner_china_export)
+        journal = self.sdd_company_bank_journal
+        wizard = (
+            self.env['account.payment.register']
+            .with_context({'active_ids': invoices.line_ids.ids, 'active_model': 'account.move.line'})
+            .create({
+                'journal_id': journal.id,
+                'payment_method_line_id': journal.inbound_payment_method_line_ids.filtered(lambda l: l.code == 'sdd').id
+            })
+        )
+        wizard.action_create_payments()
+
+        self.assertRecordValues(invoices.matched_payment_ids.sorted('partner_id'), [
+            {'partner_id': self.partner_agrolait.id, 'state': 'in_process'},  # Only the payments with a valid mandate are generated
+        ])
+
+    def test_batch_register_payment_all_invalids(self):
+        """
+        Test the register payment when two invoices belonging to different partners are selected and none has a valid mandate
+        """
+        # China export doesn't have a valid mandate
+        self.mandate_agrolait.action_revoke_mandate()
+        invoices = self.create_invoice(self.partner_agrolait) + self.create_invoice(self.partner_china_export)
+        journal = self.sdd_company_bank_journal
+        wizard = (
+            self.env['account.payment.register']
+            .with_context({'active_ids': invoices.line_ids.ids, 'active_model': 'account.move.line'})
+            .create({
+                'journal_id': journal.id,
+                'payment_method_line_id': journal.inbound_payment_method_line_ids.filtered(lambda l: l.code == 'sdd').id
+            })
+        )
+        with self.assertRaises(UserError, msg="As there is no payment that can be generated, we raise an error when trying to do so"):
+            wizard.action_create_payments()
