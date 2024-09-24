@@ -460,14 +460,31 @@ class StudioApprovalRule(models.Model):
         record = self.env[self.sudo().model_name].browse(res_id)
         record.check_access('write')
         ruleSudo = self.sudo()
-        existing_entry = self.env['studio.approval.entry'].search([
+
+        existing_entry = self.env['studio.approval.entry'].sudo().search([
                 ('model', '=', ruleSudo.model_name),
                 ('method', '=', ruleSudo.method), ('action_id', '=', ruleSudo.action_id.id),
                 ('res_id', '=', res_id), ('rule_id', '=', self.id)])
         if existing_entry and existing_entry.user_id != self.env.user:
-            # this should normally not happen because of ir.rules, but let's be careful
-            # when dealing with security
-            raise UserError(_("You cannot cancel an approval you didn't set yourself."))
+            rules_above = self.env["studio.approval.rule"].sudo().search_read([
+                ('model_name', '=', ruleSudo.model_name),
+                ('method', '=', ruleSudo.method), ('action_id', '=', ruleSudo.action_id.id),
+                ('notification_order', ">", ruleSudo.notification_order)
+            ], ["domain", "can_validate"], order="notification_order DESC")
+
+            can_revoke = False
+            for rule in rules_above:
+                domain = literal_eval(rule["domain"] or "[]")
+                if not record.filtered_domain(domain):
+                    continue
+                if rule["can_validate"]:
+                    can_revoke = True
+                    break
+
+            if not can_revoke:
+                # this should normally not happen because of ir.rules, but let's be careful
+                # when dealing with security
+                raise UserError(_("You cannot cancel an approval you didn't set yourself or you don't belong to an higher level rule's approvers."))
         if not existing_entry:
             raise UserError(_("No approval found for this rule, record and user combination."))
         return existing_entry.unlink()

@@ -85,7 +85,7 @@
                         </span>
                     </p>
                 </div>
-                <t t-if="rule.can_validate and getEntry(rule.id).user_id[0] === user.userId">
+                <t t-if="canRevokeEntry(ruleId)">
                     <div class="o_web_studio_approval_button">
                         <button
                             class="btn btn-secondary btn-sm btn-block o_web_approval_cancel"

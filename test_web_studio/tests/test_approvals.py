@@ -1,4 +1,5 @@
 from odoo import Command
+from odoo.exceptions import UserError
 
 from odoo.tests.common import TransactionCase, HttpCase, tagged
 from odoo.addons.web_studio.tests.test_ui import setup_view_editor_data
@@ -528,6 +529,42 @@ class TestStudioApprovals(TransactionCase):
         self.assertEqual(len(model_action.activity_ids), 0)
         self.assertEqual(self.env["studio.approval.request"].search([("rule_id", "=", rules[2].id)]).mail_activity_id, model_action.activity_ids)
 
+    def test_can_revoke_approval_with_inferior_order(self):
+        IrModel = self.env["ir.model"]
+
+        rules = self.env["studio.approval.rule"].create([
+            {
+                "model_id": IrModel._get("test.studio.model_action").id,
+                "method": "action_step",
+                "approver_ids": [Command.link(self.other_user.id)],
+            },
+            {
+                "model_id": IrModel._get("test.studio.model_action").id,
+                "method": "action_step",
+                "approver_ids": [Command.link(self.demo_user.id)],
+            },
+            {
+                "model_id": IrModel._get("test.studio.model_action").id,
+                "method": "action_step",
+                "notification_order": "2",
+                "approver_ids": [Command.link(self.test_user_2.id)],
+            },
+        ])
+
+        model_action = self.env["test.studio.model_action"].create({
+            "name": "test"
+        })
+        rules[0].with_user(self.other_user).set_approval(model_action.id, True)
+        spec = self.env["studio.approval.rule"].get_approval_spec([dict(model="test.studio.model_action", method="action_step", action_id=False, res_id=model_action.id)])
+        spec = dict(spec["test.studio.model_action"])[model_action.id, "action_step", False]
+        self.assertEqual(len(spec["entries"]), 1)
+        with self.assertRaises(UserError):
+            rules[0].with_user(self.demo_user).delete_approval(model_action.id)
+
+        rules[0].with_user(self.test_user_2).delete_approval(model_action.id)
+        spec = self.env["studio.approval.rule"].get_approval_spec([dict(model="test.studio.model_action", method="action_step", action_id=False, res_id=model_action.id)])
+        spec = dict(spec["test.studio.model_action"])[model_action.id, "action_step", False]
+        self.assertEqual(len(spec["entries"]), 0)
 
 @tagged("-at_install", "post_install")
 class TestStudioApprovalsUIUnit(HttpCase):
