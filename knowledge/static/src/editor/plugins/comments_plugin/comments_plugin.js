@@ -17,6 +17,7 @@ import {
 import { uniqueId } from "@web/core/utils/functions";
 import { effect } from "@web/core/utils/reactive";
 import { batched } from "@web/core/utils/timing";
+import { withSequence } from "@html_editor/utils/resource";
 
 const ALLOWED_BEACON_POSITION = new Set([...paragraphRelatedElements, ...phrasingContent]);
 
@@ -32,17 +33,15 @@ export class KnowledgeCommentsPlugin extends Plugin {
         "collaboration",
         "format",
     ];
-    static resources = (p) => ({
+    resources = {
         toolbarCategory: [
-            {
+            withSequence(60, {
                 id: "knowledge",
-                sequence: 60,
-            },
-            {
+            }),
+            withSequence(60, {
                 id: "knowledge_image",
-                sequence: 60,
                 namespace: "image",
-            },
+            }),
         ],
         toolbarItems: [
             {
@@ -68,8 +67,8 @@ export class KnowledgeCommentsPlugin extends Plugin {
         ],
         layoutGeometryChange: () => {
             // TODO ABD: why is this called
-            p.commentBeaconManager?.drawThreadOverlays();
-            p.config.onLayoutGeometryChange();
+            this.commentBeaconManager?.drawThreadOverlays();
+            this.config.onLayoutGeometryChange();
         },
         onSelectionChange: (selectionData) => {
             if (
@@ -88,13 +87,13 @@ export class KnowledgeCommentsPlugin extends Plugin {
             if (!target || !target.isConnected) {
                 return;
             }
-            p.commentBeaconManager.activateRelatedThread(target);
+            this.commentBeaconManager.activateRelatedThread(target);
         },
         // TODO ABD: arbitrary sequence, investigate what makes sense
-        handle_delete_forward: { callback: p.handleDeleteForward.bind(p), sequence: 1 },
-        handle_delete_backward: { callback: p.handleDeleteBackward.bind(p), sequence: 1 },
-        arrows_should_skip: p.arrowShouldSkip.bind(p),
-    });
+        handle_delete_forward: withSequence(1, this.handleDeleteForward.bind(this)),
+        handle_delete_backward: withSequence(1, this.handleDeleteBackward.bind(this)),
+        arrows_should_skip: this.arrowShouldSkip.bind(this),
+    };
 
     setup() {
         this.peerId = this.config.collaboration.peerId;

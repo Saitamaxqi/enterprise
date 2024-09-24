@@ -8,7 +8,7 @@ const ARTICLE_LINKS_SELECTOR = ".o_knowledge_article_link";
 export class KnowledgeArticlePlugin extends Plugin {
     static name = "article";
     static dependencies = ["dom", "selection", "dialog"];
-    static resources = (p) => ({
+    resources = {
         powerboxItems: [
             {
                 category: "navigation",
@@ -16,11 +16,11 @@ export class KnowledgeArticlePlugin extends Plugin {
                 description: _t("Insert an Article shortcut"),
                 fontawesome: "fa-newspaper-o",
                 action: () => {
-                    p.addArticle();
+                    this.addArticle();
                 },
             },
         ],
-    });
+    };
 
     setup() {
         super.setup();

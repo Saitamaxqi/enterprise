@@ -17,17 +17,17 @@ class AppointmentFormViewDialog extends FormViewDialog {
 
 class AppointmentPlugin extends Plugin {
     static dependencies = ["dom", "selection", "link", "dialog"];
-    static resources = (p) => ({
+     resources = {
         powerboxItems: [
             {
                 name: _t("Appointment"),
                 description: _t("Add a specific appointment"),
                 category: "navigation",
                 fontawesome: "fa-calendar",
-                action: () => p.addAppointment(),
+                action: () => this.addAppointment(),
             },
         ],
-    });
+    };
 
     addAppointment() {
         this.shared.addDialog(AppointmentFormViewDialog, {

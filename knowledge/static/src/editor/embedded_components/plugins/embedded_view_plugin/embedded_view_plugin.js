@@ -16,7 +16,7 @@ function isAvailable(node) {
 export class EmbeddedViewPlugin extends Plugin {
     static name = "embeddedView";
     static dependencies = ["dom", "selection", "embedded_components"];
-    static resources = (p) => ({
+    resources = {
         powerboxItems: [
             {
                 category: "knowledge",
@@ -25,7 +25,7 @@ export class EmbeddedViewPlugin extends Plugin {
                 fontawesome: "fa-th-large",
                 isAvailable,
                 action: () => {
-                    p.promptInsertEmbeddedView("kanban", true);
+                    this.promptInsertEmbeddedView("kanban", true);
                 },
             },
             {
@@ -35,7 +35,7 @@ export class EmbeddedViewPlugin extends Plugin {
                 fontawesome: "fa-address-card",
                 isAvailable,
                 action: () => {
-                    p.promptInsertEmbeddedView("kanban");
+                    this.promptInsertEmbeddedView("kanban");
                 },
             },
             {
@@ -45,7 +45,7 @@ export class EmbeddedViewPlugin extends Plugin {
                 fontawesome: "fa-th-list",
                 isAvailable,
                 action: () => {
-                    p.promptInsertEmbeddedView("list");
+                    this.promptInsertEmbeddedView("list");
                 },
             },
             {
@@ -55,11 +55,11 @@ export class EmbeddedViewPlugin extends Plugin {
                 fontawesome: "fa-calendar-plus-o",
                 isAvailable,
                 action: () => {
-                    p.promptInsertEmbeddedCalendarView();
+                    this.promptInsertEmbeddedCalendarView();
                 },
             },
         ],
-    });
+    };
 
     insertEmbeddedView(actionXmlId, name, viewType, additionalViewProps = {}) {
         const resId = this.config.getRecordInfo().resId;

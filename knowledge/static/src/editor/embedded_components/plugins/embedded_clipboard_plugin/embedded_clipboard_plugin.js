@@ -6,7 +6,7 @@ import { renderToElement } from "@web/core/utils/render";
 export class EmbeddedClipboardPlugin extends Plugin {
     static name = "embeddedClipboard";
     static dependencies = ["embedded_components", "dom", "selection"];
-    static resources = (p) => ({
+     resources = {
         powerboxItems: [
             {
                 category: "media",
@@ -15,11 +15,11 @@ export class EmbeddedClipboardPlugin extends Plugin {
                 fontawesome: "fa-pencil-square",
                 isAvailable: (node) => !!closestElement(node, "[data-embedded='clipboard']"),
                 action: () => {
-                    p.insertClipboard();
+                    this.insertClipboard();
                 },
             },
         ],
-    });
+    };
 
     handleCommand(command, payload) {
         switch (command) {
