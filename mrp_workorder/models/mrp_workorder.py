@@ -918,6 +918,15 @@ class MrpProductionWorkcenterLine(models.Model):
         expected_labour_cost = (self.duration_expected / 60) * self.workcenter_id.employee_costs_hour * (self.operation_id.employee_ratio or 1)
         return expected_machine_cost + expected_labour_cost
 
+    def _get_current_theorical_operation_cost(self, without_employee_cost=False):
+        current_machine_cost = super()._get_current_theorical_operation_cost()
+        if without_employee_cost:
+            return current_machine_cost
+        return current_machine_cost + self._get_current_theorical_employee_cost()
+
+    def _get_current_theorical_employee_cost(self):
+        return (self.get_duration() / 60) * self.workcenter_id.employee_costs_hour * (self.operation_id.employee_ratio or 1)
+
     def _compute_current_operation_cost(self):
         current_machine_cost = super()._compute_current_operation_cost()
         current_labour_cost = sum(self.time_ids.mapped('total_cost'))
