@@ -3,7 +3,7 @@
 import { FormRenderer } from '@web/views/form/form_renderer';
 import { KnowledgeCoverDialog } from '@knowledge/components/knowledge_cover/knowledge_cover_dialog';
 import { useService } from "@web/core/utils/hooks";
-import { useChildSubEnv, useEffect, useExternalListener, useRef } from "@odoo/owl";
+import { useChildSubEnv, useExternalListener, useRef } from "@odoo/owl";
 
 export class KnowledgeArticleFormRenderer extends FormRenderer {
 
@@ -31,20 +31,6 @@ export class KnowledgeArticleFormRenderer extends FormRenderer {
                 this.env.createArticle("private");
             }
         });
-
-        useEffect((isInEdition, root) => {
-            if (root && isInEdition) {
-                const element = root.el.querySelector(".o_knowledge_editor .note-editable[contenteditable]");
-                if (element) {
-                    element.focus();
-                    document.dispatchEvent(new Event("selectionchange", {}));
-                }
-            }
-        }, () => [
-            this.props.record.isInEdition,
-            this.root,
-            this.props.record.resId
-        ]);
     }
 
 
