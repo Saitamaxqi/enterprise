@@ -160,9 +160,7 @@ class WhatsappTemplate(models.Model):
                     raise AccessError(
                         _("You can not select field of %(model)s.", model=model_description)
                     )
-                safe_fields = set(COMMON_WHATSAPP_PHONE_SAFE_FIELDS)
-                if hasattr(model, '_wa_get_safe_phone_fields'):
-                    safe_fields |= set(model._wa_get_safe_phone_fields())
+                safe_fields = set(model._wa_get_safe_phone_fields())
                 if tmpl.phone_field not in safe_fields:
                     raise AccessError(
                         _("You are not allowed to use %(field)s in phone field, contact your administrator to configure it.",
