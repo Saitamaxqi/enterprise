@@ -139,3 +139,48 @@ test("approval can revoke below rules", async () => {
         },
     ]);
 });
+
+test("reload record when setting/deleting approval", async () => {
+    onRpc("studio.approval.rule", "set_approval", async (args) => {
+        expect.step({
+            ruleIds: args.args[0],
+            res_id: args.kwargs.res_id,
+            approved: args.kwargs.approved,
+        });
+        return true;
+    });
+    onRpc("studio.approval.rule", "delete_approval", (args) => {
+        expect.step("delete_approval");
+        return true;
+    });
+    onRpc("partner", "web_read", () => {
+        expect.step("web_read");
+    });
+    onRpc("studio.approval.rule", "get_approval_spec", async (args) => {
+        expect.step("get_approval_spec");
+    });
+    await mountView({
+        type: "form",
+        resModel: "partner",
+        arch: `<form>
+            <button type="object" name="my_method" />
+            </form>
+        `,
+        resId: 1,
+    });
+    expect.verifySteps(["web_read", "get_approval_spec"]);
+
+    await contains(".o_web_studio_approval").click();
+    await contains(".o_web_approval_approve").click();
+    expect.verifySteps([
+        {
+            approved: true,
+            res_id: 1,
+            ruleIds: [3],
+        },
+        "web_read",
+        "get_approval_spec",
+    ]);
+    await contains(".o_web_approval_cancel").click();
+    expect.verifySteps(["delete_approval", "web_read", "get_approval_spec"]);
+});

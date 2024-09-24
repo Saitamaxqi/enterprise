@@ -84,8 +84,9 @@ function getMissingApprovals(entries, rules) {
 }
 
 class StudioApproval {
-    constructor({ getApprovalSpecBatched }) {
+    constructor({ getApprovalSpecBatched, model }) {
         this._data = reactive({});
+        this.model = model;
         this.rules = {};
 
         const promSet = new WeakSet();
@@ -192,6 +193,7 @@ class StudioApproval {
                 res_id: this.resId,
                 approved,
             });
+            await this.model.root.load();
         } finally {
             await this.fetchApprovals();
         }
@@ -206,6 +208,7 @@ class StudioApproval {
             await this.orm.call("studio.approval.rule", "delete_approval", [[ruleId]], {
                 res_id: this.resId,
             });
+            await this.model.root.load();
         } finally {
             await this.fetchApprovals();
         }
@@ -237,7 +240,7 @@ export function useApproval({ getRecord, method, action }) {
     let approvalModelCache = approvalMap.get(model);
     if (!approvalModelCache) {
         approvalModelCache = {
-            approval: new StudioApproval({ getApprovalSpecBatched }),
+            approval: new StudioApproval({ getApprovalSpecBatched, model }),
             onRecordSaved: new Map(),
         };
         approvalMap.set(model, approvalModelCache);
