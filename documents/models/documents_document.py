@@ -1641,6 +1641,13 @@ class Document(models.Model):
         is_manager = self.env.is_admin() or self.env.user.has_group('documents.group_documents_manager')
         pinned_folders_start = self.filtered('is_pinned_folder')
 
+        if (
+            'owner_id' in vals
+            and not is_manager
+            and any(previous_owner != self.env.user for previous_owner in self.mapped('owner_id'))
+        ):
+            raise AccessError(_("You cannot change the owner of documents you do not own."))
+
         if folder_id := vals.get('folder_id'):
             folder = self.env['documents.document'].browse(folder_id)
             if not self.env.su and folder.user_permission != 'edit':

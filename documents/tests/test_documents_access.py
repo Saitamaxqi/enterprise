@@ -936,3 +936,13 @@ class TestDocumentsAccess(TransactionCaseDocuments):
 
         # Copying shortcuts is also supported
         (url_document_in_my_folder | shortcut).copy()
+
+    def test_updating_owner(self):
+        self.assertEqual(self.folder_a_a.owner_id, self.doc_user)
+        self.folder_a.action_update_access_rights(access_internal='edit')
+        self.assertEqual(self.folder_a_a.with_user(self.internal_user).user_permission, 'edit')
+
+        with self.assertRaises(AccessError):
+            self.folder_a_a.with_user(self.internal_user).owner_id = self.internal_user
+
+        self.folder_a_a.with_user(self.doc_user).owner_id = self.internal_user
