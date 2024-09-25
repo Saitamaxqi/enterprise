@@ -1098,6 +1098,7 @@ class TestCFDIInvoiceWorkflow(TestMxEdiCommon):
             'l10n_mx_edi_update_sat_needed': False,
             'l10n_mx_edi_cfdi_sat_state': 'cancelled',
             'l10n_mx_edi_cfdi_state': 'global_cancel',
+            'show_reset_to_draft_button': True,
         }])
 
     @freeze_time('2017-01-01')
