@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
-from odoo.tests.common import tagged
+from odoo import http
+from odoo.tests.common import HttpCase, RecordCapturer, tagged
 
 from .test_documents_hr_common import TransactionCaseDocumentsHr
 
 
 @tagged('post_install', '-at_install', 'test_document_bridge')
-class TestCaseDocumentsBridgeHR(TransactionCaseDocumentsHr):
+class TestCaseDocumentsBridgeHR(HttpCase, TransactionCaseDocumentsHr):
 
     @classmethod
     def setUpClass(cls):
@@ -55,9 +56,41 @@ class TestCaseDocumentsBridgeHR(TransactionCaseDocumentsHr):
         })
         self.assertTrue(document.attachment_id, "An attachment should have been created")
 
-    def test_hr_employee_document_creation_permission_employee_only(self):
-        """ Test that created hr.employee documents are only viewable by the employee and editable by hr managers. """
-        self.check_document_creation_permission(self.employee)
+    def test_hr_employee_document_auto_created_not_shared_with_employee(self):
+        """ Test that automatically created employee documents from attachment are not shared with the employee. """
+        attachment = self.env['ir.attachment'].create({
+            'name': 'test.txt',
+            'mimetype': 'text/plain',
+            'datas': self.TEXT,
+            'res_model': 'hr.employee',
+            'res_id': self.employee.id,
+        })
+        document = self.env['documents.document'].search([('attachment_id', '=', attachment.id)])
+        self.assertTrue(document)
+        self.assertEqual(document.with_user(self.employee.user_id).user_permission, 'none')
+
+    def test_hr_employee_document_upload_not_shared_with_employee(self):
+        """Test that uploaded hr.employee documents are not shared with the employee."""
+        self.authenticate(self.hr_manager.login, self.hr_manager.login)
+        with RecordCapturer(self.env['documents.document'], []) as capture:
+            res = self.url_open(f'/documents/upload/{self.hr_folder.access_token}',
+                data={
+                    'csrf_token': http.Request.csrf_token(self),
+                    'res_id': self.employee.id,
+                    'res_model': 'hr.employee',
+                },
+                files={'ufile': ('hello.txt', b"Hello", 'text/plain')},
+            )
+            res.raise_for_status()
+        document = capture.records.ensure_one()
+        self.assertEqual(document.res_model, "hr.employee",
+                         "The uploaded document is linked to the employee model")
+        self.assertEqual(document.res_id, self.employee.id,
+                         "The uploaded document is linked to the employee record")
+        self.assertEqual(document.with_user(self.doc_user).user_permission, "none",
+                         "The employee has no access to the uploaded document")
+        self.assertEqual(document.with_user(self.hr_manager).user_permission, "edit",
+                         "The HR manager has access to the uploaded document")
 
     def test_open_document_from_hr(self):
         """ Test that opening the document app from an employee (hr app) is opening it in the right context. """

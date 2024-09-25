@@ -12,9 +12,6 @@ class HrEmployee(models.Model):
 
     document_count = fields.Integer(compute='_compute_document_count', groups="hr.group_hr_user")
 
-    def _get_document_access_ids(self):
-        return [(self.work_contact_id, ('view', False))]
-
     def _get_document_folder(self):
         return self.company_id.documents_hr_folder if self.company_id.documents_hr_settings else False
 
