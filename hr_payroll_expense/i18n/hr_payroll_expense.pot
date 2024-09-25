@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:44+0000\n"
-"PO-Revision-Date: 2024-07-16 08:44+0000\n"
+"POT-Creation-Date: 2024-09-25 09:26+0000\n"
+"PO-Revision-Date: 2024-09-25 09:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,11 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: hr_payroll_expense
-#. odoo-python
-#: code:addons/hr_payroll_expense/models/account_move.py:0
-msgid "%(employee_name)s: %(expense_name)s"
+#: model_terms:ir.ui.view,arch_db:hr_payroll_expense.view_account_payment_register_form_inherit_hr_payroll_expense
+msgid ""
+"<span class=\"fw-bold\">\n"
+"                            The expenses will already be reimbursed in a payslip. Make sure this payment is intended.\n"
+"                        </span>"
 msgstr ""
 
 #. module: hr_payroll_expense
@@ -65,17 +67,22 @@ msgid "Expenses to reimburse to employee."
 msgstr ""
 
 #. module: hr_payroll_expense
+#: model:ir.model.fields,field_description:hr_payroll_expense.field_account_payment_register__is_already_paid_through_a_payslip
+msgid "Is Already Paid Through A Payslip"
+msgstr ""
+
+#. module: hr_payroll_expense
 #: model:ir.model,name:hr_payroll_expense.model_account_move
 msgid "Journal Entry"
 msgstr ""
 
 #. module: hr_payroll_expense
 #. odoo-python
-#: code:addons/hr_payroll_expense/models/account_move.py:0
+#: code:addons/hr_payroll_expense/models/hr_payroll_structure.py:0
 msgid ""
-"No debit account found in the '%(rule_name)s' payslip salary rule.Please add"
-" a payable debit account to be able to create an accounting entry for the "
-"expense report '%(expense_report_name)s'."
+"No debit account found in the '%(rule_name)s' payslip salary rule. Please "
+"add a payable debit account to be able to create an accounting entry for the"
+" expense report linked to this payslip '%(expense_report_name)s'."
 msgstr ""
 
 #. module: hr_payroll_expense
@@ -84,6 +91,11 @@ msgstr ""
 msgid ""
 "Only approved expense reports that were paid by an employee can be "
 "reimbursed in a payslip."
+msgstr ""
+
+#. module: hr_payroll_expense
+#: model:ir.model,name:hr_payroll_expense.model_account_payment_register
+msgid "Pay"
 msgstr ""
 
 #. module: hr_payroll_expense
@@ -121,8 +133,13 @@ msgid "Report in Next Payslip"
 msgstr ""
 
 #. module: hr_payroll_expense
+#: model:ir.model,name:hr_payroll_expense.model_hr_payroll_structure
+msgid "Salary Structure"
+msgstr ""
+
+#. module: hr_payroll_expense
 #. odoo-python
-#: code:addons/hr_payroll_expense/models/account_move.py:0
+#: code:addons/hr_payroll_expense/models/hr_payroll_structure.py:0
 msgid ""
 "The '%(account_name)s' account for the salary rule '%(rule_name)s' must be "
 "of type 'Payable'."

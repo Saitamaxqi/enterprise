@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:46+0000\n"
-"PO-Revision-Date: 2024-07-16 08:46+0000\n"
+"POT-Creation-Date: 2024-09-25 09:29+0000\n"
+"PO-Revision-Date: 2024-09-25 09:29+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -109,6 +109,7 @@ msgstr ""
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products
+#: model_terms:ir.ui.view,arch_db:website_sale_renting.products_collapsible
 msgid "<b>Rental Period</b>"
 msgstr ""
 
@@ -142,16 +143,10 @@ msgstr ""
 
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.o_wsale_offcanvas
-msgid ""
-"<small class=\"mx-auto\"><b>Clear Rental Period</b></small>\n"
-"                                <i class=\"oi oi-close\" role=\"img\"/>"
-msgstr ""
-
-#. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.products
 msgid ""
 "<small class=\"mx-auto\"><b>Clear Rental Period</b></small>\n"
-"                        <i class=\"oi oi-close\" role=\"img\"/>"
+"                                <i class=\"oi oi-close\" role=\"img\"/>"
 msgstr ""
 
 #. module: website_sale_renting
@@ -343,6 +338,11 @@ msgstr ""
 #. module: website_sale_renting
 #: model_terms:ir.ui.view,arch_db:website_sale_renting.cart_summary
 msgid "Rental Period"
+msgstr ""
+
+#. module: website_sale_renting
+#: model_terms:ir.ui.view,arch_db:website_sale_renting.accordion_rental_item
+msgid "Rental Pricing"
 msgstr ""
 
 #. module: website_sale_renting

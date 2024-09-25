@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:46+0000\n"
-"PO-Revision-Date: 2024-07-16 08:46+0000\n"
+"POT-Creation-Date: 2024-09-25 09:28+0000\n"
+"PO-Revision-Date: 2024-09-25 09:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,7 @@ msgid "Inconsistent Barcode"
 msgstr ""
 
 #. module: stock_barcode_barcodelookup
-#: model:ir.actions.act_window,name:stock_barcode_barcodelookup.product_barcodelookup_action
+#: model:ir.actions.act_window,name:stock_barcode_barcodelookup.stock_barcodelookup_product_product_action
 msgid "New Product"
 msgstr ""
 
@@ -61,5 +61,5 @@ msgstr ""
 #: code:addons/stock_barcode_barcodelookup/static/src/models/barcode_model.js:0
 msgid ""
 "This product doesn't exists either scan a package\n"
-"                            available at the picking location or create new product"
+"                                available at the picking location or create new product"
 msgstr ""

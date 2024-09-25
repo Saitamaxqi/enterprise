@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:43+0000\n"
-"PO-Revision-Date: 2024-07-16 08:43+0000\n"
+"POT-Creation-Date: 2024-09-25 09:25+0000\n"
+"PO-Revision-Date: 2024-09-25 09:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,18 +21,8 @@ msgid "Abandoned Carts"
 msgstr ""
 
 #. module: website_sale_dashboard
-#: model:onboarding.onboarding.step,button_text:website_sale_dashboard.onboarding_onboarding_step_payment_provider
-msgid "Activate Stripe"
-msgstr ""
-
-#. module: website_sale_dashboard
 #: model:ir.model,name:website_sale_dashboard.model_digest_digest
 msgid "Digest"
-msgstr ""
-
-#. module: website_sale_dashboard
-#: model:onboarding.onboarding.step,description:website_sale_dashboard.onboarding_onboarding_step_payment_provider
-msgid "Enable credit & debit card payments supported by Stripe."
 msgstr ""
 
 #. module: website_sale_dashboard
@@ -41,34 +31,9 @@ msgid "No data yet!"
 msgstr ""
 
 #. module: website_sale_dashboard
-#: model:ir.model,name:website_sale_dashboard.model_onboarding_onboarding
-msgid "Onboarding"
-msgstr ""
-
-#. module: website_sale_dashboard
-#: model:onboarding.onboarding.step,step_image_alt:website_sale_dashboard.onboarding_onboarding_step_payment_provider
-msgid "Onboarding Online Payments"
-msgstr ""
-
-#. module: website_sale_dashboard
-#: model:ir.model,name:website_sale_dashboard.model_onboarding_onboarding_step
-msgid "Onboarding Step"
-msgstr ""
-
-#. module: website_sale_dashboard
-#: model:onboarding.onboarding.step,title:website_sale_dashboard.onboarding_onboarding_step_payment_provider
-msgid "Online Payments"
-msgstr ""
-
-#. module: website_sale_dashboard
 #: model_terms:ir.ui.view,arch_db:website_sale_dashboard.view_online_sales_graph
 #: model_terms:ir.ui.view,arch_db:website_sale_dashboard.view_online_sales_pivot
 msgid "Sales Analysis"
-msgstr ""
-
-#. module: website_sale_dashboard
-#: model:onboarding.onboarding.step,done_text:website_sale_dashboard.onboarding_onboarding_step_payment_provider
-msgid "Step Completed!"
 msgstr ""
 
 #. module: website_sale_dashboard
@@ -79,11 +44,6 @@ msgstr ""
 #. module: website_sale_dashboard
 #: model:ir.model,name:website_sale_dashboard.model_website
 msgid "Website"
-msgstr ""
-
-#. module: website_sale_dashboard
-#: model:onboarding.onboarding,name:website_sale_dashboard.onboarding_onboarding_website_sale_dashboard
-msgid "Website Sale Dashboard"
 msgstr ""
 
 #. module: website_sale_dashboard

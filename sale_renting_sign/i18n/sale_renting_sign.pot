@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:45+0000\n"
-"PO-Revision-Date: 2024-07-16 08:45+0000\n"
+"POT-Creation-Date: 2024-09-25 09:28+0000\n"
+"PO-Revision-Date: 2024-09-25 09:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,11 +18,6 @@ msgstr ""
 #. module: sale_renting_sign
 #: model:ir.model.fields,field_description:sale_renting_sign.field_sale_order__sign_request_count
 msgid "# of Signature Requests"
-msgstr ""
-
-#. module: sale_renting_sign
-#: model_terms:ir.ui.view,arch_db:sale_renting_sign.message_signature_link
-msgid "A document has been signed and a copy attached to this order:"
 msgstr ""
 
 #. module: sale_renting_sign
@@ -98,7 +93,6 @@ msgstr ""
 #. module: sale_renting_sign
 #: model:ir.model,name:sale_renting_sign.model_sale_order
 #: model:ir.model.fields,field_description:sale_renting_sign.field_rental_sign_wizard__order_id
-#: model:ir.model.fields,field_description:sale_renting_sign.field_sign_request__sale_order_id
 #: model:ir.model.fields,field_description:sale_renting_sign.field_sign_send_request__sale_order_id
 msgid "Sales Order"
 msgstr ""

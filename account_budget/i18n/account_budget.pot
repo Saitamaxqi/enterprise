@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:44+0000\n"
-"PO-Revision-Date: 2024-07-16 08:44+0000\n"
+"POT-Creation-Date: 2024-09-25 09:26+0000\n"
+"PO-Revision-Date: 2024-09-25 09:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -17,7 +17,7 @@ msgstr ""
 
 #. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_kanban
-msgid "<i class=\"fa fa-clock-o\" role=\"img\" aria-label=\"Period\" title=\"Period\"/>"
+msgid "<i class=\"fa fa-clock-o me-1\" role=\"img\" aria-label=\"Period\" title=\"Period\"/>"
 msgstr ""
 
 #. module: account_budget
@@ -36,13 +36,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__achieved
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_report__line_type__achieved
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
+#: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_line_pivot
 msgid "Achieved"
 msgstr ""
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__achieved_percentage
-msgid "Achievement"
+msgid "Achieved (%)"
 msgstr ""
 
 #. module: account_budget
@@ -71,25 +72,20 @@ msgid "Activity Type Icon"
 msgstr ""
 
 #. module: account_budget
+#: model:ir.model.fields,help:account_budget.field_budget_line__committed_amount
+msgid "Already Billed amount + Confirmed purchase orders."
+msgstr ""
+
+#. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_line__achieved_amount
-msgid "Amount really earned/spent."
+msgid "Amount Billed/Invoiced."
 msgstr ""
 
 #. module: account_budget
 #: model:ir.model.fields,help:account_budget.field_budget_line__theoritical_amount
-msgid "Amount you are supposed to have earned/spent at this date."
-msgstr ""
-
-#. module: account_budget
-#: model:ir.model.fields,help:account_budget.field_budget_line__committed_amount
-msgid "Amount you have purchased but not invoiced at this date."
-msgstr ""
-
-#. module: account_budget
-#: model:ir.model.fields,help:account_budget.field_budget_line__budget_amount
 msgid ""
-"Amount you plan to earn/spend. Record a positive amount if it is a revenue "
-"and a negative amount if it is a cost."
+"Amount supposed to be Billed/Invoiced, formula = (Budget Amount / Budget "
+"Days) x Budget Days Completed"
 msgstr ""
 
 #. module: account_budget
@@ -97,6 +93,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__auto_account_id
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__auto_account_id
 msgid "Analytic Account"
+msgstr ""
+
+#. module: account_budget
+#: model:ir.ui.menu,name:account_budget.menu_act_budget_analytic_view
+msgid "Analytic Budget"
 msgstr ""
 
 #. module: account_budget
@@ -121,7 +122,6 @@ msgstr ""
 
 #. module: account_budget
 #: model:ir.model,name:account_budget.model_budget_analytic
-#: model:ir.model.fields,field_description:account_budget.field_budget_line__budget_amount
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__budget
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_report__line_type__budget
 #: model_terms:ir.ui.view,arch_db:account_budget.budget_report_view_search
@@ -200,10 +200,14 @@ msgid "Budget Type"
 msgstr ""
 
 #. module: account_budget
+#: model:ir.model.fields,field_description:account_budget.field_budget_line__budget_amount
+msgid "Budgeted"
+msgstr ""
+
+#. module: account_budget
 #. odoo-python
 #: code:addons/account_budget/wizards/budget_split_wizard.py:0
 #: model:ir.actions.act_window,name:account_budget.act_budget_analytic_view
-#: model:ir.ui.menu,name:account_budget.menu_act_budget_analytic_view
 #: model_terms:ir.ui.view,arch_db:account_budget.view_account_analytic_account_form_inherit_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_line_search
 msgid "Budgets"
@@ -235,11 +239,6 @@ msgid "Click to create a new budget."
 msgstr ""
 
 #. module: account_budget
-#: model:ir.model.fields,field_description:account_budget.field_budget_line__committed_percentage
-msgid "Commitment"
-msgstr ""
-
-#. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__committed_amount
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__committed
 #: model:ir.model.fields.selection,name:account_budget.selection__budget_report__line_type__committed
@@ -249,20 +248,15 @@ msgid "Committed"
 msgstr ""
 
 #. module: account_budget
+#: model:ir.model.fields,field_description:account_budget.field_budget_line__committed_percentage
+msgid "Committed (%)"
+msgstr ""
+
+#. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_analytic__company_id
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__company_id
 #: model:ir.model.fields,field_description:account_budget.field_budget_report__company_id
 msgid "Company"
-msgstr ""
-
-#. module: account_budget
-#: model:ir.model.fields,help:account_budget.field_budget_line__achieved_percentage
-msgid "Comparison between practical and Achieved amount in percentage."
-msgstr ""
-
-#. module: account_budget
-#: model:ir.model.fields,help:account_budget.field_budget_line__theoritical_percentage
-msgid "Comparison between practical and theoretical amount in percentage."
 msgstr ""
 
 #. module: account_budget
@@ -554,11 +548,6 @@ msgid "Open Budget"
 msgstr ""
 
 #. module: account_budget
-#: model:ir.model.fields,help:account_budget.field_budget_line__committed_percentage
-msgid "Percentage of the budget that has been committed."
-msgstr ""
-
-#. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_split_wizard__period
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
 msgid "Period"
@@ -647,6 +636,11 @@ msgid "SMS Delivery error"
 msgstr ""
 
 #. module: account_budget
+#: model:ir.model.fields,field_description:account_budget.field_budget_line__sequence
+msgid "Sequence"
+msgstr ""
+
+#. module: account_budget
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_search
 msgid "Show all records which has next action date is before today"
 msgstr ""
@@ -680,12 +674,12 @@ msgstr ""
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__theoritical_amount
 #: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
-msgid "Theoritical"
+msgid "Theoretical"
 msgstr ""
 
 #. module: account_budget
 #: model:ir.model.fields,field_description:account_budget.field_budget_line__theoritical_percentage
-msgid "Theoritical Percentage"
+msgid "Theoretical (%)"
 msgstr ""
 
 #. module: account_budget
@@ -749,11 +743,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_budget/models/budget_analytic.py:0
 msgid "You cannot create recursive revision of budget."
-msgstr ""
-
-#. module: account_budget
-#: model_terms:ir.ui.view,arch_db:account_budget.view_budget_analytic_form
-msgid "achieved"
 msgstr ""
 
 #. module: account_budget

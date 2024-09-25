@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:44+0000\n"
-"PO-Revision-Date: 2024-07-16 08:44+0000\n"
+"POT-Creation-Date: 2024-09-25 09:26+0000\n"
+"PO-Revision-Date: 2024-09-25 09:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -38,6 +38,15 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_winbooks_import/wizard/import_wizard.py:0
 msgid "Accounting Settings"
+msgstr ""
+
+#. module: account_winbooks_import
+#. odoo-python
+#: code:addons/account_winbooks_import/wizard/import_wizard.py:0
+msgid ""
+"At least one automatic counterpart has been created at import. This is "
+"probably an error. Please check entry lines with reference: Counterpart "
+"(generated at import from Winbooks)"
 msgstr ""
 
 #. module: account_winbooks_import

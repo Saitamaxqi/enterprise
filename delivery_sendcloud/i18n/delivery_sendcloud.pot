@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:43+0000\n"
-"PO-Revision-Date: 2024-07-16 08:43+0000\n"
+"POT-Creation-Date: 2024-09-25 09:25+0000\n"
+"PO-Revision-Date: 2024-09-25 09:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -348,7 +348,6 @@ msgstr ""
 #. module: delivery_sendcloud
 #. odoo-javascript
 #: code:addons/delivery_sendcloud/static/src/views/sendcloud_product_selection_widget.xml:0
-#, python-format
 msgid ""
 "Please check SendCloud return product documentation before selecting return "
 "product. For some products, you can be charged for return labels printed but"
@@ -447,6 +446,13 @@ msgid "Sendcloud Shipping Product"
 msgstr ""
 
 #. module: delivery_sendcloud
+#. odoo-python
+#: code:addons/delivery_sendcloud/models/sendcloud_service.py:0
+msgid ""
+"Sendcloud is not responding. Check your credentials and/or retry later."
+msgstr ""
+
+#. module: delivery_sendcloud
 #: model:ir.model.fields,field_description:delivery_sendcloud.field_delivery_carrier__country_id
 msgid "Ship From"
 msgstr ""
@@ -502,12 +508,6 @@ msgid ""
 msgstr ""
 
 #. module: delivery_sendcloud
-#. odoo-python
-#: code:addons/delivery_sendcloud/models/sendcloud_service.py:0
-msgid "Something went wrong, please try again later!!"
-msgstr ""
-
-#. module: delivery_sendcloud
 #: model:ir.model,name:delivery_sendcloud.model_stock_package_type
 msgid "Stock package type"
 msgstr ""
@@ -531,7 +531,6 @@ msgstr ""
 #. module: delivery_sendcloud
 #. odoo-python
 #: code:addons/delivery_sendcloud/models/sendcloud_service.py:0
-#, python-format
 msgid ""
 "The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n"
 " %s"
@@ -561,9 +560,10 @@ msgstr ""
 
 #. module: delivery_sendcloud
 #. odoo-python
-#: code:addons/delivery_sendcloud/models/sendcloud_service.py:0
+#: code:addons/delivery_sendcloud/models/delivery_carrier.py:0
 msgid ""
-"There is no rate available for this order with the selected shipping product"
+"There is no rate available for this order with the selected shipping "
+"product."
 msgstr ""
 
 #. module: delivery_sendcloud

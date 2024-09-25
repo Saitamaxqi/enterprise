@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:43+0000\n"
-"PO-Revision-Date: 2024-07-16 08:43+0000\n"
+"POT-Creation-Date: 2024-09-25 09:25+0000\n"
+"PO-Revision-Date: 2024-09-25 09:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -33,6 +33,11 @@ msgstr ""
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_store__auth_url
 msgid "Auth Url"
+msgstr ""
+
+#. module: pos_pricer
+#: model:product.pricelist,name:pos_pricer.pricer_demo_pricelist
+msgid "Christmas"
 msgstr ""
 
 #. module: pos_pricer
@@ -144,6 +149,11 @@ msgid "No product found for barcode '%s'"
 msgstr ""
 
 #. module: pos_pricer
+#: model:ir.model.fields,field_description:pos_pricer.field_product_product__on_sale_price
+msgid "On Sale Price"
+msgstr ""
+
+#. module: pos_pricer
 #: model:ir.actions.server,name:pos_pricer.pricer_sync_cron_ir_actions_server
 msgid "POS Pricer: tags update synchronization "
 msgstr ""
@@ -151,6 +161,16 @@ msgstr ""
 #. module: pos_pricer
 #: model:ir.model.fields,help:pos_pricer.field_pricer_store__pricer_password
 msgid "Password of your Pricer account"
+msgstr ""
+
+#. module: pos_pricer
+#: model:ir.model,name:pos_pricer.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr ""
+
+#. module: pos_pricer
+#: model:ir.model.fields,help:pos_pricer.field_product_product__on_sale_price
+msgid "Price after setting a Pricer Sales Pricelist"
 msgstr ""
 
 #. module: pos_pricer
@@ -182,6 +202,11 @@ msgstr ""
 #. module: pos_pricer
 #: model:ir.model.fields,field_description:pos_pricer.field_pricer_tag__pricer_product_to_link
 msgid "Pricer Product To Link"
+msgstr ""
+
+#. module: pos_pricer
+#: model:ir.model.fields,field_description:pos_pricer.field_product_product__pricer_sale_pricelist_id
+msgid "Pricer Sales Pricelist"
 msgstr ""
 
 #. module: pos_pricer
@@ -337,6 +362,12 @@ msgstr ""
 msgid ""
 "Tag id should be a 17 characters string composed of a letter followed by 16 "
 "digits"
+msgstr ""
+
+#. module: pos_pricer
+#: model:ir.model.fields,help:pos_pricer.field_product_product__pricer_sale_pricelist_id
+msgid ""
+"This pricelist will be used to set sales on Pricer tags for this product"
 msgstr ""
 
 #. module: pos_pricer

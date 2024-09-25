@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:43+0000\n"
-"PO-Revision-Date: 2024-07-16 08:43+0000\n"
+"POT-Creation-Date: 2024-09-25 09:25+0000\n"
+"PO-Revision-Date: 2024-09-25 09:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,12 @@ msgid "Accept payments with an Ingenico payment terminal"
 msgstr ""
 
 #. module: pos_iot
-#: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
+#. odoo-javascript
+#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+msgid "Access your"
+msgstr ""
+
+#. module: pos_iot
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Barcode Scanners/Card Readers"
 msgstr ""
@@ -40,6 +45,26 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
 #: model_terms:ir.ui.view,arch_db:pos_iot.res_config_view_form_inherit_pos_iot
 msgid "Cashdrawer"
+msgstr ""
+
+#. module: pos_iot
+#. odoo-javascript
+#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+msgid "Click on Advanced/Show Details/Details/More information"
+msgstr ""
+
+#. module: pos_iot
+#. odoo-javascript
+#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+msgid ""
+"Click on Proceed to .../Add Exception/Visit this website/Go on to the "
+"webpage"
+msgstr ""
+
+#. module: pos_iot
+#. odoo-javascript
+#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+msgid "Close this window and try again"
 msgstr ""
 
 #. module: pos_iot
@@ -100,6 +125,12 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
+#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+msgid "Firefox only: Click on Confirm Security Exception"
+msgstr ""
+
+#. module: pos_iot
+#. odoo-javascript
 #: code:addons/pos_iot/static/src/overrides/components/scale_screen/scale_screen.xml:0
 msgid "Get Weight"
 msgstr ""
@@ -112,6 +143,13 @@ msgstr ""
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__device_identifier
 msgid "Identifier"
+msgstr ""
+
+#. module: pos_iot
+#. odoo-javascript
+#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+msgid ""
+"If you are on a secure server (HTTPS) check if you accepted the certificate:"
 msgstr ""
 
 #. module: pos_iot
@@ -154,6 +192,12 @@ msgid "IoT Box"
 msgstr ""
 
 #. module: pos_iot
+#. odoo-javascript
+#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+msgid "IoT Box Homepage"
+msgstr ""
+
+#. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_printer__device_id
 msgid "IoT Device"
 msgstr ""
@@ -167,6 +211,12 @@ msgstr ""
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iot_device_ids
 msgid "Iot Device"
+msgstr ""
+
+#. module: pos_iot
+#. odoo-javascript
+#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
+msgid "Network Error"
 msgstr ""
 
 #. module: pos_iot
@@ -188,6 +238,7 @@ msgstr ""
 
 #. module: pos_iot
 #. odoo-javascript
+#: code:addons/pos_iot/static/src/app/iot_box_disconnected_dialog.xml:0
 #: code:addons/pos_iot/static/src/app/payment.js:0
 msgid "Please check if the IoT Box is still connected."
 msgstr ""
@@ -257,6 +308,11 @@ msgstr ""
 #. module: pos_iot
 #: model:ir.model.fields,field_description:pos_iot.field_pos_config__iface_scan_via_proxy
 msgid "Scan via Proxy"
+msgstr ""
+
+#. module: pos_iot
+#: model_terms:ir.ui.view,arch_db:pos_iot.pos_iot_config_view_form
+msgid "Scanner"
 msgstr ""
 
 #. module: pos_iot

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:45+0000\n"
-"PO-Revision-Date: 2024-07-16 08:45+0000\n"
+"POT-Creation-Date: 2024-09-25 09:27+0000\n"
+"PO-Revision-Date: 2024-09-25 09:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,57 +16,27 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: hr_expense_extract
-#. odoo-python
-#: code:addons/hr_expense_extract/models/hr_expense.py:0
-msgid ""
-"\n"
-"                    <p class=\"o_view_nocontent_expense_receipt\">\n"
-"                        <div class=\"o_view_pink_overlay\">\n"
-"                            <p class=\"o_view_nocontent_expense_receipt_image\"/>\n"
-"                            <h2 class=\"d-md-block\">\n"
-"                                Upload or drop an expense receipt\n"
-"                            </h2>\n"
-"                        </div>\n"
-"                    </p>"
-msgstr ""
-
-#. module: hr_expense_extract
 #. odoo-javascript
 #: code:addons/hr_expense_extract/static/src/js/tours/expense_tour.js:0
 msgid "<b>Congratulations</b>, you are now an expert of Expenses."
 msgstr ""
 
 #. module: hr_expense_extract
-#: model_terms:ir.ui.view,arch_db:hr_expense_extract.hr_expense_extract_view_form
-msgid ""
-"<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
-"                        Buy credits"
+#. odoo-javascript
+#: code:addons/hr_expense_extract/static/src/js/tours/expense_tour.js:0
+msgid "<b>Wasting time recording your receipts?</b> Let’s try a better way."
 msgstr ""
 
 #. module: hr_expense_extract
-#: model_terms:ir.ui.view,arch_db:hr_expense_extract.hr_expense_extract_view_form
+#: model_terms:web_tour.tour,rainbow_man_message:hr_expense_extract.hr_expense_extract_tour
 msgid ""
-"<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
-"                        Refresh"
-msgstr ""
-
-#. module: hr_expense_extract
-#: model_terms:ir.ui.view,arch_db:hr_expense_extract.hr_expense_extract_view_form
-msgid ""
-"<i class=\"oi oi-fw o_button_icon oi-arrow-right\"/>\n"
-"                        Retry"
+"<span><b>Congratulations</b>, you are now an expert of Expenses.\n"
+"        </span>"
 msgstr ""
 
 #. module: hr_expense_extract
 #: model:ir.model.fields,field_description:hr_expense_extract.field_hr_expense__message_needaction
 msgid "Action Needed"
-msgstr ""
-
-#. module: hr_expense_extract
-#: model_terms:ir.ui.view,arch_db:hr_expense_extract.hr_expense_extract_view_form
-msgid ""
-"All fields will be automated by Artificial Intelligence, it might take 5 "
-"seconds."
 msgstr ""
 
 #. module: hr_expense_extract
@@ -306,8 +276,8 @@ msgid ""
 "Payment Providers: Each payment provider has its own Payment Method. Request a transaction on/to a card thanks to a payment token saved by the partner when buying or subscribing online.\n"
 "Check: Pay bills by check and print it from Odoo.\n"
 "Batch Deposit: Collect several customer checks at once generating and submitting a batch deposit to your bank. Module account_batch_payment is necessary.\n"
-"SEPA Credit Transfer: Pay in the SEPA zone by submitting a SEPA Credit Transfer file to your bank. Module account_sepa is necessary.\n"
-"SEPA Direct Debit: Get paid in the SEPA zone thanks to a mandate your partner will have granted to you. Module account_sepa is necessary.\n"
+"SEPA Credit Transfer: Pay in the SEPA zone by submitting a SEPA Credit Transfer file to your bank. Module account_iso20022 is necessary.\n"
+"SEPA Direct Debit: Get paid in the SEPA zone thanks to a mandate your partner will have granted to you. Module account_iso20022 is necessary.\n"
 msgstr ""
 
 #. module: hr_expense_extract
@@ -419,13 +389,6 @@ msgid "Send mode on expense attachments"
 msgstr ""
 
 #. module: hr_expense_extract
-#: model_terms:ir.ui.view,arch_db:hr_expense_extract.hr_expense_extract_view_form
-msgid ""
-"The data extraction is not finished yet. The extraction usually takes "
-"between 5 and 10 seconds."
-msgstr ""
-
-#. module: hr_expense_extract
 #: model_terms:ir.ui.view,arch_db:hr_expense_extract.expense_sample_receipt_view_form
 msgid "Try Expense Digitization"
 msgstr ""
@@ -447,9 +410,9 @@ msgid "Try the AI with a sample receipt."
 msgstr ""
 
 #. module: hr_expense_extract
-#. odoo-javascript
-#: code:addons/hr_expense_extract/static/src/js/tours/expense_tour.js:0
-msgid "Wasting time recording your receipts? Let’s try a better way."
+#. odoo-python
+#: code:addons/hr_expense_extract/models/hr_expense.py:0
+msgid "Upload or drop an expense receipt"
 msgstr ""
 
 #. module: hr_expense_extract
@@ -472,11 +435,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/hr_expense_extract/models/hr_expense.py:0
 msgid "You cannot send a expense that is not in draft state!"
-msgstr ""
-
-#. module: hr_expense_extract
-#: model_terms:ir.ui.view,arch_db:hr_expense_extract.hr_expense_extract_view_form
-msgid "You don't have enough credit to extract data from your expense."
 msgstr ""
 
 #. module: hr_expense_extract

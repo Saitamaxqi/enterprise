@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:43+0000\n"
-"PO-Revision-Date: 2024-07-16 08:43+0000\n"
+"POT-Creation-Date: 2024-09-25 09:25+0000\n"
+"PO-Revision-Date: 2024-09-25 09:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -21,8 +21,8 @@ msgid "Appointment Resource"
 msgstr ""
 
 #. module: pos_restaurant_appointment
-#: model:ir.model.fields,field_description:pos_restaurant_appointment.field_pos_config__appointment_type_ids
-#: model:ir.model.fields,field_description:pos_restaurant_appointment.field_res_config_settings__pos_appointment_type_ids
+#: model:ir.model.fields,field_description:pos_restaurant_appointment.field_pos_config__appointment_type_id
+#: model:ir.model.fields,field_description:pos_restaurant_appointment.field_res_config_settings__pos_appointment_type_id
 msgid "Appointment Type"
 msgstr ""
 
@@ -34,6 +34,12 @@ msgstr ""
 #. module: pos_restaurant_appointment
 #: model_terms:ir.ui.view,arch_db:pos_restaurant_appointment.res_config_settings_view_form
 msgid "Appointment type"
+msgstr ""
+
+#. module: pos_restaurant_appointment
+#. odoo-javascript
+#: code:addons/pos_restaurant_appointment/static/src/overrides/navbar.xml:0
+msgid "Booking"
 msgstr ""
 
 #. module: pos_restaurant_appointment
@@ -49,13 +55,6 @@ msgstr ""
 #. module: pos_restaurant_appointment
 #: model:appointment.question,name:pos_restaurant_appointment.appointment_type_restaurant_table_question_allergies
 msgid "Do you have any dietary preferences or restrictions ?"
-msgstr ""
-
-#. module: pos_restaurant_appointment
-#. odoo-javascript
-#: code:addons/pos_restaurant_appointment/static/src/overrides/navbar.xml:0
-#: code:addons/pos_restaurant_appointment/static/src/overrides/pos_store.js:0
-msgid "Manage Bookings"
 msgstr ""
 
 #. module: pos_restaurant_appointment
@@ -76,6 +75,11 @@ msgstr ""
 #. module: pos_restaurant_appointment
 #: model:ir.model,name:pos_restaurant_appointment.model_restaurant_table
 msgid "Restaurant Table"
+msgstr ""
+
+#. module: pos_restaurant_appointment
+#: model_terms:ir.ui.view,arch_db:pos_restaurant_appointment.calendar_event_view_form_gantt_booking_inherit
+msgid "Save"
 msgstr ""
 
 #. module: pos_restaurant_appointment

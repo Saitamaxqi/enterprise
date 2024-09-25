@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:46+0000\n"
-"PO-Revision-Date: 2024-07-16 08:46+0000\n"
+"POT-Creation-Date: 2024-09-25 09:29+0000\n"
+"PO-Revision-Date: 2024-09-25 09:29+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -80,6 +80,24 @@ msgid "Done, website generated"
 msgstr ""
 
 #. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "During beta, the number of imported pages may be limited."
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "Enter your website URL"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "Features"
+msgstr ""
+
+#. module: website_generator
 #: model:ir.model,name:website_generator.model_ir_http
 msgid "HTTP Routing"
 msgstr ""
@@ -87,6 +105,30 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__id
 msgid "ID"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "Import Products"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "Import my website"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "Import your"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.js:0
+msgid "Importing your website."
 msgstr ""
 
 #. module: website_generator
@@ -111,12 +153,6 @@ msgstr ""
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Invalid url"
-msgstr ""
-
-#. module: website_generator
-#. odoo-javascript
-#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
-msgid "It should be ready in a"
 msgstr ""
 
 #. module: website_generator
@@ -152,15 +188,6 @@ msgid "Number of pages"
 msgstr ""
 
 #. module: website_generator
-#. odoo-javascript
-#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
-msgid ""
-"Once your website is ready, this page will reload automatically. You can "
-"also close this page, we will send you an email once your website has been "
-"converted."
-msgstr ""
-
-#. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__uuid
 msgid "Output UUID generated from Website Scraper Server"
 msgstr ""
@@ -168,6 +195,12 @@ msgstr ""
 #. module: website_generator
 #: model:ir.model,name:website_generator.model_website_page
 msgid "Page"
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "Pages"
 msgstr ""
 
 #. module: website_generator
@@ -195,6 +228,12 @@ msgid "Something went wrong"
 msgstr ""
 
 #. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.js:0
+msgid "Something went wrong while importing your website."
+msgstr ""
+
+#. module: website_generator
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__status
 msgid "Status"
 msgstr ""
@@ -211,9 +250,27 @@ msgid "Success"
 msgstr ""
 
 #. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/systray_items/generator_request.js:0
+msgid "The import of your website has started!"
+msgstr ""
+
+#. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "The request asks for too many pages"
+msgstr ""
+
+#. module: website_generator
+#. odoo-python
+#: code:addons/website_generator/models/website.py:0
+msgid "The website scraper service is currently unavailable."
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
+msgid "This can take a few minutes."
 msgstr ""
 
 #. module: website_generator
@@ -251,6 +308,13 @@ msgid "We could not convert your website, please try again later"
 msgstr ""
 
 #. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/systray_items/generator_request.js:0
+msgid "We will notify %(email)s when everything is ready."
+msgstr ""
+
+#. module: website_generator
+#: model:ir.model,name:website_generator.model_website
 #: model:ir.model.fields,field_description:website_generator.field_website_generator_request__website_id
 msgid "Website"
 msgstr ""
@@ -281,6 +345,12 @@ msgid "Website Scraped"
 msgstr ""
 
 #. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "Website URL"
+msgstr ""
+
+#. module: website_generator
 #. odoo-python
 #: code:addons/website_generator/models/generator.py:0
 msgid "Website blocked or unreachable"
@@ -293,18 +363,30 @@ msgid "Website not supported"
 msgstr ""
 
 #. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
+msgid "You will be redirected once your website is ready."
+msgstr ""
+
+#. module: website_generator
+#. odoo-javascript
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "You'll be able to create your pages later on."
+msgstr ""
+
+#. module: website_generator
 #: model:mail.template,subject:website_generator.email_template_website_scrapped
 msgid "Your Odoo Website is Ready!"
 msgstr ""
 
 #. module: website_generator
 #. odoo-javascript
-#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
-msgid "Your website is being converted"
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "and"
 msgstr ""
 
 #. module: website_generator
 #. odoo-javascript
-#: code:addons/website_generator/static/src/client_actions/generator_wait/generator.xml:0
-msgid "few minutes"
+#: code:addons/website_generator/static/src/client_actions/configurator/configurator.xml:0
+msgid "beta"
 msgstr ""

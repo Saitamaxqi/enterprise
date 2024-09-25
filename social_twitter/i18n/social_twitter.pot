@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:46+0000\n"
-"PO-Revision-Date: 2024-07-16 08:46+0000\n"
+"POT-Creation-Date: 2024-09-25 09:28+0000\n"
+"PO-Revision-Date: 2024-09-25 09:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -129,8 +129,8 @@ msgid "Display Name"
 msgstr ""
 
 #. module: social_twitter
-#: model:ir.model.fields,field_description:social_twitter.field_social_post__has_twitter_accounts
-#: model:ir.model.fields,field_description:social_twitter.field_social_post_template__has_twitter_accounts
+#: model:ir.model.fields,field_description:social_twitter.field_social_post__display_twitter_preview
+#: model:ir.model.fields,field_description:social_twitter.field_social_post_template__display_twitter_preview
 msgid "Display X Preview"
 msgstr ""
 
@@ -187,6 +187,12 @@ msgid "Favorites of"
 msgstr ""
 
 #. module: social_twitter
+#: model:ir.model.fields,field_description:social_twitter.field_social_post__has_twitter_account
+#: model:ir.model.fields,field_description:social_twitter.field_social_post_template__has_twitter_account
+msgid "Has X Account"
+msgstr ""
+
+#. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_twitter_account__id
 msgid "ID"
 msgstr ""
@@ -194,6 +200,11 @@ msgstr ""
 #. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_twitter_account__image
 msgid "Image"
+msgstr ""
+
+#. module: social_twitter
+#: model_terms:ir.ui.view,arch_db:social_twitter.social_post_template_view_form
+msgid "Images"
 msgstr ""
 
 #. module: social_twitter
@@ -236,6 +247,11 @@ msgid "Mentions"
 msgstr ""
 
 #. module: social_twitter
+#: model_terms:ir.ui.view,arch_db:social_twitter.social_post_template_view_form
+msgid "Message"
+msgstr ""
+
+#. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_twitter_account__name
 msgid "Name"
 msgstr ""
@@ -244,6 +260,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/social_twitter/models/social_stream.py:0
 msgid "Please select a X account for this stream type."
+msgstr ""
+
+#. module: social_twitter
+#. odoo-python
+#: code:addons/social_twitter/models/social_post_template.py:0
+msgid "Please specify either an X Message or upload some X Images."
 msgstr ""
 
 #. module: social_twitter
@@ -408,6 +430,11 @@ msgid "Tweet"
 msgstr ""
 
 #. module: social_twitter
+#: model_terms:ir.ui.view,arch_db:social_twitter.social_post_template_view_form
+msgid "Twitter"
+msgstr ""
+
+#. module: social_twitter
 #. odoo-javascript
 #: code:addons/social_twitter/static/src/js/stream_post_kanban_record.js:0
 msgid "Twitter Comments"
@@ -464,6 +491,12 @@ msgid ""
 msgstr ""
 
 #. module: social_twitter
+#: model:ir.model.fields,help:social_twitter.field_social_post__twitter_image_ids
+#: model:ir.model.fields,help:social_twitter.field_social_post_template__twitter_image_ids
+msgid "Will attach images to your posts."
+msgstr ""
+
+#. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_stream_post__twitter_author_id
 msgid "X Author ID"
 msgstr ""
@@ -494,8 +527,20 @@ msgid "X ID"
 msgstr ""
 
 #. module: social_twitter
+#: model:ir.model.fields,field_description:social_twitter.field_social_post__twitter_image_ids
+#: model:ir.model.fields,field_description:social_twitter.field_social_post_template__twitter_image_ids
+msgid "X Images"
+msgstr ""
+
+#. module: social_twitter
 #: model:ir.model.fields,field_description:social_twitter.field_social_stream_post__twitter_likes_count
 msgid "X Likes"
+msgstr ""
+
+#. module: social_twitter
+#: model:ir.model.fields,field_description:social_twitter.field_social_post__twitter_message
+#: model:ir.model.fields,field_description:social_twitter.field_social_post_template__twitter_message
+msgid "X Message"
 msgstr ""
 
 #. module: social_twitter

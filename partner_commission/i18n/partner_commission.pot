@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:45+0000\n"
-"PO-Revision-Date: 2024-07-16 08:45+0000\n"
+"POT-Creation-Date: 2024-09-25 09:27+0000\n"
+"PO-Revision-Date: 2024-09-25 09:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -330,7 +330,6 @@ msgstr ""
 #. module: partner_commission
 #: model:ir.model.fields,field_description:partner_commission.field_account_bank_statement_line__referrer_id
 #: model:ir.model.fields,field_description:partner_commission.field_account_move__referrer_id
-#: model:ir.model.fields,field_description:partner_commission.field_account_payment__referrer_id
 #: model:ir.model.fields,field_description:partner_commission.field_sale_order__referrer_id
 #: model:ir.model.fields,field_description:partner_commission.field_sale_order_log_report__referrer_id
 #: model:ir.model.fields,field_description:partner_commission.field_sale_report__referrer_id
@@ -352,7 +351,6 @@ msgstr ""
 #. module: partner_commission
 #: model:ir.model.fields,field_description:partner_commission.field_account_bank_statement_line__commission_po_line_id
 #: model:ir.model.fields,field_description:partner_commission.field_account_move__commission_po_line_id
-#: model:ir.model.fields,field_description:partner_commission.field_account_payment__commission_po_line_id
 msgid "Referrer Purchase Order line"
 msgstr ""
 

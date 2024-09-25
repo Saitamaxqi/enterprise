@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:46+0000\n"
-"PO-Revision-Date: 2024-07-16 08:46+0000\n"
+"POT-Creation-Date: 2024-09-25 09:29+0000\n"
+"PO-Revision-Date: 2024-09-25 09:29+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,8 +41,23 @@ msgid "<span class=\"fa fa-globe\" title=\"website\"/>"
 msgstr ""
 
 #. module: website_appointment
-#: model_terms:ir.ui.view,arch_db:website_appointment.appointment_type_view_kanban
-msgid "<span class=\"text-bg-success\">Published</span>"
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
+msgid "<span itemprop=\"name\">Bistr-Odoo</span>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
+msgid "<span itemprop=\"name\">Doctor's Office</span>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
+msgid "<span itemprop=\"name\">Online</span>"
+msgstr ""
+
+#. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
+msgid "<span itemprop=\"name\">Tennis Club</span>"
 msgstr ""
 
 #. module: website_appointment
@@ -182,6 +197,11 @@ msgid "Contact us"
 msgstr ""
 
 #. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
+msgid "Dental Care"
+msgstr ""
+
+#. module: website_appointment
 #: model:ir.model.fields,field_description:website_appointment.field_appointment_invite__appointment_type_warning_msg
 msgid "Different Website Message"
 msgstr ""
@@ -231,6 +251,7 @@ msgstr ""
 #. module: website_appointment
 #. odoo-python
 #: code:addons/website_appointment/models/website_snippet_filter.py:0
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Online Cooking Lesson"
 msgstr ""
 
@@ -251,6 +272,7 @@ msgid "Public Appointments"
 msgstr ""
 
 #. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.appointment_type_view_kanban
 #: model_terms:ir.ui.view,arch_db:website_appointment.appointment_type_view_search
 msgid "Published"
 msgstr ""
@@ -333,8 +355,14 @@ msgid "Specific users"
 msgstr ""
 
 #. module: website_appointment
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
+msgid "Table"
+msgstr ""
+
+#. module: website_appointment
 #. odoo-python
 #: code:addons/website_appointment/models/website_snippet_filter.py:0
+#: model_terms:ir.ui.view,arch_db:website_appointment.s_appointments_preview_data
 msgid "Tennis Court"
 msgstr ""
 
@@ -343,7 +371,7 @@ msgstr ""
 #: code:addons/website_appointment/models/appointment_invite.py:0
 msgid ""
 "The following appointment type(s) are not compatible with the website "
-"chosen: "
+"chosen: %(appointments)s"
 msgstr ""
 
 #. module: website_appointment

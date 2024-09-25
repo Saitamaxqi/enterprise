@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:45+0000\n"
-"PO-Revision-Date: 2024-07-16 08:45+0000\n"
+"POT-Creation-Date: 2024-09-25 09:27+0000\n"
+"PO-Revision-Date: 2024-09-25 09:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -20,11 +20,6 @@ msgstr ""
 msgid ""
 "<span class=\"fa fa-lg fa-building-o fa-fw\" title=\"Values set here are "
 "company-specific.\" groups=\"base.group_multi_company\"/>"
-msgstr ""
-
-#. module: industry_fsm_sale_report
-#: model_terms:ir.ui.view,arch_db:industry_fsm_sale_report.worksheet_custom_page
-msgid "Field Service Report:"
 msgstr ""
 
 #. module: industry_fsm_sale_report
@@ -55,11 +50,6 @@ msgstr ""
 #. module: industry_fsm_sale_report
 #: model:ir.model,name:industry_fsm_sale_report.model_project_task
 msgid "Task"
-msgstr ""
-
-#. module: industry_fsm_sale_report
-#: model_terms:ir.ui.view,arch_db:industry_fsm_sale_report.worksheet_custom_page
-msgid "Time &amp; Material"
 msgstr ""
 
 #. module: industry_fsm_sale_report

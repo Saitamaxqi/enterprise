@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:43+0000\n"
-"PO-Revision-Date: 2024-07-16 08:43+0000\n"
+"POT-Creation-Date: 2024-09-25 09:25+0000\n"
+"PO-Revision-Date: 2024-09-25 09:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -81,6 +81,12 @@ msgstr ""
 #. module: quality_mrp_workorder
 #: model_terms:ir.ui.view,arch_db:quality_mrp_workorder.quality_check_view_form_tablet_inherit_quality
 msgid "Measure:"
+msgstr ""
+
+#. module: quality_mrp_workorder
+#. odoo-javascript
+#: code:addons/quality_mrp_workorder/static/src/mrp_display/mrp_quality_check_confirmation_dialog/mrp_quality_check_confirmation_dialog.xml:0
+msgid "Open spreadsheet"
 msgstr ""
 
 #. module: quality_mrp_workorder

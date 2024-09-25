@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:45+0000\n"
-"PO-Revision-Date: 2024-07-16 08:45+0000\n"
+"POT-Creation-Date: 2024-09-25 09:27+0000\n"
+"PO-Revision-Date: 2024-09-25 09:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -41,6 +41,7 @@ msgid "Add details about your intervention..."
 msgstr ""
 
 #. module: maintenance_worksheet
+#: model:ir.model.fields,field_description:maintenance_worksheet.x_maintenance_request_worksheet_template_1_ir_model_fields_7
 #: model_terms:ir.ui.view,arch_db:maintenance_worksheet.report_custom_x_maintenance_request_worksheet_template_1
 msgid "Comments"
 msgstr ""
@@ -53,6 +54,12 @@ msgid ""
 msgstr ""
 
 #. module: maintenance_worksheet
+#: model:ir.model.fields,field_description:maintenance_worksheet.x_maintenance_request_worksheet_template_1_ir_model_fields_2
+msgid "Created by"
+msgstr ""
+
+#. module: maintenance_worksheet
+#: model:ir.model.fields,field_description:maintenance_worksheet.x_maintenance_request_worksheet_template_1_ir_model_fields_1
 #: model_terms:ir.ui.view,arch_db:maintenance_worksheet.x_maintenance_request_worksheet_template_1_ir_ui_view_3
 msgid "Created on"
 msgstr ""
@@ -68,7 +75,28 @@ msgid "Default Worksheet"
 msgstr ""
 
 #. module: maintenance_worksheet
+#: model:ir.model.fields,field_description:maintenance_worksheet.x_maintenance_request_worksheet_template_1_ir_model_fields_3
+msgid "Display Name"
+msgstr ""
+
+#. module: maintenance_worksheet
+#: model:ir.model.fields,field_description:maintenance_worksheet.x_maintenance_request_worksheet_template_1_ir_model_fields_4
+msgid "ID"
+msgstr ""
+
+#. module: maintenance_worksheet
+#: model:ir.model.fields,field_description:maintenance_worksheet.x_maintenance_request_worksheet_template_1_ir_model_fields_6
+msgid "Last Updated by"
+msgstr ""
+
+#. module: maintenance_worksheet
+#: model:ir.model.fields,field_description:maintenance_worksheet.x_maintenance_request_worksheet_template_1_ir_model_fields_5
+msgid "Last Updated on"
+msgstr ""
+
+#. module: maintenance_worksheet
 #: model:ir.model,name:maintenance_worksheet.model_maintenance_request
+#: model:ir.model.fields,field_description:maintenance_worksheet.x_maintenance_request_worksheet_template_1_ir_model_fields_8
 msgid "Maintenance Request"
 msgstr ""
 
@@ -80,6 +108,11 @@ msgstr ""
 #. module: maintenance_worksheet
 #: model_terms:ir.ui.view,arch_db:maintenance_worksheet.worksheet_page
 msgid "Maintenance Request:"
+msgstr ""
+
+#. module: maintenance_worksheet
+#: model:ir.model.fields,field_description:maintenance_worksheet.x_maintenance_request_worksheet_template_1_ir_model_fields_9
+msgid "Name"
 msgstr ""
 
 #. module: maintenance_worksheet

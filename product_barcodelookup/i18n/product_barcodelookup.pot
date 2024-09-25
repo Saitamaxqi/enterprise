@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:45+0000\n"
-"PO-Revision-Date: 2024-07-16 08:45+0000\n"
+"POT-Creation-Date: 2024-09-25 09:28+0000\n"
+"PO-Revision-Date: 2024-09-25 09:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -56,11 +56,51 @@ msgid "Product Variant"
 msgstr ""
 
 #. module: product_barcodelookup
+#: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_8
+msgid "age group"
+msgstr ""
+
+#. module: product_barcodelookup
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.res_config_settings_view_form
 msgid "barcodelookup.com"
 msgstr ""
 
 #. module: product_barcodelookup
+#: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_6
+msgid "brand"
+msgstr ""
+
+#. module: product_barcodelookup
+#: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_1
+msgid "color"
+msgstr ""
+
+#. module: product_barcodelookup
 #: model_terms:ir.ui.view,arch_db:product_barcodelookup.res_config_settings_view_form
 msgid "e.g. d7vctmiv2rwgenebha8bxq7irooudn"
+msgstr ""
+
+#. module: product_barcodelookup
+#: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_2
+msgid "gender"
+msgstr ""
+
+#. module: product_barcodelookup
+#: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_5
+msgid "manufacturer"
+msgstr ""
+
+#. module: product_barcodelookup
+#: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_3
+msgid "material"
+msgstr ""
+
+#. module: product_barcodelookup
+#: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_4
+msgid "pattern"
+msgstr ""
+
+#. module: product_barcodelookup
+#: model:product.attribute,name:product_barcodelookup.product_attribute_lookup_7
+msgid "size"
 msgstr ""

@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:43+0000\n"
-"PO-Revision-Date: 2024-07-16 08:43+0000\n"
+"POT-Creation-Date: 2024-09-25 09:25+0000\n"
+"PO-Revision-Date: 2024-09-25 09:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,13 +18,6 @@ msgstr ""
 #. module: hr_appraisal_survey
 #: model_terms:ir.ui.view,arch_db:hr_appraisal_survey.hr_appraisal_survey_page_statistics_header
 msgid "- Feedback requested by -"
-msgstr ""
-
-#. module: hr_appraisal_survey
-#: model_terms:survey.survey,description:hr_appraisal_survey.appraisal_360_feedback_template
-msgid ""
-"360 Degree Feedback is a system or process in which managers will ask feedback from the people who work around the employee.\n"
-"            This typically includes the employee's manager, peers, and direct reports."
 msgstr ""
 
 #. module: hr_appraisal_survey
@@ -134,7 +127,7 @@ msgstr ""
 
 #. module: hr_appraisal_survey
 #: model:survey.question.answer,value:hr_appraisal_survey.y_360_5_6
-msgid "Admit my mistakes"
+msgid "Admit his/her mistakes"
 msgstr ""
 
 #. module: hr_appraisal_survey
@@ -384,7 +377,7 @@ msgstr ""
 
 #. module: hr_appraisal_survey
 #: model:survey.question,title:hr_appraisal_survey.appraisal_360_10
-msgid "Do you have any comment to tell me and help me improve?"
+msgid "Do you have any comment to tell him/her in order to improve?"
 msgstr ""
 
 #. module: hr_appraisal_survey
@@ -446,7 +439,7 @@ msgstr ""
 
 #. module: hr_appraisal_survey
 #: model:survey.question,title:hr_appraisal_survey.appraisal_360_5
-msgid "How do you feel to work with me? Do I ... "
+msgid "How does it feel to work with the employee? Is he/she ... "
 msgstr ""
 
 #. module: hr_appraisal_survey
@@ -532,7 +525,7 @@ msgstr ""
 
 #. module: hr_appraisal_survey
 #: model:survey.question.answer,value:hr_appraisal_survey.y_360_5_1
-msgid "Listen well to others"
+msgid "Listening well to others"
 msgstr ""
 
 #. module: hr_appraisal_survey
@@ -543,6 +536,11 @@ msgstr ""
 #. module: hr_appraisal_survey
 #: model:ir.model.fields,field_description:hr_appraisal_survey.field_appraisal_ask_feedback__template_id
 msgid "Mail Template"
+msgstr ""
+
+#. module: hr_appraisal_survey
+#: model_terms:ir.ui.view,arch_db:hr_appraisal_survey.hr_appraisal_view_form
+msgid "Mark as Done"
 msgstr ""
 
 #. module: hr_appraisal_survey
@@ -806,6 +804,11 @@ msgid "Technical skills regarding to the job requirements"
 msgstr ""
 
 #. module: hr_appraisal_survey
+#: model_terms:survey.survey,description_done:hr_appraisal_survey.appraisal_360_feedback_template
+msgid "Thanks a lot for your time and participation !"
+msgstr ""
+
+#. module: hr_appraisal_survey
 #: model_terms:survey.question,description:hr_appraisal_survey.appraisal_3
 msgid ""
 "The appraiser should rate the employee’s major work accomplishments and "
@@ -830,20 +833,19 @@ msgid ""
 msgstr ""
 
 #. module: hr_appraisal_survey
+#. odoo-python
+#: code:addons/hr_appraisal_survey/wizard/appraisal_ask_feedback.py:0
+msgid ""
+"The following employees do not have any email: \n"
+"%s"
+msgstr ""
+
+#. module: hr_appraisal_survey
 #: model_terms:survey.question,description:hr_appraisal_survey.appraisal_1
 msgid ""
 "The supervisor synthesizes and integrates all input into the completed "
 "appraisal. The motivation of the evaluation is explained in the ad hoc "
 "fields."
-msgstr ""
-
-#. module: hr_appraisal_survey
-#. odoo-python
-#: code:addons/hr_appraisal_survey/wizard/appraisal_ask_feedback.py:0
-msgid ""
-"This employee doesn't have any mail address registered and will not receive any email. \n"
-"The following employees do not have any email: \n"
-"%s"
 msgstr ""
 
 #. module: hr_appraisal_survey
@@ -905,23 +907,32 @@ msgid "We're colleagues, in different teams."
 msgstr ""
 
 #. module: hr_appraisal_survey
+#: model_terms:survey.survey,description:hr_appraisal_survey.appraisal_360_feedback_template
+msgid ""
+"Welcome to this survey, <br><br>\n"
+"                You've been asked to participate to a 360 Feedback. It's a small survey that will allow managers to get more feedback about their employee. \n"
+"                By working with him/her, you're the best to share your thoughts and explain how your collaboration was.<br><br>\n"
+"                Your answers will be viewed only by the managers. This is not an anonymous survey."
+msgstr ""
+
+#. module: hr_appraisal_survey
 #: model:survey.question,title:hr_appraisal_survey.appraisal_360_6
-msgid "What should I do in order to improve on my day-to-day job?"
+msgid "What should he/she does in order to improve on his/her day-to-day job?"
 msgstr ""
 
 #. module: hr_appraisal_survey
 #: model:survey.question,title:hr_appraisal_survey.appraisal_360_7
-msgid "What's my greatest strength?"
+msgid "What's his/her greatest strength?"
 msgstr ""
 
 #. module: hr_appraisal_survey
 #: model:survey.question,title:hr_appraisal_survey.appraisal_360_8
-msgid "What's my greatest weakness?"
+msgid "What's his/her greatest weakness?"
 msgstr ""
 
 #. module: hr_appraisal_survey
 #: model:survey.question,title:hr_appraisal_survey.appraisal_360_3
-msgid "What's the relation between us?"
+msgid "What's the relation between the employee and you?"
 msgstr ""
 
 #. module: hr_appraisal_survey

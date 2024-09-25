@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:44+0000\n"
-"PO-Revision-Date: 2024-07-16 08:44+0000\n"
+"POT-Creation-Date: 2024-09-25 09:26+0000\n"
+"PO-Revision-Date: 2024-09-25 09:26+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -47,6 +47,11 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_res_config_settings__documents_account_settings
 msgid "Accounting "
+msgstr ""
+
+#. module: documents_account
+#: model:ir.model,name:documents_account.model_account_report
+msgid "Accounting Report"
 msgstr ""
 
 #. module: documents_account
@@ -120,6 +125,12 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_res_config_settings
 msgid "Config Settings"
+msgstr ""
+
+#. module: documents_account
+#. odoo-python
+#: code:addons/documents_account/models/account_report.py:0
+msgid "Copy to Documents"
 msgstr ""
 
 #. module: documents_account
@@ -198,6 +209,12 @@ msgid "Documents Account Settings"
 msgstr ""
 
 #. module: documents_account
+#. odoo-python
+#: code:addons/documents_account/models/account_report.py:0
+msgid "Export"
+msgstr ""
+
+#. module: documents_account
 #: model:ir.model,name:documents_account.model_account_reports_export_wizard_format
 msgid "Export format for accounting's reports"
 msgstr ""
@@ -231,7 +248,6 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_bank_statement_line__has_documents
 #: model:ir.model.fields,field_description:documents_account.field_account_move__has_documents
-#: model:ir.model.fields,field_description:documents_account.field_account_payment__has_documents
 msgid "Has Documents"
 msgstr ""
 
@@ -332,7 +348,6 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_bank_statement_line__suspense_statement_line_id
 #: model:ir.model.fields,field_description:documents_account.field_account_move__suspense_statement_line_id
-#: model:ir.model.fields,field_description:documents_account.field_account_payment__suspense_statement_line_id
 msgid "Request document from a bank statement line"
 msgstr ""
 
@@ -387,10 +402,9 @@ msgid "Workspace"
 msgstr ""
 
 #. module: documents_account
-#. odoo-javascript
-#: code:addons/documents_account/static/src/js/tour.js:0
+#: model_terms:web_tour.tour,rainbow_man_message:documents_account.documents_account_tour
 msgid ""
-"Wow... 6 documents processed in a few seconds, You're good.<br/>The tour is "
+"Wow... 6 documents processed in a few seconds, You're good.<br>The tour is "
 "complete. Try uploading your own documents now."
 msgstr ""
 

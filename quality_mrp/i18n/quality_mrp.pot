@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:43+0000\n"
-"PO-Revision-Date: 2024-07-16 08:43+0000\n"
+"POT-Creation-Date: 2024-09-25 09:25+0000\n"
+"PO-Revision-Date: 2024-09-25 09:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -117,6 +117,14 @@ msgid "Stock Move"
 msgstr ""
 
 #. module: quality_mrp
+#. odoo-python
+#: code:addons/quality_mrp/models/quality.py:0
+msgid ""
+"The Quantity quality check type is not possible with manufacturing operation"
+" types."
+msgstr ""
+
+#. module: quality_mrp
 #: model:ir.model,name:quality_mrp.model_quality_check_on_demand
 msgid "Wizard to select on-demand quality check points"
 msgstr ""
@@ -133,12 +141,10 @@ msgstr ""
 #. module: quality_mrp
 #. odoo-python
 #: code:addons/quality_mrp/models/mrp_production.py:0
-#, python-format
 msgid ""
 "You cannot perform a quality check if the quantity producing is zero. Please"
 " set the production quantity first."
 msgstr ""
-
 
 #. module: quality_mrp
 #. odoo-python

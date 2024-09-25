@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:45+0000\n"
-"PO-Revision-Date: 2024-07-16 08:45+0000\n"
+"POT-Creation-Date: 2024-09-25 09:28+0000\n"
+"PO-Revision-Date: 2024-09-25 09:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -128,8 +128,12 @@ msgstr ""
 #: model:ir.model.fields,help:sale_planning.field_product_template__planning_enabled
 msgid ""
 "If enabled, a shift will automatically be generated for the selected role "
-"when confirming the Sales Order. Only employees with this role will "
-"automatically be assigned shifts for Sales Orders containing this service."
+"when confirming the Sales Order.                 With the 'auto plan' "
+"feature, only employees with this role will be automatically assigned shifts"
+" for Sales Orders containing this service.                 The system will "
+"consider employee availability and the remaining time to be planned."
+"                 You can also manually schedule open shifts for your Sales "
+"Order or assign them to any employee you prefer."
 msgstr ""
 
 #. module: sale_planning
@@ -152,6 +156,18 @@ msgstr ""
 msgid ""
 "Only slots linked to a Sales Order with a plannable service can be "
 "unscheduled."
+msgstr ""
+
+#. module: sale_planning
+#. odoo-javascript
+#: code:addons/sale_planning/static/src/views/planning_hooks.js:0
+msgid "Open shifts and sales orders assigned"
+msgstr ""
+
+#. module: sale_planning
+#. odoo-javascript
+#: code:addons/sale_planning/static/src/views/planning_hooks.js:0
+msgid "Open shifts and sales orders unscheduled"
 msgstr ""
 
 #. module: sale_planning
@@ -281,20 +297,6 @@ msgstr ""
 
 #. module: sale_planning
 #. odoo-javascript
-#: code:addons/sale_planning/static/src/views/planning_hooks.js:0
-msgid "The open shifts and sales orders have been successfully assigned."
-msgstr ""
-
-#. module: sale_planning
-#. odoo-javascript
-#: code:addons/sale_planning/static/src/views/planning_hooks.js:0
-msgid ""
-"The open shifts and sales orders that had been planned have successfully "
-"been unscheduled."
-msgstr ""
-
-#. module: sale_planning
-#. odoo-javascript
 #: code:addons/sale_planning/static/src/views/sale_planning_gantt/sale_planning_gantt_renderer.js:0
 msgid ""
 "There are no hours left to plan, or there are no resources available at the "
@@ -321,6 +323,7 @@ msgid ""
 msgstr ""
 
 #. module: sale_planning
+#: model_terms:ir.ui.view,arch_db:sale_planning.planning_slot_view_gantt_inherit_sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.planning_view_form_in_gantt_inherit_sale_planning
 msgid "Unschedule"
 msgstr ""
@@ -340,6 +343,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/sale_planning/models/planning_slot.py:0
 msgid "You are attempting to create a slot for a cancelled sales order."
+msgstr ""
+
+#. module: sale_planning
+#. odoo-python
+#: code:addons/sale_planning/models/sale_order.py:0
+msgid ""
+"You cannot update the company for sales order %(order_name)s as it's linked to shifts in another company.\n"
+"Please transfer shifts %(slots_names)s to the destination company first."
 msgstr ""
 
 #. module: sale_planning

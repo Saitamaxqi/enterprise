@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:45+0000\n"
-"PO-Revision-Date: 2024-07-16 08:45+0000\n"
+"POT-Creation-Date: 2024-09-25 09:27+0000\n"
+"PO-Revision-Date: 2024-09-25 09:27+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,11 +18,11 @@ msgstr ""
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_account_bank_statement_line__payslip_count
 #: model:ir.model.fields,field_description:hr_payroll_account.field_account_move__payslip_count
-#: model:ir.model.fields,field_description:hr_payroll_account.field_account_payment__payslip_count
 msgid "# of Payslips"
 msgstr ""
 
 #. module: hr_payroll_account
+#: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_run_view_form
 #: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_view_form
 msgid ""
 "<span class=\"o_stat_text\" invisible=\"move_state != 'draft'\">Journal Entry <br/>(Draft)</span>\n"
@@ -78,6 +78,7 @@ msgstr ""
 
 #. module: hr_payroll_account
 #: model:ir.actions.act_window,name:hr_payroll_account.action_res_partner_bank_account_form
+#: model:ir.model,name:hr_payroll_account.model_res_partner_bank
 #: model:ir.ui.menu,name:hr_payroll_account.menu_hr_employee_bank_account
 msgid "Bank Accounts"
 msgstr ""
@@ -186,6 +187,12 @@ msgid "HR Payroll Payment Report Wizard"
 msgstr ""
 
 #. module: hr_payroll_account
+#: model:ir.model.fields,field_description:hr_payroll_account.field_account_setup_bank_manual_config__has_alt_bank_account
+#: model:ir.model.fields,field_description:hr_payroll_account.field_res_partner_bank__has_alt_bank_account
+msgid "Has Alt Bank Account"
+msgstr ""
+
+#. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payroll_structure.py:0
 msgid ""
@@ -208,6 +215,7 @@ msgstr ""
 #. module: hr_payroll_account
 #. odoo-python
 #: code:addons/hr_payroll_account/models/hr_payslip.py:0
+#: code:addons/hr_payroll_account/models/hr_payslip_run.py:0
 #: model:ir.model,name:hr_payroll_account.model_account_move
 msgid "Journal Entry"
 msgstr ""
@@ -218,9 +226,13 @@ msgid "Keep empty to use the period of the validation(Payslip) date."
 msgstr ""
 
 #. module: hr_payroll_account
-#. odoo-python
-#: code:addons/hr_payroll_account/models/account_chart_template.py:0
-msgid "No existing account for code %s"
+#: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payslip_run__move_id
+msgid "Move"
+msgstr ""
+
+#. module: hr_payroll_account
+#: model:ir.model.fields,field_description:hr_payroll_account.field_hr_payslip_run__move_state
+msgid "Move State"
 msgstr ""
 
 #. module: hr_payroll_account
@@ -241,6 +253,12 @@ msgid "One of the payroll structures has no account journal defined on it."
 msgstr ""
 
 #. module: hr_payroll_account
+#: model:ir.model,name:hr_payroll_account.model_account_payment_register
+#: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_view_form
+msgid "Pay"
+msgstr ""
+
+#. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payslip
 msgid "Pay Slip"
 msgstr ""
@@ -257,6 +275,11 @@ msgid "Payments"
 msgstr ""
 
 #. module: hr_payroll_account
+#: model:ir.model,name:hr_payroll_account.model_hr_payslip_run
+msgid "Payslip Batches"
+msgstr ""
+
+#. module: hr_payroll_account
 #: model:ir.model,name:hr_payroll_account.model_hr_payslip_line
 msgid "Payslip Line"
 msgstr ""
@@ -264,14 +287,7 @@ msgstr ""
 #. module: hr_payroll_account
 #: model:ir.model.fields,field_description:hr_payroll_account.field_account_bank_statement_line__payslip_ids
 #: model:ir.model.fields,field_description:hr_payroll_account.field_account_move__payslip_ids
-#: model:ir.model.fields,field_description:hr_payroll_account.field_account_payment__payslip_ids
 msgid "Payslips"
-msgstr ""
-
-#. module: hr_payroll_account
-#: model:ir.model,name:hr_payroll_account.model_account_payment_register
-#: model_terms:ir.ui.view,arch_db:hr_payroll_account.hr_payslip_view_form
-msgid "Register Payment"
 msgstr ""
 
 #. module: hr_payroll_account
@@ -351,6 +367,23 @@ msgid ""
 " rule at the accounting level to explicitly display the value of this rule "
 "in the accounting. For example, if you want to display the value of your "
 "representation fees, you can check this field."
+msgstr ""
+
+#. module: hr_payroll_account
+#: model_terms:ir.ui.view,arch_db:hr_payroll_account.view_partner_bank_form_inherit_hr_payroll_account
+msgid "This will replace the employee existing bank account."
+msgstr ""
+
+#. module: hr_payroll_account
+#. odoo-python
+#: code:addons/hr_payroll_account/models/hr_payslip.py:0
+msgid "You can only register payment for posted journal entries."
+msgstr ""
+
+#. module: hr_payroll_account
+#. odoo-python
+#: code:addons/hr_payroll_account/models/hr_payslip.py:0
+msgid "You can only register payments for unpaid documents."
 msgstr ""
 
 #. module: hr_payroll_account

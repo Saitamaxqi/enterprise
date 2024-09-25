@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:43+0000\n"
-"PO-Revision-Date: 2024-07-16 08:43+0000\n"
+"POT-Creation-Date: 2024-09-25 09:25+0000\n"
+"PO-Revision-Date: 2024-09-25 09:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -98,32 +98,15 @@ msgid "Camera"
 msgstr ""
 
 #. module: iot
-#: model_terms:ir.ui.view,arch_db:iot.view_select_printers_wizard
-msgid "Cancel"
-msgstr ""
-
-#. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/iot_websocket_service.js:0
-msgid "Check IoT box connection. Try restarting if needed."
+msgid "Check IoT Box connection. Try restarting if needed."
 msgstr ""
 
 #. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/views/iot_device_form.js:0
 msgid "Check if the device is still connected"
-msgstr ""
-
-#. module: iot
-#: model:ir.actions.client,name:iot.action_iot_delete_linked_devices_menu
-#: model:ir.ui.menu,name:iot.view_iot_selected_printer_local_action
-msgid "Clear Selected Devices"
-msgstr ""
-
-#. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
-msgid "Clear automatic reports"
 msgstr ""
 
 #. module: iot
@@ -166,9 +149,13 @@ msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__company_id
-#: model:ir.model.fields,field_description:iot.field_iot_channel__company_id
 #: model:ir.model.fields,field_description:iot.field_iot_device__company_id
 msgid "Company"
+msgstr ""
+
+#. module: iot
+#: model:ir.ui.menu,name:iot.view_iot_selected_printer_local_action
+msgid "Configuration"
 msgstr ""
 
 #. module: iot
@@ -210,7 +197,6 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__create_uid
 #: model:ir.model.fields,field_description:iot.field_iot_box__create_uid
-#: model:ir.model.fields,field_description:iot.field_iot_channel__create_uid
 #: model:ir.model.fields,field_description:iot.field_iot_device__create_uid
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__create_uid
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__create_uid
@@ -220,7 +206,6 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__create_date
 #: model:ir.model.fields,field_description:iot.field_iot_box__create_date
-#: model:ir.model.fields,field_description:iot.field_iot_channel__create_date
 #: model:ir.model.fields,field_description:iot.field_iot_device__create_date
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__create_date
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__create_date
@@ -271,7 +256,6 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__display_name
 #: model:ir.model.fields,field_description:iot.field_iot_box__display_name
-#: model:ir.model.fields,field_description:iot.field_iot_channel__display_name
 #: model:ir.model.fields,field_description:iot.field_iot_device__display_name
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__display_name
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__display_name
@@ -303,6 +287,12 @@ msgstr ""
 
 #. module: iot
 #. odoo-javascript
+#: code:addons/iot/static/src/iot_report_action.js:0
+msgid "Failed to send to printer."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
 #: code:addons/iot/static/src/iot_connection_error_dialog.xml:0
 msgid "Firefox only: Click on Confirm Security Exception"
 msgstr ""
@@ -319,13 +309,12 @@ msgstr ""
 
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__connection__hdmi
-msgid "Hdmi"
+msgid "HDMI"
 msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__id
 #: model:ir.model.fields,field_description:iot.field_iot_box__id
-#: model:ir.model.fields,field_description:iot.field_iot_channel__id
 #: model:ir.model.fields,field_description:iot.field_iot_device__id
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__id
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__id
@@ -398,13 +387,13 @@ msgid "IoT Devices"
 msgstr ""
 
 #. module: iot
-#: model:ir.model.fields,field_description:iot.field_iot_channel__is_open
-msgid "Is Open"
+#: model:ir.model.fields,field_description:iot.field_iot_device__is_scanner
+msgid "Is Scanner"
 msgstr ""
 
 #. module: iot
-#: model:ir.model.fields,field_description:iot.field_iot_device__is_scanner
-msgid "Is Scanner"
+#: model:ir.model.fields,field_description:iot.field_iot_box__is_websocket_active
+msgid "Is Websocket active?"
 msgstr ""
 
 #. module: iot
@@ -431,7 +420,6 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__write_uid
 #: model:ir.model.fields,field_description:iot.field_iot_box__write_uid
-#: model:ir.model.fields,field_description:iot.field_iot_channel__write_uid
 #: model:ir.model.fields,field_description:iot.field_iot_device__write_uid
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__write_uid
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__write_uid
@@ -441,7 +429,6 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_add_iot_box__write_date
 #: model:ir.model.fields,field_description:iot.field_iot_box__write_date
-#: model:ir.model.fields,field_description:iot.field_iot_channel__write_date
 #: model:ir.model.fields,field_description:iot.field_iot_device__write_date
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__write_date
 #: model:ir.model.fields,field_description:iot.field_select_printers_wizard__write_date
@@ -481,7 +468,6 @@ msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_box__name
-#: model:ir.model.fields,field_description:iot.field_iot_channel__name
 #: model:ir.model.fields,field_description:iot.field_iot_device__name
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__name
 msgid "Name"
@@ -493,14 +479,25 @@ msgid "Network"
 msgstr ""
 
 #. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/views/add_iot_box_form_controller.js:0
+msgid "New IoT Box connected!"
+msgstr ""
+
+#. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "No IoT Box found!"
 msgstr ""
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/select_printer_form.js:0
-#, python-format
+#: code:addons/iot/static/src/views/add_iot_box_form_controller.js:0
+msgid "No new IoT Box found."
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/select_printer_wizard.js:0
 msgid "No printer selected"
 msgstr ""
 
@@ -519,6 +516,14 @@ msgstr ""
 #. module: iot
 #: model:ir.model.fields.selection,name:iot.selection__iot_device__subtype__office_printer
 msgid "Office Printer"
+msgstr ""
+
+#. module: iot
+#. odoo-python
+#: code:addons/iot/models/ir_actions_report.py:0
+msgid ""
+"One of the printer used to print document have been removed. Please retry "
+"the operation to choose new printers to print."
 msgstr ""
 
 #. module: iot
@@ -556,6 +561,12 @@ msgid "Please check if the IoT Box is still connected."
 msgstr ""
 
 #. module: iot
+#. odoo-python
+#: code:addons/iot/wizard/add_iot_box.py:0
+msgid "Please enter a pairing code."
+msgstr ""
+
+#. module: iot
 #. odoo-javascript
 #: code:addons/iot/static/src/view_widgets/iot_restart_odoo.js:0
 msgid "Please wait"
@@ -582,6 +593,12 @@ msgid "Printers"
 msgstr ""
 
 #. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/iot_websocket_service.js:0
+msgid "Printing operation completed on printer %s"
+msgstr ""
+
+#. module: iot
 #: model:ir.model,name:iot.model_publisher_warranty_contract
 msgid "Publisher Warranty Contract For IoT Box"
 msgstr ""
@@ -603,7 +620,21 @@ msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_device__report_ids
+#: model:ir.ui.menu,name:iot.iot_settings_menu_action
 msgid "Reports"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
+msgid "Reports with linked printers"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
+#: model:ir.ui.menu,name:iot.iot_clear_selected_devices
+msgid "Reset Linked Printers"
 msgstr ""
 
 #. module: iot
@@ -636,14 +667,20 @@ msgstr ""
 
 #. module: iot
 #. odoo-javascript
-#: code:addons/iot/static/src/select_printer_form.js:0
-#, python-format
+#: code:addons/iot/static/src/select_printer_wizard.js:0
 msgid "Select at least one printer"
 msgstr ""
 
 #. module: iot
 #: model:ir.model,name:iot.model_select_printers_wizard
 msgid "Selection of printers"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/iot_report_action.js:0
+#: code:addons/iot/static/src/iot_websocket_service.js:0
+msgid "Sending to printer %s..."
 msgstr ""
 
 #. module: iot
@@ -673,13 +710,13 @@ msgid "Success"
 msgstr ""
 
 #. module: iot
-#: model:ir.model,name:iot.model_iot_channel
-msgid "The Websocket Iot Channel"
+#: model_terms:ir.ui.view,arch_db:iot.iot_box_view_form
+msgid "Technical Information"
 msgstr ""
 
 #. module: iot
-#: model:ir.model.constraint,message:iot.constraint_iot_channel_unique_name
-msgid "The channel name must be unique"
+#: model:ir.model,name:iot.model_iot_channel
+msgid "The Websocket Iot Channel"
 msgstr ""
 
 #. module: iot
@@ -739,14 +776,20 @@ msgid "USB"
 msgstr ""
 
 #. module: iot
-#. odoo-javascript
-#: code:addons/iot/static/src/client_action/delete_local_storage.xml:0
-msgid "Unlink"
+#. odoo-python
+#: code:addons/iot/wizard/add_iot_box.py:0
+msgid "Using Pairing Code to connect..."
 msgstr ""
 
 #. module: iot
 #: model:ir.model.fields,field_description:iot.field_iot_keyboard_layout__variant
 msgid "Variant"
+msgstr ""
+
+#. module: iot
+#. odoo-javascript
+#: code:addons/iot/static/src/views/add_iot_box_form_controller.js:0
+msgid "Waiting for a new IoT Box..."
 msgstr ""
 
 #. module: iot
@@ -773,6 +816,16 @@ msgid "or wifi"
 msgstr ""
 
 #. module: iot
+#: model:ir.actions.client,name:iot.action_iot_delete_linked_devices_menu
+msgid "reset.linked.printers"
+msgstr ""
+
+#. module: iot
 #: model_terms:ir.actions.act_window,help:iot.iot_box_action
 msgid "to add an IoT Box."
+msgstr ""
+
+#. module: iot
+#: model:ir.model,name:iot.model_ir_websocket
+msgid "websocket message handling"
 msgstr ""

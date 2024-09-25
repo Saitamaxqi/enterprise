@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:46+0000\n"
-"PO-Revision-Date: 2024-07-16 08:46+0000\n"
+"POT-Creation-Date: 2024-09-25 09:28+0000\n"
+"PO-Revision-Date: 2024-09-25 09:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -107,6 +107,17 @@ msgid "Failed to post the comment: “%(error_description)s”"
 msgstr ""
 
 #. module: social_linkedin
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post__has_linkedin_account
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post_template__has_linkedin_account
+msgid "Has LinkedIn Account"
+msgstr ""
+
+#. module: social_linkedin
+#: model_terms:ir.ui.view,arch_db:social_linkedin.social_post_template_view_form
+msgid "Images"
+msgstr ""
+
+#. module: social_linkedin
 #. odoo-javascript
 #: code:addons/social_linkedin/static/src/xml/social_linkedin_templates.xml:0
 msgid "Likes"
@@ -115,6 +126,7 @@ msgstr ""
 #. module: social_linkedin
 #: model:ir.model.fields.selection,name:social_linkedin.selection__social_media__media_type__linkedin
 #: model:social.media,name:social_linkedin.social_media_linkedin
+#: model_terms:ir.ui.view,arch_db:social_linkedin.social_post_template_view_form
 msgid "LinkedIn"
 msgstr ""
 
@@ -137,8 +149,20 @@ msgid "LinkedIn Comments"
 msgstr ""
 
 #. module: social_linkedin
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post__linkedin_image_ids
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post_template__linkedin_image_ids
+msgid "LinkedIn Images"
+msgstr ""
+
+#. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_stream_post__linkedin_likes_count
 msgid "LinkedIn Likes"
+msgstr ""
+
+#. module: social_linkedin
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post__linkedin_message
+#: model:ir.model.fields,field_description:social_linkedin.field_social_post_template__linkedin_message
+msgid "LinkedIn Message"
 msgstr ""
 
 #. module: social_linkedin
@@ -191,6 +215,18 @@ msgstr ""
 #. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_media__media_type
 msgid "Media Type"
+msgstr ""
+
+#. module: social_linkedin
+#: model_terms:ir.ui.view,arch_db:social_linkedin.social_post_template_view_form
+msgid "Message"
+msgstr ""
+
+#. module: social_linkedin
+#. odoo-python
+#: code:addons/social_linkedin/models/social_post_template.py:0
+msgid ""
+"Please specify either a LinkedIn Message or upload some LinkedIn Images."
 msgstr ""
 
 #. module: social_linkedin
@@ -306,6 +342,12 @@ msgstr ""
 #: code:addons/social_linkedin/models/social_account.py:0
 msgid ""
 "We could not upload your image, try reducing its size and posting it again."
+msgstr ""
+
+#. module: social_linkedin
+#: model:ir.model.fields,help:social_linkedin.field_social_post__linkedin_image_ids
+#: model:ir.model.fields,help:social_linkedin.field_social_post_template__linkedin_image_ids
+msgid "Will attach images to your posts."
 msgstr ""
 
 #. module: social_linkedin

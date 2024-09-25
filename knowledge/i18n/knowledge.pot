@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:43+0000\n"
-"PO-Revision-Date: 2024-07-16 08:43+0000\n"
+"POT-Creation-Date: 2024-09-25 09:24+0000\n"
+"PO-Revision-Date: 2024-09-25 09:24+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -578,17 +578,17 @@ msgid ""
 msgstr ""
 
 #. module: knowledge
-#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_kanban
-msgid ""
-"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove from favorites\"/>\n"
-"                                        <i invisible=\"is_user_favorite\" class=\"fa fa-star-o\" title=\"Add to favorites\"/>"
-msgstr ""
-
-#. module: knowledge
 #: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_kanban_items
 msgid ""
 "<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove from favorites\"/>\n"
 "                                    <i invisible=\"is_user_favorite\" class=\"fa fa-star-o\" title=\"Add to favorites\"/>"
+msgstr ""
+
+#. module: knowledge
+#: model_terms:ir.ui.view,arch_db:knowledge.knowledge_article_view_kanban
+msgid ""
+"<i invisible=\"not is_user_favorite\" class=\"fa fa-star\" title=\"Remove from favorites\"/>\n"
+"                                <i invisible=\"is_user_favorite\" class=\"fa fa-star-o\" title=\"Add to favorites\"/>"
 msgstr ""
 
 #. module: knowledge
@@ -1909,6 +1909,7 @@ msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
+#: code:addons/knowledge/static/src/editor/article_plugin/article_plugin.js:0
 #: code:addons/knowledge/static/src/js/wysiwyg.js:0
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_favorite__article_id
 #: model:ir.model.fields,field_description:knowledge.field_knowledge_article_member__article_id
@@ -2357,7 +2358,7 @@ msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
-#: code:addons/knowledge/static/src/components/knowledge_cover/knowledge_cover_dialog.js:0
+#: code:addons/knowledge/static/src/components/knowledge_cover/knowledge_cover_dialog.xml:0
 msgid "Choose a nice cover"
 msgstr ""
 
@@ -2763,6 +2764,13 @@ msgid "Desyncronized with parents"
 msgstr ""
 
 #. module: knowledge
+#: model_terms:digest.tip,tip_description:knowledge.digest_tip_knowledge_0
+msgid ""
+"Did you know that access rights can be defined per user on any Knowledge "
+"Article?"
+msgstr ""
+
+#. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/article_template_picker_dialog/article_template_picker_dialog.xml:0
 #: code:addons/knowledge/static/src/components/behaviors/excalidraw_behavior_dialog/draw_behavior_dialog.xml:0
@@ -2855,6 +2863,7 @@ msgstr ""
 #. module: knowledge
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/behaviors/view_link_behavior/view_link_behavior_popover.xml:0
+#: code:addons/knowledge/static/src/components/behaviors/view_link_behavior_dialog/view_link_behavior_dialog.xml:0
 msgid "Edit Link"
 msgstr ""
 
@@ -2901,7 +2910,7 @@ msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
-#: code:addons/knowledge/static/src/components/video_selector_dialog/video_selector_dialog.js:0
+#: code:addons/knowledge/static/src/components/video_selector_dialog/video_selector_dialog.xml:0
 msgid "Embed a video"
 msgstr ""
 
@@ -3196,6 +3205,12 @@ msgid "Home"
 msgstr ""
 
 #. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
+msgid "Hours Display"
+msgstr ""
+
+#. module: knowledge
 #: model:knowledge.article,template_name:knowledge.knowledge_article_template_product_catalog_house_cielo
 msgid "House Model \"Cielo\""
 msgstr ""
@@ -3419,6 +3434,7 @@ msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
+#: code:addons/knowledge/static/src/editor/article_plugin/article_plugin.js:0
 #: code:addons/knowledge/static/src/js/wysiwyg.js:0
 msgid "Insert Link"
 msgstr ""
@@ -3485,6 +3501,7 @@ msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
+#: code:addons/knowledge/static/src/editor/article_plugin/article_plugin.js:0
 #: code:addons/knowledge/static/src/js/wysiwyg.js:0
 msgid "Insert an Article shortcut"
 msgstr ""
@@ -3847,6 +3864,7 @@ msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
+#: code:addons/knowledge/static/src/editor/article_plugin/article_plugin.js:0
 #: code:addons/knowledge/static/src/js/wysiwyg.js:0
 msgid "Link an Article"
 msgstr ""
@@ -4063,7 +4081,7 @@ msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
-#: code:addons/knowledge/static/src/components/move_article_dialog/move_article_dialog.js:0
+#: code:addons/knowledge/static/src/components/move_article_dialog/move_article_dialog.xml:0
 msgid "Move an Article"
 msgstr ""
 
@@ -5044,7 +5062,7 @@ msgstr ""
 
 #. module: knowledge
 #. odoo-javascript
-#: code:addons/knowledge/static/src/components/article_template_picker_dialog/article_template_picker_dialog.js:0
+#: code:addons/knowledge/static/src/components/article_template_picker_dialog/article_template_picker_dialog.xml:0
 msgid "Select a Template"
 msgstr ""
 
@@ -5118,6 +5136,12 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/topbar/topbar.xml:0
 msgid "Show Properties"
+msgstr ""
+
+#. module: knowledge
+#. odoo-javascript
+#: code:addons/knowledge/static/src/components/item_calendar_props_dialog/item_calendar_props_dialog.xml:0
+msgid "Show Weekends?"
 msgstr ""
 
 #. module: knowledge
@@ -5298,6 +5322,13 @@ msgstr ""
 msgid ""
 "Start typing to continue with an empty page or pick an option below to get "
 "started."
+msgstr ""
+
+#. module: knowledge
+#: model_terms:digest.tip,tip_description:knowledge.digest_tip_knowledge_2
+msgid ""
+"Start working together on any Knowledge Article by sharing your article with"
+" others."
 msgstr ""
 
 #. module: knowledge
@@ -5591,6 +5622,24 @@ msgid "Tiny House Catalog"
 msgstr ""
 
 #. module: knowledge
+#: model:digest.tip,name:knowledge.digest_tip_knowledge_0
+#: model_terms:digest.tip,tip_description:knowledge.digest_tip_knowledge_0
+msgid "Tip: A Knowledge well kept"
+msgstr ""
+
+#. module: knowledge
+#: model:digest.tip,name:knowledge.digest_tip_knowledge_2
+#: model_terms:digest.tip,tip_description:knowledge.digest_tip_knowledge_2
+msgid "Tip: Be on the same page"
+msgstr ""
+
+#. module: knowledge
+#: model:digest.tip,name:knowledge.digest_tip_knowledge_1
+#: model_terms:digest.tip,tip_description:knowledge.digest_tip_knowledge_1
+msgid "Tip: Use Clipboards to easily inject repetitive content"
+msgstr ""
+
+#. module: knowledge
 #: model_terms:knowledge.article,template_body:knowledge.knowledge_article_template_sales_playbook
 msgid "Tips to close more deals"
 msgstr ""
@@ -5719,6 +5768,11 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/knowledge/static/src/components/behaviors/file_behavior/file_behavior.xml:0
 msgid "Use as Attachment"
+msgstr ""
+
+#. module: knowledge
+#: model_terms:digest.tip,tip_description:knowledge.digest_tip_knowledge_1
+msgid "Use the /clipboard command on a Knowledge Article and get going."
 msgstr ""
 
 #. module: knowledge

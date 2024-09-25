@@ -4,40 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:46+0000\n"
-"PO-Revision-Date: 2024-07-16 08:46+0000\n"
+"POT-Creation-Date: 2024-09-25 09:28+0000\n"
+"PO-Revision-Date: 2024-09-25 09:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: stock_barcode_mrp
-#: model_terms:ir.ui.view,arch_db:stock_barcode_mrp.mrp_product_selector
-msgid ""
-"<i class=\"fa fa-fw fa-lg fa-barcode me-3\" title=\"Serial/Lot Number\" "
-"invisible=\"product_tracking not in ['serial', 'lot']\"/>"
-msgstr ""
-
-#. module: stock_barcode_mrp
-#: model_terms:ir.ui.view,arch_db:stock_barcode_mrp.mrp_product_selector
-msgid "<i class=\"fa fa-fw fa-lg fa-cube me-3\" title=\"Quantity\"/>"
-msgstr ""
-
-#. module: stock_barcode_mrp
-#: model_terms:ir.ui.view,arch_db:stock_barcode_mrp.mrp_product_selector
-msgid ""
-"<i class=\"fa fa-fw fa-lg fa-long-arrow-right me-3\" title=\"Destination "
-"Location\"/>"
-msgstr ""
-
-#. module: stock_barcode_mrp
-#: model_terms:ir.ui.view,arch_db:stock_barcode_mrp.mrp_product_selector
-msgid "<i class=\"fa fa-fw fa-lg fa-tags me-3\" title=\"Product\"/>"
-msgstr ""
 
 #. module: stock_barcode_mrp
 #: model_terms:ir.ui.view,arch_db:stock_barcode_mrp.res_config_settings_view_form
@@ -213,14 +189,20 @@ msgstr ""
 
 #. module: stock_barcode_mrp
 #. odoo-javascript
-#: code:addons/stock_barcode_mrp/static/src/components/main.js:0
+#: code:addons/stock_barcode_mrp/static/src/models/barcode_mrp_model.js:0
 msgid "Produce"
 msgstr ""
 
 #. module: stock_barcode_mrp
 #. odoo-javascript
-#: code:addons/stock_barcode_mrp/static/src/components/main.js:0
+#: code:addons/stock_barcode_mrp/static/src/models/barcode_mrp_model.js:0
 msgid "Produce All"
+msgstr ""
+
+#. module: stock_barcode_mrp
+#. odoo-javascript
+#: code:addons/stock_barcode_mrp/static/src/components/header.xml:0
+msgid "Producing"
 msgstr ""
 
 #. module: stock_barcode_mrp
@@ -263,26 +245,14 @@ msgstr ""
 
 #. module: stock_barcode_mrp
 #. odoo-javascript
-#: code:addons/stock_barcode_mrp/static/src/kanban/stock_barcode_kanban.xml:0
-msgid "Scan a transfer, a product or a package to filter your records"
-msgstr ""
-
-#. module: stock_barcode_mrp
-#. odoo-javascript
-#: code:addons/stock_barcode_mrp/static/src/kanban/stock_barcode_kanban.xml:0
-msgid "Scan an order or a product to filter your records"
+#: code:addons/stock_barcode_mrp/static/src/kanban/stock_barcode_kanban_renderer.xml:0
+msgid "Scan an"
 msgstr ""
 
 #. module: stock_barcode_mrp
 #. odoo-javascript
 #: code:addons/stock_barcode_mrp/static/src/models/barcode_mrp_model.js:0
 msgid "Scan your final product or more components"
-msgstr ""
-
-#. module: stock_barcode_mrp
-#. odoo-javascript
-#: code:addons/stock_barcode_mrp/static/src/models/barcode_mrp_model.js:0
-msgid "Scrap"
 msgstr ""
 
 #. module: stock_barcode_mrp
@@ -329,11 +299,6 @@ msgid "This order is cancelled"
 msgstr ""
 
 #. module: stock_barcode_mrp
-#: model_terms:ir.ui.view,arch_db:stock_barcode_mrp.stock_mrp_picking_type_kanban
-msgid "To Process"
-msgstr ""
-
-#. module: stock_barcode_mrp
 #. odoo-javascript
 #: code:addons/stock_barcode_mrp/static/src/models/barcode_mrp_model.js:0
 msgid "To produce more products create a new MO."
@@ -370,4 +335,28 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/stock_barcode_mrp/static/src/models/barcode_mrp_model.js:0
 msgid "You can't add the final product of a MO as a byproduct."
+msgstr ""
+
+#. module: stock_barcode_mrp
+#. odoo-javascript
+#: code:addons/stock_barcode_mrp/static/src/kanban/stock_barcode_kanban_renderer.xml:0
+msgid "or a"
+msgstr ""
+
+#. module: stock_barcode_mrp
+#. odoo-javascript
+#: code:addons/stock_barcode_mrp/static/src/kanban/stock_barcode_kanban_renderer.xml:0
+msgid "order"
+msgstr ""
+
+#. module: stock_barcode_mrp
+#. odoo-javascript
+#: code:addons/stock_barcode_mrp/static/src/kanban/stock_barcode_kanban_renderer.xml:0
+msgid "product"
+msgstr ""
+
+#. module: stock_barcode_mrp
+#. odoo-javascript
+#: code:addons/stock_barcode_mrp/static/src/kanban/stock_barcode_kanban_renderer.xml:0
+msgid "to filter your records"
 msgstr ""

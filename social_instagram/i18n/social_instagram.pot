@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server saas~17.4+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-07-16 08:46+0000\n"
-"PO-Revision-Date: 2024-07-16 08:46+0000\n"
+"POT-Creation-Date: 2024-09-25 09:28+0000\n"
+"PO-Revision-Date: 2024-09-25 09:28+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -127,8 +127,20 @@ msgid ""
 msgstr ""
 
 #. module: social_instagram
+#: model:ir.model.fields,field_description:social_instagram.field_social_post__has_instagram_account
+#: model:ir.model.fields,field_description:social_instagram.field_social_post_template__has_instagram_account
+msgid "Has Instagram Account"
+msgstr ""
+
+#. module: social_instagram
+#: model_terms:ir.ui.view,arch_db:social_instagram.social_post_template_view_form
+msgid "Images"
+msgstr ""
+
+#. module: social_instagram
 #: model:ir.model.fields.selection,name:social_instagram.selection__social_media__media_type__instagram
 #: model:social.media,name:social_instagram.social_media_instagram
+#: model_terms:ir.ui.view,arch_db:social_instagram.social_post_template_view_form
 msgid "Instagram"
 msgstr ""
 
@@ -189,8 +201,20 @@ msgid "Instagram Facebook Author ID"
 msgstr ""
 
 #. module: social_instagram
+#: model:ir.model.fields,field_description:social_instagram.field_social_post__instagram_image_ids
+#: model:ir.model.fields,field_description:social_instagram.field_social_post_template__instagram_image_ids
+msgid "Instagram Images"
+msgstr ""
+
+#. module: social_instagram
 #: model:ir.model.fields,field_description:social_instagram.field_social_stream_post__instagram_likes_count
 msgid "Instagram Likes"
+msgstr ""
+
+#. module: social_instagram
+#: model:ir.model.fields,field_description:social_instagram.field_social_post__instagram_message
+#: model:ir.model.fields,field_description:social_instagram.field_social_post_template__instagram_message
+msgid "Instagram Message"
 msgstr ""
 
 #. module: social_instagram
@@ -230,6 +254,18 @@ msgstr ""
 #. module: social_instagram
 #: model:ir.model.fields,field_description:social_instagram.field_social_media__media_type
 msgid "Media Type"
+msgstr ""
+
+#. module: social_instagram
+#: model_terms:ir.ui.view,arch_db:social_instagram.social_post_template_view_form
+msgid "Message"
+msgstr ""
+
+#. module: social_instagram
+#. odoo-python
+#: code:addons/social_instagram/models/social_post_template.py:0
+msgid ""
+"Please specify either a Instagram Message or upload some Instagram Images."
 msgstr ""
 
 #. module: social_instagram
@@ -296,6 +332,7 @@ msgstr ""
 msgid ""
 "The following images are not in the correct format (jpg/jpeg).\n"
 "\n"
+"%(images)s"
 msgstr ""
 
 #. module: social_instagram
@@ -309,6 +346,7 @@ msgstr ""
 msgid ""
 "The following images do not meet the required aspect ratio (between 1.91:1 and 4:5).\n"
 "\n"
+"%(images)s"
 msgstr ""
 
 #. module: social_instagram
@@ -339,6 +377,12 @@ msgstr ""
 msgid ""
 "Used to make comparisons when we need to restrict some features to a "
 "specific media ('facebook', 'x', ...)."
+msgstr ""
+
+#. module: social_instagram
+#: model:ir.model.fields,help:social_instagram.field_social_post__instagram_image_ids
+#: model:ir.model.fields,help:social_instagram.field_social_post_template__instagram_image_ids
+msgid "Will attach images to your posts."
 msgstr ""
 
 #. module: social_instagram
