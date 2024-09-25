@@ -18,8 +18,17 @@ import { DivProperties } from "./properties/div_properties/div_properties";
 
 class KanbanFieldProperties extends FieldProperties {
     onChangeAttribute(value, name) {
-        if (name === "bold" && !value) {
-            return this.editNodeAttributes({ [name]: "" });
+        if (name === "bold") {
+            let cls = this.props.node.attrs.class;
+            if (value) {
+                cls = cls ? `fw-bold ${cls}` : "fw-bold";
+            } else {
+                cls = cls
+                    .split(" ")
+                    .filter((c) => c !== "fw-bold" && c !== "fw-bolder")
+                    .join(" ");
+            }
+            return this.editNodeAttributes({ class: cls });
         }
         return super.onChangeAttribute(...arguments);
     }

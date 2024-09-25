@@ -1677,3 +1677,83 @@ registry.category("web_tour.tours").add("web_studio_test_approval_button_xml_id"
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio_test_kanban_field_bold", {
+    test: true,
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_kanban_view",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item button:enabled",
+            run: "click",
+        },
+        // first field has class fw-bold
+        {
+            trigger:
+                ".o_web_studio_view_renderer .o_kanban_record .o-web-studio-editor--element-clickable",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_web_studio_sidebar .o_web_studio_property input#class:value(fs-6 fw-bold whatever)",
+        },
+        {
+            trigger:
+                ".o_web_studio_sidebar .o_web_studio_property input[type=checkbox]#bold:checked",
+        },
+        {
+            trigger: ".o_web_studio_sidebar .o_web_studio_property input[type=checkbox]#bold",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_web_studio_sidebar .o_web_studio_property input#class:value(fs-6 whatever)",
+        },
+        {
+            trigger:
+                ".o_web_studio_sidebar .o_web_studio_property input[type=checkbox]#bold:not(:checked)",
+        },
+        // second field has class fw-bolder
+        {
+            trigger:
+                ".o_web_studio_view_renderer .o_kanban_record .o-web-studio-editor--element-clickable:eq(1)",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar .o_web_studio_property input#class:value(fw-bolder)",
+        },
+        {
+            trigger:
+                ".o_web_studio_sidebar .o_web_studio_property input[type=checkbox]#bold:checked",
+        },
+        // third field isn't bold
+        {
+            trigger:
+                ".o_web_studio_view_renderer .o_kanban_record .o-web-studio-editor--element-clickable:eq(2)",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar .o_web_studio_property input#class:value(text-muted)",
+        },
+        {
+            trigger:
+                ".o_web_studio_sidebar .o_web_studio_property input[type=checkbox]#bold:not(:checked)",
+        },
+        {
+            trigger: ".o_web_studio_sidebar .o_web_studio_property input[type=checkbox]#bold",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar .o_web_studio_property input#class:value(fw-bold)",
+        },
+        {
+            trigger:
+                ".o_web_studio_sidebar .o_web_studio_property input[type=checkbox]#bold:checked",
+        },
+    ],
+});

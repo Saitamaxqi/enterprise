@@ -1796,3 +1796,32 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         partner_approvals = dict(approvals["res.partner"])
 
         self.assertTrue(partner_approvals[(False, False, "base.action_model_data")]["rules"])
+
+    def test_kanban_field_bold(self):
+        self.testView.write({
+            "model": "res.partner",
+            "type": "kanban",
+            "arch": '''<kanban>
+                <templates>
+                    <t t-name="card">
+                        <field name="display_name" class="fs-6 fw-bold whatever"/>
+                        <field name="phone" class="fw-bolder"/>
+                        <field name="email" class="text-muted"/>
+                    </t>
+                </templates>
+            </kanban>
+            '''
+        })
+        self.testAction.view_ids.view_mode = "kanban"
+        self.start_tour("/odoo?debug=tests", 'web_studio_test_kanban_field_bold', login="admin",
+                        timeout=200)
+        studioView = _get_studio_view(self.testView)
+        self.assertXMLEqual(studioView.arch, """
+            <data>
+                <xpath expr="//field[@name='display_name']" position="attributes">
+                    <attribute name="class">fs-6 whatever</attribute>
+                </xpath>
+                <xpath expr="//field[@name='email']" position="attributes">
+                    <attribute name="class">fw-bold text-muted</attribute>
+                </xpath>
+            </data>""")

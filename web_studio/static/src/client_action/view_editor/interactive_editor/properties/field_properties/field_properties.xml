@@ -13,7 +13,7 @@
             t-if="isAttributeSupported('bold')"
             name="'bold'"
             type="'boolean'"
-            value="props.node.attrs.bold"
+            value="getBoldValue()"
             onChange.bind="onChangeAttribute"
         >
             Bold

@@ -110,6 +110,15 @@ export class FieldProperties extends Component {
         });
     }
 
+    getBoldValue() {
+        const classList = this.props.node.arch.classList;
+        return (
+            classList.contains("fw-bold") ||
+            classList.contains("fw-bolder") ||
+            this.props.node.attrs.bold // legacy kanban
+        );
+    }
+
     async getDefaultValue(node) {
         const defaultValueObj = await rpc("/web_studio/get_default_value", {
             model_name: this.env.viewEditorModel.resModel,
