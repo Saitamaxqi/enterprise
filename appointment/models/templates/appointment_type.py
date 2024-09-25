@@ -103,7 +103,7 @@ class AppointmentType(models.Model):
             'min_cancellation_hours': 1,
             'max_schedule_days': 45,
             'min_schedule_hours': 1.0,
-            'name': _('Table Booking'),
+            'name': _('Table'),
             'question_ids': [(0, 0, {
                 'name': _('Do you have any dietary preferences or restrictions ?'),
                 'placeholder': _('e.g. Vegetarian, Lactose Intolerant, ...'),
