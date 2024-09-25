@@ -204,9 +204,17 @@ class AppointmentType(models.Model):
 
     @api.depends('appointment_duration')
     def _compute_appointment_duration_formatted(self):
+        """
+        When appointment duration exceeds a day or is not a multiple of hours e.g., 2 hours 30 minutes,
+        it is not fitting in one line, thus we are now using shorter time format.
+        E.g., Default (long) format: 2 hours 30 minutes
+              Short format: 2 hr 30 min
+        """
         for record in self:
             record.appointment_duration_formatted = self.env['ir.qweb.field.duration'].value_to_html(
-                record.appointment_duration * 3600, {})
+                record.appointment_duration * 3600,
+                {} if record.appointment_duration % 1 == 0 and record.appointment_duration < 24 else {'format': 'short'}
+            )
 
     @api.depends('appointment_invite_ids')
     def _compute_appointment_invite_count(self):

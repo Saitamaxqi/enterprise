@@ -87,12 +87,13 @@
             justify-content: center;
             align-items: center;
             font-size: var(--Tag-font-size, #{$font-size-sm});
+            background-color: lightgray;
         }
     }
     // Ungrouped specific
     .o_appointment_kanban_card_ungrouped {
         @include media-breakpoint-up(sm) {
-            margin-right: 8rem;
+            margin-right: 12rem;
         }
         min-height: 4rem;
         .ribbon {

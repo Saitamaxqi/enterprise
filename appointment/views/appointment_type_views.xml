@@ -53,11 +53,11 @@
                     <div t-name="card" class="o_appointment_kanban_card">
                         <div class="o_appointment_kanban_card_ungrouped row">
                             <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
-                            <div class="col-lg-2 col-sm-5 col-11 py-0 my-auto text-large text-truncate">
+                            <div class="col-lg-3 col-sm-5 col-11 py-0 my-auto text-large text-truncate">
                                 <span class="fw-bold ms-2 o_appointment_kanban_ungrouped_name" t-att-title="record.name.value"><field name="name"/></span><br/>
                             </div>
-                            <div class="col-lg-4 col-sm-7 col-12 py-0 mt-3 mb-2 my-lg-auto d-flex">
-                                <div class="align-self-center me-sm-0 me-3 text-large w-50 w-lg-25">
+                            <div class="col-lg-5 col-sm-7 col-12 py-0 mt-3 mb-2 my-lg-auto d-flex">
+                                <div class="align-self-center me-sm-0 me-3 text-large w-50 w-lg-50 text-nowrap">
                                     <field class="fw-normal" name="appointment_duration_formatted"/><br/>
                                     <span>Duration</span>
                                 </div>
@@ -66,15 +66,7 @@
                                     <field name="resource_ids" widget="many2many_tags_avatar" readonly="True" invisible="schedule_based_on == 'users'"/>
                                 </div>
                             </div>
-                            <div class="col-lg-2 col-sm-5 col-6 py-0 my-2 my-lg-auto text-large">
-                                <span class="fw-normal">
-                                    <field name="appointment_count_upcoming"/>
-                                    <t t-if="record.schedule_based_on.raw_value == 'users'"> Meetings</t>
-                                    <t t-else=""> Bookings</t>
-                                </span><br/>
-                                <span>Upcoming</span>
-                            </div>
-                            <div t-attf-class="col-lg-2 col-sm-7 col-6 py-0 my-2 my-lg-auto text-large #{!record.appointment_count_request.raw_value ? 'invisible' : ''}">
+                            <div t-attf-class="col-lg-1 col-sm-10 col-10 py-0 my-2 my-lg-auto mx-lg-auto text-large text-nowrap #{!record.appointment_count_request.raw_value ? 'invisible d-none d-lg-block' : ''}">
                                 <a name="action_calendar_event_view_request" type="object">
                                     <span class="fw-normal">
                                         <field name="appointment_count_request"/>
@@ -84,7 +76,15 @@
                                 </a><br/>
                                 <span>To Confirm</span>
                             </div>
-                            <div class="col-lg-2 col-sm-12 col-6 py-0 my-2 my-lg-auto text-large">
+                            <div class="col-lg-1 col-sm-5 col-6 py-0 my-2 my-lg-auto mx-lg-auto text-large text-nowrap">
+                                <span class="fw-normal">
+                                    <field name="appointment_count_upcoming"/>
+                                    <t t-if="record.schedule_based_on.raw_value == 'users'"> Meetings</t>
+                                    <t t-else=""> Bookings</t>
+                                </span><br/>
+                                <span>Upcoming</span>
+                            </div>
+                            <div class="col-lg-1 col-sm-5 col-6 py-0 my-2 my-lg-auto mx-lg-auto text-large text-nowrap">
                                 <span class="fw-normal">
                                     <field name="appointment_count"/>
                                     <t t-if="record.schedule_based_on.raw_value == 'users'"> Meetings</t>
