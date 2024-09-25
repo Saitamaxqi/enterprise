@@ -153,7 +153,6 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
     def test_automatic_invoice_token(self):
 
         self.original_prepare_invoice = self.subscription._prepare_invoice
-        self.mock_send_success_count = 0
         with patch('odoo.addons.sale_subscription.models.sale_order.SaleOrder._do_payment', wraps=self._mock_subscription_do_payment):
             self.env['ir.config_parameter'].sudo().set_param('sale.automatic_invoice', 'False')
             subscription = self._portal_payment_controller_flow()
@@ -254,7 +253,6 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
 
     def test_controller_transaction_refund(self):
         self.original_prepare_invoice = self.subscription._prepare_invoice
-        self.mock_send_success_count = 0
         self.pricing_month.price = 10
         subscription = self.subscription.create({
             'partner_id': self.partner.id,

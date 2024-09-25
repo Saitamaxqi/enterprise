@@ -1869,8 +1869,7 @@ class SaleOrder(models.Model):
             'currency': invoice.currency_id.name,
             'no_new_invoice': True}}
         auto_commit = not bool(config['test_enable'] or config['test_file'])
-        if auto_commit:
-            self.env.cr.commit()
+        self._subscription_commit_cursor(auto_commit)
         if self.plan_id.invoice_mail_template_id:
             _logger.debug("Sending Invoice Mail to %s for subscription %s", self.partner_id.mapped('email'), self.ids)
             self.env['account.move.send'].with_context(email_context)._generate_and_send_invoices(

@@ -46,7 +46,6 @@ class TestSubscriptionPayments(PaymentCommon, TestSubscriptionCommon, MockEmail)
             })
             self.subscription._onchange_sale_order_template_id()
             self.subscription.action_confirm()
-            self.mock_send_success_count = 0
             self.env['sale.order']._cron_recurring_create_invoice()
             self.subscription.transaction_ids._post_process()
             self.assertEqual(self.subscription.subscription_state, '3_progress', 'subscription with online payment and a payment method set should stay opened when transaction succeeds')
@@ -62,7 +61,6 @@ class TestSubscriptionPayments(PaymentCommon, TestSubscriptionCommon, MockEmail)
                 all(tax_line.tax_line_id == self.tax_10 for tax_line in invoice.line_ids.filtered('tax_line_id')),
                 'The invoice tax lines should be set and should all use the tax set on the subscription products')
 
-            self.mock_send_success_count = 0
             start_date = fields.Date.today() - relativedelta(months=1)
             recurring_next_date = fields.Date.today() - relativedelta(days=1)
             self.subscription.payment_token_id = False
@@ -82,7 +80,6 @@ class TestSubscriptionPayments(PaymentCommon, TestSubscriptionCommon, MockEmail)
             # 2) batch: we need to avoid taking subscription two time. flag remains until the end of the last trigger
             failing_subs.order_line.qty_to_invoice = 1
             self.env['sale.order']._create_recurring_invoice(batch_size=3)
-            self.assertFalse(self.mock_send_success_count)
             failing_result = [not res for res in failing_subs.mapped('payment_exception')]
             self.assertTrue(all(failing_result), "The subscription are not flagged anymore")
             failing_result = [not res for res in failing_subs.mapped('is_batch')]
@@ -114,7 +111,6 @@ class TestSubscriptionPayments(PaymentCommon, TestSubscriptionCommon, MockEmail)
                 'sale_order_template_id': subscription_tmpl.id,
             })
             self.subscription._onchange_sale_order_template_id()
-            self.mock_send_success_count = 0
             with freeze_time("2021-01-03"):
                 self.subscription.order_line = [Command.clear()]
                 self.subscription.write({

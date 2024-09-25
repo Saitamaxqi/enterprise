@@ -288,7 +288,6 @@ class TestSubscriptionCommon(TestSaleCommon):
             'parent_id': cls.partner_a.id,
             'type': 'delivery',
         })
-        cls.mock_send_success_count = 0
 
     # Mocking for 'test_auto_payment_with_token'
     # Necessary to have a valid and done transaction when the cron on subscription passes through

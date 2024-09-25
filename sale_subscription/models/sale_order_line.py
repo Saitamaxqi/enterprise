@@ -209,20 +209,26 @@ class SaleOrderLine(models.Model):
         return result
 
     def _get_deferred_date(self, last_invoiced_date=None, next_invoice_date=None):
+        """" Get deferred dates of a sale.order.line. This util method is useful when we need to know the current deferred dates of a line.
+        If you want to compute future period date, check _get_invoice_line_parameters
+        return: (date, date): deferred_start_date, deferred_end_date
+        """
         self.ensure_one()
+        if last_invoiced_date and next_invoice_date:
+            # trivial case where the values are known. Taking care of it here to allow overrides
+            return last_invoiced_date, next_invoice_date
+        deferred_start_date = self.last_invoiced_date and self.last_invoiced_date + relativedelta(days=1) or self.order_id.start_date
         if self._is_postpaid_line():
-            period_start = last_invoiced_date or self.last_invoiced_date or self.order_id.start_date
-            period_end = period_start + self.order_id.plan_id.billing_period - relativedelta(days=1)
+            deferred_end_date = deferred_start_date + self.order_id.plan_id.billing_period - relativedelta(days=1)
         else:
             # We invoice in the future. Regular line are based on next invoice date value to be resilient
             # on missing link between sale order line and acount move lines
             # warning this is not working if the recurrence is updated without renewal
-            last_invoiced_date = last_invoiced_date or self.last_invoiced_date
             last_period_start = self.order_id.next_invoice_date and self.order_id.next_invoice_date - self.order_id.plan_id.billing_period
-            period_start = last_invoiced_date or last_period_start
-            end_date = next_invoice_date or self.order_id.next_invoice_date
-            period_end = self.last_invoiced_date or end_date and end_date - relativedelta(days=1)
-        return period_start, period_end
+            deferred_start_date = self.last_invoiced_date or last_period_start
+            next_invoice_date = self.order_id.next_invoice_date
+            deferred_end_date = self.last_invoiced_date or next_invoice_date and next_invoice_date - relativedelta(days=1)
+        return deferred_start_date, deferred_end_date
 
     def _get_subscription_qty_invoiced(self, last_invoiced_date=None, next_invoice_date=None):
         """
@@ -307,6 +313,11 @@ class SaleOrderLine(models.Model):
 
     def _get_invoice_line_parameters(self):
         """ Util to compute the relevant next period to invoice for a line dependent on his pre-paid or post-paid status
+        This methods computes:
+            new_period_start, new_period_stop: the date corresponding to the current invoicing period
+            ratio: when we are invoicing a fraction of period, we need to compute the how much will be charged based on the prorata temporis
+            number_of_days: the number of days in the current period when we are not invoicing a full period.
+        :return: (new_period_start, new_period_stop, ratio, number_of_days)
         """
         self.ensure_one()
         today = fields.Date.today()
@@ -322,7 +333,8 @@ class SaleOrderLine(models.Model):
             # We always use next_invoice_date as the recurrence are synchronized with the invoicing periods.
             # Next invoice date is required and is equal to start_date at the creation of a subscription
             if self._is_postpaid_line():
-                new_period_start = self.last_invoiced_date and self.last_invoiced_date + relativedelta(days=1) or self.order_id.start_date
+                # fallback on self.order_id.last_invoice_date to allow invoicing correctly the first period after an upsell.
+                new_period_start = self.last_invoiced_date and self.last_invoiced_date + relativedelta(days=1) or self.order_id.last_invoice_date
                 theoretical_stop = new_period_start and new_period_start + self.order_id.plan_id.billing_period - relativedelta(days=1)
                 new_period_stop = min(date for date in [fields.Date.today(), theoretical_stop, self.order_id.end_date] if date)
                 return new_period_start, new_period_stop, 1, None
@@ -333,6 +345,7 @@ class SaleOrderLine(models.Model):
         if self.order_id.end_date and new_period_stop > self.order_id.end_date:
             next_date_1st = self.order_id.end_date + relativedelta(days=1)
         elif not self.order_id.plan_id.billing_first_day or self.order_id.plan_id.billing_period_unit == 'week':
+            # Never apply billing_first_day for weekly plan.
             return new_period_start, new_period_stop - relativedelta(days=1), 1, None
         elif self.order_id.plan_id.billing_period_unit == 'month':
             next_date_1st = new_period_stop + relativedelta(day=1)
