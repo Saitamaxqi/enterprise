@@ -44,6 +44,7 @@ class MockOutgoingWhatsApp(common.BaseCase):
             if send_vals:
                 msg_uid = f'test_wa_{time.time():.9f}'
                 self._wa_msg_sent.append(msg_uid)
+                self._wa_msg_sent_vals.append(send_vals)
                 return msg_uid
             raise WhatsAppError("Please make sure to define a template before proceeding.")
 
@@ -112,6 +113,7 @@ class MockOutgoingWhatsApp(common.BaseCase):
         self._new_partners = self.env['res.partner'].sudo()
         self._new_wa_msg = self.env['whatsapp.message'].sudo()
         self._wa_msg_sent = []
+        self._wa_msg_sent_vals = []
 
 
 class MockIncomingWhatsApp(common.HttpCase):
