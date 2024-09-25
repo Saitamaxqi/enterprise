@@ -91,6 +91,7 @@
         <field name="inherit_id" ref="account.view_account_payment_tree"/>
         <field name="arch" type="xml">
             <field name="state" position="before">
+                <field name="l10n_mx_edi_cfdi_uuid" optional="hide"/>
                 <field name="l10n_mx_edi_cfdi_state" optional="hide"/>
                 <field name="l10n_mx_edi_cfdi_sat_state" optional="hide"/>
             </field>
