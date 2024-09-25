@@ -411,6 +411,7 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         self.assertEqual(sale_to_b.picking_ids.move_ids.lot_ids, lot)
         self.assertEqual(sale_to_b.picking_ids.location_dest_id, interco_location)
         sale_to_b.picking_ids.button_validate()
+        self.assertEqual(sale_to_b.order_line.qty_delivered, 1)
 
         # Receive lot from Company A
         self.assertEqual(purchase_from_a.picking_ids.move_ids.lot_ids, lot)
