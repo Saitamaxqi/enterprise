@@ -9,14 +9,8 @@
             <xpath expr="//footer/button[@special='cancel']" position="attributes">
                 <attribute name="class">btn-secondary mx-1</attribute>
             </xpath>
-            <xpath expr="//footer/button[@special='save']" position="attributes">
-                <attribute name="invisible">not id</attribute>
-            </xpath>
             <xpath expr="//footer/button[@name='action_calendar_more_options']" position="attributes">
                 <attribute name="invisible">1</attribute>
-            </xpath>
-            <xpath expr="//footer/button[@special='save']" position="after">
-                <button string="Save" data-hotkey="s" class="btn btn-primary" invisible="id" type="object" name="action_open_booking_gantt_view"/>
             </xpath>
         </field>
     </record>
