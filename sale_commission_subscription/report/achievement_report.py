@@ -22,8 +22,8 @@ class SaleAchievementReport(models.Model):
         return f"""
 subscription_rules AS (
     SELECT
-        scpu.date_from AS date_from,
-        scpu.date_to AS date_to,
+        COALESCE(scpu.date_from, scp.date_from) AS date_from,
+        COALESCE(scpu.date_to, scp.date_to) AS date_to,
         scpu.user_id AS user_id,
         scp.team_id AS team_id,
         scp.id AS plan_id,

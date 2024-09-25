@@ -13,10 +13,10 @@ class CommissionPlanUser(models.Model):
     plan_id = fields.Many2one('sale.commission.plan', required=True, ondelete='cascade')
     user_id = fields.Many2one('res.users', "Salesperson", required=True, domain="[('share', '=', False)]")
 
-    date_from = fields.Date("From", compute='_compute_date_from', store=True, readonly=False, required=True, precompute=True)
+    date_from = fields.Date("From", compute='_compute_date_from', store=True, readonly=False)
     date_to = fields.Date("To")
 
-    other_plans = fields.Many2many('sale.commission.plan', string="Other plans", compute='_compute_other_plans')
+    other_plans = fields.Many2many('sale.commission.plan', string="Other plans", compute='_compute_other_plans', readonly=False)
 
     _sql_constraints = [
         ('user_uniq', 'unique (plan_id, user_id)', "The user is already present in the plan"),

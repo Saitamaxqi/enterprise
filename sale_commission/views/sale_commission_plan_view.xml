@@ -35,7 +35,7 @@
                                 <field name="type" class="oe_inline" readonly="state != 'draft'"/>
                                 per <field name="user_type" class="oe_inline" readonly="state != 'draft'"/>
                             </div>
-                            <field name="team_id" invisible="user_type == 'person'"/>
+                            <field name="team_id" invisible="user_type == 'person'" readonly="state != 'draft'"/>
                             <field name="currency_id" invisible="1"/>   <!-- Needed for monetary widget -->
                             <field name="commission_amount" invisible="type == 'achieve'" readonly="state != 'draft'"
                                    widget="monetary" options="{'currency_field': 'currency_id'}"/>

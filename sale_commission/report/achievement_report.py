@@ -118,7 +118,7 @@ achievement_commission_lines AS (
         return f"""
 invoices_rules AS (
     SELECT
-        scpu.date_from AS date_from,
+        COALESCE(scpu.date_from, scp.date_from) AS date_from,
         COALESCE(scpu.date_to, scp.date_to) AS date_to,
         scpu.user_id AS user_id,
         scp.team_id AS team_id,
@@ -206,7 +206,7 @@ invoices_rules AS (
         return f"""
 sale_rules AS (
     SELECT
-        scpu.date_from AS date_from,
+        COALESCE(scpu.date_from, scp.date_from) AS date_from,
         COALESCE(scpu.date_to, scp.date_to) AS date_to,
         scpu.user_id AS user_id,
         scp.team_id AS team_id,

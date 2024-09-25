@@ -113,9 +113,9 @@ CREATE INDEX IF NOT EXISTS account_move_invoice_user_id_date_idx ON account_move
     def _compute_target_commission_ids(self):
         for plan in self:
             if plan.type != 'target':
-                plan.target_commission_ids = [Command.clear()]
+                continue
             elif not plan.target_commission_ids:
-                plan.target_commission_ids = [Command.clear(), Command.create({
+                plan.target_commission_ids = [Command.create({
                     'plan_id': plan.id,
                     'target_rate': 0,
                     'amount': 0,
