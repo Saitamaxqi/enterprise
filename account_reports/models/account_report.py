@@ -14,7 +14,6 @@ from functools import cmp_to_key
 from itertools import groupby
 
 import markupsafe
-from babel.dates import get_quarter_names
 from dateutil.relativedelta import relativedelta
 from PIL import ImageFont
 
@@ -478,6 +477,11 @@ class AccountReport(models.Model):
         def match(dt_from, dt_to):
             return (dt_from, dt_to) == (date_from, date_to)
 
+        def get_quarter_name(date_to, date_from):
+            date_to_quarter_string = format_date(self.env, fields.Date.to_string(date_to), date_format='MMM yyyy')
+            date_from_quarter_string = format_date(self.env, fields.Date.to_string(date_from), date_format='MMM')
+            return f"{date_from_quarter_string} - {date_to_quarter_string}"
+
         string = None
         # If no date_from or not date_to, we are unable to determine a period
         if not period_type or period_type == 'custom':
@@ -511,9 +515,7 @@ class AccountReport(models.Model):
                     case 1:
                         string = format_date(self.env, fields.Date.to_string(date_to), date_format='MMM yyyy')
                     case 3:
-                        quarter_names = get_quarter_names('abbreviated', locale=get_lang(self.env).code)
-                        string = '%s\N{NO-BREAK SPACE}%s' % (
-                            quarter_names[date_utils.get_quarter_number(date_to)], date_to.year)
+                        string = get_quarter_name(date_to, date_from)
                     case 12:
                         string = date_to.strftime('%Y')
             else:
@@ -534,9 +536,7 @@ class AccountReport(models.Model):
             elif period_type == 'month':
                 string = format_date(self.env, fields.Date.to_string(date_to), date_format='MMM yyyy')
             elif period_type == 'quarter':
-                quarter_names = get_quarter_names('abbreviated', locale=get_lang(self.env).code)
-                string = u'%s\N{NO-BREAK SPACE}%s' % (
-                    quarter_names[date_utils.get_quarter_number(date_to)], date_to.year)
+                string = get_quarter_name(date_to, date_from)
             else:
                 dt_from_str = format_date(self.env, fields.Date.to_string(date_from))
                 dt_to_str = format_date(self.env, fields.Date.to_string(date_to))

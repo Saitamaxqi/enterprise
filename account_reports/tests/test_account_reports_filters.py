@@ -166,7 +166,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
             self.date_range_report,
             {'date': {'filter': 'this_quarter', 'mode': 'range'}},
             {
-                'string': 'Q4\N{NO-BREAK SPACE}2017',
+                'string': 'Oct - Dec 2017',
                 'period_type': 'quarter',
                 'mode': 'range',
                 'filter': 'this_quarter',
@@ -180,7 +180,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
             self.date_range_report,
             {'date': {'filter': 'previous_quarter', 'mode': 'range'}},
             {
-                'string': 'Q3\N{NO-BREAK SPACE}2017',
+                'string': 'Jul - Sep 2017',
                 'period_type': 'quarter',
                 'mode': 'range',
                 'filter': 'previous_quarter',
@@ -195,7 +195,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
             self.date_range_report,
             {'date': {'filter': 'next_quarter', 'mode': 'range'}},
             {
-                'string': 'Q1\N{NO-BREAK SPACE}2018',
+                'string': 'Jan - Mar 2018',
                 'period_type': 'quarter',
                 'mode': 'range',
                 'filter': 'next_quarter',
@@ -211,7 +211,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
             {'date': {'filter': 'this_quarter', 'mode': 'range'}, 'comparison': {'filter': 'previous_period', 'number_period': 2}},
             [
                 {
-                    'string': 'Q3\N{NO-BREAK SPACE}2017',
+                    'string': 'Jul - Sep 2017',
                     'period_type': 'quarter',
                     'mode': 'range',
                     'date_from': '2017-07-01',
@@ -219,7 +219,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
                     'currency_table_period_key': '2017-07-01_2017-09-30',
                 },
                 {
-                    'string': 'Q2\N{NO-BREAK SPACE}2017',
+                    'string': 'Apr - Jun 2017',
                     'period_type': 'quarter',
                     'mode': 'range',
                     'date_from': '2017-04-01',
@@ -234,7 +234,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
             {'date': {'filter': 'this_quarter', 'mode': 'range'}, 'comparison': {'filter': 'same_last_year', 'number_period': 2}},
             [
                 {
-                    'string': 'Q4\N{NO-BREAK SPACE}2016',
+                    'string': 'Oct - Dec 2016',
                     'period_type': 'quarter',
                     'mode': 'range',
                     'date_from': '2016-10-01',
@@ -242,7 +242,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
                     'currency_table_period_key': '2016-10-01_2016-12-31',
                 },
                 {
-                    'string': 'Q4\N{NO-BREAK SPACE}2015',
+                    'string': 'Oct - Dec 2015',
                     'period_type': 'quarter',
                     'mode': 'range',
                     'date_from': '2015-10-01',
@@ -257,7 +257,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
             {'date': {'filter': 'this_quarter', 'mode': 'range'}, 'comparison': {'filter': 'custom', 'date_from': '2016-10-01', 'date_to': '2016-12-31'}},
             [
                 {
-                    'string': 'Q4\N{NO-BREAK SPACE}2016',
+                    'string': 'Oct - Dec 2016',
                     'period_type': 'quarter',
                     'mode': 'range',
                     'date_from': '2016-10-01',
@@ -705,7 +705,7 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
             self.date_range_report,
             {'date': {'filter': 'custom', 'mode': 'range', 'date_from': '2017-10-01', 'date_to': '2017-12-31'}},
             {
-                'string': 'Q4\N{NO-BREAK SPACE}2017',
+                'string': 'Oct - Dec 2017',
                 'period_type': 'quarter',
                 'mode': 'range',
                 'filter': 'custom',

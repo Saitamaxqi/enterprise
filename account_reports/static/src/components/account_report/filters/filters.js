@@ -365,8 +365,11 @@ export class AccountReportFilters extends Component {
 
     _displayQuarter(dateTo) {
         dateTo = dateTo.plus({ months: this.dateFilter.quarter * 3 });
+        const dateFrom = dateTo.minus({ months: 2 }); // -3 is the end of previous quarter
+        const dateToFormatted = formatDate(dateTo, {format: "MMM yyyy"});
+        const dateFromFormatted = formatDate(dateFrom, {format: "MMM"});
 
-        return `Q${dateTo.quarter} ${dateTo.year}`;
+        return `${dateFromFormatted} - ${dateToFormatted}`;
     }
 
     _displayYear(dateTo) {
