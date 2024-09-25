@@ -64,6 +64,10 @@ export class DocumentsSearchPanel extends SearchPanel {
 
         onWillStart(async () => {
             this.isDocumentManager = await user.hasGroup("documents.group_documents_manager");
+            const selectedFolderId = this.env.searchModel.getSelectedFolderId();
+            if (selectedFolderId) {
+                this._expandFolder({ folderId: selectedFolderId });
+            }
         });
 
         useBus(this.env.documentsView.bus, "documents-expand-folder", (ev) => {
