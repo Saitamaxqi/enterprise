@@ -51,7 +51,11 @@ export class StudioApproval extends Component {
                 this.isOpened = false;
             };
             this.closeInfos = this.openExternal(() =>
-                this.dialog.add(StudioApprovalInfos, { approval: this.approval }, { onClose })
+                this.dialog.add(
+                    StudioApprovalInfos,
+                    { approval: this.approval, isPopover: false },
+                    { onClose }
+                )
             );
         } else {
             this.popover.open(this.rootRef.el, { approval: this.approval, isPopover: true });
