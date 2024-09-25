@@ -1,11 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.tests import tagged
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 from odoo.addons.account_reports.models.account_report import AccountReportFileDownloadException
 
 
-@tagged('post_install_l10n', 'post_install', '-at_install')
 class TestSaftReport(TestAccountReportsCommon):
 
     @classmethod
