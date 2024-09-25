@@ -34,9 +34,14 @@ export class AttendanceGanttModel extends GanttModel {
 
     async _fetchData(metaData) {
         const startDate = metaData.globalStart.toISODate();
+        let activeDomain = [];
+        if (!this.searchParams.domain.some((index) => Array.isArray(index) && index[0] == "employee_id.active")){
+            activeDomain.push(["employee_id.active", "=", true]);
+        }
         const context = {
             gantt_start_date: startDate,
             user_domain: this.searchParams.domain,
+            active_domain: activeDomain
         };
         await super._fetchData(metaData, context);
     }

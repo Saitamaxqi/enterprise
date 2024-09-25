@@ -82,6 +82,7 @@ class HrAttendance(models.Model):
         We also want to add in the gantt rows, the active emloyees that have a check in in the previous 60 days
         """
 
+        domain = expression.AND([domain, self.env.context.get('active_domain', [])])
         open_ended_gantt_data = super().get_gantt_data(domain, groupby, read_specification, limit=limit, offset=offset, unavailability_fields=unavailability_fields, progress_bar_fields=progress_bar_fields, start_date=start_date, stop_date=stop_date, scale=scale)
 
         if self.env.context.get('gantt_start_date') and groupby and groupby[0] == 'employee_id':
