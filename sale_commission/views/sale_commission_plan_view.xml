@@ -43,9 +43,8 @@
                         </group>
                         <group>
                             <label for="date_from" string="Effective Period"/>
-                            <div>
-                                <field name="date_from" class="oe_inline" readonly="state != 'draft'"/>
-                                -> <field name="date_to" class="oe_inline" readonly="state != 'draft'"/>
+                            <div class="d-inline-flex">
+                                <field name="date_from" string="Date" widget="daterange" options="{'end_date_field': 'date_to'}" readonly="state != 'draft'"/>
                             </div>
                             <field name="periodicity" string="Payment Frequency" readonly="state != 'draft'"/>
                         </group>
