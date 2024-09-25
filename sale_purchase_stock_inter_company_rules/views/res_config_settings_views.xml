@@ -7,12 +7,12 @@
         <field name="arch" type="xml">
             <xpath expr="//div[@name='module_inter_company_rules_set_so_po']" position="inside">
                 <div class="row ml16" name="warehouse_id"
-                     invisible="not intercompany_generate_purchase_orders">
+                     invisible="not intercompany_generate_sales_orders">
                     <label for="intercompany_warehouse_id" string="Use Warehouse" class="col-4 col-lg-4 o_light_label"/>
                     <field name="intercompany_warehouse_id" options="{'no_create_edit': True}"/>
                 </div>
                 <div class="row ml16"
-                     invisible="not intercompany_generate_sales_orders">
+                     invisible="not intercompany_generate_purchase_orders">
                     <label for="intercompany_receipt_type_id" string="Use Operation" class="col-4 col-lg-4 o_light_label"/>
                     <field name="intercompany_receipt_type_id" options="{'no_create_edit': True}"/>
                 </div>

@@ -9,10 +9,10 @@
                 <field name="intercompany_warehouse_id"
                        options="{'no_create_edit': True}"
                        domain="[('company_id', '=', id)]"
-                       invisible="not intercompany_generate_purchase_orders"/>
+                       invisible="not intercompany_generate_sales_orders"/>
                 <field name="intercompany_receipt_type_id"
                        domain="[('company_id', '=', id), ('code', '=', 'incoming')]"
-                       invisible="not intercompany_generate_sales_orders"/>
+                       invisible="not intercompany_generate_purchase_orders"/>
                 <field name="intercompany_sync_delivery_receipt"
                        invisible="not intercompany_generate_sales_orders"/>
             </field>
