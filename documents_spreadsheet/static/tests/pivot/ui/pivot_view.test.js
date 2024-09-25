@@ -849,10 +849,10 @@ test("pivot related context is not saved in the spreadsheet", async function () 
         "probability:avg,__count",
         "probability:avg,__count",
         // loaded in the spreadsheet
-        "probability:avg,__count",
-        "probability:avg,__count",
-        "probability:avg,__count",
-        "probability:avg,__count",
+        "probability_avg_id:avg(probability),__count",
+        "probability_avg_id:avg(probability),__count",
+        "probability_avg_id:avg(probability),__count",
+        "probability_avg_id:avg(probability),__count",
     ]);
     expect(model.exportData().pivots[pivotId].context).toEqual(
         {
