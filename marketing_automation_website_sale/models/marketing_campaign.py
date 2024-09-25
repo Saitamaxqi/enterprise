@@ -34,7 +34,7 @@ class MarketingCampaign(models.Model):
         campaign = self.env['marketing.campaign'].create({
             'name': _('Recent Purchase Follow-up'),
             'model_id': self.env['ir.model']._get_id('sale.order'),
-            'domain': repr([('state', '=', 'sale'), ('team_id.website_id', '!=', 'False')]),
+            'domain': repr([('state', '=', 'sale'), ('team_id.website_ids', '!=', False)]),
         })
         followup_mailing_template = self.env.ref(
             'marketing_automation_website_sale.mailing_purchase_followup_arch',
@@ -71,7 +71,7 @@ class MarketingCampaign(models.Model):
             'model_id': self.env['ir.model']._get_id('sale.order'),
             'domain': repr([
                 ('state', '=', 'sale'),
-                ('team_id.website_id', '!=', 'False'),
+                ('team_id.website_ids', '!=', False),
                 ('amount_untaxed', '>=', 100),
             ])
         })
