@@ -194,7 +194,7 @@ export const DocumentsRecordMixin = (component) => class extends component {
             const documents = selection.length > 1 && selection.find(rec => rec === this) && selection.filter(rec => rec.isViewable()) || [this];
 
             // Load the embeddedActions in case we open the split tool
-            const embeddedActions = this.data.available_embedded_actions_ids.records.map((rec) => ({ id: rec.resId, name: rec.data.display_name }));
+            const embeddedActions = this.data.available_embedded_actions_ids?.records.map((rec) => ({ id: rec.resId, name: rec.data.display_name })) || [];
 
             await this.model.env.documentsView.bus.trigger("documents-open-preview", {
                 documents,
