@@ -229,7 +229,7 @@
                     <codigoPrincipal t-if="is_invoice or is_liquidation" t-out="product_code"/>
                     <codigoAuxiliar t-if="is_invoice or is_liquidation" t-out="product.l10n_ec_auxiliary_code"/>
 
-                    <descripcion t-out="clean_str(line.product_id and line.product_id.name or line.name or 'OTRO')"/>
+                    <descripcion t-out="clean_str(line.name or line.product_id and line.product_id.name or 'OTRO')"/>
                     <cantidad t-out="format_num_6(line.quantity)"/>
                     <precioUnitario t-out="format_num_6(line_edi_values['price_unit'])"/>
                     <descuento t-out="format_num_2(line_edi_values['price_discount'] + abs(line.balance) - line_items[1]['base_amount'])"/>
