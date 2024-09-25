@@ -442,6 +442,7 @@ class QualityCheck(models.Model):
             failed_qty = failed_qty or check.move_line_id.quantity
             move_line = check.move_line_id
             move = move_line.move_id
+            move.picked = True
             dest_location = failure_location_id or move_line.location_dest_id.id
             if failed_qty == move_line.quantity:
                 move_line.location_dest_id = dest_location
@@ -460,6 +461,7 @@ class QualityCheck(models.Model):
                 'product_uom_qty': 0,
                 'state': 'assigned',
                 'move_line_ids': [Command.link(failed_move_line.id)],
+                'picked': True,
             })
             # switch the checks, check in self should always be the failed one,
             # new check linked to original move line will be passed check

@@ -18,5 +18,8 @@ This bridge module is auto-installed when the modules stock_barcode and quality_
             'stock_barcode_quality_control/static/src/**/*.js',
             'stock_barcode_quality_control/static/src/**/*.xml',
         ],
+        'web.assets_tests': [
+            'stock_barcode_quality_control/static/tests/tours/**/*',
+        ],
     }
 }
