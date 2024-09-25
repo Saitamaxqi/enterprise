@@ -44,9 +44,11 @@
             <attribute name="t-valuef">#</attribute>
         </xpath>
     </template>
+    <!-- TODO: Remove me in master -->
+    <!-- Because we add documents link from _task_get_page_view_values -->
     <template id="documents_project.portal_my_task" inherit_id="project.portal_my_task">
         <xpath expr="//div[@id='task-links']/ul" position="inside">
-            <li class="nav-item" id="nav-chat" t-if="task.project_use_documents and task.document_ids">
+            <li class="nav-item" id="nav-chat" t-if="1==0 and task.project_use_documents and task.document_ids">
                 <a class="nav-link p-0" target="_blank" t-attf-href="/{{ 'my/projects/' + str(project_id) + '/task' if project_id else 'my/tasks' }}/{{ task.id }}/documents?{{ keep_query() }}">
                     Documents
                 </a>
