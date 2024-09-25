@@ -31,7 +31,9 @@ export class PaymentIngenico extends PaymentInterface {
         const paymentline = this.pos.get_order().get_paymentline_by_uuid(uuid);
         return {
             messageType: "Transaction",
-            TransactionID: parseInt(this.pos.get_order().uuid.replace(/-/g, "")),
+            // The last 13 characters of the uuid is a 52-bit integer, fits in the Number data type.
+            // Use it as the TransactionID.
+            TransactionID: parseInt(uuid.replace(/-/g, "").slice(19, 32), 16),
             cid: uuid,
             amount: Math.round(paymentline.amount * 100),
         };
