@@ -32,7 +32,13 @@ export class StudioDynamicPlaceholderPopover extends DynamicPlaceholderPopover {
             await this.loadFieldInfo(this.props.resModel, this.state.path + "_filename")
         ).fieldDef;
         const is_image = fieldInfo.type == "binary" && !filename_exists;
+        this.props.validate(
+            this.state.path,
+            this.state.defaultValue,
+            is_image,
+            fieldInfo.relation,
+            fieldInfo.string
+        );
         this.props.close();
-        this.props.validate(this.state.path, this.state.defaultValue, is_image, fieldInfo.relation, fieldInfo.string);
     }
 }

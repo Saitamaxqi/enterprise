@@ -148,20 +148,18 @@ export class QWebTablePlugin extends Plugin {
             });
         }
         /** @type {import("@html_editor/core/overlay_plugin").Overlay} */
-        this.colMenu = this.shared.createOverlay(TableMenu, {
-            position: "top-fit",
-            offsetY: 0,
-            sequence: 30,
-        });
+        this.colMenu = this.shared.createOverlay(
+            TableMenu,
+            {
+                positionOptions: {
+                    position: "top-fit",
+                    offsetY: 0,
+                },
+            },
+            { sequence: 30 }
+        );
 
         this.addDomListener(this.document, "pointermove", this.onMouseMove);
-        this.addDomListener(this.document, "click", () => {
-            if (this.isMenuOpened) {
-                this.isMenuOpened = false;
-                this.colMenu.close();
-                this.rowMenu.close();
-            }
-        });
     }
 
     handleCommand(cmd, payload) {
@@ -189,7 +187,7 @@ export class QWebTablePlugin extends Plugin {
 
     onMouseMove(ev) {
         const target = ev.target;
-        if (this.isMenuOpened) {
+        if (this.colMenu.isOpen) {
             return;
         }
         if (
@@ -240,11 +238,9 @@ export class QWebTablePlugin extends Plugin {
             open: () => {
                 dropdownState.isOpen = true;
                 menuToClose?.close();
-                this.isMenuOpened = true;
             },
             close: () => {
                 dropdownState.isOpen = false;
-                this.isMenuOpened = false;
             },
         });
         return dropdownState;
