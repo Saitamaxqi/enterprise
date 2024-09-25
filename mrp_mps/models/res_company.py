@@ -78,7 +78,7 @@ class ResCompany(models.Model):
                     week_num=format_date(self.env, date_start, date_format='w'),
                     start_date=format_date(self.env, date_start, date_format='d'),
                     end_date=format_date(self.env, date_stop, date_format='d'),
-                    month=format_date(self.env, date_start, date_format='MMM')
+                    month=format_date(self.env, date_stop, date_format='MMM')
                 ))
             else:
                 dates_as_str.append(format_date(self.env, date_start, date_format='MMM d'))

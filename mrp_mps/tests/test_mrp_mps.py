@@ -943,7 +943,7 @@ class TestMpsMps(common.TransactionCase):
 
         mps_state_week = self.mps.get_mps_view_state(period_scale='week')
         self.assertEqual(len(mps_state_week['dates']), self.env.company.manufacturing_period_to_display_week)
-        self.assertEqual(mps_state_week['dates'][2:5], ['Week 3 (15-21/Jan)', 'Week 4 (22-28/Jan)', 'Week 5 (29-4/Jan)'])
+        self.assertEqual(mps_state_week['dates'][2:5], ['Week 3 (15-21/Jan)', 'Week 4 (22-28/Jan)', 'Week 5 (29-4/Feb)'])
 
         mps_state_day = self.mps.get_mps_view_state(period_scale='day')
         self.assertEqual(len(mps_state_day['dates']), self.env.company.manufacturing_period_to_display_day)
