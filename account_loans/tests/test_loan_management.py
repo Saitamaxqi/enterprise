@@ -165,6 +165,36 @@ class TestLoanManagement(AccountTestInvoicingCommon):
             'account_id': self.short_term_account.id,
         }])
 
+        # Verify that the reverse reclassification moves are correct
+        self.assertRecordValues(reclassification_reverse_moves[0] | reclassification_reverse_moves[11] | reclassification_reverse_moves[15], [{
+            'date': fields.Date.to_date('2024-02-01'),
+            'ref': "Odoomobile Loan 🚗 - Reversal reclassification LT - ST 02/2024 to 01/2025",  # offset of 1 month
+            'amount_total': 12_000,  # sum of the principals of the next 12 months
+            'generating_loan_line_id': loan.line_ids[0].id,
+        }, {
+            'date': fields.Date.to_date('2025-01-01'),
+            'ref': "Odoomobile Loan 🚗 - Reversal reclassification LT - ST 01/2025 to 12/2025",  # offset of 1 month
+            'amount_total': 12_000,  # sum of the principals between 01/25 and 12/25
+            'generating_loan_line_id': loan.line_ids[11].id,
+        }, {
+            'date': fields.Date.to_date('2025-05-01'),
+            'ref': "Odoomobile Loan 🚗 - Reversal reclassification LT - ST 05/2025 to 12/2025",  # offset of 1 month
+            'amount_total': 8_000,  # sum of the principals between 05/25 and 12/25
+            'generating_loan_line_id': loan.line_ids[15].id,
+        }])
+
+        self.assertRecordValues(reclassification_reverse_moves[0].line_ids.sorted(lambda l: l.debit), [{
+            'name': f'Odoomobile Loan 🚗 - Reversal reclassification LT - ST 02/2024 to 01/2025 (To {self.short_term_account.code})',
+            'credit': 12_000,
+            'debit': 0,
+            'account_id': self.long_term_account.id,
+        }, {
+            'name': f'Odoomobile Loan 🚗 - Reversal reclassification LT - ST 02/2024 to 01/2025 (From {self.long_term_account.code})',
+            'credit': 0,
+            'debit': 12_000,
+            'account_id': self.short_term_account.id,
+        }])
+
     @freeze_time('2024-07-31')
     def test_loan_states(self):
         """Test the flow of the loan: Draft, Running, Closed, Cancelled"""

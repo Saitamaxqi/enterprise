@@ -200,6 +200,7 @@ class AccountLoan(models.Model):
 
             payment_moves_values = []
             reclassification_moves_values = []
+            reclassification_reversed_moves_values = []
             for i, line in enumerate(loan.line_ids):
                 if loan.skip_until_date and line.date > loan.skip_until_date:
                     continue
@@ -239,13 +240,16 @@ class AccountLoan(models.Model):
                 next_lines = loan.line_ids[i + 1: i + 13]  # 13 = 1 (start offset) + 12 months
                 from_date = format_date(self.env, next_lines[0].date, date_format='MM/y')
                 to_date = format_date(self.env, next_lines[-1].date, date_format='MM/y')
-                reclassification_moves_values.append({
+                common_reclassification_values = {
                     'company_id': loan.company_id.id,
                     'auto_post': 'at_date',
                     'generating_loan_line_id': line.id,
                     'is_loan_payment_move': False,
-                    'date': line.date + relativedelta(day=31),
                     'journal_id': loan.journal_id.id,
+                }
+                reclassification_moves_values.append({
+                    **common_reclassification_values,
+                    'date': line.date + relativedelta(day=31),
                     'ref': f"{loan.name} - {_('Reclassification LT - ST')} {from_date} to {to_date}",
                     'line_ids': [
                         Command.create({
@@ -260,23 +264,36 @@ class AccountLoan(models.Model):
                         }),
                     ],
                 })
+                # Manually create the reverse (instead of using _reverse_moves()) for optimization reasons
+                reclassification_reversed_moves_values.append({
+                    **common_reclassification_values,
+                    'date': line.date + relativedelta(day=31) + relativedelta(days=1),  # first day of next month
+                    'ref': f"{loan.name} - {_('Reversal reclassification LT - ST')} {from_date} to {to_date}",
+                    'line_ids': [
+                        Command.create({
+                            'account_id': loan.long_term_account_id.id,
+                            'credit': sum(next_lines.mapped('principal')),
+                            'name': f"{loan.name} - {_('Reversal reclassification LT - ST')} {from_date} to {to_date} (To {loan.short_term_account_id.code})",
+                        }),
+                        Command.create({
+                            'account_id': loan.short_term_account_id.id,
+                            'debit': sum(next_lines.mapped('principal')),
+                            'name': f"{loan.name} - {_('Reversal reclassification LT - ST')} {from_date} to {to_date} (From {loan.long_term_account_id.code})",
+                        }),
+                    ],
+                })
 
             def post_moves(moves):
                 moves.filtered(lambda m: m.date <= fields.Date.context_today(self)).action_post()
 
             payment_moves = self.env['account.move'].create(payment_moves_values)
             reclassification_moves = self.env['account.move'].create(reclassification_moves_values)
-            post_moves(payment_moves | reclassification_moves)
+            reclassification_reversed_moves = self.env['account.move'].create(reclassification_reversed_moves_values)
+            post_moves(payment_moves | reclassification_moves | reclassification_reversed_moves)
 
-            reclassification_reversed_moves = reclassification_moves._reverse_moves()
-            for reclassification_reversed_move in reclassification_reversed_moves:
-                reclassification_reversed_move.write({
-                    'date': reclassification_reversed_move.reversed_entry_id.date + relativedelta(days=1),
-                    'ref': _("Reversal of %s", reclassification_reversed_move.reversed_entry_id.ref),
-                    'generating_loan_line_id': reclassification_reversed_move.reversed_entry_id.generating_loan_line_id.id,
-                    'is_loan_payment_move': False,
-                })
-            post_moves(reclassification_reversed_moves)
+            for (reclassification_move, reclassification_reversed_move) in zip(reclassification_moves, reclassification_reversed_moves):
+                reclassification_reversed_move.reversed_entry_id = reclassification_move
+                reclassification_reversed_move.message_post(body=_('This entry has been reversed from %s', reclassification_move._get_html_link()))
 
             reclassification_moves._message_log_batch(
                 bodies={move.id: _('This entry has been %s', reverse._get_html_link(title=_("reversed"))) for move, reverse in zip(reclassification_moves, reclassification_reversed_moves)}
