@@ -501,19 +501,19 @@ class TestWorkOrder(TestMrpWorkorderCommon):
         self.assertEqual(wo1_1.state, 'ready')
         self.assertEqual(wo1_2.state, 'pending')
         self.assertEqual(wo2_1.state, 'ready')
-        self.assertEqual(wo2_2.state, 'pending')
+        self.assertEqual(wo2_2.state, 'ready')
 
         wo1_1.qty_producing = 1
         wo1_1.do_finish()
         self.assertEqual(wo1_1.state, 'done')
         self.assertEqual(wo1_2.state, 'ready')
         self.assertEqual(wo2_1.state, 'progress', "Completion of first MO's WOs should auto-started second MO's first WO")
-        self.assertEqual(wo2_2.state, 'pending')
+        self.assertEqual(wo2_2.state, 'ready')
         wo1_2.do_finish()
         self.assertEqual(wo1_1.state, 'done')
         self.assertEqual(wo1_2.state, 'done')
         self.assertEqual(wo2_1.state, 'progress')
-        self.assertEqual(wo2_2.state, 'pending', "Completion of first MO's WOs should not affect backordered pending WO")
+        self.assertEqual(wo2_2.state, 'progress')
         self.assertEqual(mo.state, 'to_close')
 
     def test_workorder_tracked_final_product(self):

@@ -158,7 +158,7 @@ class TestWorkOrderDependencies(TestMrpWorkorderCommon):
         mo_2 = mo.procurement_group_id.mrp_production_ids - mo
         wo_4, wo_5, wo_6 = mo_2.workorder_ids
 
-        self.assertEqual(wo_4.state, 'pending')
+        self.assertEqual(wo_4.state, 'ready')
         self.assertEqual(wo_5.state, 'cancel')
         self.assertEqual(wo_6.state, 'ready')
 

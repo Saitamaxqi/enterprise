@@ -225,9 +225,9 @@ class TestWorkOrderProcessCommon(TestMrpWorkorderCommon):
         self.env['stock.quant']._update_available_quantity(self.graphics_card, self.stock_location, 20)
         form = Form(self.env['mrp.production'])
         form.product_id = self.laptop
-        form.product_qty = 1
         form.bom_id = self.bom_laptop
         mo_laptop = form.save()
+        mo_laptop.product_qty = 2.0
         mo_laptop.action_confirm()
         # <field name="qty_producing" invisible="state == 'draft'"/>
         form = Form(mo_laptop)
