@@ -22,6 +22,7 @@ in the "Statement Reports" section).
         'data/tax_report.xml',
         'data/cron.xml',
         'data/template.xml',
+        'data/account_report_ec_sales_list_report.xml',
         'security/ir.model.access.csv',
         'views/res_config_settings_views.xml',
         'views/account_journal_dashboard_view.xml',
