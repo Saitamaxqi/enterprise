@@ -1447,3 +1447,28 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
             self._get_depreciation_move_values(date='2024-06-30', depreciation_value=106.30, remaining_value=96.65, depreciated_value=7103.35, state='draft'),
             self._get_depreciation_move_values(date='2024-07-31', depreciation_value=96.65, remaining_value=0.00, depreciated_value=7200.00, state='draft'),
         ])
+
+    def test_linear_modify_0_value_residual(self):
+        """Set the value residual to 0"""
+        asset = self.create_asset(value=10000, periodicity="monthly", periods=10, method="linear", acquisition_date="2022-02-01", prorata="constant_periods", asset_type='expense')
+        asset.validate()
+
+        self.env['asset.modify'].create({
+            'asset_id': asset.id,
+            'name': 'Test reason',
+            'method_number': 4,
+            'date': fields.Date.to_date("2022-06-24"),
+            'modify_action': 'modify',
+            'value_residual': 0,
+            'account_asset_counterpart_id': self.company_data['default_account_revenue'].copy().id,
+        }).modify()
+
+        self.assertRecordValues(asset.depreciation_move_ids.sorted(lambda mv: (mv.date, mv.id)), [
+            self._get_depreciation_move_values(date='2022-02-28', depreciation_value=1000, remaining_value=9000, depreciated_value=1000, state='posted'),
+            self._get_depreciation_move_values(date='2022-03-31', depreciation_value=1000, remaining_value=8000, depreciated_value=2000, state='posted'),
+            self._get_depreciation_move_values(date='2022-04-30', depreciation_value=1000, remaining_value=7000, depreciated_value=3000, state='posted'),
+            self._get_depreciation_move_values(date='2022-05-31', depreciation_value=1000, remaining_value=6000, depreciated_value=4000, state='posted'),
+            self._get_depreciation_move_values(date='2022-06-24', depreciation_value=800, remaining_value=5200, depreciated_value=4800, state='posted'),
+
+            self._get_depreciation_move_values(date='2022-06-24', depreciation_value=5200, remaining_value=0, depreciated_value=10000, state='posted'),
+        ])
