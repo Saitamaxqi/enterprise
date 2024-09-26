@@ -145,7 +145,7 @@
                                         <field name="groupby">account_id</field>
                                         <field name="hide_if_zero" eval="1"/>
                                         <field name="foldable" eval="True"/>
-                                        <field name="account_codes_formula">130 + 132 + 133 + 131</field>
+                                        <field name="account_codes_formula">130 + 132 + 133 + 131 + 137</field>
                                     </record>
                                     <record id="account_financial_report_l10n_fi_bs_line_1_1_2_5" model="account.report.line">
                                         <field name="name">5. Advances and work in progress</field>
@@ -208,7 +208,7 @@
                                         <field name="groupby">account_id</field>
                                         <field name="hide_if_zero" eval="1"/>
                                         <field name="foldable" eval="True"/>
-                                        <field name="account_codes_formula">147 + 148</field>
+                                        <field name="account_codes_formula">147 + 148 + 149</field>
                                     </record>
                                 </field>
                             </record>
