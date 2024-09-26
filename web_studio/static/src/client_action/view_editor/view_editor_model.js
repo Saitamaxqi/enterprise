@@ -748,6 +748,12 @@ export class ViewEditorModel extends Reactive {
 
     _handleDone({ mode, pending, pendingUndone, result }) {
         this.env.bus.trigger("CLEAR-CACHES");
+        if (this.mainViewType === "kanban") {
+            // the cache is on a by-template basis
+            // kanban may have multiple t-name templates
+            // Wipe everything to force re-compilation
+            resetViewCompilerCache();
+        }
         if (result) {
             this.viewDescriptions.relatedModels = result.models;
 

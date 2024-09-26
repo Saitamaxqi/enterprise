@@ -1,7 +1,7 @@
 /** @odoo-module */
 import { registry } from "@web/core/registry";
 import { stepNotInStudio, assertEqual } from "@web_studio/../tests/tours/tour_helpers";
-import { queryFirst } from "@odoo/hoot-dom";
+import { queryFirst, drag, waitFor } from "@odoo/hoot-dom";
 
 registry
     .category("web_tour.tours")
@@ -1754,6 +1754,63 @@ registry.category("web_tour.tours").add("web_studio_test_kanban_field_bold", {
         {
             trigger:
                 ".o_web_studio_sidebar .o_web_studio_property input[type=checkbox]#bold:checked",
+        },
+    ],
+});
+
+async function animationFrame(timeoutBefore) {
+    await new Promise((resolve) => setTimeout(resolve, timeoutBefore));
+    await new Promise(requestAnimationFrame);
+}
+
+registry.category("web_tour.tours").add("web_studio_test_kanban_menu_ribbon", {
+    test: true,
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_kanban_view",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item button:enabled",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_view_renderer .o_kanban_view",
+        },
+        {
+            trigger: ".nav .o_web_studio_new",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_view_renderer .o_web_studio_hook[data-type='t']",
+        },
+        {
+            trigger: ".o_web_studio_component.o_web_studio_field_menu",
+            async run() {
+                await animationFrame();
+                const { drop, moveTo } = await drag(this.anchor);
+                await moveTo(".o_kanban_record:first()");
+                await animationFrame(500); // wait for animations to finish in under 500ms
+                const target = await waitFor(".o_web_studio_hook_visible", {
+                    visible: true,
+                    timeout: 5000,
+                });
+                await moveTo(target);
+                await drop(target);
+            },
+        },
+        {
+            trigger: ".o_kanban_view .o_kanban_record:first() .o_dropdown_kanban",
+        },
+        {
+            trigger: ".o_web_studio_component.o_web_studio_field_ribbon",
+            run: "drag_and_drop(.o_web_studio_hook[data-type='ribbon'])",
+        },
+        {
+            trigger: ".o_kanban_view .o_kanban_record:first() .o_widget_web_ribbon",
         },
     ],
 });

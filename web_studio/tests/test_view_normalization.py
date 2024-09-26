@@ -684,10 +684,10 @@ class TestViewNormalization(TransactionCase):
             </data>
         """, """
             <data>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[1]/div[1]/field[@name='name']" position="before">
+              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[@t-name='card']/div[1]/field[@name='name']" position="before">
                 <field name="color"/>
               </xpath>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[1]/div[1]/field[@name='name']" position="after">
+              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[@t-name='card']/div[1]/field[@name='name']" position="after">
                 <field name="phone"/>
                 <field name="mobile"/>
               </xpath>
@@ -722,10 +722,10 @@ class TestViewNormalization(TransactionCase):
               <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/field[@name='mobile']" position="after">
                 <field name="lang"/>
               </xpath>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[1]/div[1]" position="attributes">
+              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[@t-name='card']/div[1]" position="attributes">
                 <attribute name="color">lang</attribute>
               </xpath>
-              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[1]/div[1]/field[@name='name']" position="after">
+              <xpath expr="//form[1]/sheet[1]/notebook[1]/page[1]/field[@name='child_ids']/kanban[1]/templates[1]/t[@t-name='card']/div[1]/field[@name='name']" position="after">
                 <div class="o_dropdown_kanban dropdown" name="studio_div_302a40">
                   <a role="button" class="dropdown-toggle o-no-caret btn" data-bs-toggle="dropdown" href="#">
                     <span class="fa fa-bars fa-lg" title="menu"/>

@@ -1825,3 +1825,44 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
                     <attribute name="class">fw-bold text-muted</attribute>
                 </xpath>
             </data>""")
+
+    def test_kanban_menu_ribbon(self):
+        self.testViewKanban = self.env["ir.ui.view"].create({
+            "name": "simple partner",
+            "model": "res.partner",
+            "type": "kanban",
+            "arch": '''
+                <kanban>
+                    <t t-name="card">
+                        <field name="function" />
+                        <field name="name" />
+                    </t>
+                </kanban>
+            '''
+        })
+        self.testAction.write({
+            "view_ids": [
+                Command.clear(),
+                Command.create({"view_id": self.testViewKanban.id, "view_mode": "kanban"}),
+            ]
+        })
+
+        self.start_tour("/odoo?debug=tests", 'web_studio_test_kanban_menu_ribbon', login="admin")
+        studio_view = _get_studio_view(self.testViewKanban)
+        self.assertXMLEqual(studio_view.arch, """
+        <data>
+          <xpath expr="//kanban[1]/t[@t-name='card']" position="before">
+            <t t-name="menu">
+              <t t-if="widget.editable">
+                <a type="open" class="dropdown-item">Edit</a>
+              </t>
+              <t t-if="widget.deletable">
+                <a type="delete" class="dropdown-item">Delete</a>
+              </t>
+            </t>
+          </xpath>
+          <xpath expr="//field[@name='function']" position="before">
+            <widget name="web_ribbon" title="Demo"/>
+          </xpath>
+        </data>
+        """)

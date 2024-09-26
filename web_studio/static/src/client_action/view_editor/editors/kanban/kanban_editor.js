@@ -7,6 +7,7 @@ import { KanbanEditorRenderer } from "@web_studio/client_action/view_editor/edit
 import { makeModelErrorResilient } from "@web_studio/client_action/view_editor/editors/utils";
 import { KanbanEditorSidebar } from "./kanban_editor_sidebar/kanban_editor_sidebar";
 import { getStudioNoFetchFields, useModelConfigFetchInvisible } from "../utils";
+import { KANBAN_CARD_ATTRIBUTE } from "@web/views/kanban/kanban_arch_parser";
 
 class EditorArchParser extends kanbanView.ArchParser {
     parse(arch, models, modelName) {
@@ -131,6 +132,13 @@ async function addKanbanViewStructure(structure) {
             return { type: "kanban_menu" };
         }
         case "ribbon": {
+            const cardTemplate = this.viewEditorModel.xmlDoc.querySelector(`[t-name="${KANBAN_CARD_ATTRIBUTE}"]`);
+            let ribbonTarget;
+            if (cardTemplate.children.length) {
+                ribbonTarget = [`//kanban//t[@t-name="${KANBAN_CARD_ATTRIBUTE}"]/*[1]`, "before"];
+            } else {
+                ribbonTarget = [`//kanban//t[@t-name="${KANBAN_CARD_ATTRIBUTE}"]`, "inside"];
+            }
             return {
                 node: {
                     tag: "widget",
@@ -139,11 +147,12 @@ async function addKanbanViewStructure(structure) {
                         title: "Demo",
                     },
                 },
+
                 target: this.env.viewEditorModel.getFullTarget(
-                    "//kanban/templates/t[@t-name='card']",
+                    ribbonTarget[0],
                     { isXpathFullAbsolute: false }
                 ),
-                position: "inside",
+                position: ribbonTarget[1],
             };
         }
         case "kanban_colorpicker": {

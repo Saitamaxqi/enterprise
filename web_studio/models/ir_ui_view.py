@@ -1038,6 +1038,8 @@ class View(models.Model):
         if node.get('name') and node.tag not in named_tags:
             node_str = '%s[@name=\'%s\']' % (node.tag, node.get('name'))
             return node_str
+        if node.tag == "t" and node.get("t-name"):
+            return "t[@t-name=\'%s\']" % node.get("t-name")
 
         same_tag_prev_siblings = list(node.itersiblings(tag=node.tag, preceding=True))
 
