@@ -45,7 +45,10 @@
                                 </div>
                             </div>
                         </div>
-                        <small t-if="event" class="bg-success position-absolute bottom-0 w-100 text-end p-3">
+                        <small t-if="event.appointment_status == 'request'" class="bg-info position-absolute bottom-0 w-100 text-end p-3">
+                            <i class="fa fa-thumbs-up me-2"/>Reserved
+                        </small>
+                        <small t-elif="event" class="bg-success position-absolute bottom-0 w-100 text-end p-3">
                             <i class="fa fa-check me-2"/>Booked
                         </small>
                         <small t-elif="booking.not_available" class="bg-warning position-absolute bottom-0 w-100 text-end p-3">
