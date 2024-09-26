@@ -462,9 +462,34 @@ class TestStudioIrModelHardcoded(TransactionCase):
         """ Test that all models and fields from hardcoded lists exist in the data model.
             Should be executed at post install time because obviously the models should all
             have a chance to get up to date.
-
-            Note that all needed modules for hardcoded models should be installed.
         """
+        modules = self.env["ir.module.module"].search([])
+        module_names = set(modules.mapped("name"))
+        needed_modules = {
+            "account",
+            "crm",
+            "documents",
+            "helpdesk",
+            "hr",
+            "knowledge",
+            "planning",
+            "product",
+            "project",
+            "quality",
+            "sale",
+            "stock",
+            "survey",
+            "uom",
+            "website",
+            "worksheet",
+        }
+        self.assertTrue(module_names.issuperset(needed_modules))
+
+        installed = self.env["ir.module.module"]._installed().keys()
+        if not all(name in installed for name in needed_modules):
+            # At least one needed module is not installed, so we would not be able
+            # to assert the hardcoded lists, so we skip the rest of the test.
+            return
 
         for model, defaults in PRESET_MODELS_DEFAULTS:
             self.assertIn(model, self.env)
