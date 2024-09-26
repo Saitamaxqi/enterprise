@@ -1,12 +1,10 @@
 /** @odoo-module */
 
 import { registry } from "@web/core/registry";
-import { user } from "@web/core/user";
-import { session } from "@web/session";
 import { useService } from "@web/core/utils/hooks";
 import { WithSearch } from "@web/search/with_search/with_search";
 import { MrpDisplay } from "@mrp_workorder/mrp_display/mrp_display";
-import { Component, onWillStart, useSubEnv } from "@odoo/owl";
+import { Component, onWillStart } from "@odoo/owl";
 import { MrpDisplaySearchModel } from "@mrp_workorder/mrp_display/search_model";
 
 // from record.js
@@ -131,7 +129,7 @@ export class MrpDisplayAction extends Component {
             ],
         };
     }
-    
+
     setup() {
         this.viewService = useService("view");
         this.fieldService = useService("field");
@@ -145,14 +143,9 @@ export class MrpDisplayAction extends Component {
             ["bom_id", "=", false],
             ["bom_id.type", "in", ["normal", "phantom"]],
         ];
-        let pickingTypeId = false;
         if (context.active_model === "stock.picking.type" && context.active_id) {
             domain.push(["picking_type_id", "=", context.active_id]);
-            pickingTypeId = context.active_id;
         }
-        useSubEnv({
-            localStorageName: `mrp_workorder.db_${session.db}.user_${user.userId}.picking_type_${pickingTypeId}`,
-        });
         onWillStart(async () => {
             for (const [resModel, fieldNames] of Object.entries(this.fieldsStructure)) {
                 const fields = await this.fieldService.loadFields(resModel, { fieldNames });
@@ -198,13 +191,7 @@ export class MrpDisplayAction extends Component {
                     { name: "name", asc: true },
                 ],
                 SearchModel: MrpDisplaySearchModel,
-                searchModelArgs: {
-                    ...context,
-                    loadedWorkcenters:
-                        JSON.parse(localStorage.getItem(this.env.localStorageName)) || [],
-                    enableWorkcenterFilter:
-                        !context.workcenter_id && (await user.hasGroup("mrp.group_mrp_routings")),
-                },
+                searchModelArgs: context,
                 loadIrFilters: true,
             };
         });

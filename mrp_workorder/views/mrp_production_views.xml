@@ -47,10 +47,6 @@
             <filter name="filter_planned" position="attributes">
                 <attribute name="domain">[('is_planned', '=', True)]</attribute>
             </filter>
-            <xpath expr="//filter[@name='activities_exception']" position="before">
-                <filter name="shop_floor_this_station" string="This Station" groups="mrp.group_mrp_routings"/>
-                <separator/>
-            </xpath>
         </field>
     </record>
 
@@ -74,7 +70,7 @@
         <field name="inherit_id" ref="mrp.mrp_production_form_view"/>
         <field name="arch" type="xml">
             <xpath expr="//div[@name='button_box']" position="inside">
-                <button name="action_open_shop_floor" type="object" icon="oi-view-kanban" string="Shop Floor" 
+                <button name="action_open_shop_floor" type="object" icon="oi-view-kanban" string="Shop Floor"
                         groups="mrp_workorder.group_mrp_wo_shop_floor" invisible="state in ('draft', 'done', 'cancel')"/>
             </xpath>
             <xpath expr="//page[@name='miscellaneous']//field[@name='company_id']" position="after">
