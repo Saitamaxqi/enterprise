@@ -829,7 +829,7 @@ class SignRequestItem(models.Model):
         return "mailto:%s?subject=%s" % (url_quote(email), url_quote(subject))
 
     # this display_name (with sudo) is used for many2many_tags especially the partner_id is private
-    display_name = fields.Char(compute='_compute_display_name', compute_sudo=True)
+    display_name = fields.Char(compute='_compute_display_name', search="_search_display_name", compute_sudo=True)
 
     partner_id = fields.Many2one('res.partner', string="Signer", ondelete='restrict')
     sign_request_id = fields.Many2one('sign.request', string="Signature Request", ondelete='cascade', required=True, copy=False)

@@ -6,9 +6,10 @@ from odoo import api, fields, models, _
 class L10nAuSuperAccount(models.Model):
     _name = "l10n_au.super.account"
     _description = "Super Account"
+    _rec_names_search = ["employee_id", "fund_id"]
 
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True)
-    display_name = fields.Char(compute="_compute_display_name", export_string_translation=False)
+    display_name = fields.Char(compute="_compute_display_name", search="_search_display_name", export_string_translation=False)
     employee_tfn = fields.Char(related="employee_id.l10n_au_tfn", string='TFN')
     fund_id = fields.Many2one("l10n_au.super.fund", string="Super Fund", required=True)
     fund_type = fields.Selection(related="fund_id.fund_type")

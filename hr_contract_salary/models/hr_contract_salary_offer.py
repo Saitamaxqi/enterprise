@@ -4,6 +4,7 @@
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
+from odoo.osv import expression
 from werkzeug.urls import url_encode
 
 
@@ -26,7 +27,7 @@ class HrContractSalaryOffer(models.Model):
                     result[field] = contract[field]
         return result
 
-    display_name = fields.Char(string="Title", compute="_compute_display_name", readonly=False)
+    display_name = fields.Char(string="Title", compute="_compute_display_name", search="_search_display_name", readonly=False)  # TODO read-only=False, but not inversed?
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company.id, required=True)
     currency_id = fields.Many2one(related='company_id.currency_id')
     contract_template_id = fields.Many2one(
@@ -79,6 +80,24 @@ class HrContractSalaryOffer(models.Model):
             else:
                 name = offer.employee_contract_id.employee_id.name
             offer.display_name = _("Offer for %(recipient)s", recipient=name)
+
+    def _search_display_name(self, operator, value):
+        if neg := (operator in expression.NEGATIVE_TERM_OPERATORS):
+            operator = expression.TERM_OPERATORS_NEGATION[operator]
+        domain = [
+            "|",
+                ('applicant_id', 'any', [
+                    ('employee_id.name', operator, value),
+                    ('partner_id.name', operator, value),
+                    ('partner_name', operator, value),
+                ]),
+            "&",
+                ('applicant_id', '=', False),
+                ('employee_contract_id.employee_id.name', operator, value),
+        ]
+        if neg:
+            domain = ["!", *domain]
+        return domain
 
     @api.depends('create_date')
     def _compute_offer_create_date(self):

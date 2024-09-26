@@ -26,7 +26,6 @@ class CommissionAchievement(models.Model):
     currency_rate = fields.Float(compute='_compute_currency_rate', store=True)
 
     note = fields.Char("Note")
-    display_name = fields.Char(compute="_compute_display_name")
 
     @api.depends('note')
     def _compute_display_name(self):

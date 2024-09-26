@@ -42,8 +42,6 @@ class SaleOrderLog(models.Model):
                                         help="MRR, after applying the changes of that particular event", readonly=True)
     amount_signed = fields.Monetary(string='MRR change', required=True, readonly=True)
     subscription_state = fields.Selection(selection=SUBSCRIPTION_STATES, help="Subscription stage when the change occurred")
-    display_name = fields.Char(compute="_compute_display_name")
-
 
     @api.depends('order_id')
     def _compute_origin_order_id(self):
