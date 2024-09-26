@@ -700,7 +700,8 @@
       "type": "date",
       "label": "Month",
       "defaultValue": "this_month",
-      "rangeType": "fixedPeriod"
+      "rangeType": "fixedPeriod",
+      "disabledPeriods": ["quarter"]
     }
   ],
   "lists": {},
