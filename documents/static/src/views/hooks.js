@@ -392,6 +392,7 @@ function useDocumentsViewFilePreviewer({
         component.onOpenDocumentsPreview(ev.detail);
     });
     useBus(bus, "documents-close-preview", () => {
+        documentService.setPreviewedDocument(null);
         setPreviewStore({});
     });
 
