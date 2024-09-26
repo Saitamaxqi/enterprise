@@ -55,10 +55,13 @@ class QualityCheck(models.Model):
         # Resequence quality points according to checks
         current_sequence = 10
         points = self.env['quality.point'].search([('operation_id', '=', operation.id)])
-        old_points = self.env['quality.point'].search([('operation_id', '=', self.workorder_id.operation_id.id)])
-        check = (points | old_points).check_ids.filtered(lambda check: not check.previous_check_id)
+        check = self.env['quality.check'].search([
+            ('point_id.operation_id', 'in', (operation.id, self.workorder_id.operation_id.id)),
+            ('previous_check_id', '=', False), ('production_id', '=', self.production_id.id)
+        ])
         while check:
-            point = check.point_id if check.point_id.operation_id == operation else points.filtered(lambda p: p._get_sync_values() == check.point_id._get_sync_values())
+            point = check.point_id if check.point_id.operation_id == operation else points.filtered(lambda p: p._get_sync_values() == check.point_id._get_sync_values())[0]
+            points -= point
             if point.sequence != current_sequence:
                 point.sequence = current_sequence
             current_sequence += 10

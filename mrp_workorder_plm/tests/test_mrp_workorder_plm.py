@@ -118,3 +118,18 @@ class TestMrpWorkorderPlm(TestPlmCommon):
         self.assertEqual(eco1.routing_change_ids[0].change_type, 'update', "Wrong type on operation change line.")
         self.assertEqual(eco1.routing_change_ids[1].change_type, 'remove', "Wrong type on operation change line.")
         self.assertEqual(eco1.routing_change_ids[2].change_type, 'add', "Wrong type on operation change line.")
+
+    def test_add_new_step_to_multi_mo(self):
+        """ Test that adding a step to multiple MOs of the same bom does not trigger
+        singleton errors. """
+        for i in range(3):
+            mo_form = Form(self.env['mrp.production'])
+            mo_form.bom_id = self.bom_table
+            mo_form.product_qty = 1
+            mo = mo_form.save()
+            mo.action_confirm()
+            wo = mo.workorder_ids[0]
+            action = wo.action_add_step()
+            add_step_form = Form(self.env[action['res_model']].with_context(action['context']), view=action['views'][0][0])
+            add_step = add_step_form.save()
+            add_step.with_user(self.env.user).add_check_in_chain()
