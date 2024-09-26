@@ -18,7 +18,7 @@ class AccountMoveReversal(models.TransientModel):
 
     @api.model
     def default_get(self, fields):
-        result = super(AccountMoveReversal, self).default_get(fields)
+        result = super().default_get(fields)
         ticket_id = result.get('helpdesk_ticket_id')
         if ticket_id:
             if 'reason' in fields:
@@ -79,7 +79,7 @@ class AccountMoveReversal(models.TransientModel):
 
     def reverse_moves(self, is_modify=False):
         # OVERRIDE
-        res = super(AccountMoveReversal, self).reverse_moves(is_modify)
+        res = super().reverse_moves(is_modify)
 
         if self.helpdesk_ticket_id:
             self.helpdesk_ticket_id.invoice_ids |= self.new_move_ids

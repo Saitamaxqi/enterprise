@@ -147,7 +147,7 @@ class ProductProduct(models.Model):
         }
 
     def action_product_forecast_report(self):
-        action = super(ProductProduct, self).action_product_forecast_report()
+        action = super().action_product_forecast_report()
 
         if not self._context.get('fsm_task_id', False):
             return action

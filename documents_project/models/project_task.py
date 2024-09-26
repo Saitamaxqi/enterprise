@@ -39,7 +39,7 @@ class ProjectTask(models.Model):
     def unlink(self):
         # unlink documents.document directly so mail.activity.mixin().unlink is called
         self.env['documents.document'].sudo().search([('attachment_id', 'in', self.attachment_ids.ids)]).unlink()
-        return super(ProjectTask, self).unlink()
+        return super().unlink()
 
     def _get_document_access_ids(self):
         return False

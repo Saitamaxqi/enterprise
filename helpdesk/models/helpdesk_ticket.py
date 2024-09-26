@@ -33,7 +33,7 @@ class HelpdeskTicket(models.Model):
 
     @api.model
     def default_get(self, fields):
-        result = super(HelpdeskTicket, self).default_get(fields)
+        result = super().default_get(fields)
         if result.get('team_id') and fields:
             team = self.env['helpdesk.team'].browse(result['team_id'])
             if 'user_id' in fields and 'user_id' not in result:  # if no user given, deduce it from the team
@@ -158,7 +158,7 @@ class HelpdeskTicket(models.Model):
             ticket.domain_user_ids = [Command.set(user_ids + ticket_user_ids)]
 
     def _compute_access_url(self):
-        super(HelpdeskTicket, self)._compute_access_url()
+        super()._compute_access_url()
         for ticket in self:
             ticket.access_url = '/my/ticket/%s' % ticket.id
 
@@ -408,7 +408,7 @@ class HelpdeskTicket(models.Model):
             empty_list_help_model='helpdesk.team',
             empty_list_help_document_name=_("tickets"),
         )
-        return super(HelpdeskTicket, self).get_empty_list_help(help_message)
+        return super().get_empty_list_help(help_message)
 
     def create_action(self, action_ref, title, search_view_ref):
         action = self.env["ir.actions.actions"]._for_xml_id(action_ref)
@@ -489,7 +489,7 @@ class HelpdeskTicket(models.Model):
             vals['oldest_unanswered_customer_message_date'] = now
 
         # context: no_log, because subtype already handle this
-        tickets = super(HelpdeskTicket, self).create(list_value)
+        tickets = super().create(list_value)
 
         all_partner_emails = []
         for ticket in tickets:
@@ -787,7 +787,7 @@ class HelpdeskTicket(models.Model):
         partner_ids = [x.id for x in self.env['mail.thread']._mail_find_partner_from_emails(self._ticket_email_split(msg), records=self) if x]
         if partner_ids:
             self.message_subscribe(partner_ids)
-        return super(HelpdeskTicket, self).message_update(msg, update_vals=update_vals)
+        return super().message_update(msg, update_vals=update_vals)
 
     def _message_compute_subject(self):
         """ Override the display name by the actual name field for communication."""
@@ -820,7 +820,7 @@ class HelpdeskTicket(models.Model):
         # use the sanitized body of the email from the message thread to populate the ticket's description
         if not self.description and message.subtype_id == self._creation_subtype() and tools.email_normalize(self.partner_email) == tools.email_normalize(message.email_from):
             self.description = message.body
-        return super(HelpdeskTicket, self)._message_post_after_hook(message, msg_vals)
+        return super()._message_post_after_hook(message, msg_vals)
 
     def _send_email_notify_to_cc(self, partners_to_notify):
         self.ensure_one()
@@ -845,7 +845,7 @@ class HelpdeskTicket(models.Model):
             )
 
     def _track_template(self, changes):
-        res = super(HelpdeskTicket, self)._track_template(changes)
+        res = super()._track_template(changes)
         ticket = self[0]
         if 'stage_id' in changes and ticket.stage_id.template_id and ticket.partner_email and (
             not self.env.user.partner_id or not ticket.partner_id or ticket.partner_id != self.env.user.partner_id
@@ -866,7 +866,7 @@ class HelpdeskTicket(models.Model):
         self.ensure_one()
         if 'stage_id' in init_values:
             return self.env.ref('helpdesk.mt_ticket_stage')
-        return super(HelpdeskTicket, self)._track_subtype(init_values)
+        return super()._track_subtype(init_values)
 
     def _notify_get_recipients_groups(self, message, model_description, msg_vals=None):
         """

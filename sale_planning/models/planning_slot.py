@@ -556,7 +556,7 @@ class PlanningSlot(models.Model):
 
     @api.model
     def auto_plan_ids(self, view_domain):
-        res = super(PlanningSlot, self).auto_plan_ids(view_domain)
+        res = super().auto_plan_ids(view_domain)
         if self._context.get('planning_slot_id'):
             # It means we are looking to assign one shift in particular to an available resource, which we do in planning.
             res["sale_line_planned"] = []

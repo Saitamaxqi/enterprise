@@ -15,7 +15,7 @@ from dateutil.relativedelta import relativedelta
 class TestUserAccess(HttpCase):
 
     def setUp(self):
-        super(TestUserAccess, self).setUp()
+        super().setUp()
 
         # create a planning manager
         self.planning_mgr = new_test_user(self.env,

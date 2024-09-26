@@ -64,7 +64,7 @@ class AccountAnalyticLine(models.Model):
 
     @api.depends('helpdesk_ticket_id.partner_id')
     def _compute_partner_id(self):
-        super(AccountAnalyticLine, self)._compute_partner_id()
+        super()._compute_partner_id()
         for line in self:
             if line.helpdesk_ticket_id:
                 line.partner_id = line.helpdesk_ticket_id.partner_id or line.partner_id
@@ -107,7 +107,7 @@ class AccountAnalyticLine(models.Model):
         return super()._get_timesheet_field_and_model_name()
 
     def _timesheet_get_portal_domain(self):
-        domain = super(AccountAnalyticLine, self)._timesheet_get_portal_domain()
+        domain = super()._timesheet_get_portal_domain()
         if not self.env.user.has_group('hr_timesheet.group_hr_timesheet_user'):
             domain = expression.OR([domain, self._timesheet_in_helpdesk_get_portal_domain()])
         return domain

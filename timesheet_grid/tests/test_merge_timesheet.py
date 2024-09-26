@@ -11,7 +11,7 @@ from odoo.addons.hr_timesheet.tests.test_timesheet import TestCommonTimesheet
 class TestTimesheetMerge(TestCommonTimesheet):
 
     def setUp(self):
-        super(TestTimesheetMerge, self).setUp()
+        super().setUp()
 
         yesterday = fields.Date.today() - timedelta(days=1)
         self.timesheet1 = self.env['account.analytic.line'].with_user(self.user_employee).create({

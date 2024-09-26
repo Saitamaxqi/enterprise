@@ -65,7 +65,7 @@ class HelpdeskTeam(models.Model):
                 ('res_model', '=', 'helpdesk.ticket'),
                 ('res_id', 'in', self.with_context(active_test=False).ticket_ids.ids)
             ]).unlink()
-        result = super(HelpdeskTeam, self).write(vals)
+        result = super().write(vals)
         if 'use_helpdesk_timesheet' in vals:
             self.sudo()._check_timesheet_group()
         for team in self.filtered(lambda team: team.use_helpdesk_timesheet and not team.project_id):

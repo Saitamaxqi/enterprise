@@ -11,7 +11,7 @@ class CrmLeadConvert2Ticket(models.TransientModel):
 
     @api.model
     def default_get(self, fields):
-        result = super(CrmLeadConvert2Ticket, self).default_get(fields)
+        result = super().default_get(fields)
         if 'partner_id' in fields:
             lead_id = result.get('lead_id')
             if lead_id:

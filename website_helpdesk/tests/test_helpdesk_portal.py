@@ -12,7 +12,7 @@ from odoo.tests.common import HttpCase, tagged
 class HelpDeskPortal(HttpCase):
 
     def setUp(self):
-        super(HelpDeskPortal, self).setUp()
+        super().setUp()
         self.team_with_sla = self.env['helpdesk.team'].create({
             'name': 'Team with SLAs',
             'use_sla': True,

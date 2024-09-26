@@ -8,7 +8,7 @@ class Website(models.Model):
     _inherit = "website"
 
     def get_suggested_controllers(self):
-        suggested_controllers = super(Website, self).get_suggested_controllers()
+        suggested_controllers = super().get_suggested_controllers()
         suggested_controllers.append((_('Helpdesk Customer Satisfaction'), self.env['ir.http']._url_for('/helpdesk/rating'), 'helpdesk'))
         return suggested_controllers
 

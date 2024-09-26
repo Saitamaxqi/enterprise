@@ -705,7 +705,7 @@ class Planning(models.Model):
 
     @api.model
     def default_get(self, fields_list):
-        res = super(Planning, self).default_get(fields_list)
+        res = super().default_get(fields_list)
 
         if res.get('resource_id'):
             resource_id = self.env['resource.resource'].browse(res.get('resource_id'))
@@ -739,7 +739,7 @@ class Planning(models.Model):
             it for every record.
         """
         if column_name != 'access_token':
-            super(Planning, self)._init_column(column_name)
+            super()._init_column(column_name)
         else:
             query = """
                 UPDATE %(table_name)s

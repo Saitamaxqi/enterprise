@@ -126,7 +126,7 @@ class Task(models.Model):
 
     @api.depends('allow_material', 'material_line_product_count')
     def _compute_display_conditions_count(self):
-        super(Task, self)._compute_display_conditions_count()
+        super()._compute_display_conditions_count()
         for task in self:
             enabled = task.display_enabled_conditions_count
             satisfied = task.display_satisfied_conditions_count
@@ -238,7 +238,7 @@ class Task(models.Model):
     def _compute_sale_order_id(self):
         fsm_tasks = self.filtered('is_fsm')
         fsm_task_to_sale_order = {task.id: task.sale_order_id for task in fsm_tasks}
-        super(Task, self)._compute_sale_order_id()
+        super()._compute_sale_order_id()
         for task in fsm_tasks:
             if task.sale_order_id:
                 continue
@@ -291,7 +291,7 @@ class Task(models.Model):
         # For FSM task, we don't want to search the last SOL of the customer.
         if self.is_fsm:
             return False
-        return super(Task, self)._get_last_sol_of_customer()
+        return super()._get_last_sol_of_customer()
 
     def _show_time_and_material(self):
         # check time and material section should visible or not in portal

@@ -335,7 +335,7 @@ class HelpdeskTeam(models.Model):
             default_alias = self.name.replace(' ', '-') if self.name else ''
             vals['alias_name'] = self.alias_name or default_alias
 
-        result = super(HelpdeskTeam, self).write(vals)
+        result = super().write(vals)
         if 'active' in vals:
             self.with_context(active_test=False).mapped('ticket_ids').write({'active': vals['active']})
         if 'use_sla' in vals:
@@ -353,7 +353,7 @@ class HelpdeskTeam(models.Model):
     def unlink(self):
         stages = self.mapped('stage_ids').filtered(lambda stage: stage.team_ids <= self)  # remove stages that only belong to team in self
         stages.unlink()
-        return super(HelpdeskTeam, self).unlink()
+        return super().unlink()
 
     def copy_data(self, default=None):
         vals_list = super().copy_data(default=default)
@@ -552,7 +552,7 @@ class HelpdeskTeam(models.Model):
     # ------------------------------------------------------------
 
     def _alias_get_creation_values(self):
-        values = super(HelpdeskTeam, self)._alias_get_creation_values()
+        values = super()._alias_get_creation_values()
         values['alias_model_id'] = self.env['ir.model']._get('helpdesk.ticket').id
         if self._origin.id:
             values['alias_defaults'] = defaults = ast.literal_eval(self.alias_defaults or "{}")

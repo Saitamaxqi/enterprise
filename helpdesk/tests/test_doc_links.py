@@ -16,7 +16,7 @@ class TestDocLinks(HttpCase):
         """
         Set-up the test environment
         """
-        super(TestDocLinks, self).setUp()
+        super().setUp()
         self.re = re.compile("<a href=\"(\\S+/documentation/\\S+)\"")
         self.links = set()
 

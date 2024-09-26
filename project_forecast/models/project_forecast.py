@@ -41,7 +41,7 @@ class PlanningShift(models.Model):
 
     def _get_fields_breaking_publication(self):
         """ Fields list triggering the `publication_warning` to True when updating shifts """
-        result = super(PlanningShift, self)._get_fields_breaking_publication()
+        result = super()._get_fields_breaking_publication()
         result.append('project_id')
         return result
 
@@ -49,7 +49,7 @@ class PlanningShift(models.Model):
         return  super()._display_name_fields() + ['project_id']
 
     def _prepare_template_values(self):
-        result = super(PlanningShift, self)._prepare_template_values()
+        result = super()._prepare_template_values()
         return {
             'project_id': self.project_id.id,
             **result
@@ -57,11 +57,11 @@ class PlanningShift(models.Model):
 
     @api.model
     def _get_template_fields(self):
-        values = super(PlanningShift, self)._get_template_fields()
+        values = super()._get_template_fields()
         return {'project_id': 'project_id', **values}
 
     def _get_domain_template_slots(self):
-        domain = super(PlanningShift, self)._get_domain_template_slots()
+        domain = super()._get_domain_template_slots()
         domain = expression.AND([
             domain,
             ['|', ('company_id', '=', False), ('company_id', '=', self.company_id.id)],
@@ -75,22 +75,22 @@ class PlanningShift(models.Model):
 
     @api.depends('role_id', 'employee_id', 'project_id', 'company_id')
     def _compute_template_autocomplete_ids(self):
-        super(PlanningShift, self)._compute_template_autocomplete_ids()
+        super()._compute_template_autocomplete_ids()
 
     @api.depends('project_id')
     def _compute_template_id(self):
-        super(PlanningShift, self)._compute_template_id()
+        super()._compute_template_id()
 
     @api.depends('template_id', 'role_id', 'allocated_hours', 'project_id')
     def _compute_allow_template_creation(self):
-        super(PlanningShift, self)._compute_allow_template_creation()
+        super()._compute_allow_template_creation()
 
     @api.model_create_multi
     def create(self, vals_list):
         return super().create(vals_list)
 
     def write(self, values):
-        return super(PlanningShift, self).write(values)
+        return super().write(values)
 
     def _prepare_shift_vals(self):
         return {

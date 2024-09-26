@@ -10,7 +10,7 @@ class HelpdeskTicketConvert2Lead(models.TransientModel):
 
     @api.model
     def default_get(self, fields):
-        res = super(HelpdeskTicketConvert2Lead, self).default_get(fields)
+        res = super().default_get(fields)
 
         if not res.get('ticket_id') and self.env.context.get('active_id'):
             res['ticket_id'] = self.env.context['active_id']

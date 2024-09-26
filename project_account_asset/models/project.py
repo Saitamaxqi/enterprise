@@ -44,7 +44,7 @@ class Project(models.Model):
     # ----------------------------
 
     def _get_stat_buttons(self):
-        buttons = super(Project, self)._get_stat_buttons()
+        buttons = super()._get_stat_buttons()
         if self.env.user.has_group('account.group_account_readonly'):
             buttons.append({
                 'icon': 'pencil-square-o',

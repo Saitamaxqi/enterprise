@@ -152,7 +152,7 @@ class WebsiteForm(form.WebsiteForm):
                 })
             request.params['partner_id'] = partner.id
 
-        return super(WebsiteForm, self)._handle_website_form(model_name, **kwargs)
+        return super()._handle_website_form(model_name, **kwargs)
 
     def insert_attachment(self, model, id_record, files):
         super().insert_attachment(model, id_record, files)

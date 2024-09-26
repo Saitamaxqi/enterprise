@@ -14,7 +14,7 @@ class CreateTask(models.TransientModel):
 
     @api.model
     def default_get(self, fields_list):
-        defaults = super(CreateTask, self).default_get(fields_list)
+        defaults = super().default_get(fields_list)
         project_id = defaults.get('project_id')
         if project_id:
             project = self.env['project.project'].browse(project_id)
@@ -22,7 +22,7 @@ class CreateTask(models.TransientModel):
         return defaults
 
     def _generate_task_values(self):
-        values = super(CreateTask, self)._generate_task_values()
+        values = super()._generate_task_values()
         if self.allow_worksheets:
             values.update({'worksheet_template_id': self.worksheet_template_id.id})
         return values

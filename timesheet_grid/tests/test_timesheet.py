@@ -23,7 +23,7 @@ except ImportError:
 class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
 
     def setUp(self):
-        super(TestTimesheetValidation, self).setUp()
+        super().setUp()
         today = fields.Date.today()
         self.timesheet1 = self.env['account.analytic.line'].with_user(self.user_employee).create({
             'name': "my timesheet 1",

@@ -510,7 +510,7 @@ class AnalyticLine(models.Model):
             raise UserError(_('You cannot use the timer on validated timesheets.'))
         amount = 0
         if self.user_timer_id.timer_start:
-            minutes_spent = super(AnalyticLine, self).action_timer_stop()
+            minutes_spent = super().action_timer_stop()
             amount = self._add_timesheet_time(minutes_spent, try_to_match)
         return amount
 

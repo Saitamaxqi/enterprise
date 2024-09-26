@@ -18,7 +18,7 @@ from odoo.osv.expression import AND, FALSE_DOMAIN
 class CustomerPortal(portal.CustomerPortal):
 
     def _prepare_portal_layout_values(self):
-        values = super(CustomerPortal, self)._prepare_portal_layout_values()
+        values = super()._prepare_portal_layout_values()
         return values
 
     def _prepare_home_portal_values(self, counters):

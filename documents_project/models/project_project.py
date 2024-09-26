@@ -162,7 +162,7 @@ class ProjectProject(models.Model):
         return copied_projects
 
     def _get_stat_buttons(self):
-        buttons = super(ProjectProject, self)._get_stat_buttons()
+        buttons = super()._get_stat_buttons()
         if self.use_documents:
             buttons.append({
                 'icon': 'file-text-o',

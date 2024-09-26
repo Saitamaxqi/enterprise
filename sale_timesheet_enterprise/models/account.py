@@ -11,7 +11,7 @@ class AccountInvoice(models.Model):
 
     @api.model
     def _timesheet_domain_get_invoiced_lines(self, sale_line_delivery):
-        domain = super(AccountInvoice, self)._timesheet_domain_get_invoiced_lines(sale_line_delivery)
+        domain = super()._timesheet_domain_get_invoiced_lines(sale_line_delivery)
         param_invoiced_timesheet = self.env['ir.config_parameter'].sudo().get_param('sale.invoiced_timesheet', DEFAULT_INVOICED_TIMESHEET)
         if param_invoiced_timesheet == 'approved':
             domain = expression.AND([domain, [('validated', '=', True)]])

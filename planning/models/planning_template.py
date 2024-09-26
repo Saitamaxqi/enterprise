@@ -56,7 +56,7 @@ class PlanningTemplate(models.Model):
     @api.model
     def read_group(self, domain, fields, groupby, offset=0, limit=None, orderby=False, lazy=True):
         res = []
-        for data in super(PlanningTemplate, self).read_group(domain, fields, groupby, offset, limit, orderby, lazy):
+        for data in super().read_group(domain, fields, groupby, offset, limit, orderby, lazy):
             if 'start_time' in data:
                 data['start_time'] = float_to_time(data['start_time']).strftime('%H:%M')
             if 'end_time' in data:

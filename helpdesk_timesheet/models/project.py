@@ -64,7 +64,7 @@ class Project(models.Model):
     # ----------------------------
 
     def _get_stat_buttons(self):
-        buttons = super(Project, self)._get_stat_buttons()
+        buttons = super()._get_stat_buttons()
         buttons.append({
             'icon': 'life-ring',
             'text': self.env._('Tickets'),

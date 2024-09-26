@@ -221,7 +221,7 @@ class Task(models.Model):
 
     def action_timer_start(self):
         if not self.user_timer_id.timer_start and self.display_timesheet_timer:
-            super(Task, self).action_timer_start()
+            super().action_timer_start()
             if self.is_fsm:
                 time = fields.Datetime.context_timestamp(self, self.timer_start)
                 self.message_post(

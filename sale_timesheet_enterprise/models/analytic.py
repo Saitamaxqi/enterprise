@@ -43,7 +43,7 @@ class AnalyticLine(models.Model):
         return super()._should_not_display_timer() or self.timesheet_invoice_id
 
     def _timesheet_get_portal_domain(self):
-        domain = super(AnalyticLine, self)._timesheet_get_portal_domain()
+        domain = super()._timesheet_get_portal_domain()
         param_invoiced_timesheet = self.env['ir.config_parameter'].sudo().get_param('sale.invoiced_timesheet', DEFAULT_INVOICED_TIMESHEET)
         if param_invoiced_timesheet == 'approved':
             domain = expression.AND([domain, [('validated', '=', True)]])
@@ -61,4 +61,4 @@ class AnalyticLine(models.Model):
         invoice_validated_timesheets = self.filtered(lambda l: not l._is_not_billed())
         self -= invoice_validated_timesheets
         # Errors are handled in the parent if there are no lines left
-        return super(AnalyticLine, self).action_invalidate_timesheet()
+        return super().action_invalidate_timesheet()

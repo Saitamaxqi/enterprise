@@ -54,7 +54,7 @@ class Employee(models.Model):
             """.format(table=self._table)
             self.env.cr.execute_values(query, values_args)
         else:
-            super(Employee, self)._init_column(column_name)
+            super()._init_column(column_name)
 
     def _planning_get_url(self, planning):
         result = {}

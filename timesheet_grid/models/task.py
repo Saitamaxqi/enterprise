@@ -99,7 +99,7 @@ class Task(models.Model):
 
     def action_timer_start(self):
         if not self.user_timer_id.timer_start and self.display_timesheet_timer:
-            super(Task, self).action_timer_start()
+            super().action_timer_start()
 
     def action_timer_stop(self):
         # timer was either running or paused

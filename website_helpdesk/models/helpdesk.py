@@ -37,7 +37,7 @@ class HelpdeskTeam(models.Model):
             team.show_knowledge_base = team.use_website_helpdesk_form and any(team[field] for field in kb_fields)
 
     def _compute_website_url(self):
-        super(HelpdeskTeam, self)._compute_website_url()
+        super()._compute_website_url()
         for team in self:
             team.website_url = "/helpdesk/%s" % self.env['ir.http']._slug(team)
 
@@ -51,7 +51,7 @@ class HelpdeskTeam(models.Model):
     def write(self, vals):
         if 'active' in vals and not vals['active']:
             vals['is_published'] = False
-        res = super(HelpdeskTeam, self).write(vals)
+        res = super().write(vals)
         if 'use_website_helpdesk_form' in vals and vals['use_website_helpdesk_form']:
             self._ensure_submit_form_view()
         if {'use_website_helpdesk_form', 'is_published'} & vals.keys():
@@ -60,14 +60,14 @@ class HelpdeskTeam(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        teams = super(HelpdeskTeam, self).create(vals_list)
+        teams = super().create(vals_list)
         teams.filtered('use_website_helpdesk_form')._ensure_submit_form_view()
         teams._ensure_website_menu()
         return teams
 
     def unlink(self):
         self.website_menu_id.unlink()
-        return super(HelpdeskTeam, self).unlink()
+        return super().unlink()
 
     def _ensure_submit_form_view(self):
         teams = self.filtered('use_website_helpdesk_form')

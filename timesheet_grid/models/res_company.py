@@ -38,7 +38,7 @@ class Company(models.Model):
         return companies
 
     def write(self, values):
-        result = super(Company, self).write(values)
+        result = super().write(values)
         self.with_context(force_nextdates_calculation=False)._timesheet_postprocess(values)
         return result
 

@@ -23,7 +23,7 @@ class Project(models.Model):
         return True
 
     def write(self, values):
-        result = super(Project, self).write(values)
+        result = super().write(values)
         if 'allow_timesheets' in values and not values['allow_timesheets']:
             self.env['timer.timer'].search([
                 ('res_model', '=', "project.task"),

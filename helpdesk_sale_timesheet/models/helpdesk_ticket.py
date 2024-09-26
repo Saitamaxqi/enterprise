@@ -122,7 +122,7 @@ class HelpdeskTicket(models.Model):
                 # We need to search the timesheets of other employee to update the so_line
                 other_timesheets = self.env['account.analytic.line'].sudo().search([('id', 'not in', timesheet_ids), ('helpdesk_ticket_id', '=', self.id)])
 
-        res = super(HelpdeskTicket, self).write(values)
+        res = super().write(values)
         if other_timesheets:
             # Then we update the so_line if needed
             compute_timesheets = defaultdict(list, [(timesheet, timesheet.so_line) for timesheet in other_timesheets])  # key = timesheet and value = so_line of the timesheet before the _compute_so_line

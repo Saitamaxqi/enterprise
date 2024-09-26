@@ -10,7 +10,7 @@ from datetime import timedelta
 class TestAccessRightsTimesheetGrid(TestCommonTimesheet):
 
     def setUp(self):
-        super(TestAccessRightsTimesheetGrid, self).setUp()
+        super().setUp()
 
         self.user_approver = new_test_user(self.env, 'user_approver', groups='hr_timesheet.group_hr_timesheet_approver')
 

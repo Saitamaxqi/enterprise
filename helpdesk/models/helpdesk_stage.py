@@ -49,7 +49,7 @@ class HelpdeskStage(models.Model):
     def write(self, vals):
         if 'active' in vals and not vals['active']:
             self.env['helpdesk.ticket'].search([('stage_id', 'in', self.ids)]).write({'active': False})
-        return super(HelpdeskStage, self).write(vals)
+        return super().write(vals)
 
     def toggle_active(self):
         res = super().toggle_active()
