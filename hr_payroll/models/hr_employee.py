@@ -67,3 +67,8 @@ class HrEmployee(models.Model):
         ''', (tuple(self.env.companies.ids),))
 
         return self.env.cr.dictfetchall()
+
+    def _get_untrusted_bank_employee_ids(self, employees_data=False):
+        if not employees_data:
+            employees_data = self._get_account_holder_employees_data()
+        return [employee['id'] for employee in employees_data if not employee['allow_out_payment']]
