@@ -3,7 +3,7 @@
 import { _t } from "@web/core/l10n/translation";
 import { CharField } from "@web/views/fields/char/char_field";
 import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
-import { Component, useState } from "@odoo/owl";
+import { Component, onWillUpdateProps, useState } from "@odoo/owl";
 import { Field } from "@web/views/fields/field";
 import { StockMove } from "./mrp_record_line/stock_move";
 import { fetchOperationNote, MrpWorkorder } from "./mrp_record_line/mrp_workorder";
@@ -68,6 +68,12 @@ export class MrpDisplayRecord extends Component {
         }
         this.quantityToProduce = this.record.product_qty || this.props.production.data.product_qty;
         this.displayUOM = this.props.groups.uom;
+
+        onWillUpdateProps((nextProps) => {
+            this.resModel = nextProps.record.resModel;
+            this.model = nextProps.record.model;
+            this.record = nextProps.record.data;
+        });
     }
 
     /**
