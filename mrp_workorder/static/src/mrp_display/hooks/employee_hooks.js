@@ -7,7 +7,7 @@ import { PinPopup } from "@mrp_workorder/components/pin_popup";
 import { DialogWrapper } from "@mrp_workorder/components/dialog_wrapper";
 import { useState } from "@odoo/owl";
 
-export function useConnectedEmployee(controllerType, context, actionService, dialogService ) {
+export function useConnectedEmployee(controllerType, context, actionService, dialogService) {
     const orm = useService("orm");
     const notification = useService("notification");
     const dialog = useService("dialog");
@@ -77,31 +77,31 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
         await getConnectedEmployees();
     };
 
-    const getConnectedEmployees = async (login=false) => {
+    const getConnectedEmployees = async (login = false) => {
         const res = await orm.call("hr.employee", "get_all_employees", [null, login]);
         if (login) {
             employees.all = res.all;
         }
         res.connected.sort(function (emp1, emp2) {
-            if (emp1.workorder.length == 0) {
+            if (emp1.workorder.length === 0) {
                 return 1;
             }
-            if (emp2.workorder.length == 0) {
+            if (emp2.workorder.length === 0) {
                 return -1;
             }
             return 0;
         });
         employees.connected = res.connected.map((obj) => {
-            const emp = employees.all.find(e => e.id === obj.id);
+            const emp = employees.all.find((e) => e.id === obj.id);
             return { ...obj, name: emp.name };
-        })
-        const admin = employees.all.find(e => e.id === res.admin);
+        });
+        const admin = employees.all.find((e) => e.id === res.admin);
         if (admin) {
             employees.admin = {
                 name: admin.name,
                 id: admin.id,
                 path: imageBaseURL + `${admin.id}`,
-            }
+            };
         } else {
             employees.admin = {};
         }
@@ -126,16 +126,16 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
     };
 
     const toggleSessionOwner = async (employee_id, pin) => {
-        if (employees.admin.id == employee_id) {
+        if (employees.admin.id === employee_id) {
             await orm.call("hr.employee", "remove_session_owner", [employee_id]);
             await getConnectedEmployees();
         } else {
-            setSessionOwner(employee_id, pin);
+            await setSessionOwner(employee_id, pin);
         }
     };
 
     const setSessionOwner = async (employee_id, pin) => {
-        if (employees.admin.id == employee_id && employee_id == employees.connected[0].id) {
+        if (employees.admin.id === employee_id && employee_id === employees.connected[0].id) {
             return;
         }
         const pinValid = await orm.call("hr.employee", "login", [employee_id, pin]);
@@ -171,14 +171,13 @@ export function useConnectedEmployee(controllerType, context, actionService, dia
     const checkPin = async (employeeId, pin) => {
         if (
             employees.connected.find((e) => e.id === employeeId) &&
-            employees.admin?.id != employeeId
+            employees.admin?.id !== employeeId
         ) {
-            setSessionOwner(employeeId, pin);
+            await setSessionOwner(employeeId, pin);
         } else {
-            selectEmployee(employeeId, pin);
+            await selectEmployee(employeeId, pin);
         }
-        const pinValid = await pinValidation(employeeId, pin);
-        return pinValid;
+        return pinValidation(employeeId, pin);
     };
 
     const closePopup = (popupId) => {

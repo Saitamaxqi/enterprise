@@ -4,7 +4,7 @@
 
     <t t-name="mrp_workorder.MrpDisplaySearchBarFacets" t-inherit="web.SearchBar.Facets">
         <xpath expr="//div[hasclass('o_searchview_facet_label')]" position="attributes">
-            <attribute name="t-attf-class">btn-{{facet.color || (facet.type == 'favorite' ? 'favorite' : 'primary')}}</attribute>
+            <attribute name="t-attf-class">btn-{{facet.color || (facet.type === 'favorite' ? 'favorite' : 'primary')}}</attribute>
         </xpath>
         <xpath expr="//div[hasclass('o_searchview_facet_label')]/small" position="after">
             <small t-if="facet.color === 'info'">WO</small>

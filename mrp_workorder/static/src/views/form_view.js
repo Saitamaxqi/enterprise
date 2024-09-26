@@ -69,9 +69,9 @@ export class WorkorderFormController extends FormController {
                     const res = await update(...args);
                     this.props.onRecordChanged(root);
                     return res;
-                }
+                };
                 return res;
-            }
+            };
         }
     }
 }

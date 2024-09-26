@@ -21,15 +21,15 @@ export class WorkingEmployeePopup extends Component {
 
     setup() {
         super.setup();
-        this.orm = useService('orm');
+        this.orm = useService("orm");
         this.workorderId = this.props.popupData.workorderId;
 
         onWillStart(() => this._getState());
     }
 
-    addEmployee() {
+    async addEmployee() {
         this.props.onAddEmployee();
-        this.close();
+        await this.close();
     }
 
     async setAdmin(employeeId) {
@@ -39,7 +39,7 @@ export class WorkingEmployeePopup extends Component {
 
     async stopEmployee(employeeId) {
         this.props.onStopEmployee(employeeId);
-        this.lines.map(l => {
+        this.lines.map((l) => {
             if (l.employee_id === employeeId) {
                 l.ongoing = false;
                 const additionalDuration = DateTime.now().diff(l.start).as("seconds") / 60;
@@ -51,7 +51,7 @@ export class WorkingEmployeePopup extends Component {
 
     startEmployee(employeeId) {
         this.props.onStartEmployee(employeeId);
-        this.lines.map(l => {
+        this.lines.map((l) => {
             if (l.employee_id === employeeId) {
                 l.start = DateTime.now();
                 l.ongoing = true;
@@ -61,32 +61,33 @@ export class WorkingEmployeePopup extends Component {
     }
 
     async close() {
-        await this.props.onClosePopup('WorkingEmployeePopup');
+        await this.props.onClosePopup("WorkingEmployeePopup");
     }
 
     async _getState() {
-        const productivityLines = await this.orm.call('mrp.workcenter.productivity', 'read_group', [
+        const productivityLines = await this.orm.call("mrp.workcenter.productivity", "read_group", [
             [
-                ['workorder_id', '=', this.workorderId],
-                ['employee_id', '!=', false],
+                ["workorder_id", "=", this.workorderId],
+                ["employee_id", "!=", false],
             ],
-            ['duration', 'date_start:array_agg', 'date_end:array_agg'],
-            ['employee_id']
+            ["duration", "date_start:array_agg", "date_end:array_agg"],
+            ["employee_id"],
         ]);
         const now = DateTime.now();
         this.lines = productivityLines.map((pl) => {
             let duration = pl.duration;
             const ongoingTimerIndex = pl.date_end.indexOf(null);
-            if (ongoingTimerIndex != -1) {
-                const additionalDuration = now.diff(parseDate(pl.date_start[ongoingTimerIndex])).as("seconds") / 60;
+            if (ongoingTimerIndex !== -1) {
+                const additionalDuration =
+                    now.diff(parseDate(pl.date_start[ongoingTimerIndex])).as("seconds") / 60;
                 duration += additionalDuration;
             }
             return {
-                'employee_id': pl.employee_id[0],
-                'employee_name': pl.employee_id[1],
-                'start': now,
-                'duration': duration,
-                'ongoing': pl.date_end.some(d => !d),
+                employee_id: pl.employee_id[0],
+                employee_name: pl.employee_id[1],
+                start: now,
+                duration: duration,
+                ongoing: pl.date_end.some((d) => !d),
             };
         });
     }

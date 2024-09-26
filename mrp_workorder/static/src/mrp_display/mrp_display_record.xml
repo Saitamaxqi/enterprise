@@ -4,11 +4,11 @@
         <div class="o_mrp_display_record border card rounded m-0 mb-2"
              t-att-class="cssClass"
              t-on-animationend="onAnimationEnd">
-            <div class="card-header" t-att-class="props.record.resModel=='mrp.workorder' ? 'cursor-pointer' : ''"
+            <div class="card-header" t-att-class="props.record.resModel === 'mrp.workorder' ? 'cursor-pointer' : ''"
                  t-on-click="onClickHeader" t-att-barcode_trigger="props.barcodeTarget ? 'PAUS' : false">
                 <div class="card-title d-flex justify-content-between align-items-center">
-                    <t t-if="props.record.resModel=='mrp.production'" t-call="mrp_workorder.MrpDisplayProductionHeader"/>
-                    <t t-if="props.record.resModel=='mrp.workorder'" t-call="mrp_workorder.MrpDisplayWorkorderHeader"/>
+                    <t t-if="props.record.resModel === 'mrp.production'" t-call="mrp_workorder.MrpDisplayProductionHeader"/>
+                    <t t-if="props.record.resModel === 'mrp.workorder'" t-call="mrp_workorder.MrpDisplayWorkorderHeader"/>
                 </div>
                 <div class="d-flex justify-content-between flex-wrap" style="min-height:25px;">
                     <div class="o_finished_product mt-auto mb-0 d-flex mw-100">
@@ -20,7 +20,7 @@
                             <t t-esc="quantityToProduce"/>
                             <span class="ms-1">
                                 <t t-if="displayUOM" t-esc="uom"/>
-                                <t t-else="">Unit<t t-if="quantityToProduce != 1">s</t></t>
+                                <t t-else="">Unit<t t-if="quantityToProduce !== 1">s</t></t>
                             </span>
                         </span>
                     </div>
@@ -29,7 +29,7 @@
                             <img t-attf-src="/web/image/hr.employee/{{employee.resId}}/avatar_128" class="rounded o_avatar_connected me-1"/>
                         </t>
                         <div
-                            t-if="props.record.resModel=='mrp.workorder' and record.state !== 'ready' and record.state !== 'pending' and props.groups.timer"
+                            t-if="props.record.resModel === 'mrp.workorder' and record.state !== 'ready' and record.state !== 'pending' and props.groups.timer"
                             class="bg-light rounded p-1 ms-1">
                             <MrpTimerField name="'duration'" record="props.record" readonly="true"/>
                         </div>
@@ -48,7 +48,7 @@
                 </li>
                 <MrpWorksheet t-if="showWorksheetCheck" record="props.record" clickable="true"/>
                 <t t-foreach="workorders" t-as="workorder" t-key="workorder.data.id">
-                    <MrpWorkorder t-if="workorder.data.state != 'cancel'" t-props="subRecordProps(workorder)"/>
+                    <MrpWorkorder t-if="workorder.data.state !== 'cancel'" t-props="subRecordProps(workorder)"/>
                 </t>
                 <li t-if="this.displayRegisterProduction" t-on-click="registerProduction"
                     class="o_mrp_record_line list-group-item d-flex justify-content-between align-items-center"
@@ -63,7 +63,7 @@
                     </t>
                     <button t-else="" t-on-click.stop="quickRegisterProduction" class="btn btn-secondary btn-sm text-nowrap"
                             t-att-class="productionComplete ? 'opacity-50 bg-transparent text-black' : ''">
-                            <span t-if="quantityProducing &amp;&amp; quantityProducing != quantityToProduce">
+                            <span t-if="quantityProducing &amp;&amp; quantityProducing !== quantityToProduce">
                                 <t t-out="quantityProducing"/> /
                             </span>
                         <t t-out="quantityToProduce"/>
@@ -94,8 +94,8 @@
             </ul>
             <div class="card-footer d-flex justify-content-between align-items-center my-1"
                 t-att-class="{'py-0': !state.underValidation, 'pe-0': !displayCloseProductionButton}">
-                <t t-if="props.record.resModel=='mrp.production'" t-call="mrp_workorder.MrpDisplayProductionFooter"/>
-                <t t-if="props.record.resModel=='mrp.workorder'" t-call="mrp_workorder.MrpDisplayWorkorderFooter"/>
+                <t t-if="props.record.resModel === 'mrp.production'" t-call="mrp_workorder.MrpDisplayProductionFooter"/>
+                <t t-if="props.record.resModel === 'mrp.workorder'" t-call="mrp_workorder.MrpDisplayWorkorderFooter"/>
                 <button t-if="!state.underValidation" class="btn btn-light py-3 px-4 ms-auto rounded-0 fa fa-gear" t-on-click="onClickOpenMenu"/>
             </div>
         </div>
@@ -113,7 +113,7 @@
             t-att-class="{
                 'text-bg-light border border-secondary': record.state === 'confirmed',
                 'text-bg-warning': record.state === 'progress',
-                'text-bg-danger': record.state === 'to_close',
+                'text-bg-danger': record.state === 'to_close'
             }">
             <SelectionField name="'state'" record="props.record" readonly="true"/>
         </small>

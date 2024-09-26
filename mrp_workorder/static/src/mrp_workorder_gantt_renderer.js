@@ -21,7 +21,9 @@ export class MRPWorkorderGanttRenderer extends GanttRenderer {
         );
         let pillDuration = interval[1].diff(interval[0]);
         const workcenterId = pill.record.workcenter_id && pill.record.workcenter_id[0];
-        const workCenterUnavailabilities = (unavailabilities.workcenter_id?.[workcenterId] || []).map(({ start, stop }) => [start, stop]);
+        const workCenterUnavailabilities = (
+            unavailabilities.workcenter_id?.[workcenterId] || []
+        ).map(({ start, stop }) => [start, stop]);
         const union = getUnionOfIntersections(interval, workCenterUnavailabilities);
         for (const [otherStart, otherEnd] of union) {
             pillDuration -= otherEnd.diff(otherStart);

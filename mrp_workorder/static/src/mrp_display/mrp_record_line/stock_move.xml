@@ -10,9 +10,9 @@
             <button t-on-click.stop="toggleQuantityDone" class="btn btn-sm text-nowrap" t-att-class="{
                 'btn-outline-secondary opacity-50 bg-transparent text-black': isComplete,
                 'btn-secondary': !isComplete,
-                'text-danger': quantityDone > toConsumeQuantity,
+                'text-danger': quantityDone > toConsumeQuantity
                 }">
-                <t t-if="quantityDone &amp;&amp; quantityDone != toConsumeQuantity">
+                <t t-if="quantityDone &amp;&amp; quantityDone !== toConsumeQuantity">
                     <t t-out="quantityDone"/> /
                 </t>
                 <t t-esc="toConsumeQuantity"/>

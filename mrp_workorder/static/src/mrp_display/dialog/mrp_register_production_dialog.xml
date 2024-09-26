@@ -35,7 +35,7 @@
             </div>
             <t t-set-slot="footer">
                 <button class="btn btn-primary me-2" t-on-click="validate" t-esc="confirmLabel"
-                    t-att-barcode_trigger="recordData.test_type == 'print_label' ? 'PRPL' : 'NEXT'"/>
+                    t-att-barcode_trigger="recordData.test_type === 'print_label' ? 'PRPL' : 'NEXT'"/>
             </t>
         </Dialog>
         </div>

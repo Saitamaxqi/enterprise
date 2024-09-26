@@ -44,7 +44,7 @@ export class MrpWorksheet extends QualityCheck {
             };
         }
         if (!this.props.record.data.operation_note) {
-            this.props.record.data.operation_note  = await fetchOperationNote(this);
+            this.props.record.data.operation_note = await fetchOperationNote(this);
         }
         this.dialog.add(MrpWorksheetDialog, {
             worksheetText: this.props.record.data.operation_note,
@@ -55,5 +55,4 @@ export class MrpWorksheet extends QualityCheck {
     get active() {
         return false;
     }
-
 }

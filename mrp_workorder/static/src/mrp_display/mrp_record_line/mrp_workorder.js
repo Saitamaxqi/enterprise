@@ -29,7 +29,7 @@ export class MrpWorkorder extends StockMove {
     }
 
     get active() {
-        return this.props.record.data.employee_ids.records.length != 0;
+        return this.props.record.data.employee_ids.records.length !== 0;
     }
 
     get cssClass() {
@@ -53,7 +53,7 @@ export class MrpWorkorder extends StockMove {
             return "";
         }
         const doneChecks = this.checks.records.filter(
-            (qc) => qc.data.quality_state != "none"
+            (qc) => qc.data.quality_state !== "none"
         ).length;
         const checks = this.checks.count;
         return `${doneChecks}/${checks}`;
@@ -96,10 +96,10 @@ export class MrpWorkorder extends StockMove {
 }
 
 export async function fetchOperationNote(record) {
-   const operationNote = await record.props.record.model.orm.read(
-            "mrp.workorder",
-            [record.props.record.resId],
-            ["operation_note"]
-        );
+    const operationNote = await record.props.record.model.orm.read(
+        "mrp.workorder",
+        [record.props.record.resId],
+        ["operation_note"]
+    );
     return markup(operationNote[0].operation_note);
 }

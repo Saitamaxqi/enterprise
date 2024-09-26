@@ -124,9 +124,7 @@ export class MrpDisplayAction extends Component {
 
     get fieldsManuallyFetched() {
         return {
-            "mrp.workorder": [
-                {"operation_note": "html"},
-            ],
+            "mrp.workorder": [{ operation_note: "html" }],
         };
     }
 
@@ -155,9 +153,9 @@ export class MrpDisplayAction extends Component {
                 }
 
                 if (this.fieldsManuallyFetched[resModel]) {
-                    this.fieldsManuallyFetched[resModel].forEach(field => {
+                    this.fieldsManuallyFetched[resModel].forEach((field) => {
                         for (const [fieldName, fieldType] of Object.entries(field)) {
-                            fields[fieldName] = { type : fieldType };
+                            fields[fieldName] = { type: fieldType };
                         }
                     });
                 }

@@ -71,7 +71,9 @@ export class MrpDisplay extends Component {
         });
 
         this.state = useState({
-            activeResModel: this.props.context.workcenter_id ? "mrp.workorder" : this.props.resModel,
+            activeResModel: this.props.context.workcenter_id
+                ? "mrp.workorder"
+                : this.props.resModel,
             activeWorkcenter: this.props.context.workcenter_id || false,
             workcenters: JSON.parse(localStorage.getItem(this.env.localStorageName)) || [],
             showEmployeesPanel: localStorage.getItem("mrp_workorder.show_employees") === "true",
@@ -105,7 +107,12 @@ export class MrpDisplay extends Component {
                 await this.useEmployee.getConnectedEmployees();
             },
         });
-        this.useEmployee = useConnectedEmployee("mrp_display", this.props.context, this.actionService, this.dialogService);
+        this.useEmployee = useConnectedEmployee(
+            "mrp_display",
+            this.props.context,
+            this.actionService,
+            this.dialogService
+        );
         this.barcode = useService("barcode");
         useBus(this.barcode.bus, "barcode_scanned", (event) =>
             this._onBarcodeScanned(event.detail.barcode)
@@ -118,15 +125,18 @@ export class MrpDisplay extends Component {
                 byproducts: await user.hasGroup("mrp.group_mrp_byproducts"),
                 uom: await user.hasGroup("uom.group_uom"),
                 workorders: await user.hasGroup("mrp.group_mrp_routings"),
-                timer: await user.hasGroup("mrp_workorder.group_mrp_wo_tablet_timer")
+                timer: await user.hasGroup("mrp_workorder.group_mrp_wo_tablet_timer"),
             };
             this.env.searchModel.workorders = this.groups.workorders;
             this.group_mrp_routings = await user.hasGroup("mrp.group_mrp_routings");
             await this.useEmployee.getConnectedEmployees(true);
             // select the workcenter received in the context
             if (this.props.context.workcenter_id) {
-                const workcenters = await this.orm.searchRead("mrp.workcenter", [["id", "=", this.state.activeWorkcenter]], ["display_name"]);
-                this.state.workcenters = workcenters;
+                this.state.workcenters = await this.orm.searchRead(
+                    "mrp.workcenter",
+                    [["id", "=", this.state.activeWorkcenter]],
+                    ["display_name"]
+                );
             }
             if (
                 JSON.parse(localStorage.getItem(this.env.localStorageName)) === null &&
@@ -159,8 +169,8 @@ export class MrpDisplay extends Component {
         });
     }
 
-    close() {
-        this.homeMenu.toggle();
+    async close() {
+        await this.homeMenu.toggle();
     }
 
     async _onBarcodeScanned(barcode) {
@@ -171,22 +181,22 @@ export class MrpDisplay extends Component {
         if (production) {
             return this._onProductionBarcodeScanned(barcode);
         }
-        const workorder = this.relevantRecords.find((wo) => wo.data.barcode === barcode && wo.resModel === 'mrp.workorder');
+        const workorder = this.relevantRecords.find(
+            (wo) => wo.data.barcode === barcode && wo.resModel === "mrp.workorder"
+        );
         if (workorder) {
             return this._onWorkorderBarcodeScanned(workorder);
         }
-        const employee = await this.orm.call("mrp.workcenter", "get_employee_barcode", [
-            barcode,
-        ]);
+        const employee = await this.orm.call("mrp.workcenter", "get_employee_barcode", [barcode]);
         if (employee) {
-            if (this.useEmployee.popup.SelectionPopup.isShown){
+            if (this.useEmployee.popup.SelectionPopup.isShown) {
                 this.useEmployee.popup.SelectionPopup.close();
             }
             return this.useEmployee.setSessionOwner(employee, undefined);
         }
     }
 
-    async _onProductionBarcodeScanned(barcode){
+    async _onProductionBarcodeScanned(barcode) {
         const searchItem = Object.values(this.env.searchModel.searchItems).find(
             (i) => i.fieldName === "name"
         );
@@ -194,24 +204,28 @@ export class MrpDisplay extends Component {
             label: barcode,
             operator: "=",
             value: barcode,
-        }
+        };
         this.env.searchModel.addAutoCompletionValues(searchItem.id, autocompleteValue);
     }
 
-    async _onWorkorderBarcodeScanned(workorder){
+    async _onWorkorderBarcodeScanned(workorder) {
         workorder.component.onClickHeader();
         this.env.reload(workorder);
     }
 
-    get barcodeTargetRecord(){
+    get barcodeTargetRecord() {
         const currentAdminId = this.useEmployee.employees.admin.id;
         if (currentAdminId === this.adminId) {
             // We've already found the target record for the current admin, so we can return it
             return this.barcodeTargetRecordId;
         }
-        const firstWorking = this.relevantRecords.find((r) => r.data.employee_ids.records.some((e) => e.resId === currentAdminId));
+        const firstWorking = this.relevantRecords.find((r) =>
+            r.data.employee_ids.records.some((e) => e.resId === currentAdminId)
+        );
         this.adminId = currentAdminId;
-        this.barcodeTargetRecordId = firstWorking ? firstWorking.resId : this.relevantRecords[0].resId;
+        this.barcodeTargetRecordId = firstWorking
+            ? firstWorking.resId
+            : this.relevantRecords[0].resId;
         return this.barcodeTargetRecordId;
     }
 
@@ -240,7 +254,7 @@ export class MrpDisplay extends Component {
         return this.workorders.filter((wo) => activeStates.includes(wo.data.state));
     }
 
-    toggleWorkcenter(workcenters) {
+    async toggleWorkcenter(workcenters) {
         const localStorageName = this.env.localStorageName;
         localStorage.setItem(localStorageName, JSON.stringify(workcenters));
         this.state.workcenters = workcenters;
@@ -251,7 +265,7 @@ export class MrpDisplay extends Component {
         localStorage.setItem("mrp_workorder.show_employees", String(this.state.showEmployeesPanel));
     }
 
-    getproduction(record) {
+    getProduction(record) {
         if (record.resModel === "mrp.production") {
             return record;
         }
@@ -268,7 +282,7 @@ export class MrpDisplay extends Component {
             if (!production.isValidated) {
                 productionIds.push(production.record.resId);
                 const { data } = production.record;
-                if (data.product_tracking == "serial") {
+                if (data.product_tracking === "serial") {
                     kwargs.context = kwargs.context || { skip_redirection: true };
                     if (data.product_qty > 1) {
                         kwargs.context.skip_backorder = true;
@@ -300,8 +314,10 @@ export class MrpDisplay extends Component {
     }
 
     get relevantRecords() {
-        const myWorkordersFilter = (wo) => this.adminWorkorderIds.includes(wo.resId) && wo.data.state != "cancel";
-        const workcenterFilter = (wo) => wo.data.workcenter_id[0] === this.state.activeWorkcenter && wo.data.state != "cancel";
+        const myWorkordersFilter = (wo) =>
+            this.adminWorkorderIds.includes(wo.resId) && wo.data.state !== "cancel";
+        const workcenterFilter = (wo) =>
+            wo.data.workcenter_id[0] === this.state.activeWorkcenter && wo.data.state !== "cancel";
         const showMOs = this.state.activeResModel === "mrp.production";
         const filteredRecords = showMOs
             ? this.productions
@@ -324,7 +340,7 @@ export class MrpDisplay extends Component {
                 {}
             );
             // In some cases (ex. MO ready after scrap), an MO included in the filtered records at the previous load no
-            // longer conforms to the current filterset.
+            // longer conforms to the current filter set.
             // We make sure this does not result in any undefined values in the returned list.
             return this.env.searchModel.recordCache.ids.reduce((acc, id) => {
                 const record = allRecordsHash[id];
@@ -376,33 +392,35 @@ export class MrpDisplay extends Component {
         await this.useEmployee.getConnectedEmployees();
         if (result.success) {
             this.env.searchModel.invalidateRecordCache();
-            const workcencenterIds = this.state.workcenters.map((wc) => wc.id);
+            const workcenterIds = this.state.workcenters.map((wc) => wc.id);
             this.state.activeWorkcenter = Number(workcenterId);
             this.state.activeResModel = this.state.activeWorkcenter
-            ? "mrp.workorder"
-            : "mrp.production";
+                ? "mrp.workorder"
+                : "mrp.production";
             if (
                 this.state.activeWorkcenter > 0 &&
-                !workcencenterIds.includes(this.state.activeWorkcenter)
+                !workcenterIds.includes(this.state.activeWorkcenter)
             ) {
                 const workcenters = await this.orm.searchRead(
-                    "mrp.workcenter", [], ["display_name"]
+                    "mrp.workcenter",
+                    [],
+                    ["display_name"]
                 );
-                const workcenterToToggle = [
-                    ...workcencenterIds,
-                    this.state.activeWorkcenter,
-                ].reduce((acc, id) => {
-                    const res = workcenters.find((wc) => wc.id === id);
-                    return res ? [...acc, res] : acc;
-                }, []);
-                this.toggleWorkcenter(workcenterToToggle);
+                const workcenterToToggle = [...workcenterIds, this.state.activeWorkcenter].reduce(
+                    (acc, id) => {
+                        const res = workcenters.find((wc) => wc.id === id);
+                        return res ? [...acc, res] : acc;
+                    },
+                    []
+                );
+                await this.toggleWorkcenter(workcenterToToggle);
             }
         }
     }
 
-    async removeFromValidationStack(record, isValidated=true) {
+    async removeFromValidationStack(record, isValidated = true) {
         const relevantStack = this.validationStack[record.resModel];
-        const foundRecord = relevantStack.find(rec => rec.record.resId === record.resId);
+        const foundRecord = relevantStack.find((rec) => rec.record.resId === record.resId);
         if (isValidated) {
             foundRecord.isValidated = true;
             this.env.searchModel.removeRecordFromCache(record.resId);
@@ -485,15 +503,15 @@ export class MrpDisplay extends Component {
         }
     }
 
-    logout(id) {
-        this.useEmployee.logout(id);
+    async logout(id) {
+        await this.useEmployee.logout(id);
         if (this.state.activeWorkcenter === -1) {
             this.env.searchModel.invalidateRecordCache();
         }
     }
 
-    changeAdmin(id) {
-        this.useEmployee.toggleSessionOwner(id);
+    async changeAdmin(id) {
+        await this.useEmployee.toggleSessionOwner(id);
         if (this.state.activeWorkcenter === -1) {
             this.env.searchModel.invalidateRecordCache();
         }
@@ -510,7 +528,7 @@ export class MrpDisplay extends Component {
         this.state.canLoadSamples = "disabled";
         await this.orm.call("mrp.production", "action_load_samples", [[]]);
         if (this.groups.workorders) {
-            this.toggleWorkcenter([]);
+            await this.toggleWorkcenter([]);
             this.toggleWorkcenterDialog();
         }
         this.env.reload();
@@ -520,7 +538,7 @@ export class MrpDisplay extends Component {
     demoMORecords = [
         {
             id: 1,
-            resModel: 'mrp.production',
+            resModel: "mrp.production",
             data: {
                 product_id: [0, "[FURN_8522] Table Top"],
                 product_tracking: "serial",
@@ -537,11 +555,11 @@ export class MrpDisplay extends Component {
                                 product_uom_qty: 8,
                                 product_uom: [1, "Units"],
                                 manual_consumption: true,
-                            }
-                        }
-                    ]
+                            },
+                        },
+                    ],
                 },
-                move_byproduct_ids: {records: []},
+                move_byproduct_ids: { records: [] },
                 workorder_ids: {
                     records: [
                         {
@@ -551,32 +569,35 @@ export class MrpDisplay extends Component {
                                 name: "Manual Assembly",
                                 workcenter_id: [1, "Assembly 1"],
                                 check_ids: {
-                                    records: []
+                                    records: [],
                                 },
-                                employee_ids: {records: []}
-                            }
-                        }
-                    ]
+                                employee_ids: { records: [] },
+                            },
+                        },
+                    ],
                 },
                 display_name: "WH/MO/00013",
-                check_ids: {records: []},
-                employee_ids: {records: []},
-                priority: "1"
+                check_ids: { records: [] },
+                employee_ids: { records: [] },
+                priority: "1",
             },
             fields: {
                 state: {
                     selection: [["progress", "In Progress"]],
-                    type: "selection"
+                    type: "selection",
                 },
-                priority:{
-                    selection: [['0', 'Normal'],['1', 'Urgent']],
-                    type: "selection"
+                priority: {
+                    selection: [
+                        ["0", "Normal"],
+                        ["1", "Urgent"],
+                    ],
+                    type: "selection",
                 },
             },
         },
         {
             id: 2,
-            resModel: 'mrp.production',
+            resModel: "mrp.production",
             data: {
                 product_id: [0, "[D_0045_B] Stool (Dark Blue)"],
                 product_tracking: "serial",
@@ -584,8 +605,8 @@ export class MrpDisplay extends Component {
                 product_uom_id: [1, "Units"],
                 qty_producing: 1,
                 state: "confirmed",
-                move_raw_ids: {records: []},
-                move_byproduct_ids: {records: []},
+                move_raw_ids: { records: [] },
+                move_byproduct_ids: { records: [] },
                 workorder_ids: {
                     records: [
                         {
@@ -595,28 +616,31 @@ export class MrpDisplay extends Component {
                                 name: "Assembly  0/6",
                                 workcenter_id: [2, "Assembly 2"],
                                 check_ids: {
-                                    records: []
+                                    records: [],
                                 },
-                                employee_ids: {records: []}
-                            }
-                        }
-                    ]
+                                employee_ids: { records: [] },
+                            },
+                        },
+                    ],
                 },
                 display_name: "WH/MO/00015",
-                check_ids: {records: []},
-                employee_ids: {records: []},
-                priority: false
+                check_ids: { records: [] },
+                employee_ids: { records: [] },
+                priority: false,
             },
             fields: {
                 state: {
                     selection: [["confirmed", "Confirmed"]],
-                    type: "selection"
+                    type: "selection",
                 },
-                priority:{
-                    selection: [['0', 'Normal'],['1', 'Urgent']],
-                    type: "selection"
+                priority: {
+                    selection: [
+                        ["0", "Normal"],
+                        ["1", "Urgent"],
+                    ],
+                    type: "selection",
                 },
             },
-        }
-    ]
+        },
+    ];
 }

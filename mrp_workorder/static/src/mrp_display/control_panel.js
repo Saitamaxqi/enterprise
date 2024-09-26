@@ -24,7 +24,9 @@ export class ControlPanelButtons extends Component {
             workcenterButtons[id] = { count: 0, name: display_name };
         }
         for (const workorder of this.props.workorders) {
-            if (workorder.data.state == 'cancel') continue;
+            if (workorder.data.state === "cancel") {
+                continue;
+            }
             const button = workcenterButtons[workorder.data.workcenter_id[0]];
             if (button) {
                 button.count++;

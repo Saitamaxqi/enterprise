@@ -8,6 +8,6 @@ patch(ProductCatalogKanbanRecord.prototype, {
         return {
             ...super._getUpdateQuantityAndGetPriceParams(),
             from_shop_floor: this.props.record.context.from_shop_floor,
-        }
-    }
+        };
+    },
 });

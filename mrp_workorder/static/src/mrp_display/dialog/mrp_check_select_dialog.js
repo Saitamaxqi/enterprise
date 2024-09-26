@@ -8,7 +8,7 @@ export class MrpQualityCheckSelectDialog extends ConfirmationDialog {
         ...ConfirmationDialog.props,
         body: { type: String, optional: true },
         checks: { type: Array, optional: true },
-        type: { type: String, optional: true }
+        type: { type: String, optional: true },
     };
 
     setup() {

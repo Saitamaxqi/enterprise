@@ -1,19 +1,17 @@
 @keyframes longpress {
     0% {
-        background: linear-gradient(90deg, $list-group-active-bg 0%, $list-group-active-bg 50%, transparent 50%);
         background-size: 200% 100%;
-        background-position: 100% 0%;
+        background: linear-gradient(90deg, $list-group-active-bg 0%, $list-group-active-bg 50%, transparent 50%) 100% 0;
     }
     30% {
-        background-position: 100% 0%;
+        background-position: 100% 0;
     }
     98% {
-        background-position: 0% 0%;
+        background-position: 0 0;
     }
     99% {
-        background: linear-gradient(90deg, $list-group-active-bg 0%, $list-group-active-bg 50%, transparent 50%);
         background-size: 200% 100%;
-        background-position: 0% 0%;
+        background: linear-gradient(90deg, $list-group-active-bg 0%, $list-group-active-bg 50%, transparent 50%) 0 0;
     }
     100% {
         background: transparent;

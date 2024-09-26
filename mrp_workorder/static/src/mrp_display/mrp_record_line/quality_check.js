@@ -62,7 +62,7 @@ export class QualityCheck extends MrpWorkorder {
             const res = await record.model.orm.call(record.resModel, "action_print", [
                 record.resId,
             ]);
-            this.action.doAction(res);
+            await this.action.doAction(res);
             this._pass();
             return;
         } else if (record.data.test_type === "picture") {
@@ -127,16 +127,20 @@ export class QualityCheck extends MrpWorkorder {
         this.props.record._parentRecord.model.notify();
     }
 
-    get lotInfo(){
+    get lotInfo() {
         const recordData = this.props.record.data;
-        if (recordData.quality_state === 'pass' && recordData.test_type === 'register_consumed_materials'){
-            if (recordData.component_tracking === 'lot'){
-                return recordData.qty_done + ' ' + recordData.component_uom_id[1];
+        if (
+            recordData.quality_state === "pass" &&
+            recordData.test_type === "register_consumed_materials"
+        ) {
+            if (recordData.component_tracking === "lot") {
+                return recordData.qty_done + " " + recordData.component_uom_id[1];
             }
-            if (recordData.component_tracking === 'serial'){
+            if (recordData.component_tracking === "serial") {
                 return recordData.lot_id[1];
             }
         }
+        return undefined;
     }
 
     get shouldDisplayCheckmark() {

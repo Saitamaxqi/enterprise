@@ -45,7 +45,8 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
         this.displayLot =
             Boolean(component_tracking && component_tracking !== "none") ||
             Boolean(test_type === "register_production" && product_tracking !== "none");
-        this.trackingNumberLabel = test_type === "register_production" ? product_tracking : component_tracking;
+        this.trackingNumberLabel =
+            test_type === "register_production" ? product_tracking : component_tracking;
     }
 
     get confirmLabel() {
@@ -57,9 +58,8 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
         return _t("Validate");
     }
 
-
     get shouldDisplayValidateButton() {
-        return this.recordData.test_type !== 'passfail' || this.recordData.quality_state !== 'none'
+        return this.recordData.test_type !== "passfail" || this.recordData.quality_state !== "none";
     }
 
     async validate() {
@@ -73,43 +73,48 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
         }
         const skipSave = ["instructions", "passfail"].includes(this.recordData.test_type);
         await this.doActionAndClose("action_next", !skipSave);
-        if (this.recordData.test_type === "register_production"){
-            await this.props.record.model.orm.call("mrp.production", "set_qty_producing", [this.recordData.production_id[0]]);
+        if (this.recordData.test_type === "register_production") {
+            await this.props.record.model.orm.call("mrp.production", "set_qty_producing", [
+                this.recordData.production_id[0],
+            ]);
         }
     }
 
     async continueProduction() {
         this.state.disabled = true;
         const skipSave = ["instructions", "passfail"].includes(this.recordData.test_type);
-        this.doActionAndClose("action_continue", !skipSave, true);
+        await this.doActionAndClose("action_continue", !skipSave, true);
     }
 
-    async openWorksheet(){
+    async openWorksheet() {
         this.state.disabled = true;
         const res = await this.props.record.model.orm.call(
             this.props.record.resModel,
             "action_fill_sheet",
-            [this.props.record.resId]);
-        this.action.doAction(res);
+            [this.props.record.resId]
+        );
+        await this.action.doAction(res);
     }
 
     async pass() {
         this.state.disabled = true;
-        this.doActionAndClose("action_pass_and_next");
+        await this.doActionAndClose("action_pass_and_next");
     }
 
     async fail() {
         this.state.disabled = true;
-        this.doActionAndClose("action_fail_and_next");
+        await this.doActionAndClose("action_fail_and_next");
     }
 
-    async doActionAndClose(action, saveModel = true, reloadChecks = false){
+    async doActionAndClose(action, saveModel = true, reloadChecks = false) {
         if (saveModel) {
             await this.props.record.save();
         }
-        const res = await this.props.record.model.orm.call(this.props.record.resModel, action, [this.props.record.resId]);
+        const res = await this.props.record.model.orm.call(this.props.record.resModel, action, [
+            this.props.record.resId,
+        ]);
         if (res) {
-            this.action.doAction(res, {
+            await this.action.doAction(res, {
                 onClose: () => {
                     this.props.reload(this.props.record);
                 },
@@ -126,12 +131,18 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
         this.props.close();
     }
 
-    async _onBarcodeScanned (barcode){
-        if (["register_consumed_materials", "register_byproducts"].includes(this.recordData.test_type)){
-            const lot = await this.props.record.model.orm.search('stock.lot', [
+    async _onBarcodeScanned(barcode) {
+        if (
+            ["register_consumed_materials", "register_byproducts"].includes(
+                this.recordData.test_type
+            )
+        ) {
+            const lot = await this.props.record.model.orm.search("stock.lot", [
                 ["name", "=", barcode],
                 ["product_id", "=", this.recordData.component_id[0]],
-                "|", ["company_id", "=", false], ["company_id", "=", this.recordData.company_id[0]],
+                "|",
+                ["company_id", "=", false],
+                ["company_id", "=", this.recordData.company_id[0]],
             ]);
             if (lot.length) {
                 this.props.record.update({ lot_id: [lot[0], barcode] });
@@ -182,7 +193,7 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
 
     get note() {
         const note = this.recordData.note;
-        return note && note !== "<p><br></p>" && note != "false" ? note : undefined;
+        return note && note !== "<p><br></p>" && note !== "false" ? note : undefined;
     }
 
     get picInfo() {

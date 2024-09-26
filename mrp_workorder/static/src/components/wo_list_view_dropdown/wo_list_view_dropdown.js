@@ -11,5 +11,5 @@ patch(MOListViewDropdown.prototype, {
             name: "action_open_mes",
             resModel: "mrp.workorder",
         });
-    }
-})
+    },
+});

@@ -8,11 +8,11 @@ export class MrpLogNoteDialog extends ConfirmationDialog {
         ...ConfirmationDialog.props,
         record: Object,
         reload: { type: Function, optional: true },
-    }
+    };
     static components = {
         ...ConfirmationDialog.components,
         TextField,
-    }
+    };
 
     async _cancel() {
         this.props.record.save();

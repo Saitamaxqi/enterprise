@@ -49,7 +49,7 @@ export class MrpDisplaySearchModel extends SearchModel {
 
     async _notify() {
         this.invalidateRecordCache();
-        super._notify();
+        await super._notify();
     }
 
     _getFacets() {
