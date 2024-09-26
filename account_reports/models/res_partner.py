@@ -13,7 +13,7 @@ class ResPartner(models.Model):
     def open_partner_ledger(self):
         action = self.env["ir.actions.actions"]._for_xml_id("account_reports.action_account_report_partner_ledger")
         action['params'] = {
-            'options': {'partner_ids': self.ids, 'unfold_all': True},
+            'options': {'partner_ids': self.ids, 'unfold_all': len(self.ids) == 1},
             'ignore_session': True,
         }
         return action
