@@ -73,27 +73,12 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
                 self.start_tour(url, 'test_internal_picking_from_scratch', login='admin', timeout=180)
 
         self.assertEqual(self.call_count, 2)
-        self.assertEqual(len(internal_picking.move_line_ids), 4)
-        prod1_ml = internal_picking.move_line_ids.filtered(lambda ml: ml.product_id.id == self.product1.id).sorted(
-            lambda ml: (ml.location_id.complete_name, ml.location_dest_id.complete_name, ml.id))
-        prod2_ml = internal_picking.move_line_ids.filtered(lambda ml: ml.product_id.id == self.product2.id).sorted(
-            lambda ml: (ml.location_id.complete_name, ml.location_dest_id.complete_name, ml.id))
-        self.assertEqual(prod1_ml[0].quantity, 2)
-        self.assertTrue(prod1_ml[0].picked)
-        self.assertEqual(prod1_ml[0].location_id, self.shelf1)
-        self.assertEqual(prod1_ml[0].location_dest_id, self.shelf2)
-        self.assertEqual(prod1_ml[1].quantity, 1)
-        self.assertTrue(prod1_ml[1].picked)
-        self.assertEqual(prod1_ml[1].location_id, self.shelf1)
-        self.assertEqual(prod1_ml[1].location_dest_id, self.shelf3)
-        self.assertEqual(prod2_ml[0].quantity, 1)
-        self.assertTrue(prod2_ml[0].picked)
-        self.assertEqual(prod2_ml[0].location_id, self.shelf1)
-        self.assertEqual(prod2_ml[0].location_dest_id, self.shelf2)
-        self.assertEqual(prod2_ml[1].quantity, 1)
-        self.assertTrue(prod2_ml[1].picked)
-        self.assertEqual(prod2_ml[1].location_id, self.shelf1)
-        self.assertEqual(prod2_ml[1].location_dest_id, self.shelf3)
+        self.assertRecordValues(internal_picking.move_line_ids, [
+            {"product_id": self.product1.id, "quantity": 2, "location_id": self.shelf1.id, "location_dest_id": self.shelf2.id, "picked": True},
+            {"product_id": self.product2.id, "quantity": 1, "location_id": self.shelf1.id, "location_dest_id": self.shelf3.id, "picked": True},
+            {"product_id": self.product2.id, "quantity": 1, "location_id": self.shelf1.id, "location_dest_id": self.shelf2.id, "picked": True},
+            {"product_id": self.product1.id, "quantity": 1, "location_id": self.shelf1.id, "location_dest_id": self.shelf3.id, "picked": True},
+        ])
 
     def test_picking_scan_package_confirmation(self):
         """
@@ -1231,7 +1216,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         self.start_tour(url, 'test_scan_same_lot_different_products', login="admin")
 
-    def test_delivery_from_scratch_sn_1(self):
+    def test_delivery_reserved_with_sn_1(self):
         """ Scan unreserved serial number on a delivery order.
         """
 
@@ -1267,17 +1252,11 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             'product_uom_qty': 4,
             'picking_id': delivery_picking.id,
         })
-
         delivery_picking.action_confirm()
-        delivery_picking.action_assign()
 
         url = self._get_client_action_url(delivery_picking.id)
-
         self.start_tour(url, 'test_delivery_reserved_with_sn_1', login='admin', timeout=180)
 
-        # TODO: the framework should call invalidate_cache every time a test cursor is asked or
-        #       given back
-        self.env.invalidate_all()
         lines = delivery_picking.move_line_ids
         self.assertEqual(lines.mapped('lot_id.name'), ['sn1', 'sn2', 'sn3', 'sn4'])
         self.assertEqual(lines.mapped('qty_done'), [1, 1, 1, 1])
@@ -2752,9 +2731,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         } for product in [self.product1, self.product2, product3]])
         delivery.action_confirm()
 
-        action = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
-        url = "/odoo/action-stock_barcode.stock_barcode_action_main_menu"
-        self.start_tour(url, 'test_split_line_on_exit_for_delivery', login='admin')
+        self.start_tour("/odoo/barcode", 'test_split_line_on_exit_for_delivery', login='admin')
         # Checks delivery moves values:
         # - product1 line should not be split (completed line)
         # - product2 line should be split in two (2 qty picked, 2 qty left)

@@ -872,13 +872,7 @@ registry.category("web_tour.tours").add("test_gs1_receipt_conflicting_barcodes_m
     // interpreted as serial number once a tracked product's waiting a SN.
     { trigger: ".o_barcode_client_action", run: "scan productserial1" },
     { trigger: ".o_barcode_line[data-barcode='productserial1']", run: "scan 21-Chouette-MegaPack" },
-    {
-        trigger: ".o_barcode_line.o_selected .o_line_lot_name",
-        run: function() {
-            const line = helper.getLine({ barcode: "productserial1" });
-            helper.assert(line.querySelector(".o_line_lot_name").innerText, "-Chouette-MegaPack");
-        },
-    },
+    { trigger: ".o_barcode_line.o_selected .o_line_lot_name:contains('-Chouette-MegaPack')" },
     { trigger: ".o_barcode_client_action", run: "scan 21000000000003" },
     {
         trigger: ".o_barcode_line.o_selected .o_line_button.o_toggle_sublines",

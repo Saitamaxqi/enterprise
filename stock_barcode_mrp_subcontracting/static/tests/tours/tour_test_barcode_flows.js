@@ -24,9 +24,10 @@ registry.category("web_tour.tours").add('test_receipt_classic_subcontracted_prod
     },
 
     {
-        trigger: '.o_barcode_client_action',
+        trigger: '.o_barcode_line.o_selected',
         run: 'scan LOC-01-01-00',
     },
+    { trigger: '.o_barcode_line:nth-child(2)' },
     // Adds a line with the "Add Product" button, then scans its destination location.
     {
         trigger: '.o_add_line',
@@ -52,7 +53,7 @@ registry.category("web_tour.tours").add('test_receipt_classic_subcontracted_prod
         trigger: '.o_barcode_line',
         run: 'scan LOC-01-02-00',
     },
-    ...stepUtils.validateBarcodeOperation(),
+    ...stepUtils.validateBarcodeOperation(".o_barcode_line:nth-child(2):not(.o_selected)"),
 
 ]});
 
