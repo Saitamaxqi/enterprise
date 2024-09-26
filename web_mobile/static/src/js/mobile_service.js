@@ -11,7 +11,7 @@ const serviceRegistry = registry.category("services");
 const userMenuRegistry = registry.category("user_menuitems");
 
 export const mobileService = {
-    timeBetweenReadsInMs: session.time_between_reads_in_ms || 1000,
+    timeBetweenReadsInMs: session.time_between_reads_in_ms || 100,
     idInterval: null,
     start() {
         this.bus = new EventBus();
