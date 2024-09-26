@@ -68,6 +68,7 @@ patch(BarcodeModel.prototype, {
             {
                 additionalContext: {
                     "default_barcode": barcodeData?.barcode,
+                    "default_is_storable": true,
                     "dialog_size": "medium",
                     "skip_barcode_check": true,
                 },
