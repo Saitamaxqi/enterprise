@@ -210,7 +210,7 @@ class SDDMandate(models.Model):
         payments_collected_per_mandate = dict(self.env['account.payment']._read_group([
                 ('sdd_mandate_id', 'in', self.ids),
                 ('payment_method_code', 'in', self.env['account.payment.method']._get_sdd_payment_method_code()),
-                ('state', '=', 'in_process'),
+                ('state', 'in', ('in_process', 'paid')),
                 ('move_id.state', '=', 'posted'),
             ],
             groupby=['sdd_mandate_id'],
