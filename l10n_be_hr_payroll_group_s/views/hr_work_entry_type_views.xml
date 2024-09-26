@@ -7,7 +7,7 @@
         <field name="priority">40</field>
         <field name="arch" type="xml">
             <field name="external_code" position="after">
-                <field name="group_s_code"/>
+                <field name="group_s_code" invisible="country_code != 'BE'"/>
             </field>
         </field>
     </record>

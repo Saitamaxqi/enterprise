@@ -11,7 +11,7 @@ class HrContract(models.Model):
 
     @api.constrains('group_s_code')
     def _check_group_s_code(self):
-        if any(contract.group_s_code and len(contract.group_s_code) != 6 for contract in self):
+        if any(contract.group_s_code and len(contract.group_s_code) != 6 and contract.country_code == 'BE' for contract in self):
             raise ValidationError(_('The Groups S code should have 6 characters!'))
         similar_group_s_codes = dict(self._read_group(
             domain=[
@@ -25,6 +25,8 @@ class HrContract(models.Model):
         if any(
             similar_group_s_codes.get(contract.group_s_code)
             and len(similar_group_s_codes[contract.group_s_code]) > 1
+            and contract.country_code == 'BE'
+            and contract.group_s_code
             for contract in self
         ):
             raise ValidationError(_('The Groups S code should be unique!'))
