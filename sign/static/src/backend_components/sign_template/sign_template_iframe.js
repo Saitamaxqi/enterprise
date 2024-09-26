@@ -284,8 +284,10 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
      */
     renderAllConnectingLines() {
         const canvas = this.getCanvas();
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
 
         for (const radio_set_id in this.radioSets) {
             this.radioSets[radio_set_id].radio_item_ids = this.radioSets[radio_set_id].radio_item_ids.sort((id1, id2) => {
