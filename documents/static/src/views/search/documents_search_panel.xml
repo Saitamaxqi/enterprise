@@ -5,14 +5,8 @@
             <attribute name="t-att-data-section-id">section.id</attribute>
         </xpath>
         <xpath expr="//header" position="attributes">
-            <!-- If False and another, don't show "ALL", it helps UI and simplifies logic
-                e.g., avoid upload in ALL when in a breadcrumb with context values -->
-            <attribute name="t-if">section.rootIds.length > 2</attribute>
             <attribute name="t-on-click">() => this.env.searchModel.toggleCategoryValue(1, false)</attribute>
             <attribute name="class" add="cursor-pointer" separator=" "/>
-        </xpath>
-        <xpath expr="//header" position="after">
-            <div t-else="" class="my-2"/>
         </xpath>
         <xpath expr="//button[@t-on-click='toggleSidebar']" position="replace"/>
         <xpath expr="//header/b" position="replace">
