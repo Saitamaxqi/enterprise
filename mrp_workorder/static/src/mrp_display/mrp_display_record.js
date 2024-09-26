@@ -57,6 +57,7 @@ export class MrpDisplayRecord extends Component {
         this.resModel = this.props.record.resModel;
         this.model = this.props.record.model;
         this.record = this.props.record.data;
+        this.props.record.component = this;
 
         // Display a line for the production's registration if there is no QC for it.
         this.displayRegisterProduction = true;

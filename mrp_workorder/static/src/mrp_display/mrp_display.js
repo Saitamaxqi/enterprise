@@ -192,22 +192,7 @@ export class MrpDisplay extends Component {
     }
 
     async _onWorkorderBarcodeScanned(workorder){
-        const { resModel, resId } = workorder;
-        await this.useEmployee.getConnectedEmployees();
-        const admin_id = this.useEmployee.employees.admin.id;
-        if (admin_id && !workorder.data.employee_ids.records.some((emp) => emp.resId == admin_id)) {
-            await this.orm.call(resModel, "button_start", [resId], {
-                context: { mrp_display: true },
-            });
-            this.notification.add(_t("STARTED work on workorder %s", workorder.data.display_name), {
-                type: "success",
-            });
-        } else {
-            await this.orm.call(resModel, "stop_employee", [resId, [admin_id]]);
-            this.notification.add(_t("STOPPED work on workorder %s", workorder.data.display_name), {
-                type: "warning",
-            });
-        }
+        workorder.component.onClickHeader();
         this.env.reload(workorder);
     }
 
