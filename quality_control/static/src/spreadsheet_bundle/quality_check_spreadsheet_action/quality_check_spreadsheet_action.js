@@ -28,12 +28,15 @@ export class QualityCheckSpreadsheetAction extends QualitySpreadsheetTemplateAct
             // we are part of the quality check wizard flow
             this.writeToQualityCheckWizard(method);
         } else {
-            await this.orm.call(
+            const action = await this.orm.call(
                 "quality.check",
                 method,
                 [this.qualityCheckId],
                 { context: this.props.action.context },
             );
+            if (action && action.type === 'ir.actions.act_window') {
+                return this.actionService.doAction(action);
+            }
             await this.goBack();
         }
     }
