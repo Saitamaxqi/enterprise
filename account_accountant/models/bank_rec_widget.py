@@ -7,6 +7,7 @@ import markupsafe
 
 from odoo import _, api, fields, models, Command
 from odoo.addons.web.controllers.utils import clean_action
+from odoo.exceptions import UserError, RedirectWarning
 from odoo.tools.misc import formatLang
 
 
@@ -1508,6 +1509,18 @@ class BankRecWidget(models.Model):
     def _js_action_reset(self):
         self.ensure_one()
         st_line = self.st_line_id
+
+        # Hashed entries shouldn't be modified; we will provide clear errors as well as redirect the user if needed.
+        if st_line.inalterable_hash:
+            if not st_line.has_reconciled_entries:
+                raise UserError(_("You can't hit the reset button on a secured bank transaction."))
+            else:
+                raise RedirectWarning(
+                    message=_("This bank transaction is locked up tighter than a squirrel in a nut factory! You can't hit the reset button on it. So, do you want to \"unreconcile\" it instead?"),
+                    action=st_line.move_id.open_reconcile_view(),
+                    button_text=_('View Reconciled Entries'),
+                )
+
         st_line.action_undo_reconciliation()
 
         # The current record has been invalidated. Reload it completely.

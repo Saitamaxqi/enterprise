@@ -2332,6 +2332,15 @@ msgstr ""
 
 #. module: account_accountant
 #. odoo-python
+#: code:addons/account_accountant/models/bank_rec_widget.py:0
+msgid ""
+"This bank transaction is locked up tighter than a squirrel in a nut factory!"
+" You can't hit the reset button on it. So, do you want to \"unreconcile\" it"
+" instead?"
+msgstr ""
+
+#. module: account_accountant
+#. odoo-python
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "This can only be used on journal items"
 msgstr ""
@@ -2477,6 +2486,12 @@ msgid "View"
 msgstr ""
 
 #. module: account_accountant
+#. odoo-python
+#: code:addons/account_accountant/models/bank_rec_widget.py:0
+msgid "View Reconciled Entries"
+msgstr ""
+
+#. module: account_accountant
 #. odoo-javascript
 #: code:addons/account_accountant/static/src/components/bank_reconciliation/bank_rec_form.xml:0
 msgid "View models"
@@ -2532,6 +2547,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_accountant/wizard/account_reconcile_wizard.py:0
 msgid "You can only reconcile entries with up to two different accounts: %s"
+msgstr ""
+
+#. module: account_accountant
+#. odoo-python
+#: code:addons/account_accountant/models/bank_rec_widget.py:0
+msgid "You can't hit the reset button on a secured bank transaction."
 msgstr ""
 
 #. module: account_accountant
