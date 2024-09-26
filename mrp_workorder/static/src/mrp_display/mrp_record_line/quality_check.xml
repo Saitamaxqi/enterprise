@@ -31,13 +31,5 @@
                 <span t-elif="lotInfo" t-out="lotInfo"/>
             </button>
         </li>
-        <FileUploader t-if="props.record.data.test_type === 'picture'"
-                          acceptedFileExtensions="'image/*'"
-                          t-key="props.record.resId"
-                          onUploaded.bind="onFileUploaded">
-                <t t-set-slot="toggler">
-                    <span t-ref="fileUploaderToggle" class="d-none"/>
-                </t>
-            </FileUploader>
     </t>
 </templates>

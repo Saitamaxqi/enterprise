@@ -18,4 +18,9 @@ steps for taking measures, taking pictures, ...
     ],
     'auto_install': True,
     'license': 'OEEL-1',
+    'assets': {
+        'web.assets_backend': [
+            'mrp_workorder_iot/static/src/**/*',
+        ],
+    }
 }

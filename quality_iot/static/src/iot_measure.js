@@ -1,19 +1,19 @@
 /** @odoo-module **/
 
+import { _t } from "@web/core/l10n/translation";
 import { registry } from '@web/core/registry';
 import { FloatField, floatField } from '@web/views/fields/float/float_field';
 import { useIotDevice } from '@iot/iot_device_hook';
+import { useService } from '@web/core/utils/hooks';
+import { WarningDialog } from '@web/core/errors/error_dialogs';
+import { IoTConnectionErrorDialog } from '@iot/iot_connection_error_dialog';
 
-class IoTMeasureRealTimeValue extends FloatField {
-    static props = {
-        ...FloatField.props,
-        ip_field: { type: String },
-        identifier_field: { type: String },
-    };
-
+export class IoTMeasureRealTimeValue extends FloatField {
     setup() {
         super.setup();
-        useIotDevice({
+        this.dialog = useService('dialog');
+        this.notification = useService('notification');
+        this.getIotDevice = useIotDevice({
             getIotIp: () => {
                 if (this.props.record.data.test_type === 'measure') {
                     return this.props.record.data[this.props.ip_field];
@@ -32,7 +32,30 @@ class IoTMeasureRealTimeValue extends FloatField {
             },
         });
     }
+    async onTakeMeasure() {
+        if (this.getIotDevice()) {
+            this.notification.add(_t('Take measure...'));
+            try {
+                const data = await this.getIotDevice().action({ action: 'read_once' });
+                if (data.result !== true) {
+                    this.dialog.add(WarningDialog, {
+                        title: _t('Connection to device failed'),
+                        message: _t('Please check if the device is still connected.'),
+                    });
+                }
+                return data;
+            } catch {
+                this.dialog.add(IoTConnectionErrorDialog, { href: this.props.record.data[this.props.ip_field] });
+            }
+        }
+    }
 }
+IoTMeasureRealTimeValue.template = `quality_iot.IoTMeasureRealTimeValue`;
+IoTMeasureRealTimeValue.props = {
+    ...FloatField.props,
+    ip_field: { type: String },
+    identifier_field: { type: String },
+};
 
 registry.category("fields").add("iot_measure", {
     ...floatField,

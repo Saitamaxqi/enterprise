@@ -3,17 +3,13 @@
 import { _t } from "@web/core/l10n/translation";
 import { MrpWorkorder } from "./mrp_workorder";
 import { MrpQualityCheckConfirmationDialog } from "../dialog/mrp_quality_check_confirmation_dialog";
-import { FileUploader } from "@web/views/fields/file_handler";
 import { useService } from "@web/core/utils/hooks";
-
-import { useRef } from "@odoo/owl";
 
 export class QualityCheck extends MrpWorkorder {
     static template = "mrp_workorder.QualityCheck";
     static components = {
         ...MrpWorkorder.components,
         MrpQualityCheckConfirmationDialog,
-        FileUploader,
     };
     static props = {
         ...MrpWorkorder.props,
@@ -28,7 +24,6 @@ export class QualityCheck extends MrpWorkorder {
         this.name = this.props.record.data.title || this.props.record.data.name;
         this.note = this.props.record.data.note;
         this.action = useService("action");
-        this.fileUploaderToggle = useRef("fileUploaderToggle");
     }
 
     clicked() {
@@ -71,7 +66,6 @@ export class QualityCheck extends MrpWorkorder {
             this._pass();
             return;
         } else if (record.data.test_type === "picture") {
-            this.fileUploaderToggle.el.click();
             return;
         }
         this.clicked();
@@ -125,12 +119,6 @@ export class QualityCheck extends MrpWorkorder {
             return this.props.uom[1];
         }
         return this.quantityToProduce === 1 ? _t("Unit") : _t("Units");
-    }
-
-    async onFileUploaded(info) {
-        this.props.record.update({ picture: info.data, quality_state: "pass" });
-        this.props.record.save({ reload: false });
-        this.props.record._parentRecord.model.notify();
     }
 
     _pass() {
