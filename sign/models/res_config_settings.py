@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models
+from odoo import api, fields, models, _
 
 
 class ResConfigSettings(models.TransientModel):
@@ -28,3 +28,15 @@ class ResConfigSettings(models.TransientModel):
             # We display the preview button only if the terms_type is html in the setting but also on the company
             # to avoid landing on an error page (see terms.py controller)
             setting.sign_preview_ready = self.env.company.sign_terms_type == 'html' and setting.sign_terms_type == 'html'
+
+    def action_update_sign_terms(self):
+        self.ensure_one()
+        return {
+            'name': _('Update Terms & Conditions'),
+            'type': 'ir.actions.act_window',
+            'view_mode': 'form',
+            'res_model': 'res.company',
+            'view_id': self.env.ref("sign.res_company_view_form_sign_terms", False).id,
+            'target': 'new',
+            'res_id': self.company_id.id,
+        }

@@ -289,6 +289,7 @@
                 <field name="attachment_id" string="Document Name"/>
                 <filter name="my_templates" string="My Templates" domain="[('user_id', '=', uid)]"/>
                 <filter name="favorite" string="My Favorites" domain="[('favorited_ids', 'in', uid)]"/>
+                <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
                 <searchpanel class="searchpanel-xs-hide">
                     <field name="tag_ids" select="multi" icon="fa-tag" enable_counters="1"/>
                 </searchpanel>

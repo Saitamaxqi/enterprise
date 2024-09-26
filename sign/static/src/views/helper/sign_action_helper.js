@@ -20,7 +20,7 @@ export class SignActionHelper extends Component {
         return this.requestFile(context);
     }
 
-    onClicksampleSign() {
+    onClickSampleSign() {
         return this.actionService.doAction("sign.sign_template_tour_trigger_action");
     }
 }

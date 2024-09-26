@@ -10,25 +10,24 @@
             <xpath expr="//form" position="inside">
                 <app data-string="Sign" string="Sign" name="sign" groups="sign.group_sign_manager">
                     <block title="Sign Settings" name="sign">
-                        <setting help="Show standard terms &amp; conditions on signature requests" id="use_sign_terms">
+                        <setting id="use_sign_terms" help="Add terms &amp; conditions to the signature request email">
                             <field name="use_sign_terms"/>
                             <div class="content-group" invisible="not use_sign_terms">
                                 <div class="mt16">
                                     <field name="sign_terms_type" class="o_light_label" widget="radio"/>
-                                    <div class="d-flex">
+                                    <div>
                                         <field name="sign_terms"
                                                 invisible="sign_terms_type == 'html'"
-                                                class="oe_sign_terms"
-                                                placeholder="Insert your terms &amp; conditions here..."/>
-                                        <field name="sign_terms_html"
-                                                invisible="sign_terms_type == 'plain'"
-                                                class="oe_sign_terms o_light_label"
+                                                class="oe_sign_terms mt-5 w-100"
                                                 placeholder="Insert your terms &amp; conditions here..."/>
                                     </div>
+                                    <div class="mt8" invisible="sign_terms_type != 'html'">
+                                        <button name="action_update_sign_terms" icon="oi-arrow-right" type="object" string="Update Terms" class="btn-link"/>
+                                    </div>
                                     <field name="sign_preview_ready" invisible="1"/>
-                                    <div invisible="not sign_preview_ready">
-                                        <a href="/sign/terms">
-                                            <i class="oi oi-arrow-right"></i>
+                                    <div class="mt4 ms-1" invisible="not sign_preview_ready">
+                                        <a class="btn-link" href="/sign/terms" role="button">
+                                            <i class="oi oi-arrow-right"/>
                                             Preview
                                         </a>
                                     </div>

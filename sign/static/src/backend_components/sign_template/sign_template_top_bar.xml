@@ -7,7 +7,6 @@
                 <input type="text" t-ref="display-name" class="o_sign_template_name_input o_input"
                     t-att-value="templateName"
                     t-att-disabled="props.hasSignRequests"
-                    t-att-size="displayNameSize"
                     t-on-change="onTemplateNameChange"
                     t-on-input="changeInputSize"
                     t-on-keydown="onKeyDown"
