@@ -121,7 +121,7 @@ class AccountGenericTaxReport(models.AbstractModel):
         accumulate_untaxed_signed = 0
         accumulate_tax = 0
 
-        tax_group_vat_7 = self.env.ref(f'account.{self.env.company.id}_tax_group_vat_7')
+        tax_group_vat_7 = self.env['account.chart.template'].ref('tax_group_vat_7')
         for index, move in enumerate(moves):
             sign = move.reversed_entry_id.payment_state == 'partial' and -1 or 1
             amount_total = sign * copysign(move.amount_total_signed, move.amount_total)
