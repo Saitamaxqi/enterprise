@@ -241,12 +241,9 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
                 ]
         })
         so.action_confirm()
-        # Check that the stock move line linked to the purchase order created
-        # and confirmed for company A (by company B) applied the putaway rule
         po = self.env['purchase.order'].search([('auto_sale_order_id', '=', so.id)], limit=1)
-        picking_destination = po.picking_ids.move_line_ids.location_dest_id
-        self.assertEqual(picking_destination, shelf_location)
-        self.assertFalse(po.picking_ids.move_line_ids.lot_id)
+        # There should be no move lines yet as no reservation could be done, as delivery is not processed yet.
+        self.assertFalse(po.picking_ids.move_line_ids)
         # Confirm the delivery created in company B to update the delivery in Company A
         delivery_b = so.picking_ids
         delivery_b.move_line_ids.lot_id = my_lot
