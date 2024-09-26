@@ -992,6 +992,9 @@ class Document(models.Model):
         :param folder_id: The folder on which we pin the actions
         :param action_id: The id of the action to pin
         """
+        if not self.env.user.has_group('documents.group_documents_user'):
+            raise AccessError(_("You are not allowed to pin/unpin embedded Actions."))
+
         action = self.env['ir.actions.server'].browse(action_id).sudo().exists()
         if not action:
             raise UserError(_('This action does not exist.'))
@@ -1001,13 +1004,13 @@ class Document(models.Model):
         if not folder or folder.type != 'folder':
             raise UserError(_('You can not ping an action on that document.'))
 
-        embedded = self.env['ir.embedded.actions'].search([
+        embedded = self.env['ir.embedded.actions'].sudo().search([
             ('parent_action_id', '=', self.env.ref("documents.document_action").id),
             ('action_id', '=', action_id),
             ('action_id.type', '=', 'ir.actions.server'),
             ('parent_res_model', '=', 'documents.document'),
             ('parent_res_id', '=', folder_id),
-        ])
+        ]).sudo(False)
         if embedded:
             embedded.unlink()
         else:
