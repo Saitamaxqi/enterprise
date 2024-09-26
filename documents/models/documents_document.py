@@ -749,7 +749,7 @@ class Document(models.Model):
                 for partner, (role, exp) in (partners or {}).items()
             }
             root_access_partners = self.access_ids.partner_id
-            self._action_update_members(partners, notify, message)
+            self._action_update_members(partners)
             if notify:
                 self._send_access_by_mail(
                     {p: role for p, (role, __) in partners.items() if role and p not in root_access_partners},
@@ -762,6 +762,10 @@ class Document(models.Model):
         """Update the access on self and children.
 
         Stop the propagation when the value is already the right one.
+
+        :param str | None access_internal: change the `access_internal` if not None
+        :param str | None access_via_link: change the `access_via_link` if not None
+        :param bool | None is_access_via_link_hidden: change the `is_access_via_link_hidden` if not None
         """
         self.flush_model()
 
@@ -776,7 +780,7 @@ class Document(models.Model):
             # records that we might need to update
             candidates = self.env['documents.document']._search([
                 (field, '!=', value),
-                ('user_permission', '=', 'edit'),
+                *([] if self.env.su else [('user_permission', '=', 'edit')]),
                 # the update is done only "target -> shortcut",
                 # but not "shortcut -> target"
                 ('shortcut_document_id', '=', False),
@@ -820,8 +824,11 @@ class Document(models.Model):
             'user_permission',
         ])
 
-    def _action_update_members(self, partners, notify, message):
-        """Update the members access on all files bellow the current folder."""
+    def _action_update_members(self, partners):
+        """Update the members access on all files bellow the current folder.
+
+        :param partners: Partners to add as members / change access
+        """
         self.env['documents.access'].flush_model()
 
         partners_to_remove = self.env['res.partner']
