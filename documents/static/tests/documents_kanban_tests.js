@@ -3244,7 +3244,7 @@ QUnit.module("documents", {}, function () {
                 );
                 assert.containsOnce(
                     target,
-                    ".o_search_panel_label_title[data-tooltip='Trash']",
+                    ".o_search_panel_label[data-tooltip='Trash']",
                     "Trash folder should be displayed"
                 );
                 await legacyClick(
@@ -4356,7 +4356,7 @@ QUnit.module("documents", {}, function () {
                         5,
                         "Should contain 5 records"
                     );
-                    await click(".o_search_panel_label_title[data-tooltip='Trash']");
+                    await click(".o_search_panel_label[data-tooltip='Trash']");
                     await nextTick();
                     assert.containsN(
                         target,
@@ -5274,7 +5274,7 @@ QUnit.module("documents", {}, function () {
                                 </div>
                             </t></templates></kanban>`,
                     });
-                    await legacyClick(target, ".o_search_panel_label_title[data-tooltip='Trash']");
+                    await legacyClick(target, ".o_search_panel_label[data-tooltip='Trash']");
                     await legacyClick(
                         target,
                         ".o_kanban_record:nth-of-type(2) [name='document_preview']"
