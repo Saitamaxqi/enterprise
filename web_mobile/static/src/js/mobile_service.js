@@ -42,12 +42,16 @@ export const mobileService = {
             mobile.methods.enableReader();
             if (!this.idInterval) {
                 this.idInterval = setInterval(async () => {
-                    const value = await mobile.methods.getReaderData();
-                    if (value.success) {
-                        const data = value.data;
-                        if (data.length > 0) {
-                            this.bus.trigger("mobile_reader_scanned", {data});
+                    try {
+                        const value = await mobile.methods.getReaderData();
+                        if (value.success) {
+                            const data = value.data;
+                            if (data.length > 0) {
+                                this.bus.trigger("mobile_reader_scanned", {data});
+                            }
                         }
+                    } catch (e) {
+                        console.error(e);
                     }
                 }, this.timeBetweenReadsInMs);
             }

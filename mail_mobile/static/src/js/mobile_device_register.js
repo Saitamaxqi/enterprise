@@ -23,7 +23,7 @@ if (mobile.methods.getFCMKey) {
                     }
                 });
             }
-        });
+        }).catch(e => console.error(e));
     };
     if (session.fcm_project_id) {
         registerDevice(session.fcm_project_id);
