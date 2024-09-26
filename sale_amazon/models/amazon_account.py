@@ -919,8 +919,8 @@ class AmazonAccount(models.Model):
 
             # Prepare the values for the delivery charges.
             shipping_code = order_data.get('ShipServiceLevel')
-            if shipping_code:
-                shipping_price = float(item_data.get('ShippingPrice', {}).get('Amount', '0'))
+            shipping_price = float(item_data.get('ShippingPrice', {}).get('Amount', '0'))
+            if shipping_code and shipping_price != 0:
                 shipping_product_taxes = shipping_product.taxes_id.filtered_domain(
                     [*self.env['account.tax']._check_company_domain(self.company_id)]
                 )
