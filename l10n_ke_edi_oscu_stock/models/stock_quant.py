@@ -13,6 +13,7 @@ class StockQuant(models.Model):
         domain = [
             ('product_id', '=', self.product_id.id),
             ('location_id.usage', 'in', ['internal', 'transit']),
+            ('location_id.warehouse_id', '!=', False),
             ('location_id', '=', self.location_id.id),
             ('company_id.account_fiscal_country_id.code', '=', 'KE'),
         ]

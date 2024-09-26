@@ -132,3 +132,18 @@ class TestKeEdiStockMocked(TestKeEdiStock):
         picking.button_validate()
 
         self.assertTrue(picking.l10n_ke_validation_msg)
+
+    def test_constrain_product_quantity(self):
+        """
+        Test that a negative quantity can be created in a location without a warehouse in a Kenyan company.
+        """
+        location_without_warehouse = self.env['stock.location'].create({
+            'name': 'location_without_warehouse',
+            'usage': 'internal',
+        })
+        quant = self.env['stock.quant'].create({
+            'product_id': self.product_a.id,
+            'quantity': -1,
+            'location_id': location_without_warehouse.id,
+        })
+        self.assertEqual(quant.quantity, -1)
