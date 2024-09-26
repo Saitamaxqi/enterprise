@@ -322,7 +322,10 @@ const patchController = () => ({
     get modelParams() {
         const params = super.modelParams;
         params.hooks.onRecordChanged = async (record) => {
-            if (record.isNew && record.data.project_id) {
+            if (record.isNew) {
+                if (!record.data.project_id || !record.data.is_timer_running) {
+                    return params;
+                }
                 const { project_id, task_id, employee_id, user_id, company_id } = record.data;
                 await record.model.orm.call(record.resModel, "action_start_new_timesheet_timer", [
                     {

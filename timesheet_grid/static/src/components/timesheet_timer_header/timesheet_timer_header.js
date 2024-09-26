@@ -123,7 +123,7 @@ export class TimesheetTimerHeader extends Component {
     }
 
     async _onClickStopTimer(ev) {
-        if (await this.props.timesheet.save()) {
+        if (await this.props.timesheet?.save()) {
             await this.props.onTimerStopped();
         }
     }

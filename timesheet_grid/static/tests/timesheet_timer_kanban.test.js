@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, test } from "@odoo/hoot";
+import { beforeEach, describe, expect, test, getFixture } from "@odoo/hoot";
 import { click } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import {
@@ -8,12 +8,15 @@ import {
     mountWithCleanup,
     onRpc,
     selectFieldDropdownItem,
+    contains,
 } from "@web/../tests/web_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
+import { serializeDateTime } from "@web/core/l10n/dates";
 
 import { defineTimesheetModels, HRTimesheet } from "./hr_timesheet_models";
 import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
 
+const now = luxon.DateTime.utc();
 defineTimesheetModels();
 beforeEach(() => {
     patchSession();
@@ -135,4 +138,58 @@ test("hr.timesheet (kanban)(timer): unlink timesheet through timesheet_uom_timer
     expect('div[name="project_id"] input').toHaveCount(0, {
         message: "The project input should not exist",
     });
+});
+
+test("Timer should not start when adding new record", async () => {
+    let timerStarted = false;
+
+    onRpc(({ method }) => {
+        if (method === "get_running_timer") {
+            return { step_timer: 30 };
+        } else if (method === "action_start_new_timesheet_timer") {
+            timerStarted = true;
+            return false;
+        } else if (method === "get_daily_working_hours") {
+            return {};
+        } else if (method === "get_server_time") {
+            return Promise.resolve(serializeDateTime(now));
+        } else if (method === "get_create_edit_project_ids") {
+            return [];
+        }
+    });
+
+    HRTimesheet._views["list,false"] = `
+        <list js_class="timesheet_timer_list" editable="bottom">
+            <field name="project_id"/>
+        </list>
+    `;
+
+    HRTimesheet._views["search,false"] = `
+        <search>
+            <field name="project_id"/>
+        </search>
+    `;
+
+    await mountWithCleanup(WebClient);
+    await getService("action").doAction({
+        res_model: "account.analytic.line",
+        type: "ir.actions.act_window",
+        views: [[false, "list"], [false, "kanban"]],
+    });
+
+    await click(".o_list_button_add");
+    await animationFrame();
+
+    const fixture = getFixture();
+    await contains(fixture.querySelector(".o-autocomplete--input")).click();
+    await animationFrame();
+
+    await contains(fixture.querySelector(".o-autocomplete .o-autocomplete--dropdown-item")).click();
+    await animationFrame();
+
+    await click(".o_switch_view.o_kanban");
+    await animationFrame();
+
+    expect(".btn_start_timer").toHaveCount(1);
+    expect(timerStarted).toBe(false);
 });
