@@ -6,14 +6,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:26+0000\n"
-"PO-Revision-Date: 2024-09-25 09:26+0000\n"
+"POT-Creation-Date: 2024-09-26 09:15+0000\n"
+"PO-Revision-Date: 2024-09-26 09:15+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
+
+#. module: documents_hr
+#: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
+msgid "<i class=\"fa fa-download fa-fw\"/> Download file"
+msgstr ""
 
 #. module: documents_hr
 #: model:mail.template,body_html:documents_hr.mail_template_document_folder_link
@@ -24,7 +29,7 @@ msgid ""
 "            You'll find all your personal HR documents in this folder.<br><br>\n"
 "            Please keep this link secure.<br><br>\n"
 "            <div style=\"text-align: center; padding: 16px 0px 16px 0px; font-size: 14px;\">\n"
-"                <a t-attf-href=\"{{ object.documents_share_id.full_url }}\" target=\"_blank\" style=\"background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;\">\n"
+"                <a t-attf-href=\"{{ object.sudo().documents_link_url }}\" target=\"_blank\" style=\"background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;\">\n"
 "                    Your Documents\n"
 "                </a>\n"
 "            </div>\n"
@@ -36,7 +41,7 @@ msgid ""
 msgstr ""
 
 #. module: documents_hr
-#: model:documents.tag,name:documents_hr.documents_hr_documents_absences
+#: model:documents.tag,name:documents_hr.documents_tag_absences
 msgid "Absences"
 msgstr ""
 
@@ -46,7 +51,7 @@ msgid "Centralize your employees' documents (contracts, payslips, etc.)"
 msgstr ""
 
 #. module: documents_hr
-#: model:documents.tag,name:documents_hr.documents_hr_documents_Cerification
+#: model:documents.tag,name:documents_hr.documents_tag_certification
 msgid "Certifications"
 msgstr ""
 
@@ -76,9 +81,13 @@ msgid "Document Count"
 msgstr ""
 
 #. module: documents_hr
+#: model:ir.model,name:documents_hr.model_documents_redirect
+msgid "Document Redirect"
+msgstr ""
+
+#. module: documents_hr
 #. odoo-python
 #: code:addons/documents_hr/models/res_users.py:0
-#: model:documents.facet,name:documents_hr.documents_hr_documents
 #: model:ir.model.fields,field_description:documents_hr.field_res_users__document_count
 #: model_terms:ir.ui.view,arch_db:documents_hr.hr_employee_view_form
 #: model_terms:ir.ui.view,arch_db:documents_hr.res_users_view_form
@@ -91,12 +100,13 @@ msgid "Documents Hr Settings"
 msgstr ""
 
 #. module: documents_hr
-#: model:ir.model.fields,field_description:documents_hr.field_hr_employee__documents_share_id
-msgid "Documents Share"
+#: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
+msgid "Download file"
 msgstr ""
 
 #. module: documents_hr
 #: model:ir.model,name:documents_hr.model_hr_employee
+#: model:ir.model.fields,field_description:documents_hr.field_documents_redirect__employee_id
 msgid "Employee"
 msgstr ""
 
@@ -109,19 +119,8 @@ msgid ""
 msgstr ""
 
 #. module: documents_hr
-#: model:documents.tag,name:documents_hr.documents_hr_documents_employees
+#: model:documents.tag,name:documents_hr.documents_tag_employees
 msgid "Employees Documents"
-msgstr ""
-
-#. module: documents_hr
-#: model:documents.folder,name:documents_hr.documents_hr_folder
-msgid "HR"
-msgstr ""
-
-#. module: documents_hr
-#. odoo-python
-#: code:addons/documents_hr/models/hr_employee.py:0
-msgid "HR Documents: %s"
 msgstr ""
 
 #. module: documents_hr
@@ -132,6 +131,11 @@ msgstr ""
 #. module: documents_hr
 #: model:ir.model.fields,field_description:documents_hr.field_res_config_settings__documents_hr_settings
 msgid "Human Resources"
+msgstr ""
+
+#. module: documents_hr
+#: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
+msgid "My documents"
 msgstr ""
 
 #. module: documents_hr
@@ -162,6 +166,11 @@ msgid "Sent manually when recording an employee departure"
 msgstr ""
 
 #. module: documents_hr
+#: model_terms:ir.ui.view,arch_db:documents_hr.documents_hr_portal_view
+msgid "Size:"
+msgstr ""
+
+#. module: documents_hr
 #. odoo-python
 #: code:addons/documents_hr/models/hr_employee.py:0
 msgid "The access link has been sent to the employee."
@@ -175,6 +184,12 @@ msgstr ""
 #. module: documents_hr
 #: model_terms:ir.ui.view,arch_db:documents_hr.res_config_settings_view_form
 msgid "Workspace"
+msgstr ""
+
+#. module: documents_hr
+#. odoo-python
+#: code:addons/documents_hr/models/hr_employee.py:0
+msgid "You can not send the documents link to the employee."
 msgstr ""
 
 #. module: documents_hr

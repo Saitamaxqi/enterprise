@@ -811,15 +811,6 @@ resource_name          = documents_project_sale
 replace_edited_strings = false
 keep_translations      = false
 
-[o:odoo:p:odoo-18:r:documents_project_sign]
-file_filter            = documents_project_sign/i18n/<lang>.po
-source_file            = documents_project_sign/i18n/documents_project_sign.pot
-type                   = PO
-minimum_perc           = 0
-resource_name          = documents_project_sign
-replace_edited_strings = false
-keep_translations      = false
-
 [o:odoo:p:odoo-18:r:documents_sign]
 file_filter            = documents_sign/i18n/<lang>.po
 source_file            = documents_sign/i18n/documents_sign.pot

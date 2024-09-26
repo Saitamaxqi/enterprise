@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:26+0000\n"
-"PO-Revision-Date: 2024-09-25 09:26+0000\n"
+"POT-Creation-Date: 2024-09-26 09:15+0000\n"
+"PO-Revision-Date: 2024-09-26 09:15+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,21 +16,29 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/project_project.py:0
-msgid "%(project_name)s's Documents"
+#: model:ir.actions.server,name:documents_project.ir_actions_server_tag_add_draft
+#: model:ir.actions.server,name:documents_project.ir_actions_server_tag_remove_draft
+msgid "Add Tag Draft"
 msgstr ""
 
 #. module: documents_project
-#: model:ir.model,name:documents_project.model_documents_workflow_rule
-msgid ""
-"A set of condition and actions which will be available to all attachments "
-"matching the conditions"
+#: model:ir.actions.server,name:documents_project.ir_actions_server_tag_add_to_validate
+msgid "Add Tag To Validate"
 msgstr ""
 
 #. module: documents_project
-#: model:documents.workflow.rule,name:documents_project.documents_project_rule_ask_for_validation
-msgid "Ask for Validation"
+#: model:ir.actions.server,name:documents_project.ir_actions_server_tag_add_validated
+msgid "Add Tag Validated"
+msgstr ""
+
+#. module: documents_project
+#: model:ir.actions.server,name:documents_project.ir_actions_server_ask_for_validation_code
+msgid "Ask For Validation - Check conditions"
+msgstr ""
+
+#. module: documents_project
+#: model:ir.actions.server,name:documents_project.ir_actions_server_ask_for_validation
+msgid "Ask for validation"
 msgstr ""
 
 #. module: documents_project
@@ -44,18 +52,8 @@ msgid "Categorize and share your documents with your customers"
 msgstr ""
 
 #. module: documents_project
-#: model:ir.model,name:documents_project.model_documents_facet
-msgid "Category"
-msgstr ""
-
-#. module: documents_project
-#: model:ir.model.fields,field_description:documents_project.field_documents_workflow_rule__create_model
-msgid "Create"
-msgstr ""
-
-#. module: documents_project
-#: model:documents.workflow.rule,name:documents_project.documents_project_rule
-#: model:documents.workflow.rule,name:documents_project.documents_project_rule_task
+#: model:ir.actions.server,name:documents_project.ir_actions_server_create_a_task_code
+#: model:ir.actions.server,name:documents_project.ir_actions_server_create_project_task
 msgid "Create a Task"
 msgstr ""
 
@@ -65,13 +63,15 @@ msgid "Default Tags"
 msgstr ""
 
 #. module: documents_project
-#: model:documents.workflow.rule,name:documents_project.documents_project_rule_deprecate
+#: model:ir.actions.server,name:documents_project.ir_actions_server_create_project_deprecate
+#: model:ir.actions.server,name:documents_project.ir_actions_server_tag_add_deprecated
+#: model:ir.actions.server,name:documents_project.ir_actions_server_tag_remove_deprecated
 msgid "Deprecate"
 msgstr ""
 
 #. module: documents_project
-#: model:documents.tag,name:documents_project.documents_project_status_deprecated
-msgid "Deprecated"
+#: model:ir.actions.server,name:documents_project.ir_actions_server_deprecate_code
+msgid "Deprecate - Check conditions"
 msgstr ""
 
 #. module: documents_project
@@ -102,13 +102,29 @@ msgid "Documents &amp; Analytics"
 msgstr ""
 
 #. module: documents_project
-#: model:ir.model,name:documents_project.model_documents_folder
-msgid "Documents Workspace"
+#. odoo-python
+#: code:addons/documents_project/models/documents_document.py:0
+msgid "Documents already linked to a task."
 msgstr ""
 
 #. module: documents_project
-#: model:documents.tag,name:documents_project.documents_project_status_draft
-msgid "Draft"
+#: model:ir.model.fields,field_description:documents_project.field_project_project__documents_folder_id
+msgid "Folder"
+msgstr ""
+
+#. module: documents_project
+#: model:ir.model.fields,help:documents_project.field_project_project__documents_folder_id
+#: model:ir.model.fields,help:documents_project.field_project_task__documents_folder_id
+msgid ""
+"Folder in which all of the documents of this project will be categorized. "
+"All of the attachments of your tasks will be automatically added as "
+"documents in this workspace as well."
+msgstr ""
+
+#. module: documents_project
+#. odoo-python
+#: code:addons/documents_project/models/documents_document.py:0
+msgid "Impossible to create a task on a deprecated document"
 msgstr ""
 
 #. module: documents_project
@@ -124,13 +140,18 @@ msgid "Invalid task search"
 msgstr ""
 
 #. module: documents_project
-#: model:documents.workflow.rule,name:documents_project.documents_project_rule_mark_as_draft
-msgid "Mark As Draft"
+#: model:ir.actions.server,name:documents_project.ir_actions_server_mark_as_draft_code
+msgid "Mark As Draft - Check conditions"
+msgstr ""
+
+#. module: documents_project
+#: model:ir.actions.server,name:documents_project.ir_actions_server_mark_as_draft
+msgid "Mark as draft"
 msgstr ""
 
 #. module: documents_project
 #. odoo-python
-#: code:addons/documents_project/models/documents_workflow_rule.py:0
+#: code:addons/documents_project/models/documents_document.py:0
 msgid "New task from Documents"
 msgstr ""
 
@@ -141,31 +162,35 @@ msgid "Project"
 msgstr ""
 
 #. module: documents_project
-#: model:documents.folder,name:documents_project.documents_project_folder
+#: model:ir.model.fields,field_description:documents_project.field_documents_document__project_ids
 msgid "Projects"
 msgstr ""
 
 #. module: documents_project
-#: model:documents.facet,name:documents_project.documents_project_status
-msgid "Status"
+#: model:ir.actions.server,name:documents_project.ir_actions_server_tag_remove_to_validate
+msgid "Remove Tag To Validate"
+msgstr ""
+
+#. module: documents_project
+#: model:ir.actions.server,name:documents_project.ir_actions_server_tag_remove_validated
+msgid "Remove Tag Validated"
 msgstr ""
 
 #. module: documents_project
 #: model:ir.model,name:documents_project.model_project_task
-#: model:ir.model.fields.selection,name:documents_project.selection__documents_workflow_rule__create_model__project_task
 #: model_terms:ir.ui.view,arch_db:documents_project.document_view_search_inherit
 msgid "Task"
 msgstr ""
 
 #. module: documents_project
 #. odoo-python
-#: code:addons/documents_project/models/documents_workflow_rule.py:0
+#: code:addons/documents_project/models/documents_document.py:0
 msgid "Task created from document %s"
 msgstr ""
 
 #. module: documents_project
 #. odoo-python
-#: code:addons/documents_project/models/documents_workflow_rule.py:0
+#: code:addons/documents_project/models/documents_document.py:0
 msgid "Task created from documents"
 msgstr ""
 
@@ -179,46 +204,35 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents_project/models/project_project.py:0
 msgid ""
-"The \"%(workspace)s\" workspace should either be in the \"%(company)s\" "
-"company like this project or be open to all companies."
+"The \"%(folder)s\" folder should either be in the \"%(company)s\" company "
+"like this project or be open to all companies."
 msgstr ""
 
 #. module: documents_project
 #. odoo-python
-#: code:addons/documents_project/models/documents_folder.py:0
+#: code:addons/documents_project/models/documents_document.py:0
 msgid ""
-"The \"%s\" workspace is required by the Project application and cannot be "
+"The \"%s\" folder is required by the Project application and cannot be "
 "deleted."
 msgstr ""
 
 #. module: documents_project
 #. odoo-python
 #: code:addons/documents_project/models/documents_document.py:0
-msgid "The search does not support operator %(operator)s or value %(value)s."
+msgid ""
+"This folder should remain in the same company as the \"%(project)s\" project"
+" to which it is linked. Please update the company of the \"%(project)s\" "
+"project, or leave the company of this workspace empty."
 msgstr ""
 
 #. module: documents_project
 #. odoo-python
-#: code:addons/documents_project/models/documents_folder.py:0
+#: code:addons/documents_project/models/documents_document.py:0
 msgid ""
-"This workspace should remain in the same company as the \"%(project)s\" "
-"project to which it is linked. Please update the company of the "
-"\"%(project)s\" project, or leave the company of this workspace empty."
-msgstr ""
-
-#. module: documents_project
-#. odoo-python
-#: code:addons/documents_project/models/documents_folder.py:0
-msgid ""
-"This workspace should remain in the same company as the following projects to which it is linked:\n"
+"This folder should remain in the same company as the following projects to which it is linked:\n"
 "%s\n"
 "\n"
 "Please update the company of those projects, or leave the company of this workspace empty."
-msgstr ""
-
-#. module: documents_project
-#: model:documents.tag,name:documents_project.documents_project_status_to_validate
-msgid "To Validate"
 msgstr ""
 
 #. module: documents_project
@@ -230,27 +244,18 @@ msgid ""
 msgstr ""
 
 #. module: documents_project
-#: model:documents.workflow.rule,name:documents_project.documents_project_rule_validate
+#: model:ir.model.fields,field_description:documents_project.field_project_task__folder_user_permission
+msgid "User permission"
+msgstr ""
+
+#. module: documents_project
+#: model:ir.actions.server,name:documents_project.ir_actions_server_ask_validate
 msgid "Validate"
 msgstr ""
 
 #. module: documents_project
-#: model:documents.tag,name:documents_project.documents_project_status_validated
-msgid "Validated"
-msgstr ""
-
-#. module: documents_project
-#: model:ir.model.fields,field_description:documents_project.field_project_project__documents_folder_id
-msgid "Workspace"
-msgstr ""
-
-#. module: documents_project
-#: model:ir.model.fields,help:documents_project.field_project_project__documents_folder_id
-#: model:ir.model.fields,help:documents_project.field_project_task__documents_folder_id
-msgid ""
-"Workspace in which all of the documents of this project will be categorized."
-" All of the attachments of your tasks will be automatically added as "
-"documents in this workspace as well."
+#: model:ir.actions.server,name:documents_project.ir_actions_server_validate_code
+msgid "Validate - Check conditions"
 msgstr ""
 
 #. module: documents_project
@@ -265,17 +270,18 @@ msgstr ""
 
 #. module: documents_project
 #. odoo-python
-#: code:addons/documents_project/models/documents_folder.py:0
-msgid "You cannot set a company on the %s workspace."
-msgstr ""
-
-#. module: documents_project
-#: model_terms:ir.ui.view,arch_db:documents_project.share_page
-msgid "documents shared"
+#: code:addons/documents_project/models/documents_document.py:0
+msgid "You cannot create a task from a folder."
 msgstr ""
 
 #. module: documents_project
 #. odoo-python
-#: code:addons/documents_project/models/documents_workflow_rule.py:0
+#: code:addons/documents_project/models/documents_document.py:0
+msgid "You cannot set a company on the %s folder."
+msgstr ""
+
+#. module: documents_project
+#. odoo-python
+#: code:addons/documents_project/models/documents_document.py:0
 msgid "new %(model)s from %(new_record)s"
 msgstr ""

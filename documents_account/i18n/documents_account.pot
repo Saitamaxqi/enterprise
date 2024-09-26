@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:26+0000\n"
-"PO-Revision-Date: 2024-09-25 09:26+0000\n"
+"POT-Creation-Date: 2024-09-26 09:15+0000\n"
+"PO-Revision-Date: 2024-09-26 09:15+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -33,13 +33,6 @@ msgid "<span class=\"o_stat_text\">Documents</span>"
 msgstr ""
 
 #. module: documents_account
-#: model:ir.model,name:documents_account.model_documents_workflow_rule
-msgid ""
-"A set of condition and actions which will be available to all attachments "
-"matching the conditions"
-msgstr ""
-
-#. module: documents_account
 #: model:ir.model.constraint,message:documents_account.constraint_documents_account_folder_setting_journal_unique
 msgid "A setting already exists for this journal"
 msgstr ""
@@ -55,7 +48,8 @@ msgid "Accounting Report"
 msgstr ""
 
 #. module: documents_account
-#: model:ir.model.fields,field_description:documents_account.field_res_company__account_folder
+#: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__company_account_folder_id
+#: model:ir.model.fields,field_description:documents_account.field_res_company__account_folder_id
 msgid "Accounting Workspace"
 msgstr ""
 
@@ -69,11 +63,6 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model,name:documents_account.model_ir_attachment
 msgid "Attachment"
-msgstr ""
-
-#. module: documents_account
-#: model:ir.model.fields.selection,name:documents_account.selection__documents_workflow_rule__create_model__account_bank_statement
-msgid "Bank Statement"
 msgstr ""
 
 #. module: documents_account
@@ -134,37 +123,37 @@ msgid "Copy to Documents"
 msgstr ""
 
 #. module: documents_account
-#: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__create_model
-msgid "Create"
-msgstr ""
-
-#. module: documents_account
-#: model:documents.workflow.rule,name:documents_account.credit_note_rule
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_credit_note
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_credit_note_code
 msgid "Create Customer Credit Note"
 msgstr ""
 
 #. module: documents_account
-#: model:documents.workflow.rule,name:documents_account.customer_invoice_rule
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_customer_invoice
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_customer_invoice_code
 msgid "Create Customer Invoice"
 msgstr ""
 
 #. module: documents_account
-#: model:documents.workflow.rule,name:documents_account.misc_entry_rule
-msgid "Create Miscellaneous Operations"
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_misc_entry_code
+msgid "Create Misc Entry"
 msgstr ""
 
 #. module: documents_account
-#: model:documents.workflow.rule,name:documents_account.vendor_bill_rule_financial
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_bill
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_bill_code
 msgid "Create Vendor Bill"
 msgstr ""
 
 #. module: documents_account
-#: model:documents.workflow.rule,name:documents_account.documents_vendor_receipt_rule
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_receipt
 msgid "Create Vendor Receipt"
 msgstr ""
 
 #. module: documents_account
-#: model:documents.workflow.rule,name:documents_account.vendor_refund_rule
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund
+#: model:ir.actions.server,name:documents_account.ir_actions_server_create_vendor_refund_code
 msgid "Create Vendor Refund"
 msgstr ""
 
@@ -176,21 +165,6 @@ msgstr ""
 #. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__create_date
 msgid "Created on"
-msgstr ""
-
-#. module: documents_account
-#: model:ir.model.fields.selection,name:documents_account.selection__documents_workflow_rule__create_model__account_move_out_refund
-msgid "Credit note"
-msgstr ""
-
-#. module: documents_account
-#: model:ir.model.fields.selection,name:documents_account.selection__documents_workflow_rule__create_model__account_move_out_invoice
-msgid "Customer invoice"
-msgstr ""
-
-#. module: documents_account
-#: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__display_journal_id
-msgid "Display Journal"
 msgstr ""
 
 #. module: documents_account
@@ -262,13 +236,19 @@ msgid "ID"
 msgstr ""
 
 #. module: documents_account
-#: model:documents.workflow.rule,name:documents_account.bank_statement_rule
+#: model:ir.actions.server,name:documents_account.ir_actions_server_bank_statement
+#: model:ir.actions.server,name:documents_account.ir_actions_server_bank_statement_code
 msgid "Import Bank Statement"
 msgstr ""
 
 #. module: documents_account
+#. odoo-python
+#: code:addons/documents_account/models/documents_document.py:0
+msgid "Invoices"
+msgstr ""
+
+#. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_documents_account_folder_setting__journal_id
-#: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__journal_id
 msgid "Journal"
 msgstr ""
 
@@ -331,21 +311,6 @@ msgid ""
 msgstr ""
 
 #. module: documents_account
-#: model:ir.model.fields.selection,name:documents_account.selection__documents_workflow_rule__create_model__account_move_entry
-msgid "Miscellaneous Operations"
-msgstr ""
-
-#. module: documents_account
-#: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__move_type
-msgid "Move Type"
-msgstr ""
-
-#. module: documents_account
-#: model:ir.model.fields.selection,name:documents_account.selection__documents_workflow_rule__create_model__account_move_in_receipt
-msgid "Purchase Receipt"
-msgstr ""
-
-#. module: documents_account
 #: model:ir.model.fields,field_description:documents_account.field_account_bank_statement_line__suspense_statement_line_id
 #: model:ir.model.fields,field_description:documents_account.field_account_move__suspense_statement_line_id
 msgid "Request document from a bank statement line"
@@ -355,11 +320,6 @@ msgstr ""
 #. odoo-javascript
 #: code:addons/documents_account/static/src/js/tour.js:0
 msgid "Send this letter to the legal department, by assigning the right tags."
-msgstr ""
-
-#. module: documents_account
-#: model:ir.model.fields,field_description:documents_account.field_documents_workflow_rule__suitable_journal_ids
-msgid "Suitable Journal"
 msgstr ""
 
 #. module: documents_account
@@ -376,16 +336,6 @@ msgstr ""
 #. module: documents_account
 #: model_terms:ir.ui.view,arch_db:documents_account.view_account_move_form_inherit_documents_account
 msgid "This invoice has been initiated by a bank transaction."
-msgstr ""
-
-#. module: documents_account
-#: model:ir.model.fields.selection,name:documents_account.selection__documents_workflow_rule__create_model__account_move_in_refund
-msgid "Vendor Credit Note"
-msgstr ""
-
-#. module: documents_account
-#: model:ir.model.fields.selection,name:documents_account.selection__documents_workflow_rule__create_model__account_move_in_invoice
-msgid "Vendor bill"
 msgstr ""
 
 #. module: documents_account
@@ -409,7 +359,13 @@ msgid ""
 msgstr ""
 
 #. module: documents_account
-#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__account_folder
+#. odoo-python
+#: code:addons/documents_account/models/documents_document.py:0
+msgid "You can not create account move on folder."
+msgstr ""
+
+#. module: documents_account
+#: model:ir.model.fields,field_description:documents_account.field_res_config_settings__account_folder_id
 msgid "account default folder"
 msgstr ""
 
