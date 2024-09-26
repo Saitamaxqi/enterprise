@@ -57,6 +57,7 @@
                 <field name="url_preview_image"/>
                 <field name="checksum"/>
                 <field name="name"/>
+                <field name="display_name"/>
                 <field name="res_model_name"/>
                 <field name="res_model"/>
                 <field name="activity_state"/>
@@ -137,9 +138,9 @@
                                     </div>
                                 </div>
                             </div>
-                            <footer t-if="record.type.raw_value != 'folder'" class="d-flex mb-auto p-2">
+                            <footer t-if="record.type.raw_value != 'folder'" class="d-flex mt-auto p-2">
                                 <field name="tag_ids" class="d-block text-wrap mb-1" widget="many2many_tags" options="{'color_field': 'color'}"/>
-                                <div class="ms-auto d-flex d-flex-row">
+                                <div class="mt-auto ms-auto d-flex d-flex-row">
                                     <div t-if="record.access_via_link.raw_value !== 'none' &amp;&amp; record.access_internal.raw_value === 'none' &amp;&amp; record.is_access_via_link_hidden.raw_value">
                                         <i class="me-1 fa fa-eye-slash text-gray-500" title="Except for members, only discoverable the first time by clicking on the url"/>
                                     </div>
@@ -340,6 +341,7 @@
                 <field name="type" optional="show"/>
                 <field name="id" optional="hide"/>
                 <field name="name" required="True" readonly="False"/>
+                <field name="display_name" column_invisible="1"/>
                 <field name="url" optional="hide"/>
                 <field name="tag_ids" widget="many2many_tags"
                     optional="hide" options="{'color_field': 'color'}"/>
