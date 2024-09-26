@@ -23,22 +23,6 @@ class AccountJournal(models.Model):
             return ReqdExctnDt
         return super()._get_ReqdExctnDt_content(payment_date, payment_method_code)
 
-    def _get_company_PartyIdentification32(self, payment_method_code, postal_address=True, issr=True):
-        cpny_party_id_32 = super()._get_company_PartyIdentification32(postal_address=postal_address, issr=issr, payment_method_code=payment_method_code)
-        if payment_method_code == 'sepa_ct':
-            company = self.company_id
-            if company.iso20022_orgid_id:
-                OrgId = next(el for el in cpny_party_id_32 if el.tag == 'Id').find("OrgId")
-                if self.sepa_pain_version == "pain.001.001.09" and company.iso20022_lei:
-                    LEI = etree.Element("LEI")
-                    LEI.text = self.company_id.iso20022_lei
-                    OrgId.insert(0, LEI)
-                if issr and company.iso20022_orgid_issr:
-                    Othr = OrgId.find('Othr')
-                    Issr = etree.SubElement(Othr, "Issr")
-                    Issr.text = self._sepa_sanitize_communication(company.iso20022_orgid_issr)
-        return cpny_party_id_32
-
     def _skip_CdtrAgt(self, partner_bank, payment_method_code):
         if payment_method_code == 'sepa_ct' and self.sepa_pain_version == "pain_de":
             return False
