@@ -13,13 +13,13 @@ class HrPayslip(models.Model):
         help='Unique end-to-end transaction reference',
     )
 
-    def _get_payments_vals(self, journal_id):
+    def _get_payments_vals(self, journal_id, payment_date=fields.Date.today()):
         self.ensure_one()
 
         payment_vals = {
             'id': self.id,
             'name': self.number,
-            'payment_date': fields.Date.today(),
+            'payment_date': payment_date,
             'amount': self.net_wage,
             'journal_id': journal_id.id,
             'currency_id': journal_id.currency_id.id,

@@ -1,7 +1,7 @@
 import base64
 
 from odoo import fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tools import format_list
 
 
@@ -12,12 +12,16 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
     journal_id = fields.Many2one(
         string='Bank Journal', comodel_name='account.journal', required=True,
         default=lambda self: self.env['account.journal'].search([('type', '=', 'bank')], limit=1))
+    effective_date = fields.Date(
+        string='Effective Date',
+        help='Effective Entry Date: the banking day on which you intend the payslip batch to be settled.',
+        default=fields.Date.context_today, required=True)
 
     def _create_sepa_binary(self):
         # Map the necessary data
         payments_data = []
         for slip in self.payslip_ids.filtered(lambda p: p.state == "done" and p.net_wage > 0):
-            payments_data.append(slip._get_payments_vals(self.journal_id))
+            payments_data.append(slip._get_payments_vals(self.journal_id, self.effective_date))
 
         # Generate XML File
         xml_doc = self.journal_id.sudo().with_context(
@@ -48,5 +52,7 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
     def generate_payment_report(self):
         super().generate_payment_report()
         if self.export_format == 'sepa':
+            if self.effective_date < fields.Date.today():
+                raise ValidationError(_("The effective date cannot be in the past."))
             payment_report = self._create_sepa_binary()
             self._write_file(payment_report, '.xml')
