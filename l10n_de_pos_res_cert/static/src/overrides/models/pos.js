@@ -66,16 +66,19 @@ patch(PosStore.prototype, {
             state: "ACTIVE",
             client_id: this.getClientId(),
         };
-        return $.ajax({
-            url: `${this.getApiUrl()}/tss/${this.getTssId()}/tx/${transactionUuid}${
+        return fetch(
+            `${this.getApiUrl()}/tss/${this.getTssId()}/tx/${transactionUuid}${
                 this.isUsingApiV2() ? "?tx_revision=1" : ""
             }`,
-            method: "PUT",
-            headers: { Authorization: `Bearer ${this.getApiToken()}` },
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            timeout: 5000,
-        })
+            {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${this.getApiToken()}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            }
+        )
             .then(() => {
                 const data = {
                     state: "FINISHED",
@@ -88,16 +91,19 @@ patch(PosStore.prototype, {
                         },
                     },
                 };
-                return $.ajax({
-                    url: `${this.getApiUrl()}/tss/${this.getTssId()}/tx/${transactionUuid}?${
+                return fetch(
+                    `${this.getApiUrl()}/tss/${this.getTssId()}/tx/${transactionUuid}?${
                         this.isUsingApiV2() ? "tx_revision=2" : "last_revision=1"
                     }`,
-                    method: "PUT",
-                    headers: { Authorization: `Bearer ${this.getApiToken()}` },
-                    data: JSON.stringify(data),
-                    contentType: "application/json",
-                    timeout: 5000,
-                });
+                    {
+                        method: "PUT",
+                        headers: {
+                            Authorization: `Bearer ${this.getApiToken()}`,
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(data),
+                    }
+                );
             })
             .catch(async (error) => {
                 if (error.status === 401) {

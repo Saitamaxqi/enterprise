@@ -80,13 +80,14 @@ patch(PosStore.prototype, {
             api_secret: this.company.l10n_de_fiskaly_api_secret,
         };
 
-        return $.ajax({
-            url: this.getApiUrl() + "/auth",
+        return fetch(this.getApiUrl() + "/auth", {
             method: "POST",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            timeout: 5000,
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
         })
+            .then((response) => response.json())
             .then((data) => {
                 this.setApiToken(data.access_token);
             })
@@ -106,16 +107,20 @@ patch(PosStore.prototype, {
             client_id: this.getClientId(),
         };
 
-        return $.ajax({
-            url: `${this.getApiUrl()}/tss/${this.getTssId()}/tx/${transactionUuid}${
+        return fetch(
+            `${this.getApiUrl()}/tss/${this.getTssId()}/tx/${transactionUuid}${
                 this.isUsingApiV2() ? "?tx_revision=1" : ""
             }`,
-            method: "PUT",
-            headers: { Authorization: `Bearer ${this.getApiToken()}` },
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            timeout: 5000,
-        })
+            {
+                method: "PUT",
+                headers: {
+                    Authorization: `Bearer ${this.getApiToken()}`,
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+            }
+        )
+            .then((response) => response.json())
             .then((data) => {
                 order.l10n_de_fiskaly_transaction_uuid = transactionUuid;
                 order.transactionStarted();
@@ -180,19 +185,24 @@ patch(PosStore.prototype, {
                 },
             },
         };
-        return $.ajax({
-            headers: { Authorization: `Bearer ${this.getApiToken()}` },
-            url: `${this.getApiUrl()}/tss/${this.getTssId()}/tx/${
+        return fetch(
+            `${this.getApiUrl()}/tss/${this.getTssId()}/tx/${
                 order.l10n_de_fiskaly_transaction_uuid
             }?${this.isUsingApiV2() ? "tx_revision=2" : "last_revision=1"}`,
-            method: "PUT",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            timeout: 5000,
-        })
+            {
+                headers: {
+                    Authorization: `Bearer ${this.getApiToken()}`,
+                    "Content-Type": "application/json",
+                },
+                method: "PUT",
+                body: JSON.stringify(data),
+            }
+        )
+            .then((response) => response.json())
             .then((data) => {
                 order._updateTssInfo(data);
             })
+
             .catch(async (error) => {
                 if (error.status === 401) {
                     // Need to update the token
@@ -221,16 +231,19 @@ patch(PosStore.prototype, {
             },
         };
 
-        return $.ajax({
-            url: `${this.getApiUrl()}/tss/${this.getTssId()}/tx/${
-                this.l10n_de_fiskaly_transaction_uuid
+        return fetch(
+            `${this.getApiUrl()}/tss/${this.getTssId()}/tx/${
+                order.l10n_de_fiskaly_transaction_uuid
             }?${this.isUsingApiV2() ? "tx_revision=2" : "last_revision=1"}`,
-            method: "PUT",
-            headers: { Authorization: `Bearer ${this.getApiToken()}` },
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            timeout: 5000,
-        }).catch(async (error) => {
+            {
+                headers: {
+                    Authorization: `Bearer ${this.getApiToken()}`,
+                    "Content-Type": "application/json",
+                },
+                method: "PUT",
+                body: JSON.stringify(data),
+            }
+        ).catch(async (error) => {
             if (error.status === 401) {
                 // Need to update the token
                 await this._authenticate();
@@ -277,40 +290,40 @@ patch(PosStore.prototype, {
             api_key: this.getApiKey(),
             api_secret: this.getApiSecret(),
         };
-
-        return $.ajax({
-            url: url + "/auth",
+        return fetch(url + "/auth", {
             method: "POST",
-            data: JSON.stringify(data),
-            contentType: "application/json",
-            timeout: 5000,
-        }).then((data) => {
-            const token = data.access_token;
-            return $.ajax({
-                url: url + "/vat_definitions",
-                method: "GET",
-                headers: { Authorization: `Bearer ${token}` },
-                timeout: 5000,
-            })
-                .then((vat_data) => {
-                    vat_data.data.forEach((vat_definition) => {
-                        if (!(vat_definition.percentage in this.vatRateMapping)) {
-                            this.vatRateMapping[vat_definition.percentage] =
-                                RATE_ID_MAPPING[vat_definition.vat_definition_export_id];
-                        }
-                    });
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                fetch(url + "/vat_definitions", {
+                    headers: {
+                        Authorization: `Bearer ${data.access_token}`,
+                    },
                 })
-                .catch((error) => {
-                    // This is a fallback where we hardcode the taxes hoping that they didn't change ...
-                    this.vatRateMapping = {
-                        19: "NORMAL",
-                        7: "REDUCED_1",
-                        10.7: "SPECIAL_RATE_1",
-                        5.5: "SPECIAL_RATE_2",
-                        0: "NULL",
-                    };
-                });
-        });
+                    .then((response) => response.json())
+                    .then((vat_data) => {
+                        vat_data.data.forEach((vat_definition) => {
+                            if (!(vat_definition.percentage in this.vatRateMapping)) {
+                                this.vatRateMapping[vat_definition.percentage] =
+                                    RATE_ID_MAPPING[vat_definition.vat_definition_export_id];
+                            }
+                        });
+                    })
+                    .catch(() => {
+                        // This is a fallback where we hardcode the taxes hoping that they didn't change ...
+                        this.vatRateMapping = {
+                            19: "NORMAL",
+                            7: "REDUCED_1",
+                            10.7: "SPECIAL_RATE_1",
+                            5.5: "SPECIAL_RATE_2",
+                            0: "NULL",
+                        };
+                    });
+            });
     },
     //@Override
     /**

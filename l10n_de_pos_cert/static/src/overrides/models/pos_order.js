@@ -60,8 +60,7 @@ patch(PosOrder.prototype, {
         const receipt = super.export_for_printing(...arguments);
         if (this.isCountryGermanyAndFiskaly()) {
             if (this.isTransactionFinished()) {
-                receipt["tss"] = {};
-                $.extend(true, receipt["tss"], {
+                receipt["tss"] = {
                     transaction_number: this.l10n_de_fiskaly_transaction_number,
                     time_start: this.l10n_de_fiskaly_time_start,
                     time_end: this.l10n_de_fiskaly_time_end,
@@ -72,7 +71,7 @@ patch(PosOrder.prototype, {
                     signature_public_key: this.l10n_de_fiskaly_signature_public_key,
                     client_serial_number: this.l10n_de_fiskaly_client_serial_number,
                     erstBestellung: this.get_orderlines()[0].get_product().display_name,
-                });
+                };
             } else {
                 receipt["tss_issue"] = true;
             }
