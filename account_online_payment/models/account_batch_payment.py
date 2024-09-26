@@ -160,13 +160,13 @@ class AccountBatchPayment(models.Model):
         for payment in self.payment_ids:
             payments.append({
                 "amount": payment.amount,
-                "account_number": payment.destination_journal_id.bank_account_id.sanitized_acc_number if payment.is_internal_transfer else payment.partner_bank_id.sanitized_acc_number,
+                "account_number": payment.partner_bank_id.sanitized_acc_number,
                 "account_type": "IBAN",
-                "creditor_name": payment.commercial_partner_id.commercial_company_name,
+                "creditor_name": payment.partner_id.name,
                 "currency": payment.currency_id.display_name,
                 "date": fields.Date.to_string(payment.date),
-                "reference": payment.ref,
-                "structured_reference": is_valid_structured_reference(payment.ref),
+                "reference": payment.memo,
+                "structured_reference": is_valid_structured_reference(payment.memo),
                 "end_to_end_id": payment.end_to_end_id,
             })
 
