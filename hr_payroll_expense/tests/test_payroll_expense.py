@@ -562,16 +562,16 @@ class TestPayrollExpense(TestExpenseCommon, TestHrPayrollAccountCommon):
 
         sheet_paid_before_payslip_creation.account_move_ids.action_post()
         self.get_new_payment(sheet_paid_before_payslip_creation, 1000.0)
-        self.assertRecordValues(sheets.sorted('payment_state'), [
+        self.assertRecordValues(sheets.sorted('state'), [
             # refund_in_payslip flag isn't reset, but we currently do not need it to be
+            {'total_amount': 1000.0, 'payment_state': 'not_paid',               'state': 'approve', 'refund_in_payslip': True, 'payslip_id': False},
+            {'total_amount': 1000.0, 'payment_state': 'not_paid',               'state': 'approve', 'refund_in_payslip': True, 'payslip_id': False},
             {'total_amount': 1000.0, 'payment_state': paid_or_in_payment_state, 'state': 'done',    'refund_in_payslip': True, 'payslip_id': False},
-            {'total_amount': 1000.0, 'payment_state': 'not_paid',               'state': 'approve', 'refund_in_payslip': True, 'payslip_id': False},
-            {'total_amount': 1000.0, 'payment_state': 'not_paid',               'state': 'approve', 'refund_in_payslip': True, 'payslip_id': False},
         ])
-        self.assertRecordValues(sheets.account_move_ids.sorted('amount_residual'), [
+        self.assertRecordValues(sheets.account_move_ids.sorted('state'), [
+            {'amount_total': 1000.0, 'amount_residual': 1000.0, 'payment_state': 'not_paid',               'state': 'draft'},
+            {'amount_total': 1000.0, 'amount_residual': 1000.0, 'payment_state': 'not_paid',               'state': 'draft'},
             {'amount_total': 1000.0, 'amount_residual': 0.0,    'payment_state': paid_or_in_payment_state, 'state': 'posted'},
-            {'amount_total': 1000.0, 'amount_residual': 1000.0, 'payment_state': 'not_paid',               'state': 'draft'},
-            {'amount_total': 1000.0, 'amount_residual': 1000.0, 'payment_state': 'not_paid',               'state': 'draft'},
         ])
         payslip = self.create_payslip()
         self.assertEqual(
@@ -600,15 +600,15 @@ class TestPayrollExpense(TestExpenseCommon, TestHrPayrollAccountCommon):
             payslip.input_line_ids.filtered(lambda rule: rule.code == 'EXPENSES').amount,
             "The 2 linked expenses total amounts should be added to the new payslip expense input line",
         )
-        self.assertRecordValues(sheets.sorted('payment_state'), [
+        self.assertRecordValues(sheets.sorted('state'), [
+            {'total_amount': 1000.0, 'payment_state': 'not_paid',               'state': 'approve', 'payslip_id': payslip.id},
             {'total_amount': 1000.0, 'payment_state': paid_or_in_payment_state, 'state': 'done',    'payslip_id': False},
             {'total_amount': 1000.0, 'payment_state': paid_or_in_payment_state, 'state': 'done',    'payslip_id': payslip.id},
-            {'total_amount': 1000.0, 'payment_state': 'not_paid',               'state': 'approve', 'payslip_id': payslip.id},
         ])
-        self.assertRecordValues(sheets.account_move_ids.sorted('amount_residual'), [
-            {'amount_total': 1000.0, 'amount_residual': 0.0,    'payment_state': paid_or_in_payment_state, 'state': 'posted'},
-            {'amount_total': 1000.0, 'amount_residual': 0.0,    'payment_state': paid_or_in_payment_state, 'state': 'posted'},
+        self.assertRecordValues(sheets.account_move_ids.sorted('state'), [
             {'amount_total': 1000.0, 'amount_residual': 1000.0, 'payment_state': 'not_paid',               'state': 'draft'},
+            {'amount_total': 1000.0, 'amount_residual': 0.0,    'payment_state': paid_or_in_payment_state, 'state': 'posted'},
+            {'amount_total': 1000.0, 'amount_residual': 0.0,    'payment_state': paid_or_in_payment_state, 'state': 'posted'},
         ])
 
         # Posting the move will result in `sheet_paid_before_payslip_move_posting` being paid twice,
