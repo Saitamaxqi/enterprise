@@ -109,18 +109,18 @@ class TestDocumentsProjectRoutes(HttpCase, TestProjectCommon):
         self.assertEqual(res.status_code, 200, "the template must render nicely")
         self.assertRegex(res.text, r"0\s+folders,\s+0\s+files", "no document should be visible")
 
-        # Access project and documents from discoverable access_via_link
-        self.document_hello.action_update_access_rights(access_via_link='view')
-        res = project_url_open('/documents')
-        res.raise_for_status()
-        self.assertEqual(res.status_code, 200, "the template must render nicely")
-        self.assertRegex(res.text, r"0\s+folders,\s+1\s+files", "some documents should be visible")
-
         portal_access = self.document_hello.access_ids.filtered(lambda a: a.partner_id == self.user_portal.partner_id)
         self.assertFalse(portal_access)
 
         # Log access to the document so that is_access_via_link_hidden is irrelevant for this user.
+        self.document_hello.action_update_access_rights(access_via_link='view')
         self.url_open(self.document_hello.access_url).raise_for_status()
+
+        # Access project and documents
+        res = project_url_open('/documents')
+        res.raise_for_status()
+        self.assertEqual(res.status_code, 200, "the template must render nicely")
+        self.assertRegex(res.text, r"0\s+folders,\s+1\s+files", "some documents should be visible")
 
         portal_access = self.document_hello.access_ids.filtered(lambda a: a.partner_id == self.user_portal.partner_id)
         self.assertEqual(len(portal_access), 1)

@@ -25,57 +25,25 @@ class DocumentsProjectShareRoute(http.Controller):
         CustomerPortal._document_check_access(self, 'project.project', project_id, access_token)
         return request.env['project.task'].sudo().search([('project_id', '=', project_id), ('id', '=', task_id)], limit=1)
 
-    def _get_projects_documents(self, project_domain):
-        if request.env.user._is_public():
-            permission_domain = expression.AND([
-                [('is_access_via_link_hidden', '=', False)],
-                [('access_via_link', 'in', ('edit', 'view'))],
-                # public cannot access a request, unless access_via_link='edit'
-                expression.OR([
-                        [('access_via_link', '=', 'edit')],
-                        [('attachment_id', '!=', False)],
-                        [('type', '!=', 'binary')],
-                    ])
-            ])
-        else:
-            permission_domain = expression.OR([
-                [('user_permission', '!=', 'none')],
-                # Access via a project/task is also "having the link"
+    def _get_project_project_documents(self, project):
+        Task = request.env['project.task']
+        return request.env['documents.document'].search(
+            expression.OR([
                 expression.AND([
-                    [('access_via_link', 'in', ('edit', 'view'))],
-                    [('is_access_via_link_hidden', '=', False)]
+                    [('res_model', '=', 'project.project')],
+                    [('res_id', '=', project.id)]]),
+                expression.AND([
+                    [('res_model', '=', 'project.task')],
+                    [('res_id', 'in', Task._search([('project_id', '=', project.id)]))],
                 ]),
             ])
-
-        documents_sudo = request.env['documents.document'].sudo().search(expression.AND([
-            [('type', '!=', 'folder')],
-            [('shortcut_document_id', '=', False)],
-            permission_domain,
-            project_domain
-        ]), order='name')
-
-        return documents_sudo
-
-    def _get_project_project_documents(self, project):
-        return self._get_projects_documents(expression.OR([
-            expression.AND([[('res_model', '=', 'project.project')], [('res_id', '=', project.id)]]),
-            expression.AND([
-                [('res_model', '=', 'project.task')],
-                [('res_id', 'in', request.env['project.task'].sudo()._search([('project_id', '=', project.id)]))],
-            ]),
-        ]))
-
-    def _get_project_task_documents(self, task):
-        return self._get_projects_documents([
-            ('res_model', '=', 'project.task'),
-            ('res_id', '=', task.id),
-        ])
+        )
 
 # ------------------------------------------------------------------------------
 # Project routes
 # ------------------------------------------------------------------------------
 
-    @http.route('/my/projects/<int:project_id>/documents', type='http', auth='public')
+    @http.route('/my/projects/<int:project_id>/documents', type='http', auth='user')
     def portal_my_project_documents(self, project_id, access_token=None, **kwargs):
         try:
             project_sudo = CustomerPortal._document_check_access(self, 'project.project', project_id, access_token)
@@ -90,7 +58,7 @@ class DocumentsProjectShareRoute(http.Controller):
             'subfolders': {},
         })
 
-    @http.route('/my/projects/<int:project_id>/documents/download', type='http', auth='public')
+    @http.route('/my/projects/<int:project_id>/documents/download', type='http', auth='user')
     def portal_my_project_documents_download_all(self, project_id, access_token=None, **kwargs):
         try:
             project_sudo = CustomerPortal._document_check_access(self, 'project.project', project_id, access_token)
@@ -139,7 +107,7 @@ class DocumentsProjectShareRoute(http.Controller):
     @http.route([
         '/my/tasks/<int:task_id>/documents',
         '/my/projects/<int:project_id>/task/<int:task_id>/documents',
-    ], type='http', auth='public')
+    ], type='http', auth='user')
     def portal_my_task_documents(self, task_id, project_id=None, access_token=None, **kwargs):
         try:
             if project_id:
@@ -148,7 +116,10 @@ class DocumentsProjectShareRoute(http.Controller):
                 task_sudo = CustomerPortal._document_check_access(self, 'project.task', task_id, access_token)
         except (AccessError, MissingError):
             return request.redirect('/my')
-        documents_sudo = self._get_project_task_documents(task_sudo)
+        documents_sudo = request.env['documents.document'].search([
+            ('res_model', '=', 'project.task'),
+            ('res_id', '=', task_sudo.id),
+        ])
         return request.render('documents_project.public_task_page', {
             'access_token': access_token or '',
             'project_id': task_sudo.project_id.id,
@@ -161,7 +132,7 @@ class DocumentsProjectShareRoute(http.Controller):
     @http.route([
         '/my/tasks/<int:task_id>/documents/download',
         '/my/projects/<int:project_id>/task/<int:task_id>/documents/download',
-    ], type='http', auth='public')
+    ], type='http', auth='user')
     def portal_my_task_documents_download_all(self, task_id, project_id=None, access_token=None, **kwargs):
         try:
             if project_id:
@@ -172,7 +143,10 @@ class DocumentsProjectShareRoute(http.Controller):
             return request.redirect('/my')
         return ShareRoute()._make_zip(
             clean_filename(task_sudo.name) + '.zip',
-            self._get_project_task_documents(task_sudo),
+            request.env['documents.document'].search([
+                ('res_model', '=', 'project.task'),
+                ('res_id', '=', task_sudo.id),
+            ]),
         )
 
     @http.route([

@@ -52,6 +52,7 @@ class ProjectProject(models.Model):
 
         documents_read_group = self.env['documents.document']._read_group(
             [
+                ('user_permission', '!=', 'none'),
                 '|',
                     '&',
                         ('res_model', '=', 'project.project'),
