@@ -376,7 +376,12 @@ class ShareRoute(http.Controller):
         # If the user does not have access to the parent folder, we open it in the "SHARED" folder.
         if document.type != 'folder':
             parent = document.folder_id
-            documents_init['folder_id'] = parent.id if parent.user_permission not in (False, 'none') else "SHARED"
+            documents_init['folder_id'] = (
+                parent.id if parent.user_permission in {'view', 'edit'}
+                else "SHARED" if not parent.id and not request.env.user
+                else "MY" if document.owner_id == request.env.user
+                else "COMPANY"
+            )
             documents_init['document_id'] = document.id
             target = document.shortcut_document_id or document
             if document.type == 'binary' and target.attachment_id:

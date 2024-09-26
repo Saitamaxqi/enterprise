@@ -34,7 +34,9 @@ export class DocumentService {
         const documentId =
             Number(urlSearch.documents_init_document_id) || documents_init?.document_id;
         this.documentIdToRestoreOnce = documentId;
-        const folderId = Number(urlSearch.documents_init_folder_id) || documents_init?.folder_id;
+        const initFolderId = urlSearch.documents_init_folder_id;
+        const folderId = ['MY', 'COMPANY', 'SHARED'].includes(initFolderId) ?
+            initFolderId : Number(initFolderId) || documents_init?.folder_id;
         this._initData = { documentId, folderId, openPreview };
         if (this._initData.folderId) {
             browser.localStorage.setItem(
