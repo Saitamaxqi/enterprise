@@ -43,100 +43,35 @@ registry.category("web_tour.tours").add("account_accountant_batch_payment_bank_r
                 "div.bank_rec_widget_form_batch_payments_list_anchor table.o_list_table tr.o_rec_widget_list_selected_item",
         },
         {
-            content: "Expand the added batch line",
-            trigger: "div[name='line_ids'] .fa-caret-right",
+            content: "Open the batch",
+            trigger: "div[name='line_ids'] .o_bank_rec_second_line .o_form_uri",
             run: "click",
         },
         {
-            content: "The batch should still be selected",
-            trigger:
-                "div.bank_rec_widget_form_batch_payments_list_anchor table.o_list_table tr.o_rec_widget_list_selected_item",
-        },
-        {
-            trigger: "td[field='account_id']:contains('Outstanding Receipts')",
-        },
-        {
-            content: "Remove the payment of 100.0",
-            trigger: "div[name='line_ids'] .fa-trash-o:last",
-            run: "click",
-        },
-
-        // Check the batch rejection wizard.
-        {
-            trigger: "button.btn-primary:contains('Validate')",
-        },
-        {
-            content: "Validate and open the wizard",
-            trigger: "button:contains('Validate')",
+            content: "Open the payment of 100.0",
+            trigger: "div[name='payment_ids'] tbody tr.o_data_row:last .o_list_record_open_form_view button",
             run: "click",
         },
         {
-            trigger: "div.modal-content",
-        },
-        {
-            content: "Click on 'Cancel'",
-            trigger: "div.modal-content button[name='button_cancel']",
+            content: "Reject it",
+            trigger: "button[name='action_reject']",
             run: "click",
         },
         {
-            trigger: "body:not(.modal-open)",
-        },
-        {
-            content: "Validate and open the wizard",
-            trigger: "button:contains('Validate')",
+            content: "Go back to the reconciliation widget",
+            trigger: "a[href$='/reconciliation']",
             run: "click",
         },
         {
-            trigger: "div.modal-content",
-        },
-        {
-            content: "Click on 'Expect Payments Later'",
-            trigger: "div.modal-content button[name='button_continue']",
-            run: "click",
-        },
-
-        // Reconcile 'line2' with the remaining payment in batch.
-        {
-            trigger: "div[name='line_ids'] td[field='name']:contains('line2')",
-        },
-        {
-            content: "The 'line2' should be selected by default",
-            trigger: "div[name='line_ids'] td[field='name']:contains('line2')",
-        },
-        {
-            content: "Click on the 'batch_payments_tab'",
-            trigger: "a[name='batch_payments_tab']",
-            run: "click",
-        },
-        {
-            content: "Mount BATCH0001",
-            trigger:
-                "div.bank_rec_widget_form_batch_payments_list_anchor table.o_list_table td[name='name']:contains('BATCH0001')",
-            run: "click",
-        },
-        {
-            content: "Expand the added batch line",
-            trigger: "div[name='line_ids'] .fa-caret-right",
-            run: "click",
-        },
-        {
-            content: "One payment should be displayed",
-            trigger: "td[field='account_id']:contains('Outstanding Receipts')",
+            trigger: "div[name='line_ids'] td[field='name']:contains('line1')",
         },
         {
             trigger: "button.btn-primary:contains('Validate')",
         },
         {
-            content: "Validate. The wizard should be opened.",
+            content: "Validate",
             trigger: "button:contains('Validate')",
             run: "click",
-        },
-        {
-            trigger: "div[name='line_ids'] td[field='name']:contains('line3')",
-        },
-        {
-            content: "The 'line3' should be selected by default",
-            trigger: "div[name='line_ids'] td[field='name']:contains('line3')",
         },
         ...stepUtils.toggleHomeMenu(),
         ...accountTourSteps.goToAccountMenu("Reset back to accounting module"),

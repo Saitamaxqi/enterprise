@@ -124,13 +124,13 @@ class AccountBatchPayment(models.Model):
         for batch in self:
             batch.currency_id = batch.journal_id.currency_id or batch.company_currency_id or self.env.company.currency_id
 
-    @api.depends('currency_id', 'payment_ids.amount', 'payment_ids.is_matched')
+    @api.depends('currency_id', 'payment_ids.amount', 'payment_ids.is_matched', 'payment_ids.state')
     def _compute_from_payment_ids(self):
         for batch in self:
             amount = 0.0
             amount_residual = 0.0
             amount_residual_currency = 0.0
-            for payment in batch.payment_ids:
+            for payment in batch.payment_ids.filtered(lambda p: p.state == 'in_process'):
                 if payment.move_id:
                     liquidity_lines, _counterpart_lines, _writeoff_lines = payment._seek_for_lines()
                     for line in liquidity_lines:
@@ -151,7 +151,7 @@ class AccountBatchPayment(models.Model):
                     )
                     amount += converted_amount
                     amount_residual += converted_amount
-                    amount_residual_currency += payment.amount
+                    amount_residual_currency += payment.amount_signed
 
             batch.amount_residual = amount_residual
             batch.amount = amount
@@ -176,7 +176,7 @@ class AccountBatchPayment(models.Model):
             payment_null = record.payment_ids.filtered(lambda p: p.amount == 0)
             if payment_null:
                 raise ValidationError(_('You cannot add payments with zero amount in a Batch Payment.'))
-            if record.payment_ids.filtered(lambda p: p.state != 'in_process'):
+            if record.state == 'draft' and record.payment_ids.filtered(lambda p: p.state != 'in_process'):
                 raise ValidationError(_('You cannot add payments that are not posted.'))
 
     @api.model_create_multi

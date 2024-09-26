@@ -8,10 +8,7 @@
     'summary': 'Allows using Reconciliation with the Batch Payment feature.',
     'depends': ['account_accountant', 'account_batch_payment'],
     'data': [
-        'security/ir.model.access.csv',
-
         'views/bank_rec_widget_views.xml',
-        'views/account_batch_payment_rejection_views.xml',
     ],
     'auto_install': True,
     'license': 'OEEL-1',

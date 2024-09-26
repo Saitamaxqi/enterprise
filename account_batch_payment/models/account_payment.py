@@ -1,25 +1,18 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import models, fields, Command, api, _
+from odoo import models, fields, api, _
 
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"
 
     batch_payment_id = fields.Many2one('account.batch.payment', ondelete='set null', copy=False,
-        compute="_compute_batch_payment_id", store=True, readonly=False, check_company=True)
+        check_company=True)
     amount_signed = fields.Monetary(
         currency_field='currency_id', compute='_compute_amount_signed',
         help='Negative value of amount field if payment_type is outbound')
     payment_method_name = fields.Char(related='payment_method_line_id.name')
-
-    @api.depends('state')
-    def _compute_batch_payment_id(self):
-        for payment in self.filtered(lambda p: p.state not in ('in_process', 'draft')):
-            # unlink the payment from the batch payment ids, however _compute_amount
-            # is not triggered by the ORM when setting batch_payment_id to None
-            payment.batch_payment_id.update({'payment_ids': [Command.unlink(payment.id)]})
 
     @api.depends('amount', 'payment_type')
     def _compute_amount_signed(self):

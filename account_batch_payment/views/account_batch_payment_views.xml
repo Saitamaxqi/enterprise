@@ -59,7 +59,7 @@ if records:
                                        ('amount', '!=', 0),
                                     ]"
                                    options="{'no_create': True}">
-                                <list string="Payments" decoration-muted="state == 'draft'" create="false" editable="top" open_form_view="True">
+                                <list string="Payments" decoration-muted="state == 'draft'" decoration-danger="state in ('rejected', 'canceled')" create="false" editable="top" open_form_view="True">
                                     <field name="name" readonly="1"/>
                                     <field name="date" readonly="1"/>
                                     <field name="partner_id" readonly="1"/>

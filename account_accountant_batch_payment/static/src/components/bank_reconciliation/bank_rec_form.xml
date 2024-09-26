@@ -29,10 +29,17 @@
         <xpath expr="//td[@field='account_id']" position="replace">
             <t t-if="line.data.flag === 'new_batch'">
                 <td field="source_batch_payment_name">
-                    <t t-if="line.data.flag === 'new_batch'">
-                        <button class="btn btn-sm fa fa-caret-right ps-0" t-on-click="() => this.actionExpandBatchPayment(line)"/>
-                        <span t-on-click="() => this.actionExpandBatchPayment(line)" t-out="line.data.source_batch_payment_name" class="btn fw-normal p-0"/>
-                    </t>
+                    <span t-out="line.data.source_batch_payment_name"/>
+                </td>
+            </t>
+            <t t-else="">$0</t>
+        </xpath>
+        <xpath expr="//td[@field='name']" position="replace">
+            <t t-if="line.data.flag === 'new_batch'">
+                <td field="name">
+                    <span class="o_form_uri fst-italic"
+                          t-out="line.data.name"
+                          t-on-click="() => this.actionRedirectToSourceMove(line)"/>
                 </td>
             </t>
             <t t-else="">$0</t>

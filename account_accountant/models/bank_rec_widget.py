@@ -1300,35 +1300,39 @@ class BankRecWidget(models.Model):
             initial_values.pop(field_name, None)
 
         st_line_domain = self.st_line_id._get_default_amls_matching_domain()
-        still_available_aml_ids = self.env['account.move.line'] \
-            .browse(
-                orm_command[2]['source_aml_id']
-                for orm_command in initial_values['line_ids']
-                if orm_command[0] == Command.CREATE and orm_command[2].get('source_aml_id')
-            ) \
-            .filtered_domain(st_line_domain) \
-            .ids
-        line_ids_commands = [Command.clear()]
-        for orm_command in initial_values['line_ids']:
-            if orm_command[0] == Command.CREATE:
-                values = orm_command[2]
-                if not values.get('source_aml_id') or values.get('source_aml_id' in still_available_aml_ids):
-                    line_ids_commands.append(Command.create(orm_command[2]))
-                else:
-                    line_ids_commands.append(orm_command)
-
-        initial_values['line_ids'] = line_ids_commands
+        initial_values['line_ids'] = self._process_restore_lines_ids(initial_values['line_ids'])
         self.update(initial_values)
 
-        if return_todo_command and return_todo_command.get('res_model') == 'account.move' and return_todo_command.get('res_id'):
-            created_invoice = self.env['account.move'].browse(return_todo_command['res_id'])
-            if created_invoice.state == 'posted':
-                lines = created_invoice.line_ids.filtered_domain(st_line_domain)
-                self._action_add_new_amls(lines)
-            else:
-                self._lines_add_auto_balance_line()
+        if (
+            return_todo_command
+            and return_todo_command.get('res_model') == 'account.move'
+            and (created_invoice := self.env['account.move'].browse(return_todo_command['res_id']))
+            and created_invoice.state == 'posted'
+        ):
+            lines = created_invoice.line_ids.filtered_domain(st_line_domain)
+            self._action_add_new_amls(lines)
+        else:
+            self._lines_add_auto_balance_line()
 
         self.return_todo_command = self._prepare_embedded_views_data()
+
+    def _process_restore_lines_ids(self, initial_commands):
+        st_line_domain = self.st_line_id._get_default_amls_matching_domain()
+        still_available_aml_ids = self.env['account.move.line'].browse(
+            orm_command[2]['source_aml_id']
+            for orm_command in initial_commands
+            if orm_command[0] == Command.CREATE and orm_command[2].get('source_aml_id')
+        ).filtered_domain(st_line_domain).ids
+        still_available_aml_ids += [None]  # still available if there was no source
+        line_ids_commands = [Command.clear()]
+        for orm_command in initial_commands:
+            match orm_command:
+                case (Command.CREATE, _, values) if values.get('source_aml_id' in still_available_aml_ids):
+                    # Discard the virtual id coming from the client
+                    line_ids_commands.append(Command.create(values))
+                case _:
+                    line_ids_commands.append(orm_command)
+        return line_ids_commands
 
     def _action_reload_liquidity_line(self):
         self.ensure_one()
@@ -1347,6 +1351,35 @@ class BankRecWidget(models.Model):
         # Focus back the liquidity line.
         self._js_action_mount_line_in_edit(self.line_ids.filtered(lambda x: x.flag == 'liquidity').index)
 
+    def _validation_lines_vals(self, line_ids_create_command_list, aml_to_exchange_diff_vals, to_reconcile):
+        partners = (self.line_ids.filtered(lambda x: x.flag != 'liquidity')).partner_id
+        partner_to_set = partners if len(partners) == 1 else self.env['res.partner']
+        source2exchange = self.line_ids.filtered(lambda l: l.flag == 'exchange_diff').grouped('source_aml_id')
+        for line in self.line_ids:
+            if line.flag == 'exchange_diff':
+                continue
+
+            amount_currency = line.amount_currency
+            balance = line.balance
+            if line.flag == 'new_aml':
+                to_reconcile.append((len(line_ids_create_command_list) + 1, line.source_aml_id))
+                exchange_diff = source2exchange.get(line.source_aml_id)
+                if exchange_diff:
+                    aml_to_exchange_diff_vals[len(line_ids_create_command_list) + 1] = {
+                        'amount_residual': exchange_diff.balance,
+                        'amount_residual_currency': exchange_diff.amount_currency,
+                        'analytic_distribution': exchange_diff.analytic_distribution,
+                    }
+                    # Squash amounts of exchange diff into corresponding new_aml
+                    amount_currency += exchange_diff.amount_currency
+                    balance += exchange_diff.balance
+            line_ids_create_command_list.append(Command.create(line._get_aml_values(
+                sequence=len(line_ids_create_command_list) + 1,
+                partner_id=partner_to_set.id if line.flag in ('liquidity', 'auto_balance') else line.partner_id.id,
+                amount_currency=amount_currency,
+                balance=balance,
+            )))
+
     def _action_validate(self):
         self.ensure_one()
         partners = (self.line_ids.filtered(lambda x: x.flag != 'liquidity')).partner_id
@@ -1357,31 +1390,7 @@ class BankRecWidget(models.Model):
         line_ids_create_command_list = []
         aml_to_exchange_diff_vals = {}
 
-        source2exchange = self.line_ids.filtered(lambda l: l.flag == 'exchange_diff').grouped('source_aml_id')
-        for i, line in enumerate(self.line_ids):
-            if line.flag == 'exchange_diff':
-                continue
-
-            amount_currency = line.amount_currency
-            balance = line.balance
-            if line.flag == 'new_aml':
-                to_reconcile.append((i, line.source_aml_id))
-                exchange_diff = source2exchange.get(line.source_aml_id)
-                if exchange_diff:
-                    aml_to_exchange_diff_vals[i] = {
-                        'amount_residual': exchange_diff.balance,
-                        'amount_residual_currency': exchange_diff.amount_currency,
-                        'analytic_distribution': exchange_diff.analytic_distribution,
-                    }
-                    # Squash amounts of exchange diff into corresponding new_aml
-                    amount_currency += exchange_diff.amount_currency
-                    balance += exchange_diff.balance
-            line_ids_create_command_list.append(Command.create(line._get_aml_values(
-                sequence=i,
-                partner_id=partner_to_set.id if line.flag in ('liquidity', 'auto_balance') else line.partner_id.id,
-                amount_currency=amount_currency,
-                balance=balance,
-            )))
+        self._validation_lines_vals(line_ids_create_command_list, aml_to_exchange_diff_vals, to_reconcile)
 
         st_line = self.st_line_id
         move = st_line.move_id

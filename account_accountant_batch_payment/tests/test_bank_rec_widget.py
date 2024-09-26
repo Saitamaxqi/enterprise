@@ -7,18 +7,211 @@ from odoo.tests import tagged
 
 
 @tagged('post_install', '-at_install')
-class TestBankRecWidget(TestBankRecWidgetCommon):
+class TestBankRecWidgetWithoutEntry(TestBankRecWidgetCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.payment_method_line = cls.company_data['default_journal_bank'].inbound_payment_method_line_ids\
+            .filtered(lambda l: l.code == 'batch_payment')
+
+    def test_state_changes(self):
+        invoice = self.init_invoice('out_invoice', partner=self.partner_a, amounts=[1000.0], post=True)
+        invoice_payment = self.env['account.payment.register'].create({
+            'payment_date': '2019-01-01',
+            'payment_method_line_id': self.payment_method_line.id,
+            'line_ids': [Command.set(invoice.line_ids.filtered(lambda l: l.display_type == 'payment_term').ids)],
+        })._create_payments()
+        from_scratch_payment = self.env['account.payment'].create({
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'partner_id': self.partner_a.id,
+            'payment_method_line_id': self.payment_method_line.id,
+            'amount': 1000,
+        })
+        from_scratch_payment.action_post()
+        for payment, expect_reconcile in [(invoice_payment, True), (from_scratch_payment, False)]:
+            self.assertFalse(payment.move_id)
+            batch = self.env['account.batch.payment'].create({
+                'journal_id': self.company_data['default_journal_bank'].id,
+                'payment_ids': [Command.set(payment.ids)],
+                'payment_method_id': self.payment_method_line.payment_method_id.id,
+            })
+            batch.validate_batch()
+            self.assertRecordValues(payment, [{
+                'state': 'in_process',
+                'is_sent': True,
+            }])
+            self.assertRecordValues(batch, [{'state': 'sent'}])
+
+            st_line = self._create_st_line(1000.0, payment_ref=batch.name, partner_id=self.partner_a.id)
+            wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
+            wizard._action_add_new_batch_payments(batch)
+            self.assertRecordValues(wizard.line_ids, [
+                # pylint: disable=C0326
+                {'flag': 'liquidity',       'balance':  1000.0},
+                {'flag': 'new_batch',       'balance': -1000.0},
+            ])
+            wizard._action_validate()
+
+            self.assertRecordValues(st_line.move_id.line_ids, [
+                {'account_id': self.partner_a.property_account_receivable_id.id, 'balance': -1000.0, 'reconciled': expect_reconcile},
+                {'account_id': st_line.journal_id.default_account_id.id,         'balance':  1000.0, 'reconciled': False},
+            ])
+            self.assertRecordValues(payment, [{
+                'state': 'paid',
+                'is_sent': True,
+            }])
+            self.assertRecordValues(batch, [{'state': 'reconciled'}])
+
+    def test_writeoff(self):
+        invoice = self.init_invoice('out_invoice', partner=self.partner_a, amounts=[1000.0], post=True)
+        payment = self.env['account.payment.register'].create({
+            'payment_date': '2019-01-01',
+            'payment_method_line_id': self.payment_method_line.id,
+            'line_ids': [Command.set(invoice.line_ids.filtered(lambda l: l.display_type == 'payment_term').ids)],
+        })._create_payments()
+        batch = self.env['account.batch.payment'].create({
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'payment_ids': [Command.set(payment.ids)],
+            'payment_method_id': self.payment_method_line.payment_method_id.id,
+        })
+        batch.validate_batch()
+
+        st_line = self._create_st_line(900.0, payment_ref=batch.name, partner_id=self.partner_a.id)
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
+        wizard._action_add_new_batch_payments(batch)
+        self.assertRecordValues(wizard.line_ids, [
+            # pylint: disable=C0326
+            {'flag': 'liquidity',       'balance':   900.0},
+            {'flag': 'new_batch',       'balance': -1000.0},
+            {'flag': 'auto_balance',    'balance':   100.0},
+        ])
+        line = wizard.line_ids.filtered(lambda l: l.flag == 'auto_balance')
+        wizard._js_action_mount_line_in_edit(line.index)
+        wizard._js_action_line_set_partner_receivable_account(line.index)
+        self.assertRecordValues(wizard.line_ids, [
+            # pylint: disable=C0326
+            {'flag': 'liquidity',       'balance':   900.0},
+            {'flag': 'new_batch',       'balance': -1000.0},
+            {'flag': 'manual',          'balance':   100.0},
+        ])
+        wizard._action_validate()
+
+        self.assertRecordValues(st_line.move_id.line_ids, [
+            {'account_id': self.partner_a.property_account_receivable_id.id, 'balance': -1000.0, 'reconciled': True},
+            {'account_id': st_line.journal_id.default_account_id.id,         'balance':   900.0, 'reconciled': False},
+            {'account_id': self.partner_a.property_account_receivable_id.id, 'balance':   100.0, 'reconciled': False},
+        ])
+
+    def test_multiple_exchange_diffs_in_batch(self):
+        # Create a statement line when the currency rate is 1 USD == 2 EUR == 4 CAD
+        st_line = self._create_st_line(
+            1000.0,
+            partner_id=self.partner_a.id,
+            date='2017-01-01'
+        )
+        inv_line = self._create_invoice_line(
+            'out_invoice',
+            partner_id=self.partner_a.id,
+            invoice_line_ids=[{'price_unit': 5000.0, 'tax_ids': []}],
+        )
+        # Payment when 1 USD == 1 EUR
+        payment_eur_gain_diff = self.env['account.payment'].create({
+            'date': '2015-01-01',
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'partner_id': self.partner_a.id,
+            'payment_method_line_id': self.payment_method_line.id,
+            'currency_id': self.other_currency.id,
+            'amount': 100.0,
+        })
+        # Payment when 1 USD == 1 EUR
+        payment_eur_gain_diff_2 = self.env['account.payment'].create({
+            'date': '2015-01-01',
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'partner_id': self.partner_a.id,
+            'payment_method_line_id': self.payment_method_line.id,
+            'currency_id': self.other_currency.id,
+            'amount': 200.0,
+        })
+        # Payment when 1 USD == 3 EUR
+        payment_eur_loss_diff = self.env['account.payment'].create({
+            'date': '2016-01-01',
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'partner_id': self.partner_a.id,
+            'payment_method_line_id': self.payment_method_line.id,
+            'currency_id': self.other_currency.id,
+            'amount': 240.0,
+        })
+        # Payment when 1 USD == 6 CAD
+        payment_cad_loss_diff = self.env['account.payment'].create({
+            'date': '2016-01-01',
+            'payment_type': 'inbound',
+            'partner_type': 'customer',
+            'partner_id': self.partner_a.id,
+            'payment_method_line_id': self.payment_method_line.id,
+            'currency_id': self.other_currency_2.id,
+            'amount': 300.0,
+        })
+        payments = payment_eur_gain_diff + payment_eur_gain_diff_2 + payment_eur_loss_diff + payment_cad_loss_diff
+        payments.action_post()
+
+        batch = self.env['account.batch.payment'].create({
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'payment_ids': [Command.set(payments.ids)],
+            'payment_method_id': self.payment_method_line.payment_method_id.id,
+        })
+
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
+        wizard._action_add_new_amls(inv_line)
+        self.assertRecordValues(wizard.line_ids, [
+            # pylint: disable=C0326
+            {'flag': 'liquidity',       'balance': 1000.0},
+            {'flag': 'new_aml',         'balance': -1000.0},
+        ])
+
+        wizard._action_add_new_batch_payments(batch)
+        self.assertRecordValues(wizard.line_ids, [
+            # pylint: disable=C0326
+            {'flag': 'liquidity',       'amount_currency': 1000.0,     'balance': 1000.0},
+            {'flag': 'new_aml',         'amount_currency': -655.0,     'balance': -655.0},
+            {'flag': 'new_batch',       'amount_currency': -840.0,     'balance': -430.0},
+            {'flag': 'exchange_diff',   'amount_currency':    0.0,     'balance':  150.0},
+            {'flag': 'exchange_diff',   'amount_currency':    0.0,     'balance':  -40.0},
+            {'flag': 'exchange_diff',   'amount_currency':    0.0,     'balance':  -25.0},
+        ])
+
+        wizard._js_action_validate()
+        self.assertRecordValues(st_line.move_id.line_ids, [
+            {'balance':   -270.0, 'amount_currency':   -540.0, 'amount_residual':   -270.0},
+            {'balance':    -75.0, 'amount_currency':   -300.0, 'amount_residual':    -75.0},
+            {'balance':   1000.0, 'amount_currency':   1000.0, 'amount_residual':   1000.0},
+            {'balance':   -655.0, 'amount_currency':   -655.0, 'amount_residual':      0.0},
+        ])
+
+        reconciled = st_line.move_id.line_ids.matched_debit_ids.debit_move_id | st_line.move_id.line_ids.matched_credit_ids.credit_move_id
+        self.assertRecordValues(reconciled, [
+            {'balance':   5000.0, 'amount_currency':   5000.0, 'amount_residual':   4345.0},
+        ])
+
+
+@tagged('post_install', '-at_install')
+class TestBankRecWidgetWithEntry(TestBankRecWidgetCommon):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.payment_method_line = cls.company_data['default_journal_bank'].inbound_payment_method_line_ids\
+            .filtered(lambda l: l.code == 'batch_payment')
+        cls.payment_method_line.payment_account_id = cls.inbound_payment_method_line.payment_account_id
 
     def test_matching_batch_payment(self):
-        payment_method_line = self.company_data['default_journal_bank'].inbound_payment_method_line_ids\
-            .filtered(lambda l: l.code == 'batch_payment')
-        payment_method_line.payment_account_id = self.inbound_payment_method_line.payment_account_id
-
         payment = self.env['account.payment'].create({
             'payment_type': 'inbound',
             'partner_type': 'customer',
             'partner_id': self.partner_a.id,
-            'payment_method_line_id': payment_method_line.id,
+            'payment_method_line_id': self.payment_method_line.id,
             'amount': 100.0,
         })
         payment.action_post()
@@ -26,7 +219,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         batch = self.env['account.batch.payment'].create({
             'journal_id': self.company_data['default_journal_bank'].id,
             'payment_ids': [Command.set(payment.ids)],
-            'payment_method_id': payment_method_line.payment_method_id.id,
+            'payment_method_id': self.payment_method_line.payment_method_id.id,
         })
         self.assertRecordValues(batch, [{'state': 'draft'}])
 
@@ -52,213 +245,25 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
             {'flag': 'auto_balance',    'balance': -900.0,  'reconcile_model_id': False},
         ])
         self.assertRecordValues(wizard, [{
-            'selected_batch_payment_ids': batch.ids,
             'state': 'valid',
         }])
         wizard._action_validate()
 
         self.assertRecordValues(batch, [{'state': 'reconciled'}])
-
-    def test_batch_payment_selection_on_bank_reco_widget(self):
-        payment_method_line = self.company_data['default_journal_bank'].inbound_payment_method_line_ids\
-            .filtered(lambda l: l.code == 'batch_payment')
-        payment_method_line.payment_account_id = self.inbound_payment_method_line.payment_account_id
-
-        payments = self.env['account.payment'].create([
-            {
-                'payment_type': 'inbound',
-                'partner_type': 'customer',
-                'partner_id': self.partner_a.id,
-                'payment_method_line_id': payment_method_line.id,
-                'amount': i * 100.0,
-            }
-            for i in range(1, 5)
+        self.assertRecordValues(st_line.move_id.line_ids, [
+            {'account_id': st_line.journal_id.default_account_id.id,         'balance': 1000.0, 'reconciled': False},
+            {'account_id': payment.outstanding_account_id.id,                'balance': -100.0, 'reconciled': True},
+            {'account_id': self.partner_a.property_account_receivable_id.id, 'balance': -900.0, 'reconciled': False},
         ])
-        payments.action_post()
-
-        batch = self.env['account.batch.payment'].create({
-            'journal_id': self.company_data['default_journal_bank'].id,
-            'payment_ids': [Command.set(payments.ids)],
-            'payment_method_id': payment_method_line.payment_method_id.id,
-        })
-
-        self.env.flush_all()
-
-        # Mount the batch as new_amls (expanded) inside the bank reconciliation widget.
-        st_line = self._create_st_line(1000.0)
-        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
-        wizard._action_add_new_batch_payments(batch, expand=True)
-
-        self.assertRecordValues(wizard.line_ids, [
-            # pylint: disable=C0326
-            {'flag': 'liquidity',       'balance': 1000.0,  'source_batch_payment_id': False},
-            {'flag': 'new_aml',         'balance': -100.0,  'source_batch_payment_id': batch.id},
-            {'flag': 'new_aml',         'balance': -200.0,  'source_batch_payment_id': batch.id},
-            {'flag': 'new_aml',         'balance': -300.0,  'source_batch_payment_id': batch.id},
-            {'flag': 'new_aml',         'balance': -400.0,  'source_batch_payment_id': batch.id},
-        ])
-        self.assertRecordValues(wizard, [{'selected_batch_payment_ids': batch.ids}])
-
-        # Remove the batch
-        wizard._action_remove_new_batch_payments(batch)
-
-        self.assertRecordValues(wizard.line_ids, [
-            # pylint: disable=C0326
-            {'flag': 'liquidity',       'balance': 1000.0,  'source_batch_payment_id': False},
-            {'flag': 'auto_balance',    'balance': -1000.0, 'source_batch_payment_id': False},
-        ])
-        self.assertRecordValues(wizard, [{'selected_batch_payment_ids': []}])
-
-        # Mount the batch as normal inside the bank reconciliation widget.
-        st_line = self._create_st_line(1000.0)
-        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
-        wizard._action_add_new_batch_payments(batch)
-
-        self.assertRecordValues(wizard.line_ids, [
-            # pylint: disable=C0326
-            {'flag': 'liquidity',       'balance': 1000.0,  'source_batch_payment_id': False},
-            {'flag': 'new_batch',       'balance': -1000.0, 'source_batch_payment_id': batch.id},
-        ])
-        self.assertRecordValues(wizard, [{'selected_batch_payment_ids': batch.ids}])
-
-        # Remove payment3 from the amls tab.
-        aml_payment3 = payments[2].move_id.line_ids.filtered(lambda x: x.account_id.account_type not in ('asset_receivable', 'liability_payable', 'asset_cash', 'liability_credit_card'))
-        wizard._action_remove_new_amls(aml_payment3)
-
-        self.assertRecordValues(wizard.line_ids, [
-            # pylint: disable=C0326
-            {'flag': 'liquidity',       'balance': 1000.0,  'source_batch_payment_id': False},
-            {'flag': 'new_aml',         'balance': -100.0,  'source_batch_payment_id': batch.id},
-            {'flag': 'new_aml',         'balance': -200.0,  'source_batch_payment_id': batch.id},
-            {'flag': 'new_aml',         'balance': -400.0,  'source_batch_payment_id': batch.id},
-            {'flag': 'auto_balance',    'balance': -300.0,  'source_batch_payment_id': False},
-        ])
-        self.assertRecordValues(wizard, [{'selected_batch_payment_ids': []}])
-
-        # Add again payment3 from the aml tab.
-        wizard._action_add_new_amls(aml_payment3)
-
-        self.assertRecordValues(wizard.line_ids, [
-            # pylint: disable=C0326
-            {'flag': 'liquidity',       'balance': 1000.0,  'source_batch_payment_id': False},
-            {'flag': 'new_aml',         'balance': -100.0,  'source_batch_payment_id': batch.id},
-            {'flag': 'new_aml',         'balance': -200.0,  'source_batch_payment_id': batch.id},
-            {'flag': 'new_aml',         'balance': -400.0,  'source_batch_payment_id': batch.id},
-            {'flag': 'new_aml',         'balance': -300.0,  'source_batch_payment_id': batch.id},
-        ])
-        self.assertRecordValues(wizard, [{'selected_batch_payment_ids': batch.ids}])
-
-        # Remove payment4 & add it again using the batch.
-        line = wizard.line_ids.filtered(lambda x: x.flag == 'new_aml' and x.balance == -400.0)
-        wizard._action_remove_lines(line)
-        wizard._action_add_new_batch_payments(batch, expand=True)
-
-        self.assertRecordValues(wizard.line_ids, [
-            # pylint: disable=C0326
-            {'flag': 'liquidity',       'balance': 1000.0,  'source_batch_payment_id': False},
-            {'flag': 'new_aml',         'balance': -100.0,  'source_batch_payment_id': batch.id},
-            {'flag': 'new_aml',         'balance': -200.0,  'source_batch_payment_id': batch.id},
-            {'flag': 'new_aml',         'balance': -300.0,  'source_batch_payment_id': batch.id},
-            {'flag': 'new_aml',         'balance': -400.0,  'source_batch_payment_id': batch.id},
-        ])
-        self.assertRecordValues(wizard, [{'selected_batch_payment_ids': batch.ids}])
-
-        # Remove payment4 & add its batch again as one batch line.
-        line = wizard.line_ids.filtered(lambda x: x.flag == 'new_aml' and x.balance == -400.0)
-        wizard._action_remove_lines(line)
-        wizard._action_add_new_batch_payments(batch)
-
-        self.assertRecordValues(wizard.line_ids, [
-            # pylint: disable=C0326
-            {'flag': 'liquidity',       'balance': 1000.0,  'source_batch_payment_id': False},
-            {'flag': 'new_batch',       'balance': -1000.0, 'source_batch_payment_id': batch.id},
-        ])
-        self.assertRecordValues(wizard, [{'selected_batch_payment_ids': batch.ids}])
-
-    def test_batch_payment_rejection_on_bank_reco_widget(self):
-        payment_method_line = self.company_data['default_journal_bank'].inbound_payment_method_line_ids\
-            .filtered(lambda l: l.code == 'batch_payment')
-        payment_method_line.payment_account_id = self.inbound_payment_method_line.payment_account_id
-
-        payments = self.env['account.payment'].create([
-            {
-                'date': '2018-01-01',
-                'payment_type': 'inbound',
-                'partner_type': 'customer',
-                'partner_id': self.partner_a.id,
-                'payment_method_line_id': payment_method_line.id,
-                'amount': i * 100.0,
-            }
-            for i in range(1, 4)
-        ])
-        payments.action_post()
-
-        batch = self.env['account.batch.payment'].create({
-            'journal_id': self.company_data['default_journal_bank'].id,
-            'payment_ids': [Command.set(payments.ids)],
-            'payment_method_id': payment_method_line.payment_method_id.id,
-        })
-        batch.validate_batch()
-
-        # Mount the batch inside the bank reconciliation widget.
-        st_line = self._create_st_line(300.0, partner_id=self.partner_a.id)
-        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
-        wizard._action_add_new_batch_payments(batch)
-
-        # Validate with the full batch should reconcile directly the statement line.
-        wizard._js_action_validate()
-        self.assertTrue(wizard.return_todo_command)
-        self.assertTrue(wizard.return_todo_command.get('done'))
-        wizard._js_action_reset()
-
-        self.skipTest("Need to take better care of batch payments without entries")  # TODO WAN
-        # Remove a payment and check the wizard is well opened.
-        wizard._action_add_new_batch_payments(batch, expand=True)
-        line = wizard.line_ids.filtered(lambda x: x.flag == 'new_aml' and x.source_aml_id.payment_id == payments[-1])
-        wizard._action_remove_lines(line)
-        wizard._js_action_validate()
-        self.assertTrue(wizard.return_todo_command)
-        self.assertEqual(
-            wizard.return_todo_command.get('open_batch_rejection_wizard', {}).get('res_model'),
-            'account.batch.payment.rejection',
-        )
-
-        # Create the rejection wizard.
-        rejection_wizard = self.env['account.batch.payment.rejection']\
-            .with_context(**wizard.return_todo_command['open_batch_rejection_wizard']['context'])\
-            .create({})
-        self.assertRecordValues(rejection_wizard, [{
-            'in_reconcile_payment_ids': payments[:-1].ids,
-            'rejected_payment_ids': payments[-1].ids,
-            'nb_rejected_payment_ids': 1,
-            'nb_batch_payment_ids': 1,
-        }])
-
-        # Chose to cancel the payments with a lock date.
-        self.env.company.fiscalyear_lock_date = '2018-01-01'
-        rejection_wizard.button_cancel_payments()
-        self.assertEqual(len(batch.payment_ids), len(payments) - 1, "The last payment has been removed from the batch")
-        self.assertRecordValues(payments[-1].move_id.line_ids, [{'reconciled': True}] * 2)
-
-        # Chose to cancel the payments without a lock date.
-        self.env.company.fiscalyear_lock_date = None
-        rejection_wizard.rejected_payment_ids.move_id.line_ids.remove_move_reconcile()
-        rejection_wizard.rejected_payment_ids.batch_payment_id = batch
-        rejection_wizard.button_cancel_payments()
-        self.assertFalse(rejection_wizard.rejected_payment_ids.exists())
 
     def test_single_payment_from_batch_on_bank_reco_widget(self):
-        payment_method_line = self.company_data['default_journal_bank'].inbound_payment_method_line_ids\
-            .filtered(lambda l: l.code == 'batch_payment')
-        payment_method_line.payment_account_id = self.inbound_payment_method_line.payment_account_id
-
         payments = self.env['account.payment'].create([
             {
                 'date': '2018-01-01',
                 'payment_type': 'inbound',
                 'partner_type': 'customer',
                 'partner_id': self.partner_a.id,
-                'payment_method_line_id': payment_method_line.id,
+                'payment_method_line_id': self.payment_method_line.id,
                 'amount': i * 100.0,
             }
             for i in range(1, 4)
@@ -269,7 +274,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         batch_payment = self.env['account.batch.payment'].create({
             'journal_id': self.company_data['default_journal_bank'].id,
             'payment_ids': [Command.set(payments.ids)],
-            'payment_method_id': payment_method_line.payment_method_id.id,
+            'payment_method_id': self.payment_method_line.payment_method_id.id,
         })
 
         st_line = self._create_st_line(100.0, partner_id=self.partner_a.id)
@@ -286,9 +291,6 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         self.assertEqual(batch_payment.amount_residual, sum(payments[1:].mapped('amount')), "The batch amount should change following payment reconciliation")
 
     def test_multiple_exchange_diffs_in_batch(self):
-        payment_method_line = self.company_data['default_journal_bank'].inbound_payment_method_line_ids\
-            .filtered(lambda l: l.code == 'batch_payment')
-        payment_method_line.payment_account_id = self.inbound_payment_method_line.payment_account_id
         # Create a statement line when the currency rate is 1 USD == 2 EUR == 4 CAD
         st_line = self._create_st_line(
             1000.0,
@@ -306,7 +308,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
             'payment_type': 'inbound',
             'partner_type': 'customer',
             'partner_id': self.partner_a.id,
-            'payment_method_line_id': payment_method_line.id,
+            'payment_method_line_id': self.payment_method_line.id,
             'currency_id': self.other_currency.id,
             'amount': 100.0,
         })
@@ -316,7 +318,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
             'payment_type': 'inbound',
             'partner_type': 'customer',
             'partner_id': self.partner_a.id,
-            'payment_method_line_id': payment_method_line.id,
+            'payment_method_line_id': self.payment_method_line.id,
             'currency_id': self.other_currency.id,
             'amount': 200.0,
         })
@@ -326,7 +328,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
             'payment_type': 'inbound',
             'partner_type': 'customer',
             'partner_id': self.partner_a.id,
-            'payment_method_line_id': payment_method_line.id,
+            'payment_method_line_id': self.payment_method_line.id,
             'currency_id': self.other_currency.id,
             'amount': 240.0,
         })
@@ -336,16 +338,24 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
             'payment_type': 'inbound',
             'partner_type': 'customer',
             'partner_id': self.partner_a.id,
-            'payment_method_line_id': payment_method_line.id,
+            'payment_method_line_id': self.payment_method_line.id,
             'currency_id': self.other_currency_2.id,
             'amount': 300.0,
         })
         payments = payment_eur_gain_diff + payment_eur_gain_diff_2 + payment_eur_loss_diff + payment_cad_loss_diff
         payments.action_post()
+
+        self.assertRecordValues(payments.move_id.line_ids.filtered(lambda l: l.account_id.account_type == 'asset_current'), [
+            {'balance': 100.0, 'amount_currency': 100.0, 'amount_residual': 100.0},
+            {'balance': 200.0, 'amount_currency': 200.0, 'amount_residual': 200.0},
+            {'balance':  80.0, 'amount_currency': 240.0, 'amount_residual':  80.0},
+            {'balance':  50.0, 'amount_currency': 300.0, 'amount_residual':  50.0},
+        ])
+
         batch = self.env['account.batch.payment'].create({
             'journal_id': self.company_data['default_journal_bank'].id,
             'payment_ids': [Command.set(payments.ids)],
-            'payment_method_id': payment_method_line.payment_method_id.id,
+            'payment_method_id': self.payment_method_line.payment_method_id.id,
         })
 
         wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
@@ -362,7 +372,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
             {'flag': 'liquidity',       'amount_currency': 1000.0,     'balance': 1000.0},
             {'flag': 'new_aml',         'amount_currency': -655.0,     'balance': -655.0},
             {'flag': 'new_batch',       'amount_currency': -840.0,     'balance': -430.0},
-            {'flag': 'exchange_diff',   'amount_currency': 0.0,        'balance': 150},
+            {'flag': 'exchange_diff',   'amount_currency': 0.0,        'balance': 150.0},
             {'flag': 'exchange_diff',   'amount_currency': 0.0,        'balance': -40.0},
             {'flag': 'exchange_diff',   'amount_currency': 0.0,        'balance': -25.0},
         ])
@@ -380,4 +390,32 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
             {'flag': 'exchange_diff',   'amount_currency': 0.0,        'balance': -40.0},
             {'flag': 'new_aml',         'amount_currency': -300.0,     'balance': -50.0},
             {'flag': 'exchange_diff',   'amount_currency': 0.0,        'balance': -25.0},
+        ])
+
+        wizard._js_action_validate()
+        A, B, C, D, E, F = st_line.move_id.line_ids.mapped('matching_number')
+        self.assertRecordValues(st_line.move_id.line_ids, [
+            {'balance':   1000.0, 'amount_currency':   1000.0, 'amount_residual':   1000.0, 'matching_number': A},
+            {'balance':   -655.0, 'amount_currency':   -655.0, 'amount_residual':      0.0, 'matching_number': B},
+            {'balance':    -50.0, 'amount_currency':   -100.0, 'amount_residual':      0.0, 'matching_number': C},
+            {'balance':   -100.0, 'amount_currency':   -200.0, 'amount_residual':      0.0, 'matching_number': D},
+            {'balance':   -120.0, 'amount_currency':   -240.0, 'amount_residual':      0.0, 'matching_number': E},
+            {'balance':    -75.0, 'amount_currency':   -300.0, 'amount_residual':      0.0, 'matching_number': F},
+        ])
+
+        reconciled = st_line.move_id.line_ids.matched_debit_ids.debit_move_id | st_line.move_id.line_ids.matched_credit_ids.credit_move_id
+        self.assertRecordValues(reconciled, [
+            {'balance':   5000.0, 'amount_currency':   5000.0, 'amount_residual':   4345.0, 'matching_number': B},
+            {'balance':    100.0, 'amount_currency':    100.0, 'amount_residual':      0.0, 'matching_number': C},
+            {'balance':    200.0, 'amount_currency':    200.0, 'amount_residual':      0.0, 'matching_number': D},
+            {'balance':     40.0, 'amount_currency':      0.0, 'amount_residual':      0.0, 'matching_number': E},
+            {'balance':     80.0, 'amount_currency':    240.0, 'amount_residual':      0.0, 'matching_number': E},
+            {'balance':     25.0, 'amount_currency':      0.0, 'amount_residual':      0.0, 'matching_number': F},
+            {'balance':     50.0, 'amount_currency':    300.0, 'amount_residual':      0.0, 'matching_number': F},
+        ])
+        self.assertRecordValues(payments.move_id.line_ids.filtered(lambda l: l.account_id.account_type == 'asset_current'), [
+            {'balance':    100.0, 'amount_currency':    100.0, 'amount_residual':      0.0},
+            {'balance':    200.0, 'amount_currency':    200.0, 'amount_residual':      0.0},
+            {'balance':     80.0, 'amount_currency':    240.0, 'amount_residual':      0.0},
+            {'balance':     50.0, 'amount_currency':    300.0, 'amount_residual':      0.0},
         ])

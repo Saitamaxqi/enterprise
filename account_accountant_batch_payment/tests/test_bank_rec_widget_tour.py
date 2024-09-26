@@ -5,7 +5,7 @@ from odoo.tests import tagged, HttpCase
 
 
 @tagged('post_install', '-at_install')
-class TestBankRecWidget(TestBankRecWidgetCommon, HttpCase):
+class TestBankRecWidgetTour(TestBankRecWidgetCommon, HttpCase):
 
     @classmethod
     def setUpClass(cls):
@@ -38,12 +38,13 @@ class TestBankRecWidget(TestBankRecWidgetCommon, HttpCase):
         ])
         payments.action_post()
 
-        self.env['account.batch.payment'].create({
+        batch = self.env['account.batch.payment'].create({
             'name': "BATCH0001",
             'date': '2020-01-01',
             'journal_id': self.company_data['default_journal_bank'].id,
             'payment_ids': [Command.set(payments.ids)],
             'payment_method_id': payment_method_line.payment_method_id.id,
         })
+        batch.validate_batch()
 
         self.start_tour('/odoo', 'account_accountant_batch_payment_bank_rec_widget', login=self.env.user.login)

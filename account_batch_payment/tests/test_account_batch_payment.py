@@ -105,10 +105,8 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
         payments[0].action_cancel()
         payments[0].action_draft()
 
-        self.assertNotIn(payments[0], batch_payment.payment_ids)
-
-        with self.assertRaisesRegex(ValidationError, "You cannot add payments that are not posted"):
-            batch_payment.payment_ids += payments[0]
+        with self.assertRaisesRegex(ValidationError, "All payments must be posted to validate the batch"):
+            batch_payment.validate_batch()
 
         payments[0].action_post()
         batch_payment.validate_batch()

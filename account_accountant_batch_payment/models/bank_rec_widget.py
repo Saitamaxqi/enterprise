@@ -74,13 +74,11 @@ class BankRecWidget(models.Model):
     @api.depends('company_id', 'line_ids.source_aml_id', 'line_ids.source_batch_payment_id')
     def _compute_selected_aml_ids(self):
         # OVERRIDES account_accountant
+        super()._compute_selected_aml_ids()
         for wizard in self:
             new_batches = self.line_ids.filtered(lambda x: x.flag == 'new_batch')
-            batches_amls_ids = []
-            for batch_pay_content in new_batches.mapped('batch_pay_content'):
-                batches_amls_ids += [batch_aml['source_aml_id'] for batch_aml in batch_pay_content]
-            selected_aml_ids = wizard.line_ids.source_aml_id.ids
-            wizard.selected_aml_ids = [Command.set(batches_amls_ids + selected_aml_ids)]
+            for batch in new_batches.source_batch_payment_id:
+                wizard.selected_aml_ids += self._get_amls_from_batch_payments(batch)
 
     # -------------------------------------------------------------------------
     # HELPERS RPC
@@ -115,11 +113,8 @@ class BankRecWidget(models.Model):
         for dynamic_filter in dynamic_filters:
             dynamic_filter['domain'] = str(dynamic_filter['domain'])
 
-        # Collect the available batch payments.
-        available_amls_in_batch_payments = self._fetch_available_amls_in_batch_payments()
-
         results['batch_payments'] = {
-            'domain': [('id', 'in', list(available_amls_in_batch_payments.keys()))],
+            'domain': [],
             'dynamic_filters': dynamic_filters,
             'context': context,
         }
@@ -148,19 +143,17 @@ class BankRecWidget(models.Model):
 
     def _lines_prepare_new_batch_line(self, batch_payment, **kwargs):
         self.ensure_one()
-        amls = self._get_amls_from_batch_payments(batch_payment)
         return {
             'source_batch_payment_id': batch_payment.id,
             'flag': 'new_batch',
-            'currency_id': amls.currency_id.id if len(amls.currency_id) == 1 else False,
-            'amount_currency': -sum(amls.mapped('amount_residual_currency')),
-            'balance': -sum(amls.mapped('amount_residual')),
-            'source_amount_currency': -sum(amls.mapped('amount_residual_currency')),
-            'source_balance': -sum(amls.mapped('amount_residual')),
-            'name': _("Includes %(count)s payment(s)", count=str(len(amls))),
+            'currency_id': batch_payment.payment_ids.currency_id.id if len(batch_payment.payment_ids.currency_id) == 1 else False,
+            'amount_currency': -batch_payment.amount_residual_currency,
+            'balance': -batch_payment.amount_residual,
+            'source_amount_currency': -batch_payment.amount_residual_currency,
+            'source_balance': -batch_payment.amount_residual,
+            'source_batch_payment_name': _("Includes %(count)s payment(s)", count=str(len(batch_payment.payment_ids.filtered(lambda p: p.state == 'in_process')))),
             'date': batch_payment.date,
-            'source_batch_payment_name': batch_payment.name,
-            'batch_pay_content': [self._lines_prepare_new_aml_line(aml) for aml in amls],
+            'name': batch_payment.name,
             **kwargs,
         }
 
@@ -189,17 +182,26 @@ class BankRecWidget(models.Model):
             return super()._lines_get_exchange_diff_values(line)
         exchange_diff_values = []
         currency_x_exchange = {}
-        for new_aml in line.batch_pay_content:
-            aml_currency = self.env['res.currency'].browse(new_aml['currency_id'])
-            account, exchange_diff_balance = self._lines_get_account_balance_exchange_diff(aml_currency, new_aml['balance'], new_aml['amount_currency'])
+        for currency, balance, amount_currency in [
+            (aml.currency_id, -aml.amount_residual, -aml.amount_residual_currency)
+            for aml in self._get_amls_from_batch_payments(line.source_batch_payment_id)
+        ] + [
+            (payment.currency_id, -payment.amount_company_currency_signed, -payment.amount)
+            for payment in line.source_batch_payment_id.payment_ids.filtered(lambda p: not p.move_id)
+        ]:
+            account, exchange_diff_balance = self._lines_get_account_balance_exchange_diff(
+                currency,
+                balance,
+                amount_currency,
+            )
             if exchange_diff_balance != 0.0:
-                currency_exch_amounts = currency_x_exchange.get((aml_currency, account), {
+                currency_exch_amounts = currency_x_exchange.get((currency, account), {
                         'amount_currency': 0.0,
                         'balance': 0.0,
                     })
-                currency_exch_amounts['amount_currency'] += exchange_diff_balance if aml_currency == self.company_currency_id else 0.0
+                currency_exch_amounts['amount_currency'] += exchange_diff_balance if currency == self.company_currency_id else 0.0
                 currency_exch_amounts['balance'] += exchange_diff_balance
-                currency_x_exchange[(aml_currency, account)] = currency_exch_amounts
+                currency_x_exchange[currency, account] = currency_exch_amounts
 
         for (currency, account), exch_amounts in currency_x_exchange.items():
             if not currency.is_zero(exch_amounts['balance']):
@@ -214,14 +216,51 @@ class BankRecWidget(models.Model):
                 })
         return exchange_diff_values
 
+    def _validation_lines_vals(self, line_ids_create_command_list, aml_to_exchange_diff_vals, to_reconcile):
+        batch_lines = self.line_ids.filtered(lambda x: x.flag == 'new_batch')
+        for line in batch_lines:
+            for (currency, partner), payments in line.source_batch_payment_id.payment_ids.grouped(lambda p: (p.currency_id, p.partner_id)).items():
+                account2amount = defaultdict(float)
+                term_lines = payments.invoice_ids.line_ids.filtered(lambda l: l.display_type == 'payment_term')
+                for account, lines in term_lines.grouped('account_id').items():
+                    account2amount[account] += -sum(lines.mapped('amount_currency'))
+                    to_reconcile.append((len(line_ids_create_command_list) + 1, lines))
+                for payment in payments.filtered(lambda p: not p.invoice_ids):
+                    account2amount[partner.property_account_receivable_id] -= payment.amount
+                for account, amount in account2amount.items():
+                    line_ids_create_command_list.append(Command.create(line._get_aml_values(
+                        sequence=len(line_ids_create_command_list) + 1,
+                        partner_id=partner.id,
+                        account_id=account.id,
+                        currency_id=currency.id,
+                        amount_currency=amount,
+                        balance=currency._convert(from_amount=amount, to_currency=self.env.company.currency_id),
+                    )))
+        batch_lines.source_batch_payment_id.payment_ids.filtered(lambda p: not p.move_id).action_validate()
+        self.line_ids -= batch_lines
+        super()._validation_lines_vals(line_ids_create_command_list, aml_to_exchange_diff_vals, to_reconcile)
+
     # -------------------------------------------------------------------------
     # ACTIONS
     # -------------------------------------------------------------------------
 
+    def _process_restore_lines_ids(self, initial_commands):
+        commands = []
+        for command in super()._process_restore_lines_ids(initial_commands):
+            match command:
+                case (Command.CREATE, _, values) if values.get('flag') == 'new_batch':
+                    # Refresh the batch values (i.e. we jumped to the batch from the widget and rejected some payments)
+                    batch = self.env['account.batch.payment'].browse(values['source_batch_payment_id'])
+                    commands.append(Command.create(self._lines_prepare_new_batch_line(batch)))
+                case _:
+                    commands.append(command)
+        return commands
+
     def _action_validate(self):
         # EXTENDS account_accountant
         self.ensure_one()
-        batches_to_expand = self.line_ids.filtered(lambda x: x.flag == 'new_batch').source_batch_payment_id
+        batches = self.line_ids.filtered(lambda x: x.flag == 'new_batch').source_batch_payment_id
+        batches_to_expand = batches.filtered('payment_ids.move_id')
         self._action_expand_batch_payments(batches_to_expand)
         super()._action_validate()
 
@@ -240,19 +279,15 @@ class BankRecWidget(models.Model):
         self._lines_add_auto_balance_line()
         self._action_clear_manual_operations_form()
 
-    def _action_add_new_batch_payments(self, batch_payments, expand=False):
+    def _action_add_new_batch_payments(self, batch_payments):
         self.ensure_one()
-        if expand:
-            amls = self._get_amls_from_batch_payments(batch_payments)
-            self._action_add_new_amls(amls, allow_partial=False)
-        else:
-            mounted_batches = self.line_ids.filtered(lambda x: x.flag == 'new_batch').source_batch_payment_id
-            self._action_add_new_batched_amls(batch_payments - mounted_batches, allow_partial=False)
+        mounted_batches = self.line_ids.filtered(lambda x: x.flag == 'new_batch').source_batch_payment_id
+        self._action_add_new_batched_amls(batch_payments - mounted_batches, allow_partial=False)
 
-    def _js_action_add_new_batch_payment(self, batch_payment_id, expand=False):
+    def _js_action_add_new_batch_payment(self, batch_payment_id):
         self.ensure_one()
         batch_payment = self.env['account.batch.payment'].browse(batch_payment_id)
-        self._action_add_new_batch_payments(batch_payment, expand=expand)
+        self._action_add_new_batch_payments(batch_payment)
 
     def _action_remove_new_batch_payments(self, batch_payments):
         self.ensure_one()
@@ -277,42 +312,6 @@ class BankRecWidget(models.Model):
             self._lines_check_apply_partial_matching()
             self._lines_add_auto_balance_line()
 
-    def _js_action_validate(self):
-        # EXTENDS account_accountant
-        # Open the 'account.batch.payment.rejection' wizard if needed.
-
-        payments_with_batch = self.line_ids\
-            .filtered(lambda x: x.flag == 'new_aml' and x.source_batch_payment_id)\
-            .source_aml_id.payment_id
-
-        new_batches = self.line_ids.filtered(lambda x: x.flag == 'new_batch')
-        new_batch_aml_ids = []
-        for new_batch in new_batches:
-            new_batch_aml_ids += [x['source_aml_id'] for x in new_batch.batch_pay_content]
-
-        payments_with_batch |= self.env['account.move.line'].browse(new_batch_aml_ids).payment_id
-        if len(payments_with_batch) > 1 and self.env['account.batch.payment.rejection']._fetch_rejected_payment_ids(payments_with_batch):
-            self.return_todo_command = {
-                'open_batch_rejection_wizard': clean_action(
-                    {
-                        'name': _("Batch Payment"),
-                        'type': 'ir.actions.act_window',
-                        'res_model': 'account.batch.payment.rejection',
-                        'view_mode': 'form',
-                        'target': 'new',
-                        'context': {
-                            'default_in_reconcile_payment_ids': [Command.set(payments_with_batch.ids)],
-                        },
-                    },
-                    self.env,
-                ),
-            }
-            return
-        super()._js_action_validate()
-
-    def _js_action_validate_no_batch_payment_check(self):
-        super()._js_action_validate()
-
     def _action_expand_batch_payments(self, batch_payments):
         self.ensure_one()
         if not batch_payments:
@@ -320,23 +319,17 @@ class BankRecWidget(models.Model):
         batch_lines = self.line_ids.filtered(lambda x: x.flag == 'new_batch' and x.source_batch_payment_id in batch_payments)
         if not batch_lines:
             return
-        aml_ids = []
         batch_unlink_commands = []
         for batch_line in batch_lines:
-            aml_ids += [x['source_aml_id'] for x in batch_line.batch_pay_content]
             batch_unlink_commands.append(Command.unlink(batch_line.id))
-        amls = self.env['account.move.line'].browse(aml_ids)
         self.line_ids = batch_unlink_commands
         self._remove_related_exchange_diff_lines(batch_lines)
-        self._action_add_new_amls(amls, allow_partial=False)
+        self._action_add_new_amls(self._get_amls_from_batch_payments(batch_payments), allow_partial=False)
 
-    def _js_action_expand_batch_payment(self, batch_payment_id):
+    def _js_action_redirect_to_move(self, form_index):
         self.ensure_one()
-        batch_payment = self.env['account.batch.payment'].browse(batch_payment_id)
-        self._action_expand_batch_payments(batch_payment)
-
-    def _action_remove_new_amls(self, amls):
-        # EXTENDS account_accountant
-        self.ensure_one()
-        self._action_expand_batch_payments(amls.payment_id.batch_payment_id)
-        super()._action_remove_new_amls(amls)
+        line = self.line_ids.filtered(lambda x: x.index == form_index)
+        if line.source_batch_payment_id:
+            self.return_todo_command = clean_action(line.source_batch_payment_id._get_records_action(), self.env)
+        else:
+            return super()._js_action_redirect_to_move(form_index)
