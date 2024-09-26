@@ -11,6 +11,7 @@ class ResCompany(models.Model):
 
     # Extra Costs
 
+    # TODO in master remove the two following fields from the company, they are not used anymore
     extra_hour = fields.Float("Per Hour", default=0.0)
     extra_day = fields.Float("Per Day", default=0.0)
     min_extra_hour = fields.Integer("Minimum delay time before applying fines.", default=2)

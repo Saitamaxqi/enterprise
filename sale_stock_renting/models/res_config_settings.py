@@ -9,13 +9,32 @@ class ResConfigSettings(models.TransientModel):
 
     # Padding Time
 
-    padding_time = fields.Float(string="Padding", related='company_id.padding_time', readonly=False,
-                                help="Amount of time (in hours) during which a product is considered unavailable prior to renting (preparation time).")
+    padding_time = fields.Float(
+        string="Padding",
+        compute='_compute_padding_time',
+        inverse='_inverse_padding_time',
+        help="Amount of time (in hours) during which a product is considered unavailable"
+             "prior to renting (preparation time)."
+    )
     group_rental_stock_picking = fields.Boolean("Rental pickings", implied_group='sale_stock_renting.group_rental_stock_picking')
 
-    @api.onchange('padding_time')
-    def _onchange_padding_time(self):
-        self.env['ir.default'].set('product.template', 'preparation_time', self.padding_time)
+    @api.depends('company_id')
+    def _compute_padding_time(self):
+        for setting in self:
+            setting.padding_time = self.env['ir.default']._get(
+                'product.template',
+                'preparation_time',
+                company_id=setting.company_id.id
+            )
+
+    def _inverse_padding_time(self):
+        for setting in self:
+            self.env['ir.default'].set(
+                'product.template',
+                'preparation_time',
+                setting.padding_time,
+                company_id=setting.company_id.id
+            )
 
     def set_values(self):
         rental_group_before = self.env.user.has_group('sale_stock_renting.group_rental_stock_picking')
