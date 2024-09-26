@@ -15,9 +15,7 @@ class res_company(models.Model):
     )
     intercompany_sync_delivery_receipt = fields.Boolean(
         string="Synchronize Deliveries to your Receipts",
-        compute='_compute_intercompany_stock_fields',
-        readonly=False,
-        store=True,
+        default=lambda self: self.env.user.has_group('stock.group_production_lot'),
     )
     intercompany_receipt_type_id = fields.Many2one(
         comodel_name='stock.picking.type',
@@ -36,9 +34,7 @@ class res_company(models.Model):
             if not (company.intercompany_generate_sales_orders or company.intercompany_generate_purchase_orders):
                 company.intercompany_warehouse_id = False
                 company.intercompany_receipt_type_id = False
-                company.intercompany_sync_delivery_receipt = False
             else:
                 company.intercompany_warehouse_id = stock_warehouse.get(company, [False])[0]
                 if not company.intercompany_receipt_type_id:
                     company.intercompany_receipt_type_id = stock_picking_type.get(company, [False])[0]
-                company.intercompany_sync_delivery_receipt = self.env.user.has_group('stock.group_production_lot')

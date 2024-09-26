@@ -13,8 +13,7 @@
                 <field name="intercompany_receipt_type_id"
                        domain="[('company_id', '=', id), ('code', '=', 'incoming')]"
                        invisible="not intercompany_generate_purchase_orders"/>
-                <field name="intercompany_sync_delivery_receipt"
-                       invisible="not intercompany_generate_sales_orders"/>
+                <field name="intercompany_sync_delivery_receipt"/>
             </field>
         </field>
     </record>

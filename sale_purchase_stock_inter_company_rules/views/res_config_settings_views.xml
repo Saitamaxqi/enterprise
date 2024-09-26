@@ -16,8 +16,7 @@
                     <label for="intercompany_receipt_type_id" string="Use Operation" class="col-4 col-lg-4 o_light_label"/>
                     <field name="intercompany_receipt_type_id" options="{'no_create_edit': True}"/>
                 </div>
-                <div class="row ml16"
-                     invisible="not intercompany_generate_sales_orders">
+                <div class="row ml16">
                     <field name="intercompany_sync_delivery_receipt" class="col-1 col-lg-1"/>
                     <label for="intercompany_sync_delivery_receipt" class="col o_light_label"/>
                 </div>

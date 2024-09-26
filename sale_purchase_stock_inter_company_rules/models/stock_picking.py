@@ -11,7 +11,7 @@ class StockPicking(models.Model):
             if not picking.sale_id or picking.picking_type_code != 'outgoing':
                 continue
             company_rec = self.env['res.company']._find_company_from_partner(picking.partner_id.id)
-            if company_rec and company_rec.intercompany_generate_purchase_orders and company_rec.intercompany_sync_delivery_receipt:
+            if company_rec and company_rec.intercompany_sync_delivery_receipt:
                 # Fetch linked Sale Order
                 sale_order = picking.sale_id
                 purchase_order = self.env['purchase.order'].sudo().search([('name', '=', sale_order.client_order_ref), ('company_id', '=', company_rec.id)])
