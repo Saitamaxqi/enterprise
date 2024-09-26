@@ -769,3 +769,79 @@ class TestDatevCSV(AccountTestInvoicingCommon):
         """
 
         self.assertXmlTreeEqual(self.get_xml_tree_from_string(xml), self.get_xml_tree_from_string(expected_tree))
+
+    def test_datev_out_invoice_with_included_tax(self):
+        report = self.env.ref('account_reports.general_ledger_report')
+        options = report.get_options({})
+        options['date'].update({
+            'date_from': '2020-01-01',
+            'date_to': '2020-12-31',
+        })
+        tax_19_incl = self.tax_19.copy({'name': 'Tax 19% incl.', 'price_include_override': 'tax_included'})
+
+        move = self.env['account.move'].create([{
+            'move_type': 'out_invoice',
+            'partner_id': self.env['res.partner'].create({'name': 'Partner XYZ'}).id,
+            'invoice_date': fields.Date.to_date('2020-12-01'),
+            'invoice_line_ids': [
+                Command.create({
+                    'name': 'Line',
+                    'price_unit': 19.95,
+                    'account_id': self.account_3400.id,
+                    'tax_ids': [Command.set(tax_19_incl.ids)],
+                }),
+            ]
+        }])
+        move.action_post()
+
+        f = StringIO(self.env[report.custom_handler_model_name]._l10n_de_datev_get_csv(options, move))
+        reader = csv.reader(f, delimiter=';', quotechar='"', quoting=2)
+        data = [[x[0], x[1], x[2], x[6], x[7], x[8], x[9], x[10], x[13]] for x in reader][2:]
+        self.assertIn(['19,95', 'H', 'EUR', '34000000', str(move.partner_id.id + 100000000),
+                       self.tax_19.l10n_de_datev_code, '112', move.name, move.invoice_line_ids[0].name], data)
+
+    def test_datev_out_invoice_in_foreign_currency(self):
+        report = self.env.ref('account_reports.general_ledger_report')
+        options = report.get_options({})
+        options['date'].update({
+            'date_from': '2020-01-01',
+            'date_to': '2020-12-31',
+        })
+        tax_19_incl = self.tax_19.copy({'name': 'Tax 19% incl.', 'price_include_override': 'tax_included'})
+        foreign_currency = self.env['res.currency'].create({
+            'name': "XYZ",
+            'symbol': 'X',
+            'rate_ids': [
+                Command.create({'name': '2020-01-01', 'rate': 0.5}),
+            ],
+        })
+
+        move = self.env['account.move'].create([{
+            'move_type': 'out_invoice',
+            'partner_id': self.env['res.partner'].create({'name': 'Partner XYZ'}).id,
+            'currency_id': foreign_currency.id,
+            'invoice_date': fields.Date.to_date('2020-12-01'),
+            'invoice_line_ids': [
+                Command.create({
+                    'name': 'Line',
+                    'price_unit': 100.00,
+                    'account_id': self.account_3400.id,
+                    'tax_ids': [Command.set(self.tax_19.ids)],
+                }),
+                Command.create({
+                    'name': 'Line with included tax',
+                    'price_unit': 19.95,
+                    'account_id': self.account_3400.id,
+                    'tax_ids': [Command.set(tax_19_incl.ids)],
+                }),
+            ]
+        }])
+        move.action_post()
+
+        f = StringIO(self.env[report.custom_handler_model_name]._l10n_de_datev_get_csv(options, move))
+        reader = csv.reader(f, delimiter=';', quotechar='"', quoting=2)
+        data = [[x[0], x[1], x[2], x[6], x[7], x[8], x[9], x[10], x[13]] for x in reader][2:]
+        self.assertIn(['238,00', 'H', 'EUR', '34000000', str(move.partner_id.id + 100000000),
+                       self.tax_19.l10n_de_datev_code, '112', move.name, move.invoice_line_ids[0].name], data)
+        self.assertIn(['39,90', 'H', 'EUR', '34000000', str(move.partner_id.id + 100000000),
+                       self.tax_19.l10n_de_datev_code, '112', move.name, move.invoice_line_ids[1].name], data)

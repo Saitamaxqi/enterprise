@@ -330,8 +330,20 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
                 if aml.tax_line_id:
                     continue
 
-                aml_taxes = aml.tax_ids.compute_all(aml.balance, aml.company_id.currency_id, partner=aml.partner_id, handle_price_include=False)
-                line_amount = aml_taxes['total_included']
+                if aml.price_total:
+                    sign = -1 if aml.currency_id.compare_amounts(aml.balance, 0) < 0 else 1
+                    line_amount = abs(aml.price_total) * sign
+                    # convert line_amount in company currency
+                    if aml.currency_id != aml.company_id.currency_id:
+                        line_amount = aml.currency_id._convert(
+                            from_amount=line_amount,
+                            to_currency=aml.company_id.currency_id,
+                            company=aml.company_id,
+                            date=aml.date
+                        )
+                else:
+                    aml_taxes = aml.tax_ids.compute_all(aml.balance, aml.company_id.currency_id, partner=aml.partner_id, handle_price_include=False)
+                    line_amount = aml_taxes['total_included']
                 move_balance += line_amount
 
                 code_correction = ''
