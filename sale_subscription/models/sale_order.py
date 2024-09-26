@@ -108,8 +108,8 @@ class SaleOrder(models.Model):
     team_user_id = fields.Many2one('res.users', string="Team Leader", related="team_id.user_id", readonly=False)
     commercial_partner_id = fields.Many2one('res.partner', related='partner_id.commercial_partner_id')
 
-    recurring_total = fields.Monetary(compute='_compute_recurring_total', string="Total Recurring", store=True)
-    recurring_monthly = fields.Monetary(compute='_compute_recurring_monthly', string="Monthly Recurring",
+    recurring_total = fields.Monetary(compute='_compute_recurring_total', string="Recurring Amount", store=True)
+    recurring_monthly = fields.Monetary(compute='_compute_recurring_monthly', string="MRR",
                                         store=True, tracking=True)
     non_recurring_total = fields.Monetary(compute='_compute_non_recurring_total', string="Total Non Recurring Revenue")
     order_log_ids = fields.One2many('sale.order.log', 'order_id', string='Subscription Logs', readonly=True, copy=False)

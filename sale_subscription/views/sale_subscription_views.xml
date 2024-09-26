@@ -82,6 +82,17 @@
         </field>
     </record>
 
+    <record id="sale_order_view_graph_subscription" model="ir.ui.view">
+        <field name="name">sale.order.graph</field>
+        <field name="model">sale.order</field>
+        <field name="arch" type="xml">
+            <graph string="Subscriptions" sample="1">
+                <field name="first_contract_date" interval="month"/>
+                <field name="recurring_monthly" type="measure"/>
+            </graph>
+        </field>
+    </record>
+
     <record id="sale_subscription_action" model="ir.actions.act_window">
         <field name="name">Subscriptions</field>
         <field name="path">subscriptions</field>
@@ -103,6 +114,13 @@
         </field>
     </record>
 
+    <record id="sale_subscription_action_view_graph" model="ir.actions.act_window.view">
+        <field name="sequence" eval="5"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="sale_subscription.sale_order_view_graph_subscription"/>
+        <field name="act_window_id" ref="sale_subscription_action"/>
+    </record>
+
     <record id="sale_subscription_action_filtered" model="ir.actions.act_window">
         <field name="name">Subscriptions</field>
         <field name="res_model">sale.order</field>
@@ -119,6 +137,13 @@
                 Automate invoices and payments, simplify upsell quotes, reduce churn and get insights (MRR, churn, CLTV, ...)
             </p>
         </field>
+    </record>
+
+    <record id="sale_subscription_action_filtered_view_graph" model="ir.actions.act_window.view">
+        <field name="sequence" eval="5"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="sale_subscription.sale_order_view_graph_subscription"/>
+        <field name="act_window_id" ref="sale_subscription_action_filtered"/>
     </record>
 
     <record id="sale_subscription_action_pending" model="ir.actions.act_window">
@@ -144,6 +169,12 @@
         </field>
     </record>
 
+    <record id="sale_subscription_action_pending_view_graph" model="ir.actions.act_window.view">
+        <field name="sequence" eval="5"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="sale_subscription.sale_order_view_graph_subscription"/>
+        <field name="act_window_id" ref="sale_subscription_action_pending"/>
+    </record>
 
     <record id="sale_subscription_upsell_primary_view_tree" model="ir.ui.view">
       <field name="name">sale.subscription.order.list</field>
@@ -180,6 +211,13 @@
                 It can be created by clicking on the Upsell button from an active subscription.
             </p>
         </field>
+    </record>
+
+    <record id="sale_subscription_action_upsell_view_graph" model="ir.actions.act_window.view">
+        <field name="sequence" eval="5"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="sale_subscription.sale_order_view_graph_subscription"/>
+        <field name="act_window_id" ref="sale_subscription_action_upsell"/>
     </record>
 
     <!-- Kanban from subscription App -->
@@ -349,6 +387,13 @@
                 Create subscriptions to manage recurring invoicing and payments from your customers.
             </p>
         </field>
+    </record>
+
+    <record id="sale_subscription_action_quotes_view_graph" model="ir.actions.act_window.view">
+        <field name="sequence" eval="5"/>
+        <field name="view_mode">graph</field>
+        <field name="view_id" ref="sale_subscription.sale_order_view_graph_subscription"/>
+        <field name="act_window_id" ref="sale_subscription_action_quotes"/>
     </record>
 
     <!-- Calendar view -->
