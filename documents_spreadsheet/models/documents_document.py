@@ -433,13 +433,22 @@ class DocumentsDocument(models.Model):
         if is_multipage is not None:
             return is_multipage
 
-        if self.mimetype == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" and self.attachment_id.raw:
-            try:
-                spreadsheet_data = self._unzip_xlsx()[0]
-            except XSLXReadUserError:
-                # No need to raise for this, just return that we don't know
+        if self.mimetype in XLSX_MIME_TYPES and self.attachment_id.raw:
+            file = io.BytesIO(self.attachment_id.raw)
+            if not zipfile.is_zipfile(file):
                 return None
-            return self._is_xlsx_data_multipage(spreadsheet_data)
+            with zipfile.ZipFile(file) as archive:
+                if '[Content_Types].xml' not in archive.namelist():
+                    # the xlsx file is invalid
+                    return None
+                with archive.open("[Content_Types].xml") as myfile:
+                    content = myfile.read()
+                    tree = etree.fromstring(content)
+                    nodes = tree.xpath(
+                        "//ns:Override[@ContentType='application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml']",
+                        namespaces={"ns": "http://schemas.openxmlformats.org/package/2006/content-types"}
+                    )
+                    return len(nodes) > 1
 
         if self.handler in ("spreadsheet", "frozen_spreadsheet"):
             spreadsheet_data = json.loads(self.spreadsheet_data or '{}')
