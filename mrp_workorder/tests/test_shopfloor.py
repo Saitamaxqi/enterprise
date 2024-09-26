@@ -273,6 +273,66 @@ class TestShopFloor(HttpCase):
         url = f"/odoo/action-{action['id']}"
         self.start_tour(url, "test_canceled_wo", login='admin')
 
+    def test_quality_checks_updated_in_shop_floor(self):
+        component1 = self.env['product.product'].create({
+            'name': 'comp1',
+            'type': 'product',
+            'tracking': 'lot',
+        })
+        finished = self.env['product.product'].create({
+            'name': 'finish',
+            'type': 'product',
+            'tracking': 'serial',
+        })
+        warehouse = self.env['stock.warehouse'].search([], limit=1)
+        stock_location = warehouse.lot_stock_id
+        lot = self.env['stock.lot'].create([{'name': 'LOT', 'product_id': component1.id}])
+        self.env['stock.quant']._update_available_quantity(component1, stock_location, quantity=100, lot_id=lot)
+        workcenter = self.env['mrp.workcenter'].create({
+            'name': 'Assembly Line',
+        })
+        bom = self.env['mrp.bom'].create({
+            'product_tmpl_id': finished.product_tmpl_id.id,
+            'product_qty': 1.0,
+            'operation_ids': [
+                (0, 0, {'name': 'Assemble', 'workcenter_id': workcenter.id}),
+            ],
+            'bom_line_ids': [
+                (0, 0, {'product_id': component1.id, 'product_qty': 1}),
+            ],
+        })
+        self.env['quality.point'].create([
+            {
+                'picking_type_ids': [(4, warehouse.manu_type_id.id)],
+                'product_ids': [(4, finished.id)],
+                'operation_id': bom.operation_ids[0].id,
+                'title': 'Register Production',
+                'test_type_id': self.env.ref('mrp_workorder.test_type_register_production').id,
+                'sequence': 0,
+            },
+            {
+                'picking_type_ids': [(4, warehouse.manu_type_id.id)],
+                'product_ids': [(4, finished.id)],
+                'operation_id': bom.operation_ids[0].id,
+                'title': 'Register comp1',
+                'component_id': component1.id,
+                'test_type_id': self.env.ref('mrp_workorder.test_type_register_consumed_materials').id,
+                'sequence': 1,
+            },
+        ])
+        mo = self.env['mrp.production'].create({
+            'product_id': finished.id,
+            'product_qty': 3,
+            'bom_id': bom.id,
+        })
+        mo.action_confirm()
+        mo.action_assign()
+        mo.button_plan()
+
+        action = self.env["ir.actions.actions"]._for_xml_id("mrp_workorder.action_mrp_display")
+        url = '/web?#action=%s' % (action['id'])
+        self.start_tour(url, "test_updated_quality_checks", login='admin')
+
     def test_change_qty_produced(self):
         """
             Check that component quantity matches the quantity produced set in the shop

@@ -427,3 +427,36 @@ registry.category("web_tour.tours").add('test_change_qty_produced', { steps: () 
         },
     ]
 });
+
+registry.category("web_tour.tours").add('test_updated_quality_checks', {test: true, steps: () => [
+    {
+        content: 'Make sure workcenter is available',
+        trigger: 'button:has(input[name="Assembly Line"])',
+    },
+    {
+        content: 'Confirm workcenter',
+        extra_trigger: 'button.active:has(input[name="Assembly Line"])',
+        trigger: 'button:contains("Confirm")',
+    },
+    {
+        content: 'Select workcenter',
+        trigger: 'button.btn-light:contains("Assembly Line")',
+    },
+    {
+        content: 'Open register production',
+        extra_trigger: '.o_control_panel_actions button.active:contains("Assembly Line")',
+        trigger: '.o_mrp_record_line span:contains("Register Production")',
+    },
+    {
+        content: 'Register production check',
+        trigger: '.o_workorder_lot .btn.fa-plus',
+        extra_trigger: '.o_workorder_lot span:contains("serial")',
+    },
+    { trigger: 'button[barcode_trigger="next"]' },
+    {
+        content: 'Quantity shown 1 of 1',
+        extra_trigger: '.o_field_widget[name="qty_done"] input:propValue("1.00")',
+        trigger: 'span[name="component_remaining_qty"]:contains("1.00")',
+        isCheck: true,
+    },
+]})

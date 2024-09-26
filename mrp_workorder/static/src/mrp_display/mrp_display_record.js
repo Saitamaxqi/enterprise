@@ -408,9 +408,8 @@ export class MrpDisplayRecord extends Component {
 
     async qualityCheckDone(updateChecks = false, qualityState = "pass") {
         await this.env.reload(this.props.production);
-        if (updateChecks) {
+        if (updateChecks || qualityState === "pass") {
             /*
-                Continue consumption:
                 As the props are not yet updated with the new checks, we need to use this hack
                 to get the updated next check from the env model.
              */
@@ -428,10 +427,6 @@ export class MrpDisplayRecord extends Component {
                 (r) => r.resId === lastOpenedQualityCheck.data.next_check_id[0]
             );
             return this.displayInstruction(nextCheck);
-        }
-        // Show the next Quality Check only if the previous one is passed.
-        if (qualityState === "pass") {
-            return this.displayInstruction();
         }
     }
 
@@ -664,11 +659,15 @@ export class MrpDisplayRecord extends Component {
             await this.model.orm.call(resModel, "button_start", [resId], {
                 context: { mrp_display: true },
             });
-            const checks = this.props.record.data.check_ids.records;
+            await this.env.reload(this.props.production);
+            const checks = this.env.model.root.records
+                .find((r) => r.resId === this.props.production.resId)
+                .data.workorder_ids.records.find((wo) => wo.resId === this.props.record.resId).data
+                .check_ids.records;
             const current_check_id = this.props.record.data.current_quality_check_id[0];
             if (checks.length && current_check_id) {
-                const check = checks.find((qc) => qc.data.id === current_check_id);
-                await this.displayInstruction(check);
+                const check = checks.find((qc) => qc.data.id == current_check_id);
+                return this.displayInstruction(check);
             }
         } else if (shouldStop) {
             await this.model.orm.call(resModel, "stop_employee", [resId, [admin_id]]);
