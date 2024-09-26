@@ -94,7 +94,7 @@ class ReportMrp_Account_EnterpriseMrp_Cost_Structure(models.AbstractModel):
                 total_cost_by_product[product] += total_cost_by_mo[m.id] * cost_share
                 component_cost_by_product[product] += component_cost_by_mo[m.id] * cost_share
                 operation_cost_by_product[product] += operation_cost_by_mo[m.id] * cost_share
-                mo_qty += sum(m.move_finished_ids.filtered(lambda mo: mo.state == 'done' and mo.product_id == product).mapped('product_qty'))
+                mo_qty += sum(m.move_finished_ids.filtered(lambda mo: mo.state == 'done' and mo.product_id == product).mapped('quantity'))
             res.append({
                 'product': product,
                 'mo_qty': mo_qty,

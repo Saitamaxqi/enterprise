@@ -264,3 +264,70 @@ class TestReportsCommon(TestMrpAccount):
 
         self.assertEqual(len(workcenter_times), 1, "There should be only a single line for the workcenter cost")
         self.assertEqual(workcenter_times[0][3], production.workorder_ids[0].duration / 60, "Duration should be the total duration of this operation.")
+
+    @freeze_time('2022-05-28')
+    def test_cost_analysis_mismatch_in_produced_and_planned_quantity(self):
+        '''
+        verify that the Cost Analysis report correctly reflects the actual
+        quantity produced and cost per unit when it differs from the planned quantity.
+
+        '''
+        self.product_3.standard_price = 10
+        self.product_4.standard_price = 10
+        bom_1 = self.env['mrp.bom'].create({
+            'product_id': self.product_6.id,
+            'product_tmpl_id': self.product_6.product_tmpl_id.id,
+            'product_uom_id': self.uom_unit.id,
+            'product_qty': 1.0,
+            'consumption': 'flexible',
+            'operation_ids': [
+            ],
+            'type': 'normal',
+            'bom_line_ids': [
+                (0, 0, {'product_id': self.product_3.id, 'product_qty': 1}),
+                (0, 0, {'product_id': self.product_4.id, 'product_qty': 1})
+            ]})
+        # Make some stock and reserve
+        for product in bom_1.bom_line_ids.product_id:
+            self.env['stock.quant'].with_context(inventory_mode=True).create({
+                'product_id': product.id,
+                'inventory_quantity': 1000,
+                'location_id': self.stock_location_components.id,
+            })._apply_inventory()
+
+        # first MO set qty as 1 produce 5
+        production_form = Form(self.env['mrp.production'])
+        production_form.bom_id = bom_1
+        production_form.product_qty = 1
+        mo = production_form.save()
+        mo.action_confirm()
+        mo_form = Form(mo)
+        mo_form.qty_producing = 5
+        mo_done = mo_form.save()
+        mo_done.button_mark_done()
+
+        self.env.flush_all()
+
+        cost_analysis = self.env['report.mrp_account_enterprise.mrp_cost_structure'].get_lines(mo_done)
+
+        self.assertEqual(cost_analysis[0]['mo_qty'], 5)
+        self.assertEqual(cost_analysis[0]['total_cost'], 100)
+
+        # first MO set qty as 5 produce 1 without a backorder
+        production_form = Form(self.env['mrp.production'])
+        production_form.bom_id = bom_1
+        production_form.product_qty = 5
+        no_backorder_mo = production_form.save()
+        no_backorder_mo.action_confirm()
+        no_backorder_mo_form = Form(no_backorder_mo)
+        no_backorder_mo_form.qty_producing = 1
+        no_backorder_mo_done = no_backorder_mo_form.save()
+        action = no_backorder_mo_done.button_mark_done()
+        backorder = Form(self.env['mrp.production.backorder'].with_context(**action['context']))
+        backorder.save().action_close_mo()
+
+        self.env.flush_all()
+
+        cost_analysis = self.env['report.mrp_account_enterprise.mrp_cost_structure'].get_lines(no_backorder_mo_done)
+        self.assertEqual(cost_analysis[0]['mo_qty'], 1)
+        self.assertEqual(cost_analysis[0]['total_cost'], 20)
