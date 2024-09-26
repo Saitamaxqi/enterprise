@@ -59,7 +59,7 @@ class l10nChSocialInsurance(models.Model):
 
     def _get_retirement_rente(self, target):
         if not self:
-            return 0, 0
+            return 0.0
         for line in self.l10n_ch_avs_rente_ids:
             if line.date_from <= target and (not line.date_to or target <= line.date_to):
                 return line.amount
@@ -67,7 +67,7 @@ class l10nChSocialInsurance(models.Model):
 
     def _get_ac_threshold(self, target):
         if not self:
-            return 0, 0
+            return 0.0
         for line in self.l10n_ch_avs_ac_threshold_ids:
             if line.date_from <= target and (not line.date_to or target <= line.date_to):
                 return line.amount
@@ -75,7 +75,7 @@ class l10nChSocialInsurance(models.Model):
 
     def _get_acc_threshold(self, target):
         if not self:
-            return 0, 0
+            return 0.0
         for line in self.l10n_ch_avs_acc_threshold_ids:
             if line.date_from <= target and (not line.date_to or target <= line.date_to):
                 return line.amount
