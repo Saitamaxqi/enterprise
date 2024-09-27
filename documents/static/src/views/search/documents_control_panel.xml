@@ -30,8 +30,8 @@
                 <t t-set="nbSelected" t-value="this.env.model.root.selection.length"/>
             </t>
             <div class="btn-group">
-                <div t-if="selectionCount" class="ms-1 o_documents_action_dropdown">
-                    <div class="dropdown">
+                <div t-if="selectionCount" class="ms-1 o_documents_action_dropdown btn-group">
+                    <div class="dropdown" t-att-class="{'btn-group': singleSelection || targetRecords.some((r) => r.data.attachment_id and r.data?.handler !== 'spreadsheet')}">
                         <button class="btn btn-secondary o_dropdown_title" type="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fa fa-gear"/>

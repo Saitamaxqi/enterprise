@@ -3,13 +3,11 @@
     <t t-name="spreadsheet.documents.ControlPanel" t-inherit="documents.ControlPanel"
         t-inherit-mode="extension">
         <xpath expr="//*[hasclass('o_documents_share_button')]" position="after">
-            <xpath expr="//button[hasclass('o_documents_kanban_share_domain')]" position="after" class="btn-group">
-                <button type="button" class="btn btn-secondary"
-                    t-if="userIsInternal and singleSelection?.data?.handler === 'spreadsheet'"
-                    t-on-click.prevent="onClickFreezeAndShareSpreadsheet" data-hotkey="s">
-                    <t t-call="spreadsheet_edition.SpreadsheetIcon"/> Freeze and share
-                </button>
-            </xpath>
+            <button type="button" class="btn btn-secondary"
+                t-if="userIsInternal and singleSelection?.data?.handler === 'spreadsheet'"
+                t-on-click.prevent="onClickFreezeAndShareSpreadsheet" data-hotkey="s">
+                <t t-call="spreadsheet_edition.SpreadsheetIcon"/> Freeze and share
+            </button>
         </xpath>
         <xpath expr="//*[hasclass('o_documents_download_button')]" position="attributes">
             <attribute name="t-if">
