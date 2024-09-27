@@ -42,26 +42,39 @@
                 <field name="points_missing"/>
                 <templates>
                     <t t-name="card">
-                        <div class="ratio ratio-16x9 overflow-hidden mb-3">
-                            <div class="embed-responsive-item d-flex align-items-center">
-                                <field name="image" widget="image" class="w-100" alt="Product" options="{'img_class': 'w-100'}"/>
+                        <main>
+                            <div class="d-flex">
+                                <field name="name" class="fw-bolder fs-5 flex-grow-1"/>
+                                <div t-attf-class="o_kanban_referral_top_right bg-view fw-bold #{(record.points_missing.raw_value &lt; 1) ? '' : 'text-danger'}">
+                                    <img src="/hr_referral/static/src/img/points.svg" class="me-2" height="20px" alt="Point icon"/>
+                                    <field name="cost" class="me-1"/>Points
+                                </div>
                             </div>
-                        </div>
-                        <div t-attf-class="o_kanban_referral_top_right bg-view fw-bold #{(record.points_missing.raw_value &lt; 1) ? '' : 'text-danger'}">
-                            <img src="/hr_referral/static/src/img/points.svg" class="me-2" height="20px" alt="Point icon"/>
-                            <field name="cost" class="me-1"/>Points
-                        </div>
-                        <field name="name" class="fw-bolder fs-5"/>
-                        <field name="description"/>
-                        <field name="company_id" class="fst-italic" groups="base.group_multi_company"/>
-                        <t t-if="record.points_missing.raw_value &lt; 1">
-                            <button name="buy" type="object" class="btn btn-primary w-100 " confirm="Would you like to buy this reward? Once confirmed, an HR representative will reach out to you." confirm-label="Buy" cancel-label="Discard">
-                                <span title='Buy'><i class='fa fa-shopping-basket me-3' role="img" aria-label="Buy"/>Buy</span>
-                            </button>
-                        </t>
-                        <t t-else="">
-                            <div role="alertdialog" class="alert text-center alert-danger">You need another <field name="points_missing"/> Points to buy this</div>
-                        </t>
+                            <div class="ratio ratio-16x9 overflow-hidden mb-3">
+                                <div class="embed-responsive-item d-flex align-items-center">
+                                    <field name="image" widget="image" class="w-100" alt="Product" options="{'img_class': 'w-100'}"/>
+                                </div>
+                            </div>
+                            <field name="description"/>
+                            <div class="flex mb-2">
+                                <field name="company_id" class="fst-italic mb-2" groups="base.group_multi_company"/>
+                                <field name="gift_manager_id" widget="many2one_avatar_user" class="float-end"/>
+                            </div>
+                            <div class="w-100">
+                                <t t-if="record.points_missing.raw_value &lt; 1">
+                                    <button name="buy" type="object" class="btn btn-primary w-100 " confirm="Do you want to confirm this reward? After confirmation an HR will contact you.">
+                                        <span title='Buy'><i class='fa fa-shopping-basket me-3' role="img" aria-label="Buy"/>Buy</span>
+                                    </button>
+                                </t>
+                                <t t-else="">
+                                    <div role="alertdialog" class="alert text-center alert-danger pt-2 pb-1">
+                                        You need another
+                                        <field name="points_missing"/>
+                                        Points to buy this
+                                    </div>
+                                </t>
+                            </div>
+                        </main>
                     </t>
                 </templates>
             </kanban>
@@ -154,7 +167,7 @@
         </field>
     </record>
 
-    <menuitem parent="menu_hr_referral_configuration" id="menu_hr_referral_reward_configuration" action="action_hr_referral_reward_configuration" sequence="2"/>
+    <menuitem parent="menu_hr_referral_configuration" id="menu_hr_referral_reward_configuration" action="action_hr_referral_reward_configuration" sequence="3"/>
 
 
 </odoo>

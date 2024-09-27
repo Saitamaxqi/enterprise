@@ -68,12 +68,12 @@
                 Create new alerts
             </p>
             <p>
-                Alerts will be displayed on the first screen to give information or redirects the employees
+                Alerts will appear on the main screen to provide information or redirect employees.
             </p>
         </field>
     </record>
 
-    <menuitem parent="menu_hr_referral_configuration" id="menu_hr_referral_alert_configuration" action="action_hr_referral_alert_configuration" sequence="4" groups="hr_recruitment.group_hr_recruitment_manager"/>
+    <menuitem parent="menu_hr_referral_configuration" id="menu_hr_referral_alert_configuration" action="action_hr_referral_alert_configuration" sequence="6" groups="hr_recruitment.group_hr_recruitment_manager"/>
 
 
 </odoo>

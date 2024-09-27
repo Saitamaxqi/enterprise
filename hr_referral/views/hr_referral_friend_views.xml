@@ -47,6 +47,6 @@
         </field>
     </record>
 
-    <menuitem parent="menu_hr_referral_configuration" id="menu_hr_referral_friend_configuration" action="action_hr_referral_friend_configuration" sequence="3" groups="hr_recruitment.group_hr_recruitment_manager"/>
+    <menuitem parent="menu_hr_referral_configuration" id="menu_hr_referral_friend_configuration" action="action_hr_referral_friend_configuration" sequence="5" groups="hr_recruitment.group_hr_recruitment_manager"/>
 
 </odoo>
