@@ -768,6 +768,7 @@
                         <div>Control per: <field name="measure_on"/></div>
                         <div>Team: <field name="team_id"/></div>
                         <footer>
+                            <field name="company_id" invisible="1"/> <!-- required for the domain of `check_company' in `user-id' -->
                             <field class="ms-auto" name="user_id" widget="many2one_avatar_user"/>
                         </footer>
                     </t>
