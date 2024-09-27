@@ -186,6 +186,7 @@ export class TimesheetTimerRendererHook {
                 this.timesheet.resId === this.timerState.timesheetId) ||
             this.timerState.otherCompany
         ) {
+            this.timesheet = undefined;
             return;
         }
 
