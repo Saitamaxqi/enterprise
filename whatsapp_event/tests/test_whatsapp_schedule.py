@@ -13,7 +13,7 @@ from odoo.tests import tagged, users
 from odoo.tools import mute_logger
 
 
-@tagged('event_mail')
+@tagged('event_mail', 'post_install', '-at_install')
 class TestWhatsappSchedule(EventCase, WhatsAppCommon):
 
     @classmethod
@@ -94,7 +94,6 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         sub_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "after_sub")
         self.assertEqual(len(sub_scheduler), 1)
         self.assertEqual(sub_scheduler.mail_count_done, 2)
-        self.assertTrue(sub_scheduler.mail_done)
         self.assertEqual(sub_scheduler.scheduled_date, self.test_event.create_date.replace(microsecond=0),
                          'event: incorrect scheduled date for checking controller')
 
@@ -137,7 +136,6 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         self.assertEqual(len(sub_scheduler.mail_registration_ids), 5, "2 pre-existing + 3 new")
         self.assertTrue(all(m.mail_sent is True for m in sub_scheduler.mail_registration_ids))
         self.assertEqual(sub_scheduler.mapped('mail_registration_ids.registration_id'), test_event.registration_ids)
-        self.assertTrue(sub_scheduler.mail_done)
         self.assertEqual(sub_scheduler.mail_count_done, 5, "2 pre-existing + 3 new")
 
         # verify that message sent correctly after each registration
@@ -159,6 +157,10 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         self.assertGreater(self.reference_now, before_scheduler.scheduled_date, 'Scheduler scheduled_date should trigger it.')
         for registration, state in zip_longest(test_event.registration_ids, ['draft', 'open', 'open', 'done'], fillvalue='cancel'):
             registration.state = state
+
+        # reset scheduler
+        before_scheduler.last_registration_id = False
+        before_scheduler.mail_count_done = 0
         before_scheduler.mail_done = False
 
         with self.mock_datetime_and_now(self.reference_now), self.mockWhatsappGateway():
@@ -187,9 +189,6 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
                 cron.method_direct_trigger()
         self.assertFalse(before_scheduler.mail_done)
 
-    @mute_logger('odoo.addons.event.models.event_mail',
-                 'odoo.addons.whatsapp_event.models.event_mail',
-                 'odoo.addons.whatsapp_event.models.event_mail_registration')
     @users('user_eventmanager')
     def test_whatsapp_schedule_fail_global_no_registrations(self):
         """ Be sure no registrations = no crash in wa composer """
@@ -209,9 +208,6 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
         before_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "before_event")
 
         # ensure there is a single draft template (crash in composer)
-        self.env["whatsapp.template"].sudo().search(
-            [("model_id", "=", self.env["ir.model"]._get_id("event.registration"))]
-        ).unlink()
         tpl_draft = self.env['whatsapp.template'].sudo().create({
             "body": "Test reminder",
             "model_id": self.env["ir.model"]._get_id("event.registration"),
@@ -221,35 +217,25 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
             "wa_account_id": self.whatsapp_account.id,
         })
         before_scheduler.template_ref = tpl_draft
+        self.env["whatsapp.template"].sudo().search([
+            ("model_id", "=", self.env["ir.model"]._get_id("event.registration")),
+            ("id", "!=", tpl_draft.id)
+        ]).unlink()
 
         with self.mock_datetime_and_now(self.reference_now + timedelta(days=3)), \
              self.mockWhatsappGateway():
             cron.method_direct_trigger()
         self.assertFalse(before_scheduler.mail_done)
 
-    @mute_logger('odoo.addons.whatsapp_event.models.event_mail')
     @users('user_eventmanager')
     def test_whatsapp_schedule_fail_global_template_removed(self):
         """ Test flow where scheduler fails due to template ref being removed
         when sending global event communication (i.e. only through cron). """
-        cron = self.env.ref("event.event_mail_scheduler").sudo()
-        before_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "before_event")
-
-        # make before event scheduler crash, remove linked template
         self.whatsapp_template_rem.sudo().unlink()
+        before_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "before_event")
+        self.assertFalse(before_scheduler)
 
-        test_event = self.env['event.event'].browse(self.test_event.ids)
-
-        with self.mockWhatsappGateway():
-            _new_regs = self._create_registrations(test_event, 3)
-
-        # execute event reminder scheduler explicitly: should not crash, just skip
-        with self.mock_datetime_and_now(self.reference_now + timedelta(days=3)), \
-             self.mockWhatsappGateway():
-            cron.method_direct_trigger()
-        self.assertFalse(before_scheduler.mail_done)
-
-    @mute_logger('odoo.addons.whatsapp_event.models.event_mail_registration')
+    @mute_logger('odoo.addons.event.models.event_registration')
     @users('user_eventmanager')
     def test_whatsapp_schedule_fail_registration_composer(self):
         """ Simulate a fail during composer usage e.g. invalid field path, template
@@ -268,8 +254,8 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
                     "phone": "(255)-595-8393",
                 })
         self.assertTrue(registration.exists(), "Registration record should exist after creation.")
+        self.assertEqual(len(self.test_event.registration_ids), 3)
         self.assertEqual(onsub_scheduler.mail_count_done, 2)
-        self.assertFalse(onsub_scheduler.mail_done)
 
     @mute_logger('odoo.addons.whatsapp_event.models.event_mail')
     @users('user_eventmanager')
@@ -306,9 +292,9 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
             })
         self.assertTrue(registration.exists(), "Registration record should exist after creation.")
         sub_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "after_sub")
-        self.assertFalse(sub_scheduler.mail_done)
+        self.assertEqual(sub_scheduler.mail_count_done, 0)
 
-    @mute_logger('odoo.addons.whatsapp_event.models.event_mail')
+    @mute_logger('odoo.addons.event.models.event_mail')
     @users('user_eventmanager')
     def test_whatsapp_schedule_fail_registration_template_removed(self):
         """ Test flow where scheduler fails due to template being removed. """
@@ -323,4 +309,4 @@ class TestWhatsappSchedule(EventCase, WhatsAppCommon):
             })
         self.assertTrue(registration.exists(), "Registration record should exist after creation.")
         sub_scheduler = self.test_event.event_mail_ids.filtered(lambda s: s.interval_type == "after_sub")
-        self.assertFalse(sub_scheduler.mail_done)
+        self.assertEqual(sub_scheduler.mail_count_done, 0)

@@ -20,3 +20,10 @@ class WhatsappTemplate(models.Model):
         if self.env.context.get('filter_template_on_event'):
             domain = expression.AND([[('model', '=', 'event.registration')], [('status', '=', 'approved')], domain])
         return domain
+
+    def unlink(self):
+        res = super().unlink()
+        domain = ('template_ref', 'in', [f"{template._name},{template.id}" for template in self])
+        self.env['event.mail'].sudo().search([domain]).unlink()
+        self.env['event.type.mail'].sudo().search([domain]).unlink()
+        return res

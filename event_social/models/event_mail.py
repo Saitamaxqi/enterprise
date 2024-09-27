@@ -1,8 +1,11 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import logging
 
 from odoo import fields, models, api, _
 from odoo.exceptions import UserError
+
+_logger = logging.getLogger(__name__)
 
 
 class EventMailScheduler(models.Model):
@@ -23,26 +26,40 @@ class EventMailScheduler(models.Model):
         social_schedulers = self.filtered(lambda scheduler: scheduler.template_ref and scheduler.template_ref._name == 'social.post.template')
         social_schedulers.notification_type = 'social_post'
 
-    def execute(self):
-        social_post_mails = self.filtered(
-            lambda mail:
-                mail.template_ref
-                and mail.notification_type == 'social_post'
-                and not mail.mail_done
+    def _execute_event_based(self):
+        social_schedulers = self.filtered(lambda scheduler: scheduler.notification_type == 'social_post')
+
+        if social_schedulers:
+            self.env['social.post'].sudo().create([
+                scheduler.template_ref._prepare_social_post_values()
+                for scheduler in social_schedulers
+            ])._action_post()
+
+            for scheduler in social_schedulers:
+                scheduler.update({
+                    'mail_done': True,
+                    'mail_count_done': len(scheduler.template_ref.account_ids),
+                })
+        # do not call super for social schedulers as they have their own
+        # computation for mail_done / mail_count_done; also avoid singleton errors
+        remaining = self - social_schedulers
+        if remaining:
+            return super(EventMailScheduler, remaining)._execute_event_based()
+
+    def _filter_template_ref(self):
+        """ Check for valid template reference: existing, working template """
+        valid = super()._filter_template_ref()
+        invalid = valid.filtered(
+            lambda scheduler: scheduler.notification_type == "social_post" and not scheduler.template_ref.account_ids
         )
+        for scheduler in invalid:
+            _logger.warning(
+                "Cannot process scheduler %s (event %s - ID %s) as it refers to social post template %s (ID %s) that has no linked accounts",
+                scheduler.id, scheduler.event_id.name, scheduler.event_id.id,
+                scheduler.template_ref.name, scheduler.template_ref.id)
+        return valid - invalid
 
-        social_posts_values = [
-            scheduler.template_ref._prepare_social_post_values()
-            for scheduler in social_post_mails
-            if scheduler.template_ref.account_ids
-        ]
-
-        self.env['social.post'].sudo().create(social_posts_values)._action_post()
-
-        for social_post_mail in social_post_mails:
-            social_post_mails.update({
-                'mail_done': True,
-                'mail_count_done': len(social_post_mail.template_ref.account_ids),
-            })
-
-        return super(EventMailScheduler, self - social_post_mails).execute()
+    def _template_model_by_notification_type(self):
+        info = super()._template_model_by_notification_type()
+        info["social_post"] = "social.post.template"
+        return info
