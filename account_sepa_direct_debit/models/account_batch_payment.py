@@ -83,24 +83,27 @@ class AccountBatchPayment(models.Model):
         self.env['account.payment'].flush_model(['is_matched', 'batch_payment_id'])
         self.env['sdd.mandate'].flush_model()
 
-        # Need to use SQL due to ORM limitations
-        # We are trying to fetch all account_batch_payment that contain at least one payment using a mandate that was never used before
-        self.env.cr.execute(SQL("""
-                  WITH mandate_used AS (
-                      SELECT DISTINCT mandate.id
-                        FROM sdd_mandate mandate
-                        JOIN account_payment payment ON payment.sdd_mandate_id = mandate.id
-                       WHERE payment.is_matched AND mandate.id IN %(mandate_ids)s
-                     )
-                SELECT DISTINCT payment.batch_payment_id
-                  FROM account_payment payment
-                  JOIN sdd_mandate mandate ON payment.sdd_mandate_id = mandate.id
-             LEFT JOIN mandate_used ON mandate.id = mandate_used.id
-                 WHERE mandate_used.id IS NULL
-            """,
-            mandate_ids=tuple(related_mandates.ids),
-        ))
-        batch_with_new_mandate_ids = {row[0] for row in self.env.cr.fetchall()}
+        if related_mandates:
+            # Need to use SQL due to ORM limitations
+            # We are trying to fetch all account_batch_payment that contain at least one payment using a mandate that was never used before
+            self.env.cr.execute(SQL("""
+                      WITH mandate_used AS (
+                          SELECT DISTINCT mandate.id
+                            FROM sdd_mandate mandate
+                            JOIN account_payment payment ON payment.sdd_mandate_id = mandate.id
+                           WHERE payment.is_matched AND mandate.id IN %(mandate_ids)s
+                         )
+                    SELECT DISTINCT payment.batch_payment_id
+                      FROM account_payment payment
+                      JOIN sdd_mandate mandate ON payment.sdd_mandate_id = mandate.id
+                 LEFT JOIN mandate_used ON mandate.id = mandate_used.id
+                     WHERE mandate_used.id IS NULL
+                """,
+                mandate_ids=tuple(related_mandates.ids),
+            ))
+            batch_with_new_mandate_ids = {row[0] for row in self.env.cr.fetchall()}
+        else:
+            batch_with_new_mandate_ids = set()
 
         for batch in sepa_batch_payment:
             minimum_offset = 5 if batch.id in batch_with_new_mandate_ids else 2
@@ -136,7 +139,20 @@ class AccountBatchPayment(models.Model):
                     ),
                     action=action.id,
                     button_text=_("Go to settings"),
+                )
 
+            payments_without_mandate = self.payment_ids.filtered(lambda x: not x.sdd_mandate_id)
+            if payments_without_mandate:
+                raise RedirectWarning(
+                    _("Some payments are not linked to any mandate."),
+                    action={
+                        'name': _("Payments without mandate"),
+                        'type': 'ir.actions.act_window',
+                        'res_model': 'account.payment',
+                        'views': [(self.env.ref('account.view_account_payment_tree').id, 'list')],
+                        'domain': [('id', 'in', payments_without_mandate.ids)]
+                    },
+                    button_text=_("Go to payments"),
                 )
 
             # Check that the pre-notification delay is good
