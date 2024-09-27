@@ -168,17 +168,14 @@ class AccountBatchPayment(models.Model):
 
             invalid_mandates = self.payment_ids.sdd_mandate_id._update_and_partition_state_by_validity()['invalid']
             if invalid_mandates:
-                raise RedirectWarning(_(
-                        "All the payments in the batch must have an active SEPA mandate.\n"
-                        "Please check the following mandates: %(mandate_list)s.",
-                        mandate_list=', '.join(invalid_mandates.mapped('name')),
-                    ),
+                raise RedirectWarning(
+                    _("Some payments are linked to an inactive mandate."),
                     action={
                         'name': _("Problematic mandates"),
                         'type': 'ir.actions.act_window',
                         'res_model': 'sdd.mandate',
                         'views': [(self.env.ref('account_sepa_direct_debit.account_sepa_direct_debit_mandate_tree').id, 'list')],
-                        'domain': [('id', 'in', invalid_mandates.ids)]
+                        'domain': [('id', 'in', invalid_mandates.ids)],
                     },
                     button_text=_("Go to mandates"),
                 )
