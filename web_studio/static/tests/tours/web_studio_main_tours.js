@@ -1279,9 +1279,6 @@ registry.category("web_tour.tours").add("web_studio_approval_tour", {
             run: "click",
         },
         {
-            trigger: ".o_web_studio_snackbar .fa-check",
-        },
-        {
             // leave studio
             trigger: ".o_web_studio_leave > a.btn",
             run: "click",
@@ -1293,7 +1290,6 @@ registry.category("web_tour.tours").add("web_studio_approval_tour", {
             // TODO: add breacrumb to access multi-record view when closing studio and close studio from form instead of from kanban
             // trigger: ".o_breadcrumb .o_back_button",
             trigger: "body",
-            run: "click",
         },
         {
             // open first record (should be the one that was used, so the button should be there)

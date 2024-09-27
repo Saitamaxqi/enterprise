@@ -1542,11 +1542,7 @@ registry.category("web_tour.tours").add("web_studio.test_reports_view_concurrenc
         },
         {
             trigger: ".o_kanban_record[data-id] ",
-            run: "click",
-        },
-        {
-            trigger: ".o_kanban_record[data-id] ",
-            run: "click",
+            run: "dblclick",
         },
         {
             trigger: ".o-web-studio-report-editor",
