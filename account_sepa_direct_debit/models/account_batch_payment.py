@@ -126,7 +126,6 @@ class AccountBatchPayment(models.Model):
 
     def validate_batch(self):
         self.ensure_one()
-        res = super().validate_batch()
         if self.payment_method_code in self.payment_method_id._get_sdd_payment_method_code():
             today = fields.Date.context_today(self)
             company = self.journal_id.company_id
@@ -198,7 +197,7 @@ class AccountBatchPayment(models.Model):
                     button_text=_("Go to journal"),
                 )
 
-        return res
+        return super().validate_batch()
 
     def _check_and_post_draft_payments(self, draft_payments):
         rslt = []
