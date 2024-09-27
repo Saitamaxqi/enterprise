@@ -68,12 +68,14 @@ class BudgetReport(models.Model):
                                  AND aal.date >= bl.date_from
                                  AND aal.date <= bl.date_to
                                  AND %(condition)s
+         LEFT JOIN account_account aa ON aa.id = aal.general_account_id
          LEFT JOIN budget_analytic ba ON ba.id = bl.budget_analytic_id
              WHERE CASE
                        WHEN ba.budget_type = 'expense' THEN aal.amount < 0
                        WHEN ba.budget_type = 'revenue' THEN aal.amount > 0
                        ELSE TRUE
                    END
+                   AND (SPLIT_PART(aa.account_type, '_', 1) IN ('income', 'expense') OR aa.account_type IS NULL)
             """,
             analytic_fields=SQL(', ').join(self.env['account.analytic.line']._field_to_sql('aal', fname) for fname in plan_fnames),
             condition=SQL(' AND ').join(SQL(
