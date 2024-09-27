@@ -230,6 +230,7 @@ class AccountMove(models.Model):
             "DeptoRecep": self.partner_id.state_id and self.partner_id.state_id.name[:30] or None,  # A66
             "PaisRecep": self.partner_id.country_id and self.partner_id.country_id.name or None,  # A66.1
             "InfoAdicional": self.l10n_uy_edi_document_id._get_legends("receiver", self) or None,  # A68
+            "CompraID": self.ref and self.ref[:50] or None,  # A70
         }
 
     def _l10n_uy_edi_cfe_B_details(self, tax_details):

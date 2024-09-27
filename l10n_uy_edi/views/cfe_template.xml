@@ -34,6 +34,7 @@
                 <DeptoRecep t-out="receptor['DeptoRecep']"/>
                 <PaisRecep t-out="receptor['PaisRecep']"/>
                 <InfoAdicional  t-out="receptor['InfoAdicional']"/>
+                <CompraID t-out="receptor['CompraID']"/>
             </Receptor>
             <Totales t-if="totals_detail">
                 <TpoMoneda t-out="totals_detail['TpoMoneda']"/>

@@ -25,6 +25,7 @@
                         <DirRecep>ffgr 34</DirRecep>
                         <DeptoRecep>Montevideo</DeptoRecep>
                         <PaisRecep>Uruguay</PaisRecep>
+                        <CompraID>*DEMO</CompraID>
                     </Receptor>
                     <Totales>
                         <TpoMoneda>UYU</TpoMoneda>

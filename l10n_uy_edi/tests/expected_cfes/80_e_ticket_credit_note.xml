@@ -24,6 +24,7 @@
                 <CiudadRecep>Aeroparque</CiudadRecep>
                 <DeptoRecep>Canelones</DeptoRecep>
                 <PaisRecep>Uruguay</PaisRecep>
+                <CompraID>*DEMO</CompraID>
             </Receptor>
             <Totales>
                 <TpoMoneda>UYU</TpoMoneda>

@@ -27,6 +27,7 @@
         <CiudadRecep>San Francisco</CiudadRecep>
         <DeptoRecep>California</DeptoRecep>
         <PaisRecep>United States</PaisRecep>
+        <CompraID>*DEMO</CompraID>
       </Receptor>
       <Totales>
         <TpoMoneda>USD</TpoMoneda>
