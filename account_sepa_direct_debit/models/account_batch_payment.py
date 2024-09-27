@@ -154,18 +154,6 @@ class AccountBatchPayment(models.Model):
                     button_text=_("Go to payments"),
                 )
 
-            # Check that the pre-notification delay is good
-            collection_date = self.sdd_required_collection_date
-            pre_notification_period = max(self.payment_ids.sdd_mandate_id.mapped('pre_notification_period'))  # Empty batch already checked
-            min_collection_date = today + timedelta(days=pre_notification_period)
-            if collection_date < min_collection_date:
-                raise UserError(_(
-                    "You cannot generate a SEPA Direct Debit file with a required collection date inferior to the sending day"
-                    " + the longest pre-notification period defined in the mandates linked to this batch.\n"
-                    "According to these payments mandates, the minimum required date should be the %(minimum_date)s",
-                    minimum_date=format_date(self.env, min_collection_date),
-                ))
-
             invalid_mandates = self.payment_ids.sdd_mandate_id._update_and_partition_state_by_validity()['invalid']
             if invalid_mandates:
                 raise RedirectWarning(
@@ -179,6 +167,19 @@ class AccountBatchPayment(models.Model):
                     },
                     button_text=_("Go to mandates"),
                 )
+
+            # Check that the pre-notification delay is good
+            collection_date = self.sdd_required_collection_date
+            pre_notification_period = max(self.payment_ids.sdd_mandate_id.mapped('pre_notification_period'))  # Empty batch already checked
+            min_collection_date = today + timedelta(days=pre_notification_period)
+            if collection_date < min_collection_date:
+                raise UserError(_(
+                    "You cannot generate a SEPA Direct Debit file with a required collection date inferior to the sending day"
+                    " + the longest pre-notification period defined in the mandates linked to this batch.\n"
+                    "According to these payments mandates, the minimum required date should be the %(minimum_date)s",
+                    minimum_date=format_date(self.env, min_collection_date),
+                ))
+
             if self.journal_id.bank_account_id.acc_type != 'iban':
                 raise RedirectWarning(_(
                         "Only IBAN account numbers can receive SEPA Direct Debit payments. "
