@@ -2,9 +2,11 @@
 
 import base64
 
+from odoo.exceptions import UserError
+from odoo.tests.common import users
+
 from odoo.addons.documents.tests.test_documents_common import TransactionCaseDocuments
 from odoo.addons.project.tests.test_project_base import TestProjectCommon
-from odoo.tests.common import users
 
 GIF = b"R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs="
 TEXT = base64.b64encode(bytes("workflow bridge project", 'utf-8'))
@@ -265,3 +267,22 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
         new_name = 'New Name'
         self.project_pigs.with_user(self.env.user).name = new_name
         self.assertEqual(self.project_pigs.documents_folder_id.name, new_name, "The folder should have been renamed along with the project.")
+
+    def test_delete_project_folder(self):
+        """
+        It should not be possible to delete the "Projects" folder.
+        """
+        project_folder = self.env.ref('documents_project.document_project_folder')
+        with self.assertRaises(UserError, msg="It should not be possible to delete the 'Projects' folder"):
+            project_folder.unlink()
+
+        current = project_folder
+        for i in range(3):
+            current.folder_id = self.env['documents.document'].create({
+                "name": f"Ancestor Test {i}",
+                "type": "folder",
+            })
+            current = current.folder_id
+
+        with self.assertRaises(UserError, msg="It should not be possible to delete an ancestor of the 'Projects' folder"):
+            current.unlink()
