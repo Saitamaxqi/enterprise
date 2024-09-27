@@ -7,11 +7,12 @@ from odoo import fields, models
 class HelpdeskTicket(models.Model):
     _inherit = 'helpdesk.ticket'
 
-    sale_order_id = fields.Many2one('sale.order', string='Ref. Sales Order',
+    sale_order_id = fields.Many2one(
+        'sale.order', string='Ref. Sales Order',
         domain="""[
             '|', (not commercial_partner_id, '=', 1), ('partner_id', 'child_of', commercial_partner_id or []),
             ('company_id', '=', company_id)]""",
-        groups="sales_team.group_sale_salesman,account.group_account_invoice")
+    )
     sale_order_state = fields.Selection(related='sale_order_id.state')
 
     def copy_data(self, default=None):
