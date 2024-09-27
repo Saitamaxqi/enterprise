@@ -100,7 +100,7 @@
     </template>
     <template id="portal_helpdesk_ticket_inherit" inherit_id="helpdesk.portal_helpdesk_ticket">
         <xpath expr="//t[@t-foreach='grouped_tickets']/tbody/tr[hasclass('table-light')]" position="inside">
-            <t t-elif="groupby == 'sale_line_id'">
+            <t t-elif="groupby == 'sale_order_id'">
                 <th colspan="6">
                     <span t-if="tickets[0].sudo().sale_line_id" t-field="tickets[0].sudo().sale_line_id"/>
                     <span t-else="">Not Billed</span>
