@@ -343,7 +343,9 @@ export class InvoiceExtractFormRenderer extends AccountMoveFormRenderer {
         // Update the field's value
         await this.handleFieldChanged(fieldName, newFieldValue);
 
-        if (['date', 'due_date'].includes(box.feature)) {
+        if (['supplier', 'VAT_Number'].includes(box.feature)) {
+            this.activeFieldEl.querySelector('.o-autocomplete--dropdown-menu')?.classList.toggle('show');
+        } else if (['date', 'due_date'].includes(box.feature)) {
             // For the date fields, we want to hide the calendar tooltip
             // This is achieved by simulating an 'ESC' keypress
             this.activeFieldEl.querySelector('input').dispatchEvent(new KeyboardEvent('keydown', {
