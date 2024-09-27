@@ -34,7 +34,7 @@ class Home(web_home.Home):
         """
         subpath = kw.get('subpath', '')
         access_token = request.params.get('access_token') or subpath.removeprefix('documents/')
-        if not subpath.startswith('documents') or not access_token:
+        if not subpath.startswith('documents') or not access_token or '/' in access_token:
             return super().web_client(s_action, **kw)
 
         # This controller should be auth='public' but it actually is
