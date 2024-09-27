@@ -19,7 +19,7 @@ export class TemplateDialog extends Component {
     static template = "documents_spreadsheet.TemplateDialog";
     static props = {
         context: Object,
-        folderId: { type: Number, optional: true },
+        folderId: { type: [String, Number], optional: true },
         close: Function, // prop added by the Dialog service
         folders: Array,
     };
