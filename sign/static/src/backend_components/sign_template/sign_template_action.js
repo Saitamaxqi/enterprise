@@ -2,6 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
+import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { SignTemplateControlPanel } from "./sign_template_control_panel";
 import { SignTemplateBody } from "./sign_template_body";
 import { Component, onWillStart, useState } from "@odoo/owl";
@@ -25,6 +26,7 @@ export class SignTemplate extends Component {
         this.orm = useService("orm");
         this.notification = useService("notification");
         this.action = useService("action");
+        this.dialog = useService("dialog");
         const params = this.props.action.params;
         this.templateID = params.id;
         if (this.templateID) {
@@ -40,6 +42,7 @@ export class SignTemplate extends Component {
             isSignTemplateSaved: this.resModel === "sign.request" ? true : false,
             save : () => {},
             discardChanges : () => {},
+            isDiscardingChanges: false,
         });
 
         onWillStart(async () => {
@@ -63,6 +66,18 @@ export class SignTemplate extends Component {
                     await this.signStatus.save();
                     this.notification.add(_t("Saved"), { type: "success" });
                 }
+                // When the user clicks on "discard" from the status indicator, do not show the confirmation dialog.
+                else if (!this.signTemplate.active && !this.signStatus.isDiscardingChanges) {
+                    /* When user is directly sending a document for signing by clicking
+                    on the 'Send' or 'Sign Now' button from wizard, we don't want to show the confirmation dialog. */
+                    const isSignRequest = await this.orm.searchCount(
+                        "sign.request",
+                        [['template_id', '=', this.signTemplate.id]],
+                        { limit: 1 }
+                    );
+                    return isSignRequest || this.showConfirmationDialog();
+                }
+                this.isDiscardingChanges = false;
             }
         });
     }
@@ -444,6 +459,31 @@ export class SignTemplate extends Component {
 
     getNewFocusedDocument(oldFocusedDocumentId) {
         return this.state.documents.find((doc) => doc.id !== oldFocusedDocumentId && !doc.deleted);
+    }
+
+    async showConfirmationDialog(){
+        return new Promise((resolve) => {
+            this.dialog.add(ConfirmationDialog, {
+                title: _t("Confirmation"),
+                body: _t("Your changes will be discarded. Would you like to save them as a template?"),
+                confirm: async () => {
+                    await this.onTemplateSaveClick();
+                    if (this.signStatus.isTemplateChanged) {
+                        // If there is unsaved sign items, it will save the template before leaving.
+                        await this.signStatus.save();
+                    }
+                    resolve(true);
+                },
+                confirmLabel: _t("Save & close"),
+                cancel: () => {
+                    resolve(true);
+                },
+                cancelLabel: _t("Discard"),
+                dismiss: () => {
+                    resolve(false);
+                }
+            });
+        });
     }
 }
 

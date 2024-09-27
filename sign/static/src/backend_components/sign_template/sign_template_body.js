@@ -130,6 +130,7 @@ export class SignTemplateBody extends Component {
         const templateName = signTemplate.display_name;
         const templateId = parseInt(signTemplate.id, 10);
         this.props.signStatus.isTemplateChanged = false;
+        this.props.signStatus.isDiscardingChanges = true;
         await this.action.doAction({
             type: "ir.actions.client",
             tag: "sign.Template",
