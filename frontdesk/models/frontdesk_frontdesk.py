@@ -111,6 +111,13 @@ class FrontdeskFrontdesk(models.Model):
             'target': 'self',
         }
 
+    def install_kiosk(self):
+        return {
+            "type": "ir.actions.act_url",
+            "url": f"/scoped_app?app_id=frontdesk&path=kiosk/{self.id}/{self.access_token}",
+            "target": "new",
+        }
+
     def action_open_visitors(self):
         self.ensure_one()
         return {

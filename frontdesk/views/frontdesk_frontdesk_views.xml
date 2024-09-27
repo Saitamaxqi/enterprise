@@ -113,6 +113,8 @@
             <kanban action="%(action_open_station_visitor)d" type="action">
                 <templates>
                     <t t-name="menu">
+                        <a role="menuitem" class="dropdown-item" name="install_kiosk"
+                            type="object" target="_blank">Install</a>
                         <a role="menuitem" class="dropdown-item" name="action_open_kiosk"
                             type="object">Kiosk</a>
                         <a role="menuitem" class="dropdown-item" name="action_open_visitors"
@@ -128,7 +130,7 @@
                         </div>
                         <div class="row">
                             <div class="col-6">
-                                <button class="btn btn-primary ms-2" name="%(frontdesk_action_install_kiosk_pwa)d" type="action"
+                                <button class="btn btn-primary ms-2" name="action_open_kiosk" type="object"
                                 groups="frontdesk.frontdesk_group_user">Open Desk</button>
                             </div>
                             <div class="col-6">
