@@ -196,7 +196,7 @@
             <xpath expr="//field[@name='partner_id']" position="replace">
                 <div class="d-flex">
                     <field class="text-truncate" name="partner_id"/>
-                    <span t-if="record.is_fsm.raw_value and record.partner_city.value" class="ms-1 text-nowrap">
+                    <span t-if="record.is_fsm.raw_value and record.partner_city.value" class="ms-1 text-truncate">
                         •<field name="partner_city" class="ms-1"/>
                     </span>
                 </div>
