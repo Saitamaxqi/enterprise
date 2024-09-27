@@ -1,7 +1,12 @@
 import { browser } from "@web/core/browser/browser";
 import { Domain } from "@web/core/domain";
-import { deserializeDate, deserializeDateTime, serializeDateTime } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
+import {
+    deserializeDate,
+    deserializeDateTime,
+    serializeDate,
+    serializeDateTime,
+} from "@web/core/l10n/dates";
 import { x2ManyCommands } from "@web/core/orm_service";
 import { registry } from "@web/core/registry";
 import { groupBy, unique } from "@web/core/utils/arrays";
@@ -233,6 +238,14 @@ export class GanttModel extends Model {
         await this.fetchData();
     }
 
+    dateStartFieldIsDate(metaData = this.metaData) {
+        return metaData?.fields[metaData.dateStartField].type === "date";
+    }
+
+    dateStopFieldIsDate(metaData = this.metaData) {
+        return metaData?.fields[metaData.dateStopField].type === "date";
+    }
+
     expandRows() {
         this.closedRows.clear();
         this.notify();
@@ -279,10 +292,14 @@ export class GanttModel extends Model {
         const schedule = {};
 
         if (start) {
-            schedule[dateStartField] = serializeDateTime(start);
+            schedule[dateStartField] = this.dateStartFieldIsDate()
+                ? serializeDate(start)
+                : serializeDateTime(start);
         }
         if (stop && dateStartField !== dateStopField) {
-            schedule[dateStopField] = serializeDateTime(stop);
+            schedule[dateStopField] = this.dateStopFieldIsDate()
+                ? serializeDate(stop)
+                : serializeDateTime(stop);
         }
         if (rowId) {
             const group = Object.assign({}, ...JSON.parse(rowId));
@@ -366,7 +383,9 @@ export class GanttModel extends Model {
                 } else {
                     return recordValue[0] === newValue;
                 }
-            } else if (["date", "datetime"].includes(type)) {
+            } else if (type === "date") {
+                return serializeDate(recordValue) === newValue;
+            } else if (type === "datetime") {
                 return serializeDateTime(recordValue) === newValue;
             } else {
                 return recordValue === newValue;
@@ -794,8 +813,20 @@ export class GanttModel extends Model {
             this.searchParams.domain,
             [
                 "&",
-                [dateStartField, "<", serializeDateTime(globalStop)],
-                [dateStopField, ">", serializeDateTime(globalStart)],
+                [
+                    dateStartField,
+                    "<",
+                    this.dateStopFieldIsDate(metaData)
+                        ? serializeDate(globalStop)
+                        : serializeDateTime(globalStop),
+                ],
+                [
+                    dateStopField,
+                    this.dateStartFieldIsDate(metaData) ? ">=" : ">",
+                    this.dateStartFieldIsDate(metaData)
+                        ? serializeDate(globalStart)
+                        : serializeDateTime(globalStart),
+                ],
             ],
         ]);
         return domain.toList();

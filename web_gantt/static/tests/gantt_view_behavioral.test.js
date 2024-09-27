@@ -43,6 +43,7 @@ import {
 } from "./web_gantt_test_helpers";
 
 import { omit, pick } from "@web/core/utils/objects";
+import { deserializeDate } from "@web/core/l10n/dates";
 
 // Hard-coded daylight saving dates from 2019
 const DST_DATES = {
@@ -2100,4 +2101,203 @@ test("make tooltip visible for a long pill", async () => {
     const { left: popoverLeft, right: popoverRight } = popover.getBoundingClientRect();
     expect(popoverLeft).toBeWithin(0, window.innerWidth);
     expect(popoverRight).toBeWithin(0, window.innerWidth);
+});
+
+test("date fields: domain", async () => {
+    expect.assertions(4);
+    Tasks._fields.start = fields.Date();
+    Tasks._fields.stop = fields.Date();
+    const domains = [
+        ["&", ["start", "<", "2018-12-21"], ["stop", ">=", "2018-12-20"]],
+        ["&", ["start", "<", "2018-12-23"], ["stop", ">=", "2018-12-16"]],
+        ["&", ["start", "<", "2019-01-01"], ["stop", ">=", "2018-01-01"]],
+        ["&", ["start", "<", "2019-01-01"], ["stop", ">=", "2018-12-01"]],
+    ];
+    onRpc("get_gantt_data", ({ kwargs }) => {
+        expect(kwargs.domain).toEqual(domains.pop());
+    });
+    await mountGanttView({
+        type: "gantt",
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" default_range="month"/>`,
+    });
+    await selectRange("This year");
+    await selectRange("This week");
+    await selectRange("Today");
+});
+
+test("date fields: pill columns", async () => {
+    Tasks._fields.start = fields.Date();
+    Tasks._fields.stop = fields.Date();
+    Tasks._records = Tasks._records.slice(0, 1);
+    Tasks._records[0].start = "2018-12-20";
+    Tasks._records[0].stop = "2018-12-22";
+    await mountGanttView({
+        type: "gantt",
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop"/>`,
+    });
+    expect(getGridContent().rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "20 December 2018 -> 22 December 2018",
+                    level: 0,
+                    title: "Task 1",
+                },
+            ],
+        },
+    ]);
+});
+
+test.tags("desktop")("date fields: resize a pill", async () => {
+    expect.assertions(4);
+    Tasks._fields.start = fields.Date();
+    Tasks._fields.stop = fields.Date();
+    Tasks._records = Tasks._records.slice(0, 1);
+    Tasks._records[0].start = "2018-12-20";
+    Tasks._records[0].stop = "2018-12-22";
+    onRpc("write", ({ args }) => {
+        expect(args[0]).toEqual([1]);
+        // initial dates -- start: '"2018-12-20"', stop: '"2018-12-22"'
+        expect(args[1]).toEqual({ stop: "2018-12-21" });
+    });
+    await mountGanttView({
+        type: "gantt",
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop"/>`,
+    });
+    expect(getGridContent().rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "20 December 2018 -> 22 December 2018",
+                    level: 0,
+                    title: "Task 1",
+                },
+            ],
+        },
+    ]);
+    await resizePill(getPillWrapper("Task 1"), "end", -1);
+    expect(getGridContent().rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "20 December 2018 -> 21 December 2018",
+                    level: 0,
+                    title: "Task 1",
+                },
+            ],
+        },
+    ]);
+});
+
+test("date fields: drag a pill", async () => {
+    expect.assertions(4);
+    Tasks._fields.start = fields.Date();
+    Tasks._fields.stop = fields.Date();
+    Tasks._records = Tasks._records.slice(0, 1);
+    Tasks._records[0].start = "2018-12-20";
+    Tasks._records[0].stop = "2018-12-22";
+    onRpc("write", ({ args }) => {
+        expect(args[0]).toEqual([1]);
+        // initial dates -- start: '"2018-12-20"', stop: '"2018-12-22"'
+        expect(args[1]).toEqual({ start: "2018-12-19", stop: "2018-12-21" });
+    });
+    await mountGanttView({
+        type: "gantt",
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop"/>`,
+    });
+    expect(getGridContent().rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "20 December 2018 -> 22 December 2018",
+                    level: 0,
+                    title: "Task 1",
+                },
+            ],
+        },
+    ]);
+    const { drop } = await dragPill("Task 1");
+    await drop({ column: "19 December 2018", part: 1 });
+    expect(getGridContent().rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "19 December 2018 -> 21 December 2018",
+                    level: 0,
+                    title: "Task 1",
+                },
+            ],
+        },
+    ]);
+});
+
+test("date fields: popover", async () => {
+    expect.assertions(5);
+    Tasks._fields.start = fields.Date();
+    Tasks._fields.stop = fields.Date();
+    Tasks._records = Tasks._records.slice(0, 1);
+    Tasks._records[0].start = "2018-12-20";
+    Tasks._records[0].stop = "2018-12-22";
+    const task1 = Tasks._records[0];
+    const startDateLocalString = deserializeDate(task1.start).toFormat("f");
+    const stopDateLocalString = deserializeDate(task1.stop).toFormat("f");
+    await mountGanttView({
+        type: "gantt",
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop"/>`,
+    });
+    expect(getGridContent().rows).toEqual([
+        {
+            pills: [
+                {
+                    colSpan: "20 December 2018 -> 22 December 2018",
+                    level: 0,
+                    title: "Task 1",
+                },
+            ],
+        },
+    ]);
+    expect(".o_popover").toHaveCount(0);
+    await contains(SELECTORS.pill).click();
+    expect(".o_popover").toHaveCount(1);
+    expect(queryAllTexts(".o_popover .popover-body span")).toEqual([
+        "Task 1",
+        startDateLocalString,
+        stopDateLocalString,
+    ]);
+    await contains(".o_popover .popover-header i.fa.fa-close").click();
+    expect(".o_popover").toHaveCount(0);
+});
+
+test("date fields: dialog", async () => {
+    Tasks._fields.start = fields.Date();
+    Tasks._fields.stop = fields.Date();
+    Tasks._records = Tasks._records.slice(0, 1);
+    Tasks._records[0].start = "2018-12-20";
+    Tasks._records[0].stop = "2018-12-22";
+    Tasks._views = {
+        form: `
+            <form>
+                <field name="name"/>
+                <field name="start"/>
+                <field name="stop"/>
+            </form>
+        `,
+    };
+    await mountGanttView({
+        type: "gantt",
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop"/>`,
+    });
+    expect(".modal").toHaveCount(0);
+    await editPill("Task 1");
+    // check that the dialog is opened with prefilled fields
+    expect(".modal").toHaveCount(1);
+    const modal = queryOne(".modal");
+    expect(modal.querySelector(".o_field_widget[name=start] input")).toHaveValue("12/20/2018");
+    expect(modal.querySelector(".o_field_widget[name=stop] input")).toHaveValue("12/22/2018");
 });

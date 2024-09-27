@@ -1443,12 +1443,18 @@ export class GanttRenderer extends Component {
             this.model.metaData;
 
         const startOutside = record[dateStartField] < globalStart;
-        const stopOutside = record[dateStopField] > globalStop;
+
+        let recordDateStopField = record[dateStopField];
+        if (this.model.dateStopFieldIsDate()) {
+            recordDateStopField = recordDateStopField.plus({ day: 1 });
+        }
+
+        const stopOutside = recordDateStopField > globalStop;
 
         /** @type {DateTime} */
         const pillStartDate = startOutside ? globalStart : record[dateStartField];
         /** @type {DateTime} */
-        const pillStopDate = stopOutside ? globalStop : record[dateStopField];
+        const pillStopDate = stopOutside ? globalStop : recordDateStopField;
 
         const disableStartResize = !canEdit || startOutside;
         const disableStopResize = !canEdit || stopOutside;
