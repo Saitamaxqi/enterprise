@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
+    <record id="base.partner_demo_company_ro" model="res.partner" forcecreate="1">
+        <field name="name">My Romanian Company</field>
+        <field name="country_id" ref="base.ro"/>
+    </record>
+
     <record id="base.demo_company_ro" model="res.company" forcecreate="1">
         <field name="name">My Romanian Company</field>
+        <field name="partner_id" ref="base.partner_demo_company_ro"/>
         <field name="currency_id" ref="base.RON"/>
         <field name="street">Drumul Valea Doftanei 113</field>
         <field name="zip">061981</field>
         <field name="city">Bucuresti</field>
+        <field name="state_id" ref="base.RO_B"/>
         <field name="country_id" ref="base.ro"/>
     </record>
 
@@ -17,131 +24,235 @@
         <field name="company_ids" eval="[(4, ref('base.demo_company_ro'))]"/>
     </record>
 
-    <record id="hr_department_rdro" model="hr.department">
-        <field name="name">RD RO</field>
+    <record id="ro_hr_department_rd" model="hr.department">
+        <field name="name">R&amp;D RO</field>
         <field name="company_id" ref="base.demo_company_ro"/>
     </record>
 
-    <record id="job_developer_romania" model="hr.job">
+    <record id="ro_hr_job_technical_lead" model="hr.job">
+        <field name="name">Technical Lead RO</field>
+        <field name="department_id" ref="l10n_ro_hr_payroll.ro_hr_department_rd"/>
+        <field name="no_of_recruitment">1</field>
+        <field name="company_id" ref="base.demo_company_ro"/>
+    </record>
+
+    <record id="ro_hr_job_developer" model="hr.job">
         <field name="name">Experienced Developer RO</field>
-        <field name="department_id" ref="hr_department_rdro"/>
+        <field name="department_id" ref="l10n_ro_hr_payroll.ro_hr_department_rd"/>
         <field name="no_of_recruitment">5</field>
         <field name="company_id" ref="base.demo_company_ro"/>
     </record>
 
-    <record id="hr_employee_ionel_oprea" model="hr.employee">
+    <record id="res_partner_ionel" model="res.partner">
         <field name="name">Ionel Oprea</field>
-        <field name="job_id" ref="job_developer_romania"/>
+        <field name="street">Strada Hagi Dina 210</field>
+        <field name="city">Bucuresti</field>
+        <field name="zip">052034</field>
+        <field name="state_id" ref="base.RO_B"/>
         <field name="country_id" ref="base.ro"/>
+        <field name="phone">0999 153 429</field>
         <field name="company_id" ref="base.demo_company_ro"/>
-        <field name="image_1920" type="base64" file="l10n_ro_hr_payroll/static/img/hr_employee_ionel_oprea.jpg"/>
-        <field name="gender">male</field>
+    </record>
+    <record id="res_partner_ionel" model="res.partner">
+        <field name="email" model="res.partner" eval="'demo.' + obj(ref('l10n_ro_hr_payroll.res_partner_ionel')).name.split(' ')[-1].lower() + '@example.com'"/>
     </record>
 
-    <record id="res_partner_demetra_voinea" model="res.partner">
+    <record id="res_partner_demetra" model="res.partner">
         <field name="name">Demetra Voinea</field>
         <field name="street">Calea Giulesti 6-8</field>
         <field name="city">Bucuresti</field>
         <field name="zip">062630</field>
+        <field name="state_id" ref="base.RO_B"/>
         <field name="country_id" ref="base.ro"/>
-        <field name="phone">0213162514</field>
-        <field name="email">demetra.voinea@example.com</field>
+        <field name="phone">0999 213 162</field>
         <field name="company_id" ref="base.demo_company_ro"/>
     </record>
+    <record id="res_partner_demetra" model="res.partner">
+        <field name="email" model="res.partner" eval="'demo.' + obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).name.split(' ')[-1].lower() + '@example.com'"/>
+    </record>
 
-    <record id="user_demetra_voinea" model="res.users">
-        <field name="partner_id" ref="l10n_ro_hr_payroll.res_partner_demetra_voinea"/>
-        <field name="login">demetravoinea@example.com</field>
-        <field name="password">demetravoinea</field>
-        <field name="signature">D. Voinea</field>
+    <record id="user_demetra" model="res.users">
+        <field name="partner_id" ref="l10n_ro_hr_payroll.res_partner_demetra"/>
+        <!-- firstname.lastname@example.com -->
+        <field name="login" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).name.replace(' ', '.').lower() + '@example.com'"/>
+        <!-- firstnamelastname -->
+        <field name="password" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).name.replace(' ', '').lower()"/>
+        <field name="signature" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).name.split(' ')[0][0] + '. ' + obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).name.split(' ')[-1]"/>
         <field name="company_ids" eval="[(4, ref('base.demo_company_ro'))]"/>
         <field name="company_id" ref="base.demo_company_ro"/>
         <field name="group_ids" eval="[(6,0,[ref('base.group_user')])]"/>
         <field name="image_1920" type="base64" file="l10n_ro_hr_payroll/static/img/hr_employe_demetra_voinea.jpg"/>
     </record>
 
-    <record id="res_partner_demetra_voinea_work_address" model="res.partner">
-        <field name="name">Romanian Offices</field>
-        <field name="street">Strada Matei Basarab 32</field>
+    <record id="ro_res_bank_transilvania" model="res.bank">
+        <field name="name">Banca Transilvania</field>
+        <field name="bic">BTRLRO22XXX</field>
+        <field name="street">Strada Banca Transilvania</field>
         <field name="city">Bucuresti</field>
-        <field name="zip">030674</field>
-        <field name="country_id" ref="base.ro"/>
-        <field name="company_id" ref="base.demo_company_ro"/>
+        <field name="zip">099090</field>
+        <field name="state" ref="base.RO_B"/>
+        <field name="country" ref="base.ro"/>
+        <field name="phone">0999 932 381</field>
+    </record>
+    <record id="ro_res_bank_transilvania" model="res.bank">
+        <field name="email" model="res.bank" eval="obj(ref('l10n_ro_hr_payroll.ro_res_bank_transilvania')).name.replace(' ', '.').lower() + '@example.com'"/>
     </record>
 
-    <record id="res_partner_demetra_voinea_private_address" model="res.partner">
-        <field name="name">Demetra Voinea</field>
-        <field name="company_id" ref="base.demo_company_ro"/>
+    <record id="ro_res_bank_commerciala_romana" model="res.bank">
+        <field name="name">Banca Comerciala Romana</field>
+        <field name="bic">RNCBROBUXXX</field>
+        <field name="street">Calea Banca Comerciala Romana</field>
+        <field name="city">Bucuresti</field>
+        <field name="zip">099192</field>
+        <field name="state" ref="base.RO_B"/>
+        <field name="country" ref="base.ro"/>
+        <field name="phone">0999 978 421</field>
+    </record>
+    <record id="ro_res_bank_commerciala_romana" model="res.bank">
+        <field name="email" model="res.bank" eval="obj(ref('l10n_ro_hr_payroll.ro_res_bank_commerciala_romana')).name.replace(' ', '.').lower() + '@example.com'"/>
     </record>
 
-    <record id="res_partner_bank_account_demetra_voinea" model="res.partner.bank">
+    <record id="res_partner_bank_account_ionel" model="res.partner.bank">
+        <field name="acc_number">RO66BACX0000003214569870</field>
+        <field name="allow_out_payment" eval="True"/>
+        <field name="bank_id" ref="l10n_ro_hr_payroll.ro_res_bank_transilvania"/>
+        <field name="partner_id" ref="l10n_ro_hr_payroll.res_partner_ionel"/>
+        <field name="company_id" ref="base.demo_company_ro"/>
+        <field name="currency_id" ref="base.RON"/>
+    </record>
+
+    <record id="res_partner_bank_account_demetra" model="res.partner.bank">
         <field name="acc_number">RO030103599935698356</field>
-        <field name="bank_id" ref="base.bank_ing"/>
-        <field name="partner_id" ref="l10n_ro_hr_payroll.res_partner_demetra_voinea_private_address"/>
+        <field name="allow_out_payment" eval="True"/>
+        <field name="bank_id" ref="l10n_ro_hr_payroll.ro_res_bank_commerciala_romana"/>
+        <field name="partner_id" ref="l10n_ro_hr_payroll.res_partner_demetra"/>
         <field name="company_id" ref="base.demo_company_ro"/>
+        <field name="currency_id" ref="base.RON"/>
     </record>
 
-    <record id="hr_employee_demetra_voinea" model="hr.employee">
-        <field name="name">Demetra Voinea (dvo)</field>
-        <field name="gender">female</field>
-        <field name="marital">single</field>
-        <field name="job_title">Software Developer</field>
-        <field name="private_street">Bulevardul Alexandru Ioan Cuza</field>
-        <field name="private_city">Bucuresti</field>
-        <field name="private_zip">011052</field>
-        <field name="private_country_id" ref="base.ro"/>
-        <field name="private_phone">031 106 3746</field>
-        <field name="private_email">demetra.voinea@example.com</field>
-        <field name="address_id" ref="l10n_ro_hr_payroll.res_partner_demetra_voinea_work_address"/>
-        <field name="emergency_contact">Ilarie Voinea</field>
-        <field name="emergency_phone">031 106 3746</field>
-        <field name="birthday">1991-07-28</field>
-        <field name="distance_home_work">25</field>
-        <field name="place_of_birth">Bucuresti</field>
-        <field name="country_of_birth" ref="base.ro"/>
-        <field name="certificate">master</field>
-        <field name="study_field">Civil Engineering</field>
-        <field name="study_school">Université Catholique de Louvain-la-Neuve</field>
-        <field name="parent_id" ref="l10n_ro_hr_payroll.hr_employee_ionel_oprea"/>
-        <field name="country_id" ref="base.ro"/>
+    <record id="hr_employee_ionel" model="hr.employee">
+        <field name="name" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_ionel')).name"/>
+        <field name="job_title">Technical Lead</field>
+        <field name="image_1920" type="base64" file="l10n_ro_hr_payroll/static/img/hr_employee_ionel_oprea.jpg"/>
+        <field name="work_phone">0999 381 213</field>
+        <field name="work_email" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_ionel')).name.replace(' ', '.').lower() + '@example.com'"/>
+        <field name="work_contact_id" ref="l10n_ro_hr_payroll.res_partner_ionel"/>
+        <field name="company_id" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_ionel')).company_id"/>
         <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
-        <field name="identification_id">687184957</field>
-        <field name="bank_account_id" ref="l10n_ro_hr_payroll.res_partner_bank_account_demetra_voinea"/>
-        <field name="image_1920" type="base64" file="l10n_ro_hr_payroll/static/img/hr_employe_demetra_voinea.jpg"/>
-        <field name="company_id" ref="base.demo_company_ro"/>
-        <field name="user_id" ref="l10n_ro_hr_payroll.user_demetra_voinea"/>
+        <field name="tz">Europe/Bucharest</field>
+        <field name="private_street" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_ionel')).street"/>
+        <field name="private_city" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_ionel')).city"/>
+        <field name="private_zip" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_ionel')).zip"/>
+        <field name="private_state_id" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_ionel')).state_id"/>
+        <field name="private_country_id" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_ionel')).country_id"/>
+        <field name="private_email" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_ionel')).email"/>
+        <field name="private_phone" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_ionel')).phone"/>
+        <field name="distance_home_work">43</field>
+        <field name="country_id" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_ionel')).country_id"/>
+        <field name="identification_id">G760602012345</field>
+        <field name="gender">male</field>
+        <field name="birthday" eval="datetime(1976, 6, 2).date()"/>
+        <field name="place_of_birth">Bucuresti</field>
+        <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_ionel')).country_id"/>
+        <field name="emergency_contact">Mihai Oprea</field>
+        <field name="emergency_phone">0999 098 459</field>
+        <field name="certificate">master</field>
+        <field name="study_field">Computer Science</field>
+        <field name="study_school">Universitatea din București</field>
+        <field name="marital">single</field>
     </record>
 
-    <record id="hr_contract_cdi_demetra_voinea_previous" model="hr.contract">
-        <field name="name">CDI - Demetra Voinea - Experienced Developer</field>
-        <field name="department_id" ref="hr_department_rdro"/>
-        <field name="employee_id" ref="hr_employee_demetra_voinea"/>
-        <field name="job_id" ref="l10n_ro_hr_payroll.job_developer_romania"/>
+    <record id="hr_employee_demetra" model="hr.employee">
+        <field name="name" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).name"/>
+        <field name="job_title">Software Developer</field>
+        <field name="image_1920" type="base64" file="l10n_ro_hr_payroll/static/img/hr_employe_demetra_voinea.jpg"/>
+        <field name="work_phone">0999 318 214</field>
+        <field name="work_email" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).name.replace(' ', '.').lower() + '@example.com'"/>
+        <field name="parent_id" ref="l10n_ro_hr_payroll.hr_employee_ionel"/>
+        <field name="user_id" ref="l10n_ro_hr_payroll.user_demetra"/>
+        <field name="company_id" ref="base.demo_company_ro"/>
+        <field name="resource_calendar_id" ref="resource.resource_calendar_std"/>
+        <field name="tz">Europe/Bucharest</field>
+        <field name="private_street" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).street"/>
+        <field name="private_city" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).city"/>
+        <field name="private_zip" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).zip"/>
+        <field name="private_state_id" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).state_id"/>
+        <field name="private_country_id" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).country_id"/>
+        <field name="private_email" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).email"/>
+        <field name="private_phone" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).phone"/>
+        <field name="distance_home_work">18</field>
+        <field name="country_id" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).country_id"/>
+        <field name="identification_id">G940407012345</field>
+        <field name="gender">female</field>
+        <field name="birthday" eval="datetime(1994, 4, 7).date()"/>
+        <field name="place_of_birth">Bucuresti</field>
+        <field name="country_of_birth" model="res.partner" eval="obj(ref('l10n_ro_hr_payroll.res_partner_demetra')).country_id"/>
+        <field name="emergency_contact">Ilarie Voinea</field>
+        <field name="emergency_phone">0999 106 374</field>
+        <field name="certificate">master</field>
+        <field name="study_field">Computer Science</field>
+        <field name="study_school">Technical University of Cluj-Napoca</field>
+        <field name="marital">single</field>
+    </record>
+
+    <record id="hr_employee_ionel" model="hr.employee">
+        <field name="bank_account_id" ref="l10n_ro_hr_payroll.res_partner_bank_account_ionel"/>
+    </record>
+
+    <record id="hr_employee_demetra" model="hr.employee">
+        <field name="bank_account_id" ref="l10n_ro_hr_payroll.res_partner_bank_account_demetra"/>
+    </record>
+
+    <record id="hr_contract_ionel" model="hr.contract">
+        <field name="name" model="hr.employee" eval="'CIM - ' + obj(ref('l10n_ro_hr_payroll.hr_employee_ionel')).name + ' - ' + obj(ref('l10n_ro_hr_payroll.hr_employee_ionel')).job_title"/>
+        <field name="employee_id" ref="l10n_ro_hr_payroll.hr_employee_ionel"/>
+        <field name="job_id" ref="l10n_ro_hr_payroll.ro_hr_job_technical_lead"/>
+        <field name="department_id" ref="l10n_ro_hr_payroll.ro_hr_department_rd"/>
+        <field name="company_id" ref="base.demo_company_ro"/>
         <field name="structure_type_id" ref="l10n_ro_hr_payroll.structure_type_employee_ro"/>
+        <field name="wage_type">monthly</field>
+        <field name="wage">14000</field>
+        <field name="state">open</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-3, month=1, day=1))"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_ro').id)], limit=1)"/>
+    </record>
+
+    <record id="hr_contract_demetra_previous" model="hr.contract">
+        <field name="name" model="hr.employee" eval="'CIM - ' + obj(ref('l10n_ro_hr_payroll.hr_employee_demetra')).name + ' - ' + obj(ref('l10n_ro_hr_payroll.hr_employee_demetra')).job_title"/>
+        <field name="employee_id" ref="l10n_ro_hr_payroll.hr_employee_demetra"/>
+        <field name="job_id" ref="l10n_ro_hr_payroll.ro_hr_job_developer"/>
+        <field name="department_id" ref="l10n_ro_hr_payroll.ro_hr_department_rd"/>
+        <field name="company_id" ref="base.demo_company_ro"/>
+        <field name="structure_type_id" ref="l10n_ro_hr_payroll.structure_type_employee_ro"/>
+        <field name="wage_type">monthly</field>
         <field name="wage">10000</field>
         <field name="state">close</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="company_id" ref="base.demo_company_ro"/>
         <field name="date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
         <field name="date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_ro').id)], limit=1)"/>
     </record>
 
-    <record id="hr_contract_cdi_demetra_voinea" model="hr.contract">
-        <field name="name">CDI - Demetra Voinea - Experienced Developer</field>
-        <field name="department_id" ref="hr_department_rdro"/>
-        <field name="employee_id" ref="hr_employee_demetra_voinea"/>
-        <field name="job_id" ref="l10n_ro_hr_payroll.job_developer_romania"/>
+    <record id="hr_contract_demetra" model="hr.contract">
+        <field name="name" model="hr.employee" eval="'CIM - ' + obj(ref('l10n_ro_hr_payroll.hr_employee_demetra')).name + ' - ' + obj(ref('l10n_ro_hr_payroll.hr_employee_demetra')).job_title"/>
+        <field name="employee_id" ref="l10n_ro_hr_payroll.hr_employee_demetra"/>
+        <field name="job_id" ref="l10n_ro_hr_payroll.ro_hr_job_developer"/>
+        <field name="department_id" ref="l10n_ro_hr_payroll.ro_hr_department_rd"/>
+        <field name="company_id" ref="base.demo_company_ro"/>
         <field name="structure_type_id" ref="l10n_ro_hr_payroll.structure_type_employee_ro"/>
+        <field name="wage_type">monthly</field>
         <field name="wage">12000</field>
         <field name="state">open</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="company_id" ref="base.demo_company_ro"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1))"/>
+        <field name="date_start" model="hr.contract" eval="obj(ref('l10n_ro_hr_payroll.hr_contract_demetra_previous')).date_end + relativedelta(days=1)"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_ro').id)], limit=1)"/>
     </record>
 
-    <record id="hr_employee_demetra_voinea" model="hr.employee">
-        <field name="contract_id" ref="l10n_ro_hr_payroll.hr_contract_cdi_demetra_voinea"/>
+    <record id="hr_employee_ionel" model="hr.employee">
+        <field name="contract_id" ref="l10n_ro_hr_payroll.hr_contract_ionel"/>
+    </record>
+    <record id="hr_employee_demetra" model="hr.employee">
+        <field name="contract_id" ref="l10n_ro_hr_payroll.hr_contract_demetra"/>
     </record>
 </odoo>

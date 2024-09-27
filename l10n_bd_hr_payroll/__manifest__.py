@@ -21,6 +21,9 @@ Bangladesh Payroll Rules.
         'data/hr_salary_rule_data.xml',
         'views/hr_employee_views.xml',
     ],
+    'demo': [
+        'data/l10n_bd_hr_payroll_demo.xml',
+    ],
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }

@@ -45,6 +45,9 @@ Kenyan Payroll Rules.
             'l10n_ke_hr_payroll/static/src/**/*',
         ],
     },
+    'demo': [
+        'data/l10n_ke_hr_payroll_demo.xml',
+    ],
     'author': 'Odoo S.A.',
     'license': 'OEEL-1',
 }
