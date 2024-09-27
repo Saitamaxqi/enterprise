@@ -1,9 +1,7 @@
-const mappingRawBarcodeToObject = {};
+/** @odoo-module **/
 
 export class BarcodeObject {
     constructor(rawValue) {
-        this.cache = BarcodeObject.cache;
-        this.parser = BarcodeObject.parser;
         this.rawValue = rawValue; // Untouched barcode.
 
         this.nomenclature = undefined; // Nomenclature this barcode uses.
@@ -33,7 +31,7 @@ export class BarcodeObject {
         }
 
         // Adds this instance into the raw barcode/barcode object mapping.
-        mappingRawBarcodeToObject[rawValue] = this;
+        BarcodeObject.mappingRawBarcodeToObject[rawValue] = this;
     }
 
     /**
@@ -60,8 +58,16 @@ export class BarcodeObject {
     }
 
     // Getters
+    get cache() {
+        return BarcodeObject.__cache;
+    }
+
     get hasMissingRecords() {
         return this.isParsed && Boolean(this.missingRecords.length);
+    }
+
+    get parser() {
+        return BarcodeObject.__parser;
     }
 
     // Fetching methods
@@ -94,14 +100,17 @@ export class BarcodeObject {
     }
 }
 
+// Static properties and methods.
+BarcodeObject.mappingRawBarcodeToObject = {};
+
 BarcodeObject.setEnv = (cache, parser) => {
-    BarcodeObject.cache = cache;
-    BarcodeObject.parser = parser;
+    BarcodeObject.__cache = cache;
+    BarcodeObject.__parser = parser;
 }
 
 BarcodeObject.forBarcode = (barcode) => {
-    if (mappingRawBarcodeToObject[barcode]) {
-        return mappingRawBarcodeToObject[barcode];
+    if (BarcodeObject.mappingRawBarcodeToObject[barcode]) {
+        return BarcodeObject.mappingRawBarcodeToObject[barcode];
     }
     return new BarcodeObject(barcode);
 };
