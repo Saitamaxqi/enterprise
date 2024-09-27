@@ -29,7 +29,7 @@ export class Order extends Reactive {
         this.createDate = order.create_date;
         this.lastStageChange = order.last_stage_change;
         this.posOrderId = order.pos_order_id;
-        this.customerCount = order.customer_count;
+        this.customer_count = order.customer_count;
         this.changeStageTimeout = null;
         this.tracking_number = order.tracking_number;
     }
