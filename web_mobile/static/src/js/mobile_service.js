@@ -53,7 +53,7 @@ export const mobileService = {
 
     enableReader() {
         if (mobile.methods.enableReader && mobile.methods.getReaderData) {
-            mobile.methods.enableReader();
+            mobile.methods.enableReader().catch(e => console.error(e));
             if (!this.idInterval) {
                 this.idInterval = setInterval(async () => {
                     try {
