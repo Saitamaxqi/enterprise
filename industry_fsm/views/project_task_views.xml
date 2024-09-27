@@ -115,7 +115,7 @@
                     ('is_internal_project', '=', False),
                 ]</attribute>
             </field>
-            <xpath expr="//group/field[@name='project_id']" position="attributes">
+            <xpath expr="//group//field[@name='project_id']" position="attributes">
                 <attribute name="context">{
                     'default_is_fsm': context.get('fsm_mode'),
                 }
