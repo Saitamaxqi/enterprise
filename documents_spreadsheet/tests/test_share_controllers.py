@@ -49,6 +49,27 @@ class TestShareController(SpreadsheetTestCommon, HttpCase):
         self.assertTrue(response.ok)
         self.assertEqual(response.json(), {'revisions': []})
 
+    def test_public_spreadsheet_data_with_snapshot(self):
+        spreadsheet = self.create_spreadsheet()
+        snapshot_data = {"revisionId": "next-revision"}
+        self.snapshot(
+            spreadsheet, spreadsheet.current_revision_uuid, "next-revision", snapshot_data
+        )
+        response = self.url_open(f"/documents/spreadsheet/{spreadsheet.access_token}")
+        self.assertTrue(response.ok)
+        self.assertEqual(response.json(), {
+            **snapshot_data,
+            'revisions': []
+        })
+
+    def test_public_spreadsheet_get_revisions(self):
+        spreadsheet = self.create_spreadsheet()
+        revision_data = self.new_revision_data(spreadsheet)
+        spreadsheet.dispatch_spreadsheet_message(revision_data)
+        response = self.url_open(f"/documents/spreadsheet/{spreadsheet.access_token}")
+        self.assertTrue(response.ok)
+        self.assertEqual(len(response.json()['revisions']), 1)
+
     @mute_logger('odoo.http')
     def test_public_spreadsheet_data_wrong_token(self):
         self.create_spreadsheet()

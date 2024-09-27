@@ -55,7 +55,7 @@ class SpreadsheetShareRoute(ShareRoute):
         if not document_sudo:
             raise request.not_found()
 
-        spreadsheet_data = json.loads(document_sudo.spreadsheet_data)
+        spreadsheet_data = document_sudo._get_spreadsheet_snapshot()
         spreadsheet_data['revisions'] = document_sudo._build_spreadsheet_messages()
         return json.dumps(spreadsheet_data)
 
