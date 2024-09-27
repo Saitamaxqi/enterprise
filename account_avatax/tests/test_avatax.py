@@ -320,10 +320,10 @@ class TestAccountAvalaraInternal(TestAccountAvalaraInternalCommon):
         # --------------------------------------------------------------------------------
         #  CA STATE 4%                    |        -4.0        |   -2.0  |  0.0  |  2.0
         #  CA COUNTY 6%                   |         0.0        |    0.0  |  0.0  |  0.0
-        tax_line = invoice.line_ids.filtered(lambda l: l.tax_line_id.description == '<p>CA STATE TAX [06] (4.0000 %)</p>')
-        self.assertRecordValues(tax_line, [{'name': 'CA STATE 4%', 'amount_currency': -4.0, 'balance': -2.0, 'debit': 0.0, 'credit': 2.0}])
-        exempted_tax_line = invoice.line_ids.filtered(lambda l: l.tax_line_id.description == '<p>CA COUNTY TAX [075] (6.0000 %)</p>')
-        self.assertRecordValues(exempted_tax_line, [{'name': 'CA COUNTY 6%', 'amount_currency': 0.0, 'balance': 0.0, 'debit': 0.0, 'credit': 0.0}])
+        tax_line = invoice.line_ids.filtered(lambda l: l.tax_line_id.name == 'CA STATE 4%')
+        self.assertRecordValues(tax_line, [{'amount_currency': -4.0, 'balance': -2.0, 'debit': 0.0, 'credit': 2.0}])
+        exempted_tax_line = invoice.line_ids.filtered(lambda l: l.tax_line_id.name == 'CA COUNTY 6%')
+        self.assertRecordValues(exempted_tax_line, [{'amount_currency': 0.0, 'balance': 0.0, 'debit': 0.0, 'credit': 0.0}])
 
 @tagged("external_l10n", "external", "-at_install", "post_install", "-standard")
 class TestAccountAvalaraInternalIntegration(TestAccountAvalaraInternalCommon):

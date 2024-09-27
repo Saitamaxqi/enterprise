@@ -163,7 +163,6 @@ class TestAccountAvataxCommon(TestAvataxCommon, AccountTestInvoicingCommon):
         # Odoo computes (these values would be wrong if a user manually changes it for example).
         cls.example_tax = cls.env["account.tax"].create({
             'name': 'CA STATE 6%',
-            'description': 'CA STATE TAX [06] (6.0000 %)',
             'company_id': cls.env.user.company_id.id,
             'amount': 1,
             'amount_type': 'percent',

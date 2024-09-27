@@ -6,7 +6,7 @@ from odoo import models, api, fields, _
 from odoo.addons.account_avatax.lib.avatax_client import AvataxClient
 from odoo.exceptions import UserError, ValidationError, RedirectWarning
 from odoo.release import version
-from odoo.tools import float_repr, float_round, format_list
+from odoo.tools import float_round, format_list
 
 _logger = logging.getLogger(__name__)
 
@@ -47,11 +47,6 @@ class AccountExternalTaxMixin(models.AbstractModel):
                 tax_group_name,
                 ("$ %.4g" if fixed else "%.4g%%") % rounded_rate,
             )
-            tax_description = '%s [%s] (%s)' % (
-                detail['taxName'],
-                detail['jurisCode'],
-                ("$ %s" if fixed else "%s %%") % float_repr(rounded_rate, name_precision),
-            )
             group_key = (tax_group_name, doc.company_id)
             if group_key not in tax_group_cache:
                 tax_group_cache[group_key] = self.env['account.tax.group'].search([
@@ -61,15 +56,13 @@ class AccountExternalTaxMixin(models.AbstractModel):
                     'name': tax_group_name,
                 })
 
-            key = (tax_description, doc.company_id)
+            key = (tax_name, doc.company_id)
             if key not in tax_cache:
                 tax_cache[key] = self.env['account.tax'].search([
                     *self.env['account.tax']._check_company_domain(doc.company_id),
                     ('name', '=', tax_name),
-                    ('description', 'ilike', tax_description),  # ilike because its a Html field
                 ]) or self.env['account.tax'].sudo().with_company(doc.company_id).create({
                     'name': tax_name,
-                    'description': tax_description,
                     'tax_group_id': tax_group_cache[group_key].id,
                     'amount': rate,
                     'amount_type': 'fixed' if fixed else 'percent',
