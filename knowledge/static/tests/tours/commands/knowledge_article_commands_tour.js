@@ -671,6 +671,7 @@ const clipboardUsageSteps = [{ // open the chatter
 registry.category("web_tour.tours").add('knowledge_article_commands_tour', {
     url: '/odoo',
     test: true,
+    checkDelay: 50,
     steps: () => [stepUtils.showAppsMenuItem(), {
     // open the Knowledge App
     trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
