@@ -19,5 +19,9 @@
             'pos_iot_six/static/src/js/models.js',
             'pos_iot_six/static/src/js/payment_six.js',
         ],
+        'web.assets_backend': [
+            'pos_iot_six/static/src/js/six_terminal_id_field.*',
+            'pos_iot_six/static/src/css/six_terminal_id_field.css',
+        ],
     }
 }
