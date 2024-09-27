@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import { EventBus } from "@odoo/owl";
+import { HookEventBus } from "@web_mobile/js/hook_event_bus";
 import { registry } from "@web/core/registry";
 import { session } from "@web/session";
 
@@ -14,7 +14,27 @@ export const mobileService = {
     timeBetweenReadsInMs: session.time_between_reads_in_ms || 100,
     idInterval: null,
     start() {
-        this.bus = new EventBus();
+        let listenerCount = 0;
+        this.bus = new HookEventBus({
+            onAddListener: (eventName, listener) => {
+                listenerCount++;
+                if (listenerCount === 1) {
+                    api.enableReader();
+                }
+            },
+            onRemoveListener: (eventName, listener) => {
+                listenerCount--;
+                if (listenerCount === 0) {
+                    api.stopReader();
+                }
+            },
+        });
+
+        const api =  {
+            bus: this.bus,
+            enableReader: this.enableReader,
+            stopReader: this.stopReader,
+        };
 
         if (mobile.methods.addHomeShortcut) {
             userMenuRegistry.add("web_mobile.shortcut", shortcutItem);
@@ -28,13 +48,7 @@ export const mobileService = {
             userMenuRegistry.add("web_mobile.switch", switchAccountItem);
         }
 
-        this.enableReader();
-
-        return {
-            bus: this.bus,
-            enableReader: this.enableReader,
-            stopReader: this.stopReader,
-        };
+        return api;
     },
 
     enableReader() {
