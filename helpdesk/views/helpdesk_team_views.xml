@@ -323,29 +323,29 @@
                             </div>
                         </div>
                     </t>
-                    <t t-name="card">
-                        <field name="display_name" class="fw-bold fs-4 ms-2"/>
+                    <t t-name="card" class="px-3">
+                        <field name="display_name" class="fw-bold fs-4"/>
                         <small t-if="record.use_alias.value and record.alias_email.value" class="ms-2">
                             <a t-att-href="'mailto:' + record.alias_email.value"><i class="fa fa-envelope-o" title="Domain alias" role="img" aria-label="Domain alias"></i>&amp;nbsp; <field name="alias_email"/></a>
                         </small>
                         <div class="row mt-3" t-if="!selection_mode">
-                            <div class="col ms-2">
+                            <div class="col-4">
                                 <button class="btn btn-primary o_helpdesk_ticket_btn" name="action_view_ticket" type="object" context="{'default_team_id': id}">Tickets</button>
                             </div>
-                            <div class="col me-2">
+                            <div class="col-8">
                                 <a name="action_view_closed_ticket" type="object" title="Number of tickets closed in the past 7 days." class="justify-content-between flex-nowrap d-inline-flex w-100 mb4">
                                     <span>Tickets Closed</span>
-                                    <field name="ticket_closed" class="ms-3"/>
+                                    <field name="ticket_closed" class="ms-3 text-nowrap"/>
                                 </a>
                                 <a name="action_view_success_rate" type="object" groups="helpdesk.group_use_sla" invisible="not use_sla or success_rate &lt; 0.0" title="Percentage of tickets whose SLAs have successfully been reached on time over the total number of tickets closed within the past 7 days." class="justify-content-between flex-nowrap d-inline-flex w-100 mb4">
                                     <span>SLA Success Rate</span>
-                                    <span class="ms-3">
+                                    <span class="ms-3 text-nowrap">
                                         <field name="success_rate"/> %
                                     </span>
                                 </a>
                                 <a name="action_view_customer_satisfaction" type="object" t-if="record.use_rating.raw_value and record.rating_count.raw_value &gt; 0" groups="helpdesk.group_use_rating" title="Average rating for the last 7 days" class="justify-content-between flex-nowrap d-inline-flex w-100 mb4">
                                     <span>Average Rating</span>
-                                    <span class="d-flex ms-3">
+                                    <span class="d-flex ms-3 text-nowrap">
                                         <strong class="fa fa-fw mt4 fa-smile-o text-success fw-bolder" t-if="record.rating_avg.raw_value &gt;= 3.66" title="Average Rating: Satisfied" role="img" aria-label="Happy face"/>
                                         <strong class="fa fa-fw mt4 fa-meh-o text-warning fw-bolder" t-elif="record.rating_avg.raw_value &gt;= 2.33" title="Average Rating: Okay" role="img" aria-label="Neutral face"/>
                                         <strong class="fa fa-fw mt4 fa-frown-o text-danger fw-bolder" t-else="" title="Average Rating: Dissatisfied" role="img" aria-label="Sad face"/>
@@ -357,19 +357,19 @@
                         <div class="row pt-5 mt-auto">
                             <a name="action_view_open_ticket" type="object" class="d-flex flex-column align-items-center col">
                                 <field name="open_ticket_count" class="fw-bold"/>
-                                <span class="text-muted">Open</span>
+                                <span class="text-muted text-nowrap">Open</span>
                             </a>
                             <a name="%(helpdesk.helpdesk_ticket_action_unassigned)d" type="action" class="d-flex flex-column align-items-center col border-start">
                                 <field name="unassigned_tickets" class="fw-bold"/>
-                                <span class="text-muted">Unassigned</span>
+                                <span class="text-muted text-nowrap">Unassigned</span>
                             </a>
                             <a name="action_view_urgent" type="object" class="d-flex flex-column align-items-center col border-start">
                                 <field name="urgent_ticket" class="fw-bold"/>
-                                <span class="text-muted">Urgent</span>
+                                <span class="text-muted text-nowrap">Urgent</span>
                             </a>
                             <a name="action_view_sla_failed" type="object" class="d-flex flex-column align-items-center col border-start" groups="helpdesk.group_use_sla" invisible="not use_sla" title="Number of open tickets with at least one SLA failed.">
                                 <field name="sla_failed" class="fw-bold"/>
-                                <span class="text-muted">Failed</span>
+                                <span class="text-muted text-nowrap">Failed</span>
                             </a>
                         </div>
                     </t>
