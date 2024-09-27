@@ -21,9 +21,9 @@ if records:
                 <header>
                     <field name="id" invisible="1"/>
                     <field name="file_generation_enabled" invisible="1"/>
-                    <button name="print_batch_payment" string="Print" type="object" invisible="state != 'sent'"/>
-                    <button name="validate_batch_button" string="Re-generate Export File" type="object" invisible="not file_generation_enabled or state != 'sent' or not payment_ids"/>
-                    <button name="validate_batch_button" class="oe_highlight" string="Validate" type="object" invisible="state != 'draft' or not payment_ids"/>
+                    <button id="print_button" name="print_batch_payment" string="Print" type="object" invisible="state != 'sent'"/>
+                    <button id="regenerate_file_button" name="validate_batch_button" string="Re-generate Export File" type="object" invisible="not file_generation_enabled or state != 'sent' or not payment_ids"/>
+                    <button id="validate_button" name="validate_batch_button" class="oe_highlight" string="Validate" type="object" invisible="state != 'draft' or not payment_ids"/>
                     <field name="state" widget="statusbar"/>
                 </header>
                 <sheet>
