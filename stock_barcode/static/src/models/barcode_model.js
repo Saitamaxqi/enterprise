@@ -608,6 +608,9 @@ export default class BarcodeModel extends EventBus {
     }
 
     async processBarcode(barcode, options={}) {
+        if (!barcode) {
+            return; // Do nothing if no barcode given.
+        }
         const { readingRFID } = options;
         const barcodes = this.splitBarcode(barcode);
         if (barcodes.length > 1 && barcode === this._currentBarcode) {
@@ -630,11 +633,11 @@ export default class BarcodeModel extends EventBus {
             filteredBarcodes.push(bc);
         }
 
-        const parsedBarcodes = [];
         if (barcodes.length > 1 && !readingRFID) {
             this.trigger("addBarcodesCountToProcess", filteredBarcodes.length)
         }
         // Parse all barcodes.
+        const parsedBarcodes = [];
         for (const bc of filteredBarcodes) {
             const barcodeObject = BarcodeObject.forBarcode(bc);
             await barcodeObject.setRecords();
@@ -666,10 +669,17 @@ export default class BarcodeModel extends EventBus {
                 await this._processBarcode(barcodeObject.rawValue);
                 this.trigger("updateBarcodesCountProcessed");
             }
-            delete this._currentBarcode;
         });
+        this.postProcessBarcode();
+    }
+
+    /**
+     * Called after scanned barcodes were processed to do some cleanings.
+     */
+    postProcessBarcode() {
         this.trigger("clearBarcodesCountProcessed");
         this.notificationCache.clear();
+        delete this._currentBarcode;
     }
 
     async getGs1Filters(gs1RulesData) {
