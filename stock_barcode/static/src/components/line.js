@@ -65,7 +65,10 @@ export default class LineComponent extends Component {
     }
 
     get lotName() {
-        return (this.line.lot_id && this.line.lot_id.name) || this.line.lot_name || '';
+        if (this.env.model.showReservedSns || this.env.model.getQtyDone(this.line)) {
+            return (this.line.lot_id && this.line.lot_id.name) || this.line.lot_name || "";
+        }
+        return "";
     }
 
     get nextExpected() {

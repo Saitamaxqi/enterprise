@@ -394,7 +394,7 @@ registry.category("web_tour.tours").add('test_barcode_batch_delivery_1', {test: 
 
             helper.assertLineLocations(lines[3], 'WH/Stock/Section 1');
             helper.assertLineProduct(lines[3], 'productserial1');
-            helper.assert(lines[3].querySelector('.o_line_lot_name').innerText, 'sn1');
+            helper.assert(lines[3].querySelector('.o_line_lot_name').innerText, '');
 
             // Products coming from Section 2.
             helper.assertLineLocations(lines[4], 'WH/Stock/Section 2');
@@ -683,7 +683,7 @@ registry.category("web_tour.tours").add('test_barcode_batch_scan_lots', {test: t
             helper.assertLineBelongTo(1, "delivery_2");
             helper.assertLineQty(0, "0/3");
             helper.assertLineQty(1, "0/3");
-            helper.assertLinesTrackingNumbers(lines, ["lot1", "lot2"]);
+            helper.assertLinesTrackingNumbers(lines, ["", ""]);
         },
     },
     // First, scan productlot1. The first line (for delivery_1) should be selected.
