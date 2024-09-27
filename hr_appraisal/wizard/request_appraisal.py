@@ -3,8 +3,8 @@
 
 import logging
 
-from odoo import api, Command, fields, models, tools
-from odoo.exceptions import UserError
+from odoo import _, api, Command, fields, models, tools
+from odoo.exceptions import ValidationError
 from odoo.tools import html_sanitize, is_html_empty
 
 _logger = logging.getLogger(__name__)
@@ -13,6 +13,7 @@ _logger = logging.getLogger(__name__)
 class RequestAppraisal(models.TransientModel):
     _inherit = ['mail.composer.mixin']
     _description = "Request an Appraisal"
+    _unrestricted_rendering = True
 
     @api.model
     def default_get(self, fields):
@@ -21,25 +22,29 @@ class RequestAppraisal(models.TransientModel):
             return result
         if self.env.context.get('default_appraisal_id'):
             appraisal = self.env['hr.appraisal'].browse(self.env.context['default_appraisal_id'])
-            employee = appraisal.employee_id
-            managers = appraisal.manager_ids
-            if self.env.user.employee_id in managers:
-                template = self.env.ref('hr_appraisal.mail_template_appraisal_request', raise_if_not_found=False)
-                recipients = self._get_recipients(employee)
-            elif employee.user_id == self.env.user:
-                template = self.env.ref('hr_appraisal.mail_template_appraisal_request_from_employee', raise_if_not_found=False)
-                recipients = self._get_recipients(managers)
-            else:
-                template = self.env.ref('hr_appraisal.mail_template_appraisal_request', raise_if_not_found=False)
-                recipients = self._get_recipients(employee | managers)
-
+            template, recipients = self._get_template_and_recipients(appraisal)
             result.update({
                 'template_id': template.id,
                 'recipient_ids': [Command.set(recipients.ids)],
-                'employee_id': employee.id,
+                'employee_id': appraisal.employee_id.id,
                 'appraisal_id': appraisal.id,
             })
         return result
+
+    @api.model
+    def _get_template_and_recipients(self, appraisal):
+        employee = appraisal.employee_id
+        managers = appraisal.manager_ids
+        if self.env.user.employee_id in managers:
+            template = self.env.ref('hr_appraisal.mail_template_appraisal_request', raise_if_not_found=False)
+            recipients = self._get_recipients(employee)
+        elif employee.user_id == self.env.user:
+            template = self.env.ref('hr_appraisal.mail_template_appraisal_request_from_employee', raise_if_not_found=False)
+            recipients = self._get_recipients(managers)
+        else:
+            template = self.env.ref('hr_appraisal.mail_template_appraisal_request', raise_if_not_found=False)
+            recipients = self._get_recipients(employee | managers)
+        return template, recipients
 
     @api.model
     def _get_recipients(self, employees):
@@ -64,6 +69,24 @@ class RequestAppraisal(models.TransientModel):
     )
     employee_id = fields.Many2one('hr.employee', 'Appraisal Employee')
     recipient_ids = fields.Many2many('res.partner', string='Recipients', required=True)
+
+    @api.constrains('template_id', 'appraisal_id')
+    def _check_template_id(self):
+        """Check the default templates are used.
+
+        This is necessary to ensure the safety of _unrestricted_rendering.
+        """
+        for appraisal_request in self.filtered('template_id'):
+            template = appraisal_request.template_id
+            appraisal = appraisal_request.appraisal_id
+            expected_template, _recipients = appraisal_request._get_template_and_recipients(appraisal)
+            if template != expected_template:
+                raise ValidationError(_(
+                    'Appraisal for %(appraisal_title)s should be using template "%(template_name)s" instead of "%(wrong_template_name)s"',
+                    appraisal_title=appraisal.display_name,
+                    template_name=expected_template.display_name,
+                    wrong_template_name=template.display_name,
+                ))
 
     @api.depends('employee_id')
     def _compute_subject(self):
@@ -121,7 +144,7 @@ class RequestAppraisal(models.TransientModel):
         }
         context_self = self.with_context(ctx)
         subject = context_self._render_field('subject', appraisal.ids)[appraisal.id]
-        context_self.body = context_self.body.replace('href', 't-att-href')
+        context_self.sudo().body = context_self.body.replace('href', 't-att-href')
         body = context_self._render_field('body', appraisal.ids)[appraisal.id]
 
         appraisal.with_context(mail_post_autofollow=True).message_post(

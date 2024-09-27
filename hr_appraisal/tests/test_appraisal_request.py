@@ -3,11 +3,12 @@
 
 from datetime import date
 
-from odoo.exceptions import UserError
+from odoo.exceptions import AccessError, ValidationError
 from odoo.tests.common import TransactionCase, new_test_user
+from odoo.addons.mail.tests.common import MockEmail
 
 
-class TestHrAppraisalRequest(TransactionCase):
+class TestHrAppraisalRequest(TransactionCase, MockEmail):
 
     @classmethod
     def setUpClass(cls):
@@ -133,3 +134,34 @@ class TestHrAppraisalRequest(TransactionCase):
             ('message_type', '=', 'comment'),
         ])
         self.assertTrue("<p>Hello World !</p>" in notification.body)
+
+    def test_user_mail_render_security(self):
+        appraisal = self.env['hr.appraisal'].create({'employee_id': self.employee.id, 'manager_ids': self.employee.parent_id})
+        request_as_employee = self.request_appraisal_from(appraisal, user=self.employee_user)
+        request_as_template_editor = request_as_employee.with_env(self.env)
+
+        # The employee can change the body of its appraisal
+        request_as_employee.body = 'Hello'
+        # As long as it doesn't contain sensitive placeholders
+        with self.assertRaisesRegex(AccessError, 'Only members of Mail Template Editor'):
+            request_as_employee.body = '<t t-out="object.sudo().name"/>'
+        # The employee cannot change the template to an arbitrary template
+        with self.assertRaisesRegex(ValidationError, 'Appraisal for Michaël Hawkins should be using'):
+            with self.env.cr.savepoint():
+                request_as_employee.template_id = self.env['mail.template'].search([], limit=1)
+
+        # A mail template editor can put sensitive placeholders
+        request_as_template_editor.body = '<t t-out="object.sudo().employee_id.name"/>'
+
+        # The employee must be able to render the body even if the body contain sensible placeholders
+        # put by the template or a template editor
+        with self.mock_mail_gateway():
+            request_as_employee.action_invite()
+
+        self.assertMailMailWRecord(
+            appraisal,
+            [appraisal.manager_ids.user_partner_id],
+            'sent',
+            author=appraisal.employee_id.user_partner_id,
+            email_values={'body_content': f"<p>{self.employee.name}</p>"},
+        )

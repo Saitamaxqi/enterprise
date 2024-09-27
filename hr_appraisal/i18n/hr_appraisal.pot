@@ -616,6 +616,14 @@ msgstr ""
 
 #. module: hr_appraisal
 #. odoo-python
+#: code:addons/hr_appraisal/wizard/request_appraisal.py:0
+msgid ""
+"Appraisal for %(appraisal_title)s should be using template "
+"\"%(template_name)s\" instead of \"%(wrong_template_name)s\""
+msgstr ""
+
+#. module: hr_appraisal
+#. odoo-python
 #: code:addons/hr_appraisal/models/hr_appraisal.py:0
 msgid "Appraisal for %(employee)s on %(date)s"
 msgstr ""
@@ -1890,6 +1898,14 @@ msgstr ""
 #: model:ir.ui.menu,name:hr_appraisal.menu_config_goal_tags
 #: model_terms:ir.ui.view,arch_db:hr_appraisal.hr_appraisal_goal_tag_view_tree
 msgid "Tags"
+msgstr ""
+
+#. module: hr_appraisal
+#. odoo-python
+#: code:addons/hr_appraisal/models/mail_template.py:0
+msgid ""
+"Template %(template_name)s is necessary for appraisal requests and may not "
+"be removed."
 msgstr ""
 
 #. module: hr_appraisal

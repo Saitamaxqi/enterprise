@@ -14,3 +14,4 @@ from . import res_config_settings
 from . import res_users
 from . import hr_appraisal_goal_tag
 from . import hr_appraisal_template
+from . import mail_template
