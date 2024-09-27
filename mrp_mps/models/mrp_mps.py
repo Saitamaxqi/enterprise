@@ -44,7 +44,9 @@ class MrpProductionSchedule(models.Model):
     supplier_id = fields.Many2one(compute='_compute_route_and_supplier', store=True, readonly=False)
     bom_id = fields.Many2one(
         'mrp.bom', "Bill of Materials",
-        domain="[('product_tmpl_id', '=', product_tmpl_id), '|', ('product_id', '=', product_id), ('product_id', '=', False)]", check_company=True)
+        domain="[('product_tmpl_id', '=', product_tmpl_id), '|', ('product_id', '=', product_id), ('product_id', '=', False)]",
+        help="If set, the bill of materials components will also be imported.",
+        check_company=True)
 
     forecast_target_qty = fields.Float(
         'Safety Stock Target',
@@ -69,7 +71,8 @@ class MrpProductionSchedule(models.Model):
         ('excessive_replenishment', 'Excessive Replenishment')], store=False, search='_search_replenish_state',
         help="Technical field to support filtering by replenish state")
     mps_sequence = fields.Integer('Sequence', default=10)
-    is_indirect = fields.Boolean('Indirect demand product', default=False)
+    is_indirect = fields.Boolean('Indirect demand product', default=False,
+                                 help="When checked, this product will not appear in the 'To Forecast' filter.")
 
     _warehouse_product_ref_uniq = models.Constraint(
         'unique (warehouse_id, product_id)',

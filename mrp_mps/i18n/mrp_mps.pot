@@ -349,6 +349,11 @@ msgid "ID"
 msgstr ""
 
 #. module: mrp_mps
+#: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__bom_id
+msgid "If set, the bill of materials components will also be imported."
+msgstr ""
+
+#. module: mrp_mps
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__batch_size
 msgid ""
 "If set, the generated manufacturing orders will be split in quantities of "
@@ -929,6 +934,11 @@ msgstr ""
 #. module: mrp_mps
 #: model:ir.model.fields.selection,name:mrp_mps.selection__res_company__manufacturing_period__week
 msgid "Weekly"
+msgstr ""
+
+#. module: mrp_mps
+#: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__is_indirect
+msgid "When checked, this product will not appear in the 'To Forecast' filter."
 msgstr ""
 
 #. module: mrp_mps
