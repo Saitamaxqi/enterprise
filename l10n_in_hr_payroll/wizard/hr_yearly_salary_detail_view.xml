@@ -22,7 +22,7 @@
                 </group>
                     <group>
                         <separator string="Employees" />
-                        <field name="employee_ids" nolabel="1" colspan="2" context="{'tree_view_ref' : 'l10n_in_hr_payroll.hr_employee_tree_inherit'}"
+                        <field name="employee_ids" nolabel="1" colspan="2" context="{'list_view_ref' : 'l10n_in_hr_payroll.hr_employee_tree_inherit'}"
                                 domain="[('id', 'in', related_employee_ids)]">
                             <list no_open="True" create="False">
                                 <field name="name" string="Employee Name"/>

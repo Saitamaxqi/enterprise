@@ -29,7 +29,7 @@ class DocumentsDocument(models.Model):
             'type': 'ir.actions.act_window',
             'res_model': 'hr.candidate',
             'name': 'Candidate',
-            'view_mode': 'tree,form',
+            'view_mode': 'list,form',
             'views': [(False, "list"), (False, "form")],
             'domain': [('id', 'in', candidates.ids)],
             'context': self._context,

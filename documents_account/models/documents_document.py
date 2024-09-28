@@ -126,7 +126,7 @@ class DocumentsDocument(models.Model):
             'res_model': 'account.move',
             'name': _("Invoices"),
             'view_id': False,
-            'view_mode': 'tree',
+            'view_mode': 'list',
             'views': [(False, "list"), (False, "form")],
             'domain': [('id', 'in', invoices.ids)],
             'context': context,
