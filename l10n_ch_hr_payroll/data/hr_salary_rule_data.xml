@@ -2614,13 +2614,25 @@ result = payslip.l10n_ch_additional_accident_insurance_line_ids
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 current_solution = payslip.l10n_ch_additional_accident_insurance_line_ids[0]
-current_solution_slips = previous_payslips.filtered(lambda p : p.l10n_ch_additional_accident_insurance_line_ids[0].id == current_solution.id)
-previous_laac_1_salary = current_solution_slips._get_line_values(['LAACSALARY1'], compute_sum=True)['LAACSALARY1']['sum']['total']
-current_laac_1_base =  current_solution_slips._get_line_values(['LAACBASE'], compute_sum=True)['LAACBASE']['sum']['total'] + categories['LAACBASE']
+current_solution_slips_position_1 = previous_payslips.filtered(lambda p : p.l10n_ch_additional_accident_insurance_line_ids and p.l10n_ch_additional_accident_insurance_line_ids[0].id == current_solution.id)
+current_solution_slips_position_2 = previous_payslips.filtered(lambda p : len(p.l10n_ch_additional_accident_insurance_line_ids) > 1 and p.l10n_ch_additional_accident_insurance_line_ids[1].id == current_solution.id)
 
-wage_from_cum = current_solution_slips._get_line_values(['LAACSALARYMIN1'], compute_sum=True)['LAACSALARYMIN1']['sum']['total'] + categories['LAACSALARYMIN1']
-laac_1_threshold = current_solution_slips._get_line_values(['LAACSALARYMAX1'], compute_sum=True)['LAACSALARYMAX1']['sum']['total'] + categories['LAACSALARYMAX1']
+previous_laac_1_salary_1 = current_solution_slips_position_1._get_line_values(['LAACSALARY1'], compute_sum=True)['LAACSALARY1']['sum']['total']
+previous_laac_1_salary_2 = current_solution_slips_position_2._get_line_values(['LAACSALARY2'], compute_sum=True)['LAACSALARY2']['sum']['total']
 
+current_laac_1_base_1 =  current_solution_slips_position_1._get_line_values(['LAACBASE'], compute_sum=True)['LAACBASE']['sum']['total']
+current_laac_2_base_2 =  current_solution_slips_position_2._get_line_values(['LAACBASE'], compute_sum=True)['LAACBASE']['sum']['total']
+
+wage_from_cum1 = current_solution_slips_position_1._get_line_values(['LAACSALARYMIN1'], compute_sum=True)['LAACSALARYMIN1']['sum']['total']
+wage_from_cum2 = current_solution_slips_position_2._get_line_values(['LAACSALARYMIN2'], compute_sum=True)['LAACSALARYMIN2']['sum']['total']
+
+laac_1_threshold_1 = current_solution_slips_position_1._get_line_values(['LAACSALARYMAX1'], compute_sum=True)['LAACSALARYMAX1']['sum']['total']
+laac_1_threshold_2 = current_solution_slips_position_2._get_line_values(['LAACSALARYMAX2'], compute_sum=True)['LAACSALARYMAX2']['sum']['total']
+
+previous_laac_1_salary = previous_laac_1_salary_1 + previous_laac_1_salary_2
+current_laac_1_base = current_laac_1_base_1 + current_laac_2_base_2 + categories['LAACBASE']
+wage_from_cum = wage_from_cum1 + wage_from_cum2 + categories['LAACSALARYMIN1']
+laac_1_threshold = laac_1_threshold_1 + laac_1_threshold_2 + categories['LAACSALARYMAX1']
 
 trimmed_laac_base = max(0, current_laac_1_base - wage_from_cum)
 result = max(min(trimmed_laac_base, laac_1_threshold), 0) - previous_laac_1_salary
@@ -2642,13 +2654,25 @@ result = len(payslip.l10n_ch_additional_accident_insurance_line_ids) > 1
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 current_solution = payslip.l10n_ch_additional_accident_insurance_line_ids[1]
-current_solution_slips = previous_payslips.filtered(lambda p : len(p.l10n_ch_additional_accident_insurance_line_ids) > 1 and p.l10n_ch_additional_accident_insurance_line_ids[1].id == current_solution.id)
-previous_laac_1_salary = current_solution_slips._get_line_values(['LAACSALARY2'], compute_sum=True)['LAACSALARY2']['sum']['total']
-current_laac_1_base =  current_solution_slips._get_line_values(['LAACBASE'], compute_sum=True)['LAACBASE']['sum']['total'] + categories['LAACBASE']
+current_solution_slips_position_1 = previous_payslips.filtered(lambda p : p.l10n_ch_additional_accident_insurance_line_ids and p.l10n_ch_additional_accident_insurance_line_ids[0].id == current_solution.id)
+current_solution_slips_position_2 = previous_payslips.filtered(lambda p : len(p.l10n_ch_additional_accident_insurance_line_ids) > 1 and p.l10n_ch_additional_accident_insurance_line_ids[1].id == current_solution.id)
 
-wage_from_cum = current_solution_slips._get_line_values(['LAACSALARYMIN2'], compute_sum=True)['LAACSALARYMIN2']['sum']['total'] + categories['LAACSALARYMIN2']
-laac_1_threshold = current_solution_slips._get_line_values(['LAACSALARYMAX2'], compute_sum=True)['LAACSALARYMAX2']['sum']['total'] + categories['LAACSALARYMAX2']
+previous_laac_1_salary_1 = current_solution_slips_position_1._get_line_values(['LAACSALARY1'], compute_sum=True)['LAACSALARY1']['sum']['total']
+previous_laac_1_salary_2 = current_solution_slips_position_2._get_line_values(['LAACSALARY2'], compute_sum=True)['LAACSALARY2']['sum']['total']
 
+current_laac_1_base_1 =  current_solution_slips_position_1._get_line_values(['LAACBASE'], compute_sum=True)['LAACBASE']['sum']['total']
+current_laac_2_base_2 =  current_solution_slips_position_2._get_line_values(['LAACBASE'], compute_sum=True)['LAACBASE']['sum']['total']
+
+wage_from_cum1 = current_solution_slips_position_1._get_line_values(['LAACSALARYMIN1'], compute_sum=True)['LAACSALARYMIN1']['sum']['total']
+wage_from_cum2 = current_solution_slips_position_2._get_line_values(['LAACSALARYMIN2'], compute_sum=True)['LAACSALARYMIN2']['sum']['total']
+
+laac_1_threshold_1 = current_solution_slips_position_1._get_line_values(['LAACSALARYMAX1'], compute_sum=True)['LAACSALARYMAX1']['sum']['total']
+laac_1_threshold_2 = current_solution_slips_position_2._get_line_values(['LAACSALARYMAX2'], compute_sum=True)['LAACSALARYMAX2']['sum']['total']
+
+previous_laac_1_salary = previous_laac_1_salary_1 + previous_laac_1_salary_2
+current_laac_1_base = current_laac_1_base_1 + current_laac_2_base_2 + categories['LAACBASE']
+wage_from_cum = wage_from_cum1 + wage_from_cum2 + categories['LAACSALARYMIN2']
+laac_1_threshold = laac_1_threshold_1 + laac_1_threshold_2 + categories['LAACSALARYMAX2']
 
 trimmed_laac_base = max(0, current_laac_1_base - wage_from_cum)
 result = max(min(trimmed_laac_base, laac_1_threshold), 0) - previous_laac_1_salary
@@ -2914,12 +2938,26 @@ result = payslip.l10n_ch_sickness_insurance_line_ids
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 current_solution = payslip.l10n_ch_sickness_insurance_line_ids[0]
-current_solution_slips = previous_payslips.filtered(lambda p : p.l10n_ch_sickness_insurance_line_ids[0].id == current_solution.id)
-previous_ijm_1_salary = current_solution_slips._get_line_values(['IJMSALARY1'], compute_sum=True)['IJMSALARY1']['sum']['total']
-current_ijm_1_base =  current_solution_slips._get_line_values(['IJMBASE'], compute_sum=True)['IJMBASE']['sum']['total'] + categories['IJMBASE']
+current_solution_slips_position_1 = previous_payslips.filtered(lambda p : p.l10n_ch_sickness_insurance_line_ids and p.l10n_ch_sickness_insurance_line_ids[0].id == current_solution.id)
+current_solution_slips_position_2 = previous_payslips.filtered(lambda p : len(p.l10n_ch_sickness_insurance_line_ids) > 1 and p.l10n_ch_sickness_insurance_line_ids[1].id == current_solution.id)
 
-wage_from_cum = current_solution_slips._get_line_values(['IJMSALARYMIN1'], compute_sum=True)['IJMSALARYMIN1']['sum']['total'] + categories['IJMSALARYMIN1']
-ijm_1_threshold = current_solution_slips._get_line_values(['IJMSALARYMAX1'], compute_sum=True)['IJMSALARYMAX1']['sum']['total'] + categories['IJMSALARYMAX1']
+previous_ijm_1_salary_1 = current_solution_slips_position_1._get_line_values(['IJMSALARY1'], compute_sum=True)['IJMSALARY1']['sum']['total']
+previous_ijm_1_salary_2 = current_solution_slips_position_2._get_line_values(['IJMSALARY2'], compute_sum=True)['IJMSALARY2']['sum']['total']
+
+current_ijm_1_base_1 =  current_solution_slips_position_1._get_line_values(['IJMBASE'], compute_sum=True)['IJMBASE']['sum']['total']
+current_ijm_2_base_2 =  current_solution_slips_position_2._get_line_values(['IJMBASE'], compute_sum=True)['IJMBASE']['sum']['total']
+
+wage_from_cum1 = current_solution_slips_position_1._get_line_values(['IJMSALARYMIN1'], compute_sum=True)['IJMSALARYMIN1']['sum']['total']
+wage_from_cum2 = current_solution_slips_position_2._get_line_values(['IJMSALARYMIN2'], compute_sum=True)['IJMSALARYMIN2']['sum']['total']
+
+ijm_1_threshold_1 = current_solution_slips_position_1._get_line_values(['IJMSALARYMAX1'], compute_sum=True)['IJMSALARYMAX1']['sum']['total']
+ijm_1_threshold_2 = current_solution_slips_position_2._get_line_values(['IJMSALARYMAX2'], compute_sum=True)['IJMSALARYMAX2']['sum']['total']
+
+
+previous_ijm_1_salary = previous_ijm_1_salary_1 + previous_ijm_1_salary_2
+current_ijm_1_base =  current_ijm_1_base_1 + current_ijm_2_base_2 + categories['IJMBASE']
+wage_from_cum = wage_from_cum1 + wage_from_cum2 + categories['IJMSALARYMIN1']
+ijm_1_threshold = ijm_1_threshold_1 + ijm_1_threshold_2 + categories['IJMSALARYMAX1']
 
 trimmed_ijm_base = max(0, current_ijm_1_base - wage_from_cum)
 result = max(min(trimmed_ijm_base, ijm_1_threshold), 0) - previous_ijm_1_salary
@@ -2941,14 +2979,27 @@ result = len(payslip.l10n_ch_sickness_insurance_line_ids) > 1
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-current_solution = payslip.l10n_ch_sickness_insurance_line_ids[0]
-current_solution_slips = previous_payslips.filtered(lambda p : p.l10n_ch_sickness_insurance_line_ids[0].id == current_solution.id)
-previous_ijm_1_salary = current_solution_slips._get_line_values(['IJMSALARY2'], compute_sum=True)['IJMSALARY2']['sum']['total']
-current_ijm_1_base =  current_solution_slips._get_line_values(['IJMBASE'], compute_sum=True)['IJMBASE']['sum']['total'] + categories['IJMBASE']
+current_solution = payslip.l10n_ch_sickness_insurance_line_ids[1]
+current_solution_slips_position_1 = previous_payslips.filtered(lambda p : p.l10n_ch_sickness_insurance_line_ids and p.l10n_ch_sickness_insurance_line_ids[0].id == current_solution.id)
+current_solution_slips_position_2 = previous_payslips.filtered(lambda p : len(p.l10n_ch_sickness_insurance_line_ids) > 1 and p.l10n_ch_sickness_insurance_line_ids[1].id == current_solution.id)
 
-wage_from_cum = current_solution_slips._get_line_values(['IJMSALARYMIN2'], compute_sum=True)['IJMSALARYMIN2']['sum']['total'] + categories['IJMSALARYMIN2']
-ijm_1_threshold = current_solution_slips._get_line_values(['IJMSALARYMAX2'], compute_sum=True)['IJMSALARYMAX2']['sum']['total'] + categories['IJMSALARYMAX2']
+previous_ijm_1_salary_1 = current_solution_slips_position_1._get_line_values(['IJMSALARY1'], compute_sum=True)['IJMSALARY1']['sum']['total']
+previous_ijm_1_salary_2 = current_solution_slips_position_2._get_line_values(['IJMSALARY2'], compute_sum=True)['IJMSALARY2']['sum']['total']
 
+current_ijm_1_base_1 =  current_solution_slips_position_1._get_line_values(['IJMBASE'], compute_sum=True)['IJMBASE']['sum']['total']
+current_ijm_2_base_2 =  current_solution_slips_position_2._get_line_values(['IJMBASE'], compute_sum=True)['IJMBASE']['sum']['total']
+
+wage_from_cum1 = current_solution_slips_position_1._get_line_values(['IJMSALARYMIN1'], compute_sum=True)['IJMSALARYMIN1']['sum']['total']
+wage_from_cum2 = current_solution_slips_position_2._get_line_values(['IJMSALARYMIN2'], compute_sum=True)['IJMSALARYMIN2']['sum']['total']
+
+ijm_1_threshold_1 = current_solution_slips_position_1._get_line_values(['IJMSALARYMAX1'], compute_sum=True)['IJMSALARYMAX1']['sum']['total']
+ijm_1_threshold_2 = current_solution_slips_position_2._get_line_values(['IJMSALARYMAX2'], compute_sum=True)['IJMSALARYMAX2']['sum']['total']
+
+
+previous_ijm_1_salary = previous_ijm_1_salary_1 + previous_ijm_1_salary_2
+current_ijm_1_base =  current_ijm_1_base_1 + current_ijm_2_base_2 + categories['IJMBASE']
+wage_from_cum = wage_from_cum1 + wage_from_cum2 + categories['IJMSALARYMIN2']
+ijm_1_threshold = ijm_1_threshold_1 + ijm_1_threshold_2 + categories['IJMSALARYMAX2']
 
 trimmed_ijm_base = max(0, current_ijm_1_base - wage_from_cum)
 result = max(min(trimmed_ijm_base, ijm_1_threshold), 0) - previous_ijm_1_salary
