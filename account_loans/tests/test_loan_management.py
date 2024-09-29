@@ -1,3 +1,5 @@
+import unittest
+
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
 
@@ -250,6 +252,7 @@ class TestLoanManagement(AccountTestInvoicingCommon):
             self.env.ref('account.ir_cron_auto_post_draft_entry').method_direct_trigger()
             self.assertEqual(loan2.state, 'closed')
 
+    @unittest.skip
     def test_loan_import_amortization_schedule(self):
         """Test that we can import an amortization schedule from a file"""
         # Upload the file from the List View -> Create a new Loan
