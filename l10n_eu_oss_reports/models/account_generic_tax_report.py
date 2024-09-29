@@ -120,6 +120,7 @@ class OSSTaxReportCustomHandlerOss(models.AbstractModel):
                 'action': 'export_file',
                 'action_param': 'export_to_xml',
                 'file_export_type': _('XML'),
+                'branch_allowed': True,
             })
         options['forced_domain'] = [
             *options.get('forced_domain', []),
