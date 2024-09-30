@@ -7,11 +7,11 @@ from datetime import datetime, timedelta
 from markupsafe import Markup
 
 from odoo import _, api, Command, fields, models, tools, SUPERUSER_ID
+from odoo.addons.calendar.models.utils import interval_from_events
 from odoo.exceptions import ValidationError
 from odoo.tools.date_intervals import Intervals, intervals_overlap, invert_intervals, timezone_datetime
 from odoo.tools.mail import email_normalize, email_split_and_format_normalize, html_sanitize, is_html_empty, plaintext2html
 from odoo.osv import expression
-from odoo.addons.appointment.utils import interval_from_events
 
 _logger = logging.getLogger(__name__)
 
@@ -89,7 +89,6 @@ class CalendarEvent(models.Model):
     user_id = fields.Many2one('res.users', group_expand="_read_group_user_id")
     videocall_redirection = fields.Char('Meeting redirection URL', compute='_compute_videocall_redirection')
     appointment_booker_id = fields.Many2one('res.partner', string="Person who is booking the appointment", index='btree_not_null')
-    on_leave_partner_ids = fields.Many2many('res.partner', string='Unavailable Partners', compute='_compute_on_leave_partner_ids')
     on_leave_resource_ids = fields.Many2many('appointment.resource', string='Resources intersecting with leave time', compute="_compute_on_leave_resource_ids")
 
     @api.constrains('appointment_resource_ids', 'appointment_type_id')
@@ -122,21 +121,6 @@ class CalendarEvent(models.Model):
     def _compute_resource_ids(self):
         for event in self:
             event.resource_ids = event.booking_line_ids.appointment_resource_id
-
-    @api.depends('start', 'stop', 'partner_ids')
-    def _compute_on_leave_partner_ids(self):
-        self.on_leave_partner_ids = False
-        user_events = self.filtered(lambda event: event.appointment_type_id.schedule_based_on == 'users')
-
-        for start, stop, events in interval_from_events(user_events):
-            events_by_partner_id = events.partner_ids._get_busy_calendar_events(start, stop)
-            for event in events:
-                for partner in event.partner_ids:
-                    if any(
-                        intervals_overlap((event.start, event.stop), (other_event.start, other_event.stop))
-                        for other_event in events_by_partner_id.get(partner._origin.id, []) if other_event != event
-                    ):
-                        event.on_leave_partner_ids += partner
 
     @api.depends('start', 'stop', 'resource_ids')
     def _compute_on_leave_resource_ids(self):

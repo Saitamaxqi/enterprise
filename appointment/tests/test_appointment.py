@@ -1052,35 +1052,6 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
         self.assertTrue(len(self._filter_appointment_slots(slots_user_bxls_exterior_user)) == 2)
         self.assertTrue(len(self._filter_appointment_slots(slots_user_no_tz)) == 1)
 
-    @users('apt_manager', 'staff_user_bxls')
-    def test_partner_on_leave_with_conflicting_event(self):
-        """Check that conflicting meetings are correctly reflected in the on_leave_partner_ids field.
-
-        Overlapping times between any other meeting of the employee and the meeting should add the partner
-        to the list of unavailable partners.
-        """
-        self.env['calendar.event'].search([('user_id', '=', self.staff_user_bxls.id)]).unlink()
-        self.env['resource.calendar.leaves'].sudo().search([('calendar_id', '=', self.staff_user_bxls.resource_calendar_id.id)]).unlink()
-        [meeting] = self._create_meetings(
-            self.staff_user_bxls,
-            [(self.reference_monday,
-              self.reference_monday + timedelta(hours=3),
-              False,
-              )],
-            self.apt_type_bxls_2days.id
-        )
-        self.assertFalse(meeting.on_leave_partner_ids)
-        [conflicting_meeting] = self._create_meetings(
-            self.staff_user_bxls,
-            [(self.reference_monday,
-              self.reference_monday + timedelta(minutes=5),
-              False,
-              )],
-        )
-        meeting.invalidate_recordset()
-        self.assertEqual(meeting.on_leave_partner_ids, self.staff_user_bxls.partner_id)
-        self.assertFalse(conflicting_meeting.on_leave_partner_ids)
-
     @users('apt_manager')
     def test_slots_for_today(self):
         test_reference_now = datetime(2022, 2, 14, 11, 0, 0)  # is a Monday
