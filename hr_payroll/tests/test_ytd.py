@@ -1,7 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import unittest
-
 from datetime import date
 from dateutil.relativedelta import relativedelta
 
@@ -202,7 +200,6 @@ class TestYTD(TestPayslipContractBase):
         payslip_classic_B = self._generate_payslip(date(2024, 5, 1), ytd_test_structure_01, 1020)
         self._assert_ytd_values(payslip_classic_B, 1010 + 1020)
 
-    @unittest.skip
     def test_ytd_02_reset_date(self):
         """ This test checks the reset date """
         # New structure to ensure we have no other payslip in it
@@ -216,27 +213,28 @@ class TestYTD(TestPayslipContractBase):
         self.assertEqual(self.richard_emp.company_id.ytd_reset_day, 1)
         self.assertEqual(self.richard_emp.company_id.ytd_reset_month, '1')
 
+        reset_date = date(2024, 1, 1)
         # Tests of the behaviour of the reset date :
-        self.richard_emp.company_id.ytd_reset_day = date.today().day
-        self.richard_emp.company_id.ytd_reset_month = str(date.today().month)
+        self.richard_emp.company_id.ytd_reset_day = reset_date.day
+        self.richard_emp.company_id.ytd_reset_month = str(reset_date.month)
 
         # First payslip, ending one day before the reset date
         payslip_before_reset = self._generate_payslip(
-            date.today() + relativedelta(months=-1, days=0), ytd_test_structure_02, 1001
+            reset_date + relativedelta(months=-1, days=0), ytd_test_structure_02, 1001
         )
         self._assert_ytd_values(payslip_before_reset, 1001)
 
         # Second payslip, ending exactly on the reset date
         # It should be considered in a new year, so its YTD should be 1010
         payslip_on_reset = self._generate_payslip(
-            date.today() + relativedelta(months=-1, days=1), ytd_test_structure_02, 1010
+            reset_date + relativedelta(months=-1, days=1), ytd_test_structure_02, 1010
         )
         self._assert_ytd_values(payslip_on_reset, 1010)
 
         # Third payslip, ending one day after the reset date
         # It's the second payslip of the new year, so its YTD should be 1010 + 1020
         payslip_after_reset = self._generate_payslip(
-            date.today() + relativedelta(months=-1, days=2), ytd_test_structure_02, 1020
+            reset_date + relativedelta(months=-1, days=2), ytd_test_structure_02, 1020
         )
         self._assert_ytd_values(payslip_after_reset, 1010 + 1020)
 
