@@ -101,7 +101,7 @@
                         <!--Tax totals per group-->
                         <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
                             <table class="table table-borderless" style="page-break-inside: avoid; font-size:11px;">
-                                <t t-if="tax_totals" t-call="l10n_ec_edi.document_tax_totals">
+                                <t t-if="o.l10n_ec_withhold_subtotals" t-call="l10n_ec_edi.document_tax_totals">
                                     <t t-set="tax_totals" t-value="o.l10n_ec_withhold_subtotals"/>
                                     <t t-set="currency" t-value="o.currency_id"/>
                                 </t>
