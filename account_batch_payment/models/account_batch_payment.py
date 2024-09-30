@@ -144,7 +144,7 @@ class AccountBatchPayment(models.Model):
                         amount_residual_currency += line.amount_residual_currency
                 else:
                     converted_amount = payment.currency_id._convert(
-                        from_amount=payment.amount,
+                        from_amount=payment.amount_signed,
                         to_currency=batch.currency_id,
                         company=payment.company_id,
                         date=payment.date,
