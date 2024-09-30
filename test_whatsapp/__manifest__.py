@@ -14,7 +14,6 @@ applications. """,
         'contacts',
         'mail',
         'portal',
-        'phone_validation',
         'whatsapp',
     ],
     'data': [
