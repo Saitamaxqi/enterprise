@@ -524,22 +524,23 @@ class AccountAsset(models.Model):
 
     def write(self, vals):
         result = super().write(vals)
-        for move in self.depreciation_move_ids:
-            if move.state == 'draft' and 'analytic_distribution' in vals:
-                # Only draft entries to avoid recreating all the analytic items
-                move.line_ids.analytic_distribution = vals['analytic_distribution']
-            lock_date = move.company_id._get_user_fiscal_lock_date(self.journal_id)
-            if move.date > lock_date:
-                if 'account_depreciation_id' in vals:
-                    # ::2 (0, 2, 4, ...) because we want all first lines of the depreciation entries, which corresponds to the
-                    # lines with account_depreciation_id as account
-                    move.line_ids[::2].account_id = vals['account_depreciation_id']
-                if 'account_depreciation_expense_id' in vals:
-                    # 1::2 (1, 3, 5, ...) because we want all second lines of the depreciation entries, which corresponds to the
-                    # lines with account_depreciation_expense_id as account
-                    move.line_ids[1::2].account_id = vals['account_depreciation_expense_id']
-                if 'journal_id' in vals:
-                    move.journal_id = vals['journal_id']
+        for asset in self:
+            for move in asset.depreciation_move_ids:
+                if move.state == 'draft' and 'analytic_distribution' in vals:
+                    # Only draft entries to avoid recreating all the analytic items
+                    move.line_ids.analytic_distribution = vals['analytic_distribution']
+                lock_date = move.company_id._get_user_fiscal_lock_date(asset.journal_id)
+                if move.date > lock_date:
+                    if 'account_depreciation_id' in vals:
+                        # ::2 (0, 2, 4, ...) because we want all first lines of the depreciation entries, which corresponds to the
+                        # lines with account_depreciation_id as account
+                        move.line_ids[::2].account_id = vals['account_depreciation_id']
+                    if 'account_depreciation_expense_id' in vals:
+                        # 1::2 (1, 3, 5, ...) because we want all second lines of the depreciation entries, which corresponds to the
+                        # lines with account_depreciation_expense_id as account
+                        move.line_ids[1::2].account_id = vals['account_depreciation_expense_id']
+                    if 'journal_id' in vals:
+                        move.journal_id = vals['journal_id']
         return result
 
     # -------------------------------------------------------------------------
