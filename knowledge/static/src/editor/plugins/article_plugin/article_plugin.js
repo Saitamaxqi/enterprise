@@ -7,7 +7,7 @@ import { renderToElement } from "@web/core/utils/render";
 const ARTICLE_LINKS_SELECTOR = ".o_knowledge_article_link";
 export class KnowledgeArticlePlugin extends Plugin {
     static name = "article";
-    static dependencies = ["dom", "selection"];
+    static dependencies = ["dom", "selection", "dialog"];
     static resources = (p) => ({
         powerboxItems: [
             {
@@ -39,44 +39,28 @@ export class KnowledgeArticlePlugin extends Plugin {
     }
 
     addArticle() {
-        const selection = this.shared.getEditableSelection();
-        let restoreSelection = () => {
-            this.shared.setSelection(selection);
-        };
         const recordInfo = this.config.getRecordInfo();
         let parentArticleId;
         if (recordInfo.resModel === "knowledge.article" && recordInfo.resId) {
             parentArticleId = recordInfo.resId;
         }
-        this.services.dialog.add(
-            ArticleSelectionDialog,
-            {
-                title: _t("Link an Article"),
-                confirmLabel: _t("Insert Link"),
-                articleSelected: (article) => {
-                    const articleLinkBlock = renderToElement("knowledge.ArticleBlueprint", {
-                        href: `/knowledge/article/${article.articleId}`,
-                        articleId: article.articleId,
-                        displayName: article.displayName,
-                    });
+        this.shared.addDialog(ArticleSelectionDialog, {
+            title: _t("Link an Article"),
+            confirmLabel: _t("Insert Link"),
+            articleSelected: (article) => {
+                const articleLinkBlock = renderToElement("knowledge.ArticleBlueprint", {
+                    href: `/knowledge/article/${article.articleId}`,
+                    articleId: article.articleId,
+                    displayName: article.displayName,
+                });
 
-                    this.shared.domInsert(articleLinkBlock);
-                    this.dispatch("ADD_STEP");
-                    const [anchorNode, anchorOffset] = rightPos(articleLinkBlock);
-                    this.shared.setSelection({ anchorNode, anchorOffset });
-
-                    // TODO ABD: onClose is called after articleSelected in the dialog for the
-                    // legacy editor, can be refactored once legacy editor is removed.
-                    restoreSelection = () => {};
-                },
-                parentArticleId,
+                this.shared.domInsert(articleLinkBlock);
+                this.dispatch("ADD_STEP");
+                const [anchorNode, anchorOffset] = rightPos(articleLinkBlock);
+                this.shared.setSelection({ anchorNode, anchorOffset });
             },
-            {
-                onClose: () => {
-                    restoreSelection();
-                },
-            }
-        );
+            parentArticleId,
+        });
     }
 
     scanForArticleLinks(element) {

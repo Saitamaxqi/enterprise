@@ -16,7 +16,7 @@ class AppointmentFormViewDialog extends FormViewDialog {
 }
 
 class AppointmentPlugin extends Plugin {
-    static dependencies = ["dom", "selection", "link"];
+    static dependencies = ["dom", "selection", "link", "dialog"];
     static resources = (p) => ({
         powerboxItems: [
             {
@@ -30,7 +30,7 @@ class AppointmentPlugin extends Plugin {
     });
 
     addAppointment() {
-        this.services.dialog.add(AppointmentFormViewDialog, {
+        this.shared.addDialog(AppointmentFormViewDialog, {
             resModel: "appointment.invite",
             context: {
                 form_view_ref: "appointment.appointment_invite_view_form_insert_link",
