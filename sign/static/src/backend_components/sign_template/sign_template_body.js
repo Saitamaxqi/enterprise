@@ -46,7 +46,9 @@ export class SignTemplateBody extends Component {
                 this.saveTemplate();
                 this.iframe.unmount();
                 this.iframe = null;
-                this.notification.add(_t("Saved"), { type: "success" });
+                if (this.props.signTemplate.active) {
+                    this.notification.add(_t("Saved"), {type: "success"});
+                }
             }
         });
     }
