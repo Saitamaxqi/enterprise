@@ -90,6 +90,7 @@
         <function model="mrp.workorder" name="button_start">
             <value model="mrp.production" eval="obj().env.ref('purchase_mrp_workorder_quality.mrp_production').workorder_ids.ids"/>
             <value eval="True"/>
+            <value eval="True"/>
         </function>
 
         <record id="stock_production_lot" model="stock.lot">
