@@ -54,7 +54,7 @@ export class DocumentsControlPanel extends ControlPanel {
         const action = await this.orm.call(
             "documents.document",
             "action_execute_embedded_action",
-            [[actionId]],
+            [actionId],
             { context }
         );
         if (action) {

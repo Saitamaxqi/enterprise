@@ -946,3 +946,37 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             self.folder_a_a.with_user(self.internal_user).owner_id = self.internal_user
 
         self.folder_a_a.with_user(self.doc_user).owner_id = self.internal_user
+
+    @mute_logger('odoo.addons.base.models.ir_rule')
+    def test_embedded_action(self):
+        """Test embedding and running actions on the right records"""
+        self.folder_a.action_update_access_rights(
+            access_internal="edit",
+            partners={self.portal_user.partner_id: ('edit', False)}
+        )
+        server_action = self.env.ref('documents.ir_actions_server_tag_add_validated')
+        with self.assertRaises(AccessError):
+            self.env['documents.document'].with_user(self.internal_user).action_folder_embed_action(
+                self.folder_a.id, server_action.id)
+        self.env['documents.document'].with_user(self.doc_user).action_folder_embed_action(
+            self.folder_a.id, server_action.id)
+        doc = self.env['documents.document'].create({'name': 'A request', 'folder_id': self.folder_a.id})
+        embedded_action = doc.available_embedded_actions_ids
+        self.assertEqual(len(embedded_action), 1)
+        doc_in_context = self.env['documents.document'].with_context(
+            active_model='documents.document', active_id=doc.id)
+
+        with self.assertRaises(AccessError):
+            doc_in_context.with_user(self.portal_user).action_execute_embedded_action(embedded_action.id)
+        doc_in_context.with_user(self.internal_user).action_execute_embedded_action(embedded_action.id)
+
+        with self.assertRaises(UserError):
+            doc_in_context.with_context(
+                active_ids=(doc | self.folder_a).ids,
+            ).with_user(self.internal_user).action_execute_embedded_action(embedded_action.id)
+        doc.action_update_access_rights(access_internal='none')
+
+        with self.assertRaises(AccessError):
+            doc_in_context.with_context(
+                active_id=doc.id
+            ).with_user(self.internal_user).action_execute_embedded_action(embedded_action.id)

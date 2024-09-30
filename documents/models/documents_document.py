@@ -517,12 +517,15 @@ class Document(models.Model):
                 ('action_id.type', '=', 'ir.actions.server'),
                 ('parent_res_model', '=', 'documents.document'),
                 ('parent_res_id', 'in', folder_ids),
+                ('groups_ids', 'in', [False] + self.env.user.groups_id.ids),
             ],
             order='sequence',
         )
         # group after ordering by `ir.embedded.actions` sequence
         return embedded_actions.grouped('parent_res_id')
 
+    @api.depends_context('uid')
+    @api.depends('folder_id')
     def _compute_available_embedded_actions_ids(self):
         embedded_actions = self._get_folder_embedded_actions(self.folder_id.ids)
         embedded_actions_per_folder = {
@@ -986,14 +989,18 @@ class Document(models.Model):
         } for action in actions]
 
     @api.model
-    def action_folder_embed_action(self, folder_id, action_id):
+    def action_folder_embed_action(self, folder_id, action_id, groups_ids=None):
         """Enable / disable the action for the given folder
 
-        :param folder_id: The folder on which we pin the actions
-        :param action_id: The id of the action to pin
+        :param int folder_id: The folder on which we pin the actions
+        :param int action_id: The id of the action to enable
+        :param list[int] groups_ids: ids of the groups the action is available to
         """
         if not self.env.user.has_group('documents.group_documents_user'):
             raise AccessError(_("You are not allowed to pin/unpin embedded Actions."))
+
+        if not groups_ids:
+            groups_ids = self.env.ref('base.group_user').ids
 
         action = self.env['ir.actions.server'].browse(action_id).sudo().exists()
         if not action:
@@ -1010,6 +1017,7 @@ class Document(models.Model):
             ('action_id.type', '=', 'ir.actions.server'),
             ('parent_res_model', '=', 'documents.document'),
             ('parent_res_id', '=', folder_id),
+            ('groups_ids', 'in', groups_ids),
         ]).sudo(False)
         if embedded:
             embedded.unlink()
@@ -1023,6 +1031,7 @@ class Document(models.Model):
                 'action_id': action.id,
                 'parent_res_model': 'documents.document',
                 'parent_res_id': folder_id,
+                'groups_ids': groups_ids,
                 'sequence': last_action.sequence + 1 if last_action else 1,
             })
 
@@ -1030,17 +1039,23 @@ class Document(models.Model):
 
     @api.model
     def action_execute_embedded_action(self, action_id):
-        if self.env.context.get('active_model') == 'documents.document':
-            if ids := self.env.context.get('active_ids', self.env.context.get('active_id')):
-                if isinstance(ids, int):
-                    ids = [ids]
-                embedded_action = self.env['ir.embedded.actions'].browse(action_id)
-                if embedded_action and embedded_action in self.browse(ids).available_embedded_actions_ids:
-                    return self.env['ir.actions.server'].browse(embedded_action.action_id.id).run()
-            else:
-                raise UserError(_("Missing documents reference."))
-        else:
+        """Execute an embedded action on context records.
+
+        :param int action_id: id of embedded action to be run on context provided records.
+        """
+        if self.env.user.share:
+            raise AccessError(_("You are not allowed to execute embedded actions."))
+        if self.env.context.get('active_model') != 'documents.document':
             raise UserError(_("Unavailable action."))
+        ids = self.env.context.get('active_ids', self.env.context.get('active_id'))
+        if not ids:
+            raise UserError(_("Missing documents reference."))
+
+        embedded_action = self.env['ir.embedded.actions'].browse([action_id])
+        if all(action_id in document.available_embedded_actions_ids.ids for document in self.browse(ids)):
+            return self.env['ir.actions.server'].browse(embedded_action.action_id.id).run()
+
+        raise UserError(_("Unavailable action."))
 
     def action_link_to_record(self, model):
         """Open the `link_to_record_wizard` to choose a record to link to the current documents.
