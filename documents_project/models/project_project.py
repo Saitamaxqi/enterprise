@@ -182,11 +182,13 @@ class ProjectProject(models.Model):
         self.ensure_one()
         action = self.env["ir.actions.actions"]._for_xml_id("documents.document_action")
         return action | {
+            'view_mode': 'kanban,list',
             'context': {
                 'active_id': self.id,
                 'active_model':  'project.project',
                 'default_res_id': self.id,
                 'default_res_model': 'project.project',
+                'no_documents_unique_folder_id': True,
                 'searchpanel_default_folder_id': self._get_document_folder().id,
             }
         }
