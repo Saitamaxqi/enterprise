@@ -72,7 +72,6 @@ export class KnowledgeCommentsThread extends Component {
             // because this Object contains values and methods that are linked to the form view's
             // main chatter. By doing this we distinguish the main chatter from the comments.
             inChatter: false,
-            inChatWindow: true,
             chatter: false,
             closeThread: this.updateResolveState.bind(this, true),
             inKnowledge: true,
