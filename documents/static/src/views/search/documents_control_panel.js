@@ -161,6 +161,7 @@ export class DocumentsControlPanel extends ControlPanel {
         const records = this.targetRecords.filter((r) => r.data.active);
         const recordIds = records.map((r) => r.data.id);
         await toggleArchive(records[0].model, records[0].resModel, recordIds, true);
+        await this.notifyChange();
     }
 
     /**
@@ -170,8 +171,7 @@ export class DocumentsControlPanel extends ControlPanel {
         const records = this.targetRecords.filter((r) => r.data.active);
         const recordIds = records.map((r) => r.data.id);
         await this.orm.call("documents.document", "copy", [recordIds]);
-        await this.env.model.load();
-        await this.env.model.notify();
+        await this.notifyChange();
     }
 
     /**
@@ -335,6 +335,7 @@ export class DocumentsControlPanel extends ControlPanel {
     async notifyChange() {
         await this.env.model.load();
         await this.env.model.notify();
+        await this.env.searchModel._reloadSearchModel(true);
         // The preview will be closed, just update the state for now
         this.documentService.setPreviewedDocument(null);
     }
