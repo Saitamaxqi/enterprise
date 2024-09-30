@@ -1836,10 +1836,8 @@ class Document(models.Model):
                     if record['shortcut_document_id']:
                         continue
                     folder_id = shared_root_id
-                elif record['is_pinned_folder']:
-                    folder_id = "COMPANY"
                 else:
-                    continue
+                    folder_id = "COMPANY"
 
                 record['folder_id'] = folder_id
                 values_range[record_id] = record

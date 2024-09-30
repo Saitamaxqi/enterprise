@@ -21,6 +21,11 @@
             <attribute name="t-foreach">values.filter((v) => !!v)</attribute>
         </xpath>
         <xpath expr="//li[contains(@class, 'o_search_panel_category_value')]" position="attributes">
+            <attribute name="t-if">["COMPANY", "MY", "RECENT", "SHARED", "TRASH"].includes(valueId) ||
+                                   typeof value.folder_id === 'number' ||
+                                   value.folder_id === 'MY' ||
+                                   value.is_pinned_folder
+            </attribute>
             <attribute name="class" add="pe-0" separator=" "/>
             <attribute name="t-att-class">{
                     'o_treeEntry' : isChildList,
