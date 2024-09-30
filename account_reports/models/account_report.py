@@ -4370,9 +4370,15 @@ class AccountReport(models.Model):
     def _get_audit_line_groupby_domain(self, calling_line_dict_id):
         parsed_line_dict_id = self._parse_line_id(calling_line_dict_id)
         groupby_domain = []
-        for markup, dummy, model_id in parsed_line_dict_id:
+        for markup, dummy, grouping_key in parsed_line_dict_id:
             if isinstance(markup, dict) and 'groupby' in markup:
-                groupby_domain.append((markup['groupby'], '=', model_id))
+                groupby_field_name = markup['groupby']
+                custom_handler_model = self._get_custom_handler_model()
+                if custom_handler_model and (custom_groupby_data := self.env[custom_handler_model]._get_custom_groupby_map().get(groupby_field_name)):
+                    groupby_domain += custom_groupby_data['domain_builder'](grouping_key)
+                else:
+                    groupby_domain.append((groupby_field_name, '=', grouping_key))
+
         return groupby_domain
 
     def _get_expression_audit_aml_domain(self, expression_to_audit, options):
