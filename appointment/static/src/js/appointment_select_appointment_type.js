@@ -28,11 +28,7 @@ publicWidget.registry.appointmentTypeSelect = publicWidget.Widget.extend({
     start: function () {
         return this._super(...arguments).then(() => {
             // Load an image when no appointment types are found
-            this.el
-                .querySelectorAll(".o_appointment_svg i")
-                .forEach(
-                    (el) => (el.outerHTML = renderToElement("Appointment.appointment_svg", {}))
-                );
+            this.el.querySelector(".o_appointment_svg i")?.replaceWith(renderToElement('Appointment.appointment_svg', {}));
             this.el
                 .querySelectorAll(".o_appointment_not_found div")
                 .forEach((el) => el.classList.remove("d-none"));
