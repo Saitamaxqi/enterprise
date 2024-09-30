@@ -35,14 +35,10 @@ registry.category("web_tour.tours").add("social_tour", {
             run: "click",
         },
         {
-            trigger: '.o_social_post_message_wrapper',
+            trigger: '.o_field_widget[name="message"] .o_input',
             content: _t("Write a message to get a preview of your post."),
             tooltipPosition: 'bottom',
-            run: "click",
-        },
-        {
-            isActive: ["auto"],
-            trigger: 'textarea[name="message"]:first:value()', // message field not empty
+            run: 'edit Awesome post!',
         },
         {
             trigger: 'button[name="action_post"]',
