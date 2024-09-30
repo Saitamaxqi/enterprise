@@ -288,6 +288,11 @@ const upgrades = {
             const fileName = htmlFileName || oldProps?.fileName || _t("Untitled");
             const extension = htmlFileExtension || oldProps?.fileExtension;
             let fileData = oldProps?.fileData;
+            // accessToken has been renamed in file_model
+            if (fileData?.accessToken) {
+                fileData.access_token = fileData.accessToken;
+                delete fileData.accessToken;
+            }
             if (!id && !url && !fileData) {
                 // Abort the conversion if data can not be recovered.
                 // Element will still exist in the DOM as raw data.
@@ -295,7 +300,7 @@ const upgrades = {
             }
             if (!fileData) {
                 fileData = {
-                    accessToken,
+                    access_token: accessToken,
                     checksum,
                     extension,
                     filename: fileName,
