@@ -4605,6 +4605,7 @@ class AccountReport(models.Model):
         self.ensure_one()
 
         target_column_group_options = self._get_column_group_options(options, column_group_key)
+        self._init_currency_table(target_column_group_options)
 
         if target_column_group_options.get('compute_budget'):
             expressions_to_recompute = self.env['account.report.expression'].browse(target_expression_id) \
