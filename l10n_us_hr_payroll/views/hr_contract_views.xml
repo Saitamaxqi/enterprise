@@ -66,8 +66,8 @@
                             <field name="l10n_us_post_roth_401k_type" nolabel="1" required="country_code == 'US'"/>
                         </div>
                         <field name="l10n_us_employee_state_code" invisible="1"/>
-                        <field name="l10n_us_worker_compensation_id" invisible="l10n_us_employee_state_code != 'WA'"
-                               required="l10n_us_employee_state_code == 'WA'"/>
+                        <field name="l10n_us_worker_compensation_id" invisible="country_code != 'US' or l10n_us_employee_state_code != 'WA'"
+                               required="country_code == 'US' and l10n_us_employee_state_code == 'WA'"/>
                     </group>
                 </group>
             </group>
