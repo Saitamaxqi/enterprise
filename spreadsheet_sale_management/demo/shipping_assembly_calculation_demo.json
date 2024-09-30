@@ -4034,7 +4034,7 @@
     "lists": {
         "1": {
             "columns": [],
-            "domain": [],
+            "domain": [["display_type", "=", false]],
             "model": "sale.order.line",
             "context": {},
             "orderBy": [],

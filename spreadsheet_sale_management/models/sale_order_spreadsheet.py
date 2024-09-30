@@ -57,7 +57,7 @@ class SpreadsheetSaleOrder(models.Model):
         data['lists'] = {
             '1': {
                 'columns': SALE_ORDER_LINE_FIELDS,
-                'domain': [],
+                'domain': [('display_type', '=', False)],
                 'model': 'sale.order.line',
                 'context': {},
                 'orderBy': [],
