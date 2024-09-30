@@ -123,6 +123,9 @@ export class DocumentsListRenderer extends ListRenderer {
         if (ev.target.closest(".o_data_row") || !ev.target.closest(".o_list_renderer")) {
             return;
         }
+        if (ev.target.closest(".o_documents_view thead")) {
+            return; // We then have to check that we are not clicking on the header
+        }
         this.props.list.selection.forEach((el) => el.toggleSelection(false));
     }
 
