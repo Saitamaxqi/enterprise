@@ -240,7 +240,7 @@
                             <field name="datas" widget="pdf_viewer"/>
                         </page>
                         <page string="Fields" name="signatures">
-                            <field name="sign_item_ids"/>
+                            <field name="sign_item_ids" readonly="1"/>
                         </page>
                     </notebook>
                 </sheet>
