@@ -1479,3 +1479,68 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
             'stop': datetime(2022, 2, 1, 12, 0, 0),
         })
         self.assertEqual(len(test_record.activity_ids), 1)
+
+    @users('apt_manager')
+    def test_resource_on_leave_with_conflicting_event(self):
+        """
+        Check conflicting event with resources are correctly reflected in the unavailable_resource_ids field.
+        Overlapping times between already booked resources and the event resources should add the resource
+        to the list of unavailable resources.
+        """
+        start = datetime(2022, 2, 14, 15, 0, 0)
+        end = start + timedelta(hours=1)
+        court1, court2, court3 = self.env['appointment.resource'].create([{
+            'appointment_type_ids': self.apt_type_resource.ids,
+            'name': 'Court 1',
+        }, {
+            'appointment_type_ids': self.apt_type_resource.ids,
+            'name': 'Court 2',
+        }, {
+            'appointment_type_ids': self.apt_type_resource.ids,
+            'name': 'Court 3',
+            'shareable': True,
+            'capacity': 3,
+        }])
+        booking_1 = self.env['calendar.event'].create({
+            'appointment_type_id': self.apt_type_resource.id,
+            'booking_line_ids': [(0, 0, {'appointment_resource_id': court1.id})],
+            'name': 'Booking 1',
+            'start': start,
+            'stop': end,
+        })
+        self.assertFalse(booking_1.unavailable_resource_ids)
+        booking_2 = self.env['calendar.event'].create({
+            'appointment_type_id': self.apt_type_resource.id,
+            'booking_line_ids': [(0, 0, {'appointment_resource_id': court1.id}), (0, 0, {'appointment_resource_id': court2.id})],
+            'name': 'Booking 1',
+            'start': start,
+            'stop': end,
+        })
+        (booking_1 + booking_2)._compute_unavailable_resource_ids()
+        self.assertEqual(booking_1.unavailable_resource_ids, court1)
+        self.assertEqual(booking_2.unavailable_resource_ids, court1)
+
+        # Shared resource
+        booking_3 = self.env['calendar.event'].create({
+            'appointment_type_id': self.apt_type_resource.id,
+            'booking_line_ids': [(0, 0, {'appointment_resource_id': court3.id, 'capacity_reserved': 1})],
+            'name': 'Booking 3',
+            'start': start,
+            'stop': end,
+        })
+        booking_4 = self.env['calendar.event'].create({
+            'appointment_type_id': self.apt_type_resource.id,
+            'booking_line_ids': [(0, 0, {'appointment_resource_id': court3.id, 'capacity_reserved': 1})],
+            'name': 'Booking 4',
+            'start': start,
+            'stop': end,
+        })
+        (booking_3 + booking_4)._compute_unavailable_resource_ids()
+        self.assertFalse(booking_3.unavailable_resource_ids)
+        self.assertFalse(booking_4.unavailable_resource_ids)
+
+        # add full capacity
+        booking_4.booking_line_ids = [(0, 0, {'appointment_resource_id': court3.id, 'capacity_reserved': 3})]
+        (booking_3 + booking_4)._compute_unavailable_resource_ids()
+        self.assertEqual(booking_3.unavailable_resource_ids, court3)
+        self.assertEqual(booking_4.unavailable_resource_ids, court3)

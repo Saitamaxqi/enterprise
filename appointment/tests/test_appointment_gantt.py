@@ -217,6 +217,44 @@ class AppointmentGanttTest(AppointmentGanttTestCommon):
         self.assertNotIn(self.user_john.partner_id.id, group_partner_ids)
         self.assertEqual(gantt_data['records'], [{'id': meeting.id}])
 
+    def test_gantt_resource_unavailabilities(self):
+        """Check whether the Gantt view includes already booked resource and exclude sharable resource for calculating unavailability."""
+        self.apt_resource_2.shareable = True
+        self.env['calendar.event'].sudo().create({
+            'appointment_type_id': self.resource_apt_types.id,
+            'booking_line_ids': [(0, 0, {'appointment_resource_id': self.apt_resource_2.id}), (0, 0, {'appointment_resource_id': self.apt_resource_1.id})],
+            'name': 'Booking 1',
+            'start': self.reference_monday.replace(hour=8),
+            'stop': self.reference_monday.replace(hour=9),
+        })
+        resource_1_calendar_unavailabilities = Intervals([
+            (datetime(2022, 2, 14, 8, 00, tzinfo=pytz.UTC),
+             datetime(2022, 2, 14, 9, 0, tzinfo=pytz.UTC), set()),
+            (datetime(2022, 2, 14, 22, 59, 59, 999999, tzinfo=pytz.UTC),
+             datetime(2022, 2, 14, 23, 0, tzinfo=pytz.UTC), set()),
+        ])
+        resource_2_calendar_unavailabilities = Intervals([
+            (datetime(2022, 2, 14, 22, 59, 59, 999999, tzinfo=pytz.UTC),
+             datetime(2022, 2, 14, 23, 0, tzinfo=pytz.UTC), set()),
+        ])
+        unavailabilities = self.env['calendar.event'].with_context(self.gantt_context)._gantt_unavailability(
+            'resource_ids',
+            [self.apt_resource_1.id, self.apt_resource_2.id],
+            self.reference_monday.replace(hour=0),
+            self.reference_monday.replace(hour=23),
+            'day',
+        )
+        self.assertListEqual(
+            list(Intervals([(unavailability['start'], unavailability['stop'], set())
+                            for unavailability in unavailabilities.get(self.apt_resource_1.id, [])])),
+            list(resource_1_calendar_unavailabilities)
+        )
+        self.assertListEqual(
+            list(Intervals([(unavailability['start'], unavailability['stop'], set())
+                            for unavailability in unavailabilities.get(self.apt_resource_2.id, [])])),
+            list(resource_2_calendar_unavailabilities)
+        )
+
     @users('staff_user_bxls')
     def test_gantt_resource_unavailabilities_multi_company(self):
         """Check that resources outside of allowed companies don't get calendar unavailabilities."""

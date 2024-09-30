@@ -133,13 +133,14 @@
         <field name="arch" type="xml">
             <form string="Bookings">
                 <sheet>
-                    <div class="alert alert-warning d-flex flex-wrap" role="alert" invisible="not unavailable_partner_ids">
-                        <span class="me-1">Attendees marked as busy at the selected time</span><field name="unavailable_partner_ids" widget="many2many_tags"/>
-                    </div>
-                    <div class="alert alert-warning d-flex flex-wrap" role="alert" invisible="not on_leave_resource_ids">
-                        <field name="appointment_resource_ids" invisible="1"/>
-                        <span class="me-1">You are scheduling a booking outside the available hours of</span>
-                        <field name="on_leave_resource_ids" widget="many2many_tags" readonly="1"/>
+                    <div class="alert alert-warning d-flex flex-wrap" role="alert" invisible="not unavailable_partner_ids and not unavailable_resource_ids">
+                        <span class="me-1">The following
+                            <span invisible="not unavailable_partner_ids">attendees</span>
+                            <span invisible="not unavailable_partner_ids or not unavailable_resource_ids">/</span>
+                            <span invisible="not unavailable_resource_ids">resources</span> are not available at the selected time
+                        </span>
+                        <field name="unavailable_partner_ids" widget="many2many_tags"/>
+                        <field name="unavailable_resource_ids" widget="many2many_tags"/>
                     </div>
                     <div class="oe_title mb-3">
                         <label for="name" string="Booking Name"/>
