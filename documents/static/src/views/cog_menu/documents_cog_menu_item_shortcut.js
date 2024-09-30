@@ -10,7 +10,7 @@ import { useService } from "@web/core/utils/hooks";
  */
 export class DocumentsCogMenuItemShortcut extends DocumentsCogMenuItem {
     setup() {
-        this.icon = "fa-link";
+        this.icon = "fa-external-link-square";
         this.label = _t("Add shortcut");
         super.setup();
         this.documentService = useService("document.document");

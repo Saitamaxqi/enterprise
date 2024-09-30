@@ -175,16 +175,14 @@ export class DocumentService {
         });
     }
 
-    async createShortcut(documentIds, targetFolderId) {
+    async createShortcut(documentIds) {
         if (documentIds.length !== 1) {
             this.notificationService.add(_t("Shortcuts can only be created one at a time."), {
                 type: "danger",
             });
             return;
         }
-        await this.orm.call("documents.document", "action_create_shortcut", documentIds, {
-            location_folder_id: targetFolderId,
-        });
+        await this.orm.call("documents.document", "action_create_shortcut", documentIds);
     }
 
     async toggleFavorite(document) {
