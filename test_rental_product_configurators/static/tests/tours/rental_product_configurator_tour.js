@@ -71,7 +71,7 @@ registry.category("web_tour.tours").add('rental_product_configurator_tour', {
         },
         {
             trigger: ".o_data_row:eq(3) .o_data_cell[name='product_uom_qty'] input",
-            run: "edit 5.0 && click body",
+            run: "edit 5.0",
         },
         {
             trigger: 'button[name=action_confirm]',
