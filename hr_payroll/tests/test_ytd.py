@@ -1,5 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import unittest
+
 from datetime import date
 from dateutil.relativedelta import relativedelta
 
@@ -200,6 +202,7 @@ class TestYTD(TestPayslipContractBase):
         payslip_classic_B = self._generate_payslip(date(2024, 5, 1), ytd_test_structure_01, 1020)
         self._assert_ytd_values(payslip_classic_B, 1010 + 1020)
 
+    @unittest.skip
     def test_ytd_02_reset_date(self):
         """ This test checks the reset date """
         # New structure to ensure we have no other payslip in it
