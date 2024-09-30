@@ -81,6 +81,6 @@ class Home(web_home.Home):
             fragment.update({
                 f'documents_init_{key}': value
                 for key, value
-                in ShareRoute._documents_get_init_data(document_sudo).items()
+                in ShareRoute._documents_get_init_data(document_sudo, request.env.user).items()
             })
         return request.redirect(f'/web?{urlencode(query)}#{urlencode(fragment)}')

@@ -356,7 +356,7 @@ class ShareRoute(http.Controller):
                     },
                 },
             },
-            documents_init=self._documents_get_init_data(document),
+            documents_init=self._documents_get_init_data(document, request.env.user),
         )
 
         return request.render(
@@ -365,9 +365,9 @@ class ShareRoute(http.Controller):
         )
 
     @classmethod
-    def _documents_get_init_data(cls, document):
+    def _documents_get_init_data(cls, document, user):
         """ Get initialization data to restore the interface on the selected document. """
-        if not document:
+        if not document or not user:
             return {}
 
         document.ensure_one()
@@ -376,12 +376,16 @@ class ShareRoute(http.Controller):
         # If the user does not have access to the parent folder, we open it in the "SHARED" folder.
         if document.type != 'folder':
             parent = document.folder_id
-            documents_init['folder_id'] = (
-                parent.id if parent.user_permission in {'view', 'edit'}
-                else "SHARED" if not parent.id and not request.env.user
-                else "MY" if document.owner_id == request.env.user
-                else "COMPANY"
-            )
+            shared_root = False if user.share else "SHARED"  # Portal don't have 'Shared with me'
+            if parent:
+                documents_init['folder_id'] = parent.id if parent.user_permission in {'view', 'edit'} else shared_root
+            else:
+                documents_init['folder_id'] = (
+                    "MY" if document.owner_id == user
+                    else "COMPANY" if not user.share and (
+                        document.owner_id == document.env.ref('base.user_root') or document.access_internal != 'none')
+                    else shared_root
+                )
             documents_init['document_id'] = document.id
             target = document.shortcut_document_id or document
             if document.type == 'binary' and target.attachment_id:
