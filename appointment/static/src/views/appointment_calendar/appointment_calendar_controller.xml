@@ -2,7 +2,7 @@
 <templates>
     <t t-name="appointment.CalendarController" t-inherit="calendar.AttendeeCalendarController" t-inherit-mode="extension">
         <xpath expr="//div[hasclass('o_calendar_header')]" position="inside">
-            <div class="o_appointment_scheduling_box position-sticky start-0 bottom-0 d-flex align-items-center justify-content-center gap-2 order-last order-lg-0"
+            <div class="o_appointment_scheduling_box position-fixed position-md-static start-0 bottom-0 d-flex align-items-center justify-content-center gap-2 order-last order-lg-0"
                  t-att-class="{ 'flex-lg-row flex-column' : this.appointmentState.lastAppointment.id || this.hasSlotEvents() }">
                 <t t-if="env.calendarState.mode === 'slots-creation' || appointmentState.lastAppointment.url">
                     <span t-if="appointmentState.lastAppointment.url and !appointmentState.lastAppointment.waitingCopyLinkCustomType" class="text-center">
