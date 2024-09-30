@@ -1,5 +1,3 @@
-import unittest
-
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
 
@@ -252,7 +250,7 @@ class TestLoanManagement(AccountTestInvoicingCommon):
             self.env.ref('account.ir_cron_auto_post_draft_entry').method_direct_trigger()
             self.assertEqual(loan2.state, 'closed')
 
-    @unittest.skip
+    @freeze_time('2024-01-01')
     def test_loan_import_amortization_schedule(self):
         """Test that we can import an amortization schedule from a file"""
         # Upload the file from the List View -> Create a new Loan
@@ -287,7 +285,7 @@ class TestLoanManagement(AccountTestInvoicingCommon):
         loan.action_confirm()
 
         self.assertRecordValues(loan, [{
-            'date': fields.Date.today() - relativedelta(years=1),  # First line date
+            'date': fields.Date.from_string('2023-01-01'),
             'state': 'running',
             'name': attachment.name,
             'amount_borrowed': 19_900.25,  # Sum of principals
@@ -296,13 +294,13 @@ class TestLoanManagement(AccountTestInvoicingCommon):
 
         self.assertEqual(len(loan.line_ids), 48)  # 4 years
         self.assertRecordValues(loan.line_ids[0] | loan.line_ids[-1], [{
-            'date': fields.Date.today() - relativedelta(years=1),
+            'date': fields.Date.from_string('2023-01-01'),
             'principal': 304.60,
             'interest': 250.00,
             'payment': 554.6,
             'outstanding_balance': 19_595.65,  # = 19_900.25 - 304.60
         }, {
-            'date': fields.Date.today() + relativedelta(years=3) - relativedelta(months=1),
+            'date': fields.Date.from_string('2026-12-01'),
             'principal': 547.72,
             'interest': 6.88,
             'payment': 554.6,
@@ -332,7 +330,7 @@ class TestLoanManagement(AccountTestInvoicingCommon):
         loan2.action_confirm()
 
         self.assertRecordValues(loan, [{
-            'date': fields.Date.today() - relativedelta(years=1),  # First line date
+            'date': fields.Date.from_string('2023-01-01'),
             'state': 'running',
             'name': attachment.name,
             'amount_borrowed': 19_900.25,  # Sum of principals
@@ -341,13 +339,13 @@ class TestLoanManagement(AccountTestInvoicingCommon):
 
         self.assertEqual(len(loan.line_ids), 48)  # 4 years
         self.assertRecordValues(loan.line_ids[0] | loan.line_ids[-1], [{
-            'date': fields.Date.today() - relativedelta(years=1),
+            'date': fields.Date.from_string('2023-01-01'),
             'principal': 304.60,
             'interest': 250.00,
             'payment': 554.6,
             'outstanding_balance': 19_595.65,  # = 19_900.25 - 304.60
         }, {
-            'date': fields.Date.today() + relativedelta(years=3) - relativedelta(months=1),
+            'date': fields.Date.from_string('2026-12-01'),
             'principal': 547.72,
             'interest': 6.88,
             'payment': 554.6,
