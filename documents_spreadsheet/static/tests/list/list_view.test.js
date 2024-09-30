@@ -593,16 +593,16 @@ test("See records is visible even if the formula is lowercase", async function (
     const { env, model } = await createSpreadsheetFromListView();
     selectCell(model, "B2");
     const root = cellMenuRegistry.getAll().find((item) => item.id === "list_see_record");
-    expect(root.isVisible(env)).not.toBe(undefined);
+    expect(root.isVisible(env)).toBe(true);
     setCellContent(model, "B2", getCellFormula(model, "B2").replace("ODOO.LIST", "odoo.list"));
-    expect(root.isVisible(env)).not.toBe(undefined);
+    expect(root.isVisible(env)).toBe(true);
 });
 
 test("See records is not visible if the formula is in error", async function () {
     const { env, model } = await createSpreadsheetFromListView();
     selectCell(model, "B2");
     const root = cellMenuRegistry.getAll().find((item) => item.id === "list_see_record");
-    expect(root.isVisible(env)).not.toBe(undefined);
+    expect(root.isVisible(env)).toBe(true);
     setCellContent(
         model,
         "B2",
@@ -620,7 +620,7 @@ test("See record.isVisible() don't throw on spread values", async function () {
     selectCell(model, "D1");
     await animationFrame();
     const root = cellMenuRegistry.getAll().find((item) => item.id === "list_see_record");
-    expect(root.isVisible(env)).toBe(undefined);
+    expect(root.isVisible(env)).toBe(false);
 });
 
 test("Cannot see record of list formula without value", async function () {
