@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details
 
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from odoo.addons.planning.tests.common import TestCommonPlanning
 
 
@@ -52,7 +53,8 @@ class TestPeriodDuplication(TestCommonPlanning):
 
         self.env['planning.slot'].action_copy_previous_week('2019-06-09 00:00:00', [['start_datetime', '<=', '2020-04-04 21:59:59'], ['end_datetime', '>=', '2020-03-28 23:00:00']])
 
-        self.assertEqual(len(self.get_by_employee(employee)), 5, 'duplicate has only duplicated slots that fit entirely in the period')
+        slots = self.get_by_employee(employee)
+        self.assertEqual(len(slots), 5, 'duplicate has only duplicated slots that fit entirely in the period')
 
         duplicated_slots = self.env['planning.slot'].search([
             ('employee_id', '=', employee.id),
@@ -248,3 +250,119 @@ class TestPeriodDuplication(TestCommonPlanning):
             ('end_datetime', '<', datetime(2022, 10, 25, 23, 59)),
         ])
         self.assertEqual(0, len(duplicated_slots), 'no slot should be duplicated on a non-working days')
+
+    def test_duplication_should_take_filters_into_account(self):
+        PlanningSlot = self.env['planning.slot']
+        dt = datetime(2020, 10, 26, 0, 0)
+        copied, to_copy = PlanningSlot.with_context(tz='Europe/Brussels').action_copy_previous_week(
+            str(dt), [
+                ['start_datetime', '<=', dt],
+                ['end_datetime', '>=', dt - relativedelta(weeks=1)],
+                ['resource_id', '=', self.resource_joseph.id],
+            ]
+        )
+        self.assertEqual(PlanningSlot.browse(copied + to_copy).resource_id, self.resource_joseph,
+                         "Filter should be taken into account when copying previous week")
+
+    def test_duplication_should_only_copy_once_except_if_undone(self):
+        PlanningSlot = self.env['planning.slot']
+        dt = datetime(2020, 10, 26, 0, 0)
+        domain = [
+            ['start_datetime', '<=', dt + relativedelta(weeks=1)],
+            ['end_datetime', '>=', dt],
+            ['resource_id', '=', self.resource_joseph.id],
+        ]
+
+        def copy_slot():
+            return PlanningSlot.with_context(tz='Europe/Brussels').action_copy_previous_week(
+                str(dt), [
+                    ['start_datetime', '<=', dt],
+                    ['end_datetime', '>=', dt - relativedelta(weeks=1)],
+                    ['resource_id', '=', self.resource_joseph.id],
+                ]
+            )
+
+        copied, to_copy = copy_slot()
+        self.assertTrue(copied, "The slot should be copied")
+        self.assertTrue(PlanningSlot.search(domain), "The slot should be copied")
+
+        self.assertFalse(copy_slot(), "The slot shouldn't be copied, as it already exists")
+
+        PlanningSlot.browse(copied).action_rollback_copy_previous_week(to_copy)
+        self.assertFalse(PlanningSlot.search(domain), "The slot should be deleted")
+        self.assertTrue(copy_slot(), "The slot should be copied again, as it was deleted")
+
+    def test_duplication_should_create_open_shift_when_outside_schedule(self):
+        PlanningSlot = self.env['planning.slot']
+        dt = datetime(2023, 7, 24, 0, 0)
+        PlanningSlot.create({
+            'resource_id': self.resource_joseph.id,
+            'start_datetime': dt + relativedelta(hour=19),
+            'end_datetime': dt + relativedelta(hour=20),
+        })
+        copied, _dummy = PlanningSlot.with_context(tz='Europe/Brussels').action_copy_previous_week(
+            str(dt + relativedelta(weeks=1)), [
+                ['start_datetime', '<=', dt + relativedelta(weeks=1)],
+                ['end_datetime', '>=', dt],
+                ['resource_id', '=', self.resource_joseph.id],
+            ]
+        )
+        self.assertFalse(PlanningSlot.browse(copied).resource_id, "The slot should be copied as open, as it's outside the schedule")
+
+    def test_duplication_should_create_assigned_shift_when_flexible_resource(self):
+        PlanningSlot = self.env['planning.slot']
+        dt = datetime(2023, 7, 24, 0, 0)
+        flexible_resource = self.env['resource.resource'].create({
+            'name': 'Flexible Resource',
+            'calendar_id': False,
+        })
+        PlanningSlot.create({
+            'resource_id': flexible_resource.id,
+            'start_datetime': dt + relativedelta(hour=19),
+            'end_datetime': dt + relativedelta(hour=20),
+        })
+        copied, _dummy = PlanningSlot.with_context(tz='Europe/Brussels').action_copy_previous_week(
+            str(dt + relativedelta(weeks=1)), [
+                ['start_datetime', '<=', dt + relativedelta(weeks=1)],
+                ['end_datetime', '>=', dt],
+                ['resource_id', '=', flexible_resource.id],
+            ]
+        )
+        self.assertEqual(PlanningSlot.browse(copied).resource_id, flexible_resource, "The slot should be copied as assigned, as its resource is flexible")
+
+    def test_duplication_should_create_open_shift_when_conflicting_destination(self):
+        PlanningSlot = self.env['planning.slot']
+        dt = datetime(2023, 7, 24, 0, 0)
+        PlanningSlot.create([{
+            'resource_id': self.resource_joseph.id,
+            'start_datetime': dt + relativedelta(hours=9, weeks=i),
+            'end_datetime': dt + relativedelta(hours=15, weeks=i),
+        } for i in range(2)])
+        copied, _dummy = PlanningSlot.with_context(tz='Europe/Brussels').action_copy_previous_week(
+            str(dt + relativedelta(weeks=1)), [
+                ['start_datetime', '<=', dt + relativedelta(weeks=1)],
+                ['end_datetime', '>=', dt],
+                ['resource_id', '=', self.resource_joseph.id],
+            ]
+        )
+        self.assertFalse(PlanningSlot.browse(copied).resource_id, "The slot should be copied as open, as another shift already exists at this time")
+
+    def test_duplication_should_create_open_shift_when_conflicting_origin(self):
+        PlanningSlot = self.env['planning.slot']
+        dt = datetime(2023, 7, 24, 0, 0)
+        PlanningSlot.create([{
+            'resource_id': self.resource_joseph.id,
+            'start_datetime': dt + relativedelta(hours=9),
+            'end_datetime': dt + relativedelta(hours=15),
+        } for _dummy in range(2)])
+        copied, _dummy = PlanningSlot.with_context(tz='Europe/Brussels').action_copy_previous_week(
+            str(dt + relativedelta(weeks=1)), [
+                ['start_datetime', '<=', dt + relativedelta(weeks=1)],
+                ['end_datetime', '>=', dt],
+                ['resource_id', '=', self.resource_joseph.id],
+            ]
+        )
+        resource_ids = [s.resource_id.id for s in PlanningSlot.browse(copied)]
+        self.assertEqual(len(resource_ids), 2, "Both shifts should be copied")
+        self.assertIn(self.resource_joseph.id, resource_ids, "One of the shifts should be assigned")
+        self.assertIn(False, resource_ids, "One of the shifts should open")

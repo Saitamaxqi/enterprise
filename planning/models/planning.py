@@ -1752,17 +1752,8 @@ class Planning(models.Model):
                 attendance_interval_company = interval & attendance_intervals_per_calendar[company_calendar]
             # Check if interval is contained in the company leaves interval
             unavailable_interval_company = interval & leave_intervals_per_calendar[company_calendar]
-            if slot.allocation_type == 'planning' and not unavailable_interval_company and not attendance_interval_resource:
-                # If the slot is not a forecast and there are no expected attendance, neither a company leave
-                # check if the slot is planned during an afternoon or a morning during which the resource/company works/is opened
-
-                # /!\ Name of such attendance is an "Extended Attendance", see hereafter
-                interval = slot._get_half_day_interval(values)  # Get the afternoon and/or the morning whole interval where the planning slot exists.
-                attendance_interval_resource = interval & attendance_resource
-                attendance_interval_company = interval & attendance_intervals_per_calendar[company_calendar]
-                unavailable_interval_company = interval & leave_intervals_per_calendar[company_calendar]
             unavailable_interval_resource = unavailable_interval_company if not slot.resource_id else (interval & unavailable_intervals_per_resource[slot.resource_id])
-            if (attendance_interval_resource - unavailable_interval_company) or (attendance_interval_company - unavailable_interval_company):
+            if not unavailable_interval_company:
                 # Either the employee has, at least, some attendance that are not during the company unavailability
                 # Either the company has, at least, some attendance that are not during the company unavailability
 
