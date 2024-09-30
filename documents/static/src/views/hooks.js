@@ -552,7 +552,7 @@ export function useEmbeddedAction() {
             const result = await orm.call(
                 "documents.document",
                 "action_execute_embedded_action",
-                [[actionId]],
+                [actionId],
                 {
                     context,
                 }

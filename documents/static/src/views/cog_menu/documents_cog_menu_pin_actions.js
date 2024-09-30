@@ -58,7 +58,8 @@ export const documentCogMenuPinAction = {
     Component: DocumentCogMenuPinAction,
     groupNumber: STATIC_COG_GROUP_ACTION_PIN,
     isDisplayed: (env) =>
+        env.model.documentService.userIsDocumentUser &&
         DocumentCogMenuPinAction.isVisible(env, ({ folder, documentService }) =>
             documentService.isEditable(folder)
-        ),
+        )
 };
