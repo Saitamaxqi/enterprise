@@ -180,12 +180,6 @@ export class DocumentsSearchModel extends SearchModel {
         if (typeof valueId === "number") {
             this.documentService.logAccess(selectedFolder.access_token);
         }
-        if (!valueId) { // Home
-            const item = Object.values(this.searchItems).find(o => o['name'] === "no_shortcuts");
-            if (item && this.query.findIndex((queryElem) => queryElem.searchItemId === item.id) < 0) {
-                this.toggleSearchItem(item.id);
-            }
-        }
     }
 
     /**
