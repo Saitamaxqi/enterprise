@@ -63,12 +63,22 @@ for record in records:
                 'mail_reply', 'mail_not_reply',
                 'mail_click', 'mail_not_click',
                 'mail_bounce',
+                # whatsapp
+                'whatsapp_click', 'whatsapp_not_click',
+                'whatsapp_read', 'whatsapp_not_read',
+                'whatsapp_replied', 'whatsapp_not_replied',
+                'whatsapp_bounced',
             ]
         ])
         (cls.test_sa_descr_mail_open, cls.test_sa_descr_mail_not_open,
             cls.test_sa_descr_mail_reply, cls.test_sa_descr_mail_not_reply,
             cls.test_sa_descr_mail_click, cls.test_sa_descr_mail_not_click,
-            cls.test_sa_descr_mail_bounce) = cls.test_sa_descr
+            cls.test_sa_descr_mail_bounce,
+            cls.test_sa_descr_wa_click, cls.test_sa_descr_wa_not_click,
+            cls.test_sa_descr_wa_read, cls.test_sa_descr_wa_not_read,
+            cls.test_sa_descr_wa_replied, cls.test_sa_descr_wa_not_replied,
+            cls.test_sa_descr_wa_bounced,
+        ) = cls.test_sa_descr
         cls.test_sa_unlink = cls.env['ir.actions.server'].create({
             'code': "records.unlink()",
             'model_id': cls.env['ir.model']._get_id('marketing.test.sms'),
