@@ -41,6 +41,7 @@
 
         'report/hr_contract_employee_report_views.xml',
         'report/hr_contract_history_report_views.xml',
+        'report/hr_contract_recruitment_report_views.xml',
     ],
     'demo': [
         'data/hr_contract_salary_demo.xml',
