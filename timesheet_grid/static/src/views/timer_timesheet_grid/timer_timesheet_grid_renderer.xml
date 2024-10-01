@@ -104,9 +104,6 @@
                 'text-warning' : column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] gt 0.00001,
             }</attribute>
         </xpath>
-        <xpath expr="//div[hasclass('o_grid_bar_chart_total_title')]/span" position="after">
-            <a t-esc="column.grandTotal - column._dataPoint.data.workingHours.daily[column.value]"/>
-        </xpath>
     </t>
     <t t-name="timesheet_grid.TimerGridTotal" t-inherit="web_grid.barChart">
         <xpath expr="//t/div" position="before">
