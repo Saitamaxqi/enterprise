@@ -1,9 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Sweden - SIE Import',
+    'name': 'Sweden - SIE 5 Import',
     'countries': ['se'],
-    'summary': 'Import Accounting Data from SIE files',
+    'summary': 'Import Accounting Data from SIE 5 files',
     'version': '1.0',
     'description': """
         Module for the import of SIE 5 standard files.

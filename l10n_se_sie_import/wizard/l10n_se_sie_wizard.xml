@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <record id="action_open_load_sie" model="ir.actions.act_window">
-            <field name="name">Load SIE file</field>
+            <field name="name">Load SIE 5 file</field>
             <field name="res_model">l10n_se.sie.import.wizard</field>
             <field name="view_mode">form</field>
             <field name="target">new</field>

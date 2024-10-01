@@ -67,15 +67,21 @@
                             SIE 5
                         </h2>
                         <p>
-                            The SIE standard file format is very common in Sweden for several purposes such as auditing, importing and exporting data from and to other accounting softwares.
-                            <a class="fw-bold" href="#" t-on-click.prevent="() => this._openModuleInstallation('l10n_se_sie_import')">
-                                SIE Import module
-                            </a>
-                            is required to import the SIE and SIE entry files.
-                            For general SIE, we will setup your charts of accounts balances, journals, partners, and the history of journal entries (journals data must be present in the file).
-                            For the SIE entry, only entries and partners will be created, the rest must already be present in the system.
-
+                            The SIE standard file format is very common in Sweden for several purposes such as auditing, importing and exporting data
+                            from and to other accounting applications. Odoo support importing data from type 5 of SIE.
+                            <ul>
+                                <li>
+                                    <a class="fw-bold" href="#" t-on-click.prevent="() => this._openModuleInstallation('l10n_se_sie_import')">
+                                        SIE 5 Import module
+                                    </a>
+                                    is required to import the SIE 5 and SIE 5 entry files.
+                                    For general SIE 5, we will set up your charts of accounts balances, journals, partners, and the history of journal entries
+                                    (journals data must be present in the file).
+                                    For the SIE 5 entry, only entries and partners will be created, the rest must already be present in the system.
+                                </li>
+                            </ul>
                         </p>
+                        <div class="d-flex gap-2 sie-import-buttons"/>
                     </div>
                 </t>
                 <div class="excel-import pt-4">
