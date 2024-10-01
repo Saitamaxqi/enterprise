@@ -381,7 +381,7 @@ class AccountMove(models.Model):
         if payment_way:
             payment_method = self.env['l10n_mx_edi.payment.method'].search([('code', '=', payment_way)])
             cfdi_infos['payment_way'] = f'{payment_way} - {payment_method.name}'
-        cfdi_infos['usage_desc'] = dict(USAGE_SELECTION).get(cfdi_infos['usage'])
+        cfdi_infos['usage_desc'] = dict(self._fields['l10n_mx_edi_usage']._description_selection(self.env)).get(cfdi_infos['usage'])
 
         return cfdi_infos
 
