@@ -4,30 +4,16 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server saas~17.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-20 10:49+0000\n"
-"PO-Revision-Date: 2023-11-20 10:49+0000\n"
+"POT-Creation-Date: 2024-10-01 14:44+0000\n"
+"PO-Revision-Date: 2024-10-01 14:44+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
 "Plural-Forms: \n"
-
-#. module: l10n_ar_reports
-#: model_terms:ir.ui.view,arch_db:l10n_ar_reports.search_template_ar_vat_book
-msgid ""
-"<span class=\"fa fa-filter\"/>\n"
-"                    Tax Type:"
-msgstr ""
-
-#. module: l10n_ar_reports
-#: model_terms:ir.ui.view,arch_db:l10n_ar_reports.res_config_settings_view_form
-msgid ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
-msgstr ""
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__afip_responsibility_type_id
@@ -45,8 +31,8 @@ msgid "Afip Responsibility Type Name"
 msgstr ""
 
 #. module: l10n_ar_reports
-#. odoo-python
-#: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
+#. odoo-javascript
+#: code:addons/l10n_ar_reports/static/src/components/argentinian_report/filters.js:0
 msgid "All"
 msgstr ""
 
@@ -95,7 +81,6 @@ msgstr ""
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_res_company__l10n_ar_computable_tax_credit
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_res_config_settings__l10n_ar_computable_tax_credit
-#: model:ir.model.fields,field_description:l10n_ar_reports.field_res_config_test__l10n_ar_computable_tax_credit
 msgid "Computable Tax Credit: Prorate Options"
 msgstr ""
 
@@ -379,7 +364,7 @@ msgstr ""
 #. module: l10n_ar_reports
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
-msgid "The country '%s' does not have a '%s' configured."
+msgid "The country '%(country)s' does not have a '%(vat_type)s' configured."
 msgstr ""
 
 #. module: l10n_ar_reports

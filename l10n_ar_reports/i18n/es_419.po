@@ -6,37 +6,21 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-11-20 10:50+0000\n"
-"PO-Revision-Date: 2023-11-20 10:50+0000\n"
+"POT-Creation-Date: 2024-10-01 14:44+0000\n"
+"PO-Revision-Date: 2024-09-25 08:19-0600\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
-
-#. module: l10n_ar_reports
-#: model_terms:ir.ui.view,arch_db:l10n_ar_reports.search_template_ar_vat_book
-msgid ""
-"<span class=\"fa fa-filter\"/>\n"
-"                    Tax Type:"
-msgstr ""
-"<span class=\"fa fa-filter\"/>\n"
-"                    Tipo de Impuesto:"
-
-#. module: l10n_ar_reports
-#: model_terms:ir.ui.view,arch_db:l10n_ar_reports.res_config_settings_view_form
-msgid ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Values set here are company-"
-"specific.\" groups=\"base.group_multi_company\"/>"
-msgstr ""
-"<span class=\"fa fa-lg fa-building-o\" title=\"Valores seleccionados son especificos de la"
-"compañía.\" groups=\"base.group_multi_company\"/>"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 3.5\n"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__afip_responsibility_type_id
 msgid "AFIP Responsibility Type"
-msgstr "Tipo de Responsabilidad AFIP"
+msgstr "Tipo de responsabilidad AFIP"
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
@@ -46,12 +30,11 @@ msgstr "Responsabilidad AFIP"
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__afip_responsibility_type_name
 msgid "Afip Responsibility Type Name"
-msgstr "Nombre Responsabilidad AFIP"
+msgstr "Nombre del tipo de responsabilidad AFIP"
 
 #. module: l10n_ar_reports
-#. odoo-python
-#: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
-#, python-format
+#. odoo-javascript
+#: code:addons/l10n_ar_reports/static/src/components/argentinian_report/filters.js:0
 msgid "All"
 msgstr "Todos"
 
@@ -61,13 +44,13 @@ msgid ""
 "All the taxes tat ar not VAT taxes or iibb perceptions and that are realted "
 "to documents that have VAT"
 msgstr ""
-"Todos los impuestos que no son IVA a percepción IIBB y que estan "
+"Todos los impuestos que no son IVA a percepción IIBB y que están "
 "relacionados  a comprobantes que tienen IVA"
 
 #. module: l10n_ar_reports
 #: model:account.report,name:l10n_ar_reports.l10n_ar_vat_book_report
 msgid "Argentinean VAT book"
-msgstr "Libro de IVA Argentino"
+msgstr "Libro de IVA argentino"
 
 #. module: l10n_ar_reports
 #: model:ir.model,name:l10n_ar_reports.model_l10n_ar_tax_report_handler
@@ -93,20 +76,19 @@ msgstr "Municipales"
 #. module: l10n_ar_reports
 #: model:ir.model,name:l10n_ar_reports.model_res_company
 msgid "Companies"
-msgstr "Compañías"
+msgstr "Empresas"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__company_id
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
 msgid "Company"
-msgstr "Compañía"
+msgstr "Empresa"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_res_company__l10n_ar_computable_tax_credit
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_res_config_settings__l10n_ar_computable_tax_credit
-#: model:ir.model.fields,field_description:l10n_ar_reports.field_res_config_test__l10n_ar_computable_tax_credit
 msgid "Computable Tax Credit: Prorate Options"
-msgstr "Crédito Fiscal Computado: Opción Prorateo"
+msgstr "Crédito Fiscal Computado: Opción Prorrateo"
 
 #. module: l10n_ar_reports
 #: model:ir.model,name:l10n_ar_reports.model_res_config_settings
@@ -122,7 +104,7 @@ msgstr "País"
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__cuit
 msgid "Cuit"
-msgstr ""
+msgstr "CUIT"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__company_currency_id
@@ -137,7 +119,7 @@ msgstr "Nota de Crédito de Cliente"
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__move_type__out_invoice
 msgid "Customer Invoice"
-msgstr "Factura de Cliente"
+msgstr "Factura de cliente"
 
 #. module: l10n_ar_reports
 #: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_invoice_date
@@ -149,7 +131,7 @@ msgstr "Fecha"
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
 msgid "Date: Last month"
-msgstr "Fecha: Último mes"
+msgstr "Fecha: último mes"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__display_name
@@ -160,19 +142,19 @@ msgstr "Nombre a mostrar"
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__document_type_id
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
 msgid "Document Type"
-msgstr "Tipo de Comprobante"
+msgstr "Tipo de comprobante"
 
 #. module: l10n_ar_reports
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
 msgid "Edit Country"
-msgstr "Editar País"
+msgstr "Editar país"
 
 #. module: l10n_ar_reports
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
 msgid "Edit Partner"
-msgstr "Editar Contacto"
+msgstr "Editar contacto"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__move_id
@@ -183,32 +165,32 @@ msgstr "Asiento"
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__res_company__l10n_ar_computable_tax_credit__global
 msgid "Global"
-msgstr ""
+msgstr "Global"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__base_10
 msgid "Grav. 10,5%"
-msgstr ""
+msgstr "Grav. 10,5%"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__base_25
 msgid "Grav. 2,5%"
-msgstr ""
+msgstr "Grav. 2,5%"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__base_21
 msgid "Grav. 21%"
-msgstr ""
+msgstr "Grav. 21%"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__base_27
 msgid "Grav. 27%"
-msgstr ""
+msgstr "Grav. 27%"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__base_5
 msgid "Grav. 5%"
-msgstr ""
+msgstr "Grav. 5%"
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
@@ -218,12 +200,12 @@ msgstr "Agrupar por..."
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__invoice_date
 msgid "Invoice Date"
-msgstr "Fecha factura"
+msgstr "Fecha de la factura"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__journal_id
@@ -233,19 +215,18 @@ msgstr "Diario"
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__move_type__entry
 msgid "Journal Entry"
-msgstr "Asiento Contable"
+msgstr "Asiento contable"
 
 #. module: l10n_ar_reports
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
-#, python-format
 msgid "Legal Entity VAT"
-msgstr "CUIT Entidad"
+msgstr "CUIT de persona jurídica"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__move_name
 msgid "Move Name"
-msgstr "Nombre de Asiento"
+msgstr "Nombre de asiento"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__move_type
@@ -260,14 +241,13 @@ msgstr "Nombre"
 #. module: l10n_ar_reports
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
-#, python-format
 msgid "Natural Person VAT"
-msgstr "CUIT Persona Física"
+msgstr "CUIT de persona física"
 
 #. module: l10n_ar_reports
 #: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_not_taxed
 msgid "Not Taxed"
-msgstr "No Gravado"
+msgstr "No gravado"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,help:l10n_ar_reports.field_account_ar_vat_line__not_taxed
@@ -275,8 +255,8 @@ msgid ""
 "Not Taxed / Exempt.\\All lines that have VAT 0, Exempt, Not Taxed or Not "
 "Applicable"
 msgstr ""
-"No Gravado / Exento.\\Todas las lineas que tienen VAT 0, Exento, No Gravado "
-"o No Corresponde"
+"No gravado / Exento.\\Todas las líneas que tienen IVA 0, Exento, No gravado "
+"o No corresponde"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__not_taxed
@@ -287,7 +267,7 @@ msgstr "No grav/ex"
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
 msgid "Only one tax type should be selected."
-msgstr "Solo un tipo de impuesto debe ser seleccionado"
+msgstr "Debe seleccionar solo un tipo de impuesto"
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_tree
@@ -322,13 +302,13 @@ msgstr "Nombre de la empresa"
 #: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_perc_earnings
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__perc_earnings
 msgid "Perc. Earnings"
-msgstr "Perc. Gananc."
+msgstr "Gcia. perc."
 
 #. module: l10n_ar_reports
 #: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_perc_iibb
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__perc_iibb
 msgid "Perc. IIBB"
-msgstr ""
+msgstr "Perc. IIBB"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__state__posted
@@ -344,12 +324,12 @@ msgstr "Apuntes contables publicados"
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__move_type__in_receipt
 msgid "Purchase Receipt"
-msgstr "Recibo de Compra"
+msgstr "Recibo de compra"
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
 msgid "Purchase VAT"
-msgstr "IVA Compras"
+msgstr "IVA de compras"
 
 #. module: l10n_ar_reports
 #. odoo-python
@@ -366,12 +346,12 @@ msgstr "Ventas"
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__move_type__out_receipt
 msgid "Sales Receipt"
-msgstr "Recibo de Venta"
+msgstr "Recibo de venta"
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
 msgid "Sales VAT"
-msgstr "IVA Ventas"
+msgstr "IVA de ventas"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__state
@@ -382,7 +362,7 @@ msgstr "Estado"
 #. odoo-javascript
 #: code:addons/l10n_ar_reports/static/src/components/argentinian_report/filter_tax_type.xml:0
 msgid "Tax Type:"
-msgstr "Tipo de Impuesto:"
+msgstr "Tipo de impuesto:"
 
 #. module: l10n_ar_reports
 #: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_taxed
@@ -392,8 +372,8 @@ msgstr "Gravado"
 #. module: l10n_ar_reports
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
-msgid "The country '%s' does not have a '%s' configured."
-msgstr "El país '%s' no tiene '%s' configurado."
+msgid "The country '%(country)s' does not have a '%(vat_type)s' configured."
+msgstr "El país '%(country)s' no tiene '%(vat_type)s' configurado."
 
 #. module: l10n_ar_reports
 #. odoo-python
@@ -408,7 +388,7 @@ msgstr "El contacto '%s' no tiene país configurado."
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__total
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_tree
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
@@ -501,25 +481,25 @@ msgstr "Línea de IVA para análisis en localización argentina"
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__move_type__in_invoice
 msgid "Vendor Bill"
-msgstr "Factura de Proveedor"
+msgstr "Factura de proveedor"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__move_type__in_refund
 msgid "Vendor Credit Note"
-msgstr "Nota de Crédito de Proveedor"
+msgstr "Nota de crédito de proveedor"
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
 msgid "With Document Type"
-msgstr "Con Tipo de Documento"
+msgstr "Con tipo de documento"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__res_company__l10n_ar_computable_tax_credit__wo_prorate
 msgid "Without Prorate"
-msgstr "Sin Prorateo"
+msgstr "Sin prorrateo"
 
 #. module: l10n_ar_reports
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
 msgid "ZIP"
-msgstr ""
+msgstr "ZIP"
