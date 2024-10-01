@@ -201,7 +201,9 @@ class WhatsappComposer(models.TransientModel):
                     rec.header_text_1 = header_param[0].demo_value
             if rec.wa_template_id.variable_ids:
                 free_text_count = 1
-                for param in rec.wa_template_id.variable_ids.filtered(lambda line: line.line_type == 'body' and line.field_type == 'free_text'):
+                filtered_variables = rec.wa_template_id.variable_ids.filtered(lambda line: line.line_type == 'body' and line.field_type == 'free_text')
+                sorted_variables = filtered_variables.sorted(key=lambda var: var._extract_variable_index())
+                for param in sorted_variables:
                     rec[f"free_text_{free_text_count}"] = param.demo_value
                     free_text_count += 1
 
@@ -307,7 +309,8 @@ class WhatsappComposer(models.TransientModel):
         self.ensure_one()
         template_variables_value = self.wa_template_id.variable_ids._get_variables_value(rec)
         text_vars = self.wa_template_id.variable_ids.filtered(lambda var: var.field_type == 'free_text')
-        for var_index, body_text_var in zip(range(1, self.number_of_free_text + 1), text_vars.filtered(lambda var: var.line_type == 'body')):
+        body_text_vars = text_vars.filtered(lambda var: var.line_type == 'body').sorted(key=lambda var: var._extract_variable_index())
+        for var_index, body_text_var in zip(range(1, self.number_of_free_text + 1), body_text_vars):
             free_text_x = self[f'free_text_{var_index}']
             if free_text_x:
                 template_variables_value[f'body-{body_text_var.name}'] = free_text_x

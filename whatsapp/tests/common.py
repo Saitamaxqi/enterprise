@@ -22,7 +22,7 @@ class MockOutgoingWhatsApp(common.BaseCase):
     when contacting it. """
 
     @contextmanager
-    def mockWhatsappGateway(self):
+    def mockWhatsappGateway(self, exp_json_data=None):
         self._init_wa_mock()
         wa_msg_origin = WhatsappMessage.create
         partner_create_origin = ResPartner.create
@@ -52,6 +52,8 @@ class MockOutgoingWhatsApp(common.BaseCase):
             raise WhatsAppError("Please make sure to define a template before proceeding.")
 
         def _submit_template_new(json_data):
+            if exp_json_data:
+                self.assertDictEqual(json.loads(json_data), exp_json_data)
             if json_data:
                 return {
                     "id": f"{time.time():.15f}",

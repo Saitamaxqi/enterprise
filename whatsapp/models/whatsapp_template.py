@@ -463,7 +463,7 @@ class WhatsappTemplate(models.Model):
         if not self.body:
             return None
         body_component = {'type': 'BODY', 'text': self.body}
-        body_params = self.variable_ids.filtered(lambda line: line.line_type == 'body')
+        body_params = self.variable_ids.filtered(lambda line: line.line_type == 'body').sorted(key=lambda var: var._extract_variable_index())
         if body_params:
             body_component['example'] = {'body_text': [body_params.mapped('demo_value')]}
         return body_component
