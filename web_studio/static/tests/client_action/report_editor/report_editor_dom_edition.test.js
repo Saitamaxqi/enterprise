@@ -1,8 +1,9 @@
+import { setupEditor } from "@html_editor/../tests/_helpers/editor";
+import { getContent } from "@html_editor/../tests/_helpers/selection";
 import { before, expect, test } from "@odoo/hoot";
 import { hover, queryAll, queryFirst } from "@odoo/hoot-dom";
+import { animationFrame } from "@odoo/hoot-mock";
 import { contains } from "@web/../tests/web_test_helpers";
-import { getContent } from "@html_editor/../tests/_helpers/selection";
-import { setupEditor } from "@html_editor/../tests/_helpers/editor";
 import { registry } from "@web/core/registry";
 
 before(() => {
@@ -21,9 +22,9 @@ before(() => {
     }
 });
 
+import { QWebPlugin } from "@html_editor/others/qweb_plugin";
 import { MAIN_PLUGINS } from "@html_editor/plugin_sets";
 import { QWebTablePlugin } from "@web_studio/client_action/report_editor/report_editor_wysiwyg/qweb_table_plugin";
-import { QWebPlugin } from "@html_editor/others/qweb_plugin";
 
 const REPORT_EDITOR_PLUGINS = [...MAIN_PLUGINS, QWebPlugin, QWebTablePlugin];
 const baseConfig = {
@@ -252,4 +253,93 @@ ${"                    "}
                 </q-tr>
             </q-tbody>
         </q-table>`);
+});
+
+test("move outside table menu must remove it if the menu is close", async () => {
+    await setupEditor(
+        `<div style="width: 100px; margin-top: 50px; margin-left: 50px;">
+        <q-table>
+            <q-thead>
+                <q-tr>
+                    <q-th>HEAD1</q-th>
+                    <q-th>HEAD2</q-th>
+                </q-tr>
+            </q-thead>
+            <q-tbody>
+                <q-tr>
+                    <t t-if="true">
+                        <q-td>1[]</q-td>
+                        <q-td>2</q-td>
+                    </t>
+                    <t t-else="">
+                        <q-td>3</q-td>
+                        <q-td>4</q-td>
+                    </t>
+                </q-tr>
+                <q-tr>
+                    <q-td>5</q-td>
+                    <q-td>6</q-td>
+                </q-tr>
+            </q-tbody>
+        </q-table></div>`,
+        getEditorOptions()
+    );
+
+    await hover(queryAll(":iframe q-th")[1]);
+    await animationFrame();
+    expect(".o-overlay-container .o-we-table-menu").toHaveCount(1);
+
+    await hover(":iframe q-table");
+    await animationFrame();
+    expect(".o-overlay-container .o-we-table-menu").toHaveCount(0);
+});
+
+test("move outside table menu shouldn't remove it if the menu is close, we should click to close it", async () => {
+    await setupEditor(
+        `<div style="width: 100px; margin-top: 50px; margin-left: 50px;">
+        <q-table>
+            <q-thead>
+                <q-tr>
+                    <q-th>HEAD1</q-th>
+                    <q-th>HEAD2</q-th>
+                </q-tr>
+            </q-thead>
+            <q-tbody>
+                <q-tr>
+                    <t t-if="true">
+                        <q-td>1[]</q-td>
+                        <q-td>2</q-td>
+                    </t>
+                    <t t-else="">
+                        <q-td>3</q-td>
+                        <q-td>4</q-td>
+                    </t>
+                </q-tr>
+                <q-tr>
+                    <q-td>5</q-td>
+                    <q-td>6</q-td>
+                </q-tr>
+            </q-tbody>
+        </q-table></div>`,
+        getEditorOptions()
+    );
+
+    await hover(queryAll(":iframe q-th")[1]);
+    await animationFrame();
+    expect(".o-overlay-container .o-we-table-menu").toHaveCount(1);
+    expect(".o-dropdown-item").toHaveCount(0);
+
+    await contains(".o-overlay-container .o-we-table-menu").click();
+    expect(".o-overlay-container .o-we-table-menu").toHaveCount(1);
+    expect(".o-dropdown-item").toHaveCount(3);
+
+    await hover(":iframe q-table");
+    await animationFrame();
+    expect(".o-overlay-container .o-we-table-menu").toHaveCount(1);
+    expect(".o-dropdown-item").toHaveCount(3);
+
+    await contains(":iframe q-table").click();
+    await animationFrame();
+    expect(".o-overlay-container .o-we-table-menu").toHaveCount(0);
+    expect(".o-dropdown-item").toHaveCount(0);
 });

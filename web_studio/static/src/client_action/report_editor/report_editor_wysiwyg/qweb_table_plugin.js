@@ -159,6 +159,14 @@ export class QWebTablePlugin extends Plugin {
             { sequence: 30 }
         );
 
+        this.isMenuOpened = false;
+        const closeMenus = () => {
+            if (this.isMenuOpened) {
+                this.isMenuOpened = false;
+                this.colMenu.close();
+            }
+        };
+        this.addDomListener(this.document, "scroll", closeMenus, true);
         this.addDomListener(this.document, "pointermove", this.onMouseMove);
     }
 
@@ -187,7 +195,7 @@ export class QWebTablePlugin extends Plugin {
 
     onMouseMove(ev) {
         const target = ev.target;
-        if (this.colMenu.isOpen) {
+        if (this.isMenuOpened) {
             return;
         }
         if (
@@ -238,9 +246,11 @@ export class QWebTablePlugin extends Plugin {
             open: () => {
                 dropdownState.isOpen = true;
                 menuToClose?.close();
+                this.isMenuOpened = true;
             },
             close: () => {
                 dropdownState.isOpen = false;
+                this.isMenuOpened = false;
             },
         });
         return dropdownState;
