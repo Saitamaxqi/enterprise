@@ -475,16 +475,19 @@ class SpreadsheetMixin(models.AbstractModel):
         return list(colors)
 
     def _dispatch_command(self, command):
-        is_accepted = self.dispatch_spreadsheet_message(self._build_new_revision_data(command))
+        self._dispatch_commands([command])
+
+    def _dispatch_commands(self, commands):
+        is_accepted = self.dispatch_spreadsheet_message(self._build_new_revision_data(commands))
         if not is_accepted:
             raise UserError(_("The operation could not be applied because of a concurrent update. Please try again."))
 
-    def _build_new_revision_data(self, command):
+    def _build_new_revision_data(self, commands):
         return {
             "type": "REMOTE_REVISION",
             "serverRevisionId": self.current_revision_uuid,
             "nextRevisionId": str(uuid.uuid4()),
-            "commands": [command],
+            "commands": commands,
         }
 
     def _get_revision_by_uuid(self, revision_uuid):

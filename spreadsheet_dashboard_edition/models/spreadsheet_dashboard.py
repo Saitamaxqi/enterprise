@@ -37,7 +37,7 @@ class SpreadsheetDashboard(models.Model):
         }
         snapshot = data["data"]
         revisions = data["revisions"]
-        revisions.append(self._build_new_revision_data(update_locale_command))
+        revisions.append(self._build_new_revision_data([update_locale_command]))
         return {
             "snapshot": snapshot,
             "revisions": revisions,

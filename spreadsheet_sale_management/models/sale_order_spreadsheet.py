@@ -96,7 +96,31 @@ class SpreadsheetSaleOrder(models.Model):
             ],
             'type': 'RE_INSERT_ODOO_LIST',
         }
-        self._dispatch_command(command)
+        table_command = {
+            'type': 'CREATE_TABLE',
+            'sheetId': 'sheet1',
+            'tableType': 'static',
+            'ranges': [{
+                '_sheetId': 'sheet1',
+                '_zone': {
+                    'top': 0,
+                    'bottom': 100,
+                    'left': 0,
+                    'right': len(SALE_ORDER_LINE_FIELDS) - 1,
+                },
+            }],
+            'config': {
+                'firstColumn': False,
+                'hasFilters': False,
+                'totalRow': False,
+                'lastColumn': False,
+                'numberOfHeaders': 1,
+                'bandedRows': True,
+                'bandedColumns': False,
+                'styleId': 'TableStyleMedium5',
+            }
+        }
+        self._dispatch_commands([command, table_command])
 
     @api.model
     def get_spreadsheets(self, domain=(), offset=0, limit=None):
