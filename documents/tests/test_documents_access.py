@@ -442,6 +442,14 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         shortcut = shortcut.action_create_shortcut(False)
         self.assertEqual(shortcut.shortcut_document_id, self.folder_b)
 
+        self.folder_a.action_update_access_rights(partners={self.internal_user.partner_id.id: ('edit', False)})
+        self.folder_b.action_update_access_rights(partners={self.internal_user.partner_id.id: ('view', False)})
+        with self.assertRaises(AccessError):
+            self.document_gif.with_user(self.internal_user).folder_id = self.folder_a
+
+        with self.assertRaises(AccessError):
+            self.document_gif.with_user(self.internal_user).action_move_documents(self.folder_a.id)
+
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_create_document_access(self):
         with self.assertRaises(AccessError):
@@ -523,6 +531,11 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         self.env['documents.document'].with_user(self.internal_user).create({
             'type': 'folder', 'name': 'a folder', 'folder_id': self.folder_a.id
         })
+        # or create a shortcut inside
+        shortcut = self.document_txt.with_user(self.internal_user).action_create_shortcut(
+            location_folder_id=self.folder_a.id
+        )
+        self.assertEqual(shortcut.folder_id, self.folder_a)
         # Managers can unpin by moving to another odoobot folder
         self.folder_b.owner_id = odoobot
         self.folder_a.with_user(self.document_manager).folder_id = self.folder_b
@@ -764,6 +777,8 @@ class TestDocumentsAccess(TransactionCaseDocuments):
 
         # Check that own shortcut is deleted when access to the target is removed
         # (avoids client fetches on inaccessible previews & others).
+        self.folder_a.action_update_access_rights(access_internal='edit')
+        self.document_txt.action_update_access_rights(access_internal='view', access_via_link='none')
 
         # Access via access_internal
         shortcut = self.document_txt.with_user(self.internal_user).action_create_shortcut(

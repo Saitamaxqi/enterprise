@@ -678,19 +678,9 @@ class DocumentsDocument(models.Model):
         if location_folder_id and location.shortcut_document_id:
             return self.action_create_shortcut(location.shortcut_document_id.id)
 
-        if location:
-            try:
-                location.check_access('write')
-            except UserError as exc:
-                if self.env.user.share:
-                    raise AccessError(_("You are not allowed to write in this folder.")) from exc
-                location = self.browse()  # My Drive
-                self.env.user._bus_send('simple_notification', {
-                    'type': 'info',
-                    'message': _("Shortcut created in My Drive"),
-                })
-            if location.shortcut_document_id:
-                raise AccessError(_("Shortcuts cannot contain documents."))
+        if location and location.user_permission != 'edit':
+            raise AccessError(_("You are not allowed to write in this folder."))
+
         self.check_access('read')
 
         return self.sudo().create([{
@@ -1708,6 +1698,8 @@ class DocumentsDocument(models.Model):
             folder = self.env['documents.document'].browse(folder_id)
             if not self.env.su and folder.user_permission != 'edit':
                 raise AccessError(_("You can't access that folder_id."))
+            if not self.env.su and any(doc.folder_id and doc.folder_id.user_permission != 'edit' for doc in self):
+                raise AccessError(_("You can't move documents out of folders you cannot edit."))
             if folder.type != 'folder' or folder.shortcut_document_id:
                 raise UserError(_("Invalid folder id"))
             if any(not d.active or not folder.active or d.folder_id and not d.folder_id.active for d in self):

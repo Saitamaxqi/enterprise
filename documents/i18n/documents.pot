@@ -59,6 +59,12 @@ msgstr ""
 
 #. module: documents
 #. odoo-javascript
+#: code:addons/documents/static/src/core/document_service.js:0
+msgid "%s documents have been moved."
+msgstr ""
+
+#. module: documents
+#. odoo-javascript
 #: code:addons/documents/static/src/views/search/documents_search_panel.js:0
 msgid "%s file(s) not moved because they are locked by another user"
 msgstr ""
@@ -79,6 +85,12 @@ msgstr ""
 #. odoo-python
 #: code:addons/documents/models/documents_document.py:0
 msgid "%s shared with you"
+msgstr ""
+
+#. module: documents
+#. odoo-javascript
+#: code:addons/documents/static/src/core/document_service.js:0
+msgid "%s shortcuts have been created."
 msgstr ""
 
 #. module: documents
@@ -458,6 +470,12 @@ msgid "A shortcut cannot point to itself"
 msgstr ""
 
 #. module: documents
+#. odoo-javascript
+#: code:addons/documents/static/src/core/document_service.js:0
+msgid "A shortcut has been created."
+msgstr ""
+
+#. module: documents
 #: model_terms:ir.ui.view,arch_db:documents.document_view_form
 msgid "Access"
 msgstr ""
@@ -803,6 +821,14 @@ msgstr ""
 #: code:addons/documents/static/src/js/tours/documents.js:0
 msgid ""
 "As this PDF contains multiple documents, let's split and process in bulk."
+msgstr ""
+
+#. module: documents
+#. odoo-javascript
+#: code:addons/documents/static/src/core/document_service.js:0
+msgid ""
+"At least one document couldn't be moved due to access rights. Shortcuts "
+"have been created."
 msgstr ""
 
 #. module: documents
@@ -3005,7 +3031,7 @@ msgstr ""
 
 #. module: documents
 #. odoo-javascript
-#: code:addons/documents/static/src/views/documents_model_mixin.js:0
+#: code:addons/documents/static/src/core/document_service.js:0
 msgid "The document has been moved."
 msgstr ""
 
@@ -3463,6 +3489,12 @@ msgid ""
 msgstr ""
 
 #. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "You can't move documents out of folders you cannot edit."
+msgstr ""
+
+#. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/documents_model_mixin.js:0
 msgid "You cannot access folders in the trash."
@@ -3512,8 +3544,11 @@ msgstr ""
 
 #. module: documents
 #. odoo-javascript
+#: code:addons/documents/static/src/views/documents_model_mixin.js:0
 #: code:addons/documents/static/src/views/search/documents_search_panel.js:0
-msgid "You don't have the rights to move documents to that folder."
+msgid ""
+"You don't have the rights to move documents nor create shortcut to that "
+"folder."
 msgstr ""
 
 #. module: documents

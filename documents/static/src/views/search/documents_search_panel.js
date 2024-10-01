@@ -316,7 +316,7 @@ export class DocumentsSearchPanel extends SearchPanel {
         ) {
             return;
         }
-        let target_folder_id = value.id === "MY" ? false : value.id;
+        let targetFolderId = value.id === "MY" ? false : value.id;
         const data = JSON.parse(dataTransfer.getData("o_documents_data"));
         const currentFolder = this.env.searchModel.getSelectedFolder();
 
@@ -335,9 +335,9 @@ export class DocumentsSearchPanel extends SearchPanel {
         if (this._notify_wrong_drop_destination(value.id)) {
             return;
         }
-        if (!isEditable(currentFolder) || !isEditable(value)) {
+        if (!isEditable(value)) {
             return this.notification.add(
-                _t("You don't have the rights to move documents to that folder."),
+                _t("You don't have the rights to move documents nor create shortcut to that folder."),
                 {
                     title: _t("Access Error"),
                     type: "warning",
@@ -346,16 +346,14 @@ export class DocumentsSearchPanel extends SearchPanel {
         }
         // Dropping in 'My Drive'
         if (value.rootId === "MY" && currentFolder.rootId !== "MY") {  // Not from my drive => shortcut
-            await this.orm.call("documents.document", "action_create_shortcut", data.recordIds, {
-                location_folder_id: target_folder_id,
-            });
+            await this.orm.call("documents.document", "action_create_shortcut", [data.recordIds, targetFolderId]);
             await this.env.searchModel._reloadSearchModel(true);
             return this.notification.add(
                 _t("Shortcut created"),
                 { title: _t("Done!"), type: "success" }
             );
         }
-        if (target_folder_id === "COMPANY") {
+        if (targetFolderId === "COMPANY") {
             if (
                 movedRecords.some(
                     (r) => r.type === "binary" && !r.checksum?.length && !r.shortcut_document_id
@@ -373,7 +371,7 @@ export class DocumentsSearchPanel extends SearchPanel {
             await this.env.searchModel._reloadSearchModel(true);
             return;
         }
-        if (target_folder_id === "TRASH") {
+        if (targetFolderId === "TRASH") {
             const model = this.env.model;
             await toggleArchive(model, model.root.resModel, data.recordIds, true);
             await model.load();
@@ -390,8 +388,8 @@ export class DocumentsSearchPanel extends SearchPanel {
                 { title: _t("Partial transfer"), type: "warning" }
             );
         }
-        const action_name = ev.ctrlKey ? "action_create_shortcut" : "action_move_documents";
-        await this.orm.call("documents.document", action_name, [data.recordIds, target_folder_id]);
+
+        await this.documentService.moveOrCreateShortcut(data, targetFolderId, ev.ctrlKey);
         await this.env.searchModel._reloadSearchModel(true);
     }
 

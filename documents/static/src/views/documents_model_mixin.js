@@ -322,19 +322,25 @@ export const DocumentsRecordMixin = (component) => class extends component {
             this.selected = true;
         }
         const root = this.model.root;
-        const foldersById = this.model.env.searchModel.getFolders().reduce((agg, folder) => {
-            agg[folder.id] = folder;
-            return agg;
-        }, {});
         const draggableRecords = root.selection.filter(
             (record) => (!record.data.lock_uid || record.data.lock_uid[0] === this.context.uid)
-                && record.data.user_permission === 'edit'
-                && (!foldersById[record.data.folder_id[0]] || foldersById[record.data.folder_id[0]].user_permission === "edit")
         );
         if (draggableRecords.length === 0) {
             ev.preventDefault();
             return;
         }
+        const foldersById = Object.fromEntries(
+            this.model.env.searchModel.getFolders().map((folder) => [folder.id, folder])
+        );
+        const movableRecords = draggableRecords.filter(
+            (record) =>
+                record.data.user_permission === "edit" &&
+                (!record.data.folder_id ||
+                    foldersById[record.data.folder_id[0]].user_permission === "edit"),
+        );
+        const nonMovableRecords = draggableRecords.filter(
+            (record) => !movableRecords.includes(record),
+        );
         const lockedCount = root.selection.reduce((count, record) => {
             return count + (record.data.lock_uid && record.data.lock_uid[0] !== this.context.uid);
         }, 0);
@@ -346,6 +352,8 @@ export const DocumentsRecordMixin = (component) => class extends component {
             "o_documents_data",
             JSON.stringify({
                 recordIds: draggableRecords.map((record) => record.resId),
+                movableRecordIds: movableRecords.map((record) => record.resId),
+                nonMovableRecordIds: nonMovableRecords.map((record) => record.resId),
                 lockedCount,
             })
         );
@@ -380,21 +388,21 @@ export const DocumentsRecordMixin = (component) => class extends component {
         if (!this.isValidDragTarget(ev)) {
             return;
         }
+        if (this.data.user_permission != "edit") {
+            return this.model.notification.add(
+                _t("You don't have the rights to move documents nor create shortcut to that folder."),
+                {
+                    title: _t("Access Error"),
+                    type: "warning",
+                }
+            );
+        }
         if (ev.dataTransfer.types.includes("o_documents_data")) {
             const data = JSON.parse(ev.dataTransfer.getData("o_documents_data"));
 
-            const action_name = ev.ctrlKey ? "action_create_shortcut" : "action_move_documents";
-
             this.model.root.selection.forEach((rec) => rec.selected = false);
-            await this.model.orm.call("documents.document", action_name, [
-                data.recordIds,
-                this.data.id,
-            ]);
+            await this.model.documentService.moveOrCreateShortcut(data, this.data.id, ev.ctrlKey);
             await this.model.env.searchModel._reloadSearchModel(true);
-
-            if (action_name ===  "action_move_documents") {
-                this.model.notification.add(_t("The document has been moved."), { type: "success" });
-            }
         }
     }
 
