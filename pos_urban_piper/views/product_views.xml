@@ -15,7 +15,7 @@
                     <field name="is_recommended_on_urbanpiper" widget="boolean_toggle"
                     groups="point_of_sale.group_pos_user"/>
                     <field name="is_alcoholic_on_urbanpiper" widget="boolean_toggle"
-                    groups="point_of_sale.group_pos_user" invisible="1"/>    <!-- visible in other delivery provider modules -->
+                    groups="point_of_sale.group_pos_user"/>
                 </group>
             </xpath>
         </field>

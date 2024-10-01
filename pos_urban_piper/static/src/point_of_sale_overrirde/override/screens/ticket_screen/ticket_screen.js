@@ -1,4 +1,5 @@
 import { _t } from "@web/core/l10n/translation";
+import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { TicketScreen } from "@point_of_sale/app/screens/ticket_screen/ticket_screen";
 import { patch } from "@web/core/utils/patch";
 import { SelectionPopup } from "@point_of_sale/app/utils/input_popups/selection_popup";
@@ -103,6 +104,18 @@ patch(TicketScreen.prototype, {
     },
 
     async _rejectOrder(order) {
+        if (
+            ["deliveroo", "justeat", "hungerstation"].includes(
+                order.delivery_provider_id.technical_name
+            )
+        ) {
+            return this.dialog.add(AlertDialog, {
+                title: _t("Error"),
+                body: _t(`Rejecting this order is not allowed for "%(providerName)s"`, {
+                    providerName: order.delivery_provider_id.name,
+                }),
+            });
+        }
         this.dialog.add(SelectionPopup, {
             title: _t("Reject Order"),
             list: [

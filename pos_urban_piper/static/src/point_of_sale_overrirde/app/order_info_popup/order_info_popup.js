@@ -40,11 +40,20 @@ export class orderInfoPopup extends Component {
     }
 
     getOrderDetails() {
-        return {
+        const orderDetails = {
             channelOtp: this.extPlatform?.id,
             orderOtp: this.extPlatform?.extras?.order_otp,
             fulfilmentMode: this.extPlatform?.delivery_type,
             outletName: this.store?.name,
         };
+        const deliveryProvider = this.props?.order?.delivery_provider_id?.technical_name;
+        if (deliveryProvider === "talabat") {
+            orderDetails["talabatCode"] = this.extPlatform?.extras?.talabat_code;
+            orderDetails["talabatShortCode"] = this.extPlatform?.extras?.talabat_shortcode;
+        }
+        if (deliveryProvider === "hungerstation") {
+            orderDetails["hungerstationCode"] = this.extPlatform?.extras?.hungerstation_code;
+        }
+        return orderDetails;
     }
 }

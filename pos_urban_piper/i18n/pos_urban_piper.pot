@@ -251,6 +251,12 @@ msgstr ""
 #. module: pos_urban_piper
 #. odoo-javascript
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/ticket_screen/ticket_screen.js:0
+msgid "Error"
+msgstr ""
+
+#. module: pos_urban_piper
+#. odoo-javascript
+#: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/ticket_screen/ticket_screen.js:0
 #: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/store/pos_store.js:0
 msgid "Error to send in preparation display."
 msgstr ""
@@ -287,6 +293,12 @@ msgstr ""
 msgid ""
 "Handle products with urban piper and pos config - Product is linked or not "
 "with appropriate store."
+msgstr ""
+
+#. module: pos_urban_piper
+#. odoo-javascript
+#: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/order_info_popup/order_info_popup.xml:0
+msgid "HungerStation Code"
 msgstr ""
 
 #. module: pos_urban_piper
@@ -641,6 +653,12 @@ msgid "Reject Order"
 msgstr ""
 
 #. module: pos_urban_piper
+#. odoo-javascript
+#: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/override/screens/ticket_screen/ticket_screen.js:0
+msgid "Rejecting this order is not allowed for \"%(providerName)s\""
+msgstr ""
+
+#. module: pos_urban_piper
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_order__delivery_provider_id
 #: model:ir.model.fields,help:pos_urban_piper.field_pos_payment_method__delivery_provider_id
 msgid ""
@@ -716,6 +734,18 @@ msgstr ""
 #. module: pos_urban_piper
 #: model:ir.model,name:pos_urban_piper.model_ir_config_parameter
 msgid "System Parameter"
+msgstr ""
+
+#. module: pos_urban_piper
+#. odoo-javascript
+#: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/order_info_popup/order_info_popup.xml:0
+msgid "Talabat Code"
+msgstr ""
+
+#. module: pos_urban_piper
+#. odoo-javascript
+#: code:addons/pos_urban_piper/static/src/point_of_sale_overrirde/app/order_info_popup/order_info_popup.xml:0
+msgid "Talabat Short Code"
 msgstr ""
 
 #. module: pos_urban_piper

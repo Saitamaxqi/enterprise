@@ -200,12 +200,6 @@ class PosConfig(models.Model):
         """
         return []
 
-    def update_items_dict(self, product, item_dict):
-        """
-        Update tags in urban piper for sync menu.
-        """
-        return item_dict
-
     def update_store_status(self, status):
         """
         Activate and Deactivate store
@@ -221,10 +215,14 @@ class PosConfig(models.Model):
         """
         self.ensure_one()
         order = self.env['pos.order'].browse(order_id)
-        if new_status == 'Food Ready':
+        if new_status == 'Food Ready' and order.state != 'paid':
             self._make_order_payment(order)
         up = UrbanPiperClient(self)
-        is_success, message = up.request_status_update(order.delivery_identifier, new_status, message)
+        is_success, message = False, ''
+        if order.delivery_provider_id.technical_name in ['justeat', 'careem'] and new_status == 'Food Ready':
+            is_success = True
+        else:
+            is_success, message = up.request_status_update(order.delivery_identifier, new_status, message)
         if is_success:
             order.write({
                 'delivery_status': const.ORDER_STATUS_MAPPING[new_status][1],

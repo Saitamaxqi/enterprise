@@ -164,7 +164,7 @@ class PosUrbanPiperController(http.Controller):
                 'price_unit': charge.get('value'),
                 'price_subtotal': charge.get('value'),
                 'price_subtotal_incl': charge.get('value'),
-                'note': charge_product.sudo().name,
+                'note': charge.get('title'),
                 'uuid': str(uuid.uuid4()),
             }))
         number = str((pos_config_sudo.current_session_id.id % 10) * 100 + pos_config_sudo.current_session_id.sequence_number % 100).zfill(3)
@@ -199,7 +199,13 @@ class PosUrbanPiperController(http.Controller):
         """
         Override in delivery provider modules.
         """
-        return request.env['account.tax']
+        taxes = request.env['account.tax']
+        for tax_line in taxes_data:
+            taxes |= request.env['account.tax'].sudo().search([
+                ('tax_group_id.name', '=', tax_line.get('title')),
+                ('amount', '=', tax_line.get('rate'))
+            ], limit=1)
+        return taxes
 
     def _create_order_line(self, line_data, pos_config_sudo):
         value_ids_lst = []

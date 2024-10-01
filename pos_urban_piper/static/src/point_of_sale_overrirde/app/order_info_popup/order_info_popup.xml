@@ -76,7 +76,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row">
+                        <div class="row mb-2">
                             <div class="col-md-6">
                                 <div class="d-flex flex-column">
                                     <div class="text-muted fs-7">Order Time</div>
@@ -87,6 +87,28 @@
                                 <div class="d-flex flex-column">
                                     <div class="text-muted fs-7">Delivery Time/Time-Slot</div>
                                     <div><t t-esc="this.getTime(order.delivery_json?.order?.details?.delivery_datetime)"/></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div t-if="this.getOrderDetails().talabatCode || this.getOrderDetails().talabatShortCode" class="row mb-2">
+                            <div t-if="this.getOrderDetails().talabatCode" class="order_otp col-md-6">
+                                <div class="d-flex flex-column">
+                                    <div class="text-muted fs-7">Talabat Code</div>
+                                    <div><t t-esc="this.getOrderDetails().talabatCode"/></div>
+                                </div>
+                            </div>
+                            <div t-if="this.getOrderDetails().talabatShortCode" class="order_otp col-md-6">
+                                <div class="d-flex flex-column">
+                                    <div class="text-muted fs-7">Talabat Short Code</div>
+                                    <div><t t-esc="this.getOrderDetails().talabatShortCode"/></div>
+                                </div>
+                            </div> 
+                        </div>
+                        <div t-if="this.getOrderDetails().hungerstationCode" class="row mb-2">
+                            <div class="col-md-6">
+                                <div class="d-flex flex-column">
+                                    <div class="text-muted fs-7">HungerStation Code</div>
+                                    <div><t t-esc="this.getOrderDetails().hungerstationCode"/></div>
                                 </div>
                             </div>
                         </div>

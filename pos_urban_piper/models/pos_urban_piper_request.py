@@ -211,8 +211,12 @@ class UrbanPiperClient:
                         'description': desc_dict.get(lang, '')
                     })
             item['translations'] = translations
-            updated_item = self.config.update_items_dict(product, item)
-            item_lst.append(updated_item)
+            for provider in self.config.urbanpiper_delivery_provider_ids:
+                tags = item.setdefault('tags', {})
+                alcohol_tags = tags.setdefault(provider.technical_name, [])
+                alcohol_tag = 'alcohol-present' if product.is_alcoholic_on_urbanpiper else 'alcohol-absent'
+                alcohol_tags.append(alcohol_tag)
+            item_lst.append(item)
         return item_lst
 
     def _prepare_option_groups_data(self, pos_products):

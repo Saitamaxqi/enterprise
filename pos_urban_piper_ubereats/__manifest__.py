@@ -13,5 +13,6 @@ This module integrates with UrbanPiper to receive and manage orders from Uber Ea
             'pos_urban_piper_ubereats/static/src/**/*',
         ],
     },
+    'auto_install': True,
     'license': 'OEEL-1',
 }
