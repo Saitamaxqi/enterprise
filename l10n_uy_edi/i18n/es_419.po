@@ -88,8 +88,8 @@ msgid ""
 "environment are allowed per subscription</span>"
 msgstr ""
 "<span> Para crear su cuenta, asegúrese de tener una suscripción válida. Haga"
-" clic en \"Crear cuenta Uruware\", luego configúrelo directamente en el "
-"portar del Uruware, obtenga de ahi la contraseña de WS, el Código de "
+" clic en \"Crear cuenta Uruware\", luego configúrela directamente en el "
+"portal del Uruware, obtenga de ahi la contraseña de WS, el Código de "
 "Comercio y el Código de Terminal, e ingrese estos parámetros acá. Pruebe su "
 "conexión. Nota: Solo se permite un entorno de prueba y producción por "
 "suscripción.</span>"
@@ -149,6 +149,12 @@ msgid ""
 msgstr ""
 "Todas las líneas deberían tener impuesto de IVA (solo uno por línea). Verificar línea "
 "'%(line_name)s' (Id Factura: %(move_id)s)"
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid "An error was found when synchronizing vendor bills\n"
+msgstr "Un error fue encontrado al sincronizar comprobantes de proveedor\n"
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__attachment_id
@@ -251,6 +257,16 @@ msgstr "Empresas"
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__company_id
 msgid "Company"
 msgstr "Compañía"
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid ""
+"Company Name: \"%(company_name)s\", Company ID: (%(company_id)s), Error: "
+"\"%(error)s\""
+msgstr ""
+"Nombre de la compañía: \"%(company_name)s\", ID de la compañía: (%(company_id)s), Error: "
+"\"%(error)s\""
 
 #. module: l10n_uy_edi
 #: model:ir.model,name:l10n_uy_edi.model_res_config_settings
@@ -405,6 +421,16 @@ msgid "ERROR"
 msgstr ""
 
 #. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid ""
+"ERROR: This is what we receive when requesting notification data (610) "
+"%(response)s"
+msgstr ""
+"ERROR: Esto es lo que recibimos cuando solicitamos leer una notificación (610) "
+"%(response)s"
+
+#. module: l10n_uy_edi
 #: model:ir.model.fields.selection,name:l10n_uy_edi.selection__account_journal__l10n_uy_edi_type__electronic
 msgid "Electronic"
 msgstr "Electrónico"
@@ -545,6 +571,12 @@ msgid "Issuer"
 msgstr "Emisor"
 
 #. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid "It is not possible to create the pdf for this move. Error: %(errors)s."
+msgstr "No es posible crear el pdf para este documento. Error: %(errors)s."
+
+#. module: l10n_uy_edi
 #: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_addenda__is_legend
 msgid "It needs to be informed as a Mandatory Disclosure"
 msgstr "Necesista ser informado como una Leyenda Obligatoria"
@@ -588,6 +620,11 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__write_date
 msgid "Last Updated on"
 msgstr "Última actualización en"
+
+#. module: l10n_uy_edi
+#: model:ir.model,name:l10n_uy_edi.model_l10n_latam_document_type
+msgid "Latam Document Type"
+msgstr "Tipo de Documento Latam"
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -810,7 +847,9 @@ msgstr "Configure la provincia de su compañía"
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_cfe_state
 #: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_document__state
 msgid "State of the electronic document"
-msgstr "Estado del documento electrónico"
+msgstr ""
+"Reflejará el estado del documento electrónico, será actualizado "
+"automáticamente cuando el estado del documento cambie"
 
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
@@ -824,14 +863,23 @@ msgstr "Pruebas"
 
 #. module: l10n_uy_edi
 #. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid ""
+"The Uruguayan xml you are trying to upload contains more than one CFE and up"
+" to now it is processed only the first one existing in the xml file."
+msgstr ""
+"El XML uruguayo que estás tratando de subir contiene más de un CFE y hasta"
+" ahora es procesado solamente el primero que existe en el documento xml."
+
+#. module: l10n_uy_edi
+#. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
 msgid ""
 "The account creating request has been successfully sent. The credentials "
 "will be sent to %s. Please check your email for more instructions"
 msgstr ""
-"La solicitud de creación de cuenta se ha enviado correctamente. Las "
-"credenciales se enviarán a %s. Por favor revisa tu correo electrónico para "
-"más instrucciones."
+"La solicitud de creación de cuenta se ha enviado correctamente. Las credenciales"
+"se enviarán a %s. Por favor revisa tu correo electrónico para más instrucciones"
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -850,6 +898,16 @@ msgstr "La factura electrónica fue creada exitosamente"
 #: code:addons/l10n_uy_edi/models/account_move.py:0
 msgid "The partner of the CFE needs to have an Identification Type"
 msgstr "El receptor del CFE necesita tener un Tipo de Identificación"
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid ""
+"There is a difference between the move total amount in Odoo and the move "
+"XML. Odoo: %(amount_total)s  XML: %(formatted_amount_total)s."
+msgstr ""
+"Existe una diferencia entre el monto total en Odoo y el archivo "
+"XML. Odoo: %(amount_total)s  XML: %(formatted_amount_total)s."
 
 #. module: l10n_uy_edi
 #. odoo-python
@@ -952,7 +1010,7 @@ msgid ""
 "* Manual: To add electronic documents that were created previously outside Odoo (example: backups, from Uruware, pre printed). This type is used to maintain the history and consistency of all the CFE (they will not create a new CFE in DGI)."
 msgstr ""
 "Tipo de diarios que pueden ser utilizadas por empresas Uruguayas:\n"
-"* Electrónico: Para generar documentos electrónicos vía webservice a la DGI directo desde Odoo.* Manual: Para generar documentos electrónicos que fueron creados previamente fuera de Odoo (ejemplo: respaldos, desde Uruware, pre impreso). Este tipo es usado para mantener el histrórico y la consistencia de todos los CFE (estos no crearán u nuevo CFE en DGI)."
+"* Electrónico: Para generar documentos electrónicos vía webservice a la DGI directo desde Odoo.* Manual: Para generar documentos electrónicos que fueron creados previamente fuera de Odoo (ejemplo: respaldos, desde Uruware, pre impreso). Este tipo es usado para mantener el histrórico y la consistencia de todos los CFE (estos no crearán un nuevo CFE en DGI)."
 
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
@@ -972,6 +1030,17 @@ msgstr ""
 "Odoo del CFE"
 
 #. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid "UNKNOWN INDICATOR %(ind_fact)s"
+msgstr "INDICADOR DESCONOCIDO %(ind_fact)s"
+
+#. module: l10n_uy_edi
+#: model:ir.actions.server,name:l10n_uy_edi.ir_cron_get_vendor_bills_received_ir_actions_server
+msgid "UY: Create vendor bills (sync from Uruware)"
+msgstr "UY: Crear facturas de proveedor (sincronización desde Uruware)"
+
+#. module: l10n_uy_edi
 #: model:ir.actions.server,name:l10n_uy_edi.ir_cron_update_dgi_state_ir_actions_server
 msgid "UY: Update DGI Status"
 msgstr "UY: Actualizar Estado DGI"
@@ -986,6 +1055,13 @@ msgid ""
 msgstr ""
 "Identificación única de cada CFE en el UCFE. Actualmente formado por la "
 "concatenación de las iniciales del modelo mas el id del registro"
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid ""
+"Up to now it is not possible to create e-Resguardo or e-Delivery documents"
+msgstr "Hasta ahora no es posible crear documentos e-Resguardo o e-Delivery"
 
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.l10n_uy_edi_document_view_form
@@ -1108,6 +1184,22 @@ msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid ""
+"We found an error when dismissing the notification: id: %(id_req)s. Error: "
+"%(error)s"
+msgstr ""
+"Encontramos un error al momento de descartar una notificación: id: %(id_req)s. Error: "
+"%(error)s"
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid "We found an error while consulting a notification %(error)s."
+msgstr "Encontramos un error al consultar una notificación %(error)s."
+
+#. module: l10n_uy_edi
+#. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
 msgid ""
 "You can't send another request within 24 hours. You will be able to send "
@@ -1173,4 +1265,4 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_error
 #: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_document__message
 msgid "error details for CFEs in the 'error' state."
-msgstr "detalle de errores de los CFE en estado 'error'"
+msgstr "Uruguay: detalle de errores de los CFE en estado 'error'"

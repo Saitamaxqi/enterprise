@@ -3,9 +3,10 @@ from lxml import etree
 import re
 from requests.exceptions import Timeout, ConnectionError, HTTPError
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, tools
 
 from odoo.tools import float_compare
+from odoo.exceptions import UserError
 from odoo.tools.zeep import Client, Settings
 from odoo.tools.zeep.wsse.username import UsernameToken
 
@@ -120,7 +121,15 @@ class L10n_Uy_EdiDocument(models.Model):
         Will return None and the result will be update the cfe_state field (error field
         if applies)"""
         for edi_doc in self:
-            result = edi_doc._ucfe_inbox("360", {"Uuid": edi_doc.uuid})
+            if edi_doc.move_id.journal_id.type == 'sale':
+                result = edi_doc._ucfe_inbox("360", {"Uuid": edi_doc.uuid})
+            else:
+                document_number = re.search(r"([A-Z]*)([0-9]*)", edi_doc.move_id.l10n_latam_document_number).groups()
+                result = edi_doc._ucfe_inbox("650", {
+                    "TipoCfe": edi_doc.move_id.l10n_latam_document_type_id_code,
+                    "Serie": document_number[0],
+                    "NumeroCfe": document_number[1],
+                    "RutEmisor": edi_doc.move_id.partner_id.vat})
             edi_doc._update_cfe_state(result)
 
     # Extended methods
@@ -308,8 +317,6 @@ class L10n_Uy_EdiDocument(models.Model):
     @api.model
     def _is_connection_info_incomplete(self, company):
         """ False if everything is ok, Message if there is a problem or something missing """
-        if company.l10n_uy_edi_ucfe_env == "demo":
-            return False
 
         field_data = company.fields_get([])
         missing_info = []
@@ -381,7 +388,7 @@ class L10n_Uy_EdiDocument(models.Model):
             820 - Check Credentials
         :returns: dictionary ({"response" etree obj }, "errors": str()) """
         now = fields.Datetime.now()
-        company = self.company_id or self.env.company
+        company = extra_req.get('company') or self.company_id or self.env.company
         data = {
             "CodComercio": company.l10n_uy_edi_ucfe_commerce_code,
             "CodTerminal": company.l10n_uy_edi_ucfe_terminal_code,
@@ -405,9 +412,12 @@ class L10n_Uy_EdiDocument(models.Model):
     def _ucfe_ws_call(self, company, endpoint, method, *args, **kwargs):
         response = None
         errors = []
-        url = self._get_ws_url(endpoint, company)
 
-        if not url.endswith("?wsdl"):
+        if error := self._is_connection_info_incomplete(company):
+            # The error is possible if the company don´t have credentials or are incorrect
+            return {'response': None, "errors": [error]}
+        url = self._get_ws_url(endpoint, company)
+        if url and not url.endswith("?wsdl"):
             url += "?wsdl"
         try:
             username_token = UsernameToken(self._get_ucfe_username(company), company.l10n_uy_edi_ucfe_password)
@@ -443,3 +453,147 @@ class L10n_Uy_EdiDocument(models.Model):
                     self.message = _("CODE %(code)s: %(msg)s", code=ucfe_result_code, msg=result_msg)
                 elif self.state in ["received", "accepted"]:
                     self.message = False
+
+    def _create_partner_from_notification(self, xml_tree, partner_vat_RUC):
+        """Create partner from vendor bill XML data if the partner does not already exist in Odoo. """
+        state_id = self.env["res.country.state"].search([("name", "ilike", xml_tree.findtext(".//{*}Departamento"))], limit=1)
+        return self.env["res.partner"].create({
+            "name": xml_tree.findtext(".//{*}RznSoc"),
+            "vat": partner_vat_RUC,
+            "city": xml_tree.findtext(".//{*}Ciudad"),
+            "street": xml_tree.findtext(".//{*}DomFiscal"),
+            "state_id": state_id.id if state_id else None,
+            "country_id": state_id.country_id.id if state_id else None,
+            "l10n_latam_identification_type_id": self.env.ref("l10n_uy.it_rut").id,
+            "is_company": True
+        })
+
+    def _create_pdf_vendor_bill(self, move, req_data_pdf):
+        """ Will connect to Uruware to get the a legal PDF representation of the EDI doc and attach it to the vendor
+        bill. """
+        result = move.l10n_uy_edi_document_id._ucfe_query('ObtenerPdfCfeRecibido', req_data_pdf)
+        errors = result.get('errors')
+        if errors:= result.get('errors'):
+            msg_error = _("It is not possible to create the pdf for this move. Error: %(errors)s.", errors="\n - ".join(errors))
+            move.message_post(body=msg_error)
+            return
+
+        response = result.get("response")
+        name = f"{move.l10n_latam_document_type_id.doc_code_prefix} {req_data_pdf['serieCfe']}{req_data_pdf['numeroCfe'].zfill(7).replace('/', '_')}.pdf"
+        return self.env["ir.attachment"].create({
+            "name": name,
+            "res_model": move._name,
+            "res_field": "invoice_pdf_report_file",
+            "res_id": move.id,
+            "type": "binary",
+            "datas": response.findtext('.//{*}ObtenerPdfCfeRecibidoResult').encode()
+        })
+
+    def cron_l10n_uy_edi_get_vendor_bills(self):
+        """ UY: Create vendor bills from Uruware. If there are notifications available on Uruware side then here
+        is pulled that information, then we create the vendor bill and after that we dismiss the notification to
+        continue reading the next one until there are no more notifications available. """
+        company_errors = {}
+        cron_limit_time = tools.config['limit_time_real_cron'] or -1
+        limit_time = cron_limit_time if 0 < cron_limit_time < 300 else 300
+        start_time = fields.Datetime.now()
+        for company in self.env['res.company'].search([]).filtered(lambda x: x.country_code == 'UY'):
+            if not self.env['account.journal'].search([
+                *self.env['account.tax']._check_company_domain(company),
+                ('type', '=', 'purchase')
+            ], limit=1):
+                continue
+            notifications = True
+            while notifications:
+                # 600 - Check for available notifications.
+                response_600 = self._notification_consult(company)
+                if errors := response_600['errors']:
+                    joined_errors_msg = ". ".join(errors)
+                    error_msg = _("We found an error while consulting a notification %(joined_errors_msg)s.", joined_errors_msg=joined_errors_msg)
+                    company_errors[f'{company.id}'] = error_msg
+                    notifications = False
+                    continue
+
+                # Verify response_600 code
+                cod_rta_status = self._notification_verify_codrta(company, response_600['response'])
+                if not cod_rta_status['response']:
+                    if error := cod_rta_status['error']:
+                        company_errors[f'{company.id}'] = error
+                    notifications = False
+                    continue
+
+                # 610 - Request notification details.
+                l10n_uy_idreq = response_600['response'].findtext('.//{*}IdReq')
+                response_610 = self._ucfe_inbox("610", {"IdReq": l10n_uy_idreq, 'company': company})
+                if errors := response_610['errors']:
+                    company_errors[f'{company.id}'] = "\n".join(errors)
+                    notifications = False
+                    continue
+
+                # Only implemented for vendor bills and vendor refunds
+                move = self.env['account.move'].create({'company_id': company.id})
+                self.env['account.move']._l10n_uy_edi_complete_cfe_from_xml(move, response_610['response'], l10n_uy_idreq=l10n_uy_idreq)
+
+                # Discard notification
+                response_620 = self._notification_dismiss(company, response_600['response'])
+                if response_620['response'].findtext('.//{*}CodRta') != "00":
+                    company_errors[f'{company.id}'] = etree.tostring(response_620['response'])
+                    notifications = False
+                    continue
+                if errors := response_620['errors']:
+                    company_errors[f'{company.id}'] = str(response_620['errors'])
+                    notifications = False
+                    continue
+
+                if fields.Datetime.now().timestamp() - start_time.timestamp() > limit_time:
+                    notifications = False
+                    self.env.ref('l10n_uy_edi.ir_cron_get_vendor_bills_received')._trigger()
+        if company_errors:
+            _logger.warning(_('An error was found when synchronizing vendor bills\n'))
+            for key, value in company_errors.items():
+                _logger.warning(_('Company Name: "%(company_name)s", Company ID: (%(company_id)s), Errors: "%(error)s"',\
+                    company_name=self.env['res.company'].browse(int(key)).name, company_id=key, error=value))
+
+    def _notification_consult(self, company=False):
+        """ 600 - Consult notifications available on Uruware. """
+        company = company or self.env.company
+        return self._ucfe_inbox("600", {"TipoNotificacion": "7", "company": company})
+
+    def _notification_dismiss(self, company, response):
+        """ This is implemented for vendor bills. Is needed to dismiss the last notification if the last vendor bill was
+        created in Odoo from Uruware. To dismiss the last notification is needed to use the operation "620 - Descartar
+        una notificación" with IdReq and TipoNotificacion. If is not possible to dismiss the last notification it will
+        be returned the code "00" """
+        error = False
+        id_req = response.findtext('.//{*}IdReq')
+        response_620 = self._ucfe_inbox("620", {
+            "IdReq": id_req,
+            "TipoNotificacion": response.findtext('.//{*}TipoNotificacion'),
+            "company": company})
+        return response_620
+
+    def _notification_verify_codrta(self, company, response_600):
+        """ Verify response code from notifications (vendor bills). If response code is != 0 return False (can`t create
+        new vendor bill), else return True (continue the process and create vendor bill).
+        Available values for response code:
+        00 Petición aceptada y procesada.
+        01 Petición denegada.
+        03 Comercio inválido.
+        12 Requerimiento inválido.
+        30 Error en formato.
+        31 Error en formato de CFE.
+        89 Terminal inválida.
+        96 Error en sistema.
+        99 Sesión no iniciada.
+        ? Any other no specified code must be understanded as
+        denied requirement."""
+        cod_rta = response_600.findtext('.//{*}CodRta')
+        response = {'response': False, 'error': ''}
+        if cod_rta == "01":
+            return response
+        elif cod_rta != "00":
+            response_msg = _("ERROR: This is what we receive when requesting notification data (610) %(tree)s", tree=etree.tostring(response_600))
+            response['error'] = response_msg
+            return response
+        response['response'] = True
+        return response

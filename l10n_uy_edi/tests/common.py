@@ -188,6 +188,20 @@ class TestUyEdi(AccountTestInvoicingCommon):
             error_msg = self.env["l10n_uy_edi.document"]._validate_credentials(company)
         return error_msg
 
+    def _mock_cron_l10n_uy_edi_get_vendor_bills(self, expected_folder, get_pdf=False):
+        """ Call the cron to create vendor bills, will simulate that we have a notification, we read it and process
+        the info and pdf of the vendor bill and then will stop the cron because there ar not more notificactions """
+        with patch(f"{self.utils_path}._ucfe_inbox") as mock_inbox, patch(f"{self.utils_path}._ucfe_query", \
+            return_value=self._mocked_response(expected_folder + "_pdf" if get_pdf else False)):
+            mock_inbox.side_effect = [
+                self._mocked_response(expected_folder + '/response_600'),  # Find if they are notifications available
+                self._mocked_response(expected_folder + '/response_610'),  # Read the notification
+                self._mocked_response(expected_folder + "/_status"),  # Update the status of the CFE
+                self._mocked_response(expected_folder + '/response_620'),  # Discard Notification
+                self._mocked_response(expected_folder + '/response_600_end'),  # No more notifications
+            ]
+            self.env["l10n_uy_edi.document"].cron_l10n_uy_edi_get_vendor_bills()
+
     def _send_and_print(self, invoice):
         self.env["account.move.send.wizard"] \
             .with_context(active_model=invoice._name, active_ids=invoice.ids) \
@@ -210,3 +224,14 @@ class TestUyEdi(AccountTestInvoicingCommon):
             namespace = {"cfe": "http://cfe.dgi.gub.uy"}
             expected_xml.find(".//cfe:Referencia/cfe:Referencia/cfe:NroCFERef", namespace).text = ref_number
         self.assertXmlTreeEqual(expected_xml, result_xml)
+
+    def _mock_upload_document_on_journal(self, journal, filename):
+        filename =  filename + ".xml"
+        content = misc.file_open("l10n_uy_edi/tests/sobres_from_uruware/" + filename, mode="rb").read()
+        attachment = self.env['ir.attachment'].create({
+            'raw': content,
+            'name': filename,
+        })
+        with patch(f"{self.utils_path}._create_pdf_vendor_bill", return_value=None):
+            action_vals = journal.create_document_from_attachment(attachment.ids)
+        return self.env['account.move'].browse(action_vals['res_id'])

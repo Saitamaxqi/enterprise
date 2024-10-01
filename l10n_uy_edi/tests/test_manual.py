@@ -2,6 +2,9 @@ from unittest.mock import patch
 
 from odoo import Command
 from odoo.tests.common import tagged
+from odoo.tools import misc
+from lxml import etree
+import datetime
 
 from . import common
 
@@ -298,3 +301,30 @@ class TestManual(common.TestUyEdi):
         with patch(url % "account", return_value=result_value), patch(url % "sale", return_value=result_value):
             self._send_and_print(invoice)
         self._check_cfe(invoice, "e-FC", "160_deduct_global_donwpayment")
+
+    def test_170_uploaded_vendor_bill_with_global_fixed_discount(self):
+        """ Simulate upload xml document with global discount fixed line on vendor bill journal and test if it was
+        created correctly. """
+        new_bill = self._mock_upload_document_on_journal(
+            journal=self.company_data['default_journal_purchase'],
+            filename='vendor_bill_with_global_fixed_discount',
+        )
+        self.assertEqual(new_bill.name, "e-FC A4002353")
+        self.assertEqual(new_bill.invoice_date.strftime('%Y-%m-%d'), "2024-06-06")
+        self.assertEqual(new_bill.invoice_date_due.strftime('%Y-%m-%d'), "2024-06-07")
+        self.assertEqual(new_bill.invoice_partner_display_name, "FIERRO VIGNOLI S.A.")
+        global_discount_line = new_bill.invoice_line_ids\
+            .filtered(lambda line: line.name == 'descuento por forma de pago')
+        self.assertEqual(global_discount_line.price_total, -431.16)
+
+    def test_180_uploaded_vendor_bill_with_line_fixed_discount(self):
+        """ Simulate upload xml document with discount fixed line on vendor bill journal and test if it was created
+        correctly. """
+        new_bill = self._mock_upload_document_on_journal(
+            journal=self.company_data['default_journal_purchase'],
+            filename='vendor_bill_with_line_fixed_discount',
+        )
+        self.assertEqual(new_bill.name, "e-FC F6557758")
+        self.assertEqual(new_bill.invoice_date.strftime('%Y-%m-%d'), "2024-05-31")
+        self.assertEqual(new_bill.invoice_date_due.strftime('%Y-%m-%d'), "2024-06-25")
+        self.assertEqual(new_bill.invoice_partner_display_name, "Administración Nacional de Telecomunicaciones")

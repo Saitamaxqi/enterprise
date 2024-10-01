@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-24 20:42+0000\n"
-"PO-Revision-Date: 2025-02-24 20:42+0000\n"
+"POT-Creation-Date: 2025-03-17 19:33+0000\n"
+"PO-Revision-Date: 2025-03-17 19:33+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -125,6 +125,12 @@ msgid ""
 msgstr ""
 
 #. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid "An error was found when synchronizing vendor bills\n"
+msgstr ""
+
+#. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__attachment_id
 msgid "Attachment"
 msgstr ""
@@ -221,6 +227,14 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_addenda__company_id
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__company_id
 msgid "Company"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid ""
+"Company Name: \"%(company_name)s\", Company ID: (%(company_id)s), Error: "
+"\"%(error)s\""
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -367,6 +381,14 @@ msgid "ERROR"
 msgstr ""
 
 #. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid ""
+"ERROR: This is what we receive when requesting notification data (610) "
+"%(response)s"
+msgstr ""
+
+#. module: l10n_uy_edi
 #: model:ir.model.fields.selection,name:l10n_uy_edi.selection__account_journal__l10n_uy_edi_type__electronic
 msgid "Electronic"
 msgstr ""
@@ -502,6 +524,12 @@ msgid "Issuer"
 msgstr ""
 
 #. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid "It is not possible to create the pdf for this move. Error: %(errors)s."
+msgstr ""
+
+#. module: l10n_uy_edi
 #: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_addenda__is_legend
 msgid "It needs to be informed as a Mandatory Disclosure"
 msgstr ""
@@ -544,6 +572,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_addenda__write_date
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__write_date
 msgid "Last Updated on"
+msgstr ""
+
+#. module: l10n_uy_edi
+#: model:ir.model,name:l10n_uy_edi.model_l10n_latam_document_type
+msgid "Latam Document Type"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -769,6 +802,14 @@ msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid ""
+"The Uruguayan xml you are trying to upload contains more than one CFE and up"
+" to now it is processed only the first one existing in the xml file."
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
 msgid ""
 "The account creating request has been successfully sent. The credentials "
@@ -791,6 +832,14 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
 msgid "The partner of the CFE needs to have an Identification Type"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid ""
+"There is a difference between the move total amount in Odoo and the move "
+"XML. Odoo: %(amount_total)s  XML: %(formatted_amount_total)s."
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -897,6 +946,17 @@ msgid ""
 msgstr ""
 
 #. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid "UNKNOWN INDICATOR %(ind_fact)s"
+msgstr ""
+
+#. module: l10n_uy_edi
+#: model:ir.actions.server,name:l10n_uy_edi.ir_cron_get_vendor_bills_received_ir_actions_server
+msgid "UY: Create vendor bills (sync from Uruware)"
+msgstr ""
+
+#. module: l10n_uy_edi
 #: model:ir.actions.server,name:l10n_uy_edi.ir_cron_update_dgi_state_ir_actions_server
 msgid "UY: Update DGI Status"
 msgstr ""
@@ -908,6 +968,13 @@ msgstr ""
 msgid ""
 "Unique identification per CFE in UCFE: concatenation of the model name "
 "initials plus the record id"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid ""
+"Up to now it is not possible to create e-Resguardo or e-Delivery documents"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -1017,6 +1084,20 @@ msgid ""
 " * Name of the field: %(xml_tag)s (%(xml_tag_len)s)\n"
 " * Content: (%(value_len)s)\n"
 " %(value_content)s"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid ""
+"We found an error when dismissing the notification: id: %(id_req)s. Error: "
+"%(error)s"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
+msgid "We found an error while consulting a notification %(error)s."
 msgstr ""
 
 #. module: l10n_uy_edi

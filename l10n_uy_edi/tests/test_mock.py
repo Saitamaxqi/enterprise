@@ -134,3 +134,21 @@ class TestMock(common.TestUyEdi):
         # Since is an internal pre send to dgi validation the state and error in the invoice should be unset
         self.assertFalse(invoice.l10n_uy_edi_cfe_state)
         self.assertFalse(invoice.l10n_uy_edi_error)
+
+    def test_130_cron_vendor_bills_ok(self):
+        """ Simulate the run of 'UY: Create vendor bills (sync from Uruware)' cron. On this case exists a notification
+        available, so also exists a move that will be created. The goal of this tests is not to check if the received
+        pdf is created because it is private information of an Uruware user and also is not updated the dgi state."""
+        self._mock_cron_l10n_uy_edi_get_vendor_bills('test_130_cron_vendor_bills_ok')
+        new_move_created = self.env['l10n_uy_edi.document'].search([('uuid', '=', '9695285')]).move_id
+        self.assertEqual(new_move_created.name, 'e-FC A1419036')
+        self.assertEqual(new_move_created.invoice_date.strftime('%Y-%m-%d'), '2025-10-01')
+        self.assertEqual(new_move_created.invoice_date_due.strftime('%Y-%m-%d'), '2025-11-15')
+        self.assertEqual(new_move_created.invoice_partner_display_name, 'DELIVERY HERO URUGUAY MARKETPLACE S.A.')
+
+    def test_140_cron_vendor_bills_notf_unavailable(self):
+        """ Simulate the run of 'UY: Create vendor bills (sync from Uruware)' cron. On this case does not exist a
+        notification available on response_600. """
+        self._mock_cron_l10n_uy_edi_get_vendor_bills('test_140_cron_vendor_bills_notf_unavailable')
+        new_move_created = self.env['account.move'].search([])
+        self.assertEqual(new_move_created, self.env['account.move'])

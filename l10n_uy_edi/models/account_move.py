@@ -1,13 +1,19 @@
 import base64
 import stdnum.uy
 import unicodedata
+import logging
+import re
+from datetime import datetime
 from lxml import etree
 from markupsafe import Markup
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, Command
 
-from odoo.exceptions import ValidationError, UserError
-from odoo.tools import float_repr, float_round, cleanup_xml_node, format_amount, html2plaintext
+from odoo.tools import float_repr, float_round, cleanup_xml_node, format_amount, html2plaintext, float_compare
+from odoo.tools.misc import formatLang
+from odoo.exceptions import ValidationError, RedirectWarning, UserError
+
+_logger = logging.getLogger(__name__)
 
 
 def format_float(amount, digits=2, valid_zero=None):
@@ -435,10 +441,6 @@ class AccountMove(models.Model):
                 "To create the CFE document first complete your company data (%(company_name)s):\n\t- %(errors)s",
                 errors="\n\t- ".join(config_errors),
                 company_name=self.company_id.name))
-
-        # Check Uruware Config
-        if msg := edi_model._is_connection_info_incomplete(self.company_id):
-            errors.append(msg)
 
         # Check receiver has a valid identification number
         try:
@@ -868,3 +870,232 @@ class AccountMove(models.Model):
             m.partner_id.l10n_latam_identification_type_id == self.env.ref('l10n_uy.it_rut')):
             uy_einvoices.l10n_latam_document_type_id = self.env.ref('l10n_uy.dc_e_inv')
         super(AccountMove, self - uy_einvoices)._compute_l10n_latam_document_type()
+
+    def _l10n_uy_edi_parse_xml_to_move(self, xml_tree, move):
+        """ Up to now this method works only for vendor bills. Here is completed the move with the information from the
+        xml.
+        1) Set the move date.
+        2) Set the partner, it is created if does not exist a partner with the same vat in the database.
+        3) Set the currency.
+        4) Set the move lines.
+        5) Set the move due date.
+        6) Set the document type.
+        7) Set the document number.
+        8) Update move DGI state.
+        If there is an error while filling the move fields or a difference between the move total amount in Odoo
+        and the move XML there is posted a message in the chatter informing this.
+        """
+        error = False
+        partner_vat_RUC = xml_tree.findtext(".//{*}RUCEmisor")
+        date_format = "%Y-%m-%d"
+        # Create de partner if it does not exists.
+        partner = self.env["res.partner"]._retrieve_partner(vat=partner_vat_RUC, company=move.company_id) or \
+            self.l10n_uy_edi_document_id._create_partner_from_notification(xml_tree, partner_vat_RUC)
+        move.invoice_date = datetime.strptime(xml_tree.findtext(".//{*}FchEmis"), date_format).date()
+        move.partner_id = partner
+        # Currency.
+        currency_code = xml_tree.findtext(".//{*}TpoMoneda")
+        currency = None
+        if currency_code:
+            currency = self.env['res.currency'].with_context(active_test=False).search([('name', '=', currency_code)], limit=1)
+        if not currency:
+            currency = self.env.ref('base.UYU')
+        move.currency_id = currency
+        # Process Invoice Lines. To iterate is used findall.
+        move.line_ids = self._l10n_uy_edi_vendor_prepare_lines(
+            line_nodes=xml_tree.findall(".//{*}Item"),
+            move=move,
+            tax_included=xml_tree.findtext(".//{*}MntBruto") == '1',
+            global_discounts_surcharges=xml_tree.findall(".//{*}DRG_Item"),
+        )
+        if fecha_vto:= xml_tree.findtext(".//{*}FchVenc"):
+            move.invoice_date_due = datetime.strptime(fecha_vto, date_format).date()
+        move.l10n_latam_document_type_id = self._l10n_uy_edi_get_cfe_document_type(xml_tree).id
+        move.l10n_latam_document_number = xml_tree.findtext(".//{*}Serie") + xml_tree.findtext(".//{*}Nro").zfill(7)
+        if move.company_id.l10n_uy_edi_ucfe_commerce_code and move.company_id.l10n_uy_edi_ucfe_terminal_code:
+            move.l10n_uy_edi_action_update_dgi_state()
+        if error:
+            move.message_post(body=error)
+            _logger.warning(error)
+
+    def _get_edi_decoder(self, file_data, new=False):
+        """ User can upload xml files. The xml file must belong to the journal`s company`s. """
+        # EXTENDS 'account'
+        if (
+            self.country_code == 'UY'
+            and file_data['type'] == 'xml'
+            and b"EnvioCFE_entreEmpresas>" in file_data['content']
+            and b"CantCFE>" in file_data['content']
+            and b"CdgDGISucur>" in file_data['content']
+        ):
+            xml_tree = file_data['xml_tree']
+            rut_receptor = xml_tree.findtext(".//{*}RutReceptor") or xml_tree.findtext(".//{*}DocRecep")
+            rzn_soc_recep = xml_tree.findtext(".//{*}RznSocRecep")
+            if int(xml_tree.findtext('.//{*}CantCFE')) > 1:
+                self.message_post(body=
+                    _("The Uruguayan xml you are trying to upload contains more than one CFE and up to now it is "
+                      "processed only the first one existing in the xml file."
+                    ))
+            return self._l10n_uy_edi_complete_cfe_from_xml(self, xml_tree)
+        return super()._get_edi_decoder(file_data, new=new)
+
+    def _l10n_uy_edi_complete_cfe_from_xml(self, move, xml_tree, l10n_uy_idreq=False):
+        """ Here the vendor bills are completed and synchronized through the Uruware notification request or from
+        xml uploaded on vendor bill journal on invoicing dashboard. This method will create the attachment with the
+        given xml and also will try to get the odoo pdf from Uruware and attach it in the move. If there is a
+        difference between the move total amount in Odoo and the move total amount in the XML, then a message is posted
+        in the document informing that situation.
+        :param move: The account.move record
+        :param xml_tree: The xml_tree from the file obtained from the synchronization.
+        :param l10n_uy_idreq: the id from the response_600 when the document is
+        created by 'UY: Create vendor bills (sync from Uruware)' cron. """
+        latam_document = self._l10n_uy_edi_get_cfe_document_type(xml_tree)
+        move_type = latam_document._l10n_uy_edi_get_move_type()
+        if not latam_document and 'in_' in move_type:
+            msg = _("Up to now it is not possible to create e-Resguardo or e-Delivery documents")
+            move.message_post(body=msg)
+            return
+        move.move_type = move_type
+        move.l10n_latam_document_type_id = latam_document
+        edi_doc = self.env['l10n_uy_edi.document'].create({
+            "move_id": move.id,
+            "uuid": l10n_uy_idreq,
+        })
+        move.l10n_uy_edi_document_id = edi_doc
+        partner_vat_RUC = xml_tree.findtext(".//{*}RutEmisor") or xml_tree.findtext(".//{*}RUCEmisor")
+        serieCfe = xml_tree.findtext(".//{*}Serie")
+        # XmlCfeFirmado is a tag that exists only if a notification is read from the cron
+        # "UY: Create vendor bills (sync from Uruware)", if not we search CFE
+        xml_cfe_firmado = xml_tree.findtext('.//{*}XmlCfeFirmado')
+        xml = xml_cfe_firmado or etree.tostring(xml_tree)
+        l10n_latam_document_number = xml_tree.findtext(".//{*}NumeroCfe") or xml_tree.findtext(".//{*}Nro")
+        if xml_cfe_firmado:
+            self.env["ir.attachment"].create({
+                "name": f"CFE_{serieCfe + l10n_latam_document_number.zfill(7)}.xml",
+                "res_model": "l10n_uy_edi.document",
+                "res_id": edi_doc.id,
+                "res_field": "attachment_file",
+                "type": "binary",
+                "raw": xml_cfe_firmado.encode()
+            })
+        self.l10n_uy_edi_document_id._create_pdf_vendor_bill(move, {
+            "rut": move.company_id.vat,
+            "rutRecibido": partner_vat_RUC,
+            "tipoCfe": move.l10n_latam_document_type_id.code,
+            "serieCfe": serieCfe,
+            "numeroCfe": l10n_latam_document_number,
+        })
+        xml_tree = etree.fromstring(xml) if xml_cfe_firmado else xml_tree
+        self._l10n_uy_edi_parse_xml_to_move(xml_tree, move)
+        # Validation of the move total amounts
+        amount_total = move.amount_total
+        if xml_tree.findtext(".//{*}MntPagar"):
+            formatted_xml_amount_total = float(xml_tree.findtext(".//{*}MntPagar"))
+            if not move.currency_id.is_zero(amount_total - formatted_xml_amount_total):
+                formatted_amount_total = formatLang(self.env, formatted_xml_amount_total, currency_obj=move.currency_id)
+                move_amount = formatLang(self.env, amount_total, currency_obj=move.currency_id)
+                msg = _(
+                    "There is a difference between the move total amount in Odoo and the move XML. Odoo: %(amount_total)s  XML: %(formatted_amount_total)s.",
+                    amount_total=amount_total, formatted_amount_total=formatted_amount_total
+                )
+                move.message_post(body=msg)
+
+    def _l10n_uy_edi_get_cfe_document_type(self, xml_tree):
+        """ :return: latam document type in Odoo that represented the XML CFE. """
+        # Until now we are not supporting the creation of e-Resguardos and e-Remitos
+        l10n_latam_document_type_id = (xml_tree.findtext('.//{*}TipoCFE') or xml_tree.findtext('.//{*}TipoCfe'))
+        if l10n_latam_document_type_id in ('124', '181', '182', '224', '281', '282'):
+            return
+        return self.env["l10n_latam.document.type"].search([
+            ("code", "=", l10n_latam_document_type_id),
+            ("country_id.code", "=", "UY"),
+        ], limit=1)
+
+    def _l10n_uy_edi_get_tax_not_implemented_description(self, ind_fact):
+        """ There are some taxes no implemented for Uruguay, so when move lines are created and if those ones don`t have
+        ind_fact (Indicador de facturación) 1, 2 or 3 then is concatenated the name of the tax not implemented with the
+        name of the line.  """
+        data = {
+            "1": "Exento de IVA",
+            "2": "Gravado a Tasa Mínima",
+            "3": "Gravado a Tasa Básica",
+            "4": "Gravado a Otra Tasa/IVA sobre fictos",
+            "5": "Entrega gratuita",
+            "6": "No facturable",
+            "7": "No facturable negativo",
+            "8": "Ítem a rebajar en e-remitos",  # Only for e-remitos
+            "9": "Ítem a anular en resguardos",  # Only for e-resguardos
+            "10": "Exportación y asim",
+            "11": "Impuesto percibido",
+            "12": "IVA en suspenso",
+
+            # Only for e-Boleta de entrada
+            "13": "Ítem vendido por un no contribuyente",
+            "14": "Ítem vendido por un contribuyente IVA mínimo, Monotributo o Monotributo MIDES",
+            "15": "Ítem vendido por un contribuyente IMEBA",
+            "16": "Sólo para ítems vendidos por contribuyentes con obligación IVA mínimo, Monotributo o Monotributo MIDES",
+        }
+
+        return data.get(ind_fact, _("UNKNOWN INDICATOR %(ind_fact)s", ind_fact=ind_fact))
+
+    def _l10n_uy_edi_vendor_prepare_lines(self, line_nodes, move, tax_included, global_discounts_surcharges=False):
+        """  Prepare the lines for create vendor bills lines in Odoo from the given xml.
+        There are some taxes no implemented for Uruguay, so when line nodes don`t have 10% or 22% or 0% EXEMPT tax then
+        is concatenated the name of the tax not implemented with the name of the line.
+        :return list of invoice line ids Commands. """
+        invoice_line_ids_commands = []
+        # Basic rates: excempt from vat, taxed at minimum rate and taxed at basic rate
+        l10n_uy_basic_rates = ["1", "2", "3"]
+        for line_node in line_nodes:
+            ind_fact = line_node.findtext(".//{*}IndFact")
+            domain_tax = self._l10n_uy_edi_get_domain_line_tax(ind_fact, move.company_id, tax_included)
+            tax_item = self.env["account.tax"].search(domain_tax, limit=1)
+            price_unit = line_node.findtext(".//{*}PrecioUnitario")
+            name = line_node.findtext(".//{*}NomItem")
+            if ind_fact not in l10n_uy_basic_rates:
+                name = f"{name} ({self._l10n_uy_edi_get_tax_not_implemented_description(ind_fact)})"
+            tax_ids = [Command.set(tax_item.ids)] if ind_fact in l10n_uy_basic_rates else []
+            invoice_line_ids_commands.append(Command.create({
+                "name": name,
+                "quantity": float(line_node.findtext(".//{*}Cantidad")),
+                "price_unit": (1 if ind_fact != "7" else -1) * float(price_unit),
+                "tax_ids": tax_ids,
+            }))
+            if raw_discount_amount := float(line_node.findtext(".//{*}DescuentoMonto", default=False)):
+                invoice_line_ids_commands.append(Command.create({
+                    "name": name,
+                    "quantity": 1,
+                    "price_unit": -raw_discount_amount,
+                    "tax_ids": tax_ids,
+                }))
+        for disc_surch in global_discounts_surcharges:
+            ind_fact = disc_surch.findtext(".//{*}IndFactDR")
+            tax_item = self.env["account.tax"].search(domain_tax, limit=1)
+            valor_dr = float(disc_surch.findtext(".//{*}ValorDR"))
+            tipo_dr = disc_surch.findtext(".//{*}TpoDR")
+            tipo_mov_dr = disc_surch.findtext(".//{*}TpoMovDR")
+            if tipo_dr == '1':
+                price_unit = valor_dr
+            else:
+                price_unit = valor_dr * (1 / 100)
+            if tipo_mov_dr != 'R':
+                price_unit = -price_unit
+            invoice_line_ids_commands.append(Command.create({
+                "name": disc_surch.findtext(".//{*}GlosaDR"),
+                "quantity": 1,
+                "price_unit": price_unit,
+                "tax_ids": [Command.set(tax_item.ids)] if ind_fact in l10n_uy_basic_rates else []
+            }))
+        return invoice_line_ids_commands
+
+    def _l10n_uy_edi_get_domain_line_tax(self, ind_fact, company, tax_included=False):
+        amount_by_ind = {"1": 0, "2": 10, "3": 22}
+        domain_tax = [*self.env['account.tax']._check_company_domain(company), ("country_code", "=", "UY"), ("type_tax_use", "=", "purchase"), ('l10n_uy_tax_category', '=', 'vat')]
+        if amount:=[('amount', '=', amount_by_ind[ind_fact])] if amount_by_ind.get(ind_fact) is not None else False:
+            domain_tax += amount
+        if tax_included:
+            if company.account_price_include == 'tax_included':
+                domain_tax += [("price_include_override", 'in', ('tax_included', 'default'))]
+            else:
+                domain_tax += [("price_include_override", '=', 'tax_included')]
+        return domain_tax

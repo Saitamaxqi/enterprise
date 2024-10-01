@@ -10,7 +10,7 @@
                 <field name="l10n_uy_edi_type"
                     invisible="country_code != 'UY' or not l10n_latam_use_documents or type != 'sale'"
                     required="country_code == 'UY' and l10n_latam_use_documents and type == 'sale'"/>
-                <field name="l10n_uy_edi_send_print" invisible="l10n_uy_edi_type != 'electronic'"/>
+                <field name="l10n_uy_edi_send_print" invisible="l10n_uy_edi_type != 'electronic' or type != 'sale'"/>
             </field>
         </field>
     </record>
