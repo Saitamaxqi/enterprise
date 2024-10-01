@@ -64,12 +64,20 @@
                 <t t-if="countryCode === 'SE'">
                     <div class="sie-import pt-4">
                         <h2 class="text-odoo">
-                            SIE 5
+                            SIE 4/5
                         </h2>
                         <p>
                             The SIE standard file format is very common in Sweden for several purposes such as auditing, importing and exporting data
-                            from and to other accounting applications. Odoo support importing data from type 5 of SIE.
+                            from and to other accounting applications. Odoo support importing data from both type 4 and 5 of SIE.
                             <ul>
+                                <li>
+                                    <a class="fw-bold" href="#" t-on-click.prevent="() => this._openModuleInstallation('l10n_se_sie4_import')">
+                                        SIE 4 Import module
+                                    </a>
+                                    is required to import the SIE 4 files.
+                                    By design, it's also backward compatible with previous SIE versions (version 1 up to 3).
+                                    This import will not validate the correctness of the file.
+                                </li>
                                 <li>
                                     <a class="fw-bold" href="#" t-on-click.prevent="() => this._openModuleInstallation('l10n_se_sie_import')">
                                         SIE 5 Import module
