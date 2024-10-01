@@ -16,7 +16,7 @@
             You'll find all your personal HR documents in this folder.<br/><br/>
             Please keep this link secure.<br/><br/>
             <div style="text-align: center; padding: 16px 0px 16px 0px; font-size: 14px;">
-                <a t-attf-href="{{ object.sudo().documents_link_url }}"
+                <a t-attf-href="{{ object._get_documents_link_url() }}"
                     target="_blank"
                     style="background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;">
                     Your Documents

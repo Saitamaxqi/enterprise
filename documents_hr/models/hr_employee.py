@@ -81,3 +81,7 @@ class HrEmployee(models.Model):
             "documents-hr-my-files",
             str(self.id),
         )
+
+    def _get_documents_link_url(self):
+        self.ensure_one()
+        return f'{self.get_base_url()}/documents_hr/my_files/{self.id}/{self._get_employee_documents_token()}'

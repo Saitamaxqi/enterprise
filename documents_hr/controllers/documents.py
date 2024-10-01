@@ -17,6 +17,6 @@ class HrShareRoute(ShareRoute):
         if not redirect or not redirect.employee_id:
             return super().share_portal(share_id, token)
         return request.redirect(
-            redirect.employee_id.documents_link_url,
+            redirect.employee_id._get_documents_link_url(),
             code=HTTPStatus.MOVED_PERMANENTLY,
         )
