@@ -53,16 +53,16 @@ class TestKnowledgeArticleTemplate(HttpCase):
             "template_name": "Child 1",
             "template_body": Markup("""
                 <p>Sint dicta facere eum excepturi</p>
-                <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_embedded_view"
-                    data-oe-protected="true"
-                    data-behavior-props="{
-                    'action_xml_id': 'knowledge.knowledge_article_item_action',
-                    'display_name': 'Article Items',
-                    'view_type': 'list',
-                    'context': {
-                        'active_id': ref('knowledge.knowledge_article_template_test'),
-                        'default_parent_id': ref('knowledge.knowledge_article_template_test'),
-                        'default_is_article_item': True
+                <div data-embedded="view" data-oe-protected="true" data-embedded-props="{
+                    'viewProps': {
+                        'actionXmlId': 'knowledge.knowledge_article_item_action',
+                        'displayName': 'Article Items',
+                        'viewType': 'list',
+                        'context': {
+                            'active_id': ref('knowledge.knowledge_article_template_test'),
+                            'default_parent_id': ref('knowledge.knowledge_article_template_test'),
+                            'default_is_article_item': True
+                        }
                     }
                 }"/>
             """),
@@ -166,19 +166,20 @@ class TestKnowledgeArticleTemplate(HttpCase):
         # to refer to the parent article.
 
         fragment = html.fragment_fromstring(child_article_1.body, create_parent="div")
-        embedded_views = [element for element in fragment.xpath("//*[@data-behavior-props]") \
-            if "o_knowledge_behavior_type_embedded_view" in element.get("class")]
+        embedded_views = list(fragment.xpath("//*[@data-embedded='view']"))
 
         self.assertEqual(len(embedded_views), 1)
-        behavior_props = json.loads(parse.unquote(embedded_views[0].get("data-behavior-props")))
-        self.assertEqual(behavior_props, {
-            "action_xml_id": "knowledge.knowledge_article_item_action",
-            "display_name": "Article Items",
-            "view_type": "list",
-            "context": {
-                "active_id": child_article_1.id,
-                "default_parent_id": child_article_1.id,
-                "default_is_article_item": True
+        embedded_props = json.loads(embedded_views[0].get("data-embedded-props"))
+        self.assertEqual(embedded_props, {
+            "viewProps": {
+                "actionXmlId": "knowledge.knowledge_article_item_action",
+                "displayName": "Article Items",
+                "viewType": "list",
+                "context": {
+                    "active_id": child_article_1.id,
+                    "default_parent_id": child_article_1.id,
+                    "default_is_article_item": True
+                }
             }
         })
 

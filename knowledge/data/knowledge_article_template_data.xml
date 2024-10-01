@@ -41,38 +41,39 @@
             <h1>Shared To-Do List</h1>
             <hr/>
             <p>Please pick the following tasks first:</p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_embedded_view"
-                data-oe-protected="true"
-                data-behavior-props="{
-                'action_xml_id': 'knowledge.knowledge_article_item_action',
-                'display_name': 'Urgent Matters',
-                'view_type': 'list',
-                'favorites': [{
-                    'name': 'Urgent Tasks',
-                    'is_default': True,
-                    'model_id': 'knowledge.article',
-                    'domain': [('article_properties.priority', '=', 'high_priority')],
-                    'context': {}
-                }],
-                'context': {
-                    'active_id': ref('knowledge.knowledge_article_template_shared_todos'),
-                    'default_parent_id': ref('knowledge.knowledge_article_template_shared_todos'),
-                    'default_is_article_item': True
+            <div data-embedded="view" data-oe-protected="true" data-embedded-props="{
+                'viewProps': {
+                    'actionXmlId': 'knowledge.knowledge_article_item_action',
+                    'displayName': 'Urgent Matters',
+                    'viewType': 'list',
+                    'favoriteFilters': {
+                        'Urgent Tasks': {
+                            'name': 'Urgent Tasks',
+                            'is_default': True,
+                            'model_id': 'knowledge.article',
+                            'domain': [('article_properties.priority', '=', 'high_priority')],
+                            'context': {}
+                        }
+                    },
+                    'context': {
+                        'active_id': ref('knowledge.knowledge_article_template_shared_todos'),
+                        'default_parent_id': ref('knowledge.knowledge_article_template_shared_todos'),
+                        'default_is_article_item': True
+                    }
                 }
-            }">
-            </div>
+            }"/>
             <p><br/></p>
             <p>Otherwise, feel free to handle others listed below:</p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_embedded_view"
-                data-oe-protected="true"
-                data-behavior-props="{
-                'action_xml_id': 'knowledge.knowledge_article_item_action_stages',
-                'display_name': 'All Tasks',
-                'view_type': 'kanban',
-                'context': {
-                    'active_id': ref('knowledge.knowledge_article_template_shared_todos'),
-                    'default_parent_id': ref('knowledge.knowledge_article_template_shared_todos'),
-                    'default_is_article_item': True
+            <div data-embedded="view" data-oe-protected="true" data-embedded-props="{
+                'viewProps': {
+                    'actionXmlId': 'knowledge.knowledge_article_item_action_stages',
+                    'displayName': 'All Tasks',
+                    'viewType': 'kanban',
+                    'context': {
+                        'active_id': ref('knowledge.knowledge_article_template_shared_todos'),
+                        'default_parent_id': ref('knowledge.knowledge_article_template_shared_todos'),
+                        'default_is_article_item': True
+                    }
                 }
             }"/>
             <p><br/></p>
@@ -505,11 +506,11 @@
             <p>
                 <strong><font class="text-o-color-2">PRO TIP</font></strong>: From a lead, use the book button in the chatter to find this article and autocomplete your email with this template.
             </p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_template" data-oe-protected="true">
+            <div data-embedded="clipboard">
                 <div class="d-flex">
-                    <div class="o_knowledge_template_label align-middle">Clipboard</div>
+                    <div class="o_embedded_clipboard_label align-middle">Clipboard</div>
                 </div>
-                <div class="o_knowledge_content" data-prop-name="content" data-oe-protected="false">
+                <div data-embedded-editable="clipboardContent">
                     <p>Hey ProspectName,</p>
                     <p>
                         I was doing some research online and found your company.<br/>
@@ -530,11 +531,11 @@
             <p>
                 <strong><font class="text-o-color-2">PRO TIP</font></strong>: From a lead, use the book button in the chatter to find this article and autocomplete your description with this qualification template.
             </p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_template" data-oe-protected="true">
+            <div data-embedded="clipboard">
                 <div class="d-flex">
-                    <div class="o_knowledge_template_label align-middle">Clipboard</div>
+                    <div class="o_embedded_clipboard_label align-middle">Clipboard</div>
                 </div>
-                <div class="o_knowledge_content" data-prop-name="content" data-oe-protected="false">
+                <div data-embedded-editable="clipboardContent">
                     <h2>Prospect Qualification</h2>
                     <p><br/></p>
                     <ol>
@@ -640,16 +641,16 @@
         <field name="template_body" type="html">
             <h1>Meeting Minutes</h1>
             <hr/><br/>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_embedded_view"
-                data-oe-protected="true"
-                data-behavior-props="{
-                'action_xml_id': 'knowledge.knowledge_article_item_action',
-                'display_name': 'Meeting Minute',
-                'view_type': 'list',
-                'context': {
-                    'active_id': ref('knowledge.knowledge_article_template_meeting_minutes'),
-                    'default_parent_id': ref('knowledge.knowledge_article_template_meeting_minutes'),
-                    'default_is_article_item': True
+            <div data-embedded="view" data-oe-protected="true" data-embedded-props="{
+                'viewProps': {
+                    'actionXmlId': 'knowledge.knowledge_article_item_action',
+                    'displayName': 'Meeting Minute',
+                    'viewType': 'list',
+                    'context': {
+                        'active_id': ref('knowledge.knowledge_article_template_meeting_minutes'),
+                        'default_parent_id': ref('knowledge.knowledge_article_template_meeting_minutes'),
+                        'default_is_article_item': True
+                    }
                 }
             }"/>
             <p><br/></p>
@@ -847,7 +848,7 @@
         <field name="template_body" type="html">
             <h1>Account Management Cheat Sheet</h1>
             <hr/>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_toc" contenteditable="false"/>
+            <div data-embedded="tableOfContent"/>
             <blockquote>
                 <font class="text-o-color-2">
                     <strong>Planned Next Step:</strong>
@@ -1089,15 +1090,16 @@
                 <br/>
                 They can also be shared with customers, journalists and resellers.
             </p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_file" data-oe-protected="true">
-                <div class="o_knowledge_file_image" data-prop-name="fileImage">
-                    <a href="https://odoocdn.com/openerp_website/static/src/img/assets/png/odoo_logo.png?download=true" title="logo.jpg" data-mimetype="image/jpeg" class="o_image"></a>
-                </div>
-                <div class="o_knowledge_file_description">
-                    <div class="o_knowledge_file_name" data-prop-name="fileName">Odoo Logo</div>
-                    <div class="o_knowledge_file_extension" data-prop-name="fileExtension">JPG</div>
-                </div>
-            </div>
+            <div data-embedded="file" data-embedded-props='{
+                "fileData":{
+                    "extension": "png",
+                    "filename": "Odoo Logo",
+                    "mimetype": "image/png",
+                    "name": "Odoo Logo.png",
+                    "type": "url",
+                    "url": "https://odoocdn.com/openerp_website/static/src/img/assets/png/odoo_logo.png?download=true"
+                }
+            }'/>
             <p><br/></p>
             <h4>Usage</h4>
             <ul>
@@ -1146,11 +1148,11 @@
             <hr/>
             <p>Use this template whenever you have an announcement to make.</p>
             <p><br/></p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_template" data-oe-protected="true">
+            <div data-embedded="clipboard">
                 <div class="d-flex">
-                    <div class="o_knowledge_template_label align-middle">Clipboard</div>
+                    <div class="o_embedded_clipboard_label align-middle">Clipboard</div>
                 </div>
-                <div class="o_knowledge_content" data-prop-name="content" data-oe-protected="false">
+                <div data-embedded-editable="clipboardContent">
                     <p>
                         250 Executive Park Blvd, Suite 3400 94134
                         <br/>
@@ -1251,7 +1253,7 @@
         <field name="template_body" type="html">
             <h1>HR FAQ</h1>
             <hr/>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_toc" contenteditable="false"/>
+            <div data-embedded="tableOfContent"/>
             <p><br/></p>
             <h2>Expense Policy</h2>
             <h3>Who do I need to address if I need office supplies?</h3>
@@ -1267,15 +1269,16 @@
             <h2>Car Policy</h2>
             <h3>How do I know which model I can order or not?</h3>
             <p>Our catalog can be found here and is updated every 2 years. If you do not manage to find the specific model you are looking for, <a href="mailto:fleet@company.com" target="_blank">contact our FleetOfficer</a></p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_file" data-oe-protected="true">
-                <div class="o_knowledge_file_image" data-prop-name="fileImage">
-                    <a href="/knowledge/static/src/demo/fleet_icon.png?download=true" title="Car_Catalog.png" data-mimetype="image/png" class="o_image"></a>
-                </div>
-                <div class="o_knowledge_file_description">
-                    <div class="o_knowledge_file_name" data-prop-name="fileName">Car_Catalog.png</div>
-                    <div class="o_knowledge_file_extension" data-prop-name="fileExtension">png</div>
-                </div>
-            </div>
+            <div data-embedded="file" data-embedded-props='{
+                "fileData":{
+                    "extension": "png",
+                    "filename": "Car_Catalog.png",
+                    "mimetype": "image/png",
+                    "name": "Car_Catalog.png",
+                    "type": "url",
+                    "url": "/knowledge/static/src/demo/fleet_icon.png?download=true"
+                }
+            }'/>
             <p><br/></p>
             <h3>Who can drive my car?</h3>
             <p>
@@ -1385,7 +1388,7 @@
         <field name="template_body" type="html">
             <h1>Release Notes 🎉</h1>
             <hr/>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_toc" contenteditable="false"/>
+            <div data-embedded="tableOfContent"/>
             <p><br/></p>
             <h1>VersionName - ReleaseDate</h1>
             <hr/>
@@ -1602,26 +1605,28 @@
         <field name="template_body" type="html">
             <h1>Tiny House Catalog</h1>
             <hr/>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_toc" contenteditable="false"/>
+            <div data-embedded="tableOfContent"/>
             <p><br/></p>
             <h2>Available Models ✅</h2>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_embedded_view"
-                data-oe-protected="true"
-                data-behavior-props="{
-                'action_xml_id': 'knowledge.knowledge_article_item_action',
-                'display_name': 'Available Models',
-                'view_type': 'kanban',
-                'favorites': [{
-                    'name': 'Available Models',
-                    'is_default': True,
-                    'model_id': 'knowledge.article',
-                    'domain': [('article_properties.available', '=', True)],
-                    'context': {}
-                }],
-                'context': {
-                    'active_id': ref('knowledge.knowledge_article_template_product_catalog'),
-                    'default_parent_id': ref('knowledge.knowledge_article_template_product_catalog'),
-                    'default_is_article_item': True
+            <div data-embedded="view" data-oe-protected="true" data-embedded-props="{
+                'viewProps': {
+                    'actionXmlId': 'knowledge.knowledge_article_item_action',
+                    'displayName': 'Available Models',
+                    'viewType': 'kanban',
+                    'favoriteFilters': {
+                        'Available Models': {
+                            'name': 'Available Models',
+                            'is_default': True,
+                            'model_id': 'knowledge.article',
+                            'domain': [('article_properties.available', '=', True)],
+                            'context': {}
+                        }
+                    },
+                    'context': {
+                        'active_id': ref('knowledge.knowledge_article_template_product_catalog'),
+                        'default_parent_id': ref('knowledge.knowledge_article_template_product_catalog'),
+                        'default_is_article_item': True
+                    }
                 }
             }"/>
             <p><br/></p>
@@ -1635,12 +1640,10 @@
                 </span>
             </blockquote>
             <p>While tiny houses are inherently small, it's important to prioritize comfort when sharing such limited space. To ensure everyone's happiness, we recommend allowing at least 9m² per person. If you plan to live with multiple roommates, our Serenità model is highly recommended, providing ample space for each individual to enjoy<br/></p>
-            <p><a class="o_knowledge_behavior_anchor o_knowledge_behavior_type_article btn btn-sm"
+            <p><a class="o_knowledge_article_link btn btn-sm"
                 target="_blank" data-oe-protected="true" contenteditable="false"
-                data-behavior-props="{
-                    'article_id': ref('knowledge.knowledge_article_template_product_catalog_house_serenita'),
-                    'display_name': '🏢 House Model - Serenità'
-                }"/></p>
+                data-res_id="ref('knowledge.knowledge_article_template_product_catalog_house_serenita')"
+                >🏢 House Model - Serenità</a></p>
             <p></p>
             <p><br/></p>
             <blockquote>
@@ -1650,12 +1653,10 @@
             </blockquote>
             <p>While tiny houses do offer a more cost-effective alternative to traditional houses, at MyCompany, we prioritize durability, which comes with a price. However, if you're on a tight budget, we have the perfect solution: our Cielo model.<br/>It provides everything you need while allowing you to save.<br/></p>
             <p></p>
-            <p><a class="o_knowledge_behavior_anchor o_knowledge_behavior_type_article btn btn-sm"
+            <p><a class="o_knowledge_article_link btn btn-sm"
                 target="_blank" data-oe-protected="true" contenteditable="false"
-                data-behavior-props="{
-                    'article_id': ref('knowledge.knowledge_article_template_product_catalog_house_cielo'),
-                    'display_name': '🏠 House Model - Cielo'
-                }"/></p>
+                data-res_id="ref('knowledge.knowledge_article_template_product_catalog_house_cielo')"
+                >🏠 House Model - Cielo</a></p>
             <p><br/></p>
             <blockquote>
                 <span style="font-size: 18px;">
@@ -1663,18 +1664,14 @@
                 </span>
             </blockquote>
             <p>Whether your heart leans towards the rustic charm of a wooden hut or the intricate beauty of Victorian steelworks, we have you covered. Desiring a specific option? Rest assured, we are here to fulfill your wishes! Just get in touch with our architects and we will make sure to provide any specific choice you desire.</p>
-            <p>Natural Style ☘ -<a class="o_knowledge_behavior_anchor o_knowledge_behavior_type_article btn btn-sm"
+            <p>Natural Style ☘ -<a class="o_knowledge_article_link btn btn-sm"
                 target="_blank" data-oe-protected="true" contenteditable="false"
-                data-behavior-props="{
-                    'article_id': ref('knowledge.knowledge_article_template_product_catalog_house_incanto'),
-                    'display_name': '🏘️ House Model - Incanto'
-                }"/></p>
-            <p>Industrial ⚙-<a class="o_knowledge_behavior_anchor o_knowledge_behavior_type_article btn btn-sm"
+                data-res_id="ref('knowledge.knowledge_article_template_product_catalog_house_incanto')"
+                >🏘️ House Model - Incanto</a></p>
+            <p>Industrial ⚙-<a class="o_knowledge_article_link btn btn-sm"
                 target="_blank" data-oe-protected="true" contenteditable="false"
-                data-behavior-props="{
-                    'article_id': ref('knowledge.knowledge_article_template_product_catalog_house_dolcezza'),
-                    'display_name': '🛕 House Model - Dolcezza'
-                }"/></p>
+                data-res_id="ref('knowledge.knowledge_article_template_product_catalog_house_dolcezza')"
+                >🛕 House Model - Dolcezza</a></p>
             <p><br/></p>
             <blockquote>
                 <span style="font-size: 18px;">
@@ -1687,16 +1684,16 @@
             <hr/>
             <p><br/></p>
             <h2>All Models 📖</h2>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_embedded_view"
-                data-oe-protected="true"
-                data-behavior-props="{
-                'action_xml_id': 'knowledge.knowledge_article_item_action',
-                'display_name': 'All Models',
-                'view_type': 'list',
-                'context': {
-                    'active_id': ref('knowledge.knowledge_article_template_product_catalog'),
-                    'default_parent_id': ref('knowledge.knowledge_article_template_product_catalog'),
-                    'default_is_article_item': True
+            <div data-embedded="view" data-oe-protected="true" data-embedded-props="{
+                'viewProps': {
+                    'actionXmlId': 'knowledge.knowledge_article_item_action',
+                    'displayName': 'All Models',
+                    'viewType': 'list',
+                    'context': {
+                        'active_id': ref('knowledge.knowledge_article_template_product_catalog'),
+                        'default_parent_id': ref('knowledge.knowledge_article_template_product_catalog'),
+                        'default_is_article_item': True
+                    }
                 }
             }"/>
             <p><br/></p>
@@ -1806,16 +1803,16 @@
         <field name="template_body" type="html">
             <h1>Customer Personas</h1>
             <hr/><br/>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_embedded_view"
-                data-oe-protected="true"
-                data-behavior-props="{
-                'action_xml_id': 'knowledge.knowledge_article_item_action',
-                'display_name': 'Customer Personas',
-                'view_type': 'kanban',
-                'context': {
-                    'active_id': ref('knowledge.knowledge_article_template_marketing_customer_personas'),
-                    'default_parent_id': ref('knowledge.knowledge_article_template_marketing_customer_personas'),
-                    'default_is_article_item': True
+            <div data-embedded="view" data-oe-protected="true" data-embedded-props="{
+                'viewProps': {
+                    'actionXmlId': 'knowledge.knowledge_article_item_action',
+                    'displayName': 'Customer Personas',
+                    'viewType': 'kanban',
+                    'context': {
+                        'active_id': ref('knowledge.knowledge_article_template_marketing_customer_personas'),
+                        'default_parent_id': ref('knowledge.knowledge_article_template_marketing_customer_personas'),
+                        'default_is_article_item': True
+                    }
                 }
             }"/>
             <p><br/></p>
@@ -1824,8 +1821,8 @@
                     To add more, use the clipboard below 👇🏼
                 </span>
             </p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_template" data-oe-protected="true" contenteditable="false">
-                <div class="o_knowledge_content" data-prop-name="content" data-oe-protected="false" contenteditable="true">
+            <div data-embedded="clipboard">
+                <div data-embedded-editable="clipboardContent">
                     <h2><u>Demographics</u></h2>
                     <ul>
                         <li>Age:</li>
@@ -2050,23 +2047,23 @@
         <field name="template_body" type="html">
             <h1>Sprint Calendar</h1>
             <hr/><br/>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_embedded_view"
-                data-oe-protected="true"
-                data-behavior-props="{
-                'action_xml_id': 'knowledge.knowledge_article_action_item_calendar',
-                'display_name': 'Sprint Calendar',
-                'view_type': 'calendar',
-                'context': {
-                    'active_id': ref('knowledge.knowledge_article_template_sprint_calendar'),
-                    'default_parent_id': ref('knowledge.knowledge_article_template_sprint_calendar'),
-                    'default_is_article_item': True
-                },
-                'additionalViewProps': {
-                    'itemCalendarProps': {
-                        'dateStartPropertyId': 'start_date_time',
-                        'dateStopPropertyId': 'end_date_time',
-                        'dateType': 'datetime',
-                        'scale': 'week'
+            <div data-embedded="view" data-oe-protected="true" data-embedded-props="{
+                'viewProps': {
+                    'actionXmlId': 'knowledge.knowledge_article_action_item_calendar',
+                    'displayName': 'Sprint Calendar',
+                    'viewType': 'calendar',
+                    'context': {
+                        'active_id': ref('knowledge.knowledge_article_template_sprint_calendar'),
+                        'default_parent_id': ref('knowledge.knowledge_article_template_sprint_calendar'),
+                        'default_is_article_item': True
+                    },
+                    'additionalViewProps': {
+                        'itemCalendarProps': {
+                            'dateStartPropertyId': 'start_date_time',
+                            'dateStopPropertyId': 'end_date_time',
+                            'dateType': 'datetime',
+                            'scale': 'week'
+                        }
                     }
                 }
             }"/>
@@ -2129,7 +2126,7 @@
                 We are very excited to share with you the hottest updates and news! 🤩
             </p>
             <p><br/></p>
-            <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_toc" contenteditable="false"/>
+            <div data-embedded="tableOfContent"/>
             <p><br/></p>
             <h2>Podcast updates 📻</h2>
             <div class="container o_text_columns">

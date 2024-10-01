@@ -37,12 +37,6 @@ class KnowledgeArticleThread(models.Model):
         for record in self:
             record.display_name = record.article_id.display_name
 
-    def toggle_thread(self):
-        """Toggles the resolution state of the article"""
-        self.ensure_one()
-        self.is_resolved = not self.is_resolved
-
-
 
 # ===========================================================================
 #                             CRUD METHODS
@@ -59,6 +53,8 @@ class KnowledgeArticleThread(models.Model):
         return super(KnowledgeArticleThread, self.with_context(mail_create_nolog=True)).create(vals_list)
 
     def write(self, vals):
+        if 'is_resolved' in vals:
+            self.ensure_one()
         if 'article_anchor_text' in vals:
             article_anchor_text = html2plaintext(vals['article_anchor_text'])
             vals['article_anchor_text'] = (article_anchor_text[:self._ANCHOR_TEXT_MAX_LENGTH] + '...') \
@@ -71,24 +67,21 @@ class KnowledgeArticleThread(models.Model):
 # ==========================================================================
 
     def message_post(self, **kwargs):
-        """This function overrides the 'mail.thread' message_post in order to let portal users that
-        have access to an article to post a message in the thread.
-        We need to apply this method with sudo for portal users because they do not have access to the
-        `mail.message` model, which is needed to post the message.
-        This idea is based on the override of `mail_message_post` method in portal which needs to
-        check access rights in order to let the portal post in the chatter.
+        """This function overrides the 'mail.thread' message_post in order to control what portal
+        users that have access to an article can post through a thread message.
 
         Before posting as a portal we filter what's being sent to lessen security risks. Notably
         partner_ids should be a list of ids (not the records themselves) so that we don't allow command
-        executions, even with the sudo call.
+        executions.
         """
         self.ensure_one()
         if self.env.user._is_portal() and self.article_id.user_has_access:
-            authorized_keys = {'body', 'partner_ids', 'author_id'}
-            return super(KnowledgeArticleThread, self.sudo()).message_post(
+            authorized_keys = {'body', 'partner_ids', 'author_id', 'attachment_ids'}
+            return super().message_post(
                 **{key: kwargs.get(key) for key in authorized_keys},
                 message_type='comment', subtype_xmlid='mail.mt_comment'
             )
+        kwargs.update({'message_type': 'comment', 'subtype_xmlid': 'mail.mt_comment'})
         return super().message_post(**kwargs)
 
     def _get_access_action(self, access_uid=None, force_website=False):
@@ -109,7 +102,8 @@ class KnowledgeArticleThread(models.Model):
         have been tagged inside a comment. We are using the template 'knowledge.knowledge_mail_notification_layout'
         which is a simple template comprised of the comment sent and the person that tagged the notified user.
         """
-
+        if not kwargs.get('msg_vals', {}).get('partner_ids', []):
+            return
         kwargs['msg_vals'] = {**kwargs.get('msg_vals', {}), 'email_layout_xmlid': 'knowledge.knowledge_mail_notification_layout'}
 
         return super()._notify_thread_by_email(message, recipients_data, **kwargs)
@@ -117,6 +111,12 @@ class KnowledgeArticleThread(models.Model):
     def _message_compute_subject(self):
         self.ensure_one()
         return _('New Mention in %s') % self.display_name
+
+    def _notify_get_recipients(self, message, msg_vals, **kwargs):
+        recipients_data = super()._notify_get_recipients(message, msg_vals, **kwargs)
+        recipients_data = [data for data in recipients_data if data['id'] in msg_vals.get('partner_ids', [])]
+
+        return recipients_data
 
     def _notify_get_recipients_groups(self, message, model_description, msg_vals=None):
         groups = super()._notify_get_recipients_groups(

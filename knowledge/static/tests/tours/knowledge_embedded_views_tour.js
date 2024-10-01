@@ -17,7 +17,7 @@ registry.category("web_tour.tours").add('knowledge_embedded_view_filters_tour', 
             openCommandBar(this.anchor);
         },
     }, { // add embedded list view of article items
-        trigger: '.oe-powerbox-commandName:contains("Item List")',
+        trigger: '.o-we-command-name:contains("Item List")',
         run: "click",
     }, {
         trigger: '.btn-primary',

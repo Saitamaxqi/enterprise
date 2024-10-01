@@ -25,11 +25,11 @@ class TestHelpdeskKnowledgeCrossModuleFeatures(HttpCase):
             'name': 'EditorCommandsArticle',
             'body': Markup("""
                 <p><br></p>
-                <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_template" data-oe-protected="true">
+                <div class="o_knowledge_embedded_clipboard" data-embedded="clipboard">
                     <div class="d-flex">
-                        <div class="o_knowledge_template_label align-middle">Clipboard</div>
+                        <div class="o_embedded_clipboard_label align-middle">Clipboard</div>
                     </div>
-                    <div class="o_knowledge_content" data-prop-name="content" data-oe-protected="false">
+                    <div data-embedded-editable="clipboardContent">
                         <p>Hello world</p>
                     </div>
                 </div>

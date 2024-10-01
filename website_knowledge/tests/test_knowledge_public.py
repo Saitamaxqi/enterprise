@@ -62,7 +62,7 @@ class TestKnowledgePublic(HttpCase):
             'name': 'Odoo Experience',
             'body': '''
                 <h1>What is Odoo Experience?</h1>
-                <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_toc">Hello</div>
+                <div data-embedded="tableOfContent">Hello</div>
                 <p>Odoo Experience is our largest event, taking place once a year.</p>
                 <p>It brings together all members of the Odoo sphere, including partners, customers and open source software fans.</p>
             ''',

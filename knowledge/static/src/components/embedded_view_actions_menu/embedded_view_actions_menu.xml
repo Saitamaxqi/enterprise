@@ -4,7 +4,7 @@
         <DropdownItem onSelected.bind="_onOpenEmbeddedView">
             <i class="fa fa-fw fa-external-link me-1"/>Open
         </DropdownItem>
-        <DropdownItem onSelected.bind="_onEditEmbeddedView">
+        <DropdownItem t-if="!env.isEmbeddedReadonly" onSelected.bind="_onEditEmbeddedView">
             <i class="fa fa-fw fa-pencil me-1"/>Edit
         </DropdownItem>
     </t>

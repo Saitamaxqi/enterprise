@@ -24,11 +24,6 @@
         }
     }
 
-    .o_knowledge_behavior_type_embedded_view .o_list_renderer thead {
-        position: relative;
-        z-index: auto;
-    }
-
     span.o_knowledge_add_properties {
         cursor: not-allowed;
     }
@@ -41,7 +36,7 @@
     .o_knowledge_editor .o_field_html .o_readonly,
     .o_knowledge_editor .o_field_html .o_knowledge_helper {
         padding-left: var(--editor-gutter-size) !important;
-        padding-right: calc(var(--editor-gutter-size) + 2rem) !important;
+        padding-right: calc(var(--editor-gutter-size) + 40px) !important;
     }
     .o_knowledge_article_view_form_dynamic_width ~ .o_knowledge_icon,
     .o_knowledge_article_view_form_dynamic_width ~ .o_knowledge_editor .o_field_html .note-editable,
@@ -379,6 +374,10 @@
         .o_knowledge_chatter {
             border-left: 1px solid $border-color;
             min-width: 400px;
+        }
+        .o_widget_knowledge_comments_panel {
+            height: 100%;
+            overflow-y: auto;
         }
     }
 }

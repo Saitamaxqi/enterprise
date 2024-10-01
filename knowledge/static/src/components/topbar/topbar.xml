@@ -36,7 +36,7 @@
                     <i class="fa fa-fw fs-6 fa-comments"/>
                 </a>
                 <a t-ref="btn_history"
-                   t-if="props.record.resId and isInternalUser and props.record.data.user_can_write"
+                   t-if="props.record.resId and isInternalUser and props.record.data.user_can_write and props.record.data['html_field_history_metadata']?.['body']"
                    role="button"
                    t-attf-class="btn btn-light btn-history #{state.displayHistory ? 'active' : ''}"
                    data-hotkey="y"
@@ -47,8 +47,8 @@
                 <a t-ref="btn_properties" t-if="state.addingProperty or props.record.resId and props.record.data.article_properties.length and isInternalUser" role="button" t-attf-class="btn btn-light btn-properties #{state.displayPropertyPanel ? 'active' : ''}" data-hotkey="o" title="Show Properties" t-on-click="toggleProperties">
                     <i class="fa fa-fw fs-6 fa-cogs"/>
                 </a>
-                <a t-ref="btn_comments" t-if="props.record.resId and state.commentsActive" role="button"
-                    t-attf-class="btn btn-light btn-comments #{state.displayCommentsPanel ? 'active' : ''}" t-on-click="toggleComments">
+                <a t-ref="btn_comments" t-if="props.record.resId and displayCommentsPanelButton" role="button"
+                    t-attf-class="btn btn-light btn-comments #{commentsState.displayMode === 'panel' ? 'active' : ''}" t-on-click="toggleComments">
                     <i class="fa fa-fw fs-6 fa-commenting" title="Open comments panel"/>
                 </a>
                 <div class="o-dropdown dropdown" t-if="props.record.resId">

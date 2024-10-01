@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<templates>
-    <t t-name="knowledge.ViewLinkBehavior">
-        <span class="o_knowledge_view_link_name_container" t-ref="linkNameRef" data-oe-protected="false"/>
-    </t>
-    <t t-name="knowledge.ViewLinkBehaviorName">
-        <span t-attf-class="o_knowledge_view_link_name #{style}" t-out="linkName"/>
-    </t>
-</templates>

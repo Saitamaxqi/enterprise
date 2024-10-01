@@ -1197,17 +1197,16 @@ class Article(models.Model):
                 continue
             needs_embed_view_update = False
             fragment = html.fragment_fromstring(article.body, create_parent=True)
-            for element in fragment.findall(".//*[@data-behavior-props]"):
-                if "o_knowledge_behavior_type_embedded_view" in element.get("class"):
-                    behavior_props = json.loads(parse.unquote(element.get("data-behavior-props")))
-                    context = behavior_props.get("context", {})
-                    if context.get("default_is_article_item") and context.get("active_id") == original_article.id:
-                        context.update({
-                            "active_id": article.id,
-                            "default_parent_id": article.id
-                        })
-                        element.set("data-behavior-props", parse.quote(json.dumps(behavior_props), safe="()*!'"))
-                        needs_embed_view_update = True
+            for element in fragment.findall(".//*[@data-embedded='view']"):
+                embedded_props = json.loads(parse.unquote(element.get("data-embedded-props")))
+                context = embedded_props.get("context", {})
+                if context.get("default_is_article_item") and context.get("active_id") == original_article.id:
+                    context.update({
+                        "active_id": article.id,
+                        "default_parent_id": article.id
+                    })
+                    element.set("data-embedded-props", parse.quote(json.dumps(embedded_props), safe="()*!'"))
+                    needs_embed_view_update = True
 
             if needs_embed_view_update:
                 article.write({
@@ -2821,22 +2820,26 @@ class Article(models.Model):
             return str(ref(match.group('xml_id')))
 
         fragment = html.fragment_fromstring(self.template_body, create_parent='div')
-        for element in fragment.xpath('//*[@data-behavior-props]'):
-            # When encoding the "behavior props", we find and replace the function
+        for element in fragment.xpath('//*[@data-embedded="view"]'):
+            # When encoding the "embedded props", we find and replace the function
             # calls of `ref` with the ids returned by the given `ref` function for
             # the given xml ids. The generated HTML will then only contain ids.
             # Example:
-            # When the "behavior props" contains `ref('knowledge.article_template_1')`,
+            # When the "embedded props" contains `ref('knowledge.article_template_1')`,
             # we replace that string occurrence with the id returned by the given
             # `ref` function evaluated with the xml_id 'knowledge.article_template_1'.
-            behavior_props = ast.literal_eval(re.sub(
+            embedded_props = ast.literal_eval(re.sub(
                 r'(?<![\w])ref\(\'(?P<xml_id>\w+\.\w+)\'\)',
                 transform_xmlid_to_res_id,
-                element.get('data-behavior-props')))
-            element.set('data-behavior-props',
-                parse.quote(json.dumps(behavior_props), safe="()*!'"))
-            if 'o_knowledge_behavior_type_article' in element.get('class'):
-                element.set('href', '/knowledge/article/%s' % (behavior_props.get('article_id')))
+                element.get('data-embedded-props')))
+            element.set('data-embedded-props', json.dumps(embedded_props))
+        for element in fragment.xpath('//*[contains(@class, "o_knowledge_article_link")]'):
+            article_id = ast.literal_eval(re.sub(
+                r'(?<![\w])ref\(\'(?P<xml_id>\w+\.\w+)\'\)',
+                transform_xmlid_to_res_id,
+                element.get('data-res_id')))
+            element.set('href', '/knowledge/article/%s' % (article_id))
+            element.set('data-res_id', '%s' % (article_id))
 
         return ''.join(html.tostring(child, encoding='unicode', method='html') \
             for child in fragment.getchildren()) # unwrap the elements from the parent node

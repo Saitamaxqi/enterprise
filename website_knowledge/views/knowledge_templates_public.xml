@@ -17,74 +17,14 @@
 
     <template id="website_knowledge.article_view_public" name="Knowledge Public">
         <t t-call="website_knowledge.layout">
-            <div class="container-fluid h-100 o_knowledge_public_view p-0" t-att-data-article-id="article.id if article else False">
-                <div class="d-sm-flex h-100">
-                    <aside t-att-class="'o_knowledge_sidebar' + (' flex-shrink-0 p-0' if show_sidebar else ' d-none')">
-                        <div class="d-flex flex-column h-100">
-                            <div class="p-3">
-                                <input type="text" class="form-control knowledge_search_bar" placeholder="Search an article..."/>
-                            </div>
-                            <!-- File explorer -->
-                            <div class="flex-grow-1 position-relative border-bottom">
-                                <div class="o_scroll_view px-3">
-                                    <div class="o_knowledge_tree">
-                                        <div class="p-5 text-center">
-                                            <i class="fa fa-circle-o-notch fa-2x fa-spin" title="loader" role="img"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </aside>
-                    <div class="flex-grow-1 position-relative">
-                        <div class="d-flex flex-column h-100">
-                            <!-- Article header -->
-                            <header class="o_knowledge_header d-sm-flex flex-row justify-content-between border-bottom">
-                                <div class="d-flex align-items-center p-3">
-                                    <!-- Title -->
-                                    <t t-if="article">
-                                        <span t-if="article.name" t-out="article.display_name"/>
-                                        <span t-else="">Untitled</span>
-                                    </t>
-                                </div>
-                                <!-- Log In -->
-                                <div class="d-table my-auto o_knowledge_public_virality">
-                                    <t t-call="portal.user_sign_in_redirect">
-                                        <t t-set="_item_class" t-valuef="nav-item d-table-cell text-center"/>
-                                        <t t-set="_link_class" t-valuef="nav-link fw-bold"/>
-                                    </t>
-                                </div>
-                            </header>
-                            <div class="p-3 text-center" t-if="not article">
-                                <p class="o_view_nocontent_empty_folder">
-                                    <h2>Article not found</h2>
-                                    <br />
-                                    <p>The article you are trying the read has either been removed or you do not have access to it.</p>
-                                </p>
-                            </div>
-                            <main class="flex-grow-1 position-relative" t-else="">
-                                <div class="o_scroll_view">
-                                    <!-- Article Cover -->
-                                    <div t-if="article.cover_image_id" class="o_knowledge_cover">
-                                        <img t-att-src="article.cover_image_url" t-attf-style="object-position: 50% #{article.cover_image_position or 50}%;"/>
-                                    </div>
-                                    <!-- Article Icon -->
-                                    <div t-if="article.icon" t-attf-class="o_knowledge_icon px-3 #{'o_full_width' if article.full_width else ''}">
-                                        <t t-out="article.icon" />
-                                    </div>
-                                    <!-- Article Body -->
-                                    <div t-attf-class="o_knowledge_article px-3 #{'' if article.icon else 'pt-3'} #{'o_full_width' if article.full_width else ''}">
-                                        <t t-out="article.body" />
-                                    </div>
-                                </div>
-                            </main>
-                        </div>
-                        <div class="o_knowledge_article_form_resizer d-print-none d-none d-sm-block opacity-75 opacity-100-hover">
-                            <span class="bg-300 pe-1"/>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <t t-set="public_knowledge_props" t-value="{
+                'record': {
+                    'resId': res_id,
+                    'data': article_data,
+                },
+                'showSidebar': show_sidebar, 
+            }"/>
+            <owl-component name="knowledge.public_view" t-att-props="json.dumps(public_knowledge_props)"/>
         </t>
     </template>
 

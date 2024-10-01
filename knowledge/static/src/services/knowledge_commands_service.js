@@ -11,12 +11,12 @@ import { registry } from "@web/core/registry";
  *   Knowledge @see FormControllerPatch
  *   - Information about this record and how to access its form view is stored
  *     in this @see KnowledgeCommandsService .
- * - A knowledge Article is opened and it contains a @see TemplateBehavior .
- *   - When the behavior is injected (@see HtmlFieldPatch ) in the view, it
+ * - A knowledge Article is opened and it contains a @see TemplateEmbedded .
+ *   - When the embedded is injected (@see HtmlFieldPatch ) in the view, it
  *     asks this @see KnowledgeCommandsService if the record can be interacted
  *     with.
  *   - if there is one such record, the related buttons are displayed in the
- *     toolbar of the behavior.
+ *     toolbar of the embedded.
  * - When one such button is used, the form view of the record is reloaded
  *   and the button action is executed through a @see Macro .
  *   - an example of macro action would be copying the template contents as the
@@ -33,8 +33,8 @@ import { registry } from "@web/core/registry";
  * 2) @see ChatterPatch :
  *        It will be called if the currently viewed record (in a Form view) has
  *        a chatter which the user can use to attach files or send messages.
- * 3) @see TemplateBehavior or @see FileBehavior :
- *        It will be called by a behavior to check whether it has a record that
+ * 3) @see TemplateEmbedded or @see FileEmbedded :
+ *        It will be called by a embedded to check whether it has a record that
  *        can be interacted with in the context of the toolbar, detected through
  *        case 1) and/or 2): canPostMessages, canAttachFiles, withHtmlField.
  *
@@ -145,31 +145,31 @@ export const knowledgeCommandsService = {
         // External embedded views features
         //----------------------------------------------------------------------
 
-        let pendingBehaviorBlueprints = {};
+        let pendingEmbeddedBlueprints = {};
 
         /**
          * @param {Object}
-         * @param {HTMLElement} behaviorBlueprint element to be inserted in a
+         * @param {HTMLElement} embeddedBlueprint element to be inserted in a
          *                      html field
          * @param {string} model model name of the target record
          * @param {string} field field name of the target record
          * @param {integer} resId id of the target record
          */
-        function setPendingBehaviorBlueprint({behaviorBlueprint, model, field, resId}) {
-            if (!(model in pendingBehaviorBlueprints)) {
-                pendingBehaviorBlueprints[model] = {};
+        function setPendingEmbeddedBlueprint({embeddedBlueprint, model, field, resId}) {
+            if (!(model in pendingEmbeddedBlueprints)) {
+                pendingEmbeddedBlueprints[model] = {};
             }
-            if (!(field in pendingBehaviorBlueprints[model])) {
-                pendingBehaviorBlueprints[model][field] = {};
+            if (!(field in pendingEmbeddedBlueprints[model])) {
+                pendingEmbeddedBlueprints[model][field] = {};
             }
-            pendingBehaviorBlueprints[model][field][resId] = behaviorBlueprint;
+            pendingEmbeddedBlueprints[model][field][resId] = embeddedBlueprint;
         }
 
-        function popPendingBehaviorBlueprint({model, field, resId}) {
-            if (model in pendingBehaviorBlueprints && field in pendingBehaviorBlueprints[model]) {
-                const pendingBehaviorBlueprint = pendingBehaviorBlueprints[model][field][resId];
-                delete pendingBehaviorBlueprints[model][field][resId];
-                return pendingBehaviorBlueprint;
+        function popPendingEmbeddedBlueprint({model, field, resId}) {
+            if (model in pendingEmbeddedBlueprints && field in pendingEmbeddedBlueprints[model]) {
+                const pendingEmbeddedBlueprint = pendingEmbeddedBlueprints[model][field][resId];
+                delete pendingEmbeddedBlueprints[model][field][resId];
+                return pendingEmbeddedBlueprint;
             }
         }
 
@@ -179,8 +179,8 @@ export const knowledgeCommandsService = {
             getBreadcrumbsIdentifier,
             isRecordCompatibleWithMacro,
             unregisterCommandsRecordInfo,
-            setPendingBehaviorBlueprint,
-            popPendingBehaviorBlueprint,
+            setPendingEmbeddedBlueprint,
+            popPendingEmbeddedBlueprint,
         };
         return knowledgeCommandsService;
     }

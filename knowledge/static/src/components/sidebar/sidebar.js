@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
 import { _t } from "@web/core/l10n/translation";
-import { ArticleSelectionBehaviorDialog } from '@knowledge/components/behaviors/article_behavior_dialog/article_behavior_dialog';
+import { ArticleSelectionDialog } from "../../components/article_selection_dialog/article_selection_dialog";
 import { ArticleTemplatePickerDialog } from "@knowledge/components/article_template_picker_dialog/article_template_picker_dialog";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import {
@@ -714,7 +714,7 @@ export class KnowledgeSidebar extends Component {
             this.env.services.command.openMainPalette({searchValue: '?'});
         } else {
             this.dialog.add(
-                ArticleSelectionBehaviorDialog,
+                ArticleSelectionDialog,
                 {
                     title: _t('Search an Article...'),
                     confirmLabel: _t('Open'),

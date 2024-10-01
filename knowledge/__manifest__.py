@@ -9,7 +9,7 @@
     'version': '1.0',
     'depends': [
         'web',
-        'web_editor',
+        'web_editor',  # still needed for backend history functions
         'digest',
         'html_editor',
         'mail',
@@ -52,23 +52,19 @@
             'knowledge/static/src/scss/knowledge_common.scss',
             'knowledge/static/src/scss/knowledge_views.scss',
             'knowledge/static/src/scss/knowledge_editor.scss',
-            'knowledge/static/src/scss/knowledge_blocks.scss',
             ('after', 'web/static/src/views/form/form_controller.xml', 'knowledge/static/src/xml/form_controller.xml'),
             'knowledge/static/src/xml/**/*',
-            ('remove', 'knowledge/static/src/xml/knowledge_wysiwyg.xml'),
             'knowledge/static/src/components/**/*',
             'knowledge/static/src/editor/**/*',
-            'knowledge/static/src/discuss/**/*',
-            'knowledge/static/src/emoji_picker/**/*',
+            'knowledge/static/src/comments/**/*',
+            'knowledge/static/src/mail/**/*',
             'knowledge/static/src/search_model/**/*',
             ('after', 'web/static/src/views/form/form_controller.js', 'knowledge/static/src/web/form_controller_patch.js'),
             'knowledge/static/src/web/**/*',
             'knowledge/static/src/js/knowledge_controller.js',
-            'knowledge/static/src/js/knowledge_plugin.js',
             'knowledge/static/src/js/knowledge_utils.js',
             'knowledge/static/src/js/knowledge_renderers.js',
             'knowledge/static/src/js/knowledge_views.js',
-            'knowledge/static/src/js/tools/**/*',
             'knowledge/static/src/webclient/**/*',
             'knowledge/static/src/views/**/*',
             ('remove', 'knowledge/static/src/views/hierarchy/**'),
@@ -86,8 +82,6 @@
         ],
         'web.assets_frontend': [
             'knowledge/static/src/scss/knowledge_common.scss',
-            'knowledge/static/src/scss/knowledge_blocks.scss',
-            'knowledge/static/src/js/tools/**/*',
             'knowledge/static/src/js/knowledge_utils.js',
         ],
         'web.assets_unit_tests': [
@@ -98,23 +92,11 @@
         'web.assets_tests': [
             'knowledge/static/tests/tours/**/*',
         ],
-        'web.qunit_suite_tests': [
-            'knowledge/static/tests/legacy/**/*',
-            ('remove', 'knowledge/static/tests/legacy/mock_services.js'),
-            ('include', 'knowledge.assets_wysiwyg'),
-        ],
+        # 'web.qunit_suite_tests': [
+        #     # 'knowledge/static/tests/legacy/**/*',  # TODO: conversion
+        # ],
         'web.tests_assets': [
             'knowledge/static/tests/legacy/mock_services.js',
-        ],
-        'web_editor.backend_assets_wysiwyg': [
-            'knowledge/static/src/xml/knowledge_wysiwyg.xml',
-        ],
-        'knowledge.assets_wysiwyg': [
-            'knowledge/static/src/js/wysiwyg.js',
-            'knowledge/static/src/js/knowledge_wysiwyg.js',
-            'knowledge/static/src/xml/knowledge_editor.xml',
-            'knowledge/static/src/xml/knowledge_article_templates.xml',
-            'knowledge/static/src/js/knowledge_clipboard_whitelist.js',
         ],
         'knowledge.webclient': [
             ('include', 'web.assets_backend'),

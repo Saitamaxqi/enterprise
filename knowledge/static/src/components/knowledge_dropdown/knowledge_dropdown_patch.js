@@ -20,7 +20,7 @@ patch(Dropdown.prototype, {
             (currentActiveEl !== activeEl &&
                 activeEl &&
                 activeEl.contains(currentActiveEl) &&
-                currentActiveEl.classList.contains("o_knowledge_behavior_anchor"))
+                currentActiveEl.dataset.embedded)
         );
     },
 });

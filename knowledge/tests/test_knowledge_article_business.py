@@ -973,12 +973,12 @@ class TestKnowledgeArticleCopy(KnowledgeCommonBusinessCase):
             'name': 'Hello'
         })
 
-        def render_embedded_view(behavior_props):
+        def render_embedded_view(embedded_props):
             return '''
-                <div class="o_knowledge_behavior_anchor o_knowledge_behavior_type_embedded_view"
+                <div data-embedded='view'
                     data-oe-protected="true"
-                    data-behavior-props="%s"/>
-            ''' % (parse.quote(json.dumps(behavior_props)))
+                    data-embedded-props="%s"/>
+            ''' % (parse.quote(json.dumps(embedded_props)))
 
         article.write({
             'body': (
@@ -1036,15 +1036,14 @@ class TestKnowledgeArticleCopy(KnowledgeCommonBusinessCase):
         }]
 
         fragment = html.fragment_fromstring(article.body, create_parent=True)
-        embedded_views = [embedded_view for embedded_view in fragment.findall('.//*[@data-behavior-props]') \
-            if 'o_knowledge_behavior_type_embedded_view' in embedded_view.get('class')]
+        embedded_views = list(fragment.findall('.//*[@data-embedded="view"]'))
 
         # Check that the original article contains the embedded views we want
         self.assertEqual(len(embedded_views), 3)
         for (embedded_view, expected_view_type, expected_context) in zip(embedded_views, expected_view_types, expected_contexts):
-            behavior_props = json.loads(parse.unquote(embedded_view.get('data-behavior-props', {})))
-            self.assertEqual(behavior_props['view_type'], expected_view_type)
-            self.assertEqual(behavior_props['context'], expected_context)
+            embedded_props = json.loads(parse.unquote(embedded_view.get('data-embedded-props', {})))
+            self.assertEqual(embedded_props['view_type'], expected_view_type)
+            self.assertEqual(embedded_props['context'], expected_context)
 
         # Copy the article
         new_article = article.action_make_private_copy()
@@ -1064,8 +1063,7 @@ class TestKnowledgeArticleCopy(KnowledgeCommonBusinessCase):
         }]
 
         fragment = html.fragment_fromstring(new_article.body, create_parent=True)
-        embedded_views = [embedded_view for embedded_view in fragment.findall('.//*[@data-behavior-props]') \
-            if 'o_knowledge_behavior_type_embedded_view' in embedded_view.get('class')]
+        embedded_views = list(fragment.findall('.//*[@data-embedded="view"]'))
 
         # Check that the context of the embedded views stored in the body of the
         # newly created article have properly been updated: The embedded views
@@ -1074,9 +1072,9 @@ class TestKnowledgeArticleCopy(KnowledgeCommonBusinessCase):
 
         self.assertEqual(len(embedded_views), 3)
         for (embedded_view, expected_view_type, expected_context) in zip(embedded_views, expected_view_types, expected_contexts):
-            behavior_props = json.loads(parse.unquote(embedded_view.get('data-behavior-props', {})))
-            self.assertEqual(behavior_props['view_type'], expected_view_type)
-            self.assertEqual(behavior_props['context'], expected_context)
+            embedded_props = json.loads(parse.unquote(embedded_view.get('data-embedded-props', {})))
+            self.assertEqual(embedded_props['view_type'], expected_view_type)
+            self.assertEqual(embedded_props['context'], expected_context)
 
     @mute_logger('odoo.addons.base.models.ir_model', 'odoo.addons.base.models.ir_rule')
     @users('employee')

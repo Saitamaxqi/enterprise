@@ -4,6 +4,9 @@ import { SORTABLE_TOLERANCE } from "@knowledge/components/sidebar/sidebar";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
 import { queryOne, queryFirst } from "@odoo/hoot-dom";
 import { childNodeIndex } from "@html_editor/utils/position";
+import { Component, xml } from "@odoo/owl";
+import { patch } from "@web/core/utils/patch";
+import { ReadonlyEmbeddedViewComponent } from "@knowledge/editor/embedded_components/backend/view/readonly_embedded_view";
 
 export const changeInternalPermission = (permission) => {
     const target = document.querySelector('.o_permission[aria-label="Internal Permission"]');
@@ -109,7 +112,7 @@ export function appendArticleLink(htmlFieldContainerSelector, articleName, previ
             }
         },
     }, { // click on the /article command
-        trigger: '.o-we-powerbox .o-we-command-name:contains(Article)',
+        trigger: '.o-we-powerbox .o-we-command .o-we-command-img.fa-newspaper-o',
         run: 'click',
     }, {
         // select an article in the list
@@ -210,4 +213,24 @@ export function openPowerbox(paragraph, previousSibling) {
             bubbles: true,
         })
     );
+}
+
+export class WithoutLazyLoading extends Component {
+    static template = xml`<t t-slot="default"/>`;
+    static props = ["*"];
+}
+
+export function embeddedViewPatchFunctions() {
+    let unpatchEmbeddedView;
+    return {
+        before: () => {
+            unpatchEmbeddedView = patch(ReadonlyEmbeddedViewComponent.components, {
+                ...ReadonlyEmbeddedViewComponent.components,
+                WithLazyLoading: WithoutLazyLoading,
+            });
+        },
+        after: () => {
+            unpatchEmbeddedView();
+        },
+    };
 }

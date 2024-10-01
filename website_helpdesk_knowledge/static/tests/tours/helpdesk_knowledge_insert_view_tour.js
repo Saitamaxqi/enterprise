@@ -41,15 +41,15 @@ registry.category("web_tour.tours").add('helpdesk_insert_graph_view_in_knowledge
     trigger: '.o_knowledge_form_view',
     run: "click",
 }, { // the user should be redirected to the new article
-    trigger: '.o_knowledge_behavior_type_embedded_view',
+    trigger: '[data-embedded="view"]',
     run: function () {
         this.anchor.scrollIntoView();
     },
 }, { // check that the embedded view has the selected facet
-    trigger: '.o_knowledge_behavior_type_embedded_view .o_searchview .o_facet_value:contains("Urgent")',
+    trigger: '[data-embedded="view"] .o_searchview .o_facet_value:contains("Urgent")',
     run: "click",
 }, {
-    trigger: '.o_knowledge_behavior_type_embedded_view .o_searchview .o_facet_value:contains("Team")',
+    trigger: '[data-embedded="view"] .o_searchview .o_facet_value:contains("Team")',
     run: "click",
 }, ...endKnowledgeTour()
 ]});

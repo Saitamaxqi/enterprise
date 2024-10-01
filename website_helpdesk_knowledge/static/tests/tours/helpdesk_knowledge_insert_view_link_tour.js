@@ -35,7 +35,7 @@ registry.category("web_tour.tours").add('helpdesk_insert_kanban_view_link_in_kno
 }, { // wait for Knowledge to open
     trigger: '.o_knowledge_form_view',
 }, { // open the popover
-    trigger: ".o_knowledge_view_link",
+    trigger: "[data-embedded='viewLink'] a",
     run: "click",
 }, { // the user should be redirected to the new article
     trigger: "div.o_popover > div:nth-child(1) > div:contains('All Tickets')",
@@ -50,6 +50,6 @@ registry.category("web_tour.tours").add('helpdesk_insert_kanban_view_link_in_kno
     trigger: '.o_back_button',
     run: "click",
 }, {
-    trigger: '.o_knowledge_behavior_type_view_link',
+    trigger: '[data-embedded="viewLink"]',
 }, ...endKnowledgeTour()
 ]});

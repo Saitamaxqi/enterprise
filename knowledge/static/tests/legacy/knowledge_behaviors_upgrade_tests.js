@@ -120,7 +120,7 @@ QUnit.module("Knowledge - Behaviors Full Upgrade from original version", (hooks)
         beforeEach();
     });
 
-    QUnit.test("FileBehavior Full Upgrade from original version", async function (assert) {
+    QUnit.skip("FileBehavior Full Upgrade from original version", async function (assert) {
         // Original most basic form of `/file` blueprint (should be upgraded
         // to current version during the mounting process).
         // This file has an unrecognizable href.

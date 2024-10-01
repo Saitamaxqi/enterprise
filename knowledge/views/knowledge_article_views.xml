@@ -64,10 +64,9 @@
                     </div>
                     <div class="flex-grow-1 position-relative">
                         <div class="o_scroll_view o_knowledge_main_view">
-                            <div class="row p-0 m-0" style="min-height: 100%">
+                            <div class="row p-0 m-0" style="height: 100%">
                                 <div class="d-flex col-12 col-lg position-relative p-0">
                                     <div class="o_scroll_view_lg">
-                                        <widget name="knowledge_comments_handler" invisible="not user_permission"/>
                                         <!-- Article body -->
                                         <div class="o_knowledge_body d-flex flex-column"
                                              invisible="not id">
@@ -82,12 +81,12 @@
                                             <field name="icon" widget="knowledge_icon" invisible="not icon" readonly="is_locked or not user_can_write or not active" class="o_knowledge_icon o_large"/>
                                             <!-- Article body -->
                                             <div class="o_knowledge_editor mt-3">
-                                                <field name="body" widget="knowledge_article_html_field" class="o_field_html" no_label="1" groups="base.group_user"
-                                                    options="{'collaborative': true, 'collaborative_trigger': 'start', 'resizable': False, 'knowledge_commands': true}"
+                                                <field name="body" widget="knowledge_html" class="o_field_html" no_label="1" groups="base.group_user"
+                                                    options="{'collaborative': true, 'resizable': False, 'embedded_components': true}"
                                                     readonly="is_locked or not user_can_write or not active"/>
                                                 <!-- Portal users get some commands disabled, notably /image and /file, as they don't have access to ir.attachment -->
-                                                <field name="body" widget="knowledge_article_html_field" class="o_field_html" no_label="1" groups="base.group_portal"
-                                                    options="{'collaborative': true, 'collaborative_trigger': 'start', 'resizable': False, 'knowledge_commands': true, 'disableImage': true, 'disableVideo': true, 'allowCommandFile': false}"
+                                                <field name="body" widget="knowledge_html" class="o_field_html" no_label="1" groups="base.group_portal"
+                                                    options="{'collaborative': true, 'resizable': False, 'embedded_components': true, 'disableImage': true, 'disableVideo': true, 'disableFile': true}"
                                                     readonly="is_locked or not user_can_write or not active"/>
                                             </div>
                                         </div>
@@ -526,7 +525,7 @@
     <!-- Action window for article items calendar (different from other item
     views as we do not want to be able to switch from other views to calendar,
     and vice versa, as the calendar absolutely needs some props from the
-    behaviorProps to work) -->
+    embeddedProps to work) -->
     <record id="knowledge_article_action_item_calendar" model="ir.actions.act_window">
         <field name="name">Article Items</field>
         <field name="res_model">knowledge.article</field>
