@@ -94,8 +94,8 @@ class DocumentsDocument(models.Model):
             if move_type == 'statement':
                 journal_id = company_journals.filtered(lambda journal: journal.type == 'bank')[:1]
             else:
-                move = self.env['account.move'].create({'move_type': move_type})
-                journal_id = move.suitable_journal_ids[:1]
+                move = self.env['account.move'].new({'move_type': move_type})
+                journal_id = move.suitable_journal_ids[:1]._origin
 
         move = None
         invoices = self.env['account.move']

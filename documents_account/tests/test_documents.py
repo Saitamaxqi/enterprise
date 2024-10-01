@@ -88,7 +88,10 @@ class TestCaseDocumentsBridgeAccount(AccountTestInvoicingCommon):
 
         """
         self.assertEqual(self.document_txt.res_model, 'documents.document', "failed at default res model")
+        account_moves_count_pre = self.env['account.move'].sudo().search_count([])
         multi_return = (self.document_txt | self.document_gif).account_create_account_move('in_invoice')
+        account_moves_count_post = self.env['account.move'].sudo().search_count([])
+        self.assertEqual(account_moves_count_post - account_moves_count_pre, 2)
         self.assertEqual(multi_return.get('type'), 'ir.actions.act_window',
                          'failed at invoice workflow return value type')
         self.assertEqual(multi_return.get('res_model'), 'account.move',
@@ -102,8 +105,10 @@ class TestCaseDocumentsBridgeAccount(AccountTestInvoicingCommon):
         self.assertEqual(vendor_bill_txt.move_type, 'in_invoice', "failed at workflow_bridge_dms_account vendor_bill type")
         vendor_bill_gif = self.env['account.move'].search([('id', '=', self.document_gif.res_id)])
         self.assertEqual(self.document_gif.res_id, vendor_bill_gif.id, "failed at workflow_bridge_dms_account res_id")
-
+        account_moves_count_pre = self.env['account.move'].sudo().search_count([])
         single_return = self.document_txt.account_create_account_move('in_invoice')
+        account_moves_count_post = self.env['account.move'].sudo().search_count([])
+        self.assertEqual(account_moves_count_post - account_moves_count_pre, 0)
         self.assertEqual(single_return.get('res_model'), 'account.move',
                          'failed at invoice res_model action from workflow create model')
         invoice = self.env[single_return['res_model']].browse(single_return.get('res_id'))
