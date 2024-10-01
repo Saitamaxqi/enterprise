@@ -7,8 +7,9 @@ from odoo.tests.common import tagged
 
 @tagged('post_install', '-at_install')
 class TestPoSSubscription(TestPointOfSaleHttpCommon):
-    def test_qty_invoiced_recurring_product(self):
-        """ Test qty invoiced with recurring product """
+    def test_pos_recurring_product_invoicing(self):
+        """ Test if qty_invoiced is correctly updated when a recurring product is
+            invoiced from the POS and the next_invoice_date is updated. """
         plan_month = self.env['sale.subscription.plan'].create({'name': 'Monthly', 'billing_period_value': 1, 'billing_period_unit': 'month'})
         self.recurring_product_id = self.env['product.product'].create({
             'name': 'Test2',
@@ -21,6 +22,8 @@ class TestPoSSubscription(TestPointOfSaleHttpCommon):
         self.sale_order_id = self.env['sale.order'].create({
             'partner_id': self.partner_a.id,
             'plan_id': plan_month.id,
+            'start_date': fields.Date.from_string('2021-01-01'),
+            'next_invoice_date': fields.Date.from_string('2021-01-01'),
         })
 
         self.order_line_id2 = self.env['sale.order.line'].create({
@@ -68,3 +71,4 @@ class TestPoSSubscription(TestPointOfSaleHttpCommon):
 
         self.env['pos.order'].sync_from_ui([pos_order])
         self.assertEqual(self.sale_order_id.order_line[0].qty_invoiced, 1)
+        self.assertEqual(self.sale_order_id.next_invoice_date, fields.Date.from_string('2021-02-01'))
