@@ -170,7 +170,7 @@ class TestReconciliationReport(TestAccountReportsCommon):
 
         # ==== Statement ====
 
-        self.env['account.bank.statement'].create({
+        bank_statement = self.env['account.bank.statement'].create({
             'name': 'statement',
             'line_ids': [
 
@@ -196,6 +196,38 @@ class TestReconciliationReport(TestAccountReportsCommon):
 
             ],
         })
+
+        # Partially reconcile the suspense amount associated with each bank statement line
+        suspense_account = bank_journal.suspense_account_id
+        other_account = bank_journal.company_id.default_cash_difference_income_account_id
+
+        # the first is in company currency
+        bank_move_1 = bank_statement.line_ids[0].move_id
+        bank_move_1_suspense_line = bank_move_1.line_ids.filtered(lambda l: l.account_id == suspense_account)
+        bank_move_1.button_draft()
+        bank_move_1.write({'line_ids': [
+            Command.create({'account_id': other_account.id, 'credit': 10.00}),
+            Command.update(bank_move_1_suspense_line.id, {'credit': 40.01}),
+        ]})
+        bank_move_1.action_post()
+
+        # the second is in neither company nor journal currency
+        bank_move_2 = bank_statement.line_ids[1].move_id
+        bank_move_2_suspense_line = bank_move_2.line_ids.filtered(lambda l: l.account_id == suspense_account)
+        bank_move_2.button_draft()
+        bank_move_2.write({'line_ids': [
+            Command.create({
+                'account_id': other_account.id,
+                'currency_id': bank_move_2_suspense_line.currency_id.id,
+                'credit': 3.33,
+                'amount_currency': -99.99
+            }),
+            Command.update(bank_move_2_suspense_line.id, {
+                'credit': 30.0,
+                'amount_currency': -900.0
+            }),
+        ]})
+        bank_move_2.action_post()
 
         # ==== Payments ====
         self.inbound_payment_method_line.journal_id = bank_journal.id
@@ -255,9 +287,9 @@ class TestReconciliationReport(TestAccountReportsCommon):
                 [
                     ('Balance of \'101403 Bank\'',                       '',      '',                     '',       200.0),
                     ('Last statement balance',                           '',      '',                     '',       200.0),
-                    ('Including Unreconciled Receipts',                  '',      '',                     '',       200.0),
-                    ('BNKKK/2016/00002',                       '01/01/2016',  999.99,    choco_currency.name,       100.0),
-                    ('BNKKK/2016/00001',                       '01/01/2016',   50.01,  company_currency.name,       100.0),
+                    ('Including Unreconciled Receipts',                  '',      '',                     '',       170.005),
+                    ('BNKKK/2016/00002',                       '01/01/2016',  900.00,    choco_currency.name,        90.001),
+                    ('BNKKK/2016/00001',                       '01/01/2016',   40.01,  company_currency.name,        80.004),
                     ('Including Unreconciled Payments',                  '',      '',                     '',         0.0),
                     ('Transactions without statement',                   '',      '',                     '',         0.0),
                     ('Including Unreconciled Receipts',                  '',      '',                     '',         0.0),

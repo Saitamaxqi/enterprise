@@ -136,27 +136,30 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
         report._check_groupby_fields([current_groupby] if current_groupby else [])
 
         def build_result_dict(query_res_lines):
+            # The query should find exactly one account move line per bank statement line
             if current_groupby == 'id':
                 res = query_res_lines[0]
-                reconcile_rate = 0
-                if not journal_currency.is_zero(res['suspense_balance']):
-                    reconcile_rate = abs(res['suspense_balance']) / (abs(res['suspense_balance']) + abs(res['other_balance']))
                 foreign_currency = self.env['res.currency'].browse(res['foreign_currency_id'])
+                rate = 1  # journal_currency / foreign_currency
+                if foreign_currency:
+                    rate = (res['amount'] / res['amount_currency']) if res['amount_currency'] else 0
 
                 return self._build_custom_engine_result(
                     date=res['date'] if res['date'] else None,
                     label=res['payment_ref'] or res['ref'] or '/',
-                    amount_currency=res['amount_currency'] * reconcile_rate if res['amount_currency'] else None,
+                    amount_currency=-res['amount_residual'] if res['foreign_currency_id'] else None,
                     amount_currency_currency_id=foreign_currency.id if res['foreign_currency_id'] else None,
                     currency=foreign_currency.display_name if res['foreign_currency_id'] else None,
-                    amount=res['amount'] * reconcile_rate if res['amount'] else None,
+                    amount=-res['amount_residual'] * rate if res['amount_residual'] else None,
                     amount_currency_id=journal_currency.id,
                 )
             else:
                 amount = 0
                 for res in query_res_lines:
-                    reconcile_rate = abs(res['suspense_balance']) / (abs(res['suspense_balance']) + abs(res['other_balance']))
-                    amount += res.get('amount', 0) * reconcile_rate if unreconciled else res.get('amount', 0)
+                    rate = 1  # journal_currency / foreign_currency
+                    if res['foreign_currency_id']:
+                        rate = (res['amount'] / res['amount_currency']) if res['amount_currency'] else 0
+                    amount += -res.get('amount_residual', 0) * rate if unreconciled else res.get('amount', 0)
 
                 return self._build_custom_engine_result(
                     amount=amount,
@@ -166,7 +169,7 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
 
         query = report._get_report_query(options, 'strict_range', domain=[
             ('journal_id', '=', journal.id),
-            ('account_id', '!=', journal.default_account_id.id),
+            ('account_id', '=', journal.default_account_id.id),  # There should be only 1 line per move with that account
         ])
 
         if from_last_statement:
@@ -198,10 +201,9 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
                   move.date,
                   st_line.payment_ref,
                   st_line.amount,
+                  st_line.amount_residual,
                   st_line.amount_currency,
-                  st_line.foreign_currency_id,
-                  COALESCE(SUM(CASE WHEN account_move_line.account_id = %(suspens_journal_1)s THEN account_move_line.balance ELSE 0.0 END), 0.0) AS suspense_balance,
-                  COALESCE(SUM(CASE WHEN account_move_line.account_id = %(suspens_journal_2)s THEN 0.0 ELSE account_move_line.balance END), 0.0) AS other_balance
+                  st_line.foreign_currency_id
              FROM %(table_references)s
              JOIN account_bank_statement_line st_line ON st_line.move_id = account_move_line.move_id
              JOIN account_move move ON move.id = st_line.move_id
@@ -214,8 +216,6 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
                   move.id
             """,
             select_from_groupby=SQL("%s AS grouping_key", SQL.identifier('account_move_line', current_groupby)) if current_groupby else SQL('null'),
-            suspens_journal_1=journal.suspense_account_id.id,
-            suspens_journal_2=journal.suspense_account_id.id,
             table_references=query.from_clause,
             search_condition=query.where_clause,
             is_receipt=SQL("st_line.amount > 0") if internal_type == "receipts" else SQL("st_line.amount < 0"),
