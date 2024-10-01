@@ -69,7 +69,7 @@ class AccountReportAnnotation(models.Model):
                 if annotation['fiscal_position_id'] == 'domestic':
                     del annotation['fiscal_position_id']
                 elif annotation['fiscal_position_id'] == 'all':
-                    annotation['fiscal_position_id'] = fiscal_positions_with_foreign_vat
+                    annotation['fiscal_position_id'] = fiscal_positions_with_foreign_vat.id
                 else:
                     annotation['fiscal_position_id'] = int(annotation['fiscal_position_id'])
 
