@@ -14,10 +14,12 @@ patch(Activity, {
     },
 });
 
-patch(Activity.prototype, {
+/** @type {import("models").Activity} */
+const activityPatch = {
     /** @override */
     setup() {
         super.setup();
         this.partner = Record.one("Persona");
     },
-});
+};
+patch(Activity.prototype, activityPatch);

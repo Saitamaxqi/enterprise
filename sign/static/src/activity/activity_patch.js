@@ -5,9 +5,6 @@ patch(Activity.prototype, {
     async onClickRequestSign() {
         const { res_model, res_id } = this.props.activity;
         const documentReference = res_model && res_id ? `${res_model},${res_id}` : false;
-        await this.props.activity.requestSignature(
-            this.props.reloadParentView,
-            documentReference
-        );
+        await this.props.activity.requestSignature(this.props.reloadParentView, documentReference);
     },
 });

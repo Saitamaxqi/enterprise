@@ -2,7 +2,8 @@ import { Activity } from "@mail/core/web/activity_model";
 
 import { patch } from "@web/core/utils/patch";
 
-patch(Activity.prototype, {
+/** @type {import("models").Activity} */
+const activityPatch = {
     async markAsDone(attachmentIds = []) {
         await super.markAsDone(...arguments);
         if (this.chaining_type === "trigger") {
@@ -10,4 +11,5 @@ patch(Activity.prototype, {
             this?.store?.env?.services["document.document"]?.reload();
         }
     },
-});
+};
+patch(Activity.prototype, activityPatch);

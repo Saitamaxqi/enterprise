@@ -2,7 +2,8 @@ import { Activity } from "@mail/core/web/activity_model";
 import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
 
-patch(Activity.prototype, {
+/** @type {import("models").Activity} */
+const activityPatch = {
     requestSignature(onClose = () => {}, documentReference = false) {
         const additionalContext = {
             sign_directly_without_mail: false,
@@ -23,4 +24,5 @@ patch(Activity.prototype, {
             { additionalContext, onClose }
         );
     },
-});
+};
+patch(Activity.prototype, activityPatch);

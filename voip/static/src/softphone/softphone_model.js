@@ -30,7 +30,7 @@ export class Softphone {
 
     get activities() {
         const searchBarInputValue = this.searchBarInputValue.trim();
-        return Object.values(this.store.Activity.records).filter(
+        return Object.values(this.store["mail.activity"].records).filter(
             (activity) =>
                 activity.activity_category === "phonecall" &&
                 ["today", "overdue"].includes(activity.state) &&

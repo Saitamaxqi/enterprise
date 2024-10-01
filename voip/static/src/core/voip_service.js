@@ -54,7 +54,7 @@ export class Voip {
         Object.assign(this, this.store.voipConfig);
         delete this.store.voipConfig;
         this.busService.subscribe("delete_call_activity", (payload) => {
-            const activity = this.store.Activity.insert(payload);
+            const activity = this.store["mail.activity"].insert(payload);
             activity.remove();
         });
         this.busService.subscribe("refresh_call_activities", () => {

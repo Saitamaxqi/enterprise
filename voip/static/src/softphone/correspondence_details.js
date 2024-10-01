@@ -30,7 +30,7 @@ export class CorrespondenceDetails extends Component {
         );
     }
 
-    /** @returns {import("@mail/activity/activity_model").Activity | undefined} */
+    /** @returns {import("models").Activity | undefined} */
     get activity() {
         return this.props.correspondence.activity;
     }

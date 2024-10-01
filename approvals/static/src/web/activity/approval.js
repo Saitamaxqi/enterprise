@@ -1,12 +1,10 @@
-/* @odoo-module */
-
 import { Component, useState } from "@odoo/owl";
 
 import { useService } from "@web/core/utils/hooks";
 
 /**
  * @typedef {Object} Props
- * @property {import("@mail/core/web/activity_model").Activity} activity
+ * @property {import("models").Activity} activity
  * @extends {Component<Props, Env>}
  */
 export class Approval extends Component {
