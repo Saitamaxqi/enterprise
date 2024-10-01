@@ -9,11 +9,13 @@
             <field name="priority">1</field>
             <field name="arch" type="xml">
                 <pivot string="Application Analysis" sample="1" js_class="recruitment_report_pivot">
+                    <field name="create_date" type="row" interval="month"/>
                     <field name="job_id" type="row"/>
-                    <field name="count" type="measure"/>
-                    <field name="hired" type="measure"/>
-                    <field name="refused" type="measure"/>
+                    <field name="stage_id" type="col"/>
                     <field name="in_progress" type="measure"/>
+                    <field name="refused" type="measure"/>
+                    <field name="hired" type="measure"/>
+                    <field name="count" type="measure"/>
                 </pivot>
             </field>
         </record>
@@ -25,9 +27,10 @@
             <field name="arch" type="xml">
                 <pivot string="Source Analysis" sample="1" js_class="recruitment_report_pivot">
                     <field name="source_id" type="row"/>
-                    <field name="count" type="measure"/>
-                    <field name="hired" type="measure"/>
+                    <field name="in_progress" type="measure"/>
                     <field name="refused" type="measure"/>
+                    <field name="hired" type="measure"/>
+                    <field name="count" type="measure"/>
                 </pivot>
             </field>
         </record>
@@ -169,6 +172,7 @@
             <field name="search_view_id" ref="recruitment_report_view_search"/>
             <field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'graph', 'view_id': ref('recruitment_report_source_view_graph')}),
+                (0, 0, {'view_mode': 'pivot', 'view_id': ref('recruitment_report_view_source_pivot')}),
             ]"/>
             <field name="context">{
                 'search_default_year': True,
@@ -219,10 +223,25 @@
             <field name="mode">primary</field>
             <field name="priority">10</field>
             <field name="arch" type="xml">
-                <graph string="Source Analysis" stacked="0" sample="1">
+                <graph string="Team Performance" stacked="0" sample="1">
                     <field name="user_id"/>
                     <field name="state"/>
                 </graph>
+            </field>
+        </record>
+
+        <record id="recruitment_report_team_view_pivot" model="ir.ui.view">
+            <field name="model">hr.recruitment.report</field>
+            <field name="mode">primary</field>
+            <field name="priority">10</field>
+            <field name="arch" type="xml">
+                <pivot string="Team Performance" sample="1" js_class="recruitment_report_pivot">
+                    <field name="user_id" type="row"/>
+                    <field name="in_progress" type="measure"/>
+                    <field name="refused" type="measure"/>
+                    <field name="hired" type="measure"/>
+                    <field name="count" type="measure"/>
+                </pivot>
             </field>
         </record>
 
@@ -233,6 +252,7 @@
             <field name="search_view_id" ref="recruitment_report_view_search"/>
             <field name="view_ids" eval="[(5, 0, 0),
                 (0, 0, {'view_mode': 'graph', 'view_id': ref('recruitment_report_team_view_graph')}),
+                (0, 0, {'view_mode': 'pivot', 'view_id': ref('recruitment_report_team_view_pivot')}),
             ]"/>
             <field name="context">{
                 'search_default_year': True,
