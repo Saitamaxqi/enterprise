@@ -244,12 +244,10 @@ export class DocumentsControlPanel extends ControlPanel {
             });
             return;
         }
-        const folder = this.targetRecords[0].data.folder_id;
         await this.orm.call(
             "documents.document",
             "action_create_shortcut",
             [this.targetRecords[0].data.id],
-            { location_folder_id: folder && folder[0] }
         );
         await this.notifyChange();
     }

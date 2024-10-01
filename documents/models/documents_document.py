@@ -653,7 +653,7 @@ class Document(models.Model):
             return targets.action_create_shortcut(location_folder_id or self.folder_id.id)
 
         location = self.browse(location_folder_id) if location_folder_id is not None else self.folder_id
-        if location.shortcut_document_id:
+        if location_folder_id and location.shortcut_document_id:
             return self.action_create_shortcut(location.shortcut_document_id.id)
 
         if location:

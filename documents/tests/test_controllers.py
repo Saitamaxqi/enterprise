@@ -9,13 +9,15 @@ from PIL import Image
 from freezegun import freeze_time
 from urllib3.util import parse_url
 
-from odoo import http, fields
+from odoo import Command, fields, http
 from odoo.tests.common import RecordCapturer
 from odoo.tools import file_open
 from odoo.tools.image import image_process
 
 from odoo.addons.base.tests.common import HttpCaseWithUserDemo
 from odoo.addons.mail.tests.common import mail_new_test_user
+
+from odoo.addons.documents.controllers.documents import ShareRoute
 
 
 class TestDocumentsControllers(HttpCaseWithUserDemo):
@@ -34,6 +36,14 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
             groups='base.group_portal',
             company_id=cls.env.ref('base.main_company').id,
             name='portal',
+            notification_type='email'
+        )
+
+        cls.user_manager = mail_new_test_user(cls.env,
+            login='manager_test',
+            groups='documents.group_documents_manager',
+            company_id=cls.env.ref('base.main_company').id,
+            name='manager',
             notification_type='email'
         )
 
@@ -828,3 +838,53 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
             res.raise_for_status()
             self.assertEqual(res.status_code, 200)
             self.assertEqual(res.content, self.doc_icon)
+
+    def test_documents_get_init_data_folder_id(self):
+        """Test computed side panel root depending on access rights."""
+        shared_portal_values = {'access_ids': [
+            Command.create({'partner_id': self.user_portal.partner_id.id, 'role': 'view'})
+        ]}
+        shared_manager_values = {'access_ids': [
+            Command.create({'partner_id': self.user_manager.partner_id.id, 'role': 'edit'})
+        ]}
+        internal_folder = self.env['documents.document'].create([
+            {'type': 'folder', 'name': 'Internal', 'access_internal': 'edit'},
+        ])
+        doc_as_demo = self.env['documents.document'].with_user(self.user_demo)
+        restricted_folder = doc_as_demo.create({
+            'folder_id': internal_folder.id,
+            'type': 'folder',
+            'name': 'Restricted Folder',
+            'access_internal': 'none',
+        })
+        demo_personal, demo_company, company_portal, restricted_portal, restricted_manager, shared_via_link = (
+            doc_as_demo.create([
+                shared_portal_values | {'name': 'demo_personal_share_portal'},
+                shared_portal_values | {'name': 'demo_company_share_portal', 'access_internal': 'view'},
+                shared_portal_values | {'name': 'company_share_portal', 'folder_id': internal_folder.id},
+                shared_portal_values | {'name': 'restricted_share_portal', 'folder_id': restricted_folder.id},
+                shared_manager_values | {'name': 'restricted_manager', 'folder_id': restricted_folder.id},
+                {'name': 'restricted_shared_link', 'folder_id': restricted_folder.id, 'access_via_link': 'view'},
+            ])
+        )
+
+        for document, user, expected_folder_id in [
+            (demo_personal, self.user_demo, 'MY'),
+            (demo_personal, self.user_portal, False),
+            (demo_company, self.user_demo, 'MY'),
+            (demo_company, self.user_portal, False),
+            (demo_company, self.user_manager, 'COMPANY'),  # as would any other internal user
+            (company_portal, self.user_demo, internal_folder.id),
+            (company_portal, self.user_portal, False),
+            (company_portal, self.user_manager, internal_folder.id),
+            (restricted_portal, self.user_demo, restricted_folder.id),
+            (restricted_portal, self.user_portal, False),
+            (restricted_manager, self.user_demo, restricted_folder.id),
+            (restricted_manager, self.user_manager, 'SHARED'),
+            (shared_via_link, self.user_portal, False),
+            (shared_via_link, self.user_manager, 'SHARED'),
+        ]:
+            document.invalidate_recordset()
+            with self.subTest(document_name=document.name, username=user.name):
+                data = ShareRoute._documents_get_init_data(document.with_user(user), user)
+                self.assertEqual(data['folder_id'], expected_folder_id)
