@@ -7,7 +7,7 @@ const threadPatch = {
     setup() {
         super.setup(...arguments);
         this.whatsapp_partner_id = Record.one("Persona");
-        this.whatsappMember = Record.one("ChannelMember", {
+        this.whatsappMember = Record.one("discuss.channel.member", {
             /** @this {import("models").Thread} */
             compute() {
                 return (
