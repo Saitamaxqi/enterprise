@@ -948,3 +948,38 @@ class TestMpsMps(common.TransactionCase):
         mps_state_day = self.mps.get_mps_view_state(period_scale='day')
         self.assertEqual(len(mps_state_day['dates']), self.env.company.manufacturing_period_to_display_day)
         self.assertEqual(mps_state_day['dates'][7:12], ['Jan 8', 'Jan 9', 'Jan 10', 'Jan 11', 'Jan 12'])
+
+    def test_outgoing_move_with_different_uom(self):
+        """
+        Test that the outgoing and incoming quantities are computed in the product's UoM.
+        """
+        product_a = self.env['product.product'].create({
+            'name': 'product a test',
+            'is_storable': True,
+        })
+        mps = self.env['mrp.production.schedule'].create({
+            'product_id': product_a.id,
+            'warehouse_id': self.warehouse.id,
+        })
+        outgoing_move = self.env['stock.move'].create({
+            'name': product_a.name,
+            'product_id': product_a.id,
+            'product_uom_qty': 1,
+            'product_uom': self.env.ref('uom.product_uom_dozen').id,
+            'location_id': self.warehouse.lot_stock_id.id,
+            'location_dest_id': self.env.ref('stock.stock_location_customers').id,
+        })
+        incoming_move = self.env['stock.move'].create({
+            'name': product_a.name,
+            'product_id': product_a.id,
+            'product_uom_qty': 1,
+            'product_uom': self.env.ref('uom.product_uom_dozen').id,
+            'location_id': self.env.ref('stock.stock_location_customers').id,
+            'location_dest_id': self.warehouse.lot_stock_id.id,
+        })
+        (outgoing_move | incoming_move)._action_confirm()
+        state = mps.get_production_schedule_view_state()[0]
+        outgoing_qty = state['forecast_ids'][0]['outgoing_qty']
+        incoming_qty = state['forecast_ids'][0]['incoming_qty']
+        self.assertEqual(outgoing_qty, 12, 'outgoing qty is incorrect')
+        self.assertEqual(incoming_qty, 12, 'outgoing qty is incorrect')

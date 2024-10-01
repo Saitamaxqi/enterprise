@@ -1076,9 +1076,9 @@ class MrpProductionSchedule(models.Model):
                 index += 1
             key = (date_range[index], move.product_id, move.location_id.warehouse_id)
             if move.state == 'done':
-                outgoing_qty_done[key] += move.product_uom_qty
+                outgoing_qty_done[key] += move.product_qty
             else:
-                outgoing_qty[key] += move.product_uom_qty
+                outgoing_qty[key] += move.product_qty
 
         return outgoing_qty, outgoing_qty_done
 
