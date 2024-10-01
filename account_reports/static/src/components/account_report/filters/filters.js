@@ -364,12 +364,19 @@ export class AccountReportFilters extends Component {
     }
 
     _displayQuarter(dateTo) {
-        dateTo = dateTo.plus({ months: this.dateFilter.quarter * 3 });
-        const dateFrom = dateTo.minus({ months: 2 }); // -3 is the end of previous quarter
-        const dateToFormatted = formatDate(dateTo, {format: "MMM yyyy"});
-        const dateFromFormatted = formatDate(dateFrom, {format: "MMM"});
+        const quarterMonths = {
+            1: { 'start': 1, 'end': 3 },
+            2: { 'start': 4, 'end': 6 },
+            3: { 'start': 7, 'end': 9 },
+            4: { 'start': 10, 'end': 12 },
+        }
 
-        return `${dateFromFormatted} - ${dateToFormatted}`;
+        dateTo = dateTo.plus({ months: this.dateFilter.quarter * 3 });
+
+        const quarterDateFrom = DateTime.utc(dateTo.year, quarterMonths[dateTo.quarter]['start'], 1)
+        const quarterDateTo = DateTime.utc(dateTo.year, quarterMonths[dateTo.quarter]['end'], 1)
+
+        return `${ formatDate(quarterDateFrom, {format: "MMM"}) } - ${ formatDate(quarterDateTo, {format: "MMM yyyy"}) }`;
     }
 
     _displayYear(dateTo) {
