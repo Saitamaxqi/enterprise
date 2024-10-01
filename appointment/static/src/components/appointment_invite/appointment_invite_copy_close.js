@@ -16,6 +16,7 @@ export class AppointmentInviteCopyClose extends Component {
      */
     setup() {
         this.notification = useService("notification");
+        this.action = useService("action");
     }
     /**
      * Save the invitation and copy the url in the clipboard
@@ -41,7 +42,10 @@ export class AppointmentInviteCopyClose extends Component {
                 { type: "success" }
             );
             this.env.dialogData.close();
-            this.env.model.action.loadState();
+            if (this.action.currentController?.props?.resModel === "appointment.invite") {
+                // coming from an appointment.invite action, refresh the model state to show the changes
+                this.action.loadState();
+            }
         });
     }
 }
