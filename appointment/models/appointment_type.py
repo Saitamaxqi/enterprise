@@ -93,17 +93,17 @@ class AppointmentType(models.Model):
         string='Front-End Display', compute='_compute_avatars_display', readonly=False, store=True,
         help="""Display the Users'/Resources' picture on the Website.""")
     category = fields.Selection([
-        ('recurring', 'Recurring'),
+        ('recurring', 'Regular'),
         ('punctual', 'Punctual'),
-        ('custom', 'Custom'),
-        ('anytime', 'Any Time')],
+        ('custom', 'Specific Slots'),
+        ('anytime', 'Shared Calendar')],
         string="Category", compute="_compute_category", inverse="_inverse_category", store="True",
         help="""Used to define this appointment type's category.\n
         Can be one of:\n
-            - Recurring: the default category, weekly recurring slots. Accessible from the website\n
-            - Punctual: recurring slots limited between 2 datetimes. Accessible from the website\n
-            - Custom: the user will create and share to another user a custom appointment type with hand-picked time slots\n
-            - Anytime: the user will create and share to another user an appointment type covering all their time slots""")
+            - Regular: the default category, weekly recurring slots. Accessible from the website\n
+            - Punctual: regular slots limited between 2 datetimes. Accessible from the website\n
+            - Specific Slots: the user will create and share to another user a custom appointment type with hand-picked time slots\n
+            - Shared Calendar: the user will create and share to another user an appointment type covering all their time slots""")
     category_time_display = fields.Selection([
         ('recurring_fields', 'Available now'),
         ('punctual_fields', 'Within a date range')],

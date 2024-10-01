@@ -45,11 +45,11 @@
                             <button t-else="" class="btn btn-secondary dropdownAppointmentLink">Share Appointment Link</button>
                             <t t-set-slot="content">
                                 <button t-if="isAppointmentUser" t-on-click="onClickSelectAvailabilities" class="o_appointment_select_slots dropdown-item">
-                                    <span class="align-bottom">Select Dates</span>
+                                    <span class="align-bottom">Propose Slots</span>
                                 </button>
                                 <button t-if="isAppointmentUser" t-on-click="onClickSearchCreateAnytimeAppointment"
                                     class="o_appointment_button_link o_appointment_search_create_anytime_appointment dropdown-item">
-                                    <span class="align-bottom">Any Time</span>
+                                    <span class="align-bottom">Share Calendar</span>
                                 </button>
                                 <button t-on-click="onClickCustomLink" class="dropdown-item">
                                     <span class="align-bottom">Custom Link</span>

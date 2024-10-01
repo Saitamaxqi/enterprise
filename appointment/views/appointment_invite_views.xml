@@ -75,7 +75,8 @@
                     <group class="mb-0">
                         <field name="appointment_type_ids" class="o_input" widget="many2many_tags"
                             invisible="context.get('default_appointment_type_ids')"
-                            options="{'no_create': True, 'no_edit_color': True}"/>
+                            options="{'no_create': True, 'no_edit_color': True}"
+                            placeholder="Select Appointments to share..."/>
                         <field name="suggested_resource_ids" invisible="1"/>
                         <field name="suggested_resource_count" invisible="1"/>
                         <field name="suggested_staff_user_ids" invisible="1"/>

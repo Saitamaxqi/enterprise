@@ -45,7 +45,7 @@ onRpc("/web/dataset/call_kw/calendar.event/get_default_duration", () => {
 });
 
 test("verify appointment links button are displayed", async () => {
-    expect.assertions(3);
+    expect.assertions(4);
 
     await mountView({
         type: "calendar",
@@ -68,7 +68,9 @@ test("verify appointment links button are displayed", async () => {
 
     expect('button:contains("Test Appointment")').toHaveCount(1);
 
-    expect('button:contains("Any Time")').toHaveCount(1);
+    expect('button:contains("Propose Slots")').toHaveCount(1);
+
+    expect('button:contains("Share Calendar")').toHaveCount(1);
 });
 
 test("create/search anytime appointment type", async () => {

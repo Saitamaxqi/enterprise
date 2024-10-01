@@ -6,9 +6,5 @@
             <i class="fa fa-clipboard me-1" role="img" aria-label="Save and Copy Link"/> Save &amp; Copy Link
             </button>
         </xpath>
-
-        <xpath expr="//button[hasclass('o_form_button_cancel')]" position="after">
-            <button class="o_my_button btn btn-link ms-auto" aria-label="More Options" t-on-click="onClickMoreOptions">More Options</button>
-        </xpath>
     </t>
 </templates>

@@ -14,9 +14,9 @@ class AppointmentSlot(models.Model):
 
     appointment_type_id = fields.Many2one('appointment.type', 'Appointment Type', ondelete='cascade')
     schedule_based_on = fields.Selection(related="appointment_type_id.schedule_based_on")
-    slot_type = fields.Selection([('recurring', 'Recurring'), ('unique', 'One Shot')],
+    slot_type = fields.Selection([('recurring', 'Regular'), ('unique', 'One Shot')],
         string='Slot type', default='recurring', required=True, compute="_compute_slot_type", store=True,
-        help="""Defines the type of slot. The recurring slot is the default type which is used for
+        help="""Defines the type of slot. The regular slot is the default type which is used for
         appointment type that are used recurringly in type like medical appointment.
         The one shot type is only used when an user create a custom appointment type for a client by
         defining non-recurring time slot (e.g. 10th of April 2021 from 10 to 11 am) from its calendar.""")

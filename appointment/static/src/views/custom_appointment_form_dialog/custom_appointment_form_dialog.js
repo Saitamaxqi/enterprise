@@ -26,6 +26,9 @@ export class CustomAppointmentFormController extends FormController {
         this.actionService = useService("action");
     }
 
+    /**
+    * Deprecated: remove me in master.
+    */
     async onClickMoreOptions() {
         if (await super.saveButtonClicked()) {
             this.actionService.doAction({

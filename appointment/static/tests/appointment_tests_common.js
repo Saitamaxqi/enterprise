@@ -95,7 +95,7 @@ export class AppointmentType extends models.Model {
     category = fields.Selection({
         selection: [
             ["website", "Website"],
-            ["custom", "Custom"],
+            ["custom", "Specific Slots"],
         ],
     });
 
@@ -135,7 +135,7 @@ export class AppointmentSlot extends models.Model {
     slot_type = fields.Selection({
         string: "Slot Type",
         selection: [
-            ["recurring", "Recurring"],
+            ["recurring", "Regular"],
             ["unique", "One Shot"],
         ],
     });
