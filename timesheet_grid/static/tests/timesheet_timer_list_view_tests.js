@@ -2,6 +2,7 @@
 
 import { timesheetListSetupHelper } from "./helpers";
 
+import { registry } from "@web/core/registry";
 import { getFixture } from "@web/../tests/helpers/utils";
 import { makeView } from "@web/../tests/views/helpers";
 
@@ -24,6 +25,19 @@ QUnit.module("timesheet_grid", (hooks) => {
             },
         };
         timesheetListSetupHelper.setupTimesheetList();
+        registry.category("services").add("create_edit_project_ids", {
+            // fake service
+            start() {
+                return {
+                    fetchProjectIds() {
+                        return [];
+                    },
+                    get projectIds() {
+                        return [];
+                    },
+                };
+            },
+        });
         target = getFixture();
     });
 

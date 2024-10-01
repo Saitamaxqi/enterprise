@@ -1,5 +1,6 @@
 import { timesheetListSetupHelper } from "@timesheet_grid/../tests/helpers";
 
+import { registry } from "@web/core/registry";
 import { getFixture } from "@web/../tests/helpers/utils";
 import { makeView } from "@web/../tests/views/helpers";
 
@@ -41,6 +42,19 @@ QUnit.module("Timesheet Leaderboard List View", (hooks) => {
     hooks.beforeEach(async () => {
         target = getFixture();
         timesheetListSetupHelper.setupTimesheetList();
+        registry.category("services").add("create_edit_project_ids", {
+            // fake service
+            start() {
+                return {
+                    fetchProjectIds() {
+                        return [];
+                    },
+                    get projectIds() {
+                        return [];
+                    },
+                };
+            },
+        });
     });
 
     QUnit.test("Check that leaderboard is displayed if user's company has the features on.", async function (assert) {
