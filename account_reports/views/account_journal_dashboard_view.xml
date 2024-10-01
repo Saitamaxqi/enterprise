@@ -38,7 +38,9 @@
             </xpath>
 
             <xpath expr="//div[@id='dashboard_general_right']" position="after">
-                <widget name="account_onboarding" t-if="!record.has_posted_entries.raw_value and dashboard['onboarding'] and dashboard['is_account_tax_periodicity_journal']"/>
+                <widget t-if="!record.has_posted_entries.raw_value and dashboard['onboarding'] and dashboard['is_account_tax_periodicity_journal']"
+                        name="account_onboarding"
+                        groups="account.group_account_manager"/>
             </xpath>
 
         </field>

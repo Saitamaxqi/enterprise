@@ -37,7 +37,9 @@
                 </xpath>
 
                 <xpath expr="//t[@t-name='bank_configuration_placeholder']" position="replace">
-                    <widget t-if="bank_unconfigured" name="bank_configure"/>
+                    <t t-if="bank_unconfigured">
+                        <widget name="bank_configure" groups="account.group_account_manager"/>
+                    </t>
                     <t t-else="" t-call="JournalBodyBankCash" t-name="bank_configuration_placeholder"/>
                 </xpath>
             </field>
