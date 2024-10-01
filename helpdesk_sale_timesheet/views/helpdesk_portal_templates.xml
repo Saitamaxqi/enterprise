@@ -115,6 +115,9 @@
         <xpath expr="//span[@t-field='timesheet.task_id']" position="after">
             <span t-if="timesheet.helpdesk_ticket_id" t-field="timesheet.helpdesk_ticket_id" t-att-title="timesheet.helpdesk_ticket_id.display_name"/>
         </xpath>
+        <xpath expr="//tr/td[span[@t-field='timesheet.task_id']]" position="attributes">
+            <attribute name="t-if">groupby not in ['task_id', 'helpdesk_ticket_id']</attribute>
+        </xpath>
         <xpath expr="//t[@t-foreach='grouped_timesheets']/tbody/tr[hasclass('table-light')]/th[hasclass('text-end')]" position="before">
             <t t-elif="groupby == 'helpdesk_ticket_id'">
                 <th colspan="6">
