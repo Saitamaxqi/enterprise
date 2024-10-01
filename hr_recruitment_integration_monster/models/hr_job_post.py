@@ -23,5 +23,5 @@ class JobPost(models.Model):
             'jobAction': 'delete',
             'jobRefCode': self.api_data['jobRefCode'],
         }
-        response = self.platform._post_api_call(data)
+        response = self.platform_id._post_api_call(data)
         return self.write(response)
