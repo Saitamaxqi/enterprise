@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { Document } from "./document_model";
 import { EventBus } from "@odoo/owl";
 import { browser } from "@web/core/browser/browser";
@@ -35,14 +33,12 @@ export class DocumentService {
             Number(urlSearch.documents_init_document_id) || documents_init?.document_id;
         this.documentIdToRestoreOnce = documentId;
         const initFolderId = urlSearch.documents_init_folder_id;
-        const folderId = ['MY', 'COMPANY', 'SHARED'].includes(initFolderId) ?
-            initFolderId : Number(initFolderId) || documents_init?.folder_id;
+        const folderId = ["MY", "COMPANY", "SHARED"].includes(initFolderId)
+            ? initFolderId
+            : Number(initFolderId) || documents_init?.folder_id;
         this._initData = { documentId, folderId, openPreview };
         if (this._initData.folderId) {
-            browser.localStorage.setItem(
-                "searchpanel_documents_document",
-                this._initData.folderId
-            );
+            browser.localStorage.setItem("searchpanel_documents_document", this._initData.folderId);
         }
     }
 
@@ -75,7 +71,7 @@ export class DocumentService {
                 document.id = data.id;
             }
             if ("attachment" in data) {
-                document.attachment = this.store.Attachment.insert(data.attachment);
+                document.attachment = this.store["ir.attachment"].insert(data.attachment);
             }
             if ("name" in data) {
                 document.name = data.name;
@@ -258,9 +254,7 @@ export class DocumentService {
         if (!this.userIsInternal) {
             return { actions: [] };
         }
-        return await this.orm.call("documents.document", "get_documents_actions", [
-            folderId,
-        ]);
+        return await this.orm.call("documents.document", "get_documents_actions", [folderId]);
     }
 
     /**

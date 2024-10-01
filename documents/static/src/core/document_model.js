@@ -1,8 +1,6 @@
-/* @odoo-module */
-
 export class Document {
     id;
-    /** @type import("@mail/core/common/attachment_model").Attachment */
+    /** @type {import("models").Attachment} */
     attachment;
     /** @type {string} */
     name;
