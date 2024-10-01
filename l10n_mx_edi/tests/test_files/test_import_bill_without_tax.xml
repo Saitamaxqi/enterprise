@@ -5,14 +5,14 @@
 	<cfdi:Emisor Nombre="Bacon Inc" RegimenFiscal="400" Rfc="BBA90751LJ8" />
 	<cfdi:Receptor DomicilioFiscalReceptor="89560" Nombre="Pasta" RegimenFiscalReceptor="601" Rfc="GODE561231GR8" UsoCFDI="G03" />
 	<cfdi:Conceptos>
-		<cfdi:Concepto Cantidad="1.00" ClaveProdServ="84121500" ClaveUnidad="E48" Descripcion="INTERESES SUJETOS A IVA" Descuento="0.00" Importe="54017.48" ObjetoImp="02" Unidad="Servicio" ValorUnitario="54017.48">
+		<cfdi:Concepto Cantidad="1.00" ClaveProdServ="84121500" ClaveUnidad="E48" Descripcion="INTERESES SUJETOS A IVA" Descuento="0.000000" Importe="54017.480000" ObjetoImp="02" Unidad="Servicio" ValorUnitario="54017.48">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
 					<cfdi:Traslado Base="54017.48" Importe="8642.80" Impuesto="002" TasaOCuota="0.160000" TipoFactor="Tasa" />
 				</cfdi:Traslados>
 			</cfdi:Impuestos>
 		</cfdi:Concepto>
-		<cfdi:Concepto Cantidad="1.00" ClaveProdServ="84121500" ClaveUnidad="E48" Descripcion="INTERESES NO SUJETOS A IVA" Descuento="0.00" Importe="17893.00" ObjetoImp="02" Unidad="Servicio" ValorUnitario="17893.00">
+		<cfdi:Concepto Cantidad="1.00" ClaveProdServ="84121500" ClaveUnidad="E48" Descripcion="INTERESES NO SUJETOS A IVA" Descuento="0.000000" Importe="17893.000000" ObjetoImp="02" Unidad="Servicio" ValorUnitario="17893.00">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
 					<cfdi:Traslado Base="17893.00" Impuesto="002" TipoFactor="azerty" />

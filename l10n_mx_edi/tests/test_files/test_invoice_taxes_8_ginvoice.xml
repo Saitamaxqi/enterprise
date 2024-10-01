@@ -4,14 +4,14 @@
 	<cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601"/>
 	<cfdi:Receptor Rfc="XAXX010101000" Nombre="PUBLICO EN GENERAL" DomicilioFiscalReceptor="20914" RegimenFiscalReceptor="616" UsoCFDI="S01"/>
 	<cfdi:Conceptos>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="___ignore___" Cantidad="1.000000" ClaveUnidad="ACT" Descripcion="Venta" ValorUnitario="4000.00" Importe="4000.00" ObjetoImp="02">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="___ignore___" Cantidad="1.000000" ClaveUnidad="ACT" Descripcion="Venta" ValorUnitario="4000.000000" Importe="4000.000000" ObjetoImp="02">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
-					<cfdi:Traslado Base="4000.00" Importe="640.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
+					<cfdi:Traslado Base="4000.000000" Importe="640.000000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
 				</cfdi:Traslados>
 				<cfdi:Retenciones>
-					<cfdi:Retencion Base="4000.00" Importe="400.00" Impuesto="001" TipoFactor="Tasa" TasaOCuota="0.100000"/>
-					<cfdi:Retencion Base="4000.00" Importe="426.80" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.106700"/>
+					<cfdi:Retencion Base="4000.000000" Importe="400.000000" Impuesto="001" TipoFactor="Tasa" TasaOCuota="0.100000"/>
+					<cfdi:Retencion Base="4000.000000" Importe="426.800000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.106700"/>
 				</cfdi:Retenciones>
 			</cfdi:Impuestos>
 		</cfdi:Concepto>

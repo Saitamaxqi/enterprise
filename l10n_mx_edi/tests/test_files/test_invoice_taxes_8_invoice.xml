@@ -3,18 +3,18 @@
 	<cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601"/>
 	<cfdi:Receptor Rfc="ICV060329BY0" Nombre="INMOBILIARIA CVA" DomicilioFiscalReceptor="33826" RegimenFiscalReceptor="601" UsoCFDI="G03"/>
 	<cfdi:Conceptos>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="5.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="1000.00" Importe="5000.00" ObjetoImp="02" Descuento="1000.00">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="5.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="1000.000000" Importe="5000.000000" ObjetoImp="02" Descuento="1000.000000">
 			<cfdi:Impuestos>
 				<cfdi:Traslados>
-					<cfdi:Traslado Base="4000.00" Importe="640.00" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
+					<cfdi:Traslado Base="4000.000000" Importe="640.000000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.160000"/>
 				</cfdi:Traslados>
 				<cfdi:Retenciones>
-					<cfdi:Retencion Base="4000.00" Importe="400.00" Impuesto="001" TipoFactor="Tasa" TasaOCuota="0.100000"/>
-					<cfdi:Retencion Base="4000.00" Importe="426.80" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.106700"/>
+					<cfdi:Retencion Base="4000.000000" Importe="400.000000" Impuesto="001" TipoFactor="Tasa" TasaOCuota="0.100000"/>
+					<cfdi:Retencion Base="4000.000000" Importe="426.800000" Impuesto="002" TipoFactor="Tasa" TasaOCuota="0.106700"/>
 				</cfdi:Retenciones>
 			</cfdi:Impuestos>
 		</cfdi:Concepto>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="1000.00" Importe="1000.00" ObjetoImp="01" Descuento="1000.00">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="1000.000000" Importe="1000.000000" ObjetoImp="01" Descuento="1000.000000">
                     </cfdi:Concepto>
 	</cfdi:Conceptos>
 	<cfdi:Impuestos TotalImpuestosTrasladados="640.00" TotalImpuestosRetenidos="826.80">

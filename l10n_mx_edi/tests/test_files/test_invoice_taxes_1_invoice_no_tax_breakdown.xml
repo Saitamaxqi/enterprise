@@ -3,9 +3,9 @@
 	<cfdi:Emisor Rfc="EKU9003173C9" Nombre="ESCUELA KEMPER URGATE" RegimenFiscal="601"/>
 	<cfdi:Receptor Rfc="ICV060329BY0" Nombre="INMOBILIARIA CVA" DomicilioFiscalReceptor="33826" RegimenFiscalReceptor="601" UsoCFDI="G03"/>
 	<cfdi:Conceptos>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="5.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="1000.00" Importe="5000.00" ObjetoImp="01" Descuento="1000.00">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="5.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="1000.000000" Importe="5000.000000" ObjetoImp="01" Descuento="1000.000000">
                     </cfdi:Concepto>
-		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="1000.00" Importe="1000.00" ObjetoImp="01" Descuento="1000.00">
+		<cfdi:Concepto ClaveProdServ="01010101" NoIdentificacion="product_mx" Cantidad="1.000000" ClaveUnidad="KGM" Unidad="KG" Descripcion="[product_mx] product_mx" ValorUnitario="1000.000000" Importe="1000.000000" ObjetoImp="01" Descuento="1000.000000">
                     </cfdi:Concepto>
 	</cfdi:Conceptos>
 	<cfdi:Complemento>
