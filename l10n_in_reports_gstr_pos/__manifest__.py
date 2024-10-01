@@ -11,6 +11,7 @@ GSTR-1 return data set as per point of sale orders
     "depends": ["l10n_in_reports_gstr", "point_of_sale"],
     'data': [
         'data/account_financial_html_report_gstr1.xml',
+        'data/account_financial_html_report_gstr3.xml',
     ],
     "auto_install": True,
     "installable": True,
