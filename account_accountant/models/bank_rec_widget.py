@@ -132,34 +132,30 @@ class BankRecWidget(models.Model):
         for wizard in self:
             if wizard.st_line_id:
 
-                is_reconciled = wizard.st_line_id.is_reconciled
-
                 # Liquidity line.
                 line_ids_commands = [
                     Command.clear(),
                     Command.create(wizard._lines_prepare_liquidity_line()),
                 ]
 
-                # Existing amls if the statement line is already reconciled.
-                if is_reconciled:
-                    _liquidity_lines, _suspense_lines, other_lines = wizard.st_line_id._seek_for_lines()
-                    for aml in other_lines:
-                        exchange_diff_amls = (aml.matched_debit_ids + aml.matched_credit_ids) \
-                            .exchange_move_id.line_ids.filtered(lambda l: l.account_id != aml.account_id)
-                        if wizard.state == 'reconciled' and exchange_diff_amls:
+                _liquidity_lines, _suspense_lines, other_lines = wizard.st_line_id._seek_for_lines()
+                for aml in other_lines:
+                    exchange_diff_amls = (aml.matched_debit_ids + aml.matched_credit_ids) \
+                        .exchange_move_id.line_ids.filtered(lambda l: l.account_id != aml.account_id)
+                    if wizard.state == 'reconciled' and exchange_diff_amls:
+                        line_ids_commands.append(
+                            Command.create(wizard._lines_prepare_aml_line(
+                                aml,  # Create the aml line with un-squashed amounts (aml - exchange diff)
+                                balance=aml.balance - sum(exchange_diff_amls.mapped('balance')),
+                                amount_currency=aml.amount_currency - sum(exchange_diff_amls.mapped('amount_currency')),
+                            ))
+                        )
+                        for exchange_diff_aml in exchange_diff_amls:
                             line_ids_commands.append(
-                                Command.create(wizard._lines_prepare_aml_line(
-                                    aml,  # Create the aml line with un-squashed amounts (aml - exchange diff)
-                                    balance=aml.balance - sum(exchange_diff_amls.mapped('balance')),
-                                    amount_currency=aml.amount_currency - sum(exchange_diff_amls.mapped('amount_currency')),
-                                ))
+                                Command.create(wizard._lines_prepare_aml_line(exchange_diff_aml))
                             )
-                            for exchange_diff_aml in exchange_diff_amls:
-                                line_ids_commands.append(
-                                    Command.create(wizard._lines_prepare_aml_line(exchange_diff_aml))
-                                )
-                        else:
-                            line_ids_commands.append(Command.create(wizard._lines_prepare_aml_line(aml)))
+                    else:
+                        line_ids_commands.append(Command.create(wizard._lines_prepare_aml_line(aml)))
 
                 wizard.line_ids = line_ids_commands
 
