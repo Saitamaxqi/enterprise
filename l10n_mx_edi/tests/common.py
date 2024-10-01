@@ -334,12 +334,6 @@ class TestMxEdiCommon(AccountTestInvoicingCommon):
         sequence.number_next = number
         yield
 
-    def _test_cfdi_rounding(self, run_function):
-        for tax_calculation_rounding_method in ('round_per_line', 'round_globally'):
-            with self.subTest(tax_calculation_rounding_method=tax_calculation_rounding_method):
-                self.env.company.tax_calculation_rounding_method = tax_calculation_rounding_method
-                run_function(tax_calculation_rounding_method)
-
     @classmethod
     def _create_product(cls, **kwargs):
         return super()._create_product(

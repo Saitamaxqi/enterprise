@@ -1035,152 +1035,142 @@ class TestCFDIInvoice(TestMxEdiCommon):
         ))
 
     def test_cfdi_rounding_1(self):
-        def run(rounding_method):
-            with self.mx_external_setup(self.frozen_today):
-                invoice = self._create_invoice(
-                    invoice_line_ids=[
-                        Command.create({
-                            'product_id': self.product.id,
-                            'price_unit': 398.28,
-                            'tax_ids': [Command.set(self.tax_16.ids)],
-                        }),
-                        Command.create({
-                            'product_id': self.product.id,
-                            'price_unit': 108.62,
-                            'tax_ids': [Command.set(self.tax_16.ids)],
-                        }),
-                        Command.create({
-                            'product_id': self.product.id,
-                            'price_unit': 362.07,
-                            'tax_ids': [Command.set(self.tax_16.ids)],
-                        })
-                    ] + [
-                        Command.create({
-                            'product_id': self.product.id,
-                            'price_unit': 31.9,
-                            'tax_ids': [Command.set(self.tax_16.ids)],
-                        }),
-                    ] * 12,
-                )
-                with self.with_mocked_pac_sign_success():
-                    invoice._l10n_mx_edi_cfdi_invoice_try_send()
-                self._assert_invoice_cfdi(invoice, f'test_cfdi_rounding_1_{rounding_method}_inv')
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 398.28,
+                        'tax_ids': [Command.set(self.tax_16.ids)],
+                    }),
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 108.62,
+                        'tax_ids': [Command.set(self.tax_16.ids)],
+                    }),
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 362.07,
+                        'tax_ids': [Command.set(self.tax_16.ids)],
+                    })
+                ] + [
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 31.9,
+                        'tax_ids': [Command.set(self.tax_16.ids)],
+                    }),
+                ] * 12,
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_1_inv')
 
-                payment = self._create_payment(invoice)
-                with self.with_mocked_pac_sign_success():
-                    payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
-                self._assert_invoice_payment_cfdi(payment.move_id, f'test_cfdi_rounding_1_{rounding_method}_pay')
-
-        self._test_cfdi_rounding(run)
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_cfdi_rounding_1_pay')
 
     def test_cfdi_rounding_2(self):
-        def run(rounding_method):
-            with self.mx_external_setup(self.frozen_today):
-                invoice = self._create_invoice(
-                    invoice_line_ids=[
-                        Command.create({
-                            'product_id': self.product.id,
-                            'quantity': quantity,
-                            'price_unit': price_unit,
-                            'discount': discount,
-                            'tax_ids': [Command.set(self.tax_16.ids)],
-                        })
-                        for quantity, price_unit, discount in (
-                            (30, 84.88, 13.00),
-                            (30, 18.00, 13.00),
-                            (3, 564.32, 13.00),
-                            (33, 7.00, 13.00),
-                            (20, 49.88, 13.00),
-                            (100, 3.10, 13.00),
-                            (2, 300.00, 13.00),
-                            (36, 36.43, 13.00),
-                            (36, 15.00, 13.00),
-                            (2, 61.08, 0),
-                            (2, 13.05, 0),
-                        )
-                    ])
-                with self.with_mocked_pac_sign_success():
-                    invoice._l10n_mx_edi_cfdi_invoice_try_send()
-                self._assert_invoice_cfdi(invoice, f'test_cfdi_rounding_2_{rounding_method}_inv')
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'quantity': quantity,
+                        'price_unit': price_unit,
+                        'discount': discount,
+                        'tax_ids': [Command.set(self.tax_16.ids)],
+                    })
+                    for quantity, price_unit, discount in (
+                        (30, 84.88, 13.00),
+                        (30, 18.00, 13.00),
+                        (3, 564.32, 13.00),
+                        (33, 7.00, 13.00),
+                        (20, 49.88, 13.00),
+                        (100, 3.10, 13.00),
+                        (2, 300.00, 13.00),
+                        (36, 36.43, 13.00),
+                        (36, 15.00, 13.00),
+                        (2, 61.08, 0),
+                        (2, 13.05, 0),
+                    )
+                ])
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_2_inv')
 
-                payment = self._create_payment(invoice, currency_id=self.comp_curr.id)
-                with self.with_mocked_pac_sign_success():
-                    payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
-                self._assert_invoice_payment_cfdi(payment.move_id, f'test_cfdi_rounding_2_{rounding_method}_pay')
-
-        self._test_cfdi_rounding(run)
+            payment = self._create_payment(invoice, currency_id=self.comp_curr.id)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_cfdi_rounding_2_pay')
 
     def test_cfdi_rounding_3(self):
         today = self.frozen_today
         today_minus_1 = self.frozen_today - relativedelta(days=1)
         usd = self.setup_other_currency('USD', rates=[(today_minus_1, 1 / 17.187), (today, 1 / 17.0357)])
 
-        def run(rounding_method):
-            with self.mx_external_setup(today_minus_1):
-                invoice = self._create_invoice(
-                    currency_id=usd.id,
-                    invoice_line_ids=[
-                        Command.create({
-                            'product_id': self.product.id,
-                            'price_unit': 7.34,
-                            'quantity': 200,
-                            'tax_ids': [Command.set(self.tax_16.ids)],
-                        }),
-                    ],
-                )
-                with self.with_mocked_pac_sign_success():
-                    invoice._l10n_mx_edi_cfdi_invoice_try_send()
-                self._assert_invoice_cfdi(invoice, f'test_cfdi_rounding_3_{rounding_method}_inv')
+        with self.mx_external_setup(today_minus_1):
+            invoice = self._create_invoice(
+                currency_id=usd.id,
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 7.34,
+                        'quantity': 200,
+                        'tax_ids': [Command.set(self.tax_16.ids)],
+                    }),
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_3_inv')
 
-            with self.mx_external_setup(today):
-                payment = self._create_payment(
-                    invoice,
-                    payment_date=today,
-                    currency_id=usd.id,
-                )
-                with self.with_mocked_pac_sign_success():
-                    payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
-                self._assert_invoice_payment_cfdi(payment.move_id, f'test_cfdi_rounding_3_{rounding_method}_pay')
-
-        self._test_cfdi_rounding(run)
+        with self.mx_external_setup(today):
+            payment = self._create_payment(
+                invoice,
+                payment_date=today,
+                currency_id=usd.id,
+            )
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_cfdi_rounding_3_pay')
 
     def test_cfdi_rounding_4(self):
         today = self.frozen_today
         today_minus_1 = self.frozen_today - relativedelta(days=1)
         usd = self.setup_other_currency('USD', rates=[(today_minus_1, 1 / 16.9912), (today, 1 / 17.068)])
 
-        def run(rounding_method):
-            with self.mx_external_setup(today_minus_1):
-                invoice1 = self._create_invoice(
-                    currency_id=usd.id,
-                    invoice_line_ids=[
-                        Command.create({
-                            'product_id': self.product.id,
-                            'price_unit': 68.0,
-                            'quantity': 68.25,
-                            'tax_ids': [Command.set(self.tax_16.ids)],
-                        }),
-                    ],
-                )
-                with self.with_mocked_pac_sign_success():
-                    invoice1._l10n_mx_edi_cfdi_invoice_try_send()
-                self._assert_invoice_cfdi(invoice1, f'test_cfdi_rounding_4_{rounding_method}_inv_1')
+        with self.mx_external_setup(today_minus_1):
+            invoice1 = self._create_invoice(
+                currency_id=usd.id,
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 68.0,
+                        'quantity': 68.25,
+                        'tax_ids': [Command.set(self.tax_16.ids)],
+                    }),
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice1._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice1, 'test_cfdi_rounding_4_inv_1')
 
-            with self.mx_external_setup(today):
-                invoice2 = self._create_invoice(
-                    currency_id=usd.id,
-                    invoice_line_ids=[
-                        Command.create({
-                            'product_id': self.product.id,
-                            'price_unit': 68.0,
-                            'quantity': 24.0,
-                            'tax_ids': [Command.set(self.tax_16.ids)],
-                        }),
-                    ],
-                )
-                with self.with_mocked_pac_sign_success():
-                    invoice2._l10n_mx_edi_cfdi_invoice_try_send()
-                self._assert_invoice_cfdi(invoice2, f'test_cfdi_rounding_4_{rounding_method}_inv_2')
+        with self.mx_external_setup(today):
+            invoice2 = self._create_invoice(
+                currency_id=usd.id,
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 68.0,
+                        'quantity': 24.0,
+                        'tax_ids': [Command.set(self.tax_16.ids)],
+                    }),
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice2._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice2, 'test_cfdi_rounding_4_inv_2')
 
             invoices = invoice1 + invoice2
             with self.mx_external_setup(today):
@@ -1192,141 +1182,127 @@ class TestCFDIInvoice(TestMxEdiCommon):
                 )
                 with self.with_mocked_pac_sign_success():
                     payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
-                self._assert_invoice_payment_cfdi(payment.move_id, f'test_cfdi_rounding_4_{rounding_method}_pay')
-
-        self._test_cfdi_rounding(run)
+                self._assert_invoice_payment_cfdi(payment.move_id, 'test_cfdi_rounding_4_pay')
 
     def test_cfdi_rounding_5(self):
-        def run(rounding_method):
-            with self.mx_external_setup(self.frozen_today):
-                invoice = self._create_invoice(
-                    invoice_line_ids=[
-                        Command.create({
-                            'product_id': self.product.id,
-                            'price_unit': price_unit,
-                            'quantity': quantity,
-                        })
-                        for quantity, price_unit in (
-                            (412.0, 43.65),
-                            (412.0, 43.65),
-                            (90.0, 50.04),
-                            (500.0, 11.77),
-                            (500.0, 34.93),
-                            (90.0, 50.04),
-                        )
-                    ],
-                )
-                with self.with_mocked_pac_sign_success():
-                    invoice._l10n_mx_edi_cfdi_invoice_try_send()
-                self._assert_invoice_cfdi(invoice, f'test_cfdi_rounding_5_{rounding_method}_inv')
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': price_unit,
+                        'quantity': quantity,
+                    })
+                    for quantity, price_unit in (
+                        (412.0, 43.65),
+                        (412.0, 43.65),
+                        (90.0, 50.04),
+                        (500.0, 11.77),
+                        (500.0, 34.93),
+                        (90.0, 50.04),
+                    )
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_5_inv')
 
-                payment = self._create_payment(invoice)
-                with self.with_mocked_pac_sign_success():
-                    payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
-                self._assert_invoice_payment_cfdi(payment.move_id, f'test_cfdi_rounding_5_{rounding_method}_pay')
-
-        self._test_cfdi_rounding(run)
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_cfdi_rounding_5_pay')
 
     def test_cfdi_rounding_6(self):
-        def run(rounding_method):
-            with self.mx_external_setup(self.frozen_today):
-                invoice = self._create_invoice(
-                    invoice_line_ids=[
-                        Command.create({
-                            'product_id': self.product.id,
-                            'price_unit': price_unit,
-                            'quantity': quantity,
-                            'discount': 30.0,
-                        })
-                        for quantity, price_unit in (
-                            (7.0, 724.14),
-                            (4.0, 491.38),
-                            (2.0, 318.97),
-                            (7.0, 224.14),
-                            (6.0, 206.90),
-                            (6.0, 129.31),
-                            (6.0, 189.66),
-                            (16.0, 775.86),
-                            (2.0, 7724.14),
-                            (2.0, 1172.41),
-                        )
-                    ],
-                )
-                with self.with_mocked_pac_sign_success():
-                    invoice._l10n_mx_edi_cfdi_invoice_try_send()
-                self._assert_invoice_cfdi(invoice, f'test_cfdi_rounding_6_{rounding_method}_inv')
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': price_unit,
+                        'quantity': quantity,
+                        'discount': 30.0,
+                    })
+                    for quantity, price_unit in (
+                        (7.0, 724.14),
+                        (4.0, 491.38),
+                        (2.0, 318.97),
+                        (7.0, 224.14),
+                        (6.0, 206.90),
+                        (6.0, 129.31),
+                        (6.0, 189.66),
+                        (16.0, 775.86),
+                        (2.0, 7724.14),
+                        (2.0, 1172.41),
+                    )
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_6_inv')
 
-                payment = self._create_payment(invoice)
-                with self.with_mocked_pac_sign_success():
-                    payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
-                self._assert_invoice_payment_cfdi(payment.move_id, f'test_cfdi_rounding_6_{rounding_method}_pay')
-
-        self._test_cfdi_rounding(run)
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_cfdi_rounding_6_pay')
 
     def test_cfdi_rounding_7(self):
-        def run(rounding_method):
-            with self.mx_external_setup(self.frozen_today):
-                invoice = self._create_invoice(
-                    invoice_line_ids=[
-                        Command.create({
-                            'product_id': self.product.id,
-                            'price_unit': price_unit,
-                            'quantity': quantity,
-                            'tax_ids': [Command.set(taxes.ids)],
-                        })
-                        for quantity, price_unit, taxes in (
-                            (12.0, 457.92, self.tax_26_5_ieps + self.tax_16),
-                            (12.0, 278.04, self.tax_26_5_ieps + self.tax_16),
-                            (12.0, 539.76, self.tax_26_5_ieps + self.tax_16),
-                            (36.0, 900.0, self.tax_16),
-                        )
-                    ],
-                )
-                with self.with_mocked_pac_sign_success():
-                    invoice._l10n_mx_edi_cfdi_invoice_try_send()
-                self._assert_invoice_cfdi(invoice, f'test_cfdi_rounding_7_{rounding_method}_inv')
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': price_unit,
+                        'quantity': quantity,
+                        'tax_ids': [Command.set(taxes.ids)],
+                    })
+                    for quantity, price_unit, taxes in (
+                        (12.0, 457.92, self.tax_26_5_ieps + self.tax_16),
+                        (12.0, 278.04, self.tax_26_5_ieps + self.tax_16),
+                        (12.0, 539.76, self.tax_26_5_ieps + self.tax_16),
+                        (36.0, 900.0, self.tax_16),
+                    )
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_7_inv')
 
-                payment = self._create_payment(invoice)
-                with self.with_mocked_pac_sign_success():
-                    payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
-                self._assert_invoice_payment_cfdi(payment.move_id, f'test_cfdi_rounding_7_{rounding_method}_pay')
-
-        self._test_cfdi_rounding(run)
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_cfdi_rounding_7_pay')
 
     def test_cfdi_rounding_8(self):
-        def run(rounding_method):
-            with self.mx_external_setup(self.frozen_today):
-                invoice = self._create_invoice(
-                    invoice_line_ids=[
-                        Command.create({
-                            'product_id': self.product.id,
-                            'price_unit': price_unit,
-                            'quantity': quantity,
-                            'tax_ids': [Command.set(taxes.ids)],
-                        })
-                        for quantity, price_unit, taxes in (
-                            (1.0, 244.0, self.tax_0_ieps + self.tax_0),
-                            (8.0, 244.0, self.tax_0_ieps + self.tax_0),
-                            (1.0, 2531.0, self.tax_0),
-                            (1.0, 2820.75, self.tax_6_ieps + self.tax_0),
-                            (1.0, 2531.0, self.tax_0),
-                            (8.0, 468.0, self.tax_0_ieps + self.tax_0),
-                            (1.0, 2820.75, self.tax_6_ieps + self.tax_0),
-                            (1.0, 210.28, self.tax_7_ieps),
-                            (1.0, 2820.75, self.tax_6_ieps + self.tax_0),
-                        )
-                    ],
-                )
-                with self.with_mocked_pac_sign_success():
-                    invoice._l10n_mx_edi_cfdi_invoice_try_send()
-                self._assert_invoice_cfdi(invoice, f'test_cfdi_rounding_8_{rounding_method}_inv')
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': price_unit,
+                        'quantity': quantity,
+                        'tax_ids': [Command.set(taxes.ids)],
+                    })
+                    for quantity, price_unit, taxes in (
+                        (1.0, 244.0, self.tax_0_ieps + self.tax_0),
+                        (8.0, 244.0, self.tax_0_ieps + self.tax_0),
+                        (1.0, 2531.0, self.tax_0),
+                        (1.0, 2820.75, self.tax_6_ieps + self.tax_0),
+                        (1.0, 2531.0, self.tax_0),
+                        (8.0, 468.0, self.tax_0_ieps + self.tax_0),
+                        (1.0, 2820.75, self.tax_6_ieps + self.tax_0),
+                        (1.0, 210.28, self.tax_7_ieps),
+                        (1.0, 2820.75, self.tax_6_ieps + self.tax_0),
+                    )
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_8_inv')
 
-                payment = self._create_payment(invoice)
-                with self.with_mocked_pac_sign_success():
-                    payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
-                self._assert_invoice_payment_cfdi(payment.move_id, f'test_cfdi_rounding_8_{rounding_method}_pay')
-
-        self._test_cfdi_rounding(run)
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_cfdi_rounding_8_pay')
 
     def test_cfdi_rounding_9(self):
         usd_exchange_rates = (
@@ -1358,43 +1334,40 @@ class TestCFDIInvoice(TestMxEdiCommon):
                 invoice._l10n_mx_edi_cfdi_invoice_try_send()
             return invoice
 
-        def run(rounding_method):
-            with self.mx_external_setup(self.frozen_today):
-                invoice1 = quick_create_invoice(
-                    usd_exchange_rates[0],
-                    [(80.0, 21.9)],
-                )
-                invoice2 = quick_create_invoice(
-                    usd_exchange_rates[1],
-                    [(200.0, 13.36)],
-                )
-                invoice3 = quick_create_invoice(
-                    usd_exchange_rates[1],
-                    [(1200.0, 0.36), (1000.0, 0.44), (800.0, 0.44), (800.0, 0.23)],
-                )
-                invoice4 = quick_create_invoice(
-                    usd_exchange_rates[2],
-                    [(200.0, 21.9)],
-                )
-                invoice5 = quick_create_invoice(
-                    usd_exchange_rates[3],
-                    [(1000.0, 0.36), (500.0, 0.44), (500.0, 0.23), (400.0, 0.87), (200.0, 0.44)],
-                )
-                invoice6 = quick_create_invoice(
-                    usd_exchange_rates[4],
-                    [(200.0, 14.4)],
-                )
+        with self.mx_external_setup(self.frozen_today):
+            invoice1 = quick_create_invoice(
+                usd_exchange_rates[0],
+                [(80.0, 21.9)],
+            )
+            invoice2 = quick_create_invoice(
+                usd_exchange_rates[1],
+                [(200.0, 13.36)],
+            )
+            invoice3 = quick_create_invoice(
+                usd_exchange_rates[1],
+                [(1200.0, 0.36), (1000.0, 0.44), (800.0, 0.44), (800.0, 0.23)],
+            )
+            invoice4 = quick_create_invoice(
+                usd_exchange_rates[2],
+                [(200.0, 21.9)],
+            )
+            invoice5 = quick_create_invoice(
+                usd_exchange_rates[3],
+                [(1000.0, 0.36), (500.0, 0.44), (500.0, 0.23), (400.0, 0.87), (200.0, 0.44)],
+            )
+            invoice6 = quick_create_invoice(
+                usd_exchange_rates[4],
+                [(200.0, 14.4)],
+            )
 
-                self.setup_other_currency('USD', rates=[(self.frozen_today, usd_exchange_rates[5])])
-                payment = self._create_payment(
-                    invoice1 + invoice2 + invoice3 + invoice4 + invoice5 + invoice6,
-                    currency_id=self.env.company.currency_id.id,
-                )
-                with self.with_mocked_pac_sign_success():
-                    payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
-                self._assert_invoice_payment_cfdi(payment.move_id, f'test_cfdi_rounding_9_{rounding_method}_pay')
-
-        self._test_cfdi_rounding(run)
+            self.setup_other_currency('USD', rates=[(self.frozen_today, usd_exchange_rates[5])])
+            payment = self._create_payment(
+                invoice1 + invoice2 + invoice3 + invoice4 + invoice5 + invoice6,
+                currency_id=self.env.company.currency_id.id,
+            )
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_cfdi_rounding_9_pay')
 
     def test_cfdi_rounding_10(self):
         def create_invoice(**kwargs):
@@ -1416,25 +1389,22 @@ class TestCFDIInvoice(TestMxEdiCommon):
                 **kwargs,
             )
 
-        def run(rounding_method):
-            with self.mx_external_setup(self.frozen_today):
-                invoice = create_invoice()
-                with self.with_mocked_pac_sign_success():
-                    invoice._l10n_mx_edi_cfdi_invoice_try_send()
-                self._assert_invoice_cfdi(invoice, f'test_cfdi_rounding_10_{rounding_method}_inv')
-
-                payment = self._create_payment(invoice)
-                with self.with_mocked_pac_sign_success():
-                    payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
-                self._assert_invoice_payment_cfdi(payment.move_id, f'test_cfdi_rounding_10_{rounding_method}_pay')
-
-                invoice = create_invoice(l10n_mx_edi_cfdi_to_public=True)
-                with self.with_mocked_pac_sign_success():
-                    invoice._l10n_mx_edi_cfdi_global_invoice_try_send()
-                self._assert_global_invoice_cfdi_from_invoices(invoice, f'test_cfdi_rounding_10_{rounding_method}_ginvoice')
-
         self.tax_16.price_include = True
-        self._test_cfdi_rounding(run)
+        with self.mx_external_setup(self.frozen_today):
+            invoice = create_invoice()
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_10_inv')
+
+            payment = self._create_payment(invoice)
+            with self.with_mocked_pac_sign_success():
+                payment.move_id._l10n_mx_edi_cfdi_payment_try_send()
+            self._assert_invoice_payment_cfdi(payment.move_id, 'test_cfdi_rounding_10_pay')
+
+            invoice = create_invoice(l10n_mx_edi_cfdi_to_public=True)
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_global_invoice_try_send()
+            self._assert_global_invoice_cfdi_from_invoices(invoice, 'test_cfdi_rounding_10_ginvoice')
 
     def test_partial_payment_1(self):
         date1 = self.frozen_today - relativedelta(days=2)

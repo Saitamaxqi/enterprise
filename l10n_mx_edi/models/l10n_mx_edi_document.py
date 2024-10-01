@@ -586,20 +586,10 @@ class L10nMxEdiDocument(models.Model):
             # Avoid things like -0.0, see: https://stackoverflow.com/a/11010869
             return '%.*f' % (precision, amount if not float_is_zero(amount, precision_digits=precision) else 0.0)
 
-        if cfdi_values['company'].tax_calculation_rounding_method == 'round_per_line':
-            line_base_importe_dp = currency_precision
-        else:
-            # In case of round_globally, we need to round the tax amounts for each line with an higher
-            # number of decimals to avoid rounding issues.
-            # Indeed, the total per invoice per tax must be equal to the sum of the reported tax amounts for
-            # each line.
-            line_base_importe_dp = 6
-
         cfdi_values.update({
             'format_float': format_float,
             'currency': currency,
             'currency_precision': currency_precision,
-            'line_base_importe_dp': line_base_importe_dp,
             'moneda': currency.name,
         })
 
@@ -1010,28 +1000,6 @@ class L10nMxEdiDocument(models.Model):
             cfdi_values['total_impuestos_retenidos'] = None
 
     @api.model
-    def _get_post_fix_tax_amounts_map(self, base_amount, tax_amount, tax_rate, precision_digits):
-        total = base_amount + tax_amount
-        new_base_amount = float_round(total / (1 + tax_rate), precision_digits=precision_digits)
-        new_tax_amount = total - new_base_amount
-        delta_base_amount = new_base_amount - base_amount
-        delta_tax_amount = new_tax_amount - tax_amount
-
-        if float_is_zero(delta_base_amount, precision_digits=precision_digits):
-            # to avoid floating point error in the new amounts, return the default values if the delta base is "zero"
-            new_base_amount = base_amount
-            new_tax_amount = tax_amount
-            delta_base_amount = 0.0
-            delta_tax_amount = 0.0
-
-        return {
-            'new_base_amount': new_base_amount,
-            'new_tax_amount': new_tax_amount,
-            'delta_base_amount': delta_base_amount,
-            'delta_tax_amount': delta_tax_amount,
-        }
-
-    @api.model
     def _clean_cfdi_values(self, cfdi_values):
         """ Clean values from 'cfdi_values' that could represent a security risk like sudoed records.
 
@@ -1167,7 +1135,6 @@ class L10nMxEdiDocument(models.Model):
             'sequence': sequence,
             'format_string': cfdi_values_list[0]['format_string'],
             'format_float': cfdi_values_list[0]['format_float'],
-            'line_base_importe_dp': cfdi_values_list[0]['line_base_importe_dp'],
             'currency_precision': cfdi_values_list[0]['currency_precision'],
 
             'no_certificado': cfdi_values_list[0]['no_certificado'],
@@ -1292,18 +1259,7 @@ class L10nMxEdiDocument(models.Model):
                 for list_key in ('traslados_list', 'retenciones_list'):
                     cfdi_line_values[list_key] = []
                     for tax_key, tax_amounts in aggregated_values[list_key].items():
-                        tax_values = {**tax_key, **tax_amounts}
-                        if tax_values['importe'] and tax_values['tasa_o_cuota']:
-                            post_amounts_map = self._get_post_fix_tax_amounts_map(
-                                base_amount=tax_values['base'],
-                                tax_amount=tax_values['importe'],
-                                tax_rate=tax_values['tasa_o_cuota'],
-                                precision_digits=results['line_base_importe_dp'],
-                            )
-                            tax_values['base'] = post_amounts_map['new_base_amount']
-                            tax_values['importe'] = post_amounts_map['new_tax_amount']
-                            cfdi_line_values['importe'] += post_amounts_map['delta_base_amount']
-                        cfdi_line_values[list_key].append(tax_values)
+                        cfdi_line_values[list_key].append({**tax_key, **tax_amounts})
 
                 if cfdi_line_values['traslados_list'] or cfdi_line_values['retenciones_list']:
                     cfdi_line_values['objeto_imp'] = '02'
@@ -1324,20 +1280,7 @@ class L10nMxEdiDocument(models.Model):
         ):
             results[key] = []
             for tax_key, tax_amounts in global_result_dict.items():
-                tax_values = {**tax_key, **tax_amounts}
-                # if tax_values['importe'] and tax_values.get('tasa_o_cuota'):
-                #     post_amounts_map = self._get_post_fix_tax_amounts_map(
-                #         base_amount=tax_values['base'],
-                #         tax_amount=tax_values['importe'],
-                #         tax_rate=tax_values['tasa_o_cuota'],
-                #         precision_digits=currency.decimal_places,
-                #     )
-                #     tax_values['base'] = post_amounts_map['new_base_amount']
-                #     tax_values['importe'] = post_amounts_map['new_tax_amount']
-                #     if results[total_key] is not None:
-                #         results[total_key] += post_amounts_map['delta_tax_amount']
-                #     results['subtotal'] += post_amounts_map['delta_base_amount']
-                results[key].append(tax_values)
+                results[key].append({**tax_key, **tax_amounts})
         results['objeto_imp'] = '02' if results['retenciones_reduced_list'] or results['traslados_list'] else '03'
 
         # Cleanup attributes for Exento taxes.

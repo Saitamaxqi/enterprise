@@ -1137,26 +1137,6 @@ class AccountMove(models.Model):
                         if tax_values[tax_key] is not None:
                             tax_values[tax_key] = invoice.currency_id.round(tax_values[tax_key] * percentage_paid)
 
-                    # CRP20261:
-                    # - 'base' * 'tasa_o_cuota' must give 'importe' with 0.01 rounding error allowed.
-                    # Suppose an invoice of 5 * 0.47 with 16% tax. Each line gives a tax amount of 0.08 so 0.40 for the whole invoice.
-                    # However, 5 * 0.47 = 2.35 and 2.35 * 0.16 = 0.38 so the constraint is failing.
-                    # - 'base' + 'importe' must be exactly equal to the part that is actually paid.
-                    # Using the same example, we need to report 2.35 + 0.40 = 2.75
-                    # => To solve that, let's proceed backward. 2.75 * 0.16 / 1.16 = 0.38 (importe) and 2.75 - 0.38 = 2.27 (base).
-                    if (
-                        company.tax_calculation_rounding_method == 'round_per_line'
-                        and all(tax_values[key] is not None for key in ('base', 'importe', 'tasa_o_cuota'))
-                    ):
-                        post_amounts_map = self.env['l10n_mx_edi.document']._get_post_fix_tax_amounts_map(
-                            base_amount=tax_values['base'],
-                            tax_amount=tax_values['importe'],
-                            tax_rate=tax_values['tasa_o_cuota'],
-                            precision_digits=invoice.currency_id.decimal_places,
-                        )
-                        tax_values['importe'] = post_amounts_map['new_tax_amount']
-                        tax_values['base'] = post_amounts_map['new_base_amount']
-
             # 'equivalencia' (rate) is a conditional attribute used to express the exchange rate according to the currency
             # registered in the document related. It is required when the currency of the related document is different
             # from the payment currency.

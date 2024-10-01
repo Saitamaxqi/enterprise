@@ -7,24 +7,18 @@
 	</cfdi:Conceptos>
 	<cfdi:Complemento>
 		<pago20:Pagos Version="2.0">
-			<pago20:Totales TotalTrasladosBaseIVA0="19971.99" TotalTrasladosImpuestoIVA0="0.00" MontoTotalPagos="20196.99"/>
-			<pago20:Pago FechaPago="___ignore___" FormaDePagoP="01" MonedaP="MXN" TipoCambioP="1" Monto="20196.99" NumOperacion="___ignore___">
-				<pago20:DoctoRelacionado IdDocumento="___ignore___" Folio="2" Serie="INV/2024/" MonedaDR="MXN" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="20196.99" ImpPagado="20196.99" ObjetoImpDR="02" ImpSaldoInsoluto="0.00">
+			<pago20:Totales TotalTrasladosBaseIVA16="68324.80" TotalTrasladosImpuestoIVA16="10931.97" MontoTotalPagos="79256.77"/>
+			<pago20:Pago FechaPago="___ignore___" FormaDePagoP="01" MonedaP="MXN" TipoCambioP="1" Monto="79256.77" NumOperacion="___ignore___">
+				<pago20:DoctoRelacionado IdDocumento="___ignore___" Folio="___ignore___" Serie="INV/2024/" MonedaDR="MXN" EquivalenciaDR="1" NumParcialidad="1" ImpSaldoAnt="79256.77" ImpPagado="79256.77" ObjetoImpDR="02" ImpSaldoInsoluto="0.00">
 					<pago20:ImpuestosDR>
 						<pago20:TrasladosDR>
-							<pago20:TrasladoDR BaseDR="5940.00" ImporteDR="0.00" ImpuestoDR="003" TipoFactorDR="Tasa" TasaOCuotaDR="0.000000"/>
-							<pago20:TrasladoDR BaseDR="19971.99" ImporteDR="0.00" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.000000"/>
-							<pago20:TrasladoDR BaseDR="8462.25" ImporteDR="507.74" ImpuestoDR="003" TipoFactorDR="Tasa" TasaOCuotaDR="0.060000"/>
-							<pago20:TrasladoDR BaseDR="210.28" ImporteDR="14.72" ImpuestoDR="003" TipoFactorDR="Tasa" TasaOCuotaDR="0.070000"/>
+							<pago20:TrasladoDR BaseDR="68324.80" ImporteDR="10931.97" ImpuestoDR="002" TipoFactorDR="Tasa" TasaOCuotaDR="0.160000"/>
 						</pago20:TrasladosDR>
 					</pago20:ImpuestosDR>
 				</pago20:DoctoRelacionado>
 				<pago20:ImpuestosP>
 					<pago20:TrasladosP>
-						<pago20:TrasladoP BaseP="5940.00" ImporteP="0.00" ImpuestoP="003" TipoFactorP="Tasa" TasaOCuotaP="0.000000"/>
-						<pago20:TrasladoP BaseP="19971.99" ImporteP="0.00" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.000000"/>
-						<pago20:TrasladoP BaseP="8462.25" ImporteP="507.74" ImpuestoP="003" TipoFactorP="Tasa" TasaOCuotaP="0.060000"/>
-						<pago20:TrasladoP BaseP="210.28" ImporteP="14.72" ImpuestoP="003" TipoFactorP="Tasa" TasaOCuotaP="0.070000"/>
+						<pago20:TrasladoP BaseP="68324.80" ImporteP="10931.97" ImpuestoP="002" TipoFactorP="Tasa" TasaOCuotaP="0.160000"/>
 					</pago20:TrasladosP>
 				</pago20:ImpuestosP>
 			</pago20:Pago>
