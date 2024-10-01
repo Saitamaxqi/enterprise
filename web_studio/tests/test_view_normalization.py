@@ -1455,6 +1455,40 @@ class TestViewNormalization(TransactionCase):
             ''',
         )
 
+    def test_normalization_adjacent_remove_add(self):
+        self.view = self.base_view.create({
+            'arch_base':
+                '''
+                <form>
+                    <group>
+                        <group name="group_name">
+                            <field name="display_name" />
+                        </group>
+                        <group name="group_name_2"/>
+                    </group>
+                </form>
+                ''',
+            'model': 'res.partner',
+            'type': 'form'
+        })
+
+        self._test_view_normalization(
+            '''
+            <data>
+                <xpath expr="/form/group/group[1]/field[1]" position="after">
+                    <field name="function" />
+                </xpath>
+                <xpath expr="/form/group/group[2]" position="replace"/>
+            </data>
+            ''', """
+            <data>
+              <xpath expr="//group[@name='group_name_2']" position="replace"/>
+              <xpath expr="//field[@name='display_name']" position="after">
+                <field name="function"/>
+              </xpath>
+            </data>
+            """)
+
     def tearDown(self):
         super(TestViewNormalization, self).tearDown()
         random.seed()

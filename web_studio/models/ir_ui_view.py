@@ -775,8 +775,8 @@ class IrUiView(models.Model):
                         # Maybe we are already removing the parent of this
                         # node so this one will be removed automatically
                         current_xpath_target = next(iter(old_view_tree.xpath('.' + xpath.get('expr'))), None)
-                        if xpath.get('position') == 'replace' and \
-                                current_xpath_target in node.iterancestors():
+                        is_xpath_target_an_ancestor = None if current_xpath_target is None else current_xpath_target in node.iterancestors()
+                        if xpath.get('position') == 'replace' and is_xpath_target_an_ancestor:
                             continue
                         # If we are already adding stuff just before this node,
                         # we could as well replace it directly by what we want to add
@@ -785,6 +785,13 @@ class IrUiView(models.Model):
                         elif ((node.tag != 'attributes' and xpath.get('position') != 'after') or
                                 (node.tag == 'attributes' and xpath.get('position') != 'attributes')):
                             # Consecutive removals need different xpath
+                            xpath = self._close_and_get_new(arch, xpath)
+
+                        # The current xpath does not contain the current removed node
+                        # and they are not siblings either.
+                        # So it is safe to say the current xpath cannot be aggregated
+                        # to contain the removal we are about to do.
+                        elif is_xpath_target_an_ancestor is False and current_xpath_target.getparent() != node.getparent():
                             xpath = self._close_and_get_new(arch, xpath)
 
                     xpath.attrib['expr'] = self._node_to_xpath(node)
