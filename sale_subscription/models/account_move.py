@@ -72,7 +72,7 @@ class AccountMove(models.Model):
         if user_id and self.invoice_line_ids.subscription_id:
             for move in self:
                 salesperson = move.invoice_line_ids.subscription_id.user_id
-                if salesperson and user_id == salesperson.id and user_id != self.env.user.id:
-                    partner_id = salesperson.partner_id.id
-                    res = [(v[0], v[1], False) for v in res if v[0] == partner_id and v[2] == 'mail.message_user_assigned']
+                if salesperson and user_id in salesperson.ids and user_id != self.env.user.id:
+                    partner_ids = salesperson.partner_id.ids
+                    res = [(v[0], v[1], False) for v in res if v[0] in partner_ids and v[2] == 'mail.message_user_assigned']
         return res
