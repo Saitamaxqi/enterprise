@@ -85,7 +85,7 @@ class TestReports(TestAr, TestAccountReportsCommon):
             }, "test_vendor_bill_2": {
                 "ref": "demo_sup_invoice_2: Invoice from Foreign with vat 21, 27 and 10,5",
                 "l10n_latam_document_number": "0002-00000123",
-                "partner_id": self.res_partner_expresso,
+                "partner_id": self.res_partner_barcelona_food,
                 "invoice_payment_term_id": payment_term_id,
                 "move_type": "in_invoice",
                 "invoice_date": '2021-03-01',
@@ -98,7 +98,7 @@ class TestReports(TestAr, TestAccountReportsCommon):
             }, "test_vendor_bill_3": {
                 "ref": "demo_sup_invoice_3: Invoice from Foreign with vat zero and 21",
                 "l10n_latam_document_number": "0003-00000312",
-                "partner_id": self.res_partner_expresso,
+                "partner_id": self.res_partner_barcelona_food,
                 "invoice_payment_term_id": payment_term_id,
                 "move_type": "in_invoice",
                 "invoice_date": '2021-03-01',
@@ -110,7 +110,7 @@ class TestReports(TestAr, TestAccountReportsCommon):
             }, "test_vendor_bill_4": {
                 "ref": "demo_sup_invoice_4: Invoice to Foreign with vat exempt and 21",
                 "l10n_latam_document_number": "0001-00000200",
-                "partner_id": self.res_partner_expresso,
+                "partner_id": self.res_partner_barcelona_food,
                 "invoice_payment_term_id": payment_term_id,
                 "move_type": "in_invoice",
                 "invoice_date": '2021-03-15',
@@ -122,7 +122,7 @@ class TestReports(TestAr, TestAccountReportsCommon):
             }, "test_vendor_bill_5": {
                 "ref": "demo_sup_invoice_5: Invoice to Foreign with all type of taxes",
                 "l10n_latam_document_number": "0001-00000222",
-                "partner_id": self.res_partner_expresso,
+                "partner_id": self.res_partner_barcelona_food,
                 "invoice_payment_term_id": payment_term_id,
                 "move_type": "in_invoice",
                 "invoice_date": '2021-03-18',
@@ -138,7 +138,7 @@ class TestReports(TestAr, TestAccountReportsCommon):
             }, "test_vendor_bill_6": {
                 "ref": "demo_sup_invoice_6: Service Import to Odoo, fiscal position changes tax not correspond",
                 "l10n_latam_document_number": "0001-00000333",
-                "partner_id": self.res_partner_expresso,
+                "partner_id": self.res_partner_barcelona_food,
                 "invoice_payment_term_id": payment_term_id,
                 "move_type": "in_invoice",
                 "invoice_date": '2021-03-26',
@@ -149,7 +149,7 @@ class TestReports(TestAr, TestAccountReportsCommon):
             }, "test_vendor_bill_7": {
                 "ref": "demo_sup_invoice_7: Similar to last one but with line that have tax not correspond with negative amount",
                 "l10n_latam_document_number": "0001-00000334",
-                "partner_id": self.res_partner_expresso,
+                "partner_id": self.res_partner_barcelona_food,
                 "invoice_payment_term_id": payment_term_id,
                 "move_type": "in_invoice",
                 "invoice_date": '2021-03-27',
