@@ -5761,12 +5761,15 @@ class AccountReport(models.Model):
 
         row_height = sheet.row_sizes.get(row, [8.43])[0]
 
-        try:
-            # This is needed, otherwise we could compute width on very long number such as 12.0999999998
-            # which wouldn't show well in the end result as the numbers are rounded.
-            value = float_repr(float(value), self.env.company.currency_id.decimal_places)
-        except ValueError:
-            pass
+        if value is None:
+            value = ''
+        else:
+            try:  # noqa: SIM105
+                # This is needed, otherwise we could compute width on very long number such as 12.0999999998
+                # which wouldn't show well in the end result as the numbers are rounded.
+                value = float_repr(float(value), self.env.company.currency_id.decimal_places)
+            except ValueError:
+                pass
 
         # Start by computing the width of the cell if we are not using colspans.
         if not has_colspan:
