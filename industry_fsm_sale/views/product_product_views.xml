@@ -4,6 +4,8 @@
         <field name="name">industry_fsm.product.catalog.kanban.view.inherit</field>
         <field name="model">product.product</field>
         <field name="inherit_id" ref="product.product_view_kanban_catalog"/>
+        <!-- make sure it's bigger than existing catalog view -->
+        <field name="priority">20</field>
         <field name="mode">primary</field>
         <field name="arch" type="xml">
             <kanban position="attributes">
