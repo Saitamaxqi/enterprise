@@ -73,6 +73,13 @@ msgid "999 - reversal of nf-e not cancelled within the legal period"
 msgstr ""
 
 #. module: l10n_br_avatax
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
+msgid ""
+"- The barcode of %s must have either 8, or 12 to 14 digits when using Avatax."
+msgstr ""
+
+#. module: l10n_br_avatax
 #: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
 msgid ""
 "<i title=\"Create a new account\" role=\"img\" aria-label=\"Create a new account\" class=\"fa fa-plug fa-fw\"/>\n"

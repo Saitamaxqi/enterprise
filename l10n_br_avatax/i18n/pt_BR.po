@@ -76,6 +76,14 @@ msgid "999 - reversal of nf-e not cancelled within the legal period"
 msgstr "999 - Devolução de NF-e não cancelada dentro do período legal"
 
 #. module: l10n_br_avatax
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
+msgid ""
+"- The barcode of %s must have either 8, or 12 to 14 digits when using Avatax."
+msgstr ""
+"- Ao utilizar a Avalara, o código de barras para %s pode ter 8 dígitos, ou de 12 a 14 dígitos."
+
+#. module: l10n_br_avatax
 #: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
 msgid ""
 "<i title=\"Create a new account\" role=\"img\" aria-label=\"Create a new "

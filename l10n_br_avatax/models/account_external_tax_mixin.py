@@ -136,12 +136,15 @@ class AccountExternalTaxMixin(models.AbstractModel):
         errors = []
         for line in lines:
             product = line['tempProduct']
+            cean = line['itemDescriptor']['cean']
             if not product:
                 errors.append(_('- A product is required on each line when using Avatax.'))
             elif not product.l10n_br_ncm_code_id:
                 errors.append(_('- Please configure a Mercosul NCM Code on %s.', product.display_name))
             elif line['lineAmount'] < 0:
                 errors.append(_("- Avatax Brazil doesn't support negative lines."))
+            elif cean and (not cean.isdigit() or not (len(cean) == 8 or 12 <= len(cean) <= 14)):
+                errors.append(_("- The barcode of %s must have either 8, or 12 to 14 digits when using Avatax.", product.display_name))
 
         service_lines, consumable_lines = partition(
             lambda line: line["tempProduct"].product_tmpl_id._l10n_br_is_only_allowed_on_service_invoice(), lines
@@ -211,6 +214,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
             'numberOfItems': qty,
             'itemDescriptor': {
                 'description': product.display_name or '',
+                'cean': product.barcode or '',
             },
             'tempTransportCostType': product.l10n_br_transport_cost_type,
             'tempProduct': product,
