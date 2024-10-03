@@ -110,7 +110,7 @@
                                         <img t-if="log.action == 'sign' and log.sign_request_item_id.signature" class="text-start" t-att-src="image_data_uri(log.sign_request_item_id.signature)" style="max-height: 40px"/>
                                     </td>
                                     <td>
-                                        <span t-field="log.partner_id">Marc Demo</span>
+                                        <span t-field="log.partner_id">Unknown Partner</span>
                                         <span t-if="log.partner_id.email" t-field="log.partner_id.email">demo@email.com</span>
                                     </td>
                                     <td> <span t-field="log.log_date">20-03-2000</span> </td>

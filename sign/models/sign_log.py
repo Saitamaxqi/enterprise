@@ -74,6 +74,7 @@ class SignLog(models.Model):
         1/ if action=='create': get initial shasign from template (checksum pdf)
         2/ if action == 'sign': search for logs with hash for the same request and use that to compute new hash
         """
+        vals_list = [{**vals, **self.default_get(['sign_request_item_id'])} for vals in vals_list]
         vals_list_request_item = [vals for vals in vals_list if vals.get('sign_request_item_id')]
         sign_request_items = self.env['sign.request.item'].browse([vals['sign_request_item_id'] for vals in vals_list_request_item])
         vals_list_request = [vals for vals in vals_list if not vals.get('sign_request_item_id') and vals.get('sign_request_id')]

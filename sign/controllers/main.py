@@ -536,7 +536,7 @@ class Sign(http.Controller):
     def confirm_cancel_sign_request_item(self, item_id, access_token=None):
         sign_request_item = request.env['sign.request.item'].sudo().browse(item_id)
         if sign_request_item and consteq(sign_request_item.access_token, access_token):
-            sign_request_item.sign_request_id.cancel()
+            sign_request_item.sign_request_id.with_context(default_sign_request_item_id=sign_request_item.id).cancel()
             message_post = _("The signature has been canceled by %(partner)s(%(role)s)", partner=sign_request_item.partner_id.name, role=sign_request_item.role_id.name)
             sign_request_item.sign_request_id.message_post(body=message_post)
             return http.request.render('sign.canceled_sign_request_item')
@@ -551,7 +551,7 @@ class Sign(http.Controller):
                 return http.request.render('sign.cancel_sign_request_item_with_confirmation', {
                     'record': sign_request_item,
                 })
-            sign_request_item.sign_request_id.cancel()
+            sign_request_item.sign_request_id.with_context(default_sign_request_item_id=sign_request_item.id).cancel()
             message_post = _("The signature has been canceled by %(partner)s(%(role)s)", partner=sign_request_item.partner_id.name, role=sign_request_item.role_id.name)
             sign_request_item.sign_request_id.message_post(body=message_post)
             return http.request.render('sign.canceled_sign_request_item')
