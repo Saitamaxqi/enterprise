@@ -47,6 +47,8 @@ class AccountBankStatementLine(models.Model):
     # optimize the bank matching process"
     cron_last_check = fields.Datetime()
 
+    bank_statement_attachment_ids = fields.One2many('ir.attachment', compute='_compute_attachment')
+
     def action_save_close(self):
         return {'type': 'ir.actions.act_window_close'}
 
@@ -54,6 +56,19 @@ class AccountBankStatementLine(models.Model):
         action = self.env['ir.actions.act_window']._for_xml_id('account_accountant.action_bank_statement_line_form_bank_rec_widget')
         action['context'] = {'default_journal_id': self._context['default_journal_id']}
         return action
+
+    ####################################################
+    # COMPUTE METHODS
+    ####################################################
+
+    def _compute_attachment(self):
+        for st_line in self:
+            domain = [
+                ('res_model', '=', 'account.bank.statement'),
+                ('res_id', '=', st_line.statement_id.id),
+                ('res_field', 'in', (False, 'invoice_pdf_report_file')),
+            ]
+            st_line.bank_statement_attachment_ids = self.env['ir.attachment'].search(domain)
 
     ####################################################
     # RECONCILIATION PROCESS

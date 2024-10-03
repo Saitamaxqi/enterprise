@@ -2,7 +2,7 @@ import { AttachmentView } from "@mail/core/common/attachment_view";
 import { onMounted } from "@odoo/owl";
 import { useBus } from "@web/core/utils/hooks";
 
-export class AttachmentViewMoveLine extends AttachmentView {
+export class AccountAttachmentView extends AttachmentView {
     static props = [...AttachmentView.props, "openInPopout"];
     static components = { AttachmentView };
 
