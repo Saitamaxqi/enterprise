@@ -395,7 +395,7 @@ class SendCloud:
         # Assign consequent price to each method, delete the method if no price is available
         for shipping_method in reversed(shipping_methods):
             price = shipping_prices.get(shipping_method['id'], {}).get('price')
-            shipping_method['price'] = price or 0.0
+            shipping_method['price'] = float(price) if price else 0.0
 
         method_shipments = self._assign_packages_to_methods(carrier_id, delivery_packages, shipping_methods, use_multicollo)
         parcel_common = self._prepare_parcel_common_data(picking, is_return, sender_id)
