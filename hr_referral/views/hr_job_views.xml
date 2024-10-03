@@ -152,5 +152,10 @@
         </field>
     </record>
 
-    <menuitem parent="menu_hr_referral_configuration" id="menu_hr_referral_job_configuration" action="hr.action_hr_job" sequence="2"/>
+    <menuitem
+        parent="menu_hr_referral_configuration"
+        id="menu_hr_referral_job_configuration"
+        action="hr.action_hr_job"
+        groups="hr_referral.group_hr_referral_manager"
+        sequence="2"/>
 </odoo>

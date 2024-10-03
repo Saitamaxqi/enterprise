@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <odoo>
     <menuitem name="Referrals" id="menu_hr_referral_root" web_icon="hr_referral,static/description/icon.png" sequence="215" groups="hr_referral.group_hr_recruitment_referral_user"/>
-    <menuitem parent="menu_hr_referral_root" id="menu_hr_referral_configuration" name="Configuration" sequence="50" groups="hr_recruitment.group_hr_recruitment_manager,hr_referral.group_hr_referral_reward_responsible_user"/>
+    <menuitem parent="menu_hr_referral_root" id="menu_hr_referral_configuration" name="Configuration" sequence="50" groups="hr_referral.group_hr_referral_manager,hr_referral.group_hr_referral_reward_responsible_user"/>
 
     <record model="ir.ui.view" id="hr_applicant_view_form_inherit_referral">
         <field name="name">hr.applicant.view.form.inherit.referral</field>

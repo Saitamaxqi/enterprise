@@ -39,7 +39,7 @@
         <field name="name">Friends</field>
         <field name="res_model">hr.referral.friend</field>
         <field name="view_mode">list,form</field>
-        <field name="group_ids" eval="[(4, ref('hr_recruitment.group_hr_recruitment_manager'))]"/>
+        <field name="group_ids" eval="[Command.link(ref('hr_referral.group_hr_referral_manager'))]"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create a new friend
@@ -47,6 +47,6 @@
         </field>
     </record>
 
-    <menuitem parent="menu_hr_referral_configuration" id="menu_hr_referral_friend_configuration" action="action_hr_referral_friend_configuration" sequence="5" groups="hr_recruitment.group_hr_recruitment_manager"/>
+    <menuitem parent="menu_hr_referral_configuration" id="menu_hr_referral_friend_configuration" action="action_hr_referral_friend_configuration" sequence="5" groups="hr_referral.group_hr_referral_manager"/>
 
 </odoo>

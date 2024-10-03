@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
@@ -23,12 +22,13 @@ class HrReferralReward(models.Model):
     awarded_employees = fields.Integer(compute='_compute_awarded_employees')
     points_missing = fields.Integer(compute='_compute_points_missing')
     description = fields.Html(required=True)
-    gift_manager_id = fields.Many2one('res.users', string='Gift Responsible',
+    gift_manager_id = fields.Many2one('res.users', string='Gift Responsible', tracking=True,
         domain=_group_hr_referral_domain, help="User responsible of this gift.")
     gift_manager_image = fields.Binary("Gift Responsible Image", related="gift_manager_id.image_1024")
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.company, required=True)
     image = fields.Binary("Image",
         help="This field holds the image used as image for the product, limited to 1024x1024px.")
+    is_gift_manager = fields.Boolean(compute="_compute_is_gift_manager", default=True)
 
     def _compute_awarded_employees(self):
         data = {hr_referral_reward.id: count for hr_referral_reward, count in self.env['hr.referral.points']._read_group(
@@ -43,6 +43,13 @@ class HrReferralReward(models.Model):
         available_points_company = {company.id: points_sum for company, points_sum in read_group_res}
         for item in self:
             item.points_missing = item.cost - available_points_company.get(item.company_id.id, 0)
+
+    @api.depends_context('uid')
+    def _compute_is_gift_manager(self):
+        current_user = self.env.user
+        is_manager = current_user.has_group('hr_referral.group_hr_referral_manager')
+        for reward in self:
+            reward.is_gift_manager = bool(is_manager or reward.gift_manager_id == current_user)
 
     def buy(self):
         current_user = self.env.user
