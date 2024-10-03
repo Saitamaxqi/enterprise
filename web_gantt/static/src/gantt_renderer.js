@@ -1685,6 +1685,7 @@ export class GanttRenderer extends Component {
             reload: () => this.model.fetchData(),
             buttons: [
                 {
+                    id: "open_view_edit_dialog",
                     text: canEdit ? _t("Edit") : _t("View"),
                     class: "btn btn-sm btn-primary",
                     // Sync with the mutex to wait for potential changes on the view

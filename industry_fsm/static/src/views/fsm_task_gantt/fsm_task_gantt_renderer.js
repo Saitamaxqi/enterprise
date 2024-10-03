@@ -5,7 +5,7 @@ export class FsmTaskGanttRenderer extends TaskGanttRenderer {
         const props = super.getSelectCreateDialogProps(params);
         if (this.env.isSmall) {
             props.onCreateEdit = () => {
-                this.action.doAction("industry_fsm.project_task_fsm_mobile_server_action");
+                this.actionService.doAction("industry_fsm.project_task_fsm_mobile_server_action");
             };
         }
         return props;
@@ -14,10 +14,10 @@ export class FsmTaskGanttRenderer extends TaskGanttRenderer {
     getPopoverProps(pill) {
         const props = super.getPopoverProps(pill);
         if (this.env.isSmall) {
-            props.button.onClick = () => {
+            props.buttons.find((obj) => obj.id === "open_view_edit_dialog").onClick = () => {
                 const resId = pill.record.id;
                 const resModel = this.model.metaData.resModel;
-                this.action.doAction("industry_fsm.project_task_fsm_mobile_server_action", {
+                this.actionService.doAction("industry_fsm.project_task_fsm_mobile_server_action", {
                     additionalContext: {
                         active_id: resId,
                         active_model: resModel,

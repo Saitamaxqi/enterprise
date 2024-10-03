@@ -1,30 +1,34 @@
-import { describe, expect, test } from "@odoo/hoot";
+import { expect, test, beforeEach } from "@odoo/hoot";
 import { animationFrame, mockDate } from "@odoo/hoot-mock";
 import { click } from "@odoo/hoot-dom";
 
-import { onRpc, mountView } from "@web/../tests/web_test_helpers";
+import { onRpc, mountView, mockService } from "@web/../tests/web_test_helpers";
 
 import { defineProjectModels, projectModels } from "@project/../tests/project_models";
 
-describe.current.tags("desktop");
 defineProjectModels();
+
+function mockActionService(doActionStep) {
+    const fakeActionService = {
+        doAction: async (actionRequest, options = {}) => {
+            expect(actionRequest).toBe("industry_fsm.project_task_fsm_mobile_server_action");
+            expect.step(doActionStep);
+        },
+    };
+    mockService("action", fakeActionService);
+}
 
 const { ProjectTask } = projectModels;
 
-test("fsm task gantt view", async () => {
-    mockDate("2024-01-03 07:00:00");
+beforeEach(() => {
     onRpc("get_all_deadlines", () => ({ milestone_id: [], project_id: [] }));
-
+    mockDate("2024-01-03 07:00:00");
     ProjectTask._records = [
         {
             id: 1,
-            planned_date_begin: "2024-01-10 06:30:00",
-            date_deadline: "2024-01-10 11:30:00",
-        },
-        {
-            id: 2,
+            name: "Custom Mobile Button Test",
             planned_date_begin: "2024-01-01 06:00:00",
-            date_deadline: "2024-01-01 12:30:00",
+            date_deadline: "2024-01-02 12:30:00",
         },
     ];
 
@@ -37,7 +41,9 @@ test("fsm task gantt view", async () => {
             </form>
         `,
     };
+});
 
+test.tags("desktop")("fsm task gantt view", async () => {
     const now = luxon.DateTime.now();
 
     await mountView({
@@ -59,4 +65,25 @@ test("fsm task gantt view", async () => {
                 "The fsm_mode present in the view context should set the start_datetime to the current day instead of the first day of the gantt view",
         }
     );
+});
+
+test.tags("mobile")("test custom action for edit gantt popover button", async () => {
+    const doActionStep = "doAction";
+    mockActionService(doActionStep);
+
+    await mountView({
+        arch: '<gantt date_start="planned_date_begin" date_stop="date_deadline" js_class="fsm_task_gantt" />',
+        resModel: "project.task",
+        type: "gantt",
+        context: { fsm_mode: true },
+    });
+
+    expect(".o_gantt_pill").toHaveCount(1);
+    click(".o_gantt_pill");
+    await animationFrame();
+    expect(".o_popover .popover-header").toHaveText("Custom Mobile Button Test");
+    click(".o_popover .popover-footer button", { text: "Edit" });
+    await animationFrame();
+
+    expect.verifySteps([doActionStep]);
 });
