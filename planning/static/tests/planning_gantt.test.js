@@ -47,6 +47,37 @@ const getProgressBars = () => ({
     },
 });
 
+async function recurrenceDeletionTemplate(mode) {
+    onRpc("planning.slot", "action_address_recurrency", async ({ args }) => {
+        expect.step(`Recurency Delete in mode ${args[1]}`);
+        return true;
+    });
+
+    const ganttViewProps = _getCreateViewArgsForGanttViewTotalsTests();
+    ganttViewProps.groupBy = ["resource_id"];
+
+    PlanningSlot._records[0].repeat = true;
+    await mountGanttView(ganttViewProps);
+
+    expect(".o_gantt_pill:not(.o_gantt_consolidated_pill)").toHaveCount(1);
+
+    click(".o_gantt_pill");
+    await animationFrame();
+
+    click("button:contains('Delete')");
+    await animationFrame();
+
+    expect(".o_dialog").toHaveCount(1);
+    expect(".modal-title").toHaveText("Delete Recurring Shift");
+    await animationFrame();
+    click(`input[id="${mode}"]`);
+    await animationFrame();
+
+    click(".o_dialog button:contains(Delete Recurring Shift)");
+    await animationFrame();
+    expect.verifySteps([`Recurency Delete in mode ${mode}`]);
+}
+
 async function ganttResourceWorkIntervalRPC() {
     return [
         {
@@ -98,6 +129,7 @@ function _getCreateViewArgsForGanttViewTotalsTests() {
                 <field name="allocated_percentage"/>
                 <field name="resource_id"/>
                 <field name="name"/>
+                <field name="repeat"/>
             </gantt>
         `,
     };
@@ -775,4 +807,33 @@ test("The date should take into the account when created through the button in G
 
     expect([...queryAll(".o_gantt_pill_wrapper")].map((node) => node.style.gridRow.split(' / ')[0])).
         toEqual(["r2","r2"], { message: "The record should be added to the Resource column" });
+});
+
+test("Gantt Popover delete confirmation", async () => {
+    const ganttViewProps = _getCreateViewArgsForGanttViewTotalsTests();
+    ganttViewProps.groupBy = ["resource_id"];
+    await mountGanttView(ganttViewProps);
+
+    expect(".o_gantt_pill:not(.o_gantt_consolidated_pill)").toHaveCount(1);
+
+    click(".o_gantt_pill");
+    await animationFrame();
+
+    click("button:contains('Delete')");
+    await animationFrame();
+
+    expect(".o_dialog").toHaveCount(1);
+    expect(".modal-title").toHaveText("Confirmation");
+    click(".o_dialog button:contains('Delete')");
+    await animationFrame();
+
+    expect(".o_gantt_pill:not(.o_gantt_consolidated_pill)").toHaveCount(0);
+});
+
+test("Gantt Popover recurrence delete confirmation in mode subsequent", async () => {
+    await recurrenceDeletionTemplate("subsequent");
+});
+
+test("Gantt Popover recurrence delete confirmation in mode all", async () => {
+    await recurrenceDeletionTemplate("all");
 });

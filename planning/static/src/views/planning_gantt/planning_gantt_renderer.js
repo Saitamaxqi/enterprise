@@ -6,13 +6,16 @@ import { getUnionOfIntersections } from "@web_gantt/gantt_helpers";
 import { PlanningEmployeeAvatar } from "./planning_employee_avatar";
 import { PlanningMaterialRole } from "./planning_material_role";
 import { PlanningGanttRowProgressBar } from "./planning_gantt_row_progress_bar";
-import { useEffect, onWillStart, reactive, onWillUnmount, markup } from "@odoo/owl";
+import { useEffect, onWillStart, reactive, onWillUnmount, markup, useState } from "@odoo/owl";
 import { serializeDateTime } from "@web/core/l10n/dates";
 import { planningAskRecurrenceUpdate } from "../planning_calendar/planning_ask_recurrence_update/planning_ask_recurrence_update_hook";
 import { PlanningGanttRendererControls } from "./planning_gantt_renderer_controls";
 import { escape } from "@web/core/utils/strings";
 import { useService } from "@web/core/utils/hooks";
 import { _t } from "@web/core/l10n/translation";
+import { usePlanningRecurringDeleteAction } from "../planning_hooks";
+import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { AddressRecurrencyConfirmationDialog } from "@planning/components/address_recurrency_confirmation_dialog/address_recurrency_confirmation_dialog";
 
 const { Duration, DateTime } = luxon;
 
@@ -34,6 +37,10 @@ export class PlanningGanttRenderer extends GanttRenderer {
             this.gridRef.el.classList.add("o_planning_gantt");
         });
 
+        this.state = useState({
+            recurrenceUpdate: "this",
+        });
+        this.planningRecurrenceDeletion = usePlanningRecurringDeleteAction();
         this.isPlanningManager = false;
         this.notificationService = useService("notification");
         onWillStart(this.onWillStart);
@@ -230,13 +237,54 @@ export class PlanningGanttRenderer extends GanttRenderer {
      */
     async getPopoverProps(pill) {
         const popoverProps = await super.getPopoverProps(...arguments);
+        const { record } = pill;
         if (popoverProps.bodyTemplate || popoverProps.footerTemplate) {
-            const { record } = pill;
             Object.assign(popoverProps.context, {
                 allocatedHoursFormatted:
                     record.allocated_hours && formatFloatTime(record.allocated_hours),
                 allocatedPercentageFormatted:
                     record.allocated_percentage && formatFloat(record.allocated_percentage),
+            });
+        }
+        if (this.isPlanningManager) {
+            const recurrenceProps = { resId: record.id, resModel: this.model.metaData.resModel };
+            popoverProps.buttons.push({
+                text: _t("Delete"),
+                class: "btn btn-sm btn-secondary btn-delete",
+                onClick: async () => {
+                    const canProceed = await new Promise((resolve) => {
+                        if (record.repeat) {
+                            this.dialogService.add(AddressRecurrencyConfirmationDialog, {
+                                cancel: () => resolve(false),
+                                close: () => resolve(false),
+                                confirm: async () => {
+                                    await this.planningRecurrenceDeletion._actionAddressRecurrency(
+                                        recurrenceProps,
+                                        this.state.recurrenceUpdate
+                                    );
+                                    return resolve(true);
+                                },
+                                onChangeRecurrenceUpdate:
+                                    this.planningRecurrenceDeletion._setRecurrenceUpdate.bind(this),
+                                selected: this.state.recurrenceUpdate,
+                            });
+                        } else {
+                            this.dialogService.add(ConfirmationDialog, {
+                                body: _t("Are you sure you want to delete this shift?"),
+                                confirmLabel: _t("Delete"),
+                                cancel: () => resolve(false),
+                                close: () => resolve(false),
+                                confirm: () => resolve(true),
+                            });
+                        }
+                    });
+                    if (canProceed) {
+                        await this.model.orm.unlink(recurrenceProps.resModel, [
+                            recurrenceProps.resId,
+                        ]);
+                        await this.model.fetchData();
+                    }
+                },
             });
         }
         return popoverProps;

@@ -107,4 +107,28 @@ patch(PlanningGanttRenderer.prototype, {
         }
         super.onPlan(rowId, columnStart, columnStop);
     },
+    /**
+     * @override
+     */
+    getPopoverProps(pill) {
+        const popoverProps = super.getPopoverProps(pill);
+        const { record } = pill;
+        if (record.sale_line_plannable && this.isPlanningManager) {
+            const deleteBtnIndex = popoverProps.buttons.findIndex((btn) => btn.class.includes("btn-delete"));
+            const unscheduleBtn = {
+                text: _t("Unschedule"),
+                class: "btn btn-secondary",
+                onClick: async () => {
+                    await this.model.orm.call(this.model.metaData.resModel, "action_unschedule", [record.id]);
+                },
+            };
+
+            if (deleteBtnIndex === -1) {
+                popoverProps.buttons.push(unscheduleBtn);
+            } else {
+                popoverProps.buttons.splice(deleteBtnIndex, 0, unscheduleBtn);
+            }
+        }
+        return popoverProps;
+    },
 });

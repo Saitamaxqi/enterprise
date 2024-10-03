@@ -343,6 +343,8 @@ msgid ""
 msgstr ""
 
 #. module: sale_planning
+#. odoo-javascript
+#: code:addons/sale_planning/static/src/views/sale_planning_gantt/sale_planning_gantt_renderer.js:0
 #: model_terms:ir.ui.view,arch_db:sale_planning.planning_slot_view_gantt_inherit_sale_planning
 #: model_terms:ir.ui.view,arch_db:sale_planning.planning_view_form_in_gantt_inherit_sale_planning
 msgid "Unschedule"

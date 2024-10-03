@@ -721,6 +721,7 @@ msgstr ""
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/views/planning_form/planning_form_view.js:0
+#: code:addons/planning/static/src/views/planning_gantt/planning_gantt_renderer.js:0
 msgid "Are you sure you want to delete this shift?"
 msgstr ""
 
@@ -988,6 +989,7 @@ msgstr ""
 #. module: planning
 #. odoo-javascript
 #: code:addons/planning/static/src/views/planning_form/planning_form_view.js:0
+#: code:addons/planning/static/src/views/planning_gantt/planning_gantt_renderer.js:0
 #: model_terms:ir.ui.view,arch_db:planning.planning_role_view_kanban
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_gantt
 #: model_terms:ir.ui.view,arch_db:planning.planning_view_kanban

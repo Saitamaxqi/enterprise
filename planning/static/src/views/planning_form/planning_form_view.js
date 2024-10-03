@@ -9,6 +9,7 @@ import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { AddressRecurrencyConfirmationDialog } from "@planning/components/address_recurrency_confirmation_dialog/address_recurrency_confirmation_dialog";
 import { deserializeDateTime } from "@web/core/l10n/dates";
+import { usePlanningRecurringDeleteAction } from "../planning_hooks";
 
 export class PlanningFormController extends FormController {
     setup() {
@@ -19,6 +20,7 @@ export class PlanningFormController extends FormController {
         this.state = useState({
             recurrenceUpdate: "this",
         });
+        this.planningRecurrenceDeletion = usePlanningRecurringDeleteAction();
         onMounted(() => {
             this.initialTemplateCreation = this.model.root.data.template_creation;
         });
@@ -67,10 +69,10 @@ export class PlanningFormController extends FormController {
                         cancel: () => resolve(false),
                         close: () => resolve(false),
                         confirm: async () => {
-                            await this._actionAddressRecurrency(shift);
+                            await this.planningRecurrenceDeletion._actionAddressRecurrency(shift, this.state.recurrenceUpdate);
                             return resolve(true);
                         },
-                        onChangeRecurrenceUpdate: this._setRecurrenceUpdate.bind(this),
+                        onChangeRecurrenceUpdate: this.planningRecurrenceDeletion._setRecurrenceUpdate.bind(this),
                         selected: this.state.recurrenceUpdate,
                     });
                 } else {
@@ -157,7 +159,7 @@ export class PlanningFormController extends FormController {
         if (shift.data.recurrency_id) {
             this.dialogService.add(AddressRecurrencyConfirmationDialog, {
                 confirm: async () => {
-                    await this._actionAddressRecurrency(shift);
+                    await this.planningRecurrenceDeletion._actionAddressRecurrency(shift, this.state.recurrenceUpdate);
                     await shift.delete().then(
                         () => {
                             if (!shift.resId) {
@@ -169,25 +171,11 @@ export class PlanningFormController extends FormController {
                         }
                     );
                 },
-                onChangeRecurrenceUpdate: this._setRecurrenceUpdate.bind(this),
+                onChangeRecurrenceUpdate: this.planningRecurrenceDeletion._setRecurrenceUpdate.bind(this),
             });
         } else {
             await super.deleteRecord(...arguments);
         }
-    }
-
-    async _actionAddressRecurrency(shift) {
-        if (['subsequent', 'all'].includes(this.state.recurrenceUpdate)) {
-            await this.orm.call(
-                shift.resModel,
-                'action_address_recurrency',
-                [shift.resId, this.state.recurrenceUpdate],
-            );
-        }
-    }
-
-    _setRecurrenceUpdate(recurrenceUpdate) {
-        this.state.recurrenceUpdate = recurrenceUpdate;
     }
 }
 

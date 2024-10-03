@@ -244,3 +244,21 @@ export function setupDisplayName(displayNameRef) {
         () => [displayNameRef.el]
     );
 }
+
+export function usePlanningRecurringDeleteAction() {
+    const orm = useService("orm");
+    return {
+        async _actionAddressRecurrency(shift, recurrenceUpdate) {
+            if (['subsequent', 'all'].includes(recurrenceUpdate)) {
+                await orm.call(
+                    shift.resModel,
+                    'action_address_recurrency',
+                    [shift.resId, recurrenceUpdate],
+                );
+            }
+        },
+        _setRecurrenceUpdate(recurrenceUpdate) {
+            this.state.recurrenceUpdate = recurrenceUpdate;
+        },
+    };
+}

@@ -89,12 +89,6 @@
                     <t t-esc="sale_line_id[1]"/>
                 </div>
             </xpath>
-            <xpath expr="//footer/button[@name='unlink']" position="before">
-                <t t-if="sale_line_plannable">
-                    <button string="Unschedule" type="object" name="action_unschedule" class="btn btn-secondary"
-                        groups="planning.group_planning_manager"/>
-                </t>
-            </xpath>
         </field>
     </record>
 
