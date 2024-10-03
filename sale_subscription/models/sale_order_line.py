@@ -73,7 +73,7 @@ class SaleOrderLine(models.Model):
                 future_line = line.order_id.start_date and line.order_id.start_date > today or (currency_id.is_zero(line.price_subtotal))
                 if future_line:
                     line.invoice_status = 'no'
-                elif last_invoiced_date and last_invoiced_date <= today and next_invoice_date and next_invoice_date:
+                elif last_invoiced_date and last_invoiced_date <= today and next_invoice_date:
                     line.invoice_status = 'invoiced'
 
     @api.depends('order_id.subscription_state', 'order_id.start_date')
