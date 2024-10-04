@@ -228,10 +228,10 @@ if tag_deprecated and tag_deprecated in records.tag_ids:
 tag_validated = env.ref('documents.documents_tag_validated', raise_if_not_found=False)
 if tag_validated and tag_validated in records.tag_ids:
     # Easier than remembering not to remove activities
-    raise UserError(_("Impossible to validate twice."))
+    raise UserError(env._("Document has already been validated."))
 tag_deprecated = env.ref('documents.documents_tag_deprecated', raise_if_not_found=False)
 if tag_deprecated and tag_deprecated in records.tag_ids:
-    raise UserError(_("Impossible to validate documents tagged with Deprecated."))
+    raise UserError(env._("Impossible to validate documents tagged with Deprecated."))
             </field>
         </record>
 
