@@ -64,7 +64,7 @@
         </div>
     </template>
 
-    <template id="subscription_portal_template" inherit_id="sale.sale_order_portal_template" primary="True">
+    <template id="subscription_portal_template" name="Subscription" inherit_id="sale.sale_order_portal_template" primary="True">
         <div id="modalaccept" position="after">
             <!-- ======  MODAL: Close Subscription Initialization ====== -->
             <div role="dialog" class="modal fade" id="wc-modal-close-init" t-if="display_close" aria-hidden="true">
