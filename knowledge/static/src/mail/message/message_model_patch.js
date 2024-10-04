@@ -4,7 +4,8 @@ import { _t } from "@web/core/l10n/translation";
 import { browser } from "@web/core/browser/browser";
 import { url } from "@web/core/utils/urls";
 
-patch(Message.prototype, {
+/** @type {import("models").Message} */
+const messagePatch = {
     async copyLink() {
         if (this.thread?.model === "knowledge.article.thread") {
             let notification = _t("Message Link Copied!");
@@ -22,4 +23,5 @@ patch(Message.prototype, {
             return super.copyLink(...arguments);
         }
     },
-});
+};
+patch(Message.prototype, messagePatch);
