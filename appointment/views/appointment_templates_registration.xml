@@ -16,7 +16,13 @@
                                 </t>
                             </nav>
                             <div class="oe_structure o_appointment">
-                                <h4 class="pb-3">Add more details about you</h4>
+                                <h4 class="pb-3">
+                                    <span>Add more details about you</span>
+                                    <t t-if="request.env.user._is_public()">
+                                        <span class="mx-1">or</span>
+                                        <a class="text-primary text-decoration-none" role="button" t-att-href="login_with_redirect_url">Sign in</a>
+                                    </t>
+                                </h4>
                                 <div class="oe_structure"/>
                                 <div class="oe_structure o_appointment_attendee_form">
                                     <div class="d-flex row justify-content-between">

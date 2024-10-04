@@ -36,18 +36,20 @@ class WebsiteAppointmentUITest(AppointmentCommon):
         mail_new_test_user(
             self.env, login='user_portal', groups='base.group_portal', name='Portal User',
             company_id=self.company_admin.id, email='portal@example.com')
+        self.assertFalse(self.apt_manager.partner_id.phone)
         self.start_tour('/odoo', 'website_appointment_tour', login='apt_manager')
+        self.assertEqual(self.apt_manager.partner_id.phone, '0123456789')
         guest_names = [
             'Raoul', 'new_zeadland2@test.example.com', 'def@gmail.example.com', 'test1@gmail.com', 'test2@gmail.com',
             'abc@gmail.com', 'Appointment Manager'
         ]
         new_partners = self.env['res.partner'].search_count([('name', 'in', guest_names)])
-        self.assertEqual(new_partners, 8)
+        self.assertEqual(new_partners, 7)
         event = self.env['calendar.event'].search([('name', '=', 'Appointment Manager - Test Booking')], limit=1)
         expected_names = [
-            'Appointment Manager', 'Appointment Manager', 'Portal User', 'Raoul', 'abc@gmail.com',
+            'Appointment Manager', 'Portal User', 'Raoul', 'abc@gmail.com',
             'def@gmail.example.com', 'new_zeadland2@test.example.com', 'test1@gmail.com', 'test2@gmail.com'
         ]
         attendees = self.env['calendar.attendee'].search([('event_id', '=', event.id)])
-        self.assertEqual(len(attendees), 9)
+        self.assertEqual(len(attendees), 8)
         self.assertListEqual(attendees.sorted('common_name').mapped('common_name'), expected_names)

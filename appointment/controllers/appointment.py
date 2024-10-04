@@ -10,7 +10,7 @@ from babel.dates import format_datetime, format_date, format_time
 from datetime import datetime, date
 from dateutil.relativedelta import relativedelta
 from markupsafe import Markup
-from urllib.parse import unquote_plus
+from urllib.parse import quote, unquote_plus
 from werkzeug.exceptions import Forbidden, NotFound
 from werkzeug.urls import url_encode
 
@@ -545,6 +545,7 @@ class AppointmentController(http.Controller):
             'users_possible': users_possible,
             'resources_possible': resources_possible,
             'available_resource_ids': available_resource_ids,
+            'login_with_redirect_url': f'/web/login?redirect={quote(request.httprequest.full_path)}',
         })
 
     def _check_appointment_is_valid_slot(self, appointment_type, staff_user_id, resource_selected_id, available_resource_ids, start_dt, duration, asked_capacity, **kwargs):
@@ -679,17 +680,19 @@ class AppointmentController(http.Controller):
 
         customer = self._get_customer_partner()
 
-        # considering phone and email are mandatory
-        new_customer = not (customer.email) or not (customer.phone)
+        # email is mandatory
+        new_customer = not customer.email
         if not new_customer and customer.email != email and customer.email_normalized != email_normalize(email):
             new_customer = True
-        if not new_customer and not customer.phone:
-            new_customer = True
         if not new_customer:
-            customer_phone_fmt = customer._phone_format(fname="phone")
-            input_country = self._get_customer_country()
-            input_phone_fmt = phone_validation.phone_format(phone, input_country.code, input_country.phone_code, force_format="E164", raise_exception=False)
-            new_customer = customer.phone != phone and customer_phone_fmt != input_phone_fmt
+            # phone is mandatory
+            if not customer.phone:
+                customer.phone = customer._phone_format(number=phone) or phone
+            else:
+                customer_phone_fmt = customer._phone_format(fname="phone")
+                input_country = self._get_customer_country()
+                input_phone_fmt = phone_validation.phone_format(phone, input_country.code, input_country.phone_code, force_format="E164", raise_exception=False)
+                new_customer = customer.phone != phone and customer_phone_fmt != input_phone_fmt
 
         if new_customer:
             customer = customer.sudo().create({

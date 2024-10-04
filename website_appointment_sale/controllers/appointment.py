@@ -13,8 +13,6 @@ class WebsiteAppointmentSale(AppointmentAccountPayment):
             and link the booking to the SOL as one can go through the flow several times and book
             several slots of the same appointment type """
         order_sudo = request.website.sale_get_order(force_create=True)
-        if request.env.user._is_public():
-            order_sudo.partner_id = calendar_booking.partner_id
 
         # Necessary to have a description matching the tz picked by partner.
         # See _prepare_order_line_values on sale.order model.
