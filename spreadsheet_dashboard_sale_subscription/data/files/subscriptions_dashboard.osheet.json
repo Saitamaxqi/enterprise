@@ -2154,7 +2154,7 @@
         },
         "dbb716a1-5977-47ee-a53e-ca5716303433": {},
         "7d95fe28-fd13-4805-948c-95742e7d6733": {
-          "chain": "message_partner_ids",
+          "chain": "partner_id",
           "type": "many2many"
         },
         "b75963ca-ab5f-4da5-9c90-67526517e5e7": {
@@ -2162,7 +2162,7 @@
           "type": "many2one"
         },
         "4181e8e3-2e7e-42be-a88b-f24acb7d03e7": {
-          "chain": "activity_user_id",
+          "chain": "user_id",
           "type": "many2one"
         },
         "ec466626-f54a-4955-9611-eaa2719f1afb": {
@@ -2201,7 +2201,7 @@
         },
         "dbb716a1-5977-47ee-a53e-ca5716303433": {},
         "7d95fe28-fd13-4805-948c-95742e7d6733": {
-          "chain": "message_partner_ids",
+          "chain": "partner_id",
           "type": "many2many"
         },
         "b75963ca-ab5f-4da5-9c90-67526517e5e7": {
@@ -2209,7 +2209,7 @@
           "type": "many2one"
         },
         "4181e8e3-2e7e-42be-a88b-f24acb7d03e7": {
-          "chain": "activity_user_id",
+          "chain": "user_id",
           "type": "many2one"
         },
         "ec466626-f54a-4955-9611-eaa2719f1afb": {
