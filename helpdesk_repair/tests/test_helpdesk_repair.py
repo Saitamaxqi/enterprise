@@ -58,14 +58,22 @@ class TestRepair(HelpdeskCommon):
             'Repair validation should be logged on the ticket')
 
     def test_helpdesk_return_and_repair(self):
+        """
+        Check that the moves linked to a repair are not mimicked on the return.
+        """
         self.test_team.use_product_returns = True
         self.test_team.use_product_repairs = True
 
-        product = self.env['product.product'].create({
-            'name': 'product 1',
-            'is_storable': True,
-            'invoice_policy': 'order',
-        })
+        product, part = self.env['product.product'].create([
+            {
+                'name': 'final product',
+                'is_storable': True,
+            },
+            {
+                'name': 'part',
+                'is_storable': True,
+            }
+        ])
         so = self.env['sale.order'].create({
             'partner_id': self.partner.id,
         })
@@ -101,14 +109,18 @@ class TestRepair(HelpdeskCommon):
         return_picking.move_ids.picked = True
         return_picking.button_validate()
 
-        ro_form = Form(self.env['repair.order'].with_context(
-            active_model='helpdesk.ticket', default_ticket_id=ticket.id, default_picking_id=delivery.id
-        ))
-        ro_form.product_id = product
-        ro_form.partner_id = self.partner
+        res_dict = ticket.action_repair_order_form()
+        ro_form = Form(self.env[(res_dict.get('res_model'))].with_context(res_dict['context']), view=res_dict['view_id'])
+        with ro_form.move_ids.new() as move:
+            move.product_id = part
+            move.product_uom_qty = 1.0
+            move.quantity = 1.0
+            move.repair_line_type = 'add'
         repair_order = ro_form.save()
         repair_order.action_validate()
         repair_order.action_repair_start()
         repair_order.action_repair_end()
-
+        delivery = so.picking_ids - return_picking
         self.assertRecordValues(delivery.move_ids, [{'product_id': product.id, 'quantity': 1.0}])
+        return_picking = so.picking_ids.filtered(lambda p: p.picking_type_id == so.warehouse_id.in_type_id)
+        self.assertRecordValues(return_picking.move_ids, [{'product_id': product.id, 'quantity': 1.0}])

@@ -52,6 +52,6 @@ class HelpdeskTicket(models.Model):
             'default_user_id': False,
             'default_team_id': False,
             'default_internal_notes': self.description,
-            'default_picking_id': self.picking_ids.filtered(lambda x: x.product_id == self.product_id)[-1].id
+            'default_repair_picking_id': self.picking_ids.filtered(lambda x: x.product_id == self.product_id)[-1].id
                 if self.picking_ids and self.product_id else self.picking_ids[-1:].id,
         }
