@@ -2,7 +2,7 @@ import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests
 import { getEnrichedSearchArch } from "@documents_spreadsheet/../tests/helpers/document_helpers";
 import { mockActionService } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { describe, expect, test } from "@odoo/hoot";
-import { click, dblclick, queryFirst } from "@odoo/hoot-dom";
+import { click, dblclick, queryFirst, select } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import { contains, mountView } from "@web/../tests/web_test_helpers";
@@ -407,4 +407,34 @@ test("Can navigate through templates with keyboard", async function () {
     await contains(defaultTemplate).press("ArrowLeft");
     expect(firstTemplate).not.toHaveClass("o-spreadsheet-grid-selected");
     expect(defaultTemplate).toHaveClass("o-spreadsheet-grid-selected");
+});
+
+test("Can create a blank spreadsheet from template dialog in a specific folder", async function () {
+    const mockDoAction = (action) => {
+        expect.step("redirect");
+        expect(action.tag).toBe("action_open_spreadsheet");
+    };
+    await initTestEnvWithBlankSpreadsheet({
+        mockRPC: async function (route, args) {
+            if (
+                args.model === "documents.document" &&
+                args.method === "action_open_new_spreadsheet"
+            ) {
+                expect(args.args[0].folder_id).toBe(1);
+                expect.step("action_open_new_spreadsheet");
+            }
+        },
+    });
+    mockActionService(mockDoAction);
+
+    await contains(".o_search_panel_section .o_search_panel_section_header").click();
+
+    await openTemplateDialog();
+
+    await select("2", { target: ".o-spreadsheet-templates-dialog select" });
+
+    await contains(`${dialogSelector} .o-spreadsheet-grid-image`).click();
+    await contains(`${dialogSelector} .o-spreadsheet-create`).click();
+
+    expect.verifySteps(["action_open_new_spreadsheet", "redirect"]);
 });

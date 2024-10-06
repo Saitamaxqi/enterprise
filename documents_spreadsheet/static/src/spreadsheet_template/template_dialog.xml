@@ -11,7 +11,7 @@
                 <div class="d-flex pb-2">
                     <div t-if="!props.folderId" class="flex-grow-1">
                         <span class="text-black me-3">Workspace</span>
-                        <select class="w-50 d-inline-flex o_input" t-model="this.documentsSpreadsheetFolderId">
+                        <select class="w-50 d-inline-flex o_input" t-model.number="this.documentsSpreadsheetFolderId">
                             <option t-foreach="props.folders" t-as="folder"
                                 t-key="folder.id" t-att-value="folder.id"
                                 t-esc="folder.display_name"/>
