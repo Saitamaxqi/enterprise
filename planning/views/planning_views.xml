@@ -338,12 +338,12 @@
                         ('start_datetime', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0)).to_utc()),
                     ]"/>
                     <filter name="start_this_week" string="This Week" domain="[
-                        ('start_datetime', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(weeks=-1,weekday=0), datetime.time(0,0,0)).to_utc()),
-                        ('start_datetime', '&lt;', datetime.datetime.combine(context_today() + relativedelta(weekday=0), datetime.time(0,0,0)).to_utc()),
+                        ('start_datetime', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(weeks=-1,days=1,weekday=0), datetime.time(0,0,0)).to_utc()),
+                        ('start_datetime', '&lt;', datetime.datetime.combine(context_today() + relativedelta(days=1,weekday=0), datetime.time(0,0,0)).to_utc()),
                     ]"/>
                     <filter name="start_next_week" string="Next Week" domain="[
-                        ('start_datetime', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(weekday=0), datetime.time(0,0,0)).to_utc()),
-                        ('start_datetime', '&lt;', datetime.datetime.combine(context_today() + relativedelta(weeks=1,weekday=0), datetime.time(0,0,0)).to_utc()),
+                        ('start_datetime', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(days=1,weekday=0), datetime.time(0,0,0)).to_utc()),
+                        ('start_datetime', '&lt;', datetime.datetime.combine(context_today() + relativedelta(weeks=1,days=1,weekday=0), datetime.time(0,0,0)).to_utc()),
                     ]"/>
                 </filter>
                 <filter string="End Date" name="end_datetime" date="end_datetime" end_month="1">
@@ -352,12 +352,12 @@
                         ('end_datetime', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)).to_utc()),
                     ]"/>
                     <filter name="end_this_week" string="This Week" domain="[
-                        ('end_datetime', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(weeks=-1,weekday=0), datetime.time(0,0,0)).to_utc()),
-                        ('end_datetime', '&lt;', datetime.datetime.combine(context_today() + relativedelta(weekday=0), datetime.time(0,0,0)).to_utc()),
+                        ('end_datetime', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(weeks=-1,days=1,weekday=0), datetime.time(0,0,0)).to_utc()),
+                        ('end_datetime', '&lt;', datetime.datetime.combine(context_today() + relativedelta(days=1,weekday=0), datetime.time(0,0,0)).to_utc()),
                     ]"/>
                     <filter name="end_next_week" string="Next Week" domain="[
-                        ('end_datetime', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(weekday=0), datetime.time(0,0,0)).to_utc()),
-                        ('end_datetime', '&lt;', datetime.datetime.combine(context_today() + relativedelta(weeks=1,weekday=0), datetime.time(0,0,0)).to_utc()),
+                        ('end_datetime', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(days=1,weekday=0), datetime.time(0,0,0)).to_utc()),
+                        ('end_datetime', '&lt;', datetime.datetime.combine(context_today() + relativedelta(weeks=1,days=1,weekday=0), datetime.time(0,0,0)).to_utc()),
                     ]"/>
                 </filter>    
                 <group string="Group By">

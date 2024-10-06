@@ -69,13 +69,13 @@
                 <separator/>
                 <filter string="Date" name="year" date="entry_date">
                     <filter name="entry_date_this_week" string="This Week" domain="[
-                        ('entry_date', '&gt;=', (datetime.datetime.combine(context_today() + relativedelta(weeks=-1,weekday=0), datetime.time(0,0,0)).to_utc())),
-                        ('entry_date', '&lt;', (datetime.datetime.combine(context_today() + relativedelta(weekday=0), datetime.time(0,0,0)).to_utc())),
+                        ('entry_date', '&gt;=', (datetime.datetime.combine(context_today() + relativedelta(weeks=-1,days=1,weekday=0), datetime.time(0,0,0)).to_utc())),
+                        ('entry_date', '&lt;', (datetime.datetime.combine(context_today() + relativedelta(days=1,weekday=0), datetime.time(0,0,0)).to_utc())),
                     ]"/>
                     <filter name="entry_date_today" string="Today" domain="[('entry_date', '&gt;', datetime.datetime.combine(context_today() - relativedelta(days=1), datetime.time(23, 59, 59)).to_utc())]"/>
                     <filter name="entry_date_last_week" string="Last Week" domain="[
-                        ('entry_date', '&gt;=', (datetime.datetime.combine(context_today() + relativedelta(weeks=-2,weekday=0), datetime.time(0,0,0)).to_utc())),
-                        ('entry_date', '&lt;', (datetime.datetime.combine(context_today() + relativedelta(weeks=-1,weekday=0), datetime.time(0,0,0)).to_utc())),
+                        ('entry_date', '&gt;=', (datetime.datetime.combine(context_today() + relativedelta(weeks=-2,days=1,weekday=0), datetime.time(0,0,0)).to_utc())),
+                        ('entry_date', '&lt;', (datetime.datetime.combine(context_today() + relativedelta(weeks=-1,days=1,weekday=0), datetime.time(0,0,0)).to_utc())),
                     ]"/>
                 </filter>
                 <group expand="1" string="Group By">
