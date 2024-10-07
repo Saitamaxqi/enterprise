@@ -9,7 +9,7 @@ export class WorkedDaysField extends Field {
     setup() {
         super.setup(...arguments);
         this.actionService = useService("action");
-        this.orm = useService("orm");
+        this.orm = useEnv().services.orm;
     }
 
     get fieldComponentProps() {
@@ -20,7 +20,9 @@ export class WorkedDaysField extends Field {
             const oldUpdate = record.update.bind(record);
             record.update = async (changes) => {
                 if ('amount' in changes || 'quantity' in changes) {
-                    await oldUpdate(changes, { save: true });
+                    await oldUpdate(changes);
+                    // save x2many from its parent for the relation to work
+                    await record._parentRecord.save();
                     const wizardId = record.model.config.resId;
                     if (wizardId) {
                         const action = await this.orm.call(
@@ -28,7 +30,9 @@ export class WorkedDaysField extends Field {
                             "recompute_worked_days_lines",
                             [wizardId]
                         );
-                        await this.actionService.doAction(action);
+                        if (action) {
+                            await this.actionService.doAction(action);
+                        }
                     }
                 } else {
                     await oldUpdate(changes);
