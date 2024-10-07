@@ -9,9 +9,6 @@
             draggable="false"
             aria-label="Edit"
             data-tooltip="Edit"
-            t-on-click.stop="props.onClick" />
+            t-on-click.stop="onClick" />
   </div>
 </templates>
-
-
-

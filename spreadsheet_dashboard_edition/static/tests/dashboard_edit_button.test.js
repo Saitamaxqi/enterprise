@@ -66,3 +66,33 @@ test("User with edit permissions does not see the 'Edit' option on the dashboard
     await createSpreadsheetDashboard();
     expect(".o_edit_dashboard").toHaveCount(0);
 });
+
+test("Can edit a non-active dashboard", async function () {
+    patchWithCleanup(odoo, { debug: true });
+
+    const action = (spreadsheetId) => ({
+        type: "ir.actions.client",
+        tag: "action_edit_dashboard",
+        params: { spreadsheet_id: spreadsheetId },
+    });
+
+    await createSpreadsheetDashboard({
+        mockRPC: async function (route, args) {
+            if (args.method === "action_edit_dashboard" && args.model === "spreadsheet.dashboard") {
+                expect.step("action_edit_dashboard");
+                return action(args.args[0]);
+            }
+        },
+    });
+    const env = getMockEnv();
+    patchWithCleanup(env.services.action, {
+        doAction(action) {
+            expect.step("doAction");
+            expect(action.params.spreadsheet_id).toBe(2);
+            expect(action.tag).toBe("action_edit_dashboard");
+        },
+    });
+    click(getFixture().querySelectorAll(".o_edit_dashboard")[1]);
+    await animationFrame();
+    expect.verifySteps(["action_edit_dashboard", "doAction"]);
+});

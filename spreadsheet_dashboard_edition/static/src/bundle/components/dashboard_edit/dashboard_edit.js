@@ -6,6 +6,7 @@ export class DashboardEdit extends Component {
     static template = "spreadsheet_dashboard_edition.DashboardEdit";
     static props = {
         onClick: Function,
+        dashboardId: Number,
     };
     setup() {
         this.isDashboardAdmin = false;
@@ -16,6 +17,9 @@ export class DashboardEdit extends Component {
                 );
             }
         });
+    }
+    onClick() {
+        return this.props.onClick(this.props.dashboardId);
     }
 }
 
