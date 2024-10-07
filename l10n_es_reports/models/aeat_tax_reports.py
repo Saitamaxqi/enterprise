@@ -671,12 +671,15 @@ class SpanishMod303TaxReportCustomHandler(models.AbstractModel):
 
         reserved_empty_chars = 600
         if options['date']['date_from'] >= '2024-10-01':
-            rslt += self._boe_format_number(casilla_lines_map.get('165', 0), length=17, decimal_places=2, in_currency=True)
-            rslt += self._boe_format_number(200, length=5)
-            rslt += self._boe_format_number(casilla_lines_map.get('167', 0), length=17, decimal_places=2, in_currency=True)
-            rslt += self._boe_format_number(casilla_lines_map.get('168', 0), length=17, decimal_places=2, in_currency=True)
-            rslt += self._boe_format_number(26, length=5)
-            rslt += self._boe_format_number(casilla_lines_map.get('170', 0), length=17, decimal_places=2, in_currency=True)
+            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map.get('165', 0), length=17, decimal_places=2, in_currency=True)
+            rslt += self._l10n_es_boe_format_number(options, 200, length=5)
+            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map.get('167', 0), length=17, decimal_places=2, in_currency=True)
+            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map.get('168', 0), length=17, decimal_places=2, in_currency=True)
+            rslt += self._l10n_es_boe_format_number(options, 26, length=5)
+            rslt += self._l10n_es_boe_format_number(options, casilla_lines_map.get('170', 0), length=17, decimal_places=2, in_currency=True)
+            reserved_empty_chars = 522
+        elif options['date']['date_to'] >= '2024-09-30':
+            rslt += self._l10n_es_boe_format_number(options, 0, length=78)
             reserved_empty_chars = 522
 
         # Footer of page 1
