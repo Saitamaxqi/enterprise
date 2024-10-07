@@ -3,7 +3,7 @@
 import { animationFrame } from "@odoo/hoot-mock";
 import { makeSpreadsheetMockEnv } from "@spreadsheet/../tests/helpers/model";
 import { WebClient } from "@web/webclient/webclient";
-import { getService, mountWithCleanup, patchWithCleanup } from "@web/../tests/web_test_helpers";
+import { getService, mountWithCleanup, patchWithCleanup, makeMockServer } from "@web/../tests/web_test_helpers";
 import {
     prepareWebClientForSpreadsheet,
     getSpreadsheetActionModel,
@@ -13,6 +13,8 @@ import { SpreadsheetTestAction } from "@test_spreadsheet_edition/spreadsheet_tes
 import { VersionHistoryAction } from "@spreadsheet_edition/bundle/actions/version_history/version_history_action";
 import { SpreadsheetTest, getDummyBasicServerData } from "./data";
 import { getPyEnv } from "@spreadsheet/../tests/helpers/data";
+import { session } from "@web/session";
+import { mailDataHelpers } from "@mail/../tests/mock_server/mail_mock_server";
 
 /**
  * @typedef {import("@spreadsheet/../tests/helpers/data").ServerData} ServerData
@@ -82,7 +84,7 @@ export async function createSpreadsheetTestAction(actionTag, params = {}) {
  * @returns {number}
  */
 export function createNewDummySpreadsheet(serverData, data) {
-    if(!serverData.models["spreadsheet.test"].records){
+    if (!serverData.models["spreadsheet.test"].records) {
         serverData.models["spreadsheet.test"].records = [];
     }
     const spreadsheetDummy = serverData.models["spreadsheet.test"].records;
@@ -96,7 +98,7 @@ export function createNewDummySpreadsheet(serverData, data) {
     return spreadsheetId;
 }
 
-export async function setupWithThreads(workbookdata = {}, thread) {
+export async function setupWithThreads(workbookdata = {}) {
     SpreadsheetTest._records = [
         {
             id: 1,
@@ -105,6 +107,17 @@ export async function setupWithThreads(workbookdata = {}, thread) {
         },
     ];
 
+    // When sending messages, the user needs to exist and be correctly configured in the server data so he can edit his messages.
+    const { env: pyEnv } = await makeMockServer();
+    if ("res.users" in pyEnv) {
+        /** @type {import("mock_models").ResUsers} */
+        const ResUsers = pyEnv["res.users"];
+        const store = new mailDataHelpers.Store();
+        ResUsers._init_store_data(store);
+        patchWithCleanup(session, {
+            storeData: store.get_result(),
+        });
+    }
     const result = await createSpreadsheetTestAction("spreadsheet_test_action", {
         spreadsheetId: 1,
     });
@@ -119,6 +132,7 @@ export async function createThread(model, pyEnv, threadPosition, messages = []) 
     messages.forEach((msg) =>
         pyEnv["mail.message"].create({
             body: `<p>${msg}</p>`,
+            message_type: "comment",
             model: "spreadsheet.cell.thread",
             res_id: threadId,
         })

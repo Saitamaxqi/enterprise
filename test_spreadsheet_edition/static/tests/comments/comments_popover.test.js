@@ -101,3 +101,20 @@ test("Open side panel from thread popover", async () => {
     await contains(".o-thread-popover div.o-thread-highlight button").click();
     expect(".o-threads-side-panel").toHaveCount(1);
 });
+
+
+test("edit comment from the thread popover", async () => {
+    const { model, pyEnv } = await setupWithThreads();
+    const sheetId = model.getters.getActiveSheetId();
+    await createThread(model, pyEnv, { sheetId, ...toCartesian("A2") }, ["wave"]);
+    selectCell(model, "A2");
+    await waitFor(".o-mail-Message");
+    await manuallyDispatchProgrammaticEvent(fixture.querySelector(".o-mail-Message"), "mouseenter");
+    await contains(".o-mail-Message [title='Expand']").click();
+    await contains(".dropdown-item:contains(Edit)").click();
+    let mailComposerInput = fixture.querySelector(".o-mail-Composer textarea");
+    await contains(mailComposerInput).edit("msg1", { confirm: false });
+    await contains(mailComposerInput).press("Enter");
+    await waitFor(".o-mail-Message-content:contains(msg1 (edited))");
+    expect(fixture.querySelector(".o-mail-Message-content").textContent).toBe("msg1 (edited)");
+});

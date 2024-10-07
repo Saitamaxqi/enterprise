@@ -10,7 +10,7 @@ patch(Composer.prototype, {
      * @override
      */
     get SEND_TEXT() {
-        if (this.props.composer.thread.model === "spreadsheet.cell.thread") {
+        if (this.props.composer?.thread?.model === "spreadsheet.cell.thread") {
             return _t("Send");
         } else {
             return super.SEND_TEXT;
