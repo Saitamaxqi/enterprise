@@ -260,23 +260,23 @@
             <div t-att-class="'position-absolute mx-2 my-1 toast o_planning_toast ' + o_toast_color" role="alert" id="PlanningToast" data-delay="3000">
                 <div class="toast-body">
                     <t t-if="message_slug == 'assign'">
-                        <i class="fa fa-check-circle text-success"/> You were successfully assigned this open shift.
+                        <i class="fa fa-check-circle"/> You were successfully assigned this open shift.
                     </t>
                     <t t-if="message_slug == 'unassign'">
-                        <i class="fa fa-check-circle text-success"/> This shift is no longer assigned to you.
+                        <i class="fa fa-check-circle"/> This shift is no longer assigned to you.
                     </t>
                     <t t-if="message_slug == 'already_assign'">
-                        <i class="fa fa-exclamation-circle text-warning"/> This shift is already assigned to another employee.
+                        <i class="fa fa-exclamation-circle"/> This shift is already assigned to another employee.
                     </t>
                     <t t-if="message_slug == 'deny_unassign'">
-                        <i class="fa fa-exclamation-circle text-warning"/> You can no longer unassign yourself from this shift.
+                        <i class="fa fa-exclamation-circle"/> You can no longer unassign yourself from this shift.
                     </t>
                     <t t-if="message_slug == 'switch'">
-                        <i class="fa fa-check-circle text-success"/>
+                        <i class="fa fa-check-circle"/>
                         You have successfully requested to switch your shift. You will be notified when another employee takes over your shift.
                     </t>
                     <t t-if="message_slug == 'cancel_switch'">
-                        <i class="fa fa-check-circle text-success"/> Request to switch shift cancelled successfully.
+                        <i class="fa fa-check-circle"/> Request to switch shift cancelled successfully.
                     </t>
                 </div>
             </div>
