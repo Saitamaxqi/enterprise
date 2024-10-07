@@ -846,7 +846,10 @@ Are you sure you want to remove the selection values of those records?""", len(r
             for k, v in node.get('attrs', {}).items():
                 if k == 'class':
                     # Special case for classes which usually contain multiple values
-                    expr += '[contains(@%s,\'%s\')]' % (k, v)
+                    clx = v.strip().split(" ")
+                    if clx:
+                        str_classes = ",".join(f"'{cls}'" for cls in clx)
+                        expr += f"[hasclass({str_classes})]"
                 else:
                     expr += '[@%s=\'%s\']' % (k, v)
 
