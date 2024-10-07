@@ -87,14 +87,17 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
      */
     get relatedModels() {
         const all = this.fieldMatchings.map((object) => Object.values(object.fields()));
-        return [
-            ...new Set(
-                all
-                    .flat()
-                    .filter((field) => field.relation)
-                    .map((field) => field.relation)
-            ),
-        ];
+        // Add the model to allow to filter on id.
+        const set = new Set(
+            all
+                .flat()
+                .filter((field) => field.relation)
+                .map((field) => field.relation)
+        );
+        this.fieldMatchings.forEach((object) => {
+            set.add(object.model());
+        });
+        return [...set];
     }
 
     /**
@@ -124,10 +127,14 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
      * Get the first field which could be a relation of the current related
      * model
      *
+     * @param {string} model
      * @param {Object.<string, OdooField>} fields Fields to look in
      * @returns {field|undefined}
      */
-    _findRelation(fields) {
+    _findRelation(model, fields) {
+        if (this.relationState.relatedModel.technical === model) {
+            return Object.values(fields).find((field) => field.name === "id");
+        }
         const field = Object.values(fields).find(
             (field) =>
                 field.searchable && field.relation === this.relationState.relatedModel.technical
@@ -147,7 +154,7 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
         this.relationState.domainOfAllowedValues = [];
 
         this.fieldMatchings.forEach((object, index) => {
-            const field = this._findRelation(object.fields());
+            const field = this._findRelation(object.model(), object.fields());
             this.onSelectedField(index, field ? field.name : undefined, field);
         });
         await this.fetchModelRelation();

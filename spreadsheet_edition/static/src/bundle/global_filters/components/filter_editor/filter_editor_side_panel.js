@@ -169,6 +169,9 @@ export class AbstractFilterEditorSidePanel extends Component {
         if (!field.searchable) {
             return false;
         }
+        if (field.name === "id") {
+            return true;
+        }
         return this.ALLOWED_FIELD_TYPES.includes(field.type) || !!field.relation;
     }
 
@@ -202,7 +205,7 @@ export class AbstractFilterEditorSidePanel extends Component {
             chain: fieldName,
             type: field?.type || "",
         };
-        if (!field || !this.matchingRelation(field) || !field.searchable) {
+        if (!field || (field.name !== "id" && !this.matchingRelation(field)) || !field.searchable) {
             this._wrongFieldMatchingsSet.add(index);
         } else {
             this._wrongFieldMatchingsSet.delete(index);

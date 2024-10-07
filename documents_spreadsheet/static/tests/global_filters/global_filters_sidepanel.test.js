@@ -347,6 +347,32 @@ test("Create a new relational global filter", async function () {
     });
 });
 
+test("Can select ID in relation filter", async function () {
+    const { model, pivotId } = await createSpreadsheetFromPivotView({
+        serverData: {
+            models: getBasicData(),
+            views: {
+                "partner,false,pivot": `
+                    <pivot string="Partners">
+                        <field name="foo" type="col"/>
+                        <field name="product_id" type="row"/>
+                        <field name="probability" type="measure"/>
+                    </pivot>`,
+                "partner,false,search": `<search/>`,
+            },
+        },
+    });
+    await openGlobalFilterSidePanel();
+    await clickCreateFilter("relation");
+    await selectModelForRelation("partner");
+    await saveGlobalFilter();
+    const [globalFilter] = model.getters.getGlobalFilters();
+    expect(model.getters.getPivotFieldMatching(pivotId, globalFilter.id)).toEqual({
+        chain: "id",
+        type: "integer",
+    });
+});
+
 test("Create a new many2many relational global filter", async function () {
     defineModels([Vehicle]);
     const serverData = getBasicServerData();
@@ -608,14 +634,15 @@ test("Only related models can be selected", async function () {
     await openGlobalFilterSidePanel();
     await clickCreateFilter("relation");
     await contains(".o_side_panel_related_model input").click();
-    const [model1, model2, model3, model4, model5] = target.querySelectorAll(
+    const [model1, model2, model3, model4, model5, model6] = target.querySelectorAll(
         ".o-autocomplete--dropdown-item a"
     );
     expect(model1).toHaveText("Computer");
     expect(model2).toHaveText("Document");
-    expect(model3).toHaveText("Product");
-    expect(model4).toHaveText("Users");
-    expect(model5).toHaveText("Vehicle");
+    expect(model3).toHaveText("Partner");
+    expect(model4).toHaveText("Product");
+    expect(model5).toHaveText("Users");
+    expect(model6).toHaveText("Vehicle");
 });
 
 test("Edit an existing global filter", async function () {
