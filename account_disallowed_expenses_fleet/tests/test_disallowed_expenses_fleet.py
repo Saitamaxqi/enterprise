@@ -480,26 +480,36 @@ class TestAccountDisallowedExpensesFleetReport(TestAccountReportsCommon):
         report, options = self._setup_base_report(unfold=True, split=True)
         lines = report._get_lines(options)
         self._prepare_column_values(lines)
+        expected_lines = [
+              # pylint: disable=C0326
+              ('bob DNA category',                          111_100.0,                '',    29_425.0,           1),
+
+                ('Wayne Enterprises/Batmobile/No Plate',    100_100.0,          '25.00%',    25_025.0,           2),
+                  ('605555 Super expense',                      100.0,          '25.00%',        25.0,           3),
+                    ('605555 Super expense',                    100.0,          '25.00%',        25.0,           4),
+                  ('605556 bob expense',                    100_000.0,          '25.00%',    25_000.0,           3),
+                    ('605556 bob expense',                  100_000.0,          '25.00%',    25_000.0,           4),
+
+                ('605555 Super expense',                      1_000.0,          '40.00%',       400.0,           2),
+                  ('605555 Super expense',                    1_000.0,          '40.00%',       400.0,           3),
+                ('605556 bob expense',                       10_000.0,          '40.00%',     4_000.0,           2),
+                  ('605556 bob expense',                     10_000.0,          '40.00%',     4_000.0,           3),
+
+              ('Total',                                     111_100.0,                '',    29_425.0,           1),
+          ]
         self.assertLinesValues(
             # pylint: disable=C0326
             lines,
             #   Name                                          Total Amount        Rate         Disallowed Amount   Level
             [   0,                                            1,                  2,           3,                  4],
-            [
-                ('bob DNA category',                          111_100.0,          '',          29_425.0,           1),
-
-                  ('Wayne Enterprises/Batmobile/No Plate',    100_100.0,          '25.00%',    25_025.0,           2),
-                    ('605555 Super expense',                      100.0,          '25.00%',        25.0,           3),
-                      ('605555 Super expense',                    100.0,          '25.00%',        25.0,           4),
-                    ('605556 bob expense',                    100_000.0,          '25.00%',    25_000.0,           3),
-                      ('605556 bob expense',                  100_000.0,          '25.00%',    25_000.0,           4),
-
-                  ('605555 Super expense',                      1_000.0,          '40.00%',       400.0,           2),
-                    ('605555 Super expense',                    1_000.0,          '40.00%',       400.0,           3),
-                  ('605556 bob expense',                       10_000.0,          '40.00%',     4_000.0,           2),
-                    ('605556 bob expense',                     10_000.0,          '40.00%',     4_000.0,           3),
-
-                ('Total',                                     111_100.0,          '',          29_425.0,           1),
-            ],
+            expected_lines,
             options,
         )
+
+        # For each report line, ensure that the audited move lines have the same total amount.
+        for name, amount, _dummy, _dummy, level in expected_lines[:-1]:  # 'Total' line can't be audited.
+            with self.subTest(name=name, amount=amount, level=level):
+                line_id = next(line['id'] for line in lines if (line['name'], line['columns'][0]['no_format'], line['level']) == (name, amount, level))
+                action = self.env[report.custom_handler_model_id.model].open_journal_items(options, {'line_id': line_id})
+                amls = self.env['account.move.line'].search(action['domain'])
+                self.assertEqual(sum(amls.mapped('balance')), amount, "The sum of the audited move lines should be equal to the amount of the corresponding report line.")

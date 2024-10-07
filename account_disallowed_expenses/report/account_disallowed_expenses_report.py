@@ -75,11 +75,22 @@ class DisallowedExpensesCustomHandler(models.AbstractModel):
             'fleet.vehicle': 'vehicle_id',
         }
 
+        vehicle_audit = False
+        account_audit = False
         for markup, res_model, res_id in self.env['account.report']._parse_line_id(params.get('line_id')):
             if model_to_domain.get(res_model):
                 domain.append((model_to_domain[res_model], '=', res_id))
             if markup:
                 ctx['search_default_account_id'] = int(markup)
+            if res_model == 'fleet.vehicle':
+                vehicle_audit = True
+            if res_model == 'account.account':
+                account_audit = True
+
+        # When auditing a line while the vehicle split is active,
+        # the lines related to a vehicle must be explicitly excluded.
+        if options.get('vehicle_split') and account_audit and not vehicle_audit:
+            domain.append(('vehicle_id', '=', False))
 
         return {
             'name': 'Journal Items',
