@@ -47,15 +47,13 @@ class AppointmentSlot(models.Model):
     end_datetime = fields.Datetime('To', help="End datetime for unique slot type management")
     duration = fields.Float('Duration', compute='_compute_duration')
 
-    _sql_constraints = [(
-        'check_start_and_end_hour',
-        """CHECK(
-                ((end_hour=0 AND (start_hour BETWEEN 0 AND 23.99))
-                    OR (start_hour BETWEEN 0 AND end_hour))
-                AND (end_hour=0
-                    OR (end_hour BETWEEN start_hour AND 23.99))
-                )""",
-        'The end time must be later than the start time.')]
+    _check_start_and_end_hour = models.Constraint(
+        '''CHECK(
+            ((end_hour=0 AND (start_hour BETWEEN 0 AND 23.99)) OR (start_hour BETWEEN 0 AND end_hour))
+            AND (end_hour=0 OR (end_hour BETWEEN start_hour AND 23.99))
+        )''',
+        "The end time must be later than the start time.",
+    )
 
     @api.depends('start_datetime', 'end_datetime')
     def _compute_duration(self):

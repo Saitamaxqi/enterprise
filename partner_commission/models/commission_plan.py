@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import _, api, fields, models, tools
+from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 
 
@@ -58,9 +58,13 @@ class CommissionRule(models.Model):
     max_commission = fields.Float('Max Commission', help="Maximum amount, specified in the currency of the pricelist, if given.")
     sequence = fields.Integer(string='Sequence')
 
-    _sql_constraints = [
-        ('check_rate', 'CHECK(rate >= 0 AND rate <= 100)', 'Rate should be between 0 and 100.'),
-    ]
+    _check_rate = models.Constraint(
+        'CHECK(rate >= 0 AND rate <= 100)',
+        'Rate should be between 0 and 100.',
+    )
+    _check_combination_unique_index = models.UniqueIndex(
+        "(plan_id, category_id, COALESCE(product_id, -1), COALESCE(template_id, -1), COALESCE(pricelist_id, -1))"
+    )
 
     @api.constrains('product_id', 'category_id')
     def _check_product_category(self):
@@ -72,14 +76,3 @@ class CommissionRule(models.Model):
     def _onchange_is_capped(self):
         if not self.is_capped:
             self.max_commission = 0
-
-    def _auto_init(self):
-        result = super(CommissionRule, self)._auto_init()
-        # Unique index to handle product_id, template_id, pricelist_id even if those are null (not possible using a constraint).
-        tools.create_unique_index(
-            self._cr,
-            'commission_rule_check_combination_unique_index',
-            self._table,
-            ['plan_id', 'category_id', 'COALESCE(product_id, -1)', 'COALESCE(template_id, -1)', 'COALESCE(pricelist_id, -1)']
-        )
-        return result

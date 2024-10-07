@@ -20,17 +20,20 @@ class ProjectProject(models.Model):
     _sql_constraints = [
         ('material_imply_billable', "CHECK((allow_material = 't' AND allow_billable = 't') OR (allow_material = 'f'))", 'The material can be allowed only when the task can be billed.'),
         ('fsm_imply_task_rate', "CHECK((is_fsm = 't' AND sale_line_id IS NULL) OR (is_fsm = 'f'))", 'An FSM project must be billed at task rate or employee rate.'),
-        ('timesheet_product_required_if_billable_and_time', """
-            CHECK(
-                (allow_billable = 't' AND allow_timesheets = 't' AND is_fsm = 't' AND timesheet_product_id IS NOT NULL)
-                OR (allow_billable IS NOT TRUE)
-                OR (allow_timesheets IS NOT TRUE)
-                OR (is_fsm IS NOT TRUE)
-                OR (allow_billable IS NULL)
-                OR (allow_timesheets IS NULL)
-                OR (is_fsm IS NULL)
-            )""", 'The timesheet product is required when the fsm project can be billed and timesheets are allowed.'),
     ]
+    _timesheet_product_required_if_billable_and_time = models.Constraint(
+        """
+        CHECK(
+            (allow_billable = 't' AND allow_timesheets = 't' AND is_fsm = 't' AND timesheet_product_id IS NOT NULL)
+            OR (allow_billable IS NOT TRUE)
+            OR (allow_timesheets IS NOT TRUE)
+            OR (is_fsm IS NOT TRUE)
+            OR (allow_billable IS NULL)
+            OR (allow_timesheets IS NULL)
+            OR (is_fsm IS NULL)
+        )""",
+        "The timesheet product is required when the fsm project can be billed and timesheets are allowed.",
+    )
 
     def _get_hide_partner(self):
         return super()._get_hide_partner() and not self.is_fsm

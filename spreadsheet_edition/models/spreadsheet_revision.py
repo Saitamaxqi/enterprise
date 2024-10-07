@@ -5,7 +5,6 @@ from dateutil.relativedelta import relativedelta
 from collections import defaultdict
 
 from odoo import api, fields, models
-from odoo.tools import SQL
 
 
 class SpreadsheetRevision(models.Model):
@@ -21,31 +20,14 @@ class SpreadsheetRevision(models.Model):
     revision_uuid = fields.Char(required=True, index=True)
     parent_revision_id = fields.Many2one("spreadsheet.revision", copy=False)
 
-    # virtual constraints implemented by a custom index below
-    _sql_constraints = [
-        ('initial_unique', '', "There can be only one initial revision per spreadsheet"),
-        ('parent_unique', '', "A revision based on the same revision already exists"),
-    ]
-
-    def init(self):
-        self.env.cr.execute(
-            SQL(
-                """
-                CREATE UNIQUE INDEX IF NOT EXISTS spreadsheet_revision_initial_unique
-                ON %s (res_model, res_id) WHERE parent_revision_id IS NULL
-                """,
-                SQL.identifier(self._table)
-            )
-        )
-        self.env.cr.execute(
-            SQL(
-                """
-                CREATE UNIQUE INDEX IF NOT EXISTS spreadsheet_revision_parent_unique
-                ON %s (parent_revision_id, res_model, res_id) WHERE parent_revision_id IS NOT NULL
-                """,
-                SQL.identifier(self._table)
-            )
-        )
+    _initial_unique = models.UniqueIndex(
+        '(res_model, res_id) WHERE parent_revision_id IS NULL',
+        "There can be only one initial revision per spreadsheet",
+    )
+    _parent_unique = models.UniqueIndex(
+        '(parent_revision_id, res_model, res_id) WHERE parent_revision_id IS NOT NULL',
+        "A revision based on the same revision already exists",
+    )
 
     @api.depends('name', 'revision_uuid')
     def _compute_display_name(self):
