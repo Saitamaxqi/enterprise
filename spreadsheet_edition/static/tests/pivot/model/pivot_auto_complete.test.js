@@ -221,6 +221,21 @@ test("ODOO.VALUE group with a single date grouped by day", async function () {
     expect(composer.autocompleteProvider).toBe(undefined, { message: "autocomplete closed" });
 });
 
+test("PIVOT.VALUE group after a positional group", async function () {
+    const { model } = await createSpreadsheetWithPivot({
+        arch: /*xml*/ `
+            <pivot>
+                <field name="product_id" type="col"/>
+                <field name="date" type="row"/>
+                <field name="probability" type="measure"/>
+            </pivot>`,
+    });
+    const { store: composer } = makeStoreWithModel(model, CellComposerStore);
+    composer.startEdition('=PIVOT.VALUE(1,"probability", "#date:month", 1,');
+    const autoComplete = composer.autocompleteProvider;
+    expect(autoComplete.proposals.map((p) => p.text)).toEqual(['"product_id"', '"#product_id"']);
+});
+
 test("PIVOT.VALUE search field", async function () {
     const { model } = await createSpreadsheetWithPivot({
         arch: /*xml*/ `
