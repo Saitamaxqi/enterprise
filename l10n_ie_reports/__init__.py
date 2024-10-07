@@ -3,7 +3,7 @@ from . import models
 
 
 def _l10n_ie_reports_post_init(env):
-    for company in env['res.company'].search([('chart_template', '=', 'ie')]):
+    for company in env['res.company'].search([('chart_template', '=', 'ie')], order="parent_path"):
         ChartTemplate = env['account.chart.template'].with_company(company)
         ChartTemplate._load_data({
             'res.company': ChartTemplate._get_ie_reports_res_company(company.chart_template),

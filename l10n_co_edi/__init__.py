@@ -4,7 +4,7 @@ from . import wizards
 
 
 def _l10n_co_edi_post_init(env):
-    for company in env['res.company'].search([('chart_template', '=', 'co')]):
+    for company in env['res.company'].search([('chart_template', '=', 'co')], order="parent_path"):
         Template = env['account.chart.template'].with_company(company)
         Template._load_data({
             'account.tax': Template._get_co_edi_account_tax(),

@@ -19,7 +19,7 @@ def _post_init_hook(env):
     env['product.unspsc.code'].invalidate_model()
 
     # Load eTIMS type on the tax
-    for company in env['res.company'].search([('chart_template', '=', 'ke')]):
+    for company in env['res.company'].search([('chart_template', '=', 'ke')], order="parent_path"):
         _logger.info("Company %s already has the Kenyan localization installed, updating...", company.name)
         ChartTemplate = env['account.chart.template'].with_company(company)
         tax_types_to_load = {

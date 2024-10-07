@@ -3,7 +3,7 @@ from . import models
 
 
 def post_init(env):
-    companies = env['res.company'].search([('chart_template', '=', 'br')])
+    companies = env['res.company'].search([('chart_template', '=', 'br')], order="parent_path")
     for company in companies:
         Template = env['account.chart.template'].with_company(company)
         for xml_id, tax_data in Template._get_br_avatax_account_tax().items():
