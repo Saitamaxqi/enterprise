@@ -9,8 +9,10 @@ import {
     patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
 
+import { reactive } from "@odoo/owl";
 import { session } from "@web/session";
 import { HomeMenu } from "@web_enterprise/webclient/home_menu/home_menu";
+import { reorderApps } from "@web/webclient/menus/menu_helpers";
 
 async function walkOn(path) {
     for (const step of path) {
@@ -22,8 +24,8 @@ async function walkOn(path) {
     }
 }
 
-const getDefaultHomeMenuProps = () => ({
-    apps: [
+const getDefaultHomeMenuProps = () => {
+    const apps = [
         {
             actionID: 121,
             href: "/odoo/action-121",
@@ -54,8 +56,9 @@ const getDefaultHomeMenuProps = () => ({
             webIcon: false,
             xmlid: "app.3",
         },
-    ],
-});
+    ];
+    return { apps, reorderApps: (order) => reorderApps(apps, order) };
+};
 
 describe.current.tags("desktop");
 
@@ -128,6 +131,7 @@ test("Navigation (only apps, only one line)", async () => {
                 xmlid: `app.${i}`,
             };
         }),
+        reorderApps: (order) => reorderApps(homeMenuProps.apps, order),
     };
     await mountWithCleanup(HomeMenu, {
         props: homeMenuProps,
@@ -163,6 +167,7 @@ test("Navigation (only apps, two lines, one incomplete)", async () => {
                 xmlid: `app.${i}`,
             };
         }),
+        reorderApps: (order) => reorderApps(homeMenuProps.apps, order),
     };
     await mountWithCleanup(HomeMenu, {
         props: homeMenuProps,
@@ -225,18 +230,21 @@ test("Navigation and open an app in the home menu", async () => {
 
 test("Reorder apps in home menu using drag and drop", async () => {
     const homeMenuProps = {
-        apps: new Array(8).fill().map((x, i) => {
-            return {
-                actionID: 121,
-                href: "/odoo/action-121",
-                appID: i + 1,
-                id: i + 1,
-                label: `0${i}`,
-                parents: "",
-                webIcon: false,
-                xmlid: `app.${i}`,
-            };
-        }),
+        apps: reactive(
+            new Array(8).fill().map((x, i) => {
+                return {
+                    actionID: 121,
+                    href: "/odoo/action-121",
+                    appID: i + 1,
+                    id: i + 1,
+                    label: `0${i}`,
+                    parents: "",
+                    webIcon: false,
+                    xmlid: `app.${i}`,
+                };
+            })
+        ),
+        reorderApps: (order) => reorderApps(homeMenuProps.apps, order),
     };
     onRpc("set_res_users_settings", () => {
         expect.step(`set_res_users_settings`);
