@@ -960,14 +960,6 @@ class AccountMove(models.Model):
         invoice_lines = self._l10n_mx_edi_cfdi_invoice_line_ids()
         if not invoice_lines:
             errors.append(_("The invoice must contain at least one positive line to generate the CFDI."))
-        negative_lines = invoice_lines.filtered(lambda line: line.price_subtotal < 0)
-        if negative_lines:
-            # Line having a negative amount is not allowed.
-            if not self.env['l10n_mx_edi.document']._is_cfdi_negative_lines_allowed():
-                errors.append(_(
-                    "Invoice lines having a negative amount are not allowed to generate the CFDI. "
-                    "Please create a credit note instead.",
-                ))
         invalid_unspcs_products = invoice_lines.product_id.filtered(lambda product: not product.unspsc_code_id)
         if invalid_unspcs_products:
             errors.append(_(

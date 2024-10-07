@@ -309,9 +309,6 @@ class PosOrder(models.Model):
             if (x['record'].price_subtotal > 0.0 and x['is_refund']) or (x['record'].price_subtotal < 0.0 and not x['is_refund'])
         ]
         if negative_lines:
-            # Line having a negative amount is not allowed.
-            if not self.env['l10n_mx_edi.document']._is_cfdi_negative_lines_allowed():
-                errors.append(_("Order lines having a negative amount are not allowed to generate the CFDI."))
             # Discount line without taxes is not allowed.
             if [x for x in negative_lines if not x['tax_ids']]:
                 errors.append(_(

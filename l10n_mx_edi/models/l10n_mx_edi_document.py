@@ -720,19 +720,6 @@ class L10nMxEdiDocument(models.Model):
         cfdi_values['objeto_imp'] = tax_objected
 
     @api.model
-    def _is_cfdi_negative_lines_allowed(self):
-        """ Negative lines are not allowed by the Mexican government making some features unavailable like sale_coupon
-        or global discounts. This method allows odoo to distribute the negative discount lines to each others making
-        such features available even for Mexican people.
-
-        EDIT: Since the introduction of the global invoice, we need to manage pos order refund properly so everyone
-        needs this feature now.
-
-        :return: True if odoo needs to distribute the negative discount lines, False otherwise.
-        """
-        return True
-
-    @api.model
     def _dispatch_cfdi_base_lines(self, base_lines):
         """ Process the base lines passed as parameter and try to distribute the negative ones across the
         others since negative lines are not allowed in the CFDI.
