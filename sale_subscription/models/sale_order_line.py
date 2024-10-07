@@ -6,8 +6,6 @@ from collections import defaultdict
 from odoo import fields, models, api, _, Command
 from odoo.tools import float_is_zero, format_date
 
-from .sale_order import SUBSCRIPTION_PROGRESS_STATE
-
 INTERVAL_FACTOR = {
     'day': 30.437,  # average number of days per month over the year,
     'week': 30.437 / 7.0,
@@ -22,7 +20,7 @@ class SaleOrderLine(models.Model):
     recurring_invoice = fields.Boolean(related="product_template_id.recurring_invoice")
     recurring_monthly = fields.Monetary(compute='_compute_recurring_monthly', string="Monthly Recurring Revenue")
     parent_line_id = fields.Many2one('sale.order.line', compute='_compute_parent_line_id', store=True, precompute=True, index='btree_not_null')
-    last_invoiced_date = fields.Date(index=True)
+    last_invoiced_date = fields.Date(compute='_compute_last_invoiced_date', index=True, store=True)
     pricelist_id = fields.Many2one(related="order_id.pricelist_id")
     subscription_start_date = fields.Date(related="order_id.start_date")
     subscription_end_date = fields.Date(related="order_id.end_date")
@@ -178,6 +176,22 @@ class SaleOrderLine(models.Model):
             if line.recurring_invoice and is_order_active and not float_is_zero(line.price_subtotal, precision_rounding=line.currency_id.rounding):
                 recurring_monthly_tax_incl = line.recurring_monthly / line.price_subtotal * line.price_total
                 line.amount_to_invoice = recurring_monthly_tax_incl
+
+    @api.depends('invoice_lines.deferred_end_date', 'invoice_lines.move_id.state')
+    def _compute_last_invoiced_date(self):
+        relevant_move_lines = self.env['account.move.line']._read_group(
+            [
+                ('sale_line_ids', 'in', self.ids),
+                ('move_id.state', '=', 'posted'),
+                ('move_id.move_type', 'in', ['out_invoice', 'out_refund']),
+                ('deferred_end_date', '!=', False)
+            ],
+            aggregates=['id:recordset'],
+            groupby=['sale_line_ids']
+        )
+        self.last_invoiced_date = False
+        for line, move_lines in relevant_move_lines:
+            line.last_invoiced_date = move_lines._get_max_invoiced_date()
 
     def _get_invoice_lines(self):
         self.ensure_one()

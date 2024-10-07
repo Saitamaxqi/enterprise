@@ -27,7 +27,6 @@ class AccountMove(models.Model):
                 if not aml.subscription_id or aml.is_downpayment:
                     continue
                 all_subscription_ids.add(aml.subscription_id.id)
-                aml.sale_line_ids.last_invoiced_date = aml.deferred_end_date
         all_subscriptions = self.env['sale.order'].browse(all_subscription_ids)
         for subscription in all_subscriptions:
             # Invoice validation will increment the next invoice date
@@ -36,8 +35,8 @@ class AccountMove(models.Model):
                 # Churn sub are reopened in the _post_process of payment transaction.
                 # Renewed sub should not be incremented as the renewal is the running contract.
                 # Invoices for renewed contract can be posted when the delivered products arrived after the renewal date.
-                last_invoice_end_dates = [date for date in subscription.order_line.mapped('last_invoiced_date') if date]
-                subscription.next_invoice_date = max(last_invoice_end_dates) + relativedelta(days=1) if last_invoice_end_dates else subscription.start_date
+                last_invoice_end_date = subscription.order_line.invoice_lines._get_max_invoiced_date()
+                subscription.next_invoice_date = last_invoice_end_date + relativedelta(days=1) if last_invoice_end_date else subscription.start_date
                 if all(subscription.order_line.mapped(lambda line: line._is_postpaid_line())):
                     subscription.next_invoice_date += subscription.plan_id.billing_period
                 subscription.last_reminder_date = False

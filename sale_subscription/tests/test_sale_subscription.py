@@ -4278,6 +4278,63 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             upsell_order_line_note = upsell_so.order_line.filtered(lambda l: l.display_type == 'line_note').name
             self.assertEqual(expected_line_name, upsell_order_line_note)
 
+    def test_compute_last_invoiced_date(self):
+        with freeze_time("2024-09-01"):
+            subscription = self.env['sale.order'].create({
+                'partner_id': self.partner.id,
+                'plan_id': self.plan_month.id,
+                'order_line': [
+                    (0, 0, {
+                        'name': self.product.name,
+                        'product_id': self.product.id,
+                        'product_uom_qty': 3.0,
+                        'product_uom': self.product.uom_id.id,
+                        'price_unit': 12,
+                    })],
+            })
+            subscription.action_confirm()
+            inv = subscription._create_recurring_invoice()
+            self.assertEqual(subscription.order_line.last_invoiced_date, datetime.date(2024, 9, 30), "Last invoiced date is updated")
+            self.assertEqual(subscription.next_invoice_date, datetime.date(2024, 10, 1), "Next invoice date is updated")
+
+        with freeze_time("2024-10-01"):
+            inv = subscription._create_recurring_invoice()
+            self.assertEqual(subscription.next_invoice_date, datetime.date(2024, 11, 1), "Next invoice date is updated")
+            self.assertEqual(subscription.order_line.last_invoiced_date, datetime.date(2024, 10, 31), "Last invoiced date is updated")
+
+        with freeze_time("2024-10-05"):
+            inv.button_draft()
+            self.assertEqual(subscription.order_line.last_invoiced_date, datetime.date(2024, 9, 30), "Last invoiced date is reset to previous value")
+            inv.button_cancel()
+            # user update the next invoice date to recreate it
+            subscription.next_invoice_date = datetime.date(2024, 10, 1)
+
+        # with freeze_time("2024-11-01"):
+            self.assertEqual(subscription.order_line.last_invoiced_date, datetime.date(2024, 9, 30), "Last invoiced date is unchanged")
+            inv = subscription._create_recurring_invoice()
+            self.assertEqual(subscription.order_line.last_invoiced_date, datetime.date(2024, 10, 31), "Last invoiced date is updated")
+
+        with freeze_time("2024-12-01"):
+            inv = subscription._create_recurring_invoice()
+            self.assertEqual(subscription.order_line.last_invoiced_date, datetime.date(2024, 11, 30), "Last invoiced date is updated")
+            inv.payment_state = 'paid'
+            # We refund the invoice
+            refund_wizard = self.env['account.move.reversal'].with_context(
+                active_model="account.move",
+                active_ids=inv.ids).create({
+                'reason': 'Test refund tax repartition',
+                'journal_id': inv.journal_id.id,
+            })
+            res = refund_wizard.refund_moves()
+            refund_move = self.env['account.move'].browse(res['res_id'])
+            self.assertEqual(inv.reversal_move_ids, refund_move, "The initial move should be reversed")
+            refund_move._post()
+            # user update the next invoice date to recreate it
+            subscription.next_invoice_date = datetime.date(2024, 11, 1)
+            self.assertEqual(subscription.order_line.last_invoiced_date, datetime.date(2024, 10, 31), "Last invoiced date is reverted")
+            inv = subscription._create_recurring_invoice()
+            self.assertEqual(subscription.order_line.last_invoiced_date, datetime.date(2024, 11, 30), "Last invoiced date is updated")
+
 
 @tagged('post_install', '-at_install')
 @freeze_time("2021-01-03")
