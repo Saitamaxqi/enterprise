@@ -164,7 +164,7 @@ class QualityCheck(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _check_company_auto = True
 
-    name = fields.Char('Reference')
+    name = fields.Char('Reference', copy=False)
     point_id = fields.Many2one(
         'quality.point', 'Control Point', check_company=True)
     title = fields.Char('Title', compute='_compute_title', store=True, precompute=True, readonly=False)
@@ -173,7 +173,7 @@ class QualityCheck(models.Model):
         ('pass', 'Passed'),
         ('fail', 'Failed')], string='Status', tracking=True,
         default='none', copy=False)
-    control_date = fields.Datetime('Control Date', tracking=True)
+    control_date = fields.Datetime('Control Date', tracking=True, copy=False)
     product_id = fields.Many2one(
         'product.product', 'Product', check_company=True,
         domain="[('type', '=', 'consu')]")
