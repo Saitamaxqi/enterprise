@@ -497,8 +497,9 @@ class AccountMove(models.Model):
             errors.append(_("You need to have UYI rate before validating invoices"))
 
         if not doc_type:
-            errors.append(_("You can only invoice to a partner that has a valid Uruguayan Document Type %(dtype)s",
-                            dtype=self.partner_id.l10n_latam_document_type_id.name))
+            errors.append(_("%(dtype)s is not an Uruguayan Identification Type or "
+                            "a Generic one (VAT, Passport, or Foreign ID). You need to select a valid ID to be able "
+                            "to invoice", dtype=self.partner_id.l10n_latam_identification_type_id.name))
 
         # Validations to have all the receiver data if the receiver is required
         if receptor_required:

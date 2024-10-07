@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-23 19:27+0000\n"
-"PO-Revision-Date: 2024-09-23 19:27+0000\n"
+"POT-Creation-Date: 2024-10-15 12:00+0000\n"
+"PO-Revision-Date: 2024-10-15 12:00+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -48,6 +48,19 @@ msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+#, python-format
+msgid ""
+"%(dtype)s is not an Uruguayan Identification Type or a Generic one "
+"(VAT, Passport, or Foreign ID). You need to select a valid ID to be able "
+"to invoice"
+msgstr ""
+"%(dtype)s no es un tipo de identificación Uruguayo o Genérico "
+"(VAT, Pasaporte o Cédula Extranjera). Debes seleccionar un ID válido para "
+"poder facturar"
+
+#. module: l10n_uy_edi
+#. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_addenda.py:0
 #, python-format
 msgid "%(name)s (%(type)s)"
@@ -79,8 +92,8 @@ msgid ""
 "environment are allowed per subscription</span>"
 msgstr ""
 "<span> Para crear su cuenta, asegúrese de tener una suscripción válida. Haga"
-" clic en \"Crear cuenta Uruware\", luego configúrela directamente en el "
-"portal del Uruware, obtenga de ahi la contraseña de WS, el Código de "
+" clic en \"Crear cuenta Uruware\", luego configúrelo directamente en el "
+"portar del Uruware, obtenga de ahi la contraseña de WS, el Código de "
 "Comercio y el Código de Terminal, e ingrese estos parámetros acá. Pruebe su "
 "conexión. Nota: Solo se permite un entorno de prueba y producción por "
 "suscripción.</span>"
@@ -776,8 +789,7 @@ msgstr "Configure la provincia de su compañía"
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_cfe_state
 #: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_document__state
 msgid "State of the electronic document"
-msgstr ""
-"Estado del documento electrónico"
+msgstr "Estado del documento electrónico"
 
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
@@ -1117,17 +1129,6 @@ msgstr ""
 " * Nombre del campo: %(xml_tag)s (%(xml_tag_len)s)\n"
 " * Contenido: (%(value_len)s)\n"
 " %(value_content)s"
-
-#. module: l10n_uy_edi
-#. odoo-python
-#: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
-msgid ""
-"You can only invoice to a partner that has a valid Uruguayan Document Type "
-"%(dtype)s"
-msgstr ""
-"Solo puedes facturarle a una empresa que tenga un documento uruguayo válido "
-"%(dtype)s"
 
 #. module: l10n_uy_edi
 #. odoo-python
