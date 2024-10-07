@@ -93,7 +93,7 @@ export class CommentsStore extends SpreadsheetStore {
      * @param {*} ctx Grid rendering context
      */
     drawLayer({ ctx }, layer) {
-        if (!this.areCommentsActive || layer !== "Comments" || this.getters.isReadonly()) {
+        if (!this.areCommentsActive || layer !== "Triangle" || this.getters.isReadonly()) {
             return;
         }
 
