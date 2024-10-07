@@ -915,6 +915,7 @@ class L10nMxEdiDocument(models.Model):
                     'tasa_o_cuota': tasa_o_cuota,
                     'base': values['base_amount_currency'],
                     'importe': -values['tax_amount_currency'],
+                    'raw_importe': -values['raw_tax_amount_currency'],
                 }
                 if grouping_key['local_tax_name']:
                     cfdi_values['local_retenciones_list'].append(tax_values)
@@ -926,6 +927,7 @@ class L10nMxEdiDocument(models.Model):
                     'tasa_o_cuota': tasa_o_cuota,
                     'base': values['base_amount_currency'],
                     'importe': values['tax_amount_currency'],
+                    'raw_importe': values['raw_tax_amount_currency'],
                 }
                 if grouping_key['local_tax_name']:
                     cfdi_values['local_traslados_list'].append(tax_values)
@@ -961,25 +963,46 @@ class L10nMxEdiDocument(models.Model):
             }
 
         transferred_tax_amounts = [x['importe'] for x in cfdi_values['traslados_list'] if x['tipo_factor'] != 'Exento']
-        local_transferred_tax_amounts = [x['importe'] for x in cfdi_values['local_traslados_list'] if x['tipo_factor'] != 'Exento']
         withholding_tax_amounts = [x['importe'] for x in cfdi_values['retenciones_list'] if x['tipo_factor'] != 'Exento']
-        local_withholding_tax_amounts = [x['importe'] for x in cfdi_values['local_traslados_list'] if x['tipo_factor'] != 'Exento']
         cfdi_values['total_impuestos_trasladados'] = sum(transferred_tax_amounts)
-        cfdi_values['total_local_impuestos_trasladados'] = sum(local_transferred_tax_amounts)
+        cfdi_values['raw_total_impuestos_trasladados'] = sum(
+            x['raw_importe']
+            for x in cfdi_values['traslados_list']
+            if x['tipo_factor'] != 'Exento'
+        )
+        cfdi_values['total_local_impuestos_trasladados'] = sum(
+            x['importe']
+            for x in cfdi_values['local_traslados_list']
+            if x['tipo_factor'] != 'Exento'
+        )
         cfdi_values['total_impuestos_retenidos'] = sum(withholding_tax_amounts)
-        cfdi_values['total_local_impuestos_retenidos'] = sum(local_withholding_tax_amounts)
+        cfdi_values['raw_total_impuestos_retenidos'] = sum(
+            x['raw_importe']
+            for x in cfdi_values['retenciones_list']
+            if x['tipo_factor'] != 'Exento'
+        )
+        cfdi_values['total_local_impuestos_retenidos'] = sum(
+            x['importe']
+            for x in cfdi_values['local_traslados_list']
+            if x['tipo_factor'] != 'Exento'
+        )
 
         base_lines_aggregated_values = AccountTax._aggregate_base_lines_tax_details(base_lines, grouping_function_total_amounts)
         values_per_grouping_key = AccountTax._aggregate_base_lines_aggregated_values(base_lines_aggregated_values)
-        total_discount_after_disp = currency.round(sum(x['discount_amount'] for x in base_lines))
-        cfdi_values['descuento'] = total_discount_after_disp
-        cfdi_values['subtotal'] = total_discount_after_disp
+        cfdi_values['raw_descuento'] = sum(x['discount_amount'] for x in base_lines)
+        cfdi_values['descuento'] = currency.round(cfdi_values['raw_descuento'])
+        cfdi_values['raw_subtotal'] = cfdi_values['raw_descuento']
+        cfdi_values['subtotal'] = cfdi_values['descuento']
         cfdi_values['total'] = 0.0
+        cfdi_values['raw_total'] = 0.0
         for grouping_key, values in values_per_grouping_key.items():
             if grouping_key and grouping_key['objeto_imp'] != '02':
                 cfdi_values['subtotal'] += values['tax_amount_currency']
+                cfdi_values['raw_subtotal'] += values['raw_tax_amount_currency']
             cfdi_values['subtotal'] += values['base_amount_currency']
+            cfdi_values['raw_subtotal'] += values['raw_base_amount_currency']
             cfdi_values['total'] += values['base_amount_currency'] + values['tax_amount_currency']
+            cfdi_values['raw_total'] += values['raw_base_amount_currency'] + values['raw_tax_amount_currency']
 
         if currency.is_zero(cfdi_values['descuento']):
             cfdi_values['descuento'] = None
@@ -1113,6 +1136,7 @@ class L10nMxEdiDocument(models.Model):
             raise UserError(_("You can't make a global invoice for invoices having different currencies."))
 
         root_company = cfdi_values_list[0]['root_company']
+        currency_precision = cfdi_values_list[0]['currency_precision']
 
         # Sequence:
         sequence = self._get_global_invoice_cfdi_sequence(root_company)
@@ -1135,7 +1159,7 @@ class L10nMxEdiDocument(models.Model):
             'sequence': sequence,
             'format_string': cfdi_values_list[0]['format_string'],
             'format_float': cfdi_values_list[0]['format_float'],
-            'currency_precision': cfdi_values_list[0]['currency_precision'],
+            'currency_precision': currency_precision,
 
             'no_certificado': cfdi_values_list[0]['no_certificado'],
             'certificado': cfdi_values_list[0]['certificado'],
@@ -1161,17 +1185,23 @@ class L10nMxEdiDocument(models.Model):
             'tipo_cambio': aggregate_average_or_none([x['tipo_cambio'] for x in cfdi_values_list if x['tipo_cambio']]),
             'tipo_de_comprobante': 'I',
             'exportacion': aggregate_to_one(x['exportacion'] for x in cfdi_values_list),
-            'total_impuestos_trasladados': aggregate_sum_or_none(
-                x.get('total_impuestos_trasladados', 0.0)
-                for x in cfdi_values_list
+            'total_impuestos_trasladados': float_round(
+                aggregate_sum_or_none(
+                    x.get('raw_total_impuestos_trasladados', 0.0)
+                    for x in cfdi_values_list
+                ),
+                precision_digits=currency_precision,
             ),
-            'total_impuestos_retenidos': aggregate_sum_or_none(
-                x.get('total_impuestos_retenidos', 0.0)
-                for x in cfdi_values_list
+            'total_impuestos_retenidos': float_round(
+                aggregate_sum_or_none(
+                    x.get('raw_total_impuestos_retenidos', 0.0)
+                    for x in cfdi_values_list
+                ),
+                precision_digits=currency_precision,
             ),
-            'subtotal': sum(x['subtotal'] - (x['descuento'] or 0.0) for x in cfdi_values_list),
+            'subtotal': sum(x['raw_subtotal'] - (x['raw_descuento'] or 0.0) for x in cfdi_values_list),
             'descuento': None,
-            'total': sum(x['total'] for x in cfdi_values_list),
+            'total': sum(x['raw_total'] for x in cfdi_values_list),
         }
 
         # Customer needs to be "Publico En General.
