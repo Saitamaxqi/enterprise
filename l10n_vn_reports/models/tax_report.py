@@ -223,7 +223,7 @@ class L10nVnTaxCustomHandler(models.AbstractModel):
                 invoice_number_column=invoice_number_column,
                 table_references=query.from_clause,
                 search_condition=query.where_clause,
-                currency_table_join=report._currency_table_apply_rate(column_group_options),
+                currency_table_join=report._currency_table_aml_join(column_group_options),
                 tax_groups_condition=tax_groups_condition,
                 tail_query=tail_query,
             ))
