@@ -95,8 +95,9 @@ class AccountBatchPayment(models.Model):
             test_bsb = re.sub(r'( |-)', '', bsb)
             return '%s-%s' % (test_bsb[0:3], test_bsb[3:6])
 
-        def _to_fixed_width(string, length, fill=' ', right=False):
-            return right and string[0:length].rjust(length, fill) or string[0:length].ljust(length, fill)
+        def _to_fixed_width(string, length, fill=' ', right=False, check_utf8=False):
+            utf8_length = length + (len(string) - len(string.encode('utf8'))) if check_utf8 else length
+            return (right and string[0:utf8_length].rjust(utf8_length, fill)) or string[0:utf8_length].ljust(utf8_length, fill)
 
         def append_detail(detail_summary, detail_record, credit, debit):
             detail_summary['detail_records'].append(detail_record)
@@ -140,11 +141,11 @@ class AccountBatchPayment(models.Model):
                 record_data.get('indicator', ' '),  # Indicator, mostly used when paying withholding.
                 record_data['transaction_code'],  # 13 for debit, 50 for credit.
                 _to_fixed_width(str(round(aud.round(amount) * 100)), 10, '0', right=True),  # Amount in cents.
-                _to_fixed_width(record_data['bank_account'].acc_holder_name or record_data['account_holder'].name, 32),  # Title of the account to be credited or debited.
+                _to_fixed_width(record_data['bank_account'].acc_holder_name or record_data['account_holder'].name, 32, check_utf8=True),  # Title of the account to be credited or debited.
                 _to_fixed_width(record_data['reference'] or 'Payment', 18),  # Lodgement Reference.
                 _normalise_bsb(bank_account.aba_bsb),  # BSB of the user to allow returns if necessary.
                 _to_fixed_width(bank_account.acc_number, 9, right=True),  # Account number for the same reason.
-                _to_fixed_width(bank_account.acc_holder_name or journal.company_id.name, 16),  # Account holder name for the same reason.
+                _to_fixed_width(bank_account.acc_holder_name or journal.company_id.name, 16, check_utf8=True),  # Account holder name for the same reason.
                 ('0' * 8),  # Amount of tax withholding.
             ])
             # We do not support debit at the moment.
@@ -161,11 +162,11 @@ class AccountBatchPayment(models.Model):
                 ' ',
                 '13',
                 _to_fixed_width(str(round(aud.round(debit) * 100)), 10, fill='0', right=True),
-                _to_fixed_width(bank_account.acc_holder_name or journal.company_id.name, 32),
+                _to_fixed_width(bank_account.acc_holder_name or journal.company_id.name, 32, check_utf8=True),
                 _to_fixed_width(aba_values['self_balancing_reference'], 18),
                 _normalise_bsb(bank_account.aba_bsb),
                 _to_fixed_width(bank_account.acc_number, 9, right=True),
-                _to_fixed_width(bank_account.acc_holder_name or journal.company_id.name, 16),
+                _to_fixed_width(bank_account.acc_holder_name or journal.company_id.name, 16, check_utf8=True),
                 ('0' * 8),
             ])
             append_detail(detail_summary, detail_record, 0, debit)
