@@ -24,6 +24,7 @@ appropriate views and selling choices.
             ('before', 'website_sale/static/src/js/website_sale.js', 'website_sale_subscription/static/src/js/variant_mixin.js'),
             'website_sale_subscription/static/src/js/website_sale_subscription.js',
             'website_sale_subscription/static/src/js/website_sale_configurators.js',
+            'website_sale_subscription/static/src/xml/pricing_view.xml',
         ],
         'web.assets_tests': [
             'website_sale_subscription/static/tests/tours/**/*',
