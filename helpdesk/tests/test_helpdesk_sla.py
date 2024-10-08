@@ -274,3 +274,15 @@ class HelpdeskSLA(TransactionCase):
             # Success rate checks
             self.assertEqual(self.test_team_reached.success_rate, 100.0, "Team without late tickets should have 100.0 success rate")
             self.assertEqual(self.test_team_late.success_rate, 0.0, "Team with only late tickets should have 0.0 success rate")
+
+        # Check that an SLA team that has closed tickets before, but hasn't
+        # closed any in the past 7 days has a -1 success rate. This test makes
+        # sure that the success rate is correctly only meaningful for the past
+        # 7 days.
+        with self._ticket_patch_now(NOW + relativedelta(days=14)):
+            # Need to manually recompute the field because the value is stored
+            # in memory and not recomputed automatically.
+            self.test_team_reached._compute_success_rate()
+            self.assertEqual(self.test_team_reached.success_rate, -1,
+                "Team with no tickets closed in the past 7 days should have a -1 success rate"
+            )

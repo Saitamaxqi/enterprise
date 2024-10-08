@@ -170,7 +170,7 @@ class HelpdeskTeam(models.Model):
         sla_teams = self.filtered('use_sla')
         domain = [
             ('team_id', 'in', sla_teams.ids),
-            '|', ('stage_id.fold', '=', True), ('close_date', '>=', dt)
+            '&', ('stage_id.fold', '=', True), ('close_date', '>=', dt)
         ]
         sla_tickets_and_failed_tickets_per_team = defaultdict(lambda: [0, 0])
         today = fields.Datetime.now()
