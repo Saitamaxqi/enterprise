@@ -8,7 +8,7 @@ import re
 from odoo import fields, models, api, _, Command
 from odoo.exceptions import UserError
 from odoo.osv import expression
-from odoo.tools import SQL
+from odoo.tools import SQL, float_compare
 
 
 _logger = logging.getLogger(__name__)
@@ -36,7 +36,6 @@ class AccountMove(models.Model):
         help="The deferred entries created by this invoice",
         copy=False,
     )
-
     deferred_original_move_ids = fields.Many2many(
         string="Original Invoices",
         comodel_name='account.move',
@@ -46,7 +45,6 @@ class AccountMove(models.Model):
         help="The original invoices that created the deferred entries",
         copy=False,
     )
-
     deferred_entry_type = fields.Selection(
         string="Deferred Entry Type",
         selection=[
@@ -450,6 +448,7 @@ class AccountMoveLine(models.Model):
         help="Date at which the deferred expense/revenue ends"
     )
     has_deferred_moves = fields.Boolean(compute='_compute_has_deferred_moves')
+    has_abnormal_deferred_dates = fields.Boolean(compute='_compute_has_abnormal_deferred_dates')
 
     def _order_to_sql(self, order, query, alias=None, reverse=False):
         sql_order = super()._order_to_sql(order, query, alias, reverse)
@@ -502,6 +501,25 @@ class AccountMoveLine(models.Model):
     def _compute_has_deferred_moves(self):
         for line in self:
             line.has_deferred_moves = line.move_id.deferred_move_ids
+
+    @api.depends('deferred_start_date', 'deferred_end_date')
+    def _compute_has_abnormal_deferred_dates(self):
+        # In the deferred computations, we always assume that both the start and end date are inclusive
+        # E.g: 1st January -> 31st December is *exactly* 1 year = 12 months
+        # However, the user may instead put 1st January -> 1st January of next year which is then
+        # 12 months + 1/30 month = 12.03 months which may result in odd amounts when deferrals are created
+        # For this reason, we alert the user if we detect such a case
+        # Other cases were the number of months is not round should not be handled.
+        for line in self:
+            line.has_abnormal_deferred_dates = (
+                line.deferred_start_date
+                and line.deferred_end_date
+                and float_compare(
+                    self.env['account.move']._get_deferred_diff_dates(line.deferred_start_date, line.deferred_end_date + relativedelta(days=1)) % 1,  # end date is included
+                    1 / 30,
+                    precision_digits=2
+                ) == 0
+            )
 
     def _has_deferred_compatible_account(self):
         self.ensure_one()

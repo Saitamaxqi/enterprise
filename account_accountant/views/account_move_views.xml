@@ -50,8 +50,9 @@
                 <field name="inalterable_hash" groups="base.group_no_one"/>
             </xpath>
             <xpath expr="//list/field[@name='analytic_distribution']" position="after">
-                <field name="deferred_start_date" optional="hide"/>
-                <field name="deferred_end_date" optional="hide"/>
+                <field name="has_abnormal_deferred_dates" column_invisible="1"/>
+                <field name="deferred_start_date" optional="hide" decoration-warning="has_abnormal_deferred_dates"/>
+                <field name="deferred_end_date" optional="hide" decoration-warning="has_abnormal_deferred_dates"/>
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_open_bank_reconciliation_widget_statement"

@@ -125,6 +125,45 @@ class TestDeferredManagement(AccountTestInvoicingCommon):
         assertEndsOfMonths('2023-01-10', '2023-04-30', ['2023-01-31', '2023-02-28', '2023-03-31', '2023-04-30'])
         assertEndsOfMonths('2023-01-10', '2023-04-09', ['2023-01-31', '2023-02-28', '2023-03-31', '2023-04-30'])
 
+    def test_deferred_abnormal_dates(self):
+        """
+        Test that we correctly detect abnormal dates.
+        In the deferred computations, we always assume that both the start and end date are inclusive
+        E.g: 1st January -> 31st December is *exactly* 1 year = 12 months
+        However, the user may instead put 1st January -> 1st January of next year which is then
+        12 months + 1/30 month = 12.03 months which may result in odd amounts when deferrals are created.
+        This is what we call abnormal dates.
+        Other cases were the number of months is not round should not be handled and are not considered abnormal.
+        """
+        move = self.create_invoice('in_invoice', [
+            [self.expense_accounts[0], 0, '2023-01-01', '2023-12-30'],
+            [self.expense_accounts[0], 1, '2023-01-01', '2023-12-31'],
+            [self.expense_accounts[0], 2, '2023-01-01', '2024-01-01'],
+            [self.expense_accounts[0], 3, '2023-01-01', '2024-01-02'],
+            [self.expense_accounts[0], 4, '2023-01-01', '2024-01-31'],
+            [self.expense_accounts[0], 5, '2023-01-01', '2024-02-01'],
+            [self.expense_accounts[0], 6, '2023-01-02', '2024-02-01'],
+            [self.expense_accounts[0], 7, '2023-01-02', '2024-02-02'],
+            [self.expense_accounts[0], 8, '2023-01-31', '2024-01-30'],
+            [self.expense_accounts[0], 9, '2023-01-31', '2024-02-28'],  # 29 days in Feb 2024
+            # Following one is abnormal because we have a full months in February (= 30 accounting days) + 1 day in January
+            [self.expense_accounts[0], 10, '2023-01-31', '2024-02-29'],
+            [self.expense_accounts[0], 11, '2023-02-01', '2024-02-29'],
+        ], post=True)
+        lines = move.invoice_line_ids.sorted('price_unit')
+        self.assertFalse(lines[0].has_abnormal_deferred_dates)
+        self.assertFalse(lines[1].has_abnormal_deferred_dates)
+        self.assertTrue(lines[2].has_abnormal_deferred_dates)
+        self.assertFalse(lines[3].has_abnormal_deferred_dates)
+        self.assertFalse(lines[4].has_abnormal_deferred_dates)
+        self.assertTrue(lines[5].has_abnormal_deferred_dates)
+        self.assertFalse(lines[6].has_abnormal_deferred_dates)
+        self.assertTrue(lines[7].has_abnormal_deferred_dates)
+        self.assertFalse(lines[8].has_abnormal_deferred_dates)
+        self.assertFalse(lines[9].has_abnormal_deferred_dates)
+        self.assertTrue(lines[10].has_abnormal_deferred_dates)
+        self.assertFalse(lines[11].has_abnormal_deferred_dates)
+
     def test_deferred_expense_generate_entries_method(self):
         # The deferred entries are NOT generated when the invoice is validated if the method is set to 'manual'.
         self.company.generate_deferred_expense_entries_method = 'manual'
