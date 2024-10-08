@@ -28,7 +28,7 @@
                             <field name="progression" widget="selection_badge"/>
                         </group>
                         <group>
-                            <field name="manager_id" force_save="1" readonly="not is_manager" widget="many2one_avatar_user"/>
+                            <field name="manager_id" force_save="1" readonly="not is_manager" widget="many2one_avatar_employee"/>
                             <field name="deadline"/>
                             <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
                         </group>
@@ -54,8 +54,8 @@
                 <field name="deadline" widget="remaining_days" optional="hidden"/>
                 <field name="activity_ids" widget="list_activity" optional="hidden"/>
                 <field name="progression" widget="badge" decoration-success="progression == '100'"/>
-                <field name="employee_id" widget="many2one_avatar_user" options="{'no_open': True}"/>
-                <field name="manager_id" widget="many2one_avatar_user" optional="hidden" options="{'no_open': True}"/>
+                <field name="employee_id" widget="many2one_avatar_employee" options="{'no_open': True}"/>
+                <field name="manager_id" widget="many2one_avatar_employee" optional="hidden" options="{'no_open': True}"/>
                 <field name="tag_ids" widget="many2many_tags" readonly="1" optional="hidden" options="{'color_field': 'color'}"/>
             </list>
         </field>
@@ -69,7 +69,7 @@
                 <templates>
                     <t t-name="menu">
                         <t t-if="widget.deletable"><a type="delete" class="dropdown-item" role="menuitem">Delete</a></t>
-                        <a type="object" name="action_confirm" class="dropdown-item" role="menuitem">Mark as Done</a>
+                        <a type="object" name="action_confirm" class="dropdown-item" invisible="progression == '100'" role="menuitem">Mark as Done</a>
                     </t>
                     <t t-name="card">
                         <widget name="web_ribbon" title="Done" bg_color="text-bg-success" invisible="progression != '100'"/>
@@ -84,7 +84,7 @@
                                 <field name="activity_ids" widget="kanban_activity"/>
                                 <field name="create_date" widget="timeless_date" class="ms-2"/>
                             </div>
-                            <field name="employee_id" widget="many2one_avatar_user" class="ms-auto"/>
+                            <field name="employee_id" widget="many2one_avatar_employee" class="ms-auto"/>
                         </footer>
                     </t>
                 </templates>
