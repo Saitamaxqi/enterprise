@@ -30,15 +30,6 @@
 
         <!-- internal -->
 
-        <record id="documents_data_design_brief_pdf_document" model="documents.document" forcecreate="0">
-            <field name="name">Interior Design Brief.pdf</field>
-            <field name="datas" type="base64" file="documents/demo/files/Interior_Design_Brief.pdf"/>
-            <field name="folder_id" ref="documents.document_internal_folder"/>
-            <field name="access_internal">view</field>
-            <field name="tag_ids" eval="[(6,0,[ref('documents.documents_tag_to_validate'),
-                                               ref('documents.documents_tag_project')])]"/>
-        </record>
-
         <record id="documents_data_multi_pdf_document" model="documents.document" forcecreate="0">
             <field name="name">Mails_inbox.pdf</field>
             <field name="datas" type="base64" file="documents/data/files/Mails_inbox.pdf"/>
@@ -72,6 +63,7 @@
             <field name="folder_id" ref="documents.document_internal_folder"/>
             <field name="access_internal">view</field>
         </record>
+
 
         <!-- finance -->
 
