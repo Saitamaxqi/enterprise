@@ -33,7 +33,9 @@ class SignItemType(models.Model):
         for sign_type in self:
             if sign_type.auto_field:
                 try:
-                    if isinstance(partner.mapped(sign_type.auto_field), models.BaseModel):
-                        raise AttributeError
-                except (KeyError, AttributeError):
+                    auto_field_value = partner.mapped(sign_type.auto_field)
+                except KeyError:
+                    auto_field_value = None
+
+                if auto_field_value is None or isinstance(auto_field_value, models.BaseModel):
                     raise ValidationError(_("Malformed expression: %(exp)s", exp=sign_type.auto_field))
