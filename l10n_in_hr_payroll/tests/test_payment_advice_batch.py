@@ -1,5 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from datetime import date
+
+
 from odoo import Command
 from odoo.addons.l10n_in_hr_payroll.tests.common import TestPayrollCommon
 from odoo.tests import tagged
@@ -60,3 +63,52 @@ class TestPaymentAdviceBatch(TestPayrollCommon):
         self.assertTrue(payment_report.l10n_in_payment_advice_pdf, "PDF File should be generated!")
         self.assertEqual(payment_report.l10n_in_payment_advice_filename_pdf, payment_report.l10n_in_reference + '.pdf')
         self.assertTrue(payslip_run.payment_report_filename)
+
+    def test_payment_advice_xlsx_report_from_payslip(self):
+        jethalal_payslip = self.env['hr.payslip'].create({
+            'name': 'Jethalal Payslip',
+            'employee_id': self.jethalal_emp.id,
+            'contract_id': self.contract_jethalal.id,
+            'date_from': date(2023, 1, 1),
+            'date_to': date(2023, 1, 31),
+        })
+        jethalal_payslip.compute_sheet()
+        jethalal_payslip.action_payslip_done()
+        self.assertEqual(jethalal_payslip.state, "done", "Payslip should be in Done state")
+
+        # Generating the XLSX report for the payslip
+        payment_report_dict = self.env["hr.payroll.payment.report.wizard"].create({
+            'payslip_ids': jethalal_payslip.ids,
+            'export_format': 'advice',
+        }).generate_payment_report_xls()
+        payment_report = self.env['hr.payroll.payment.report.wizard'].browse(payment_report_dict['res_id'])
+
+        self.assertTrue(jethalal_payslip.payment_report, "XLSX File should be generated!")
+        self.assertTrue(payment_report.l10n_in_payment_advice_xlsx, "XLSX File should be generated!")
+        self.assertEqual(payment_report.l10n_in_payment_advice_filename_xlsx, payment_report.l10n_in_reference + '.xlsx')
+        self.assertTrue(jethalal_payslip.payment_report_filename, payment_report.l10n_in_reference + '.xlsx')
+
+    def test_payment_advice_pdf_report_from_payslip(self):
+        rahul_payslip = self.env['hr.payslip'].create({
+            'name': 'Rahul Payslip',
+            'employee_id': self.rahul_emp.id,
+            'contract_id': self.contract_rahul.id,
+            'date_from': date(2023, 1, 1),
+            'date_to': date(2023, 1, 31),
+        })
+        rahul_payslip.compute_sheet()
+        rahul_payslip.action_payslip_done()
+        self.assertEqual(rahul_payslip.state, "done", "Payslip should be in Done state")
+
+        # Generating the PDF report for the payslip
+        payment_report_dict = self.env["hr.payroll.payment.report.wizard"].create({
+            'payslip_ids': rahul_payslip.ids,
+            'export_format': 'advice',
+        }).generate_payment_report_pdf()
+
+        payment_report = self.env['hr.payroll.payment.report.wizard'].browse(payment_report_dict['res_id'])
+
+        self.assertTrue(rahul_payslip.payment_report, "PDF File should be generated!")
+        self.assertTrue(payment_report.l10n_in_payment_advice_pdf, "PDF File should be generated!")
+        self.assertEqual(payment_report.l10n_in_payment_advice_filename_pdf, payment_report.l10n_in_reference + '.pdf')
+        self.assertTrue(rahul_payslip.payment_report_filename, payment_report.l10n_in_reference + '.pdf')
