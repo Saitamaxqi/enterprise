@@ -35,8 +35,6 @@ class TestEcEdiCommon(AccountEdiTestCommon):
             'l10n_ec_legal_name': "EC Test Company (official)",
         })
 
-        cls.env['account.chart.template']._l10n_ec_configure_ecuadorian_journals(cls.env.company)
-
         for journal in (cls.company_data['default_journal_sale'], cls.company_data['default_journal_purchase']):
             # Needs to be set before assigning authorization number
             journal.write({

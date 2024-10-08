@@ -8,55 +8,53 @@ from odoo.addons.account.models.chart_template import template
 class AccountChartTemplate(models.AbstractModel):
     _inherit = ['account.chart.template']
 
-    def _l10n_ec_configure_ecuadorian_journals(self, companies):
-        for company in companies.filtered(lambda r: r.account_fiscal_country_id.code == 'EC'):
-            new_journals_values = [
-                {'name': "Retenciones de Clientes",
-                 'code': 'RVNTA',
-                 'type': 'general',
-                 'l10n_ec_withhold_type': 'out_withhold',
-                 'l10n_ec_entity': False,
-                 'l10n_ec_is_purchase_liquidation': False,
-                 'l10n_ec_emission': False,
-                 'l10n_ec_emission_address_id': False},
-                {'name': "001-001 Retenciones",
-                 'code': 'RCMPR',
-                 'type': 'general',
-                 'l10n_ec_withhold_type': 'in_withhold',
-                 'l10n_ec_entity': '001',
-                 'l10n_ec_emission': '001',
-                 'l10n_ec_is_purchase_liquidation': False,
-                 'l10n_ec_emission_address_id': company.partner_id.id},
-                {'name': "001-001 Liquidaciones de Compra",
-                 'code': 'LIQCO',
-                 'type': 'purchase',
-                 'l10n_ec_withhold_type': False,
-                 'l10n_ec_entity': '001',
-                 'l10n_ec_emission': '001',
-                 'l10n_ec_is_purchase_liquidation': True,
-                 'l10n_latam_use_documents': True,
-                 'l10n_ec_emission_address_id': company.partner_id.id},
-            ]
-            for new_values in new_journals_values:
-                journal = self.env['account.journal'].search([
-                    *self.env['account.journal']._check_company_domain(company),
-                    ('code', '=', new_values['code']),
-                ])
-                if not journal:
-                    self.env['account.journal'].create({
-                        **new_values,
-                        'company_id': company.id,
-                        'show_on_dashboard': True,
-                    })
+    @template('ec', 'account.journal')
+    def _get_ec_edi_account_journal(self):
+        return {
+            'out_withhold': {
+                'name': "Retenciones de Clientes",
+                'code': 'RVNTA',
+                'type': 'general',
+                'l10n_ec_withhold_type': 'out_withhold',
+                'l10n_ec_entity': False,
+                'l10n_ec_is_purchase_liquidation': False,
+                'l10n_ec_emission': False,
+                'l10n_ec_emission_address_id': False,
+                'show_on_dashboard': True,
+            },
+            'in_withhold': {
+                'name': "001-001 Retenciones",
+                'code': 'RCMPR',
+                'type': 'general',
+                'l10n_ec_withhold_type': 'in_withhold',
+                'l10n_ec_entity': '001',
+                'l10n_ec_emission': '001',
+                'l10n_ec_is_purchase_liquidation': False,
+                'l10n_ec_emission_address_id': self.env.company.partner_id.id,
+                'show_on_dashboard': True,
+            },
+            'in_liquidation': {
+                'name': "001-001 Liquidaciones de Compra",
+                'code': 'LIQCO',
+                'type': 'purchase',
+                'l10n_ec_withhold_type': False,
+                'l10n_ec_entity': '001',
+                'l10n_ec_emission': '001',
+                'l10n_ec_is_purchase_liquidation': True,
+                'l10n_latam_use_documents': True,
+                'l10n_ec_emission_address_id': self.env.company.partner_id.id,
+                'show_on_dashboard': True,
+            }
+        }
 
     def _load(self, template_code, company, install_demo):
         # EXTENDS account to create journals and setup withhold taxes in company configuration
         res = super()._load(template_code, company, install_demo)
         if template_code == 'ec':
-            self._l10n_ec_configure_ecuadorian_journals(company)
             self._l10n_ec_configure_ecuadorian_withhold_taxpayer_type(company)
             self._l10n_ec_setup_profit_withhold_taxes(company)
             self._l10n_ec_copy_taxsupport_codes_from_templates(company)
+            self._l10n_ec_configure_default_withhold_accounts(company)
         return res
 
     def _l10n_ec_configure_ecuadorian_withhold_taxpayer_type(self, companies):
