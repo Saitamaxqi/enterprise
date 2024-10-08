@@ -57,9 +57,9 @@ test("Pivot properties panel shows ascending sorting", async function () {
     env.openSidePanel("PivotSidePanel", { pivotId });
     await animationFrame();
 
-    const sections = target.querySelectorAll(".o_side_panel_section");
-    expect(sections.length).toBe(5, { message: "it should have 5 sections" });
-    const pivotSorting = sections[3];
+    const sections = target.querySelectorAll(".o_spreadsheet_pivot_side_panel div .o-section");
+    expect(sections.length).toBe(6, { message: "it should have 6 sections" });
+    const pivotSorting = sections[4];
 
     expect(pivotSorting.children[0]).toHaveText("Sorting");
     expect(pivotSorting.children[1]).toHaveText("Probability (ascending)");
@@ -75,9 +75,9 @@ test("Pivot properties panel shows descending sorting", async function () {
     env.openSidePanel("PivotSidePanel", { pivotId });
     await animationFrame();
 
-    const sections = target.querySelectorAll(".o_side_panel_section");
-    expect(sections.length).toBe(5, { message: "it should have 5 sections" });
-    const pivotSorting = sections[3];
+    const sections = target.querySelectorAll(".o_spreadsheet_pivot_side_panel div .o-section");
+    expect(sections.length).toBe(6, { message: "it should have 6 sections" });
+    const pivotSorting = sections[4];
 
     expect(pivotSorting.children[0]).toHaveText("Sorting");
     expect(pivotSorting.children[1]).toHaveText("Probability (descending)");
@@ -138,11 +138,11 @@ test("Opening the sidepanel of a pivot while the panel of another pivot is open 
     });
     env.openSidePanel("PivotSidePanel", { pivotId });
     await animationFrame();
-    expect(".o_side_panel_section .o_model_name").toHaveText("Partner (partner)");
+    expect(".o-section .o_model_name").toHaveText("Partner (partner)");
 
     env.openSidePanel("PivotSidePanel", { pivotId: pivotId2 });
     await animationFrame();
-    expect(".o_side_panel_section .o_model_name").toHaveText("Product (product)");
+    expect(".o-section .o_model_name").toHaveText("Product (product)");
 });
 
 test("Duplicate the pivot from the side panel", async function () {

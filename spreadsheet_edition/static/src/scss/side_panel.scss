@@ -4,15 +4,7 @@
 .o-listing-details-side-panel,
 .o-listing-all-side-panel,
 .o-threads-side-panel {
-    .o_side_panel_section {
-        background-color: #fff;
-        padding: 16px;
-
-        .o_side_panel_title {
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
+    .o-section {
         .o_model_field_selector,
         .o_field_many2one {
             width: 100%;
@@ -31,7 +23,7 @@
     }
 }
 
-.o_side_panel_section .o_draggable_item {
+.o-section .o_draggable_item {
     box-sizing: border-box;
     cursor: grab;
     margin-bottom: 0.6rem;

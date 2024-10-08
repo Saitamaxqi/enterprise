@@ -1630,7 +1630,7 @@ test("Changing the range of a date global filter reset the default value", async
     await openGlobalFilterSidePanel();
     await contains(".o_side_panel_filter_icon.fa-cog").click();
     const timeRangeOption = target.querySelectorAll(
-        ".o_spreadsheet_filter_editor_side_panel .o_side_panel_section"
+        ".o_spreadsheet_filter_editor_side_panel .o-section"
     )[1];
     const selectField = timeRangeOption.querySelector("select");
     await contains(selectField).select("fixedPeriod");
@@ -1670,13 +1670,13 @@ test("Changing the range of a date global filter reset the current value", async
     // Edit filter range and save
     await contains(editFilter).click();
     const timeRangeOption = target.querySelectorAll(
-        ".o_spreadsheet_filter_editor_side_panel .o_side_panel_section"
+        ".o_spreadsheet_filter_editor_side_panel .o-section"
     )[1];
     const selectField = timeRangeOption.querySelector("select");
     await contains(selectField).select("fixedPeriod");
     await contains("input[name=date_automatic_filter]").click();
     const automaticTimeRangeOption = target.querySelectorAll(
-        ".o_spreadsheet_filter_editor_side_panel .o_side_panel_section"
+        ".o_spreadsheet_filter_editor_side_panel .o-section"
     )[2];
     const selectPeriodField = automaticTimeRangeOption.querySelector("select");
     await contains(selectPeriodField).select("this_quarter");

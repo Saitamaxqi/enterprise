@@ -2,7 +2,7 @@
 <templates>
     <div t-name="spreadsheet_edition.ListDetailsSidePanel" class="o-listing-details-side-panel">
         <t t-set="def" t-value="listDefinition"/>
-        <Section class="'o_side_panel_section'">
+        <Section class="'o-section'">
             <t t-set-slot="title">
                 <div class="d-flex flex-row justify-content-between align-items-center">
                     List Name
@@ -14,12 +14,12 @@
                 onChange.bind="onNameChanged"
             />
         </Section>
-        <div class="o_side_panel_section">
-            <div class="o_side_panel_title">Model</div>
+        <div class="o-section">
+            <div class="o-section-title">Model</div>
             <div class="o_model_name"><t t-esc="def.modelDisplayName"/> (<t t-esc="def.model"/>)</div>
         </div>
-        <Section class="'o_side_panel_section'">
-            <div class="o_side_panel_title">
+        <Section class="'o-section'">
+            <div class="o-section-title">
                 Columns
             </div>
             <div t-foreach="getColumnFields()" t-as="field" t-key="field.name">
@@ -37,10 +37,10 @@
             fields="listFields"
             onUpdateSorting.bind="this.onUpdateSorting"
         />
-        <Section class="'o_side_panel_section pt-0'">
+        <Section class="'o-section pt-0'">
             <div class="o_pivot_last_update text-muted"><i>Last updated at <t t-esc="getLastUpdate()"/></i></div>
         </Section>
-        <div class="o_side_panel_section py-1" t-if="env.model.getters.isListUnused(props.listId)">
+        <div class="o-section py-1" t-if="env.model.getters.isListUnused(props.listId)">
             <ValidationMessages messages="[unusedListWarning]" msgType="'warning'"/>
         </div>
     </div>

@@ -2,7 +2,7 @@
 <templates>
 
     <t t-name="spreadsheet_edition.FilterEditorLabel">
-        <div class="o_side_panel_title">Label</div>
+        <div class="o-section-title">Label</div>
         <div t-att-class="props.inputClass" class="o_required_modifier">
             <input
                 type="text"

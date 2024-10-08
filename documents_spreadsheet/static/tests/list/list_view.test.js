@@ -176,7 +176,7 @@ test("Open list properties", async function () {
     const title = target.querySelector(".o-sidePanelTitle").innerText;
     expect(title).toBe("List #1");
 
-    const sections = target.querySelectorAll(".o_side_panel_section");
+    const sections = target.querySelectorAll(".o-section");
     expect(sections.length).toBe(6, { message: "it should have 6 sections" });
     const [listName, listModel, columns, domain] = sections;
 
@@ -1012,12 +1012,12 @@ test("Opening the sidepanel of a list while the panel of another list is open up
 
     env.openSidePanel("LIST_PROPERTIES_PANEL", { listId: listIds[0] });
     await animationFrame();
-    let modelName = fixture.querySelector(".o_side_panel_section .o_model_name");
+    let modelName = fixture.querySelector(".o-section .o_model_name");
     expect(modelName).toHaveText("Partner (partner)");
 
     env.openSidePanel("LIST_PROPERTIES_PANEL", { listId: listIds[1] });
     await animationFrame();
-    modelName = fixture.querySelector(".o_side_panel_section .o_model_name");
+    modelName = fixture.querySelector(".o-section .o_model_name");
     expect(modelName).toHaveText("Product (product)");
 });
 

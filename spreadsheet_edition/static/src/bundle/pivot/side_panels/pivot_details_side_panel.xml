@@ -4,8 +4,8 @@
         <div class="h-100 position-relative overflow-x-hidden overflow-y-auto">
             <t t-set="definition" t-value="store.definition"/>
             <PivotTitleSection pivotId="props.pivotId" flipAxis.bind="flipAxis"/>
-            <div class="o_side_panel_section">
-                <div class="o_side_panel_title">Model</div>
+            <div class="o-section">
+                <div class="o-section-title">Model</div>
                 <div class="o_model_name"><t t-esc="modelDisplayName"/> (<t t-esc="definition.model"/>)</div>
             </div>
             <OdooPivotLayoutConfigurator
@@ -23,14 +23,14 @@
                 domain="definition.domain"
                 onUpdate.bind="onDomainUpdate"
             />
-            <div class="o_side_panel_section" t-if="definition.sortedColumn">
-                <div class="o_side_panel_title">Sorting</div>
+            <div class="o-section" t-if="definition.sortedColumn">
+                <div class="o-section-title">Sorting</div>
                 <div t-esc="formatSort()"/>
             </div>
-            <div class="o_side_panel_section pt-1">
+            <div class="o-section pt-1">
                 <div class="o_pivot_last_update text-muted"><i>Last updated at <t t-esc="getLastUpdate()"/></i></div>
             </div>
-            <div class="o_side_panel_section py-1" t-if="env.model.getters.isPivotUnused(props.pivotId)">
+            <div class="o-section py-1" t-if="env.model.getters.isPivotUnused(props.pivotId)">
                 <ValidationMessages messages="[unusedPivotWarning]" msgType="'warning'"/>
             </div>
         </div>

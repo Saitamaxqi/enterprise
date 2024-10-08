@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
     <div t-name="spreadsheet_edition.RelationFilterEditorSidePanel" class="o_spreadsheet_filter_editor_side_panel">
-        <div class="o_side_panel_section">
+        <div class="o-section">
             <FilterEditorLabel
                 inputClass="missingLabel ? 'o_field_invalid' : ''"
                 label="genericState.label"
@@ -9,8 +9,8 @@
                 placeholder="placeholder"
             />
         </div>
-        <div class="o_side_panel_section o_side_panel_related_model">
-            <div class="o_side_panel_title">Related model</div>
+        <div class="o-section o_side_panel_related_model">
+            <div class="o-section-title">Related model</div>
             <div t-att-class="missingModel ? 'o_field_invalid' : ''" class="mb-2">
                 <ModelSelector
                     value="relationState.relatedModel.label"
@@ -26,8 +26,8 @@
                 onChange="(value) => this.relationState.includeChildren = value"
             />
         </div>
-        <div class="o_side_panel_section" t-if="relationState.relatedModel.technical">
-            <div class="o_side_panel_title">Default value</div>
+        <div class="o-section" t-if="relationState.relatedModel.technical">
+            <div class="o-section-title">Default value</div>
             <div class="pivot_filter_input" t-if="!(relationState.relatedModel.technical === 'res.users' and relationState.defaultValue === 'current_user')">
                 <MultiRecordSelector
                     resModel="relationState.relatedModel.technical"
@@ -77,7 +77,7 @@
                 </t>
             </SidePanelCollapsible>
         </t>
-        <div class="o_side_panel_section o-sidePanelButtons">
+        <div class="o-section o-sidePanelButtons">
             <t t-call="spreadsheet_edition.FilterEditorButtons">
                 <t t-set="onDelete" t-value="this.props.id and onDelete.bind(this)" />
                 <t t-set="onSave" t-value="onSave.bind(this)" />
