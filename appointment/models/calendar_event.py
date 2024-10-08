@@ -75,17 +75,17 @@ class CalendarEvent(models.Model):
     appointment_invite_id = fields.Many2one('appointment.invite', 'Appointment Invitation', readonly=True, ondelete='set null')
     appointment_resource_ids = fields.Many2many('appointment.resource', 'appointment_booking_line', 'calendar_event_id', 'appointment_resource_id',
                                                 string="Appointment Resources", group_expand="_read_group_appointment_resource_ids",
-                                                depends=['booking_line_ids'], readonly=True)
+                                                depends=['booking_line_ids'], readonly=True, copy=False)
     # This field is used in the form view to create/manage the booking lines based on the resource_total_capacity_reserved
     # selected. This allows to have the appointment_resource_ids field linked to the appointment_booking_line model and
     # thus avoid the duplication of information.
     resource_ids = fields.Many2many('appointment.resource', string="Resources",
                                     compute="_compute_resource_ids", inverse="_inverse_resource_ids_or_capacity",
                                     search="_search_resource_ids",
-                                    group_expand="_read_group_appointment_resource_ids")
-    booking_line_ids = fields.One2many('appointment.booking.line', 'calendar_event_id', string="Booking Lines")
+                                    group_expand="_read_group_appointment_resource_ids", copy=False)
+    booking_line_ids = fields.One2many('appointment.booking.line', 'calendar_event_id', string="Booking Lines", copy=True)
     partner_ids = fields.Many2many('res.partner', group_expand="_read_group_partner_ids")
-    resource_total_capacity_reserved = fields.Integer('Total Capacity Reserved', compute="_compute_resource_total_capacity", inverse="_inverse_resource_ids_or_capacity")
+    resource_total_capacity_reserved = fields.Integer('Total Capacity Reserved', compute="_compute_resource_total_capacity", inverse="_inverse_resource_ids_or_capacity", copy=True)
     resource_total_capacity_used = fields.Integer('Total Capacity Used', compute="_compute_resource_total_capacity")
     user_id = fields.Many2one('res.users', group_expand="_read_group_user_id")
     videocall_redirection = fields.Char('Meeting redirection URL', compute='_compute_videocall_redirection')
@@ -248,6 +248,9 @@ class CalendarEvent(models.Model):
         for event in self:
             resources = event.resource_ids
             if resources:
+                # Ignore the inverse and keep the previous booking lines when we duplicate an event
+                if self.env.context.get('is_appointment_copied'):
+                    continue
                 if event.appointment_type_manage_capacity and self.resource_total_capacity_reserved:
                     capacity_to_reserve = self.resource_total_capacity_reserved
                 else:
@@ -266,6 +269,9 @@ class CalendarEvent(models.Model):
             else:
                 event.booking_line_ids.sudo().unlink()
         self.env['appointment.booking.line'].sudo().create(booking_lines)
+
+    def copy(self, default=None):
+        return super(CalendarEvent, self.with_context(is_appointment_copied=True)).copy()
 
     def _search_resource_ids(self, operator, value):
         return [('appointment_resource_ids', operator, value)]

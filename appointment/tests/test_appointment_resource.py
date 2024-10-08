@@ -1019,6 +1019,45 @@ class AppointmentResourceBookingTest(AppointmentCommon):
         )
 
     @users('apt_manager')
+    def test_appointment_resources_duplicate(self):
+        """ Check that we can correctly duplicate resource bookings """
+        table, other_table = self.env["appointment.resource"].create([{
+            'appointment_type_ids': self.apt_type_resource.ids,
+            'capacity': 3,
+            'name': 'Table for 3',
+            'sequence': 1,
+        }, {
+            'appointment_type_ids': self.apt_type_resource.ids,
+            'capacity': 4,
+            'name': 'Table for 4',
+            'sequence': 2,
+        }])
+
+        start = datetime(2022, 2, 14, 15, 0, 0)
+        end = start + timedelta(hours=1)
+        booking = self.env['calendar.event'].with_context(self._test_context).create({
+            'appointment_type_id': self.apt_type_resource.id,
+            'booking_line_ids': [
+                (0, 0, {'appointment_resource_id': table.id, 'capacity_reserved': 2, 'capacity_used': 3}),
+                (0, 0, {'appointment_resource_id': other_table.id, 'capacity_reserved': 3, 'capacity_used': 4}),
+            ],
+            'name': 'Resource booking',
+            'start': start,
+            'stop': end,
+        })
+
+        duplicate = booking.copy()
+        self.assertEqual(booking.name, duplicate.name, "Resource booking should have duplicated correctly")
+        self.assertListEqual(booking.resource_ids.ids, duplicate.resource_ids.ids, "Resources should be the same")
+        self.assertEqual(booking.resource_total_capacity_used, duplicate.resource_total_capacity_used, "Capacity used should be the same")
+        self.assertEqual(booking.resource_total_capacity_reserved, duplicate.resource_total_capacity_reserved, "Capacity reserved should be the same")
+        self.assertListEqual(
+            [bl.capacity_reserved for bl in booking.booking_line_ids],
+            [bl.capacity_reserved for bl in duplicate.booking_line_ids],
+            "Capacity reserved should be the same for each booking line",
+        )
+
+    @users('apt_manager')
     def test_appointment_resources_without_capacity_management(self):
         """ Check use case where capacity management is not activated """
 
