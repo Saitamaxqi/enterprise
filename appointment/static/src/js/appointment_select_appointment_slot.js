@@ -435,7 +435,8 @@ publicWidget.registry.appointmentSlotSelect = publicWidget.Widget.extend({
                     this._renderNoAvailabilityForMonth(displayedMonthEl);
                 }
                 this._removeLoadingSpinner();
-                this.el.querySelector(`div[data-slot-date="${daySlotSelected}"]`)?.click();
+                // Select previous selected date (in displayed month) if possible.
+                displayedMonthEl?.querySelector(`div[data-slot-date="${daySlotSelected}"]`)?.click();
             }
         }
     },
