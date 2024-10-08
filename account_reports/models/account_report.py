@@ -4858,6 +4858,8 @@ class AccountReport(models.Model):
             return self._get_markup(line_elem.get('id')) in ('total', 'load_more')
 
         def compare_values(a_line, b_line):
+            if column_index is False:
+                return 0
             type_seq = {
                 type(None): 0,
                 bool: 1,
@@ -4907,6 +4909,7 @@ class AccountReport(models.Model):
 
         descending = options['order_column']['direction'] == 'DESC' # To keep total lines at the end, used in compare_values & merge_tree scopes
 
+        column_index = False
         for index, col in enumerate(options['columns']):
             if options['order_column']['expression_label'] == col['expression_label']:
                 column_index = index # To know from which column to sort, used in merge_tree scope
