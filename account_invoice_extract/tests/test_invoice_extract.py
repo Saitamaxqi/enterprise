@@ -2,15 +2,13 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
-import json
 import textwrap
-import unittest
 
 from odoo import fields
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.addons.iap_extract.tests.test_extract_mixin import TestExtractMixin
-from odoo.addons.mail.tests.common import MailCommon
+from odoo.addons.mail.tests.common import MailCase
 from odoo.tests import tagged
 from odoo.tools import file_open
 
@@ -18,11 +16,15 @@ from ..models.account_invoice import OCR_VERSION
 
 
 @tagged('post_install', '-at_install')
-class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCommon):
+class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCase):
 
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
+
+        # give default values for all email aliases and domain
+        cls._init_mail_gateway()
+        cls._init_mail_servers()
 
         cls.env.user.group_ids |= cls.env.ref('base.group_system')
 

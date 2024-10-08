@@ -12,26 +12,18 @@ from unittest import skipIf
 from odoo import fields
 from odoo.tests.common import tagged, users
 from odoo.addons.base.tests.common import HttpCaseWithUserDemo
-from odoo.addons.mail.tests.common import MailCommon, mail_new_test_user
+from odoo.addons.mail.tests.common import MailCase
 
 
-class TestKnowledgeUICommon(HttpCaseWithUserDemo, MailCommon):
+class TestKnowledgeUICommon(HttpCaseWithUserDemo, MailCase):
     @classmethod
     def setUpClass(cls):
         super(TestKnowledgeUICommon, cls).setUpClass()
         # remove existing articles to ease tour management
         cls.env['knowledge.article'].with_context(active_test=False).search([]).unlink()
 
-        cls.user_portal = mail_new_test_user(
-            cls.env,
-            company_id=cls.company_admin.id,
-            email='patrick.portal@test.example.com',
-            groups='base.group_portal',
-            login='portal_test',
-            name='Patrick Portal',
-            notification_type='email',
-            tz='Europe/Brussels',
-        )
+        cls.user_portal = cls._create_portal_user()
+
 
 @tagged('post_install', '-at_install', 'knowledge', 'knowledge_tour')
 class TestKnowledgeUI(TestKnowledgeUICommon):

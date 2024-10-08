@@ -9,11 +9,11 @@ from unittest.mock import patch
 from odoo.addons.appointment.models.res_partner import ResPartner
 from odoo.addons.calendar.models.calendar_event import CalendarEvent
 from odoo.addons.resource.models.resource_calendar import ResourceCalendar
-from odoo.addons.mail.tests.common import mail_new_test_user, MailCommon
+from odoo.addons.mail.tests.common import mail_new_test_user, MailCase
 from odoo.tests import common, tagged
 
 
-class AppointmentCommon(MailCommon, common.HttpCase):
+class AppointmentCommon(MailCase, common.HttpCase):
 
     @classmethod
     def setUpClass(cls):
