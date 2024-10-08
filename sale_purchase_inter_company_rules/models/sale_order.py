@@ -47,7 +47,7 @@ class sale_order(models.Model):
             for line in rec.order_line.sudo():
                 po_vals['order_line'] += [(0, 0, rec._prepare_purchase_order_line_data(line, rec.date_order, company))]
             purchase_order = self.env['purchase.order'].create(po_vals)
-            msg = _("Automatically generated from %(origin)s of company %(company)s.", origin=self.name, company=company.name)
+            msg = _("Automatically generated from %(origin)s of company %(company)s.", origin=self.name, company=rec.company_id.name)
             purchase_order.message_post(body=msg)
 
             # write customer reference field on SO
