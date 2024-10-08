@@ -1,3 +1,5 @@
+from collections import defaultdict
+
 from odoo import api, models
 
 
@@ -13,15 +15,15 @@ class AccountMove(models.Model):
         # EXTENDS l10n_ec_edi
         # If an invoice is created from a pos order, then the payment is collected at the moment of sale.
         if self.pos_order_ids:
-            payment_data = []
+            payment_data = defaultdict(lambda: {'payment_total': 0})
             for payment in self.pos_order_ids.payment_ids:
-                payment_vals = {
+                grouping_key = (payment.pos_order_id.id, payment.payment_method_id.id)
+                payment_data[grouping_key].update({
                     'payment_code': payment.payment_method_id.l10n_ec_sri_payment_id.code,
                     'payment_name': payment.payment_method_id.l10n_ec_sri_payment_id.display_name,
-                    'payment_total': abs(payment.amount),
-                }
-                payment_data.append(payment_vals)
-            return payment_data
+                    'payment_total': payment_data[grouping_key]['payment_total'] + payment.amount,
+                })
+            return list(payment_data.values())
         return super()._l10n_ec_get_payment_data()
 
     def _l10n_ec_get_formas_de_pago(self):
