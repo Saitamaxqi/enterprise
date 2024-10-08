@@ -853,3 +853,54 @@ class TestQualityCheck(TestQualityCommon):
             {'quality_state': 'fail', 'product_id': self.product_2.id, 'qty_line': 1, 'failure_location_id': self.failure_location.id},
             {'quality_state': 'pass', 'product_id': self.product_2.id, 'qty_line': 1, 'failure_location_id': False},
         ])
+
+    def test_qp_with_product_ctg(self):
+        """
+        Test that the quality check is created based on the product category of product and quality point.
+        """
+        product_cat_2 = self.product_category_base.copy({'name': 'cat2'})
+        product_a = self.env['product.product'].create({
+            'name': 'Product A',
+            'is_storable': True,
+            'categ_id': product_cat_2.id,
+        })
+        product_b = self.env['product.product'].create({
+            'name': 'Product B',
+            'is_storable': True,
+            'categ_id': self.product_category_base.id,
+        })
+        self.env['quality.point'].create({
+            'title': 'QP1',
+            'product_category_ids': [(4, product_cat_2.id), (4, self.product_category_base.id)],
+            'picking_type_ids': [(4, self.picking_type_id)],
+            'measure_on': 'move_line',
+        })
+        self.env['quality.point'].create({
+            'title': 'QP2',
+            'product_category_ids': [(4, self.product_category_base.id)],
+            'picking_type_ids': [(4, self.picking_type_id)],
+            'measure_on': 'move_line',
+        })
+        picking = self.env['stock.picking'].create({
+            'picking_type_id': self.picking_type_id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id,
+        })
+        self.env['stock.move'].create({
+            'name': self.product.name,
+            'product_id': product_a.id,
+            'product_uom_qty': 1,
+            'picking_id': picking.id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id,
+        })
+        self.env['stock.move'].create({
+            'name': self.product.name,
+            'product_id': product_b.id,
+            'product_uom_qty': 1,
+            'picking_id': picking.id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id,
+        })
+        picking.action_confirm()
+        self.assertEqual(len(picking.check_ids), 3)

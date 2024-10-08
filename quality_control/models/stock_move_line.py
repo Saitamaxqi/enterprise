@@ -71,7 +71,7 @@ class StockMoveLine(models.Model):
                     for picking_type in quality_point.picking_type_ids:
                         quality_points_by_product_picking_type.setdefault(
                             (product, picking_type), set()).add(quality_point.id)
-            if not quality_point.product_ids:
+            if not quality_point.product_ids and not quality_point.product_category_ids:
                 for picking_type in quality_point.picking_type_ids:
                     quality_points_by_product_picking_type.setdefault(
                         (None, picking_type), set()).add(quality_point.id)
