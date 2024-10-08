@@ -13,3 +13,4 @@ from . import hr_contract_salary_offer
 from . import hr_contract_salary_offer_refusal_reason
 from . import hr_contract_signatory
 from . import hr_salary_structure_type
+from . import sign_request

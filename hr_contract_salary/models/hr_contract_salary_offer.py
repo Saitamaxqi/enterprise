@@ -39,6 +39,7 @@ class HrContractSalaryOffer(models.Model):
         ('full_signed', 'Fully Signed'),
         ('expired', 'Expired'),
         ('refused', 'Refused'),
+        ('cancelled', 'Cancelled'),
     ], default='open', tracking=True)
     refusal_reason = fields.Many2one('hr.contract.salary.offer.refusal.reason', string="Refusal Reason", tracking=True)
     offer_create_date = fields.Date("Offer Create Date", compute="_compute_offer_create_date", readonly=True)
