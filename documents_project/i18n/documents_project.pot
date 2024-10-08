@@ -129,6 +129,14 @@ msgstr ""
 #. module: documents_project
 #. odoo-python
 #: code:addons/documents_project/models/documents_document.py:0
+msgid ""
+"Impossible to update write `res_id` without `access_internal` for records "
+"with different `res_models` when some are linked to projects or tasks."
+msgstr ""
+
+#. module: documents_project
+#. odoo-python
+#: code:addons/documents_project/models/documents_document.py:0
 msgid "Invalid project search"
 msgstr ""
 

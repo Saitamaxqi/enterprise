@@ -77,24 +77,28 @@ class DocumentsDocument(models.Model):
                 vals.update(folder_id_values[folder_id])
         return vals_list
 
-    def _add_missing_default_values(self, values):
-        values = super()._add_missing_default_values(values)
-        if self.env.context.get('documents_project') and not values.get('folder_id'):
-            access_internal = values['access_internal'] or (
-                'edit' if self.env.context.get('privacy_visibility') != 'followers' else 'none')
-            values['folder_id'] = self.env.ref('documents_project.document_project_folder').id
-            values['access_internal'] = access_internal
-            values["children_ids"] = [Command.create({
-                "access_internal": access_internal,
-                "name": f'{values.get("name")} - {_("Shared")}',
-                "type": 'folder',
-            })]
-        return values
-
     @api.depends('res_id', 'res_model')
     def _compute_task_id(self):
         for record in self:
             record.task_id = record.res_model == 'project.task' and self.env['project.task'].browse(record.res_id)
+
+    def write(self, vals):
+        if (project_or_task_id := vals.get('res_id')) and 'access_internal' not in vals:
+            res_model = vals.get('res_model')
+            if res_model is None:
+                res_models = set(self.mapped('res_model'))
+                if len(res_models) == 1:
+                    res_model = self[0].res_model
+                elif res_models & {'project.project', 'project.task'}:
+                    raise UserError(_(
+                        "Impossible to update write `res_id` without `access_internal` for records "
+                        "with different `res_models` when some are linked to projects or tasks."))
+
+            if res_model in {'project.project', 'project.task'}:
+                project_or_task = self.env[res_model].browse(project_or_task_id)
+                project = project_or_task if res_model == 'project.project' else project_or_task.project_id
+                vals['access_internal'] = 'none' if project.privacy_visibility == 'followers' else 'edit'
+        return super().write(vals)
 
     @api.model
     def _search_task_id(self, operator, value):

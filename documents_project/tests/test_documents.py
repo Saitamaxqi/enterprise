@@ -89,7 +89,7 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
             'res_model': 'project.project',
             'res_id': self.project_pigs.id,
         })
-        projects._compute_documents()
+        projects.invalidate_recordset()
         self.assertEqual(self.project_pigs.document_count, 1, "The documents linked to the project should be taken into account.")
         self.env['documents.document'].create({
             'datas': GIF,
@@ -99,7 +99,7 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
             'res_model': 'project.task',
             'res_id': self.task_1.id,
         })
-        projects._compute_documents()
+        projects.invalidate_recordset()
         self.assertEqual(self.project_pigs.document_count, 2, "The documents linked to the tasks of the project should be taken into account.")
 
     def test_project_document_search(self):
@@ -169,7 +169,7 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
 
         self.document_txt.write({
             'res_model': 'project.task',
-            'res_id': task_2,
+            'res_id': task_2.id,
         })
         # docs[0] --> tasks[1]  "Goats UserTask"
         # docs[2] --> tasks[0] "Pigs UserTask"
@@ -286,3 +286,40 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
 
         with self.assertRaises(UserError, msg="It should not be possible to delete an ancestor of the 'Projects' folder"):
             current.unlink()
+
+    @users('proj_admin')
+    def test_sync_project_privacy_visibility_access_internal(self):
+        self.assertEqual(self.document_txt_2.access_internal, 'view')
+
+        self.project_pigs.privacy_visibility = 'followers'
+
+        self.document_txt_2.write({
+            'res_model': 'project.project',
+            'res_id': self.project_pigs.id,
+        })
+        self.assertEqual(self.document_txt_2.access_internal, 'none')
+
+        self.project_pigs.invalidate_recordset()
+        self.assertIn(self.document_txt_2, self.project_pigs.document_ids)
+
+        self.project_pigs.privacy_visibility = 'employees'
+        self.assertEqual(self.document_txt_2.access_internal, 'edit')
+        self.project_pigs.privacy_visibility = 'followers'
+        self.assertEqual(self.document_txt_2.access_internal, 'none')
+
+        # Now again from a task link
+        self.document_txt_2.write({
+            'res_model': 'documents.document',
+            'res_id': self.document_txt_2.id,
+        })
+        self.assertEqual(self.document_txt_2.access_internal, 'none')
+        self.project_pigs.privacy_visibility = 'employees'
+        self.document_txt_2.write({
+            'res_model': 'project.task',
+            'res_id': self.task_1.id,
+        })
+        self.assertEqual(self.document_txt_2.access_internal, 'edit')
+        self.project_pigs.invalidate_recordset()
+        self.assertIn(self.document_txt_2, self.project_pigs.document_ids)
+        self.project_pigs.privacy_visibility = 'followers'
+        self.assertEqual(self.document_txt_2.access_internal, 'none')

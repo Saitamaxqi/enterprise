@@ -138,7 +138,7 @@ class ProjectProject(models.Model):
             self.documents_folder_id.sudo().name = vals['name']
 
         if new_visibility := vals.get('privacy_visibility'):
-            self.documents_folder_id.action_update_access_rights(
+            (self.documents_folder_id | self.document_ids).action_update_access_rights(
                 access_internal='none' if new_visibility == 'followers' else 'edit')
 
         res = super().write(vals)
