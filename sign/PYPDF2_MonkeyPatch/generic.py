@@ -1,6 +1,6 @@
-from PyPDF2.generic import FloatObject
+from odoo.tools.pdf import generic
 
-orig_FloatObject___new__ = FloatObject.__new__
+orig_FloatObject___new__ = generic.FloatObject.__new__
 
 def FloatObject___new__(cls, value="0", context=None):
     # Fix invalid numbers like 0.000000000000-5684342
@@ -11,4 +11,5 @@ def FloatObject___new__(cls, value="0", context=None):
         value = '-' + ''.join(value.split('-', 1))
     return orig_FloatObject___new__(cls, value, context)
 
-FloatObject.__new__ = FloatObject___new__
+
+generic.FloatObject.__new__ = FloatObject___new__

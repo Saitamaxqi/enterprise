@@ -2,10 +2,9 @@
 import base64
 import io
 
-from PyPDF2 import PdfFileWriter
-
 from odoo.exceptions import AccessError
 from odoo.tests import TransactionCase
+from odoo.tools.pdf import PdfFileWriter
 
 
 class testAttachmentAccess(TransactionCase):

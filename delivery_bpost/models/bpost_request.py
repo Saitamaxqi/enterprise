@@ -7,13 +7,13 @@ import logging
 import re
 import requests
 from lxml import html
-from PyPDF2 import PdfFileWriter, PdfFileReader
 from xml.etree import ElementTree as etree
 from werkzeug.urls import url_join
 
 from odoo import _
 from odoo.exceptions import UserError
 from odoo.tools import float_round
+from odoo.tools.pdf import PdfFileWriter, PdfFileReader
 
 _logger = logging.getLogger(__name__)
 

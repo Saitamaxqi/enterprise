@@ -2,14 +2,9 @@
 import io
 import base64
 
-from PyPDF2 import PdfFileReader
-try:
-    from PyPDF2.errors import PdfReadError
-except ImportError:
-    from PyPDF2.utils import PdfReadError
-
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError, ValidationError
+from odoo.tools.pdf import PdfFileReader, PdfReadError
 
 
 class SignDuplicateTemplatePdf(models.TransientModel):

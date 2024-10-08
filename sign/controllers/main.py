@@ -7,11 +7,11 @@ import logging
 import mimetypes
 import re
 
-from PyPDF2 import PdfFileReader
 
 from odoo import http, models, tools, Command, _, fields
 from odoo.http import request, content_disposition
 from odoo.tools import consteq, format_date
+from odoo.tools.pdf import PdfFileReader
 from odoo.addons.iap.tools import iap_tools
 from odoo.exceptions import UserError
 

@@ -10,7 +10,6 @@ from ast import literal_eval
 from collections import Counter, OrderedDict, defaultdict
 
 import requests
-from PyPDF2 import PdfFileReader
 from dateutil.relativedelta import relativedelta
 from markupsafe import Markup
 from werkzeug.urls import url_encode
@@ -22,6 +21,7 @@ from odoo.osv import expression
 from odoo.tools import email_normalize, groupby, image_process, SQL, create_index
 from odoo.tools.mimetypes import get_extension
 from odoo.tools.misc import clean_context
+from odoo.tools.pdf import PdfFileReader
 from odoo.addons.mail.tools import link_preview
 
 _logger = logging.getLogger(__name__)

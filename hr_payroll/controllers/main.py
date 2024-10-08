@@ -4,9 +4,8 @@
 import io
 import re
 
-from PyPDF2 import PdfFileReader, PdfFileWriter
-
 from odoo.http import request, route, Controller, content_disposition
+from odoo.tools.pdf import PdfFileReader, PdfFileWriter
 from odoo.tools.safe_eval import safe_eval
 
 

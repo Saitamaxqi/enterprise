@@ -4,7 +4,7 @@ import base64
 import io
 
 from odoo import models, api, fields
-from PyPDF2 import PdfFileWriter, PdfFileReader
+from odoo.tools.pdf import PdfFileWriter, PdfFileReader
 
 
 class IrAttachment(models.Model):
