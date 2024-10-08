@@ -679,7 +679,8 @@ class L10nInGSTReturnPeriod(models.Model):
                             ],
                         }
                         inv_json_list.append(inv_json)
-                b2b_json.append({'ctin': partner.vat, 'inv': inv_json_list})
+                if inv_json_list:
+                    b2b_json.append({'ctin': partner.vat, 'inv': inv_json_list})
             return b2b_json
 
         def _get_b2cl_json(journal_items):
@@ -871,7 +872,8 @@ class L10nInGSTReturnPeriod(models.Model):
                             ],
                         }
                         inv_json_list.append(inv_json)
-                cdnr_json.append({'ctin': partner.vat, 'nt': inv_json_list})
+                if inv_json_list:
+                    cdnr_json.append({'ctin': partner.vat, 'nt': inv_json_list})
             return cdnr_json
 
         def _get_cdnur_json(journal_items):
