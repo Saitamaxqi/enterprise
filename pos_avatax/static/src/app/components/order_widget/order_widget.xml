@@ -11,8 +11,5 @@
                 </span>
             </span>
         </xpath>
-        <xpath expr="//div[hasclass('tax-info')]" position="attributes">
-            <attribute name="t-if">props.tax or this.props.lines[0]?.order_id?.partner_id</attribute>
-        </xpath>
     </t>
 </templates>

@@ -136,6 +136,8 @@ patch(PosStore.prototype, {
             });
     },
     _createAmountPerVatRateArray(order) {
+        // TODO: That part is completely wrong in round_globally. Rewrite using the '_aggregate_base_line_tax_details'
+        // and '_aggregate_base_lines_aggregated_values'.
         const rateIds = {
             NORMAL: [],
             REDUCED_1: [],
