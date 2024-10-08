@@ -1866,3 +1866,40 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
           </xpath>
         </data>
         """)
+
+    def test_create_related(self):
+        self.testViewForm = self.env["ir.ui.view"].create({
+            "name": "simple partner",
+            "model": "res.partner",
+            "type": "form",
+            "arch": '''
+                <form>
+                    <group>
+                        <field name="function" />
+                        <field name="name" />
+                    </group>
+                </form>
+            '''
+        })
+        self.testAction.write({
+            "view_ids": [
+                Command.clear(),
+                Command.create({"view_id": self.testViewForm.id, "view_mode": "form"}),
+            ]
+        })
+
+        self.assertEqual(self.env["res.partner"]._fields["child_ids"].type, "one2many")
+        self.start_tour("/odoo?debug=tests", 'web_studio_test_create_related', login="admin")
+
+        partnerModel = self.env["ir.model"]._get("res.partner")
+        new_field = self.env["ir.model.fields"].search([("model_id", "=", partnerModel.id)], order="id DESC", limit=1)
+        self.assertEqual(new_field.related, "parent_id.child_ids")
+
+        studio_view = _get_studio_view(self.testViewForm)
+        self.assertXMLEqual(studio_view.arch, f"""
+        <data>
+          <xpath expr="//form[1]/group[1]/field[@name='name']" position="after">
+            <field name="{new_field.name}"/>
+          </xpath>
+        </data>
+        """)

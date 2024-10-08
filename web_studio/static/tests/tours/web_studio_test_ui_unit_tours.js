@@ -1814,3 +1814,57 @@ registry.category("web_tour.tours").add("web_studio_test_kanban_menu_ribbon", {
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio_test_create_related", {
+    test: true,
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_form_view",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item button:enabled",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_view_renderer .o_form_view",
+        },
+        {
+            trigger: ".o_web_studio_component.o_web_studio_field_related",
+            run: "drag_and_drop (.o_web_studio_hook:last())",
+        },
+        {
+            trigger: ".modal .o_model_field_selector_value",
+            run: "click"
+        },
+        {
+            trigger: ".o_model_field_selector_popover_search input",
+            run: "edit Related Company"
+        },
+        {
+            trigger: ".o_model_field_selector_popover_item[data-name='parent_id'] .o_model_field_selector_popover_relation_icon",
+            run: "click",
+        },
+        {
+            trigger: ".o_model_field_selector_popover_title:contains(Related Company)",
+        },
+        {
+            trigger: ".o_model_field_selector_popover_search input",
+            run: "edit Contact"
+        },
+        {
+            trigger: ".o_model_field_selector_popover_item[data-name='child_ids'] .o_model_field_selector_popover_item_name",
+            run: "click"
+        },
+        {
+            trigger: ".modal footer button.btn-primary",
+            run: "click"
+        },
+        {
+            trigger: ".o_web_studio_view_renderer .o_field_widget.o_field_one2many",
+        }
+    ]
+})

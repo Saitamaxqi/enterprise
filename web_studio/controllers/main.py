@@ -348,7 +348,7 @@ class WebStudioController(http.Controller):
         if rel_id := values.pop('relation_id', None):
             values['relation'] = request.env['ir.model'].browse(rel_id).model
         # For related one2many fields
-        if related := values.get('related') and values.get('ttype') == 'one2many':
+        if related := values.get('related') if values.get('ttype') == 'one2many' else "":
             field_name = related.rsplit('.', 1)[-1]
             field = request.env['ir.model.fields'].search([
                 ('name', '=', field_name),
