@@ -1,8 +1,7 @@
 <odoo>
 
     <t t-name="spreadsheet_edition.OdooMenuChartPanelSection">
-        <Section>
-            <t t-set-slot="title">Link to Odoo menu</t>
+        <Section title.translate="Link to Odoo menu">
             <IrMenuSelector
                 menuId="odooMenuId"
                 onValueChanged.bind="updateOdooLink"/>

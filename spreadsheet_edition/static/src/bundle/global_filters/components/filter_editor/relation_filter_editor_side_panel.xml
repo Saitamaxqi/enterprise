@@ -49,8 +49,7 @@
                 <label for="user_automatic_filter">Automatically filter on the current user</label>
             </div>
         </div>
-        <Section t-if="relationState.relatedModel.technical">
-            <t t-set-slot="title">Possible values</t>
+        <Section t-if="relationState.relatedModel.technical" title.translate="Possible values">
             <Checkbox
                 className="'mb-1'"
                 label.translate="Restrict values with a domain"
@@ -65,8 +64,7 @@
             />
         </Section>
         <t t-if="shouldDisplayFieldMatching()">
-            <SidePanelCollapsible collapsedAtInit="!isNewFilter">
-                <t t-set-slot="title">Field matching</t>
+            <SidePanelCollapsible collapsedAtInit="!isNewFilter" title.translate="Field matching">
                 <t t-set-slot="content">
                     <Section class="'pt-0'">
                         <FilterEditorFieldMatching

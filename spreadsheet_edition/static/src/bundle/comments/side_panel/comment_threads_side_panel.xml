@@ -5,8 +5,7 @@
       class="o-threads-side-panel"
       tabindex="0"
       >
-      <Section>
-        <t t-set-slot="title">Filter comments</t>
+      <Section title.translate="Filter comments">
         <select t-model="state.mode" class="o-input">
           <option value="allSheets">All sheets</option>
           <option value="activeSheet">This sheet</option>

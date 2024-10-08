@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <templates>
     <div t-name="spreadsheet_sale_management.FieldSyncSidePanel">
-        <Section>
-            <t t-set-slot="title">Cell to sync</t>
+        <Section title.translate="Cell to sync">
             <SelectionInput
                 ranges="[fieldSyncPositionString]"
                 hasSingleRange="true"
@@ -11,8 +10,7 @@
                 onSelectionConfirmed.bind="onRangeConfirmed"
             />
         </Section>
-        <Section>
-            <t t-set-slot="title">Record to sync (position)</t>
+        <Section title.translate="Record to sync (position)">
             <input
                 class="o_input o-required mt-3"
                 type="number"
@@ -23,8 +21,7 @@
             />
 
         </Section>
-        <Section>
-            <t t-set-slot="title">Field to sync</t>
+        <Section title.translate="Field to sync">
             <ModelFieldSelector
                 resModel="'sale.order.line'"
                 readonly="false"

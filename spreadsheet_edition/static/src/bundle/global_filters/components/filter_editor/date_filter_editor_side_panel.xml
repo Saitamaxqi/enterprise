@@ -88,8 +88,7 @@
             </div>
         </div>
         <t t-if="shouldDisplayFieldMatching()">
-            <SidePanelCollapsible collapsedAtInit="!isNewFilter">
-                <t t-set-slot="title">Field matching</t>
+            <SidePanelCollapsible collapsedAtInit="!isNewFilter" title.translate="Field matching">
                 <t t-set-slot="content">
                     <Section class="'pt-0'">
                         <DateFilterEditorFieldMatching

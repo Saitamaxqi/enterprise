@@ -5,8 +5,7 @@
       definition="props.definition"
       updateChart="props.updateChart">
       <t t-set-slot="general-extension">
-        <Section class="'pt-0'">
-          <t t-set-slot="title">Vertical axis position</t>
+        <Section class="'pt-0'" title.translate="Vertical axis position">
           <RadioSelection
             choices="axisChoices"
             selectedValue="props.definition.verticalAxisPosition"
@@ -14,8 +13,7 @@
             onChange.bind="updateVerticalAxisPosition"
           />
         </Section>
-        <Section class="'pt-0'">
-          <t t-set-slot="title">Legend position</t>
+        <Section class="'pt-0'" title.translate="Legend position">
           <select
             t-att-value="props.definition.legendPosition ?? 'top'"
             class="o-input"
@@ -77,8 +75,7 @@
         </Section>
       </t>
     </GeneralDesignEditor>
-    <SidePanelCollapsible collapsedAtInit="true">
-      <t t-set-slot="title">Axis</t>
+    <SidePanelCollapsible collapsedAtInit="true" title.translate="Axis">
       <t t-set-slot="content">
         <AxisDesignEditor
           axesList="axesList"

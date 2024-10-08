@@ -1,11 +1,9 @@
 <odoo>
     <t t-name="spreadsheet_edition.CommonOdooChartConfigPanel">
-        <Section>
-            <t t-set-slot="title">Model</t>
+        <Section title.translate="Model">
             <div><t t-esc="modelDisplayName" /> (<t t-esc="model" />)</div>
         </Section>
-        <Section>
-            <t t-set-slot="title">Domain</t>
+        <Section title.translate="Domain">
             <DomainSelector resModel="model" domain="domain" t-key="'odoo_chart_' + props.figureId" />
             <div class="btn btn-link o_edit_domain" t-on-click="openDomainEdition">
                 <i class="oi oi-arrow-right me-1" />Edit domain</div>
