@@ -127,7 +127,7 @@
                             <span>Digital stamp of the emitter</span>
                         </div>
                         <div class="digital-stamp-content">
-                            <span t-out="cfdi['sello_sat']"/>
+                            <span t-out="cfdi['sello']"/>
                         </div>
                         <div class="digital-stamp">
                             <span>Digital stamp SAT</span>
