@@ -335,7 +335,7 @@
         <field name="view_mode">list</field>
     </record>
 
-    <!-- Signature Item Party Views -->
+    <!-- Signature Item Role Views -->
     <record id="sign_item_role_view_tree" model="ir.ui.view">
         <field name="name">sign.item.role.list</field>
         <field name="model">sign.item.role</field>
