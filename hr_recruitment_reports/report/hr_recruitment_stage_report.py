@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models
@@ -15,6 +14,8 @@ class HrRecruitmentStageReport(models.Model):
     stage_id = fields.Many2one('hr.recruitment.stage', readonly=True)
     job_id = fields.Many2one('hr.job', readonly=True)
     days_in_stage = fields.Float(readonly=True, aggregator='avg')
+
+    unique_candidate = fields.Boolean('Unique Candidate', readonly=True)
 
     state = fields.Selection([
         ('is_hired', 'Hired'),
@@ -36,6 +37,11 @@ SELECT
     c.partner_name AS name,
     ha.job_id AS job_id,
     ha.company_id AS company_id,
+    CASE
+        WHEN (ha.create_date = MAX(ha.create_date) OVER (PARTITION BY ha.job_id, c.id))
+        THEN TRUE
+        ELSE FALSE
+    END AS unique_candidate,
     CASE
         WHEN ha.active IS FALSE and ha.refuse_reason_id IS NOT NULL THEN 'refused'
         WHEN ha.active IS FALSE and ha.refuse_reason_id IS NULL THEN 'archived'
@@ -79,6 +85,11 @@ SELECT
     c.partner_name AS name,
     ha.job_id AS job_id,
     ha.company_id AS company_id,
+    CASE
+        WHEN (ha.create_date = MAX(ha.create_date) OVER (PARTITION BY ha.job_id, c.id))
+        THEN TRUE
+        ELSE FALSE
+    END AS unique_candidate,
     CASE
         WHEN ha.active IS FALSE AND ha.refuse_reason_id IS NOT NULL THEN 'refused'
         WHEN ha.active IS FALSE AND ha.refuse_reason_id IS NULL THEN 'archived'

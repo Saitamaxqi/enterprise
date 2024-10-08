@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import tools
@@ -16,7 +15,7 @@ class HrRecruitmentReport(models.Model):
     _rec_name = 'create_date'
     _order = 'create_date desc'
 
-    count = fields.Integer('Applicant', aggregator="sum", readonly=True)
+    count = fields.Integer('Applications', aggregator="sum", readonly=True)
     refused = fields.Integer('Refused', aggregator="sum", readonly=True)
     hired = fields.Integer('Hired', aggregator="sum", readonly=True)
     hiring_ratio = fields.Integer('Hired Ratio', aggregator="avg", readonly=True)
@@ -30,6 +29,8 @@ class HrRecruitmentReport(models.Model):
     ], readonly=True)
 
     user_id = fields.Many2one('res.users', 'Recruiter', readonly=True)
+
+    unique_candidate = fields.Boolean('Unique Candidate', readonly=True)
 
     create_date = fields.Date('Application Date', readonly=True)
     create_uid = fields.Many2one('res.users', 'Creator', readonly=True)
@@ -80,6 +81,12 @@ class HrRecruitmentReport(models.Model):
                 CASE WHEN a.refuse_reason_id IS NULL AND a.active IS TRUE AND a.date_closed IS NOT NULL THEN 1 ELSE 0 END as hired,
                 CASE WHEN a.date_closed IS NOT NULL THEN 100 ELSE 0 END as hiring_ratio,
                 CASE WHEN a.active IS NOT FALSE AND a.date_closed IS NULL THEN 1 ELSE 0 END as in_progress,
+                CASE WHEN (
+                    ROW_NUMBER() OVER (
+                        PARTITION BY a.job_id, a.candidate_id
+                        ORDER BY a.create_date DESC
+                    ) = 1) THEN True ELSE False
+                END AS unique_candidate,
                 CASE WHEN a.date_closed IS NOT NULL THEN date_part('day', a.date_closed - a.create_date) ELSE NULL END as process_duration
                 %s
         """ % fields

@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="1">
+    <record id="hr_case_trainee_duplicate" model="hr.applicant">
+        <field name="candidate_id" ref="hr_recruitment.hr_candidate_traineemca0"/>
+        <field name="job_id" ref="hr.job_trainee"/>
+        <field name="department_id" ref="hr.dep_rd"/>
+        <field name="user_id" ref="base.user_demo"/>
+        <field name="priority">1</field>
+        <field name="stage_id" ref="hr_recruitment.stage_job4"/>
+        <field name="create_date" eval="DateTime.now() - relativedelta(days=30)"/>
+        <field name="date_last_stage_update" eval="(DateTime.today() - timedelta(days=21)).strftime('%Y-%m-%d')"/>
+    </record>
+
     <record id="hr_case_salesman0_mm" model="mail.message">
         <field name="model">hr.applicant</field>
         <field name="res_id" ref="hr_recruitment.hr_case_salesman0"/>
@@ -61,6 +72,57 @@
         <field name="new_value_integer" eval="ref('hr_recruitment.stage_job4')"/>
         <field name="mail_message_id" ref="hr_case_traineemca0_mm3"/>
     </record>
+
+    <record id="hr_case_trainee_duplicate_mm1" model="mail.message">
+        <field name="model">hr.applicant</field>
+        <field name="res_id" ref="hr_recruitment_reports.hr_case_trainee_duplicate"/>
+        <field name="message_type">notification</field>
+        <field name="date" eval="DateTime.now() - relativedelta(days=26)"/>
+        <field name="author_id" ref="base.partner_admin"/>
+    </record>
+    <record id="hr_case_trainee_duplicate_mtv1" model="mail.tracking.value">
+        <field name="field_id" ref="hr_recruitment.field_hr_applicant__stage_id" />
+        <field name="old_value_char">Initial Qualification</field>
+        <field name="new_value_char">First Interview</field>
+        <field name="old_value_integer" eval="ref('hr_recruitment.stage_job1')"/>
+        <field name="new_value_integer" eval="ref('hr_recruitment.stage_job2')"/>
+        <field name="mail_message_id" ref="hr_case_trainee_duplicate_mm1"/>
+    </record>
+    <record id="hr_case_trainee_duplicate_mm2" model="mail.message">
+        <field name="model">hr.applicant</field>
+        <field name="res_id" ref="hr_recruitment_reports.hr_case_trainee_duplicate"/>
+        <field name="message_type">notification</field>
+        <field name="date" eval="DateTime.now() - relativedelta(days=23)"/>
+        <field name="author_id" ref="base.partner_admin"/>
+    </record>
+    <record id="hr_case_trainee_duplicate_mtv2" model="mail.tracking.value">
+        <field name="field_id" ref="hr_recruitment.field_hr_applicant__stage_id" />
+        <field name="old_value_char">First Interview</field>
+        <field name="new_value_char">Second Interview</field>
+        <field name="old_value_integer" eval="ref('hr_recruitment.stage_job2')"/>
+        <field name="new_value_integer" eval="ref('hr_recruitment.stage_job3')"/>
+        <field name="mail_message_id" ref="hr_case_trainee_duplicate_mm2"/>
+    </record>
+    <record id="hr_case_trainee_duplicate_mm3" model="mail.message">
+        <field name="model">hr.applicant</field>
+        <field name="res_id" ref="hr_recruitment_reports.hr_case_trainee_duplicate"/>
+        <field name="message_type">notification</field>
+        <field name="date" eval="DateTime.now() - relativedelta(days=21)"/>
+        <field name="author_id" ref="base.partner_admin"/>
+    </record>
+    <record id="hr_case_trainee_duplicate_mtv3" model="mail.tracking.value">
+        <field name="field_id" ref="hr_recruitment.field_hr_applicant__stage_id" />
+        <field name="old_value_char">Second Interview</field>
+        <field name="new_value_char">Contract Proposal</field>
+        <field name="old_value_integer" eval="ref('hr_recruitment.stage_job3')"/>
+        <field name="new_value_integer" eval="ref('hr_recruitment.stage_job4')"/>
+        <field name="mail_message_id" ref="hr_case_trainee_duplicate_mm3"/>
+    </record>
+
+    <function model="hr.applicant" name="write">
+        <value model="hr.applicant" search="[('id','=', ref('hr_recruitment_reports.hr_case_trainee_duplicate'))]"/>
+        <value eval="{'refuse_reason_id': ref('hr_recruitment.refuse_reason_1'), 'active' : False, 'refuse_date' : DateTime.now() - relativedelta(days=20)}"/>
+    </function>
 
     <record id="hr_case_traineemca1_mm1" model="mail.message">
         <field name="model">hr.applicant</field>

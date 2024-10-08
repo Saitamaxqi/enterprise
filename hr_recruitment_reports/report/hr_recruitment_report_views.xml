@@ -8,7 +8,7 @@
             <field name="mode">primary</field>
             <field name="priority">1</field>
             <field name="arch" type="xml">
-                <pivot string="Recruitment Analysis" sample="1" js_class="recruitment_report_pivot">
+                <pivot string="Application Analysis" sample="1" js_class="recruitment_report_pivot">
                     <field name="job_id" type="row"/>
                     <field name="count" type="measure"/>
                     <field name="hired" type="measure"/>
@@ -82,6 +82,7 @@
                     string="Recruitment Analysis"
                     action="action_open_applicant"
                     type="object"
+                    decoration-danger="state == 'refused'"
                 >
                     <field name="name"/>
                     <field name="job_id" optional="show"/>
@@ -89,6 +90,7 @@
                     <field name="medium_id" optional="show"/>
                     <field name="create_date" optional="show"/>
                     <field name="stage_id" optional="show"/>
+                    <field name="state" optional="show"/>
                 </list>
             </field>
         </record>
@@ -109,6 +111,8 @@
                         ('create_date', '>=', (context_today() + relativedelta(days=-365)).strftime('%Y-%m-%d')),
                         ('create_date', '&lt;', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d'))]"/>
                     <separator/>
+                    <filter string="Exclude Duplicates" name="exclude_duplicates" domain="[('unique_candidate', '=', True)]"/>
+                    <separator/>
                     <filter name="filter_create_date" date="create_date" string="Application Date"/>
                     <filter name="filter_date_closed" date="date_closed" string="Hired Date"/>
                     <group expand="1" string="Group By">
@@ -124,7 +128,7 @@
         </record>
 
         <record id="recruitment_report_action" model="ir.actions.act_window">
-            <field name="name">Applicant Analysis</field>
+            <field name="name">Application Analysis</field>
             <field name="res_model">hr.recruitment.report</field>
             <field name="view_mode">pivot,graph</field>
             <field name="search_view_id" ref="recruitment_report_view_search"/>
@@ -203,7 +207,7 @@
         </record>
 
         <menuitem id="hr_recruitment.hr_applicant_report_menu"
-            name="Applicant Analysis"
+            name="Application Analysis"
             parent="hr_recruitment.report_hr_recruitment"
             action="recruitment_report_action" sequence="1"/>
 
