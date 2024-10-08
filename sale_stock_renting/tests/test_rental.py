@@ -792,3 +792,37 @@ class TestRentalPicking(TestRentalCommon):
         settings.set_values()
         # check that the rules of the rental route have been updated
         self.assertFalse(rental_stock_rules & warehouse_rental_route.rule_ids)
+
+    def test_multi_step_route_revised_order_correct_transfer_amount(self):
+        """ Ensure correct quantities are encoded on stock moves for rental transfers when an order
+        gets revised and a multi-step route is used whose pick action sources product from a child
+        location of lot_stock.
+        """
+        product = self.product_id
+        warehouse = self.warehouse_id
+        warehouse.delivery_steps = 'pick_ship'
+        store_location = self.env['stock.location'].create({
+            'name': 'storage location',
+            'usage': 'internal',
+            'location_id': warehouse.lot_stock_id.id,
+        })
+        warehouse.route_ids.filtered(
+            lambda r: '2 steps' in r.name).rule_ids.filtered(
+            lambda r: r.location_src_id == warehouse.lot_stock_id
+        ).location_src_id = store_location.id
+
+        rental_order = self.env['sale.order'].create({
+            'is_rental_order': True,
+            'partner_id': self.cust1.id,
+            'order_line': [Command.create({
+                'product_id': product.id,
+                'product_uom_qty': 1,
+                'is_rental': True,
+            })],
+        })
+        rental_order.action_confirm()
+        rental_order.order_line[0].product_uom_qty = 2
+        self.assertEqual(
+            rental_order.picking_ids.move_ids.mapped('product_uom_qty'),
+            [rental_order.order_line.product_uom_qty] * len(rental_order.picking_ids.move_ids)
+        )

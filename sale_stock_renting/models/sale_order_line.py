@@ -397,7 +397,7 @@ class RentalOrderLine(models.Model):
             for move in self.move_ids.filtered(lambda r: r.state != 'cancel' and not r.scrapped and self.product_id == r.product_id):
                 if (
                         strict and move.location_dest_id == self.company_id.rental_loc_id or
-                        not strict and move.location_id == self.order_id.warehouse_id.lot_stock_id
+                        not strict and move.location_id._child_of(self.order_id.warehouse_id.lot_stock_id)
                 ):
                     outgoing_moves |= move
                 elif strict and move.location_id == self.company_id.rental_loc_id:
