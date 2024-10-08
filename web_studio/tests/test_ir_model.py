@@ -455,6 +455,20 @@ class TestStudioIrModel(TransactionCase):
                 {'xml_id': 'web_studio.xmlid', 'record': record}
             ])
 
+    def test_ir_default_company_fields(self):
+        model = self.env['ir.model'].create({
+            'name': 'Rockets',
+            'model': 'x_rockets',
+            'field_id': [
+                Command.create({'name': 'x_studio_company_id', 'ttype': 'many2one', 'relation': 'res.company'}),
+                Command.create({'name': 'x_company_id', 'ttype': 'many2one', 'relation': 'res.company'}),
+            ]
+        })
+        self.env["res.company"].create({"name": "new company test"})
+        defaults = self.env["ir.default"].search([("field_id", "in", model.field_id.ids)])
+        self.assertEqual(len(defaults), 2)
+        self.assertEqual(defaults.mapped("field_id"), model.field_id.filtered(lambda f: f.relation == "res.company"))
+
 
 @tagged("-at_install", "post_install")
 class TestStudioIrModelHardcoded(TransactionCase):

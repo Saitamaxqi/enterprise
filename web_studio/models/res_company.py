@@ -14,7 +14,7 @@ class ResCompany(models.Model):
         """Override to ensure a default exists for all studio-created company/currency fields."""
         companies = super().create(vals_list)
         company_fields = self.env['ir.model.fields'].sudo().search([
-            ('name', '=', 'x_studio_company_id'),
+            ('name', 'in', ['x_studio_company_id', "x_company_id"]),
             ('ttype', '=', 'many2one'),
             ('relation', '=', 'res.company'),
             ('store', '=', True),
