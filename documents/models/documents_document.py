@@ -310,8 +310,10 @@ class DocumentsDocument(models.Model):
     def _compute_user_permission(self):
         for document in self:
             if self.env.user._is_admin():
-                document.user_permission = ('edit' if not (cid := document.company_id) or cid in self.env.companies
-                                            else 'none')
+                document.user_permission = (
+                    'edit' if not (company := document.company_id)
+                    or company in self.env.companies or company not in self.env.user.company_ids
+                    else 'none')
                 continue
             document.user_permission = document._get_permission_without_token()
             if document.user_permission == 'view' and document.access_via_link == 'edit':

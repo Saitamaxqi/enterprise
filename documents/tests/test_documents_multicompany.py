@@ -14,7 +14,13 @@ class TestDocumentsMulticompany(TransactionCaseDocuments):
         cls.company_allowed, cls.company_other, cls.company_disabled = cls.env['res.company'].create([
             {'name': f'Company {name}'} for name in ['Allowed', 'Other', 'Disabled']
         ])
-        (cls.internal_user + cls.document_manager + cls.portal_user).write({
+        cls.admin_user = cls.env['res.users'].create({
+            'email': "an_admin@yourcompany.com",
+            'groups_id': [Command.link(cls.env.ref('base.group_erp_manager').id)],
+            'login': "an_admin",
+            'name': "An Admin",
+        })
+        (cls.internal_user + cls.document_manager + cls.portal_user + cls.admin_user).write({
             'company_ids': [Command.link(cls.company_allowed.id), Command.link(cls.company_disabled.id)],
         })
 
@@ -102,6 +108,17 @@ class TestDocumentsMulticompany(TransactionCaseDocuments):
                 ]
                 user_permissions = docs.with_user(user).mapped('user_permission')
                 self.assertListEqual(user_permissions, expected_user_permissions)
+
+    @mute_logger('odoo.addons.base.models.ir_rule')
+    def test_company_access_admin(self):
+        ALL_DOCUMENTS = list(range(6))
+        cases = [
+            (self.env['res.company'], ALL_DOCUMENTS, []),
+            (self.company_allowed, ALL_DOCUMENTS, []),
+            (self.company_other, ALL_DOCUMENTS, []),
+            (self.company_disabled, [], []),
+        ]
+        self._test_company_with_user(cases, self.admin_user)
 
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_company_access_manager(self):
