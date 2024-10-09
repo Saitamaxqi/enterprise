@@ -17,17 +17,22 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
     l10n_in_payment_advice_filename_pdf = fields.Char()
     l10n_in_payment_advice_xlsx = fields.Binary('Payment Advice XLSX', readonly=True, attachment=False)
     l10n_in_payment_advice_filename_xlsx = fields.Char()
-    l10n_in_reference = fields.Char(string="Reference")
+    l10n_in_reference = fields.Char(string="Report Name")
+    l10n_in_company_bank_id = fields.Many2one('res.partner.bank', string="Company Bank Account",
+        domain="[('company_id', 'in', allowed_company_ids)]")
     l10n_in_neft = fields.Boolean(string="NEFT Transaction", help="Tick this box if your company use online transfer for salary")
     l10n_in_cheque_number = fields.Char(string="Cheque Number")
     l10n_in_state_pdf = fields.Boolean()
     l10n_in_state_xlsx = fields.Boolean()
+    l10n_in_effective_from = fields.Date(string="Effective From", default=fields.Date.today)
 
     def _get_report_data(self, payslip):
         employee = payslip.employee_id
         bank_account = employee.bank_account_id
 
         return {
+            'company_name': self.company_id.name or '',
+            'company_account': self.l10n_in_company_bank_id.acc_number or '',
             'name': employee.name,
             'acc_no': bank_account.acc_number or '',
             'ifsc_code': bank_account.bank_bic or '',
@@ -39,28 +44,17 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         total_bysal = 0
         lines = []
 
-        partner_bank = self.company_id.partner_id.bank_ids
-        partner_bank_name = partner_bank[0].bank_id.name if partner_bank else ''
-        partner_bank_acc_number = partner_bank[0].acc_number if partner_bank else ''
-
         for payslip in self.payslip_ids:
             report_line_data = self._get_report_data(payslip)
             lines.append(report_line_data)
             total_bysal += report_line_data['bysal']
 
         return {
-            'bank': {
-                'bank_name': partner_bank_name,
-                'acc_number': partner_bank_acc_number,
-            },
             'line_ids': {
                 'lines': lines,
                 'total_bysal': total_bysal,
             },
             'current_date': date.today(),
-            'l10n_in_neft': self.l10n_in_neft,
-            'l10n_in_cheque_number': self.l10n_in_cheque_number,
-            'note': _('Please make the payroll transfer from above account number to the below mentioned account numbers towards employee salaries:'),
         }
 
     def _get_wizard(self):
@@ -112,7 +106,16 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
         header_format = workbook.add_format({'bold': True, 'pattern': 1, 'bg_color': '#E0E0E0', 'align': 'center'})
         cell_format = workbook.add_format({'align': 'center'})
         total_format = workbook.add_format({'bold': True, 'align': 'center'})
-        headers = [_('SI No.'), _('Name Of Employee'), _('Bank Account No.'), _('IFSC Code'), _('By Salary'), _('C/D')]
+        headers = [
+            _('SI No.'),
+            _('Company Name'),
+            _('Company Bank Account'),
+            _('Name Of Employee'),
+            _('Bank Account No.'),
+            _('IFSC Code'),
+            _('By Salary'),
+            _('C/D')
+        ]
 
         worksheet.write_row(0, 0, headers, header_format)
 
@@ -125,6 +128,8 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
             total_salary += row_data['bysal']
 
         worksheet.set_column(0, 0, 10)  # SI No.
+        worksheet.set_column(0, 0, 20)  # Company Name.
+        worksheet.set_column(0, 0, 30)  # Company Bank Account Number.
         worksheet.set_column(1, 1, 20)  # Name Of Employee
         worksheet.set_column(2, 2, 20)  # Bank Account No.
         worksheet.set_column(3, 3, 15)  # IFSC Code
