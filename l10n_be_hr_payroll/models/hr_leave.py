@@ -1,6 +1,8 @@
-from odoo import api, fields, models, _
-
+from datetime import timezone
 from dateutil.relativedelta import relativedelta
+
+from odoo import api, fields, models, _
+from odoo.exceptions import UserError
 
 
 class HrLeave(models.Model):
@@ -56,6 +58,7 @@ class HrLeave(models.Model):
         activity_type_id = self.env.ref('mail.mail_activity_data_todo').id
         res_model_id = self.env.ref('hr_holidays.model_hr_leave').id
         for leave in self:
+            leave._check_consecutive_leaves()
             if leave.employee_id.company_id.country_id.code == "BE" and \
                     leave.sudo().holiday_status_id.work_entry_type_id.code in self._get_drs_work_entry_type_codes():
                 drs_link = "https://www.socialsecurity.be/site_fr/employer/applics/drs/index.htm"
@@ -88,3 +91,47 @@ class HrLeave(models.Model):
             'LEAVE115', # Work Accident
         ]
         return drs_work_entry_types
+
+    def _check_work_interval_between_dates(self, date_from, date_to, employee):
+        '''
+        Check if there is a work interval between two dates for an employee
+        Returns true if there is a period where the employee worked 
+        or had a leave borne by the employee (e.g. not a public holiday)
+        between date_from and date_to
+        '''
+        calendar = employee._get_calendars()[employee.id]
+        dt_from = date_from.replace(tzinfo=timezone.utc)
+        dt_to = date_to.replace(tzinfo=timezone.utc)
+        attendance_intervals = calendar._attendance_intervals_batch(dt_from, dt_to, employee.resource_id)
+        leave_intervals = calendar._leave_intervals_batch(dt_from, dt_to, employee.resource_id)
+        if leave_intervals[employee.resource_id.id].items():
+            for start, end, leave in leave_intervals[employee.resource_id.id].items():
+                if leave.holiday_id:
+                    # remove holidays taken by the user from leave_intervals
+                    leave_intervals[employee.resource_id.id].remove((start, end, leave))
+        attendance_intervals = attendance_intervals[employee.resource_id.id] - leave_intervals[employee.resource_id.id]
+        return bool(attendance_intervals.items())
+
+    def _check_consecutive_leaves(self):
+        self.ensure_one()
+        if not self.holiday_status_id.l10n_be_no_consecutive_leaves_allowed:
+            return
+        employee = self.employee_id
+        last_leave_taken = self.env['hr.leave'].search([
+            ('employee_id', '=', employee.id),
+            ('date_to', '<', self.date_from),
+            ('holiday_status_id', '=', self.holiday_status_id.id),
+            ('state', '=', 'validate'),
+        ], order='date_to desc', limit=1)
+        next_leave_taken = self.env['hr.leave'].search([
+            ('employee_id', '=', employee.id),
+            ('date_from', '>', self.date_to),
+            ('holiday_status_id', '=', self.holiday_status_id.id),
+            ('state', '=', 'validate'),
+        ], order='date_from asc', limit=1)
+        if last_leave_taken:
+            if not self._check_work_interval_between_dates(last_leave_taken.date_to, self.date_from, employee):
+                raise UserError(_("You can't take two consecutive leaves of the same type."))
+        if next_leave_taken:
+            if not self._check_work_interval_between_dates(self.date_to, next_leave_taken.date_from, employee):
+                raise UserError(_("You can't take two consecutive leaves of the same type."))

@@ -109,4 +109,14 @@
         <field name="company_id" eval="False"/>
         <field name="country_id" ref="base.be"/>
     </record>
+
+    <record id="sick_leave_without_certificate" model="hr.leave.type">
+        <field name="name">Sick Leave Without Certificate</field>
+        <field name="requires_allocation">no</field>
+        <field name="request_unit">half_day</field>
+        <field name="leave_notif_subtype_id" ref="hr_holidays.mt_leave"/>
+        <field name="work_entry_type_id" ref="hr_work_entry_contract.work_entry_type_sick_leave"></field>
+        <field name="company_id" eval="False"/>
+        <field name="l10n_be_no_consecutive_leaves_allowed">True</field>
+    </record>
 </odoo>

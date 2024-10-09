@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding='UTF-8' ?>
+<odoo>
+    <record id="l10n_be_hr_payroll_leave_form_inherit" model="ir.ui.view">
+        <field name="name">l10n_be_hr_payroll.leave.form.inherit</field>
+        <field name="model">hr.leave.type</field>
+        <field name="inherit_id" ref="hr_holidays.edit_holiday_status_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group[@name='visual']" position="before">
+                    <group groups="base.group_no_one" string="Belgium">
+                            <field name="l10n_be_no_consecutive_leaves_allowed"/>
+                    </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>
