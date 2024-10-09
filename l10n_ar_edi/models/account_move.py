@@ -679,6 +679,11 @@ class AccountMove(models.Model):
         ArrayOfCbteAsoc = client.get_type('ns0:ArrayOfCbteAsoc')
         ArrayOfOpcional = client.get_type('ns0:ArrayOfOpcional')
 
+        if self.l10n_latam_document_type_id.code == '6' and (
+            self.commercial_partner_id.l10n_ar_afip_responsibility_type_id == self.env.ref('l10n_ar.res_EXT') or
+                self.commercial_partner_id.country_id.code != 'AR'):
+            vat = self.get_vat_country()
+
         res = {'FeCabReq': {
                    'CantReg': 1, 'PtoVta': self.journal_id.l10n_ar_afip_pos_number, 'CbteTipo': self.l10n_latam_document_type_id.code},
                'FeDetReq': [{'FECAEDetRequest': {
@@ -709,6 +714,18 @@ class AccountMove(models.Model):
                    'Compradores': None}}]}
         return res
 
+    def get_vat_country(self):
+        """ CUIT PAIS: Is default VAT(CUIT) that AFIP define per country to identify a foreign country partner, We have
+        3 CUIT PAIS per contry: one for legal entities, one for natural person and others.
+
+        Returns (int) number CUIT PAIS of the related partner, Is not CUIT PAIS then return 0 """
+        vat_country = 0
+        partner = self.commercial_partner_id
+        if partner.country_id.code != 'AR':
+            vat_country = partner.country_id.l10n_ar_legal_entity_vat if partner.is_company \
+                else partner.country_id.l10n_ar_natural_vat
+        return vat_country
+
     def wsfex_get_cae_request(self, last_id, client):
         if not self.commercial_partner_id.country_id:
             raise UserError(_('For WS "%s" country is required on partner', self.journal_id.l10n_ar_afip_ws))
@@ -724,10 +741,6 @@ class AccountMove(models.Model):
             raise RedirectWarning(msg, self.env.ref('l10n_ar_edi.action_help_afip').id, _('Go to AFIP page'))
 
         related_invoices = self._get_related_invoice_data()
-        vat_country = 0
-        if self.commercial_partner_id.country_id.code != 'AR':
-            vat_country = self.commercial_partner_id.country_id.l10n_ar_legal_entity_vat if self.commercial_partner_id.is_company \
-                else self.commercial_partner_id.country_id.l10n_ar_natural_vat
 
         ArrayOfItem = client.get_type('ns0:ArrayOfItem')
         ArrayOfCmp_asoc = client.get_type('ns0:ArrayOfCmp_asoc')
@@ -746,7 +759,7 @@ class AccountMove(models.Model):
                    self.commercial_partner_id.name or '', self.commercial_partner_id.street or '',
                    self.commercial_partner_id.street2 or '', self.commercial_partner_id.zip or '', self.commercial_partner_id.city or '']),
                'Id_impositivo': self.commercial_partner_id.vat or "",
-               'Cuit_pais_cliente': vat_country or 0,
+               'Cuit_pais_cliente': self.get_vat_country(),
                'Moneda_Id': self.currency_id.l10n_ar_afip_code,
                'Moneda_ctz': float_repr(1 / self.invoice_currency_rate, precision_digits=6),
                'Obs_comerciales': self.invoice_payment_term_id.name if self.invoice_payment_term_id else None,
