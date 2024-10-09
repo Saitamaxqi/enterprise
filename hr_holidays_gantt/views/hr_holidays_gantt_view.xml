@@ -53,6 +53,7 @@
                     string="Time Off"
                     date_start="start_datetime"
                     date_stop="stop_datetime"
+                    default_range="month"
                     default_group_by="employee_id"
                     decoration-info="state in ['confirm', 'validate1']"
                     color="employee_id"
