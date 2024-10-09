@@ -144,7 +144,7 @@ registry.category("web_tour.tours").add("test_shop_floor", {
         run: "click",
     },
     {
-        trigger: 'div.o_mrp_display_record .card-header .fa-play',
+        trigger: 'div.o_mrp_display_record:contains("Release") .card-header .fa-play',
         run: "click",
     },
     {

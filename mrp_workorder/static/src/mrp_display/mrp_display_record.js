@@ -523,6 +523,10 @@ export class MrpDisplayRecord extends Component {
                 this.props.record.update({ qty_producing: this.record.qty_production });
             }
             this.validatingEmployee = this.props.sessionOwner.id;
+            if (this.props.record.data.employee_ids.records.some((emp) => emp.resId == this.validatingEmployee)) {
+                await this.model.orm.call(resModel, "stop_employee", [resId, [this.validatingEmployee]]);
+                await this.props.record.load();
+            }
             await this.props.record.save();
             const action = await this.model.orm.call(resModel, "pre_record_production", [resId]);
             if (action && typeof action === "object") {
@@ -580,6 +584,7 @@ export class MrpDisplayRecord extends Component {
             await this.props.removeFromValidationStack(this.props.record);
             this.state.validated = true;
         }
+        this.env.reload();
     }
 
     async workorderValidation(skipRemoveFromStack = false) {
