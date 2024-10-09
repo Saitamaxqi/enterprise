@@ -60,6 +60,52 @@ class DiscussChannel(WhatsAppCommon, MockIncomingWhatsApp):
                     member_of_operator._gc_unpin_whatsapp_channels()
                 self.assertFalse(member_of_operator.is_pinned)
 
+    def test_post_with_audio_attachment(self):
+        message_vals_all = (
+            {'body': '', 'attachment_ids': self.audio_attachment_wa_admin.ids},
+            {'body': 'TestBody', 'attachment_ids': self.audio_attachment_wa_admin.ids},
+            {'body': 'TestBody', 'attachment_ids': (self.image_attachment_wa_admin + self.audio_attachment_wa_admin).ids},
+        )
+        for message_vals in message_vals_all:
+            expected_body = message_vals['body']
+            expect_audio_attachment = self.audio_attachment_wa_admin.id in message_vals['attachment_ids']
+            expect_image_attachment = self.image_attachment_wa_admin.id in message_vals['attachment_ids']
+            with self.subTest(
+                body=expected_body, image_attachment=expect_image_attachment, audio_attachment=expect_audio_attachment
+            ):
+                with self.mockWhatsappGateway(), self.mock_mail_app():
+                    return_message = self.test_channel_wa.message_post(
+                        author_id=self.test_channel_wa.whatsapp_partner_id.id,
+                        message_type='whatsapp_message',
+                        subtype_xmlid='mail.mt_comment',
+                        **message_vals,
+                    )
+                    self.assertEqual(len(return_message), 1, "We expect one returned message when posting.")
+                    if expected_body:
+                        self.assertIn(
+                            expected_body, return_message.body,
+                            "Should return the message containing the body if two are created."
+                        )
+                messages = self._new_msgs
+
+                expected_message_count = bool(message_vals['body']) + bool(expect_audio_attachment)
+
+                self.assertEqual(len(messages), expected_message_count)
+                self.assertEqual(len(self._wa_msg_sent), expected_message_count)
+                self.assertEqual(messages.wa_message_ids.mapped('msg_uid'), self._wa_msg_sent)
+
+                if expected_body:
+                    body_message = messages[0]
+                    self.assertIn(expected_body, body_message.body)
+                    if expect_image_attachment:
+                        self.assertEqual(len(body_message.attachment_ids), 1)
+                        self.assertEqual(body_message.attachment_ids.mimetype, 'image/jpeg')
+                if expect_audio_attachment:
+                    audio_message = messages[expected_message_count - 1]
+                    self.assertEqual(len(audio_message.attachment_ids), 1)
+                    self.assertEqual(audio_message.attachment_ids.mimetype, 'audio/mpeg')
+
+
     @users('user_wa_admin')
     def test_post_with_outbound(self):
         """ Test automatic whatsapp message creation when posting on a whatsapp

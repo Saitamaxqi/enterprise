@@ -41,7 +41,7 @@ class MockOutgoingWhatsApp(common.BaseCase):
             return {}
 
         def _get_whatsapp_document(document_id):
-            return "abcd"
+            return self._wa_document_store.get(document_id, "abcd")
 
         def _send_whatsapp(number, *, send_vals, **kwargs):
             if send_vals:
@@ -119,6 +119,7 @@ class MockOutgoingWhatsApp(common.BaseCase):
         self._new_wa_msg = self.env['whatsapp.message'].sudo()
         self._wa_msg_sent = []
         self._wa_msg_sent_vals = []
+        self._wa_document_store = {}
 
 
 class MockIncomingWhatsApp(common.HttpCase):
@@ -198,22 +199,53 @@ class MockIncomingWhatsApp(common.HttpCase):
             }
         )
 
-    def _receive_whatsapp_message(self, account, body, sender_phone_number, additional_message_values=None, msg_id=None):
+    def _receive_whatsapp_message(
+        self, account, body, sender_phone_number, message_type="text",
+        additional_message_values=None, content_values=None, sender_name='',
+    ):
+        body = body or ""
+        additional_message_values = additional_message_values or {}
+        content_values = content_values or {}
+        message_vals = {
+            "id": f"test_wa_{time.time():.9f}",
+            "from": sender_phone_number,
+            "timestamp": f"{time.time():.0f}",
+            "type": message_type,
+        }
+        match message_type:
+            case "text":
+                message_vals.update(text={"body": body} | content_values)
+            case "audio":
+                message_vals.update(audio={
+                    "mime_type": "audio/ogg; codecs=opus",
+                    "sha256": "cNkcfuFnXxg3WcBOc4A+nw8SBV0+2LyWkZ+0ZbeKPG0=",
+                    "id": f"{time.time():.0f}",
+                    "voice": True,
+                } | content_values)
+            case "image":
+                message_vals.update(image={
+                    "caption": body,
+                    "mime_type": "image/jpeg",
+                    "sha256": "GToZ5lsWaujMRC7kjueZsKxnNVXo/29NbHJmO6OZa+M=",
+                    "id": f"{time.time():.0f}",
+                } | content_values)
+            case _:
+                raise Exception(f"Unsupported whatsapp message type {message_type}")
+        message_vals.update(additional_message_values)
         message_data = json.dumps({
+            "object": "whatsapp_business_account",
             "entry": [{
                 "id": account.account_uid,
                 "changes": [{
                     "field": "messages",
                     "value": {
-                        "metadata": {"phone_number_id": account.phone_uid},
-                        "messages": [
-                            dict({
-                                "id": msg_id or f"test_wa_{time.time():.9f}",
-                                "from": sender_phone_number,
-                                "type": "text",
-                                "text": {"body": body}
-                            }, **(additional_message_values or {}))
-                        ],
+                        "messaging_product": "whatsapp",
+                        "metadata": {"phone_number_id": account.phone_uid, "display_phone_number": "12345678912"},
+                        "contacts": [{
+                            "profile": {"name": sender_name},
+                            "wa_id": f"{time.time() % 9 // 1:.0f}{sender_phone_number[1:]}",  # not necessarily the actual phone number
+                        }],
+                        "messages": [message_vals],
                     }
                 }]
             }]
@@ -701,6 +733,8 @@ class WhatsAppCommon(MailCommon, WhatsAppCase):
                       "AAAAAQAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAABidWR0"
                       "YQAAAFptZXRhAAAAAAAAACFoZGxyAAAAAAAAAABtZGlyYXBwbAAAAAAAAAAAAAAAAC1pbHN0AAAA"
                       "Jal0b28AAAAdZGF0YQAAAAEAAAAATGF2ZjU3LjQxLjEwMA==")
+        audio_data = '/+MYxAAAAANIAAAAAExBTUUzLjk4LjIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA'
+
         documents = cls.env['ir.attachment'].with_user(cls.user_employee).create([
             {'name': 'Document.pdf', 'datas': pdf_data},
             {'name': 'Image.jpg', 'datas': image_data},
@@ -713,8 +747,9 @@ class WhatsAppCommon(MailCommon, WhatsAppCase):
             {'name': 'Image.jpg', 'datas': image_data},
             {'name': 'Video.mpg', 'datas': video_data},
             {'name': 'Payload.wasm', 'datas': "AGFzbQEAAAA=", 'mimetype': 'application/octet-stream'},
+            {'name': 'Audio.mp3', 'datas': audio_data},
         ])
-        cls.document_attachment_wa_admin, cls.image_attachment_wa_admin, cls.video_attachment_wa_admin, cls.invalid_attachment_wa_admin = documents_wa_admin
+        cls.document_attachment_wa_admin, cls.image_attachment_wa_admin, cls.video_attachment_wa_admin, cls.invalid_attachment_wa_admin, cls.audio_attachment_wa_admin = documents_wa_admin
 
     @classmethod
     def _setup_share_users(cls):

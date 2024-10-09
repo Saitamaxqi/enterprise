@@ -98,7 +98,7 @@ class DiscussChannel(models.Model):
                 self.env['whatsapp.message'].browse(parent_msg_id).state = 'replied'
         return recipients_data
 
-    def message_post(self, *, message_type='notification', parent_id=False, **kwargs):
+    def message_post(self, *args, body='', attachment_ids=None, message_type='notification', parent_id=False, **kwargs):
         valid_parent_id = False
         if parent_id and self.whatsapp_number:
             parent_wa_msg = self.env['mail.message'].browse(parent_id).wa_message_ids
@@ -108,23 +108,60 @@ class DiscussChannel(models.Model):
                 parent_wa_msg.mobile_number_formatted == self.whatsapp_number  # same recipient
             ):
                 valid_parent_id = parent_id
-        new_msg = super().message_post(message_type=message_type, parent_id=parent_id, **kwargs)
-        if valid_parent_id:
-            new_msg.parent_id = valid_parent_id
-        if self.channel_type == 'whatsapp' and message_type == 'whatsapp_message':
-            if new_msg.author_id == self.whatsapp_partner_id:
-                self.last_wa_mail_message_id = new_msg
-                self._bus_send_store(self, "whatsapp_channel_valid_until")
+
+        if message_type != 'whatsapp_message' or self.channel_type != 'whatsapp':
+            message = super().message_post(
+                *args, body=body, attachment_ids=attachment_ids,
+                message_type=message_type, parent_id=parent_id, **kwargs
+            )
+            if valid_parent_id:
+                message.parent_id = valid_parent_id
+            return message
+
+        messages = None
+        if not kwargs.get('whatsapp_inbound_msg_uid') and attachment_ids and body:
+            audio_types = self.env['whatsapp.message']._SUPPORTED_ATTACHMENT_TYPE['audio']
+            attachment_records = self.env['ir.attachment'].browse(attachment_ids)
+            audio_attachments = attachment_records.filtered(lambda x: x.mimetype in audio_types)
+
+            if audio_attachments:
+                body_message = super().message_post(
+                    *args, message_type=message_type, body=body,
+                    attachment_ids=(attachment_records - audio_attachments).ids,
+                    parent_id=parent_id, **kwargs,
+                )
+                audio_message = super().message_post(
+                    *args, message_type=message_type, attachment_ids=audio_attachments.ids,
+                    parent_id=parent_id, **kwargs,
+                )
+                messages = body_message + audio_message
+        if not messages:
+            messages = super().message_post(
+                *args, body=body, message_type=message_type, attachment_ids=attachment_ids,
+                parent_id=parent_id, **kwargs,
+            )
+
+        whatsapp_message_vals = []
+        for new_msg in messages:
             if not new_msg.wa_message_ids:
-                whatsapp_message = self.env['whatsapp.message'].create({
+                whatsapp_message_vals.append({
                     'body': new_msg.body,
                     'mail_message_id': new_msg.id,
                     'message_type': 'outbound',
                     'mobile_number': f'+{self.whatsapp_number}',
                     'wa_account_id': self.wa_account_id.id,
                 })
-                whatsapp_message._send()
-        return new_msg
+        if messages.author_id == self.whatsapp_partner_id:
+            self.last_wa_mail_message_id = new_msg
+            self._bus_send_store(self, "whatsapp_channel_valid_until")
+        if whatsapp_message_vals:
+            self.env['whatsapp.message'].create(whatsapp_message_vals)._send_message()
+
+        if valid_parent_id:
+            messages.parent_id = valid_parent_id
+
+        # only return the non-audio message if there are two, as we don't expect to post two messages
+        return messages[0]
 
     # ------------------------------------------------------------
     # CONTROLLERS

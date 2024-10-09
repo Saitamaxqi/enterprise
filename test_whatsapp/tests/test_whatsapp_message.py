@@ -259,3 +259,51 @@ class WhatsAppMessage(WhatsAppFullCase, MockIncomingWhatsApp):
                 'state': 'received',
             },
         )
+
+    def test_receive_attachment(self):
+        """Ensure incoming attachments are processed and attached to messages properly."""
+        # Image
+        with self.mockWhatsappGateway(), self.mock_mail_app():
+            self._wa_document_store['image_doc_id'] = self.image_attachment_wa_admin.raw
+            self._receive_whatsapp_message(
+                self.whatsapp_account, 'Hello', '32499123456', message_type="image", content_values={
+                    'mime_type': self.image_attachment_wa_admin.mimetype,
+                    'sha256': '',  # currently not checked...
+                    'id': 'image_doc_id',
+                }
+            )
+        self.assertWhatsAppDiscussChannel(
+            "32499123456",
+            wa_msg_count=1, msg_count=1,
+            wa_message_fields_values={
+                'state': 'received',
+            },
+        )
+        channel_message = self._new_msgs.filtered(lambda msg: msg.model == 'discuss.channel')
+        self.assertEqual(len(channel_message.attachment_ids), 1)
+        self.assertEqual(channel_message.attachment_ids.datas, self.image_attachment_wa_admin.datas)
+        # Voice
+        with self.mockWhatsappGateway(), self.mock_mail_app():
+            self._wa_document_store['audio_doc_id'] = self.audio_attachment_wa_admin.raw
+            self._receive_whatsapp_message(
+                self.whatsapp_account, 'Hello', '32499123456', message_type="image", content_values={
+                    'filename': 'audio.ogg',
+                    'id': 'audio_doc_id',
+                    'mime_type': self.audio_attachment_wa_admin.mimetype,
+                    'sha256': '',
+                    'voice': True,
+                }
+            )
+        self.assertWhatsAppDiscussChannel(
+            "32499123456",
+            wa_msg_count=2, msg_count=2,
+            wa_message_fields_values={
+                'state': 'received',
+            },
+        )
+        self.assertEqual(len(self._new_msgs), 1)
+        attachment = self._new_msgs.attachment_ids
+        self.assertEqual(len(attachment), 1)
+        self.assertEqual(attachment.datas, self.audio_attachment_wa_admin.datas)
+        self.assertEqual(attachment.name, "audio.ogg")
+        self.assertTrue(attachment.voice_ids)
