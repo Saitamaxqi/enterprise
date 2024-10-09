@@ -1395,7 +1395,9 @@ class SaleOrder(models.Model):
         # only when prepayment_per is 100 or if there is no invoice in case prepayment_per < 100
         to_invoice_ids = []
         for sub in self:
-            if sub.payment_token_id or not sub.require_payment or (sub.id not in invoiced_sub_ids and sub.prepayment_percent != 1):
+            if (sub.payment_token_id or not sub.require_payment
+                or (sub.id not in invoiced_sub_ids and sub.prepayment_percent != 1)
+                or sub._invoice_is_considered_free(sub.with_context(recurring_automatic=True)._get_invoiceable_lines())[0]):
                 to_invoice_ids.append(sub.id)
         return self.browse(to_invoice_ids)
 
