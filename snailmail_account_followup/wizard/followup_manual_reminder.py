@@ -10,11 +10,12 @@ class FollowupManualReminder(models.TransientModel):
     snailmail = fields.Boolean()
     snailmail_cost = fields.Float(string='Stamps', default=1, readonly=True, compute='_compute_snailmail_cost')
 
-    @api.depends('snailmail')
+    @api.depends('partner_id')
     def _compute_snailmail_cost(self):
-        # We send the letter to the main address of the company (self) and the followup contacts
-        followup_contacts = self.partner_id._get_all_followup_contacts()
-        self.snailmail_cost = len(followup_contacts) + 1
+        for record in self:
+            # We send the letter to the main address of the company (self) and the followup contacts
+            followup_contacts = record.partner_id._get_all_followup_contacts()
+            record.snailmail_cost = len(followup_contacts) + 1
 
     def _get_wizard_options(self):
         # OVERRIDE account_followup/wizard/followup_manual_reminder.py
