@@ -1,5 +1,6 @@
 
 from odoo import models, fields, api
+from odoo.addons.account_batch_payment.models.sepa_mapping import sanitize_communication
 
 
 class ResCompany(models.Model):
@@ -20,7 +21,7 @@ class ResCompany(models.Model):
             # for iso20022_initiating_party_name field
             name = vals.get('name')
             if name and 'iso20022_initiating_party_name' not in vals:
-                vals['iso20022_initiating_party_name'] = self.env['account.journal']._sepa_sanitize_communication(name)
+                vals['iso20022_initiating_party_name'] = sanitize_communication(name)
         return super().create(vals_list)
 
     @api.depends('partner_id.country_id')

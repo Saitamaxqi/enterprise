@@ -10,6 +10,7 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_repr, float_round
 
 import odoo.addons.account.tools.structured_reference as sr
+from odoo.addons.account_batch_payment.models.sepa_mapping import sanitize_communication
 
 
 class AccountJournal(models.Model):
@@ -225,7 +226,7 @@ class AccountJournal(models.Model):
         PmtId = etree.SubElement(CdtTrfTxInf, "PmtId")
         if payment['name']:
             InstrId = etree.SubElement(PmtId, "InstrId")
-            InstrId.text = self._sepa_sanitize_communication(payment['name'], 35)
+            InstrId.text = sanitize_communication(payment['name'], 35)
         EndToEndId = etree.SubElement(PmtId, "EndToEndId")
         EndToEndId.text = (payment.get('end_to_end_id') or PmtInfId.text + str(payment['id']))[-30:].strip()
         Amt = etree.SubElement(CdtTrfTxInf, "Amt")
@@ -250,7 +251,7 @@ class AccountJournal(models.Model):
 
         Cdtr = etree.SubElement(CdtTrfTxInf, "Cdtr")
         Nm = etree.SubElement(Cdtr, "Nm")
-        Nm.text = self._sepa_sanitize_communication((
+        Nm.text = sanitize_communication((
             partner_bank.acc_holder_name or partner.name or partner.commercial_partner_id.name or '/'
         )[:70]).strip() or '/'
 
@@ -323,7 +324,7 @@ class AccountJournal(models.Model):
         # Check whether we have a structured communication
         else:
             Ustrd = etree.SubElement(RmtInf, "Ustrd")
-            Ustrd.text = self._sepa_sanitize_communication(payment['memo'])
+            Ustrd.text = sanitize_communication(payment['memo'])
         return RmtInf
 
     def _get_company_PartyIdentification32(self, payment_method_code, postal_address=True, nm=True, issr=True, schme_nm=False):
@@ -350,10 +351,10 @@ class AccountJournal(models.Model):
                 OrgId.insert(0, LEI)
             Othr = etree.SubElement(OrgId, "Othr")
             _Id = etree.SubElement(Othr, "Id")
-            _Id.text = self._sepa_sanitize_communication(self.company_id.iso20022_orgid_id)
+            _Id.text = sanitize_communication(self.company_id.iso20022_orgid_id)
             if issr and company.iso20022_orgid_issr:
                 Issr = etree.SubElement(Othr, "Issr")
-                Issr.text = self._sepa_sanitize_communication(company.iso20022_orgid_issr)
+                Issr.text = sanitize_communication(company.iso20022_orgid_issr)
             if schme_nm:
                 SchmeNm = etree.SubElement(Othr, "SchmeNm")
                 Cd = etree.SubElement(SchmeNm, "Cd")
@@ -380,7 +381,7 @@ class AccountJournal(models.Model):
         company = self.company_id
         name_length = 35 if company.iso20022_initiating_party_name else 70
         name = company.iso20022_initiating_party_name or company.name
-        return self._sepa_sanitize_communication(name[:name_length])
+        return sanitize_communication(name[:name_length])
 
     def _get_SvcLvlText(self, payment_method_code):
         # 'SEPA' covers the current cases of pain 03, 09, the Austrian and the German version.
@@ -395,10 +396,10 @@ class AccountJournal(models.Model):
             # Some banks seem allergic to having the zip in a separate tag, so we do as before
             if partner_address.get('street'):
                 AdrLine = etree.SubElement(PstlAdr, "AdrLine")
-                AdrLine.text = self._sepa_sanitize_communication(partner_address['street'][:70])
+                AdrLine.text = sanitize_communication(partner_address['street'][:70])
             if partner_address.get('zip') and partner_address.get('city'):
                 AdrLine = etree.SubElement(PstlAdr, "AdrLine")
-                AdrLine.text = self._sepa_sanitize_communication((partner_address['zip'] + " " + partner_address['city'])[:70])
+                AdrLine.text = sanitize_communication((partner_address['zip'] + " " + partner_address['city'])[:70])
             return PstlAdr
         return None
 

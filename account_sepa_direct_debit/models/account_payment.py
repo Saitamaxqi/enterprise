@@ -10,8 +10,7 @@ from odoo.exceptions import UserError
 
 from odoo.tools.float_utils import float_repr
 from odoo.tools.xml_utils import create_xml_node, create_xml_node_chain
-from odoo.addons.account_batch_payment.models.sepa_mapping import _replace_characters_SEPA
-
+from odoo.addons.account_batch_payment.models.sepa_mapping import sanitize_communication
 from lxml import etree
 
 
@@ -64,7 +63,7 @@ class AccountPayment(models.Model):
     @api.model
     def split_node(self, string_node, max_size):
         # Split a string node according to its max_size in byte
-        string_node = self._sanitize_communication(string_node)
+        string_node = sanitize_communication(string_node)
         byte_node = string_node.encode()
         if len(byte_node) <= max_size:
             return string_node, ''
@@ -85,24 +84,6 @@ class AccountPayment(models.Model):
         for pay in self:
             if pay.sdd_mandate_id and pay.sdd_mandate_id.partner_id != pay.partner_id.commercial_partner_id:
                 raise UserError(_("Trying to register a payment on a mandate belonging to a different partner."))
-
-    @api.model
-    def _sanitize_communication(self, communication):
-        """ Returns a sanitized version of the communication given in parameter,
-            so that:
-                - it contains only latin characters
-                - it does not contain any //
-                - it does not start or end with /
-            (these are the SEPA compliance criteria)
-        """
-        while '//' in communication:
-            communication = communication.replace('//', '/')
-        if communication.startswith('/'):
-            communication = communication[1:]
-        if communication.endswith('/'):
-            communication = communication[:-1]
-        communication = _replace_characters_SEPA(communication)
-        return communication
 
     def generate_xml(self, company_id, required_collection_date, askBatchBooking):
         """ Generates a SDD XML file containing the payments corresponding to this recordset,

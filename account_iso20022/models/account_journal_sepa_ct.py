@@ -2,7 +2,7 @@
 from lxml import etree
 from odoo import _, fields, models
 from odoo.exceptions import UserError
-from odoo.addons.account_batch_payment.models.sepa_mapping import _replace_characters_SEPA
+from odoo.addons.account_batch_payment.models.sepa_mapping import sanitize_communication
 
 
 class AccountJournal(models.Model):
@@ -59,7 +59,7 @@ class AccountJournal(models.Model):
                 for node_name, attr, size in [('StrtNm', 'street', 70), ('PstCd', 'zip', 140), ('TwnNm', 'city', 140)]:
                     if postal_address[attr]:
                         address_element = etree.SubElement(PstlAdr, node_name)
-                        address_element.text = self._sepa_sanitize_communication(postal_address[attr], size)
+                        address_element.text = sanitize_communication(postal_address[attr], size)
                 return PstlAdr
         return super()._get_PstlAdr(partner_id, payment_method_code)
 
@@ -112,29 +112,11 @@ class AccountJournal(models.Model):
         if self.env.context.get('l10n_be_hr_payroll_sepa_salary_payment'):
             RmtInf = super()._get_RmtInf(payment_method_code, payment)
             Ustrd = etree.SubElement(RmtInf, "Ustrd")
-            Ustrd.text = self._sepa_sanitize_communication(payment['memo'])
+            Ustrd.text = sanitize_communication(payment['memo'])
             if self.env.context.get('l10n_be_hr_payroll_sepa_salary_payment'):
                 Ustrd.text = f"/A/ {Ustrd.text}"
             return RmtInf
         return super()._get_RmtInf(payment_method_code, payment)
-
-    def _sepa_sanitize_communication(self, communication, size=140):
-        """ Returns a sanitized version of the communication given in parameter,
-            so that:
-                - it contains only latin characters
-                - it does not contain any //
-                - it does not start or end with /
-                - it is maximum 140 characters long
-            (these are the SEPA compliance criteria)
-        """
-        while '//' in communication:
-            communication = communication.replace('//', '/')
-        if communication.startswith('/'):
-            communication = communication[1:]
-        if communication.endswith('/'):
-            communication = communication[:-1]
-        communication = _replace_characters_SEPA(communication, size)
-        return communication
 
     def _get_bic_tag(self, payment_method_code):
         if payment_method_code == 'sepa_ct' and self.sepa_pain_version == "pain.001.001.09":
