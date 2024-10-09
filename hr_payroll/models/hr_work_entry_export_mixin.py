@@ -29,7 +29,7 @@ class HrWorkEntryExportMixin(models.AbstractModel):
     @api.model
     def default_get(self, fields):
         country_restriction = self._country_restriction()
-        if country_restriction and self.env.company.country_id.code != country_restriction:
+        if country_restriction and country_restriction not in self.env.companies.mapped('country_id.code'):
             raise UserError(_(
                 'You must be logged in a %(country_code)s company to use this feature',
                 country_code=country_restriction
@@ -37,7 +37,7 @@ class HrWorkEntryExportMixin(models.AbstractModel):
         return super().default_get(fields)
 
     def _get_company_domain(self):
-        domain = Domain('id', '=', self.env.company.id)
+        domain = Domain('id', 'in', self.env.companies.ids)
         if restriction := self._country_restriction():
             domain &= Domain('country_id.code', '=', restriction)
         return domain

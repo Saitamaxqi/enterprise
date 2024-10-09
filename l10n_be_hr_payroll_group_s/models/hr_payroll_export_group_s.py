@@ -4,7 +4,8 @@ from datetime import datetime
 from math import ceil
 
 from odoo import api, models, fields, _
-from odoo.exceptions import UserError
+from odoo.fields import Domain
+from odoo.exceptions import RedirectWarning, UserError
 
 
 class L10nBeHrPayrollExportGroupS(models.Model):
@@ -17,6 +18,28 @@ class L10nBeHrPayrollExportGroupS(models.Model):
     @api.model
     def _country_restriction(self):
         return 'BE'
+
+    @api.model
+    def default_get(self, fields):
+        res = super().default_get(fields)
+        if not (companies := self.env.companies.filtered(
+            lambda company: company.group_s_code and company.country_id.code == self._country_restriction())
+        ):
+            raise RedirectWarning(
+                _('The companies must have an affiliation number to export to Group S.'),
+                action=self.env.ref('hr_payroll.action_hr_payroll_configuration').id,
+                button_text=_('Go to Settings')
+            )
+        if 'company_id' in fields:
+            res['company_id'] = self.env.company.id \
+                if self.env.company in companies else companies[0].id
+        return res
+
+    def _get_company_domain(self):
+        return Domain.AND([
+            super()._get_company_domain(),
+            [('group_s_code', '!=', False)]
+        ])
 
     def _compose_group_s_starter(self):
         """Group S requires a start line composed of a series of fixed-length fields.
@@ -234,14 +257,14 @@ class L10nBeHrPayrollExportGroupS(models.Model):
         [36]       - 4      - ASCII     - file extension                (.dat)
         ```
         """
-        self.env.company.group_s_sequence_number += 1
-        if len(str(self.env.company.group_s_sequence_number)) > 5:
-            self.env.company.group_s_sequence_number = 0
+        self.company_id.group_s_sequence_number += 1
+        if len(str(self.company_id.group_s_sequence_number)) > 5:
+            self.company_id.group_s_sequence_number = 0
         return '_'.join([
             'FIPAI', 'PTG',
-            f'{int(self.env.company.group_s_code):06d}',
-            f'{self.env.company.id:06d}',
-            f'{self.env.company.group_s_sequence_number:05d}',
+            f'{int(self.company_id.group_s_code):06d}',
+            f'{self.company_id.id:06d}',
+            f'{self.company_id.group_s_sequence_number:05d}',
             datetime.now().strftime('%Y%m%d'), '000000.dat'
         ])
 
