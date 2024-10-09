@@ -225,9 +225,17 @@ class TestWebsiteDeliverySendcloudLocationsController(TransactionCase):
                         pickup_location_data=json.dumps(response['pickup_locations'][0])
                     )
         sale_order.action_confirm()
+        # the delivery adress of the SO and the delivery should have been updated
+        # to gather the mail and phon number of the partner but the pickup point address
         delivery = sale_order.picking_ids
         self.assertEqual(sale_order.partner_shipping_id, delivery.partner_id)
-        self.assertEqual(delivery.partner_id.type, "delivery")
+        self.assertRecordValues(delivery.partner_id, [{
+            'type': 'delivery',
+            'name': 'Station Avia',
+            'contact_address_complete': 'Chaussee De Namur 67, 1367 Ramillies, Belgium',
+            'email': 'bob@email.com',
+            'phone': '+1 555-555-555',
+        }])
         sendcloud_class = 'odoo.addons.delivery_sendcloud.models.sendcloud_service.SendCloud'
 
         def _prepare_fake_parcel(self, *args, **kwargs):
