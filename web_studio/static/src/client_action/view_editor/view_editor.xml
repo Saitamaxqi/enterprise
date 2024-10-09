@@ -22,7 +22,7 @@
 </t>
 
 <t t-name="web_studio.ViewEditor.View">
-  <div class="o_web_studio_view_renderer overflow-auto h-100" t-ref="viewRenderer">
+  <div class="o_web_studio_view_renderer overflow-auto h-100 pe-auto" t-ref="viewRenderer">
     <StudioView
       t-props="viewEditorModel.studioViewProps"
       t-key="viewEditorModel.studioViewKey"
