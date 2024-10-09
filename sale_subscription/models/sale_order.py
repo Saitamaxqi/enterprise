@@ -2044,3 +2044,29 @@ class SaleOrder(models.Model):
                     if reminder_mail_template:
                         reminder_mail_template.with_context(email_context).send_mail(subscription.id)
                         subscription.last_reminder_date = today
+
+    def _get_ratio_value(self, new_upsell=False):
+        """ Compute ratio for a given order
+        :param new_upsell: force the start date
+        return: ratio
+        rtype: float
+        """
+        self.ensure_one()
+        today = fields.Date.today()
+        if new_upsell:
+            parent_id = self
+            start_date = today
+        else:
+            parent_id = self.subscription_id
+            start_date = max(self.start_date or today, self.first_contract_date or today)
+        end_date = parent_id and parent_id.next_invoice_date or today
+        if not end_date or start_date >= end_date:
+            ratio = 0
+        else:
+            recurrence = parent_id.plan_id.billing_period
+            complete_rec = 0
+            while end_date - recurrence >= start_date:
+                complete_rec += 1
+                end_date -= recurrence
+            ratio = (end_date - start_date).days / ((start_date + recurrence) - start_date).days + complete_rec
+        return ratio

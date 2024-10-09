@@ -8,7 +8,7 @@ from odoo.addons.mail.tests.common import MockEmail
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
 from odoo.addons.sale_subscription.models.sale_order import SaleOrder
 from odoo.tests import Form, tagged, freeze_time
-from odoo.tools import mute_logger
+from odoo.tools import mute_logger, format_date
 from odoo import fields, Command
 from odoo.exceptions import AccessError, ValidationError, UserError
 
@@ -4212,6 +4212,71 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 sub_6.transaction_ids._get_last()._post_process()
 
             SaleOrder._cron_recurring_send_payment_reminder()
+
+    def test_upsell_line_note_update(self):
+        """"
+        Test that the line note is handled correctly in upsell orders:
+        For positive discount upsell orders, the line note remains unchanged.
+        For negative discount upsell orders, the line note is updated to reflect the surcharged prorated period.
+        """
+        with freeze_time("2022-01-01"):
+            self.subscription.write({
+                'partner_id': self.partner.id,
+                'plan_id': self.plan_year.id,
+                'name': 'First order'
+            })
+            # Test the positive discount (line note remains unchanged)
+            # Create a second sale order (for positive discount scenario)
+            sale_order_2 = self.subscription.copy({'name': 'Second order'})
+            (self.subscription | sale_order_2).action_confirm()
+            self.env['sale.order']._cron_recurring_create_invoice()
+
+        with freeze_time("2022-09-10"):
+            action = sale_order_2.prepare_upsell_order()
+            upsell_so_2 = self.env['sale.order'].browse(action['res_id'])
+            upsell_so_2.name = "Upsell of second order"
+            upsell_so_2.order_line.filtered(lambda l: not l.display_type).product_uom_qty = 1
+            self.assertEqual(upsell_so_2.order_line.mapped('product_uom_qty'), [1.0, 1.0, 0])
+            upsell_so_2.action_confirm()
+
+            self.assertEqual(upsell_so_2.order_line.mapped('discount'), [69.04, 69.04, 0])
+            expected_line_name = (
+                '(*) These recurring products are discounted according to the prorated period from %s to %s' % (
+                format_date(self.env, upsell_so_2.start_date),
+                format_date(self.env, upsell_so_2.next_invoice_date - relativedelta(days=1))
+            ))
+            upsell_order_line_note = upsell_so_2.order_line.filtered(lambda l: l.display_type == 'line_note').name
+            self.assertEqual(expected_line_name, upsell_order_line_note)
+
+            # Test for negative discount (line note should be updated)
+            # Prepare and confirm the renewal order (for negative discount scenario)
+            action = self.subscription.prepare_renewal_order()
+            renewal_so = self.env['sale.order'].browse(action['res_id'])
+            renewal_so.name = 'Renewal SO'
+            renewal_so.action_confirm()
+            renewal_so._create_invoices()
+            renewal_so.order_line.invoice_lines.move_id._post()
+
+            self.assertEqual(renewal_so.start_date, datetime.date(2023, 1, 1))
+            self.assertEqual(renewal_so.next_invoice_date, datetime.date(2024, 1, 1))
+
+        with freeze_time("2022-10-02"):
+            self.env['sale.order']._cron_recurring_create_invoice()
+            action = renewal_so.prepare_upsell_order()
+            upsell_so = self.env['sale.order'].browse(action['res_id'])
+            upsell_so.name = "Upsell of renewal"
+            upsell_so.order_line.filtered(lambda l: not l.display_type).product_uom_qty = 1
+            upsell_so.action_confirm()
+
+            # Assert that the discounts are negative and the line note is updated accordingly
+            self.assertEqual(upsell_so.order_line.mapped('discount'), [-24.93, -24.93, 0])
+            expected_line_name = (
+                '(*) These recurring products are surcharged according to the prorated period from %s to %s' % (
+                format_date(self.env, upsell_so.start_date),
+                format_date(self.env, upsell_so.next_invoice_date - relativedelta(days=1))
+            ))
+            upsell_order_line_note = upsell_so.order_line.filtered(lambda l: l.display_type == 'line_note').name
+            self.assertEqual(expected_line_name, upsell_order_line_note)
 
 
 @tagged('post_install', '-at_install')

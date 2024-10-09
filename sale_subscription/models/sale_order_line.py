@@ -84,7 +84,6 @@ class SaleOrderLine(models.Model):
                         complete period before computing the prorata for the current period.
                         For the current period, we use the remaining number of days / by the number of day in the current period.
         """
-        today = fields.Date.today()
         other_lines = self.env['sale.order.line']
         line_per_so = defaultdict(lambda: self.env['sale.order.line'])
         for line in self:
@@ -99,23 +98,13 @@ class SaleOrderLine(models.Model):
             if not parent_id.next_invoice_date or order_id.subscription_state != '7_upsell':
                 # We don't apply discount
                 continue
-            start_date = max(order_id.start_date or today, order_id.first_contract_date or today)
-            end_date = parent_id.next_invoice_date
-            if start_date >= end_date:
-                ratio = 0
-            else:
-                recurrence = parent_id.plan_id.billing_period
-                complete_rec = 0
-                while end_date - recurrence >= start_date:
-                    complete_rec += 1
-                    end_date -= recurrence
-                ratio = (end_date - start_date).days / ((start_date + recurrence) - start_date).days + complete_rec
+            ratio = order_id._get_ratio_value()
             # If the parent line had a discount, we reapply it to keep the same conditions.
             # E.G. base price is 200€, parent line has a 10% discount and upsell has a 25% discount.
             # We want to apply a final price equal to 200 * 0.75 (prorata) * 0.9 (discount) = 135 or 200*0,675
             # We need 32.5 in the discount
             add_comment = False
-            line_to_discount, discount_comment = lines._get_renew_discount_info()
+            line_to_discount, discount_comment = lines._get_renew_discount_info(upsell_ratio=ratio)
             for line in line_to_discount:
                 if line.parent_line_id and line.parent_line_id.discount:
                     line.discount = (1 - ratio * (1 - line.parent_line_id.discount / 100)) * 100
@@ -425,7 +414,7 @@ class SaleOrderLine(models.Model):
     # Business Methods #
     ####################
 
-    def _get_renew_discount_info(self):
+    def _get_renew_discount_info(self, upsell_ratio=0):
         order = self.order_id
         if len(order) != 1:
             return [], ""
@@ -437,7 +426,11 @@ class SaleOrderLine(models.Model):
         else:
             format_start = format_date(self.env, start_date)
             format_end = format_date(self.env, end_date)
-            line_name = _('(*) These recurring products are discounted according to the prorated period from %(start)s to %(end)s',
+            if upsell_ratio <= 1:
+                line_name = _('(*) These recurring products are discounted according to the prorated period from %(start)s to %(end)s',
+                start=format_start, end=format_end)
+            else:
+                line_name = _('(*) These recurring products are surcharged according to the prorated period from %(start)s to %(end)s',
                 start=format_start, end=format_end)
         return self.filtered_domain(self._need_renew_discount_domain()), line_name
 
@@ -449,7 +442,12 @@ class SaleOrderLine(models.Model):
         order_lines = []
         description_needed, description_name = [], ""
         if subscription_state == '7_upsell':
-            description_needed, description_name = self._get_renew_discount_info()
+            if len(self.order_id) > 1:
+                ratio = 0
+            else:
+                ratio = self.order_id._get_ratio_value(new_upsell=True)
+            # kaput the self is the renewal here !
+            description_needed, description_name = self._get_renew_discount_info(upsell_ratio=ratio)
         for line in self:
             if not line.recurring_invoice:
                 continue

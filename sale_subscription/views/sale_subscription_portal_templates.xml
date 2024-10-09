@@ -486,6 +486,11 @@
 
     <!-- Sale order (quotations): display recurrence -->
     <template id="sale_order_portal_content_inherit" inherit_id="sale.sale_order_portal_content">
+        <t t-set="display_discount" position="attributes">
+            <attribute name="t-value">
+                True in [bool(line.discount) if sale_order.subscription_state == '7_upsell' else line.discount > 0 for line in sale_order.order_line]
+            </attribute>
+        </t>
         <tbody id="sale_info_table" position="inside">
             <tr t-if="sale_order.subscription_id">
                 <th class="ps-0 pb-0">Subscription:</th>
@@ -507,6 +512,12 @@
                 <span t-field="line.product_uom"/>
             </td>
         </td>
+        <div t-field="line.price_unit" position="attributes">
+            <attribute name="t-if" separator="or" add="sale_order.subscription_state == '7_upsell'"/>
+        </div>
+        <strong t-if="line.discount &gt; 0" position="attributes">
+            <attribute name="t-if" separator="or" add="sale_order.subscription_state == '7_upsell'"/>
+        </strong>
         <div id="intro_row" position="inside">
             <div t-if="sale_order.subscription_state == '7_upsell'">
                 <span class="badge rounded-pill text-bg-primary"><i class="fa fa-fw fa-check"/> Upsell</span>
