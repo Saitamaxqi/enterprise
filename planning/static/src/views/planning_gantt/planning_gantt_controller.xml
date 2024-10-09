@@ -4,7 +4,7 @@
 
     <t t-name="planning.PlanningGanttView.Buttons" t-inherit="web_gantt.GanttView.Buttons">
         <xpath expr="//div" position="inside">
-            <div class="btn-group px-1">
+            <div class="btn-group">
                 <div class="btn-group d-block">
                     <button t-if="model.metaData.canEdit"
                         class="o_gantt_button_send_all btn btn-primary"

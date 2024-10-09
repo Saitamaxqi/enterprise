@@ -442,10 +442,10 @@
 
     <div t-name="StreamPostKanbanView.buttons" t-inherit="web.KanbanView.Buttons">
         <xpath expr="//div[hasclass('o_cp_buttons')]" position="inside">
-            <button type="button" class="btn btn-primary o_stream_post_kanban_new_stream me-1" t-on-click.prevent="_onNewStream">
+            <button type="button" class="btn btn-primary o_stream_post_kanban_new_stream" t-on-click.prevent="_onNewStream">
                 Add Stream
             </button>
-            <button  t-if="hasAccounts" type="button" class="btn btn-primary o_stream_post_kanban_new_post me-1" t-on-click.prevent="_onNewPost">
+            <button  t-if="hasAccounts" type="button" class="btn btn-primary o_stream_post_kanban_new_post" t-on-click.prevent="_onNewPost">
                 New Post
             </button>
             <button t-if="hasAccounts" type="button" class="btn btn-secondary o_stream_post_kanban_refresh_now" t-att-disabled="state.disableSyncButton" t-on-click.prevent="_onRefreshStats">

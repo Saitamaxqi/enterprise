@@ -43,7 +43,7 @@
     </t>
 
     <t t-name="web_gantt.GanttView.Buttons">
-        <div class="d-flex flex-wrap o_gantt_buttons_container">
+        <div class="d-empty-none d-flex flex-wrap o_gantt_buttons_container">
         </div>
     </t>
 
