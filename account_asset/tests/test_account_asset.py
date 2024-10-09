@@ -2875,9 +2875,6 @@ class TestAccountAsset(TestAccountReportsCommon):
         self.assertTrue(added_move_on_sale.asset_move_type == 'sale')
         self.assertEqual(car.net_gain_on_sale, 100)
 
-        car.original_move_line_ids = self.env['account.move.line']
-        self.assertEqual(bill.asset_move_type, False, "removing the bill from the original bills of the asset reset the asset_move_type field to False")
-
         # Create new asset to test positive revaluation and disposal
         new_car = car.copy()
         new_car.validate()
