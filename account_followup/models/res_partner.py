@@ -294,6 +294,10 @@ class ResPartner(models.Model):
 
     def _get_partner_account_report_attachment(self, report, options=None):
         self.ensure_one()
+        if self.lang:
+            # Print the followup in the customer's language
+            report = report.with_context(lang=self.lang)
+
         if not options:
             options = report.get_options({
                 'partner_ids': self.ids,
