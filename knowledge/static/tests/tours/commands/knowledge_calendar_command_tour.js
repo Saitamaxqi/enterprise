@@ -51,6 +51,7 @@ function dragDate(el, target) {
 registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     url: '/odoo',
     test: true,
+    checkDelay: 80,
     steps: () => [stepUtils.showAppsMenuItem(), { // open the Knowledge App
     trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
     run: "click",
@@ -128,7 +129,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     // and create new start and stop properties to use by the view
     //--------------------------------------------------------------
 
-    // Remove previous item calendar view
+    content: "Remove previous item calendar view",
     trigger: '.odoo-editor-editable',
     run: function () {
         htmlField.editor.dispatch("HISTORY_STAGE_SELECTION");
