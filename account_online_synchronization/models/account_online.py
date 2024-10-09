@@ -1087,6 +1087,7 @@ class AccountOnlineLink(models.Model):
                 'mode': mode,
                 'includeParam': {
                     'lang': get_lang(self.env).code,
+                    'dbURL': self.get_base_url(),
                     'countryCode': country.code,
                     'countryName': country.display_name,
                     'redirect_reconnection': self.env.context.get('redirect_reconnection'),
