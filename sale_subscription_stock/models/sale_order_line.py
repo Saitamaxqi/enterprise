@@ -47,13 +47,6 @@ class SaleOrderLine(models.Model):
         """
         return self.filtered(lambda line: line.recurring_invoice and line.product_id.type == 'consu')
 
-    def _get_recurring_invoiceable_condition(self, automatic_invoice, date_from):
-        self.ensure_one()
-        line_condition = super()._get_recurring_invoiceable_condition(automatic_invoice, date_from)
-        if not line_condition and not automatic_invoice and self.product_id.invoice_policy == 'delivery' and self._is_postpaid_line():
-            line_condition = True
-        return line_condition
-
     def _get_invoice_line_parameters(self):
         self.ensure_one()
         if self._is_postpaid_line() and self.order_id.subscription_state == '5_renewed':

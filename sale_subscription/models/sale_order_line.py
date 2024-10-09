@@ -404,11 +404,12 @@ class SaleOrderLine(models.Model):
         self.ensure_one()
         if automatic_invoice:
             # We don't invoice line before their SO's next_invoice_date
-            line_condition = self.order_id.next_invoice_date and self.order_id.next_invoice_date <= date_from and self.order_id.start_date and self.order_id.start_date <= date_from
+            return self.order_id.next_invoice_date and self.order_id.next_invoice_date <= date_from and self.order_id.start_date and self.order_id.start_date <= date_from
+        elif self._is_postpaid_line():
+            return True
         else:
             # We don't invoice line past their SO's end_date
-            line_condition = not self.order_id.end_date or (self.order_id.next_invoice_date and self.order_id.next_invoice_date < self.order_id.end_date)
-        return line_condition
+            return not self.order_id.end_date or (self.order_id.next_invoice_date and self.order_id.next_invoice_date < self.order_id.end_date)
 
     ####################
     # Business Methods #

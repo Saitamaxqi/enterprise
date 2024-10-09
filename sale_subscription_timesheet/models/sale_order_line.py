@@ -8,6 +8,10 @@ from odoo.tools import groupby
 class SaleOrderLine(models.Model):
     _inherit = "sale.order.line"
 
+    def _is_postpaid_line(self):
+        self.ensure_one()
+        return self.qty_delivered_method == 'timesheet' or super()._is_postpaid_line()
+
     def _get_timesheet_subscription_lines(self):
         return self.filtered(lambda sol: sol.recurring_invoice and sol.qty_delivered_method == 'timesheet')
 
