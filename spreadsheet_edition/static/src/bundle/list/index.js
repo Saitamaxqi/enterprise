@@ -17,7 +17,7 @@ const { featurePluginRegistry, sidePanelRegistry, cellMenuRegistry } = spreadshe
 featurePluginRegistry.add("odooListAutofillPlugin", ListAutofillPlugin);
 
 sidePanelRegistry.add("LIST_PROPERTIES_PANEL", {
-    title: () => _t("List properties"),
+    title: (env, props) => _t("List #%s", props.listId),
     Body: ListDetailsSidePanel,
     computeState(getters, initialProps) {
         return {

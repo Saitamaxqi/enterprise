@@ -174,14 +174,14 @@ test("Open list properties", async function () {
     await animationFrame();
     const target = getFixture();
     const title = target.querySelector(".o-sidePanelTitle").innerText;
-    expect(title).toBe("List properties");
+    expect(title).toBe("List #1");
 
     const sections = target.querySelectorAll(".o_side_panel_section");
     expect(sections.length).toBe(6, { message: "it should have 6 sections" });
     const [listName, listModel, columns, domain] = sections;
 
     expect(listName.children[0]).toHaveText("List Name");
-    expect(listName.children[1]).toHaveText("(#1) Partners");
+    expect(listName.children[1].querySelector("input").value).toBe("Partners");
 
     expect(listModel.children[0]).toHaveText("Model");
     expect(listModel.children[1]).toHaveText("Partner (partner)");
@@ -243,7 +243,7 @@ test("Deleting the list closes the side panel", async function () {
     env.openSidePanel("LIST_PROPERTIES_PANEL", { listId });
     await animationFrame();
     const titleSelector = ".o-sidePanelTitle";
-    expect(titleSelector).toHaveText("List properties");
+    expect(titleSelector).toHaveText("List #1");
 
     model.dispatch("REMOVE_ODOO_LIST", { listId });
     await animationFrame();
@@ -257,7 +257,7 @@ test("Undo a list insertion closes the side panel", async function () {
     await animationFrame();
     const fixture = getFixture();
     const titleSelector = ".o-sidePanelTitle";
-    expect(titleSelector).toHaveText("List properties");
+    expect(titleSelector).toHaveText("List #1");
 
     model.dispatch("REQUEST_UNDO");
     model.dispatch("REQUEST_UNDO");
@@ -691,9 +691,7 @@ test("Update the list title from the side panel", async function () {
     const [listId] = model.getters.getListIds();
     env.openSidePanel("LIST_PROPERTIES_PANEL", { listId });
     await animationFrame();
-    await contains(".o_sp_en_rename").click();
-    await contains(".o_sp_en_name").edit("new name");
-    await contains(".o_sp_en_save").click();
+    await contains(".os-input").edit("new name");
     expect(model.getters.getListName(listId)).toBe("new name");
 });
 
@@ -1035,11 +1033,11 @@ test("Duplicate a list from the side panel", async function () {
     await animationFrame();
 
     expect(model.getters.getListIds().length).toBe(1);
-    expect(".o_sp_en_display_name").toHaveText("(#1) Partners by Foo");
+    expect(".o-sidePanelTitle").toHaveText("List #1");
     await contains(".os-cog-wheel-menu-icon").click();
     await contains(".o-popover .fa-clone").click();
     expect(model.getters.getListIds().length).toBe(2);
-    expect(".o_sp_en_display_name").toHaveText("(#2) Partners by Foo");
+    expect(".o-sidePanelTitle").toHaveText("List #2");
 });
 
 test("List export from an action with an xml ID", async function () {

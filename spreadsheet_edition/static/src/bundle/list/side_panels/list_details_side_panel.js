@@ -11,16 +11,16 @@ import { hooks, components } from "@odoo/o-spreadsheet";
 import { SidePanelDomain } from "../../components/side_panel_domain/side_panel_domain";
 
 const { useHighlights } = hooks;
-const { ValidationMessages, EditableName, CogWheelMenu, Section } = components;
+const { ValidationMessages, CogWheelMenu, Section, TextInput } = components;
 
 export class ListDetailsSidePanel extends Component {
     static template = "spreadsheet_edition.ListDetailsSidePanel";
     static components = {
-        EditableName,
         ValidationMessages,
         CogWheelMenu,
         Section,
         SidePanelDomain,
+        TextInput,
         EditListSortingSection,
     };
     static props = {

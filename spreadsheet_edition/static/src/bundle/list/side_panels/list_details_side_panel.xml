@@ -9,9 +9,10 @@
                     <CogWheelMenu items="cogWheelMenuItems"/>
                 </div>
             </t>
-            <EditableName name="env.model.getters.getListName(props.listId)"
-                          displayName="env.model.getters.getListDisplayName(props.listId)"
-                          onChanged.bind="onNameChanged"/>
+            <TextInput
+                value="env.model.getters.getListName(props.listId)"
+                onChange.bind="onNameChanged"
+            />
         </Section>
         <div class="o_side_panel_section">
             <div class="o_side_panel_title">Model</div>
