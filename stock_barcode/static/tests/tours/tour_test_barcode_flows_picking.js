@@ -5,7 +5,6 @@ import { registry } from "@web/core/registry";
 import { stepUtils } from "./tour_step_utils";
 
 registry.category("web_tour.tours").add("test_internal_picking_from_scratch", {
-    test: true,
     steps: () => [
         // Move 2 product1 from WH/Stock/Section 1 to WH/Stock/Section 2.
         {
@@ -243,7 +242,6 @@ registry.category("web_tour.tours").add("test_internal_picking_from_scratch", {
 });
 
 registry.category("web_tour.tours").add("test_internal_picking_from_scratch_with_package", {
-    test: true,
     steps: () => [
         // Creates a first internal transfert (Section 1 -> Section 2).
         { trigger: ".o_stock_barcode_main_menu", run: "scan WHINT" },
@@ -298,7 +296,6 @@ registry.category("web_tour.tours").add("test_internal_picking_from_scratch_with
 });
 
 registry.category("web_tour.tours").add("test_internal_picking_reserved_1", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -472,7 +469,6 @@ registry.category("web_tour.tours").add("test_internal_picking_reserved_1", {
 });
 
 registry.category("web_tour.tours").add("test_procurement_backorder", {
-    test: true,
     steps: () => [
         { trigger: ".o_barcode_client_action", run: "scan PB" },
         { trigger: '.o_barcode_line:contains("PB")', run: "scan OBTVALI" },
@@ -481,7 +477,6 @@ registry.category("web_tour.tours").add("test_procurement_backorder", {
 });
 
 registry.category("web_tour.tours").add("test_receipt_reserved_1", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -589,7 +584,6 @@ registry.category("web_tour.tours").add("test_receipt_reserved_1", {
 });
 
 registry.category("web_tour.tours").add("test_receipt_reserved_2_partial_put_in_pack", {
-    test: true,
     steps: () => [
         // Scan the picking's name to open it.
         { trigger: ".o_stock_barcode_main_menu", run: "scan receipt_test" },
@@ -698,7 +692,6 @@ registry.category("web_tour.tours").add("test_receipt_reserved_2_partial_put_in_
 });
 
 registry.category("web_tour.tours").add("test_receipt_product_not_consecutively", {
-    test: true,
     steps: () => [
         // Scan two products (product1 - product2 - product1)
         { trigger: ".o_barcode_client_action", run: "scan product1" },
@@ -715,7 +708,6 @@ registry.category("web_tour.tours").add("test_receipt_product_not_consecutively"
 });
 
 registry.category("web_tour.tours").add("test_delivery_source_location", {
-    test: true,
     steps: () => [
         // FIRST DELIVERY (using stock from WH/Stock)
         { trigger: ".o_stock_barcode_main_menu", run: "scan delivery_from_stock" },
@@ -788,7 +780,6 @@ registry.category("web_tour.tours").add("test_delivery_source_location", {
 });
 
 registry.category("web_tour.tours").add("test_delivery_lot_with_multi_companies", {
-    test: true,
     steps: () => [
         // Scans tsn-002: should find nothing since this SN belongs to another company.
         { trigger: ".o_barcode_client_action", run: "scan tsn-002" },
@@ -815,7 +806,6 @@ registry.category("web_tour.tours").add("test_delivery_lot_with_multi_companies"
 });
 
 registry.category("web_tour.tours").add("test_delivery_lot_with_package", {
-    test: true,
     steps: () => [
         // Unfold grouped lines.
         {
@@ -916,7 +906,6 @@ registry.category("web_tour.tours").add("test_delivery_lot_with_package", {
 });
 
 registry.category("web_tour.tours").add("test_delivery_lot_with_package_delivery_step", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_line",
@@ -944,7 +933,6 @@ registry.category("web_tour.tours").add("test_delivery_lot_with_package_delivery
 });
 
 registry.category("web_tour.tours").add("test_delivery_reserved_1", {
-    test: true,
     steps: () => [
         // test that picking note properly pops up + close it
         {
@@ -1024,7 +1012,6 @@ registry.category("web_tour.tours").add("test_delivery_reserved_1", {
 });
 
 registry.category("web_tour.tours").add("test_delivery_reserved_2", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -1117,7 +1104,6 @@ registry.category("web_tour.tours").add("test_delivery_reserved_2", {
 });
 
 registry.category("web_tour.tours").add("test_delivery_reserved_3", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -1147,7 +1133,6 @@ registry.category("web_tour.tours").add("test_delivery_reserved_3", {
 });
 
 registry.category("web_tour.tours").add("test_delivery_reserved_4_backorder", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -1234,7 +1219,6 @@ registry.category("web_tour.tours").add("test_delivery_reserved_4_backorder", {
 });
 
 registry.category("web_tour.tours").add("test_delivery_reserved_5_dont_show_reserved_sn", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -1300,7 +1284,6 @@ registry.category("web_tour.tours").add("test_delivery_reserved_5_dont_show_rese
 });
 
 registry.category("web_tour.tours").add("test_delivery_reserved_6_dont_show_reserved_lots", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -1385,7 +1368,6 @@ registry.category("web_tour.tours").add("test_delivery_reserved_6_dont_show_rese
 });
 
 registry.category("web_tour.tours").add("test_delivery_using_buttons", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -1574,7 +1556,6 @@ registry.category("web_tour.tours").add("test_delivery_using_buttons", {
 });
 
 registry.category("web_tour.tours").add("test_remaining_decimal_accuracy", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -1675,7 +1656,6 @@ registry.category("web_tour.tours").add("test_remaining_decimal_accuracy", {
 });
 
 registry.category("web_tour.tours").add("test_receipt_from_scratch_with_lots_1", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -1745,7 +1725,6 @@ registry.category("web_tour.tours").add("test_receipt_from_scratch_with_lots_1",
 });
 
 registry.category("web_tour.tours").add("test_receipt_from_scratch_with_lots_2", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -1826,7 +1805,6 @@ registry.category("web_tour.tours").add("test_receipt_from_scratch_with_lots_2",
 });
 
 registry.category("web_tour.tours").add("test_receipt_from_scratch_with_lots_3", {
-    test: true,
     steps: () => [
         { trigger: ".o_barcode_client_action", run: "scan product1" },
         {
@@ -1895,7 +1873,6 @@ registry.category("web_tour.tours").add("test_receipt_from_scratch_with_lots_3",
 });
 
 registry.category("web_tour.tours").add("test_receipt_from_scratch_with_lots_4", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -1925,7 +1902,6 @@ registry.category("web_tour.tours").add("test_receipt_from_scratch_with_lots_4",
 });
 
 registry.category("web_tour.tours").add("test_delivery_from_scratch_with_lots_1", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -1968,7 +1944,6 @@ registry.category("web_tour.tours").add("test_delivery_from_scratch_with_lots_1"
 });
 
 registry.category("web_tour.tours").add("test_delivery_from_scratch_with_incompatible_lot", {
-    test: true,
     steps: () => [
         { trigger: ".o_barcode_client_action", run: "scan 0000000001" },
         {
@@ -1980,7 +1955,6 @@ registry.category("web_tour.tours").add("test_delivery_from_scratch_with_incompa
 });
 
 registry.category("web_tour.tours").add("test_delivery_from_scratch_with_common_lots_name", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -2028,7 +2002,6 @@ registry.category("web_tour.tours").add("test_delivery_from_scratch_with_common_
 });
 
 registry.category("web_tour.tours").add("test_receipt_with_sn_1", {
-    test: true,
     steps: () => [
         { trigger: ".o_barcode_client_action", run: "scan sn1" },
         ...stepUtils.validateBarcodeOperation(),
@@ -2036,7 +2009,6 @@ registry.category("web_tour.tours").add("test_receipt_with_sn_1", {
 });
 
 registry.category("web_tour.tours").add("test_delivery_from_scratch_with_sn_1", {
-    test: true,
     steps: () => [
         /* scan a product tracked by serial number. Then scan 4 a its serial numbers.
          */
@@ -2090,7 +2062,6 @@ registry.category("web_tour.tours").add("test_delivery_from_scratch_with_sn_1", 
 });
 
 registry.category("web_tour.tours").add("test_delivery_reserved_lots_1", {
-    test: true,
     steps: () => [
         { trigger: ".o_barcode_client_action", run: "scan productlot1" },
         { trigger: ".o_barcode_line.o_selected .o_toggle_sublines", run: "click" },
@@ -2190,7 +2161,6 @@ registry.category("web_tour.tours").add("test_delivery_reserved_lots_1", {
 });
 
 registry.category("web_tour.tours").add("test_delivery_different_products_with_same_lot_name", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -2246,7 +2216,6 @@ registry.category("web_tour.tours").add("test_delivery_different_products_with_s
 });
 
 registry.category("web_tour.tours").add("test_delivery_reserved_with_sn_1", {
-    test: true,
     steps: () => [
         /* scan a product tracked by serial number. Then scan 4 a its serial numbers.
          */
@@ -2275,7 +2244,6 @@ registry.category("web_tour.tours").add("test_delivery_reserved_with_sn_1", {
 });
 
 registry.category("web_tour.tours").add("test_nomenclature_alias_and_conversion", {
-    test: true,
     steps: () => [
         // Before all, create a new receipt on the fly.
         { trigger: ".o_stock_barcode_main_menu", run: "scan WHIN" },
@@ -2313,7 +2281,6 @@ registry.category("web_tour.tours").add("test_nomenclature_alias_and_conversion"
 });
 
 registry.category("web_tour.tours").add("test_receipt_reserved_lots_multiloc_1", {
-    test: true,
     steps: () => [
         /* Receipt of a product tracked by lots. Open an existing picking with 4
          * units initial demands. Scan 2 units in lot1 in location WH/Stock. Then scan
@@ -2364,7 +2331,6 @@ registry.category("web_tour.tours").add("test_receipt_reserved_lots_multiloc_1",
 });
 
 registry.category("web_tour.tours").add("test_receipt_duplicate_serial_number", {
-    test: true,
     steps: () => [
         // Create a receipt. Try to scan twice the same serial in different locations.
         { trigger: '.o_stock_barcode_main_menu:contains("Scan or tap")', run: "click" },
@@ -2426,7 +2392,6 @@ registry.category("web_tour.tours").add("test_receipt_duplicate_serial_number", 
 });
 
 registry.category("web_tour.tours").add("test_delivery_duplicate_serial_number", {
-    test: true,
     steps: () => [
         // Create a delivery. Try to scan twice the same serial in different locations.
         { trigger: ".o_stock_barcode_main_menu", run: "scan WHOUT" },
@@ -2484,7 +2449,6 @@ registry.category("web_tour.tours").add("test_delivery_duplicate_serial_number",
 });
 
 registry.category("web_tour.tours").add("test_bypass_source_scan", {
-    test: true,
     steps: () => [
         /* Scan directly a serial number, a package or a lot in delivery order.
          * It should implicitely trigger the same action than a source location
@@ -2573,7 +2537,6 @@ registry.category("web_tour.tours").add("test_bypass_source_scan", {
 });
 
 registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_settings_pick_int_1", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -2658,7 +2621,6 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_settin
 });
 
 registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_settings_pick_int_2", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -2842,7 +2804,6 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_settin
 registry
     .category("web_tour.tours")
     .add("test_receipt_scan_package_and_location_after_group_of_product", {
-        test: true,
         steps: () => [
             {
                 trigger: ".o_barcode_client_action",
@@ -2996,7 +2957,6 @@ registry
     });
 
 registry.category("web_tour.tours").add("test_receipt_assign_sibling_reservation_no_empty_line", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -3033,7 +2993,6 @@ registry.category("web_tour.tours").add("test_receipt_assign_sibling_reservation
 });
 
 registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_product_packaging", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_line",
@@ -3052,7 +3011,6 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_produc
 });
 
 registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_complete_flux_receipt", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -3144,7 +3102,6 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
 });
 
 registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_complete_flux_internal", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -3305,7 +3262,6 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
 });
 
 registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_complete_flux_pick", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -3606,7 +3562,6 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
 });
 
 registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_complete_flux_pack", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -3652,7 +3607,6 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
 });
 
 registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_complete_flux_delivery", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -3679,7 +3633,6 @@ registry.category("web_tour.tours").add("test_picking_type_mandatory_scan_comple
 });
 
 registry.category("web_tour.tours").add("test_pack_multiple_scan", {
-    test: true,
     steps: () => [
         // Create a receipt, scan product1 and product2, pack them and validate the receipt.
         { trigger: ".o_stock_barcode_main_menu", run: "scan WHIN" },
@@ -3727,7 +3680,6 @@ registry.category("web_tour.tours").add("test_pack_multiple_scan", {
 });
 
 registry.category("web_tour.tours").add("test_pack_common_content_scan", {
-    test: true,
     steps: () => [
         /* Scan 2 packages PACK1 and PACK2 that contains both product1 and
          * product 2. It also scan a single product1 before scanning both packages.
@@ -3773,7 +3725,6 @@ registry.category("web_tour.tours").add("test_pack_common_content_scan", {
 });
 
 registry.category("web_tour.tours").add("test_pack_multiple_location", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_stock_barcode_main_menu",
@@ -3838,7 +3789,6 @@ registry.category("web_tour.tours").add("test_pack_multiple_location", {
 });
 
 registry.category("web_tour.tours").add("test_pack_multiple_location_02", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -3869,7 +3819,6 @@ registry.category("web_tour.tours").add("test_pack_multiple_location_02", {
 });
 
 registry.category("web_tour.tours").add("test_pack_multiple_location_03", {
-    test: true,
     steps: () => [
         { trigger: ".o_barcode_client_action", run: "scan shelf3" },
         {
@@ -3898,7 +3847,6 @@ registry.category("web_tour.tours").add("test_pack_multiple_location_03", {
 });
 
 registry.category("web_tour.tours").add("test_put_in_pack_from_multiple_pages", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -3962,7 +3910,6 @@ registry.category("web_tour.tours").add("test_put_in_pack_from_multiple_pages", 
 });
 
 registry.category("web_tour.tours").add("test_put_in_pack_no_freeze", {
-    test: true,
     steps: () => [
         { trigger: "button.o_button_operations", run: "click" },
 
@@ -3989,7 +3936,6 @@ registry.category("web_tour.tours").add("test_put_in_pack_no_freeze", {
 });
 
 registry.category("web_tour.tours").add("test_reload_flow", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_stock_barcode_main_menu",
@@ -4069,7 +4015,6 @@ registry.category("web_tour.tours").add("test_reload_flow", {
 });
 
 registry.category("web_tour.tours").add("test_highlight_packs", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -4111,7 +4056,6 @@ registry.category("web_tour.tours").add("test_highlight_packs", {
 });
 
 registry.category("web_tour.tours").add("test_put_in_pack_from_different_location", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -4146,7 +4090,6 @@ registry.category("web_tour.tours").add("test_put_in_pack_from_different_locatio
 });
 
 registry.category("web_tour.tours").add("test_put_in_pack_before_dest", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -4216,7 +4159,6 @@ registry.category("web_tour.tours").add("test_put_in_pack_before_dest", {
 });
 
 registry.category("web_tour.tours").add("test_put_in_pack_scan_package", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -4293,7 +4235,6 @@ registry.category("web_tour.tours").add("test_put_in_pack_scan_package", {
 });
 
 registry.category("web_tour.tours").add("test_put_in_pack_new_lines", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -4322,7 +4263,6 @@ registry.category("web_tour.tours").add("test_put_in_pack_new_lines", {
 });
 
 registry.category("web_tour.tours").add("test_picking_owner_scan_package", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_stock_barcode_main_menu",
@@ -4339,7 +4279,6 @@ registry.category("web_tour.tours").add("test_picking_owner_scan_package", {
 });
 
 registry.category("web_tour.tours").add("test_receipt_delete_button", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -4406,7 +4345,6 @@ registry.category("web_tour.tours").add("test_receipt_delete_button", {
 });
 
 registry.category("web_tour.tours").add("test_scan_aggregate_barcode", {
-    test: true,
     steps: () => [
         { trigger: ".o_stock_barcode_main_menu", run: "scan WHIN" },
         // Scan 3x product1 (using ',' as separator).
@@ -4451,7 +4389,6 @@ registry.category("web_tour.tours").add("test_scan_aggregate_barcode", {
 });
 
 registry.category("web_tour.tours").add("test_scrap", {
-    test: true,
     steps: () => [
         // Opens the receipt and checks we can't scrap if not done.
         { trigger: ".o_stock_barcode_main_menu", run: "scan receipt_scrap_test" },
@@ -4665,7 +4602,6 @@ registry.category("web_tour.tours").add("test_scrap", {
 });
 
 registry.category("web_tour.tours").add("test_picking_scan_package_confirmation", {
-    test: true,
     steps: () => [
         // Scan product 1
         { trigger: ".o_barcode_client_action", run: "scan product1" },
@@ -4688,7 +4624,6 @@ registry.category("web_tour.tours").add("test_picking_scan_package_confirmation"
 });
 
 registry.category("web_tour.tours").add("test_show_entire_package", {
-    test: true,
     steps: () => [
         {
             trigger: "button.o_button_operations",
@@ -4785,7 +4720,6 @@ registry.category("web_tour.tours").add("test_show_entire_package", {
 });
 
 registry.category("web_tour.tours").add("test_define_the_destination_package", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_line_button.o_add_remaining_quantity",
@@ -4809,7 +4743,6 @@ registry.category("web_tour.tours").add("test_define_the_destination_package", {
 });
 
 registry.category("web_tour.tours").add("stock_barcode_package_with_lot", {
-    test: true,
     steps: () => [
         {
             trigger: "[data-menu-xmlid='stock_barcode.stock_barcode_menu']", // open barcode app
@@ -4837,7 +4770,6 @@ registry.category("web_tour.tours").add("stock_barcode_package_with_lot", {
 });
 
 registry.category("web_tour.tours").add("test_scan_same_lot_different_products", {
-    test: true,
     steps: () => [
         // Scanning 123 will fetch the lot 123 for the 'aaa' product and add them
         // both in the cache (the 'aaa' product and its lot.)
@@ -4865,7 +4797,6 @@ registry.category("web_tour.tours").add("test_scan_same_lot_different_products",
 });
 
 registry.category("web_tour.tours").add("test_avoid_useless_line_creation", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -4891,7 +4822,6 @@ registry.category("web_tour.tours").add("test_avoid_useless_line_creation", {
 });
 
 registry.category("web_tour.tours").add("test_setting_barcode_allow_extra_product", {
-    test: true,
     steps: () => [
         // Scans the delivery to open it.
         { trigger: ".o_stock_barcode_main_menu", run: "scan delivery_test" },
@@ -4925,7 +4855,6 @@ registry.category("web_tour.tours").add("test_setting_barcode_allow_extra_produc
 });
 
 registry.category("web_tour.tours").add("test_split_line_reservation", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -5090,7 +5019,6 @@ registry.category("web_tour.tours").add("test_split_line_reservation", {
 });
 
 registry.category("web_tour.tours").add("test_split_line_on_destination_scan", {
-    test: true,
     steps: () => [
         // Open the receipt then scans 2x product1.
         {
@@ -5212,7 +5140,6 @@ registry.category("web_tour.tours").add("test_split_line_on_destination_scan", {
 });
 
 registry.category("web_tour.tours").add("test_split_line_on_exit_for_delivery", {
-    test: true,
     steps: () => [
         // Opens the delivery and checks its lines.
         { trigger: ".o_stock_barcode_main_menu", run: "scan delivery_split_line_on_exit" },
@@ -5243,7 +5170,6 @@ registry.category("web_tour.tours").add("test_split_line_on_exit_for_delivery", 
 });
 
 registry.category("web_tour.tours").add("test_split_line_on_exit_for_receipt", {
-    test: true,
     steps: () => [
         // Opens the receipt and check its lines.
         { trigger: ".o_stock_barcode_main_menu", run: "scan receipt_split_line_on_exit" },
@@ -5308,7 +5234,6 @@ registry.category("web_tour.tours").add("test_split_line_on_exit_for_receipt", {
 });
 
 registry.category("web_tour.tours").add("test_split_line_on_scan", {
-    test: true,
     steps: () => [
         // Scan product2 twice
         {
@@ -5380,7 +5305,6 @@ registry.category("web_tour.tours").add("test_split_line_on_scan", {
 });
 
 registry.category("web_tour.tours").add("test_scan_line_splitting_preserve_destination", {
-    test: true,
     steps: () => [
         // Select the first (only) line
         {
@@ -5475,7 +5399,6 @@ registry.category("web_tour.tours").add("test_scan_line_splitting_preserve_desti
 });
 
 registry.category("web_tour.tours").add("test_editing_done_picking", {
-    test: true,
     steps: () => [
         { trigger: ".o_barcode_client_action", run: "scan OBTVALI" },
         {
@@ -5488,7 +5411,6 @@ registry.category("web_tour.tours").add("test_editing_done_picking", {
 });
 
 registry.category("web_tour.tours").add("test_barcode_picking_return", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -5525,7 +5447,6 @@ registry.category("web_tour.tours").add("test_barcode_picking_return", {
 });
 
 registry.category("web_tour.tours").add("test_sml_sort_order_by_product_category", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",
@@ -5547,7 +5468,6 @@ registry.category("web_tour.tours").add("test_sml_sort_order_by_product_category
 });
 
 registry.category("web_tour.tours").add("test_barcode_signature_flow", {
-    test: true,
     steps: () => [
         {
             trigger: "div.o_kanban_record_title > span:contains(Delivery Orders)",
@@ -5609,7 +5529,6 @@ registry.category("web_tour.tours").add("test_barcode_signature_flow", {
 });
 
 registry.category("web_tour.tours").add("test_create_backorder_after_qty_modified", {
-    test: true,
     steps: () => [
         { trigger: ".o_edit", run: "click" },
         { trigger: ".o_digipad_increment", run: "click" },
@@ -5620,7 +5539,6 @@ registry.category("web_tour.tours").add("test_create_backorder_after_qty_modifie
 });
 
 registry.category("web_tour.tours").add("test_open_picking_dont_override_assigned_user", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_button_operations",
@@ -5649,7 +5567,6 @@ registry.category("web_tour.tours").add("test_open_picking_dont_override_assigne
 });
 
 registry.category("web_tour.tours").add("test_serial_product_packaging", {
-    test: true,
     steps: () => [
         { trigger: ".o_stock_barcode_main_menu", run: "scan WHIN" },
         { trigger: ".o_barcode_client_action", run: "scan PCK4" },
@@ -5690,7 +5607,6 @@ registry.category("web_tour.tours").add("test_serial_product_packaging", {
 });
 
 registry.category("web_tour.tours").add("test_multi_company_record_access_in_barcode", {
-    test: true,
     steps: () => [
         { trigger: ".o_stock_barcode_main_menu", run: "scan company2_receipt" },
         // Shouldn't have access to company1 prod while in company2 picking type
@@ -5709,7 +5625,6 @@ registry.category("web_tour.tours").add("test_multi_company_record_access_in_bar
 });
 
 registry.category("web_tour.tours").add("test_no_zero_demand_new_line_from_split", {
-    test: true,
     steps: () => [
         { trigger: ".o_stock_barcode_main_menu", run: "scan TNZDNLFS picking" },
         { trigger: ".o_edit", run: "click" },
@@ -5727,7 +5642,6 @@ registry.category("web_tour.tours").add("test_no_zero_demand_new_line_from_split
 });
 
 registry.category("web_tour.tours").add("test_barcode_pack_lot_tour", {
-    test: true,
     steps: () => [
         // Pack two units of the same not reserved lot in different packages
         { trigger: ".o_barcode_line", run: "scan LOT005" },

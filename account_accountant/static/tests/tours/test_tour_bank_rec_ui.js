@@ -20,7 +20,6 @@ patch(accountTourSteps, {
 });
 
 registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_ui", {
-    test: true,
     url: "/odoo",
     steps: () => [
         stepUtils.showAppsMenuItem(),
@@ -904,7 +903,6 @@ registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_ui",
 
 registry.category("web_tour.tours").add('account_accountant_bank_rec_widget_reconciliation_button',
     {
-        test: true,
         url: '/odoo',
         steps: () => [
         stepUtils.showAppsMenuItem(),

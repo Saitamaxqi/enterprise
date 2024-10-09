@@ -19,7 +19,7 @@ import { Editor } from "@html_editor/editor";
 
 /**
  * This is a global knowledge tour testing commands and their usage.
- * 
+ *
  * If you need to edit this tour, here are a few recommendations:
  * - Try to keep the steps light and test specifically your command
  * - Keep the commands modifying the main article at the top
@@ -119,7 +119,7 @@ const fileCommandSteps = [{ // open the command bar
 }, { // wait for the block to appear in the editor
     trigger: "div[data-embedded='file'] a.o_image",
     run: 'click',
-}, 
+},
 {
     trigger: '.o-FileViewer-view:iframe body:contains(Content)',
 },
@@ -670,7 +670,6 @@ const clipboardUsageSteps = [{ // open the chatter
 
 registry.category("web_tour.tours").add('knowledge_article_commands_tour', {
     url: '/odoo',
-    test: true,
     checkDelay: 50,
     steps: () => [stepUtils.showAppsMenuItem(), {
     // open the Knowledge App

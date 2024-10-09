@@ -3,7 +3,7 @@
 import { registry } from "@web/core/registry";
 import helper from '@mrp_workorder/../tests/tours/tour_helper_mrp_workorder';
 
-registry.category("web_tour.tours").add('test_serial_tracked_and_register', {test: true, steps: () => [
+registry.category("web_tour.tours").add('test_serial_tracked_and_register', { steps: () => [
     {
         trigger: '.o_tablet_client_action',
         run: function() {
@@ -101,7 +101,6 @@ registry.category("web_tour.tours").add('test_serial_tracked_and_register', {tes
 ]});
 
 registry.category("web_tour.tours").add('test_access_shop_floor_with_multicomany', {
-    test: true,
     url: '/odoo/action-menu',
     steps: () => [{
         content: 'Select Shop Floor app',

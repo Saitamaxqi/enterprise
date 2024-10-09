@@ -7,7 +7,6 @@ registry.category("web_tour.tours").add(
     "fsm_task_form_tour",
     {
         url: '/odoo',
-        test: true,
         steps: () => [
             ...stepUtils.goToAppSteps("industry_fsm.fsm_menu_root", "Open app Field Service"),
             {

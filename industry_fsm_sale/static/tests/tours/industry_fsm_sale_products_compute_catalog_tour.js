@@ -5,7 +5,6 @@ import { registry } from "@web/core/registry";
 registry.category("web_tour.tours").add(
     'industry_fsm_sale_products_compute_catalog_tour',
     {
-        test: true,
         url: "/odoo",
         steps: () => [
         {

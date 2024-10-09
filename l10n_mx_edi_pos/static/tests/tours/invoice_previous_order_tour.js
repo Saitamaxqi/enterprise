@@ -3,7 +3,6 @@ import * as Chrome from "@point_of_sale/../tests/tours/utils/chrome_util";
 import * as Dialog from "@point_of_sale/../tests/tours/utils/dialog_util";
 
 registry.category("web_tour.tours").add("l10n_mx_edi_pos.tour_invoice_previous_order", {
-    test: true,
     steps: () =>
         [
             {
@@ -90,7 +89,6 @@ registry.category("web_tour.tours").add("l10n_mx_edi_pos.tour_invoice_previous_o
 registry
     .category("web_tour.tours")
     .add("l10n_mx_edi_pos.tour_invoice_previous_order_default_usage", {
-        test: true,
         steps: () =>
             [
                 {

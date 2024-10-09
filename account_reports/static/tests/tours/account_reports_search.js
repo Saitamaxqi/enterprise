@@ -3,7 +3,6 @@
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add('account_reports_search', {
-    test: false,
     url: '/odoo/action-account_reports.action_account_report_general_ledger',
     steps: () => [
         {

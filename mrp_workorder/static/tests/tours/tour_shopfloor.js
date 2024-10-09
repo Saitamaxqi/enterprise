@@ -3,7 +3,6 @@
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("test_shop_floor", {
-    test: true,
     steps: () => [
     {
         content: 'Select the workcenter the first time we enter in shopfloor',
@@ -223,7 +222,6 @@ registry.category("web_tour.tours").add("test_shop_floor", {
 });
 
 registry.category("web_tour.tours").add("test_generate_serials_in_shopfloor", {
-    test: true,
     steps: () => [
     {
         content: 'Make sure workcenter is available',
@@ -281,7 +279,6 @@ registry.category("web_tour.tours").add("test_generate_serials_in_shopfloor", {
 });
 
 registry.category("web_tour.tours").add("test_canceled_wo", {
-    test: true,
     steps: () => [
         {
             content: 'Make sure workcenter is available',
@@ -307,8 +304,7 @@ registry.category("web_tour.tours").add("test_canceled_wo", {
     ],
 });
 
-registry.category("web_tour.tours").add('test_change_qty_produced', {
-    test: true, steps: () => [
+registry.category("web_tour.tours").add('test_change_qty_produced', { steps: () => [
         {
             content: 'Make sure workcenter is available',
             trigger: '.form-check:has(input[name="WorkCenter"])',

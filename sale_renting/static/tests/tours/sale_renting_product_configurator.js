@@ -8,7 +8,6 @@ import tourUtils from '@sale/js/tours/tour_utils';
 registry
     .category('web_tour.tours')
     .add('sale_renting_product_configurator', {
-        test: true,
         url: '/odoo',
         steps: () => [
             ...stepUtils.goToAppSteps("sale_renting.rental_menu_root", "Open the rental app"),

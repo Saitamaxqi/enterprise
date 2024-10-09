@@ -3,7 +3,6 @@
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add('sale_subscription_product_variants', {
-    test: true,
     steps: () => [
         {
             content: "Trigger first period (Month)",

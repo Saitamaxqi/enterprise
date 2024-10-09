@@ -10,7 +10,6 @@ const ProductScreen = { ...ProductScreenPos, ...ProductScreenResto };
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("PreparationDisplayTourResto", {
-    test: true,
     steps: () =>
         [
             Chrome.startPoS(),
@@ -69,7 +68,6 @@ registry.category("web_tour.tours").add("PreparationDisplayTourResto", {
 });
 
 registry.category("web_tour.tours").add("PreparationDisplayTourInternalNotes", {
-    test: true,
     steps: () =>
         [
             Chrome.startPoS(),
@@ -95,7 +93,6 @@ registry.category("web_tour.tours").add("PreparationDisplayTourInternalNotes", {
 });
 
 registry.category("web_tour.tours").add("PreparationDisplayTourResto2", {
-    test: true,
     steps: () =>
         [
             Chrome.startPoS(),

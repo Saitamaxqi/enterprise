@@ -9,7 +9,6 @@ import * as ProductScreenResto from "@pos_restaurant/../tests/tours/utils/produc
 const ProductScreen = { ...ProductScreenPos, ...ProductScreenResto };
 
 registry.category("web_tour.tours").add("RestaurantAppointmentTour", {
-    test: true,
     steps: () =>
         [
             Chrome.startPoS(),

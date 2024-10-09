@@ -3,7 +3,6 @@
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("translate_sign_instructions", {
-    test: true,
     steps: () => [
         {
             content: "Translations must be loaded",

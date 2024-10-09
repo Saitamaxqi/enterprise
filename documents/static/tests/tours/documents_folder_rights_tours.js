@@ -5,7 +5,6 @@ import { stepUtils } from "@web_tour/tour_service/tour_utils";
 
 registry.category("web_tour.tours").add("test_document_folder_rights_for_multi_company", {
     url: "/odoo",
-    test: true,
     steps: () => [
         stepUtils.showAppsMenuItem(),
         {

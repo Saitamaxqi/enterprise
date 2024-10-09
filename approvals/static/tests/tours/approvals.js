@@ -3,7 +3,6 @@
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("approvals_tour", {
-    test: true,
     url: "/odoo",
     steps: () => [
         {

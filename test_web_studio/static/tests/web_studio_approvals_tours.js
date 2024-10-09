@@ -1,8 +1,6 @@
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("test_web_studio.test_disable_approvals", {
-    sequence: 1260,
-    test: true,
     steps: () => [
         {
             trigger: ".o_web_studio_view_renderer .o_view_controller.o_form_view button.mybutton",
@@ -16,8 +14,6 @@ registry.category("web_tour.tours").add("test_web_studio.test_disable_approvals"
 });
 
 registry.category("web_tour.tours").add("test_web_studio.test_disable_approvals_via_kanban", {
-    sequence: 1260,
-    test: true,
     steps: () => [
         {
             trigger: ".o_web_studio_view_renderer .o_view_controller.o_form_view button.mybutton",

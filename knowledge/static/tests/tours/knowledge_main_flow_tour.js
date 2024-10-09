@@ -16,7 +16,6 @@ import { stepUtils } from "@web_tour/tour_service/tour_utils";
 import { queryOne } from "@odoo/hoot-dom";
 
 registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
-    test: true,
     url: '/odoo',
     steps: () => [stepUtils.showAppsMenuItem(), {
     // open Knowledge App

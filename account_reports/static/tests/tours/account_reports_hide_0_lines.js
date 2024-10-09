@@ -3,7 +3,6 @@
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add('account_reports_hide_0_lines', {
-    test: true,
     url: '/odoo/action-account_reports.action_account_report_bs',
     steps: () => [
         {
@@ -65,7 +64,6 @@ registry.category("web_tour.tours").add('account_reports_hide_0_lines', {
 });
 
 registry.category("web_tour.tours").add('account_reports_hide_0_lines_with_string_columns', {
-    test: true,
     url: '/odoo/action-account_reports.action_account_report_general_ledger',
     steps: () => [
         {

@@ -7,8 +7,6 @@
 
     registry.category("web_tour.tours").add('hr_expense_extract_tour' , {
         url: "/odoo",
-        rainbowManMessage: () => markup(_t("<b>Congratulations</b>, you are now an expert of Expenses.")),
-        sequence: 42,
         steps: () => [stepUtils.showAppsMenuItem(), {
         trigger: '.o_app[data-menu-xmlid="hr_expense.menu_hr_expense_root"]',
         content: markup(_t("<b>Wasting time recording your receipts?</b> Let’s try a better way.")),

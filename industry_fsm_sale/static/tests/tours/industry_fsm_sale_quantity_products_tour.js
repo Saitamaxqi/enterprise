@@ -1,7 +1,6 @@
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add('industry_fsm_sale_quantity_products_tour', {
-    test: true,
     url: "/odoo",
     steps: () => [{
     trigger: '.o_app[data-menu-xmlid="industry_fsm.fsm_menu_root"]',

@@ -91,7 +91,6 @@ registry.category("web_tour.tours").add(
     'social_twitter/static/tests/tours/tour_social_twitter_spam.js',
     {
         url: '/odoo',
-        test: true,
         steps: () => [
         {
             trigger: '.o_app[data-menu-xmlid="social.menu_social_global"]',

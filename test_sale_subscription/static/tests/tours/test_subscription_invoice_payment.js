@@ -41,12 +41,10 @@ const confirmPayment = [
 ];
 
 tourRegistry.add("test_subscription_invoice_payment", {
-    test: true,
     steps: () => [clickPayNowButton, ...selectNewPaymentMethod, ...confirmPayment],
 });
 
 tourRegistry.add("test_subscription_invoice_tokenize", {
-    test: true,
     steps: () => [
         clickPayNowButton,
         ...selectNewPaymentMethod,
@@ -60,7 +58,6 @@ tourRegistry.add("test_subscription_invoice_tokenize", {
 });
 
 tourRegistry.add("test_subscription_invoice_automate", {
-    test: true,
     steps: () => [
         clickPayNowButton,
         ...selectNewPaymentMethod,
@@ -74,12 +71,10 @@ tourRegistry.add("test_subscription_invoice_automate", {
 });
 
 tourRegistry.add("test_subscription_invoice_tokenized_payment", {
-    test: true,
     steps: () => [clickPayNowButton, ...selectSavedPaymentMethod, ...confirmPayment],
 });
 
 tourRegistry.add("test_subscription_invoice_tokenized_automate", {
-    test: true,
     steps: () => [
         clickPayNowButton,
         ...selectSavedPaymentMethod,

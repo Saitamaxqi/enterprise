@@ -3,7 +3,6 @@
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("frontdesk_basic_tour", {
-    test: true,
     steps: () => [
         {
             content: "Check that the QR is there",

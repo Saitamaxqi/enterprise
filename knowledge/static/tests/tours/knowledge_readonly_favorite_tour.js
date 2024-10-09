@@ -9,7 +9,6 @@ import { registry } from "@web/core/registry";
 // Checks that one can add an readonly article to its favorites
 
 registry.category("web_tour.tours").add("knowledge_readonly_favorite_tour", {
-    test: true,
     steps: () => [
         {
             isActive: ["auto"],

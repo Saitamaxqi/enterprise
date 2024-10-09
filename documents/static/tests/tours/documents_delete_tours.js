@@ -37,7 +37,6 @@ function restoreDocumentSteps() {
 
 registry.category("web_tour.tours").add("document_delete_tour", {
     url: "/odoo",
-    test: true,
     steps: () => [
         stepUtils.showAppsMenuItem(),
         {

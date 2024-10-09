@@ -6,7 +6,6 @@ import * as Dialog from "@point_of_sale/../tests/tours/utils/dialog_util";
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("PreparationDisplayTour", {
-    test: true,
     steps: () =>
         [
             // First order should send these orderlines to preparation:
@@ -46,7 +45,6 @@ registry.category("web_tour.tours").add("PreparationDisplayTour", {
 });
 
 registry.category("web_tour.tours").add("PreparationDisplayPrinterTour", {
-    test: true,
     steps: () =>
         [
             Chrome.startPoS(),
@@ -61,7 +59,6 @@ registry.category("web_tour.tours").add("PreparationDisplayPrinterTour", {
 });
 
 registry.category("web_tour.tours").add("PreparationDisplayTourConfigurableProduct", {
-    test: true,
     steps: () =>
         [
             Chrome.startPoS(),

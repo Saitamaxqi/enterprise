@@ -9,7 +9,6 @@ import { registry } from "@web/core/registry";
 registry
     .category("web_tour.tours")
     .add("mail_enterprise/static/tests/tours/discuss_channel_expand_test_tour.js", {
-        test: true,
         steps: () => [
             {
                 content:

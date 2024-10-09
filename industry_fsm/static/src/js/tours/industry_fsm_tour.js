@@ -5,7 +5,6 @@ import { registry } from "@web/core/registry";
 import { markup } from "@odoo/owl";
 
 registry.category("web_tour.tours").add("industry_fsm_tour", {
-    sequence: 90,
     url: "/odoo",
     steps: () => [
         {

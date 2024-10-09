@@ -3,7 +3,6 @@ import { _t } from "@web/core/l10n/translation";
 
 registry.category("web_tour.tours").add("website_helpdesk_forum_tour", {
     url: '/forum/help-1',
-    test: true,
     steps: () => [
         {
             content: "Ask the question in this forum by clicking on the button.",

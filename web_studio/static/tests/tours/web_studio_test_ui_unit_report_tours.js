@@ -141,8 +141,6 @@ function patchReportEditorModelForSilentSave() {
 
 let silentPatch;
 registry.category("web_tour.tours").add("web_studio.test_basic_report_edition", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o_web_studio_sidebar input[id='name']",
@@ -181,8 +179,6 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition", 
 });
 
 registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xml", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o_web_studio_sidebar button[name='report_edit_sources']",
@@ -257,8 +253,6 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xm
 });
 
 registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_discard", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o_web_studio_sidebar input[id='name']",
@@ -296,8 +290,6 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_di
 });
 
 registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_cancel_discard", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o_web_studio_sidebar input[id='name']",
@@ -338,8 +330,6 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_ca
 });
 
 registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xml_discard", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o_web_studio_sidebar button[name='report_edit_sources']",
@@ -370,8 +360,6 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xm
 });
 
 registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_error", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(0)",
@@ -413,8 +401,6 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_er
 });
 
 registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xml_error", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o_web_studio_sidebar button[name='report_edit_sources']",
@@ -454,8 +440,6 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_xm
 });
 
 registry.category("web_tour.tours").add("web_studio.test_report_reset_archs", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o_web_studio_sidebar button[name='report_reset_archs']",
@@ -482,8 +466,6 @@ registry.category("web_tour.tours").add("web_studio.test_report_reset_archs", {
 let downloadProm;
 const steps = [];
 registry.category("web_tour.tours").add("web_studio.test_print_preview", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o_web_studio_sidebar button[name='report_print_preview']",
@@ -516,8 +498,6 @@ registry.category("web_tour.tours").add("web_studio.test_print_preview", {
 });
 
 registry.category("web_tour.tours").add("web_studio.test_table_rendering", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger:
@@ -569,8 +549,6 @@ registry.category("web_tour.tours").add("web_studio.test_table_rendering", {
 });
 
 registry.category("web_tour.tours").add("web_studio.test_field_placeholder", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             // 1 sec delay to make sure we call the download route
@@ -648,8 +626,6 @@ registry.category("web_tour.tours").add("web_studio.test_field_placeholder", {
 });
 
 registry.category("web_tour.tours").add("web_studio.test_add_field_blank_report", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             // edit reports
@@ -738,8 +714,6 @@ registry.category("web_tour.tours").add("web_studio.test_add_field_blank_report"
 });
 
 registry.category("web_tour.tours").add("web_studio.test_toolbar_appearance", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable .to_edit",
@@ -775,8 +749,6 @@ registry.category("web_tour.tours").add("web_studio.test_toolbar_appearance", {
 });
 
 registry.category("web_tour.tours").add("web_studio.test_edition_without_lang", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(1)",
@@ -829,8 +801,6 @@ registry.category("web_tour.tours").add("web_studio.test_edition_without_lang", 
 });
 
 registry.category("web_tour.tours").add("web_studio.test_report_xml_other_record", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o_web_studio_sidebar button[name='report_edit_sources']",
@@ -865,8 +835,6 @@ registry.category("web_tour.tours").add("web_studio.test_report_xml_other_record
 });
 
 registry.category("web_tour.tours").add("web_studio.test_partial_eval", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o-web-studio-report-container :iframe .odoo-editor-editable .lol",
@@ -890,8 +858,6 @@ registry.category("web_tour.tours").add("web_studio.test_partial_eval", {
 });
 
 registry.category("web_tour.tours").add("web_studio.test_render_multicompany", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o-web-studio-report-container :iframe .odoo-editor-editable .test_layout",
@@ -907,8 +873,6 @@ registry.category("web_tour.tours").add("web_studio.test_render_multicompany", {
 });
 
 registry.category("web_tour.tours").add("web_studio.test_add_non_searchable_field", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
@@ -950,8 +914,6 @@ registry.category("web_tour.tours").add("web_studio.test_add_non_searchable_fiel
 });
 
 registry.category("web_tour.tours").add("web_studio.test_report_edition_binary_field", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
@@ -1041,8 +1003,6 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_binary_f
 });
 
 registry.category("web_tour.tours").add("web_studio.test_report_edition_dynamic_table", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
@@ -1132,8 +1092,6 @@ registry.category("web_tour.tours").add("web_studio.test_report_edition_dynamic_
 });
 
 registry.category("web_tour.tours").add("web_studio.test_saving_xml_editor_reload", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: "button[name='report_edit_sources']",
@@ -1180,8 +1138,6 @@ registry.category("web_tour.tours").add("web_studio.test_saving_xml_editor_reloa
 });
 
 registry.category("web_tour.tours").add("web_studio.test_error_at_loading", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: "body:not(:has(.o_error_dialog)) .o-web-studio-report-editor",
@@ -1207,8 +1163,6 @@ registry.category("web_tour.tours").add("web_studio.test_error_at_loading", {
 });
 
 registry.category("web_tour.tours").add("web_studio.test_error_at_loading_debug", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: "body:not(:has(.o_error_dialog)) .o-web-studio-report-editor",
@@ -1242,8 +1196,6 @@ registry.category("web_tour.tours").add("web_studio.test_error_at_loading_debug"
 });
 
 registry.category("web_tour.tours").add("web_studio.test_xml_and_form_diff", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o-web-studio-report-editor-wysiwyg :iframe .odoo-editor-editable p:eq(2)",
@@ -1299,8 +1251,6 @@ registry.category("web_tour.tours").add("web_studio.test_xml_and_form_diff", {
 });
 
 registry.category("web_tour.tours").add("web_studio.test_record_model_differs_from_action", {
-    test: true,
-    sequence: 260,
     steps: () => {
         const stepsToAssert = [];
 
@@ -1355,7 +1305,6 @@ registry.category("web_tour.tours").add("web_studio.test_record_model_differs_fr
 });
 
 registry.category("web_tour.tours").add("web_studio.test_remove_branding_on_copy", {
-    test: true,
     steps: () => [
         {
             trigger: "body :iframe .odoo-editor-editable#wrapwrap",
@@ -1380,7 +1329,6 @@ registry.category("web_tour.tours").add("web_studio.test_remove_branding_on_copy
 });
 
 registry.category("web_tour.tours").add("web_studio.test_different_view_document_name", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_web_studio_sidebar button[name='report_edit_sources']",
@@ -1408,7 +1356,6 @@ registry.category("web_tour.tours").add("web_studio.test_different_view_document
 });
 
 registry.category("web_tour.tours").add("web_studio.test_edit_main_arch", {
-    test: true,
     steps: () => [
         {
             trigger: ":iframe .odoo-editor-editable .outside-t-call",
@@ -1433,7 +1380,6 @@ registry.category("web_tour.tours").add("web_studio.test_edit_main_arch", {
 });
 
 registry.category("web_tour.tours").add("web_studio.test_edit_in_t_call", {
-    test: true,
     steps: () => [
         {
             trigger: ":iframe .odoo-editor-editable .in-t-call",
@@ -1458,7 +1404,6 @@ registry.category("web_tour.tours").add("web_studio.test_edit_in_t_call", {
 });
 
 registry.category("web_tour.tours").add("web_studio.test_edit_main_and_in_t_call", {
-    test: true,
     steps: () => [
         {
             trigger: ":iframe .odoo-editor-editable#wrapwrap",
@@ -1491,7 +1436,6 @@ registry.category("web_tour.tours").add("web_studio.test_edit_main_and_in_t_call
 });
 
 registry.category("web_tour.tours").add("web_studio.test_image_crop", {
-    test: true,
     steps: () => [
         {
             trigger: "body :iframe .odoo-editor-editable .myimg",
@@ -1508,7 +1452,6 @@ registry.category("web_tour.tours").add("web_studio.test_image_crop", {
 });
 
 registry.category("web_tour.tours").add("web_studio.test_translations_are_copied", {
-    test: true,
     steps: () => [
         {
             trigger: "body :iframe .odoo-editor-editable#wrapwrap div:contains(term2)",
@@ -1533,8 +1476,6 @@ registry.category("web_tour.tours").add("web_studio.test_translations_are_copied
 });
 
 registry.category("web_tour.tours").add("web_studio.test_reports_view_concurrence", {
-    test: true,
-    sequence: 260,
     steps: () => [
         {
             trigger: ".o_menu_sections li:contains('Reports')",

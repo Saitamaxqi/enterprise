@@ -3,7 +3,6 @@
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add('timesheet_record_time', {
-    test: true,
     url: "/odoo",
     steps: () => [
     {

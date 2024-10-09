@@ -29,7 +29,6 @@ function extractURLResID(url) {
 }
 
 registry.category("web_tour.tours").add('knowledge_main_flow_tour_portal', {
-    test: true,
     url: '/knowledge/home',
     steps: () => [{
     // click on the main "New" action

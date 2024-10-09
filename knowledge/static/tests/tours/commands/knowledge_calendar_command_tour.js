@@ -44,7 +44,6 @@ function dragDate(el, target) {
 
 registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     url: '/odoo',
-    test: true,
     checkDelay: 80,
     steps: () => [stepUtils.showAppsMenuItem(), { // open the Knowledge App
     trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
@@ -75,7 +74,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     run: function() {
         this.anchor.scrollIntoView(true);
     }
-}, 
+},
 {
     trigger:
         "[data-embedded='view']",

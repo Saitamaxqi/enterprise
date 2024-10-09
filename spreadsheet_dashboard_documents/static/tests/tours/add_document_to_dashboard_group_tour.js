@@ -19,7 +19,6 @@ function focusFirstSheetInModal() {
 registry
     .category("web_tour.tours")
     .add("spreadsheet_dashboard_document_add_document_to_dashboard_group", {
-        test: true,
         url: "/odoo",
         steps: () => [
             {

@@ -57,7 +57,6 @@ class TerminalProxy {
 }
 
 registry.category("web_tour.tours").add("payment_terminals_tour", {
-    test: true,
     steps: () =>
         [
             stepUtils.showAppsMenuItem(),

@@ -6,7 +6,6 @@ import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add('helpdesk_insert_graph_view_in_knowledge', {
     url: '/odoo/action-helpdesk.helpdesk_ticket_analysis_action',
-    test: true,
     steps: () => [{ // open the search menu
     trigger: '.o_control_panel .o_searchview_dropdown_toggler',
     run: "click",

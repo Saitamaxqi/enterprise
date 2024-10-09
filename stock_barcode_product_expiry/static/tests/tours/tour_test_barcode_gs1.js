@@ -5,7 +5,6 @@ import { registry } from "@web/core/registry";
 import { stepUtils } from "@stock_barcode/../tests/tours/tour_step_utils";
 
 registry.category("web_tour.tours").add("test_gs1_receipt_expiration_date", {
-    test: true,
     steps: () => [
         {
             trigger: ".o_barcode_client_action",

@@ -6,7 +6,6 @@ import { queryOne } from "@odoo/hoot-dom";
 import { redirect } from "@web/core/utils/urls";
 
 registry.category("web_tour.tours").add("hr_contract_salary_tour", {
-    test: true,
     url: "/my",
     wait_for: Promise.resolve(odoo.__TipTemplateDef),
     steps: () => [
@@ -813,7 +812,6 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour", {
     ],
 });
 registry.category("web_tour.tours").add("hr_contract_salary_tour_hr_sign", {
-    test: true,
     url: "/odoo",
     wait_for: Promise.resolve(odoo.__TipTemplateDef),
     steps: () => [
@@ -899,7 +897,6 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_hr_sign", {
     ],
 });
 registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
-    test: true,
     url: "/odoo",
     wait_for: Promise.resolve(odoo.__TipTemplateDef),
     steps: () => [
@@ -1455,7 +1452,6 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_2", {
 });
 
 registry.category("web_tour.tours").add("hr_contract_salary_tour_counter_sign", {
-    test: true,
     url: "/odoo",
     wait_for: Promise.resolve(odoo.__TipTemplateDef),
     steps: () => [

@@ -160,7 +160,6 @@ const embedKnowledgeKanbanViewSteps = function (article) {
 
 registry.category("web_tour.tours").add("knowledge_items_search_favorites_tour", {
     url: "/odoo",
-    test: true,
     steps: () => [
         stepUtils.showAppsMenuItem(),
         {
@@ -232,7 +231,6 @@ registry.category("web_tour.tours").add("knowledge_items_search_favorites_tour",
 
 registry.category("web_tour.tours").add("knowledge_search_favorites_tour", {
     url: "/odoo",
-    test: true,
     steps: () => [stepUtils.showAppsMenuItem(),
         // insert a first kanban view
         ...embedKnowledgeKanbanViewSteps("Article 1"),

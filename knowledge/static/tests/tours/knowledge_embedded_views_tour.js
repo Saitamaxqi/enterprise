@@ -5,7 +5,6 @@ import { stepUtils } from "@web_tour/tour_service/tour_utils";
 import { endKnowledgeTour, openCommandBar } from './knowledge_tour_utils';
 
 registry.category("web_tour.tours").add('knowledge_embedded_view_filters_tour', {
-    test: true,
     url: '/odoo',
     steps: () => [stepUtils.showAppsMenuItem(), {
         // open Knowledge App

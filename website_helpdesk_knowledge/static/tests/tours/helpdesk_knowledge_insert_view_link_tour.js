@@ -6,7 +6,6 @@ import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add('helpdesk_insert_kanban_view_link_in_knowledge', {
     url: '/odoo/action-helpdesk.helpdesk_ticket_action_main_tree',
-    test: true,
     steps: () => [{ // switch to the kanban view
     trigger: 'button.o_switch_view.o_kanban',
     run: 'click',

@@ -5,7 +5,6 @@ import { stepUtils } from "@web_tour/tour_service/tour_utils";
 import { accountTourSteps } from "@account/js/tours/account";
 
 registry.category("web_tour.tours").add("account_accountant_bank_rec_widget_rainbowman_reset", {
-    test: true,
     url: "/odoo",
     steps: () => [
         stepUtils.showAppsMenuItem(),

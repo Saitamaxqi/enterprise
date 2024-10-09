@@ -4,7 +4,6 @@ import { registry } from "@web/core/registry";
 
 // This tour relies on data created on the Python test.
 registry.category("web_tour.tours").add('sale_external_optional_products', {
-    test: true,
     url: '/my/quotes',
     steps: () => [
     {

@@ -129,7 +129,6 @@ const LOAD_MORE_ADVANCED_STEPS = [{
 }];
 
 registry.category("web_tour.tours").add('website_knowledge_load_more_tour', {
-    test: true,
     steps: () => [
         ...LOAD_MORE_ADVANCED_STEPS,
     ]

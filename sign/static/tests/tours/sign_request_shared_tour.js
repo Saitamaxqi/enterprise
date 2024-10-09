@@ -3,7 +3,6 @@
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("shared_sign_request_tour", {
-    test: true,
     url: "/odoo",
     steps: () => [
         {
@@ -95,7 +94,6 @@ registry.category("web_tour.tours").add("shared_sign_request_tour", {
 });
 
 registry.category("web_tour.tours").add("sign_resend_expired_link_tour", {
-    test: true,
     steps: () => [
         {
             trigger: ".btn.btn-primary",

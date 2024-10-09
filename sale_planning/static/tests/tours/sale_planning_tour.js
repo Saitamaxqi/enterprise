@@ -6,7 +6,6 @@ const planningTestTour = registry.category("web_tour.tours").get("planning_test_
 
 registry.category("web_tour.tours").add('sale_planning_test_tour', {
     url: '/odoo',
-    test: true,
     steps: () => [
         ...planningTestTour.steps(), {
             trigger: ".o_gantt_cell.o_gantt_hoverable",

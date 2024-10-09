@@ -72,7 +72,6 @@ const AddTrackingLineAndValidateSteps = [
  *   moves from another warehouse than the current user's default one are muted and readonly.
  */
 registry.category("web_tour.tours").add('industry_fsm_stock_test_tour', {
-    test: true,
     url: "/odoo",
     steps: () => [
     stepUtils.showAppsMenuItem(),
@@ -142,7 +141,7 @@ registry.category("web_tour.tours").add('industry_fsm_stock_test_tour', {
     {
         content: 'Check that is it not possible to reduce the quantity of the first product (lot) since it has been delivered',
         trigger: '.o_kanban_record:nth-of-type(2) .o_product_catalog_quantity:has(button[disabled]):has(i.fa-minus)',
-    }, 
+    },
     {
         content: 'Add quantity to the first product (no lot)',
         trigger: '.o_kanban_record:first-child button:has(i.fa-plus)',
@@ -254,7 +253,7 @@ registry.category("web_tour.tours").add('industry_fsm_stock_test_tour', {
         content: 'Check that is it not possible to reduce the quantity of the first product (lot) because of the warehouse change',
         trigger: '.o_kanban_record:nth-of-type(2) .o_product_catalog_quantity:has(button[disabled]):has(i.fa-minus)',
         run: "click",
-    }, 
+    },
     {
         content: 'Add quantity to the first product (lot)',
         trigger: '.o_kanban_record:nth-of-type(2) button:has(i.fa-plus)',

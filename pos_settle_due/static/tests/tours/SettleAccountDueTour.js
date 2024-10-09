@@ -8,7 +8,6 @@ import * as Utils from "@point_of_sale/../tests/tours/utils/common";
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("pos_settle_account_due", {
-    test: true,
     steps: () =>
         [
             Chrome.startPoS(),
@@ -34,7 +33,6 @@ registry.category("web_tour.tours").add("pos_settle_account_due", {
 });
 
 registry.category("web_tour.tours").add("SettleDueButtonPresent", {
-    test: true,
     steps: () =>
         [
             Chrome.startPoS(),
@@ -47,7 +45,6 @@ registry.category("web_tour.tours").add("SettleDueButtonPresent", {
 });
 
 registry.category("web_tour.tours").add("pos_settle_account_due_update_instantly", {
-    test: true,
     steps: () =>
         [
             Chrome.startPoS(),

@@ -1,7 +1,6 @@
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("test_shop_floor_spreadsheet", {
-    test: true,
     steps: () => [
     {
         content: 'Select the workcenter the first time we enter in shopfloor',

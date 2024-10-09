@@ -5,7 +5,6 @@ import { stepUtils } from "@web_tour/tour_service/tour_utils";
 import { queryAll } from "@odoo/hoot-dom";
 
 registry.category("web_tour.tours").add('payroll_dashboard_ui_tour', {
-    test: true,
     url: '/odoo',
     steps: () => [
     stepUtils.showAppsMenuItem(),

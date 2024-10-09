@@ -20,15 +20,7 @@
 
 
     registry.category("web_tour.tours").add('account_accountant_tour', {
-            rainbowManMessage: function({ isTourConsumed }) {
-                var message = markup(_t('<strong><b>Good job!</b> You went through all steps of this tour.</strong>'));
-                if (!isTourConsumed('account_tour')) {
-                    message += markup(_t('<br>See how to manage your customer invoices in the <b>Customers/Invoices</b> menu'));
-                }
-                return markup(message);
-            },
             url: "/odoo",
-            sequence: 50,
             steps: () => [
             ...accountTourSteps.goToAccountMenu('Let’s automate your bills, bank transactions and accounting processes.'),
             // The tour will stop here if there is at least 1 vendor bill in the database.
@@ -43,7 +35,7 @@
                 content: _t('After the data extraction, check and validate the bill. If no vendor has been found, add one before validating.'),
                 tooltipPosition: 'bottom',
                 run: "click",
-            }, 
+            },
             {
                 trigger: 'button[data-value="posted"].btn',
             },

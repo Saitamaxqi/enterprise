@@ -17,7 +17,6 @@ import { queryOne } from "@odoo/hoot-dom";
  */
 
 registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
-    test: true,
     url: '/odoo',
     steps: () => [stepUtils.showAppsMenuItem(), {
     // Open the Knowledge App
@@ -215,7 +214,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 }, {
     // Check article was opened
     trigger: '.o_article_active .o_article_name:contains("Private Article")',
-}, 
+},
 // Open the trash
 {
     trigger: '.o_knowledge_sidebar_trash > div[role="button"]',
@@ -653,7 +652,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 }, {
     // Check that the article moved to the workspace
     trigger: 'section[data-section="workspace"] .o_article:contains("Shared Article")',
-}, 
+},
 // Restrict workspace article with member
 {
     // Change permission
@@ -765,7 +764,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 }, {
     // Check that article did not move
     trigger: 'section[data-section="workspace"] .o_article:contains("Private Article")',
-}, 
+},
 // Restrict workspace article
 {
     // Change permission

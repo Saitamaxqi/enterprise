@@ -3,7 +3,6 @@
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("required_fields_tour", {
-    test: true,
     steps: () => [
         {
             content: "Click on Check in",

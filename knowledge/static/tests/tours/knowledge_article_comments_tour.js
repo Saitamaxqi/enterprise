@@ -21,7 +21,6 @@ const addAnswerComment = (commentText) => [{
 }];
 
 registry.category('web_tour.tours').add('knowledge_article_comments', {
-    test: true,
     url: '/odoo',
     steps: () => [
         stepUtils.showAppsMenuItem(), { // Open Knowledge App
