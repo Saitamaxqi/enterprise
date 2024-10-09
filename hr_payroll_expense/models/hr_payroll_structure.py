@@ -15,7 +15,7 @@ class HrPayrollStructure(models.Model):
             if not account:
                 raise UserError(_(
                     "No debit account found in the '%(rule_name)s' payslip salary rule. Please add a payable debit account "
-                    "to be able to create an accounting entry for the expense report linked to this payslip '%(expense_report_name)s'.",
+                    "to be able to create an accounting entry for the expense reports linked to this payslip.",
                     rule_name=expense_rule.name,
                 ))
             if account.account_type != 'liability_payable':
