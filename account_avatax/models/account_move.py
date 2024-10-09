@@ -39,4 +39,5 @@ class AccountMove(models.Model):
     def _perform_address_validation(self):
         # Payments inherit account.move and will end up with a fiscal position.
         # Even if an auto-applied Avatax fiscal position is set don't validate the address.
-        return super()._perform_address_validation() and not self.origin_payment_id
+        moves = self.filtered(lambda m: m.move_type in ('out_invoice', 'out_refund'))
+        return super(AccountMove, moves)._perform_address_validation() and not moves.origin_payment_id
