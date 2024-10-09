@@ -68,8 +68,8 @@ class StockPicking(models.Model):
         """
         self.ensure_one()
         return_picking = self.with_context(active_model='stock.picking', active_id=self.id).env['stock.return.picking'].create({})
-        if sum(return_picking.product_return_moves.mapped('quantity')) <= 0:
-            raise UserError(_("All products have been returned already"))
+        for line in return_picking.product_return_moves:
+            line.quantity = line.move_id.quantity
         new_picking = return_picking._create_return()
         return new_picking.action_open_picking_client_action()
 

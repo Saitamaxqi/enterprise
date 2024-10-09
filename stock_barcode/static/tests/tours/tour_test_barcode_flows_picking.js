@@ -5487,6 +5487,43 @@ registry.category("web_tour.tours").add("test_editing_done_picking", {
     ],
 });
 
+registry.category("web_tour.tours").add("test_barcode_picking_return", {
+    test: true,
+    steps: () => [
+        {
+            trigger: ".o_barcode_client_action",
+        },
+        {
+            trigger: "span.o_scan_message:contains('This picking is already done')",
+        },
+        // Press return
+        {
+            trigger: "button.o_create_return",
+            run: "click",
+        },
+        {
+            trigger: "span.o_scan_message:contains('Scan a product')",
+        },
+        {
+            trigger: '.o_barcode_line_title > div.o_product_label:contains("product2")',
+        },
+        // Scan a product not in the original picking
+        {
+            trigger: "span.o_scan_message:contains('Scan a product')",
+            run: "scan product1",
+        },
+        ...stepUtils.confirmAddingUnreservedProduct(),
+        {
+            trigger: '.o_barcode_line_title > div.o_product_label:contains("product1")',
+        },
+        // Press validate before signing the picking
+        {
+            trigger: "button.o_validate_page",
+            run: "click",
+        },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_sml_sort_order_by_product_category", {
     test: true,
     steps: () => [

@@ -3049,6 +3049,25 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         ])
         self.assertEqual(len(delivery.move_line_ids.result_package_id), 4)
 
+    def test_barcode_picking_return(self):
+        """ create a return from a done picking """
+        self.clean_access_rights()
+
+        self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 5)
+
+        delivery_form = Form(self.env['stock.picking'])
+        delivery_form.picking_type_id = self.picking_type_out
+        with delivery_form.move_ids_without_package.new() as move:
+            move.product_id = self.product2
+            move.product_uom_qty = 5
+        delivery = delivery_form.save()
+        delivery.action_confirm()
+        delivery.action_assign()
+        delivery.button_validate()
+
+        url = self._get_client_action_url(delivery.id)
+        self.start_tour(url, 'test_barcode_picking_return', login='admin', timeout=180)
+
     # === GS1 TESTS ===#
     def test_gs1_delivery_ambiguous_lot_number(self):
         """
