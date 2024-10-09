@@ -115,8 +115,7 @@ patch(PosStore.prototype, {
             !this.get_order() ||
             (this.get_order().delivery_identifier && this.get_order().state == "paid")
         ) {
-            this.add_new_order();
-            return;
+            return this.add_new_order();
         }
         return super.addOrderIfEmpty(...arguments);
     },

@@ -68,7 +68,7 @@ patch(TicketScreen.prototype, {
             filter: filterState,
         };
         this.env.services.ui.block();
-        this._setOrder(this._getEmptyOrder(false));
+        this._setOrder(await this._getEmptyOrder(false));
         this.closeTicketScreen();
         setTimeout(() => {
             this.pos.showScreen("TicketScreen", { stateOverride, upState });
@@ -144,7 +144,7 @@ patch(TicketScreen.prototype, {
                     if (order.id === this.pos.get_order()?.id) {
                         const orderList = this._getOrderList();
                         if (orderList.length == 1) {
-                            this.pos.add_new_order();
+                            await this.pos.add_new_order();
                         } else {
                             this._selectNextOrder(order);
                         }

@@ -23,9 +23,3 @@ class PosOrder(models.Model):
         string='Food Preparation Time',
         help='Preparation time for the food as provided by UrbanPiper.'
     )
-
-    def _generate_unique_reference(self, pos_session_id, config_id, sequence_number, delivery_provider):
-        """
-        Generate unique id for the urban piper order.
-        """
-        return f'{delivery_provider} {pos_session_id:05}-{config_id:03}-{sequence_number:04}'

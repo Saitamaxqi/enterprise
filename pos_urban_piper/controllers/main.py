@@ -127,12 +127,6 @@ class PosUrbanPiperController(http.Controller):
                     'zip': customer_address.get('pin'),
                     'city': customer_address.get('city'),
                 })
-        order_reference = request.env['pos.order']._generate_unique_reference(
-            pos_config_sudo.current_session_id.id,
-            pos_config_sudo.id,
-            pos_config_sudo.current_session_id.sequence_number,
-            order['details']['channel'].capitalize()
-        )
 
         def get_prep_time(details):
             data = details.get('prep_time')
@@ -167,13 +161,12 @@ class PosUrbanPiperController(http.Controller):
                 'note': charge.get('title'),
                 'uuid': str(uuid.uuid4()),
             }))
-        number = str((pos_config_sudo.current_session_id.id % 10) * 100 + pos_config_sudo.current_session_id.sequence_number % 100).zfill(3)
+        pos_reference, order_sequence_number, tracking_number = pos_config_sudo.current_session_id.get_next_order_refs(ref_prefix=pos_delivery_provider.name)
         delivery_order = request.env["pos.order"].sudo().create({
-            'name': order_reference,
             'partner_id': customer_sudo.id,
-            'pos_reference': order_reference,
-            'sequence_number': number,
-            'tracking_number': number,
+            'pos_reference': pos_reference,
+            'sequence_number': order_sequence_number,
+            'tracking_number': tracking_number,
             'config_id': pos_config_sudo.id,
             'session_id': pos_config_sudo.current_session_id.id,
             'company_id': pos_config_sudo.company_id.id,
@@ -192,7 +185,6 @@ class PosUrbanPiperController(http.Controller):
             'user_id':  pos_config_sudo.current_session_id.user_id.id,
             'uuid': str(uuid.uuid4()),
         })
-        pos_config_sudo.current_session_id.sequence_number += 1
         pos_config_sudo._send_delivery_order_count(delivery_order.id)
 
     def _get_tax_value(self, taxes_data, pos_config):

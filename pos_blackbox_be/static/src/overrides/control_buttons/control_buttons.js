@@ -108,7 +108,7 @@ patch(ControlButtons.prototype, {
         if (this.pos.config.module_pos_restaurant) {
             this.pos.showScreen("FloorScreen");
         } else {
-            this.pos.add_new_order();
+            await this.pos.add_new_order();
             this.pos.showScreen("ProductScreen");
         }
     },

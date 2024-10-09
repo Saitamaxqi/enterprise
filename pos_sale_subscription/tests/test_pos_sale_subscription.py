@@ -57,15 +57,12 @@ class TestPoSSubscription(TestPointOfSaleHttpCommon):
               'sale_order_origin_id': self.sale_order_id.id,
               'qty': 1,
               'tax_ids': []}]],
-           'name': 'Order 00044-003-0014',
            'session_id': current_session.id,
-           'sequence_number': self.main_pos_config.journal_id.id,
            'payment_ids': [[0,
              0,
              {'amount': 250,
               'name': fields.Datetime.now(),
               'payment_method_id': self.main_pos_config.payment_method_ids[0].id}]],
-           'uuid': '00044-003-0014',
            'user_id': self.env.uid
         }
 

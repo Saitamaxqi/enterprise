@@ -27,7 +27,7 @@ patch(PosStore.prototype, {
             // at this point of the flow, it's impossible to retrieve the local order, only the ids were stored
             // therefore we create an "empty" order object in order to call the needed methods
             data.forEach(async (elem) => {
-                const order = this.createNewOrder();
+                const order = this.createNewOrder(await this.getNextOrderRefs());
                 await this.cancelOrderTransaction(order, elem.differences);
             });
         }

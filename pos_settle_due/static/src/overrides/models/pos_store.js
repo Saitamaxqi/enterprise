@@ -59,7 +59,7 @@ patch(PosStore.prototype, {
         this.dialog.add(SelectionPopup, {
             title: _t("Select the payment method to settle the due"),
             list: selectionList,
-            getPayload: (selectedPaymentMethod) => {
+            getPayload: async (selectedPaymentMethod) => {
                 // Reuse an empty order that has no partner or has partner equal to the selected partner.
                 let newOrder;
                 const emptyOrder = this.models["pos.order"].find(
@@ -73,7 +73,7 @@ patch(PosStore.prototype, {
                     // Set the empty order as the current order.
                     this.set_order(newOrder);
                 } else {
-                    newOrder = this.add_new_order();
+                    newOrder = await this.add_new_order();
                 }
                 const payment = newOrder.add_paymentline(selectedPaymentMethod);
                 payment.set_amount(totalDue);

@@ -28,19 +28,19 @@ class TestUi(TestFrontend):
         self.start_pos_tour('PreparationDisplayTourResto')
 
         # Order 1 should have 2 preparation orderlines (Coca-Cola and Water)
-        order1 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-0001')], limit=1)
+        order1 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-00001')], limit=1)
         pdis_order1 = self.env['pos_preparation_display.order'].search([('pos_order_id', '=', order1.id)], limit=1)
         self.assertEqual(len(pdis_order1.preparation_display_order_line_ids), 2, "Should have 2 preparation orderlines")
 
         # Order 2 should have 1 preparation orderline (Coca-Cola)
-        order2 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-0002')], limit=1)
+        order2 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-00002')], limit=1)
         pdis_order2 = self.env['pos_preparation_display.order'].search([('pos_order_id', '=', order2.id)], limit=1)
         self.assertEqual(len(pdis_order2.preparation_display_order_line_ids), 1, "Should have 1 preparation orderline")
         self.assertEqual(pdis_order2.preparation_display_order_line_ids.product_quantity, 1, "Should have 1 quantity of Coca-Cola")
 
         # Order 3 should have 3 preparation orderlines (Coca-Cola, Water and Minute Maid)
         # with one cancelled Minute Maid
-        order3 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-0003')], limit=1)
+        order3 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-00003')], limit=1)
         pdis_order3 = self.env['pos_preparation_display.order'].search([('pos_order_id', '=', order3.id)], limit=1)
         cancelled_orderline = pdis_order3.preparation_display_order_line_ids.filtered(lambda x: x.product_id.name == 'Minute Maid')
         self.assertEqual(cancelled_orderline.product_cancelled, 1, "Should have 1 cancelled Minute Maid orderline")
@@ -66,7 +66,7 @@ class TestUi(TestFrontend):
         self.start_pos_tour('PreparationDisplayTourResto2')
 
         # Order 1 should have 1 preparation orderlines (Coca-Cola) with quantity 2
-        order1 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-0001')], limit=1)
+        order1 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-00001')], limit=1)
         prep_line = self.env['pos_preparation_display.orderline'].search([
             ('preparation_display_order_id.pos_order_id', '=', order1.id),
         ])
@@ -82,7 +82,7 @@ class TestUi(TestFrontend):
         self.pos_config.with_user(self.pos_user).open_ui()
         self.start_pos_tour('PreparationDisplayTourInternalNotes')
         # Order 1 should have 2 preparation orderlines (Coca-Cola and Water)
-        order1 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-0001')], limit=1)
+        order1 = self.env['pos.order'].search([('pos_reference', 'ilike', '%-00001')], limit=1)
         pdis_order1 = self.env['pos_preparation_display.order'].search([('pos_order_id', '=', order1.id)])
         self.assertEqual(len(pdis_order1.preparation_display_order_line_ids), 2, "Should have 2 preparation orderlines")
         self.assertEqual(pdis_order1.preparation_display_order_line_ids[0].product_quantity, 1)
