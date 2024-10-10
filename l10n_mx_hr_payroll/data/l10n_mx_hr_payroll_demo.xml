@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <odoo>
     <record id="base.demo_company_mx" model="res.company" forcecreate="1">
         <field name="name">My Mexican Company</field>
@@ -29,13 +29,51 @@
         <field name="company_id" ref="base.demo_company_mx"/>
     </record>
 
-    <record id="hr_employee_roque" model="hr.employee">
+    <record id="res_partner_roque" model="res.partner">
         <field name="name">Roque Yepes</field>
+        <field name="street">Zona Hotelera</field>
+        <field name="city">Cancun</field>
+        <field name="zip">77500</field>
+        <field name="country_id" ref="base.mx"/>
+        <field name="phone">+0032484623230</field>
+        <field name="email">roque.yepes@example.com</field>
+        <field name="company_id" ref="base.demo_company_mx"/>
+    </record>
+
+    <record id="user_roque" model="res.users">
+        <field name="partner_id" ref="l10n_mx_hr_payroll.res_partner_roque"/>
+        <field name="login">roque.yepes@example.com</field>
+        <field name="password">roqueyepes</field>
+        <field name="company_ids" eval="[(4, ref('base.demo_company_mx'))]"/>
+        <field name="company_id" ref="base.demo_company_mx"/>
+        <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
+        <field name="image_1920" type="base64" file="l10n_mx_hr_payroll/static/img/hr_employee_roque.jpg"/>
+    </record>
+
+    <record id="hr_employee_roque" model="hr.employee">
+        <field name="name">Roque Yepes (rye)</field>
         <field name="job_id" ref="job_developer_lithuania"/>
         <field name="country_id" ref="base.mx"/>
         <field name="company_id" ref="base.demo_company_mx"/>
         <field name="image_1920" type="base64" file="l10n_mx_hr_payroll/static/img/hr_employee_roque.jpg"/>
         <field name="gender">male</field>
+        <field name="user_id" ref="l10n_mx_hr_payroll.user_roque"/>
+    </record>
+
+    <record id="hr_contract_cdi_roque" model="hr.contract">
+        <field name="name">CDI - Roque Yepes - Experienced Developer</field>
+        <field name="department_id" ref="hr_department_rdlt"/>
+        <field name="employee_id" ref="hr_employee_roque"/>
+        <field name="job_id" ref="l10n_mx_hr_payroll.job_developer_lithuania"/>
+        <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
+        <field name="wage">30000</field>
+        <field name="state">open</field>
+        <field name="hr_responsible_id" ref="base.user_demo"/>
+        <field name="company_id" ref="base.demo_company_mx"/>
+        <field name="date_start" eval="datetime(2023, 10, 2)"/>
+        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
+        <field name="l10n_mx_schedule_pay">bi_weekly</field>
+        <field name="l10n_mx_holiday_bonus_rate">25</field>
     </record>
 
     <record id="res_partner_elvera" model="res.partner">
@@ -112,44 +150,60 @@
         <field name="user_id" ref="l10n_mx_hr_payroll.user_elvera"/>
     </record>
 
-    <record id="hr_contract_cdi_elvera_previous" model="hr.contract">
-        <field name="name">CDI - Elvera Ramirez - Experienced Developer</field>
-        <field name="department_id" ref="hr_department_rdlt"/>
-        <field name="employee_id" ref="hr_employee_elvera"/>
-        <field name="job_id" ref="l10n_mx_hr_payroll.job_developer_lithuania"/>
-        <field name="structure_type_id" ref="l10n_mx_hr_payroll.structure_type_employee_mx"/>
-        <field name="wage">23000</field>
-        <field name="state">close</field>
-        <field name="hr_responsible_id" ref="base.user_demo"/>
-        <field name="company_id" ref="base.demo_company_mx"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-2, month=1, day=1))"/>
-        <field name="date_end" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-2))"/>
-        <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
-        <field name="l10n_mx_risk_bonus_rate">0.5</field>
-        <field name="l10n_mx_christmas_bonus">15</field>
-        <field name="l10n_mx_holidays_count">12</field>
-        <field name="l10n_mx_holiday_bonus_rate">25</field>
-    </record>
-
     <record id="hr_contract_cdi_elvera" model="hr.contract">
         <field name="name">CDI - Elvera Ramirez - Experienced Developer</field>
         <field name="department_id" ref="hr_department_rdlt"/>
         <field name="employee_id" ref="hr_employee_elvera"/>
         <field name="job_id" ref="l10n_mx_hr_payroll.job_developer_lithuania"/>
-        <field name="structure_type_id" ref="l10n_mx_hr_payroll.structure_type_employee_mx"/>
-        <field name="wage">25000</field>
+        <field name="structure_type_id" ref="l10n_mx_hr_payroll.l10n_mx_employee"/>
+        <field name="wage">50000</field>
         <field name="state">open</field>
         <field name="hr_responsible_id" ref="base.user_demo"/>
         <field name="company_id" ref="base.demo_company_mx"/>
-        <field name="date_start" eval="(DateTime.today() + relativedelta(years=-1, month=1, day=1, days=-1))"/>
+        <field name="date_start" eval="datetime(2021, 5, 31)"/>
         <field name="resource_calendar_id" model="resource.calendar" eval="obj().search([('company_id', '=', obj().env.ref('base.demo_company_mx').id)], limit=1)"/>
-        <field name="l10n_mx_risk_bonus_rate">0.5</field>
-        <field name="l10n_mx_christmas_bonus">15</field>
-        <field name="l10n_mx_holidays_count">12</field>
+        <field name="l10n_mx_schedule_pay">bi_weekly</field>
+        <field name="l10n_mx_payment_period_vouchers">in_period</field>
+        <field name="l10n_mx_meal_voucher_amount">3000</field>
+        <field name="l10n_mx_transport_amount">2000</field>
+        <field name="l10n_mx_gasoline_amount">1000</field>
+        <field name="l10n_mx_savings_fund">4000</field>
         <field name="l10n_mx_holiday_bonus_rate">25</field>
     </record>
 
-    <record id="hr_employee_elvera" model="hr.employee">
-        <field name="contract_id" ref="l10n_mx_hr_payroll.hr_contract_cdi_elvera"/>
+    <record id="hr_infonavit_discount" model="l10n.mx.hr.infonavit">
+        <field name="contract_id" ref="hr_contract_cdi_elvera"/>
+        <field name="monthly_insurance">50</field>
+        <field name="extra_fixed_monthly_contribution">100</field>
+        <field name="infonavit_type">discount_factor</field>
+        <field name="discount_factor">2</field>
+    </record>
+
+    <record id="hr_infonavit_fixed_monetary_fee" model="l10n.mx.hr.infonavit">
+        <field name="contract_id" ref="hr_contract_cdi_elvera"/>
+        <field name="monthly_insurance">50</field>
+        <field name="extra_fixed_monthly_contribution">100</field>
+        <field name="infonavit_type">fixed_monetary_fee</field>
+        <field name="fixed_monetary_fee">2000</field>
+    </record>
+
+    <record id="hr_infonavit_percentage" model="l10n.mx.hr.infonavit">
+        <field name="contract_id" ref="hr_contract_cdi_elvera"/>
+        <field name="monthly_insurance">50</field>
+        <field name="extra_fixed_monthly_contribution">100</field>
+        <field name="infonavit_type">percentage</field>
+        <field name="percentage">20</field>
+    </record>
+
+    <record id="hr_fonacot_1000" model="l10n.mx.hr.fonacot">
+        <field name="contract_id" ref="hr_contract_cdi_elvera"/>
+        <field name="extra_fixed_monthly_contribution">50</field>
+        <field name="monthly_import">1000</field>
+    </record>
+
+    <record id="hr_fonacot_200" model="l10n.mx.hr.fonacot">
+        <field name="contract_id" ref="hr_contract_cdi_elvera"/>
+        <field name="extra_fixed_monthly_contribution">50</field>
+        <field name="monthly_import">200</field>
     </record>
 </odoo>

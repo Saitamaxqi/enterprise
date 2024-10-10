@@ -41,9 +41,9 @@ class AccountChartTemplate(models.AbstractModel):
         default_account = '210.01.01'
         rules_mapping = defaultdict(dict)
 
-        # =============================== #
-        #          MX Regular Pay         #
-        # =============================== #
+        # ================================================ #
+        #          MX Regular Pay Payroll Structure        #
+        # ================================================ #
 
         gross_without_holidays = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_bruto')
         rules_mapping[gross_without_holidays]['debit'] = '601.01.01'
@@ -72,10 +72,7 @@ class AccountChartTemplate(models.AbstractModel):
         savings_fund_employer_alw = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_employer_savings_fund_alw')
         rules_mapping[savings_fund_employer_alw]['debit'] = '601.19.01'
 
-        reimbursement = self.env['hr.salary.rule'].search([
-            ('struct_id', '=', self.env.ref('l10n_mx_hr_payroll.hr_payroll_structure_mx_employee_salary').id),
-            ('code', '=', 'REIMBURSEMENT')
-        ])
+        reimbursement = self.env.ref('l10n_mx_hr_payroll.l10n_mx_hr_payroll_structure_mx_employee_salary_reimbursement_salary_rule')
         rules_mapping[reimbursement]['debit'] = '201.01.02'
 
         expenses = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_expenses')
@@ -87,7 +84,7 @@ class AccountChartTemplate(models.AbstractModel):
         bonus = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_bonus')
         rules_mapping[bonus]['debit'] = '601.01.01'
 
-        isr = self.env.ref('l10n_mx_hr_payroll.l10n_mx_employees_salary_isr')
+        isr = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_isr')
         rules_mapping[isr]['debit'] = '216.01.01'
 
         isr_holiday_bonus = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_isr_holiday_bonus_tax')
@@ -99,51 +96,51 @@ class AccountChartTemplate(models.AbstractModel):
         savings_fund_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_employer_savings_fund')
         rules_mapping[savings_fund_employer]['debit'] = '210.04.01'
 
-        subsidy = self.env.ref('l10n_mx_hr_payroll.l10n_mx_employees_salary_subsidy')
+        subsidy = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_subsidy')
         rules_mapping[subsidy]['debit'] = '110.01.01'
 
-        infonavit = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_infonavit')
+        infonavit = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_infonavit_employee')
         rules_mapping[infonavit]['debit'] = '211.03.01'
 
         fonacot = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_fonacot')
         rules_mapping[fonacot]['debit'] = '205.06.02'
 
-        imss_employee = self.env.ref('l10n_mx_hr_payroll.l10n_mx_social_security_total_employee')
+        imss_employee = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_social_security_total_employee')
         rules_mapping[imss_employee]['credit'] = '216.11.01'
 
-        imss_work_risk_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_work_risk')
+        imss_work_risk_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_imss_work_risk')
         rules_mapping[imss_work_risk_employer]['debit'] = '601.26.01'
         rules_mapping[imss_work_risk_employer]['credit'] = '211.01.01'
 
-        imss_dis_fix_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_fixed')
+        imss_dis_fix_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_imss_disease_maternity_fixed')
         rules_mapping[imss_dis_fix_employer]['debit'] = '601.26.01'
         rules_mapping[imss_dis_fix_employer]['credit'] = '211.01.01'
 
-        imss_dis_add_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_additional')
+        imss_dis_add_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_imss_disease_maternity_additional')
         rules_mapping[imss_dis_add_employer]['debit'] = '601.26.01'
         rules_mapping[imss_dis_add_employer]['credit'] = '211.01.01'
 
-        imss_dis_med_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_medical')
+        imss_dis_med_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_imss_disease_maternity_medical')
         rules_mapping[imss_dis_med_employer]['debit'] = '601.26.01'
         rules_mapping[imss_dis_med_employer]['credit'] = '211.01.01'
 
-        imss_dis_mon_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disease_maternity_money')
+        imss_dis_mon_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_imss_disease_maternity_money')
         rules_mapping[imss_dis_mon_employer]['debit'] = '601.26.01'
         rules_mapping[imss_dis_mon_employer]['credit'] = '211.01.01'
 
-        imss_dis_lif_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_disability_life')
+        imss_dis_lif_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_imss_disability_life')
         rules_mapping[imss_dis_lif_employer]['debit'] = '601.26.01'
         rules_mapping[imss_dis_lif_employer]['credit'] = '211.01.01'
 
-        imss_retire_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_retirement')
+        imss_retire_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_imss_retirement')
         rules_mapping[imss_retire_employer]['debit'] = '601.28.01'
         rules_mapping[imss_retire_employer]['credit'] = '211.02.01'
 
-        imss_ceav_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_ceav')
+        imss_ceav_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_imss_ceav')
         rules_mapping[imss_ceav_employer]['debit'] = '601.28.01'
         rules_mapping[imss_ceav_employer]['credit'] = '211.02.01'
 
-        imss_nursery_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_employees_salary_imss_nursery')
+        imss_nursery_employer = self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay_imss_nursery')
         rules_mapping[imss_nursery_employer]['debit'] = '601.26.01'
         rules_mapping[imss_nursery_employer]['credit'] = '211.01.01'
 
@@ -164,14 +161,14 @@ class AccountChartTemplate(models.AbstractModel):
         rules_mapping[provision_period_vacation]['credit'] = '210.02.01'
 
         net = self.env['hr.salary.rule'].search([
-            ('struct_id', '=', self.env.ref('l10n_mx_hr_payroll.hr_payroll_structure_mx_employee_salary').id),
+            ('struct_id', '=', self.env.ref('l10n_mx_hr_payroll.l10n_mx_regular_pay').id),
             ('code', '=', 'NET')
         ])
         rules_mapping[net]['credit'] = '210.01.01'
 
-        # =============================== #
-        #        MX Christmas Bonus       #
-        # =============================== #
+        # ================================================ #
+        #        MX Christmas Bonus Payroll Structure      #
+        # ================================================ #
 
         basic = self.env.ref('l10n_mx_hr_payroll.l10n_mx_christmas_bonus_basic')
         rules_mapping[basic]['debit'] = '210.03.01'
@@ -179,7 +176,7 @@ class AccountChartTemplate(models.AbstractModel):
         isr = self.env.ref('l10n_mx_hr_payroll.l10n_mx_christmas_bonus_isr')
         rules_mapping[isr]['debit'] = '216.01.01'
 
-        basic = self.env.ref('l10n_mx_hr_payroll.l10n_mx_christmas_bonus_net')
+        net = self.env.ref('l10n_mx_hr_payroll.l10n_mx_christmas_bonus_net')
         rules_mapping[net]['credit'] = '210.01.01'
 
         self._configure_payroll_account(

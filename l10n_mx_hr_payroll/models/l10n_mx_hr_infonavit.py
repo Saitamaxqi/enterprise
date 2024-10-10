@@ -28,23 +28,23 @@ class HrInfonavit(models.Model):
     percentage = fields.Float(string="Percentage")
     discount_factor = fields.Float(string="Discount Factor")
 
-    _percentage = models.Constraint(
+    _check_percentage = models.Constraint(
         'CHECK (0 <= percentage AND percentage <= 100)',
-        "The percentage must be between 0 and 100",
+        'The percentage must be between 0 and 100'
     )
-    _positive_monthly_insurance = models.Constraint(
+    _check_positive_monthly_insurance = models.Constraint(
         'CHECK (monthly_insurance >= 0)',
-        "The monthly insurance cannot be negative",
+        'The monthly insurance cannot be negative'
     )
-    _positive_extra_fixed_monthly_contribution = models.Constraint(
+    _check_positive_extra_fixed_monthly_contribution = models.Constraint(
         'CHECK (extra_fixed_monthly_contribution >= 0)',
-        "The extra fixed monthly contribution cannot be negative",
+        'The extra fixed monthly contribution cannot be negative'
     )
-    _positive_fixed_monetary_fee = models.Constraint(
+    _check_positive_fixed_monetary_fee = models.Constraint(
         'CHECK (fixed_monetary_fee >= 0)',
-        "The fixed monetary fee cannot be negative",
+        'The fixed monetary fee cannot be negative'
     )
-    _positive_discount_factor = models.Constraint(
+    _check_positive_discount_factor = models.Constraint(
         'CHECK (discount_factor >= 0)',
-        "The discount factor cannot be negative",
+        'The discount factor cannot be negative'
     )

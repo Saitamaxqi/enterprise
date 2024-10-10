@@ -15,7 +15,6 @@
     </record>
 
     <record id="base.partner_demo_company_mx" model="res.partner" forcecreate="1">
-        <field name="name">My Mexican Company</field>
         <field name="currency_id" ref="base.MXN"/>
         <field name="name">My MX Company</field>
         <field name="vat">EKU9003173C9</field>

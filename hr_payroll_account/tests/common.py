@@ -139,7 +139,7 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
 
     @classmethod
     def _generate_leave(cls, date_from, date_to, holiday_status_id):
-        return cls.env['hr.leave'].create({
+        return cls.env['hr.leave'].sudo().create({
             'employee_id': cls.employee.id,
             'request_date_from': date_from,
             'request_date_to': date_to,
@@ -153,40 +153,28 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
             if code in line_values:
                 payslip_line_value = line_values[code][payslip.id]['total']
                 if float_compare(payslip_line_value, value, 2):
-                    error.append(f"Code: {code:<30} │ Expected: {value:<15} │ Reality: {payslip_line_value:<15}")
-        if error:
-            error.insert(0, '')
-            error.append('')
+                    error.append(f"{'WRONG CALCULATION':>20} │ {code:<30} │ {value:>15} │ {payslip_line_value:>15} │ {round(payslip_line_value-value, 2):>15} │")
         if not skip_lines:
-            error_before = bool(error)
-            unnecessary_line = False
-            for code in results:
+            for code, value in results.items():
                 if code not in payslip.line_ids.mapped('code'):
                     error.append(
-                        f"Unnecessary Line: {code:<30}")
-                    unnecessary_line = True
-            if unnecessary_line:
-                error.append('')
-                if not error_before:
-                    error.insert(0, '')
-            error_before = bool(error)
-            missing_line = False
+                        f"{'UNNECESSARY LINE':>20} │ {code:<30} │ {value:>15} │ {'/':>15} │")
             for line in payslip.line_ids:
                 if line.code not in results:
                     error.append(
-                        f"Missing Line: {line.code:<30} - {line_values[line.code][payslip.id]['total']:<15}")
-                    missing_line = True
-            if missing_line:
-                error.append('')
-                if not error_before:
-                    error.insert(0, '')
+                        f"{'MISSING LINE':>20} │ {line.code:<30} │ {'/':>15} │ {line_values[line.code][payslip.id]['total']:>15} │")
         if error:
+            error.insert(
+                0,
+                f"{'ERROR':>20} │ {'CODE':<30} │ {'EXPECTED':>15} │ {'REALITY':>15} │ {'DIFFERENCE':>15} │\n"
+                f"{'':>20} │ {'':<30} │ {'':>15} │ {'':>15} │ {'':>15} │")
             error.extend([
+                "",
                 f"Payslip Period: {payslip.date_from} - {payslip.date_to}",
                 "Payslip Actual Values: ",
                 "        payslip_results = {" + ', '.join(f"'{line.code}': {line_values[line.code][payslip.id]['total']}" for line in payslip.line_ids) + "}"
             ])
-        self.assertEqual(len(error), 0, '\n' + '\n'.join(error))
+        self.assertEqual(len(error), 0, '\n\n' + '\n'.join(error))
 
     def _validate_worked_days(self, payslip, results, skip_lines=False):
         error = []

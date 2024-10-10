@@ -19,11 +19,11 @@ class HrFonacot(models.Model):
     extra_fixed_monthly_contribution = fields.Monetary(string="Extra Fixed Monthly Contribution")
     monthly_import = fields.Monetary(string="Import")
 
-    _positive_monthly_import = models.Constraint(
+    _check_positive_monthly_import = models.Constraint(
         'CHECK (monthly_import >= 0)',
-        "The monthly import cannot be negative",
+        'The monthly import cannot be negative'
     )
-    _positive_extra_fixed_monthly_contribution = models.Constraint(
+    _check_positive_extra_fixed_monthly_contribution = models.Constraint(
         'CHECK (extra_fixed_monthly_contribution >= 0)',
-        "The extra fixed monthly contribution cannot be negative",
+        'The extra fixed monthly contribution cannot be negative'
     )
