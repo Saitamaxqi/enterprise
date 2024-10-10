@@ -261,7 +261,7 @@
         <field name="model">project.task</field>
         <field name="priority">12</field>
         <field name="arch" type="xml">
-            <map res_partner="partner_id" default_order="planned_date_begin" routing="1" js_class="project_task_map">
+            <map res_partner="partner_id" default_order="sequence, planned_date_begin" allow_resequence="true" routing="1" js_class="project_task_map">
                 <field name="partner_id" string="Customer"/>
                 <field name="project_id" string="Project"/>
                 <field name="milestone_id" string="Milestone"/>
@@ -276,7 +276,7 @@
         <field name="model">project.task</field>
         <field name="priority">12</field>
         <field name="arch" type="xml">
-            <map res_partner="partner_id" routing="1" js_class="project_task_map">
+            <map res_partner="partner_id" default_order="sequence, planned_date_begin" allow_resequence="true" routing="1" js_class="project_task_map">
                 <field name="partner_id" string="Customer"/>
                 <field name="milestone_id" string="Milestone"/>
                 <field name="user_names" string="Assignees"/>
