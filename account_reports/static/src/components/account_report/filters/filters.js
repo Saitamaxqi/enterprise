@@ -383,6 +383,13 @@ export class AccountReportFilters extends Component {
         return dateTo.plus({ years: this.dateFilter.year }).toFormat("yyyy");
     }
 
+    hideTaxPeriodFilter() {
+        const optionalPeriods = ['monthly', 'trimester', 'year'];
+        const periodicitySettings = this.controller.options.tax_periodicity;
+        return optionalPeriods.includes(periodicitySettings.periodicity) &&
+            periodicitySettings.start_day == 1 && periodicitySettings.start_month == 1;
+    }
+
     _displayTaxPeriod(dateTo) {
         const periodicitySettings = this.controller.options.tax_periodicity;
         const targetDateInPeriod = dateTo.plus({months: periodicitySettings.months_per_period * this.dateFilter['tax_period']})
