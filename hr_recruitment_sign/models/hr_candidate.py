@@ -12,10 +12,3 @@ class HrCandidate(models.Model):
             ('partner_id', '=', self.partner_id.id)]).sign_request_id
         vals['sign_request_ids'] = request_ids.ids
         return vals
-
-    def _update_employee_from_candidate(self):
-        for candidate in self:
-            request_ids = self.env['sign.request.item'].search([
-                ('partner_id', '=', candidate.partner_id.id)]).sign_request_id
-            candidate.employee_id.sign_request_ids |= request_ids
-        return super()._update_employee_from_candidate()
