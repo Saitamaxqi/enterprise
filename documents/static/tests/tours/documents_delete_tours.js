@@ -1,6 +1,4 @@
 import { registry } from "@web/core/registry";
-import { stepUtils } from "@web_tour/tour_service/tour_utils";
-
 
 function restoreDocumentSteps() {
     return [
@@ -34,14 +32,7 @@ function restoreDocumentSteps() {
 }
 
 registry.category("web_tour.tours").add("document_delete_tour", {
-    url: "/odoo",
     steps: () => [
-        stepUtils.showAppsMenuItem(),
-        {
-            trigger: '.o_app[data-menu-xmlid="documents.menu_root"]',
-            content: "Open document app",
-            run: "click",
-        },
         // Archive a file in a folder and restore it
         {
             trigger: '.o_search_panel_field header.active:contains("Folder1")',
