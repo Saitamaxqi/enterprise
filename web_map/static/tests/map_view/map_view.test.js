@@ -1156,7 +1156,7 @@ describe.tags("desktop")("map_view_desktop", () => {
         expect(controller.model.metaData.allowResequence).toBe(true, {
             message: "The resequence option should be activated",
         });
-        expect(controller.model.metaData.defaultOrder.name).toBe("sequence");
+        expect(controller.model.metaData.defaultOrder[0].name).toBe("sequence");
 
         expect(".o_row_handle").toHaveCount(5, {
             message: "Should have one row handle per record",
@@ -1184,6 +1184,60 @@ describe.tags("desktop")("map_view_desktop", () => {
         ]);
 
         expect.verifySteps(["resequence project.task sequence 4 3,4,2", "API called 1,3,4,2,5"]);
+    });
+
+    test("Resequence records, multiple default order fields", async () => {
+        const taskRecords = [
+            {
+                id: 1,
+                name: "Project 1",
+                sequence: 3,
+                partner_id: 1,
+            },
+            {
+                id: 2,
+                name: "Project 2",
+                sequence: 3,
+                partner_id: 1,
+            },
+        ];
+        Task._records = taskRecords;
+        const defer = new Deferred();
+        onRpc("/web/dataset/resequence", async (request) => {
+            const { params: args } = await request.json();
+            await defer;
+            expect.step(`resequence ${args.model} ${args.field} ${args.offset} ${args.ids}`);
+        });
+        await mountView({
+            type: "map",
+            resModel: "project.task",
+            arch: `
+                <map res_partner="partner_id" routing="1" default_order="sequence, id" allow_resequence="true">
+                    <field name="sequence"/>
+                    <field name="id"/>
+                </map>
+            `,
+        });
+
+        expect(queryAllTexts(".o-map-renderer--pin-list-details li")).toEqual([
+            "1. Project 1",
+            "2. Project 2",
+        ]);
+
+        await contains(".o-map-renderer--pin-located:nth-child(1) .o_row_handle").dragAndDrop(
+            ".o-map-renderer--pin-located:nth-child(2) .o_row_handle"
+        );
+        await animationFrame();
+
+        // Model got notified before the backend resequence call
+        expect(queryAllTexts(".o-map-renderer--pin-list-details li")).toEqual([
+            "1. Project 2",
+            "2. Project 1",
+        ]);
+
+        defer.resolve();
+        await animationFrame();
+        expect.verifySteps(["resequence project.task sequence 3 2,1"]);
     });
 
     test("When resequencing, model get notified before the backend call", async () => {

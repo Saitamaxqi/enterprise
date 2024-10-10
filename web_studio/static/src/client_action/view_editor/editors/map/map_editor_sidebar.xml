@@ -51,7 +51,7 @@
                     t-if="modelParams.routing === true"
                     name="'default_order'"
                     type="'selection'"
-                    value="modelParams.defaultOrder?.name"
+                    value="modelParams.defaultOrder?.[0]?.name"
                     childProps="{ choices: this.defaultOrderChoices, required: false }"
                     onChange.bind="onViewAttributeChanged"
                 >
@@ -60,8 +60,8 @@
 
                 <Property
                     t-if="modelParams.defaultOrder
-                        and modelParams.fields[modelParams.defaultOrder.name].type === 'integer'
-                        and !modelParams.fields[modelParams.defaultOrder.name].readonly"
+                        and modelParams.fields[modelParams.defaultOrder[0].name].type === 'integer'
+                        and !modelParams.fields[modelParams.defaultOrder[0].name].readonly"
                     name="'allow_resequence'"
                     type="'boolean'"
                     value="modelParams.allowResequence"
