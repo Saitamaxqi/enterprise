@@ -681,7 +681,7 @@ class DMFAOccupation(DMFANode):
         self.worker_status = -1
         self.retired = '0'
         self.apprenticeship = -1
-        self.remun_method = -1
+        self.remun_method = 2 if contract.commission_on_target else -1
         self.position_code = -1
         self.flying_staff_class = -1
         self.TenthOrTwelfth = -1
@@ -750,6 +750,7 @@ class DMFAOccupation(DMFANode):
         # |   51 | Indemnité payée à un membre du personnel nommé à titre définitif qui est totalement absent dans le cadre d'une mesure de réorganisation du temps de travail                                                                                                                               |
         # +------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
         regular_gross = self.env.ref('l10n_be_hr_payroll.cp200_employees_salary_gross_salary')
+        commission_gross = self.env.ref('l10n_be_hr_payroll.cp200_employees_salary_fixed_commission')
         student_struct = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_student_regular_pay')
         regular_gross_student = self.env['hr.salary.rule'].search([
             ('struct_id', '=', student_struct.id),
@@ -766,6 +767,7 @@ class DMFAOccupation(DMFANode):
             regular_gross: 1,
             regular_gross_student: 1,
             rule_13th_month_gross: 2,
+            commission_gross: 2,
             termination_n: 7,
             termination_n1: 7,
             regular_car: 10,
@@ -775,9 +777,11 @@ class DMFAOccupation(DMFANode):
             codes[holiday_pay_recovery_n] = 12
             codes[holiday_pay_recovery_n1] = 12
         frequencies = {
-            rule_13th_month_gross: 12
+            rule_13th_month_gross: 12,
+            commission_gross: 0,
         }
         lines_by_code = defaultdict(lambda: self.env['hr.payslip.line'])
+        lines_to_deduct_by_code = defaultdict(lambda: self.env['hr.payslip.line'])
         # Exclude payslips without remuneration to avoid having a sum of 27€ (ATNs)
         # On a full sick quarter that actually has no presence
         lines = self.payslips.mapped('line_ids')
@@ -791,10 +795,12 @@ class DMFAOccupation(DMFANode):
             if code:
                 frequency = frequencies.get(line.salary_rule_id)
                 lines_by_code[code, frequency] |= line
+                if line.salary_rule_id == commission_gross:
+                    lines_to_deduct_by_code[1, None] += line
         # La valeur zéro pour la remuneration est autorisée uniquement pour le solde du budget
         # mobilité (code rémunération 029).
         return DMFARemuneration.init_multi([(
-            lines, code, frequency
+            lines, code, frequency, lines_to_deduct_by_code[code, frequency]
         ) for (code, frequency), lines in lines_by_code.items() if sum(lines.mapped('total'))])
 
     def _prepare_occupation_informations(self):
@@ -805,18 +811,20 @@ class DMFARemuneration(DMFANode):
     """
     Represents the paid amounts on payslips
     """
-    def __init__(self, payslip_lines, code, frequency=None, sequence=1):
+    def __init__(self, payslip_lines, code, frequency=None, lines_to_deduct=None, sequence=1):
         super().__init__(payslip_lines.env, sequence=sequence)
         self.code = str(code).zfill(3)
 
-        if frequency:
+        if frequency is not None:
             self.frequency = str(frequency).zfill(2)
         else:
             self.frequency = -1
 
         amount = sum(l.total if l.code not in ['HolPayRecN', 'HolPayRecN1'] else -l.total for l in payslip_lines)
         self.amount = format_amount(amount)
-
+        if lines_to_deduct:
+            amount_to_deduct = format_amount(sum(lines_to_deduct.mapped('total')))
+            self.amount = format_amount(int(self.amount) - int(amount_to_deduct), hundredth=False)
         self.percentage_paid = -1
 
 class DMFAOccupationInformation(DMFANode):
