@@ -4,5 +4,6 @@ from . import test_analytic_line
 from . import test_timesheet
 from . import test_access_rights
 from . import test_merge_timesheet
+from . import test_project_gantt
 from . import test_project_task_quick_create
 from . import test_record_time

@@ -1383,3 +1383,25 @@ class TestGanttRescheduleOnTasks(ProjectEnterpriseGanttRescheduleCommon):
         tasks.web_gantt_write({'user_ids': users.ids})
         self.assertEqual(self.task_1.user_ids, users, "Project user and Prohect manager should be assigned to the task 1 and portal user should be assigned.")
         self.assertEqual(self.task_2.user_ids, users, "Project user and Prohect maanger should be assigned to the task 2 and portal user should be assigned.")
+
+    def test_project_web_gantt_write(self):
+        self.project_goats.write({
+            'user_id': self.user_projectmanager.id,
+        })
+        self.project_pigs.write({
+            'user_id': self.user_projectmanager.id,
+            'date_start': '2021-09-27',
+            'date': '2021-09-28'
+        })
+        self.project_goats.web_gantt_write({'user_id': False})
+        self.assertEqual(
+            self.project_goats.user_id,
+            self.user_projectmanager,
+            "Project without a schedule should retain its assignee when `user_id` is set to False"
+        )
+
+        self.project_pigs.web_gantt_write({'user_id': False})
+        self.assertFalse(
+            self.project_pigs.user_id,
+            "Scheduled project should have its assignee removed when `user_id` is set to False."
+        )

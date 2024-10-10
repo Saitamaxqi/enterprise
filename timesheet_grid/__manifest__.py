@@ -23,6 +23,7 @@
         'views/res_users_views.xml',
         'views/hr_employee.xml',
         'views/timesheet_grid_menus.xml',
+        'views/project_views.xml',
         'views/res_config_settings_views.xml',
         "report/timesheets_analysis_report_views.xml",
         'wizard/hr_timesheet_merge_wizard_views.xml',
