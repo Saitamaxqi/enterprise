@@ -109,7 +109,7 @@ class FrontdeskVisitor(models.Model):
         for recipient in recipients:
             odoobot_id = self.env.ref("base.partner_root").id
             partners_to = [recipient.user_partner_id.id] if is_host else [recipient.partner_id.id]
-            channel = self.env["discuss.channel"].with_user(SUPERUSER_ID).channel_get(partners_to)
+            channel = self.env["discuss.channel"].with_user(SUPERUSER_ID)._get_or_create_chat(partners_to)
             channel.message_post(body=msg, author_id=odoobot_id, message_type="comment", subtype_xmlid="mail.mt_comment")
 
     def _notify_by_email(self):
