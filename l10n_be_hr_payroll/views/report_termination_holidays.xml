@@ -237,7 +237,7 @@
             <div class="oe_structure"></div>
             <h6>
                 <t t-set="period_from" t-value="o.employee_id.first_contract_in_company if not o.employee_id.end_notice_period else max(o.employee_id.first_contract_in_company, (o.employee_id.end_notice_period + relativedelta(years=-1)).replace(month=1, day=1))"/>
-                <t t-set="period_to" t-value="o.employee_id.first_contract_in_company if not o.employee_id.end_notice_period else max(o.employee_id.first_contract_in_company, (o.employee_id.end_notice_period + relativedelta(years=-1)).replace(month=12, day=31))"/>
+                <t t-set="period_to" t-value="o.employee_id.end_notice_period"/>
                 <span>Remuneration for the period from </span><span t-out="period_from">20-03-2000</span>
                 <span>to </span><span t-out="period_to">21-04-2001</span><span> included:</span>
             </h6>
