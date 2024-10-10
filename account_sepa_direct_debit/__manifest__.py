@@ -46,7 +46,7 @@ try to use this method on an invoice for whose payment no mandate can be used.
         'data/account_data.xml',
         'data/sdd_payment_method.xml',
         'data/sdd_mandate_state_cron.xml',
-        'data/email_templates.xml',
+        'data/mail_template.xml',
         'views/sdd_mandate_views.xml',
         'views/account_payment_view.xml',
         'views/account_journal_dashboard_view.xml',

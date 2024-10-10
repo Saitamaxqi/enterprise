@@ -27,6 +27,7 @@ of recall defined. You can define different policies for different companies.
         'security/account_followup_security.xml',
         'security/ir.model.access.csv',
         'security/sms_security.xml',
+        'data/mail_template.xml',
         'data/account_followup_data.xml',
         'data/cron.xml',
         'wizard/followup_manual_reminder_views.xml',

@@ -12,7 +12,7 @@
         'security/ir.model.access.csv',
         'cron/cron.xml',
         'views/website_generator_views.xml',
-        'data/website_generator_data.xml',
+        'data/mail_template.xml',
     ],
     'assets': {
         'web.assets_backend': [
