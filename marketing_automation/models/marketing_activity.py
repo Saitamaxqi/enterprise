@@ -5,14 +5,12 @@ import json
 import logging
 import threading
 
-from ast import literal_eval
 from datetime import timedelta, date, datetime
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, fields, models, _
 from odoo.fields import Datetime
 from odoo.exceptions import ValidationError, AccessError
-from odoo.osv import expression
 from odoo.tools.misc import clean_context
 
 _logger = logging.getLogger(__name__)
@@ -138,12 +136,15 @@ class MarketingActivity(models.Model):
 
     @api.depends('activity_domain', 'campaign_id.domain', 'parent_id.domain')
     def _compute_inherited_domain(self):
+        MailingFilter = self.env['mailing.filter']
         for activity in self:
-            domain = expression.AND([literal_eval(activity.activity_domain or '[]'),
-                                     literal_eval(activity.campaign_id.domain or '[]')])
+            domain = MailingFilter._combine_dynamic_domains(
+                activity.activity_domain or '[]',
+                activity.campaign_id.domain or '[]'
+            )
             ancestor = activity.parent_id
             while ancestor:
-                domain = expression.AND([domain, literal_eval(ancestor.activity_domain or '[]')])
+                domain = MailingFilter._combine_dynamic_domains(domain, ancestor.activity_domain or '[]')
                 ancestor = ancestor.parent_id
             activity.domain = domain
 
@@ -376,10 +377,11 @@ class MarketingActivity(models.Model):
             traces = traces - invalid_traces
 
         # Filter traces not fitting the activity filter and whose record has been deleted
+        MailingFilter = self.env['mailing.filter']
         if self.domain:
-            rec_domain = literal_eval(self.domain)
+            rec_domain = MailingFilter._evaluate_domain(self.domain or '[]')
         else:
-            rec_domain = literal_eval(self.campaign_id.domain or '[]')
+            rec_domain = MailingFilter._evaluate_domain(self.campaign_id.domain or '[]')
         if rec_domain:
             user_id = self.campaign_id.user_id or self.env.user
             rec_valid = self.env[self.model_name].with_context(lang=user_id.lang).search(rec_domain)
