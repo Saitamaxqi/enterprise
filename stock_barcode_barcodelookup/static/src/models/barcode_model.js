@@ -117,4 +117,8 @@ patch(BarcodeModel.prototype, {
             });
         }
     },
+
+    get isValidForBarcodeLookup() {
+        return true;
+    },
 });

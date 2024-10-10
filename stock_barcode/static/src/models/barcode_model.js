@@ -135,10 +135,6 @@ export default class BarcodeModel extends EventBus {
         return true;
     }
 
-    get isValidForBarcodeLookup() {
-        return true;
-    }
-
     /**
      * The operation can be validated if there is at least one line.
      * @returns {boolean}

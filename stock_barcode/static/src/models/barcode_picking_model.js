@@ -712,13 +712,6 @@ export default class BarcodePickingModel extends BarcodeModel {
         this.scannedLinesVirtualId = [];
     }
 
-    get isValidForBarcodeLookup() {
-        if (this?.record.picking_type_code === "incoming") {
-            return true;
-        }
-        return false;
-    }
-
     get considerPackageLines() {
         return this._moveEntirePackage() && this.packageLines.length;
     }

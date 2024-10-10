@@ -42,17 +42,11 @@ patch(MainComponent.prototype, {
     // Private
     //--------------------------------------------------------------------------
 
-    _getModel() {
-        const { resId, resModel, rpc, notification, orm, action } = this;
+    _getBarcodeModel() {
         if (this.resModel === "stock.picking.batch") {
-            return new BarcodePickingBatchModel(resModel, resId, {
-                rpc,
-                notification,
-                orm,
-                action,
-            });
+            return BarcodePickingBatchModel;
         }
-        return super._getModel(...arguments);
+        return super._getBarcodeModel(...arguments);
     },
 });
 

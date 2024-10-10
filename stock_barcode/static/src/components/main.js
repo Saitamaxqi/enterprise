@@ -279,6 +279,15 @@ class MainComponent extends Component {
     // Private
     //--------------------------------------------------------------------------
 
+    _getBarcodeModel() {
+        if (this.resModel === "stock.picking") {
+            return BarcodePickingModel;
+        } else if (this.resModel === "stock.quant") {
+            return BarcodeQuantModel;
+        }
+        throw new Error("No JS model define");
+    }
+
     _getModel() {
         const services = {
             rpc: rpc,
@@ -286,14 +295,8 @@ class MainComponent extends Component {
             notification: this.notification,
             action: this.action,
         };
-        if (this.resModel === "stock.picking") {
-            services.dialog = this.dialog;
-            return new BarcodePickingModel(this.resModel, this.resId, services);
-        } else if (this.resModel === "stock.quant") {
-            return new BarcodeQuantModel(this.resModel, this.resId, services);
-        } else {
-            throw new Error("No JS model define");
-        }
+        const BarcodeModel = this._getBarcodeModel();
+        return new BarcodeModel(this.resModel, this.resId, services);
     }
 
     //--------------------------------------------------------------------------

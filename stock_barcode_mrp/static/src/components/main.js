@@ -145,12 +145,11 @@ patch(MainComponent.prototype, {
         this.toggleBarcodeLines();
     },
 
-    _getModel() {
-        const { resId, resModel, rpc, notification, orm, action } = this;
+    _getBarcodeModel() {
         if (this.resModel === "mrp.production") {
-            return new BarcodeMRPModel(resModel, resId, { rpc, notification, orm, action });
+            return BarcodeMRPModel;
         }
-        return super._getModel(...arguments);
+        return super._getBarcodeModel(...arguments);
     },
 
     _getHeaderHeight() {

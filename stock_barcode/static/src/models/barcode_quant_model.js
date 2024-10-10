@@ -92,13 +92,6 @@ export default class BarcodeQuantModel extends BarcodeModel {
         notifyAndGoAhead();
     }
 
-    get isValidForBarcodeLookup() {
-        if (this.resModel === "stock.quant") {
-            return true;
-        }
-        return false;
-    }
-
     get applyOn() {
         return this.pageLines.filter((line) => line.inventory_quantity_set).length;
     }
@@ -657,7 +650,6 @@ export default class BarcodeQuantModel extends BarcodeModel {
                     quantity: quant.quantity,
                     lot: quant.lot_id,
                     package: quant.package_id,
-                    resultPackage: quant.package_id,
                     owner: quant.owner_id,
                 });
                 const newLine = await this._createNewLine({ fieldsParams });
