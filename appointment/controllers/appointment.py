@@ -692,7 +692,7 @@ class AppointmentController(http.Controller):
             new_customer = customer.phone != phone and customer_phone_fmt != input_phone_fmt
 
         if new_customer:
-            customer = customer.create({
+            customer = customer.sudo().create({
                 'name': name,
                 'phone': customer._phone_format(number=phone, country=self._get_customer_country()) or phone,
                 'email': email,
