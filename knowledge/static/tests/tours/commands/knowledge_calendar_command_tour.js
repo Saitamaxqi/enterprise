@@ -1,9 +1,6 @@
 /** @odoo-module */
 
-import { HtmlField } from "@html_editor/fields/html_field";
-import { nodeSize } from "@html_editor/utils/position";
 import { registry } from "@web/core/registry";
-import { patch } from "@web/core/utils/patch";
 import {
     embeddedViewPatchFunctions,
     endKnowledgeTour,
@@ -12,9 +9,6 @@ import {
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
 
 const embeddedViewPatchUtil = embeddedViewPatchFunctions();
-
-let htmlField;
-let unpatchHtmlField;
 
 function clickDate(el) {
     const rect = el.getBoundingClientRect();
@@ -59,12 +53,6 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     trigger: "body",
     run: () => {
         embeddedViewPatchUtil.before();
-        unpatchHtmlField = patch(HtmlField.prototype, {
-            setup() {
-                super.setup();
-                htmlField = this;
-            },
-        });
     },
 }, {
     //-----------------------------------------------
@@ -131,16 +119,7 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
 
     content: "Remove previous item calendar view",
     trigger: '.odoo-editor-editable',
-    run: function () {
-        htmlField.editor.dispatch("HISTORY_STAGE_SELECTION");
-        htmlField.editor.shared.setSelection({
-            anchorNode: htmlField.editor.editable,
-            anchorOffset: 0,
-            focusOffset: nodeSize(htmlField.editor.editable),
-        });
-        htmlField.editor.dispatch("DELETE_SELECTION");
-        htmlField.editor.dispatch("ADD_STEP");
-    },
+    run: "editor ",
 },
 {
     trigger: ".odoo-editor-editable:not(:has( [data-embedded='view']))",
@@ -478,7 +457,6 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     trigger: 'body',
     run: () => {
         embeddedViewPatchUtil.after();
-        unpatchHtmlField();
     },
 }, ...endKnowledgeTour()
 ]});
