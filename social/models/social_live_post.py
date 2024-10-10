@@ -16,7 +16,6 @@ class SocialLivePost(models.Model):
     Basically, a social.post that is posted on 4 social.accounts will create 4 instances
     of the social.live.post. """
 
-    _name = 'social.live.post'
     _description = 'Social Live Post'
 
     post_id = fields.Many2one('social.post', string="Social Post", required=True, readonly=True, ondelete="cascade")

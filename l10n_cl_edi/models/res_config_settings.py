@@ -5,7 +5,7 @@ from odoo import fields, models
 
 class ResConfigSettings(models.TransientModel):
 
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     l10n_cl_dte_email = fields.Char('DTE Email', related='company_id.l10n_cl_dte_email', readonly=False)
     l10n_cl_dte_service_provider = fields.Selection(related='company_id.l10n_cl_dte_service_provider', readonly=False,

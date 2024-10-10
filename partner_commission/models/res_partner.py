@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ResPartnerGrade(models.Model):
-    _inherit = 'res.partner.grade'
+    _inherit = ['res.partner.grade']
 
     default_commission_plan_id = fields.Many2one(
         'commission.plan',
@@ -14,7 +14,7 @@ class ResPartnerGrade(models.Model):
 
 
 class ResPartner(models.Model):
-    _inherit = 'res.partner'
+    _inherit = ['res.partner']
 
     @api.model
     def _default_commission_plan(self):

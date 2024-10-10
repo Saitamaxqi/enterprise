@@ -6,8 +6,8 @@ from odoo.osv import expression
 from odoo.addons.sale_timesheet_enterprise.models.sale import DEFAULT_INVOICED_TIMESHEET
 
 
-class AccountInvoice(models.Model):
-    _inherit = 'account.move.line'
+class AccountMoveLine(models.Model):
+    _inherit = ['account.move.line']
 
     @api.model
     def _timesheet_domain_get_invoiced_lines(self, sale_line_delivery):

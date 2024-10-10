@@ -317,7 +317,7 @@ transaction_code = safedict(**{
 
 
 class AccountJournal(models.Model):
-    _inherit = 'account.journal'
+    _inherit = ['account.journal']
 
     coda_split_transactions = fields.Boolean(
         string="Split Transactions",

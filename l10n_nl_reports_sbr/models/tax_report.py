@@ -5,9 +5,9 @@ from odoo.exceptions import UserError, RedirectWarning
 import datetime
 from lxml import etree
 
-class DutchReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_nl.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+
+class L10n_NlTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'Dutch Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):

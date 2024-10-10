@@ -4,7 +4,7 @@ from odoo import models
 
 
 class ResPartner(models.Model):
-    _inherit = 'res.partner'
+    _inherit = ['res.partner']
 
     def write(self, vals):
         """ Archive all SDD tokens if the commercial partner is updated.

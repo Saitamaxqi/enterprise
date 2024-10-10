@@ -4,9 +4,8 @@ from odoo import _, Command, models
 from odoo.exceptions import UserError
 
 
-class CorporateTaxReportHandler(models.AbstractModel):
-    _name = 'l10n_bd.corporate.tax.report.handler'
-    _inherit = 'account.report.custom.handler'
+class L10n_BdCorporateTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = "Custom Handler for Corporate TAX Reports in Bangladesh"
 
     def _custom_options_initializer(self, report, options, previous_options):

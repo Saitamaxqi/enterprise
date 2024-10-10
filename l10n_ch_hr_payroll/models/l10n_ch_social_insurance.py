@@ -5,8 +5,7 @@ from odoo import api, models, fields, _
 from odoo.exceptions import UserError
 
 
-class l10nChSocialInsurance(models.Model):
-    _name = 'l10n.ch.social.insurance'
+class L10nChSocialInsurance(models.Model):
     _description = 'Swiss: Social Insurances (AVS, AC)'
 
     name = fields.Char(required=True)
@@ -82,8 +81,7 @@ class l10nChSocialInsurance(models.Model):
         raise UserError(_('No ACC threshold rates found for date %s', target))
 
 
-class l10nChSocialInsuranceAVSLine(models.Model):
-    _name = 'l10n.ch.social.insurance.avs.line'
+class L10nChSocialInsuranceAvsLine(models.Model):
     _description = 'Swiss: Social Insurances - AVS Line'
 
     date_from = fields.Date(string="From", required=True)
@@ -93,8 +91,7 @@ class l10nChSocialInsuranceAVSLine(models.Model):
     employer_rate = fields.Float(string="Company Rate (%)", default=5.3)
 
 
-class l10nChSocialInsuranceACLine(models.Model):
-    _name = 'l10n.ch.social.insurance.ac.line'
+class L10nChSocialInsuranceAcLine(models.Model):
     _description = 'Swiss: Social Insurances - AC Line'
 
     date_from = fields.Date(string="From", required=True)
@@ -106,8 +103,7 @@ class l10nChSocialInsuranceACLine(models.Model):
     employer_additional_rate = fields.Float(string="Company Additional Rate (%)", digits='Payroll Rate', default=0)
 
 
-class l10nChSocialInsuranceRetirementRente(models.Model):
-    _name = 'l10n.ch.social.insurance.avs.retirement.rente'
+class L10nChSocialInsuranceAvsRetirementRente(models.Model):
     _description = 'Swiss: Retired Employees Exoneration'
 
     date_from = fields.Date(string="From", required=True)
@@ -116,8 +112,7 @@ class l10nChSocialInsuranceRetirementRente(models.Model):
     amount = fields.Float(string="Amount", default=1400)
 
 
-class l10nChSocialInsuranceACThreshold(models.Model):
-    _name = 'l10n.ch.social.insurance.avs.ac.threshold'
+class L10nChSocialInsuranceAvsAcThreshold(models.Model):
     _description = 'Swiss: AC: Rate Threshold'
 
     date_from = fields.Date(string="From", required=True)
@@ -126,8 +121,7 @@ class l10nChSocialInsuranceACThreshold(models.Model):
     amount = fields.Float(string="Amount", default=148200)
 
 
-class l10nChSocialInsuranceACCThreshold(models.Model):
-    _name = 'l10n.ch.social.insurance.avs.acc.threshold'
+class L10nChSocialInsuranceAvsAccThreshold(models.Model):
     _description = 'Swiss: ACC: Rate Threshold'
 
     date_from = fields.Date(string="From", required=True)

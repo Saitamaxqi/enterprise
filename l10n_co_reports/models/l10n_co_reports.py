@@ -6,9 +6,8 @@ import json
 from odoo import models
 
 
-class ColumbianReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_co.report.handler'
-    _inherit = 'account.report.custom.handler'
+class L10n_CoReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Columbian Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):

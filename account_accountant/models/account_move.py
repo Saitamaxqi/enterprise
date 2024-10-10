@@ -19,7 +19,7 @@ DEFERRED_DATE_MAX = '9999-12-31'
 
 
 class AccountMove(models.Model):
-    _inherit = "account.move"
+    _inherit = ["account.move"]
 
     # Technical field to keep the value of payment_state when switching from invoicing to accounting
     # (using invoicing_switch_threshold setting field). It allows keeping the former payment state, so that
@@ -431,8 +431,7 @@ class AccountMove(models.Model):
 
 
 class AccountMoveLine(models.Model):
-    _name = "account.move.line"
-    _inherit = "account.move.line"
+    _inherit = ["account.move.line"]
 
     move_attachment_ids = fields.One2many('ir.attachment', compute='_compute_attachment')
 

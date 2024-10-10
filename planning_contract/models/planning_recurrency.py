@@ -6,7 +6,7 @@ from odoo import models
 
 
 class PlanningRecurrency(models.Model):
-    _inherit = 'planning.recurrency'
+    _inherit = ['planning.recurrency']
 
     def _get_misc_recurrence_stop(self):
         res = super()._get_misc_recurrence_stop()

@@ -2,6 +2,7 @@
 
 from odoo import models, api
 
+
 class IrAttachment(models.Model):
     _inherit = ['ir.attachment']
 

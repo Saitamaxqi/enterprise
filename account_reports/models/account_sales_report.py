@@ -5,9 +5,8 @@ from odoo import _, api, fields, models
 from odoo.tools import SQL
 
 
-class ECSalesReportCustomHandler(models.AbstractModel):
-    _name = 'account.ec.sales.report.handler'
-    _inherit = 'account.report.custom.handler'
+class AccountEcSalesReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'EC Sales Report Custom Handler'
 
     def _get_custom_display_config(self):

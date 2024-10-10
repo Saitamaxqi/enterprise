@@ -6,7 +6,7 @@ from odoo.addons.account_batch_payment.models.sepa_mapping import _replace_chara
 
 
 class AccountJournal(models.Model):
-    _inherit = "account.journal"
+    _inherit = ["account.journal"]
 
     def create_iso20022_credit_transfer(self, payments, payment_method_code, batch_booking=False, charge_bearer=None):
         if (payments and payment_method_code == 'sepa_ct'

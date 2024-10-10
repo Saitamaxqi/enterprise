@@ -8,8 +8,8 @@ from odoo.exceptions import UserError
 from werkzeug.urls import url_join
 
 
-class Track(models.Model):
-    _inherit = 'event.track'
+class EventTrack(models.Model):
+    _inherit = ['event.track']
 
     firebase_enable_push_notifications = fields.Boolean('Enable Web Push Notifications',
         compute='_compute_firebase_enable_push_notifications')
@@ -48,13 +48,13 @@ class Track(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        res = super(Track, self).create(vals_list)
+        res = super().create(vals_list)
         res.filtered(lambda track: track.push_reminder and track.is_track_upcoming)._create_or_update_reminder()
         return res
 
     def write(self, vals):
         push_reminder_tracks = self.filtered(lambda track: track.push_reminder)
-        res = super(Track, self).write(vals)
+        res = super().write(vals)
 
         if vals.keys() & set(['name', 'date', 'push_reminder', 'push_reminder_delay', 'wishlisted_by_default']):
             self.filtered(lambda track: track.push_reminder and track.is_track_upcoming)._create_or_update_reminder()

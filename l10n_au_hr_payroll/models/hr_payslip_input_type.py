@@ -3,8 +3,8 @@
 from odoo import fields, models
 
 
-class HrPayslipInput(models.Model):
-    _inherit = "hr.payslip.input.type"
+class HrPayslipInputType(models.Model):
+    _inherit = ["hr.payslip.input.type"]
     _order = "l10n_au_payment_type"
     currency_id = fields.Many2one(
         "res.currency", string="Currency",

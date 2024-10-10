@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class HrPayslipLine(models.Model):
-    _inherit = 'hr.payslip.line'
+    _inherit = ['hr.payslip.line']
 
     @api.constrains('name', 'amount')
     def _check_helb_amount(self):

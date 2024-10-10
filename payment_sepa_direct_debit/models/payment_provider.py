@@ -11,7 +11,7 @@ from odoo.addons.payment_sepa_direct_debit import const
 
 
 class PaymentProvider(models.Model):
-    _inherit = 'payment.provider'
+    _inherit = ['payment.provider']
 
     custom_mode = fields.Selection(selection_add=[('sepa_direct_debit', "SEPA Direct Debit")])
 

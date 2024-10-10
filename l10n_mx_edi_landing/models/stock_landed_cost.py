@@ -6,7 +6,7 @@ from odoo.addons.l10n_mx_edi_extended.models.account_move import CUSTOM_NUMBERS_
 
 
 class StockLandedCost(models.Model):
-    _inherit = 'stock.landed.cost'
+    _inherit = ['stock.landed.cost']
 
     l10n_mx_edi_customs_number = fields.Char(
         help='Optional field for entering the customs information in the case '

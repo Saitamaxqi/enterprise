@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class HrJob(models.Model):
-    _inherit = 'hr.job'
+    _inherit = ['hr.job']
 
     l10n_be_contract_ip = fields.Boolean(string="Intellectual Property", help="If checked, the job position is eligible to Intellectual Property")
     l10n_be_contract_withholding_taxes_exemption = fields.Boolean(string="Withholding Taxes Exemption", help="If checked, the job position will grant a withholding taxes exemption to eligible employees")

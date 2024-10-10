@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     access_token_validity = fields.Integer(string='Default Access Token Validity Duration')
     employee_salary_simulator_link_validity = fields.Integer(string='Default Salary Configurator Link Validity Duration For Employees')

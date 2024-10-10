@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class ResUsers(models.Model):
-    _inherit = 'res.users'
+    _inherit = ['res.users']
 
     commission_plan_users_ids = fields.One2many('sale.commission.plan.user', 'user_id', 'Commission plans')
     filtered_commission_plan_users_ids = fields.One2many('sale.commission.plan.user', compute='_compute_filtered_commission_plan_users_ids')

@@ -9,8 +9,9 @@ from odoo import api, fields, models
 from datetime import datetime
 import pytz
 
-class Planning(models.Model):
-    _inherit = 'planning.slot'
+
+class PlanningSlot(models.Model):
+    _inherit = ['planning.slot']
 
     @api.model
     def gantt_resource_employees_working_periods(self, rows):

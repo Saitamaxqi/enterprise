@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class UtmCampaign(models.Model):
-    _inherit = 'utm.campaign'
+    _inherit = ['utm.campaign']
 
     social_post_ids = fields.One2many(compute="_compute_social_post_ids", groups="social.group_social_user")
     social_push_notification_ids = fields.One2many("social.post", "utm_campaign_id", compute="_compute_social_post_ids", string="Push Notifications", groups="social.group_social_user")

@@ -12,8 +12,9 @@ from odoo.tools import file_open
 
 from .easypost_request import EasypostRequest
 
-class DeliverCarrier(models.Model):
-    _inherit = 'delivery.carrier'
+
+class DeliveryCarrier(models.Model):
+    _inherit = ['delivery.carrier']
 
     delivery_type = fields.Selection(selection_add=[
         ('easypost', 'Easypost')
@@ -32,13 +33,13 @@ class DeliverCarrier(models.Model):
     easypost_insurance_fee_minimum = fields.Float("Insurance fee minimum (USD)")
 
     def _compute_can_generate_return(self):
-        super(DeliverCarrier, self)._compute_can_generate_return()
+        super()._compute_can_generate_return()
         for carrier in self:
             if carrier.delivery_type == 'easypost':
                 carrier.can_generate_return = True
 
     def _compute_supports_shipping_insurance(self):
-        res = super(DeliverCarrier, self)._compute_supports_shipping_insurance()
+        res = super()._compute_supports_shipping_insurance()
         for carrier in self:
             if carrier.delivery_type == 'easypost':
                 carrier.supports_shipping_insurance = True

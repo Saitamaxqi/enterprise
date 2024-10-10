@@ -2,9 +2,9 @@
 
 from odoo import api, fields, models
 
-class SaftAccount(models.Model):
 
-    _name = 'l10n_at_saft.account'
+class L10n_At_SaftAccount(models.Model):
+
     _description = "Information for the SAF-T export about a virtual account from the chart of accounts given in the Austrian SAF-T specification; each (accounting) account has to be mapped to such a virtual account for the SAF-T export"
     _order = 'code'
     _rec_names_search = ['name', 'code']

@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class HrPayslipRun(models.Model):
-    _inherit = 'hr.payslip.run'
+    _inherit = ['hr.payslip.run']
 
     nacha_effective_date = fields.Date('The effective date of the NACHA file generated for this batch')
 

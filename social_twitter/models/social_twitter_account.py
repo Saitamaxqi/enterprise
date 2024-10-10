@@ -5,7 +5,6 @@ from odoo import models, fields
 
 
 class SocialTwitterAccount(models.Model):
-    _name = 'social.twitter.account'
     _description = 'Social X Account'
 
     name = fields.Char('Name')

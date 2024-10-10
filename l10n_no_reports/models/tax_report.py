@@ -11,9 +11,8 @@ from odoo.tools import date_utils, SQL
 _logger = logging.getLogger(__name__)
 
 
-class AccountGenericTaxReport(models.AbstractModel):
-    _name = 'l10n_no.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_NoTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = "Norvegian Tax Report Custom Handler"
 
     def _custom_options_initializer(self, report, options, previous_options):

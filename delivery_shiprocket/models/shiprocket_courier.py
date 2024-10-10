@@ -4,7 +4,6 @@ from odoo import fields, models
 
 
 class ShiprocketCourier(models.Model):
-    _name = 'shiprocket.courier'
     _description = 'Shiprocket Courier'
     _order = 'name'
 

@@ -5,9 +5,9 @@
 from odoo import models
 
 
-class SaftImportWizard(models.TransientModel):
+class AccountSaftImportWizard(models.TransientModel):
     """ SAF-T import wizard to import LT specific files """
-    _inherit = 'account.saft.import.wizard'
+    _inherit = ['account.saft.import.wizard']
 
     def _get_account_types(self):
         """ Returns a mapping between the account types accepted for the SAF-T and the types in Odoo """

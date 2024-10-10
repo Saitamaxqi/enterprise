@@ -2,7 +2,7 @@ from odoo import api, fields, models
 
 
 class LinkTrackerClick(models.Model):
-    _inherit = "link.tracker.click"
+    _inherit = ["link.tracker.click"]
 
     whatsapp_message_id = fields.Many2one('whatsapp.message', string='Whatsapp Message', ondelete="set null")
 

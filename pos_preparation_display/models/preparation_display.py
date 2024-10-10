@@ -3,8 +3,8 @@ from odoo.exceptions import ValidationError
 
 from odoo.addons.pos_preparation_display.models.preparation_display_orderline import PosPreparationDisplayOrderline
 
-class PosPreparationDisplay(models.Model):
-    _name = 'pos_preparation_display.display'
+
+class Pos_Preparation_DisplayDisplay(models.Model):
     _inherit = ["pos.bus.mixin", "pos.load.mixin"]
     _description = "Preparation display"
 

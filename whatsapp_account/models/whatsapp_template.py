@@ -1,7 +1,8 @@
 from odoo import models
 
-class WhatsAppTemplate(models.Model):
-    _inherit = 'whatsapp.template'
+
+class WhatsappTemplate(models.Model):
+    _inherit = ['whatsapp.template']
 
     def _get_sample_record(self):
         if self.model == 'account.move':

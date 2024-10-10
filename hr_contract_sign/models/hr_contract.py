@@ -6,8 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class HrContract(models.Model):
-    _name = 'hr.contract'
-    _inherit = 'hr.contract'
+    _inherit = ['hr.contract']
 
     sign_request_ids = fields.Many2many('sign.request', string='Requested Signatures')
     sign_request_count = fields.Integer(compute='_compute_sign_request_count')

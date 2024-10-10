@@ -3,9 +3,8 @@
 from odoo import models
 
 
-class DocumentUnlinkMixin(models.AbstractModel):
+class DocumentsUnlinkMixin(models.AbstractModel):
     """Send the related documents to trash when the record is deleted."""
-    _name = 'documents.unlink.mixin'
     _description = "Documents unlink mixin"
 
     def unlink(self):

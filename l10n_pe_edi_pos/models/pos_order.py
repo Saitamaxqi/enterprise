@@ -4,7 +4,7 @@ from odoo.exceptions import UserError
 
 
 class PosOrder(models.Model):
-    _inherit = 'pos.order'
+    _inherit = ['pos.order']
 
     l10n_pe_edi_refund_reason = fields.Selection(
         selection=REFUND_REASON,

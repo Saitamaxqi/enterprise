@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class KnowledgeInvite(models.TransientModel):
-    _name = 'knowledge.invite'
     _description = 'Knowledge Invite Wizard'
 
     article_id = fields.Many2one('knowledge.article', required=True, ondelete="cascade")

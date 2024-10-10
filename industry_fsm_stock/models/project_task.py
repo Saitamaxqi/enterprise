@@ -4,8 +4,8 @@ from odoo import models, fields, _
 from odoo.tools import float_compare, float_round
 
 
-class Task(models.Model):
-    _inherit = "project.task"
+class ProjectTask(models.Model):
+    _inherit = ["project.task"]
 
     stock_move_customer_product_count = fields.Integer(compute='_compute_stock_move_customer_product_total')
 

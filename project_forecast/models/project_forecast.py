@@ -9,8 +9,8 @@ from odoo.osv import expression
 _logger = logging.getLogger(__name__)
 
 
-class PlanningShift(models.Model):
-    _inherit = 'planning.slot'
+class PlanningSlot(models.Model):
+    _inherit = ['planning.slot']
 
     project_id = fields.Many2one(
         'project.project', string="Project", compute='_compute_project_id', store=True,

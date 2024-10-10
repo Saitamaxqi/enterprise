@@ -4,8 +4,8 @@
 from odoo import models
 
 
-class Project(models.Model):
-    _inherit = 'project.project'
+class ProjectProject(models.Model):
+    _inherit = ['project.project']
 
     def action_project_forecast_from_project(self):
         action = super().action_project_forecast_from_project()

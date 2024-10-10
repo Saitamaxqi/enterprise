@@ -2,7 +2,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 
 
-class Form325Wizard(models.TransientModel):
+class L10n_BeForm325Wizard(models.TransientModel):
     _name = 'l10n_be.form.325.wizard'
     _description = '325 Form Wizard'
 
@@ -10,7 +10,7 @@ class Form325Wizard(models.TransientModel):
     def default_get(self, field_list=None):
         if self.env.company.country_id.code != 'BE':
             raise UserError(_("You must be logged in a Belgian company to use this feature"))
-        return super(Form325Wizard, self).default_get(field_list)
+        return super().default_get(field_list)
 
     company_id = fields.Many2one(
         'res.company',

@@ -3,8 +3,8 @@
 
 from odoo import api, fields, models, _
 
+
 class MrpMpsForecastDetails(models.TransientModel):
-    _name = "mrp.mps.forecast.details"
     _description = "Forecast Demand Details"
 
     move_ids = fields.Many2many('stock.move', readonly=True)

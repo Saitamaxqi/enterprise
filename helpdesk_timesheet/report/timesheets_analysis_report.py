@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class TimesheetsAnalysisReport(models.Model):
-    _inherit = "timesheets.analysis.report"
+    _inherit = ["timesheets.analysis.report"]
 
     helpdesk_ticket_id = fields.Many2one("helpdesk.ticket", "Helpdesk Ticket", readonly=True)
 

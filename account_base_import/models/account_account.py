@@ -4,6 +4,7 @@
 from odoo import _, api, models
 from odoo.exceptions import UserError
 
+
 class AccountAccount(models.Model):
     _inherit = ["account.account"]
 

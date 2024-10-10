@@ -8,7 +8,9 @@ from odoo.tools import format_datetime
 
 
 class BaseModel(models.AbstractModel):
-    _inherit = 'base'
+    _name = "base"
+
+    _inherit = ['base']
 
     def _whatsapp_get_portal_url(self):
         """ List is defined here else we need to create bridge modules. """

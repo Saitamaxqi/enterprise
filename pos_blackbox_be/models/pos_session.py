@@ -7,8 +7,8 @@ from odoo.tools.translate import _
 from itertools import groupby
 
 
-class pos_session(models.Model):
-    _inherit = "pos.session"
+class PosSession(models.Model):
+    _inherit = ["pos.session"]
 
     total_base_of_measure_tax_a = fields.Monetary(compute="_compute_total_tax")
     total_base_of_measure_tax_b = fields.Monetary(compute="_compute_total_tax")

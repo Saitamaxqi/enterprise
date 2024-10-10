@@ -1,8 +1,7 @@
 from odoo import fields, models, api
 
 
-class MexicanEDIHazardousMaterial(models.Model):
-    _name = 'l10n_mx_edi.hazardous.material'
+class L10n_Mx_EdiHazardousMaterial(models.Model):
     _description = 'Mexican Hazardous Material'
 
     code = fields.Char(string='Code', required=True)

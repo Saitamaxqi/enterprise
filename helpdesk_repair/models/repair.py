@@ -4,8 +4,8 @@
 from odoo import api, fields, models, _
 
 
-class Repair(models.Model):
-    _inherit = 'repair.order'
+class RepairOrder(models.Model):
+    _inherit = ['repair.order']
 
     ticket_id = fields.Many2one('helpdesk.ticket', export_string_translation=False)
 
@@ -52,4 +52,4 @@ class Repair(models.Model):
         """
         context = dict(self.env.context)
         context.pop('default_lot_id', None)
-        return super(Repair, self.with_context(context))._action_repair_confirm()
+        return super(RepairOrder, self.with_context(context))._action_repair_confirm()

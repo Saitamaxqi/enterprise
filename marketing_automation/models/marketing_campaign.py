@@ -14,7 +14,6 @@ from odoo.tools import convert
 
 
 class MarketingCampaign(models.Model):
-    _name = 'marketing.campaign'
     _description = 'Marketing Campaign'
     _inherits = {'utm.campaign': 'utm_campaign_id'}
     _order = 'create_date DESC'

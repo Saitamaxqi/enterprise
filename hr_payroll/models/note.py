@@ -3,8 +3,8 @@
 
 from odoo import fields, models
 
-class PayrollNote(models.Model):
-    _name = 'hr.payroll.note'
+
+class HrPayrollNote(models.Model):
     _description = "Payroll Note"
 
     name = fields.Char(required=True)

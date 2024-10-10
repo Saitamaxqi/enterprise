@@ -2,7 +2,7 @@ from odoo import models, _
 
 
 class CrmLead(models.Model):
-    _inherit = 'crm.lead'
+    _inherit = ['crm.lead']
 
     def _update_revenues_from_so(self, order):
         for opportunity in self:

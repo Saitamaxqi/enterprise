@@ -9,9 +9,8 @@ from odoo.exceptions import UserError
 from odoo.tools.translate import _
 
 
-class L10nClDteCaf(models.Model):
-    _name = 'l10n_cl.dte.caf'
-    _inherit = 'l10n_cl.edi.util'
+class L10n_ClDteCaf(models.Model):
+    _inherit = ['l10n_cl.edi.util']
     _description = 'CAF Files for chilean electronic invoicing'
     _rec_name = 'filename'
     """

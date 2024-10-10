@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class SaleOrder(models.Model):
-    _inherit = "sale.order"
+    _inherit = ["sale.order"]
 
     display_recurring_stock_delivery_warning = fields.Boolean(compute='_compute_recurring_stock_products')
 

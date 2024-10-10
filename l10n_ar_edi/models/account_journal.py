@@ -8,7 +8,7 @@ _logger = logging.getLogger(__name__)
 
 class AccountJournal(models.Model):
 
-    _inherit = 'account.journal'
+    _inherit = ['account.journal']
 
     l10n_ar_afip_ws = fields.Selection(selection='_get_l10n_ar_afip_ws', compute='_compute_l10n_ar_afip_ws',
                                        string='AFIP WS')

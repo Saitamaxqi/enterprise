@@ -6,7 +6,7 @@ from odoo import fields, models
 
 class StockMove(models.Model):
 
-    _inherit = 'stock.move'
+    _inherit = ['stock.move']
 
     move_orig_fifo_ids = fields.Many2many(
         'stock.move', 'stock_move_move_fifo_rel', 'move_dest_id',

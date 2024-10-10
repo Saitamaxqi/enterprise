@@ -5,8 +5,7 @@ from odoo import api, fields, models
 
 
 class WebsiteVisitor(models.Model):
-    _name = 'website.visitor'
-    _inherit = 'website.visitor'
+    _inherit = ['website.visitor']
 
     event_track_push_enabled_ids = fields.Many2many(
         'event.track', string="Push Enabled Tracks",

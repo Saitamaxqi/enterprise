@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class HrEmployee(models.Model):
-    _inherit = "hr.employee"
+    _inherit = ["hr.employee"]
 
     l10n_us_old_w4 = fields.Boolean(
         string="Filled in 2019 or Before",

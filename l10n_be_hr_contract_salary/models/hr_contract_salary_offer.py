@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class HrContractSalaryOffer(models.Model):
-    _inherit = 'hr.contract.salary.offer'
+    _inherit = ['hr.contract.salary.offer']
     _description = 'Salary Package Offer'
 
     contract_type_id = fields.Many2one(

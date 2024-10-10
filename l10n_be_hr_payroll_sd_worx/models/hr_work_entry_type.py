@@ -4,8 +4,9 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
+
 class HrWorkEntryType(models.Model):
-    _inherit = 'hr.work.entry.type'
+    _inherit = ['hr.work.entry.type']
 
     sdworx_code = fields.Char("SDWorx code", groups="hr.group_hr_user")
 

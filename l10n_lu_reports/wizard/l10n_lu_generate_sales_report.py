@@ -6,13 +6,13 @@ import base64
 from odoo import _, fields, models
 from odoo.exceptions import UserError
 
-class L10nLuGenerateSalesReport(models.TransientModel):
+
+class L10n_LuGenerateVatIntraReport(models.TransientModel):
     """
     This wizard is used to generate an xml EC Sales report for Luxembourg
     according to the xml 2.0 standard.
     """
-    _inherit = 'l10n_lu.generate.xml'
-    _name = 'l10n_lu.generate.vat.intra.report'
+    _inherit = ['l10n_lu.generate.xml']
     _description = 'Generate Sales Report'
 
     l10n_lu_stored_report_ids = fields.Many2many(

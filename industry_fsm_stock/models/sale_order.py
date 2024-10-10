@@ -4,7 +4,7 @@ from odoo import models
 
 
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = ['sale.order']
 
     def _get_product_catalog_order_data(self, products, **kwargs):
         product_catalog = super()._get_product_catalog_order_data(products, **kwargs)

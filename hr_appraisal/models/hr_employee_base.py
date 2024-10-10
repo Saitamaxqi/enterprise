@@ -9,7 +9,7 @@ from odoo import fields, models, _
 
 
 class HrEmployeeBase(models.AbstractModel):
-    _inherit = "hr.employee.base"
+    _inherit = ["hr.employee.base"]
     _description = "Basic Employee"
 
     parent_user_id = fields.Many2one(related='parent_id.user_id', string="Parent User")

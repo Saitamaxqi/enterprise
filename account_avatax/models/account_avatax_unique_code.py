@@ -12,7 +12,6 @@ class AccountAvataxUniqueCode(models.AbstractModel):
     they cannot change. They're made searchable so customers can easily cross-reference
     between Odoo and Avalara.
     """
-    _name = 'account.avatax.unique.code'
     _description = 'Mixin to generate unique ids for Avatax'
 
     avatax_unique_code = fields.Char(

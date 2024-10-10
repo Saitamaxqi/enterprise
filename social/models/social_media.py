@@ -14,7 +14,6 @@ class SocialMedia(models.Model):
     The social.media is used to store global media configuration (API keys, ...).
     It's also used to install the modules related to that social media (social_facebook, social_twitter, ...). """
 
-    _name = 'social.media'
     _description = 'Social Media'
     _inherit = ['mail.thread']
 

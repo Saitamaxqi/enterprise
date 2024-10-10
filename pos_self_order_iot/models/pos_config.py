@@ -6,7 +6,7 @@ _logger = logging.getLogger(__name__)
 
 
 class PosConfig(models.Model):
-    _inherit = 'pos.config'
+    _inherit = ['pos.config']
 
     available_iot_box_ids = fields.One2many(
         'iot.box',

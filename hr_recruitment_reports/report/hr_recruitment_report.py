@@ -8,8 +8,8 @@ from odoo import fields, models, _
 def nlargest(amount, data_list, method):
     return sorted(data_list, key=method, reverse=1)[:amount]
 
+
 class HrRecruitmentReport(models.Model):
-    _name = "hr.recruitment.report"
     _description = "Recruitment Analysis Report"
     _auto = False
     _rec_name = 'create_date'

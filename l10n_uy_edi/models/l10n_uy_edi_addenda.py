@@ -1,8 +1,7 @@
 from odoo import _, api, models, fields
 
 
-class L10nUyEdiAddenda(models.Model):
-    _name = "l10n_uy_edi.addenda"
+class L10n_Uy_EdiAddenda(models.Model):
     _description = "CFE Addenda / Disclosure"
 
     name = fields.Char()

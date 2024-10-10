@@ -4,7 +4,7 @@ from odoo.addons.l10n_br_edi.models.account_move import PAYMENT_METHOD_SELECTION
 
 
 class PaymentMethod(models.Model):
-    _inherit = 'payment.method'
+    _inherit = ['payment.method']
 
     l10n_br_edi_payment_method = fields.Selection(
         PAYMENT_METHOD_SELECTION,

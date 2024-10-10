@@ -82,8 +82,9 @@ L10N_CL_SII_REGIONAL_OFFICES_ITEMS = [
     ('ur_ViM', 'Viña del Mar'),
 ]
 
+
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     l10n_cl_dte_email = fields.Char('DTE Email', related='partner_id.l10n_cl_dte_email', readonly=False)
     l10n_cl_dte_service_provider = fields.Selection([

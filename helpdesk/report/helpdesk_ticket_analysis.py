@@ -6,8 +6,7 @@ from odoo.addons.helpdesk.models.helpdesk_ticket import TICKET_PRIORITY
 from odoo.addons.rating.models.rating_data import RATING_LIMIT_MIN
 
 
-class HelpdeskTicketReport(models.Model):
-    _name = 'helpdesk.ticket.report.analysis'
+class HelpdeskTicketReportAnalysis(models.Model):
     _description = "Ticket Analysis"
     _auto = False
     _order = 'create_date DESC'

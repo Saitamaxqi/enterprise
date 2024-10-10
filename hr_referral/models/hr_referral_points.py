@@ -6,7 +6,6 @@ from odoo import api, fields, models
 
 
 class HrReferralPoints(models.Model):
-    _name = 'hr.referral.points'
     _description = 'Points line for referrals'
 
     applicant_id = fields.Many2one('hr.applicant')

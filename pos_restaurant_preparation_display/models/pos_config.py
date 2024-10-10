@@ -5,7 +5,7 @@ from odoo.tools import convert
 
 
 class PosConfig(models.Model):
-    _inherit = 'pos.config'
+    _inherit = ['pos.config']
 
     def _load_preparation_display_data(self):
         main_company = self.env.ref('base.main_company', raise_if_not_found=False)

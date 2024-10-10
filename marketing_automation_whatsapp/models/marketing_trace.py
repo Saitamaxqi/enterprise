@@ -2,7 +2,7 @@ from odoo import api, fields, models, _
 
 
 class MarketingTrace(models.Model):
-    _inherit = 'marketing.trace'
+    _inherit = ['marketing.trace']
 
     whatsapp_message_id = fields.Many2one(
         'whatsapp.message', string='Marketing Template',

@@ -7,13 +7,12 @@ from odoo import models, fields, api, _
 from odoo.exceptions import UserError
 
 
-class HmrcSendWizard(models.TransientModel):
-    _name = 'l10n_uk.hmrc.send.wizard'
+class L10n_UkHmrcSendWizard(models.TransientModel):
     _description = "HMRC Send Wizard"
 
     @api.model
     def default_get(self, fields_list):
-        res = super(HmrcSendWizard, self).default_get(fields_list)
+        res = super().default_get(fields_list)
 
         if 'obligation_id' in fields_list:
             obligations = self.env['l10n_uk.vat.obligation'].search([('status', '=', 'open')])

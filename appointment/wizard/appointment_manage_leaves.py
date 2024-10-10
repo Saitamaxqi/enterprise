@@ -7,7 +7,6 @@ from odoo import fields, models
 
 
 class AppointmentManageLeaves(models.TransientModel):
-    _name = 'appointment.manage.leaves'
     _description = 'Add or remove leaves from appointments'
 
     def _default_time(self, hour, minute):

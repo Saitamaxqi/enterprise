@@ -10,8 +10,8 @@ from odoo.exceptions import UserError
 from odoo.tools import format_list
 
 
-class Project(models.Model):
-    _inherit = 'project.project'
+class ProjectProject(models.Model):
+    _inherit = ['project.project']
 
     total_forecast_time = fields.Integer(compute='_compute_total_forecast_time', export_string_translation=False, compute_sudo=True)
 

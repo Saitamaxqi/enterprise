@@ -2,7 +2,7 @@ from odoo import models
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     def _get_edi_decoder(self, file_data, new=False):
         if self.journal_id.type == 'general' and self.journal_id._l10n_be_check_soda_format(file_data['attachment']):
@@ -15,7 +15,7 @@ class AccountMove(models.Model):
 
 
 class AccountMoveLine(models.Model):
-    _inherit = 'account.move.line'
+    _inherit = ['account.move.line']
 
     def write(self, vals):
         if 'account_id' not in vals:

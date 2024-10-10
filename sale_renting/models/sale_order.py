@@ -19,7 +19,7 @@ RENTAL_STATUS = [
 
 
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = ['sale.order']
 
     _sql_constraints = [(
         'rental_period_coherence',

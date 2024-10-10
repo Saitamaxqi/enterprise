@@ -1,8 +1,7 @@
 from odoo import fields, models, api
 
 
-class L10nRoSaftTaxType(models.Model):
-    _name = 'l10n_ro_saft.tax.type'
+class L10n_Ro_SaftTaxType(models.Model):
     _description = 'Romanian SAF-T Tax Type'
     _rec_names_search = ['code', 'description']
 

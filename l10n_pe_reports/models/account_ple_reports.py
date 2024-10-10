@@ -10,9 +10,8 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, SQL
 from odoo.exceptions import UserError
 
 
-class PeruvianTaxPleReportCustomHandler(models.AbstractModel):
-    _name = "l10n_pe.tax.ple.report.handler"
-    _inherit = "account.tax.report.handler"
+class L10n_PeTaxPleReportHandler(models.AbstractModel):
+    _inherit = ["account.tax.report.handler"]
     _description = "PLE Generic Report"
 
     def _custom_options_initializer(self, report, options, previous_options):

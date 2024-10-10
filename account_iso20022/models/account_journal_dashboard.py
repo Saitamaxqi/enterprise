@@ -2,8 +2,8 @@
 from odoo import models, _
 
 
-class account_journal(models.Model):
-    _inherit = "account.journal"
+class AccountJournal(models.Model):
+    _inherit = ["account.journal"]
 
     def _get_journal_dashboard_data_batched(self):
         dashboard_data = super()._get_journal_dashboard_data_batched()

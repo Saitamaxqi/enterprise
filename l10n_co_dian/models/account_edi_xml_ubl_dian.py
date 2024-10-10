@@ -266,12 +266,11 @@ COUNTRIES_ES = {
 }
 
 
-class AccountEdiXmlUBLDian(models.AbstractModel):
+class AccountEdiXmlUbl_Dian(models.AbstractModel):
     """ The technical documentation is available on the dian.gov.co website. Latest version is 1.9:
     https://www.dian.gov.co/impuestos/factura-electronica/Documents/Anexo-Tecnico-Factura-Electronica-de-Venta-vr-1-9.pdf
     """
-    _name = 'account.edi.xml.ubl_dian'
-    _inherit = 'account.edi.xml.ubl_21'
+    _inherit = ['account.edi.xml.ubl_21']
     _description = "UBL DIAN"
 
     # -------------------------------------------------------------------------

@@ -30,8 +30,8 @@ COMMON_WHATSAPP_PHONE_SAFE_FIELDS = {
     'x_studio_partner_id.phone_sanitized',
 }
 
-class WhatsAppTemplate(models.Model):
-    _name = 'whatsapp.template'
+
+class WhatsappTemplate(models.Model):
     _inherit = ['mail.thread']
     _description = 'WhatsApp Template'
     _order = 'sequence asc, id'

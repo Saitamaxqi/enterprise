@@ -11,8 +11,9 @@ from .bpost_request import BpostRequest
 
 TRACKING_REF_DELIM = ', '
 
-class ProviderBpost(models.Model):
-    _inherit = 'delivery.carrier'
+
+class DeliveryCarrier(models.Model):
+    _inherit = ['delivery.carrier']
 
     delivery_type = fields.Selection(selection_add=[
         ('bpost', 'bpost')
@@ -43,7 +44,7 @@ class ProviderBpost(models.Model):
 
     @api.depends('bpost_delivery_nature')
     def _compute_can_generate_return(self):
-        super(ProviderBpost, self)._compute_can_generate_return()
+        super()._compute_can_generate_return()
         for carrier in self:
             if carrier.delivery_type == 'bpost':
                 if carrier.bpost_delivery_nature == 'International':

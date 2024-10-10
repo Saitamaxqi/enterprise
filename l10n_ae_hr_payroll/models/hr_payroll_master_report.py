@@ -19,8 +19,7 @@ XLSX = {
 }
 
 
-class HrAeMasterReport(models.Model):
-    _name = 'report.l10n_ae_hr_payroll.master'
+class ReportL10n_Ae_Hr_PayrollMaster(models.Model):
     _description = 'United Arab Emirates Master Payroll Report'
 
     name = fields.Char(compute='_compute_name', store=True)

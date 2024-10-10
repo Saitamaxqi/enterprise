@@ -3,7 +3,7 @@ from odoo import models
 
 
 class AccountAccount(models.Model):
-    _inherit = "account.account"
+    _inherit = ["account.account"]
 
     def action_open_reconcile(self):
         self.ensure_one()

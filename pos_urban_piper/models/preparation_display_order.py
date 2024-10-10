@@ -2,8 +2,8 @@ from odoo import models
 from odoo.tools.json import scriptsafe as json
 
 
-class PosPreparationDisplayOrder(models.Model):
-    _inherit = 'pos_preparation_display.order'
+class Pos_Preparation_DisplayOrder(models.Model):
+    _inherit = ['pos_preparation_display.order']
 
     def _export_for_ui(self, preparation_display):
         order = super()._export_for_ui(preparation_display)

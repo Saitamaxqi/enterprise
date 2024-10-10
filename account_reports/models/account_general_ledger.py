@@ -11,9 +11,8 @@ from datetime import timedelta
 from collections import defaultdict
 
 
-class GeneralLedgerCustomHandler(models.AbstractModel):
-    _name = 'account.general.ledger.report.handler'
-    _inherit = 'account.report.custom.handler'
+class AccountGeneralLedgerReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'General Ledger Custom Handler'
 
     def _get_custom_display_config(self):

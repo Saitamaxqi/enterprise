@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class AccountPayment(models.Model):
-    _inherit = "account.payment"
+    _inherit = ["account.payment"]
 
     sepa_pain_version = fields.Selection(related='journal_id.sepa_pain_version')
     iso20022_uetr = fields.Char(

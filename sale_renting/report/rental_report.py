@@ -4,8 +4,7 @@ from odoo import fields, models, tools
 from odoo.addons.sale.models.sale_order import SALE_ORDER_STATE
 
 
-class RentalReport(models.Model):
-    _name = "sale.rental.report"
+class SaleRentalReport(models.Model):
     _description = "Rental Analysis Report"
     _rec_name = 'order_id'
     _auto = False

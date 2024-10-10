@@ -1,8 +1,8 @@
 from odoo import models, fields
 
 
-class PosPreparationDisplayOrder(models.Model):
-    _inherit = 'pos_preparation_display.order'
+class Pos_Preparation_DisplayOrder(models.Model):
+    _inherit = ['pos_preparation_display.order']
 
     pos_table_stand_number = fields.Char(string="Table Stand Number")
     pos_takeaway = fields.Boolean(string="Take Away", default=False)

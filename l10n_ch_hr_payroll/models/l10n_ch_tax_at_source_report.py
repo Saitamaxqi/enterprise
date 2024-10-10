@@ -10,8 +10,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class L10nCHInsuranceReport(models.Model):
-    _name = 'l10n.ch.is.report'
+class L10nChIsReport(models.Model):
     _description = 'Tax at Source Monthly Report'
 
     @api.model
@@ -111,8 +110,7 @@ class L10nCHInsuranceReport(models.Model):
         self.report_line_ids = self.env['l10n.ch.is.report.line'].create(report_vals)
 
 
-class L10nCHInsuranceReportLine(models.Model):
-    _name = 'l10n.ch.is.report.line'
+class L10nChIsReportLine(models.Model):
     _description = 'Tax at Source Monthly Report Line'
 
     report_id = fields.Many2one('l10n.ch.is.report')

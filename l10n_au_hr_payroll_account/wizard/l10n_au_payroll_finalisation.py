@@ -5,8 +5,7 @@ from odoo.tools import date_utils, format_list
 from odoo.exceptions import ValidationError
 
 
-class L10nAUPayrollFinalisationWizard(models.TransientModel):
-    _name = "l10n_au.payroll.finalisation.wizard"
+class L10n_AuPayrollFinalisationWizard(models.TransientModel):
     _description = "STP Finalisation"
 
     def _default_fiscal_year(self):
@@ -118,8 +117,7 @@ class L10nAUPayrollFinalisationWizard(models.TransientModel):
         return stp._get_records_action()
 
 
-class L10nAUPayrollFinalisationEmp(models.TransientModel):
-    _name = "l10n_au.payroll.finalisation.wizard.emp"
+class L10n_AuPayrollFinalisationWizardEmp(models.TransientModel):
     _description = "STP Finalisation Employees"
 
     l10n_au_payroll_finalisation_id = fields.Many2one("l10n_au.payroll.finalisation.wizard", string="Finalisation Wizard", required=True, ondelete="cascade")

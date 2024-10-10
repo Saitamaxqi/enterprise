@@ -8,13 +8,13 @@ from odoo.exceptions import UserError
 from odoo.addons.base_import.models.base_import import FIELDS_RECURSION_LIMIT
 
 
-class AccountBankStmtImportCSV(models.TransientModel):
+class Base_ImportImport(models.TransientModel):
 
-    _inherit = 'base_import.import'
+    _inherit = ['base_import.import']
 
     @api.model
     def get_fields_tree(self, model, depth=FIELDS_RECURSION_LIMIT):
-        fields_list = super(AccountBankStmtImportCSV, self).get_fields_tree(model, depth=depth)
+        fields_list = super().get_fields_tree(model, depth=depth)
         if self._context.get('bank_stmt_import', False):
             add_fields = [{
                 'id': 'balance',
@@ -121,7 +121,7 @@ class AccountBankStmtImportCSV(models.TransientModel):
     def parse_preview(self, options, count=10):
         if options.get('bank_stmt_import', False):
             self = self.with_context(bank_stmt_import=True)
-        return super(AccountBankStmtImportCSV, self).parse_preview(options, count=count)
+        return super().parse_preview(options, count=count)
 
     def execute_import(self, fields, columns, options, dryrun=False):
         if options.get('bank_stmt_import'):
@@ -146,4 +146,4 @@ class AccountBankStmtImportCSV(models.TransientModel):
                 pass
             return res
         else:
-            return super(AccountBankStmtImportCSV, self).execute_import(fields, columns, options, dryrun=dryrun)
+            return super().execute_import(fields, columns, options, dryrun=dryrun)

@@ -6,9 +6,9 @@ from odoo import api, models, fields, _
 from odoo.exceptions import UserError
 from odoo.tools import SQL
 
+
 class AccountMoveLine(models.Model):
-    _name = "account.move.line"
-    _inherit = "account.move.line"
+    _inherit = ["account.move.line"]
 
     exclude_bank_lines = fields.Boolean(compute='_compute_exclude_bank_lines', store=True)
 

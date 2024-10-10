@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     avalara_api_id = fields.Char(string='Avalara API ID', groups='base.group_system')
     avalara_api_key = fields.Char(string='Avalara API KEY', groups='base.group_system')
@@ -30,7 +30,7 @@ class ResCompany(models.Model):
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     avalara_api_id = fields.Char(
         related='company_id.avalara_api_id',

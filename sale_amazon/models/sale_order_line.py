@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+    _inherit = ['sale.order.line']
 
     amazon_item_ref = fields.Char(help="The Amazon-defined item reference.")
     amazon_offer_id = fields.Many2one(

@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class AccountAsset(models.Model):
-    _inherit = 'account.asset'
+    _inherit = ['account.asset']
 
     vehicle_id = fields.Many2one('fleet.vehicle', compute='_compute_vehicle_id', readonly=False, store=True)
 

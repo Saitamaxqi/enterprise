@@ -9,9 +9,8 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
 
-class LuxembourgishFinancialReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_lu.report.handler'
-    _inherit = 'account.report.custom.handler'
+class L10n_LuReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Luxembourgish Financial Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):

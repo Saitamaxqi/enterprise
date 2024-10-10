@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 
 
 class SocialPostTemplate(models.Model):
-    _inherit = 'social.post.template'
+    _inherit = ['social.post.template']
 
     twitter_message = fields.Text(
         'X Message', compute='_compute_message_by_media',

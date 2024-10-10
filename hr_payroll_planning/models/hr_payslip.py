@@ -9,8 +9,9 @@ import pytz
 from odoo import api, fields, models
 from odoo.osv import expression
 
+
 class HrPayslip(models.Model):
-    _inherit = 'hr.payslip'
+    _inherit = ['hr.payslip']
 
     planning_slot_count = fields.Integer(compute='_compute_planning_slot_count', groups="planning.group_planning_manager")
 

@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError, UserError
 
 
 class AccountPayment(models.Model):
-    _inherit = "account.payment"
+    _inherit = ["account.payment"]
 
     bacs_ddi_usable = fields.Boolean(string="Could a SDD ddi be used?",
         compute='_compute_usable_ddi')

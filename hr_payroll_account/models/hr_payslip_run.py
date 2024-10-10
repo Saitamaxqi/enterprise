@@ -4,7 +4,7 @@ from odoo import fields, models, _
 
 
 class HrPayslipRun(models.Model):
-    _inherit = 'hr.payslip.run'
+    _inherit = ['hr.payslip.run']
 
     move_id = fields.Many2one('account.move', readonly=True)
     move_state = fields.Selection(related='move_id.state', string='Move State')

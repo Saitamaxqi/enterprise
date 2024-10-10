@@ -7,7 +7,7 @@ from odoo.tools import consteq
 
 
 class HrRecruitmentPostJobWizard(models.TransientModel):
-    _inherit = 'hr.recruitment.post.job.wizard'
+    _inherit = ['hr.recruitment.post.job.wizard']
 
     def _prepare_monster_data(self):
         def convert_hours_to_monster_id():

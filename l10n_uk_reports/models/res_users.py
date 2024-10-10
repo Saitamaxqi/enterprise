@@ -4,8 +4,9 @@
 from uuid import uuid4
 from odoo import fields, models, api
 
-class User(models.Model):
-    _inherit = 'res.users'
+
+class ResUsers(models.Model):
+    _inherit = ['res.users']
 
     l10n_uk_user_token = fields.Char('User Token', copy=False, groups='base.group_system',
                                      help="Is a token given by the Odoo server used to refresh the access token. ")

@@ -32,7 +32,7 @@ NUMBER_OF_WEEKS = {
 
 
 class HrPayslip(models.Model):
-    _inherit = "hr.payslip"
+    _inherit = ["hr.payslip"]
 
     l10n_au_income_stream_type = fields.Selection(
         related="employee_id.l10n_au_income_stream_type", store=True)

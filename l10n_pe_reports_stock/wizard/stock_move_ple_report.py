@@ -11,8 +11,7 @@ from odoo.tools import groupby
 from odoo.exceptions import UserError
 
 
-class StockMovePleReport(models.TransientModel):
-    _name = 'l10n_pe.stock.ple.wizard'
+class L10n_PeStockPleWizard(models.TransientModel):
     _description = 'Wizard to generate Stock Move PLE reports for PE'
 
     @api.model

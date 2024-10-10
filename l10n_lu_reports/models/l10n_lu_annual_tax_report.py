@@ -8,9 +8,8 @@ from odoo.tools import float_compare, format_list
 from ..models.l10n_lu_tax_report_data import MULTI_COLUMN_FIELDS
 
 
-class LuAnnualTaxReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_lu.annual.tax.report.handler'
-    _inherit = 'l10n_lu.tax.report.handler'
+class L10n_LuAnnualTaxReportHandler(models.AbstractModel):
+    _inherit = ['l10n_lu.tax.report.handler']
     _description = 'Luxembourgish Annual Tax Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
@@ -187,9 +186,8 @@ class LuAnnualTaxReportCustomHandler(models.AbstractModel):
             warnings['l10n_lu_reports.annual_tax_report_warning_checks'] = {'failed_controls': list(failed_controls), 'alert_type': 'danger'}
 
 
-class LuReportAppendixA(models.AbstractModel):
-    _name = 'l10n_lu.appendix.a.tax.report.handler'
-    _inherit = 'l10n_lu.annual.tax.report.handler'
+class L10n_LuAppendixATaxReportHandler(models.AbstractModel):
+    _inherit = ['l10n_lu.annual.tax.report.handler']
     _description = 'Custom Handler for the Appendix A of the LU Annual Tax Report'
 
     def _get_account_details(self, ln):
@@ -251,9 +249,8 @@ class LuReportAppendixA(models.AbstractModel):
         return result
 
 
-class LuReportAppendixOpEx(models.AbstractModel):
-    _name = 'l10n_lu.appendix.opex.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_LuAppendixOpexTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'Custom Handler for the Appendix to Operational Expenditures of the LU Annual Tax Report'
 
     def _get_custom_display_config(self):

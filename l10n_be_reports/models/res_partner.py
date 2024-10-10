@@ -7,7 +7,7 @@ from odoo.exceptions import AccessError, RedirectWarning
 
 
 class ResPartner(models.Model):
-    _inherit = 'res.partner'
+    _inherit = ['res.partner']
 
     citizen_identification = fields.Char(
         string="Citizen Identification",

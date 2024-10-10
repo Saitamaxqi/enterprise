@@ -2,8 +2,7 @@
 from odoo import api, fields, models
 
 
-class CustomsPort(models.Model):
-    _name = 'l10n_cl.customs_port'
+class L10n_ClCustoms_Port(models.Model):
     _description = 'Chilean customs ports and codes.'
 
     name = fields.Char(required=True)

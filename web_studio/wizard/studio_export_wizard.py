@@ -334,7 +334,6 @@ class StudioExportWizardData(models.TransientModel):
     It is used to store the export data for the wizard,
     even for data that do not have an xmlid (an ir.model.data record).
     """
-    _name = "studio.export.wizard.data"
     _description = "Studio Export Data"
     _order = "model_name, res_id"
 
@@ -397,7 +396,6 @@ class StudioExportWizardData(models.TransientModel):
 
 
 class StudioExportWizard(models.TransientModel):
-    _name = "studio.export.wizard"
     _description = "Studio Export Wizard"
 
     def _default_studio_export_data(self):

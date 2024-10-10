@@ -21,7 +21,7 @@ END_OF_ITEM = b'^'
 
 
 class AccountJournal(models.Model):
-    _inherit = 'account.journal'
+    _inherit = ['account.journal']
 
     qif_decimal_point = fields.Char(
         string="QIF Decimal Separator",

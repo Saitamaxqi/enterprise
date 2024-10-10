@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class ApprovalProductLine(models.Model):
-    _inherit = 'approval.product.line'
+    _inherit = ['approval.product.line']
 
     def _domain_product_id(self):
         """ Filters on product to get only the ones who are available on

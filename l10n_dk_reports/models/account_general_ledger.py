@@ -9,8 +9,8 @@ from odoo.tools import street_split
 from odoo import api, models, _
 
 
-class GeneralLedgerCustomHandler(models.AbstractModel):
-    _inherit = 'account.general.ledger.report.handler'
+class AccountGeneralLedgerReportHandler(models.AbstractModel):
+    _inherit = ['account.general.ledger.report.handler']
 
     def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings=None):
         super()._customize_warnings(report, options, all_column_groups_expression_totals, warnings=warnings)

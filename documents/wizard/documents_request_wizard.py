@@ -6,8 +6,7 @@ from odoo import api, fields, models
 from odoo.tools.misc import clean_context
 
 
-class RequestWizard(models.TransientModel):
-    _name = "documents.request_wizard"
+class DocumentsRequest_Wizard(models.TransientModel):
     _description = "Document Request"
 
     name = fields.Char(required=True)

@@ -12,8 +12,8 @@ except ImportError:
 from odoo import api, models, fields, _
 from odoo.exceptions import UserError, ValidationError
 
-class SignDuplicateTemplatePDF(models.TransientModel):
-    _name = 'sign.duplicate.template.pdf'
+
+class SignDuplicateTemplatePdf(models.TransientModel):
     _description = 'Sign Duplicate Template with new PDF'
 
     new_pdf = fields.Binary(string="File name", required=True)

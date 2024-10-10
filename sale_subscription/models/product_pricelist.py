@@ -3,8 +3,9 @@
 
 from odoo import fields, models
 
-class Pricelist(models.Model):
-    _inherit = "product.pricelist"
+
+class ProductPricelist(models.Model):
+    _inherit = ["product.pricelist"]
 
     product_subscription_pricing_ids = fields.One2many(
         'sale.subscription.pricing',

@@ -1,7 +1,7 @@
 from odoo import _, api, fields, models
 
+
 class SpreadsheetCellThread(models.Model):
-    _name = "spreadsheet.cell.thread"
 
     _description = "Spreadsheet discussion thread"
 

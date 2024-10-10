@@ -9,9 +9,8 @@ from odoo.tools.translate import _
 logger = logging.getLogger(__name__)
 
 
-class WebsitePageGenerator(models.Model):
-    _name = 'website.page'
-    _inherit = 'website.page'
+class WebsitePage(models.Model):
+    _inherit = ['website.page']
 
     def _construct_homepage(self, homepage_data):
         self._construct_page(homepage_data)

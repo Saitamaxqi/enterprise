@@ -6,7 +6,6 @@ from odoo.exceptions import ValidationError
 
 
 class CommissionPlan(models.Model):
-    _name = 'commission.plan'
     _description = 'Commission plan'
 
     name = fields.Char('Name', required=True)
@@ -41,7 +40,6 @@ class CommissionPlan(models.Model):
 
 
 class CommissionRule(models.Model):
-    _name = 'commission.rule'
     _description = 'Commission rules management.'
 
     plan_id = fields.Many2one('commission.plan', 'Commission Plan', required=True, ondelete='cascade')

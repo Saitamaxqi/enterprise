@@ -3,7 +3,7 @@ from odoo import _, api, models
 
 
 class AccountMoveSend(models.AbstractModel):
-    _inherit = "account.move.send"
+    _inherit = ["account.move.send"]
 
     @api.model
     def _is_br_edi_applicable(self, move):

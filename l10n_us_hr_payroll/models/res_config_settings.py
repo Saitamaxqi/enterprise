@@ -5,7 +5,7 @@ from odoo import fields, models, _
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     l10n_us_ca_ett_tax = fields.Boolean(
         string="ETT Tax",

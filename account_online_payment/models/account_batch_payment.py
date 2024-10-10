@@ -12,7 +12,7 @@ STATUSES = [
 
 
 class AccountBatchPayment(models.Model):
-    _inherit = 'account.batch.payment'
+    _inherit = ['account.batch.payment']
 
     payment_identifier = fields.Char(string='Batch ID', readonly=True)
     redirect_url = fields.Char(string='Redirect URL', readonly=True)

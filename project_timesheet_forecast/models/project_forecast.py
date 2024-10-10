@@ -7,8 +7,8 @@ from odoo import _, api, fields, models
 from odoo.osv import expression
 
 
-class Forecast(models.Model):
-    _inherit = 'planning.slot'
+class PlanningSlot(models.Model):
+    _inherit = ['planning.slot']
 
     allow_timesheets = fields.Boolean("Allow timesheets", related='project_id.allow_timesheets', help="Timesheets can be logged on this slot.", readonly=True)
     effective_hours = fields.Float("Effective Time", compute='_compute_effective_hours', compute_sudo=True, store=True,

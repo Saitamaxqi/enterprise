@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     extract_in_invoice_digitalization_mode = fields.Selection(related='company_id.extract_in_invoice_digitalization_mode',
                                                               string='Vendor Bills', readonly=False)

@@ -8,7 +8,6 @@ from odoo.tools.sql import drop_view_if_exists, SQL
 
 
 class HrPayrollReport(models.Model):
-    _name = "hr.payroll.report"
     _description = "Payroll Analysis Report"
     _auto = False
     _rec_name = 'date_from'

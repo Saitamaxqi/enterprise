@@ -3,8 +3,7 @@ from odoo import models, fields, _
 from odoo.exceptions import ValidationError, UserError
 
 
-class L10nBrEDIInvoiceUpdate(models.TransientModel):
-    _name = "l10n_br_edi.invoice.update"
+class L10n_Br_EdiInvoiceUpdate(models.TransientModel):
     _description = "Implements both correcting and cancelling an invoice."
 
     move_id = fields.Many2one("account.move", string="Move To Cancel", required=True, help="The move to be cancelled.")

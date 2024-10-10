@@ -8,8 +8,8 @@ from odoo import models, fields, _
 from odoo.osv import expression
 
 
-class SocialLivePostPushNotifications(models.Model):
-    _inherit = 'social.live.post'
+class SocialLivePost(models.Model):
+    _inherit = ['social.live.post']
 
     reached_visitor_ids = fields.Many2many('website.visitor', string="Reached Visitors")
 
@@ -23,7 +23,7 @@ class SocialLivePostPushNotifications(models.Model):
         Instead, we keep them 'ready' and they are gathered by a cron job (see 'social.post#_cron_publish_scheduled'). """
 
         push_notifications_live_posts = self._filter_by_media_types(['push_notifications'])
-        super(SocialLivePostPushNotifications, (self - push_notifications_live_posts))._post()
+        super(SocialLivePost, (self - push_notifications_live_posts))._post()
 
         push_notifications_live_posts.write({
             'state': 'ready'

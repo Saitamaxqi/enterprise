@@ -10,7 +10,7 @@ from odoo.addons.resource.models.utils import timezone_datetime
 
 
 class HrLeave(models.Model):
-    _inherit = "hr.leave"
+    _inherit = ["hr.leave"]
 
     @api.model
     def _gantt_unavailability(self, field, res_ids, start, stop, scale):

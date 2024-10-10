@@ -7,7 +7,7 @@ from odoo import fields, models
 
 
 class AccountBatchPayment(models.Model):
-    _inherit = 'account.batch.payment'
+    _inherit = ['account.batch.payment']
 
     l10n_au_is_payroll_payment = fields.Boolean("is Payroll Payment")
 

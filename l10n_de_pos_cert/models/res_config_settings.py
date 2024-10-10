@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     # pos.config fields
     pos_is_company_country_germany = fields.Boolean(related='pos_config_id.is_company_country_germany', readonly=False)

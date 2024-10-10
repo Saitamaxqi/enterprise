@@ -3,8 +3,8 @@ from odoo.exceptions import ValidationError
 from odoo.tools.translate import _
 
 
-class ResUser(models.Model):
-    _inherit = "res.users"
+class ResUsers(models.Model):
+    _inherit = ["res.users"]
 
     # bis number is for foreigners in Belgium
     insz_or_bis_number = fields.Char(
@@ -62,7 +62,7 @@ class ResUser(models.Model):
                 filtered_values, "create", self._name, value_dict.get("name")
             )
 
-        return super(ResUser, self).create(values)
+        return super().create(values)
 
     def write(self, values):
         filtered_values = {
@@ -74,7 +74,7 @@ class ResUser(models.Model):
                 filtered_values, "modify", user._name, user.name
             )
 
-        return super(ResUser, self).write(values)
+        return super().write(values)
 
     def unlink(self):
         for user in self:
@@ -82,4 +82,4 @@ class ResUser(models.Model):
                 {}, "delete", user._name, user.name
             )
 
-        return super(ResUser, self).unlink()
+        return super().unlink()

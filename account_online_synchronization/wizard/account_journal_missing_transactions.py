@@ -7,8 +7,7 @@ from odoo.exceptions import UserError
 from odoo.tools import format_date
 
 
-class AccountMissingTransaction(models.TransientModel):
-    _name = 'account.missing.transaction.wizard'
+class AccountMissingTransactionWizard(models.TransientModel):
     _description = 'Wizard for missing transactions'
 
     date = fields.Date(

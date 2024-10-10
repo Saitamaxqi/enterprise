@@ -18,8 +18,8 @@ from odoo.exceptions import UserError, AccessError
 from werkzeug.urls import url_join, url_quote
 
 
-class SocialMediaTwitter(models.Model):
-    _inherit = 'social.media'
+class SocialMedia(models.Model):
+    _inherit = ['social.media']
 
     _TWITTER_ENDPOINT = 'https://api.twitter.com'
 

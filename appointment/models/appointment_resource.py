@@ -6,7 +6,6 @@ from odoo.tools.translate import html_translate
 
 
 class AppointmentResource(models.Model):
-    _name = "appointment.resource"
     _description = "Appointment Resource"
     _inherit = ["avatar.mixin", "resource.mixin"]
     _order = 'sequence,id'

@@ -12,9 +12,9 @@ COLORS_BY_STATE = {
     'done': 3,
 }
 
+
 class HrAppraisalReport(models.Model):
-    _name = "hr.appraisal.report"
-    _inherit = "hr.manager.department.report"
+    _inherit = ["hr.manager.department.report"]
     _description = "Appraisal Statistics"
     _order = 'create_date desc'
     _auto = False

@@ -6,8 +6,8 @@ from odoo import fields, models
 # This model is a persistant copy of l10n.be.double.pay.recovery.line.wizard
 # it will be used as default values for the wizard.
 
-class L10nBeDoublePayRecoveryLineWizard(models.Model):
-    _name = 'l10n.be.double.pay.recovery.line'
+
+class L10nBeDoublePayRecoveryLine(models.Model):
     _description = 'CP200: Double Pay Recovery Line Wizard'
 
     employee_id = fields.Many2one('hr.employee', ondelete='cascade')

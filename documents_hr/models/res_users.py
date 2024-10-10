@@ -4,8 +4,7 @@
 from odoo import api, models, fields, _
 
 
-class Users(models.Model):
-    _name = 'res.users'
+class ResUsers(models.Model):
     _inherit = ['res.users']
 
     document_ids = fields.One2many('documents.document', compute='_compute_documents')

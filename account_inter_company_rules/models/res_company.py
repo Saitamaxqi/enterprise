@@ -1,8 +1,8 @@
 from odoo import api, fields, models, SUPERUSER_ID
 
 
-class res_company(models.Model):
-    _inherit = 'res.company'
+class ResCompany(models.Model):
+    _inherit = ['res.company']
 
     intercompany_generate_bills_refund = fields.Boolean(string="Generate Bills and Refunds")
     intercompany_document_state = fields.Selection(

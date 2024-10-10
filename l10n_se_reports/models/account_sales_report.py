@@ -8,9 +8,8 @@ from odoo import _, api, fields, models
 from odoo.tools import date_utils
 
 
-class SwedishECSalesReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_se.ec.sales.report.handler'
-    _inherit = 'account.ec.sales.report.handler'
+class L10n_SeEcSalesReportHandler(models.AbstractModel):
+    _inherit = ['account.ec.sales.report.handler']
     _description = 'Swedish EC Sales Report Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):

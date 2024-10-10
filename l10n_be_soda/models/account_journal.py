@@ -10,7 +10,7 @@ from odoo.exceptions import UserError
 
 
 class AccountJournal(models.Model):
-    _inherit = 'account.journal'
+    _inherit = ['account.journal']
 
     def create_document_from_attachment(self, attachment_ids=None):
         # OVERRIDE

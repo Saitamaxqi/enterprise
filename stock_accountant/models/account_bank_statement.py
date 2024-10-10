@@ -4,7 +4,7 @@ from odoo.osv import expression
 
 
 class AccountBankStatementLine(models.Model):
-    _inherit = "account.bank.statement.line"
+    _inherit = ["account.bank.statement.line"]
 
     def _get_default_amls_matching_domain(self):
         # EXTENDS account

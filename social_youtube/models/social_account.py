@@ -9,8 +9,8 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
 
-class SocialAccountYoutube(models.Model):
-    _inherit = 'social.account'
+class SocialAccount(models.Model):
+    _inherit = ['social.account']
 
     youtube_channel_id = fields.Char('YouTube Channel ID', readonly=True,
         help="YouTube Channel ID provided by the YouTube API, this should never be set manually.")
@@ -26,14 +26,14 @@ class SocialAccountYoutube(models.Model):
     def _compute_stats_link(self):
         """ External link to this Youtube Page's Analytics. """
         youtube_accounts = self._filter_by_media_types(['youtube'])
-        super(SocialAccountYoutube, (self - youtube_accounts))._compute_stats_link()
+        super(SocialAccount, (self - youtube_accounts))._compute_stats_link()
 
         for account in youtube_accounts:
             account.stats_link = "https://studio.youtube.com/channel/%s/analytics/tab-overview" % account.youtube_channel_id
 
     @api.model_create_multi
     def create(self, vals_list):
-        res = super(SocialAccountYoutube, self).create(vals_list)
+        res = super().create(vals_list)
         res.filtered(lambda account: account.media_type == 'youtube')._create_default_stream_youtube()
         return res
 

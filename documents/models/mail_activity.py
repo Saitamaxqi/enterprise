@@ -8,7 +8,7 @@ from odoo.osv import expression
 
 
 class MailActivity(models.Model):
-    _inherit = 'mail.activity'
+    _inherit = ['mail.activity']
 
     def _prepare_next_activity_values(self):
         vals = super()._prepare_next_activity_values()

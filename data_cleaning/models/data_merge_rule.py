@@ -4,8 +4,7 @@
 from odoo import fields, models
 
 
-class DataMergeRule(models.Model):
-    _name = 'data_merge.rule'
+class Data_MergeRule(models.Model):
     _description = 'Deduplication Rule'
     _order = 'sequence, field_id'
 

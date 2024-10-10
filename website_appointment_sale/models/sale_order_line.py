@@ -3,8 +3,9 @@
 
 from odoo import api, fields, models
 
+
 class SaleOrderLine(models.Model):
-    _inherit = "sale.order.line"
+    _inherit = ["sale.order.line"]
 
     calendar_booking_ids = fields.One2many("calendar.booking", "order_line_id", "Bookings")
     calendar_event_id = fields.Many2one("calendar.event", "Meeting")

@@ -5,7 +5,7 @@ from odoo import _, models, Command
 
 
 class QualityCheck(models.Model):
-    _inherit = 'quality.check'
+    _inherit = ['quality.check']
 
     def add_check_in_chain(self, notify_bom=False):
         self.ensure_one()

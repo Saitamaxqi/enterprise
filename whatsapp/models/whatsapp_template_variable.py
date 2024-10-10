@@ -6,8 +6,7 @@ from odoo import api, models, fields, _
 from odoo.exceptions import UserError, ValidationError
 
 
-class WhatsAppTemplateVariable(models.Model):
-    _name = 'whatsapp.template.variable'
+class WhatsappTemplateVariable(models.Model):
     _description = 'WhatsApp Template Variable'
     _order = 'line_type desc, name, id'
 

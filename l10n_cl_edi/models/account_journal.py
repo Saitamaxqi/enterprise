@@ -4,7 +4,7 @@ from odoo import fields, models, api
 
 
 class AccountJournal(models.Model):
-    _inherit = 'account.journal'
+    _inherit = ['account.journal']
 
     l10n_cl_point_of_sale_type = fields.Selection([
         ('manual', 'Manual'),

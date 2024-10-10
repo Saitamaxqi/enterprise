@@ -5,9 +5,8 @@ from odoo import fields, models, release, _
 from odoo.tools import float_round
 
 
-class CzechTaxReportCustomHandler(models.AbstractModel):
-    _name = "l10n_cz.tax.report.handler"
-    _inherit = "account.tax.report.handler"
+class L10n_CzTaxReportHandler(models.AbstractModel):
+    _inherit = ["account.tax.report.handler"]
     _description = "Czech Tax Report Custom Handler"
 
     def _custom_options_initializer(self, report, options, previous_options):

@@ -5,12 +5,12 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class MassMailing(models.Model):
-    _inherit = 'mailing.mailing'
+class MailingMailing(models.Model):
+    _inherit = ['mailing.mailing']
 
     @api.model
     def default_get(self, fields):
-        vals = super(MassMailing, self).default_get(fields)
+        vals = super().default_get(fields)
         if 'subject' in fields and self.env.context.get('default_use_in_marketing_automation', False):
             vals['subject'] = self.env.context.get('default_name')
         return vals
@@ -40,14 +40,14 @@ class MassMailing(models.Model):
                     blacklist=['/unsubscribe_from_list', '/view']
                 )
                 done |= mass_mailing
-        res.update(super(MassMailing, self - done).convert_links())
+        res.update(super(MailingMailing, self - done).convert_links())
         return res
 
     def _get_link_tracker_values(self):
         # We don't want to create link trackers for tests
         if self.env.context.get('active_model') == 'marketing.campaign.test':
             return {}
-        res = super(MassMailing, self)._get_link_tracker_values()
+        res = super()._get_link_tracker_values()
         if self.env.context.get('default_marketing_activity_id'):
             activity = self.env['marketing.activity'].browse(self.env.context['default_marketing_activity_id'])
             res['campaign_id'] = activity.campaign_id.utm_campaign_id.id

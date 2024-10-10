@@ -7,12 +7,11 @@ from odoo.exceptions import RedirectWarning, UserError
 from odoo.tools import SQL
 
 
-class SDDMandate(models.Model):
+class SddMandate(models.Model):
     """ A class containing the data of a mandate sent by a customer to give its
     consent to a company to collect the payments associated to his invoices
     using SEPA Direct Debit.
     """
-    _name = 'sdd.mandate'
     _inherit = ['mail.thread.main.attachment', 'mail.activity.mixin']
     _description = 'SDD Mandate'
     _check_company_auto = True

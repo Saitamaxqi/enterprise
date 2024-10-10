@@ -10,8 +10,7 @@ MINIUTES_PER_DAY = 8 * 60
 
 
 class L10nBeHrPayrollExportPartena(models.Model):
-    _inherit = 'hr.work.entry.export.mixin'
-    _name = 'l10n.be.hr.payroll.export.partena'
+    _inherit = ['hr.work.entry.export.mixin']
     _description = 'Export Payroll to Partena'
 
     eligible_employee_line_ids = fields.One2many('l10n.be.hr.payroll.export.partena.employee')
@@ -81,8 +80,7 @@ class L10nBeHrPayrollExportPartena(models.Model):
 
 
 class L10nBeHrPayrollExportPartenaEmployee(models.Model):
-    _name = 'l10n.be.hr.payroll.export.partena.employee'
     _description = 'Partena Export Employee'
-    _inherit = 'hr.work.entry.export.employee.mixin'
+    _inherit = ['hr.work.entry.export.employee.mixin']
 
     export_id = fields.Many2one('l10n.be.hr.payroll.export.partena')

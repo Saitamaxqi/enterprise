@@ -6,8 +6,8 @@ from markupsafe import Markup
 from odoo import api, fields, models, Command, _
 
 
-class CalendarEventCrm(models.Model):
-    _inherit = 'calendar.event'
+class CalendarEvent(models.Model):
+    _inherit = ['calendar.event']
 
     opportunity_id = fields.Many2one(compute="_compute_opportunity_id", readonly=False, store=True, tracking=True)
 

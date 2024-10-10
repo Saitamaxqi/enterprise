@@ -2,7 +2,7 @@ from odoo import models
 
 
 class MailThread(models.AbstractModel):
-    _inherit = 'mail.thread'
+    _inherit = ['mail.thread']
 
     def _message_get_suggested_recipients(self):
         """ This Studio override adds the field 'x_studio_partner_id' in the auto-suggested list."""

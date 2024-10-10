@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class SlideSlide(models.Model):
-    _inherit = 'slide.slide'
+    _inherit = ['slide.slide']
 
     @api.model
     def _search_get_detail(self, website, order, options):

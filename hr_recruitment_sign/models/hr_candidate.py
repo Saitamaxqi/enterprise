@@ -4,7 +4,7 @@ from odoo import models
 
 
 class HrCandidate(models.Model):
-    _inherit = 'hr.candidate'
+    _inherit = ['hr.candidate']
 
     def _get_employee_create_vals(self):
         vals = super()._get_employee_create_vals()

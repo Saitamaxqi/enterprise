@@ -3,13 +3,12 @@
 from odoo import api, fields, models
 
 
-class RentalSign(models.TransientModel):
-    _name = "rental.sign.wizard"
+class RentalSignWizard(models.TransientModel):
     _description = "Sign Documents from a SO"
 
     @api.model
     def default_get(self, fields):
-        res = super(RentalSign, self).default_get(fields)
+        res = super().default_get(fields)
         if 'template_id' in fields:
             company = self.env['sale.order'].browse(res.get('order_id')).company_id or self.env.company
             default_template = company.rental_sign_tmpl_id

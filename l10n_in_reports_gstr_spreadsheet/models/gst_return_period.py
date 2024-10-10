@@ -7,9 +7,10 @@ from datetime import datetime
 from odoo import Command, fields, models
 from odoo.tools.misc import xlsxwriter
 
-class L10nInGSTReturnPeriod(models.Model):
 
-    _inherit = "l10n_in.gst.return.period"
+class L10n_InGstReturnPeriod(models.Model):
+
+    _inherit = ["l10n_in.gst.return.period"]
 
     gstr1_spreadsheet = fields.Many2one('documents.document')
 

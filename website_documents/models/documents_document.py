@@ -3,8 +3,7 @@
 from odoo import models, fields, api
 
 
-class Document(models.Model):
-    _name = 'documents.document'
+class DocumentsDocument(models.Model):
     _inherit = ['documents.document']
 
     website_id = fields.Many2one('website', ondelete='cascade', compute='_compute_website_id',

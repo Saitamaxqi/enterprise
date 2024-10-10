@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class StockPicking(models.Model):
-    _inherit = 'stock.picking'
+    _inherit = ['stock.picking']
 
     eway_bill_number = fields.Char("EWay Bill", copy=False)
     shiprocket_orders = fields.Char(

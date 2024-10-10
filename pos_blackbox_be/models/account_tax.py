@@ -5,7 +5,7 @@ from odoo import models, fields, api
 
 
 class AccountTax(models.Model):
-    _inherit = "account.tax"
+    _inherit = ["account.tax"]
 
     identification_letter = fields.Selection(
         [("A", "A"), ("B", "B"), ("C", "C"), ("D", "D")],

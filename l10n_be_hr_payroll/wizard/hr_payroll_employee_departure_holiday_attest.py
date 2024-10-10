@@ -7,8 +7,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class HrPayslipEmployeeDepartureHoliday(models.TransientModel):
-    _name = 'hr.payslip.employee.depature.holiday.attests'
+class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
     _description = 'Manage the Employee Departure Holiday Attests'
 
     @api.model

@@ -5,8 +5,8 @@ from ast import literal_eval
 from odoo import api, models, fields, _
 from odoo.http import request
 
+
 class IrUiMenu(models.Model):
-    _name = 'ir.ui.menu'
     _description = 'Menu'
     _inherit = ['studio.mixin', 'ir.ui.menu']
 

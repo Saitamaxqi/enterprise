@@ -4,7 +4,6 @@ from odoo import models
 
 
 class HrContract(models.Model):
-    _name = 'hr.contract'
     _inherit = ['hr.contract', 'documents.mixin']
 
     def _get_document_access_ids(self):

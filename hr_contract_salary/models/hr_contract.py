@@ -17,7 +17,7 @@ _logger = logging.getLogger(__name__)
 
 
 class HrContract(models.Model):
-    _inherit = 'hr.contract'
+    _inherit = ['hr.contract']
 
     origin_contract_id = fields.Many2one('hr.contract', string="Origin Contract", domain="[('company_id', '=', company_id)]", help="The contract from which this contract has been duplicated.")
     is_origin_contract_template = fields.Boolean(compute='_compute_is_origin_contract_template', string='Is origin contract a contract template?', readonly=True)

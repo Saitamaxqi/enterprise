@@ -3,8 +3,9 @@
 
 from odoo import models
 
+
 class HelpdeskTicketConvertWizard(models.TransientModel):
-    _inherit = 'helpdesk.ticket.convert.wizard'
+    _inherit = ['helpdesk.ticket.convert.wizard']
 
     def _default_project_id(self):
         default_project_id = super()._default_project_id()

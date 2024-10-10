@@ -7,6 +7,6 @@ from odoo import fields, models
 
 
 class AccountBankStatement(models.Model):
-    _inherit = 'account.bank.statement'
+    _inherit = ['account.bank.statement']
 
     coda_note = fields.Text('CODA Notes')

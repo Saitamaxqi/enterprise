@@ -9,7 +9,6 @@ from odoo.tools import format_list
 
 
 class SignSendRequest(models.TransientModel):
-    _name = 'sign.send.request'
     _description = 'Sign send request'
 
     @api.model
@@ -216,7 +215,6 @@ class SignSendRequest(models.TransientModel):
 
 
 class SignSendRequestSigner(models.TransientModel):
-    _name = "sign.send.request.signer"
     _description = 'Sign send request signer'
 
     role_id = fields.Many2one('sign.item.role', readonly=True, required=True)

@@ -20,8 +20,8 @@ except ImportError:
     service_account = None
 
 
-class SocialAccountPushNotifications(models.Model):
-    _inherit = 'social.account'
+class SocialAccount(models.Model):
+    _inherit = ['social.account']
 
     website_id = fields.Many2one('website', string="Website",
                                  help="This firebase configuration will only be used for the specified website", ondelete='cascade')

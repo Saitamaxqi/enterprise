@@ -9,8 +9,8 @@ from odoo.exceptions import UserError
 from werkzeug.urls import url_encode, url_join
 
 
-class SocialMediaYoutube(models.Model):
-    _inherit = 'social.media'
+class SocialMedia(models.Model):
+    _inherit = ['social.media']
 
     _YOUTUBE_ENDPOINT = 'https://www.googleapis.com'
 
@@ -20,7 +20,7 @@ class SocialMediaYoutube(models.Model):
         self.ensure_one()
 
         if self.media_type != 'youtube':
-            return super(SocialMediaYoutube, self)._action_add_account()
+            return super()._action_add_account()
 
         youtube_oauth_client_id = self.env['ir.config_parameter'].sudo().get_param('social.youtube_oauth_client_id')
         youtube_oauth_client_secret = self.env['ir.config_parameter'].sudo().get_param('social.youtube_oauth_client_secret')

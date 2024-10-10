@@ -10,17 +10,17 @@ from odoo.osv import expression
 from werkzeug.urls import url_join
 
 
-class SocialPostFacebook(models.Model):
-    _inherit = 'social.post'
+class SocialPost(models.Model):
+    _inherit = ['social.post']
 
     facebook_image_ids = fields.Many2many(relation='facebook_image_ids_rel')
 
     @api.depends('live_post_ids.facebook_post_id')
     def _compute_stream_posts_count(self):
-        super(SocialPostFacebook, self)._compute_stream_posts_count()
+        super()._compute_stream_posts_count()
 
     def _get_stream_post_domain(self):
-        domain = super(SocialPostFacebook, self)._get_stream_post_domain()
+        domain = super()._get_stream_post_domain()
         facebook_post_ids = [facebook_post_id for facebook_post_id in self.live_post_ids.mapped('facebook_post_id') if facebook_post_id]
         if facebook_post_ids:
             return expression.OR([domain, [('facebook_post_id', 'in', facebook_post_ids)]])

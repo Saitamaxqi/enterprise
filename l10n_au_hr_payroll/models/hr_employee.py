@@ -6,7 +6,7 @@ from odoo.tools.float_utils import float_compare
 
 
 class HrEmployee(models.Model):
-    _inherit = 'hr.employee'
+    _inherit = ['hr.employee']
 
     l10n_au_tfn_declaration = fields.Selection(
         selection=[

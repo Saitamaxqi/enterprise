@@ -3,8 +3,8 @@
 from odoo import fields, models
 
 
-class Partner(models.Model):
-    _inherit = 'res.partner'
+class ResPartner(models.Model):
+    _inherit = ['res.partner']
 
     sdd_mandate_ids = fields.One2many(comodel_name='sdd.mandate', inverse_name='partner_id',
         help="Every mandate belonging to this partner.")

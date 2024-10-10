@@ -4,8 +4,8 @@
 from odoo import models
 
 
-class RentalOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+class SaleOrderLine(models.Model):
+    _inherit = ['sale.order.line']
 
     def _get_qty_procurement(self, previous_product_uom_qty=False):
         qty = super()._get_qty_procurement(previous_product_uom_qty)

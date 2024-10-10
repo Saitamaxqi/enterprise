@@ -4,7 +4,7 @@ from odoo import api, fields, models, _
 
 
 class ResPartner(models.Model):
-    _inherit = 'res.partner'
+    _inherit = ['res.partner']
 
     # == Address ==
     l10n_mx_edi_locality = fields.Char(

@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class HelpdeskTicket(models.Model):
-    _inherit = 'helpdesk.ticket'
+    _inherit = ['helpdesk.ticket']
 
     invoices_count = fields.Integer('Credit Notes Count', compute='_compute_credit_notes_count')
     invoice_ids = fields.Many2many('account.move', string='Credit Notes', copy=False)

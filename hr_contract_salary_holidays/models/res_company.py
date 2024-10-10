@@ -4,8 +4,9 @@
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
-class Company(models.Model):
-    _inherit = 'res.company'
+
+class ResCompany(models.Model):
+    _inherit = ['res.company']
 
     hr_contract_timeoff_auto_allocation = fields.Boolean(string="Extra Time Off Allocation on contract signature")
     hr_contract_timeoff_auto_allocation_type_id = fields.Many2one(

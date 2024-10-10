@@ -15,14 +15,13 @@ RUN_TYPE = 'P'  # T for test or P for production
 VALID_STATES = {'ACT', 'NSW', 'NT', 'QLD', 'SA', 'TAS', 'VIC', 'WA', 'OTH'}
 
 
-class AustralianReportCustomHandler(models.AbstractModel):
+class L10n_AuReportHandler(models.AbstractModel):
     """Generate the TPAR for Australia.
 
     This file was generated using https://softwaredevelopers.ato.gov.au/TPARspecification
     as a reference.
     """
-    _name = 'l10n_au.report.handler'
-    _inherit = 'account.report.custom.handler'
+    _inherit = ['account.report.custom.handler']
     _description = 'Australian Report Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):

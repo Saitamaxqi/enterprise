@@ -12,8 +12,7 @@ from odoo.addons.l10n_co_dian import xml_utils
 from odoo.exceptions import UserError
 
 
-class L10nCoDianDocument(models.Model):
-    _name = 'l10n_co_dian.document'
+class L10n_Co_DianDocument(models.Model):
     _description = "Colombian documents used for each interaction with the DIAN"
     _order = 'datetime DESC, id DESC'
 

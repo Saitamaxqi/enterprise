@@ -3,8 +3,8 @@
 from odoo import fields, models
 
 
-class City(models.Model):
-    _inherit = 'res.city'
+class ResCity(models.Model):
+    _inherit = ['res.city']
 
     l10n_mx_edi_code = fields.Char(
         string="Code MX",

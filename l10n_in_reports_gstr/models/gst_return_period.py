@@ -23,8 +23,7 @@ _logger = logging.getLogger(__name__)
 TOLERANCE_AMOUNT = 1.0  # Default fallback tolerance amount for GSTR-2B matching if the system parameter is unset.
 
 
-class L10nInGSTReturnPeriod(models.Model):
-    _name = "l10n_in.gst.return.period"
+class L10n_InGstReturnPeriod(models.Model):
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "GST Return Period"
 

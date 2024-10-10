@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class AccountFollowupReport(models.AbstractModel):
-    _inherit = "account.followup.report"
+    _inherit = ["account.followup.report"]
 
     @api.model
     def _send_snailmail(self, options):

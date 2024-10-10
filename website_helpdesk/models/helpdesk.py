@@ -8,7 +8,6 @@ from odoo.exceptions import ValidationError
 
 
 class HelpdeskTeam(models.Model):
-    _name = "helpdesk.team"
     _inherit = ['helpdesk.team', 'website.published.mixin', 'website.seo.metadata']
 
     feature_form_url = fields.Char('URL to Submit Issue', readonly=True, compute='_compute_form_url', export_string_translation=False)

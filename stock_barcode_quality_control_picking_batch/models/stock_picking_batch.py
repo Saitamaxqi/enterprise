@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class StockPickingBatch(models.Model):
-    _inherit = 'stock.picking.batch'
+    _inherit = ['stock.picking.batch']
 
     @api.model
     def _get_fields_stock_barcode(self):

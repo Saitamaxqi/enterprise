@@ -3,8 +3,9 @@
 
 from odoo import models
 
+
 class ProjectTaskConvertWizard(models.TransientModel):
-    _inherit = 'project.task.convert.wizard'
+    _inherit = ['project.task.convert.wizard']
 
     def _get_ticket_values(self, task):
         return {

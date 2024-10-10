@@ -11,7 +11,6 @@ class StudioMixin(models.AbstractModel):
         currently installed as the ir.model.data will be created automatically
         afterwards.
     """
-    _name = 'studio.mixin'
     _description = 'Studio Mixin'
 
     @api.model_create_multi

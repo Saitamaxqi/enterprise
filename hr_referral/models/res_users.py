@@ -7,7 +7,7 @@ from odoo import api, fields, models
 
 
 class ResUsers(models.Model):
-    _inherit = 'res.users'
+    _inherit = ['res.users']
 
     hr_referral_level_id = fields.Many2one('hr.referral.level', groups="hr.group_hr_user")
     hr_referral_onboarding_page = fields.Boolean(groups="hr.group_hr_user")

@@ -17,8 +17,7 @@ PARTNER_AUTOCOMPLETE_ENDPOINT = 'https://partner-autocomplete.odoo.com'
 OCR_VERSION = 122
 
 
-class AccountInvoiceExtractionWords(models.Model):
-    _name = "account.invoice_extract.words"
+class AccountInvoice_ExtractWords(models.Model):
     _description = "Extracted words from invoice scan"
 
     invoice_id = fields.Many2one("account.move", required=True, ondelete='cascade', index=True, string="Invoice")
@@ -36,7 +35,6 @@ class AccountInvoiceExtractionWords(models.Model):
 
 
 class AccountMove(models.Model):
-    _name = 'account.move'
     _inherit = ['extract.mixin', 'account.move']
 
     @api.depends('state')

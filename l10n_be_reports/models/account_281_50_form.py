@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 from .ONSS_country_mapping import ONSS_COUNTRY_CODE_MAPPING
 
 
-class Form28150(models.Model):
+class L10n_BeForm28150(models.Model):
     _name = "l10n_be.form.281.50"
     _description = "Represents a 281.50 form"
     _inherit = ['mail.thread']

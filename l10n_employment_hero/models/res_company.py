@@ -13,7 +13,7 @@ from odoo.tools.misc import format_date, format_datetime
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     employment_hero_enable = fields.Boolean(string='Enable Employment Hero Integration')
     employment_hero_api_key = fields.Char(string='API Key', groups='base.group_system')

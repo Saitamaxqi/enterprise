@@ -4,9 +4,8 @@ from odoo.tools import  date_utils
 L10N_MA_CUSTOMS_VAT_ICE = '20727020'
 
 
-class MoroccanTaxReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_ma.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_MaTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'Moroccan Tax Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):

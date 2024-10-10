@@ -3,7 +3,7 @@ from odoo.exceptions import UserError
 
 
 class AccountPaymentRegister(models.TransientModel):
-    _inherit = "account.payment.register"
+    _inherit = ["account.payment.register"]
 
     def _create_payment_vals_from_batch(self, batch_result):
         # OVERRIDE

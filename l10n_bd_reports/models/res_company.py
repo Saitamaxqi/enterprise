@@ -4,7 +4,7 @@ from odoo import models, fields
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     l10n_bd_corporate_tax_liability = fields.Many2one(
         string="Corporate tax liability account",

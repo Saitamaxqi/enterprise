@@ -19,7 +19,7 @@ _logger = logging.getLogger(__name__)
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
     l10n_ke_branch_code = fields.Char(
         related='partner_id.l10n_ke_branch_code',
         readonly=False,
@@ -443,7 +443,7 @@ class ResCompany(models.Model):
 
 
 class BaseDocumentLayout(models.TransientModel):
-    _inherit = 'base.document.layout'
+    _inherit = ['base.document.layout']
 
     @api.model
     def _default_company_details(self):

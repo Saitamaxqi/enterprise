@@ -6,7 +6,6 @@ from odoo.exceptions import ValidationError
 
 
 class AccountTaxUnit(models.Model):
-    _name = "account.tax.unit"
     _description = "Tax Unit"
 
     name = fields.Char(string="Name", required=True)

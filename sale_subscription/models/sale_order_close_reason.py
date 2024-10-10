@@ -7,7 +7,6 @@ from odoo.tools import is_html_empty
 
 
 class SaleOrderCloseReason(models.Model):
-    _name = "sale.order.close.reason"
     _order = "sequence, id"
     _description = "Subscription Close Reason"
 

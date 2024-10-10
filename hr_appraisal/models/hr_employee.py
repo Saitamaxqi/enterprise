@@ -8,7 +8,7 @@ from odoo.exceptions import ValidationError, UserError
 
 
 class HrEmployee(models.Model):
-    _inherit = "hr.employee"
+    _inherit = ["hr.employee"]
 
     next_appraisal_date = fields.Date(
         string='Next Appraisal Date', compute='_compute_next_appraisal_date', groups="hr.group_hr_user", readonly=False, store=True,

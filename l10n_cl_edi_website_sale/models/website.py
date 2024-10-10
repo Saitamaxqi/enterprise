@@ -7,7 +7,7 @@ _lt = LazyTranslate(__name__)
 
 
 class Website(models.Model):
-    _inherit = 'website'
+    _inherit = ['website']
 
     def _get_checkout_steps(self, current_step=None):
         """ Override of `website_sale` to add an "Invoicing info" step when needed.

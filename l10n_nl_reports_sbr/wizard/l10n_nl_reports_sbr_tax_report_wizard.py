@@ -233,8 +233,8 @@ class WsaSBR(wsa.WsAddressingPlugin):
         header.extend([wsa.WSA.ReplyTo(wsa.WSA.Address('http://www.w3.org/2005/08/addressing/anonymous'))])
         return senvelope, shttp_headers
 
-class L10nNlTaxReportSBRWizard(models.TransientModel):
-    _name = 'l10n_nl_reports_sbr.tax.report.wizard'
+
+class L10n_Nl_Reports_SbrTaxReportWizard(models.TransientModel):
     _description = 'L10n NL Tax Report for SBR Wizard'
 
     def _get_default_initials(self):

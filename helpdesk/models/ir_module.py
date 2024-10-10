@@ -3,7 +3,7 @@ from odoo import models
 
 
 class IrModuleModule(models.Model):
-    _inherit = 'ir.module.module'
+    _inherit = ['ir.module.module']
 
     def module_uninstall(self):
         helpdesk_modules = self.env['helpdesk.team']._get_field_modules()

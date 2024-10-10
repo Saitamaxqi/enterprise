@@ -6,7 +6,7 @@ from odoo import Command, models, fields, api, _
 
 
 class AccountMoveReversal(models.TransientModel):
-    _inherit = 'account.move.reversal'
+    _inherit = ['account.move.reversal']
 
     @api.model
     def _get_default_so_domain(self, ticket):

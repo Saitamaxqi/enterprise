@@ -2,7 +2,7 @@ from odoo import api, models, fields
 
 
 class ResUsers(models.Model):
-    _inherit = "res.users"
+    _inherit = ["res.users"]
 
     onsip_auth_username = fields.Char(
         compute="_compute_onsip_auth_username",

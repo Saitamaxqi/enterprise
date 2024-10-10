@@ -7,8 +7,7 @@ import io
 from odoo import api, models, fields
 
 
-class Generate1099Wizard(models.TransientModel):
-    _name = "l10n_us_1099.wizard"
+class L10n_Us_1099Wizard(models.TransientModel):
     _description = "Exports 1099 data to a CSV file."
 
     def _default_start_date(self):

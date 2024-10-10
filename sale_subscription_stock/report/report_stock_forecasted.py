@@ -4,8 +4,8 @@
 from odoo import models
 
 
-class StockForecasted(models.AbstractModel):
-    _inherit = 'stock.forecasted_product_product'
+class StockForecasted_Product_Product(models.AbstractModel):
+    _inherit = ['stock.forecasted_product_product']
 
     def _get_report_header(self, product_template_ids, product_variant_ids, wh_location_ids):
         res = super()._get_report_header(product_template_ids, product_variant_ids, wh_location_ids)
@@ -34,5 +34,5 @@ class StockForecasted(models.AbstractModel):
         return domain
 
     def _product_sale_domain(self, product_template_ids, product_ids):
-        domain = super(StockForecasted, self)._product_sale_domain(product_template_ids, product_ids)
+        domain = super()._product_sale_domain(product_template_ids, product_ids)
         return domain + [('product_template_id.recurring_invoice', '=', False)]

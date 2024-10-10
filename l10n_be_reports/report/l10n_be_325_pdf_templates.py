@@ -3,8 +3,8 @@
 
 from odoo import api, models
 
-class L10nBe325Report(models.AbstractModel):
-    _name = 'report.l10n_be_reports.report_325_pdf'
+
+class ReportL10n_Be_ReportsReport_325_Pdf(models.AbstractModel):
     _description = 'Get 325 Report as PDF'
 
     @api.model

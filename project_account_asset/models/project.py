@@ -4,8 +4,8 @@
 from odoo import api, fields, models
 
 
-class Project(models.Model):
-    _inherit = 'project.project'
+class ProjectProject(models.Model):
+    _inherit = ['project.project']
 
     assets_count = fields.Integer('# Assets', compute='_compute_assets_count', groups='account.group_account_readonly')
 

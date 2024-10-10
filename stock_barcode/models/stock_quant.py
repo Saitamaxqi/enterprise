@@ -2,7 +2,7 @@ from odoo import models, fields, api
 
 
 class StockQuant(models.Model):
-    _inherit = 'stock.quant'
+    _inherit = ['stock.quant']
 
     dummy_id = fields.Char(compute='_compute_dummy_id', inverse='_inverse_dummy_id')
     image_1920 = fields.Image(related="product_id.image_1920")

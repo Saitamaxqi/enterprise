@@ -6,7 +6,7 @@ from odoo import api, fields, models
 
 
 class HrEmployee(models.Model):
-    _inherit = 'hr.employee'
+    _inherit = ['hr.employee']
 
     l10n_lu_tax_id_number = fields.Char(
         string="Tax Identification Number",

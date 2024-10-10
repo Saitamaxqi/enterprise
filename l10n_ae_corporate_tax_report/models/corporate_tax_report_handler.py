@@ -2,9 +2,8 @@ from odoo import _, Command, models
 from odoo.exceptions import ValidationError
 
 
-class CorporateTaxReportHandler(models.AbstractModel):
-    _name = 'l10n_ae.corporate.tax.report.handler'
-    _inherit = 'account.report.custom.handler'
+class L10n_AeCorporateTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = "Custom Handler for Corporate TAX Reports in UAE"
 
     def _custom_options_initializer(self, report, options, previous_options=None):

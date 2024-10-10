@@ -9,20 +9,20 @@ from odoo.exceptions import UserError
 from werkzeug.urls import url_join
 
 
-class SocialLivePostFacebook(models.Model):
-    _inherit = 'social.live.post'
+class SocialLivePost(models.Model):
+    _inherit = ['social.live.post']
 
     facebook_post_id = fields.Char('Actual Facebook ID of the post')
 
     def _compute_live_post_link(self):
         facebook_live_posts = self._filter_by_media_types(["facebook"]).filtered(lambda post: post.state == 'posted')
-        super(SocialLivePostFacebook, self - facebook_live_posts)._compute_live_post_link()
+        super(SocialLivePost, self - facebook_live_posts)._compute_live_post_link()
 
         for post in facebook_live_posts:
             post.live_post_link = "http://facebook.com/%s" % post.facebook_post_id
 
     def _refresh_statistics(self):
-        super(SocialLivePostFacebook, self)._refresh_statistics()
+        super()._refresh_statistics()
         accounts = self.env['social.account'].search([('media_type', '=', 'facebook')])
 
         for account in accounts:
@@ -61,7 +61,7 @@ class SocialLivePostFacebook(models.Model):
 
     def _post(self):
         facebook_live_posts = self._filter_by_media_types(['facebook'])
-        super(SocialLivePostFacebook, (self - facebook_live_posts))._post()
+        super(SocialLivePost, (self - facebook_live_posts))._post()
 
         for live_post in facebook_live_posts:
             live_post._post_facebook(live_post.account_id.facebook_account_id)

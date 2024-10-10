@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class StockPicking(models.Model):
-    _inherit = 'stock.picking'
+    _inherit = ['stock.picking']
     _barcode_field = 'name'
 
     def action_cancel_from_barcode(self):

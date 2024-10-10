@@ -2,7 +2,7 @@ from odoo import models
 
 
 class AccountEdiDocument(models.Model):
-    _inherit = "account.edi.document"
+    _inherit = ["account.edi.document"]
 
     def _filter_edi_attachments_for_mailing(self):
         self.ensure_one()

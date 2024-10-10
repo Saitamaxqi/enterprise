@@ -5,7 +5,7 @@ from odoo.tools import str2bool
 
 
 class AppointmentType(models.Model):
-    _inherit = "appointment.type"
+    _inherit = ["appointment.type"]
 
     connector_microsoft = fields.Boolean(compute="_compute_connector_microsoft")
 

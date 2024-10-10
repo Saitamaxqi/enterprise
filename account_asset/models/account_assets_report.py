@@ -8,9 +8,8 @@ from collections import defaultdict
 MAX_NAME_LENGTH = 50
 
 
-class AssetsReportCustomHandler(models.AbstractModel):
-    _name = 'account.asset.report.handler'
-    _inherit = 'account.report.custom.handler'
+class AccountAssetReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Assets Report Custom Handler'
 
     def _get_custom_display_config(self):
@@ -454,8 +453,8 @@ class AssetsReportCustomHandler(models.AbstractModel):
         }
 
 
-class AssetsReport(models.Model):
-    _inherit = 'account.report'
+class AccountReport(models.Model):
+    _inherit = ['account.report']
 
     def _get_caret_option_view_map(self):
         view_map = super()._get_caret_option_view_map()

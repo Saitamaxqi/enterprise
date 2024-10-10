@@ -3,8 +3,8 @@
 from odoo import api, fields, models
 
 
-class PlanningTemplate(models.Model):
-    _inherit = 'planning.slot.template'
+class PlanningSlotTemplate(models.Model):
+    _inherit = ['planning.slot.template']
 
     project_id = fields.Many2one('project.project', string="Project", copy=True)
     company_id = fields.Many2one('res.company', related='project_id.company_id')

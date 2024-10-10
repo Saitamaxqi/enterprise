@@ -10,8 +10,8 @@ from odoo.osv import expression
 from odoo.tools import SQL
 
 
-class Document(models.Model):
-    _inherit = 'documents.document'
+class DocumentsDocument(models.Model):
+    _inherit = ['documents.document']
 
     project_id = fields.Many2one('project.project', compute='_compute_project_id', search='_search_project_id', export_string_translation=False)
     task_id = fields.Many2one('project.task', compute='_compute_task_id', search='_search_task_id', export_string_translation=False)

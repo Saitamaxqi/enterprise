@@ -4,7 +4,6 @@ from odoo import models
 
 
 class ProductTemplate(models.Model):
-    _name = 'product.template'
     _inherit = ['product.template', 'documents.mixin']
 
     def _get_document_vals_access_rights(self):

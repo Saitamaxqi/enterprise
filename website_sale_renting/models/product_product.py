@@ -2,8 +2,9 @@
 
 from odoo import models
 
+
 class ProductProduct(models.Model):
-    _inherit = 'product.product'
+    _inherit = ['product.product']
 
     def _website_show_quick_add(self):
         self.ensure_one()

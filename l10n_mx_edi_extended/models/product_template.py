@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = ['product.template']
 
     l10n_mx_edi_tariff_fraction_id = fields.Many2one(
         comodel_name='l10n_mx_edi.tariff.fraction',

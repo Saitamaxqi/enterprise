@@ -5,27 +5,25 @@ from odoo import fields, models, api
 from odoo.osv import expression
 
 
-
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = ['product.template']
 
     unspsc_code_id = fields.Many2one('product.unspsc.code', 'UNSPSC Category', domain=[('applies_to', '=', 'product')],
         help='The UNSPSC code related to this product.  Used for edi in Colombia, Peru, Mexico and Denmark')
 
 
 class UomUom(models.Model):
-    _inherit = 'uom.uom'
+    _inherit = ['uom.uom']
 
     unspsc_code_id = fields.Many2one('product.unspsc.code', 'UNSPSC Category',
                                                 domain=[('applies_to', '=', 'uom')],
                                                 help='The UNSPSC code related to this UoM. ')
 
 
-class ProductCode(models.Model):
+class ProductUnspscCode(models.Model):
     """Product and UoM codes defined by UNSPSC
     Used by Mexico, Peru, Colombia and Denmark localizations
     """
-    _name = 'product.unspsc.code'
     _description = "Product and UOM Codes from UNSPSC"
     _rec_names_search = ['name', 'code']
 

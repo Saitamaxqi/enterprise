@@ -11,7 +11,6 @@ from odoo.tools.misc import format_date
 
 class HrPayrollPaymentReportWizard(models.TransientModel):
 
-    _name = 'hr.payroll.payment.report.wizard'
     _description = 'HR Payroll Payment Report Wizard'
 
     payslip_run_id = fields.Many2one('hr.payslip.run')

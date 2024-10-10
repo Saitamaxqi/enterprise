@@ -4,7 +4,7 @@ from odoo import models, _
 
 
 class AccountJournal(models.Model):
-    _inherit = "account.journal"
+    _inherit = ["account.journal"]
 
     def _get_journal_dashboard_data_batched(self):
         # add a 'l10n_fr_has_rejected_tax_report' key

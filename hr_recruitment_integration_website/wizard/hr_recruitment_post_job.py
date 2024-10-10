@@ -6,7 +6,7 @@ from odoo.exceptions import UserError, RedirectWarning
 
 
 class HrRecruitmentPostJobWizard(models.TransientModel):
-    _inherit = 'hr.recruitment.post.job.wizard'
+    _inherit = ['hr.recruitment.post.job.wizard']
 
     def default_get(self, fields_list):
         res = super().default_get(fields_list)

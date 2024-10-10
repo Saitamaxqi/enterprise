@@ -1,8 +1,7 @@
 from odoo import fields, models
 
 
-class MexicanEDICustomsDocumentType(models.Model):
-    _name = 'l10n_mx_edi.customs.document.type'
+class L10n_Mx_EdiCustomsDocumentType(models.Model):
     _description = 'Mexican Customs Document Type'
 
     code = fields.Char(string='Code', required=True)

@@ -8,7 +8,7 @@ from odoo.tools import str2bool
 
 
 class AppointmentType(models.Model):
-    _inherit = "appointment.type"
+    _inherit = ["appointment.type"]
 
     connector_google = fields.Boolean(compute="_compute_connector_google")
     event_videocall_source = fields.Selection(selection_add=[('google_meet', 'Google Meet')], ondelete={'google_meet': 'set default'})

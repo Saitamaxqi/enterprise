@@ -4,7 +4,7 @@ from odoo import models
 
 
 class WebsiteMenu(models.Model):
-    _inherit = "website.menu"
+    _inherit = ["website.menu"]
 
     def _compute_visible(self):
         """ Display helpdesk team menus even if they are unpublished """

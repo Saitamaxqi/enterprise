@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 class PosOrder(models.Model):
-    _inherit = "pos.order"
+    _inherit = ["pos.order"]
 
     blackbox_date = fields.Char(
         "Fiscal Data Module date",
@@ -154,7 +154,7 @@ class PosOrder(models.Model):
 
 
 class PosOrderLine(models.Model):
-    _inherit = "pos.order.line"
+    _inherit = ["pos.order.line"]
 
     vat_letter = fields.Selection(
         [("A", "A"), ("B", "B"), ("C", "C"), ("D", "D")],

@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     expense_extract_show_ocr_option_selection = fields.Selection([
         ('no_send', 'Do not digitize'),

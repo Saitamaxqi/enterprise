@@ -19,7 +19,6 @@ class SocialStreamPost(models.Model):
     based on their interest (a Facebook Page, a Twitter hashtag, ...).
     They are directly created by their related social.stream. """
 
-    _name = 'social.stream.post'
     _description = 'Social Stream Post'
     _order = 'published_date desc'
 

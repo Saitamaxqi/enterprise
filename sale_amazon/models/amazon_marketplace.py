@@ -4,7 +4,6 @@ from odoo import _, api, exceptions, fields, models
 
 
 class AmazonMarketplace(models.Model):
-    _name = 'amazon.marketplace'
     _description = "Amazon Marketplace"
 
     name = fields.Char(string="Name", required=True, translate=True)

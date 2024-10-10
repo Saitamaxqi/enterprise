@@ -3,8 +3,8 @@
 from odoo import models, _
 
 
-class Job(models.Model):
-    _inherit = 'hr.job'
+class HrJob(models.Model):
+    _inherit = ['hr.job']
 
     def action_open_whatsapp_composer(self):
         self.ensure_one()

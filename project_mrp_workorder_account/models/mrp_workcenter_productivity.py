@@ -4,7 +4,7 @@ from odoo import models
 
 
 class MrpWorkcenterProductivity(models.Model):
-    _inherit = "mrp.workcenter.productivity"
+    _inherit = ["mrp.workcenter.productivity"]
 
     def _compute_duration(self):
         previous_durations = self.mapped('duration')

@@ -5,7 +5,7 @@ from odoo import api, models, fields
 
 
 class StockMoveLine(models.Model):
-    _inherit = 'stock.move.line'
+    _inherit = ['stock.move.line']
 
     is_subcontract_stock_barcode = fields.Boolean(compute="_compute_is_subcontract_stock_barcode")
 

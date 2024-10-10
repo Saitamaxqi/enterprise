@@ -14,8 +14,8 @@ from odoo.tools import get_lang, SQL
 from odoo.tools.misc import street_split
 
 
-class GeneralLedgerCustomHandler(models.AbstractModel):
-    _inherit = 'account.general.ledger.report.handler'
+class AccountGeneralLedgerReportHandler(models.AbstractModel):
+    _inherit = ['account.general.ledger.report.handler']
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)

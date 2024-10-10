@@ -26,7 +26,9 @@ DIFF_KEY = "o-diff-key"
 
 
 class Model(models.AbstractModel):
-    _inherit = 'base'
+    _name = "base"
+
+    _inherit = ['base']
 
     @api.model
     def _get_view_cache_key(self, *args, **kwargs):
@@ -56,8 +58,8 @@ class Model(models.AbstractModel):
             self = self.with_context(studio=True, no_address_format=True)
         return super().get_views(views, options)
 
-class View(models.Model):
-    _name = 'ir.ui.view'
+
+class IrUiView(models.Model):
     _description = 'View'
     _inherit = ['studio.mixin', 'ir.ui.view']
 
@@ -559,11 +561,11 @@ class View(models.Model):
                 self._check_parent_groups(source, spec)
                 # Here, we don't want to catch the exception.
                 # This mechanism doesn't save the view if something goes wrong.
-                source = super(View, self).apply_inheritance_specs(source, spec)
+                source = super().apply_inheritance_specs(source, spec)
             else:
                 # Avoid traceback if studio view and skip xpath when studio mode is off
                 try:
-                    source = super(View, self).apply_inheritance_specs(source, spec)
+                    source = super().apply_inheritance_specs(source, spec)
                 except ValueError:
                     # 'locate_node' already log this error.
                     pass
@@ -580,7 +582,7 @@ class View(models.Model):
         else:
             # Remove branding added by '_groups_branding' before locating a node
             pre_locate = lambda arch: arch.attrib.pop("studio-view-group-ids", None)
-            return super(View, self).apply_inheritance_specs(source, specs_tree,
+            return super().apply_inheritance_specs(source, specs_tree,
                                                                 pre_locate=pre_locate)
 
     def _generate_trees_with_diff_key(self, parser, old_view):
@@ -1305,7 +1307,7 @@ class View(models.Model):
         if self._context.get("studio"):
             # Force inherit branding from report rendering
             self = self.with_context(inherit_branding=True)
-        return super(View, self)._render_template(template, values)
+        return super()._render_template(template, values)
 
     def _contains_branded(self, node):
         if not self._context.get("studio"):
@@ -1337,10 +1339,9 @@ class View(models.Model):
         return super().save_embedded_field(el)
 
 
-
 class ResetViewArchWizard(models.TransientModel):
     """ A wizard to compare and reset views architecture. """
-    _inherit = "reset.view.arch.wizard"
+    _inherit = ["reset.view.arch.wizard"]
 
     @api.model
     def default_get(self, fields):

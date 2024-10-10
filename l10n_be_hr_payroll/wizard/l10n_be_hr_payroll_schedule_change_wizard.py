@@ -8,8 +8,8 @@ from odoo.tools import float_round
 from datetime import timedelta
 from markupsafe import Markup
 
-class L10nBeHrPayrollScheduleChange(models.TransientModel):
-    _name = 'l10n_be.hr.payroll.schedule.change.wizard'
+
+class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
     _description = 'Change contract working schedule'
 
     contract_id = fields.Many2one(

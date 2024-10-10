@@ -4,13 +4,13 @@
 from datetime import datetime
 from odoo import api, models, fields
 
-class L10nLuGenerateAccountsReport(models.TransientModel):
+
+class L10n_LuGenerateAccountsReport(models.TransientModel):
     """
     This wizard is used to generate an xml yearly accounts report for Luxembourg
     according to the xml 2.0 standard.
     """
-    _inherit = 'l10n_lu.generate.xml'
-    _name = 'l10n_lu.generate.accounts.report'
+    _inherit = ['l10n_lu.generate.xml']
     _description = 'Generate Accounts Report'
 
     avg_nb_employees = fields.Float(string="Average number of employees for the fiscal year", required=True, default=1)

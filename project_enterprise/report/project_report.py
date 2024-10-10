@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ReportProjectTaskUser(models.Model):
-    _inherit = 'report.project.task.user'
+    _inherit = ['report.project.task.user']
 
     planned_date_begin = fields.Datetime("Start date", readonly=True)
 

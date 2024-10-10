@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = "res.company"
+    _inherit = ["res.company"]
 
     l10n_in_gstr_gst_username = fields.Char(string="GST User Name (IN)", groups="base.group_system")
     l10n_in_gstr_gst_token = fields.Char(string="GST Token (IN)", groups="base.group_system")

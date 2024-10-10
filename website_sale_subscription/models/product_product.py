@@ -3,8 +3,9 @@
 
 from odoo import models
 
+
 class ProductProduct(models.Model):
-    _inherit = 'product.product'
+    _inherit = ['product.product']
 
     def _website_can_be_added(self, pricelist=None, pricing=None, product=None):
         return self.product_tmpl_id._website_can_be_added(pricelist, pricing, product or self)

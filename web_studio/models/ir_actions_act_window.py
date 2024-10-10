@@ -4,11 +4,9 @@
 from odoo import models
 
 
-class IrActionsActWindow(models.Model):
-    _name = 'ir.actions.act_window'
+class IrActionsAct_Window(models.Model):
     _inherit = ['studio.mixin', 'ir.actions.act_window']
 
 
-class IrActionsActWindowView(models.Model):
-    _name = 'ir.actions.act_window.view'
+class IrActionsAct_WindowView(models.Model):
     _inherit = ['studio.mixin', 'ir.actions.act_window.view']

@@ -9,11 +9,10 @@ from odoo.addons.l10n_ec.models.res_partner import verify_final_consumer
 import re
 
 
-class L10nEcReimbursement(models.Model):
+class L10n_EcReimbursement(models.Model):
     '''
     This class allow to store the purchase invoice related with reimbursements in client scenario
     '''
-    _name = 'l10n_ec.reimbursement'
     _description = 'Reimbursement Lines'
 
     # Columns

@@ -4,8 +4,8 @@ from odoo import _, api, models
 from odoo.exceptions import ValidationError
 
 
-class DocumentAccess(models.Model):
-    _inherit = "documents.access"
+class DocumentsAccess(models.Model):
+    _inherit = ["documents.access"]
 
     @api.constrains("document_id", "partner_id", "role")
     def _check_spreadsheet(self):

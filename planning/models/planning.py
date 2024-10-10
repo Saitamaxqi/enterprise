@@ -29,9 +29,7 @@ def days_span(start_datetime, end_datetime):
     return duration.days + 1
 
 
-
-class Planning(models.Model):
-    _name = 'planning.slot'
+class PlanningSlot(models.Model):
     _description = 'Planning Shift'
     _order = 'start_datetime desc, id desc'
     _rec_name = 'name'
@@ -2314,8 +2312,8 @@ class Planning(models.Model):
         copied_shift.unlink()
         return True
 
+
 class PlanningRole(models.Model):
-    _name = 'planning.role'
     _description = "Planning Role"
     _order = 'sequence'
     _rec_name = 'name'
@@ -2337,7 +2335,6 @@ class PlanningRole(models.Model):
 
 
 class PlanningPlanning(models.Model):
-    _name = 'planning.planning'
     _description = 'Schedule'
 
     @api.model

@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class StockMoveLine(models.Model):
-    _inherit = "stock.move.line"
+    _inherit = ["stock.move.line"]
 
     check_ids = fields.One2many('quality.check', 'move_line_id', 'Checks')
     check_state = fields.Selection([

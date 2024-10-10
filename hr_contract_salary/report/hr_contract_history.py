@@ -4,8 +4,9 @@
 from odoo import api, fields, models
 from collections import defaultdict
 
-class ContractHistory(models.Model):
-    _inherit = 'hr.contract.history'
+
+class HrContractHistory(models.Model):
+    _inherit = ['hr.contract.history']
 
     default_contract_id = fields.Many2one('hr.contract', string='Contract Template', readonly=True,
         help='Default contract used when making an offer to an applicant.')

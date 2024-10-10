@@ -8,6 +8,7 @@ from odoo import Command, fields, models, _
 from odoo.tools import is_html_empty, plaintext2html
 from odoo.osv.expression import OR
 
+
 class HelpdeskTeam(models.Model):
     _inherit = ['helpdesk.team']
 
@@ -50,8 +51,9 @@ class HelpdeskTeam(models.Model):
             action.update(res_id=channel_ids[0], views=[(False, 'form')])
         return action
 
+
 class DiscussChannel(models.Model):
-    _inherit = 'discuss.channel'
+    _inherit = ['discuss.channel']
 
     # ------------------------------------------------------
     #  Commands

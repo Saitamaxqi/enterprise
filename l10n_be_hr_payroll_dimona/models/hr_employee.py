@@ -7,7 +7,7 @@ from odoo import models
 
 
 class HrEmployee(models.Model):
-    _inherit = 'hr.employee'
+    _inherit = ['hr.employee']
 
     def _get_split_name(self):
         self.ensure_one()

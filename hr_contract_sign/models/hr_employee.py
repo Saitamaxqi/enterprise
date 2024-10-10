@@ -5,8 +5,7 @@ from odoo import models, fields, _
 
 
 class HrEmployee(models.Model):
-    _name = 'hr.employee'
-    _inherit = 'hr.employee'
+    _inherit = ['hr.employee']
 
     sign_request_ids = fields.Many2many(
         'sign.request', string='Requested Signatures', groups="hr.group_hr_user")

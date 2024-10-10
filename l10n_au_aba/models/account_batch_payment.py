@@ -13,7 +13,7 @@ SEPARATOR = '\r\n'
 
 
 class AccountBatchPayment(models.Model):
-    _inherit = 'account.batch.payment'
+    _inherit = ['account.batch.payment']
 
     def _get_methods_generating_files(self):
         rslt = super(AccountBatchPayment, self)._get_methods_generating_files()

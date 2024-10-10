@@ -9,7 +9,7 @@ TEMPLATE_CODE = [
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     l10n_co_edi_username = fields.Char(string='Username', groups='base.group_system')
     l10n_co_edi_password = fields.Char(string='Password', groups='base.group_system')

@@ -3,8 +3,8 @@
 from odoo import fields, models
 
 
-class JobPost(models.Model):
-    _inherit = 'hr.job.post'
+class HrJobPost(models.Model):
+    _inherit = ['hr.job.post']
 
     apply_method = fields.Selection(
         selection_add=[('redirect', 'Redirect to Website')],

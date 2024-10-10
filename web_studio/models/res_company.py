@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = "res.company"
+    _inherit = ["res.company"]
 
     background_image = fields.Binary(string="Home Menu Background Image", attachment=True)
 

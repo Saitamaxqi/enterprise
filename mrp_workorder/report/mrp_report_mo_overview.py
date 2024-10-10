@@ -3,8 +3,9 @@
 
 from odoo import models
 
-class ReportMoOverview(models.AbstractModel):
-    _inherit = 'report.mrp.report_mo_overview'
+
+class ReportMrpReport_Mo_Overview(models.AbstractModel):
+    _inherit = ['report.mrp.report_mo_overview']
 
     def _get_finished_operation_data(self, production, level=0, current_index=False):
         res = super()._get_finished_operation_data(production, level, current_index)

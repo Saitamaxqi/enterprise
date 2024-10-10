@@ -6,8 +6,8 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.osv import expression
 
 
-class SocialPostYoutube(models.Model):
-    _inherit = 'social.post'
+class SocialPost(models.Model):
+    _inherit = ['social.post']
 
     youtube_video = fields.Char('YouTube Video',
         help="Simply holds the filename of the video as the video itself is uploaded directly to YouTube")
@@ -35,13 +35,13 @@ class SocialPostYoutube(models.Model):
         """ When posting only on YouTube, the 'message' and 'image_ids' field can (and should) be empty. """
         youtube_posts_only = self.filtered(
             lambda post: all(media.media_type == 'youtube' for media in post.media_ids))
-        super(SocialPostYoutube, self -
+        super(SocialPost, self -
               youtube_posts_only)._check_has_message_or_image()
 
 
     @api.depends('youtube_video_id')
     def _compute_stream_posts_count(self):
-        super(SocialPostYoutube, self)._compute_stream_posts_count()
+        super()._compute_stream_posts_count()
 
     @api.depends('account_ids.media_type', 'account_ids.youtube_access_token')
     def _compute_youtube_access_token(self):
@@ -85,7 +85,7 @@ class SocialPostYoutube(models.Model):
             post.youtube_video_url = "https://www.youtube.com/watch?v=%s" % post.youtube_video_id
 
     def _check_post_access(self):
-        super(SocialPostYoutube, self)._check_post_access()
+        super()._check_post_access()
 
         for social_post in self:
             if social_post.youtube_accounts_count > 1:
@@ -116,7 +116,7 @@ class SocialPostYoutube(models.Model):
         return super().create(vals_list)
 
     def _get_stream_post_domain(self):
-        domain = super(SocialPostYoutube, self)._get_stream_post_domain()
+        domain = super()._get_stream_post_domain()
         youtube_video_ids = [youtube_video_id for youtube_video_id in self.mapped('youtube_video_id') if youtube_video_id]
         if youtube_video_ids:
             return expression.OR([domain, [('youtube_video_id', 'in', youtube_video_ids)]])
@@ -125,11 +125,11 @@ class SocialPostYoutube(models.Model):
 
     @api.model
     def _prepare_post_content(self, message, media_type, **kw):
-        message = super(SocialPostYoutube, self)._prepare_post_content(message, media_type, **kw)
+        message = super()._prepare_post_content(message, media_type, **kw)
         if media_type != 'youtube' and kw.get('youtube_video_id'):
             message += f'\n\nhttps://youtube.com/watch?v={kw.get("youtube_video_id")}'
         return message
 
     @api.model
     def _get_post_message_modifying_fields(self):
-        return super(SocialPostYoutube, self)._get_post_message_modifying_fields() + ['youtube_video_id']
+        return super()._get_post_message_modifying_fields() + ['youtube_video_id']

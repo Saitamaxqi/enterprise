@@ -2,7 +2,7 @@ from odoo import models
 
 
 class BankRecWidget(models.Model):
-    _inherit = 'bank.rec.widget'
+    _inherit = ['bank.rec.widget']
 
     def _line_value_changed_l10n_mx_edi_payment_method_id(self, line):
         self.ensure_one()

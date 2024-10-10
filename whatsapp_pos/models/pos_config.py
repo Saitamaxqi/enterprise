@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class PosConfig(models.Model):
-    _inherit = 'pos.config'
+    _inherit = ['pos.config']
 
     whatsapp_enabled = fields.Boolean('WhatsApp Enabled', default=False)
     receipt_template_id = fields.Many2one('whatsapp.template', string="Receipt template", domain=[('model', '=', 'pos.order'), ('status', '=', 'approved')])

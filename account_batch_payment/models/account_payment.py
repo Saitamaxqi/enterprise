@@ -5,7 +5,7 @@ from odoo import models, fields, api, _
 
 
 class AccountPayment(models.Model):
-    _inherit = "account.payment"
+    _inherit = ["account.payment"]
 
     batch_payment_id = fields.Many2one('account.batch.payment', ondelete='set null', copy=False,
         check_company=True)

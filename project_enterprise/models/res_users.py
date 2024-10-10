@@ -5,8 +5,9 @@ from collections import defaultdict
 from odoo import models
 from odoo.addons.resource.models.utils import Intervals
 
-class User(models.Model):
-    _inherit = 'res.users'
+
+class ResUsers(models.Model):
+    _inherit = ['res.users']
 
     # -----------------------------------------
     # Business Methods

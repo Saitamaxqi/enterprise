@@ -4,7 +4,7 @@ from odoo import api, models
 
 
 class BankRecWidgetLine(models.Model):
-    _inherit = 'bank.rec.widget.line'
+    _inherit = ['bank.rec.widget.line']
 
     @api.depends('account_id')
     def _compute_vehicle_required(self):

@@ -7,7 +7,7 @@ from odoo.addons.resource.models.utils import Intervals
 
 
 class HelpdeskTeam(models.Model):
-    _inherit = 'helpdesk.team'
+    _inherit = ['helpdesk.team']
 
     @api.model
     def _get_working_user_interval(self, start_dt, end_dt, calendar, users, compute_leaves=True):

@@ -4,7 +4,7 @@ from odoo import models, fields
 
 
 class AccountMoveReversal(models.TransientModel):
-    _inherit = 'account.move.reversal'
+    _inherit = ['account.move.reversal']
 
     l10n_ke_reason_code_id = fields.Many2one(
         comodel_name='l10n_ke_edi_oscu.code',

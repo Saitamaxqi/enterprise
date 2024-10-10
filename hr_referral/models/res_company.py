@@ -5,8 +5,9 @@ from base64 import encodebytes
 from odoo import fields, models
 from odoo.tools.misc import file_open
 
+
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     def _get_default_referral_background(self):
         return encodebytes(file_open('hr_referral/static/src/img/bg.jpg', 'rb').read())

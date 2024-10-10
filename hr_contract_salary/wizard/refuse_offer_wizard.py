@@ -5,8 +5,7 @@ from odoo import fields, models, _
 from odoo.exceptions import UserError
 
 
-class GenerateSimulationLink(models.TransientModel):
-    _name = 'refuse.offer.wizard'
+class RefuseOfferWizard(models.TransientModel):
     _description = 'Refuse an Offer'
 
     refusal_reason = fields.Many2one('hr.contract.salary.offer.refusal.reason', string="Refusal Reason", required=True)

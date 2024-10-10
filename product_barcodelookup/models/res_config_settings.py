@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     barcodelookup_api_key = fields.Char(
         string='API key',

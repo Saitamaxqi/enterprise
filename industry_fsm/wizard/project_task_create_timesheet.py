@@ -5,8 +5,9 @@ from datetime import datetime
 from odoo import fields, models, _
 from odoo.tools import get_lang
 
+
 class ProjectTaskCreateTimesheet(models.TransientModel):
-    _inherit = 'project.task.create.timesheet'
+    _inherit = ['project.task.create.timesheet']
 
     def save_timesheet(self):
         if self.task_id.project_id.is_fsm:

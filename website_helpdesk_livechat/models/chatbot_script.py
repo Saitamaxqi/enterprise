@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class ChatbotScript(models.Model):
-    _inherit = 'chatbot.script'
+    _inherit = ['chatbot.script']
 
     ticket_count = fields.Integer(string='Generated Ticket Count', compute='_compute_ticket_count', export_string_translation=False)
 

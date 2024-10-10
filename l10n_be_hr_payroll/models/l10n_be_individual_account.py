@@ -11,9 +11,8 @@ from odoo.fields import Datetime
 _logger = logging.getLogger(__name__)
 
 
-class L10nBeIndividualAccount(models.Model):
-    _name = 'l10n_be.individual.account'
-    _inherit = 'hr.payroll.declaration.mixin'
+class L10n_BeIndividualAccount(models.Model):
+    _inherit = ['hr.payroll.declaration.mixin']
     _description = 'HR Individual Account Report By Employee'
 
     name = fields.Char(

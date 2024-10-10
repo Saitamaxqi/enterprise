@@ -7,8 +7,8 @@ from odoo import fields, models, _
 from odoo.osv import expression
 
 
-class Project(models.Model):
-    _inherit = "project.project"
+class ProjectProject(models.Model):
+    _inherit = ["project.project"]
 
     total_budget_amount = fields.Monetary('Total planned amount', compute='_compute_budget', default=0, export_string_translation=False)
     total_budget_progress = fields.Float("Budget Spent", compute="_compute_budget", export_string_translation=False)

@@ -8,8 +8,9 @@ from odoo.tools.sql import column_exists, create_column
 # Available values for the release_to_pay field.
 _release_to_pay_status_list = [('yes', 'Yes'), ('no', 'No'), ('exception', 'Exception')]
 
+
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     def _auto_init(self):
         if not column_exists(self.env.cr, "account_move", "release_to_pay"):
@@ -89,7 +90,7 @@ class AccountMove(models.Model):
 
 
 class AccountMoveLine(models.Model):
-    _inherit = 'account.move.line'
+    _inherit = ['account.move.line']
 
     def _auto_init(self):
         if not column_exists(self.env.cr, "account_move_line", "can_be_paid"):

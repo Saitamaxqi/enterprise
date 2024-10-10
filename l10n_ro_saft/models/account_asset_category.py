@@ -1,8 +1,7 @@
 from odoo import api, fields, models
 
 
-class AccountAssetCategory(models.Model):
-    _name = 'l10n_ro_saft.account.asset.category'
+class L10n_Ro_SaftAccountAssetCategory(models.Model):
     _description = "Asset categories for Romania's saft"
     _order = "code"
     _rec_names_search = ['code', 'description']

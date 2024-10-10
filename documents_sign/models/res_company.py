@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = "res.company"
+    _inherit = ["res.company"]
 
     documents_sign_folder_id = fields.Many2one('documents.document', string="Sign Folder", check_company=True,
                                             domain=[('type', '=', 'folder'), ('shortcut_document_id', '=', False)],

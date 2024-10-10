@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 
 
 class AccountMove(models.Model):
-    _inherit = "account.move"
+    _inherit = ["account.move"]
 
     l10n_pe_detraction_date = fields.Date(
         string="Detraction Date",

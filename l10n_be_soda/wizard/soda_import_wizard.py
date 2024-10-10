@@ -3,7 +3,6 @@ from odoo import Command, _, api, fields, models
 
 
 class SodaImportWizard(models.TransientModel):
-    _name = 'soda.import.wizard'
     _description = 'Import a SODA file and map accounts'
 
     # A dict mapping the SODA reference to a dict with a list of `entries` and an `attachment_id`

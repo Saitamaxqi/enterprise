@@ -3,7 +3,7 @@ from odoo.exceptions import UserError
 
 
 class AccountPaymentRegister(models.TransientModel):
-    _inherit = 'account.payment.register'
+    _inherit = ['account.payment.register']
 
     sdd_mandate_usable = fields.Boolean(string="Could a SDD mandate be used?",
         compute='_compute_usable_mandate')

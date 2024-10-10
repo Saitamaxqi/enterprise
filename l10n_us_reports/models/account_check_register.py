@@ -2,12 +2,11 @@
 from odoo import models, api, _
 
 
-class USReportCustomHandler(models.AbstractModel):
+class L10n_UsReportHandler(models.AbstractModel):
     '''Check Register is an accounting report usually part of the general ledger, used to record
     financial transactions in cash.
     '''
-    _name = 'l10n_us.report.handler'
-    _inherit = 'account.general.ledger.report.handler'
+    _inherit = ['account.general.ledger.report.handler']
     _description = 'US Report Custom Handler'
 
     def _get_custom_display_config(self):

@@ -15,8 +15,7 @@ from odoo.tools import plaintext2html
 _logger = logging.getLogger(__name__)
 
 
-class WhatsAppAccount(models.Model):
-    _name = 'whatsapp.account'
+class WhatsappAccount(models.Model):
     _inherit = ['mail.thread']
     _description = 'WhatsApp Business Account'
 

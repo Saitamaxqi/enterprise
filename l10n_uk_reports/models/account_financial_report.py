@@ -3,9 +3,8 @@
 from odoo import models, _
 
 
-class BritishGenericTaxReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_uk.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_UkTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'British Tax Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):

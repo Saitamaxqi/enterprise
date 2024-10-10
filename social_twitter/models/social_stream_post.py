@@ -14,8 +14,8 @@ from werkzeug.urls import url_join
 _logger = logging.getLogger(__name__)
 
 
-class SocialStreamPostTwitter(models.Model):
-    _inherit = 'social.stream.post'
+class SocialStreamPost(models.Model):
+    _inherit = ['social.stream.post']
 
     twitter_tweet_id = fields.Char('X Post ID', index=True)
     twitter_conversation_id = fields.Char('X Conversation ID')
@@ -41,14 +41,14 @@ class SocialStreamPostTwitter(models.Model):
 
     def _compute_author_link(self):
         twitter_posts = self._filter_by_media_types(['twitter'])
-        super(SocialStreamPostTwitter, (self - twitter_posts))._compute_author_link()
+        super(SocialStreamPost, (self - twitter_posts))._compute_author_link()
 
         for post in twitter_posts:
             post.author_link = 'https://twitter.com/intent/user?user_id=%s' % post.twitter_author_id
 
     def _compute_post_link(self):
         twitter_posts = self._filter_by_media_types(['twitter'])
-        super(SocialStreamPostTwitter, (self - twitter_posts))._compute_post_link()
+        super(SocialStreamPost, (self - twitter_posts))._compute_post_link()
 
         for post in twitter_posts:
             post.post_link = 'https://www.twitter.com/%s/statuses/%s' % (post.twitter_author_id, post.twitter_tweet_id)
@@ -87,7 +87,7 @@ class SocialStreamPostTwitter(models.Model):
 
     def _compute_is_author(self):
         twitter_posts = self._filter_by_media_types(['twitter'])
-        super(SocialStreamPostTwitter, (self - twitter_posts))._compute_is_author()
+        super(SocialStreamPost, (self - twitter_posts))._compute_is_author()
 
         for post in twitter_posts:
             post.is_author = post.twitter_author_id == post.account_id.twitter_user_id

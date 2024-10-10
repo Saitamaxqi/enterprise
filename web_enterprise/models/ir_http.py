@@ -7,8 +7,8 @@ from odoo import models
 from odoo.http import request
 
 
-class Http(models.AbstractModel):
-    _inherit = 'ir.http'
+class IrHttp(models.AbstractModel):
+    _inherit = ['ir.http']
 
     @classmethod
     def _post_logout(cls):
@@ -30,7 +30,7 @@ class Http(models.AbstractModel):
         else:
             warn_enterprise = False
 
-        result = super(Http, self).session_info()
+        result = super().session_info()
         result['support_url'] = "https://www.odoo.com/help"
         if warn_enterprise:
             result['warning'] = warn_enterprise

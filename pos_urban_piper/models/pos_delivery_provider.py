@@ -2,7 +2,6 @@ from odoo import api, fields, models
 
 
 class PosDeliveryProvider(models.Model):
-    _name = 'pos.delivery.provider'
     _description = 'Online Delivery Providers'
 
     name = fields.Char(string='Name', required=True, help='Name of the delivery provider i.e. Zomato, UberEats, etc.')

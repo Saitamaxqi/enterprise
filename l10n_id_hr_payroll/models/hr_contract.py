@@ -3,8 +3,8 @@
 from odoo import fields, models
 
 
-class Contract(models.Model):
-    _inherit = "hr.contract"
+class HrContract(models.Model):
+    _inherit = ["hr.contract"]
 
     l10n_id_bpjs_jkk = fields.Float(string="BPJS JKK(%)")
 

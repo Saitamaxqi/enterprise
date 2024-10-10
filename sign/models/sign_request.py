@@ -54,8 +54,8 @@ def _fix_image_transparency(image):
             if pixels[x, y] == (0, 0, 0, 0):
                 pixels[x, y] = (255, 255, 255, 0)
 
+
 class SignRequest(models.Model):
-    _name = "sign.request"
     _description = "Signature Request"
     _rec_name = 'reference'
     _inherit = ['mail.thread', 'mail.activity.mixin']
@@ -817,7 +817,6 @@ class SignRequest(models.Model):
 
 
 class SignRequestItem(models.Model):
-    _name = "sign.request.item"
     _description = "Signature Request Item"
     _inherit = ['portal.mixin']
     _rec_name = 'partner_id'
@@ -1254,7 +1253,6 @@ class SignRequestItem(models.Model):
 
 
 class SignRequestItemValue(models.Model):
-    _name = "sign.request.item.value"
     _description = "Signature Item Value"
     _rec_name = 'sign_request_id'
 

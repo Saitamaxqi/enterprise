@@ -5,7 +5,7 @@ from odoo import fields, models, api
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     company_country_id = fields.Many2one(
         'res.country', string="Company country", readonly=True,

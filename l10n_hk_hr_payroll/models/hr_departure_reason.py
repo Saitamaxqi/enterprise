@@ -4,7 +4,7 @@
 from odoo import fields, models
 
 
-class DepartureReason(models.Model):
-    _inherit = "hr.departure.reason"
+class HrDepartureReason(models.Model):
+    _inherit = ["hr.departure.reason"]
 
     l10n_hk_ir56f_code = fields.Char()

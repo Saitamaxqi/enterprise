@@ -6,7 +6,7 @@ from odoo import _, fields, models
 
 
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = ['sale.order']
 
     def _get_cart_and_free_qty(self, product, line=None):
         """ Override to take the rental product specificity into account

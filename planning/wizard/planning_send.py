@@ -6,7 +6,6 @@ from odoo.osv import expression
 
 
 class PlanningSend(models.TransientModel):
-    _name = 'planning.send'
     _description = "Send Planning"
 
     @api.model

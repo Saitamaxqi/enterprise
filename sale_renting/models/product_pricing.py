@@ -21,7 +21,6 @@ PERIOD_RATIO = {
 
 
 class ProductPricing(models.Model):
-    _name = 'product.pricing'
     _description = "Pricing rule of rental products"
     _order = 'product_template_id,price,pricelist_id,recurrence_id'
 

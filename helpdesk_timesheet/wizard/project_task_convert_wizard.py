@@ -3,8 +3,9 @@
 
 from odoo import models
 
+
 class ProjectTaskConvertWizard(models.TransientModel):
-    _inherit = 'project.task.convert.wizard'
+    _inherit = ['project.task.convert.wizard']
 
     def _default_team_id(self):
         tasks_to_convert = self._get_tasks_to_convert()

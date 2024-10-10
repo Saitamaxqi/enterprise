@@ -4,8 +4,7 @@
 from odoo import fields, models
 
 
-class CalendarAppointmentAnswer(models.Model):
-    _name = "appointment.answer"
+class AppointmentAnswer(models.Model):
     _description = "Appointment Question Answers"
     _order = "sequence,id"
 
@@ -13,8 +12,8 @@ class CalendarAppointmentAnswer(models.Model):
     name = fields.Char('Answer', translate=True, required=True)
     sequence = fields.Integer(default=10)
 
-class CalendarAppointmentAnswerInput(models.Model):
-    _name = "appointment.answer.input"
+
+class AppointmentAnswerInput(models.Model):
     _rec_name = "question_id"
     _description = "Appointment Answer Inputs"
     _order = "id desc"

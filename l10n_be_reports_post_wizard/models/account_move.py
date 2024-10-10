@@ -5,7 +5,7 @@ from odoo import models, api, _
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     def action_post(self):
         """This action will be called by the POST button on a tax report account move.

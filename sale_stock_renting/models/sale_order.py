@@ -4,7 +4,7 @@ from odoo import models, _
 
 
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = ['sale.order']
 
     def action_open_pickup(self):
         if any(s.is_rental for s in self.picking_ids.filtered(lambda p: p.state not in ('done', 'cancel')).move_ids.sale_line_id):

@@ -8,8 +8,8 @@ from odoo.exceptions import UserError
 from werkzeug.urls import url_encode, url_join
 
 
-class SocialMediaFacebook(models.Model):
-    _inherit = 'social.media'
+class SocialMedia(models.Model):
+    _inherit = ['social.media']
 
     _FACEBOOK_ENDPOINT = 'https://graph.facebook.com'
     _FACEBOOK_ENDPOINT_VERSIONED = '%s/v17.0/' % _FACEBOOK_ENDPOINT
@@ -27,7 +27,7 @@ class SocialMediaFacebook(models.Model):
         self.ensure_one()
 
         if self.media_type != 'facebook':
-            return super(SocialMediaFacebook, self)._action_add_account()
+            return super()._action_add_account()
 
         facebook_app_id = self.env['ir.config_parameter'].sudo().get_param('social.facebook_app_id')
         facebook_client_secret = self.env['ir.config_parameter'].sudo().get_param('social.facebook_client_secret')

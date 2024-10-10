@@ -4,8 +4,7 @@
 from odoo import models, api, fields
 
 
-class SaleAchievementReport(models.Model):
-    _name = "sale.commission.achievement.report"
+class SaleCommissionAchievementReport(models.Model):
     _description = "Sales Achievement Report"
     _order = 'id'
     _auto = False

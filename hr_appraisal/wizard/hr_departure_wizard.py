@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class HrDepartureWizard(models.TransientModel):
-    _inherit = 'hr.departure.wizard'
+    _inherit = ['hr.departure.wizard']
 
     cancel_appraisal = fields.Boolean(string="Cancel Future Appraisals", default=True,
         help="Cancel all appraisal after contract end date.")

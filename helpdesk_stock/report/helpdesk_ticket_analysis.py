@@ -4,8 +4,8 @@
 from odoo import fields, models
 
 
-class HelpdeskTicketReport(models.Model):
-    _inherit = 'helpdesk.ticket.report.analysis'
+class HelpdeskTicketReportAnalysis(models.Model):
+    _inherit = ['helpdesk.ticket.report.analysis']
 
     product_id = fields.Many2one('product.product', string='Product', readonly=True)
 

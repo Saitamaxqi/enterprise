@@ -5,8 +5,8 @@ from odoo import fields, models, _
 from odoo.exceptions import AccessError
 
 
-class Digest(models.Model):
-    _inherit = 'digest.digest'
+class DigestDigest(models.Model):
+    _inherit = ['digest.digest']
 
     kpi_helpdesk_tickets_closed = fields.Boolean('Tickets Closed')
     kpi_helpdesk_tickets_closed_value = fields.Integer(compute='_compute_kpi_helpdesk_tickets_closed_value', export_string_translation=False)

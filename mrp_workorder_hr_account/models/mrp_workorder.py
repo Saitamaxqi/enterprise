@@ -2,7 +2,7 @@ from odoo import _, models, fields
 
 
 class MrpWorkcenterProductivity(models.Model):
-    _inherit = "mrp.workcenter.productivity"
+    _inherit = ["mrp.workcenter.productivity"]
 
     def _prepare_analytic_line_values(self, account, amount, unit_amount):
         self.ensure_one()
@@ -13,7 +13,7 @@ class MrpWorkcenterProductivity(models.Model):
 
 
 class MrpWorkorder(models.Model):
-    _inherit = "mrp.workorder"
+    _inherit = ["mrp.workorder"]
 
     employee_analytic_account_line_ids = fields.Many2many('account.analytic.line', copy=False)
 

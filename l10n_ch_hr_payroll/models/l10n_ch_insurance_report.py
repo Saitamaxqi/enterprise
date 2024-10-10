@@ -11,8 +11,7 @@ from odoo.exceptions import UserError
 from odoo.tools.misc import format_date
 
 
-class L10nCHInsuranceReport(models.Model):
-    _name = 'ch.yearly.report'
+class ChYearlyReport(models.Model):
     _description = 'AVS / LAA / LAAC / IJM Yearly Report'
 
     @api.model
@@ -424,8 +423,7 @@ class L10nCHInsuranceReport(models.Model):
         self.ensure_one()
 
 
-class L10nCHInsuranceReportLine(models.Model):
-    _name = 'ch.yearly.report.line'
+class ChYearlyReportLine(models.Model):
     _description = 'Insurance Reports'
 
     report_id = fields.Many2one('ch.yearly.report')

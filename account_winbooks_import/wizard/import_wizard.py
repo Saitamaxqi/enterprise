@@ -27,8 +27,8 @@ SALE_CODE = '2'
 CREDIT_NOTE_PURCHASE_CODE = '1'
 CREDIT_NOTE_SALE_CODE = '3'
 
-class WinbooksImportWizard(models.TransientModel):
-    _name = "account.winbooks.import.wizard"
+
+class AccountWinbooksImportWizard(models.TransientModel):
     _description = 'Account Winbooks import wizard'
 
     zip_file = fields.Binary('File', required=True)

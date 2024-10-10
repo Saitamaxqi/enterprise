@@ -2,7 +2,6 @@ from odoo import models, fields
 
 
 class AccountMove(models.Model):
-    _name = 'account.move'
     _inherit = ['account.avatax.unique.code', 'account.move']
 
     avatax_tax_date = fields.Date(

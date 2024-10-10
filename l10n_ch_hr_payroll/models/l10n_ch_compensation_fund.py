@@ -5,8 +5,7 @@ from odoo import models, fields, _
 from odoo.exceptions import UserError
 
 
-class l10nChCompensationFund(models.Model):
-    _name = 'l10n.ch.compensation.fund'
+class L10nChCompensationFund(models.Model):
     _description = 'Swiss: Family Allowance (CAF)'
 
     name = fields.Char(required=True)
@@ -26,8 +25,7 @@ class l10nChCompensationFund(models.Model):
         raise UserError(_('No CAF rates found for date %s', target))
 
 
-class l10nChCompensationFundLine(models.Model):
-    _name = 'l10n.ch.compensation.fund.line'
+class L10nChCompensationFundLine(models.Model):
     _description = 'Swiss: Family Allowance Rate (CAF)'
 
     date_from = fields.Date(string="From", required=True)

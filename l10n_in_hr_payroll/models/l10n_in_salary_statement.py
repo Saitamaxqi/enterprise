@@ -6,9 +6,8 @@ from collections import defaultdict
 from datetime import datetime
 
 
-class L10nInSalaryStatement(models.Model):
-    _name = 'l10n_in_hr_payroll.salary.statement'
-    _inherit = 'hr.payroll.declaration.mixin'
+class L10n_In_Hr_PayrollSalaryStatement(models.Model):
+    _inherit = ['hr.payroll.declaration.mixin']
     _description = 'Salary Statement Report'
 
     name = fields.Char(string="Description", required=True, compute='_compute_name', readonly=False, store=True)

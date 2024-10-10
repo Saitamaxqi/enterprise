@@ -5,7 +5,6 @@ from odoo import models, fields, _
 
 
 class SaleCommissionReport(models.Model):
-    _name = "sale.commission.report"
     _description = "Sales Commission Report"
     _order = 'id'
     _auto = False

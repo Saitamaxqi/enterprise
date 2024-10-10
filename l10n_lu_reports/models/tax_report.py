@@ -5,9 +5,8 @@ from odoo import fields, models, tools, _
 from odoo.exceptions import UserError
 
 
-class LuxembourgishTaxReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_lu.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_LuTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'Luxembourgish Tax Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):

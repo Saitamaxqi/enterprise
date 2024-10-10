@@ -5,7 +5,6 @@ from odoo import api, fields, models
 
 
 class HrAppraisalNote(models.Model):
-    _name = "hr.appraisal.note"
     _description = "Appraisal Assessment Note"
     _order = "sequence, id"
 

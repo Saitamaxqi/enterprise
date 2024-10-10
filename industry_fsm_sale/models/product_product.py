@@ -7,7 +7,7 @@ from odoo.tools import float_round, SQL
 
 
 class ProductProduct(models.Model):
-    _inherit = 'product.product'
+    _inherit = ['product.product']
 
     fsm_quantity = fields.Float('Material Quantity', compute="_compute_fsm_quantity", inverse="_inverse_fsm_quantity", search="_search_fsm_quantity")
 

@@ -4,8 +4,8 @@
 from odoo import api, models
 
 
-class QualityCustomReport(models.AbstractModel):
-    _inherit = "report.quality_control.quality_worksheet"
+class ReportQuality_ControlQuality_Worksheet(models.AbstractModel):
+    _inherit = ["report.quality_control.quality_worksheet"]
 
     @api.model
     def _get_report_values(self, docids, data=None):

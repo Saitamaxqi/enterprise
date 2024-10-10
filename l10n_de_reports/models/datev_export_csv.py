@@ -16,8 +16,8 @@ import os
 BalanceKey = namedtuple('BalanceKey', ['from_code', 'to_code', 'partner_id', 'tax_id'])
 
 
-class GeneralLedgerCustomHandler(models.AbstractModel):
-    _inherit = 'account.general.ledger.report.handler'
+class AccountGeneralLedgerReportHandler(models.AbstractModel):
+    _inherit = ['account.general.ledger.report.handler']
 
     def _custom_options_initializer(self, report, options, previous_options):
         """

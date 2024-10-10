@@ -49,8 +49,7 @@ CHAR_WIDTHS = {
 }
 
 
-class L10nKePayrollMasterReport(models.Model):
-    _name = 'l10n_ke.master.report'
+class L10n_KeMasterReport(models.Model):
     _description = 'Headover Wizard'
 
     @staticmethod

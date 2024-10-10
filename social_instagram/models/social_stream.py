@@ -8,12 +8,12 @@ from odoo import Command, models
 from werkzeug.urls import url_join
 
 
-class SocialStreamInstagram(models.Model):
-    _inherit = 'social.stream'
+class SocialStream(models.Model):
+    _inherit = ['social.stream']
 
     def _apply_default_name(self):
         instagram_streams = self.filtered(lambda s: s.media_id.media_type == 'instagram')
-        super(SocialStreamInstagram, (self - instagram_streams))._apply_default_name()
+        super(SocialStream, (self - instagram_streams))._apply_default_name()
 
         for stream in instagram_streams:
             stream.write({'name': '%s: %s' % (stream.stream_type_id.name, stream.account_id.name)})
@@ -75,7 +75,7 @@ class SocialStreamInstagram(models.Model):
 
     def _fetch_stream_data(self):
         if self.media_id.media_type != 'instagram':
-            return super(SocialStreamInstagram, self)._fetch_stream_data()
+            return super()._fetch_stream_data()
 
         if self.stream_type_id.stream_type == 'instagram_posts':
             return self._fetch_instagram_posts()

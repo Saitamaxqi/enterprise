@@ -5,8 +5,7 @@ from odoo import api, fields, models, _
 from datetime import timedelta
 
 
-class FollowupLine(models.Model):
-    _name = 'account_followup.followup.line'
+class Account_FollowupFollowupLine(models.Model):
     _description = 'Follow-up Criteria'
     _order = 'delay asc'
     _check_company_auto = True

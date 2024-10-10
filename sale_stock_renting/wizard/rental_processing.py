@@ -7,8 +7,8 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
-class RentalProcessing(models.TransientModel):
-    _inherit = 'rental.order.wizard'
+class RentalOrderWizard(models.TransientModel):
+    _inherit = ['rental.order.wizard']
 
     has_tracked_lines = fields.Boolean(
         string="Has lines with tracked products", compute='_compute_has_tracked_lines')
@@ -27,11 +27,11 @@ class RentalProcessing(models.TransientModel):
             wizard.has_lines_missing_stock = any(line.is_product_storable and line.status == 'pickup' and line.qty_delivered > line.qty_available for line in wizard.rental_wizard_line_ids)
 
 
-class RentalProcessingLine(models.TransientModel):
-    _inherit = 'rental.order.wizard.line'
+class RentalOrderWizardLine(models.TransientModel):
+    _inherit = ['rental.order.wizard.line']
 
     def _default_wizard_line_vals(self, line, status):
-        default_line_vals = super(RentalProcessingLine, self)._default_wizard_line_vals(line, status)
+        default_line_vals = super()._default_wizard_line_vals(line, status)
 
         default_line_vals.update({
             'tracking': line.product_id.tracking,

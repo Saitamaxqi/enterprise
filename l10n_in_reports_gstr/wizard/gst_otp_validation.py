@@ -5,8 +5,7 @@ from odoo import fields, models, _
 from odoo.exceptions import RedirectWarning, UserError
 
 
-class GstOtpValidation(models.TransientModel):
-    _name = 'l10n_in.gst.otp.validation'
+class L10n_InGstOtpValidation(models.TransientModel):
     _description = 'GST portal validation.'
 
     company_id = fields.Many2one('res.company', string="Company Name")

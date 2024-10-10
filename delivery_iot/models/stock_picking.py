@@ -6,8 +6,8 @@ from random import sample
 from odoo import api, fields, models
 
 
-class PickingType(models.Model):
-    _inherit = "stock.picking.type"
+class StockPickingType(models.Model):
+    _inherit = ["stock.picking.type"]
 
     iot_scale_ids = fields.Many2many(
         'iot.device',
@@ -24,7 +24,7 @@ class PickingType(models.Model):
 
 
 class StockPicking(models.Model):
-    _inherit = "stock.picking"
+    _inherit = ["stock.picking"]
 
     @api.returns('mail.message', lambda value: value.id)
     def message_post(self, **kwargs):

@@ -13,7 +13,6 @@ from odoo.tools.misc import xlsxwriter, format_date
 
 
 class L10nBeSocialBalanceSheet(models.TransientModel):
-    _name = 'l10n.be.social.balance.sheet'
     _description = 'Belgium: Social Balance Sheet'
 
     @api.model

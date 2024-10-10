@@ -4,9 +4,8 @@
 from odoo import fields, models
 
 
-class SendCloudShippingWizard(models.TransientModel):
+class SendcloudShippingWizard(models.TransientModel):
 
-    _name = "sendcloud.shipping.wizard"
     _description = "Choose from the available sendcloud shipping methods"
 
     carrier_id = fields.Many2one('delivery.carrier', string="Delivery")

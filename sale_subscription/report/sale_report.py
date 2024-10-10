@@ -3,8 +3,9 @@
 
 from odoo import models
 
+
 class SaleReport(models.Model):
-    _inherit = 'sale.report'
+    _inherit = ['sale.report']
 
     def _where_sale(self):
         res = super()._where_sale()

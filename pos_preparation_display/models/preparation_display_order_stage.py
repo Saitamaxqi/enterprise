@@ -1,8 +1,7 @@
 from odoo import fields, models
 
 
-class PosPreparationDisplayOrderStage(models.Model):
-    _name = 'pos_preparation_display.order.stage'
+class Pos_Preparation_DisplayOrderStage(models.Model):
     _description = "Stage of orders by preparation display"
 
     stage_id = fields.Many2one('pos_preparation_display.stage', ondelete='cascade')

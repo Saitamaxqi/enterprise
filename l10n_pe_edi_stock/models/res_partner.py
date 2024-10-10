@@ -1,8 +1,9 @@
 from odoo import fields, models
 from .l10n_pe_edi_vehicle import ISSUING_ENTITY
 
+
 class ResPartner(models.Model):
-    _inherit = "res.partner"
+    _inherit = ["res.partner"]
 
     l10n_pe_edi_operator_license = fields.Char(
         string="Driver's License",

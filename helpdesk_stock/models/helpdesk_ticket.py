@@ -6,7 +6,7 @@ from odoo import api, fields, models, _
 
 
 class HelpdeskTicket(models.Model):
-    _inherit = 'helpdesk.ticket'
+    _inherit = ['helpdesk.ticket']
 
     product_id = fields.Many2one('product.product', string='Product', tracking=True,
         check_company=True,

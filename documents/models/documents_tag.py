@@ -7,8 +7,7 @@ from odoo import _, api, models, fields
 from odoo.exceptions import UserError
 
 
-class Tags(models.Model):
-    _name = "documents.tag"
+class DocumentsTag(models.Model):
     _description = "Tag"
     _order = "sequence, name"
 

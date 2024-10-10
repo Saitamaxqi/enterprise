@@ -3,8 +3,8 @@
 
 from odoo import models, api, fields, _
 
-class DataCleaningTestModel(models.Model):
-    _name = 'data_cleaning.test.model'
+
+class Data_CleaningTestModel(models.Model):
     _description = 'Tests: Data Cleaning Test Model'
 
     active = fields.Boolean(default=True)

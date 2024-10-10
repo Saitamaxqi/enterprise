@@ -5,7 +5,7 @@ from odoo.tools import convert
 
 
 class HrAppraisal(models.Model):
-    _inherit = "hr.appraisal"
+    _inherit = ["hr.appraisal"]
 
     employee_feedback_ids = fields.Many2many('hr.employee', string="Asked Feedback")
     survey_ids = fields.Many2many('survey.survey', help="Sent out surveys")

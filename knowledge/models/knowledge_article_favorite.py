@@ -4,8 +4,7 @@
 from odoo import api, exceptions, fields, models, _
 
 
-class ArticleFavorite(models.Model):
-    _name = 'knowledge.article.favorite'
+class KnowledgeArticleFavorite(models.Model):
     _description = 'Favorite Article'
     _order = 'sequence ASC, id DESC'
     _rec_name = 'article_id'
@@ -45,7 +44,7 @@ class ArticleFavorite(models.Model):
             if not vals.get('sequence'):
                 vals['sequence'] = default_sequence
                 default_sequence += 1
-        return super(ArticleFavorite, self).create(vals_list)
+        return super().create(vals_list)
 
     def write(self, vals):
         """ Whatever rights, avoid any attempt at privilege escalation. """

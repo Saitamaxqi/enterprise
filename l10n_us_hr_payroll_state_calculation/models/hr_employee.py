@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class HrEmployee(models.Model):
-    _inherit = "hr.employee"
+    _inherit = ["hr.employee"]
 
     l10n_us_state_withholding_allowance = fields.Float(
         string="State Withholding Allowance",

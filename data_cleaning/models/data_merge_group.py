@@ -13,8 +13,7 @@ IGNORED_FIELDS = MAGIC_COLUMNS
 DM_CRON_BATCH_SIZE = 100
 
 
-class DataMergeGroup(models.Model):
-    _name = 'data_merge.group'
+class Data_MergeGroup(models.Model):
     _description = 'Deduplication Group'
     _order = 'similarity desc'
 

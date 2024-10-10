@@ -4,7 +4,7 @@ from odoo import models
 
 
 class AmazonAccount(models.Model):
-    _inherit = 'amazon.account'
+    _inherit = ['amazon.account']
 
     def _create_order_from_data(self, order_data):
         """ Override to avoid recomputing taxes for orders made through Amazon. """

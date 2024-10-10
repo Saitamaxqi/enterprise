@@ -1,8 +1,8 @@
 from odoo import models
 
 
-class PosPreparationDisplay(models.Model):
-    _inherit = "pos_preparation_display.display"
+class Pos_Preparation_DisplayDisplay(models.Model):
+    _inherit = ["pos_preparation_display.display"]
 
     def _get_pos_orders(self):
         self.ensure_one()

@@ -17,7 +17,7 @@ INTERVAL_FACTOR = {
 
 
 class SaleOrderLine(models.Model):
-    _inherit = "sale.order.line"
+    _inherit = ["sale.order.line"]
 
     recurring_invoice = fields.Boolean(related="product_template_id.recurring_invoice")
     recurring_monthly = fields.Monetary(compute='_compute_recurring_monthly', string="Monthly Recurring Revenue")

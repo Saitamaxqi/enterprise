@@ -65,7 +65,7 @@ MX_PACKAGING_CATALOG = [
 
 
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = ['product.template']
 
     l10n_mx_edi_hazardous_material = fields.Selection(related='unspsc_code_id.l10n_mx_edi_hazardous_material')
     l10n_mx_edi_hazardous_material_code_id = fields.Many2one(

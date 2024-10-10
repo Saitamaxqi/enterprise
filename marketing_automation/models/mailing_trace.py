@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class MailingTrace(models.Model):
-    _inherit = 'mailing.trace'
+    _inherit = ['mailing.trace']
 
     marketing_trace_id = fields.Many2one(
         'marketing.trace', string='Marketing Trace',

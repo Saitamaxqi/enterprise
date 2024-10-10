@@ -5,7 +5,7 @@ from odoo import fields, models, api
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     linkedin_use_own_account = fields.Boolean("Use your own LinkedIn Account",
         config_parameter='social.linkedin_use_own_account',

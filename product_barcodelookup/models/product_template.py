@@ -11,7 +11,7 @@ BARCODE_UOM_REGEX = r'^((?P<uom_val>(\d*\.?\d+))([\s?]*)(?P<unit>(([a-zA-Z]*))))
 
 
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = ['product.template']
 
     @api.onchange('barcode')
     def _onchange_barcode(self):

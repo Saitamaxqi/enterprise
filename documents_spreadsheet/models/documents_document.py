@@ -39,8 +39,7 @@ XLSX_MIME_TYPES = [
 ]
 
 
-class Document(models.Model):
-    _name = "documents.document"
+class DocumentsDocument(models.Model):
     _inherit = ["documents.document", "spreadsheet.mixin"]
 
     spreadsheet_binary_data = fields.Binary(compute='_compute_spreadsheet_binary_data', inverse='_inverse_spreadsheet_binary_data', default=None)
@@ -172,7 +171,7 @@ class Document(models.Model):
         """ Spreadsheet documents do not have file extension. """
         spreadsheet_docs = self.filtered(lambda rec: rec.handler in ("spreadsheet", "frozen_spreadsheet"))
         spreadsheet_docs.file_extension = False
-        super(Document, self - spreadsheet_docs)._compute_file_extension()
+        super(DocumentsDocument, self - spreadsheet_docs)._compute_file_extension()
 
     @api.depends("attachment_id", "handler")
     def _compute_spreadsheet_data(self):
@@ -219,11 +218,11 @@ class Document(models.Model):
         # Spreadsheet thumbnails cannot be computed from their binary data.
         # They should be saved independently.
         spreadsheets = self.filtered(lambda d: d.handler in ("spreadsheet", "frozen_spreadsheet"))
-        super(Document, self - spreadsheets)._compute_thumbnail()
+        super(DocumentsDocument, self - spreadsheets)._compute_thumbnail()
 
     def _copy_spreadsheet_image_attachments(self):
         spreadsheets = self.filtered(lambda d: d.handler in ("spreadsheet", "frozen_spreadsheet"))
-        super(Document, spreadsheets)._copy_spreadsheet_image_attachments()
+        super(DocumentsDocument, spreadsheets)._copy_spreadsheet_image_attachments()
 
     def _copy_attachment_filter(self, default):
         return super()._copy_attachment_filter(default).filtered(

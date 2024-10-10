@@ -4,9 +4,8 @@
 from odoo import api, fields, models, Command
 
 
-class FollowupManualReminder(models.TransientModel):
-    _name = 'account_followup.manual_reminder'
-    _inherit = 'mail.composer.mixin'
+class Account_FollowupManual_Reminder(models.TransientModel):
+    _inherit = ['mail.composer.mixin']
     _description = "Wizard for sending manual reminders to clients"
 
     def default_get(self, fields_list):

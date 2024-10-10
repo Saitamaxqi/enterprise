@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class HrReferralLevel(models.Model):
-    _name = 'hr.referral.level'
     _description = 'Level for referrals'
     _order = 'points'
 

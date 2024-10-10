@@ -5,8 +5,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class YearlySalaryDetail(models.TransientModel):
-    _name = 'salary.register.wizard'
+class SalaryRegisterWizard(models.TransientModel):
     _description = 'Salary Register'
 
     @api.model

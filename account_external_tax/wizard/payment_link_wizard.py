@@ -2,8 +2,8 @@
 from odoo import api, models
 
 
-class PaymentLinkWizardExternalTax(models.TransientModel):
-    _inherit = "payment.link.wizard"
+class PaymentLinkWizard(models.TransientModel):
+    _inherit = ["payment.link.wizard"]
 
     @api.model
     def default_get(self, fields):

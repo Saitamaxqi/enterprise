@@ -9,7 +9,6 @@ from odoo.tools.misc import formatLang
 
 class AccountReconcileWizard(models.TransientModel):
     """ This wizard is used to reconcile selected account.move.line. """
-    _name = 'account.reconcile.wizard'
     _description = 'Account reconciliation wizard'
     _check_company_auto = True
 

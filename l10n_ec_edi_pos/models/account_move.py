@@ -4,7 +4,6 @@ from odoo import api, models
 
 
 class AccountMove(models.Model):
-    _name = 'account.move'
     _inherit = ['account.move', 'pos.load.mixin']
 
     @api.model

@@ -5,8 +5,7 @@ from collections import defaultdict
 from odoo import models, fields, exceptions, _, api
 
 
-class CommissionPlanUser(models.Model):
-    _name = 'sale.commission.plan.user'
+class SaleCommissionPlanUser(models.Model):
     _description = 'Commission Plan User'
     _order = 'id'
 

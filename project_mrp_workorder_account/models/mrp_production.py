@@ -4,7 +4,7 @@ from odoo import models
 
 
 class MrpProduction(models.Model):
-    _inherit = 'mrp.production'
+    _inherit = ['mrp.production']
 
     def write(self, vals):
         distribution_per_project = {p: p._get_analytic_distribution() for p in self.project_id}

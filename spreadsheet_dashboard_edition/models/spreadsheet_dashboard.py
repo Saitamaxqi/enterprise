@@ -2,7 +2,6 @@ from odoo import api, models, _
 
 
 class SpreadsheetDashboard(models.Model):
-    _name = 'spreadsheet.dashboard'
     _inherit = ['spreadsheet.dashboard', 'spreadsheet.mixin']
 
     def join_spreadsheet_session(self, *args, **kwargs):

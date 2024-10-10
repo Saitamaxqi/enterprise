@@ -8,7 +8,6 @@ _logger = logging.getLogger(__name__)
 
 
 class VoipQueueMixin(models.AbstractModel):
-    _name = "voip.queue.mixin"
     _description = "VOIP Queue support"
 
     has_call_in_queue = fields.Boolean("Is in the Call Queue", compute="_compute_has_call_in_queue")

@@ -5,7 +5,7 @@ from odoo import _, models
 
 class AccountEdiFormat(models.Model):
 
-    _inherit = 'account.edi.format'
+    _inherit = ['account.edi.format']
 
     def _check_move_configuration(self, move):
         # EXTENDS account.edi.format

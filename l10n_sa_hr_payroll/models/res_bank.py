@@ -7,7 +7,7 @@ SARIE_CODE_LENGTH = 4
 
 
 class ResBank(models.Model):
-    _inherit = 'res.bank'
+    _inherit = ['res.bank']
 
     l10n_sa_sarie_code = fields.Char(string='Bank SARIE ID', size=SARIE_CODE_LENGTH)
     # Ref. http://www.sama.gov.sa/

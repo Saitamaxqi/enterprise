@@ -4,7 +4,6 @@ from odoo import models, api
 
 
 class IotDevice(models.Model):
-    _name = 'iot.device'
     _inherit = ['iot.device', 'pos.load.mixin']
 
     @api.model

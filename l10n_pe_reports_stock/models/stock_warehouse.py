@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class StockWarehouse(models.Model):
-    _inherit = "stock.warehouse"
+    _inherit = ["stock.warehouse"]
 
     country_code = fields.Char(related='company_id.account_fiscal_country_id.code', readonly=True)
     l10n_pe_anexo_establishment_code = fields.Char(

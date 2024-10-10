@@ -7,9 +7,8 @@ from lxml.objectify import fromstring
 DOCTYPE = '<!DOCTYPE eSKDUpload PUBLIC "-//Skatteverket, Sweden//DTD Skatteverket eSKDUpload-DTD Version 6.0//SV" "https://www1.skatteverket.se/demoeskd/eSKDUpload_6p0.dtd">'
 
 
-class SwedishTaxReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_se.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_SeTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'Swedish Tax Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):

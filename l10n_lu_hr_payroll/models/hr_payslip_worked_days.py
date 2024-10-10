@@ -3,8 +3,8 @@
 from odoo import api, models
 
 
-class HrPayslipWorkedDays(models.Model):
-    _inherit = 'hr.payslip.worked_days'
+class HrPayslipWorked_Days(models.Model):
+    _inherit = ['hr.payslip.worked_days']
 
     @api.depends('is_paid', 'is_credit_time', 'number_of_hours', 'payslip_id', 'contract_id.wage', 'contract_id.l10n_lu_indexed_wage', 'payslip_id.sum_worked_hours')
     def _compute_amount(self):
@@ -16,4 +16,4 @@ class HrPayslipWorkedDays(models.Model):
                 worked_days.amount = 0
                 continue
             worked_days.amount = worked_days.payslip_id.l10n_lu_prorated_wage * worked_days.number_of_hours / (worked_days.payslip_id.sum_worked_hours or 1) if worked_days.is_paid else 0
-        return super(HrPayslipWorkedDays, self - lu_worked_days)._compute_amount()
+        return super(HrPayslipWorked_Days, self - lu_worked_days)._compute_amount()

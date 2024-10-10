@@ -5,8 +5,7 @@ from odoo.exceptions import ValidationError
 from markupsafe import Markup
 
 
-class L10nAuSTPSubmit(models.TransientModel):
-    _name = "l10n_au.stp.submit"
+class L10n_AuStpSubmit(models.TransientModel):
     _description = "Submit STP Report"
 
     l10n_au_stp_id = fields.Many2one(

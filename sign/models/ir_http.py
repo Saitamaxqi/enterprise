@@ -4,8 +4,9 @@
 from odoo import api, models
 from odoo.http import request
 
-class Http(models.AbstractModel):
-    _inherit = 'ir.http'
+
+class IrHttp(models.AbstractModel):
+    _inherit = ['ir.http']
 
     @api.model
     def get_frontend_session_info_sign(self):
@@ -17,5 +18,5 @@ class Http(models.AbstractModel):
 
     @classmethod
     def _get_translation_frontend_modules_name(cls):
-        mods = super(Http, cls)._get_translation_frontend_modules_name()
+        mods = super(IrHttp, cls)._get_translation_frontend_modules_name()
         return mods + ['sign']

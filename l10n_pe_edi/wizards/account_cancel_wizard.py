@@ -3,8 +3,7 @@
 from odoo import fields, models
 
 
-class L10nPeEdiCancelWizard(models.TransientModel):
-    _name = "l10n_pe_edi.cancel"
+class L10n_Pe_EdiCancel(models.TransientModel):
     _description = "Wizard to allow the cancellation of Peruvian documents"
 
     l10n_pe_edi_cancel_reason = fields.Char(

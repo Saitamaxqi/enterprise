@@ -2,7 +2,6 @@ from odoo import fields, models, api
 
 
 class AccountLoanLine(models.Model):
-    _name = 'account.loan.line'
     _description = 'Loan Line'
     _order = 'date, id'
 

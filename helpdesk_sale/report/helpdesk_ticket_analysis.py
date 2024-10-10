@@ -4,8 +4,8 @@
 from odoo import fields, models
 
 
-class HelpdeskTicketReport(models.Model):
-    _inherit = 'helpdesk.ticket.report.analysis'
+class HelpdeskTicketReportAnalysis(models.Model):
+    _inherit = ['helpdesk.ticket.report.analysis']
 
     sale_order_id = fields.Many2one('sale.order', string='Ref. Sales Order', readonly=True, groups="sales_team.group_sale_salesman,account.group_account_invoice")
 

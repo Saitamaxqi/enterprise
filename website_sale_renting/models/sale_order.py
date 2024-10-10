@@ -8,7 +8,7 @@ from odoo.exceptions import ValidationError
 
 
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = ['sale.order']
 
     def _is_cart_ready(self):
         """Whether the cart is valid and can be confirmed (and paid for)

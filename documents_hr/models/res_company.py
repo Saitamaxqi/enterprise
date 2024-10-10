@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = "res.company"
+    _inherit = ["res.company"]
 
     documents_hr_settings = fields.Boolean()
     documents_hr_folder = fields.Many2one('documents.document', string="hr Workspace", check_company=True,

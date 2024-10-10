@@ -8,7 +8,7 @@ from odoo.addons.l10n_be_codabox.const import get_error_msg
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = "res.config.settings"
+    _inherit = ["res.config.settings"]
 
     l10n_be_codabox_fiduciary_vat = fields.Char(related="company_id.l10n_be_codabox_fiduciary_vat")
     l10n_be_codabox_iap_token = fields.Char(related="company_id.l10n_be_codabox_iap_token", readonly=False)

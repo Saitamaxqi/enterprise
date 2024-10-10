@@ -42,8 +42,7 @@ RULE_MAPPING = {
 }
 
 
-class L10nCHSalaryCertificate(models.Model):
-    _name = 'l10n.ch.salary.certificate'
+class L10nChSalaryCertificate(models.Model):
     _description = 'Salary Certificate By Employee'
 
     @api.model

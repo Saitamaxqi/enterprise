@@ -4,8 +4,8 @@
 from odoo import api, models, fields
 
 
-class ReportExportWizard(models.TransientModel):
-    _inherit = 'account_reports.export.wizard'
+class Account_ReportsExportWizard(models.TransientModel):
+    _inherit = ['account_reports.export.wizard']
 
     l10n_be_reports_periodic_vat_wizard_id = fields.Many2one(string="Periodic VAT Export Wizard", comodel_name="l10n_be_reports.periodic.vat.xml.export")
 
@@ -18,11 +18,11 @@ class ReportExportWizard(models.TransientModel):
             manual_wizard.calling_export_wizard_id = self
             return manual_action
 
-        return super(ReportExportWizard, self).export_report()
+        return super().export_report()
 
 
-class ReportExportWizardOption(models.TransientModel):
-    _inherit = 'account_reports.export.wizard.format'
+class Account_ReportsExportWizardFormat(models.TransientModel):
+    _inherit = ['account_reports.export.wizard.format']
 
     def apply_export(self, report_action):
         self.ensure_one()
@@ -30,4 +30,4 @@ class ReportExportWizardOption(models.TransientModel):
         if report_action['type'] == 'ir.actions.act_window' and report_action['res_model'] == 'l10n_be_reports.periodic.vat.xml.export':
             report_action = self.export_wizard_id.l10n_be_reports_periodic_vat_wizard_id.print_xml()
 
-        return super(ReportExportWizardOption, self).apply_export(report_action)
+        return super().apply_export(report_action)

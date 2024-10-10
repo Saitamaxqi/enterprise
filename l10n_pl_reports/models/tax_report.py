@@ -7,7 +7,7 @@ from datetime import datetime
 import pytz
 
 
-class PolishTaxReportCustomHandler(models.AbstractModel):
+class L10n_PlTaxReportHandler(models.AbstractModel):
     """
     Handler for generating the JPK V7M and V7K declarations.
     The V7M is for taxpayers filing monthly VAT declarations, and includes a list of invoices /
@@ -17,8 +17,7 @@ class PolishTaxReportCustomHandler(models.AbstractModel):
     the quarter, it includes the list of invoices / vendor bills for the last month and the VAT
     declaration for the entire quarter.
     """
-    _name = 'l10n_pl.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+    _inherit = ['account.tax.report.handler']
     _description = 'Polish Tax Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):

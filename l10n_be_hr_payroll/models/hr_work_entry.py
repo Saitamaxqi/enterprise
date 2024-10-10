@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class HrWorkEntry(models.Model):
-    _inherit = 'hr.work.entry'
+    _inherit = ['hr.work.entry']
 
     def init(self):
         # speeds up `l10n_be.work.entry.daily.benefit.report`

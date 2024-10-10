@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class AccountMoveReversal(models.TransientModel):
-    _inherit = "account.move.reversal"
+    _inherit = ["account.move.reversal"]
 
     l10n_cl_edi_reference_doc_code = fields.Selection([
         ('1', '1. Cancels Referenced Document'),

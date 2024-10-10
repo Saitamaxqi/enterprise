@@ -4,8 +4,9 @@ from odoo import api
 from odoo.models import AbstractModel
 from odoo.tools import cloc
 
-class PublisherWarrantyContract(AbstractModel):
-    _inherit = "publisher_warranty.contract"
+
+class Publisher_WarrantyContract(AbstractModel):
+    _inherit = ["publisher_warranty.contract"]
 
     @api.model
     def _get_message(self):

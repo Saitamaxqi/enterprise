@@ -4,7 +4,7 @@ from odoo import api, models
 
 
 class HrPayrollStructure(models.Model):
-    _inherit = "hr.payroll.structure"
+    _inherit = ["hr.payroll.structure"]
 
     @api.model_create_multi
     def create(self, vals):

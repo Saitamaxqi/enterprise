@@ -6,8 +6,8 @@ from odoo import api, fields, models
 
 ACCEPTED_CODES = ('fr_BE', 'fr_FR', 'nl_BE', 'nl_NL', 'de_BE', 'de_DE')
 
-class L10nBeHrPayrollEmployeeLangWizard(models.TransientModel):
-    _name = 'l10n_be.hr.payroll.employee.lang.wizard'
+
+class L10n_BeHrPayrollEmployeeLangWizard(models.TransientModel):
     _description = 'Change Employee Language'
 
     def _default_line_ids(self):
@@ -28,8 +28,8 @@ class L10nBeHrPayrollEmployeeLangWizard(models.TransientModel):
                 employees.write({'lang': code})
         return self.slip_ids.action_payslip_done()
 
-class L10nBeHrPayrollEmployeeLangWizardLine(models.TransientModel):
-    _name = 'l10n_be.hr.payroll.employee.lang.wizard.line'
+
+class L10n_BeHrPayrollEmployeeLangWizardLine(models.TransientModel):
     _description = 'Change Employee Language Line'
 
     @api.model

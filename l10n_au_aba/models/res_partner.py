@@ -2,7 +2,7 @@ from odoo import models, _
 
 
 class ResPartner(models.Model):
-    _inherit = "res.partner"
+    _inherit = ["res.partner"]
 
     def action_show_details(self):
         """ Opens Contact in a form view with a new window

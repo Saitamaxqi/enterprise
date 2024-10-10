@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class StockScrap(models.Model):
-    _name = 'stock.scrap'
     _inherit = ['stock.scrap', 'barcodes.barcode_events_mixin']
 
     product_barcode = fields.Char(related='product_id.barcode', string='Barcode', readonly=False)

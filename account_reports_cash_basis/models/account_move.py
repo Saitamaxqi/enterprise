@@ -3,8 +3,7 @@ from odoo.tools import SQL
 
 
 class AccountMove(models.Model):
-    _name = "account.move"
-    _inherit = "account.move"
+    _inherit = ["account.move"]
 
     impacting_cash_basis = fields.Boolean(store=False, search='_search_impacting_cash_basis')
 

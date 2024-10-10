@@ -4,7 +4,7 @@ from odoo import models
 
 
 class AccountJournal(models.Model):
-    _inherit = "account.journal"
+    _inherit = ["account.journal"]
 
     # ---------------
     # Default methods

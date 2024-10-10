@@ -4,8 +4,8 @@
 from odoo import models
 
 
-class Employee(models.Model):
-    _inherit = 'hr.employee'
+class HrEmployee(models.Model):
+    _inherit = ['hr.employee']
 
     def _get_timesheets_and_working_hours_query(self):
         return """

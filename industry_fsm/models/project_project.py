@@ -5,8 +5,8 @@ from odoo import fields, models, api, _
 from odoo.osv import expression
 
 
-class Project(models.Model):
-    _inherit = "project.project"
+class ProjectProject(models.Model):
+    _inherit = ["project.project"]
 
     is_fsm = fields.Boolean("Field Service", default=False, help="Display tasks in the Field Service module and allow planning with start/end dates.")
     allow_task_dependencies = fields.Boolean(compute='_compute_allow_task_dependencies', store=True, readonly=False)

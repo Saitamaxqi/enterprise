@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class HrPayrollStructure(models.Model):
-    _inherit = 'hr.payroll.structure'
+    _inherit = ['hr.payroll.structure']
 
     def _get_expense_rule_account_id_map(self, company_id):
         structure_to_account_id_map = {}

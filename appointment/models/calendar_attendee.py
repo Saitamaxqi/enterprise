@@ -4,14 +4,14 @@
 from odoo import models, tools
 
 
-class Attendee(models.Model):
-    _inherit = 'calendar.attendee'
+class CalendarAttendee(models.Model):
+    _inherit = ['calendar.attendee']
 
     def _compute_mail_tz(self):
         toupdate = self.filtered(lambda r: r.event_id.appointment_type_id.appointment_tz)
         for attendee in toupdate:
             attendee.mail_tz = attendee.event_id.appointment_type_id.appointment_tz
-        super(Attendee, self - toupdate)._compute_mail_tz()
+        super(CalendarAttendee, self - toupdate)._compute_mail_tz()
 
     def _send_invitation_emails(self):
         """ When meetings are booked through appointment, we want to respect the configuration of
@@ -24,7 +24,7 @@ class Attendee(models.Model):
         type and call '_send_mail_to_attendees' in batch, specifying the correct template to use. """
 
         appointment_attendees = self.filtered(lambda attendee: attendee.event_id.appointment_type_id)
-        super(Attendee, self - appointment_attendees)._send_invitation_emails()
+        super(CalendarAttendee, self - appointment_attendees)._send_invitation_emails()
 
         attendees_per_appointment_type = tools.groupby(
             appointment_attendees,
@@ -33,7 +33,7 @@ class Attendee(models.Model):
             if appointment_type.booked_mail_template_id:
                 # groupby returns a list -> convert back to a recordset
                 calendar_attendees = self.env['calendar.attendee'].concat(*attendees)
-                super(Attendee, calendar_attendees).with_context(mail_notify_author=True)._send_mail_to_attendees(
+                super(CalendarAttendee, calendar_attendees).with_context(mail_notify_author=True)._send_mail_to_attendees(
                     appointment_type.booked_mail_template_id,
                     force_send=True,
                 )

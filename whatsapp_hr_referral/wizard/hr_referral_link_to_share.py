@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class HrReferralLinkToShare(models.TransientModel):
-    _inherit = 'hr.referral.link.to.share'
+    _inherit = ['hr.referral.link.to.share']
 
     recipient = fields.Char(string="Recipient")
 

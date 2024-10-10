@@ -9,8 +9,8 @@ from dateutil.relativedelta import relativedelta
 from werkzeug.urls import url_join
 
 
-class SocialStreamPostYoutube(models.Model):
-    _inherit = 'social.stream.post'
+class SocialStreamPost(models.Model):
+    _inherit = ['social.stream.post']
 
     youtube_video_id = fields.Char('YouTube Video ID', index=True)
     youtube_likes_count = fields.Integer('YouTube Likes')
@@ -21,14 +21,14 @@ class SocialStreamPostYoutube(models.Model):
 
     def _compute_author_link(self):
         youtube_posts = self._filter_by_media_types(['youtube'])
-        super(SocialStreamPostYoutube, (self - youtube_posts))._compute_author_link()
+        super(SocialStreamPost, (self - youtube_posts))._compute_author_link()
 
         for post in youtube_posts:
             post.author_link = 'http://www.youtube.com/channel/%s' % (post.stream_id.account_id.youtube_channel_id)
 
     def _compute_post_link(self):
         youtube_posts = self._filter_by_media_types(['youtube'])
-        super(SocialStreamPostYoutube, (self - youtube_posts))._compute_post_link()
+        super(SocialStreamPost, (self - youtube_posts))._compute_post_link()
 
         for post in youtube_posts:
             post.post_link = 'https://www.youtube.com/watch?v=%s' % post.youtube_video_id
@@ -40,7 +40,7 @@ class SocialStreamPostYoutube(models.Model):
 
     def _compute_is_author(self):
         youtube_posts = self._filter_by_media_types(['youtube'])
-        super(SocialStreamPostYoutube, (self - youtube_posts))._compute_is_author()
+        super(SocialStreamPost, (self - youtube_posts))._compute_is_author()
         youtube_posts.is_author = True
 
     # ========================================================
@@ -180,7 +180,7 @@ class SocialStreamPostYoutube(models.Model):
                 [('youtube_video_id', '=', self.youtube_video_id)], limit=1
             ).post_id
         else:
-            return super(SocialStreamPostYoutube, self)._fetch_matching_post()
+            return super()._fetch_matching_post()
 
     @api.autovacuum
     def _gc_youtube_data(self):

@@ -7,7 +7,6 @@ from odoo.exceptions import UserError
 
 
 class QualityCheckWizard(models.TransientModel):
-    _name = 'quality.check.wizard'
     _description = "Wizard for Quality Check Pop Up"
 
     check_ids = fields.Many2many('quality.check', required=True)

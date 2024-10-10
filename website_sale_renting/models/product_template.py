@@ -14,7 +14,7 @@ from odoo.addons.sale_renting.models.product_pricing import PERIOD_RATIO
 
 
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = ['product.template']
 
     def _get_additionnal_combination_info(self, product_or_template, quantity, date, website):
         """Override to add the information about renting for rental products

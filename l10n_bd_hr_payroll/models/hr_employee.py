@@ -3,8 +3,8 @@
 from odoo import fields, models
 
 
-class HREmployee(models.Model):
-    _inherit = "hr.employee"
+class HrEmployee(models.Model):
+    _inherit = ["hr.employee"]
 
     l10n_bd_disabled_dependent = fields.Integer(
         string="Number of disabled dependent people",

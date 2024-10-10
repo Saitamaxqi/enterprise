@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = ['sale.order']
 
     spreadsheet_template_id = fields.Many2one(
         'sale.order.spreadsheet',

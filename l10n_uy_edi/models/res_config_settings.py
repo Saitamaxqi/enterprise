@@ -13,7 +13,7 @@ PROD_ENDPOINT = "https://l10n-uy-uruware.api.odoo.com/"
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = "res.config.settings"
+    _inherit = ["res.config.settings"]
 
     l10n_uy_edi_ucfe_env = fields.Selection(related="company_id.l10n_uy_edi_ucfe_env", readonly=False)
     l10n_uy_edi_ucfe_password = fields.Char(related="company_id.l10n_uy_edi_ucfe_password", readonly=False)

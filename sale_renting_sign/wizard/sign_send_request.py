@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class SignSendRequest(models.TransientModel):
-    _inherit = "sign.send.request"
+    _inherit = ["sign.send.request"]
 
     sale_order_id = fields.Many2one("sale.order", string="Sales Order")
 

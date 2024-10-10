@@ -10,9 +10,8 @@ from lxml import etree, objectify
 from dateutil.relativedelta import relativedelta
 
 
-class OSSTaxReportCustomHandlerOss(models.AbstractModel):
-    _name = 'l10n_eu_oss.tax.report.handler'
-    _inherit = 'account.generic.tax.report.handler'
+class L10n_Eu_OssTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.generic.tax.report.handler']
     _description = 'OSS Tax Report Custom Handler'
 
     def _get_vat_closing_entry_additional_domain(self):
@@ -252,7 +251,7 @@ class OSSTaxReportCustomHandlerOss(models.AbstractModel):
 
 
 class AccountTaxReportHandler(models.AbstractModel):
-    _inherit = 'account.tax.report.handler'
+    _inherit = ['account.tax.report.handler']
 
     def _get_vat_closing_entry_additional_domain(self):
         # EXTENDS account_reports
@@ -263,9 +262,8 @@ class AccountTaxReportHandler(models.AbstractModel):
         return domain
 
 
-class OSSTaxReportCustomHandlerSales(models.AbstractModel):
-    _name = 'l10n_eu_oss.sales.tax.report.handler'
-    _inherit = 'l10n_eu_oss.tax.report.handler'
+class L10n_Eu_OssSalesTaxReportHandler(models.AbstractModel):
+    _inherit = ['l10n_eu_oss.tax.report.handler']
     _description = 'OSS Tax Report Custom Handler (Sales)'
 
     def _get_oss_custom_domain(self):
@@ -275,9 +273,8 @@ class OSSTaxReportCustomHandlerSales(models.AbstractModel):
         ]
 
 
-class OSSTaxReportCustomHandlerSalesImports(models.AbstractModel):
-    _name = 'l10n_eu_oss.imports.tax.report.handler'
-    _inherit = 'l10n_eu_oss.tax.report.handler'
+class L10n_Eu_OssImportsTaxReportHandler(models.AbstractModel):
+    _inherit = ['l10n_eu_oss.tax.report.handler']
     _description = 'OSS Tax Report Custom Handler (Imports)'
 
     def _get_oss_custom_domain(self):
@@ -288,7 +285,7 @@ class OSSTaxReportCustomHandlerSalesImports(models.AbstractModel):
 
 
 class AccountReport(models.Model):
-    _inherit = 'account.report'
+    _inherit = ['account.report']
 
     availability_condition = fields.Selection(selection_add=[('oss', "Using OSS")])
 

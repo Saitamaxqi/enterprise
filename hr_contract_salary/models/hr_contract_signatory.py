@@ -5,7 +5,6 @@ from odoo.exceptions import ValidationError
 
 
 class HrContractSignatory(models.Model):
-    _name = 'hr.contract.signatory'
     _description = 'Contract Signatories'
 
     sign_role_id = fields.Many2one('sign.item.role', string="Contract Role")

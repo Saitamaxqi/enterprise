@@ -5,7 +5,7 @@ from odoo import models, fields
 
 
 class MailActivityType(models.Model):
-    _inherit = "mail.activity.type"
+    _inherit = ["mail.activity.type"]
 
     tag_ids = fields.Many2many('documents.tag')
     folder_id = fields.Many2one('documents.document',

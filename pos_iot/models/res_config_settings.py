@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     ingenico_payment_terminal = fields.Boolean(
         string="Ingenico Payment Terminal",

@@ -7,7 +7,6 @@ from odoo.exceptions import UserError
 
 
 class L10nBeDecemberSlipWizard(models.TransientModel):
-    _name = 'l10n.be.december.slip.wizard'
     _description = 'CP200: December Slip Computation'
 
     @api.model

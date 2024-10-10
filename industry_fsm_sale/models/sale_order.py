@@ -5,6 +5,7 @@ from collections import defaultdict
 from odoo import api, models, fields, _
 from odoo.tools import float_is_zero
 
+
 class SaleOrder(models.Model):
     _inherit = ['sale.order']
 

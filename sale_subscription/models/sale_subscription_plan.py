@@ -6,7 +6,6 @@ from odoo.tools import _, get_timedelta
 
 
 class SaleSubscriptionPlan(models.Model):
-    _name = 'sale.subscription.plan'
     _description = 'Subscription Plan'
 
     active = fields.Boolean(default=True)

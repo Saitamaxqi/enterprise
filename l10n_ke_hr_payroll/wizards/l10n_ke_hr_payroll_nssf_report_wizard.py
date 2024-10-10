@@ -8,7 +8,6 @@ from odoo.exceptions import UserError
 
 
 class L10nKeHrPayrollNssfReportWizard(models.TransientModel):
-    _name = 'l10n.ke.hr.payroll.nssf.report.wizard'
     _description = 'NSSF Report Wizard'
 
     @api.model
@@ -99,8 +98,8 @@ class L10nKeHrPayrollNssfReportWizard(models.TransientModel):
             'url': '/export/nssf/%s' % (self.id),
         }
 
+
 class L10nKeHrPayrollNssfReportLineWizard(models.TransientModel):
-    _name = 'l10n.ke.hr.payroll.nssf.report.line.wizard'
     _description = 'NSSF Report Wizard Line'
 
     wizard_id = fields.Many2one('l10n.ke.hr.payroll.nssf.report.wizard')

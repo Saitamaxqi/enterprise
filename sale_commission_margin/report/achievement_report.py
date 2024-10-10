@@ -4,8 +4,8 @@
 from odoo import models
 
 
-class SaleAchievementReport(models.Model):
-    _inherit = "sale.commission.achievement.report"
+class SaleCommissionAchievementReport(models.Model):
+    _inherit = ["sale.commission.achievement.report"]
 
     def _get_sale_rates(self):
         return super()._get_sale_rates() + ['margin']

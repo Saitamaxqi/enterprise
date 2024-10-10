@@ -6,9 +6,8 @@ from odoo import fields, models
 from odoo.addons.sale.models.sale_order import INVOICE_STATUS
 
 
-class ReportProjectTaskUser(models.Model):
-    _name = 'report.project.task.user.fsm'
-    _inherit = 'report.project.task.user.fsm'
+class ReportProjectTaskUserFsm(models.Model):
+    _inherit = ['report.project.task.user.fsm']
 
     invoice_status = fields.Selection(INVOICE_STATUS, string='Invoice Status', readonly=True)
 

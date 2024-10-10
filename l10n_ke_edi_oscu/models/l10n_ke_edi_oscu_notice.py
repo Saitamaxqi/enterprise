@@ -7,8 +7,7 @@ from odoo import fields, models, api
 _logger = logging.getLogger(__name__)
 
 
-class L10nKeOSCUNotice(models.Model):
-    _name = 'l10n_ke_edi_oscu.notice'
+class L10n_Ke_Edi_OscuNotice(models.Model):
     _description = "eTIMS Notices"
 
     number = fields.Integer()

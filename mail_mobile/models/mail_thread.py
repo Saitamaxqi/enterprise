@@ -20,7 +20,7 @@ BLACK_LIST_PARAM = {
 
 
 class MailThread(models.AbstractModel):
-    _inherit = 'mail.thread'
+    _inherit = ['mail.thread']
 
     def _notify_thread(self, message, msg_vals=False, **kwargs):
         """ Main notification method. Override to add support of sending OCN

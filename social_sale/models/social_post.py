@@ -5,7 +5,7 @@ from odoo import models, fields
 
 
 class SocialPost(models.Model):
-    _inherit = 'social.post'
+    _inherit = ['social.post']
 
     sale_quotation_count = fields.Integer('Quotation Count', groups='sales_team.group_sale_salesman',
                                           compute='_compute_sale_quotation_count', compute_sudo=True)

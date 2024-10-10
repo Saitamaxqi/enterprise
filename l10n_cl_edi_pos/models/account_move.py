@@ -4,7 +4,6 @@ from odoo import fields, models, api
 
 
 class AccountMove(models.Model):
-    _name = 'account.move'
     _inherit = ['account.move', 'pos.load.mixin']
 
     l10n_cl_sii_barcode_image = fields.Char(string="SII Barcode Image", compute='_compute_l10n_cl_sii_barcode_image')

@@ -5,9 +5,8 @@ from odoo import api, models, fields, _
 from odoo.exceptions import UserError
 
 
-class l10nChAccidentInsurance(models.Model):
+class L10nChAccidentInsurance(models.Model):
     # YTI TODO Rename into l10n.ch.laa.insurance
-    _name = 'l10n.ch.accident.insurance'
     _description = 'Swiss: Accident Insurances (AAP/AANP)'
 
     name = fields.Char(required=True)
@@ -20,8 +19,7 @@ class l10nChAccidentInsurance(models.Model):
     line_ids = fields.One2many('l10n.ch.accident.insurance.line', 'insurance_id')
 
 
-class l10nChAccidentInsuranceLine(models.Model):
-    _name = 'l10n.ch.accident.insurance.line'
+class L10nChAccidentInsuranceLine(models.Model):
     _description = 'Swiss: Accident Insurances Line (AAP/AANP)'
     _rec_name = 'solution_name'
 
@@ -80,8 +78,7 @@ class l10nChAccidentInsuranceLine(models.Model):
         raise UserError(_('No AANP rates found for date %s', target))
 
 
-class l10nChAccidentInsuranceLineRate(models.Model):
-    _name = 'l10n.ch.accident.insurance.line.rate'
+class L10nChAccidentInsuranceLineRate(models.Model):
     _description = 'Swiss: Accident Insurances Line Rate (AAP/AANP)'
 
     line_id = fields.Many2one('l10n.ch.accident.insurance.line')

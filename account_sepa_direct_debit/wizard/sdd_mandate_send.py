@@ -1,9 +1,8 @@
 from odoo import _, api, fields, models
 
 
-class SDDMandateSend(models.TransientModel):
-    _inherit = 'mail.composer.mixin'
-    _name = 'sdd.mandate.send'
+class SddMandateSend(models.TransientModel):
+    _inherit = ['mail.composer.mixin']
     _description = "SDD Mandate Send"
 
     company_id = fields.Many2one(comodel_name='res.company', compute='_compute_company_id', store=True)

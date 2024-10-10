@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class AccountBatchPayment(models.Model):
-    _inherit = 'account.batch.payment'
+    _inherit = ['account.batch.payment']
 
     country_code = fields.Char(
         string="Country Code",

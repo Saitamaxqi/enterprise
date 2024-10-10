@@ -1,8 +1,8 @@
 from odoo import fields, models, api
 
 
-class PosPreparationDisplayOrder(models.Model):
-    _inherit = 'pos_preparation_display.order'
+class Pos_Preparation_DisplayOrder(models.Model):
+    _inherit = ['pos_preparation_display.order']
 
     employee_id = fields.Many2one('hr.employee', string='Responsible employee')
 

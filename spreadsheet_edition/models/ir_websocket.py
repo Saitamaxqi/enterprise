@@ -6,7 +6,7 @@ from odoo import models
 
 
 class IrWebsocket(models.AbstractModel):
-    _inherit = "ir.websocket"
+    _inherit = ["ir.websocket"]
 
     def _build_bus_channel_list(self, channels):
         if self.env.uid:

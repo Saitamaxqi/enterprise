@@ -7,7 +7,7 @@ from math import copysign
 
 
 class AccountReconcileModelLine(models.Model):
-    _inherit = 'account.reconcile.model.line'
+    _inherit = ['account.reconcile.model.line']
 
     def _prepare_aml_vals(self, partner):
         """ Prepare a dictionary that will be used later to create a new journal item (account.move.line) for the

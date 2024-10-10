@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 from itertools import chain
 
 
-class MulticurrencyRevaluationReportCustomHandler(models.AbstractModel):
+class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
     """Manage Unrealized Gains/Losses.
 
     In multi-currencies environments, we need a way to control the risk related
@@ -19,8 +19,7 @@ class MulticurrencyRevaluationReportCustomHandler(models.AbstractModel):
     probable expense in reports (and revert it at the end of the period, to
     recon the real gain/loss.
     """
-    _name = 'account.multicurrency.revaluation.report.handler'
-    _inherit = 'account.report.custom.handler'
+    _inherit = ['account.report.custom.handler']
     _description = 'Multicurrency Revaluation Report Custom Handler'
 
     def _get_custom_display_config(self):

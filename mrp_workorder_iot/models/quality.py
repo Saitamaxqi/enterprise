@@ -7,7 +7,7 @@ from odoo import fields, models
 
 
 class QualityCheck(models.Model):
-    _inherit = "quality.check"
+    _inherit = ["quality.check"]
 
     boxes = fields.Char(compute='_compute_boxes')
 

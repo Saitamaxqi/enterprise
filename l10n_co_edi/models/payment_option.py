@@ -2,8 +2,7 @@
 from odoo import fields, models
 
 
-class PaymentOptions(models.Model):
-    _name = 'l10n_co_edi.payment.option'
+class L10n_Co_EdiPaymentOption(models.Model):
     _description = 'Colombian Payment Options'
 
     code = fields.Char(string="Code")

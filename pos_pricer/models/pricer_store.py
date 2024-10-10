@@ -22,8 +22,8 @@ def setup_requests_session(requests_session, pricer_login, pricer_password, auth
     except requests.exceptions.RequestException as e:
         _logger.warning("Failed to update the jwt token through Pricer API URL: %s: %s", auth_url, e)
 
+
 class PricerStore(models.Model):
-    _name = 'pricer.store'
     _description = 'Pricer Store regrouping pricer tags'
 
     # The name of the Pricer store in Odoo

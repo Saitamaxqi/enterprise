@@ -4,7 +4,7 @@ from odoo import fields, models, api
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = "res.config.settings"
+    _inherit = ["res.config.settings"]
 
     pos_iface_sweden_fiscal_data_module = fields.Many2one(
         "iot.device",

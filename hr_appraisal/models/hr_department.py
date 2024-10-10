@@ -6,8 +6,8 @@ import ast
 from odoo import api, fields, models, _
 
 
-class hr_department(models.Model):
-    _inherit = 'hr.department'
+class HrDepartment(models.Model):
+    _inherit = ['hr.department']
 
     appraisals_to_process_count = fields.Integer(compute='_compute_appraisals_to_process', string='Appraisals to Process')
     custom_appraisal_template_id = fields.Many2one('hr.appraisal.template', string="Appraisal Templates", compute='_compute_appraisal_feedbacks', store=True, readonly=False, check_company=True)

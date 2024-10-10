@@ -11,7 +11,6 @@ from odoo.tools.date_utils import start_of, end_of
 
 
 class L10nUsAdpExport(models.Model):
-    _name = 'l10n.us.adp.export'
     _description = 'ADP Export'
 
     @api.model

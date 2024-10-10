@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class ApprovalRequest(models.Model):
-    _inherit = 'approval.request'
+    _inherit = ['approval.request']
 
     hide_location = fields.Boolean(compute='_compute_hide_location')
 

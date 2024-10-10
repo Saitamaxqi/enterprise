@@ -6,18 +6,18 @@ from odoo.osv import expression
 from odoo.addons.sale_timesheet_enterprise.models.sale import DEFAULT_INVOICED_TIMESHEET
 
 
-class AnalyticLine(models.Model):
-    _inherit = 'account.analytic.line'
+class AccountAnalyticLine(models.Model):
+    _inherit = ['account.analytic.line']
 
     def _compute_display_timer(self):
         invoiced_timesheets = self.filtered('timesheet_invoice_id')
         invoiced_timesheets.display_timer = False
-        super(AnalyticLine, self - invoiced_timesheets)._compute_display_timer()
+        super(AccountAnalyticLine, self - invoiced_timesheets)._compute_display_timer()
 
     @api.depends('validated')
     def _compute_so_line(self):
         updatable_timesheets = self.filtered(lambda t: t._is_updatable_timesheet())
-        super(AnalyticLine, updatable_timesheets)._compute_so_line()
+        super(AccountAnalyticLine, updatable_timesheets)._compute_so_line()
 
     @api.model
     def grid_update_cell(self, domain, measure_field_name, value):

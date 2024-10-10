@@ -15,8 +15,7 @@ IRAS_XML_TEMPLATE = 'l10n_sg_reports.iras_audit_file_xml'
 IRAS_XSD = 'l10n_sg_reports/data/iras_audit_file.xsd'
 
 
-class IrasAuditFileWizard(models.TransientModel):
-    _name = 'l10n.sg.reports.iaf.wizard'
+class L10nSgReportsIafWizard(models.TransientModel):
     _description = "Singaporean IAF Report Wizard"
 
     date_from = fields.Date(string='Start Date', required=True)
@@ -38,8 +37,8 @@ class IrasAuditFileWizard(models.TransientModel):
         return general_ledger_report.l10n_sg_export_iras_audit_file_txt(options)
 
 
-class IrasAuditFile(models.Model):
-    _inherit = 'account.report'
+class AccountReport(models.Model):
+    _inherit = ['account.report']
 
     def _l10n_sg_get_company_infos(self, date_from, date_to):
         """

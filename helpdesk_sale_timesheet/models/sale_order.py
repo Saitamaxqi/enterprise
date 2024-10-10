@@ -3,8 +3,9 @@
 
 from odoo import fields, models, _
 
+
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = ['sale.order']
 
     ticket_count = fields.Integer(string='Ticket Count', compute='_compute_ticket_count')
 

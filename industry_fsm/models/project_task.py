@@ -9,8 +9,9 @@ from odoo.osv import expression
 from odoo.tools import get_lang
 from odoo.addons.resource.models.utils import Intervals, sum_intervals
 
-class Task(models.Model):
-    _inherit = "project.task"
+
+class ProjectTask(models.Model):
+    _inherit = ["project.task"]
 
     @api.model
     def default_get(self, fields_list):
@@ -22,7 +23,7 @@ class Task(models.Model):
             fsm_project = self.env['project.project'].search([('is_fsm', '=', True), ('company_id', '=', company_id)], order='sequence', limit=1)
             if fsm_project:
                 context['default_project_id'] = self.env.context.get('default_project_id', fsm_project.id)
-        result = super(Task, self.with_context(context)).default_get(fields_list)
+        result = super(ProjectTask, self.with_context(context)).default_get(fields_list)
         if fsm_project:
             result.update({
                 'company_id': company_id,
@@ -69,9 +70,9 @@ class Task(models.Model):
             2. When two fsm tasks have overlapping planned dates.
 
             Example:
-            - Task A (normal) conflicts with Task B (fsm) if their combined hours > user's workable hours. Both have 1 conflict.
-            - Introduce Task C (fsm) with no allocated hours (no conflict with Task A) but same time period as Task B.
-            Result: Task A has 1 conflict, Task B has 2 conflicts, Task C has 1 conflict.
+            - ProjectTask A (normal) conflicts with ProjectTask B (fsm) if their combined hours > user's workable hours. Both have 1 conflict.
+            - Introduce ProjectTask C (fsm) with no allocated hours (no conflict with ProjectTask A) but same time period as ProjectTask B.
+            Result: ProjectTask A has 1 conflict, ProjectTask B has 2 conflicts, ProjectTask C has 1 conflict.
         """
         fsm_tasks = self.filtered("is_fsm")
         overlap_mapping = super()._compute_planning_overlap()
@@ -166,7 +167,7 @@ class Task(models.Model):
             'display_timer_pause': False,
             'display_timer_resume': False,
         })
-        super(Task, self - fsm_done_tasks)._compute_display_timer_buttons()
+        super(ProjectTask, self - fsm_done_tasks)._compute_display_timer_buttons()
 
     @api.onchange('date_deadline', 'planned_date_begin')
     def _onchange_planned_dates(self):
@@ -177,7 +178,7 @@ class Task(models.Model):
         self_fsm = self.filtered('is_fsm')
         basic_projects = self - self_fsm
         if basic_projects:
-            res = super(Task, basic_projects).write(vals.copy())
+            res = super(ProjectTask, basic_projects).write(vals.copy())
             if not self_fsm:
                 return res
 
@@ -194,7 +195,7 @@ class Task(models.Model):
         ):
             vals.update({"date_deadline": False, "planned_date_begin": False})
 
-        return super(Task, self_fsm).write(vals)
+        return super(ProjectTask, self_fsm).write(vals)
 
     @api.model
     def _group_expand_project_ids(self, projects, domain):
@@ -470,7 +471,7 @@ class Task(models.Model):
 
     def _allocated_hours_per_user_for_scale(self, users, start, stop):
         fsm_tasks = self.filtered("is_fsm")
-        allocated_hours_mapped = super(Task, self - fsm_tasks)._allocated_hours_per_user_for_scale(users, start, stop)
+        allocated_hours_mapped = super(ProjectTask, self - fsm_tasks)._allocated_hours_per_user_for_scale(users, start, stop)
         users_work_intervals, dummy = users.sudo()._get_valid_work_intervals(start, stop)
         for task in fsm_tasks:
             # if the task goes over the gantt period, compute the duration only within

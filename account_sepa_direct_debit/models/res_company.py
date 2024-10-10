@@ -10,8 +10,9 @@ from odoo.exceptions import ValidationError
 # Regular expression used to parse the creditor identifiers in SDD scheme.
 SDD_CREDITOR_IDENTIFIER_REGEX_PATTERN = r"(?P<country_code>[A-Z]{2})(?P<check_digits>\d{2})(?P<business_code>.{3})(?P<country_identifier>.{1,28})"
 
+
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     sdd_creditor_identifier = fields.Char(string='SDD creditor identifier', help="SEPA Direct Debit creditor identifier of the company, given by the bank.")
 

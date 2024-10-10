@@ -4,7 +4,7 @@ from odoo.addons.l10n_br_edi.models.account_move import FREIGHT_MODEL_SELECTION,
 
 
 class SaleOrder(models.Model):
-    _inherit = "sale.order"
+    _inherit = ["sale.order"]
 
     l10n_br_edi_transporter_id = fields.Many2one(
         "res.partner",

@@ -7,8 +7,8 @@ from odoo.tools import format_list, pdf
 from .ups_request import UPSRequest
 
 
-class ProviderUPS(models.Model):
-    _inherit = 'delivery.carrier'
+class DeliveryCarrier(models.Model):
+    _inherit = ['delivery.carrier']
 
     delivery_type = fields.Selection(selection_add=[
         ('ups_rest', "UPS")
@@ -60,7 +60,7 @@ class ProviderUPS(models.Model):
             carrier.can_generate_return = True
 
     def _compute_supports_shipping_insurance(self):
-        super(ProviderUPS, self)._compute_supports_shipping_insurance()
+        super()._compute_supports_shipping_insurance()
         for carrier in self:
             if carrier.delivery_type == 'ups_rest':
                 carrier.supports_shipping_insurance = True

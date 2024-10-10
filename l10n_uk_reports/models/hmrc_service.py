@@ -27,7 +27,6 @@ class HmrcService(models.AbstractModel):
     """
     Service in order to pass through our authentication proxy
     """
-    _name = 'hmrc.service'
     _description = 'HMRC service'
 
     @api.model

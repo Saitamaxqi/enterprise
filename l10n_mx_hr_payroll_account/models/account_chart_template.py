@@ -7,7 +7,7 @@ from odoo import models
 
 
 class AccountChartTemplate(models.AbstractModel):
-    _inherit = "account.chart.template"
+    _inherit = ["account.chart.template"]
 
     def _configure_payroll_account_mx(self, companies):
         account_codes = [

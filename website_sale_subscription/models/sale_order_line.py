@@ -5,7 +5,7 @@ from odoo import models
 
 
 class SaleOrderLine(models.Model):
-    _inherit = "sale.order.line"
+    _inherit = ["sale.order.line"]
 
     def _is_reorder_allowed(self):
         if self.recurring_invoice:

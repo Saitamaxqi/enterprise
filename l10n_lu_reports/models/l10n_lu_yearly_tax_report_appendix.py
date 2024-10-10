@@ -3,11 +3,11 @@
 
 from odoo import fields, models
 
-class L10nLuYearlyTaxReportAppendix(models.Model):
+
+class L10n_Lu_ReportsReportAppendixExpenditures(models.Model):
     """
     The manual fields in the Appendix to Operational expenditures in the LU yearly VAT report
     """
-    _name = 'l10n_lu_reports.report.appendix.expenditures'
     _description = '"Operational Expenditures" Appendix for LU'
 
     # ==== Business fields ====

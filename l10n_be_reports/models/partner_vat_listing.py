@@ -12,9 +12,8 @@ from stdnum.be.vat import compact as vat_be_compact
 from stdnum.exceptions import ValidationError
 
 
-class PartnerVATListingCustomHandler(models.AbstractModel):
-    _name = 'l10n_be.partner.vat.handler'
-    _inherit = 'account.report.custom.handler'
+class L10n_BePartnerVatHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Partner VAT Listing Custom Handler'
 
     def _caret_options_initializer(self):

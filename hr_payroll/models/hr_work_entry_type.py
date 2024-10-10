@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HrWorkEntryType(models.Model):
-    _inherit = 'hr.work.entry.type'
+    _inherit = ['hr.work.entry.type']
     _description = 'HR Work Entry Type'
 
     _sql_constraints = [

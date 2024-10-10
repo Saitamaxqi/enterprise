@@ -3,9 +3,9 @@
 from odoo import models
 
 
-class PeruvianTaxPle81ReportCustomHandler(models.AbstractModel):
+class L10n_PeTaxPle81ReportHandler(models.AbstractModel):
     _name = "l10n_pe.tax.ple.8.1.report.handler"
-    _inherit = "l10n_pe.tax.ple.report.handler"
+    _inherit = ["l10n_pe.tax.ple.report.handler"]
     _description = "PLE Purchase Report 8.1 (Now RCE 8.4)"
 
     def _get_report_number(self):

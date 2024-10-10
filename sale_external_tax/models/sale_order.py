@@ -3,7 +3,6 @@ from odoo import models
 
 
 class SaleOrder(models.Model):
-    _name = 'sale.order'
     _inherit = ['account.external.tax.mixin', 'sale.order']
 
     def _compute_tax_totals(self):
@@ -117,7 +116,7 @@ class SaleOrder(models.Model):
 
 
 class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+    _inherit = ['sale.order.line']
 
     def _prepare_invoice_line(self, **optional_values):
         """ Override to clear tax_ids on lines. Brazilian taxes are variable and don't have the right amount set in Odoo (always 1%),

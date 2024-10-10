@@ -3,8 +3,8 @@
 from odoo import Command, models
 
 
-class MailComposer(models.TransientModel):
-    _inherit = 'mail.compose.message'
+class MailComposeMessage(models.TransientModel):
+    _inherit = ['mail.compose.message']
 
     def _prepare_mail_values_dynamic(self, res_ids):
         mail_values_all = super()._prepare_mail_values_dynamic(res_ids)

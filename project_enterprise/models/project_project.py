@@ -3,8 +3,8 @@
 from odoo import models
 
 
-class Project(models.Model):
-    _inherit = 'project.project'
+class ProjectProject(models.Model):
+    _inherit = ['project.project']
 
     def action_view_tasks(self):
         action = super().action_view_tasks()

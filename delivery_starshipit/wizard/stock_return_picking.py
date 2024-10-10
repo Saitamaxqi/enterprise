@@ -4,7 +4,7 @@ from odoo import models
 
 
 class StockReturnPicking(models.TransientModel):
-    _inherit = 'stock.return.picking'
+    _inherit = ['stock.return.picking']
 
     def _reset_carrier_id(self, picking):
         """ For starshipit, we want to keep the provider when generating a return. """

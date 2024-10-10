@@ -5,9 +5,9 @@
 from odoo import fields, models
 from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_STATES
 
+
 class SaleSubscriptionReport(models.Model):
-    _inherit = "sale.report"
-    _name = "sale.subscription.report"
+    _inherit = ["sale.report"]
     _description = "Subscription Analysis"
     _auto = False
 

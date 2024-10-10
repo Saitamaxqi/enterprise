@@ -19,7 +19,6 @@ _logger = logging.getLogger(__name__)
 
 
 class MarketingActivity(models.Model):
-    _name = 'marketing.activity'
     _description = 'Marketing Activity'
     _inherit = ['utm.source.mixin']
     _order = 'interval_standardized, id ASC'

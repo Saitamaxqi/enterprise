@@ -3,8 +3,8 @@
 from odoo import fields, models
 
 
-class HRContract(models.Model):
-    _inherit = "hr.contract"
+class HrContract(models.Model):
+    _inherit = ["hr.contract"]
 
     l10n_ae_housing_allowance = fields.Monetary(string="Housing Allowance")
     l10n_ae_transportation_allowance = fields.Monetary(string="Transportation Allowance")

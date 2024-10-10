@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 
 class HrPayslip(models.Model):
-    _inherit = 'hr.payslip'
+    _inherit = ['hr.payslip']
 
     expense_sheet_ids = fields.One2many(
         'hr.expense.sheet', 'payslip_id', string='Expenses',

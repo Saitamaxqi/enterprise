@@ -12,7 +12,7 @@ class ResPartner(models.Model):
     document `Document <goo.gl/THPLDk>`_. To allow generate the form A-29
     requested by this SAT.
     """
-    _inherit = 'res.partner'
+    _inherit = ['res.partner']
 
     l10n_mx_type_of_third = fields.Char(
         compute='_compute_type_of_third',

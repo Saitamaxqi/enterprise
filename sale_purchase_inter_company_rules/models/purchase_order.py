@@ -2,16 +2,16 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class purchase_order(models.Model):
+class PurchaseOrder(models.Model):
 
-    _inherit = "purchase.order"
+    _inherit = ["purchase.order"]
 
     auto_generated = fields.Boolean(string='Auto Generated Purchase Order', copy=False)
     auto_sale_order_id = fields.Many2one('sale.order', string='Source Sales Order', readonly=True, copy=False)
 
     def button_approve(self, force=False):
         """ Generate inter company sales order base on conditions."""
-        res = super(purchase_order, self).button_approve(force=force)
+        res = super().button_approve(force=force)
         for order in self:
             # get the company from partner then trigger action of intercompany relation
             company_rec = self.env['res.company']._find_company_from_partner(order.partner_id.id)

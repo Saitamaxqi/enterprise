@@ -1,9 +1,8 @@
 from odoo import models
 
 
-class DutchReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_nl.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_NlTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'Dutch Report Custom Handler'
 
     def _postprocess_vat_closing_entry_results(self, company, options, results):

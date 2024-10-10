@@ -3,7 +3,7 @@ from odoo import models, fields
 
 
 class ResCompany(models.Model):
-    _inherit = "res.company"
+    _inherit = ["res.company"]
 
     l10n_ca_cpa005_short_name = fields.Char(
         "Short Name used in Canadian EFT",

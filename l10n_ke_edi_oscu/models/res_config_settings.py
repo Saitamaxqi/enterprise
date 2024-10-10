@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     l10n_ke_server_mode = fields.Selection(
         related='company_id.l10n_ke_server_mode',

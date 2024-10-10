@@ -7,9 +7,8 @@ from odoo.tools import SQL
 _logger = logging.getLogger(__name__)
 
 
-class BankReconciliationReportCustomHandler(models.AbstractModel):
-    _name = 'account.bank.reconciliation.report.handler'
-    _inherit = 'account.report.custom.handler'
+class AccountBankReconciliationReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Bank Reconciliation Report Custom Handler'
 
     ######################

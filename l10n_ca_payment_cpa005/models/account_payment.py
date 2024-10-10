@@ -3,7 +3,7 @@ from odoo import api, models, fields
 
 
 class AccountPayment(models.Model):
-    _inherit = "account.payment"
+    _inherit = ["account.payment"]
 
     l10n_ca_cpa005_transaction_code_id = fields.Many2one(
         "l10n_ca_cpa005.transaction.code",

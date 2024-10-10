@@ -9,7 +9,7 @@ from odoo.tools import float_compare, float_is_zero, plaintext2html
 
 
 class HrPayslip(models.Model):
-    _inherit = 'hr.payslip'
+    _inherit = ['hr.payslip']
 
     date = fields.Date('Date Account',
         help="Keep empty to use the period of the validation(Payslip) date.")

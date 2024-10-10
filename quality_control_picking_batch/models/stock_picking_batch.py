@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class StockPickingBatch(models.Model):
-    _inherit = 'stock.picking.batch'
+    _inherit = ['stock.picking.batch']
 
     quality_check_todo = fields.Boolean(compute='_compute_quality_check_todo')
 

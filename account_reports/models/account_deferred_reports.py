@@ -9,9 +9,8 @@ from odoo.tools import groupby, SQL
 from odoo.addons.account_accountant.models.account_move import DEFERRED_DATE_MIN, DEFERRED_DATE_MAX
 
 
-class DeferredReportCustomHandler(models.AbstractModel):
-    _name = 'account.deferred.report.handler'
-    _inherit = 'account.report.custom.handler'
+class AccountDeferredReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Deferred Expense Report Custom Handler'
 
     def _get_deferred_report_type(self):
@@ -563,18 +562,16 @@ class DeferredReportCustomHandler(models.AbstractModel):
         return deferred_lines + deferral_lines, original_move_ids
 
 
-class DeferredExpenseCustomHandler(models.AbstractModel):
-    _name = 'account.deferred.expense.report.handler'
-    _inherit = 'account.deferred.report.handler'
+class AccountDeferredExpenseReportHandler(models.AbstractModel):
+    _inherit = ['account.deferred.report.handler']
     _description = 'Deferred Expense Custom Handler'
 
     def _get_deferred_report_type(self):
         return 'expense'
 
 
-class DeferredRevenueCustomHandler(models.AbstractModel):
-    _name = 'account.deferred.revenue.report.handler'
-    _inherit = 'account.deferred.report.handler'
+class AccountDeferredRevenueReportHandler(models.AbstractModel):
+    _inherit = ['account.deferred.report.handler']
     _description = 'Deferred Revenue Custom Handler'
 
     def _get_deferred_report_type(self):

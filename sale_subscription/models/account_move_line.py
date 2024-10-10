@@ -8,7 +8,7 @@ from odoo.tools.sql import column_exists, create_column
 
 
 class AccountMoveLine(models.Model):
-    _inherit = "account.move.line"
+    _inherit = ["account.move.line"]
 
     def _auto_init(self):
         # create column manually to skip initial computation

@@ -4,8 +4,8 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class Repair(models.Model):
-    _inherit = "repair.order"
+class RepairOrder(models.Model):
+    _inherit = ["repair.order"]
 
     quality_check_ids = fields.One2many("quality.check", "repair_id", string="Checks")
     quality_check_todo = fields.Boolean(compute="_compute_quality_check_counts")

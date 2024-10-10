@@ -9,8 +9,8 @@ from datetime import datetime, timedelta
 from lxml import etree
 
 
-class IntrastatReportCustomHandler(models.AbstractModel):
-    _inherit = 'account.intrastat.report.handler'
+class AccountIntrastatReportHandler(models.AbstractModel):
+    _inherit = ['account.intrastat.report.handler']
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)

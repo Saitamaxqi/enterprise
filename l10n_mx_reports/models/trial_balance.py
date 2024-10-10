@@ -12,8 +12,8 @@ from odoo.exceptions import UserError, RedirectWarning
 CFDIBCE_XSLT_CADENA = 'l10n_mx_reports/data/xslt/1.3/BalanzaComprobacion_1_2.xslt'
 
 
-class TrialBalanceCustomHandler(models.AbstractModel):
-    _inherit = 'account.trial.balance.report.handler'
+class AccountTrialBalanceReportHandler(models.AbstractModel):
+    _inherit = ['account.trial.balance.report.handler']
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)

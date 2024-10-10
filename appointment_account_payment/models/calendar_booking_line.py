@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class CalendarBookingLine(models.Model):
-    _name = "calendar.booking.line"
     _description = "Meeting Resource Booking"
     _order = "create_date DESC, id DESC"
     _rec_name = "calendar_booking_id"

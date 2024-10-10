@@ -19,8 +19,8 @@ ATS_SALE_DOCUMENT_TYPE = {
 }
 
 
-class L10nECTaxReportATSCustomHandler(models.AbstractModel):
-    _inherit = 'account.tax.report.handler'
+class AccountTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)

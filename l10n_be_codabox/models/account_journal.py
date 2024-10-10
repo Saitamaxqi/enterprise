@@ -12,7 +12,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountJournal(models.Model):
-    _inherit = "account.journal"
+    _inherit = ["account.journal"]
 
     ############################
     # COMMON CODABOX METHODS

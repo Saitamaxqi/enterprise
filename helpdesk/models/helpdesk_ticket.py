@@ -16,8 +16,8 @@ TICKET_PRIORITY = [
     ('3', 'Urgent'),
 ]
 
+
 class HelpdeskTicket(models.Model):
-    _name = 'helpdesk.ticket'
     _description = 'Helpdesk Ticket'
     _order = 'priority desc, id desc'
     _primary_email = 'partner_email'

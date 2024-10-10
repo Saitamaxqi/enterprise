@@ -11,8 +11,7 @@ DEFAULT_ADDENDA_ARCH = '''
 '''
 
 
-class Addenda(models.Model):
-    _name = 'l10n_mx_edi.addenda'
+class L10n_Mx_EdiAddenda(models.Model):
     _description = 'Addenda for Mexican EDI'
 
     name = fields.Char(string='Name', required=True)

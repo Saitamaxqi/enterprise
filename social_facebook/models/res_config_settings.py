@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     facebook_use_own_account = fields.Boolean("Use your own Facebook Account", config_parameter='social.facebook_use_own_account',
         help="""Check this if you want to use your personal Facebook Developer Account instead of the provided one.""")

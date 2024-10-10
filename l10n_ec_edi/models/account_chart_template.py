@@ -4,8 +4,9 @@
 from odoo import models
 from odoo.addons.account.models.chart_template import template
 
+
 class AccountChartTemplate(models.AbstractModel):
-    _inherit = 'account.chart.template'
+    _inherit = ['account.chart.template']
 
     def _l10n_ec_configure_ecuadorian_journals(self, companies):
         for company in companies.filtered(lambda r: r.account_fiscal_country_id.code == 'EC'):

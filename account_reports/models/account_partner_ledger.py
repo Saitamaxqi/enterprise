@@ -9,9 +9,8 @@ from datetime import timedelta
 from collections import defaultdict
 
 
-class PartnerLedgerCustomHandler(models.AbstractModel):
-    _name = 'account.partner.ledger.report.handler'
-    _inherit = 'account.report.custom.handler'
+class AccountPartnerLedgerReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Partner Ledger Custom Handler'
 
     def _get_custom_display_config(self):

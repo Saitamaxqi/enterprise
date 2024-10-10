@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     partena_code = fields.Char("Partena Affiliation Number", groups="hr.group_hr_user")
     partena_sequence_number = fields.Integer(

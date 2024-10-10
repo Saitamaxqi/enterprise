@@ -9,7 +9,7 @@ from odoo.addons.hr_work_entry_contract.models.hr_work_intervals import WorkInte
 
 
 class HrContract(models.Model):
-    _inherit = 'hr.contract'
+    _inherit = ['hr.contract']
 
     def _get_attendance_intervals(self, start_dt, end_dt):
         ##################################

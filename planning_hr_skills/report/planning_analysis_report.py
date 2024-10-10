@@ -3,8 +3,9 @@
 
 from odoo import fields, models, api
 
+
 class PlanningAnalysisReport(models.Model):
-    _inherit = "planning.analysis.report"
+    _inherit = ["planning.analysis.report"]
 
     # Not using a related as we want to avoid having a depends.
     employee_skill_ids = fields.One2many('hr.employee.skill', string='Skills', compute='_compute_employee_skill_ids',

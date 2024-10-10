@@ -8,7 +8,7 @@ from odoo.osv import expression
 
 
 class QualityPoint(models.Model):
-    _inherit = "quality.point"
+    _inherit = ["quality.point"]
 
     worksheet_template_id = fields.Many2one(
         'worksheet.template', 'Template',
@@ -20,7 +20,7 @@ class QualityPoint(models.Model):
 
 
 class QualityCheck(models.Model):
-    _inherit = "quality.check"
+    _inherit = ["quality.check"]
 
     worksheet_template_id = fields.Many2one(
         'worksheet.template', 'Quality Template',

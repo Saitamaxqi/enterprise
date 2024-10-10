@@ -13,8 +13,8 @@ from werkzeug.urls import url_join
 _logger = logging.getLogger(__name__)
 
 
-class SocialStreamTwitter(models.Model):
-    _inherit = 'social.stream'
+class SocialStream(models.Model):
+    _inherit = ['social.stream']
 
     twitter_searched_keyword = fields.Char('Search Keyword')
     twitter_followed_account_search = fields.Char('Search User')
@@ -32,7 +32,7 @@ class SocialStreamTwitter(models.Model):
 
     def _apply_default_name(self):
         twitter_streams = self.filtered(lambda s: s.media_id.media_type == 'twitter')
-        super(SocialStreamTwitter, (self - twitter_streams))._apply_default_name()
+        super(SocialStream, (self - twitter_streams))._apply_default_name()
 
         for stream in twitter_streams:
             name = False

@@ -3,8 +3,7 @@
 from odoo import api, models
 
 
-class TaxDeductionCardReport(models.AbstractModel):
-    _name = 'report.l10n_ke_hr_payroll.report_tax_deduction_card'
+class ReportL10n_Ke_Hr_PayrollReport_Tax_Deduction_Card(models.AbstractModel):
     _description = 'Tax Deduction Card Report'
 
     @api.model

@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class AccountPaymentMethod(models.Model):
-    _inherit = 'account.payment.method'
+    _inherit = ['account.payment.method']
 
     # ----------------
     # Business methods
@@ -24,7 +24,7 @@ class AccountPaymentMethod(models.Model):
 
 
 class AccountPaymentMethodLine(models.Model):
-    _inherit = 'account.payment.method.line'
+    _inherit = ['account.payment.method.line']
 
     # ------------------
     # Fields declaration

@@ -13,8 +13,7 @@ from collections import defaultdict
 _logger = logging.getLogger(__name__)
 
 
-class StudioApprovers(models.Model):
-    _name = "studio.approval.rule.approver"
+class StudioApprovalRuleApprover(models.Model):
     _description = "Approval Rule Approvers Enriched"
     _order = "id desc"
     _log_access = True  # explicit: we need create_uid and create_date
@@ -44,8 +43,8 @@ class StudioApprovers(models.Model):
     def _filtered_valid(self):
         return self.filtered(lambda rec: rec._is_valid())
 
+
 class StudioApprovalRule(models.Model):
-    _name = "studio.approval.rule"
     _description = "Studio Approval Rule"
     _inherit = ["studio.mixin", 'mail.thread']
 
@@ -1163,7 +1162,6 @@ class StudioApprovalRule(models.Model):
 
 
 class StudioApprovalEntry(models.Model):
-    _name = 'studio.approval.entry'
     _description = 'Studio Approval Entry'
     # entries don't have the studio mixin since they depend on the data of the
     # db - they cannot be included into the Studio Customizations module
@@ -1255,7 +1253,6 @@ class StudioApprovalEntry(models.Model):
 
 
 class StudioApprovalRequest(models.Model):
-    _name = 'studio.approval.request'
     _description = 'Studio Approval Request'
 
     mail_activity_id = fields.Many2one('mail.activity', string='Linked Activity', ondelete='cascade',
@@ -1266,7 +1263,6 @@ class StudioApprovalRequest(models.Model):
 
 
 class StudioApprovalRuleDelegate(models.TransientModel):
-    _name = "studio.approval.rule.delegate"
     _description = "Approval Rule Delegate"
 
     approval_rule_id = fields.Many2one("studio.approval.rule", required=True)

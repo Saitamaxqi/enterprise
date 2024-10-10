@@ -3,8 +3,9 @@
 
 from odoo import fields, models
 
-class RentalReport(models.Model):
-    _inherit = "sale.rental.report"
+
+class SaleRentalReport(models.Model):
+    _inherit = ["sale.rental.report"]
 
     lot_id = fields.Many2one('stock.lot', 'Serial Number', readonly=True)
 
@@ -45,7 +46,7 @@ class RentalReport(models.Model):
                 END """ % (price, price)
 
     def _from(self):
-        return super(RentalReport, self)._from() + """
+        return super()._from() + """
             LEFT JOIN rental_reserved_lot_rel AS res ON res.sale_order_line_id=sol.id
             LEFT JOIN rental_pickedup_lot_rel AS pickedup ON pickedup.sale_order_line_id=sol.id
                 AND pickedup.stock_lot_id = res.stock_lot_id
@@ -54,6 +55,6 @@ class RentalReport(models.Model):
         """
 
     def _select(self):
-        return super(RentalReport, self)._select() + """,
+        return super()._select() + """,
             res.stock_lot_id AS lot_id
         """

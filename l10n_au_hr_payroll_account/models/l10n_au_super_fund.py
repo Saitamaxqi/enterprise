@@ -3,8 +3,8 @@
 from odoo import api, fields, models
 
 
-class L10nAuSuperFund(models.Model):
-    _inherit = "l10n_au.super.fund"
+class L10n_AuSuperFund(models.Model):
+    _inherit = ["l10n_au.super.fund"]
 
     bank_account_id = fields.Many2one(
         "res.partner.bank",

@@ -5,7 +5,7 @@ from odoo.tools import float_round, format_list
 
 
 class AccountMove(models.Model):
-    _inherit = "account.move"
+    _inherit = ["account.move"]
 
     l10n_cl_port_origin_id = fields.Many2one(
         comodel_name='l10n_cl.customs_port', string='Port of Origin',

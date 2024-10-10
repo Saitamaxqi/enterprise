@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     exemption_doctor_master_account_id = fields.Many2one(
         'account.account', string="Doctors/Civil Engineers/Masters",

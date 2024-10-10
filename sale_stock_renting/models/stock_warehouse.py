@@ -4,7 +4,7 @@ from odoo import models, api
 
 
 class StockWarehouse(models.Model):
-    _inherit = 'stock.warehouse'
+    _inherit = ['stock.warehouse']
 
     @api.model
     def update_rental_rules(self):

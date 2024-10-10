@@ -5,7 +5,6 @@ from odoo.exceptions import AccessError
 
 
 class HrReferralSendMail(models.TransientModel):
-    _name = 'hr.referral.send.mail'
     _description = 'Referral Send Mail'
 
     job_id = fields.Many2one(

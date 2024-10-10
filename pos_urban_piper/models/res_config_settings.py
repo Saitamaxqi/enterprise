@@ -5,7 +5,7 @@ from .pos_urban_piper_request import UrbanPiperClient
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     urbanpiper_username = fields.Char(
         string='Username',

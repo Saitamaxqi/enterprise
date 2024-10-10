@@ -2,8 +2,7 @@
 from odoo import models, fields
 
 
-class L10nBrOperationType(models.Model):
-    _name = "l10n_br.operation.type"
+class L10n_BrOperationType(models.Model):
     _description = "Operation Type"
 
     active = fields.Boolean(default=True)

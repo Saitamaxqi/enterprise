@@ -8,8 +8,8 @@ from odoo import api, fields, models, _
 from odoo.tools import SQL
 from odoo.exceptions import UserError
 
-class EmployeesYearlySalaryReport(models.AbstractModel):
-    _name = 'report.l10n_in_hr_payroll.report_hryearlysalary'
+
+class ReportL10n_In_Hr_PayrollReport_Hryearlysalary(models.AbstractModel):
     _description = "Indian Yearly Salary Report"
 
     # YTI: This mess deserves a good cleaning

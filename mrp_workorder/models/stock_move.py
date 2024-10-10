@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class StockMove(models.Model):
-    _inherit = 'stock.move'
+    _inherit = ['stock.move']
 
     @api.depends('workorder_id')
     def _compute_manual_consumption(self):

@@ -7,7 +7,7 @@ from odoo.http import request
 
 
 class MrpWorkcenter(models.Model):
-    _inherit = 'mrp.workcenter'
+    _inherit = ['mrp.workcenter']
 
     employee_ids = fields.Many2many(
         'hr.employee', string="employees with access",
@@ -53,7 +53,7 @@ class MrpWorkcenter(models.Model):
 
 
 class MrpWorkcenterProductivity(models.Model):
-    _inherit = "mrp.workcenter.productivity"
+    _inherit = ["mrp.workcenter.productivity"]
 
     employee_id = fields.Many2one(
         'hr.employee', string="Employee", compute='_compute_employee',

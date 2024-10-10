@@ -6,8 +6,7 @@ import json
 from odoo import api, fields, models
 
 
-class DocumentsToDashboardWizard(models.TransientModel):
-    _name = "spreadsheet.document.to.dashboard"
+class SpreadsheetDocumentToDashboard(models.TransientModel):
     _description = "Create a dashboard from a spreadsheet document"
 
     name = fields.Char(

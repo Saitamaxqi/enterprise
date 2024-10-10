@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     iso20022_orgid_id = fields.Char(related='company_id.iso20022_orgid_id', string="Identification", readonly=False,
         help="Identification assigned by an institution (eg. VAT number).")

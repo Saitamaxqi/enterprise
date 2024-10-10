@@ -6,7 +6,7 @@ from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_PROGRES
 
 
 class SaleOrder(models.Model):
-    _inherit = "sale.order"
+    _inherit = ["sale.order"]
 
     def _can_generate_service(self):
         self.ensure_one()

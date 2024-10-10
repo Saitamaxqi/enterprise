@@ -11,7 +11,6 @@ from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, html2plaintext, plaintext2htm
 
 
 class AccountFollowupReport(models.AbstractModel):
-    _name = 'account.followup.report'
     _description = "Follow-up Report"
 
     ####################################################

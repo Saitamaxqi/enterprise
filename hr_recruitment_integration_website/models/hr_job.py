@@ -10,8 +10,8 @@ from odoo.addons.iap.tools import iap_tools
 DEFAULT_OLG_ENDPOINT = 'https://olg.api.odoo.com'
 
 
-class Job(models.Model):
-    _inherit = 'hr.job'
+class HrJob(models.Model):
+    _inherit = ['hr.job']
 
     def _get_plain_text_description(self):
         def remove_uris(text):

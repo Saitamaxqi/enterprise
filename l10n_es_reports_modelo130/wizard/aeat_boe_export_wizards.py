@@ -3,9 +3,8 @@
 from odoo import models, fields
 
 
-class Mod130BOEWizard(models.TransientModel):
-    _inherit = 'l10n_es_reports.aeat.boe.mod111and115and303.export.wizard'
-    _name = 'l10n_es_reports_modelo130.aeat.boe.mod130.export.wizard'
+class L10n_Es_Reports_Modelo130AeatBoeMod130ExportWizard(models.TransientModel):
+    _inherit = ['l10n_es_reports.aeat.boe.mod111and115and303.export.wizard']
     _description = "BOE Export Wizard for (mod130)"
 
     MODELO_NUMBER = 130

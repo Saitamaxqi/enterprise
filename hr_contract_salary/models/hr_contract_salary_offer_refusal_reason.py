@@ -4,8 +4,7 @@
 from odoo import fields, models
 
 
-class HrContractSalaryOffer(models.Model):
-    _name = 'hr.contract.salary.offer.refusal.reason'
+class HrContractSalaryOfferRefusalReason(models.Model):
     _description = 'Salary Offer Refusal Reasons'
     _order = "sequence, id"
 

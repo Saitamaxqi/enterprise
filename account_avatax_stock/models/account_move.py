@@ -2,7 +2,7 @@ from odoo import models
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     def _get_line_data_for_external_taxes(self):
         """ Override to set the originating warehouse per line. """

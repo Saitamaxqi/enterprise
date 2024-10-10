@@ -6,7 +6,7 @@ from odoo import api, fields, models
 
 
 class PaymentTransaction(models.Model):
-    _inherit = 'payment.transaction'
+    _inherit = ['payment.transaction']
 
     # used to control the renewal flow based on the transaction state
     renewal_state = fields.Selection([('draft', 'Draft'),

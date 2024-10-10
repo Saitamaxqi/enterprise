@@ -9,7 +9,7 @@ from odoo.tools import float_round
 
 
 class HrContract(models.Model):
-    _inherit = 'hr.contract'
+    _inherit = ['hr.contract']
 
     def _preprocess_work_hours_data_split_half(self, work_data, date_from, date_to):
         """

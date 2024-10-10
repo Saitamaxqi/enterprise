@@ -4,7 +4,6 @@ from odoo import api, fields, models
 
 
 class HelpdeskTicketCreateTimesheet(models.TransientModel):
-    _name = 'helpdesk.ticket.create.timesheet'
     _description = "Create Timesheet from ticket"
 
     time_spent = fields.Float('Time')

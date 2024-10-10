@@ -11,8 +11,8 @@ from odoo.tools import float_repr, SQL, Query
 from odoo.addons.account_edi_ubl_cii.models.account_edi_common import UOM_TO_UNECE_CODE
 
 
-class GeneralLedgerCustomHandler(models.AbstractModel):
-    _inherit = 'account.general.ledger.report.handler'
+class AccountGeneralLedgerReportHandler(models.AbstractModel):
+    _inherit = ['account.general.ledger.report.handler']
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)

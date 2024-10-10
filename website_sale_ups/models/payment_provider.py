@@ -7,8 +7,8 @@ from odoo.addons.website_sale_ups import const
 from odoo.addons.payment import utils as payment_utils
 
 
-class Paymentprovider(models.Model):
-    _inherit = 'payment.provider'
+class PaymentProvider(models.Model):
+    _inherit = ['payment.provider']
 
     custom_mode = fields.Selection(
         selection_add=[('cash_on_delivery', 'Cash On Delivery')]

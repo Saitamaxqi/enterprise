@@ -12,7 +12,7 @@ from odoo.tools.float_utils import json_float_round
 
 
 class StockMove(models.Model):
-    _inherit = 'stock.move'
+    _inherit = ['stock.move']
 
     country_code = fields.Char(related='company_id.account_fiscal_country_id.code')
     l10n_ke_oscu_flow_type_code = fields.Selection(

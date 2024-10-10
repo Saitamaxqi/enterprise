@@ -4,7 +4,7 @@ from odoo.exceptions import UserError
 
 
 class AccountPayment(models.Model):
-    _inherit = 'account.payment'
+    _inherit = ['account.payment']
 
     end_to_end_id = fields.Char(string='End to End ID', readonly=True, compute='_compute_end_to_end_id', store=True)
 

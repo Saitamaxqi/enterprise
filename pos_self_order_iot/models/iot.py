@@ -4,7 +4,7 @@ MIN_VERSION_FOR_KIOSK = 24.08
 
 
 class IotBox(models.Model):
-    _inherit = 'iot.box'
+    _inherit = ['iot.box']
 
     screen_orientation = fields.Selection(
         selection=[

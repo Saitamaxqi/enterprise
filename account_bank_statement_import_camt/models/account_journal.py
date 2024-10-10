@@ -15,7 +15,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountJournal(models.Model):
-    _inherit = 'account.journal'
+    _inherit = ['account.journal']
 
     def _get_bank_statements_available_import_formats(self):
         rslt = super()._get_bank_statements_available_import_formats()

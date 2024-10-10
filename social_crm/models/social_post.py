@@ -5,7 +5,7 @@ from odoo import models, fields
 
 
 class SocialPost(models.Model):
-    _inherit = 'social.post'
+    _inherit = ['social.post']
 
     use_leads = fields.Boolean('Use Leads', compute='_compute_use_leads')
     leads_opportunities_count = fields.Integer('Leads / Opportunities count', groups='sales_team.group_sale_salesman',

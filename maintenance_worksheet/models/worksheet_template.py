@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class WorksheetTemplate(models.Model):
-    _inherit = 'worksheet.template'
+    _inherit = ['worksheet.template']
 
     @api.model
     def _get_maintenance_request_manager_group(self):

@@ -7,7 +7,7 @@ from odoo.tools import format_list
 
 
 class HrPayslip(models.Model):
-    _inherit = "hr.payslip"
+    _inherit = ["hr.payslip"]
 
     has_superstream = fields.Boolean(compute="_compute_has_superstream")
     l10n_au_stp_status = fields.Selection([

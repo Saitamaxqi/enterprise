@@ -4,8 +4,8 @@
 from odoo import api, fields, models
 
 
-class Mod347BOEWizard(models.TransientModel):
-    _inherit = 'l10n_es_reports.aeat.boe.mod347.export.wizard'
+class L10n_Es_ReportsAeatBoeMod347ExportWizard(models.TransientModel):
+    _inherit = ['l10n_es_reports.aeat.boe.mod347.export.wizard']
 
     real_estates_vat_mod347_data = fields.One2many(
         comodel_name='l10n_es_reports.aeat.mod347.real.estates.vat',
@@ -13,7 +13,7 @@ class Mod347BOEWizard(models.TransientModel):
         string="Amount Perceived for Transfers of Real Estates Subject to VAT")
 
     def l10n_es_get_partners_manual_parameters_map(self):
-        rslt = super(Mod347BOEWizard, self).l10n_es_get_partners_manual_parameters_map()
+        rslt = super().l10n_es_get_partners_manual_parameters_map()
 
         real_estates_vat_dict = {}
         for data in self.real_estates_vat_mod347_data:
@@ -29,9 +29,8 @@ class Mod347BOEWizard(models.TransientModel):
         return rslt
 
 
-class Mod347BOERealEstatesVATData(models.TransientModel):
-    _name = 'l10n_es_reports.aeat.mod347.real.estates.vat'
+class L10n_Es_ReportsAeatMod347RealEstatesVat(models.TransientModel):
     _description = 'BOE Real Estates VAT Data for (mod347)'
-    _inherit = 'l10n_es_reports.aeat.mod347.manual.partner.data'
+    _inherit = ['l10n_es_reports.aeat.mod347.manual.partner.data']
 
     trimester = fields.Selection(selection=[('1', '1st'), ('2', '2nd'), ('3', '3rd'), ('4', '4th')], required=True)

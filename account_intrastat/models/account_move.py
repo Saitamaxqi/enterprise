@@ -6,7 +6,7 @@ from odoo.tools.sql import column_exists, create_column
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     intrastat_transport_mode_id = fields.Many2one(
         'account.intrastat.code', string='Intrastat Transport Mode',
@@ -40,8 +40,9 @@ class AccountMove(models.Model):
             else:
                 move.intrastat_country_id = False
 
+
 class AccountMoveLine(models.Model):
-    _inherit = 'account.move.line'
+    _inherit = ['account.move.line']
 
     def _auto_init(self):
         if not column_exists(self.env.cr, "account_move_line", "intrastat_product_origin_country_id"):

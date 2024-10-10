@@ -4,7 +4,6 @@ from odoo import fields, models
 
 
 class ShiprocketChannel(models.Model):
-    _name = 'shiprocket.channel'
     _description = 'Shiprocket Channel'
     _order = 'name'
 

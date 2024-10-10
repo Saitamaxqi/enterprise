@@ -2,7 +2,7 @@ from odoo import api, models, fields
 
 
 class AccountJournal(models.Model):
-    _inherit = "account.journal"
+    _inherit = ["account.journal"]
 
     l10n_uy_edi_type = fields.Selection(
         selection=[

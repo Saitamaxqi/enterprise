@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class TimesheetsAnalysisReport(models.Model):
-    _inherit = "timesheets.analysis.report"
+    _inherit = ["timesheets.analysis.report"]
 
     validated = fields.Boolean("Validated line", aggregator="bool_and", readonly=True)
     validated_status = fields.Selection([('draft', 'Draft'), ('validated', 'Validated')], readonly=True)

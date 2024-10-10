@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class AccountJournal(models.Model):
-    _inherit = "account.journal"
+    _inherit = ["account.journal"]
 
     @api.ondelete(at_uninstall=False)
     def _prevent_unlink_payroll_journal(self):

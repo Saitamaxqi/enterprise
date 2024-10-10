@@ -14,7 +14,6 @@ from odoo.exceptions import UserError
 
 
 class L10nUsW2(models.Model):
-    _name = 'l10n.us.w2'
     _description = 'W2 Form'
 
     @api.model

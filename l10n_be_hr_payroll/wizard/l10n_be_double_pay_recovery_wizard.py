@@ -8,7 +8,6 @@ from odoo.tools import format_date
 
 
 class L10nBeDoublePayRecoveryWizard(models.TransientModel):
-    _name = 'l10n.be.double.pay.recovery.wizard'
     _description = 'CP200: Double Pay Recovery Wizard'
 
     @api.model
@@ -89,8 +88,8 @@ class L10nBeDoublePayRecoveryWizard(models.TransientModel):
         })
         self.payslip_id.compute_sheet()
 
+
 class L10nBeDoublePayRecoveryLineWizard(models.TransientModel):
-    _name = 'l10n.be.double.pay.recovery.line.wizard'
     _description = 'CP200: Double Pay Recovery Line Wizard'
 
     amount = fields.Monetary(string="Amount", required=True, help="Holiday pay amount on the holiday attest from the previous employer")

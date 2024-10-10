@@ -9,7 +9,7 @@ from odoo.exceptions import ValidationError
 
 
 class HrPayslip(models.Model):
-    _inherit = 'hr.payslip'
+    _inherit = ['hr.payslip']
 
     l10n_lu_month_taxable_days = fields.Float(compute='_compute_taxable_days')
     l10n_lu_period_taxable_days = fields.Float(compute='_compute_taxable_days')

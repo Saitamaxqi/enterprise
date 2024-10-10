@@ -4,8 +4,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
-class HelpdeskTicketConvert2Lead(models.TransientModel):
-    _name = "helpdesk.ticket.to.lead"
+class HelpdeskTicketToLead(models.TransientModel):
     _description = "Convert Ticket to Lead"
 
     @api.model

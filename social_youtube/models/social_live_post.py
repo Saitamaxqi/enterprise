@@ -7,8 +7,8 @@ from odoo import _, fields, models, tools
 from werkzeug.urls import url_join
 
 
-class SocialLivePostYoutube(models.Model):
-    _inherit = 'social.live.post'
+class SocialLivePost(models.Model):
+    _inherit = ['social.live.post']
 
     youtube_video_id = fields.Char(related='post_id.youtube_video_id')
 
@@ -18,13 +18,13 @@ class SocialLivePostYoutube(models.Model):
 
     def _compute_live_post_link(self):
         youtube_live_posts = self._filter_by_media_types(["youtube"]).filtered(lambda post: post.state == 'posted')
-        super(SocialLivePostYoutube, self - youtube_live_posts)._compute_live_post_link()
+        super(SocialLivePost, self - youtube_live_posts)._compute_live_post_link()
 
         for post in youtube_live_posts:
             post.live_post_link = f"http://youtube.com/watch?v={post.youtube_video_id}"
 
     def _refresh_statistics(self):
-        super(SocialLivePostYoutube, self)._refresh_statistics()
+        super()._refresh_statistics()
         youtube_accounts = self.env['social.account'].search([('media_type', '=', 'youtube')])
 
         # 1. build various data structures we are going to need
@@ -81,7 +81,7 @@ class SocialLivePostYoutube(models.Model):
 
     def _post(self):
         youtube_live_posts = self._filter_by_media_types(['youtube'])
-        super(SocialLivePostYoutube, (self - youtube_live_posts))._post()
+        super(SocialLivePost, (self - youtube_live_posts))._post()
 
         for live_post in youtube_live_posts:
             live_post._post_youtube()

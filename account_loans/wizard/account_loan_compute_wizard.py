@@ -8,7 +8,6 @@ from ..lib import pyloan
 
 
 class AccountLoanComputeWizard(models.TransientModel):
-    _name = 'account.loan.compute.wizard'
     _description = 'Loan Compute Wizard'
 
     loan_id = fields.Many2one(

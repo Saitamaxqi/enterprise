@@ -3,8 +3,7 @@
 from odoo import api, fields, models
 
 
-class WhatsAppPreview(models.TransientModel):
-    _name = 'whatsapp.preview'
+class WhatsappPreview(models.TransientModel):
     _description = 'Preview template'
 
     wa_template_id = fields.Many2one(comodel_name="whatsapp.template", string="Templates")

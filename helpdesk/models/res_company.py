@@ -5,7 +5,7 @@ from odoo import Command, api, models, _
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     @api.model_create_multi
     def create(self, values):

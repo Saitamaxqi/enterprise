@@ -27,8 +27,7 @@ DEFAULT_DOC_NUMBER_PADDING = 6
 
 
 class FetchmailServer(models.Model):
-    _name = 'fetchmail.server'
-    _inherit = 'fetchmail.server'
+    _inherit = ['fetchmail.server']
 
     l10n_cl_is_dte = fields.Boolean(
         'DTE server', help='By checking this option, this email account will be used to receive the electronic\n'

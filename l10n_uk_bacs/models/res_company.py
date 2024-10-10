@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     bacs_sun = fields.Char(string='Service User Number', help="Service user number of your company within BACS, given by the bank. Write 'HSBC' here if your bank does not provide one.")
 

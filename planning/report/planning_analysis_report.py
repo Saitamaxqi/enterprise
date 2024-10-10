@@ -6,7 +6,6 @@ from odoo.tools.sql import drop_view_if_exists, SQL
 
 
 class PlanningAnalysisReport(models.Model):
-    _name = "planning.analysis.report"
     _description = "Planning Analysis Report"
     _auto = False
 

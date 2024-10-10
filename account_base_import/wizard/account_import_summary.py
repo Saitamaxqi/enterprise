@@ -4,7 +4,6 @@ from odoo import api, fields, models, _
 
 
 class AccountImportSummary(models.TransientModel):
-    _name = "account.import.summary"
     _description = "Account import summary view"
     _rec_name = 'import_summary_name'
 

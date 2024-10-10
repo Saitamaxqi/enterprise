@@ -7,8 +7,7 @@ from odoo.addons.sale.models.sale_order import SALE_ORDER_STATE
 from odoo.addons.sale_renting.models.sale_order import RENTAL_STATUS
 
 
-class RentalSchedule(models.Model):
-    _name = "sale.rental.schedule"
+class SaleRentalSchedule(models.Model):
     _description = "Rental Schedule"
     _auto = False
     _order = 'order_date desc'

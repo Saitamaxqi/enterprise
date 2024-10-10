@@ -8,8 +8,8 @@ from odoo import _, api, models
 from odoo.exceptions import UserError
 
 
-class Certificate(models.Model):
-    _inherit = 'certificate.certificate'
+class CertificateCertificate(models.Model):
+    _inherit = ['certificate.certificate']
 
     @api.model
     def _l10n_ar_create_certificate_request(self, company_id):

@@ -2,8 +2,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import models
 
+
 class PosOrder(models.Model):
-    _inherit = 'pos.order'
+    _inherit = ['pos.order']
 
     def _send_order(self):
         super()._send_order()

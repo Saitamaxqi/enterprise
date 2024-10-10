@@ -4,7 +4,7 @@ from odoo import models
 
 
 class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+    _inherit = ['sale.order.line']
 
     def _get_rental_pricing_description(self):
         self.ensure_one()

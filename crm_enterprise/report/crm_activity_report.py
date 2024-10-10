@@ -4,8 +4,8 @@
 from odoo import fields, models
 
 
-class ActivityReport(models.Model):
-    _inherit = 'crm.activity.report'
+class CrmActivityReport(models.Model):
+    _inherit = ['crm.activity.report']
 
     won_status = fields.Selection([
         ('won', 'Won'),
@@ -14,6 +14,6 @@ class ActivityReport(models.Model):
     ], string='Is Won', readonly=True)
 
     def _select(self):
-        res = super(ActivityReport, self)._select()
+        res = super()._select()
         res += ', l.won_status'
         return res

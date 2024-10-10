@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 
 class ResCompany(models.Model):
 
-    _inherit = "res.company"
+    _inherit = ["res.company"]
 
     l10n_ar_afip_verification_type = fields.Selection([('not_available', 'Not Available'), ('available', 'Available'), ('required', 'Required')], required=True,
         default='not_available', string='AFIP Invoice Verification', help='It adds an option on invoices to'

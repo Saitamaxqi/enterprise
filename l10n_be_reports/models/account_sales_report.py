@@ -9,9 +9,8 @@ from odoo.exceptions import UserError
 from .account_report import _raw_phonenumber, _get_xml_export_representative_node
 
 
-class BelgianECSalesReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_be.ec.sales.report.handler'
-    _inherit = 'account.ec.sales.report.handler'
+class L10n_BeEcSalesReportHandler(models.AbstractModel):
+    _inherit = ['account.ec.sales.report.handler']
     _description = 'Belgian EC Sales Report Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):

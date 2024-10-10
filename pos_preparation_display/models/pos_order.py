@@ -4,7 +4,7 @@ from odoo import models, api
 
 
 class PosOrder(models.Model):
-    _inherit = 'pos.order'
+    _inherit = ['pos.order']
 
     @api.model
     def sync_from_ui(self, orders):

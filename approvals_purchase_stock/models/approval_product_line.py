@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class ApprovalProductLine(models.Model):
-    _inherit = 'approval.product.line'
+    _inherit = ['approval.product.line']
 
     def _default_warehouse_id(self):
         company_id = self.env.context.get('default_company_id', self.env.company.id)

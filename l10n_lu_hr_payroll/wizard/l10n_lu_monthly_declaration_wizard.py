@@ -13,7 +13,6 @@ from odoo.tools import float_round
 
 
 class L10nLuMonthlyDeclarationWizard(models.TransientModel):
-    _name = 'l10n.lu.monthly.declaration.wizard'
     _description = "Luxembourg: Monthly Declaration"
 
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company)
@@ -207,7 +206,6 @@ class L10nLuMonthlyDeclarationWizard(models.TransientModel):
 
 
 class L10nLuSituationalUnemploymentWizard(models.TransientModel):
-    _name = 'l10n.lu.situational.unemployment.wizard'
     _description = "Employee Situational Unemployment"
 
     monthly_declaration_id = fields.Many2one('l10n.lu.monthly.declaration.wizard', required=True, ondelete='cascade')

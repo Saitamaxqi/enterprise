@@ -1,8 +1,8 @@
 from odoo import _, api, fields, models
 
 
-class L10nMxEdiDocument(models.Model):
-    _inherit = 'l10n_mx_edi.document'
+class L10n_Mx_EdiDocument(models.Model):
+    _inherit = ['l10n_mx_edi.document']
 
     pos_order_ids = fields.Many2many(
         comodel_name='pos.order',

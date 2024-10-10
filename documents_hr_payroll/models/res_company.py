@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = "res.company"
+    _inherit = ["res.company"]
 
     documents_hr_payslips_tags = fields.Many2many(
         'documents.tag', 'payslip_tags_table')

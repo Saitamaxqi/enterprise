@@ -4,13 +4,13 @@
 from odoo import fields, models
 
 
-class SMSComposer(models.TransientModel):
-    _inherit = 'sms.composer'
+class SmsComposer(models.TransientModel):
+    _inherit = ['sms.composer']
 
     marketing_activity_id = fields.Many2one('marketing.activity', string='Marketing Activity')
 
     def _prepare_mass_sms_values(self, records):
-        result = super(SMSComposer, self)._prepare_mass_sms_values(records)
+        result = super()._prepare_mass_sms_values(records)
         if self.composition_mode == 'mass' and self.mailing_id and self.marketing_activity_id:
             # retrieve traces linked to recipients
             traces = self.env['marketing.trace'].search([('activity_id', '=', self.marketing_activity_id.id), ('res_id', 'in', records.ids)])

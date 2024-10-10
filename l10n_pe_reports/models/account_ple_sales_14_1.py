@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class AccountReport(models.Model):
-    _inherit = 'account.report'
+    _inherit = ['account.report']
 
     @api.model
     def _get_options_all_entries_domain(self, options):
@@ -18,9 +18,9 @@ class AccountReport(models.Model):
         return [("parent_state", "in", ("posted", "cancel"))]
 
 
-class PeruvianTaxPle141ReportCustomHandler(models.AbstractModel):
+class L10n_PeTaxPle141ReportHandler(models.AbstractModel):
     _name = "l10n_pe.tax.ple.14.1.report.handler"
-    _inherit = "l10n_pe.tax.ple.report.handler"
+    _inherit = ["l10n_pe.tax.ple.report.handler"]
     _description = "PLE Sales Report 14.1 (Now RVIE 14.2)"
 
     def _get_report_number(self):

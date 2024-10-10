@@ -6,8 +6,9 @@ from odoo.exceptions import ValidationError
 from odoo.tools import parse_date
 from odoo.tools.float_utils import float_round
 
-class AssetsReport(models.Model):
-    _inherit = 'account.report'
+
+class AccountReport(models.Model):
+    _inherit = ['account.report']
 
     def assets_init_custom_options(self, options, previous_options):
         super().assets_init_custom_options(options, previous_options)

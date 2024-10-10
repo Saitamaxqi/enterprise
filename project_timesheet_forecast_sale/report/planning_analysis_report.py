@@ -3,8 +3,9 @@
 
 from odoo import fields, models, api
 
+
 class PlanningAnalysisReport(models.Model):
-    _inherit = "planning.analysis.report"
+    _inherit = ["planning.analysis.report"]
 
     billable_allocated_hours = fields.Float("Billable Time Allocated", readonly=True, help="Sum of hours allocated to shifts linked to a SOL.")
     non_billable_allocated_hours = fields.Float("Non-billable Time Allocated", readonly=True, help="Sum of hours allocated to shifts not linked to a SOL.")

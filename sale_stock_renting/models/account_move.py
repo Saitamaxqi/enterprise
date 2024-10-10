@@ -8,7 +8,7 @@ from odoo.tools import float_is_zero
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     def _get_invoiced_lot_values(self):
         """ Display Rental lots on invoice report when functionality is enabled. """

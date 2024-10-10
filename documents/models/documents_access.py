@@ -2,8 +2,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import AccessError
 
 
-class DocumentAccess(models.Model):
-    _name = 'documents.access'
+class DocumentsAccess(models.Model):
     _description = 'Document / Partner'
     _log_access = False
 

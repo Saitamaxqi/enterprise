@@ -6,8 +6,8 @@ from odoo.osv import expression
 from odoo.tools import SQL
 
 
-class Project(models.Model):
-    _inherit = "project.project"
+class ProjectProject(models.Model):
+    _inherit = ["project.project"]
 
     allow_material = fields.Boolean("Products on Tasks", compute="_compute_allow_material", store=True, readonly=False)
     allow_quotations = fields.Boolean(
@@ -88,7 +88,7 @@ class Project(models.Model):
                 fsm_project.update({'pricing_type': 'employee_rate'})
             else:
                 fsm_project.update({'pricing_type': 'task_rate'})
-        super(Project, self - fsm_projects)._compute_pricing_type()
+        super(ProjectProject, self - fsm_projects)._compute_pricing_type()
 
     def _search_pricing_type(self, operator, value):
         domain = super()._search_pricing_type(operator, value)
@@ -117,18 +117,18 @@ class Project(models.Model):
         # We cannot have a SOL in the fsm project
         fsm_projects = self.filtered('is_fsm')
         fsm_projects.update({'sale_line_id': False})
-        super(Project, self - fsm_projects)._compute_sale_line_id()
+        super(ProjectProject, self - fsm_projects)._compute_sale_line_id()
 
     @api.depends('sale_line_employee_ids.sale_line_id', 'sale_line_id')
     def _compute_partner_id(self):
         basic_projects = self.filtered(lambda project: not project.is_fsm)
-        super(Project, basic_projects)._compute_partner_id()
+        super(ProjectProject, basic_projects)._compute_partner_id()
 
     @api.depends('is_fsm')
     def _compute_display_sales_stat_buttons(self):
         fsm_projects = self.filtered('is_fsm')
         fsm_projects.display_sales_stat_buttons = False
-        super(Project, self - fsm_projects)._compute_display_sales_stat_buttons()
+        super(ProjectProject, self - fsm_projects)._compute_display_sales_stat_buttons()
 
     def _get_profitability_sale_order_items_domain(self, domain=None):
         quotation_projects = self.filtered('allow_quotations')

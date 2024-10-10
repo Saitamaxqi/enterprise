@@ -5,9 +5,8 @@ from odoo import models
 from odoo.tools import SQL
 
 
-class IVAReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_co.iva.report.handler'
-    _inherit = 'l10n_co.report.handler'
+class L10n_CoIvaReportHandler(models.AbstractModel):
+    _inherit = ['l10n_co.report.handler']
     _description = 'IVA Report Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):

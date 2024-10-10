@@ -7,12 +7,12 @@ import random
 from odoo import api, models
 
 
-class DemoSocialStream(models.Model):
-    _inherit = 'social.stream'
+class SocialStream(models.Model):
+    _inherit = ['social.stream']
 
     @api.model_create_multi
     def create(self, vals_list):
-        res = super(DemoSocialStream, self).create(vals_list)
+        res = super().create(vals_list)
 
         demo_streams = [
             self.env.ref('social_demo.social_stream_facebook_page', raise_if_not_found=False),

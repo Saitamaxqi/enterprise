@@ -7,7 +7,6 @@ from odoo.tools.misc import get_lang
 
 
 class HrAppraisalGoal(models.Model):
-    _name = "hr.appraisal.goal"
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Appraisal Goal"
 

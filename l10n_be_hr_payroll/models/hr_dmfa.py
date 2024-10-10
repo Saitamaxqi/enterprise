@@ -893,8 +893,7 @@ class DMFAWorkerDeduction(DMFANode):
         self.certificate_origin = -1
 
 
-class HrDMFAReport(models.Model):
-    _name = 'l10n_be.dmfa'
+class L10n_BeDmfa(models.Model):
     _description = 'DMFA xml report'
     _order = "year desc, quarter desc"
 
@@ -1253,8 +1252,7 @@ class HrDMFAReport(models.Model):
         return (round(basis, 2), round(onss_amount, 2))
 
 
-class HrDMFALocationUnit(models.Model):
-    _name = 'l10n_be.dmfa.location.unit'
+class L10n_BeDmfaLocationUnit(models.Model):
     _description = 'Work Place defined by ONSS'
     _rec_name = 'code'
 

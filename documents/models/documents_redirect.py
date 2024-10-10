@@ -1,13 +1,12 @@
 from odoo import api, fields, models
 
 
-class DocumentRedirect(models.Model):
+class DocumentsRedirect(models.Model):
     """Model used to keep the old links valid after the 18.0 migration.
 
     Do *NOT* use that model or inherit from it, it will be removed in the future.
     """
 
-    _name = "documents.redirect"
     _description = "Document Redirect"
     _log_access = False
 

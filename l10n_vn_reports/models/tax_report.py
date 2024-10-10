@@ -4,9 +4,8 @@ from odoo.tools import date_utils, SQL
 from odoo.tools.misc import format_date, get_lang
 
 
-class L10nVnTaxCustomHandler(models.AbstractModel):
-    _name = 'l10n_vn.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_VnTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'Taxes Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
@@ -500,9 +499,8 @@ class L10nVnTaxCustomHandler(models.AbstractModel):
         return lines_with_values
 
 
-class SalesTaxCustomHandler(models.AbstractModel):
-    _name = 'l10n_vn.sales.tax.report.handler'
-    _inherit = 'l10n_vn.tax.report.handler'
+class L10n_VnSalesTaxReportHandler(models.AbstractModel):
+    _inherit = ['l10n_vn.tax.report.handler']
     _description = 'Taxes Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
@@ -549,9 +547,8 @@ class SalesTaxCustomHandler(models.AbstractModel):
         })
 
 
-class PurchaseTaxCustomHandler(models.AbstractModel):
-    _name = 'l10n_vn.purchase.tax.report.handler'
-    _inherit = 'l10n_vn.tax.report.handler'
+class L10n_VnPurchaseTaxReportHandler(models.AbstractModel):
+    _inherit = ['l10n_vn.tax.report.handler']
     _description = 'Taxes Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):

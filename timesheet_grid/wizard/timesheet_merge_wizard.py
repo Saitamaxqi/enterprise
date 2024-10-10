@@ -5,8 +5,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 
 
-class MergeTimesheets(models.TransientModel):
-    _name = 'hr_timesheet.merge.wizard'
+class Hr_TimesheetMergeWizard(models.TransientModel):
     _description = 'Merge Timesheets'
 
     name = fields.Char('Description', compute='_compute_name', readonly=False, store=True)

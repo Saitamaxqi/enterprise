@@ -8,8 +8,7 @@ import requests
 _logger = logging.getLogger(__name__)
 
 
-class AddSixTerminal(models.TransientModel):
-    _name = "pos_iot_six.add_six_terminal"
+class Pos_Iot_SixAdd_Six_Terminal(models.TransientModel):
     _description = "Connect a Six Payment Terminal"
 
     iot_box_id = fields.Many2one(

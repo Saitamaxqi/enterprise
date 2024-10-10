@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 
 
 class Base(models.AbstractModel):
-    _inherit = 'base'
+    _inherit = ['base']
 
     @api.model
     def _get_default_map_view(self):

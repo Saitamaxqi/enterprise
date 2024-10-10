@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class HrExpense(models.Model):
-    _name = 'hr.expense'
     _inherit = ['hr.expense', 'documents.unlink.mixin']
 
     document_count = fields.Integer(string='Document Count', compute="_compute_document_count")

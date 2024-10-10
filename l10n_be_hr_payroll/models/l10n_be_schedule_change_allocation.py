@@ -5,8 +5,7 @@ from markupsafe import Markup
 from odoo import api, models, fields, _
 
 
-class L10nBeScheduleChangeAllocation(models.Model):
-    _name = 'l10n_be.schedule.change.allocation'
+class L10n_BeScheduleChangeAllocation(models.Model):
     _description = 'Update allocation on schedule change'
 
     effective_date = fields.Date(required=True)

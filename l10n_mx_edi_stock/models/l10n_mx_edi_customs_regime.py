@@ -1,8 +1,7 @@
 from odoo import fields, models
 
 
-class MexicanEDICustomsRegime(models.Model):
-    _name = 'l10n_mx_edi.customs.regime'
+class L10n_Mx_EdiCustomsRegime(models.Model):
     _description = 'Mexican Customs Regime'
 
     code = fields.Char(string='Code', required=True)

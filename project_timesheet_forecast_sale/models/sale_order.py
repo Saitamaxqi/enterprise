@@ -6,8 +6,9 @@ from datetime import datetime
 from odoo import api, models
 from odoo.osv import expression
 
+
 class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+    _inherit = ['sale.order.line']
 
     @api.depends('analytic_line_ids.unit_amount', 'analytic_line_ids.validated', 'planning_slot_ids.allocated_hours', 'task_id', 'project_id')
     def _compute_planning_hours_planned(self):

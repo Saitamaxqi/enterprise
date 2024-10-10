@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     sdd_mandate_id = fields.Many2one(related='origin_payment_id.sdd_mandate_id')
     sdd_has_usable_mandate = fields.Boolean(compute='_compute_sdd_has_usable_mandate', search='_search_sdd_has_usable_mandate')

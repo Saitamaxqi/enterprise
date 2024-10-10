@@ -11,8 +11,8 @@ from odoo.tools import float_round, float_is_zero, date_utils, ormcache
 from odoo.exceptions import UserError
 
 
-class Payslip(models.Model):
-    _inherit = 'hr.payslip'
+class HrPayslip(models.Model):
+    _inherit = ['hr.payslip']
 
     meal_voucher_count = fields.Integer(
         compute='_compute_work_entry_dependent_benefits')  # Overrides compute method
@@ -206,7 +206,7 @@ class Payslip(models.Model):
                 ('company_id', '=', payslip.company_id.id),
                 ('employee_id', '=', payslip.employee_id.id),
                 ('state', '!=', 'cancel')])
-        super(Payslip, self - reimbursement_payslips)._compute_contract_domain_ids()
+        super(HrPayslip, self - reimbursement_payslips)._compute_contract_domain_ids()
 
     @api.depends('date_to', 'line_ids.total', 'input_line_ids.code')
     def _compute_l10n_be_max_seizable_amount(self):

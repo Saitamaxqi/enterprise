@@ -5,8 +5,8 @@ from odoo import api, fields, models, _
 from collections import defaultdict
 
 
-class ContractHistory(models.Model):
-    _inherit = 'hr.contract.history'
+class HrContractHistory(models.Model):
+    _inherit = ['hr.contract.history']
 
     l10n_be_is_below_scale = fields.Boolean(
         string="Is below CP200 salary scale", compute='_compute_l10n_be_is_below_scale', search='_search_l10n_be_is_below_scale')

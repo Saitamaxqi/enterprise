@@ -4,7 +4,7 @@ from .pos_urban_piper_request import UrbanPiperClient
 
 
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = ['product.template']
 
     urbanpiper_pos_config_ids = fields.Many2many(
         'pos.config',

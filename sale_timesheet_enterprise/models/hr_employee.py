@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class HrEmployee(models.Model):
-    _inherit = "hr.employee"
+    _inherit = ["hr.employee"]
 
     billable_time_target = fields.Float("Billing Time Target", groups="hr.group_hr_user")
     show_billable_time_target = fields.Boolean(related="company_id.timesheet_show_rates", groups="hr.group_hr_user")

@@ -7,8 +7,8 @@ from datetime import datetime, time
 from odoo import fields, models
 
 
-class Partner(models.Model):
-    _inherit = "res.partner"
+class ResPartner(models.Model):
+    _inherit = ["res.partner"]
 
     upcoming_appointment_ids = fields.Many2many('calendar.event', string="Upcoming Appointments", compute="_compute_upcoming_appointment_ids")
 

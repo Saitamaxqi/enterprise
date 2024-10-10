@@ -1,8 +1,8 @@
 from odoo import api, models
 
 
-class PricerPosConfig(models.Model):
-    _inherit = 'pos.config'
+class PosConfig(models.Model):
+    _inherit = ['pos.config']
 
     @api.model
     def enable_pos_pricelists_demo(self):

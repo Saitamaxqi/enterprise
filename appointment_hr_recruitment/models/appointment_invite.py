@@ -4,8 +4,8 @@
 from odoo import fields, models
 
 
-class AppointmentInviteHrRecruitment(models.Model):
-    _inherit = "appointment.invite"
+class AppointmentInvite(models.Model):
+    _inherit = ["appointment.invite"]
 
     applicant_id = fields.Many2one('hr.applicant', "Applicant",
         help="Link an applicant to the appointment invite created.\n"

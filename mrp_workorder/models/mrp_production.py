@@ -11,7 +11,7 @@ from odoo.tools import file_open
 
 
 class MrpProduction(models.Model):
-    _inherit = 'mrp.production'
+    _inherit = ['mrp.production']
     _start_name = "date_start"
     _stop_name = "date_finished"
 

@@ -4,7 +4,7 @@ from odoo import _, api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     employment_hero_api_key = fields.Char(related='company_id.employment_hero_api_key', readonly=False)
     employment_hero_base_url = fields.Char(related='company_id.employment_hero_base_url', readonly=False)

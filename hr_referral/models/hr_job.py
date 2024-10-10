@@ -3,8 +3,8 @@
 from odoo import fields, models, _
 
 
-class Job(models.Model):
-    _inherit = "hr.job"
+class HrJob(models.Model):
+    _inherit = ["hr.job"]
 
     job_open_date = fields.Date('Job Start Recruitment Date', default=fields.Date.today())
     utm_campaign_id = fields.Many2one('utm.campaign', 'Campaign', ondelete='restrict')
@@ -108,7 +108,7 @@ class Job(models.Model):
 
     def set_recruit(self):
         self.write({'job_open_date': fields.Date.today()})
-        return super(Job, self).set_recruit()
+        return super().set_recruit()
 
     def get_referral_link(self, channel):
         self.ensure_one()

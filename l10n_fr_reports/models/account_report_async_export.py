@@ -30,7 +30,6 @@ ERROR_CODE_TO_MSG = {
 
 
 class AccountReportAsyncExport(models.Model):
-    _name = 'account.report.async.export'
     _description = "Account Report Async Export"
 
     name = fields.Char()

@@ -5,8 +5,9 @@ from odoo import fields, models, api
 from odoo.addons.resource.models.utils import filter_domain_leaf
 from odoo.osv import expression
 
+
 class PlanningSlot(models.Model):
-    _inherit = 'planning.slot'
+    _inherit = ['planning.slot']
 
     employee_skill_ids = fields.One2many(related='employee_id.employee_skill_ids', string='Skills')
 

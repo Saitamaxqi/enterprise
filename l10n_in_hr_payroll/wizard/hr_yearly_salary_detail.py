@@ -9,7 +9,6 @@ from odoo.osv import expression
 
 
 class YearlySalaryDetail(models.TransientModel):
-    _name = 'yearly.salary.detail'
     _description = 'Hr Salary Employee By Category Report'
 
     @api.model

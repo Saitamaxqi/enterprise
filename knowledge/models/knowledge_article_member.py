@@ -5,8 +5,7 @@ from odoo import api, fields, models, tools, _
 from odoo.exceptions import AccessError, ValidationError
 
 
-class ArticleMember(models.Model):
-    _name = 'knowledge.article.member'
+class KnowledgeArticleMember(models.Model):
     _description = 'Article Member'
     _rec_name = 'partner_id'
 

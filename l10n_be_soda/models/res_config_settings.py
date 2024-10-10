@@ -4,7 +4,7 @@ from odoo import models, _
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = "res.config.settings"
+    _inherit = ["res.config.settings"]
 
     def l10n_be_soda_open_soda_mapping(self):
         wizard = self.env['soda.import.wizard'].create({

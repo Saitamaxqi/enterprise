@@ -1,8 +1,7 @@
 from odoo import fields, models, api
 
 
-class L10nPEPleUsage(models.Model):
-    _name = "l10n_pe.ple.usage"
+class L10n_PePleUsage(models.Model):
     _description = "Service that is reflected in the declared invoice and must be classified according to table 31, used on purchase report 8.2"
     _rec_names_search = ["name", "code"]
 

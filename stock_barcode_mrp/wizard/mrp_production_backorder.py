@@ -4,7 +4,7 @@ from odoo import models
 
 
 class MrpProductionBackorder(models.TransientModel):
-    _inherit = 'mrp.production.backorder'
+    _inherit = ['mrp.production.backorder']
 
     def action_backorder(self):
         res = super().action_backorder()

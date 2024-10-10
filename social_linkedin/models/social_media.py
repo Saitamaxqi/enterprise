@@ -8,8 +8,8 @@ from odoo import _, models, fields
 from odoo.exceptions import UserError
 
 
-class SocialMediaLinkedin(models.Model):
-    _inherit = 'social.media'
+class SocialMedia(models.Model):
+    _inherit = ['social.media']
 
     _LINKEDIN_ENDPOINT = 'https://api.linkedin.com/rest/'
     _LINKEDIN_SCOPE = 'r_basicprofile r_organization_followers w_member_social w_member_social_feed rw_organization_admin w_organization_social w_organization_social_feed r_organization_social r_organization_social_feed'
@@ -20,7 +20,7 @@ class SocialMediaLinkedin(models.Model):
         self.ensure_one()
 
         if self.media_type != 'linkedin':
-            return super(SocialMediaLinkedin, self)._action_add_account()
+            return super()._action_add_account()
 
         linkedin_use_own_account = self.env['ir.config_parameter'].sudo().get_param('social.linkedin_use_own_account')
         linkedin_app_id = self.env['ir.config_parameter'].sudo().get_param('social.linkedin_app_id')

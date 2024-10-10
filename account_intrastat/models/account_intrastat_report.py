@@ -26,9 +26,9 @@ _unknown_country_code = {
 
 _qn_unknown_individual_vat_country_codes = ('FI', 'SE', 'SK', 'DE', 'AT')
 
-class IntrastatReportCustomHandler(models.AbstractModel):
-    _name = 'account.intrastat.report.handler'
-    _inherit = 'account.report.custom.handler'
+
+class AccountIntrastatReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Intrastat Report Custom Handler'
 
     def _get_custom_display_config(self):

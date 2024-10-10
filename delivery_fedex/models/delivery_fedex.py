@@ -47,8 +47,8 @@ With the above example, the AdditionalInformation of each piece will be updated.
 More info on https://www.fedex.com/en-us/developer/web-services/process.html#documentation"""
 
 
-class ProviderFedex(models.Model):
-    _inherit = 'delivery.carrier'
+class DeliveryCarrier(models.Model):
+    _inherit = ['delivery.carrier']
 
     delivery_type = fields.Selection(selection_add=[
         ('fedex', "FedEx")
@@ -115,14 +115,14 @@ class ProviderFedex(models.Model):
     fedex_extra_data_return_request = fields.Text('Extra data for return', help=HELP_EXTRA_DATA)
 
     def _compute_can_generate_return(self):
-        super(ProviderFedex, self)._compute_can_generate_return()
+        super()._compute_can_generate_return()
         for carrier in self:
             if not carrier.can_generate_return:
                 if carrier.delivery_type == 'fedex':
                     carrier.can_generate_return = True
 
     def _compute_supports_shipping_insurance(self):
-        res = super(ProviderFedex, self)._compute_supports_shipping_insurance()
+        res = super()._compute_supports_shipping_insurance()
         for carrier in self:
             if carrier.delivery_type == 'fedex':
                 carrier.supports_shipping_insurance = True

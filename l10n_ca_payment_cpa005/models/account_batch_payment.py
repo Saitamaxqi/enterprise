@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError, RedirectWarning
 
 
 class AccountBatchPayment(models.Model):
-    _inherit = "account.batch.payment"
+    _inherit = ["account.batch.payment"]
 
     l10n_ca_cpa005_file_creation_number = fields.Char(
         string="File Creation Number used in Canadian EFT",

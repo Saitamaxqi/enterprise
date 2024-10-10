@@ -8,7 +8,6 @@ from odoo.fields import Datetime
 
 
 class MarketingTrace(models.Model):
-    _name = 'marketing.trace'
     _description = 'Marketing Trace'
     _order = 'schedule_date DESC, id ASC'
     _rec_name = 'participant_id'

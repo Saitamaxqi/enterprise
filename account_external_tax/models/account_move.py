@@ -4,7 +4,6 @@ from collections import defaultdict
 
 
 class AccountMove(models.Model):
-    _name = 'account.move'
     _inherit = ['account.move', 'account.external.tax.mixin']
 
     def _compute_tax_totals(self):

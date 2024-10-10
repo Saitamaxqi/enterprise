@@ -5,7 +5,7 @@ from odoo import models
 
 
 class ResourceCalendar(models.Model):
-    _inherit = "resource.calendar"
+    _inherit = ["resource.calendar"]
 
     def _work_intervals_batch(self, start_dt, end_dt, resources=None, domain=None, tz=None, compute_leaves=True):
         work_intervals = super()._work_intervals_batch(start_dt, end_dt, resources=resources, domain=domain, tz=tz, compute_leaves=compute_leaves)

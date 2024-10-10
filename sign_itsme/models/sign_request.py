@@ -6,7 +6,7 @@ from odoo import models
 
 class SignRequest(models.Model):
 
-    _inherit = "sign.request"
+    _inherit = ["sign.request"]
 
     def go_to_signable_document(self, request_items=None):
         """ go to the signable document as the signers for specified request_items or the current user"""

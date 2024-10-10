@@ -29,7 +29,7 @@ def parse_etims_datetime(dt_str):
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     # === Business fields === #
     l10n_ke_payment_method_id = fields.Many2one(

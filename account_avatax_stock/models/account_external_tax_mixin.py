@@ -3,7 +3,7 @@ from odoo import models
 
 
 class AccountExternalTaxMixin(models.AbstractModel):
-    _inherit = 'account.external.tax.mixin'
+    _inherit = ['account.external.tax.mixin']
 
     def _get_avatax_line_addresses(self, partner, warehouse_id):
         """Get the line level addresses from the warehouse.

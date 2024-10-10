@@ -12,9 +12,7 @@ from odoo.addons.sale.models.sale_order import SALE_ORDER_STATE
 from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_PROGRESS_STATE, SUBSCRIPTION_STATES
 
 
-
 class SaleOrderLogReport(models.Model):
-    _name = "sale.order.log.report"
     _description = "Sales Log Analysis Report"
     _order = 'id desc'
     _auto = False

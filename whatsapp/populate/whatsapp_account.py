@@ -7,7 +7,7 @@ from odoo.tools import populate
 
 
 class WhatsappAccount(models.Model):
-    _inherit = "whatsapp.account"
+    _inherit = ["whatsapp.account"]
 
     _populate_dependencies = ["res.users"]
     _populate_sizes = {'small': 2, 'medium': 5, 'large': 10}

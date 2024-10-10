@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     @api.model
     def winbooks_import_action(self):

@@ -3,7 +3,7 @@ from odoo import models
 
 
 class AccountBatchPayment(models.Model):
-    _inherit = "account.batch.payment"
+    _inherit = ["account.batch.payment"]
 
     def _get_nr_nacha_files(self):
         nr = super()._get_nr_nacha_files()

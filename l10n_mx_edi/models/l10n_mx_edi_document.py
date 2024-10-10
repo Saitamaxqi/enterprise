@@ -82,8 +82,7 @@ USAGE_SELECTION = [
 ]
 
 
-class L10nMxEdiDocument(models.Model):
-    _name = 'l10n_mx_edi.document'
+class L10n_Mx_EdiDocument(models.Model):
     _description = "Mexican documents that needs to transit outside of Odoo"
     _order = 'datetime DESC, id DESC'
 

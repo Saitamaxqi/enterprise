@@ -4,8 +4,7 @@
 from odoo import api, models
 
 
-class ReportL10nBeHrDMFA(models.AbstractModel):
-    _name = 'report.l10n_be_hr_payroll.dmfa_pdf_report'
+class ReportL10n_Be_Hr_PayrollDmfa_Pdf_Report(models.AbstractModel):
     _description = 'Get DmfA declaration as PDF'
 
     @api.model

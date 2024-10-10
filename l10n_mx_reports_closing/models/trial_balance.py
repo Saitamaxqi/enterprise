@@ -3,8 +3,9 @@
 
 from odoo import models, fields, _
 
-class L10nMXTrialBalanceCustomHandler(models.AbstractModel):
-    _inherit = 'account.trial.balance.report.handler'
+
+class AccountTrialBalanceReportHandler(models.AbstractModel):
+    _inherit = ['account.trial.balance.report.handler']
 
     def _get_custom_display_config(self):
         return {

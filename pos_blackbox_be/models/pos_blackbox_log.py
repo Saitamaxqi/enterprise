@@ -3,8 +3,8 @@
 
 from odoo import models, fields
 
-class PosBlackboxBeLog(models.Model):
-    _name = "pos_blackbox_be.log"
+
+class Pos_Blackbox_BeLog(models.Model):
     _description = "Track every changes made while using the Blackbox"
     _order = "id desc"
 
@@ -28,6 +28,6 @@ class PosBlackboxBeLog(models.Model):
                 "description": str(values),
             }
 
-            return super(PosBlackboxBeLog, self).create(log_values)
+            return super().create(log_values)
 
         return None

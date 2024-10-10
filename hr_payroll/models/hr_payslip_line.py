@@ -6,7 +6,6 @@ from odoo.exceptions import UserError
 
 
 class HrPayslipLine(models.Model):
-    _name = 'hr.payslip.line'
     _description = 'Payslip Line'
     _order = 'contract_id, sequence, code'
 

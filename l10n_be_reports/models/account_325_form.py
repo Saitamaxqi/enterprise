@@ -26,7 +26,8 @@ def format_325_form_values(values):
             tmp_dict[key] = format_if_float(value)
     return tmp_dict
 
-class Form325(models.Model):
+
+class L10n_BeForm325(models.Model):
     _name = "l10n_be.form.325"
     _description = "Represents a 325 form"
     _inherit = ['mail.thread']

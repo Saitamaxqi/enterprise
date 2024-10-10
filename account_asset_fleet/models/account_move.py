@@ -4,7 +4,7 @@ from odoo import models
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     def _prepare_move_for_asset_depreciation(self, vals):
         # Overridden in order to link the depreciation entries with the vehicle_id

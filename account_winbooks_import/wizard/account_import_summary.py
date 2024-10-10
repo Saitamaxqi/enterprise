@@ -3,8 +3,8 @@
 from odoo import api, fields, models
 
 
-class AccountWinbooksImportSummary(models.TransientModel):
-    _inherit = 'account.import.summary'
+class AccountImportSummary(models.TransientModel):
+    _inherit = ['account.import.summary']
 
     import_summary_analytic_ids = fields.Many2many('account.analytic.account')
     import_summary_analytic_line_ids = fields.Many2many('account.analytic.line')

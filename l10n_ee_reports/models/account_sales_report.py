@@ -8,9 +8,8 @@ from odoo.exceptions import RedirectWarning, UserError
 from odoo.tools import float_round
 
 
-class EstonianECSalesReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_ee.ec.sales.report.handler'
-    _inherit = 'account.ec.sales.report.handler'
+class L10n_EeEcSalesReportHandler(models.AbstractModel):
+    _inherit = ['account.ec.sales.report.handler']
     _description = 'Estonian EC Sales Report Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):

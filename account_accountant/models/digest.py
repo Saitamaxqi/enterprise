@@ -5,8 +5,8 @@ from odoo import fields, models, _
 from odoo.exceptions import AccessError
 
 
-class Digest(models.Model):
-    _inherit = 'digest.digest'
+class DigestDigest(models.Model):
+    _inherit = ['digest.digest']
 
     kpi_account_bank_cash = fields.Boolean('Bank & Cash Moves')
     kpi_account_bank_cash_value = fields.Monetary(compute='_compute_kpi_account_total_bank_cash_value')
@@ -29,6 +29,6 @@ class Digest(models.Model):
             record.kpi_account_bank_cash_value = data.get(company)
 
     def _compute_kpis_actions(self, company, user):
-        res = super(Digest, self)._compute_kpis_actions(company, user)
+        res = super()._compute_kpis_actions(company, user)
         res.update({'kpi_account_bank_cash': 'account.open_account_journal_dashboard_kanban&menu_id=%s' % (self.env.ref('account.menu_finance').id)})
         return res

@@ -3,8 +3,7 @@
 from odoo import fields, models
 
 
-class L10nCHISMutationLine(models.Model):
-    _name = 'hr.employee.is.line'
+class HrEmployeeIsLine(models.Model):
     _description = 'IS Entry / Withdrawals / Mutations'
 
     employee_id = fields.Many2one('hr.employee', required=True)

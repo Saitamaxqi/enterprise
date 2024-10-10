@@ -21,8 +21,7 @@ _logger = logging.getLogger(__name__)
 ALLOWED_COMPANY_OPERATORS = ['not in', 'in', '=', '!=', 'ilike', 'not ilike', 'like', 'not like']
 
 
-class DataMergeRecord(models.Model):
-    _name = 'data_merge.record'
+class Data_MergeRecord(models.Model):
     _description = 'Deduplication Record'
     _order = 'res_id desc'
 
@@ -569,7 +568,7 @@ class DataMergeRecord(models.Model):
             master = self.with_context(active_test=False).group_id.record_ids.filtered('is_master')
             master.write({'is_master': False})
 
-        return super(DataMergeRecord, self).write(vals)
+        return super().write(vals)
 
     ############
     ### Actions

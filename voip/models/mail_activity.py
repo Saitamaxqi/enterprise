@@ -5,7 +5,7 @@ from odoo.addons.mail.tools.discuss import Store
 
 
 class MailActivity(models.Model):
-    _inherit = "mail.activity"
+    _inherit = ["mail.activity"]
 
     phone = fields.Char("Phone", compute="_compute_phone_numbers", readonly=False, store=True)
     mobile = fields.Char("Mobile", compute="_compute_phone_numbers", readonly=False, store=True)

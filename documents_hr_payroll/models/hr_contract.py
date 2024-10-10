@@ -5,7 +5,7 @@ from odoo import models
 
 
 class HrContract(models.Model):
-    _inherit = 'hr.contract'
+    _inherit = ['hr.contract']
 
     def _get_sign_request_folder(self):
         self.ensure_one()

@@ -3,8 +3,9 @@
 
 from odoo import models
 
+
 class ProjectTaskType(models.Model):
-    _inherit = 'project.task.type'
+    _inherit = ['project.task.type']
 
     def _get_default_project_ids(self):
         # Call super first to take into account the context

@@ -7,7 +7,7 @@ from odoo.tools import float_is_zero
 
 
 class MrpProduction(models.Model):
-    _inherit = "mrp.production"
+    _inherit = ["mrp.production"]
 
     check_ids = fields.One2many('quality.check', 'production_id', string="Checks")
     quality_check_todo = fields.Boolean(compute='_compute_check')

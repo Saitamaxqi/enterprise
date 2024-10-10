@@ -10,7 +10,7 @@ from odoo.tools import _, unique, OrderedSet
 
 
 class Base(models.AbstractModel):
-    _inherit = 'base'
+    _inherit = ['base']
 
     _start_name = 'date_start'       # start field to use for default gantt view
     _stop_name = 'date_stop'         # stop field to use for default gantt view

@@ -12,7 +12,6 @@ _logger = logging.getLogger(__name__)
 
 
 class AmazonOffer(models.Model):
-    _name = 'amazon.offer'
     _description = "Amazon Offer"
 
     def _default_marketplace(self):

@@ -4,8 +4,7 @@
 from odoo import _, models
 
 
-class Project(models.Model):
-    _name = 'project.project'
+class ProjectProject(models.Model):
     _inherit = ["project.project", "timesheet.grid.mixin"]
 
     def check_can_start_timer(self):

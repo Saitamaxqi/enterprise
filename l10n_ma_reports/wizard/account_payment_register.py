@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class AccountPaymentRegister(models.TransientModel):
-    _inherit = 'account.payment.register'
+    _inherit = ['account.payment.register']
 
     l10n_ma_reports_payment_method = fields.Selection(
         [

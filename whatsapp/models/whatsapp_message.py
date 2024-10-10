@@ -19,8 +19,8 @@ from odoo.tools import groupby, html2plaintext
 
 _logger = logging.getLogger(__name__)
 
-class WhatsAppMessage(models.Model):
-    _name = 'whatsapp.message'
+
+class WhatsappMessage(models.Model):
     _description = 'WhatsApp Messages'
     _order = 'id desc'
     _rec_name = 'mobile_number'

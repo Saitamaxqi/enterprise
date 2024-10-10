@@ -2,8 +2,8 @@
 from odoo import api, models
 
 
-class L10nMxEdiDocument(models.Model):
-    _inherit = 'l10n_mx_edi.document'
+class L10n_Mx_EdiDocument(models.Model):
+    _inherit = ['l10n_mx_edi.document']
 
     # -------------------------------------------------------------------------
     # BUSINESS METHODS

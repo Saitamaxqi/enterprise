@@ -4,7 +4,7 @@
 from odoo import Command, models
 
 
-class DocumentMixin(models.AbstractModel):
+class DocumentsMixin(models.AbstractModel):
     """
     Inherit this mixin to automatically create a `documents.document` when
     an `ir.attachment` is linked to a record and add the default values when
@@ -15,8 +15,7 @@ class DocumentMixin(models.AbstractModel):
 
     Note: this mixin can be disabled with the context variable "no_document=True".
     """
-    _name = 'documents.mixin'
-    _inherit = 'documents.unlink.mixin'
+    _inherit = ['documents.unlink.mixin']
     _description = "Documents creation mixin"
 
     def _get_document_vals(self, attachment):
@@ -95,7 +94,7 @@ class DocumentMixin(models.AbstractModel):
 
         Note:
         - This method doesn't override existing values (permission, owner, ...).
-        - The related record res_model must inherit from DocumentMixin
+        - The related record res_model must inherit from DocumentsMixin
         """
         if self._name != res_model:
             raise ValueError(f'Invalid model {res_model} (expected {self._name})')

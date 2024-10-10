@@ -20,7 +20,7 @@ L10N_EC_TAXSUPPORTS = [
 
 
 class AccountTax(models.Model):
-    _inherit = "account.tax"
+    _inherit = ["account.tax"]
 
     l10n_ec_code_taxsupport = fields.Selection(
         L10N_EC_TAXSUPPORTS,

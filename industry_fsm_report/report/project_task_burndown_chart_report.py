@@ -2,8 +2,9 @@
 
 from odoo import fields, models
 
-class ReportProjectTaskBurndownChart(models.AbstractModel):
-    _inherit = 'project.task.burndown.chart.report'
+
+class ProjectTaskBurndownChartReport(models.AbstractModel):
+    _inherit = ['project.task.burndown.chart.report']
 
     worksheet_template_id = fields.Many2one('worksheet.template', string="Worksheet Template", readonly=True)
 

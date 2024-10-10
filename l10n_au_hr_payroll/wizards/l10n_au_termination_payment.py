@@ -8,8 +8,7 @@ from odoo.addons.l10n_au_hr_payroll.models.hr_contract import CESSATION_TYPE_COD
 from odoo.exceptions import UserError
 
 
-class TerminationPaymentWizard(models.TransientModel):
-    _name = "l10n_au.termination.payment"
+class L10n_AuTerminationPayment(models.TransientModel):
     _description = "Termination Payment"
 
     employee_id = fields.Many2one("hr.employee")

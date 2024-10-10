@@ -12,7 +12,6 @@ class AccountChangeLockDate(models.TransientModel):
     """
     This wizard is used to change the lock date
     """
-    _name = 'account.change.lock.date'
     _description = 'Change Lock Date'
 
     company_id = fields.Many2one(

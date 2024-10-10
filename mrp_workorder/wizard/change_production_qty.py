@@ -4,8 +4,9 @@
 from odoo import models, _
 from odoo.exceptions import ValidationError
 
+
 class ChangeProductionQty(models.TransientModel):
-    _inherit = "change.production.qty"
+    _inherit = ["change.production.qty"]
 
     def change_prod_qty(self):
         super(ChangeProductionQty, self).change_prod_qty()

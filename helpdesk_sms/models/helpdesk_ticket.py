@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class HelpdeskTicket(models.Model):
-    _inherit = "helpdesk.ticket"
+    _inherit = ["helpdesk.ticket"]
 
     def _send_sms(self):
         for ticket in self:

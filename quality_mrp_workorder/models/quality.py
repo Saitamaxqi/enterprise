@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 
 
 class QualityPoint(models.Model):
-    _inherit = "quality.point"
+    _inherit = ["quality.point"]
 
     @api.model
     def _get_domain_for_production(self, quality_points_domain):
@@ -28,7 +28,7 @@ class QualityPoint(models.Model):
 
 
 class QualityCheck(models.Model):
-    _inherit = "quality.check"
+    _inherit = ["quality.check"]
 
     operation_id = fields.Many2one(related="point_id.operation_id")
 

@@ -10,8 +10,8 @@ from werkzeug.urls import url_join
 from odoo import api, fields, models
 
 
-class SocialAccountInstagram(models.Model):
-    _inherit = 'social.account'
+class SocialAccount(models.Model):
+    _inherit = ['social.account']
 
     instagram_account_id = fields.Char('Instagram Account ID', readonly=True,
         help="Instagram Account ID provided by the Facebook API, this should never be set manually.")
@@ -28,7 +28,7 @@ class SocialAccountInstagram(models.Model):
         Statistics are only available through the mobile app, which means we don't have any website URL to provide. """
         instagram_accounts = self._filter_by_media_types(['instagram'])
 
-        super(SocialAccountInstagram, (self - instagram_accounts))._compute_stats_link()
+        super(SocialAccount, (self - instagram_accounts))._compute_stats_link()
 
         for account in instagram_accounts:
             account.stats_link = False
@@ -38,7 +38,7 @@ class SocialAccountInstagram(models.Model):
         Probably because the 'share' mechanic is not the same / not existing for Instagram posts. """
         instagram_accounts = self._filter_by_media_types(['instagram'])
 
-        super(SocialAccountInstagram, (self - instagram_accounts))._compute_statistics()
+        super(SocialAccount, (self - instagram_accounts))._compute_statistics()
 
         for account in instagram_accounts:
             insights_endpoint_url = url_join(
@@ -135,7 +135,7 @@ class SocialAccountInstagram(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        res = super(SocialAccountInstagram, self).create(vals_list)
+        res = super().create(vals_list)
         res.filtered(
             lambda a: a.media_type == 'instagram'
         )._create_default_stream_instagram()

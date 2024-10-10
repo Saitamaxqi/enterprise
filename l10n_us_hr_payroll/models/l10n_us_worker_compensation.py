@@ -4,7 +4,6 @@ from odoo import fields, models
 
 
 class L10nUsWorkerCompensation(models.Model):
-    _name = 'l10n.us.worker.compensation'
     _description = "Worker's Compensation"
 
     name = fields.Char(required=True)

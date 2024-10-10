@@ -12,8 +12,7 @@ from odoo.addons.whatsapp.tools import phone_validation as wa_phone_validation
 _logger = logging.getLogger(__name__)
 
 
-class WhatsAppComposer(models.TransientModel):
-    _name = 'whatsapp.composer'
+class WhatsappComposer(models.TransientModel):
     _description = 'Send WhatsApp Wizard'
 
     @api.model

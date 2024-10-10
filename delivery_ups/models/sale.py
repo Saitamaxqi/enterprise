@@ -6,7 +6,7 @@ from odoo.tools.translate import _
 
 
 class SaleOrder(models.Model):
-    _inherit = 'sale.order'
+    _inherit = ['sale.order']
 
     def _create_delivery_line(self, carrier, price_unit):
         res = super(SaleOrder, self)._create_delivery_line(carrier, price_unit)

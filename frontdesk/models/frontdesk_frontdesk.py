@@ -16,8 +16,8 @@ ASK_FIELDS_SELECTION = [
 
 PLANNED_VISITOR_TIME = 45
 
-class Frontdesk(models.Model):
-    _name = 'frontdesk.frontdesk'
+
+class FrontdeskFrontdesk(models.Model):
     _description = 'Frontdesk'
 
     name = fields.Char('Frontdesk Name', required=True)

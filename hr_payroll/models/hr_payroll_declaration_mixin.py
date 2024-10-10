@@ -13,7 +13,6 @@ _logger = logging.getLogger(__name__)
 
 
 class HrPayrollDeclarationMixin(models.AbstractModel):
-    _name = 'hr.payroll.declaration.mixin'
     _description = 'Payroll Declaration Mixin'
 
     @api.model

@@ -4,7 +4,7 @@ from odoo import models
 
 
 class StockMove(models.Model):
-    _inherit = 'stock.move'
+    _inherit = ['stock.move']
 
     def action_open_reference_no_repair(self):
         self.ensure_one()

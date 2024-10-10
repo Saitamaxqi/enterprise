@@ -4,8 +4,8 @@
 from odoo import models, fields
 
 
-class HrContract(models.Model):
-    _inherit = 'hr.contract.history'
+class HrContractHistory(models.Model):
+    _inherit = ['hr.contract.history']
 
     def action_sign_contract_wizard(self):
         self.ensure_one()

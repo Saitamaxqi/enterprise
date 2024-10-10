@@ -3,8 +3,9 @@
 
 from odoo import fields, models
 
+
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = ['product.template']
 
     version = fields.Integer('Version', default=1, copy=False, help="The current version of the product.")
     eco_count = fields.Integer('# ECOs',compute='_compute_eco_count')
@@ -22,7 +23,7 @@ class ProductTemplate(models.Model):
 
 
 class ProductProduct(models.Model):
-    _inherit = 'product.product'
+    _inherit = ['product.product']
 
     def mrp_eco_action_product_tmpl(self):
         action = self.product_tmpl_id.mrp_eco_action_product_tmpl()

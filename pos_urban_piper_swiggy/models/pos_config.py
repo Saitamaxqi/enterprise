@@ -2,7 +2,7 @@ from odoo import models
 
 
 class PosConfig(models.Model):
-    _inherit = 'pos.config'
+    _inherit = ['pos.config']
 
     def _get_total_tax_tag(self):
         if self.company_id.country_id.code == 'IN':

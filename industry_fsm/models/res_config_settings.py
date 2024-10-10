@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     module_industry_fsm_report = fields.Boolean("Worksheet Templates")
     module_industry_fsm_sale = fields.Boolean(

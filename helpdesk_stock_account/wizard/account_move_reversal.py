@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class AccountMoveReversal(models.TransientModel):
-    _inherit = 'account.move.reversal'
+    _inherit = ['account.move.reversal']
 
     product_id = fields.Many2one(related='helpdesk_ticket_id.product_id', readonly=False)
     lot_id = fields.Many2one(related='helpdesk_ticket_id.lot_id', readonly=False)

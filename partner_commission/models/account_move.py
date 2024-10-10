@@ -9,7 +9,7 @@ from odoo.tools import formatLang, format_date
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     referrer_id = fields.Many2one('res.partner', 'Referrer', domain=[('grade_id', '!=', False)], tracking=True)
     commission_po_line_id = fields.Many2one('purchase.order.line', 'Referrer Purchase Order line', copy=False)
@@ -178,8 +178,9 @@ class AccountMove(models.Model):
                 move.message_post(body=message_body)
         return res
 
+
 class AccountMoveLine(models.Model):
-    _inherit = 'account.move.line'
+    _inherit = ['account.move.line']
 
     def _get_commission_rule(self):
         self.ensure_one()

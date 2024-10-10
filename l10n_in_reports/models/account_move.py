@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     l10n_in_transaction_type = fields.Selection(
         selection=[

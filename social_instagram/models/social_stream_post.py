@@ -9,8 +9,8 @@ from werkzeug.urls import url_join, url_quote
 from odoo import fields, models, _
 
 
-class SocialStreamPostInstagram(models.Model):
-    _inherit = 'social.stream.post'
+class SocialStreamPost(models.Model):
+    _inherit = ['social.stream.post']
 
     instagram_facebook_author_id = fields.Char('Instagram Facebook Author ID',
         help="The Facebook ID of this Instagram post author, used to fetch the profile picture.")
@@ -24,7 +24,7 @@ class SocialStreamPostInstagram(models.Model):
         We have to store the URL that we got when fetching the instagram posts. """
         instagram_posts = self._filter_by_media_types(['instagram'])
 
-        super(SocialStreamPostInstagram, (self - instagram_posts))._compute_post_link()
+        super(SocialStreamPost, (self - instagram_posts))._compute_post_link()
 
         for post in instagram_posts:
             post.post_link = post.instagram_post_link or False
@@ -32,14 +32,14 @@ class SocialStreamPostInstagram(models.Model):
     def _compute_author_link(self):
         instagram_posts = self._filter_by_media_types(['instagram'])
 
-        super(SocialStreamPostInstagram, (self - instagram_posts))._compute_author_link()
+        super(SocialStreamPost, (self - instagram_posts))._compute_author_link()
 
         for post in instagram_posts:
             post.author_link = 'https://www.instagram.com/%s' % url_quote(post.author_name)
 
     def _compute_is_author(self):
         instagram_posts = self._filter_by_media_types(['instagram'])
-        super(SocialStreamPostInstagram, (self - instagram_posts))._compute_is_author()
+        super(SocialStreamPost, (self - instagram_posts))._compute_is_author()
 
         for post in instagram_posts:
             post.is_author = post.instagram_facebook_author_id == post.account_id.instagram_facebook_account_id
@@ -117,7 +117,7 @@ class SocialStreamPostInstagram(models.Model):
                 [('instagram_post_id', '=', self.instagram_post_id)], limit=1
             ).post_id
         else:
-            return super(SocialStreamPostInstagram, self)._fetch_matching_post()
+            return super()._fetch_matching_post()
 
     def _instagram_format_comment(self, comment):
         return {

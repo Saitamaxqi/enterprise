@@ -11,9 +11,8 @@ from dateutil.relativedelta import relativedelta
 from itertools import chain
 
 
-class AgedPartnerBalanceCustomHandler(models.AbstractModel):
-    _name = 'account.aged.partner.balance.report.handler'
-    _inherit = 'account.report.custom.handler'
+class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Aged Partner Balance Custom Handler'
 
     def _get_custom_display_config(self):
@@ -394,9 +393,9 @@ class AgedPartnerBalanceCustomHandler(models.AbstractModel):
             domain = []
         return domain
 
-class AgedPayableCustomHandler(models.AbstractModel):
-    _name = 'account.aged.payable.report.handler'
-    _inherit = 'account.aged.partner.balance.report.handler'
+
+class AccountAgedPayableReportHandler(models.AbstractModel):
+    _inherit = ['account.aged.partner.balance.report.handler']
     _description = 'Aged Payable Custom Handler'
 
     def open_journal_items(self, options, params):
@@ -418,9 +417,9 @@ class AgedPayableCustomHandler(models.AbstractModel):
     def action_audit_cell(self, options, params):
         return super().aged_partner_balance_audit(options, params, 'purchase')
 
-class AgedReceivableCustomHandler(models.AbstractModel):
-    _name = 'account.aged.receivable.report.handler'
-    _inherit = 'account.aged.partner.balance.report.handler'
+
+class AccountAgedReceivableReportHandler(models.AbstractModel):
+    _inherit = ['account.aged.partner.balance.report.handler']
     _description = 'Aged Receivable Custom Handler'
 
     def open_journal_items(self, options, params):

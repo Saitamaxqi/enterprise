@@ -21,7 +21,6 @@ class SocialAccount(models.Model):
     that is overridden by each actual social module implementations (social_facebook, social_twitter, ...).
     The statistics computation is run manually when visualizing the Feed. """
 
-    _name = 'social.account'
     _description = 'Social Account'
 
     def _get_default_company(self):

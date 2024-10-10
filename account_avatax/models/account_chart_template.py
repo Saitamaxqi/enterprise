@@ -3,7 +3,7 @@ from odoo.addons.account.models.chart_template import template
 
 
 class AccountChartTemplate(models.AbstractModel):
-    _inherit = 'account.chart.template'
+    _inherit = ['account.chart.template']
 
     @template('generic_coa', 'account.fiscal.position')
     def _get_us_avatax_fiscal_position(self):

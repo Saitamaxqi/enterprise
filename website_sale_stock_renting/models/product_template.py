@@ -5,8 +5,9 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import fields, models
 
+
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = ['product.template']
 
     def _get_default_start_date(self):
         """ Override to take the padding time into account """

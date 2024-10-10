@@ -6,8 +6,7 @@ from odoo.addons.resource.models.utils import float_to_time
 from odoo.exceptions import ValidationError
 
 
-class PlanningTemplate(models.Model):
-    _name = 'planning.slot.template'
+class PlanningSlotTemplate(models.Model):
     _description = "Shift Template"
     _order = "sequence"
 

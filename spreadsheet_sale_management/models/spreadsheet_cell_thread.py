@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class SpreadsheetCellThread(models.Model):
-    _inherit = 'spreadsheet.cell.thread'
+    _inherit = ['spreadsheet.cell.thread']
 
     sale_order_spreadsheet_id = fields.Many2one(
         'sale.order.spreadsheet',

@@ -2,8 +2,9 @@
 from odoo import models
 from odoo.addons.account.models.chart_template import template
 
+
 class AccountChartTemplate(models.AbstractModel):
-    _inherit = 'account.chart.template'
+    _inherit = ['account.chart.template']
 
     @template('pe', 'account.tax.group')
     def _get_pe_edi_account_tax_group(self):

@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class StockMoveLine(models.Model):
-    _inherit = 'stock.move.line'
+    _inherit = ['stock.move.line']
 
     def _domain_picking_id(self):
         # Add a domain on `picking_id` only if we come from a batch.

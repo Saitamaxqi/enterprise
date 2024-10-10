@@ -10,8 +10,8 @@ from werkzeug.urls import url_join
 from odoo import api, fields, models
 
 
-class SocialAccountFacebook(models.Model):
-    _inherit = 'social.account'
+class SocialAccount(models.Model):
+    _inherit = ['social.account']
 
     facebook_account_id = fields.Char('Facebook Account ID', readonly=True,
         help="Facebook Page ID provided by the Facebook API, this should never be set manually.")
@@ -22,7 +22,7 @@ class SocialAccountFacebook(models.Model):
     def _compute_stats_link(self):
         """ External link to this Facebook Page's 'insights' (fancy name for the page statistics). """
         facebook_accounts = self._filter_by_media_types(['facebook'])
-        super(SocialAccountFacebook, (self - facebook_accounts))._compute_stats_link()
+        super(SocialAccount, (self - facebook_accounts))._compute_stats_link()
 
         for account in facebook_accounts:
             account.stats_link = "https://www.facebook.com/%s/insights" % account.facebook_account_id \
@@ -40,7 +40,7 @@ class SocialAccountFacebook(models.Model):
           - The trend is 200% -> (40 / (60 - 40)) * 100 """
 
         facebook_accounts = self._filter_by_media_types(['facebook'])
-        super(SocialAccountFacebook, (self - facebook_accounts))._compute_statistics()
+        super(SocialAccount, (self - facebook_accounts))._compute_statistics()
 
         for account in facebook_accounts.filtered('facebook_account_id'):
             insights_endpoint_url = url_join(self.env['social.media']._FACEBOOK_ENDPOINT_VERSIONED, "%s/insights" % account.facebook_account_id)
@@ -141,7 +141,7 @@ class SocialAccountFacebook(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        res = super(SocialAccountFacebook, self).create(vals_list)
+        res = super().create(vals_list)
         res.filtered(lambda account: account.media_type == 'facebook')._create_default_stream_facebook()
         return res
 

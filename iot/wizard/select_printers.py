@@ -3,8 +3,8 @@
 
 from odoo import fields, models
 
-class SelectPrinter(models.TransientModel):
-    _name = "select.printers.wizard"
+
+class SelectPrintersWizard(models.TransientModel):
     _description = "Selection of printers"
 
     device_ids = fields.Many2many('iot.device', domain=[('type', '=', 'printer')])

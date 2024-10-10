@@ -8,7 +8,6 @@ from odoo.exceptions import UserError
 
 
 class HelpdeskTicketSelectForumWizard(models.TransientModel):
-    _name = "helpdesk.ticket.select.forum.wizard"
     _description = 'Share on Forum'
 
     ticket_id = fields.Many2one('helpdesk.ticket', default=lambda self: self.env.context.get('active_id'), export_string_translation=False)
@@ -91,7 +90,7 @@ class HelpdeskTicketSelectForumWizard(models.TransientModel):
 
 
 class ForumForum(models.Model):
-    _inherit = "forum.forum"
+    _inherit = ["forum.forum"]
 
     filter_for_helpdesk_wizard = fields.Boolean(store=False, search='_search_filter_for_helpdesk_wizard')
 

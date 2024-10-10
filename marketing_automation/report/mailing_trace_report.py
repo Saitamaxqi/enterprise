@@ -5,7 +5,7 @@ from odoo import fields, models, tools
 
 
 class MailingTraceReport(models.Model):
-    _inherit = 'mailing.trace.report'
+    _inherit = ['mailing.trace.report']
 
     def _report_get_request_where_items(self):
         res = super(MailingTraceReport, self)._report_get_request_where_items()

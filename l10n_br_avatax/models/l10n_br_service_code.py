@@ -2,8 +2,7 @@
 from odoo import models, fields
 
 
-class L10nBrServiceCode(models.Model):
-    _name = "l10n_br.service.code"
+class L10n_BrServiceCode(models.Model):
     _description = "Product service codes defined by the city"
     _rec_name = "code"
 

@@ -6,9 +6,8 @@ from lxml import etree
 from datetime import date, datetime
 
 
-class GermanTaxReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_de.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_DeTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'German Tax Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):

@@ -28,7 +28,6 @@ class DefaultDictPayroll(defaultdict):
 
 
 class HrPayslip(models.Model):
-    _name = 'hr.payslip'
     _description = 'Pay Slip'
     _inherit = ['mail.thread.cc', 'mail.thread.main.attachment', 'mail.activity.mixin']
     _order = 'date_to desc'

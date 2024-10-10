@@ -9,7 +9,7 @@ from odoo.addons.web.controllers.utils import clean_action
 
 
 class BankRecWidget(models.Model):
-    _inherit = 'bank.rec.widget'
+    _inherit = ['bank.rec.widget']
 
     selected_batch_payment_ids = fields.Many2many(
         comodel_name='account.batch.payment',

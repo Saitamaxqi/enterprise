@@ -5,7 +5,7 @@ from odoo import models
 
 
 class IrAttachment(models.Model):
-    _inherit = 'ir.attachment'
+    _inherit = ['ir.attachment']
 
     def register_as_main_attachment(self, force=True):
         """Add the automatic scanning of attachments when registered as main.

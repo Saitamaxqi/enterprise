@@ -12,9 +12,8 @@ from odoo.exceptions import UserError
 from odoo.tools import format_list
 
 
-class L10nHkIr56f(models.Model):
-    _name = 'l10n_hk.ir56f'
-    _inherit = 'l10n_hk.ird'
+class L10n_HkIr56f(models.Model):
+    _inherit = ['l10n_hk.ird']
     _description = 'IR56F Sheet'
     _order = 'start_period'
 

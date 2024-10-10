@@ -2,7 +2,7 @@ from odoo import api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     barcode_nomenclature_id = fields.Many2one('barcode.nomenclature', related='company_id.nomenclature_id', readonly=False)
     stock_barcode_demo_active = fields.Boolean("Demo Data Active", compute='_compute_stock_barcode_demo_active')

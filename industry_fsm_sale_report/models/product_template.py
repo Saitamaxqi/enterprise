@@ -6,7 +6,7 @@ from odoo.tools.sql import column_exists, create_column
 
 
 class ProductTemplate(models.Model):
-    _inherit = "product.template"
+    _inherit = ["product.template"]
 
     allow_worksheets = fields.Boolean(related='project_id.allow_worksheets', readonly=True, export_string_translation=False)
     worksheet_template_id = fields.Many2one(

@@ -5,9 +5,8 @@ from odoo import fields, models, _
 from odoo.exceptions import UserError
 
 
-class FrenchReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_fr.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_FrReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'French Report Custom Handler'
 
     def _postprocess_vat_closing_entry_results(self, company, options, results):

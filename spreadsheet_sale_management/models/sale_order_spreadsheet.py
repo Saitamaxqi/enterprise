@@ -17,9 +17,8 @@ SALE_ORDER_LINE_FIELDS = [
 ]
 
 
-class SpreadsheetSaleOrder(models.Model):
-    _name = 'sale.order.spreadsheet'
-    _inherit = 'spreadsheet.mixin'
+class SaleOrderSpreadsheet(models.Model):
+    _inherit = ['spreadsheet.mixin']
     _description = 'Quotation Spreadsheet'
 
     name = fields.Char(required=True)

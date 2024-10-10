@@ -4,13 +4,12 @@
 from odoo import models
 
 
-class L10nLuGenerateXML(models.TransientModel):
+class L10n_LuGenerateAssetReport(models.TransientModel):
     """
     This wizard is used to generate xml reports for Luxembourg
     according to the xml 2.0 standard.
     """
-    _inherit = 'l10n_lu.generate.xml'
-    _name = 'l10n_lu.generate.asset.report'
+    _inherit = ['l10n_lu.generate.xml']
     _description = 'Generate XML for Luxembourg'
 
     def _lu_get_declarations(self, declaration_template_values):

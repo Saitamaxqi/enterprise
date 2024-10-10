@@ -9,8 +9,8 @@ from odoo import fields, models, _, api
 _logger = logging.getLogger(__name__)
 
 
-class Employee(models.Model):
-    _inherit = "hr.employee"
+class HrEmployee(models.Model):
+    _inherit = ["hr.employee"]
 
     def _default_employee_token(self):
         return str(uuid.uuid4())
@@ -92,8 +92,9 @@ class Employee(models.Model):
         planning_slots._manage_archived_resources(departure_date)
         return res
 
+
 class HrEmployeeBase(models.AbstractModel):
-    _inherit = "hr.employee.base"
+    _inherit = ["hr.employee.base"]
 
     has_slots = fields.Boolean(compute='_compute_has_slots')
 

@@ -7,7 +7,7 @@ from odoo.tools.misc import clean_context
 
 
 class ApprovalRequest(models.Model):
-    _inherit = 'approval.request'
+    _inherit = ['approval.request']
 
     purchase_order_count = fields.Integer(compute='_compute_purchase_order_count')
 

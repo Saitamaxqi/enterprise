@@ -8,7 +8,6 @@ from functools import partial
 
 
 class BudgetSplitWizard(models.TransientModel):
-    _name = 'budget.split.wizard'
     _description = 'Budget Split Wizard'
 
     date_from = fields.Date(string='Start Date', required=True)

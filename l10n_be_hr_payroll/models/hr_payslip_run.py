@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class HrPayslipRun(models.Model):
-    _inherit = 'hr.payslip.run'
+    _inherit = ['hr.payslip.run']
 
 
     l10n_be_display_eco_voucher_button = fields.Boolean(

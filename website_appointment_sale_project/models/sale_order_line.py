@@ -2,7 +2,7 @@ from odoo import models
 
 
 class SaleOrderLine(models.Model):
-    _inherit = "sale.order.line"
+    _inherit = ["sale.order.line"]
 
     def _timesheet_create_task_prepare_values(self, project):
         res = super()._timesheet_create_task_prepare_values(project)

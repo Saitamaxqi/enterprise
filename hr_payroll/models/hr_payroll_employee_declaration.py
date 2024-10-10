@@ -11,7 +11,6 @@ _logger = logging.getLogger(__name__)
 
 
 class HrPayrollEmployeeDeclaration(models.Model):
-    _name = 'hr.payroll.employee.declaration'
     _description = 'Payroll Employee Declaration'
     _rec_name = 'employee_id'
 

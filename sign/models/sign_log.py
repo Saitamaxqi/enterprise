@@ -13,8 +13,8 @@ _logger = logging.getLogger(__name__)
 
 LOG_FIELDS = ['log_date', 'action', 'partner_id', 'request_state', 'latitude', 'longitude', 'ip',]
 
+
 class SignLog(models.Model):
-    _name = 'sign.log'
     _order = 'log_date, id'
     _description = "Sign requests access history"
 

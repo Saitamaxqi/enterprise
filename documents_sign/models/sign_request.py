@@ -5,7 +5,6 @@ from werkzeug.urls import url_encode
 
 
 class SignRequest(models.Model):
-    _name = 'sign.request'
     _inherit = ['sign.request', 'documents.mixin']
 
     @api.model_create_multi
@@ -62,7 +61,6 @@ class SignRequest(models.Model):
 
 
 class SignRequestItem(models.Model):
-    _name = "sign.request.item"
     _inherit = ['sign.request.item']
 
     def _sign(self, signature, **kwargs):

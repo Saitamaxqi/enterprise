@@ -2,8 +2,7 @@ from odoo import api, Command, fields, models, _
 from odoo.exceptions import UserError
 
 
-class L10nAuStpFfrWizard(models.TransientModel):
-    _name = "l10n_au.stp.ffr.wizard"
+class L10n_AuStpFfrWizard(models.TransientModel):
     _description = "STP Full File Replacement Wizard"
 
     stp_id = fields.Many2one("l10n_au.stp", string="Report to Replace", required=True)
@@ -44,8 +43,7 @@ class L10nAuStpFfrWizard(models.TransientModel):
         return new_stp._get_records_action()
 
 
-class L10nAuStpffrPayslip(models.TransientModel):
-    _name = "l10n_au.stp.ffr.payslip"
+class L10n_AuStpFfrPayslip(models.TransientModel):
     _description = "STP Full File Replacement Payslips"
 
     ffr_wizard_id = fields.Many2one("l10n_au.stp.ffr.wizard", string="Wizard", required=True, ondelete="cascade")

@@ -15,7 +15,6 @@ from odoo.addons.web.controllers.utils import clean_action
 
 
 class HelpdeskTeam(models.Model):
-    _name = "helpdesk.team"
     _inherit = ['mail.alias.mixin', 'mail.thread', 'rating.parent.mixin']
     _description = "Helpdesk Team"
     _order = 'sequence,name'

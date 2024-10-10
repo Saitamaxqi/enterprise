@@ -6,9 +6,9 @@ from odoo import _, fields, models
 from odoo.exceptions import RedirectWarning, UserError
 from odoo.tools import SQL
 
-class EstonianTaxReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_ee.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+
+class L10n_EeTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'Estonian Tax Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
@@ -112,9 +112,8 @@ class EstonianTaxReportCustomHandler(models.AbstractModel):
         }
 
 
-class EstonianKmdInfReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_ee.kmd.inf.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_EeKmdInfReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'Estonian KMD INF Report Custom Handler'
 
     def _report_custom_engine_kmd_inf_common(self, options, current_groupby, next_groupby, kmd_inf_part):

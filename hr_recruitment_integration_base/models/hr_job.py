@@ -3,8 +3,8 @@
 from odoo import api, fields, models, _
 
 
-class Job(models.Model):
-    _inherit = 'hr.job'
+class HrJob(models.Model):
+    _inherit = ['hr.job']
 
     job_post_count = fields.Integer(
         compute='_compute_job_post_count', string='Number of Job Posts')

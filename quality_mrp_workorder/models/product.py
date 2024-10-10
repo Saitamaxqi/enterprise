@@ -7,7 +7,7 @@ from odoo.osv.expression import AND
 
 
 class ProductTemplate(models.Model):
-    _inherit = "product.template"
+    _inherit = ["product.template"]
 
     def action_see_quality_control_points(self):
         action = super().action_see_quality_control_points()
@@ -22,7 +22,7 @@ class ProductTemplate(models.Model):
 
 
 class ProductProduct(models.Model):
-    _inherit = "product.product"
+    _inherit = ["product.product"]
 
     def action_see_quality_control_points(self):
         action = super().action_see_quality_control_points()

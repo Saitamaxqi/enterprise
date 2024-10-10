@@ -8,8 +8,7 @@ from odoo.exceptions import UserError
 from odoo.addons.l10n_ke_edi_oscu.models.account_move import format_etims_datetime, parse_etims_datetime
 
 
-class L10nKeEdiCustomsImport(models.Model):
-    _name = 'l10n_ke_edi.customs.import'
+class L10n_Ke_EdiCustomsImport(models.Model):
     _description = "Kenya Customs Import"
     _inherit = ['mail.thread']
 

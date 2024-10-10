@@ -12,8 +12,7 @@ from odoo.exceptions import RedirectWarning, UserError, AccessError
 from odoo.osv import expression
 
 
-class AnalyticLine(models.Model):
-    _name = 'account.analytic.line'
+class AccountAnalyticLine(models.Model):
     _inherit = ['account.analytic.line', 'timer.mixin']
     # As this model has his own data merge, avoid to enable the generic data_merge on that model.
     _disable_data_merge = True
@@ -101,7 +100,7 @@ class AnalyticLine(models.Model):
     def _compute_project_id(self):
         # override hr_timesheet to allow the check on field validated to only update the project_id on non validated timesheets.
         non_validated_timesheets = self.filtered(lambda t: not t.validated and t.task_id.project_id.allow_timesheets)
-        super(AnalyticLine, non_validated_timesheets)._compute_project_id()
+        super(AccountAnalyticLine, non_validated_timesheets)._compute_project_id()
 
     @api.depends('project_id')
     def _compute_is_timesheet(self):

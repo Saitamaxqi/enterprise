@@ -4,7 +4,7 @@
 from odoo import api, fields, models
 
 
-class ReportL10nBeHrPayroll273S(models.AbstractModel):
+class ReportL10n_Be_Hr_Payroll_273s_274273s(models.AbstractModel):
     _name = 'report.l10n_be_hr_payroll_273s_274.273s'
     _description = 'Get 273S report as PDF.'
 

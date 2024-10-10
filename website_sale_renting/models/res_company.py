@@ -4,8 +4,9 @@ from dateutil.relativedelta import relativedelta
 
 from odoo import fields, models
 
+
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     renting_minimal_time_duration = fields.Integer("Minimal Rental Duration")
     renting_minimal_time_unit = fields.Selection([

@@ -6,7 +6,7 @@ from odoo.tools import float_round, format_duration, float_compare, float_is_zer
 
 
 class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+    _inherit = ['sale.order.line']
 
     planning_slot_ids = fields.One2many('planning.slot', 'sale_line_id', export_string_translation=False)
     planning_hours_planned = fields.Float(compute='_compute_planning_hours_planned', store=True, compute_sudo=True, export_string_translation=False)

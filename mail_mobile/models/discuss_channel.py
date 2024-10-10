@@ -5,7 +5,7 @@ from odoo import models
 
 
 class DiscussChannel(models.Model):
-    _inherit = 'discuss.channel'
+    _inherit = ['discuss.channel']
 
     def _notify_thread_by_ocn(self, message, recipients_data, msg_vals=False, **kwargs):
         """ Specifically handle channel members. """

@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 
 
 class HrEmployee(models.Model):
-    _inherit = 'hr.employee'
+    _inherit = ['hr.employee']
 
     partena_code = fields.Char("Partena code", groups="hr.group_hr_user")
 

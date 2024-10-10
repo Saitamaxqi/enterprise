@@ -10,9 +10,8 @@ import zipfile
 import io
 
 
-class ArgentinianReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_ar.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_ArTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'Argentinian Report Custom Handler'
 
     def _get_custom_display_config(self):

@@ -11,8 +11,8 @@ from odoo.tools.float_utils import float_repr
 from odoo.addons.l10n_pe_reports.models.res_company import CHART_OF_ACCOUNTS
 
 
-class GeneralLedgerCustomHandler(models.AbstractModel):
-    _inherit = 'account.general.ledger.report.handler'
+class AccountGeneralLedgerReportHandler(models.AbstractModel):
+    _inherit = ['account.general.ledger.report.handler']
 
     def _custom_options_initializer(self, report, options, previous_options):
         # Overridden to add export button on GL for Peruvian companies

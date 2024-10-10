@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class HrPayrollDeclarationMixin(models.AbstractModel):
-    _inherit = 'hr.payroll.declaration.mixin'
+    _inherit = ['hr.payroll.declaration.mixin']
 
     documents_enabled = fields.Boolean(compute='_compute_documents_enabled')
     documents_count = fields.Integer(compute='_compute_documents_count')

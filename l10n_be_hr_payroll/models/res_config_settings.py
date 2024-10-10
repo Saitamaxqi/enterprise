@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     default_commission_on_target = fields.Float(
         string="Commission on Target",

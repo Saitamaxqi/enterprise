@@ -1,7 +1,7 @@
 from odoo import api, models
 
-class GreenSavingsReport(models.AbstractModel):
-    _name = 'report.sign.green_savings_report'
+
+class ReportSignGreen_Savings_Report(models.AbstractModel):
     _description = 'Green Savings Report model'
 
     @api.model

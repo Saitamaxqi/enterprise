@@ -9,8 +9,7 @@ from odoo.tools.misc import format_date
 from odoo.exceptions import UserError
 
 
-class HrSalaryRuleParameterValue(models.Model):
-    _name = 'hr.rule.parameter.value'
+class HrRuleParameterValue(models.Model):
     _description = 'Salary Rule Parameter Value'
     _order = 'date_from desc'
 
@@ -48,8 +47,7 @@ class HrSalaryRuleParameterValue(models.Model):
         return super().unlink()
 
 
-class HrSalaryRuleParameter(models.Model):
-    _name = 'hr.rule.parameter'
+class HrRuleParameter(models.Model):
     _description = 'Salary Rule Parameter'
 
     name = fields.Char(required=True)

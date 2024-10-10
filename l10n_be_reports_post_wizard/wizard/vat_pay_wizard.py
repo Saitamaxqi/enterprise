@@ -3,8 +3,7 @@
 from odoo import api, models, fields
 
 
-class VATPayWizard(models.TransientModel):
-    _name = 'l10n_be.vat.pay.wizard'
+class L10n_BeVatPayWizard(models.TransientModel):
     _description = "Payment instructions for VAT"
 
     move_id = fields.Many2one(comodel_name='account.move')

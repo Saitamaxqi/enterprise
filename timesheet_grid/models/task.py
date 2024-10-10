@@ -4,8 +4,7 @@
 from odoo import models, fields, api, _
 
 
-class Task(models.Model):
-    _name = "project.task"
+class ProjectTask(models.Model):
     _inherit = ["project.task", "timer.mixin", "timesheet.grid.mixin"]
 
     display_timesheet_timer = fields.Boolean("Display Timesheet Time", compute='_compute_display_timesheet_timer', export_string_translation=False)
@@ -26,7 +25,7 @@ class Task(models.Model):
                     'display_timer_resume': False,
                 })
             else:
-                super(Task, task)._compute_display_timer_buttons()
+                super(ProjectTask, task)._compute_display_timer_buttons()
                 task.display_timer_start_secondary = task.display_timer_start_primary
                 if not task.timer_start:
                     task.update({
@@ -64,7 +63,7 @@ class Task(models.Model):
             }
 
     def _set_allocated_hours_for_tasks(self):
-        super(Task, self.filtered(lambda task: not task.allow_timesheets))._set_allocated_hours_for_tasks()
+        super(ProjectTask, self.filtered(lambda task: not task.allow_timesheets))._set_allocated_hours_for_tasks()
 
     def _gantt_progress_bar_project_id(self, res_ids):
         timesheet_read_group = self.env['account.analytic.line'].sudo()._read_group(

@@ -11,8 +11,7 @@ from odoo.osv import expression
 from odoo.tools.float_utils import float_compare, float_is_zero
 
 
-class TransferModel(models.Model):
-    _name = "account.transfer.model"
+class AccountTransferModel(models.Model):
     _description = "Account Transfer Model"
 
     # DEFAULTS
@@ -347,8 +346,7 @@ class TransferModel(models.Model):
         return values_list, amount_left
 
 
-class TransferModelLine(models.Model):
-    _name = "account.transfer.model.line"
+class AccountTransferModelLine(models.Model):
     _description = "Account Transfer Model Line"
     _order = "sequence, id"
 

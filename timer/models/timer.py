@@ -4,8 +4,8 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 
+
 class TimerTimer(models.Model):
-    _name = 'timer.timer'
     _description = 'Timer Module'
 
     timer_start = fields.Datetime("Timer Start", export_string_translation=False)

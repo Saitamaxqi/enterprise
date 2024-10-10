@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 class HrPayslip(models.Model):
-    _inherit = 'hr.payslip'
+    _inherit = ['hr.payslip']
 
     def compute_sheet(self):
         if self.env.context.get('salary_simulation'):

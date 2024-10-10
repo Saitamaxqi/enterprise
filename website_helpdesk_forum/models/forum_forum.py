@@ -5,7 +5,7 @@ from odoo import fields, models, Command, _
 
 
 class ForumForum(models.Model):
-    _inherit = 'forum.forum'
+    _inherit = ['forum.forum']
 
     helpdesk_team_count = fields.Integer(compute='_compute_team_count', compute_sudo=True)
     helpdesk_team_ids = fields.Many2many('helpdesk.team', 'forum_forum_helpdesk_team_rel', 'forum_forum_id', 'helpdesk_team_id')

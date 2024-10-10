@@ -10,9 +10,8 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_compare
 
 
-class LuxembourgishECSalesReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_lu.ec.sales.report.handler'
-    _inherit = 'account.ec.sales.report.handler'
+class L10n_LuEcSalesReportHandler(models.AbstractModel):
+    _inherit = ['account.ec.sales.report.handler']
     _description = 'Luxembourgish EC Sales Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
@@ -478,8 +477,7 @@ class LuxembourgishECSalesReportCustomHandler(models.AbstractModel):
         return corrections
 
 
-class L10n_luStoredSalesReport(models.Model):
-    _name = 'l10n_lu.stored.intra.report'
+class L10n_LuStoredIntraReport(models.Model):
     _description = "Wrapper for an attachment, adds the financial report data"
     _rec_name = "display_name"
 

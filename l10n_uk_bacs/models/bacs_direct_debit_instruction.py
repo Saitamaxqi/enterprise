@@ -7,7 +7,8 @@ from odoo import api, models, fields, _
 
 from odoo.exceptions import UserError, ValidationError
 
-class BACSDirectDebitInstruction(models.Model):
+
+class BacsDdi(models.Model):
     """ A class containing the data of a Direct Debit Instruction (DDI) sent by a customer to
     give their consent to a company to collect the payments associated with their invoices
     using BACS Direct Debit.
@@ -17,7 +18,6 @@ class BACSDirectDebitInstruction(models.Model):
     the company, keep a record of the DDI, which can be cancelled or changed by the customer
     at any time, given that sufficient notice is provided to the company and the bank.
     """
-    _name = 'bacs.ddi'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'BACS Direct Debit Instruction'
 

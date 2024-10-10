@@ -8,7 +8,7 @@ from odoo.http import request
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     map_box_token = fields.Char(config_parameter='web_map.token_map_box',string = 'Token Map Box', help='Necessary for some functionalities in the map view', copy=True, default='', store=True)
 

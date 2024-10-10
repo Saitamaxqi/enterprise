@@ -15,8 +15,8 @@ from werkzeug.urls import url_join
 _logger = logging.getLogger(__name__)
 
 
-class SocialStreamPostFacebook(models.Model):
-    _inherit = 'social.stream.post'
+class SocialStreamPost(models.Model):
+    _inherit = ['social.stream.post']
 
     FACEBOOK_COMMENT_FIELDS = f'id,from.fields(id,name,picture),message,message_tags,created_time,attachment,comments.fields(id,from.fields(id,name,picture),message,created_time,attachment,user_likes,like_count,{SocialStreamFacebook.FACEBOOK_REACTIONS_FIELDS}),user_likes,like_count,{SocialStreamFacebook.FACEBOOK_REACTIONS_FIELDS}'
 
@@ -33,21 +33,21 @@ class SocialStreamPostFacebook(models.Model):
 
     def _compute_author_link(self):
         facebook_posts = self._filter_by_media_types(['facebook'])
-        super(SocialStreamPostFacebook, (self - facebook_posts))._compute_author_link()
+        super(SocialStreamPost, (self - facebook_posts))._compute_author_link()
 
         for post in facebook_posts:
             post.author_link = '/social_facebook/redirect_to_profile/%s/%s?name=%s' % (post.account_id.id, post.facebook_author_id, urllib.parse.quote(post.author_name))
 
     def _compute_post_link(self):
         facebook_posts = self._filter_by_media_types(['facebook'])
-        super(SocialStreamPostFacebook, (self - facebook_posts))._compute_post_link()
+        super(SocialStreamPost, (self - facebook_posts))._compute_post_link()
 
         for post in facebook_posts:
             post.post_link = 'https://www.facebook.com/%s' % post.facebook_post_id
 
     def _compute_is_author(self):
         facebook_posts = self._filter_by_media_types(['facebook'])
-        super(SocialStreamPostFacebook, (self - facebook_posts))._compute_is_author()
+        super(SocialStreamPost, (self - facebook_posts))._compute_is_author()
 
         for post in facebook_posts:
             post.is_author = post.facebook_author_id == post.account_id.facebook_account_id
@@ -168,7 +168,7 @@ class SocialStreamPostFacebook(models.Model):
                 [('facebook_post_id', '=', self.facebook_post_id)], limit=1
             ).post_id
         else:
-            return super(SocialStreamPostFacebook, self)._fetch_matching_post()
+            return super()._fetch_matching_post()
 
     def _format_facebook_comment(self, comment):
         """Modify `comment` for the web client."""

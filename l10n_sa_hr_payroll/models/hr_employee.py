@@ -5,7 +5,7 @@ from odoo.tools.float_utils import float_round
 
 
 class HrEmployee(models.Model):
-    _inherit = "hr.employee"
+    _inherit = ["hr.employee"]
 
     l10n_sa_leaves_count_compensable = fields.Float(
         'Number of Time Off Eligible for Compensation',

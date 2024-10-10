@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class HrReferralOnboarding(models.Model):
-    _name = 'hr.referral.onboarding'
     _description = 'Welcome Onboarding in Referral App'
     _order = 'sequence'
     _rec_name = 'text'

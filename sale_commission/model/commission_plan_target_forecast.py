@@ -4,8 +4,7 @@ from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
 
-class CommissionPlanTargetForecast(models.Model):
-    _name = 'sale.commission.plan.target.forecast'
+class SaleCommissionPlanTargetForecast(models.Model):
     _description = 'Commission Plan Target Forecast'
     _order = 'id'
 

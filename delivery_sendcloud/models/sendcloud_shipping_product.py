@@ -2,9 +2,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import api, fields, models
 
-class SendCloudShippingProduct(models.Model):
 
-    _name = "sendcloud.shipping.product"
+class SendcloudShippingProduct(models.Model):
+
     _description = "Choose from the available sendcloud shipping products"
 
     name = fields.Char(string="Shipping Product", required=True, readonly=True)

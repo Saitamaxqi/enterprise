@@ -5,8 +5,8 @@ from odoo import api, fields, models
 from odoo.osv import expression
 
 
-class SocialPostTwitter(models.Model):
-    _inherit = 'social.post'
+class SocialPost(models.Model):
+    _inherit = ['social.post']
 
     twitter_image_ids = fields.Many2many(relation="twitter_image_ids_rel")
 
@@ -18,7 +18,7 @@ class SocialPostTwitter(models.Model):
     def _compute_twitter_post_limit_message(self):
         self.twitter_post_limit_message = False
         self.is_twitter_post_limit_exceed = False
-        super(SocialPostTwitter, self - self.filtered(lambda post: post.state in ['posting', 'posted']))._compute_twitter_post_limit_message()
+        super(SocialPost, self - self.filtered(lambda post: post.state in ['posting', 'posted']))._compute_twitter_post_limit_message()
 
     def _get_stream_post_domain(self):
         domain = super()._get_stream_post_domain()

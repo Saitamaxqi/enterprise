@@ -9,9 +9,8 @@ from odoo.tools import float_repr, float_round
 from odoo.exceptions import UserError
 
 
-class IeTaxReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_ie.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_IeTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'Custom Tax Report Handler for Ireland'
 
     def _custom_options_initializer(self, report, options, previous_options):

@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     # == External Trade==
     l10n_mx_edi_num_exporter = fields.Char(

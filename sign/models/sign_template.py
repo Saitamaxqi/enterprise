@@ -16,7 +16,6 @@ from odoo.tools import pdf
 
 
 class SignTemplate(models.Model):
-    _name = "sign.template"
     _description = "Signature Template"
 
     def _default_favorited_ids(self):
@@ -378,7 +377,6 @@ class SignTemplate(models.Model):
 
 class SignTemplateTag(models.Model):
 
-    _name = "sign.template.tag"
     _description = "Sign Template Tag"
     _order = "name"
 
@@ -393,8 +391,7 @@ class SignTemplateTag(models.Model):
     ]
 
 
-class SignItemSelectionOption(models.Model):
-    _name = "sign.item.option"
+class SignItemOption(models.Model):
     _description = "Option of a selection Field"
     _rec_name = "value"
 
@@ -415,7 +412,6 @@ class SignItemSelectionOption(models.Model):
 
 
 class SignItemRadioSet(models.Model):
-    _name = "sign.item.radio.set"
     _description = "Radio button set for keeping radio button items together"
 
     radio_items = fields.One2many('sign.item', 'radio_set_id')
@@ -428,7 +424,6 @@ class SignItemRadioSet(models.Model):
 
 
 class SignItem(models.Model):
-    _name = "sign.item"
     _description = "Fields to be sign on Document"
     _order = "page asc, posY asc, posX asc"
     _rec_name = 'template_id'
@@ -479,7 +474,6 @@ class SignItem(models.Model):
 
 
 class SignItemType(models.Model):
-    _name = "sign.item.type"
     _description = "Signature Item Type"
 
     name = fields.Char(string="Field Name", required=True, translate=True)
@@ -514,8 +508,7 @@ class SignItemType(models.Model):
                     raise ValidationError(_("Malformed expression: %(exp)s", exp=sign_type.auto_field))
 
 
-class SignItemParty(models.Model):
-    _name = "sign.item.role"
+class SignItemRole(models.Model):
     _description = "Signature Item Party"
     _rec_name = "name"
     _order = "sequence, id"

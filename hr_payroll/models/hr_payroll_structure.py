@@ -4,7 +4,6 @@ from odoo import api, fields, models
 
 
 class HrPayrollStructure(models.Model):
-    _name = 'hr.payroll.structure'
     _description = 'Salary Structure'
 
     @api.model

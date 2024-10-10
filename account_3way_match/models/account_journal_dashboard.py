@@ -6,7 +6,7 @@ from odoo.tools import SQL
 
 
 class AccountJournal(models.Model):
-    _inherit = 'account.journal'
+    _inherit = ['account.journal']
 
     def open_action(self):
         action = super(AccountJournal, self).open_action()

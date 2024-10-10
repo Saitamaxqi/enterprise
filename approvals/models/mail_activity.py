@@ -6,7 +6,7 @@ from odoo.addons.mail.tools.discuss import Store
 
 
 class MailActivity(models.Model):
-    _inherit = "mail.activity"
+    _inherit = ["mail.activity"]
 
     def _to_store(self, store: Store):
         super()._to_store(store)

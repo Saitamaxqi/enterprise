@@ -8,7 +8,7 @@ from odoo.http import request
 
 
 class Website(models.Model):
-    _inherit = 'website'
+    _inherit = ['website']
 
     tz = fields.Selection(
         selection='_tz_get',

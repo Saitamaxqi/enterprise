@@ -9,8 +9,8 @@ from odoo.tools import pdf
 from .ups_request import UPSRequest
 
 
-class ProviderUPS(models.Model):
-    _inherit = 'delivery.carrier'
+class DeliveryCarrier(models.Model):
+    _inherit = ['delivery.carrier']
 
     def _get_ups_service_types(self):
         return [
@@ -60,13 +60,13 @@ class ProviderUPS(models.Model):
         ], string='COD Funding Option', default='0')
 
     def _compute_can_generate_return(self):
-        super(ProviderUPS, self)._compute_can_generate_return()
+        super()._compute_can_generate_return()
         for carrier in self:
             if carrier.delivery_type == 'ups':
                 carrier.can_generate_return = True
 
     def _compute_supports_shipping_insurance(self):
-        super(ProviderUPS, self)._compute_supports_shipping_insurance()
+        super()._compute_supports_shipping_insurance()
         for carrier in self:
             if carrier.delivery_type == 'ups':
                 carrier.supports_shipping_insurance = True

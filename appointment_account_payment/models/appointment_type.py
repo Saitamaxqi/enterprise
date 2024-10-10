@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class AppointmentType(models.Model):
-    _inherit = "appointment.type"
+    _inherit = ["appointment.type"]
 
     has_payment_step = fields.Boolean("Up-front Payment", help="Require visitors to pay to confirm their booking")
     product_id = fields.Many2one(

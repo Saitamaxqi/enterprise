@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class AccountAnalyticAccount(models.Model):
-    _inherit = "account.analytic.account"
+    _inherit = ["account.analytic.account"]
 
     budget_line_ids = fields.One2many('budget.line', 'auto_account_id', readonly=False)
 

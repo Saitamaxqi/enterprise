@@ -4,7 +4,6 @@ from odoo import api, fields, models, _
 
 
 class ExpenseSampleRegister(models.TransientModel):
-    _name = 'expense.sample.register'
     _description = 'Register Sample Payments'
 
     sheet_id = fields.Many2one('hr.expense.sheet', string='Expense')

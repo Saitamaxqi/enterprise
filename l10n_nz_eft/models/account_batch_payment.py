@@ -12,7 +12,7 @@ from odoo.tools.misc import format_date
 
 
 class AccountBatchPayment(models.Model):
-    _inherit = 'account.batch.payment'
+    _inherit = ['account.batch.payment']
 
     # ------------------
     # Fields declaration

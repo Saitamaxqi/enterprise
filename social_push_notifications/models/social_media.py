@@ -4,8 +4,8 @@
 from odoo import models, fields
 
 
-class SocialMediaPushNotifications(models.Model):
-    _inherit = 'social.media'
+class SocialMedia(models.Model):
+    _inherit = ['social.media']
 
     media_type = fields.Selection(selection_add=[('push_notifications', 'Push Notifications')])
 
@@ -13,6 +13,6 @@ class SocialMediaPushNotifications(models.Model):
         self.ensure_one()
 
         if self.media_type != 'push_notifications':
-            return super(SocialMediaPushNotifications, self)._action_add_account()
+            return super()._action_add_account()
 
         return None

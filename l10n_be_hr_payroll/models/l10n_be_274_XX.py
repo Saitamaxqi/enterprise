@@ -16,7 +16,7 @@ from odoo.tools.misc import file_path, xlsxwriter
 from odoo.osv import expression
 
 
-class L10nBe274XX(models.Model):
+class L10n_Be274_Xx(models.Model):
     _name = 'l10n_be.274_xx'
     _description = '274.XX Sheets'
     _order = 'date_start'
@@ -481,7 +481,7 @@ class L10nBe274XX(models.Model):
         self.state = 'waiting'
 
 
-class L10nBe274XXLine(models.Model):
+class L10n_Be274_XxLine(models.Model):
     _name = 'l10n_be.274_xx.line'
     _description = '274.XX Sheets Line'
 

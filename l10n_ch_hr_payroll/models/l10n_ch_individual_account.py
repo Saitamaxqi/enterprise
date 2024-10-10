@@ -8,10 +8,8 @@ from odoo import api, fields, models, _
 from odoo.fields import Datetime
 
 
-
 class L10nChIndividualAccount(models.Model):
-    _name = 'l10n.ch.individual.account'
-    _inherit = 'hr.payroll.declaration.mixin'
+    _inherit = ['hr.payroll.declaration.mixin']
     _description = 'Swiss Payroll: Individual Account'
 
     def _country_restriction(self):

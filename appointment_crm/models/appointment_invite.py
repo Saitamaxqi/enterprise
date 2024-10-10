@@ -4,8 +4,8 @@
 from odoo import fields, models
 
 
-class AppointmentInviteCrm(models.Model):
-    _inherit = "appointment.invite"
+class AppointmentInvite(models.Model):
+    _inherit = ["appointment.invite"]
 
     opportunity_id = fields.Many2one('crm.lead', "Opportunity/Lead",
         help="Link an opportunity/lead to the appointment invite created.\n"

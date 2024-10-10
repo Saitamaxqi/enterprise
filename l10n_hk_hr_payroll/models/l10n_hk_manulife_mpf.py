@@ -15,8 +15,7 @@ from odoo.tools.misc import xlsxwriter
 from odoo.addons.l10n_hk_hr_payroll.models.l10n_hk_ird import MONTH_SELECTION
 
 
-class L10nHkManulifeMpf(models.Model):
-    _name = 'l10n_hk.manulife.mpf'
+class L10n_HkManulifeMpf(models.Model):
     _description = 'Manulife MPF'
     _order = 'period'
 
@@ -268,8 +267,7 @@ class L10nHkManulifeMpf(models.Model):
             })
 
 
-class L10nHkManulifeMpfLine(models.Model):
-    _name = 'l10n_hk.manulife.mpf.line'
+class L10n_HkManulifeMpfLine(models.Model):
     _description = 'Manulife MPF Line'
 
     _sql_constraints = [

@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = "res.company"
+    _inherit = ["res.company"]
 
     documents_product_settings = fields.Boolean()
     product_folder_id = fields.Many2one(

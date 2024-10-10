@@ -6,8 +6,8 @@ import math
 from odoo import fields, models, api
 from odoo.osv import expression
 
-class HelpdeskSLAStatus(models.Model):
-    _name = 'helpdesk.sla.status'
+
+class HelpdeskSlaStatus(models.Model):
     _description = "Ticket SLA Status"
     _table = 'helpdesk_sla_status'
     _order = 'deadline ASC, sla_stage_id'

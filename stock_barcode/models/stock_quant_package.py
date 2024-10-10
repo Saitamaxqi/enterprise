@@ -5,8 +5,8 @@ from odoo import models, api
 from odoo.osv import expression
 
 
-class QuantPackage(models.Model):
-    _inherit = 'stock.quant.package'
+class StockQuantPackage(models.Model):
+    _inherit = ['stock.quant.package']
     _barcode_field = 'name'
 
     @api.model

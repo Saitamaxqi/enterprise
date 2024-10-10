@@ -5,8 +5,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class L10nBeEcoVouchersWizard(models.TransientModel):
-    _name = 'l10n.be.dimona.wizard'
+class L10nBeDimonaWizard(models.TransientModel):
     _description = 'Dimona Wizard'
 
     @api.model

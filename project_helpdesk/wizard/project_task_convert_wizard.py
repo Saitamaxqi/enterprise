@@ -2,8 +2,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import api, fields, models, _
 
+
 class ProjectTaskConvertWizard(models.TransientModel):
-    _name = 'project.task.convert.wizard'
     _description = 'Convert Project Tasks to Tickets'
 
     @api.model

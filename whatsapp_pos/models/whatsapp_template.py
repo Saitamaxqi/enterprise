@@ -4,8 +4,8 @@ from ast import literal_eval
 from odoo import api, models
 
 
-class WhatsAppTemplate(models.Model):
-    _inherit = 'whatsapp.template'
+class WhatsappTemplate(models.Model):
+    _inherit = ['whatsapp.template']
 
     @api.model
     def _find_default_for_model(self, model_name):

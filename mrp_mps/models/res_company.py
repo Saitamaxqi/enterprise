@@ -7,8 +7,8 @@ from odoo.tools.date_utils import start_of, end_of, add, subtract
 from odoo.tools.misc import format_date
 
 
-class Company(models.Model):
-    _inherit = "res.company"
+class ResCompany(models.Model):
+    _inherit = ["res.company"]
 
     manufacturing_period = fields.Selection([
         ('year', 'Yearly'),

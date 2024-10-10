@@ -9,7 +9,6 @@ from werkzeug.urls import url_encode
 
 
 class HrContractSalaryOffer(models.Model):
-    _name = 'hr.contract.salary.offer'
     _description = 'Salary Package Offer'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 

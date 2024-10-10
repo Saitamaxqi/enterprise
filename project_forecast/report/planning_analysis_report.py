@@ -3,8 +3,9 @@
 
 from odoo import fields, models, api
 
+
 class PlanningAnalysisReport(models.Model):
-    _inherit = "planning.analysis.report"
+    _inherit = ["planning.analysis.report"]
 
     project_id = fields.Many2one("project.project", string="Project", readonly=True)
 

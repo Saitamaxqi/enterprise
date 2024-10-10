@@ -13,8 +13,7 @@ DR_CREATE_STEP_AUTO = 5000
 DR_CREATE_STEP_MANUAL = 50000
 
 
-class DataCleaningModel(models.Model):
-    _name = 'data_cleaning.model'
+class Data_CleaningModel(models.Model):
     _description = 'Cleaning Model'
     _order = 'name'
 

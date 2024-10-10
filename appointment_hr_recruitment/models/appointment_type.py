@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class AppointmentType(models.Model):
-    _inherit = "appointment.type"
+    _inherit = ["appointment.type"]
 
     @api.model
     def _get_calendar_view_appointment_type_default_context_fields_whitelist(self):

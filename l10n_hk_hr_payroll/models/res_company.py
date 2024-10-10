@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     l10n_hk_autopay = fields.Boolean(string="Payroll with HSBC Autopay payment")
     l10n_hk_autopay_type = fields.Selection(

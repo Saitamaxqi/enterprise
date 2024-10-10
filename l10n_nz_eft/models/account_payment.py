@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class AccountPayment(models.Model):
-    _inherit = "account.payment"
+    _inherit = ["account.payment"]
 
     # ------------------
     # Fields declaration

@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     module_project_forecast = fields.Boolean(string="Project Planning", default=False)
     planning_generation_interval = fields.Integer("Rate Of Shift Generation", required=True,

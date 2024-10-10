@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class HrLeaveType(models.Model):
-    _inherit = "hr.leave.type"
+    _inherit = ["hr.leave.type"]
 
     l10n_ae_is_annual_leave = fields.Boolean(
         string="Is Annual Leave", compute="_compute_l10n_ae_is_annual_leave", store=True, readonly=False,

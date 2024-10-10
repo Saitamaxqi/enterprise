@@ -38,8 +38,7 @@ def merge_common_lists(lsts):
     return sets
 
 
-class DataMergeModel(models.Model):
-    _name = 'data_merge.model'
+class Data_MergeModel(models.Model):
     _description = 'Deduplication Model'
     _order = 'name'
 
@@ -312,7 +311,7 @@ class DataMergeModel(models.Model):
         if 'create_threshold' in vals and vals['create_threshold']:
             self.env['data_merge.group'].search([('model_id', 'in', self.ids), ('similarity', '<=', vals['create_threshold'] / 100)]).unlink()
 
-        return super(DataMergeModel, self).write(vals)
+        return super().write(vals)
 
     def unlink(self):
         if self.ids:

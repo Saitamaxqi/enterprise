@@ -10,8 +10,8 @@ from odoo.osv import expression
 from odoo.tools.misc import groupby as tools_groupby
 
 
-class RentalOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+class SaleOrderLine(models.Model):
+    _inherit = ['sale.order.line']
 
     tracking = fields.Selection(related='product_id.tracking', depends=['product_id'])
 
@@ -103,7 +103,7 @@ class RentalOrderLine(models.Model):
     @api.depends('reservation_begin', 'return_date', 'product_id')
     def _compute_qty_at_date(self):
         non_rental = self.filtered(lambda sol: not sol.is_rental)
-        super(RentalOrderLine, non_rental)._compute_qty_at_date()
+        super(SaleOrderLine, non_rental)._compute_qty_at_date()
         rented_product_lines = (self - non_rental).filtered(
             lambda l: l.product_id and l.product_id.is_storable
         )
@@ -140,7 +140,7 @@ class RentalOrderLine(models.Model):
     def _compute_qty_delivered_method(self):
         """Allow modification of delivered qty without depending on stock moves."""
         rental_lines = self.filtered('is_rental')
-        super(RentalOrderLine, self - rental_lines)._compute_qty_delivered_method()
+        super(SaleOrderLine, self - rental_lines)._compute_qty_delivered_method()
         rental_lines.qty_delivered_method = 'manual'
 
     def write(self, vals):
@@ -158,7 +158,7 @@ class RentalOrderLine(models.Model):
         """
         if not any(key in vals for key in ['qty_delivered', 'pickedup_lot_ids', 'qty_returned', 'returned_lot_ids']) or self.env.user.has_group('sale_stock_renting.group_rental_stock_picking'):
             # If nothing to catch for rental: usual write behavior
-            return super(RentalOrderLine, self).write(vals)
+            return super().write(vals)
 
         # TODO add context for disabling stock moves in write ?
         old_vals = dict()
@@ -178,7 +178,7 @@ class RentalOrderLine(models.Model):
                     """
                     vals['reserved_lot_ids'] = vals['pickedup_lot_ids']
 
-        res = super(RentalOrderLine, self).write(vals)
+        res = super().write(vals)
 
         self._write_rental_lines(movable_confirmed_rental_lines, old_vals, vals)
         # TODO constraint s.t. qty_returned cannot be > than qty_delivered (and same for lots)
@@ -389,7 +389,7 @@ class RentalOrderLine(models.Model):
             returns._recompute_state()
         else:
             other_lines = self.filtered(lambda sol: not sol.is_rental)
-            super(RentalOrderLine, other_lines)._action_launch_stock_rule(previous_product_uom_qty)
+            super(SaleOrderLine, other_lines)._action_launch_stock_rule(previous_product_uom_qty)
 
     def _get_outgoing_incoming_moves(self, strict=True):
         outgoing_moves, incoming_moves = super()._get_outgoing_incoming_moves(strict)

@@ -4,7 +4,7 @@
 from odoo import fields, models
 
 
-class PaymentMethod(models.Model):
+class L10n_Mx_EdiPaymentMethod(models.Model):
     """Payment Method for Mexico from SAT Data.
     Electronic documents need this information from such data.
     Here the `xsd <goo.gl/Vk3IF1>`_
@@ -17,7 +17,6 @@ class PaymentMethod(models.Model):
     there with other purpose, then a new model is necessary in order to avoid
     lose odoo's features"""
 
-    _name = 'l10n_mx_edi.payment.method'
     _description = "Payment Method for Mexico from SAT Data"
 
     name = fields.Char(

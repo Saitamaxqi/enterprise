@@ -5,8 +5,8 @@ import datetime
 from odoo import api, fields, models
 
 
-class Event(models.Model):
-    _inherit = 'event.event'
+class EventEvent(models.Model):
+    _inherit = ['event.event']
 
     # Initial date and scale of the track gantt view
     track_gantt_initial_date = fields.Date(compute='_compute_track_gantt_information')

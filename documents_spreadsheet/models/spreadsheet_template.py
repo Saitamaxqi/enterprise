@@ -2,9 +2,9 @@
 
 from odoo import api, fields, models, _
 
+
 class SpreadsheetTemplate(models.Model):
-    _name = "spreadsheet.template"
-    _inherit = "spreadsheet.mixin"
+    _inherit = ["spreadsheet.mixin"]
     _description = "Spreadsheet Template"
     _order = "sequence"
 

@@ -14,8 +14,8 @@ from .shiprocket_request import ShipRocket
 _logger = logging.getLogger(__name__)
 
 
-class DeliverCarrier(models.Model):
-    _inherit = 'delivery.carrier'
+class DeliveryCarrier(models.Model):
+    _inherit = ['delivery.carrier']
 
     delivery_type = fields.Selection(
         selection_add=[('shiprocket', 'Shiprocket')],

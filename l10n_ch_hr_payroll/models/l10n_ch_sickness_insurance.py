@@ -5,8 +5,7 @@ from odoo import api, models, fields, _
 from odoo.exceptions import UserError
 
 
-class l10nChSicknessInsurance(models.Model):
-    _name = 'l10n.ch.sickness.insurance'
+class L10nChSicknessInsurance(models.Model):
     _description = 'Swiss: Sickness Insurances (IJM)'
 
     name = fields.Char(required=True)
@@ -24,8 +23,7 @@ class l10nChSicknessInsurance(models.Model):
             insurance.insurance_code = insurance.insurance_company
 
 
-class l10nChSicknessInsuranceLine(models.Model):
-    _name = 'l10n.ch.sickness.insurance.line'
+class L10nChSicknessInsuranceLine(models.Model):
     _description = 'Swiss: Sickness Insurances Line (IJM)'
     _rec_name = 'solution_name'
 
@@ -65,8 +63,7 @@ class l10nChSicknessInsuranceLine(models.Model):
         raise UserError(_('No IJM rates found for date %s', target))
 
 
-class l10nChSicknessInsuranceLineRate(models.Model):
-    _name = 'l10n.ch.sickness.insurance.line.rate'
+class L10nChSicknessInsuranceLineRate(models.Model):
     _description = 'Swiss: Sickness Insurances Line Rate (IJM)'
 
     line_id = fields.Many2one('l10n.ch.sickness.insurance.line')

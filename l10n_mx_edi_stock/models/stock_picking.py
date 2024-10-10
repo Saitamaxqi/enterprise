@@ -18,8 +18,8 @@ MAPBOX_GEOCODE_URL = 'https://api.mapbox.com/geocoding/v5/mapbox.places/'
 MAPBOX_MATRIX_URL = 'https://api.mapbox.com/directions-matrix/v1/mapbox/driving/'
 
 
-class Picking(models.Model):
-    _inherit = 'stock.picking'
+class StockPicking(models.Model):
+    _inherit = ['stock.picking']
 
     l10n_mx_edi_is_delivery_guide_needed = fields.Boolean(
         compute='_compute_l10n_mx_edi_is_delivery_guide_needed'

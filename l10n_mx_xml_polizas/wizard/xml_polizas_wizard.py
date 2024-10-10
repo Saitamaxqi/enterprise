@@ -40,8 +40,8 @@ class MoveExportData(defaultdict):
         move_key = self.Key(date.strftime(move_date, '%Y-%m-%d'), journal_name, move_name)
         self[period][move_key].append(move_data)
 
-class XmlPolizasExportWizard(models.TransientModel):
-    _name = 'l10n_mx_xml_polizas.xml_polizas_wizard'
+
+class L10n_Mx_Xml_PolizasXml_Polizas_Wizard(models.TransientModel):
     _description = "Wizard for the XML Polizas export of Journal Entries"
 
     # Report fields

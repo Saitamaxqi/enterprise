@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class DocumentsDocument(models.Model):
-    _inherit = 'documents.document'
+    _inherit = ['documents.document']
 
     def document_hr_expense_create_hr_expense(self):
         if self.filtered(

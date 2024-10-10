@@ -16,8 +16,9 @@ from ..utils import interval_from_events, intervals_overlap
 
 _logger = logging.getLogger(__name__)
 
+
 class CalendarEvent(models.Model):
-    _inherit = "calendar.event"
+    _inherit = ["calendar.event"]
 
     @api.model
     def default_get(self, fields_list):

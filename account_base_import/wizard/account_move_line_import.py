@@ -5,8 +5,8 @@ from odoo import api, models
 from odoo.addons.base_import.models.base_import import FIELDS_RECURSION_LIMIT
 
 
-class AccountMoveLineImport(models.TransientModel):
-    _inherit = "base_import.import"
+class Base_ImportImport(models.TransientModel):
+    _inherit = ["base_import.import"]
 
     @api.model
     def get_fields_tree(self, model, depth=FIELDS_RECURSION_LIMIT):

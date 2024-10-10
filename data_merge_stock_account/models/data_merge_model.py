@@ -4,8 +4,8 @@
 from odoo import api, models, _
 
 
-class DataMergeModel(models.Model):
-    _inherit = 'data_merge.model'
+class Data_MergeModel(models.Model):
+    _inherit = ['data_merge.model']
 
     @api.onchange('res_model_id')
     def _onchange_res_model_id(self):

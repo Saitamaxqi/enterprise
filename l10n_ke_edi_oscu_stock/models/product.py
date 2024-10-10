@@ -6,7 +6,7 @@ from odoo.tools.float_utils import json_float_round
 
 
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = ['product.template']
 
     def action_l10n_ke_oscu_save_stock_master(self):
         if self.product_variant_count != 1:
@@ -22,7 +22,7 @@ class ProductTemplate(models.Model):
 
 
 class ProductProduct(models.Model):
-    _inherit = 'product.product'
+    _inherit = ['product.product']
 
     def _l10n_ke_oscu_save_stock_master_content(self):
         """ Send the current available stock quantity to eTIMS.

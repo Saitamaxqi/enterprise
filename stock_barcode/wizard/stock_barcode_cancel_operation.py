@@ -4,8 +4,7 @@
 from odoo import fields, models
 
 
-class StockBarcodeCancelPicking(models.TransientModel):
-    _name = 'stock_barcode.cancel.operation'
+class Stock_BarcodeCancelOperation(models.TransientModel):
     _description = 'Cancel Operation'
 
     picking_id = fields.Many2one('stock.picking', 'Transfer', readonly=True)

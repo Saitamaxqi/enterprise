@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class HrPayslipInput(models.Model):
-    _name = 'hr.payslip.input'
     _description = 'Payslip Input'
     _order = 'payslip_id, sequence'
 

@@ -5,8 +5,10 @@ from odoo import fields, models, _
 from odoo.exceptions import UserError, ValidationError
 
 
-class L10nBe274XX(models.Model):
-    _inherit = 'l10n_be.274_xx'
+class L10n_Be274_Xx(models.Model):
+    _name = "l10n_be.274_xx"
+
+    _inherit = ['l10n_be.274_xx']
 
     move_id = fields.Many2one('account.move', 'Accounting Entry', readonly=True, index='btree_not_null')
 

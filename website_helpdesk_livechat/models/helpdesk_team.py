@@ -3,8 +3,9 @@
 
 from odoo import api, Command, models
 
+
 class HelpdeskTeam(models.Model):
-    _inherit = "helpdesk.team"
+    _inherit = ["helpdesk.team"]
 
     @api.model_create_multi
     def create(self, vals_list):

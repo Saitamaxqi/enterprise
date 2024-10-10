@@ -8,8 +8,7 @@ from requests.exceptions import ConnectionError
 import base64
 
 
-class L10nNlSBRStatusService(models.Model):
-    _name = 'l10n_nl_reports_sbr.status.service'
+class L10n_Nl_Reports_SbrStatusService(models.Model):
     _description = 'Status checking service for Digipoort submission'
 
     kenmerk = fields.Char('Message Exchange ID')

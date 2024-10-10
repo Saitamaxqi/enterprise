@@ -7,9 +7,8 @@ import logging
 _logger = logging.getLogger(__name__)
 
 
-class L10nArAfipWsConsult(models.TransientModel):
+class L10n_Ar_AfipWsConsult(models.TransientModel):
 
-    _name = 'l10n_ar_afip.ws.consult'
     _description = 'Consult Invoice Data in AFIP'
 
     number = fields.Integer(required=True)

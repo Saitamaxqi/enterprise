@@ -5,8 +5,7 @@ from odoo import api, fields, models, _
 from odoo.tools import format_list
 
 
-class AppointmentType(models.Model):
-    _name = "appointment.invite"
+class AppointmentInvite(models.Model):
     _inherit = ['appointment.invite', 'website.published.multi.mixin']
 
     appointment_type_warning_msg = fields.Char('Different Website Message', compute='_compute_appointment_type_warning_msg')

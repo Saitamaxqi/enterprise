@@ -2,7 +2,7 @@ from odoo import api, fields, models, _
 
 
 class AccountAsset(models.Model):
-    _inherit = 'account.asset'
+    _inherit = ['account.asset']
 
     linked_loans_ids = fields.One2many(related='asset_group_id.linked_loan_ids')
     count_linked_loans = fields.Integer(compute="_compute_count_linked_loans")

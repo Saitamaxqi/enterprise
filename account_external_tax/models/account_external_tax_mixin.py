@@ -13,7 +13,6 @@ class AccountExternalTaxMixin(models.AbstractModel):
     This mixin can be inherited on models that should support external tax integration. Certain methods
     will need to be overridden, they are indicated below.
     """
-    _name = 'account.external.tax.mixin'
     _description = 'Mixin to manage common parts of external tax calculation'
 
     is_tax_computed_externally = fields.Boolean(

@@ -7,8 +7,9 @@ HR_PAYROLL_WRITABLE_FIELDS = [
     'is_non_resident',
 ]
 
+
 class ResUsers(models.Model):
-    _inherit = "res.users"
+    _inherit = ["res.users"]
 
     is_non_resident = fields.Boolean(related='employee_ids.is_non_resident', readonly=False)
 

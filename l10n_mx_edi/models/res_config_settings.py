@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     l10n_mx_edi_pac = fields.Selection(related='company_id.l10n_mx_edi_pac', readonly=False)
     l10n_mx_edi_pac_test_env = fields.Boolean(related='company_id.l10n_mx_edi_pac_test_env', readonly=False)

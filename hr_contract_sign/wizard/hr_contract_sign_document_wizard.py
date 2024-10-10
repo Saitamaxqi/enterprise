@@ -7,7 +7,6 @@ from odoo import api, fields, models, _, Command
 
 
 class HrContractSignDocumentWizard(models.TransientModel):
-    _name = 'hr.contract.sign.document.wizard'
     _description = 'Sign document in contract'
 
     def _group_hr_contract_domain(self):

@@ -7,9 +7,8 @@ from odoo import _, models
 from odoo.exceptions import RedirectWarning
 
 
-class DenmarkECSalesReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_dk.ec.sales.report.handler'
-    _inherit = 'account.ec.sales.report.handler'
+class L10n_DkEcSalesReportHandler(models.AbstractModel):
+    _inherit = ['account.ec.sales.report.handler']
     _description = 'Denmark EC Sales Report Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):

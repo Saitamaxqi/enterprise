@@ -9,9 +9,8 @@ def _csv_row(*data, delimiter=","):
     return delimiter.join(data) + '\n'
 
 
-class TaxReportPND(models.AbstractModel):
-    _name = "l10n_th.pnd.report.handler"
-    _inherit = "account.generic.tax.report.handler"
+class L10n_ThPndReportHandler(models.AbstractModel):
+    _inherit = ["account.generic.tax.report.handler"]
     _description = "Abstract Tax Report PND Handler"
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
@@ -71,9 +70,8 @@ class TaxReportPND(models.AbstractModel):
         return res
 
 
-class TaxReportPND53(models.AbstractModel):
-    _name = "l10n_th.pnd53.report.handler"
-    _inherit = "l10n_th.pnd.report.handler"
+class L10n_ThPnd53ReportHandler(models.AbstractModel):
+    _inherit = ["l10n_th.pnd.report.handler"]
     _description = "Thai Tax Report (PND53) Custom Handler"
 
     def _custom_options_initializer(self, report, options, previous_options):
@@ -108,9 +106,8 @@ class TaxReportPND53(models.AbstractModel):
         }
 
 
-class TaxReportPND3(models.AbstractModel):
-    _name = "l10n_th.pnd3.report.handler"
-    _inherit = "l10n_th.pnd.report.handler"
+class L10n_ThPnd3ReportHandler(models.AbstractModel):
+    _inherit = ["l10n_th.pnd.report.handler"]
     _description = "Thai Tax Report (PND3) Custom Handler"
 
     def _custom_options_initializer(self, report, options, previous_options):

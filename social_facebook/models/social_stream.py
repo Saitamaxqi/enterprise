@@ -9,8 +9,8 @@ from odoo import models, api
 from werkzeug.urls import url_join
 
 
-class SocialStreamFacebook(models.Model):
-    _inherit = 'social.stream'
+class SocialStream(models.Model):
+    _inherit = ['social.stream']
 
     FACEBOOK_REACTIONS = {'LIKE', 'LOVE', 'HAHA', 'WOW', 'SAD', 'ANGRY', 'CARE'}
     FACEBOOK_REACTIONS_FIELDS = ','.join({
@@ -20,14 +20,14 @@ class SocialStreamFacebook(models.Model):
 
     def _apply_default_name(self):
         facebook_streams = self.filtered(lambda s: s.media_id.media_type == 'facebook')
-        super(SocialStreamFacebook, (self - facebook_streams))._apply_default_name()
+        super(SocialStream, (self - facebook_streams))._apply_default_name()
 
         for stream in facebook_streams:
             stream.write({'name': '%s: %s' % (stream.stream_type_id.name, stream.account_id.name)})
 
     def _fetch_stream_data(self):
         if self.media_id.media_type != 'facebook':
-            return super(SocialStreamFacebook, self)._fetch_stream_data()
+            return super()._fetch_stream_data()
 
         if self.stream_type_id.stream_type == 'facebook_page_posts':
             return self._fetch_page_posts('published_posts')

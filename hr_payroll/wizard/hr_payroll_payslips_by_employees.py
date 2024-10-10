@@ -13,7 +13,6 @@ from odoo.tools import format_date
 
 
 class HrPayslipEmployees(models.TransientModel):
-    _name = 'hr.payslip.employees'
     _description = 'Generate payslips for all selected employees'
 
     def _get_available_contracts_domain(self):

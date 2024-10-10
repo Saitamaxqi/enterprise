@@ -4,8 +4,9 @@
 from markupsafe import Markup
 from odoo import models
 
+
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     def write(self, vals):
         previous_states = None

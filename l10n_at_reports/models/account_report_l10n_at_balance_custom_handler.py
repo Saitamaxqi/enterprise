@@ -6,9 +6,9 @@
 from odoo import models, _
 from odoo.tools import float_compare
 
-class AccountReportCustomHandler(models.AbstractModel):
-    _name = 'account.report.l10n_at.balance.custom.handler'
-    _inherit = 'account.report.custom.handler'
+
+class AccountReportL10n_AtBalanceCustomHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Austrian Balance Sheet Report Custom Handler'
 
     def _custom_line_postprocessor(self, report, options, lines, warnings=None):

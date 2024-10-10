@@ -6,7 +6,7 @@ from datetime import datetime
 
 
 class HelpdeskTicket(models.Model):
-    _inherit = 'helpdesk.ticket'
+    _inherit = ['helpdesk.ticket']
 
     def _merge_method(self, destination, source):
         tickets = destination + source

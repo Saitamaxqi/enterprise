@@ -4,12 +4,11 @@
 from odoo import _, models, api
 
 
-class Users(models.Model):
-    _name = 'res.users'
-    _inherit = 'res.users'
+class ResUsers(models.Model):
+    _inherit = ['res.users']
     @api.model_create_multi
     def create(self, vals_list):
-        users = super(Users, self).create(vals_list)
+        users = super().create(vals_list)
         if not self.env.context.get('knowledge_skip_onboarding_article'):
             users.filtered(lambda user: not user.partner_share)._generate_tutorial_articles()
         return users

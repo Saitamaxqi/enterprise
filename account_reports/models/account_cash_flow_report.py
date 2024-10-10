@@ -2,9 +2,8 @@ from odoo import models, _
 from odoo.tools import SQL, Query
 
 
-class CashFlowReportCustomHandler(models.AbstractModel):
-    _name = 'account.cash.flow.report.handler'
-    _inherit = 'account.report.custom.handler'
+class AccountCashFlowReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Cash Flow Report Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):

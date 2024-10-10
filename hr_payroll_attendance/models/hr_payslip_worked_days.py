@@ -3,8 +3,9 @@
 
 from odoo import models
 
-class HrPayslipWorkedDays(models.Model):
-    _inherit = 'hr.payslip.worked_days'
+
+class HrPayslipWorked_Days(models.Model):
+    _inherit = ['hr.payslip.worked_days']
 
     def _compute_amount(self):
         # Try to deduce the amount from the salary rules bound to the payslip
@@ -24,7 +25,7 @@ class HrPayslipWorkedDays(models.Model):
             overtime_worked_days |= worked_day
             amount = worked_day.payslip_id.contract_id.hourly_wage * worked_day.number_of_hours if worked_day.is_paid else 0
             worked_day.amount = amount * overtime_pay_percent
-        super(HrPayslipWorkedDays, self - overtime_worked_days)._compute_amount()
+        super(HrPayslipWorked_Days, self - overtime_worked_days)._compute_amount()
 
     def _is_half_day(self):
         self.ensure_one()

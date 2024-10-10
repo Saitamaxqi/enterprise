@@ -7,7 +7,7 @@ from dateutil.relativedelta import relativedelta
 
 
 class AccountReconcileModel(models.Model):
-    _inherit = 'account.reconcile.model'
+    _inherit = ['account.reconcile.model']
 
     ####################################################
     # RECONCILIATION PROCESS

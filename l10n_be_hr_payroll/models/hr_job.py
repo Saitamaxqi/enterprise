@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class HrJob(models.Model):
-    _inherit = "hr.job"
+    _inherit = ["hr.job"]
 
     l10n_be_scale_category = fields.Selection([
         ('A', 'Category A'),

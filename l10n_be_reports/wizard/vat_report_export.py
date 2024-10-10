@@ -5,8 +5,7 @@ import json
 import base64
 
 
-class AccountFinancialReportXMLReportExport(models.TransientModel):
-    _name = "l10n_be_reports.periodic.vat.xml.export"
+class L10n_Be_ReportsPeriodicVatXmlExport(models.TransientModel):
     _description = "Belgian Periodic VAT Report Export Wizard"
 
     ask_restitution = fields.Boolean()

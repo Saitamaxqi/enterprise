@@ -56,9 +56,9 @@ COUNTRY_CODES = {
 }
 
 
-class L10nBe28145(models.Model):
+class L10n_Be281_45(models.Model):
     _name = 'l10n_be.281_45'
-    _inherit = 'hr.payroll.declaration.mixin'
+    _inherit = ['hr.payroll.declaration.mixin']
     _description = 'HR Payroll 281.45 Wizard'
     _order = 'year'
 

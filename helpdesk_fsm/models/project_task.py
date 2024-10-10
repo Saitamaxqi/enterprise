@@ -4,8 +4,8 @@
 from odoo import api, models, fields
 
 
-class Task(models.Model):
-    _inherit = 'project.task'
+class ProjectTask(models.Model):
+    _inherit = ['project.task']
 
     helpdesk_ticket_id = fields.Many2one('helpdesk.ticket', string='Original Ticket', index='btree_not_null', readonly=True)
 

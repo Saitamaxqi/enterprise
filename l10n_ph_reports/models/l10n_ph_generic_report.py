@@ -4,9 +4,8 @@ from odoo.tools.sql import SQL
 from odoo.tools.misc import get_lang
 
 
-class L10nPhGenericCustomHandler(models.AbstractModel):
-    _name = 'l10n_ph.generic.report.handler'
-    _inherit = 'account.report.custom.handler'
+class L10n_PhGenericReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Philippines Generic Report Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):

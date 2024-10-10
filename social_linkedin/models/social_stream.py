@@ -9,12 +9,12 @@ from odoo import models, _
 from odoo.exceptions import UserError
 
 
-class SocialStreamLinkedIn(models.Model):
-    _inherit = 'social.stream'
+class SocialStream(models.Model):
+    _inherit = ['social.stream']
 
     def _apply_default_name(self):
         linkedin_streams = self.filtered(lambda s: s.media_id.media_type == 'linkedin')
-        super(SocialStreamLinkedIn, (self - linkedin_streams))._apply_default_name()
+        super(SocialStream, (self - linkedin_streams))._apply_default_name()
 
         for stream in linkedin_streams:
             stream.write({'name': '%s: %s' % (stream.stream_type_id.name, stream.account_id.name)})
@@ -27,7 +27,7 @@ class SocialStreamLinkedIn(models.Model):
         statistics of all posts (there are 2 different endpoints)."""
         self.ensure_one()
         if self.media_id.media_type != 'linkedin':
-            return super(SocialStreamLinkedIn, self)._fetch_stream_data()
+            return super()._fetch_stream_data()
 
         # retrieve post information
         if self.stream_type_id.stream_type != 'linkedin_company_post':

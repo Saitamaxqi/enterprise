@@ -2,8 +2,7 @@
 from odoo import fields, models
 
 
-class TypeCode(models.Model):
-    _name = 'l10n_co_edi.type_code'
+class L10n_Co_EdiType_Code(models.Model):
     _description = "Colombian EDI Type Code"
 
     name = fields.Char(required=True)

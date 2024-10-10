@@ -4,8 +4,7 @@ from odoo.exceptions import UserError
 from odoo.addons.l10n_be_codabox.const import get_error_msg
 
 
-class L10nBeCodaBoxConnectionWizard(models.TransientModel):
-    _name = 'l10n_be_codabox.connection.wizard'
+class L10n_Be_CodaboxConnectionWizard(models.TransientModel):
     _description = 'CodaBox Connection Wizard'
     _check_company_auto = True
 

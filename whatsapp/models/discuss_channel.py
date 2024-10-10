@@ -13,10 +13,11 @@ from odoo.exceptions import ValidationError
 
 _logger = logging.getLogger(__name__)
 
+
 class DiscussChannel(models.Model):
     """ Support WhatsApp Channels, used for discussion with a specific
     whasapp number """
-    _inherit = 'discuss.channel'
+    _inherit = ['discuss.channel']
 
     channel_type = fields.Selection(
         selection_add=[('whatsapp', 'WhatsApp Conversation')],

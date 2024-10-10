@@ -1,9 +1,8 @@
 from odoo import models, _
 
 
-class IndianTDSTCSReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_in_withholding.tds.tcs.report.handler'
-    _inherit = 'account.generic.tax.report.handler'
+class L10n_In_WithholdingTdsTcsReportHandler(models.AbstractModel):
+    _inherit = ['account.generic.tax.report.handler']
     _description = 'Indian Tax Report Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):

@@ -7,8 +7,8 @@ from odoo import fields, models, _
 from odoo.exceptions import UserError
 
 
-class IrActionReport(models.Model):
-    _inherit = 'ir.actions.report'
+class IrActionsReport(models.Model):
+    _inherit = ['ir.actions.report']
 
     device_ids = fields.Many2many('iot.device', string='IoT Devices', domain="[('type', '=', 'printer')]",
                                 help='When setting a device here, the report will be printed through this device on the IoT Box')
@@ -53,7 +53,7 @@ class IrActionReport(models.Model):
         return True
 
     def report_action(self, docids, data=None, config=True):
-        result = super(IrActionReport, self).report_action(docids, data, config)
+        result = super().report_action(docids, data, config)
         if result.get('type') != 'ir.actions.report':
             return result
         device = self.device_ids and self.device_ids[0]

@@ -4,8 +4,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class HrTdsCalculation(models.TransientModel):
-    _name = 'l10n.in.tds.computation.wizard'
+class L10nInTdsComputationWizard(models.TransientModel):
     _description = 'Indian Payroll: TDS computation'
 
     def default_get(self, fields):

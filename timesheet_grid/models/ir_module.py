@@ -1,8 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import models
 
+
 class IrModuleModule(models.Model):
-    _inherit = 'ir.module.module'
+    _inherit = ['ir.module.module']
 
     def button_uninstall(self):
         extra = self.browse()

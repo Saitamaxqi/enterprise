@@ -13,7 +13,6 @@ from odoo.tools import format_date
 
 
 class HrWorkEntryExportMixin(models.AbstractModel):
-    _name = 'hr.work.entry.export.mixin'
     _description = 'Work Entry Export Mixin'
 
     @api.model
@@ -187,7 +186,6 @@ class HrWorkEntryExportMixin(models.AbstractModel):
 
 
 class HrWorkEntryExportEmployeeMixin(models.AbstractModel):
-    _name = 'hr.work.entry.export.employee.mixin'
     _description = 'Work Entry Export Employee'
 
     export_id = fields.Many2one('hr.work.entry.export.mixin', required=True, ondelete='cascade')

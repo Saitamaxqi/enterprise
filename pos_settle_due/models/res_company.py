@@ -3,7 +3,7 @@ from odoo import models, api
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     @api.model
     def _load_pos_data_fields(self, config_id):

@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class HrReferralAlert(models.Model):
-    _name = 'hr.referral.alert'
     _description = 'Alert in Referral App'
 
     name = fields.Char(string='Alert', required=True)

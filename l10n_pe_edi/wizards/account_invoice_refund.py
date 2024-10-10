@@ -5,7 +5,7 @@ from odoo.addons.l10n_pe_edi.models.account_move import REFUND_REASON
 
 
 class AccountMoveReversal(models.TransientModel):
-    _inherit = 'account.move.reversal'
+    _inherit = ['account.move.reversal']
 
     l10n_pe_edi_refund_reason = fields.Selection(
         selection=REFUND_REASON,

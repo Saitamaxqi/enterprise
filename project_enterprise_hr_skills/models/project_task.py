@@ -4,8 +4,9 @@ from odoo import models
 
 from odoo.addons.resource.models.utils import filter_domain_leaf
 
+
 class ProjectTask(models.Model):
-    _inherit = "project.task"
+    _inherit = ["project.task"]
 
     def _get_additional_users(self, domain):
         users = super()._get_additional_users(domain)

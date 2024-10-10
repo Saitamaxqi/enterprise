@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class AccountJournal(models.Model):
-    _inherit = 'account.journal'
+    _inherit = ['account.journal']
 
     debit_sepa_pain_version = fields.Selection(
         [

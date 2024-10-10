@@ -64,9 +64,8 @@ class SimpleTransport:
         return self.__obj.xml_response
 
 
-class L10nArAfipwsConnection(models.Model):
+class L10n_ArAfipwsConnection(models.Model):
 
-    _name = "l10n_ar.afipws.connection"
     _description = "AFIP Webservice Connection"
     _rec_name = "l10n_ar_afip_ws"
     _order = "expiration_time desc"

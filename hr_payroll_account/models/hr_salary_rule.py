@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HrSalaryRule(models.Model):
-    _inherit = 'hr.salary.rule'
+    _inherit = ['hr.salary.rule']
 
     analytic_account_id = fields.Many2one(
         'account.analytic.account', 'Analytic Account', company_dependent=True)

@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 
 class ResCompany(models.Model):
 
-    _inherit = "res.company"
+    _inherit = ["res.company"]
 
     l10n_nl_reports_sbr_cert_id = fields.Many2one(
         string='Digipoort Certificate',

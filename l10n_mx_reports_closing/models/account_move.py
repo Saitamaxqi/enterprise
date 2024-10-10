@@ -3,8 +3,9 @@
 
 from odoo import fields, models
 
+
 class AccountMove(models.Model):
-    _inherit = "account.move"
+    _inherit = ["account.move"]
 
     l10n_mx_closing_move = fields.Boolean(
         string="Month 13 Closing",

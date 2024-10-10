@@ -4,7 +4,7 @@ from odoo import models, fields
 
 
 class AvataxValidateAddress(models.TransientModel):
-    _inherit = 'avatax.validate.address'
+    _inherit = ['avatax.validate.address']
 
     def action_save_validated(self):
         res = super().action_save_validated()

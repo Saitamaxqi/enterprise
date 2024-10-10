@@ -32,8 +32,8 @@ class OdooFinRedirectException(UserError):
         self.mode = mode
         super().__init__(message)
 
+
 class AccountOnlineAccount(models.Model):
-    _name = 'account.online.account'
     _description = 'representation of an online bank account'
 
     name = fields.Char(string="Account Name", help="Account Name as provided by third party provider")
@@ -315,7 +315,6 @@ class AccountOnlineAccount(models.Model):
 
 
 class AccountOnlineLink(models.Model):
-    _name = 'account.online.link'
     _description = 'Bank Connection'
     _inherit = ['mail.thread', 'mail.activity.mixin']
 

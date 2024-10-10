@@ -9,9 +9,8 @@ from odoo.tools.misc import DEFAULT_SERVER_DATE_FORMAT
 TRIAL_BALANCE_END_COLUMN_GROUP_KEY = '_trial_balance_end_column_group'
 
 
-class TrialBalanceCustomHandler(models.AbstractModel):
-    _name = 'account.trial.balance.report.handler'
-    _inherit = 'account.report.custom.handler'
+class AccountTrialBalanceReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Trial Balance Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):

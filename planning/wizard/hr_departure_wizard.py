@@ -6,7 +6,7 @@ from odoo import models
 
 
 class HrDepartureWizard(models.TransientModel):
-    _inherit = 'hr.departure.wizard'
+    _inherit = ['hr.departure.wizard']
 
     def action_register_departure(self):
         super().action_register_departure()

@@ -1,8 +1,8 @@
 from odoo import models, api
 
 
-class PosPreparationDisplay(models.Model):
-    _inherit = "pos_preparation_display.display"
+class Pos_Preparation_DisplayDisplay(models.Model):
+    _inherit = ["pos_preparation_display.display"]
 
     def _paper_status_change(self, pos_config):
         preparation_displays = self.search(['|', ('pos_config_ids', 'in', pos_config.ids), ('pos_config_ids', '=', False)])

@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class PosConfig(models.Model):
-    _inherit = 'pos.config'
+    _inherit = ['pos.config']
 
     journal_id = fields.Many2one(
         'account.journal',

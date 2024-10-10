@@ -1,8 +1,7 @@
 from odoo import fields, models
 
 
-class PosPreparationDisplayOrderline(models.Model):
-    _name = 'pos_preparation_display.orderline'
+class Pos_Preparation_DisplayOrderline(models.Model):
     _description = "Point of Sale preparation order line"
 
     todo = fields.Boolean("Status of the orderline", help="The status of a command line, todo or not")

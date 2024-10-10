@@ -5,7 +5,7 @@ from odoo import models, api
 
 
 class MailMessage(models.Model):
-    _inherit = 'mail.message'
+    _inherit = ['mail.message']
 
     @api.model_create_multi
     def create(self, values_list):

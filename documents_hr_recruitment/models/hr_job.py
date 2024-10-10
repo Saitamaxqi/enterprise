@@ -5,7 +5,6 @@ from odoo import _, models
 
 
 class HrJob(models.Model):
-    _name = 'hr.job'
     _inherit = ['hr.job', 'documents.mixin']
 
     def _get_document_folder(self):

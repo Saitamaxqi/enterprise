@@ -7,7 +7,7 @@ from odoo.addons.sale_timesheet_enterprise.models.sale import DEFAULT_INVOICED_T
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     timesheet_show_rates = fields.Boolean(
         string="Billing Rate Indicators",

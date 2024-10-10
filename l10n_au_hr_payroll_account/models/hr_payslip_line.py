@@ -3,8 +3,8 @@
 from odoo import api, models
 
 
-class HrPayslip(models.Model):
-    _inherit = "hr.payslip.line"
+class HrPayslipLine(models.Model):
+    _inherit = ["hr.payslip.line"]
 
     def _adapt_records_to_w3(self, debit_credit='debit'):
         ''' A special case in some contracts needs to be reported in another section of the tax report.
@@ -34,10 +34,10 @@ class HrPayslip(models.Model):
     def _compute_debit_tags(self):
         lines_to_report_in_w3 = self.filtered(lambda record: record.contract_id.l10n_au_report_to_w3)
         lines_to_report_in_w3._adapt_records_to_w3('debit')
-        super(HrPayslip, self - lines_to_report_in_w3)._compute_debit_tags()
+        super(HrPayslipLine, self - lines_to_report_in_w3)._compute_debit_tags()
 
     @api.depends('salary_rule_id.credit_tag_ids', 'contract_id.l10n_au_report_to_w3')
     def _compute_credit_tags(self):
         lines_to_report_in_w3 = self.filtered(lambda record: record.contract_id.l10n_au_report_to_w3)
         lines_to_report_in_w3._adapt_records_to_w3('credit')
-        super(HrPayslip, self - lines_to_report_in_w3)._compute_credit_tags()
+        super(HrPayslipLine, self - lines_to_report_in_w3)._compute_credit_tags()

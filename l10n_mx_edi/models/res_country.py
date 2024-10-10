@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResCountry(models.Model):
-    _inherit = 'res.country'
+    _inherit = ['res.country']
 
     l10n_mx_edi_code = fields.Char(
         'Code MX', help='Country code defined by the SAT in the catalog to '

@@ -24,7 +24,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     # ==== CFDI flow fields ====
 

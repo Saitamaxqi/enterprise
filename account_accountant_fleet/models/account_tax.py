@@ -2,8 +2,9 @@
 
 from odoo import models
 
+
 class AccountTax(models.Model):
-    _inherit = 'account.tax'
+    _inherit = ['account.tax']
 
     def _prepare_base_line_for_taxes_computation(self, record, **kwargs):
         # EXTENDS 'account'

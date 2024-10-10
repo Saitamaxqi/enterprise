@@ -10,8 +10,8 @@ _logger = logging.getLogger(__name__)
 INT_PHONE_NUMBER_FORMAT_REGEX = r'^\+[^+]+$'
 
 
-class SDDMandate(models.Model):
-    _inherit = 'sdd.mandate'
+class SddMandate(models.Model):
+    _inherit = ['sdd.mandate']
 
     def write(self, vals):
         res = super().write(vals)

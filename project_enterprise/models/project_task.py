@@ -22,8 +22,8 @@ PROJECT_TASK_WRITABLE_FIELDS = {
 }
 
 
-class Task(models.Model):
-    _inherit = "project.task"
+class ProjectTask(models.Model):
+    _inherit = ["project.task"]
 
     planned_date_begin = fields.Datetime("Start date", tracking=True)
     # planned_date_start is added to be able to display tasks in calendar view because both start and end date are mandatory
@@ -123,16 +123,16 @@ class Task(models.Model):
         ]
         if additional_domain:
             domain = expression.AND([domain, additional_domain])
-        Task = self.env['project.task']
-        planning_overlap_query = Task._where_calc(
+        ProjectTask = self.env['project.task']
+        planning_overlap_query = ProjectTask._where_calc(
             expression.AND([
                 domain,
                 [('id', 'in', self.ids)]
             ])
         )
-        tu1_alias = planning_overlap_query.join(Task._table, 'id', 'project_task_user_rel', 'task_id', 'TU1')
-        task2_alias = planning_overlap_query.make_alias(Task._table, 'T2')
-        task2_expression = expression.expression(domain, Task, task2_alias)
+        tu1_alias = planning_overlap_query.join(ProjectTask._table, 'id', 'project_task_user_rel', 'task_id', 'TU1')
+        task2_alias = planning_overlap_query.make_alias(ProjectTask._table, 'T2')
+        task2_expression = expression.expression(domain, ProjectTask, task2_alias)
         task2_query = task2_expression.query
 
         # add additional condition to join with the main query
@@ -146,8 +146,8 @@ class Task(models.Model):
         task2_query.add_where(
             SQL(
                 "(%s::TIMESTAMP, %s::TIMESTAMP) OVERLAPS (%s::TIMESTAMP, %s::TIMESTAMP)",
-                SQL.identifier(Task._table, 'planned_date_begin'),
-                SQL.identifier(Task._table, 'date_deadline'),
+                SQL.identifier(ProjectTask._table, 'planned_date_begin'),
+                SQL.identifier(ProjectTask._table, 'date_deadline'),
                 SQL.identifier(task2_alias, 'planned_date_begin'),
                 SQL.identifier(task2_alias, 'date_deadline')
             )
@@ -157,7 +157,7 @@ class Task(models.Model):
         planning_overlap_query.add_join(
             'JOIN',
             task2_alias,
-            Task._table,
+            ProjectTask._table,
             task2_query.where_clause
         )
         tu2_alias = planning_overlap_query.join(task2_alias, 'id', 'project_task_user_rel', 'task_id', 'TU2')
@@ -171,15 +171,15 @@ class Task(models.Model):
         user_alias = planning_overlap_query.join(tu1_alias, 'user_id', 'res_users', 'id', 'U')
         partner_alias = planning_overlap_query.join(user_alias, 'partner_id', 'res_partner', 'id', 'P')
         query_str = planning_overlap_query.select(
-            SQL.identifier(Task._table, 'id'),
-            SQL.identifier(Task._table, 'planned_date_begin'),
-            SQL.identifier(Task._table, 'date_deadline'),
+            SQL.identifier(ProjectTask._table, 'id'),
+            SQL.identifier(ProjectTask._table, 'planned_date_begin'),
+            SQL.identifier(ProjectTask._table, 'date_deadline'),
             SQL("ARRAY_AGG(%s) AS task_ids", SQL.identifier(task2_alias, 'id')),
             SQL("MIN(%s)", SQL.identifier(task2_alias, 'planned_date_begin')),
             SQL("MAX(%s)", SQL.identifier(task2_alias, 'date_deadline')),
             SQL("%s AS user_id", SQL.identifier(user_alias, 'id')),
             SQL("%s AS partner_name", SQL.identifier(partner_alias, 'name')),
-            SQL("%s", SQL.identifier(Task._table, 'allocated_hours')),
+            SQL("%s", SQL.identifier(ProjectTask._table, 'allocated_hours')),
             SQL("SUM(%s)", SQL.identifier(task2_alias, 'allocated_hours')),
         )
 
@@ -192,7 +192,7 @@ class Task(models.Model):
                 """,
                 query_str,
                 SQL(", ").join([
-                    SQL.identifier(Task._table, 'id'),
+                    SQL.identifier(ProjectTask._table, 'id'),
                     SQL.identifier(user_alias, 'id'),
                     SQL.identifier(partner_alias, 'name'),
                 ]),
@@ -467,7 +467,7 @@ class Task(models.Model):
             tasks_by_resource_calendar_dict = compute_default_planned_dates._get_tasks_by_resource_calendar_dict()
             for (calendar, tasks) in tasks_by_resource_calendar_dict.items():
                 date_start, date_stop = self._calculate_planned_dates(planned_date_begin, date_deadline, calendar=calendar)
-                super(Task, tasks).write({
+                super(ProjectTask, tasks).write({
                     'planned_date_begin': date_start,
                     'date_deadline': date_stop,
                 })

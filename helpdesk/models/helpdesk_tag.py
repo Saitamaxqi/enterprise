@@ -5,8 +5,8 @@ from random import randint
 
 from odoo import api, fields, models
 
+
 class HelpdeskTag(models.Model):
-    _name = 'helpdesk.tag'
     _description = 'Helpdesk Tags'
     _order = 'name'
 

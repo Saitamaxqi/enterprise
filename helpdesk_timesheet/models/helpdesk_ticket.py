@@ -3,8 +3,8 @@
 
 from odoo import api, fields, models, _
 
+
 class HelpdeskTicket(models.Model):
-    _name = 'helpdesk.ticket'
     _inherit = ['helpdesk.ticket', 'timer.mixin']
 
     project_id = fields.Many2one(

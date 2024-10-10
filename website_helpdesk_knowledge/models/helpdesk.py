@@ -3,8 +3,9 @@
 
 from odoo import api, models, fields, _
 
+
 class HelpdeskTeam(models.Model):
-    _inherit = "helpdesk.team"
+    _inherit = ["helpdesk.team"]
 
     show_knowledge_base_article = fields.Boolean(compute="_compute_show_knowledge_base_article", export_string_translation=False)
     website_article_id = fields.Many2one('knowledge.article', string='Article',

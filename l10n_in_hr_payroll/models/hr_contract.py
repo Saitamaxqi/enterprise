@@ -10,7 +10,7 @@ class HrContract(models.Model):
     Employee contract allows to add different values in fields.
     Fields are used in salary rule computation.
     """
-    _inherit = 'hr.contract'
+    _inherit = ['hr.contract']
 
     l10n_in_tds = fields.Float(string='TDS', digits='Payroll',
         help='Amount for Tax Deduction at Source')

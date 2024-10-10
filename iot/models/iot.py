@@ -8,9 +8,10 @@ from odoo import api, fields, models
 
 # ----------------------------------------------------------
 # Models for client
+
+
 # ----------------------------------------------------------
 class IotBox(models.Model):
-    _name = 'iot.box'
     _description = 'IoT Box'
 
     name = fields.Char('Name', readonly=True)
@@ -38,7 +39,6 @@ class IotBox(models.Model):
 
 
 class IotDevice(models.Model):
-    _name = 'iot.device'
     _description = 'IOT Device'
 
     iot_id = fields.Many2one('iot.box', string='IoT Box', required=True, ondelete='cascade')
@@ -107,8 +107,7 @@ class IotDevice(models.Model):
         return return_value
 
 
-class KeyboardLayout(models.Model):
-    _name = 'iot.keyboard.layout'
+class IotKeyboardLayout(models.Model):
     _description = 'Keyboard Layout'
 
     name = fields.Char('Name')
@@ -117,7 +116,6 @@ class KeyboardLayout(models.Model):
 
 
 class IotChannel(models.AbstractModel):
-    _name = "iot.channel"
     _description = "The Websocket Iot Channel"
 
     SYSTEM_PARAMETER_KEY = 'iot.ws_channel'

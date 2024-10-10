@@ -5,8 +5,8 @@ from odoo.exceptions import ValidationError
 from odoo.tools import format_amount
 
 
-class product_template(models.Model):
-    _inherit = "product.template"
+class ProductTemplate(models.Model):
+    _inherit = ["product.template"]
 
     recurring_invoice = fields.Boolean(
         'Subscription Product',
@@ -73,7 +73,7 @@ class product_template(models.Model):
     def copy(self, default=None):
         copied_tmpls = self.env['product.template']
         for record in self:
-            copied_tmpl = super(product_template, record).copy(default)
+            copied_tmpl = super(ProductTemplate, record).copy(default)
             copied_tmpls += copied_tmpl
             for pricing in record.product_subscription_pricing_ids:
                 copied_variant_ids = []

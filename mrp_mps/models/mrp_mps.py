@@ -14,8 +14,7 @@ from collections import OrderedDict
 
 
 class MrpProductionSchedule(models.Model):
-    _name = 'mrp.production.schedule'
-    _inherit = 'stock.replenish.mixin'
+    _inherit = ['stock.replenish.mixin']
     _order = 'warehouse_id, mps_sequence, product_id'
     _description = 'Schedule the production of Product in a warehouse'
 
@@ -1130,8 +1129,8 @@ class MrpProductionSchedule(models.Model):
 
         return res_purchase_lines
 
+
 class MrpProductForecast(models.Model):
-    _name = 'mrp.product.forecast'
     _order = 'date'
     _description = 'Product Forecast at Date'
 

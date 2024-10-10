@@ -13,7 +13,7 @@ import odoo.addons.account.tools.structured_reference as sr
 
 
 class AccountJournal(models.Model):
-    _inherit = "account.journal"
+    _inherit = ["account.journal"]
 
     sepa_pain_version = fields.Selection(
         [

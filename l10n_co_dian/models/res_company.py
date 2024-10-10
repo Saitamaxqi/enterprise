@@ -2,7 +2,7 @@ from odoo import models, fields
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     l10n_co_dian_operation_mode_ids = fields.One2many(
         string="DIAN Operation Modes",

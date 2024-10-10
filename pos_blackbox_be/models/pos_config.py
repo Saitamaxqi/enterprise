@@ -8,7 +8,7 @@ from odoo.tools.translate import _
 
 
 class PosConfig(models.Model):
-    _inherit = "pos.config"
+    _inherit = ["pos.config"]
 
     iface_fiscal_data_module = fields.Many2one(
         "iot.device",

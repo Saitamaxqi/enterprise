@@ -94,8 +94,8 @@ def adapt_arch_to_model(arch, Model):
 
     return etree.tostring(arch, encoding='utf-8', pretty_print=True)
 
-class WebsiteControllerPageStudio(models.Model):
-    _name = "website.controller.page"
+
+class WebsiteControllerPage(models.Model):
     _inherit = ['studio.mixin', "website.controller.page"]
 
     def _default_name(self):

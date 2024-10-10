@@ -14,7 +14,7 @@ from odoo.tools import format_date
 from odoo.tools.misc import file_path
 
 
-class L10nBe273S(models.Model):
+class L10n_Be273s(models.Model):
     _name = 'l10n_be.273s'
     _description = '273S Sheet'
     _order = 'period'

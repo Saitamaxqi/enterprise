@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class Website(models.Model):
-    _inherit = 'website'
+    _inherit = ['website']
 
     firebase_enable_push_notifications = fields.Boolean('Enable Web Push Notifications')
     firebase_use_own_account = fields.Boolean('Use your own Firebase account')

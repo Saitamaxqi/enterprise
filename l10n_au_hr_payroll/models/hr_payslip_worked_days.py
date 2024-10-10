@@ -3,8 +3,8 @@
 from odoo import models
 
 
-class HrPayslipWorkedDays(models.Model):
-    _inherit = "hr.payslip.worked_days"
+class HrPayslipWorked_Days(models.Model):
+    _inherit = ["hr.payslip.worked_days"]
 
     def _compute_amount(self):
         res = super()._compute_amount()

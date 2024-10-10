@@ -4,7 +4,7 @@ from odoo import models
 
 
 class StockMoveLine(models.Model):
-    _inherit = "stock.move.line"
+    _inherit = ["stock.move.line"]
 
     def write(self, vals):
         res = super().write(vals)

@@ -5,8 +5,9 @@ from odoo import api, fields, models
 from odoo.osv import expression
 from odoo.addons.sale_timesheet_enterprise.models.sale import DEFAULT_INVOICED_TIMESHEET
 
+
 class AccountAnalyticLine(models.Model):
-    _inherit = 'account.analytic.line'
+    _inherit = ['account.analytic.line']
 
     display_sol = fields.Boolean(compute="_compute_display_sol", export_string_translation=False)
 

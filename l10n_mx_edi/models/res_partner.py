@@ -9,7 +9,7 @@ from odoo.addons.l10n_mx_edi.models.l10n_mx_edi_document import USAGE_SELECTION
 
 
 class ResPartner(models.Model):
-    _inherit = 'res.partner'
+    _inherit = ['res.partner']
 
     l10n_mx_edi_addenda_id = fields.Many2one(
         comodel_name='l10n_mx_edi.addenda',

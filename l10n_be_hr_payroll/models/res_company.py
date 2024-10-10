@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     onss_company_id = fields.Char(string="ONSS Company ID", help="10-digit code given by ONSS")
     onss_registration_number = fields.Char(string="ONSS Registration Number", help="9-digit code given by ONSS")

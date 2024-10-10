@@ -3,9 +3,8 @@
 from odoo import models
 
 
-class SpanishMod130TaxReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_es_modelo130.mod130.tax.report.handler'
-    _inherit = 'l10n_es.tax.report.handler'
+class L10n_Es_Modelo130Mod130TaxReportHandler(models.AbstractModel):
+    _inherit = ['l10n_es.tax.report.handler']
     _description = 'Spanish Tax Report Custom Handler (Mod130)'
 
     def _custom_options_initializer(self, report, options, previous_options):

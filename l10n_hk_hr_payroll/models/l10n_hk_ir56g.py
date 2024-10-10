@@ -7,9 +7,8 @@ from collections import defaultdict
 from odoo import _, api, fields, models
 
 
-class L10nHkIr56g(models.Model):
-    _name = 'l10n_hk.ir56g'
-    _inherit = 'l10n_hk.ird'
+class L10n_HkIr56g(models.Model):
+    _inherit = ['l10n_hk.ird']
     _description = 'IR56G Sheet'
     _order = 'start_period'
 
@@ -190,8 +189,7 @@ class L10nHkIr56g(models.Model):
         return employee.contract_id.hr_responsible_id or self.env.user
 
 
-class L10nHkIr56bLine(models.Model):
-    _name = 'l10n_hk.ir56g.line'
+class L10n_HkIr56gLine(models.Model):
     _description = 'IR56G Line'
 
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True)

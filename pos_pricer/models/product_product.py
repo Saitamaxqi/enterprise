@@ -19,9 +19,9 @@ PRICER_RELATED_FIELDS = [
 ]
 
 
-class PricerProductProduct(models.Model):
+class ProductProduct(models.Model):
     """ Adding the necessary fields to products to use with Pricer electronic tags """
-    _inherit = 'product.product'
+    _inherit = ['product.product']
 
     pricer_store_id = fields.Many2one(
         comodel_name='pricer.store',

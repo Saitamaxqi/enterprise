@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HelpdeskTeam(models.Model):
-    _inherit = 'helpdesk.team'
+    _inherit = ['helpdesk.team']
 
     project_id = fields.Many2one(domain="[('allow_timesheets', '=', True), ('company_id', '=', company_id), ('allow_billable', '=', use_helpdesk_sale_timesheet)]")
 

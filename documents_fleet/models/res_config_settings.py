@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     documents_fleet_settings = fields.Boolean(
         related='company_id.documents_fleet_settings', readonly=False, string="Fleet")

@@ -6,8 +6,8 @@ from odoo.osv import expression
 from odoo.exceptions import ValidationError
 
 
-class Article(models.Model):
-    _inherit = 'knowledge.article'
+class KnowledgeArticle(models.Model):
+    _inherit = ['knowledge.article']
 
     @api.model
     def _search_get_detail(self, website, order, options):

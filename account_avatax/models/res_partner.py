@@ -10,7 +10,6 @@ ADDRESS_FIELDS = ('street', 'street2', 'city', 'state_id', 'zip', 'country_id')
 
 
 class ResPartner(models.Model):
-    _name = 'res.partner'
     _inherit = ['res.partner', 'account.avatax.unique.code']
 
     avalara_partner_code = fields.Char(

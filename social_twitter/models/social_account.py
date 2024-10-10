@@ -12,8 +12,8 @@ from odoo.exceptions import UserError
 TWITTER_IMAGES_UPLOAD_ENDPOINT = "https://upload.twitter.com/1.1/media/upload.json"
 
 
-class SocialAccountTwitter(models.Model):
-    _inherit = 'social.account'
+class SocialAccount(models.Model):
+    _inherit = ['social.account']
 
     twitter_user_id = fields.Char('X User ID')
     twitter_oauth_token = fields.Char('X OAuth Token')
@@ -23,7 +23,7 @@ class SocialAccountTwitter(models.Model):
         """ See methods '_get_last_tweets_stats' for more info about Twitter stats. """
 
         twitter_accounts = self._filter_by_media_types(['twitter'])
-        super(SocialAccountTwitter, (self - twitter_accounts))._compute_statistics()
+        super(SocialAccount, (self - twitter_accounts))._compute_statistics()
 
         for account in twitter_accounts:
             account_stats = account._get_account_stats()
@@ -38,14 +38,14 @@ class SocialAccountTwitter(models.Model):
 
     def _compute_stats_link(self):
         twitter_accounts = self._filter_by_media_types(['twitter'])
-        super(SocialAccountTwitter, (self - twitter_accounts))._compute_stats_link()
+        super(SocialAccount, (self - twitter_accounts))._compute_stats_link()
 
         for account in twitter_accounts:
             account.stats_link = f"https://analytics.twitter.com/user/{account.social_account_handle}"
 
     @api.model_create_multi
     def create(self, vals_list):
-        res = super(SocialAccountTwitter, self).create(vals_list)
+        res = super().create(vals_list)
         res.filtered(lambda account: account.media_type == 'twitter')._create_default_stream_twitter()
         return res
 

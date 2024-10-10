@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class EventTypeMail(models.Model):
-    _inherit = 'event.type.mail'
+    _inherit = ['event.type.mail']
 
     notification_type = fields.Selection(selection_add=[('social_post', 'Social Post')])
     template_ref = fields.Reference(ondelete={'social.post.template': 'cascade'}, selection_add=[('social.post.template', 'Social Post')])

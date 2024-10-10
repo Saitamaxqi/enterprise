@@ -23,7 +23,7 @@ CESSATION_TYPE_CODE = [
 
 
 class HrContract(models.Model):
-    _inherit = 'hr.contract'
+    _inherit = ['hr.contract']
 
     l10n_au_casual_loading = fields.Float(string="Casual Loading")
     l10n_au_pay_day = fields.Selection(

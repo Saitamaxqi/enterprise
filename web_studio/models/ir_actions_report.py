@@ -6,7 +6,6 @@ from odoo.osv import expression
 
 
 class IrActionsReport(models.Model):
-    _name = 'ir.actions.report'
     _inherit = ['studio.mixin', 'ir.actions.report']
 
     def _read_paper_format_measures(self, paperformat_fields=None):

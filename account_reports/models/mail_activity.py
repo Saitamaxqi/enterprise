@@ -4,8 +4,8 @@
 from odoo import fields, models
 
 
-class AccountTaxReportActivity(models.Model):
-    _inherit = "mail.activity"
+class MailActivity(models.Model):
+    _inherit = ["mail.activity"]
 
     account_tax_closing_params = fields.Json(string="Tax closing additional params")
 

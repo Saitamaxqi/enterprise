@@ -5,8 +5,7 @@ from odoo import models
 
 
 class ResPartner(models.Model):
-    _name = 'res.partner'
-    _inherit = 'res.partner'
+    _inherit = ['res.partner']
 
     def send_followup_snailmail(self, options):
         """

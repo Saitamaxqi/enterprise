@@ -2,7 +2,7 @@ from odoo import api, models, fields
 
 
 class ResUsers(models.Model):
-    _inherit = "res.users"
+    _inherit = ["res.users"]
 
     last_seen_phone_call = fields.Many2one("voip.call")
     # --------------------------------------------------------------------------

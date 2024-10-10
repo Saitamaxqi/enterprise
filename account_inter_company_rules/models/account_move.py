@@ -3,7 +3,7 @@ from odoo import fields, models, _
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     auto_generated = fields.Boolean(string='Auto Generated Document', copy=False, default=False)
     auto_invoice_id = fields.Many2one('account.move', string='Source Invoice', readonly=True, copy=False, index='btree_not_null')
@@ -103,7 +103,7 @@ class AccountMove(models.Model):
 
 
 class AccountMoveLine(models.Model):
-    _inherit = 'account.move.line'
+    _inherit = ['account.move.line']
 
     def _inter_company_prepare_invoice_line_data(self):
         ''' Get values to create the invoice line.

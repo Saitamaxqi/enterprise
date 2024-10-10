@@ -5,14 +5,13 @@ from odoo import fields, models
 from odoo.tools.sql import drop_view_if_exists, SQL
 
 
-class l10nBeWorkEntryDailyBenefitReport(models.Model):
+class L10n_BeWorkEntryDailyBenefitReport(models.Model):
     """Generates a list of combination of dates, benefit name and employee_id.
        The list is created in accordance with:
        * The work entries currently in the system and the benefits associated with the work entry types.
        * The assumption that a work entry, even minimal (at least 1 hour) is enough to grant the benefit for
          that day.
     """
-    _name = 'l10n_be.work.entry.daily.benefit.report'
     _description = 'Work Entry Related Benefit Report'
     _auto = False
 

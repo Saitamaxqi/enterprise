@@ -2,7 +2,6 @@ from odoo import fields, models
 
 
 class EnetTemplate(models.Model):
-    _name = 'enet.template'
     _description = 'ENet Template'
 
     sequence = fields.Integer()

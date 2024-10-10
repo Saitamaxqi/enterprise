@@ -5,7 +5,6 @@ from odoo import api, fields, models, _
 
 
 class MarketingCampaignTest(models.TransientModel):
-    _name = 'marketing.campaign.test'
     _description = 'Marketing Campaign: Launch a Test'
 
     @api.model

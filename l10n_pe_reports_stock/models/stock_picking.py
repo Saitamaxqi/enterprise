@@ -2,7 +2,7 @@ from odoo import api, fields, models
 
 
 class StockPicking(models.Model):
-    _inherit = 'stock.picking'
+    _inherit = ['stock.picking']
 
     l10n_pe_operation_type = fields.Selection(
         [

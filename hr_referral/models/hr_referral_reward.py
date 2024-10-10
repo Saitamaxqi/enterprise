@@ -6,7 +6,6 @@ from odoo.exceptions import UserError
 
 
 class HrReferralReward(models.Model):
-    _name = 'hr.referral.reward'
     _description = 'Reward for Referrals'
     _order = 'sequence'
     _inherit = ['mail.thread', 'mail.activity.mixin']

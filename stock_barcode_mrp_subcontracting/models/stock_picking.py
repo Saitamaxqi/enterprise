@@ -5,7 +5,7 @@ from odoo import models
 
 
 class StockPicking(models.Model):
-    _inherit = 'stock.picking'
+    _inherit = ['stock.picking']
 
     def _get_fields_stock_barcode(self):
         """ Inject the field 'display_action_record_components' in the initial

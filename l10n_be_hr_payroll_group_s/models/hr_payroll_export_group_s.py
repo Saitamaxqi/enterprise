@@ -8,8 +8,7 @@ from odoo.exceptions import UserError
 
 
 class L10nBeHrPayrollExportGroupS(models.Model):
-    _inherit = 'hr.work.entry.export.mixin'
-    _name = 'l10n.be.hr.payroll.export.group.s'
+    _inherit = ['hr.work.entry.export.mixin']
     _description = 'Export Payroll to Group S'
 
     eligible_employee_line_ids = fields.One2many('l10n.be.hr.payroll.export.group.s.employee')
@@ -250,8 +249,7 @@ class L10nBeHrPayrollExportGroupS(models.Model):
 
 
 class L10nBeHrPayrollExportGroupSEmployee(models.Model):
-    _name = 'l10n.be.hr.payroll.export.group.s.employee'
     _description = 'Group S Export Employee'
-    _inherit = 'hr.work.entry.export.employee.mixin'
+    _inherit = ['hr.work.entry.export.employee.mixin']
 
     export_id = fields.Many2one('l10n.be.hr.payroll.export.group.s')

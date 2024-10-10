@@ -11,8 +11,8 @@ from odoo.tools.zeep.wsse.username import UsernameToken
 MONSTER_WSDL_URI = 'https://schemas.monster.com/Current/WSDL/MonsterBusinessGateway.wsdl'
 
 
-class RecruitmentPlatform(models.Model):
-    _inherit = 'hr.recruitment.platform'
+class HrRecruitmentPlatform(models.Model):
+    _inherit = ['hr.recruitment.platform']
 
     def _post_api_call(self, data):
         # To be overridden by the specific platform

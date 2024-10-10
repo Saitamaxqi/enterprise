@@ -15,8 +15,8 @@ from odoo.tools.date_utils import end_of
 DAYS_PER_MONTH = 30
 DAYS_PER_YEAR = DAYS_PER_MONTH * 12
 
+
 class AccountAsset(models.Model):
-    _name = 'account.asset'
     _description = 'Asset/Revenue Recognition'
     _inherit = ['mail.thread', 'mail.activity.mixin', 'analytic.mixin']
 

@@ -4,7 +4,7 @@ from odoo import _, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     def action_view_default_amazon_products(self):
         default_product = self.env.ref('sale_amazon.default_product', raise_if_not_found=False) \

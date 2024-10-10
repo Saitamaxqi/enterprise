@@ -8,8 +8,8 @@ _logger = logging.getLogger(__name__)
 # Tag id should be a 17 characters string composed of a letter followed by 16 digits
 PRICER_TAG_ID_LENGTH = 17
 
+
 class PricerTag(models.Model):
-    _name = 'pricer.tag'
     _description = 'Pricer electronic tag'
 
     name = fields.Char(

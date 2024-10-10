@@ -4,8 +4,8 @@
 from odoo import api, fields, models
 
 
-class ReturnPicking(models.TransientModel):
-    _inherit = 'stock.return.picking'
+class StockReturnPicking(models.TransientModel):
+    _inherit = ['stock.return.picking']
 
     partner_id = fields.Many2one('res.partner', related="ticket_id.partner_id", string="Customer")
     ticket_id = fields.Many2one('helpdesk.ticket')

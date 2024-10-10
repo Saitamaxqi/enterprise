@@ -11,7 +11,7 @@ from .pos_urban_piper_request import UrbanPiperClient
 
 
 class PosConfig(models.Model):
-    _inherit = 'pos.config'
+    _inherit = ['pos.config']
 
     def _default_payment_methods(self):
         """

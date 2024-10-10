@@ -2,8 +2,7 @@
 from odoo import models, fields
 
 
-class L10nBrNCMCode(models.Model):
-    _name = "l10n_br.ncm.code"
+class L10n_BrNcmCode(models.Model):
     _description = "NCM Code"
 
     code = fields.Char("Code")

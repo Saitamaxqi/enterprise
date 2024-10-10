@@ -13,10 +13,10 @@ from markupsafe import Markup
 
 _logger = logging.getLogger(__name__)
 
-class HmrcVatObligation(models.Model):
+
+class L10n_UkVatObligation(models.Model):
     """ VAT obligations retrieved from HMRC """
 
-    _name = 'l10n_uk.vat.obligation'
     _description = 'HMRC VAT Obligation'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _rec_name = 'date_due'

@@ -15,8 +15,9 @@ from odoo.addons.social_linkedin.utils import urn_to_id, id_to_urn
 
 _logger = logging.getLogger(__name__)
 
-class SocialAccountLinkedin(models.Model):
-    _inherit = 'social.account'
+
+class SocialAccount(models.Model):
+    _inherit = ['social.account']
 
     linkedin_account_urn = fields.Char('LinkedIn Account URN', readonly=True, help='LinkedIn Account URN')
     linkedin_account_id = fields.Char('LinkedIn Account ID', compute='_compute_linkedin_account_id')
@@ -36,14 +37,14 @@ class SocialAccountLinkedin(models.Model):
 
     def _compute_stats_link(self):
         linkedin_accounts = self._filter_by_media_types(['linkedin'])
-        super(SocialAccountLinkedin, (self - linkedin_accounts))._compute_stats_link()
+        super(SocialAccount, (self - linkedin_accounts))._compute_stats_link()
 
         for account in linkedin_accounts:
             account.stats_link = 'https://www.linkedin.com/company/%s/admin/analytics/visitors/' % account.linkedin_account_id
 
     def _compute_statistics(self):
         linkedin_accounts = self._filter_by_media_types(['linkedin'])
-        super(SocialAccountLinkedin, (self - linkedin_accounts))._compute_statistics()
+        super(SocialAccount, (self - linkedin_accounts))._compute_statistics()
 
         for account in linkedin_accounts:
             all_stats_dict = account._compute_statistics_linkedin()
@@ -117,7 +118,7 @@ class SocialAccountLinkedin(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        res = super(SocialAccountLinkedin, self).create(vals_list)
+        res = super().create(vals_list)
 
         linkedin_accounts = res.filtered(lambda account: account.media_type == 'linkedin')
         if linkedin_accounts:

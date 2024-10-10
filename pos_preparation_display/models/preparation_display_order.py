@@ -2,8 +2,8 @@
 from odoo import fields, models, api
 from datetime import timedelta
 
-class PosPreparationDisplayOrder(models.Model):
-    _name = 'pos_preparation_display.order'
+
+class Pos_Preparation_DisplayOrder(models.Model):
     _description = "Preparation orders"
 
     displayed = fields.Boolean("Order is displayed", help="Determines whether the order should be displayed on the preparation screen")

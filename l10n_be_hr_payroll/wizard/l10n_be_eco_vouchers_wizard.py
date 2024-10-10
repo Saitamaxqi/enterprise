@@ -12,7 +12,6 @@ from odoo.exceptions import UserError
 
 
 class L10nBeEcoVouchersWizard(models.TransientModel):
-    _name = 'l10n.be.eco.vouchers.wizard'
     _description = 'Eco-Vouchers Wizard'
 
     @api.model
@@ -223,8 +222,8 @@ class L10nBeEcoVouchersWizard(models.TransientModel):
         }})
         return action
 
+
 class L10nBeEcoVouchersLineWizard(models.TransientModel):
-    _name = 'l10n.be.eco.vouchers.line.wizard'
     _description = 'Eco-Vouchers Wizard'
 
     wizard_id = fields.Many2one('l10n.be.eco.vouchers.wizard')

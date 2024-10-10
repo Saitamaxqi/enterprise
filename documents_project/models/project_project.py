@@ -8,7 +8,6 @@ from odoo.tools import _, frozendict
 
 
 class ProjectProject(models.Model):
-    _name = 'project.project'
     _inherit = ['project.project', 'documents.mixin']
 
     use_documents = fields.Boolean("Use Documents", default=True)

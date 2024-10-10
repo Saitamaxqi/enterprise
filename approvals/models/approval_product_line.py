@@ -6,7 +6,6 @@ from odoo.exceptions import UserError
 
 
 class ApprovalProductLine(models.Model):
-    _name = 'approval.product.line'
     _description = 'Product Line'
 
     _check_company_auto = True

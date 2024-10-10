@@ -3,8 +3,7 @@ from datetime import timedelta
 from odoo import api, Command, fields, models, _
 
 
-class AccountDuplicateTransaction(models.TransientModel):
-    _name = 'account.duplicate.transaction.wizard'
+class AccountDuplicateTransactionWizard(models.TransientModel):
     _description = 'Wizard for duplicate transactions'
 
     date = fields.Date(

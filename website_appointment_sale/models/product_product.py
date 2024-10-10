@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ProductProduct(models.Model):
-    _inherit = 'product.product'
+    _inherit = ['product.product']
 
     is_booking_fee = fields.Boolean(compute='_compute_is_booking_fee', compute_sudo=True)
 

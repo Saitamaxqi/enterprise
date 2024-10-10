@@ -17,8 +17,8 @@ ISSUING_ENTITY = [
     ('12', 'Regional government'),
 ]
 
-class L10nPeEdiVehicle(models.Model):
-    _name = 'l10n_pe_edi.vehicle'
+
+class L10n_Pe_EdiVehicle(models.Model):
     _description = 'PE EDI Vehicle'
     _check_company_auto = True
     _rec_names_search = ['name', 'license_plate']

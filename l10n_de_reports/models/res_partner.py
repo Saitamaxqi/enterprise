@@ -4,7 +4,7 @@ from odoo.exceptions import ValidationError
 
 
 class ResPartner(models.Model):
-    _inherit = 'res.partner'
+    _inherit = ['res.partner']
 
     l10n_de_datev_identifier = fields.Integer(
         string='DateV Vendor',

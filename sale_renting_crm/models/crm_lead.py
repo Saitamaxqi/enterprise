@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class CrmLead(models.Model):
-    _inherit = "crm.lead"
+    _inherit = ["crm.lead"]
 
     rental_quotation_count = fields.Integer(
         compute="_compute_rental_count", string="Number of Rental Quotations")

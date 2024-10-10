@@ -21,7 +21,6 @@ _logger = logging.getLogger(__name__)
 
 
 class L10nChTaxRateImportWizard(models.TransientModel):
-    _name = 'l10n.ch.tax.rate.import.wizard'
     _description = 'Swiss Payroll: Tax rate import wizard'
 
     @api.model

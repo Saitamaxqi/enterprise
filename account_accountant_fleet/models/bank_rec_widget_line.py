@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class BankRecWidgetLine(models.Model):
-    _inherit = 'bank.rec.widget.line'
+    _inherit = ['bank.rec.widget.line']
 
     vehicle_id = fields.Many2one(
         comodel_name='fleet.vehicle',

@@ -6,8 +6,7 @@ from odoo import fields, models, _
 from odoo.exceptions import RedirectWarning
 
 
-class JobPost(models.Model):
-    _name = "hr.job.post"
+class HrJobPost(models.Model):
     _description = "Job Post"
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _order = "write_date desc"

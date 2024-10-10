@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     bacs_ddi_id = fields.Many2one('bacs.ddi', compute='_compute_bacs_ddi_id')
     bacs_has_usable_ddi = fields.Boolean(compute='_compute_bacs_has_usable_ddi', search='_search_bacs_has_usable_ddi')

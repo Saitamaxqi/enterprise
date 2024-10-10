@@ -6,8 +6,8 @@ from collections import defaultdict
 from odoo import api, Command, fields, models, _
 from odoo.exceptions import UserError
 
+
 class FsmStockTracking(models.TransientModel):
-    _name = 'fsm.stock.tracking'
     _description = 'Track Stock'
 
     task_id = fields.Many2one('project.task')
@@ -181,8 +181,8 @@ class FsmStockTracking(models.TransientModel):
                         'product_uom_qty': qty + line.sale_order_line_id.qty_delivered,
                     })
 
+
 class FsmStockTrackingLine(models.TransientModel):
-    _name = 'fsm.stock.tracking.line'
     _description = 'Lines for FSM Stock Tracking'
 
     def _default_warehouse_id(self):

@@ -2,16 +2,16 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
 
-    _inherit = "sale.order"
+    _inherit = ["sale.order"]
 
     auto_generated = fields.Boolean(string='Auto Generated Sales Order', copy=False)
     auto_purchase_order_id = fields.Many2one('purchase.order', string='Source Purchase Order', readonly=True, copy=False)
 
     def _action_confirm(self):
         """ Generate inter company purchase order based on conditions """
-        res = super(sale_order, self)._action_confirm()
+        res = super()._action_confirm()
         for order in self:
             if not order.company_id: # if company_id not found, return to normal behavior
                 continue

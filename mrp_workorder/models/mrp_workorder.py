@@ -17,8 +17,7 @@ from odoo.addons.resource.models.utils import Intervals, sum_intervals
 from odoo.http import request
 
 
-class MrpProductionWorkcenterLine(models.Model):
-    _name = 'mrp.workorder'
+class MrpWorkorder(models.Model):
     _inherit = ['mrp.workorder', 'barcodes.barcode_events_mixin']
 
     quality_point_ids = fields.Many2many('quality.point', compute='_compute_quality_point_ids', store=True)
@@ -161,7 +160,7 @@ class MrpProductionWorkcenterLine(models.Model):
 
     def action_cancel(self):
         self.mapped('check_ids').filtered(lambda c: c.quality_state == 'none').sudo().unlink()
-        return super(MrpProductionWorkcenterLine, self).action_cancel()
+        return super().action_cancel()
 
     def action_generate_serial(self):
         self.ensure_one()
@@ -437,7 +436,7 @@ class MrpProductionWorkcenterLine(models.Model):
             wo._change_quality_check(position='first')
 
     def _get_byproduct_move_to_update(self):
-        moves = super(MrpProductionWorkcenterLine, self)._get_byproduct_move_to_update()
+        moves = super()._get_byproduct_move_to_update()
         return moves.filtered(lambda m: m.product_id.tracking == 'none')
 
     def pre_record_production(self):
@@ -652,7 +651,7 @@ class MrpProductionWorkcenterLine(models.Model):
         return [from_date, to_date]
 
     def _web_gantt_reschedule_write_new_dates(self, new_start_date, new_stop_date, start_date_field_name, stop_date_field_name):
-        return super(MrpProductionWorkcenterLine, self.with_context(bypass_duration_calculation=True))._web_gantt_reschedule_write_new_dates(new_start_date, new_stop_date, start_date_field_name, stop_date_field_name)
+        return super(MrpWorkorder, self.with_context(bypass_duration_calculation=True))._web_gantt_reschedule_write_new_dates(new_start_date, new_stop_date, start_date_field_name, stop_date_field_name)
 
     def _web_gantt_progress_bar_workcenter_id(self, res_ids, start, stop):
         self.env['mrp.workorder'].check_access('read')
@@ -684,7 +683,7 @@ class MrpProductionWorkcenterLine(models.Model):
 
     @api.model
     def get_gantt_data(self, domain, groupby, read_specification, limit=None, offset=0, unavailability_fields=[], progress_bar_fields=None, start_date=None, stop_date=None, scale=None):
-        gantt_data = super(MrpProductionWorkcenterLine, self.with_context(prefix_product=True)).get_gantt_data(domain, groupby, read_specification, limit=limit, offset=offset, unavailability_fields=unavailability_fields, progress_bar_fields=progress_bar_fields, start_date=start_date, stop_date=stop_date, scale=scale)
+        gantt_data = super(MrpWorkorder, self.with_context(prefix_product=True)).get_gantt_data(domain, groupby, read_specification, limit=limit, offset=offset, unavailability_fields=unavailability_fields, progress_bar_fields=progress_bar_fields, start_date=start_date, stop_date=stop_date, scale=scale)
         if 'workcenter_id' not in gantt_data['unavailabilities']:
             workcenter_ids = set()
             if groupby and 'workcenter_id' in groupby:
@@ -761,7 +760,7 @@ class MrpProductionWorkcenterLine(models.Model):
                 wo.duration_percent = max(-2147483648, min(2147483647, 100 * (wo.duration_expected - wo.duration) / wo.duration_expected))
             else:
                 wo.duration_percent = 0
-        return super(MrpProductionWorkcenterLine, self.env['mrp.workorder'].browse(wo_ids_without_employees))._compute_duration()
+        return super(MrpWorkorder, self.env['mrp.workorder'].browse(wo_ids_without_employees))._compute_duration()
 
     @api.depends('employee_ids')
     def _compute_employee_id(self):

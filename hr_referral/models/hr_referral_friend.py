@@ -5,7 +5,6 @@ from odoo import fields, models
 
 
 class HrReferralFriend(models.Model):
-    _name = 'hr.referral.friend'
     _description = 'Friends for Referrals'
 
     name = fields.Char('Friend Name', required=True)

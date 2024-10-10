@@ -42,8 +42,8 @@ SURCHARGE_TAX_EQUIVALENT = {
 }
 
 
-class GenericTaxReportCustomHandler(models.AbstractModel):
-    _inherit = 'account.generic.tax.report.handler'
+class AccountGenericTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.generic.tax.report.handler']
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
@@ -373,7 +373,6 @@ class GenericTaxReportCustomHandler(models.AbstractModel):
         }
 
 
-class SpanishLibrosRegistroExportHandler(models.AbstractModel):  # TODO: Remove in master
-    _name = 'l10n_es.libros.registro.export.handler'
-    _inherit = 'account.generic.tax.report.handler'
+class L10n_EsLibrosRegistroExportHandler(models.AbstractModel):  # TODO: Remove in master
+    _inherit = ['account.generic.tax.report.handler']
     _description = 'Spanish Libros Registro de IVA'

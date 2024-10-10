@@ -10,8 +10,8 @@ from odoo.addons.resource.models.utils import sum_intervals, HOURS_PER_DAY
 from odoo.exceptions import UserError
 
 
-class Employee(models.Model):
-    _inherit = 'hr.employee'
+class HrEmployee(models.Model):
+    _inherit = ['hr.employee']
 
     def _get_employees_working_hours(self, employees, start_datetime, end_datetime):
 
@@ -188,7 +188,7 @@ class Employee(models.Model):
 
 
 class HrEmployeePublic(models.Model):
-    _inherit = 'hr.employee.public'
+    _inherit = ['hr.employee.public']
 
     timesheet_manager_id = fields.Many2one('res.users', string='Timesheet',
         help="User responsible of timesheet validation. Should be Timesheet Manager.")

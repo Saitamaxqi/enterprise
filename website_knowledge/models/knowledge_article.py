@@ -11,8 +11,7 @@ from odoo.osv import expression
 from odoo.tools import is_html_empty
 
 
-class Article(models.Model):
-    _name = 'knowledge.article'
+class KnowledgeArticle(models.Model):
     _inherit = ['knowledge.article', 'website.published.mixin', 'website.searchable.mixin']
 
     summary = fields.Text('Summary', compute='_compute_summary')

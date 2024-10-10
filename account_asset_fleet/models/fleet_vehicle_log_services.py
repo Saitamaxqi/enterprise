@@ -2,8 +2,9 @@
 
 from odoo import api, models
 
+
 class FleetVehicleLogServices(models.Model):
-    _inherit = 'fleet.vehicle.log.services'
+    _inherit = ['fleet.vehicle.log.services']
 
     @api.depends('account_move_line_id.price_subtotal',
         'account_move_line_id.non_deductible_tax_value',

@@ -4,7 +4,7 @@ from odoo import models
 
 
 class SignRequest(models.Model):
-    _inherit = "sign.request"
+    _inherit = ["sign.request"]
 
     def _get_linked_record_action(self, default_action=None):
         """ Override to display the sale.order rental record correctly

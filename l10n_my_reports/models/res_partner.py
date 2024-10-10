@@ -5,7 +5,7 @@ from odoo.osv import expression
 
 
 class ResPartner(models.Model):
-    _inherit = 'res.partner'
+    _inherit = ['res.partner']
 
     active_company_country_code = fields.Char(compute='_compute_active_company_country_code')
 

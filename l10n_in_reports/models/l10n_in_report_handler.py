@@ -8,9 +8,9 @@ from odoo import api, models, osv, _
 
 _logger = logging.getLogger(__name__)
 
-class IndianTaxReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_in.report.handler'
-    _inherit = 'account.generic.tax.report.handler'
+
+class L10n_InReportHandler(models.AbstractModel):
+    _inherit = ['account.generic.tax.report.handler']
     _description = 'Indian Tax Report Custom Handler'
 
     @api.model

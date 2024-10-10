@@ -37,7 +37,7 @@ CANTONS = [
 
 
 class HrEmployee(models.Model):
-    _inherit = 'hr.employee'
+    _inherit = ['hr.employee']
 
     l10n_ch_canton = fields.Selection(selection=CANTONS, string="Canton", groups="hr.group_hr_user")
     l10n_ch_tax_scale = fields.Selection([

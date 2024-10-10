@@ -3,7 +3,7 @@ from odoo.exceptions import UserError
 
 
 class AccountPaymentRegister(models.TransientModel):
-    _inherit = "account.payment.register"
+    _inherit = ["account.payment.register"]
 
     missing_account_employees = fields.Many2many("hr.employee", string="Employees without Bank Account")
 

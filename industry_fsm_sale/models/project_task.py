@@ -10,8 +10,8 @@ from odoo.osv import expression
 from odoo.tools.misc import unquote
 
 
-class Task(models.Model):
-    _inherit = "project.task"
+class ProjectTask(models.Model):
+    _inherit = ["project.task"]
 
     def _domain_sale_line_id(self):
         domain = expression.AND([
@@ -663,8 +663,9 @@ class Task(models.Model):
             if sol.product_id.service_policy != 'delivered_milestones':
                 sol.qty_delivered = sol.product_uom_qty
 
+
 class ProjectTaskRecurrence(models.Model):
-    _inherit = 'project.task.recurrence'
+    _inherit = ['project.task.recurrence']
 
     def _get_sale_line_id(self, task):
         if not task.is_fsm:

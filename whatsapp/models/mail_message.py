@@ -5,7 +5,7 @@ from odoo.addons.mail.tools.discuss import Store
 
 
 class MailMessage(models.Model):
-    _inherit = 'mail.message'
+    _inherit = ['mail.message']
 
     message_type = fields.Selection(
         selection_add=[('whatsapp_message', 'WhatsApp')],

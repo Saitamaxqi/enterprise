@@ -6,7 +6,7 @@ from odoo import models, fields, api
 
 
 class ResourceCalendar(models.Model):
-    _inherit = 'resource.calendar'
+    _inherit = ['resource.calendar']
 
     @api.model
     def default_get(self, fields):

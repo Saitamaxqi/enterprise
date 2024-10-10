@@ -3,8 +3,7 @@
 from odoo import fields, models
 
 
-class L10nCHPayslipISLogLine(models.Model):
-    _name = 'hr.payslip.is.log.line'
+class HrPayslipIsLogLine(models.Model):
     _description = 'IS Log lines'
 
     is_code = fields.Char()

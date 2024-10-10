@@ -3,8 +3,7 @@
 from odoo import fields, models
 
 
-class L10nAuSuperFund(models.Model):
-    _name = "l10n_au.super.fund"
+class L10n_AuSuperFund(models.Model):
     _description = "Super Fund"
 
     display_name = fields.Char(string="Name", required=True)

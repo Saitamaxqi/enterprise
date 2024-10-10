@@ -8,7 +8,7 @@ from odoo import models
 
 
 class SaleOrderLine(models.Model):
-    _inherit = "sale.order.line"
+    _inherit = ["sale.order.line"]
 
     def _compute_product_updatable(self):
         temporal_lines = self.filtered('recurring_invoice')

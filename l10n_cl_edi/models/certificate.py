@@ -4,8 +4,8 @@ from cryptography import x509
 from odoo import models, fields, api
 
 
-class Certificate(models.Model):
-    _inherit = "certificate.certificate"
+class CertificateCertificate(models.Model):
+    _inherit = ["certificate.certificate"]
 
     user_id = fields.Many2one('res.users', 'Certificate Owner',
                               help='If this certificate has an owner, he will be the only user authorized to use it, '

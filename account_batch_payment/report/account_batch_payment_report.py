@@ -4,8 +4,7 @@
 from odoo import api, models
 
 
-class PrintBatchPayment(models.AbstractModel):
-    _name = 'report.account_batch_payment.print_batch_payment'
+class ReportAccount_Batch_PaymentPrint_Batch_Payment(models.AbstractModel):
     _template = 'account_batch_payment.print_batch_payment'
     _description = 'Batch Deposit Report'
 

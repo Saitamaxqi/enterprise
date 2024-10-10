@@ -6,7 +6,6 @@ from odoo.tools import html2plaintext
 
 
 class AccountBankStatementLineTransient(models.TransientModel):
-    _name = "account.bank.statement.line.transient"
     _description = "Transient model for bank statement line"
     _order = 'date asc'
 

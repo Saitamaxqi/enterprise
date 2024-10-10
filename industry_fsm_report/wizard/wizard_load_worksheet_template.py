@@ -4,8 +4,7 @@
 from odoo import fields, models
 
 
-class WorksheetTemplateLoad(models.TransientModel):
-    _name = 'worksheet.template.load.wizard'
+class WorksheetTemplateLoadWizard(models.TransientModel):
     _description = 'Load the worksheet template'
 
     task_id = fields.Many2one('project.task', "Task", required=True)

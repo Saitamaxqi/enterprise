@@ -18,8 +18,7 @@ XLSX = {
 }
 
 
-class HrEgMasterReport(models.Model):
-    _name = "report.l10n_eg_hr_payroll.master"
+class ReportL10n_Eg_Hr_PayrollMaster(models.Model):
     _description = "Eygpt Master Payroll Report"
 
     name = fields.Char(compute="_compute_name", store=True)

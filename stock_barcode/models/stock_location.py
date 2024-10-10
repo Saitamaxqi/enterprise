@@ -4,8 +4,8 @@
 from odoo import models, api
 
 
-class Location(models.Model):
-    _inherit = 'stock.location'
+class StockLocation(models.Model):
+    _inherit = ['stock.location']
     _barcode_field = 'barcode'
 
     @api.model

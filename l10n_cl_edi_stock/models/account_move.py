@@ -3,7 +3,7 @@ from odoo import models
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     # cron jobs
     def cron_run_sii_workflow(self):

@@ -5,8 +5,8 @@ from dateutil.relativedelta import relativedelta
 from odoo import models
 
 
-class HrEmployee(models.Model):
-    _inherit = 'hr.payslip'
+class HrPayslip(models.Model):
+    _inherit = ['hr.payslip']
 
     def _get_data_files_to_update(self):
         # Note: file order should be maintained

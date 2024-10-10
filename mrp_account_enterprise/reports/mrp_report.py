@@ -6,7 +6,6 @@ from odoo.tools import SQL
 
 
 class MrpReport(models.Model):
-    _name = 'mrp.report'
     _description = "Manufacturing Report"
     _rec_name = 'production_id'
     _auto = False

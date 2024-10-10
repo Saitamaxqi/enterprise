@@ -4,8 +4,8 @@ from odoo import models
 from odoo.osv import expression
 
 
-class Task(models.Model):
-    _inherit = "project.task"
+class ProjectTask(models.Model):
+    _inherit = ["project.task"]
 
     def action_fsm_view_material(self):
         res = super().action_fsm_view_material()

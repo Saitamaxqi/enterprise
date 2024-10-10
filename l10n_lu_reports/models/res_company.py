@@ -6,7 +6,7 @@ import re
 
 
 class ResCompany(models.Model):
-    _inherit = "res.company"
+    _inherit = ["res.company"]
 
     matr_number = fields.Char(string="Matr Number")
     ecdf_prefix = fields.Char(string="eCDF Prefix")

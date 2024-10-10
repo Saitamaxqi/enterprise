@@ -5,9 +5,8 @@ from odoo import models, _
 from odoo.tools import SQL, Query
 
 
-class DisallowedExpensesCustomHandler(models.AbstractModel):
-    _name = 'account.disallowed.expenses.report.handler'
-    _inherit = 'account.report.custom.handler'
+class AccountDisallowedExpensesReportHandler(models.AbstractModel):
+    _inherit = ['account.report.custom.handler']
     _description = 'Disallowed Expenses Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):

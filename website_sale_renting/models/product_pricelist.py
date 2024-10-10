@@ -2,8 +2,9 @@
 
 from odoo import models
 
-class Pricelist(models.Model):
-    _inherit = "product.pricelist"
+
+class ProductPricelist(models.Model):
+    _inherit = ["product.pricelist"]
 
     def _enable_rental_price(self, *args, **kwargs):
         """ Override to force the computation through rental price from website """

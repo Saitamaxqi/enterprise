@@ -13,7 +13,7 @@ DEFAULT_ENDPOINT = 'https://ocn.odoo.com'
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     disable_redirect_firebase_dynamic_link = fields.Boolean(
         "Disable link redirection to mobile app",

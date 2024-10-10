@@ -6,7 +6,6 @@ from odoo.osv.expression import AND
 
 
 class HrReferralCampaignWizard(models.TransientModel):
-    _name = 'hr.referral.campaign.wizard'
     _description = 'Referral Campaign Wizard'
 
     @api.model

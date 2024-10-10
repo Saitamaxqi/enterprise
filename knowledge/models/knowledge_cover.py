@@ -5,8 +5,7 @@ from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
-class Cover(models.Model):
-    _name = "knowledge.cover"
+class KnowledgeCover(models.Model):
     _description = "Knowledge Cover"
 
     attachment_id = fields.Many2one("ir.attachment", string="Cover attachment", required=True, ondelete="cascade")

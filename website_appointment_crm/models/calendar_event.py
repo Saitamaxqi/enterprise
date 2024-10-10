@@ -4,8 +4,8 @@
 from odoo import models, Command
 
 
-class CalendarEventCrm(models.Model):
-    _inherit = 'calendar.event'
+class CalendarEvent(models.Model):
+    _inherit = ['calendar.event']
 
     def _get_lead_values(self, partner):
         lead_values = super()._get_lead_values(partner)

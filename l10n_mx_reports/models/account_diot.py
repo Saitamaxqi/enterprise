@@ -39,9 +39,9 @@ def diot_country_adapt(values):
         values['country_code'] = diot_country_dict.get(cc, cc)
     return values
 
-class MexicanAccountReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_mx.report.handler'
-    _inherit = 'account.tax.report.handler'
+
+class L10n_MxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'Mexican Account Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):

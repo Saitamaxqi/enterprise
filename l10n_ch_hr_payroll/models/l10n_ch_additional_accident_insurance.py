@@ -5,8 +5,7 @@ from odoo import models, fields, _
 from odoo.exceptions import UserError
 
 
-class l10nChAdditionalAccidentInsurance(models.Model):
-    _name = 'l10n.ch.additional.accident.insurance'
+class L10nChAdditionalAccidentInsurance(models.Model):
     _description = 'Swiss: Additional Accident Insurances (LAAC)'
 
     name = fields.Char(required=True)
@@ -19,8 +18,7 @@ class l10nChAdditionalAccidentInsurance(models.Model):
     line_ids = fields.One2many('l10n.ch.additional.accident.insurance.line', 'insurance_id')
 
 
-class l10nChAdditionalAccidentInsuranceLine(models.Model):
-    _name = 'l10n.ch.additional.accident.insurance.line'
+class L10nChAdditionalAccidentInsuranceLine(models.Model):
     _description = 'Swiss: Additional Accident Insurances Line (LAAC)'
     _rec_name = 'solution_name'
 
@@ -60,8 +58,7 @@ class l10nChAdditionalAccidentInsuranceLine(models.Model):
         raise UserError(_('No LAAC rates found for date %s', target))
 
 
-class l10nChAdditionalAccidentInsuranceLineRate(models.Model):
-    _name = 'l10n.ch.additional.accident.insurance.line.rate'
+class L10nChAdditionalAccidentInsuranceLineRate(models.Model):
     _description = 'Swiss: Accident Additional Insurances Line Rate (LAAC)'
 
     line_id = fields.Many2one('l10n.ch.additional.accident.insurance.line')

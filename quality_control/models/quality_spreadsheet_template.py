@@ -5,9 +5,8 @@ from odoo import fields, models
 
 
 class QualitySpreadsheetTemplate(models.Model):
-    _name = 'quality.spreadsheet.template'
     _description = "Quality check template spreadsheet"
-    _inherit = 'spreadsheet.mixin'
+    _inherit = ['spreadsheet.mixin']
 
     name = fields.Char(required=True)
     company_id = fields.Many2one(

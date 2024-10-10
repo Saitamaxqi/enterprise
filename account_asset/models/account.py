@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class AccountAccount(models.Model):
-    _inherit = 'account.account'
+    _inherit = ['account.account']
 
     asset_model_ids = fields.Many2many(
         'account.asset',

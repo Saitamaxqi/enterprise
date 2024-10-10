@@ -11,7 +11,6 @@ class AccountArVatLine(models.Model):
     Basically which it does is covert the accounting entries into columns depending on the information of the taxes and
     add some other fields """
 
-    _name = "account.ar.vat.line"
     _description = "VAT line for Analysis in Argentinean Localization"
     _rec_name = 'move_name'
     _auto = False

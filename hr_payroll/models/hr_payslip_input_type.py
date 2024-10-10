@@ -6,7 +6,6 @@ from odoo.exceptions import UserError
 
 
 class HrPayslipInputType(models.Model):
-    _name = 'hr.payslip.input.type'
     _description = 'Payslip Input Type'
 
     name = fields.Char(string='Description', required=True)

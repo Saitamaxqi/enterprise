@@ -4,7 +4,6 @@ from odoo import models, fields, Command
 
 
 class SaleCommissionPlanUserWizard(models.TransientModel):
-    _name = 'sale.commission.plan.user.wizard'
     _description = 'Wizard for selecting multiple users'
 
     user_ids = fields.Many2many('res.users', "Salespersons", domain="[('share', '=', False)]")

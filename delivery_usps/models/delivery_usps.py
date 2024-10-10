@@ -9,9 +9,8 @@ from odoo.exceptions import UserError
 from .usps_request import USPSRequest
 
 
-
-class ProviderUSPS(models.Model):
-    _inherit = 'delivery.carrier'
+class DeliveryCarrier(models.Model):
+    _inherit = ['delivery.carrier']
 
     delivery_type = fields.Selection(selection_add=[
         ('usps', "USPS")
@@ -92,7 +91,7 @@ class ProviderUSPS(models.Model):
 
     @api.depends('usps_delivery_nature')
     def _compute_can_generate_return(self):
-        super(ProviderUSPS, self)._compute_can_generate_return()
+        super()._compute_can_generate_return()
         for carrier in self:
             if carrier.delivery_type == 'usps':
                 if carrier.usps_delivery_nature == 'international':

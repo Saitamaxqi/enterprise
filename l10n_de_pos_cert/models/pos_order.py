@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class PosOrder(models.Model):
-    _inherit = 'pos.order'
+    _inherit = ['pos.order']
 
     l10n_de_fiskaly_transaction_uuid = fields.Char(string="Transaction ID", readonly=True, copy=False)
     l10n_de_fiskaly_transaction_number = fields.Integer(string="Transaction Number", readonly=True, copy=False)

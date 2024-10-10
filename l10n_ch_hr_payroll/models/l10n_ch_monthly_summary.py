@@ -14,8 +14,7 @@ from odoo.tools import format_date
 from odoo.tools.misc import xlsxwriter
 
 
-class L10nChMonthlySummaryWizard(models.Model):
-    _name = 'l10n.ch.monthly.summary'
+class L10nChMonthlySummary(models.Model):
     _description = 'Swiss Payroll: Monthly Summary'
     _order = 'date_start'
 

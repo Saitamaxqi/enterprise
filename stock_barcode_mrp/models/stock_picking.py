@@ -4,7 +4,7 @@ from odoo import models
 
 
 class StockPicking(models.Model):
-    _inherit = 'stock.picking'
+    _inherit = ['stock.picking']
 
     def _get_stock_barcode_data(self):
         data = super()._get_stock_barcode_data()

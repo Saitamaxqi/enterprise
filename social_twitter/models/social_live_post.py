@@ -13,8 +13,8 @@ from werkzeug.urls import url_join
 _logger = logging.getLogger(__name__)
 
 
-class SocialLivePostTwitter(models.Model):
-    _inherit = 'social.live.post'
+class SocialLivePost(models.Model):
+    _inherit = ['social.live.post']
 
     twitter_tweet_id = fields.Char('X post id')
 
@@ -22,7 +22,7 @@ class SocialLivePostTwitter(models.Model):
         twitter_live_posts = self._filter_by_media_types(['twitter']).filtered(
             lambda post: post.state == 'posted' and post.account_id.twitter_user_id
         )
-        super(SocialLivePostTwitter, (self - twitter_live_posts))._compute_live_post_link()
+        super(SocialLivePost, (self - twitter_live_posts))._compute_live_post_link()
 
         for post in twitter_live_posts:
             post.live_post_link = 'https://www.twitter.com/%s/statuses/%s' % (
@@ -78,7 +78,7 @@ class SocialLivePostTwitter(models.Model):
 
     def _post(self):
         twitter_live_posts = self._filter_by_media_types(['twitter'])
-        super(SocialLivePostTwitter, (self - twitter_live_posts))._post()
+        super(SocialLivePost, (self - twitter_live_posts))._post()
 
         twitter_live_posts._post_twitter()
 

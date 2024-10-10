@@ -6,7 +6,6 @@ from odoo.exceptions import ValidationError
 
 
 class HrPayslipRunHsbcAutopayWizard(models.TransientModel):
-    _name = 'hr.payslip.run.hsbc.autopay.wizard'
     _description = 'HR Payslip Run HSBC Autopay Wizard'
 
     def _default_file_name(self):

@@ -3,8 +3,8 @@
 
 from odoo import api, fields, models
 
+
 class RoomOffice(models.Model):
-    _name = "room.office"
     _description = "Room Office"
     _order = "name, id"
 

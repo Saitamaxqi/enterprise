@@ -2,8 +2,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from odoo import fields, models, api
 
+
 class AppointmentResource(models.Model):
-    _name = 'appointment.resource'
     _inherit = ['appointment.resource', 'pos.load.mixin']
 
     # this should be one2one

@@ -3,7 +3,7 @@ from odoo import models, fields, api
 
 
 class AccountJournal(models.Model):
-    _inherit = "account.journal"
+    _inherit = ["account.journal"]
 
     l10n_ca_cpa005_destination_data_center = fields.Char(
         "Destination Data Center",

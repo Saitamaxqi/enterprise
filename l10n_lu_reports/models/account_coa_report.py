@@ -6,8 +6,9 @@ from odoo.exceptions import ValidationError
 from odoo.tools.float_utils import float_compare
 from ..models.coa_data import ACCOUNTS_2020, ACCOUNTS_2019
 
-class AccountChartOfAccountReport(models.AbstractModel):
-    _inherit = 'account.report'
+
+class AccountReport(models.AbstractModel):
+    _inherit = ['account.report']
 
     def l10n_lu_get_xml_2_0_report_coa_values(self, options, avg_nb_employees=1, size='small',
                                       pl='full', bs='full', coa_only=False, optional_remarks=''):

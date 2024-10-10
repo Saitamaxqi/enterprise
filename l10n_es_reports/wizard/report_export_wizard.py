@@ -5,8 +5,9 @@ from odoo import api, models, fields, _
 
 import re
 
-class ReportExportWizard(models.TransientModel):
-    _inherit = 'account_reports.export.wizard'
+
+class Account_ReportsExportWizard(models.TransientModel):
+    _inherit = ['account_reports.export.wizard']
 
     # id of the related BOE generation wizard when exporting a Spanish report
     l10n_es_reports_boe_wizard_id = fields.Integer()
@@ -33,11 +34,11 @@ class ReportExportWizard(models.TransientModel):
                     boe_action['res_id'] = boe_wizard.id
                     return boe_action
 
-        return super(ReportExportWizard, self).export_report()
+        return super().export_report()
 
 
-class ReportExportWizardOption(models.TransientModel):
-    _inherit = 'account_reports.export.wizard.format'
+class Account_ReportsExportWizardFormat(models.TransientModel):
+    _inherit = ['account_reports.export.wizard.format']
 
     def apply_export(self, report_action):
         self.ensure_one()
@@ -51,4 +52,4 @@ class ReportExportWizardOption(models.TransientModel):
                 report_action = boe_wizard.download_boe_action()
             # BOE reports without BOE export wizard behave normally
 
-        return super(ReportExportWizardOption, self).apply_export(report_action)
+        return super().apply_export(report_action)

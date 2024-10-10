@@ -6,7 +6,7 @@ from odoo.addons.whatsapp.tools.lang_list import Languages
 
 
 class WhatsappTemplate(models.Model):
-    _inherit = "whatsapp.template"
+    _inherit = ["whatsapp.template"]
 
     _populate_dependencies = ["whatsapp.account"]
     _populate_sizes = {'small': 10, 'medium': 100, 'large': 1000}

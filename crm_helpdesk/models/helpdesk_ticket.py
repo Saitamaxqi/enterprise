@@ -5,7 +5,7 @@ from odoo import models, tools, _
 
 
 class HelpdeskTicket(models.Model):
-    _inherit = 'helpdesk.ticket'
+    _inherit = ['helpdesk.ticket']
 
     def _find_matching_partner(self, email_only=False, force_create=False, force_update=True):
         """ Try to find a matching partner with available information on the

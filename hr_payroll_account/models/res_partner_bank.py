@@ -3,7 +3,7 @@ from odoo import api, fields, models
 
 
 class ResPartnerBank(models.Model):
-    _inherit = 'res.partner.bank'
+    _inherit = ['res.partner.bank']
 
     has_alt_bank_account = fields.Boolean(compute="_compute_has_alt_bank_account")
 

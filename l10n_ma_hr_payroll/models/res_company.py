@@ -3,8 +3,9 @@
 
 from odoo import fields, models
 
+
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     l10n_ma_employer_contribution = fields.Float(string="Employer's contribution")
     l10n_ma_social_security_organization = fields.Char(string="Social security organization")

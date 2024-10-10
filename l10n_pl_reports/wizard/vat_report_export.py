@@ -3,8 +3,7 @@ from odoo import models, fields
 import json
 
 
-class PolishVATXMLReportExport(models.TransientModel):
-    _name = "l10n_pl_reports.periodic.vat.xml.export"
+class L10n_Pl_ReportsPeriodicVatXmlExport(models.TransientModel):
     _description = "Polish Periodic VAT Report Export Wizard"
 
     l10n_pl_birthdate = fields.Date(

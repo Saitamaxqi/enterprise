@@ -2,8 +2,8 @@
 from odoo import models, fields
 
 
-class SaleSubscription(models.Model):
-    _inherit = "sale.order"
+class SaleOrder(models.Model):
+    _inherit = ["sale.order"]
 
     def _create_recurring_invoice(self, batch_size=30):
         invoices = super()._create_recurring_invoice(batch_size)

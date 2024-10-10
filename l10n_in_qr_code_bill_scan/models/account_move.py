@@ -10,8 +10,9 @@ MOVE_TYPE_MAPPING = {
     'DBN': 'in_invoice'
 }
 
+
 class AccountMove(models.Model):
-    _inherit = "account.move"
+    _inherit = ["account.move"]
 
     def _l10n_in_get_notification_action(self, params):
         return {

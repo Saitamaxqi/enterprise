@@ -8,7 +8,7 @@ SESSION_OWNER = "session_owner"
 
 
 class HrEmployee(models.Model):
-    _inherit = 'hr.employee'
+    _inherit = ['hr.employee']
 
     """ Use the session to remember the current employee between views.
         The main purpose is to avoid a hash implementation on client side.

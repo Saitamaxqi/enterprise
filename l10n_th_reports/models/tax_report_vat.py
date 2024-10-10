@@ -8,9 +8,8 @@ from odoo.tools.misc import xlsxwriter
 from odoo import fields
 
 
-class AccountGenericTaxReport(models.AbstractModel):
-    _name = "l10n_th.tax.report.handler"
-    _inherit = "account.generic.tax.report.handler"
+class L10n_ThTaxReportHandler(models.AbstractModel):
+    _inherit = ["account.generic.tax.report.handler"]
     _description = "Thai Tax Report Custom Handler"
 
     def _custom_options_initializer(self, report, options, previous_options):

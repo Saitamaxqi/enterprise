@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ProductTemplate(models.Model):
-    _inherit = 'product.template'
+    _inherit = ['product.template']
 
     l10n_ec_withhold_tax_id = fields.Many2one(
         comodel_name='account.tax',

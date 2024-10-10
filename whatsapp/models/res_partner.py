@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 
 
 class ResPartner(models.Model):
-    _inherit = 'res.partner'
+    _inherit = ['res.partner']
 
     wa_channel_count = fields.Integer(string='WhatsApp Channel Count', compute="_compute_wa_channel_count")
 

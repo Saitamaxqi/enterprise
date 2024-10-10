@@ -5,7 +5,7 @@ from odoo import fields, models, api, _
 
 
 class ResCompany(models.Model):
-    _inherit = "res.company"
+    _inherit = ["res.company"]
 
     documents_recruitment_settings = fields.Boolean(default=False)
     recruitment_folder_id = fields.Many2one('documents.document', string="Recruitment Workspace", check_company=True,

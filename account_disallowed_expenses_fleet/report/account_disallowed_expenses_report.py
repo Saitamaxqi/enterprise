@@ -5,9 +5,8 @@ from odoo import models, _
 from odoo.tools import SQL
 
 
-class DisallowedExpensesFleetCustomHandler(models.AbstractModel):
-    _name = 'account.disallowed.expenses.fleet.report.handler'
-    _inherit = 'account.disallowed.expenses.report.handler'
+class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
+    _inherit = ['account.disallowed.expenses.report.handler']
     _description = 'Disallowed Expenses Fleet Custom Handler'
 
     def _get_custom_display_config(self):

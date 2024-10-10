@@ -5,7 +5,6 @@ OCR_VERSION = 100
 
 
 class AccountBankStatement(models.Model):
-    _name = 'account.bank.statement'
     _inherit = ['extract.mixin', 'account.bank.statement']
 
     @api.depends('line_ids')

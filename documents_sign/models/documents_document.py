@@ -3,7 +3,7 @@ from odoo.exceptions import UserError
 
 
 class DocumentsDocument(models.Model):
-    _inherit = 'documents.document'
+    _inherit = ['documents.document']
 
     def document_sign_create_sign_template_x(self, create_model, folder_id):
         if create_model not in ('sign.template.new', 'sign.template.direct'):

@@ -2,7 +2,6 @@ from odoo import api, fields, models
 
 
 class SodaAccountMapping(models.Model):
-    _name = 'soda.account.mapping'
     _description = 'SODA Account Mapping'
     _order = 'code, company_id'
     _check_company_auto = True

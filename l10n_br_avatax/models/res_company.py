@@ -3,7 +3,7 @@ from odoo import models, fields
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     l10n_br_avatax_portal_email = fields.Char(string='Avatax Portal Email')
     l10n_br_avatax_api_identifier = fields.Char(string='Avalara Brazil API ID', groups='base.group_system')

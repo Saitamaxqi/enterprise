@@ -5,9 +5,8 @@ from odoo import api, models, _
 from odoo.tools import format_date
 
 
-class L10nHkIr56e(models.Model):
-    _name = 'l10n_hk.ir56e'
-    _inherit = 'l10n_hk.ird'
+class L10n_HkIr56e(models.Model):
+    _inherit = ['l10n_hk.ird']
     _description = 'IR56E Sheet'
     _order = 'submission_date'
 

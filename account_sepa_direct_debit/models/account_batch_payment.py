@@ -9,7 +9,7 @@ from odoo.tools import SQL, format_date
 
 
 class AccountBatchPayment(models.Model):
-    _inherit = 'account.batch.payment'
+    _inherit = ['account.batch.payment']
 
     sdd_required_collection_date = fields.Date(
         string='Required collection date',

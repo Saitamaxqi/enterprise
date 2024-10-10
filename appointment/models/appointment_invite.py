@@ -13,8 +13,7 @@ from odoo.exceptions import ValidationError
 SHORT_CODE_PATTERN = re.compile(r"^[\w-]+$")
 
 
-class AppointmentShare(models.Model):
-    _name = 'appointment.invite'
+class AppointmentInvite(models.Model):
     _description = 'Appointment Invite'
     _order = 'create_date DESC, id DESC'
     _rec_name = 'short_code'

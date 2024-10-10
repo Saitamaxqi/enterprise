@@ -32,8 +32,7 @@ def _sanitize_file_extension(extension):
     return re.sub(r'^[\s.]+|\s+$', '', extension)
 
 
-class Document(models.Model):
-    _name = 'documents.document'
+class DocumentsDocument(models.Model):
     _description = 'Document'
     _inherit = ['mail.thread.cc', 'mail.activity.mixin', 'mail.alias.mixin']
     _order = 'id desc'
@@ -1502,7 +1501,7 @@ class Document(models.Model):
         deletion_date = fields.Date.to_string(fields.Date.today() + relativedelta(days=self.get_deletion_delay()))
         log_message = _("This file has been sent to the trash and will be deleted forever on the %s", deletion_date)
         active_documents._message_log_batch(bodies={doc.id: log_message for doc in active_documents})
-        return super(Document, active_documents).action_archive()
+        return super(DocumentsDocument, active_documents).action_archive()
 
     def action_unarchive(self):
         self_archived = self.filtered(lambda d: not d.active)
@@ -1542,7 +1541,7 @@ class Document(models.Model):
         to_unarchive_documents = to_unarchive_candidate_documents.filtered(lambda d: d.id in to_unarchive_ids)
         log_message = _("This document has been restored.")
         to_unarchive_documents._message_log_batch(bodies={doc.id: log_message for doc in to_unarchive_documents})
-        return super(Document, to_unarchive_documents).action_unarchive()
+        return super(DocumentsDocument, to_unarchive_documents).action_unarchive()
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -1567,7 +1566,7 @@ class Document(models.Model):
             attachments.append(attachment)
 
         # don't allow using default_access_ids
-        documents = super(Document, self.with_context(default_access_ids=None)).create(vals_list)
+        documents = super(DocumentsDocument, self.with_context(default_access_ids=None)).create(vals_list)
 
         is_manager = self.env.is_admin() or self.env.user.has_group('documents.group_documents_manager')
         if not is_manager:
@@ -1914,7 +1913,7 @@ class Document(models.Model):
             lambda folder: len(folder.children_ids - self) == 0 and not folder.active)
         removable_attachments = self.filtered(lambda d: d.res_model != d._name).attachment_id
 
-        res = super(Document, to_delete).unlink()
+        res = super(DocumentsDocument, to_delete).unlink()
 
         if removable_attachments:
             removable_attachments.unlink()

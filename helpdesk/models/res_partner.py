@@ -4,7 +4,7 @@ from odoo import fields, models, _
 
 
 class ResPartner(models.Model):
-    _inherit = 'res.partner'
+    _inherit = ['res.partner']
 
     ticket_count = fields.Integer("Tickets", compute='_compute_ticket_count')
     sla_ids = fields.Many2many(

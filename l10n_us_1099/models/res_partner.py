@@ -3,7 +3,7 @@ from odoo import models, fields
 
 
 class ResPartner(models.Model):
-    _inherit = "res.partner"
+    _inherit = ["res.partner"]
 
     box_1099_id = fields.Many2one(
         "l10n_us.1099_box",

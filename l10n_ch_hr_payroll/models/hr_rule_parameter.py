@@ -6,8 +6,8 @@ from odoo.tools import ormcache
 from odoo.exceptions import UserError
 
 
-class HrSalaryRuleParameter(models.Model):
-    _inherit = 'hr.rule.parameter'
+class HrRuleParameter(models.Model):
+    _inherit = ['hr.rule.parameter']
 
     @api.model
     @ormcache('code', 'date', 'tuple(self.env.context.get("allowed_company_ids", []))')

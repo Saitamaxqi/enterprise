@@ -4,8 +4,8 @@ from odoo import fields, models, _
 from odoo.exceptions import UserError
 
 
-class FECReportCustomHandler(models.AbstractModel):
-    _inherit = 'account.general.ledger.report.handler'
+class AccountGeneralLedgerReportHandler(models.AbstractModel):
+    _inherit = ['account.general.ledger.report.handler']
     _description = 'FEC Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
@@ -37,8 +37,8 @@ class FECReportCustomHandler(models.AbstractModel):
         return self.env['l10n_fr.fec.export.wizard'].browse(options['fec_wizard_id']).generate_fec()
 
 
-class FecExportWizard(models.TransientModel):
-    _inherit = 'l10n_fr.fec.export.wizard'
+class L10n_FrFecExportWizard(models.TransientModel):
+    _inherit = ['l10n_fr.fec.export.wizard']
 
     def create_fec_report_action(self):
         # OVERRIDE

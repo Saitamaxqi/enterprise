@@ -11,8 +11,9 @@ from odoo.tools import float_utils, DEFAULT_SERVER_DATETIME_FORMAT
 
 from odoo.addons.resource.models.utils import Intervals
 
+
 class PlanningSlot(models.Model):
-    _inherit = 'planning.slot'
+    _inherit = ['planning.slot']
 
     def _domain_sale_line_id(self):
         return expression.AND([

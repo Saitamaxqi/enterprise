@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class EventTypeMail(models.Model):
-    _inherit = 'event.type.mail'
+    _inherit = ['event.type.mail']
 
     notification_type = fields.Selection(selection_add=[('whatsapp', 'WhatsApp')])
     template_ref = fields.Reference(ondelete={'whatsapp.template': 'cascade'}, selection_add=[('whatsapp.template', 'WhatsApp')])

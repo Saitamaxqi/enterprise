@@ -5,7 +5,7 @@ from odoo.osv import expression
 
 
 class ProductProduct(models.Model):
-    _inherit = 'product.product'
+    _inherit = ['product.product']
 
     def _compute_show_qty_status_button(self):
         super()._compute_show_qty_status_button()

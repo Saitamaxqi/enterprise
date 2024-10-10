@@ -17,7 +17,7 @@ from .account_invoice import L10N_CO_EDI_TYPE
 
 
 class AccountEdiFormat(models.Model):
-    _inherit = 'account.edi.format'
+    _inherit = ['account.edi.format']
 
     # -------------------------------------------------------------------------
     # Helpers

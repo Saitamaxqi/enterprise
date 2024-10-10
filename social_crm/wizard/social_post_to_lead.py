@@ -7,7 +7,7 @@ from odoo import _, api, fields, models
 from odoo.tools.misc import format_datetime
 
 
-class SocialPostConvert2Lead(models.TransientModel):
+class SocialPostToLead(models.TransientModel):
     """ Simple wizard allowing to convert a social.stream.post or a comment/reply to a post into
     a lead.
 
@@ -22,7 +22,6 @@ class SocialPostConvert2Lead(models.TransientModel):
     For that reason, end users will probably often only convert to leads based on existing clients,
     since otherwise they will not have any mean to contact the created lead. """
 
-    _name = "social.post.to.lead"
     _description = "Convert Social Post to Lead"
 
     action = fields.Selection([

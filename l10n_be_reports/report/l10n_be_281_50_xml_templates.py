@@ -4,8 +4,7 @@
 from odoo import api, models
 
 
-class ReportL10nBeXMLReports28150(models.AbstractModel):
-    _name = 'report.l10n_be_reports.report_281_50_xml'
+class ReportL10n_Be_ReportsReport_281_50_Xml(models.AbstractModel):
     _description = 'Get 281.50 report as XML.'
 
     @api.model

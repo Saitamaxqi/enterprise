@@ -7,7 +7,7 @@ from odoo.tools import format_date, date_utils
 
 
 class HrPayslip(models.Model):
-    _inherit = 'hr.payslip'
+    _inherit = ['hr.payslip']
 
     def _get_l10n_in_company_working_time(self, return_hours=False):
         self.ensure_one()

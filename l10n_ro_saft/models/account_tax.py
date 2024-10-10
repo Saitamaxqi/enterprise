@@ -5,7 +5,7 @@ from odoo import models, fields
 
 
 class AccountTax(models.Model):
-    _inherit = 'account.tax'
+    _inherit = ['account.tax']
 
     l10n_ro_saft_tax_type_id = fields.Many2one(
         comodel_name='l10n_ro_saft.tax.type',

@@ -44,7 +44,7 @@ def sanitize_for_xmlid(s):
 
 
 class Base(models.AbstractModel):
-    _inherit = 'base'
+    _inherit = ['base']
 
     def create_studio_model_data(self, name):
         """ We want to keep track of created records with studio
@@ -77,7 +77,6 @@ class Base(models.AbstractModel):
 
 
 class IrModel(models.Model):
-    _name = 'ir.model'
     _inherit = ['studio.mixin', 'ir.model']
 
     abstract = fields.Boolean(compute='_compute_abstract',
@@ -593,8 +592,8 @@ class IrModel(models.Model):
         })
         return action
 
-class IrModelField(models.Model):
-    _name = 'ir.model.fields'
+
+class IrModelFields(models.Model):
     _inherit = ['studio.mixin', 'ir.model.fields']
 
     @property
@@ -649,5 +648,4 @@ class IrModelField(models.Model):
 
 
 class IrModelAccess(models.Model):
-    _name = 'ir.model.access'
     _inherit = ['studio.mixin', 'ir.model.access']

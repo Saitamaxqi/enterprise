@@ -13,7 +13,6 @@ TIMEOUT = 20
 
 
 class AddIotBox(models.TransientModel):
-    _name = 'add.iot.box'
     _description = 'Add IoT Box wizard'
 
     def _default_token(self):

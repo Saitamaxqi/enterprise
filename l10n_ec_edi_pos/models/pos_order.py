@@ -2,7 +2,7 @@ from odoo import models
 
 
 class PosOrder(models.Model):
-    _inherit = 'pos.order'
+    _inherit = ['pos.order']
 
     def _prepare_invoice_vals(self):
         # EXTENDS 'point_of_sale'

@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = 'res.company'
+    _inherit = ['res.company']
 
     document_spreadsheet_folder_id = fields.Many2one(
         'documents.document', check_company=True,

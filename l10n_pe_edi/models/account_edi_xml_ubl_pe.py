@@ -3,9 +3,8 @@ import re
 from odoo import models
 
 
-class AccountEdiXmlUBLPE(models.AbstractModel):
-    _inherit = 'account.edi.xml.ubl_21'
-    _name = 'account.edi.xml.ubl_pe'
+class AccountEdiXmlUbl_Pe(models.AbstractModel):
+    _inherit = ['account.edi.xml.ubl_21']
     _description = 'PE UBL 2.1'
 
     # -------------------------------------------------------------------------

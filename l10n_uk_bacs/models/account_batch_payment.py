@@ -10,8 +10,9 @@ import base64
 
 MAX_PAYMENT_AMOUNT = 999999999.99
 
+
 class AccountBatchPayment(models.Model):
-    _inherit = 'account.batch.payment'
+    _inherit = ['account.batch.payment']
 
     bacs_multi_mode = fields.Boolean(string="BACS Multi Mode", help="Payments in batch get processed on their individual date.",)
     bacs_processing_date = fields.Date(string="BACS Processing Date", default=fields.Date.today(), help="The processing day of the BACS transaction.")

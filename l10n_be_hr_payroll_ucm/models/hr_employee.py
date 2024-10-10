@@ -4,6 +4,6 @@ from odoo import fields, models
 
 
 class HrEmployee(models.Model):
-    _inherit = 'hr.employee'
+    _inherit = ['hr.employee']
 
     ucm_code = fields.Char("UCM code", groups="hr.group_hr_user")

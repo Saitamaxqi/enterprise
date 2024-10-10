@@ -8,7 +8,7 @@ from odoo.exceptions import UserError, ValidationError
 
 
 class PosOrder(models.Model):
-    _inherit = 'pos.order'
+    _inherit = ['pos.order']
 
     l10n_mx_edi_is_cfdi_needed = fields.Boolean(
         compute='_compute_l10n_mx_edi_is_cfdi_needed',

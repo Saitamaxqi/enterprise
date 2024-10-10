@@ -4,7 +4,7 @@ from odoo.exceptions import ValidationError
 
 
 class ResPartnerBank(models.Model):
-    _inherit = "res.partner.bank"
+    _inherit = ["res.partner.bank"]
 
     l10n_ca_financial_institution_number = fields.Char(
         "Financial Institution ID Number",

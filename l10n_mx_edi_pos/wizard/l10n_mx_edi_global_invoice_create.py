@@ -1,8 +1,8 @@
 from odoo import api, fields, models, Command
 
 
-class L10nMxEdiGlobalInvoiceCreate(models.Model):
-    _inherit = 'l10n_mx_edi.global_invoice.create'
+class L10n_Mx_EdiGlobal_InvoiceCreate(models.Model):
+    _inherit = ['l10n_mx_edi.global_invoice.create']
 
     pos_order_ids = fields.Many2many(comodel_name='pos.order')
 

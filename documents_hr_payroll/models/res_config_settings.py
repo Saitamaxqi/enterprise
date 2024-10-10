@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = 'res.config.settings'
+    _inherit = ['res.config.settings']
 
     documents_payroll_folder_id = fields.Many2one(
         'documents.document', domain=[('type', '=', 'folder'), ('shortcut_document_id', '=', False)],

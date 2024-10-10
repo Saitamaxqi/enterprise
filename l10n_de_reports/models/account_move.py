@@ -5,7 +5,7 @@ from odoo.tools.sql import column_exists, create_column
 
 
 class AccountMove(models.Model):
-    _inherit = 'account.move'
+    _inherit = ['account.move']
 
     l10n_de_datev_main_account_id = fields.Many2one('account.account', compute='_get_datev_account', store=True)
 

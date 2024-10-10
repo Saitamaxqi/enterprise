@@ -3,7 +3,7 @@ from odoo.addons.web.controllers.utils import clean_action
 
 
 class BankRecWidget(models.Model):
-    _inherit = "bank.rec.widget"
+    _inherit = ["bank.rec.widget"]
 
     matched_sale_order_ids = fields.Many2many(
         comodel_name='sale.order',

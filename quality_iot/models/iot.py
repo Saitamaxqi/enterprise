@@ -5,7 +5,7 @@ from odoo import fields, models, api
 
 
 class IotDevice(models.Model):
-    _inherit = 'iot.device'
+    _inherit = ['iot.device']
 
     qcp_test_type = fields.Char(compute='_compute_qcp_test_type')
     quality_point_ids = fields.One2many('quality.point', 'device_id')

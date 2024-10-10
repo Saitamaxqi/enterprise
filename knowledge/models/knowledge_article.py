@@ -23,8 +23,7 @@ from odoo.tools.sql import create_index, make_index_name, SQL
 ARTICLE_PERMISSION_LEVEL = {'none': 0, 'read': 1, 'write': 2}
 
 
-class Article(models.Model):
-    _name = "knowledge.article"
+class KnowledgeArticle(models.Model):
     _description = "Knowledge Article"
     _inherit = ['mail.thread', 'mail.activity.mixin', 'html.field.history.mixin']
     _order = "favorite_count desc, write_date desc, id desc"
@@ -32,7 +31,7 @@ class Article(models.Model):
     _parent_store = True
 
     def _get_versioned_fields(self):
-        return [Article.body.name]
+        return [KnowledgeArticle.body.name]
 
     DEFAULT_ARTICLE_TRASH_LIMIT_DAYS = 30
 
@@ -509,15 +508,15 @@ class Article(models.Model):
           - The article allow read or write access to all internal users AND the user
             is not member with 'none' access
         """
-        Article = self.env["knowledge.article"]
+        KnowledgeArticle = self.env["knowledge.article"]
         if operator not in ('=', '!=') or not isinstance(value, bool):
             raise NotImplementedError("Unsupported search operator")
 
         articles_with_access = {}
         if not self.env.user.share:
-            articles_with_access = Article._get_internal_permission(
+            articles_with_access = KnowledgeArticle._get_internal_permission(
                 filter_domain=[('internal_permission', 'not in', ['none', False])])
-        member_permissions = Article._get_partner_member_permissions(self.env.user.partner_id)
+        member_permissions = KnowledgeArticle._get_partner_member_permissions(self.env.user.partner_id)
         articles_with_no_member_access = [article_id for article_id, perm in member_permissions.items() if perm == 'none']
         articles_with_member_access = list(set(member_permissions.keys() - set(articles_with_no_member_access)))
 
@@ -953,11 +952,11 @@ class Article(models.Model):
                     current_sequence += 1
 
         # sort by sudo / not sudo
-        notsudo_articles = iter(super(Article, self).create([
+        notsudo_articles = iter(super().create([
             vals for vals, can_sudo in zip(vals_list, vals_as_sudo)
             if not can_sudo
         ]))
-        sudo_articles = iter(super(Article, self.sudo()).create([
+        sudo_articles = iter(super(KnowledgeArticle, self.sudo()).create([
             vals for vals, can_sudo in zip(vals_list, vals_as_sudo)
             if can_sudo
         ]).with_env(self.env))
@@ -1014,7 +1013,7 @@ class Article(models.Model):
             else:
                 _resequence = True
 
-        result = super(Article, self).write(vals)
+        result = super().write(vals)
 
         # resequence only if a sequence was not already computed based on current
         # parent maximum to avoid unnecessary recomputation of sequences
@@ -1222,7 +1221,7 @@ class Article(models.Model):
         """ Creates a copy of an article. != duplicate article (see `copy`).
         Creates a new private article with the same body, icon and cover,
         but drops other fields such as members, children, permissions etc.
-        Note: Article references will be update, see `_update_article_references`
+        Note: KnowledgeArticle references will be update, see `_update_article_references`
         """
         self.ensure_one()
         article_vals = self._get_common_copied_data()
@@ -1248,7 +1247,7 @@ class Article(models.Model):
         """Creates a duplicate of an article in the same context as the original.
         This means that this methods create a copy with the same parent,
         permission and properties as the original
-        Note: Article references will be update, see `_update_article_references`
+        Note: KnowledgeArticle references will be update, see `_update_article_references`
         """
         self.ensure_one()
         if not self.user_can_write or not (self.parent_id and self.parent_id.user_can_write):
@@ -1330,7 +1329,7 @@ class Article(models.Model):
                   * archive the current article and all its writable descendants;
                   * unreachable descendants (none, read) are set as free articles without
                     root;
-        :param bool send_to_trash: Article specific archive:
+        :param bool send_to_trash: KnowledgeArticle specific archive:
         """
         # _detach_unwritable_descendants calls _filtered_access() which returns
         # a sudo-ed recordset
@@ -1363,7 +1362,7 @@ class Article(models.Model):
 
         writable_descendants = self.with_context(active_test=False)._detach_unwritable_descendants().with_env(self.env)
         articles_to_restore = self + writable_descendants
-        super(Article, articles_to_restore).action_unarchive()
+        super(KnowledgeArticle, articles_to_restore).action_unarchive()
         # Removes the article from the trash:
         articles_to_restore.filtered('to_delete').to_delete = False
         for article_sudo in self.sudo().filtered(lambda article: article.parent_id.to_delete):
@@ -1494,7 +1493,7 @@ class Article(models.Model):
 
         for sequence in article_to_update_by_sequence:
             # call super to avoid loops in write
-            super(Article, article_to_update_by_sequence[sequence]).write({'sequence': sequence})
+            super(KnowledgeArticle, article_to_update_by_sequence[sequence]).write({'sequence': sequence})
 
     @api.model
     def _get_max_sequence_inside_parents(self, parent_ids):
@@ -2883,7 +2882,7 @@ class Article(models.Model):
     def _get_ancestor_ids(self):
         """ Return the union of sets including the ids for the ancestors of
         records in recordset. E.g.,
-         * if self = Article `8` which has for parent `4` that has itself
+         * if self = KnowledgeArticle `8` which has for parent `4` that has itself
            parent `2`, return `{2, 4}`;
          * if article `11` is a child of `6` and is also in `self`, return
            `{2, 4, 6}`;

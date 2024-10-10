@@ -3,8 +3,8 @@
 from odoo import models
 
 
-class Users(models.Model):
-    _inherit = "res.users"
+class ResUsers(models.Model):
+    _inherit = ["res.users"]
 
     def _init_store_data(self, store):
         super()._init_store_data(store)

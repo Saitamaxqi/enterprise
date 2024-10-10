@@ -13,7 +13,6 @@ from odoo.tools import format_date, format_time
 class CalendarBooking(models.Model):
     """ This model is only used to store appointment informations for bookings WITH PAYMENT
         When we consider it is paid, the calendar event is created and GC will remove the booking. """
-    _name = "calendar.booking"
     _description = "Meeting Booking"
     _order = "start desc, id desc"
 

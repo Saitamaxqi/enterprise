@@ -4,8 +4,8 @@
 from odoo import models
 
 
-class AccountFinancialReportXMLReportExport(models.TransientModel):
-    _inherit = "l10n_be_reports.periodic.vat.xml.export"
+class L10n_Be_ReportsPeriodicVatXmlExport(models.TransientModel):
+    _inherit = ["l10n_be_reports.periodic.vat.xml.export"]
 
     def action_resume_post(self):
         """This action resumes the Post of an account move which was interrupted by this wizard"""

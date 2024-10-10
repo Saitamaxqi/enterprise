@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class HelpdeskTeam(models.Model):
-    _inherit = "helpdesk.team"
+    _inherit = ["helpdesk.team"]
 
     show_knowledge_base_forum = fields.Boolean(compute="_compute_show_knowledge_base_forum", export_string_translation=False)
     website_forum_ids = fields.Many2many('forum.forum', 'forum_forum_helpdesk_team_rel', 'helpdesk_team_id', 'forum_forum_id', string='Forums', help="Customers will see only the posts from chosen forums in the help center. If you want all forums to be accessible, just leave the field empty. Alternatively, you can make forums private to restrict this feature to internal users.")
@@ -66,8 +66,9 @@ class HelpdeskTeam(models.Model):
 
             team.top_forum_posts = self.env['forum.post'].search(search_domain, order='vote_count desc, last_activity_date desc', limit=5)
 
+
 class HelpdeskTicket(models.Model):
-    _inherit = "helpdesk.ticket"
+    _inherit = ["helpdesk.ticket"]
 
     forum_post_ids = fields.Many2many('forum.post', string="Forum Posts", copy=False, export_string_translation=False)
     forum_post_count = fields.Integer(compute='_compute_forum_post_count', export_string_translation=False)

@@ -3,7 +3,6 @@ from odoo import models
 
 
 class SaleOrder(models.Model):
-    _name = 'sale.order'
     _inherit = ['account.avatax.unique.code', 'sale.order']
 
     def _get_avatax_dates(self):
@@ -23,7 +22,7 @@ class SaleOrder(models.Model):
 
 
 class SaleOrderLine(models.Model):
-    _inherit = 'sale.order.line'
+    _inherit = ['sale.order.line']
 
     def _without_invoice_line_taxes(self):
         without = super()._without_invoice_line_taxes()

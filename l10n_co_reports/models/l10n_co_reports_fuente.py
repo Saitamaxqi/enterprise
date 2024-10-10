@@ -4,9 +4,8 @@ from odoo import models
 from odoo.tools import SQL
 
 
-class FuenteReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_co.fuente.report.handler'
-    _inherit = 'l10n_co.report.handler'
+class L10n_CoFuenteReportHandler(models.AbstractModel):
+    _inherit = ['l10n_co.report.handler']
     _description = 'Fuente Report Custom Handler'
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):

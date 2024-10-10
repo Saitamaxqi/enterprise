@@ -5,7 +5,7 @@ from odoo import models, _
 
 
 class MarketingTrace(models.Model):
-    _inherit = 'marketing.trace'
+    _inherit = ['marketing.trace']
 
     def process_event(self, action):
         self.ensure_one()

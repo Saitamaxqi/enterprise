@@ -3,9 +3,8 @@
 from odoo import _, models
 
 
-class NigerianTaxReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_ng.tax.report.handler'
-    _inherit = 'account.tax.report.handler'
+class L10n_NgTaxReportHandler(models.AbstractModel):
+    _inherit = ['account.tax.report.handler']
     _description = 'Nigerian Tax Report Custom Handler'
 
     def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings):
@@ -16,9 +15,8 @@ class NigerianTaxReportCustomHandler(models.AbstractModel):
             }
 
 
-class NigerianWithholdingReportCustomHandler(models.AbstractModel):
-    _name = 'l10n_ng.withholding.report.handler'
-    _inherit = 'l10n_ng.tax.report.handler'
+class L10n_NgWithholdingReportHandler(models.AbstractModel):
+    _inherit = ['l10n_ng.tax.report.handler']
     _description = 'Nigerian Withholding Tax Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):

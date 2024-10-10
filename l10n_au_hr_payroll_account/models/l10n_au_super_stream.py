@@ -11,8 +11,7 @@ from odoo.exceptions import UserError, ValidationError
 from odoo.tools.float_utils import float_compare
 
 
-class L10auSuperStream(models.Model):
-    _name = "l10n_au.super.stream"
+class L10n_AuSuperStream(models.Model):
     _description = "Super Contributions"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
@@ -280,8 +279,7 @@ class L10auSuperStream(models.Model):
             rec.state = 'draft'
 
 
-class L10nauSuperStreamLine(models.Model):
-    _name = "l10n_au.super.stream.line"
+class L10n_AuSuperStreamLine(models.Model):
     _description = "Super Contribution Line"
 
     name = fields.Char(compute="_compute_name", default="Draft")

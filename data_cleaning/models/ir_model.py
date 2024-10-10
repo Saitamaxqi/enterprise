@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class IrModel(models.Model):
-    _inherit = 'ir.model'
+    _inherit = ['ir.model']
 
     hide_merge_action = fields.Boolean(
         string='Hide merge action button', compute="_compute_hide_merge_action",

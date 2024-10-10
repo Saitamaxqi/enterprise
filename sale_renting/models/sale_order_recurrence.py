@@ -14,8 +14,7 @@ SINGULAR_LABELS = {
 }
 
 
-class SaleOrderRecurrence(models.Model):
-    _name = 'sale.temporal.recurrence'
+class SaleTemporalRecurrence(models.Model):
     _description = "Sale temporal Recurrence"
     _order = 'unit,duration'
 

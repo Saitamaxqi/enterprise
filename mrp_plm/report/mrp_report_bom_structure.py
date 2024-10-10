@@ -3,8 +3,8 @@
 from odoo import models
 
 
-class ReportBomStructure(models.AbstractModel):
-    _inherit = 'report.mrp.report_bom_structure'
+class ReportMrpReport_Bom_Structure(models.AbstractModel):
+    _inherit = ['report.mrp.report_bom_structure']
 
     def _get_pdf_doc(self, bom_id, data, quantity, product_variant_id=None):
         doc = super()._get_pdf_doc(bom_id, data, quantity, product_variant_id)

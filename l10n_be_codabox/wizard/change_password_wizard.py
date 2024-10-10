@@ -6,8 +6,7 @@ from odoo.exceptions import UserError
 from odoo.addons.l10n_be_codabox.const import get_error_msg
 
 
-class L10nBeCodaBoxChangePasswordWizard(models.TransientModel):
-    _name = 'l10n_be_codabox.change.password.wizard'
+class L10n_Be_CodaboxChangePasswordWizard(models.TransientModel):
     _description = 'CodaBox Change Password Wizard'
     _check_company_auto = True
 

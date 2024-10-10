@@ -5,7 +5,6 @@ from odoo.exceptions import UserError, ValidationError
 
 
 class ApprovalRequest(models.Model):
-    _name = 'approval.request'
     _description = 'Approval Request'
     _inherit = ['mail.thread.main.attachment', 'mail.activity.mixin']
     _order = 'name'
@@ -377,8 +376,8 @@ class ApprovalRequest(models.Model):
             if len(request.approver_ids) != len(request.approver_ids.user_id):
                 raise UserError(_("You cannot assign the same approver multiple times on the same request."))
 
+
 class ApprovalApprover(models.Model):
-    _name = 'approval.approver'
     _description = 'Approver'
     _order = 'sequence, id'
 
