@@ -89,6 +89,7 @@ registry.category("web_tour.tours").add('shop_buy_rental_stock_product', {
             trigger: '#cart_products .oe_currency_value:contains(28.00)',
         },
         tourUtils.goToCheckout(),
+        tourUtils.confirmOrder(),
         ...tourUtils.payWithTransfer(true),
     ]
 });

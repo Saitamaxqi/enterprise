@@ -42,6 +42,7 @@ registry.category("web_tour.tours").add('shop_buy_rental_product_wishlist', {
             trigger: 'a[href*="/shop/checkout"]',
             run: "click",
         },
+        tourUtils.confirmOrder(),
         {
             content: "verify checkout page",
             trigger: 'span div.o_wizard_step_active:contains("Payment")',

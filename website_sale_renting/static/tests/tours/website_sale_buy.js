@@ -66,6 +66,7 @@ registry.category("web_tour.tours").add('shop_buy_rental_product', {
             trigger: '#cart_products div div.css_quantity input[value="2"]',
         },
         tourUtils.goToCheckout(),
+        tourUtils.confirmOrder(),
         {
             content: "verify checkout page",
             trigger: 'span div.o_wizard_step_active:contains("Payment")',
