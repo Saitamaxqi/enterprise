@@ -107,18 +107,23 @@ export class DocumentsSearchPanel extends SearchPanel {
                     prevPos.parent.classList.remove("o_has_treeEntry");
                 }
             },
-            onDrop: async ({ element, parent, next }) => {
+            onDrop: async ({ element, parent }) => {
                 const draggingFolderId = parseInt(element.dataset.valueId);
+                const draggingFolderRootId = this.env.searchModel.getFolderById(draggingFolderId).rootId;
                 let parentFolderId = parent ? parent.dataset.valueId : false;
+                if (draggingFolderId === parentFolderId) {
+                    return;
+                }
                 if (!parentFolderId || this._notify_wrong_drop_destination(parentFolderId)) {
                     return;
                 }
-                if (parentFolderId === "MY") {
+                const parentFolderRootId =this.env.searchModel.getFolderById(parentFolderId).rootId;
+                if (parentFolderRootId === "MY" && draggingFolderRootId !== "MY") {
                     await this.orm.call(
                         "documents.document",
                         "action_create_shortcut",
                         [draggingFolderId],
-                        { location_folder_id : false },
+                        { location_folder_id : parentFolderId === "MY" ? false : parentFolderId },
                     );
                     return this.env.searchModel._reloadSearchModel(true);
                 } else if (parentFolderId === "COMPANY") {
@@ -342,7 +347,7 @@ export class DocumentsSearchPanel extends SearchPanel {
         // Dropping in 'My Drive'
         if (value.rootId === "MY" && currentFolder.rootId !== "MY") {  // Not from my drive => shortcut
             await this.orm.call("documents.document", "action_create_shortcut", data.recordIds, {
-                location_folder_id: false,
+                location_folder_id: target_folder_id,
             });
             await this.env.searchModel._reloadSearchModel(true);
             return this.notification.add(
