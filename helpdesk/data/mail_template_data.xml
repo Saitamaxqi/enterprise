@@ -5,8 +5,9 @@
         <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
         <field name="subject">{{ object.name }}</field>
         <field name="email_from">{{ (object.team_id.alias_email_from or object.company_id.email_formatted or object.user_id.email_formatted or user.email_formatted) }}</field>
-        <field name="email_to">{{ (object.partner_email if not object.sudo().partner_id.email or object.sudo().partner_id.email != object.partner_email else '') }}</field>
-        <field name="partner_to">{{ object.partner_id.id if object.sudo().partner_id.email and object.sudo().partner_id.email == object.partner_email else '' }}</field>
+        <field name="email_to" eval="False"/>
+        <field name="partner_to" eval="False"/>
+        <field name="use_default_to" eval="True"/>
         <field name="description">Send customers a confirmation email to notify them that their helpdesk ticket has been received and is currently being reviewed by the helpdesk team. Automatically send an email to customers when a ticket reaches a specific stage in a helpdesk team by setting this template on that stage.</field>
         <field name="body_html" type="html">
 <div>
@@ -58,8 +59,9 @@
         <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
         <field name="subject">Ticket Closed - Reference {{ object.id if object.id else 15 }}</field>
         <field name="email_from">{{ (object.team_id.alias_email_from or object.company_id.email_formatted or object.user_id.email_formatted or user.email_formatted) }}</field>
-        <field name="email_to">{{ (object.partner_email if not object.sudo().partner_id.email or object.sudo().partner_id.email != object.partner_email else '') }}</field>
-        <field name="partner_to">{{ object.partner_id.id if object.sudo().partner_id.email and object.sudo().partner_id.email == object.partner_email else '' }}</field>
+        <field name="email_to" eval="False"/>
+        <field name="partner_to" eval="False"/>
+        <field name="use_default_to" eval="True"/>
         <field name="description">Set this template on a project's stage to automate email when tasks reach stages</field>
         <field name="body_html" type="html">
     <div>
@@ -82,8 +84,9 @@
         <field name="model_id" ref="helpdesk.model_helpdesk_ticket"/>
         <field name="subject">{{ object.company_id.name or object.user_id.company_id.name or 'Helpdesk' }}: Service Rating Request</field>
         <field name="email_from">{{ (object.team_id.alias_email_from or object.company_id.email_formatted or object._rating_get_operator().email_formatted or user.email_formatted) }}</field>
-        <field name="email_to">{{ (object.partner_email if not object.sudo().partner_id.email or object.sudo().partner_id.email != object.partner_email else '') }}</field>
-        <field name="partner_to">{{ object.partner_id.id if object.sudo().partner_id.email and object.sudo().partner_id.email == object.partner_email else '' }}</field>
+        <field name="email_to" eval="False"/>
+        <field name="partner_to" eval="False"/>
+        <field name="use_default_to" eval="True"/>
         <field name="description">Enable "customer ratings" feature on the helpdesk team</field>
         <field name="body_html" type="html">
 <div>

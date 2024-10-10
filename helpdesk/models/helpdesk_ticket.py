@@ -794,6 +794,21 @@ class HelpdeskTicket(models.Model):
         self.ensure_one()
         return self.name
 
+    def _message_get_default_recipients(self):
+        # override to grant access to partner email value, sometimes MC environment
+        # create ACL issues; also partner_email takes precedence on partner_id.email
+        res = {}
+        for ticket in self.sudo():
+            ticket_email_n = tools.email_normalize(ticket.partner_email, strict=False)
+            if ticket_email_n and ticket_email_n != ticket.partner_id.email_normalized:
+                email_to = ','.join(tools.email_normalize_all(ticket.partner_email))
+                if not email_to:  # keep value to ease debug / trace update
+                    email_to = ticket.partner_email
+                res[ticket.id] = {'partner_ids': [], 'email_to': email_to, 'email_cc': False}
+            else:
+                res[ticket.id] = {'partner_ids': ticket.partner_id.ids, 'email_to': False, 'email_cc': False}
+        return res
+
     def _message_post_after_hook(self, message, msg_vals):
         if not self.partner_email:
             return super()._message_post_after_hook(message, msg_vals)
