@@ -470,6 +470,8 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         purchase_from_a = sale_to_customer._get_purchase_orders()
         self.assertEqual(purchase_from_a.partner_id, self.company_a.partner_id)
         purchase_from_a.with_company(self.company_b).button_confirm()
+        self.assertEqual(sale_to_customer.dropship_picking_count, 1)
+        self.assertEqual(purchase_from_a.dropship_picking_count, 1)
 
         # Company A side.
         sale_to_b = self.env['sale.order'].with_company(self.company_a).search([('client_order_ref', '=', purchase_from_a.name)], limit=1)
@@ -477,6 +479,8 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         self.assertEqual(sale_to_b.purchase_order_count, 1)
         purchase_from_vendor = sale_to_b._get_purchase_orders()
         purchase_from_vendor.button_confirm()
+        self.assertEqual(sale_to_b.dropship_picking_count, 1)
+        self.assertEqual(purchase_from_vendor.dropship_picking_count, 1)
         dropship_from_vendor = purchase_from_vendor.picking_ids
 
         # Dropship lot from vendor
