@@ -15,6 +15,8 @@ Accounting reports for the Vietnam
     "data": [
         "data/account_return_data.xml",
         "data/account_tax_report_data.xml",
+        "data/balance_sheet.xml",
+        "data/profit_and_loss.xml",
     ],
     "installable": True,
     "auto_install": True,
