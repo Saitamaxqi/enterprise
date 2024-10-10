@@ -321,12 +321,6 @@ export class DocumentsSearchPanel extends SearchPanel {
                 }
             );
         }
-        if (currentFolder.id === "TRASH") {
-            const model = this.env.model;
-            await this.orm.write("documents.document", data.recordIds, { folder_id: value.id });
-            await toggleArchive(model, model.root.resModel, data.recordIds, false);
-            return;
-        }
         // Dropping in 'My Drive'
         if (value.rootId === "MY" && currentFolder.rootId !== "MY") {  // Not from my drive => shortcut
             await this.orm.call("documents.document", "action_create_shortcut", data.recordIds, {

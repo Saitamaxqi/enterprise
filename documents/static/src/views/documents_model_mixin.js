@@ -279,6 +279,14 @@ export const DocumentsRecordMixin = (component) => class extends component {
      * Called when starting to drag kanban/list records
      */
     async onDragStart(ev) {
+        const currentFolder = this.model.env.searchModel.getSelectedFolder();
+        if (currentFolder.id === "TRASH") {
+            ev.preventDefault();
+            return this.model.notification.add(
+                _t("You cannot move folders or files when in the trash."),
+                { title: _t("Invalid operation"), type: "warning" }
+            );
+        }
         if (!this.selected) {
             this.onRecordClick(ev, { isKeepSelection: false, isRangeSelection: false });
         }
