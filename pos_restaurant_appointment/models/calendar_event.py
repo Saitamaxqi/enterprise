@@ -62,7 +62,7 @@ class CalendarEvent(models.Model):
             'name': 'Manage Bookings',
             'type': 'ir.actions.act_window',
             'res_model': 'calendar.event',
-            "views": [(self.env.ref("pos_restaurant_appointment.calendar_event_view_gantt_booking_resource_inherited").id, "gantt")],
+            "views": [(self.env.ref("appointment.calendar_event_view_gantt_booking_resource").id, "gantt")],
             'target': 'current',
             'context': {
                 'appointment_booking_gantt_show_all_resources': True,

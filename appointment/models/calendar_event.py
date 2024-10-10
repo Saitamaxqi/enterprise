@@ -329,14 +329,6 @@ class CalendarEvent(models.Model):
         for event in self:
             event.access_token = self._default_access_token()
 
-    def action_calendar_more_options(self):
-        # this method is deprecated and will be removed in the master
-        self.ensure_one()
-        action = self.env["ir.actions.actions"]._for_xml_id("calendar.action_calendar_event")
-        action["views"] = [(False, 'form')]
-        action["res_id"] = self.id
-        return action
-
     def action_cancel_meeting(self, partner_ids):
         """ In case there are more than two attendees (responsible + another attendee),
             we do not want to archive the calendar.event.

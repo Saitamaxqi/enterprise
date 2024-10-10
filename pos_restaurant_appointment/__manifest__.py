@@ -10,7 +10,6 @@
     'website': 'https://www.odoo.com/app/appointments',
     'depends': ['appointment', 'pos_restaurant'],
     'data': [
-        'views/calendar_event_views.xml',
         'views/pos_restaurant_views.xml',
         'views/res_config_settings_views.xml',
     ],
