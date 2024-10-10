@@ -285,6 +285,7 @@ class AccountMove(models.Model):
             if move.country_code == 'EC':
                 base_lines = [line._prepare_base_line_for_taxes_computation() for line in move.l10n_ec_reimbursement_ids]
                 AccountTax._add_tax_details_in_base_lines(base_lines, move.company_id)
+                AccountTax._round_base_lines_tax_details(base_lines, move.company_id)
                 move.reimbursement_totals = AccountTax._get_tax_totals_summary(
                     base_lines=base_lines,
                     currency=move.currency_id,
