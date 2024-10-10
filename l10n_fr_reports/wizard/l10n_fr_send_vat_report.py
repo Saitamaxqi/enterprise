@@ -232,8 +232,8 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             raise ValidationError(", ".join(error_list))
 
     def _check_siret(self, company):
-        if not siret.is_valid(company.siret):
-            raise ValidationError(_("%(company)s has an invalid siret: %(siret)s.", company=company.display_name, siret=company.siret))
+        if not siret.is_valid(company.company_registry):
+            raise ValidationError(_("%(company)s has an invalid siret: %(siret)s.", company=company.display_name, siret=company.company_registry))
 
     def _check_bank_accounts(self):
         self.ensure_one()
@@ -295,11 +295,11 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
         sender_company = self.report_id._get_sender_company_for_export(options)
         # Assume Emitor = Writer -> omit the emitor
         writer = sender_company.account_representative_id or sender_company
-        self._check_constraints(writer, ['siret', 'street', 'zip', 'city', 'country_id'])
+        self._check_constraints(writer, ['company_registry', 'street', 'zip', 'city', 'country_id'])
         self._check_siret(writer)
         # Debtor
         debtor = sender_company
-        self._check_constraints(debtor, ['siret', 'street', 'zip', 'city', 'country_id'])
+        self._check_constraints(debtor, ['company_registry', 'street', 'zip', 'city', 'country_id'])
         self._check_siret(debtor)
 
         self._check_bank_accounts()
@@ -310,13 +310,13 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
             raise UserError(_("The tax report is empty."))
 
         writer_vals = {
-            'siret': writer.siret,
+            'siret': writer.company_registry,
             'designation': "CEC_EDI_TVA",
             'designation_cont_1': writer.name,  # "raison sociale"
             'address': self._get_address_dict(writer),
         }
         debtor_vals = {
-            'identifier': debtor.siret and debtor.siret[:9],  # siren
+            'identifier': debtor.company_registry and debtor.company_registry[:9],  # siren
             'designation': debtor.name,  # "raison sociale"
             'address': self._get_address_dict(debtor),
             'rof': "TVA1",  # "référence obligation fiscale"
@@ -333,7 +333,7 @@ class L10n_Fr_ReportsSendVatReport(models.TransientModel):
         identif_vals = [
             {
                 'id': 'AA',
-                'identifier': debtor.siret and debtor.siret[:9],
+                'identifier': debtor.company_registry and debtor.company_registry[:9],
                 'designation': debtor.display_name,
                 'address': self._get_address_dict(debtor),
             },

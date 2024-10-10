@@ -154,16 +154,16 @@ class AccountIntrastatGoodsReportHandler(models.AbstractModel):
 
     @api.model
     def _get_company_identifier(self, company_id, values):
-        """ Return: FR (ISO code of the country) + VAT number key (2 alphanumeric) + SIREN number (9 digits) + SIRET complement (5 digits) """
+        """ Return: FR (ISO code of the country) + VAT number key (2 alphanumeric) + SIREN number (9 digits) + NIC complement (5 digits) """
         company_vat = company_id.vat or ''
-        company_siret = company_id.siret[9:14] if company_id.siret and len(company_id.siret) >= 14 else ''
-        if not company_vat or not company_siret:
+        company_nic = company_id.company_registry[9:14] if company_id.company_registry and len(company_id.company_registry) >= 14 else ''
+        if not company_vat or not company_nic:
             values['errors']['company_vat_or_siret_missing'] = {
                 'message': _("The VAT or SIRET code is not properly set on the company."),
                 'action_text': _("View Company/ies"),
                 'action': company_id._get_records_action(name=_("Check Company Data")),
             }
-        return f'{company_vat}{company_siret}'
+        return f'{company_vat}{company_nic}'
 
     @api.model
     def _check_missing_required_values(self, item, missing_required_values):

@@ -26,7 +26,7 @@ class TestFrenchTaxClosing(TestAccountReportsCommon):
         })
 
         cls.company_data['company'].write({
-            'siret': '50056940503239',
+            'company_registry': '50056940503239',
             'street': 'Rue du Souleillou',
             'street2': '2',
             'zip': '46800',

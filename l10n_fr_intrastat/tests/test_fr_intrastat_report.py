@@ -17,7 +17,7 @@ class TestFRIntrastatReport(TestAccountReportsCommon):
         italy = cls.env.ref('base.it')
         cls.company_data['company'].write({
             'vat': 'FR23334175221',
-            'siret': '2333417522155555',
+            'company_registry': '2333417522155555',
             'l10n_fr_intrastat_envelope_id': 'D090',
             'intrastat_region_id': cls.env.ref('l10n_fr_intrastat.intrastat_region_01').id,
         })
@@ -139,7 +139,7 @@ class TestFRIntrastatReport(TestAccountReportsCommon):
         self._report_compare_with_test_file(report, 'vat_summary_stmt.xml')
 
     def test_fr_intrastat_export_errors(self):
-        self.company_data['company'].siret = False
+        self.company_data['company'].company_registry = False
         self.outwards_customer_invoice.intrastat_transport_mode_id = False
         self.outwards_customer_invoice.line_ids[0].update({
             "intrastat_transaction_id": False,
@@ -147,7 +147,7 @@ class TestFRIntrastatReport(TestAccountReportsCommon):
         })
         self.product_aeroplane.intrastat_code_id = False
         self.company_data['company'].write({
-            'siret': False,
+            'company_registry': False,
             'intrastat_region_id': False,
         })
         options = self._generate_options({
