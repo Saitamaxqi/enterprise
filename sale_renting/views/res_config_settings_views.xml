@@ -31,7 +31,11 @@
                                 </div>
                                 <div class="row mt8">
                                     <label string="Product" for="extra_product" class="col-lg-3 o_light_label"/>
-                                    <field name="extra_product" placeholder="Product to charge extra time"/>
+                                    <field
+                                        name="extra_product"
+                                        placeholder="Product to charge extra time"
+                                        context="{'default_type': 'service'}"
+                                    />
                                 </div>
                             </div>
                         </setting>
