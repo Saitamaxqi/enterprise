@@ -258,13 +258,19 @@ export const DocumentsRecordMixin = (component) => class extends component {
      * Opens the folder upon double click on record with folder as type.
      */
     onRecordDoubleClick() {
-        const sectionId = this.model.env.searchModel.getSections()[0].id;
+        const section = this.model.env.searchModel.getSections()[0];
+        if (this.shortcutTarget.data.type === "folder" && section.activeValueId === "TRASH") {
+            return this.model.notification.add(
+                _t("You cannot access folders in the trash."),
+                { title: _t("Invalid operation"), type: "warning" }
+            );
+        }
         const folderId = this.isShortcut()
             ? this.data.type === "folder"
                 ? this.shortcutTarget.data.id
                 : this.shortcutTarget.data.folder_id[0]
             : this.data.id;
-        this.model.env.searchModel.toggleCategoryValue(sectionId, folderId);
+        this.model.env.searchModel.toggleCategoryValue(section.id, folderId);
         this.model.originalSelection = [this.shortcutTarget.resId];
         this.model.env.documentsView.bus.trigger("documents-expand-folder", { folderId: folderId });
     }
