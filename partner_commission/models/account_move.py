@@ -39,10 +39,6 @@ class AccountMove(models.Model):
             ('purchase_type', '=', 'commission'),
         ]
 
-        sales_rep = self._get_sales_representative()
-        if sales_rep:
-            domain += [('user_id', '=', sales_rep.id)]
-
         return domain
 
     def _get_commission_purchase_order(self):
@@ -50,14 +46,13 @@ class AccountMove(models.Model):
         purchase = self.env['purchase.order'].sudo().search(self._get_commission_purchase_order_domain(), limit=1)
 
         if not purchase:
-            sales_rep = self._get_sales_representative()
             purchase = self.env['purchase.order'].with_context(mail_create_nosubscribe=True).sudo().create({
                 'partner_id': self.referrer_id.id,
                 'currency_id': self.currency_id.id,
                 'company_id': self.company_id.id,
                 'fiscal_position_id': self.env['account.fiscal.position'].with_company(self.company_id)._get_fiscal_position(self.referrer_id).id,
                 'payment_term_id': self.referrer_id.with_company(self.company_id).property_supplier_payment_term_id.id,
-                'user_id': sales_rep and sales_rep.id or False,
+                'user_id': False,
                 'dest_address_id': self.referrer_id.id,
                 'origin': self.name,
                 'purchase_type': 'commission',
@@ -126,6 +121,7 @@ class AccountMove(models.Model):
                     desc += _(' (%d month(s))', n_months)
 
             purchase = move._get_commission_purchase_order()
+            purchase.message_subscribe(partner_ids=move._get_sales_representative().partner_id.ids)
 
             line = self.env['purchase.order.line'].sudo().create({
                 'name': desc,

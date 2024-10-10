@@ -146,7 +146,7 @@ class TestPurchaseOrder(TestCommissionsSetup):
 
             return so, po
 
-        with self.subTest("SO's salesperson is assigned as Purchase Representative."):
+        with self.subTest("No buyer is assigned to the PO."):
             foo = self.env['product.category'].create({
                 'name': 'foo',
             })
@@ -167,12 +167,13 @@ class TestPurchaseOrder(TestCommissionsSetup):
             })
             self.gold_plan.write({'commission_rule_ids': [(4, rule.id)]})
 
-            so, po = make_orders(bar)
+            so, first_po = make_orders(bar)
 
             self.assertEqual(so.user_id, self.salesman)
-            self.assertEqual(po.user_id, self.salesman)
+            self.assertFalse(first_po.user_id)
+            self.assertIn(self.salesman.partner_id, first_po.message_follower_ids.partner_id, "Salesman should be follower so he can access the PO.")
 
-        with self.subTest("Each sales representative has its own PO."):
+        with self.subTest("POs to the same partner are grouped together, even if they come from SOs with different sales representatives."):
             sales_rep = self.env['res.users'].create({
                 'name': '...',
                 'login': 'sales_rep_1',
@@ -181,10 +182,12 @@ class TestPurchaseOrder(TestCommissionsSetup):
                 'groups_id': [(6, 0, [self.ref('sales_team.group_sale_salesman')])],
             })
 
-            so, po = make_orders(bar, so_sales_rep=sales_rep)
+            so, second_po = make_orders(bar, so_sales_rep=sales_rep)
 
             self.assertEqual(so.user_id, sales_rep)
-            self.assertEqual(po.user_id, sales_rep)
+            self.assertFalse(second_po.user_id)
+            self.assertEqual(first_po, second_po)
+            self.assertIn(sales_rep.partner_id, first_po.message_follower_ids.partner_id, "Salesman should be follower so he can access the PO.")
 
     def test_access_rigths(self):
 
@@ -246,3 +249,7 @@ class TestPurchaseOrder(TestCommissionsSetup):
         # group_commission_user: can access commissions for which he/she is the purchase representative.
         # group_commission_manager: can access all commissions.
         assert_access_allowed([commission_user_1, commission_manager])
+
+        # group_commission_user: can access commissions they are following
+        po.message_subscribe(partner_ids=commission_user_2.partner_id.ids)
+        assert_access_allowed([commission_user_2])
