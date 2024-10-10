@@ -22,7 +22,7 @@
                         <group>
                             <group>
                                 <field name="client_id" readonly="1" string="Client id"/>
-                                <field name="auto_sync" invisible="not provider_data" readonly="not auto_sync"/>
+                                <field name="auto_sync" invisible="not provider_data"/>
                                 <field name="provider_data" readonly="1" invisible="1"/>
                                 <field name="provider_type" readonly="1"/>
                             </group>
