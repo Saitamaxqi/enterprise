@@ -1422,15 +1422,16 @@ class SaleOrder(models.Model):
                 self._get_auto_invoice_grouping_keys(),
                 limit=limit, lazy=False)
             all_subscriptions = [self.browse(res['id']) for res in all_subscriptions]
+            need_cron_trigger = batch_size and len(all_subscriptions) > batch_size
             # We get a list of record sets when grouped is true. For each record set in all_subscriptions,
             # we call the '_get_subscriptions_to_invoice' method to process them.
             all_subscriptions = [subscription._get_subscriptions_to_invoice() for subscription in all_subscriptions]
         else:
             all_subscriptions = self.search(domain, limit=limit)
+            need_cron_trigger = batch_size and len(all_subscriptions) > batch_size
             all_subscriptions = all_subscriptions._get_subscriptions_to_invoice()
 
         if batch_size:
-            need_cron_trigger = len(all_subscriptions) > batch_size
             all_subscriptions = all_subscriptions[:batch_size]
 
         return all_subscriptions, need_cron_trigger
