@@ -421,6 +421,7 @@ class DMFAWorker(DMFANode):
                     termination_payslips,
                     termination_period[0],
                     termination_period[1],
+                    quarter_start,
                 ) for termination_period in termination_periods]
                 termination_sequence = 90
                 termination_occupations = DMFAOccupation.init_multi(termination_values)
@@ -453,7 +454,7 @@ class DMFAWorker(DMFANode):
                     remun.percentage_paid = -1
             if not termination_payslips and date_to and date_to > quarter_end:
                 date_to = False
-            values.append((occupation_contracts, payslips - termination_payslips, date_from, date_to))
+            values.append((occupation_contracts, payslips - termination_payslips, date_from, date_to, quarter_start))
         return DMFAOccupation.init_multi(values) + termination_occupations
 
     def _prepare_deductions(self):
@@ -643,7 +644,7 @@ class DMFAOccupation(DMFANode):
     """
     Represents the contract
     """
-    def __init__(self, contracts, payslips, date_from, date_to, sequence=1):
+    def __init__(self, contracts, payslips, date_from, date_to, quarter_start, sequence=1):
         super().__init__(contracts.env, sequence=sequence)
 
         contract = contracts.sorted(key='date_start', reverse=True)[0]
@@ -653,7 +654,9 @@ class DMFAOccupation(DMFANode):
 
         self.date_start = date_from
         self.date_stop = date_to
-        if contract.date_end and contract.contract_type_id == self.env.ref('l10n_be_hr_payroll.l10n_be_contract_type_cdd'):
+        self.quarter_start = quarter_start
+        quarter_end = quarter_start + relativedelta(months=3, days=-1)
+        if contract.date_end and contract.contract_type_id == self.env.ref('l10n_be_hr_payroll.l10n_be_contract_type_cdd') and contract.date_end <= quarter_end:
             self.date_stop = contract.date_end
 
         # See: https://www.socialsecurity.be/employer/instructions/dmfa/fr/latest/instructions/fill_in_dmfa/dmfa_fillinrules/workerrecord_occupationrecords/occupationrecord.html
