@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
 import { _t } from "@web/core/l10n/translation";
-import MainComponent from '@stock_barcode/components/main';
+import MainComponent from "@stock_barcode/components/main";
 import { patch } from "@web/core/utils/patch";
 
 patch(MainComponent.prototype, {
@@ -12,12 +12,10 @@ patch(MainComponent.prototype, {
     async checkQuality(ev) {
         ev.stopPropagation();
         await this.env.model.save();
-        const res = await this.orm.call(
-            this.resModel,
-            this.env.model.openQualityChecksMethod,
-            [[this.resId]]
-        );
-        if (typeof res === 'object' && res !== null) {
+        const res = await this.orm.call(this.resModel, this.env.model.openQualityChecksMethod, [
+            [this.resId],
+        ]);
+        if (typeof res === "object" && res !== null) {
             return this.action.doAction(res, {
                 onClose: this._onRefreshState.bind(this, { recordId: this.resId }),
             });
@@ -28,13 +26,13 @@ patch(MainComponent.prototype, {
 
     async onDemandQualityCheck() {
         await this.env.model.save();
-        const res = await this.orm.call(this.resModel, "action_open_on_demand_quality_check",
-            [[this.resId]]
-        );
-        if (typeof res === 'object' && res !== null) {
+        const res = await this.orm.call(this.resModel, "action_open_on_demand_quality_check", [
+            [this.resId],
+        ]);
+        if (typeof res === "object" && res !== null) {
             return this.action.doAction(res, {
                 onClose: this._onRefreshState.bind(this, { recordId: this.resId }),
             });
         }
-    }
+    },
 });

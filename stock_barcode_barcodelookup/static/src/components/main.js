@@ -9,5 +9,5 @@ patch(MainComponent.prototype, {
     async onOpenProductForm() {
         await this.env.model.save();
         this.env.model.openProductForm();
-    }
+    },
 });

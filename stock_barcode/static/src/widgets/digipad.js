@@ -15,22 +15,21 @@ export class Digipad extends Component {
     };
 
     setup() {
-        this.orm = useService('orm');
+        this.orm = useService("orm");
         const { data } = this.props.record;
         const context = this.props.record.evalContext.context;
         this.quantity = data[this.props.fieldToEdit];
         this.value = String(this.quantity);
         this.precision = 2;
-        this.fulfillQuantity = this.props.fulfilledAt && !context.hide_qty_to_count
-            ? data[this.props.fulfilledAt]
-            : 0;
+        this.fulfillQuantity =
+            this.props.fulfilledAt && !context.hide_qty_to_count ? data[this.props.fulfilledAt] : 0;
         if (context.force_fullfil_quantity) {
             this.fulfillQuantity = context.force_fullfil_quantity;
         }
         const field = this.props.record.model.config.fields[this.props.fieldToEdit];
         this.precision = field.digits[1];
         onWillStart(async () => {
-            this.displayUOM = await user.hasGroup('uom.group_uom');
+            this.displayUOM = await user.hasGroup("uom.group_uom");
             await this._fetchPackagingButtons();
         });
     }
@@ -49,7 +48,7 @@ export class Digipad extends Component {
     }
 
     get buttonContainerClass() {
-        return this.fulfillQuantity ? 'col-3' : 'col-4';
+        return this.fulfillQuantity ? "col-3" : "col-4";
     }
 
     get buttonFulfillClass() {
@@ -84,7 +83,7 @@ export class Digipad extends Component {
      * @private
      * @param {integer} [interval=1]
      */
-    async _increment(interval=1, enforceQuantity=false) {
+    async _increment(interval = 1, enforceQuantity = false) {
         if (enforceQuantity) {
             this.quantity = interval;
         } else {
@@ -105,15 +104,16 @@ export class Digipad extends Component {
      */
     async _fetchPackagingButtons() {
         const record = this.props.record.data;
-        const domain = [['product_id', '=', record.product_id[0]]];
-        if (this.quantityToFulfill) { // Doesn't fetch packaging with a too high quantity.
-            domain.push(['qty', '<=', this.quantityToFulfill]);
+        const domain = [["product_id", "=", record.product_id[0]]];
+        if (this.quantityToFulfill) {
+            // Doesn't fetch packaging with a too high quantity.
+            domain.push(["qty", "<=", this.quantityToFulfill]);
         }
         this.packagingButtons = await this.orm.searchRead(
-            'product.packaging',
+            "product.packaging",
             domain,
-            ['name', 'product_uom_id', 'qty'],
-            { limit: 2 },
+            ["name", "product_uom_id", "qty"],
+            { limit: 2 }
         );
     }
 
@@ -163,4 +163,4 @@ export const digipad = {
         };
     },
 };
-registry.category('view_widgets').add('digipad', digipad);
+registry.category("view_widgets").add("digipad", digipad);

@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import LineComponent from './line';
+import LineComponent from "./line";
 
 export default class PackageLineComponent extends LineComponent {
     static props = ["displayUOM", "line", "openPackage"];
@@ -30,6 +30,6 @@ export default class PackageLineComponent extends LineComponent {
     select(ev) {
         ev.stopPropagation();
         this.env.model.selectPackageLine(this.line);
-        this.env.model.trigger('update');
+        this.env.model.trigger("update");
     }
 }

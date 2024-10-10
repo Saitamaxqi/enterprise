@@ -1,6 +1,6 @@
 /** @odoo-module **/
 
-import LineComponent from '@stock_barcode/components/line';
+import LineComponent from "@stock_barcode/components/line";
 import { useService } from "@web/core/utils/hooks";
 import { patch } from "@web/core/utils/patch";
 

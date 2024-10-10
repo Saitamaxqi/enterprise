@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
 import { Component } from "@odoo/owl";
-import { ProductImageDialog } from '@stock_barcode/components/product_image_dialog';
+import { ProductImageDialog } from "@stock_barcode/components/product_image_dialog";
 
 export default class LineComponent extends Component {
     static props = ["displayUOM", "line", "subline?", "editLine"];
@@ -13,8 +13,11 @@ export default class LineComponent extends Component {
             : null;
     }
 
-    get destinationLocationPath () {
-        return this._getLocationPath(this.env.model._defaultDestLocation(), this.line.location_dest_id);
+    get destinationLocationPath() {
+        return this._getLocationPath(
+            this.env.model._defaultDestLocation(),
+            this.line.location_dest_id
+        );
     }
 
     get displayDeleteButton() {
@@ -56,8 +59,11 @@ export default class LineComponent extends Component {
     }
 
     get isSelected() {
-        return this.env.model.lineIsSelected(this.line) ||
-        (this.line.package_id && this.line.package_id.id === this.env.model.lastScanned.packageId);
+        return (
+            this.env.model.lineIsSelected(this.line) ||
+            (this.line.package_id &&
+                this.line.package_id.id === this.env.model.lastScanned.packageId)
+        );
     }
 
     get isTracked() {
@@ -72,13 +78,14 @@ export default class LineComponent extends Component {
     }
 
     get nextExpected() {
-        if (!this.isSelected) {
-            return false;
-        } else if (this.isTracked && !this.lotName) {
-            return 'lot';
-        } else if (this.qtyDemand && this.qtyDone < this.qtyDemand) {
-            return 'quantity';
+        if (this.isSelected) {
+            if (this.isTracked && !this.lotName) {
+                return "lot";
+            } else if (this.qtyDemand && this.qtyDone < this.qtyDemand) {
+                return "quantity";
+            }
         }
+        return false;
     }
 
     get qtyDemand() {
@@ -99,20 +106,24 @@ export default class LineComponent extends Component {
 
     get componentClasses() {
         return [
-            this.isComplete ? 'o_line_completed' : 'o_line_not_completed',
-            this.env.model.lineIsFaulty(this.line) ? 'o_faulty' : '',
-            this.isSelected ? 'o_selected o_highlight' : ''
-        ].join(' ');
+            this.isComplete ? "o_line_completed" : "o_line_not_completed",
+            this.env.model.lineIsFaulty(this.line) ? "o_faulty" : "",
+            this.isSelected ? "o_selected o_highlight" : "",
+        ].join(" ");
     }
 
     _getLocationPath(rootLocation, currentLocation) {
         let locationName = currentLocation.display_name;
-        if (this.env.model.shouldShortenLocationName && this.env.model._isSublocation &&
+        if (
+            this.env.model.shouldShortenLocationName &&
+            this.env.model._isSublocation &&
             this.env.model._isSublocation(currentLocation, rootLocation) &&
-            rootLocation && rootLocation.id != currentLocation.id) {
-            locationName = locationName.replace(rootLocation.display_name, '...');
+            rootLocation &&
+            rootLocation.id != currentLocation.id
+        ) {
+            locationName = locationName.replace(rootLocation.display_name, "...");
         }
-        return locationName.replace(new RegExp(currentLocation.name + '$'), '');
+        return locationName.replace(new RegExp(currentLocation.name + "$"), "");
     }
 
     addQuantity(quantity) {
@@ -122,7 +133,7 @@ export default class LineComponent extends Component {
     select(ev) {
         ev.stopPropagation();
         this.env.model.selectLine(this.line);
-        this.env.model.trigger('update');
+        this.env.model.trigger("update");
     }
 
     toggleAsCounted(ev) {

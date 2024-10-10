@@ -51,7 +51,7 @@ export class CountScreenRFID extends Component {
         });
     }
 
-    setActiveScanning () {
+    setActiveScanning() {
         if (this.activeScanningTimeout) {
             clearTimeout(this.activeScanningTimeout);
         }

@@ -8,7 +8,7 @@ import { Component } from "@odoo/owl";
 export class FullScreenImage extends Component {
     static template = "stock_barcode.FullScreenImage";
     static props = {
-        src: {type: String},
+        src: { type: String },
         close: Function,
     };
 }

@@ -17,7 +17,7 @@ export class BarcodeObject {
             } catch (err) {
                 // The barcode can't be parsed but the error is caught to fallback
                 // on the classic way to handle barcodes.
-                console.log(`%cWarning: error about ${this.rawValue}`, 'text-weight: bold;');
+                console.log(`%cWarning: error about ${this.rawValue}`, "text-weight: bold;");
                 console.log(err.message);
             }
             if (this.parsedBarcode && !Array.isArray(this.parsedBarcode)) {
@@ -38,7 +38,7 @@ export class BarcodeObject {
      * Attach to the barcode record(s) already in the cache.
      * For missing record(s), they need to be fetched afterward.
      */
-    async setRecords(options=false) {
+    async setRecords(options = false) {
         if (!this.isParsed) {
             return;
         }
@@ -81,11 +81,19 @@ export class BarcodeObject {
     }
 
     async fetchProduct(productBarcode, options) {
-        let product = await this.cache.getRecordByBarcode(productBarcode, "product.product", options);
+        let product = await this.cache.getRecordByBarcode(
+            productBarcode,
+            "product.product",
+            options
+        );
         if (!product) {
-            const packaging = await this.cache.getRecordByBarcode(productBarcode, "product.packaging", {
-                onlyInCache: true,
-            });
+            const packaging = await this.cache.getRecordByBarcode(
+                productBarcode,
+                "product.packaging",
+                {
+                    onlyInCache: true,
+                }
+            );
             if (packaging) {
                 product = this.cache.getRecord("product.product", packaging.product_id, false);
                 this.parsedData.packaging = packaging;
@@ -106,7 +114,7 @@ BarcodeObject.mappingRawBarcodeToObject = {};
 BarcodeObject.setEnv = (cache, parser) => {
     BarcodeObject.__cache = cache;
     BarcodeObject.__parser = parser;
-}
+};
 
 BarcodeObject.forBarcode = (barcode) => {
     if (BarcodeObject.mappingRawBarcodeToObject[barcode]) {

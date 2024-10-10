@@ -3,20 +3,31 @@
 import { _t } from "@web/core/l10n/translation";
 import { Chatter } from "@mail/chatter/web_portal/chatter";
 import { COMMANDS } from "@barcodes/barcode_handlers";
-import BarcodePickingModel from '@stock_barcode/models/barcode_picking_model';
-import BarcodeQuantModel from '@stock_barcode/models/barcode_quant_model';
-import GroupedLineComponent from '@stock_barcode/components/grouped_line';
-import LineComponent from '@stock_barcode/components/line';
-import PackageLineComponent from '@stock_barcode/components/package_line';
+import BarcodePickingModel from "@stock_barcode/models/barcode_picking_model";
+import BarcodeQuantModel from "@stock_barcode/models/barcode_quant_model";
+import GroupedLineComponent from "@stock_barcode/components/grouped_line";
+import LineComponent from "@stock_barcode/components/line";
+import PackageLineComponent from "@stock_barcode/components/package_line";
 import { rpc } from "@web/core/network/rpc";
 import { registry } from "@web/core/registry";
 import { useService, useBus } from "@web/core/utils/hooks";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { View } from "@web/views/view";
-import { BarcodeVideoScanner, isBarcodeScannerSupported } from '@web/core/barcode/barcode_video_scanner';
-import { url } from '@web/core/utils/urls';
+import {
+    BarcodeVideoScanner,
+    isBarcodeScannerSupported,
+} from "@web/core/barcode/barcode_video_scanner";
+import { url } from "@web/core/utils/urls";
 import { utils as uiUtils } from "@web/core/ui/ui_service";
-import { Component, EventBus, onPatched, onWillStart, onWillUnmount, useState, useSubEnv } from "@odoo/owl";
+import {
+    Component,
+    EventBus,
+    onPatched,
+    onWillStart,
+    onWillUnmount,
+    useState,
+    useSubEnv,
+} from "@odoo/owl";
 import { ImportBlockUI } from "@base_import/import_block_ui";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
@@ -31,7 +42,7 @@ const bus = new EventBus();
 
 class StockBarcodeUnlinkButton extends Component {
     static template = "stock_barcode.UnlinkButton";
-    static props = {...standardWidgetProps};
+    static props = { ...standardWidgetProps };
     setup() {
         this.orm = useService("orm");
     }
@@ -71,10 +82,10 @@ class MainComponent extends Component {
     //--------------------------------------------------------------------------
 
     setup() {
-        this.orm = useService('orm');
-        this.notification = useService('notification');
-        this.dialog = useService('dialog');
-        this.action = useService('action');
+        this.orm = useService("orm");
+        this.notification = useService("notification");
+        this.dialog = useService("dialog");
+        this.action = useService("action");
         this.resModel = this.props.action.res_model;
         this.resId = this.props.action.context.active_id || false;
         const model = this._getModel();
@@ -83,7 +94,7 @@ class MainComponent extends Component {
             model,
             dialog: this.dialog,
         });
-        this._scrollBehavior = 'smooth';
+        this._scrollBehavior = "smooth";
         this.isMobile = uiUtils.isSmall();
         this.state = useState({
             cameraScannedEnabled: false,
@@ -108,20 +119,30 @@ class MainComponent extends Component {
             this.onMobileReaderScanned(ev.detail.data)
         );
 
-        useBus(this.env.model, 'flash', this.flashScreen.bind(this));
+        useBus(this.env.model, "flash", this.flashScreen.bind(this));
         useBus(this.env.model, "playSound", this.playSound.bind(this));
         useBus(this.env.model, "blockUI", this.blockUI.bind(this));
         useBus(this.env.model, "unblockUI", this.unblockUI.bind(this));
-        useBus(this.env.model, "addBarcodesCountToProcess", (ev) => this.addBarcodesCountToProcess(ev.detail));
-        useBus(this.env.model, "updateBarcodesCountProcessed", this.updateBarcodesCountProcessed.bind(this));
-        useBus(this.env.model, "clearBarcodesCountProcessed", this.clearBarcodesCountProcessed.bind(this));
+        useBus(this.env.model, "addBarcodesCountToProcess", (ev) =>
+            this.addBarcodesCountToProcess(ev.detail)
+        );
+        useBus(
+            this.env.model,
+            "updateBarcodesCountProcessed",
+            this.updateBarcodesCountProcessed.bind(this)
+        );
+        useBus(
+            this.env.model,
+            "clearBarcodesCountProcessed",
+            this.clearBarcodesCountProcessed.bind(this)
+        );
         useBus(bus, "refresh", (ev) => this._onRefreshState(ev.detail));
 
         onWillStart(async () => {
-            const barcodeData = await rpc(
-                '/stock_barcode/get_barcode_data',
-                { model: this.resModel, res_id: this.resId }
-            );
+            const barcodeData = await rpc("/stock_barcode/get_barcode_data", {
+                model: this.resModel,
+                res_id: this.resId,
+            });
             barcodeData.actionId = this.props.actionId;
             this.config = { play_sound: true, ...barcodeData.data.config };
             if (this.config.play_sound) {
@@ -129,7 +150,9 @@ class MainComponent extends Component {
                 this.sounds = {
                     error: new Audio(url(`/barcodes/static/src/audio/error.${fileExtension}`)),
                     notify: new Audio(url(`/mail/static/src/audio/ting.${fileExtension}`)),
-                    success: new Audio(url(`/stock_barcode/static/src/audio/success.${fileExtension}`)),
+                    success: new Audio(
+                        url(`/stock_barcode/static/src/audio/success.${fileExtension}`)
+                    ),
                 };
                 this.sounds.error.load();
                 this.sounds.notify.load();
@@ -139,14 +162,14 @@ class MainComponent extends Component {
             this.groups = barcodeData.groups;
             this.env.model.setData(barcodeData);
             this.state.displayNote = Boolean(this.env.model.record.note);
-            this.env.model.addEventListener('process-action', this._onDoAction.bind(this));
-            this.env.model.addEventListener('refresh', (ev) => this._onRefreshState(ev.detail));
-            this.env.model.addEventListener('update', () => {
+            this.env.model.addEventListener("process-action", this._onDoAction.bind(this));
+            this.env.model.addEventListener("refresh", (ev) => this._onRefreshState(ev.detail));
+            this.env.model.addEventListener("update", () => {
                 if (!this.state.uiBlocked) {
                     this.render(true);
                 }
             });
-            this.env.model.addEventListener('history-back', () => this._exit());
+            this.env.model.addEventListener("history-back", () => this._exit());
         });
 
         onWillUnmount(() => {
@@ -245,11 +268,11 @@ class MainComponent extends Component {
     }
 
     get addLineBtnName() {
-        return _t('Add Product');
+        return _t("Add Product");
     }
 
     get displayActionButtons() {
-        return this.state.view === 'barcodeLines' && this.env.model.canBeProcessed;
+        return this.state.view === "barcodeLines" && this.env.model.canBeProcessed;
     }
 
     //--------------------------------------------------------------------------
@@ -257,14 +280,19 @@ class MainComponent extends Component {
     //--------------------------------------------------------------------------
 
     _getModel() {
-        const services = { rpc: rpc, orm: this.orm, notification: this.notification, action: this.action };
-        if (this.resModel === 'stock.picking') {
+        const services = {
+            rpc: rpc,
+            orm: this.orm,
+            notification: this.notification,
+            action: this.action,
+        };
+        if (this.resModel === "stock.picking") {
             services.dialog = this.dialog;
             return new BarcodePickingModel(this.resModel, this.resId, services);
-        } else if (this.resModel === 'stock.quant') {
+        } else if (this.resModel === "stock.quant") {
             return new BarcodeQuantModel(this.resModel, this.resId, services);
         } else {
-            throw new Error('No JS model define');
+            throw new Error("No JS model define");
         }
     }
 
@@ -290,7 +318,7 @@ class MainComponent extends Component {
             onError: (error) => {
                 this.state.cameraScannedEnabled = false;
                 const message = error.message;
-                this.notification.add(message, { type: 'warning' });
+                this.notification.add(message, { type: "warning" });
             },
             onReady: () => {
                 this.state.readyToToggleCamera = true;
@@ -312,12 +340,10 @@ class MainComponent extends Component {
 
     async cancel() {
         await this.env.model.save();
-        const action = await this.orm.call(
-            this.resModel,
-            'action_cancel_from_barcode',
-            [[this.resId]]
-        );
-        const onClose = res => {
+        const action = await this.orm.call(this.resModel, "action_cancel_from_barcode", [
+            [this.resId],
+        ]);
+        const onClose = (res) => {
             if (res && res.cancelled) {
                 this.env.model._cancelNotification();
                 this._exit();
@@ -331,12 +357,12 @@ class MainComponent extends Component {
     onBarcodeScanned(barcode) {
         if (barcode) {
             this.env.model.processBarcode(barcode);
-            if ('vibrate' in window.navigator) {
+            if ("vibrate" in window.navigator) {
                 window.navigator.vibrate(100);
             }
         } else {
             const message = _t("Please, Scan again!");
-            this.env.services.notification.add(message, { type: 'warning' });
+            this.env.services.notification.add(message, { type: "warning" });
         }
     }
 
@@ -411,13 +437,13 @@ class MainComponent extends Component {
         if (this.state.uiBlocked) {
             return;
         }
-        const clientAction = document.querySelector('.o_barcode_client_action');
+        const clientAction = document.querySelector(".o_barcode_client_action");
         // Resets the animation (in case it still going).
-        clientAction.style.animation = 'none';
+        clientAction.style.animation = "none";
         clientAction.offsetHeight; // Trigger reflow.
         clientAction.style.animation = null;
         // Adds the CSS class linked to the keyframes animation `white-flash`.
-        clientAction.classList.add('o_white_flash');
+        clientAction.classList.add("o_white_flash");
     }
 
     putInPack(ev) {
@@ -425,14 +451,16 @@ class MainComponent extends Component {
         this.env.model._putInPack();
     }
 
-    returnProducts(ev){
+    returnProducts(ev) {
         ev.stopPropagation();
         this.env.model._returnProducts();
     }
 
     saveFormView(lineRecord) {
-        const lineId = (lineRecord && lineRecord.resId) || (this._editedLineParams && this._editedLineParams.currentId);
-        const recordId = (lineRecord.resModel === this.resModel) ? lineId : undefined;
+        const lineId =
+            (lineRecord && lineRecord.resId) ||
+            (this._editedLineParams && this._editedLineParams.currentId);
+        const recordId = lineRecord.resModel === this.resModel ? lineId : undefined;
         this._onRefreshState({ recordId, lineId });
     }
 
@@ -470,32 +498,36 @@ class MainComponent extends Component {
     }
 
     _getHeaderHeight() {
-        const header = document.querySelector('.o_barcode_header');
-        const navbar = document.querySelector('.o_main_navbar');
+        const header = document.querySelector(".o_barcode_header");
+        const navbar = document.querySelector(".o_main_navbar");
         // Computes the real header's height (the navbar is present if the page was refreshed).
         return navbar ? navbar.offsetHeight + header.offsetHeight : header.offsetHeight;
     }
 
     _scrollToSelectedLine() {
         if (!this.state.view === "barcodeLines" && this.env.model.canBeProcessed) {
-            this._scrollBehavior = 'auto';
+            this._scrollBehavior = "auto";
             return;
         }
         // Tries to scroll to selected subline.
         let targetElement = false;
-        let selectedLine = document.querySelector('.o_sublines .o_barcode_line.o_highlight');
+        let selectedLine = document.querySelector(".o_sublines .o_barcode_line.o_highlight");
         const isSubline = Boolean(selectedLine);
         // If no selected subline, tries to scroll to selected line.
         if (!selectedLine) {
-            selectedLine = document.querySelector('.o_barcode_line.o_highlight');
+            selectedLine = document.querySelector(".o_barcode_line.o_highlight");
         }
 
         let locationLine = false;
         if (this.env.model.lastScanned.sourceLocation) {
             const locId = this.env.model.lastScanned.sourceLocation.id;
-            locationLine = document.querySelector(`.o_barcode_location_line[data-location-id="${locId}"]`);
+            locationLine = document.querySelector(
+                `.o_barcode_location_line[data-location-id="${locId}"]`
+            );
         } else if (selectedLine) {
-            locationLine = selectedLine.closest('.o_barcode_location_group').querySelector(".o_barcode_location_line");
+            locationLine = selectedLine
+                .closest(".o_barcode_location_group")
+                .querySelector(".o_barcode_location_line");
         }
         // Scrolls either to the selected line, either to the location line.
         targetElement = selectedLine || (locationLine && locationLine.parentElement);
@@ -504,21 +536,22 @@ class MainComponent extends Component {
             // If a line is selected, checks if this line is on the top of the
             // page, and if it's not, scrolls until the line is on top.
             const elRect = targetElement.getBoundingClientRect();
-            const page = document.querySelector('.o_barcode_lines');
+            const page = document.querySelector(".o_barcode_lines");
             const headerHeight = this._getHeaderHeight();
-            if (elRect.top < headerHeight || elRect.bottom > (headerHeight + elRect.height)) {
+            if (elRect.top < headerHeight || elRect.bottom > headerHeight + elRect.height) {
                 let top = elRect.top - headerHeight + page.scrollTop;
                 if (isSubline) {
-                    const parentLine = targetElement.closest('.o_sublines').closest('.o_barcode_line');
-                    const parentSummary = parentLine.querySelector('.o_barcode_line_summary');
+                    const parentLine = targetElement
+                        .closest(".o_sublines")
+                        .closest(".o_barcode_line");
+                    const parentSummary = parentLine.querySelector(".o_barcode_line_summary");
                     top -= parentSummary.getBoundingClientRect().height;
                 } else if (selectedLine && locationLine) {
                     top -= locationLine.getBoundingClientRect().height;
                 }
                 page.scroll({ left: 0, top, behavior: this._scrollBehavior });
-                this._scrollBehavior = 'smooth';
+                this._scrollBehavior = "smooth";
             }
-
         }
     }
 
@@ -546,7 +579,7 @@ class MainComponent extends Component {
     get scrapViewProps() {
         const context = this.env.model.scrapContext;
         return {
-            resModel: 'stock.scrap',
+            resModel: "stock.scrap",
             context: context,
             viewId: this.env.model.scrapViewId,
             display: { controlPanel: false },
@@ -563,7 +596,7 @@ class MainComponent extends Component {
             const virtualId = line.virtual_id;
             // Updates the line id if it's missing, in order to open the line form view.
             if (!line.id && virtualId) {
-                line = this.env.model.pageLines.find(l => l.dummy_id === virtualId);
+                line = this.env.model.pageLines.find((l) => l.dummy_id === virtualId);
             }
             this._editedLineParams = this.env.model.getEditedLineParams(line);
         }
@@ -571,7 +604,7 @@ class MainComponent extends Component {
     }
 
     async _onRefreshState(paramsRefresh) {
-        const { recordId, lineId } = paramsRefresh || {}
+        const { recordId, lineId } = paramsRefresh || {};
         const { route, params } = this.env.model.getActionRefresh(recordId);
         const result = await rpc(route, params);
         await this.env.model.refreshCache(result.data.records);

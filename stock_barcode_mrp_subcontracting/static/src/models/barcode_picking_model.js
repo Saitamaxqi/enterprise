@@ -1,14 +1,16 @@
 /** @odoo-module **/
 
-import BarcodePickingModel from '@stock_barcode/models/barcode_picking_model';
+import BarcodePickingModel from "@stock_barcode/models/barcode_picking_model";
 import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";
 
-
 patch(BarcodePickingModel.prototype, {
-
     showSubcontractingDetails(line) {
-        return line.is_subcontract_stock_barcode && !['done', 'cancel'].includes(line.state) && this.getQtyDone(line);
+        return (
+            line.is_subcontract_stock_barcode &&
+            !["done", "cancel"].includes(line.state) &&
+            this.getQtyDone(line)
+        );
     },
 
     getPickingToRecordComponents() {
@@ -36,10 +38,10 @@ patch(BarcodePickingModel.prototype, {
     },
 
     _actionRecordComponents(line) {
-        const moveId = line && line.move_id || false;
+        const moveId = (line && line.move_id) || false;
         return this._getActionRecordComponents(moveId).then(
             ({ action, options }) => this.action.doAction(action, options),
-            error => this.notification(error)
+            (error) => this.notification(error)
         );
     },
 
@@ -47,27 +49,21 @@ patch(BarcodePickingModel.prototype, {
         await this.save();
         let action = false;
         if (moveId) {
-            action = await this.orm.call(
-                'stock.move',
-                'action_show_details',
-                [[moveId]]
-            );
+            action = await this.orm.call("stock.move", "action_show_details", [[moveId]]);
         } else {
-            action = await this.orm.call(
-                'stock.picking',
-                'action_record_components',
-                [[this.getPickingToRecordComponents().id]]
-            );
+            action = await this.orm.call("stock.picking", "action_record_components", [
+                [this.getPickingToRecordComponents().id],
+            ]);
         }
         if (!action) {
             return Promise.reject({
-                message: _t('No components to register'),
-                type: 'danger',
+                message: _t("No components to register"),
+                type: "danger",
             });
         }
         const options = {
             onClose: () => {
-                this.trigger('refresh');
+                this.trigger("refresh");
             },
         };
         return { action, options };
@@ -75,18 +71,16 @@ patch(BarcodePickingModel.prototype, {
 
     async _getActionSubcontractingDetails(line) {
         await this.save();
-        const action = await this.orm.call(
-            'stock.move',
-            'action_show_subcontract_details',
-            [[line.move_id]]
-        );
+        const action = await this.orm.call("stock.move", "action_show_subcontract_details", [
+            [line.move_id],
+        ]);
         return action;
     },
 
     _getCommands() {
         const commands = super._getCommands();
         if (!this.isDone) {
-            commands['OBTRECO'] = this._actionRecordComponents.bind(this);
+            commands["OBTRECO"] = this._actionRecordComponents.bind(this);
         }
         return commands;
     },

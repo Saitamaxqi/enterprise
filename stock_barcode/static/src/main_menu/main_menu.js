@@ -8,23 +8,25 @@ import { useBus, useService } from "@web/core/utils/hooks";
 import { Component, onWillStart, useState } from "@odoo/owl";
 import { ManualBarcodeScanner } from "../components/manual_barcode";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";
-import { url } from '@web/core/utils/urls';
+import { url } from "@web/core/utils/urls";
 
 export class MainMenu extends Component {
     static props = { ...standardActionServiceProps };
-    static components = {}
+    static components = {};
     static template = "stock_barcode.MainMenu";
 
     setup() {
         const displayDemoMessage = this.props.action.params.message_demo_barcodes;
-        this.actionService = useService('action');
+        this.actionService = useService("action");
         this.dialogService = useService("dialog");
         this.pwaService = useService("pwa");
         this.home = useService("home_menu");
         this.notificationService = useService("notification");
         this.state = useState({ displayDemoMessage });
-        this.barcodeService = useService('barcode');
-        useBus(this.barcodeService.bus, "barcode_scanned", (ev) => this._onBarcodeScanned(ev.detail.barcode));
+        this.barcodeService = useService("barcode");
+        useBus(this.barcodeService.bus, "barcode_scanned", (ev) =>
+            this._onBarcodeScanned(ev.detail.barcode)
+        );
 
         onWillStart(async () => {
             const data = await rpc("/stock_barcode/get_main_menu_data");
@@ -36,7 +38,9 @@ export class MainMenu extends Component {
             if (this.soundEnable) {
                 const fileExtension = new Audio().canPlayType("audio/ogg") ? "ogg" : "mp3";
                 this.sounds = {
-                    success: new Audio(url(`/stock_barcode/static/src/audio/success.${fileExtension}`)),
+                    success: new Audio(
+                        url(`/stock_barcode/static/src/audio/success.${fileExtension}`)
+                    ),
                 };
                 this.sounds.success.load();
             }
@@ -44,7 +48,10 @@ export class MainMenu extends Component {
     }
 
     logout() {
-        window.open(`/web/session/logout${ this.pwaService.isScopedApp ? "?redirect=scoped_app/barcode" : "" }`, "_self");
+        const path = `/web/session/logout${
+            this.pwaService.isScopedApp ? "?redirect=scoped_app/barcode" : ""
+        }`;
+        window.open(path, "_self");
     }
 
     openManualBarcodeDialog() {
@@ -62,7 +69,7 @@ export class MainMenu extends Component {
             },
             onError: (error) => rej(error),
         });
-        promise.catch(error => console.log(error))
+        promise.catch((error) => console.log(error));
         return promise;
     }
 
@@ -70,10 +77,12 @@ export class MainMenu extends Component {
         this.state.displayDemoMessage = false;
         const params = {
             title: _t("Don't show this message again"),
-            body: _t("Do you want to permanently remove this message ? " +
-                    "It won't appear anymore, so make sure you don't need the barcodes sheet or you have a copy."),
+            body: _t(
+                "Do you want to permanently remove this message ? " +
+                    "It won't appear anymore, so make sure you don't need the barcodes sheet or you have a copy."
+            ),
             confirm: () => {
-                rpc('/stock_barcode/rid_of_message_demo_barcodes');
+                rpc("/stock_barcode/rid_of_message_demo_barcodes");
                 location.reload();
             },
             cancel: () => {},
@@ -91,13 +100,13 @@ export class MainMenu extends Component {
     }
 
     async _onBarcodeScanned(barcode) {
-        const res = await rpc('/stock_barcode/scan_from_main_menu', { barcode });
+        const res = await rpc("/stock_barcode/scan_from_main_menu", { barcode });
         if (res.action) {
             this.playSound("success");
             return this.actionService.doAction(res.action);
         }
-        this.notificationService.add(res.warning, { type: 'danger' });
+        this.notificationService.add(res.warning, { type: "danger" });
     }
 }
 
-registry.category('actions').add('stock_barcode_main_menu', MainMenu);
+registry.category("actions").add("stock_barcode_main_menu", MainMenu);

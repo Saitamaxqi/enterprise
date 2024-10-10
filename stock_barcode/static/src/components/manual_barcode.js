@@ -1,4 +1,4 @@
-import { BarcodeDialog } from '@web/core/barcode/barcode_dialog';
+import { BarcodeDialog } from "@web/core/barcode/barcode_dialog";
 import { Component, onMounted, useRef, useState } from "@odoo/owl";
 
 export class BarcodeInput extends Component {
@@ -11,7 +11,7 @@ export class BarcodeInput extends Component {
         this.state = useState({
             barcode: false,
         });
-        this.barcodeManual = useRef('manualBarcode');
+        this.barcodeManual = useRef("manualBarcode");
         // Autofocus processing was blocked because a document already has a focused element.
         onMounted(() => {
             this.barcodeManual.el.focus();

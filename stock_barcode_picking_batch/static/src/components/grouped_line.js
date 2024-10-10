@@ -1,8 +1,7 @@
 /** @odoo-module **/
 
-import GroupedLineComponent from '@stock_barcode/components/grouped_line';
+import GroupedLineComponent from "@stock_barcode/components/grouped_line";
 import { patch } from "@web/core/utils/patch";
-
 
 patch(GroupedLineComponent.prototype, {
     get sublineProps() {
@@ -15,9 +14,9 @@ patch(GroupedLineComponent.prototype, {
     },
 
     get displayToggleBtn() {
-        if (this.env.model.resModel === "stock.picking.batch" && !Boolean(this.pickingName)) {
+        if (this.env.model.resModel === "stock.picking.batch" && !this.pickingName) {
             return true;
         }
         return super.displayToggleBtn;
-    }
+    },
 });

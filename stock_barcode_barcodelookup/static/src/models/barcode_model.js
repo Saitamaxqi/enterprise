@@ -5,10 +5,8 @@ import { rpc } from "@web/core/network/rpc";
 import { registry } from "@web/core/registry";
 import { _t } from "@web/core/l10n/translation";
 
-
 patch(BarcodeModel.prototype, {
-
-     /**
+    /**
      * The purpose of this extension is to allow the user to create the product for the barcode data
      * if no product found based on barcode lookup!
      *
@@ -20,10 +18,11 @@ patch(BarcodeModel.prototype, {
         // Applicable for the picking operation ["receipts"]
         const canManageBarcodelookup = await this.groups.group_user_admin;
         if (
-          canManageBarcodelookup && this.isValidForBarcodeLookup &&
-          ["ean8", "ean13", "upca"].some((encoding) =>
-            this.parser.check_encoding(barcodeData.barcode, encoding)
-          )
+            canManageBarcodelookup &&
+            this.isValidForBarcodeLookup &&
+            ["ean8", "ean13", "upca"].some((encoding) =>
+                this.parser.check_encoding(barcodeData.barcode, encoding)
+            )
         ) {
             this.trigger("playSound", "error");
             if (!barcodeData.error) {
@@ -62,15 +61,15 @@ patch(BarcodeModel.prototype, {
         return super.noProductToast(barcodeData);
     },
 
-    async openProductForm(barcodeData=false) {
+    async openProductForm(barcodeData = false) {
         return await this.action.doAction(
             "stock_barcode_barcodelookup.stock_barcodelookup_product_product_action",
             {
                 additionalContext: {
-                    "default_barcode": barcodeData?.barcode,
-                    "default_is_storable": true,
-                    "dialog_size": "medium",
-                    "skip_barcode_check": true,
+                    default_barcode: barcodeData?.barcode,
+                    default_is_storable: true,
+                    dialog_size: "medium",
+                    skip_barcode_check: true,
                 },
                 props: {
                     onSave: async (record) => {
@@ -84,7 +83,7 @@ patch(BarcodeModel.prototype, {
     },
 
     async createNewProductLine(barcodeData) {
-        const params = {barcode: barcodeData.barcode, model_name: "product.product"};
+        const params = { barcode: barcodeData.barcode, model_name: "product.product" };
         try {
             const result = await rpc("/stock_barcode/get_specific_barcode_data", params);
             if (Object.keys(result).length === 0) {
@@ -105,7 +104,7 @@ patch(BarcodeModel.prototype, {
             if (barcodeData.uom) {
                 fieldsParams.uom = barcodeData.uom;
             }
-            const currentLine = await this.createNewLine({fieldsParams});
+            const currentLine = await this.createNewLine({ fieldsParams });
             if (currentLine) {
                 this._selectLine(currentLine);
             }
@@ -117,5 +116,5 @@ patch(BarcodeModel.prototype, {
                 type: "danger",
             });
         }
-    }
+    },
 });

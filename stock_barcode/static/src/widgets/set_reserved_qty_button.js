@@ -14,7 +14,7 @@ export class SetReservedQuantityButton extends Component {
 
     setup() {
         onWillStart(async () => {
-            this.displayUOM = await user.hasGroup('uom.group_uom');
+            this.displayUOM = await user.hasGroup("uom.group_uom");
         });
     }
 
@@ -23,9 +23,11 @@ export class SetReservedQuantityButton extends Component {
         return { id, name };
     }
 
-    _setQuantity (ev) {
+    _setQuantity(ev) {
         ev.stopPropagation();
-        this.props.record.update({ [this.props.fieldToSet]: this.props.record.data[this.props.name] });
+        this.props.record.update({
+            [this.props.fieldToSet]: this.props.record.data[this.props.name],
+        });
     }
 }
 

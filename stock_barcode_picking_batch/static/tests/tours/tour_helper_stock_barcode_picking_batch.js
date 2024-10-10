@@ -1,7 +1,7 @@
 /** @odoo-module **/
 
-export * from '@stock_barcode/../tests/tours/tour_helper_stock_barcode';
-import {assert, _getLineOrFail} from '@stock_barcode/../tests/tours/tour_helper_stock_barcode';
+export * from "@stock_barcode/../tests/tours/tour_helper_stock_barcode";
+import { assert, _getLineOrFail } from "@stock_barcode/../tests/tours/tour_helper_stock_barcode";
 
 /**
  * Checks the line is linked to the given picking.
@@ -11,7 +11,7 @@ import {assert, _getLineOrFail} from '@stock_barcode/../tests/tours/tour_helper_
  */
 export function assertLineBelongTo(lineOrIndex, pickingName) {
     const line = _getLineOrFail(lineOrIndex, "Can't check line's picking");
-    const pickingLabel = line.querySelector('.o_picking_label').innerText;
+    const pickingLabel = line.querySelector(".o_picking_label").innerText;
     assert(pickingLabel, pickingName, "Wrong picking");
 }
 
@@ -22,5 +22,5 @@ export function assertLineBelongTo(lineOrIndex, pickingName) {
  * @param {string} pickingName
  */
 export function assertLinesBelongTo(lines, pickingName) {
-    lines.forEach(line => assertLineBelongTo(line, pickingName));
+    lines.forEach((line) => assertLineBelongTo(line, pickingName));
 }
