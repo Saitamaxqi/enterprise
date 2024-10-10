@@ -9,7 +9,7 @@ from odoo.tests.common import users, tagged, freeze_time
 from .gantt_reschedule_dates_common import ProjectEnterpriseGanttRescheduleCommon, fake_now
 
 
-@tagged('gantt_reschedule')
+@tagged('gantt_reschedule', 'post_install', '-at_install')
 @freeze_time(fake_now)
 class TestGanttRescheduleOnTasks(ProjectEnterpriseGanttRescheduleCommon):
 

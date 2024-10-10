@@ -3,12 +3,12 @@
 from freezegun import freeze_time
 
 from odoo.fields import Datetime
-from odoo.tests import new_test_user
+from odoo.tests import new_test_user, tagged
 
 from odoo.addons.project.tests.test_project_base import TestProjectCommon
 from odoo.addons.project.models.project_task import CLOSED_STATES
 
-
+@tagged('-at_install', 'post_install')
 class TestTaskGanttView(TestProjectCommon):
 
     @classmethod

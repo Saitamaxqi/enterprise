@@ -49,6 +49,12 @@ class ProjectTask(models.Model):
         for task in self:
             task.display_timesheet_timer = task.allow_timesheets and task.analytic_account_active
 
+    def _compute_allocated_hours(self):
+        # Only change values when creating a new record from the gantt view
+        # or the existing tasks that doesn't allow timesheets
+        timsheeted_tasks = self.filtered(lambda task: task._origin and task.allow_timesheets)
+        super(ProjectTask, self - timsheeted_tasks)._compute_allocated_hours()
+
     @api.onchange('project_id')
     def _onchange_project_id(self):
         # If task has non-validated timesheets AND new project has not the timesheets feature enabled, raise a warning notification

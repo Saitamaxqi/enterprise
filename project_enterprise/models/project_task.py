@@ -84,34 +84,32 @@ class ProjectTask(models.Model):
 
     @api.depends('date_deadline', 'planned_date_begin', 'user_ids')
     def _compute_allocated_hours(self):
-        # Only change values when creating a new record
-        if self._origin:
-            return
-        if not self.date_deadline or not self.planned_date_begin:
-            self.allocated_hours = 0
-            return
-        date_begin, date_end = self._calculate_planned_dates(
-            self.planned_date_begin,
-            self.date_deadline,
-            user_id=self.user_ids.ids if len(self.user_ids) == 1 else None,
-            calendar=self.env.company.resource_calendar_id if len(self.user_ids) != 1 else None,
-        )
-        if len(self.user_ids) == 1:
-            tz = self.user_ids.tz or 'UTC'
-            # We need to browse on res.users in order to bypass the new origin id
-            work_intervals, _dummy = self.env["res.users"].browse(self.user_ids.id.origin).sudo()._get_valid_work_intervals(
-                date_begin.astimezone(timezone(tz)),
-                date_end.astimezone(timezone(tz))
+        for task in self:
+            if not task.date_deadline or not task.planned_date_begin:
+                task.allocated_hours = 0
+                return
+            date_begin, date_end = task._calculate_planned_dates(
+                task.planned_date_begin,
+                task.date_deadline,
+                user_id=task.user_ids.ids if len(task.user_ids) == 1 else None,
+                calendar=task.env.company.resource_calendar_id if len(task.user_ids) != 1 else None,
             )
-            work_duration = sum_intervals(work_intervals[self.user_ids.id.origin])
-        else:
-            tz = self.env.company.resource_calendar_id.tz or 'UTC'
-            work_duration = self.env.company.resource_calendar_id.get_work_hours_count(
-                date_begin.astimezone(timezone(tz)),
-                date_end.astimezone(timezone(tz)),
-                compute_leaves=False
-            )
-        self.allocated_hours = round(work_duration, 2)
+            if len(task.user_ids) == 1:
+                tz = task.user_ids.tz or 'UTC'
+                # We need to browse on res.users in order to bypass the new origin id
+                work_intervals, _dummy = task.user_ids.sudo()._get_valid_work_intervals(
+                    date_begin.astimezone(timezone(tz)),
+                    date_end.astimezone(timezone(tz))
+                )
+                work_duration = sum_intervals(work_intervals[task.user_ids._ids[0]])
+            else:
+                tz = task.env.company.resource_calendar_id.tz or 'UTC'
+                work_duration = task.env.company.resource_calendar_id.get_work_hours_count(
+                    date_begin.astimezone(timezone(tz)),
+                    date_end.astimezone(timezone(tz)),
+                    compute_leaves=False
+                )
+            task.allocated_hours = round(work_duration, 2)
 
     def _fetch_planning_overlap(self, additional_domain=None):
         domain = Domain([
