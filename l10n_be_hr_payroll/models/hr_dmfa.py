@@ -274,9 +274,9 @@ class DMFAWorker(DMFANode):
         if not basis:
             return []
 
-        contributions = [
-            DMFAWorkerContributionAmiante(contribution_payslips, basis, self.quarter_start)
-        ] + [
+        contributions = ([
+            DMFAWorkerContributionAmiante(contribution_payslips, basis, self.quarter_start)  # Only 1rst and 2nd quarter
+        ] if self.quarter_start.month < 7 else []) + [
             DMFAWorkerContributionSpecialWorkAccident(contribution_payslips, basis, self.quarter_start)
         ] + [
             DMFAWorkerContribution(contribution_payslips, basis, self.quarter_start)
