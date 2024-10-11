@@ -23,7 +23,7 @@ patch(PosStore.prototype, {
         return false;
     },
     async addLineToCurrentOrder(vals, opt = {}, configure = true) {
-        const product = vals.product_id;
+        const product = vals.product_tmpl_id;
         if (this.useBlackBoxSweden() && product.taxes_id.length === 0) {
             this.dialog.add(AlertDialog, {
                 title: _t("POS error"),

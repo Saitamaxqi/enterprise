@@ -34,7 +34,7 @@ class TestUi(TestPointOfSaleHttpCommon):
                 lines.append(li)
 
         self.assertEqual(len(lines), 1, "The order has 1 preparation orderline")
-        self.assertEqual(lines[0]['product_id'], self.letter_tray.id, "The preparation orderline has the product " + self.letter_tray.name)
+        self.assertEqual(lines[0]['product_id'], self.letter_tray.product_variant_id.id, "The preparation orderline has the product " + self.letter_tray.name)
 
     def test_printer_and_order_display(self):
         self.env['pos.printer'].create({
@@ -62,7 +62,7 @@ class TestUi(TestPointOfSaleHttpCommon):
         preparation_order = self.env['pos_preparation_display.order'].search([('pos_order_id', '=', order.id)], limit=1)
 
         self.assertEqual(len(preparation_order.preparation_display_order_line_ids), 1, "The order " + str(order.amount_paid) + " has 1 preparation orderline")
-        self.assertEqual(preparation_order.preparation_display_order_line_ids.product_id, self.letter_tray, "The preparation orderline has the product " + self.letter_tray.name)
+        self.assertEqual(preparation_order.preparation_display_order_line_ids.product_id, self.letter_tray.product_variant_id, "The preparation orderline has the product " + self.letter_tray.name)
     def test_02_preparation_display(self):
 
         self.main_pos_config.write({

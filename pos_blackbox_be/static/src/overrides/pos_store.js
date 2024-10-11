@@ -19,7 +19,7 @@ patch(PosStore.prototype, {
         await super.printReceipt();
     },
     async addLineToCurrentOrder(vals, opt = {}, configure = true) {
-        const product = vals.product_id;
+        const product = vals.product_tmpl_id;
         if (this.useBlackBoxBe() && product.get_price() < 0) {
             this.dialog.add(AlertDialog, {
                 title: _t("POS error"),

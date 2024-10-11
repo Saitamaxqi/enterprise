@@ -62,14 +62,14 @@ patch(PosStore.prototype, {
     },
     async addLineToCurrentOrder(vals, opt = {}, configure = true) {
         if (this.isCountryGermanyAndFiskaly()) {
-            const product = vals.product_id;
-            for (const tax of product.taxes_id) {
+            const productTmpl = vals.product_tmpl_id;
+            for (const tax of productTmpl.taxes_id) {
                 if (!(tax.amount in this.vatRateMapping)) {
-                    throw new TaxError(product);
+                    throw new TaxError(productTmpl);
                 }
             }
-            if (!product.taxes_id.length) {
-                throw new TaxError(product);
+            if (!productTmpl.taxes_id.length) {
+                throw new TaxError(productTmpl);
             }
         }
         return await super.addLineToCurrentOrder(vals, opt, configure);
