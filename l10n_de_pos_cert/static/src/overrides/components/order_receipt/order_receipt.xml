@@ -5,8 +5,8 @@
             <t t-if="'tss' in props.data">
                 <t t-foreach="props.data.tss" t-as="info" t-key="info">
                     <div class="tss-info">
-                        <span t-esc="info_value.name"/>
-                        <span t-esc='info_value.value' t-attf-class="{{ (info_value.name == 'TSE-Seriennummer' or info_value.name == 'TSE-Signatur' or info_value.name == 'TSE-PublicKey') ? 'tss-info-long-value' : 'pos-receipt-right-align' }}"/>
+                        <span t-esc="info"/>
+                        <span t-esc='info_value' t-attf-class="{{ (info == 'TSE-Seriennummer' or info == 'TSE-Signatur' or info == 'TSE-PublicKey') ? 'tss-info-long-value' : 'pos-receipt-right-align' }}"/>
                     </div>
                 </t>
             </t>
