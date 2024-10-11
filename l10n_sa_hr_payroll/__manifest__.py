@@ -13,7 +13,6 @@ Kingdom of Saudi Arabia Payroll and End of Service rules.
     "license": "OEEL-1",
     "depends": ["hr_payroll", "hr_work_entry_holidays"],
     "data": [
-        "security/ir.model.access.csv",
         "data/hr_departure_reason_data.xml",
         "data/hr_payroll_structure_type_data.xml",
         "data/hr_payroll_structure_data.xml",
@@ -21,7 +20,6 @@ Kingdom of Saudi Arabia Payroll and End of Service rules.
         "data/hr_salary_rule_expat_data.xml",
         "views/hr_contract_view.xml",
         "views/hr_leave_type_views.xml",
-        "views/hr_payroll_master_report_views.xml",
         "data/res_bank_data.xml",
         "data/ir_sequence_data.xml",
         "views/hr_employee_views.xml",

@@ -11,7 +11,23 @@
                 <field name="struct_id" column_invisible="True"/>
                 <field name="sequence" column_invisible="True"/>
                 <field name="partner_id"/>
+                <field name="country_id" optional="hidden"/>
             </list>
+        </field>
+    </record>
+
+    <record id="hr_salary_rule_view_list_m2m" model="ir.ui.view">
+        <field name="name">hr.salary.rule.view.list.m2m</field>
+        <field name="model">hr.salary.rule</field>
+        <field name="inherit_id" ref="hr_payroll.hr_salary_rule_list"/>
+        <field name="mode">primary</field>
+        <field name="arch" type="xml">
+            <field name="struct_id" position="attributes">
+                <attribute name="column_invisible">0</attribute>
+            </field>
+            <field name="partner_id" position="attributes">
+                <attribute name="optional">hidden</attribute>
+            </field>
         </field>
     </record>
 

@@ -11,7 +11,6 @@ United Arab Emirates Payroll and End of Service rules.
     """,
     'depends': ['hr_payroll', 'hr_work_entry_holidays'],
     'data': [
-        'security/ir.model.access.csv',
         'views/hr_payroll_report.xml',
         'views/report_payslip_templates.xml',
         'data/hr_payroll_structure_type_data.xml',
@@ -21,7 +20,6 @@ United Arab Emirates Payroll and End of Service rules.
         'data/hr_leave_type_data.xml',
         'data/hr_salary_rule_data.xml',
         'views/hr_contract_views.xml',
-        'views/hr_payroll_master_report_views.xml',
         'views/res_bank_views.xml',
         'views/res_config_settings_view.xml',
         'views/hr_leave_type_views.xml',

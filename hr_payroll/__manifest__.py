@@ -31,6 +31,7 @@
         'views/hr_employee_views.xml',
         'views/res_users_views.xml',
         'views/hr_payroll_employee_declaration_views.xml',
+        'views/hr_payroll_master_report_views.xml',
         'data/hr_payroll_dashboard_warning_data.xml',
         'data/hr_payroll_sequence.xml',
         'data/report_paperformat_data.xml',

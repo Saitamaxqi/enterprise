@@ -98,6 +98,13 @@
         sequence="20"
         parent="menu_hr_payroll_report"/>
 
+    <menuitem
+        id="menu_hr_payroll_master_report"
+        name="Master Report"
+        action="action_hr_payroll_master_report"
+        sequence="20"
+        parent="menu_hr_payroll_report"/>
+
     <!-- **** Configuration **** -->
 
     <menuitem
