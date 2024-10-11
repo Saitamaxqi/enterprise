@@ -172,7 +172,12 @@ class AccountJournal(models.Model):
         Extend the consent of the user by redirecting him to update his credentials
         """
         self.ensure_one()
-        return self.account_online_link_id.action_update_credentials()
+        return self.account_online_link_id._open_iframe(
+            mode='updateCredentials',
+            include_param={
+                'account_online_identifier': self.account_online_account_id.online_identifier,
+            },
+        )
 
     def action_reconnect_online_account(self):
         self.ensure_one()

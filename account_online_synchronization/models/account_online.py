@@ -1005,7 +1005,7 @@ class AccountOnlineLink(models.Model):
 
     def _success_updateCredentials(self):
         self.ensure_one()
-        return self._fetch_transactions()
+        return self._fetch_transactions(refresh=False)
 
     def _success_refreshAccounts(self):
         self.ensure_one()
