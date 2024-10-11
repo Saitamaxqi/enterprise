@@ -1,10 +1,11 @@
 /** @odoo-module **/
 
 import { _t } from "@web/core/l10n/translation";
+import { escape } from "@web/core/utils/strings";
 import { FileUploader } from "@web/views/fields/file_handler";
 import { useAutofocus, useService } from "@web/core/utils/hooks";
 import { useEmojiPicker } from "@web/core/emoji_picker/emoji_picker";
-import { Component, useState, useRef } from "@odoo/owl";
+import { Component, useState, useRef, markup } from "@odoo/owl";
 
 export class StreamPostCommentsReply extends Component {
     static template = "social.StreamPostCommentsReply";
@@ -112,7 +113,11 @@ export class StreamPostCommentsReply extends Component {
             }
             if (comment.error) {
                 this.notification.add(
-                    _t("Something went wrong while posting the comment. \n%s", comment.error),
+                    markup(
+                        _t("Something went wrong while posting the comment.") +
+                            "<br/><br/>" +
+                            escape(comment.error)
+                    ),
                     { type: "danger" }
                 );
             } else {

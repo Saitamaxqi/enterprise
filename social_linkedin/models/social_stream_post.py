@@ -194,11 +194,18 @@ class SocialStreamPostLinkedIn(models.Model):
         response = self.account_id._linkedin_request(
             f'socialActions/{quote(element_urn)}/comments',
             params={'start': offset, 'count': count},
-        ).json()
+        )
+        response_json = response.json()
         if 'elements' not in response:
             self.sudo().account_id._action_disconnect_accounts(response)
+        if not response.ok:
+            raise UserError(
+                _(
+                    'Failed to retrieve the post. It might have been deleted or you may not have permission to view it.'
+                )
+            )
 
-        comments = response.get('elements', [])
+        comments = response_json.get('elements', [])
 
         persons_ids = {comment.get('actor') for comment in comments if comment.get('actor')}
         organizations_ids = {urn_to_id(author) for author in persons_ids if author.startswith("urn:li:organization:")}
@@ -214,12 +221,12 @@ class SocialStreamPostLinkedIn(models.Model):
 
         # get the author information if it's an organization
         if organizations_ids:
-            response = self.account_id._linkedin_request(
+            response_json = self.account_id._linkedin_request(
                 'organizations',
                 object_ids=organizations_ids,
                 fields=('id', 'name', 'localizedName', 'vanityName', 'logoV2:(original)'),
             ).json()
-            for organization_id, organization in response.get('results', {}).items():
+            for organization_id, organization in response_json.get('results', {}).items():
                 organization_urn = f"urn:li:organization:{organization_id}"
                 image_id = urn_to_id(organization.get('logoV2', {}).get('original'))
                 images_ids.append(image_id)
@@ -236,12 +243,12 @@ class SocialStreamPostLinkedIn(models.Model):
         if persons:
             # On the 3 December 2023, /people is still not in the rest API...
             # As the LinkedIn support suggested, we need to use the old endpoint...
-            response = requests.get(
+            response_json = requests.get(
                 "https://api.linkedin.com/v2/people?ids=List(%s)" % ",".join("(id:%s)" % p for p in persons),
                 headers=self.account_id._linkedin_bearer_headers(),
                 timeout=5).json()
 
-            for person_id, person_values in response.get('results', {}).items():
+            for person_id, person_values in response_json.get('results', {}).items():
                 person_urn = id_to_urn(person_values['id'], "li:person")
                 image_id = urn_to_id(person_values.get('profilePicture', {}).get('displayImage'))
                 images_ids.append(image_id)
@@ -286,7 +293,7 @@ class SocialStreamPostLinkedIn(models.Model):
             'accountId': self.account_id.id,
             'comments': comments,
             'offset': offset + count,
-            'summary': {'total_count': response.get('paging', {}).get('total', 0)},
+            'summary': {'total_count': response_json.get('paging', {}).get('total', 0)},
         }
 
     def _linkedin_comments_user_liked(self, comments):

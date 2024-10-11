@@ -6,8 +6,7 @@ import requests
 
 from werkzeug.urls import url_join, url_quote
 
-from odoo import fields, models
-from odoo.exceptions import ValidationError
+from odoo import fields, models, _
 
 
 class SocialStreamPostInstagram(models.Model):
@@ -67,12 +66,13 @@ class SocialStreamPostInstagram(models.Model):
                 'order': 'reverse'
             },
             timeout=5
-        ).json()
-
-        if 'error' in response:
-            raise ValidationError(str(response))
-
-        return self._instagram_format_comment(response)
+        )
+        response_json = response.json()
+        if not response.ok or 'error' in response_json:
+            return {
+                'error': _('Please confirm that commenting is enabled for this post on the platform.')
+            }
+        return self._instagram_format_comment(response_json)
 
     def _instagram_comment_fetch(self, next_records_token=False, count=20):
         """ Returns users comments on an Instagram social.stream.post.

@@ -107,6 +107,14 @@ msgid "Failed to post the comment: “%(error_description)s”"
 msgstr ""
 
 #. module: social_linkedin
+#. odoo-python
+#: code:addons/social_linkedin/models/social_stream_post.py:0
+msgid ""
+"Failed to retrieve the post. It might have been deleted or you may not have "
+"permission to view it."
+msgstr ""
+
+#. module: social_linkedin
 #: model:ir.model.fields,field_description:social_linkedin.field_social_post__has_linkedin_account
 #: model:ir.model.fields,field_description:social_linkedin.field_social_post_template__has_linkedin_account
 msgid "Has LinkedIn Account"
