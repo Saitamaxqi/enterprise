@@ -1,11 +1,10 @@
 import { pivotView } from "@web/views/pivot/pivot_view";
 import { registry } from "@web/core/registry";
+import { PivotRenderer } from "@web/views/pivot/pivot_renderer";
 
 const viewRegistry = registry.category("views");
 
-
-export class RecruitmentReportPivotController extends pivotView.Controller {
-
+export class RecruitmentReportPivotRenderer extends PivotRenderer {
     /**
      * @param {CustomEvent} ev
      */
@@ -35,13 +34,12 @@ export class RecruitmentReportPivotController extends pivotView.Controller {
         };
 
         const domain = this.model.getGroupDomain(group);
-        if (cell.measure == "hired") {
+        // Any measure that doesn't use a sum aggregator will never make sense
+        // in a domain as you f.ex can't fetch a list of the the average
+        // of a set of records.
+        if (this.model.metaData.measures[cell.measure].aggregator === "sum") {
             domain.unshift("&");
-            domain.push(['hired', '=', true]);
-        }
-        if (cell.measure == "refused") {
-            domain.unshift("&");
-            domain.push(['refused', '=', true]);
+            domain.push([cell.measure, "=", true]);
         }
         this.openView(domain, this.views, context);
     }
@@ -49,5 +47,5 @@ export class RecruitmentReportPivotController extends pivotView.Controller {
 
 viewRegistry.add("recruitment_report_pivot", {
     ...pivotView,
-    Controller: RecruitmentReportPivotController,
+    Renderer: RecruitmentReportPivotRenderer,
 });
