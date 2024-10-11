@@ -61,11 +61,13 @@ class TestSpreadsheetBus(SpreadsheetTestCommon, MailCase):
     def test_inexistent_spreadsheet(self):
         spreadsheet = self.env["documents.document"].browse(9999999)
         self.assertFalse(spreadsheet.exists())
-        self.assertEqual(
-            self.poll_spreadsheet(spreadsheet.id),
-            [],
-            "It should have ignored the wrong spreadsheet"
-        )
+        new_test_user(self.env, login="Raoul")
+        with self.with_user("Raoul"):
+            self.assertEqual(
+                self.poll_spreadsheet(spreadsheet.id),
+                [],
+                "It should have ignored the wrong spreadsheet"
+            )
 
     def test_wrong_active_spreadsheet(self):
         self.assertEqual(
