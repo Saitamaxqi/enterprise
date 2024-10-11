@@ -2,10 +2,10 @@
 
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
-import * as Dialog from "@point_of_sale/../tests/tours/utils/dialog_util";
-import * as Order from "@point_of_sale/../tests/tours/utils/generic_components/order_widget_util";
-import * as PaymentScreen from "@point_of_sale/../tests/tours/utils/payment_screen_util";
-import { inLeftSide } from "@point_of_sale/../tests/tours/utils/common";
+import * as Dialog from "@point_of_sale/../tests/generic_helpers/dialog_util";
+import * as Order from "@point_of_sale/../tests/generic_helpers/order_widget_util";
+import * as PaymentScreen from "@point_of_sale/../tests/pos/tours/utils/payment_screen_util";
+import { inLeftSide } from "@point_of_sale/../tests/pos/tours/utils/common";
 
 class TerminalProxy {
     action(data) {
