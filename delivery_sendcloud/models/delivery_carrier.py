@@ -149,12 +149,13 @@ class DeliveryCarrier(models.Model):
             parcels = sendcloud._send_shipment(pick)
             # fetch the ids, tracking numbers and url for each parcel
             parcel_ids, parcel_tracking_numbers, doc_ids = self._prepare_track_message_docs(pick, parcels, sendcloud)
-            pick.message_post_with_source(
-                'delivery_sendcloud.sendcloud_label_tracking',
-                render_values={'type': 'Shipment', 'parcels': parcels},
-                subtype_xmlid='mail.mt_note',
-                attachment_ids=doc_ids.ids,
-            )
+            for doc_id in doc_ids:
+                pick.message_post_with_source(
+                    'delivery_sendcloud.sendcloud_label_tracking',
+                    render_values={'type': 'Shipment', 'parcels': parcels},
+                    subtype_xmlid='mail.mt_note',
+                    attachment_ids=[doc_id.id],
+                )
             pick.sendcloud_parcel_ref = parcel_ids
             try:
                 # generate return if config is set
