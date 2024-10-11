@@ -66,12 +66,15 @@ export class SpreadsheetCollaborativeChannel {
      *
      * @param {Object} message
      */
-    sendMessage(message) {
-        return this.orm.call(this.resModel, "dispatch_spreadsheet_message", [
+    async sendMessage(message) {
+        const isAccepted = await this.orm.call(this.resModel, "dispatch_spreadsheet_message", [
             this.resId,
             message,
             this.accessToken,
         ]);
+        if (isAccepted) {
+            this._handleNotification(message);
+        }
     }
 
     /**
