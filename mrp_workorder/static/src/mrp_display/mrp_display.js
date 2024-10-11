@@ -67,12 +67,17 @@ export class MrpDisplay extends Component {
             localStorageName: `mrp_workorder.db_${session.db}.user_${user.userId}.picking_type_${this.pickingTypeId}`,
         });
 
+        const workcenters = JSON.parse(localStorage.getItem(this.env.localStorageName)) || [];
+        let activeWorkcenter = this.props.context.workcenter_id || false;
+        // If no workcenter by default but some WC were already selected, selects the first one.
+        if (!activeWorkcenter && workcenters.length) {
+            activeWorkcenter = workcenters[0].id;
+        }
+
         this.state = useState({
-            activeResModel: this.props.context.workcenter_id
-                ? "mrp.workorder"
-                : this.props.resModel,
-            activeWorkcenter: this.props.context.workcenter_id || false,
-            workcenters: JSON.parse(localStorage.getItem(this.env.localStorageName)) || [],
+            activeResModel: activeWorkcenter ? "mrp.workorder" : this.props.resModel,
+            activeWorkcenter,
+            workcenters,
             showEmployeesPanel: localStorage.getItem("mrp_workorder.show_employees") === "true",
             canLoadSamples: false,
             offset: 0,

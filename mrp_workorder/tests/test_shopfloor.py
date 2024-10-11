@@ -26,6 +26,10 @@ class TestShopFloor(HttpCase):
         group_user.write({'implied_ids': [(3, group_uom.id)]})
         self.env.user.write({'groups_id': [(3, group_uom.id)]})
 
+        # Add some properties for commonly used in tests records.
+        self.warehouse = self.env['stock.warehouse'].search([], limit=1)
+        self.stock_location = self.warehouse.lot_stock_id
+
     def test_shop_floor(self):
         # Creates somme employees for test purpose.
         self.env['hr.employee'].create([{
@@ -58,12 +62,10 @@ class TestShopFloor(HttpCase):
             'name': 'NE2',
             'product_id': neck.id,
         }])
-        warehouse = self.env['stock.warehouse'].search([], limit=1)
-        stock_location = warehouse.lot_stock_id
-        self.env['stock.quant']._update_available_quantity(leg, stock_location, quantity=100)
-        self.env['stock.quant']._update_available_quantity(color, stock_location, quantity=100)
-        self.env['stock.quant']._update_available_quantity(neck, stock_location, quantity=1, lot_id=neck_sn_1)
-        self.env['stock.quant']._update_available_quantity(neck, stock_location, quantity=1, lot_id=neck_sn_2)
+        self.env['stock.quant']._update_available_quantity(leg, self.stock_location, quantity=100)
+        self.env['stock.quant']._update_available_quantity(color, self.stock_location, quantity=100)
+        self.env['stock.quant']._update_available_quantity(neck, self.stock_location, quantity=1, lot_id=neck_sn_1)
+        self.env['stock.quant']._update_available_quantity(neck, self.stock_location, quantity=1, lot_id=neck_sn_2)
         savannah = self.env['mrp.workcenter'].create({
             'name': 'Savannah',
             'time_start': 10,
@@ -71,7 +73,7 @@ class TestShopFloor(HttpCase):
             'time_efficiency': 80,
         })
         jungle = self.env['mrp.workcenter'].create({'name': 'Jungle'})
-        picking_type = warehouse.manu_type_id
+        picking_type = self.warehouse.manu_type_id
         bom = self.env['mrp.bom'].create({
             'product_id': giraffe.id,
             'product_tmpl_id': giraffe.product_tmpl_id.id,
@@ -163,6 +165,66 @@ class TestShopFloor(HttpCase):
             {'quality_state': 'pass', 'component_id': neck.id, 'qty_done': 1, 'lot_id': neck_sn_1.id},
             {'quality_state': 'pass', 'component_id': False, 'qty_done': 0, 'lot_id': 0},
         ])
+
+    def test_shop_floor_auto_select_workcenter(self):
+        """ This test ensures the right work center is selected when Shop Floor is opened."""
+        # Create some products.
+        product_final = self.env['product.product'].create({
+            'name': 'Pizza',
+            'is_storable': True,
+        })
+        product_comp1 = self.env['product.product'].create({
+            'name': 'Pizza dough',
+            'is_storable': True,
+        })
+        product_comp2 = self.env['product.product'].create({
+            'name': 'Tomato sauce',
+            'is_storable': True,
+        })
+        # Adds some quantity in stock.
+        self.env['stock.quant']._update_available_quantity(product_comp1, self.stock_location, quantity=999)
+        self.env['stock.quant']._update_available_quantity(product_comp2, self.stock_location, quantity=999)
+        # Create three workcenters.
+        wc1, wc2 = self.env['mrp.workcenter'].create([{
+            'name': f'Preparation Table {i}',
+            'default_capacity': 1,
+        } for i in (1, 2)])
+        wc1.alternative_workcenter_ids = wc2
+        wc2.alternative_workcenter_ids = wc1
+        wc3 = self.env['mrp.workcenter'].create({'name': 'Furnace'})
+        # Create a BoM.
+        bom = self.env['mrp.bom'].create({
+            'product_id': product_final.id,
+            'product_tmpl_id': product_final.product_tmpl_id.id,
+            'product_uom_id': product_final.uom_id.id,
+            'product_qty': 1.0,
+            'consumption': 'flexible',
+            'operation_ids': [
+                Command.create({
+                'name': 'Prepare the pizza 🤌',
+                'workcenter_id': wc1.id,
+            }), Command.create({
+                'name': 'Bake it!',
+                'workcenter_id': wc3.id,
+            })],
+            'bom_line_ids': [
+                Command.create({'product_id': product_comp1.id, 'product_qty': 1, 'manual_consumption': True}),
+                Command.create({'product_id': product_comp2.id, 'product_qty': 1, 'manual_consumption': True})
+            ]
+        })
+        # Create two Manufacturing Orders.
+        all_mo = self.env['mrp.production'].create([{
+            'product_id': product_final.id,
+            'product_qty': qty,
+            'bom_id': bom.id,
+        } for qty in (6, 4)])
+        all_mo.action_confirm()
+        all_mo.action_assign()
+        all_mo.button_plan()
+        # Mark as done the 2th MO 1st WO.
+        all_mo[1].workorder_ids[0].button_start()
+        all_mo[1].workorder_ids[0].button_done()
+        self.start_tour("/odoo/shop-floor", "test_shop_floor_auto_select_workcenter", login='admin')
 
     def test_generate_serials_in_shopfloor(self):
         component1 = self.env['product.product'].create({
