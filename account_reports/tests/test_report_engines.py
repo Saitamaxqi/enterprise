@@ -224,7 +224,7 @@ class TestReportEngines(TestAccountReportsCommon):
         # Create the report.
         test_line_1 = self._prepare_test_report_line(
             self._prepare_test_expression_tax_tags('11'),
-            groupby='account_id',
+            groupby='account_id,move_type',
         )
         test_line_2 = self._prepare_test_report_line(
             self._prepare_test_expression_tax_tags('222T'),
@@ -258,7 +258,9 @@ class TestReportEngines(TestAccountReportsCommon):
             [
                 ('test_line_1',        5400.0),
                 ('101001 101001',      3000.0),
+                ('Journal Entry',      3000.0),
                 ('101002 101002',      2400.0),
+                ('Journal Entry',      2400.0),
                 ('test_line_2',           0.0),
                 ('Posted',                0.0),
                 ('101001 101001',         0.0),
@@ -286,7 +288,7 @@ class TestReportEngines(TestAccountReportsCommon):
         # Create the report.
         test_line_1 = self._prepare_test_report_line(
             self._prepare_test_expression_domain(domain, 'sum'),
-            groupby='account_id',
+            groupby='account_id,move_type',
         )
         test_line_2 = self._prepare_test_report_line(
             self._prepare_test_expression_domain(domain, '-sum'),
@@ -332,8 +334,11 @@ class TestReportEngines(TestAccountReportsCommon):
             [
                 ('test_line_1',       -1800.0),
                 ('101002 101002',      -300.0),
+                ('Journal Entry',      -300.0),
                 ('101003 101003',      -600.0),
+                ('Journal Entry',      -600.0),
                 ('101004 101004',      -900.0),
+                ('Journal Entry',      -900.0),
                 ('test_line_2',        1800.0),
                 ('Posted',             1800.0),
                 ('101002 101002',       300.0),
@@ -410,7 +415,7 @@ class TestReportEngines(TestAccountReportsCommon):
         )
         test_line_6 = self._prepare_test_report_line(
             self._prepare_test_expression_account_codes(r'-101\(101002,101003)'),
-            groupby='account_id',
+            groupby='account_id,move_type',
         )
         test_line_7 = self._prepare_test_report_line(
             self._prepare_test_expression_account_codes('10.'),
@@ -502,6 +507,7 @@ class TestReportEngines(TestAccountReportsCommon):
                 ('101002 101002',       300.0),
                 ('test_line_6',       -2000.0),
                 ('101001 101001',     -2000.0),
+                ('Journal Entry',     -2000.0),
                 ('test_line_7',       10000.0),
                 ('10.20.0 10.20.0',   10000.0),
                 ('test_line_8',       10000.0),

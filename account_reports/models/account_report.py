@@ -3613,8 +3613,8 @@ class AccountReport(models.Model):
             all_expressions |= expressions
         tags = all_expressions._get_matching_tags()
 
-        groupby_sql = SQL.identifier('account_move_line', current_groupby) if current_groupby else None
         query = self._get_report_query(options, date_scope)
+        groupby_sql = self.env['account.move.line']._field_to_sql('account_move_line', current_groupby, query) if current_groupby else None
         tail_query = self._get_engine_query_tail(offset, limit)
         lang = get_lang(self.env, self.env.user.lang).code
         acc_tag_name = self.with_context(lang='en_US').env['account.account.tag']._field_to_sql('acc_tag', 'name')
@@ -3710,8 +3710,6 @@ class AccountReport(models.Model):
 
         self._check_groupby_fields((next_groupby.split(',') if next_groupby else []) + ([current_groupby] if current_groupby else []))
 
-        groupby_sql = SQL.identifier('account_move_line', current_groupby) if current_groupby else None
-
         rslt = {}
 
         for formula, expressions in formulas_dict.items():
@@ -3726,12 +3724,15 @@ class AccountReport(models.Model):
                 ))
             query = self._get_report_query(options, date_scope, domain=line_domain)
 
+            groupby_sql = self.env['account.move.line']._field_to_sql('account_move_line', current_groupby, query) if current_groupby else None
+            select_count_field = self.env['account.move.line']._field_to_sql('account_move_line', next_groupby.split(',')[0] if next_groupby else 'id', query)
+
             tail_query = self._get_engine_query_tail(offset, limit)
             query = SQL(
                 """
                 SELECT
                     COALESCE(SUM(%(balance_select)s), 0.0) AS sum,
-                    COUNT(DISTINCT account_move_line.%(select_count_field)s) AS count_rows
+                    COUNT(DISTINCT %(select_count_field)s) AS count_rows
                     %(select_groupby_sql)s
                 FROM %(table_references)s
                 %(currency_table_join)s
@@ -3740,7 +3741,7 @@ class AccountReport(models.Model):
                 %(order_by_sql)s
                 %(tail_query)s
                 """,
-                select_count_field=SQL.identifier(next_groupby.split(',')[0] if next_groupby else 'id'),
+                select_count_field=select_count_field,
                 select_groupby_sql=SQL(', %s AS grouping_key', groupby_sql) if groupby_sql else SQL(),
                 table_references=query.from_clause,
                 balance_select=self._currency_table_apply_rate(SQL("account_move_line.balance")),
@@ -3898,7 +3899,7 @@ class AccountReport(models.Model):
         # Run main query
         query = self._get_report_query(options, date_scope)
 
-        current_groupby_aml_sql = SQL.identifier('account_move_line', current_groupby) if current_groupby else SQL()
+        current_groupby_aml_sql = self.env['account.move.line']._field_to_sql('account_move_line', current_groupby, query) if current_groupby else None
         tail_query = self._get_engine_query_tail(offset, limit)
         if current_groupby_aml_sql and tail_query:
             tail_query_additional_groupby_where_sql = SQL(
@@ -3943,7 +3944,7 @@ class AccountReport(models.Model):
             search_condition=query.where_clause,
             extra_groupby_sql=extra_groupby_sql,
             tail_query_additional_groupby_where_sql=tail_query_additional_groupby_where_sql,
-            order_by_sql=SQL('ORDER BY %s', SQL.identifier('account_move_line', current_groupby)) if current_groupby else SQL(),
+            order_by_sql=SQL('ORDER BY %s', current_groupby_aml_sql) if current_groupby_aml_sql else SQL(),
             tail_query=tail_query if not tail_query_additional_groupby_where_sql else SQL(),
         )
         self._cr.execute(query)
@@ -6384,19 +6385,27 @@ class AccountReport(models.Model):
                 line['columns'][col_index] = comparison_column
 
     def _check_groupby_fields(self, groupby_fields_name: list[str] | str):
-        """ Checks that each string in the groupby_fields_name list is a valid groupby value for an accounting report (so: it must be a field from
-        account.move.line, or a custom value allowed by the _get_custom_groupby_map function of the custom handler).
+        """ Checks that each string in the groupby_fields_name list is a valid groupby value for an accounting report.
+            So it must be:
+            - a field from account.move.line which is (1) searchable and (2) for which _field_to_sql is implemented,
+              this includes stored and related non-stored fields, or
+            - a custom value allowed by the _get_custom_groupby_map function of the custom handler
         """
         self.ensure_one()
         if isinstance(groupby_fields_name, str | bool):
             groupby_fields_name = groupby_fields_name.split(',') if groupby_fields_name else []
+
+        custom_handler_name = self._get_custom_handler_model()
+
         for field_name in (fname.strip() for fname in groupby_fields_name):
             groupby_field = self.env['account.move.line']._fields.get(field_name)
-            custom_handler_name = self._get_custom_handler_model()
-
             if groupby_field:
-                if not groupby_field.store:
-                    raise UserError(_("Field %s of account.move.line is not stored, and hence cannot be used in a groupby expression", field_name))
+                if not groupby_field._description_searchable:
+                    raise UserError(self.env._("Field %s of account.move.line is not searchable and can therefore not be used in a groupby expression.", field_name))
+                try:
+                    self.env['account.move.line']._field_to_sql('account_move_line', field_name, Query(self.env, 'account_move_line'))
+                except ValueError:
+                    raise UserError(self.env._("Field %s of account.move.line cannot be used in a groupby expression.", field_name)) from None
             elif custom_handler_name:
                 if field_name not in self.env[custom_handler_name]._get_custom_groupby_map():
                     raise UserError(_("Field %s does not exist on account.move.line, and is not supported by this report's custom handler.", field_name))

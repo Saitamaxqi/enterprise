@@ -1754,8 +1754,15 @@ msgstr ""
 #. odoo-python
 #: code:addons/account_reports/models/account_report.py:0
 msgid ""
-"Field %s of account.move.line is not stored, and hence cannot be used in a "
-"groupby expression"
+"Field %s of account.move.line cannot be used in a groupby expression."
+msgstr ""
+
+#. module: account_reports
+#. odoo-python
+#: code:addons/account_reports/models/account_report.py:0
+msgid ""
+"Field %s of account.move.line is not searchable and can therefore not be used"
+" in a groupby expression."
 msgstr ""
 
 #. module: account_reports
