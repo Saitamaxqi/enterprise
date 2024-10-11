@@ -97,7 +97,9 @@ class SocialStreamPostYoutube(models.Model):
                 timeout=5
             ).json().get('snippet', {}).get('topLevelComment')
 
-        return self.env['social.media']._format_youtube_comment(result_comment)
+        youtube_comment = self.env['social.media']._format_youtube_comment(result_comment)
+        youtube_comment.setdefault('comments', {'data': []})
+        return youtube_comment
 
     def _youtube_comment_delete(self, comment_id):
         self.ensure_one()
