@@ -9,7 +9,7 @@ class HrContract(models.Model):
     l10n_lu_index_on_contract_signature = fields.Float(
         string='Index on Contract Signature (LU)', readonly=True, compute='_compute_indexed_wage')
     l10n_lu_indexed_wage = fields.Monetary(string='Indexed Wage (LU)', compute='_compute_indexed_wage')
-    l10n_lu_current_index = fields.Monetary(string='Current Index (LU)', compute='_compute_indexed_wage')
+    l10n_lu_current_index = fields.Float(string='Current Index (LU)', compute='_compute_indexed_wage')
 
     l10n_lu_meal_voucher_amount = fields.Monetary(string='Meal Vouchers (LU)')
     l10n_lu_meal_voucher_employer_cost = fields.Monetary(

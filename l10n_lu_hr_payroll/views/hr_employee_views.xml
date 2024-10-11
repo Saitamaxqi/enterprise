@@ -38,63 +38,63 @@
                             <separator string="Tax Deductions &amp; Packages"/>
                             <div class="d-flex fw-bold mb-3">
                                 <span class="w-25">Deductions</span>
-                                <span class="w-25">Year</span>
-                                <span class="w-25">Month</span>
                                 <span class="w-25">Day</span>
+                                <span class="w-25">Month</span>
+                                <span class="w-25">Year</span>
                             </div>
                             <div class="d-flex">
                                 <label for="l10n_lu_deduction_fd_daily" class="w-25 fw-bold"/>
-                                <field name="l10n_lu_deduction_fd_yearly" class="w-25"/>
-                                <field name="l10n_lu_deduction_fd_monthly" class="w-25"/>
                                 <field name="l10n_lu_deduction_fd_daily" class="w-25"/>
+                                <field name="l10n_lu_deduction_fd_monthly" class="w-25 text-muted"/>
+                                <field name="l10n_lu_deduction_fd_yearly" class="w-25 text-muted"/>
                             </div>
                             <div class="d-flex">
                                 <label for="l10n_lu_deduction_ac_ae_daily" class="w-25 fw-bold"/>
-                                <field name="l10n_lu_deduction_ac_ae_yearly" class="w-25"/>
-                                <field name="l10n_lu_deduction_ac_ae_monthly" class="w-25"/>
                                 <field name="l10n_lu_deduction_ac_ae_daily" class="w-25"/>
+                                <field name="l10n_lu_deduction_ac_ae_monthly" class="w-25 text-muted"/>
+                                <field name="l10n_lu_deduction_ac_ae_yearly" class="w-25 text-muted"/>
                             </div>
                             <div class="d-flex">
                                 <label for="l10n_lu_deduction_ce_daily" class="w-25 fw-bold"/>
-                                <field name="l10n_lu_deduction_ce_yearly" class="w-25"/>
-                                <field name="l10n_lu_deduction_ce_monthly" class="w-25"/>
                                 <field name="l10n_lu_deduction_ce_daily" class="w-25"/>
+                                <field name="l10n_lu_deduction_ce_monthly" class="w-25 text-muted"/>
+                                <field name="l10n_lu_deduction_ce_yearly" class="w-25 text-muted"/>
                             </div>
                             <div class="d-flex">
                                 <label for="l10n_lu_deduction_ds_daily" class="w-25 fw-bold"/>
-                                <field name="l10n_lu_deduction_ds_yearly" class="w-25"/>
-                                <field name="l10n_lu_deduction_ds_monthly" class="w-25"/>
                                 <field name="l10n_lu_deduction_ds_daily" class="w-25"/>
+                                <field name="l10n_lu_deduction_ds_monthly" class="w-25 text-muted"/>
+                                <field name="l10n_lu_deduction_ds_yearly" class="w-25 text-muted"/>
                             </div>
                             <div class="d-flex">
                                 <label for="l10n_lu_deduction_fo_daily" class="w-25 fw-bold"/>
-                                <field name="l10n_lu_deduction_fo_yearly" class="w-25"/>
-                                <field name="l10n_lu_deduction_fo_monthly" class="w-25"/>
                                 <field name="l10n_lu_deduction_fo_daily" class="w-25"/>
+                                <field name="l10n_lu_deduction_fo_monthly" class="w-25 text-muted"/>
+                                <field name="l10n_lu_deduction_fo_yearly" class="w-25 text-muted"/>
                             </div>
                             <div class="d-flex mb-4">
                                 <label for="l10n_lu_deduction_amd_daily" class="w-25 fw-bold"/>
-                                <field name="l10n_lu_deduction_amd_yearly" class="w-25"/>
-                                <field name="l10n_lu_deduction_amd_monthly" class="w-25"/>
                                 <field name="l10n_lu_deduction_amd_daily" class="w-25"/>
+                                <field name="l10n_lu_deduction_amd_monthly" class="w-25 text-muted"/>
+                                <field name="l10n_lu_deduction_amd_yearly" class="w-25 text-muted"/>
                             </div>
                             <div class="d-flex fw-bold mb-3">
                                 <span class="w-25">Packages</span>
-                                <span class="w-25">Year</span>
-                                <span class="w-25">Month</span>
                                 <span class="w-25">Day</span>
+                                <span class="w-25">Month</span>
+                                <span class="w-25">Year</span>
                             </div>
                             <div class="d-flex">
                                 <label for="l10n_lu_package_ffo_daily" class="w-25 fw-bold"/>
-                                <field name="l10n_lu_package_ffo_yearly" class="w-25"/>
-                                <field name="l10n_lu_package_ffo_monthly" class="w-25"/>
                                 <field name="l10n_lu_package_ffo_daily" class="w-25"/>
+                                <field name="l10n_lu_package_ffo_monthly" class="w-25 text-muted"/>
+                                <field name="l10n_lu_package_ffo_yearly" class="w-25 text-muted"/>
                             </div>
                             <div class="d-flex">
                                 <label for="l10n_lu_package_fds_daily" class="w-25 fw-bold"/>
-                                <field name="l10n_lu_package_fds_yearly" class="w-25"/>
-                                <field name="l10n_lu_package_fds_monthly" class="w-25"/>
                                 <field name="l10n_lu_package_fds_daily" class="w-25"/>
+                                <field name="l10n_lu_package_fds_monthly" class="w-25 text-muted"/>
+                                <field name="l10n_lu_package_fds_yearly" class="w-25 text-muted"/>
                             </div>
                         </div>
                     </group>
