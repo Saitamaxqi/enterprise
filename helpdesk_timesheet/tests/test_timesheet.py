@@ -322,3 +322,33 @@ class TestTimesheet(TestHelpdeskTimesheetCommon):
             ('helpdesk_ticket_id', '=', self.helpdesk_ticket.id)
         ], limit=1)
         self.assertEqual(timesheet_count, 1, "The new timesheet entry's ticket_id should be set correctly.")
+
+    def test_create_separate_timesheet_entries_depending_on_ticket_id(self):
+        ticket_copy = self.helpdesk_ticket.copy()
+        timesheet_1, timesheet_2, timesheet_3 = self.env['account.analytic.line'].with_user(self.user_employee).create([{
+            'name': '/',
+            'project_id': self.project.id,
+            'date': date.today(),
+            'helpdesk_ticket_id': self.helpdesk_ticket.id,
+        }, {
+            'name': '/',
+            'project_id': self.project.id,
+            'date': date.today(),
+            'helpdesk_ticket_id': ticket_copy.id,
+        }, {
+            'name': '/',
+            'project_id': self.project.id,
+            'date': date.today(),
+            'helpdesk_ticket_id': ticket_copy.id,
+        }])
+
+        timesheet_1.sudo()._add_timesheet_time(15, True)
+        timesheet_2.sudo()._add_timesheet_time(15, True)
+        timesheet_3.sudo()._add_timesheet_time(15, True)
+
+        # timesheets 2 and 3 should be merged since they belong to the same ticket, timesheet 1 must be kept separate
+        self.assertTrue(timesheet_1.exists(), 'Timesheet 1 should not have been merged')
+        self.assertFalse(timesheet_2.exists(), 'Timesheet 2 should have been merged into 3')
+        self.assertTrue(timesheet_3.exists(), 'Timesheet 2 should have been merged into 3')
+        self.assertAlmostEqual(timesheet_1.unit_amount, 0.25, 2)
+        self.assertAlmostEqual(timesheet_3.unit_amount, 0.5, 2)

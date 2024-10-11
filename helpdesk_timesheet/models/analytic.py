@@ -134,3 +134,9 @@ class AccountAnalyticLine(models.Model):
             **super()._get_new_timesheet_timer_vals(),
             'helpdesk_ticket_id': self.helpdesk_ticket_id.id,
         }
+
+    def _get_last_timesheet_domain(self):
+        return expression.AND([
+            super()._get_last_timesheet_domain(),
+            [('helpdesk_ticket_id', '=', self.helpdesk_ticket_id.id)],
+        ])
