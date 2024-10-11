@@ -284,8 +284,8 @@ class StockPicking(models.Model):
             totals['total_amount'] += tax_res['total_included']
 
             no_vat_taxes = True
-            tax_group_ila = self.env['account.chart.template'].ref('tax_group_ila', raise_if_not_found=False)
-            tax_group_retenciones = self.env['account.chart.template'].ref('tax_group_retenciones', raise_if_not_found=False)
+            tax_group_ila = self.env['account.chart.template'].with_company(move.company_id).ref('tax_group_ila', raise_if_not_found=False)
+            tax_group_retenciones = self.env['account.chart.template'].with_company(move.company_id).ref('tax_group_retenciones', raise_if_not_found=False)
             for tax_val in tax_res['taxes']:
                 tax = self.env['account.tax'].browse(tax_val['id'])
                 if tax.l10n_cl_sii_code == TAX19_SII_CODE:

@@ -702,9 +702,10 @@ services reception has been received as well.
                 'invoicing. Please go to your company and set the regional office, according to your company '
                 'address (www.sii.cl - Mi SII)'))
         if self.l10n_latam_document_type_id.code == '39':
-            cid = self.company_id.id
             if self.line_ids.filtered(lambda x: x.tax_group_id.id in [
-                    self.env['account.chart.template'].ref('tax_group_ila').id, self.env['account.chart.template'].ref('tax_group_retenciones').id]):
+                self.env['account.chart.template'].with_company(self.company_id).ref('tax_group_ila').id,
+                self.env['account.chart.template'].with_company(self.company_id).ref('tax_group_retenciones').id,
+            ]):
                 raise UserError(_('Receipts with withholding taxes are not allowed'))
             if self.company_id.currency_id != self.currency_id:
                 raise UserError(_('It is not allowed to create receipts in a different currency than CLP'))

@@ -121,7 +121,7 @@
                 <DescuentoPct t-out="float_repr(line.discount, 2)"/>
                 <DescuentoMonto t-out="float_repr(line_amounts['total_discount'], 0)"/>
             </t>
-            <t t-foreach="line.tax_ids.filtered(lambda x: x.tax_group_id in [env['account.chart.template'].ref('tax_group_retenciones'), env['account.chart.template'].ref('tax_group_ila')])" t-as="tax">
+            <t t-foreach="line.tax_ids.filtered(lambda x: x.tax_group_id in [env['account.chart.template'].with_company(line.company_id).ref('tax_group_retenciones'), env['account.chart.template'].with_company(line.company_id).ref('tax_group_ila')])" t-as="tax">
                 <CodImpAdic t-out="tax.l10n_cl_sii_code"/>
             </t>
                 <MontoItem t-out="float_rr(line_amounts['price_subtotal'], line_amounts['decimal_places'])"/>
