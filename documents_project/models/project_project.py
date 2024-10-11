@@ -10,7 +10,7 @@ from odoo.tools import _, frozendict
 class ProjectProject(models.Model):
     _inherit = ['project.project', 'documents.mixin']
 
-    use_documents = fields.Boolean("Use Documents", default=True)
+    use_documents = fields.Boolean("Documents", default=True)
     documents_folder_id = fields.Many2one(
         'documents.document', string="Folder", copy=False,
         domain="[('type', '=', 'folder'), ('shortcut_document_id', '=', False), "
