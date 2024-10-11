@@ -9,8 +9,8 @@
                 <field name="active" string="Active" invisible="1"/>
                 <sheet>
                     <div class="oe_title">
-                        <label for="name" class="Workspace Name"/>
-                        <h1><field name="name" placeholder="e.g. Finance" options="{'line_breaks': False}" widget="text" readonly="False"/></h1>
+                        <label for="name"/>
+                        <h1><field name="name" placeholder="e.g. Finance" options="{'line_breaks': False}" widget="text" readonly="False" required="True"/></h1>
                     </div>
                 </sheet>
             </form>
