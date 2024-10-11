@@ -22,6 +22,8 @@
         <field name="message_partner_ids" eval="[(6, 0, [ref('base.partner_admin')])]"/>
         <field name="event_videocall_source" eval="False"/>
         <field name="is_published" eval="True"/>
+        <field name="hide_timezone" eval="True"/>
+        <field name="hide_duration" eval="True"/>
         <!-- Restaurant is open 1) from WED to SUN at 19, 19.30 and 20. 2) on WED, SAT, SUN at 12 and 12.30. -->
         <field name="slot_ids" eval="[(5, 0, 0)] + [
             (0, 0, {'weekday': weekday, 'start_hour': start_hour, 'end_hour': start_hour + 2.0})
