@@ -47,6 +47,9 @@
                 <group name="sale_info_group" position="inside">
                     <field name="l10n_br_nfse_verification" readonly="True" invisible="not l10n_br_is_service_transaction"/>
                 </group>
+                <xpath expr="//list/field[@name='tax_ids']" position="before">
+                    <field name="l10n_br_cfop" column_invisible="not parent.l10n_br_edi_avatax_data" optional="hide"/>
+                </xpath>
                 <button name="action_invoice_sent" position="before">
                     <button name="button_l10n_br_edi_get_service_invoice"
                             type="object"

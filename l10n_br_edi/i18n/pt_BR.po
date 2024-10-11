@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2023-12-05 22:48+0000\n"
-"PO-Revision-Date: 2024-08-19 16:32-0300\n"
+"PO-Revision-Date: 2024-10-14 20:06+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -120,7 +120,6 @@ msgstr "Aceito"
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_access_key
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__l10n_br_access_key
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_payment__l10n_br_access_key
 msgid "Access Key"
 msgstr "Chave de acesso"
 
@@ -160,42 +159,36 @@ msgstr "Boleto bancário"
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_last_correction_number
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__l10n_br_edi_last_correction_number
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_payment__l10n_br_edi_last_correction_number
 msgid "Brazil Correction Number"
 msgstr "Brasil: Valor de correção"
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_error
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__l10n_br_edi_error
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_payment__l10n_br_edi_error
 msgid "Brazil E-Invoice Error"
 msgstr "Brasil: Erro de fatura eletrônica"
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_last_edi_status
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__l10n_br_last_edi_status
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_payment__l10n_br_last_edi_status
 msgid "Brazil E-Invoice Status"
 msgstr "Brasil: Status da fatura eletrônica"
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_xml_attachment_id
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__l10n_br_edi_xml_attachment_id
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_payment__l10n_br_edi_xml_attachment_id
 msgid "Brazil E-Invoice XML"
 msgstr "Brasil: XML da fatura eletrônica"
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_xml_attachment_file
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__l10n_br_edi_xml_attachment_file
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_payment__l10n_br_edi_xml_attachment_file
 msgid "Brazil E-Invoice XML File"
 msgstr "Brasil: Arquivo XML da fatura eletrônica"
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_nfse_verification
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_nfse_verification
-#: model:ir.model.fields,help:l10n_br_edi.field_account_payment__l10n_br_nfse_verification
 msgid ""
 "Brazil: After an NFS-e invoice is issued and confirmed by the municipality, a unique code is "
 "provided for online verification of its authenticity."
@@ -206,12 +199,22 @@ msgstr ""
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_nfse_number
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_nfse_number
-#: model:ir.model.fields,help:l10n_br_edi.field_account_payment__l10n_br_nfse_number
 msgid ""
 "Brazil: After an NFS-e invoice is issued and confirmed by the municipality, an NFS-e number "
 "is provided."
 msgstr ""
 "Brasil: Após a emissão e confirmação da NFS-e pelo município, é fornecido o número da NFS-e."
+
+#. module: l10n_br_edi
+#: model:ir.model.fields,help:l10n_br_edi.field_account_move_line__l10n_br_cfop
+msgid ""
+"Brazil: CFOP returned from the tax calculation that will be used for "
+"submitting your electronic invoice per line. This is computed based on the "
+"Operation Type, product, contact and company configuration."
+msgstr ""
+"Brasil: CFOP retornado no cálculo de impostos e será usado no envio da Nota "
+"fiscal eletrônica por linha. Essa informação é determinada com base nas "
+"configurações como tipo de operação, produto, contato e informações da empresa."
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_res_country__l10n_br_edi_code
@@ -221,7 +224,6 @@ msgstr "Brasil: Código do país usado na NF-e"
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_access_key
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_access_key
-#: model:ir.model.fields,help:l10n_br_edi.field_account_payment__l10n_br_access_key
 msgid ""
 "Brazil: access key associated with the electronic document. Can be used to get invoice "
 "information directly from the government."
@@ -232,14 +234,12 @@ msgstr ""
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_error
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_edi_error
-#: model:ir.model.fields,help:l10n_br_edi.field_account_payment__l10n_br_edi_error
 msgid "Brazil: error details for invoices in the 'error' state."
 msgstr "Brasil: Detalhes do erro para faturas com status de \"erro\"."
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_payment_method
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_edi_payment_method
-#: model:ir.model.fields,help:l10n_br_edi.field_account_payment__l10n_br_edi_payment_method
 #: model:ir.model.fields,help:l10n_br_edi.field_payment_method__l10n_br_edi_payment_method
 msgid "Brazil: expected payment method to be used."
 msgstr "Brasil: Método de pagamento esperado a ser usado."
@@ -247,14 +247,12 @@ msgstr "Brasil: Método de pagamento esperado a ser usado."
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_transporter_id
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_edi_transporter_id
-#: model:ir.model.fields,help:l10n_br_edi.field_account_payment__l10n_br_edi_transporter_id
 msgid "Brazil: if you use a transport company, add its company contact here."
 msgstr "Brasil: Se houver transportadora em uso, adicione o contato da empresa aqui."
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_xml_attachment_file
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_edi_xml_attachment_file
-#: model:ir.model.fields,help:l10n_br_edi.field_account_payment__l10n_br_edi_xml_attachment_file
 msgid "Brazil: technical field holding the e-invoice XML data for security reasons."
 msgstr ""
 "Brasil: Campo técnico que mantém os dados XML da fatura eletrônica por motivos de segurança."
@@ -262,30 +260,18 @@ msgstr ""
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_last_correction_number
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_edi_last_correction_number
-#: model:ir.model.fields,help:l10n_br_edi.field_account_payment__l10n_br_edi_last_correction_number
 msgid "Brazil: technical field that holds the latest correction that happened to this invoice"
 msgstr "Brasil: Campo técnico que contém a última correção que ocorreu nessa fatura"
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_avatax_data
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_edi_avatax_data
-#: model:ir.model.fields,help:l10n_br_edi.field_account_payment__l10n_br_edi_avatax_data
 msgid "Brazil: technical field that remembers the last tax summary returned by Avatax."
 msgstr "Brasil: Campo técnico que lembra o último resumo de imposto retornado pelo Avatax."
 
 #. module: l10n_br_edi
-#: model:ir.model.fields,help:l10n_br_edi.field_account_move_send__l10n_br_edi_is_visible
-msgid ""
-"Brazil: technical field to determine if the option to submit a Brazilian electronic invoice "
-"is visible."
-msgstr ""
-"Brasil: Campo técnico para determinar se a opção de enviar uma fatura eletrônica brasileira "
-"está visível."
-
-#. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_is_needed
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_edi_is_needed
-#: model:ir.model.fields,help:l10n_br_edi.field_account_payment__l10n_br_edi_is_needed
 msgid "Brazil: technical field to determine if this invoice is eligible to be e-invoiced."
 msgstr ""
 "Brasil: Campo técnico para determinar se essa fatura está qualificada para ser faturada "
@@ -294,32 +280,24 @@ msgstr ""
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_xml_attachment_id
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_edi_xml_attachment_id
-#: model:ir.model.fields,help:l10n_br_edi.field_account_payment__l10n_br_edi_xml_attachment_id
 msgid "Brazil: the most recent e-invoice XML returned by Avalara."
 msgstr "Brasil: O XML mais recente da fatura eletrônica retornado pela Avalara."
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_last_edi_status
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_last_edi_status
-#: model:ir.model.fields,help:l10n_br_edi.field_account_payment__l10n_br_last_edi_status
 msgid "Brazil: the state of the most recent e-invoicing attempt."
 msgstr "Brasil: Status da tentativa de faturamento eletrônico mais recente."
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_freight_model
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_edi_freight_model
-#: model:ir.model.fields,help:l10n_br_edi.field_account_payment__l10n_br_edi_freight_model
 msgid "Brazil: used to determine the freight model used on this transaction."
 msgstr "Brasil: Usado para determinar o modelo de frete usado nessa transação."
 
 #. module: l10n_br_edi
-#: model:ir.model.fields,help:l10n_br_edi.field_account_move_send__l10n_br_edi_is_enabled
-msgid "Brazil: used to determine whether to submit this e-invoice."
-msgstr "Brasil: Usado para determinar se essa fatura eletrônica deve ser enviada."
-
-#. module: l10n_br_edi
 #. odoo-python
-#: code:addons/l10n_br_edi/wizard/account_move_send.py:0
+#: code:addons/l10n_br_edi/models/account_move_send.py:0
 msgid ""
 "Brazilian e-invoicing was enabled but the following invoices cannot be e-invoiced:\n"
 "%s\n"
@@ -331,6 +309,11 @@ msgstr ""
 "%s\n"
 "Se isso não for intencional, verifique se uma posição fiscal do Avatax está sendo usada "
 "nessas faturas e se a fatura não já foi faturada eletronicamente."
+
+#. module: l10n_br_edi
+#: model:ir.model.fields,field_description:l10n_br_edi.field_account_move_line__l10n_br_cfop
+msgid "CFOP"
+msgstr "CFOP"
 
 #. module: l10n_br_edi
 #: model:ir.model.fields.selection,name:l10n_br_edi.selection__l10n_br_edi_invoice_update__mode__cancel
@@ -362,7 +345,7 @@ msgstr "Cheque"
 
 #. module: l10n_br_edi
 #. odoo-python
-#: code:addons/l10n_br_edi/wizard/account_move_send.py:0
+#: code:addons/l10n_br_edi/models/account_move_send.py:0
 msgid "Check Invoice(s)"
 msgstr "Verificar fatura(s)"
 
@@ -613,23 +596,21 @@ msgid "Journal Entry"
 msgstr "Lançamento de diário"
 
 #. module: l10n_br_edi
+#: model:ir.model,name:l10n_br_edi.model_account_move_line
+msgid "Journal Item"
+msgstr "Item de Diário"
+
+#. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_avatax_data
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__l10n_br_edi_avatax_data
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_payment__l10n_br_edi_avatax_data
 msgid "L10N Br Edi Avatax Data"
 msgstr "L10N Br: Dados de EDI do Avatax"
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_is_needed
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__l10n_br_edi_is_needed
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_payment__l10n_br_edi_is_needed
 msgid "L10N Br Edi Is Needed"
 msgstr "L10N Br: EDI é necessário"
-
-#. module: l10n_br_edi
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_move_send__l10n_br_edi_is_visible
-msgid "L10N Br Edi Is Visible"
-msgstr "L10N Br: EDI está visível"
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_l10n_br_edi_cancel_range__write_uid
@@ -685,14 +666,12 @@ msgstr "N/A"
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_nfse_number
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__l10n_br_nfse_number
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_payment__l10n_br_nfse_number
 msgid "NFS-e Number"
 msgstr "Número da NFS-e"
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_nfse_verification
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__l10n_br_nfse_verification
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_payment__l10n_br_nfse_verification
 msgid "NFS-e Verification Code"
 msgstr "Código de verificação da NFS-e"
 
@@ -749,7 +728,6 @@ msgstr "Forma de pagamento"
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_payment_method
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__l10n_br_edi_payment_method
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_payment__l10n_br_edi_payment_method
 #: model:ir.model.fields,field_description:l10n_br_edi.field_payment_method__l10n_br_edi_payment_method
 msgid "Payment Method Brazil"
 msgstr "Brasil: Forma de pagamento"
@@ -758,11 +736,6 @@ msgstr "Brasil: Forma de pagamento"
 #: model:ir.model.fields.selection,name:l10n_br_edi.selection__account_move__l10n_br_last_edi_status__pending
 msgid "Pending"
 msgstr "Pendente"
-
-#. module: l10n_br_edi
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_move_send__l10n_br_edi_is_enabled
-msgid "Process e-invoice"
-msgstr "Processar fatura eletrônica"
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_l10n_br_edi_cancel_range__reason
@@ -881,7 +854,6 @@ msgstr ""
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_transporter_id
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__l10n_br_edi_transporter_id
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_payment__l10n_br_edi_transporter_id
 msgid "Transporter Brazil"
 msgstr "Transportadora Brasil"
 
@@ -893,7 +865,7 @@ msgstr "Código %(code)s de status de fatura eletrônica desconhecido: %(descrip
 
 #. module: l10n_br_edi
 #. odoo-python
-#: code:addons/l10n_br_edi/wizard/account_move_send.py:0
+#: code:addons/l10n_br_edi/models/account_move_send.py:0
 msgid "View Invoice(s)"
 msgstr "Ver fatura(s)\t"
 
@@ -905,6 +877,12 @@ msgid ""
 msgstr ""
 "Quando a caixa estiver marcada, será enviado um e-mail informando o cliente sobre as "
 "alterações e os novos documentos EDI."
+
+#. module: l10n_br_edi
+#. odoo-python
+#: code:addons/l10n_br_edi/models/account_move_send.py:0
+msgid "e-invoice (Brazil)"
+msgstr "fatura eletrônica (Brasil)"
 
 #. module: l10n_br_edi
 #: model:mail.template,subject:l10n_br_edi.mail_template_move_update
