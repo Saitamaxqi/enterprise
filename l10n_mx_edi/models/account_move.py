@@ -1134,23 +1134,33 @@ class AccountMove(models.Model):
             # from the payment currency.
             # The number of units of the currency must be recorded indicated in the related document that are
             # equivalent to a unit of the currency of the payment.
+            def calculate_rate(invoice, invoice_amount, payment_amount):
+                if not payment_amount:
+                    return 0.0
+                rate = self.currency_id._get_conversion_rate(self.currency_id, invoice.currency_id, self.company_id, self.date)
+                converted_invoice_amount = self.currency_id.round(invoice_amount / rate) if rate else 0.0
+                converted_payment_amount = invoice.currency_id.round(payment_amount * rate)
+                if (
+                    self.currency_id.is_zero(converted_invoice_amount - payment_amount)
+                    or invoice.currency_id.is_zero(invoice_amount - converted_payment_amount)
+                ):
+                    return rate
+                return abs(invoice_amount / payment_amount)
+
             if invoice.currency_id == self.currency_id:
                 # Same currency.
                 rate = None
             elif invoice.currency_id == company_curr != self.currency_id:
                 # Adapt the payment rate to find the reconciled amount of the invoice but expressed in payment currency.
                 balance = invoice_values['balance'] + invoice_values['invoice_exchange_balance']
-                amount_currency = invoice_values['payment_amount_currency']
-                rate = abs(balance / amount_currency) if amount_currency else 0.0
+                rate = calculate_rate(invoice, balance, invoice_values['payment_amount_currency'])
             elif self.currency_id == company_curr != invoice.currency_id:
                 # Adapt the invoice rate to find the reconciled amount of the payment but expressed in invoice currency.
                 balance = invoice_values['balance'] + invoice_values['payment_exchange_balance']
-                rate = abs(invoice_values['invoice_amount_currency'] / balance) if balance else 0.0
-            elif invoice_values['payment_amount_currency']:
-                # Both are expressed in different currencies.
-                rate = abs(invoice_values['invoice_amount_currency'] / invoice_values['payment_amount_currency'])
+                rate = calculate_rate(invoice, invoice_values['invoice_amount_currency'], balance)
             else:
-                rate = 0.0
+                # Both are expressed in different currencies.
+                rate = calculate_rate(invoice, invoice_values['invoice_amount_currency'], invoice_values['payment_amount_currency'])
 
             invoice_values_list.append({
                 **inv_cfdi_values,
