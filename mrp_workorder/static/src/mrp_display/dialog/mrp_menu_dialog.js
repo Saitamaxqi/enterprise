@@ -27,7 +27,7 @@ export class MrpMenuDialog extends Component {
         this.state = useState({ menu: "main" });
     }
 
-    async callAction(method) {
+    async callAction(method, props = {}) {
         const action = await this.orm.call(
             this.props.record.resModel,
             method,
@@ -40,11 +40,20 @@ export class MrpMenuDialog extends Component {
             onClose: async () => {
                 await this.props.reload(this.props.record);
             },
+            props,
         });
         this.props.close();
     }
 
-    async moveToWorkcenter()  {
+    async callAddComponentAction() {
+        return this.callAction("action_add_component", {
+            onCatalogUpdated: async () => {
+                await this.props.reload(this.props.record);
+            },
+        });
+    }
+
+    async moveToWorkcenter() {
         const workcenters = await this.orm.searchRead("mrp.workcenter", [], ["display_name"]);
         function _moveToWorkcenter(workcenters) {
             const workcenter = workcenters[0];

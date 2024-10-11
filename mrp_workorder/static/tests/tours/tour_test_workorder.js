@@ -1,5 +1,5 @@
 import { registry } from "@web/core/registry";
-import helper from "@stock/../tests/tours/tour_helper";
+import * as helper from "@stock/../tests/tours/tour_helper";
 
 registry.category("web_tour.tours").add("test_serial_tracked_and_register", {
     steps: () => [
@@ -161,6 +161,140 @@ registry.category("web_tour.tours").add("test_access_shop_floor_with_multicomany
         {
             content: "Check that the WO is not clickable",
             trigger: "div.o_mrp_display_record.o_disabled",
+        },
+    ],
+});
+
+registry.category("web_tour.tours").add("test_add_component_from_shop_foor", {
+    steps: () => [
+        {
+            trigger: ".form-check-input[name='All MO']",
+            run: "click",
+        },
+        {
+            trigger: ".form-check-input[name='Nuclear Workcenter']",
+            run: "click",
+        },
+        {
+            trigger: "button:contains('Confirm')",
+            run: "click",
+        },
+        {
+            content: "Check that we are in the MO view",
+            trigger:
+                ".o_mrp_display_records:has(.card-header:contains(Lovely MO)) button:contains('Nuclear Workcenter')",
+        },
+        {
+            content: "Add Wood to the MO components",
+            trigger:
+                ".o_mrp_display_record:has(.card-header:contains(Lovely MO)) .card-footer button.fa-gear",
+            run: "click",
+        },
+        {
+            trigger: ".o_mrp_menu_dialog button:contains('Add Component')",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content input.o_searchview_input.o_input",
+            run: "edit Super Wood",
+        },
+        {
+            trigger: ".dropdown-item:contains('Super Wood')",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .o_kanban_record:has(span:contains('Super Wood'))",
+            run: "click",
+        },
+        {
+            content: "Await for the Component to be added",
+            trigger: ".modal-content input.o_input[type='number']",
+            run: function ({ anchor }) {
+                helper.assert(anchor.value, "1");
+            },
+        },
+        {
+            trigger: ".modal-content button.btn-close",
+            run: "click",
+        },
+        {
+            content: "Check that the Wood is visible on the MO",
+            trigger:
+                ".o_mrp_display_records:has(.card-header:contains(Lovely MO)) .o_mrp_record_line:contains('Super Wood')",
+        },
+        {
+            content: "Swap to the WO view of the Nuclear Workcenter",
+            trigger: "button.btn-light:contains('Nuclear Workcenter')",
+            run: "click",
+        },
+        {
+            content: "Check that the Wood is visible on the MO",
+            trigger: ".o_mrp_record_line:contains('Super Wood')",
+        },
+        {
+            content: "Swap to the WO view of the Nuclear Workcenter",
+            trigger: "button.btn-light:contains('Nuclear Workcenter')",
+            run: "click",
+        },
+        {
+            content: "Check that we are in the WO view",
+            trigger: ".o_mrp_display_records .card-header .card-title:contains('Super Operation')",
+        },
+        {
+            content: "Add Courage to the WO components",
+            trigger:
+                ".o_mrp_display_record:has(.card-header:contains(Lovely MO)) .card-footer button.fa-gear",
+            run: "click",
+        },
+        {
+            trigger: ".o_mrp_menu_dialog",
+        },
+        {
+            trigger: "button:contains('Add Component')",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content input.o_searchview_input.o_input",
+            run: "edit Courage",
+        },
+        {
+            trigger: ".dropdown-item:contains('Courage')",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content .o_kanban_record:has(span:contains('Courage'))",
+            run: "click",
+        },
+        {
+            content: "Await for the Component to be added",
+            trigger: ".modal-content input.o_input[type='number']",
+            run: function ({ anchor }) {
+                helper.assert(anchor.value, "1");
+            },
+        },
+        {
+            trigger: ".modal-content button.btn-close",
+            run: "click",
+        },
+        {
+            content: "Check that the Courage is visible on the WO",
+            trigger:
+                ".o_mrp_display_records:has(.card-header:contains(Lovely MO)) .o_mrp_record_line span:contains('Courage')",
+        },
+        {
+            content: "Go back to the MO",
+            trigger: "button.btn:contains('All MO')",
+            run: "click",
+        },
+        {
+            content: "Check that we are in the MO view",
+            trigger:
+                ".o_mrp_display_records:has(.card-header:contains(Lovely MO)) button:contains('Nuclear Workcenter')",
+        },
+        {
+            content: "Check that the Courage is visible on the MO",
+            trigger:
+                ".o_mrp_display_records:has(.card-header:contains(Lovely MO)) .o_mrp_record_line span:contains('Courage')",
         },
     ],
 });

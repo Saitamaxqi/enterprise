@@ -629,3 +629,37 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
         mo.button_plan()
         self.start_tour(
             "/", 'test_access_shop_floor_with_multicomany', login="admin")
+
+    def test_add_component_from_shop_foor(self):
+        """
+        Check that components added to a WO from the shopfloor are visible
+        on both the WO and the MO.
+        """
+        self.env.ref('base.group_user').implied_ids += (
+            self.env.ref('mrp.group_mrp_routings')
+        )
+        mo_form = Form(self.env['mrp.production'])
+        mo_form.product_id = self.bom_2.product_id
+        mo_form.bom_id = self.bom_2
+        self.bom_2.bom_line_ids.product_id.is_storable = False
+        self.bom_2.operation_ids.name = "Super Operation"
+        mo_form.product_qty = 1
+        mo = mo_form.save()
+        mo.name = "Lovely MO"
+        mo.action_confirm()
+        # Put some "Wood" in stock to be added to the MO
+        self.product_2.is_storable = True
+        self.product_2.name = "Super Wood"
+        self.env['stock.quant']._update_available_quantity(self.product_2, mo.warehouse_id.lot_stock_id, quantity=10.0)
+        # Put some "Courage" in stock to be added to the WO
+        self.product_1.is_storable = True
+        self.env['stock.quant']._update_available_quantity(self.product_1, mo.warehouse_id.lot_stock_id, quantity=10.0)
+        action = mo.workorder_ids.action_open_mes()
+        url = '/web?#action=%s' % (action['id'])
+        self.start_tour(url, "test_add_component_from_shop_foor", login='admin')
+        # Check that the Wood was added to the component
+        self.assertRecordValues(mo.move_raw_ids.filtered(lambda m: m.product_id == self.product_2), [{
+            "product_uom_qty": 1.0,
+        }])
+        # Check that the Courage is associated with the operation
+        self.assertEqual(mo.workorder_ids, mo.move_raw_ids.filtered(lambda m: m.product_id == self.product_1).workorder_id)
