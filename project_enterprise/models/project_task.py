@@ -1311,10 +1311,9 @@ class ProjectTask(models.Model):
 
     @api.model
     def _gantt_unavailability(self, field, res_ids, start, stop, scale):
-        if field not in ['user_ids', 'user_id']:
-            return super()._gantt_unavailability(field, res_ids, start, stop, scale)
-
-        resources = self.env['resource.resource'].search([('user_id', 'in', res_ids), ('company_id', 'in', self.env.companies.ids)], order='create_date')
+        resources = self.env['resource.resource']
+        if field in ['user_ids', 'user_id']:
+            resources = self.env['resource.resource'].search([('user_id', 'in', res_ids), ('company_id', 'in', self.env.companies.ids)], order='create_date')
         # we reverse sort the resources by date to keep the first one created in the dictionary
         # to anticipate the case of a resource added later for the same employee and company
         user_resource_mapping = {resource.user_id.id: resource.id for resource in resources}
