@@ -44,9 +44,6 @@ class PosOrder(models.Model):
     def _get_whatsapp_safe_fields(self):
         return {'partner_id.name', 'name', 'company_id.name'}
 
-    def _mail_get_partners(self):
-        return {pos_order.id: pos_order.partner_id for pos_order in self}
-
     def action_send_whatsapp(self):
         return {
             'name': _('Send Whatsapp'),
