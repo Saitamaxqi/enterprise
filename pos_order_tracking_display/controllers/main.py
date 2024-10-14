@@ -23,6 +23,7 @@ class PosOrderTrackingDisplay(http.Controller):
                     **request.env["ir.http"].get_frontend_session_info(),
                     "preparation_display": preparation_display_sudo.read(["access_token"])[0],
                     "initial_data": preparation_display_sudo._get_pos_orders(),
+                    "db": request.env.cr.dbname,
                 },
             },
         )
