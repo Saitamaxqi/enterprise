@@ -2,7 +2,7 @@ import { expect, test } from "@odoo/hoot";
 
 import { HookEventBus } from "@web_mobile/js/hook_event_bus";
 
-test.skip("HookEventBus: Test callback", async () => {
+test("HookEventBus: Test callback", async () => {
     const eventBus = new HookEventBus({
         onAddListener: () => expect.step("onAddListenerCallback"),
         onRemoveListener: () => expect.step("onRemoveListenerCallback"),
