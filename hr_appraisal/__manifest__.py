@@ -44,6 +44,7 @@ Key Features
         'data/hr_appraisal_data.xml',
         'data/mail_template_data.xml',
         'wizard/hr_departure_wizard_views.xml',
+        'wizard/hr_appraisal_campaign_wizard.xml',
     ],
     "demo": [
         "data/hr_appraisal_demo.xml",

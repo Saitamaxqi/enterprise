@@ -151,11 +151,44 @@
         </field>
     </record>
 
+    <record id="hr_appraisal_action_multiple_appraisals" model="ir.actions.act_window">
+        <field name="name">Appraisals</field>
+        <field name="res_model">hr.appraisal</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Schedule an appraisal
+            </p>
+            <p>
+                Plan appraisals with your colleagues, collect and discuss feedback.
+            </p>
+        </field>
+    </record>
+
+    <record id="action_open_appraisal_campaign_wizard" model="ir.actions.server">
+        <field name="name">Launch Campaign</field>
+        <field name="model_id" ref="hr_appraisal.model_hr_appraisal"/>
+        <field name="group_ids" eval="[(4, ref('hr_appraisal.group_hr_appraisal_user'))]"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+            action = model.action_open_appraisal_campaign_wizard()
+        </field>
+    </record>
+
     <record model="ir.ui.view" id="view_hr_appraisal_tree">
         <field name="name">hr.appraisal.list</field>
         <field name="model">hr.appraisal</field>
         <field name="arch" type="xml">
             <list string="Appraisal" multi_edit="1" sample="1" js_class="appraisal_list_view">
+                <header>
+                    <button name="%(action_open_appraisal_campaign_wizard)d"
+                            class="btn btn-secondary"
+                            string="Launch Campaign"
+                            type="action"
+                            groups="hr_appraisal.group_hr_appraisal_user"
+                            display="always"/>
+                </header>
                 <field name="active" column_invisible="True"/>
                 <field name="employee_id" string="Name" readonly="1" widget="many2one_avatar_employee"/>
                 <field name="department_id"/>
@@ -239,6 +272,14 @@
                 <field name="manager_ids" />
                 <field name="waiting_feedback"/>
                 <progressbar field="state" colors='{"1_new": "secondary", "2_pending": "warning", "3_done": "success"}'/>
+                <header>
+                    <button name="%(action_open_appraisal_campaign_wizard)d"
+                            class="btn btn-secondary"
+                            string="Launch Campaign"
+                            type="action"
+                            groups="hr_appraisal.group_hr_appraisal_user"
+                            display="always"/>
+                </header>
                 <templates>
                     <t t-name="card" class="flex-row">
                             <widget name="web_ribbon" title="Done" bg_color="text-bg-secondary" invisible="state != '3_done'"/>

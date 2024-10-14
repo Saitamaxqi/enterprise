@@ -5,12 +5,17 @@
             <div class="container">
                 <div class="o_nocontent_help">
                     <div class="oe_view_nocontent_create">
-                        <p class="py-2" t-if="employeeNumber > 1 || !hasAppraisalRight">
-                            No Appraisals yet ...<br/>
-                            Do you want to
-                            <a type="oject" class="oe_link" t-on-click="() => this.loadCreateAppraisal()">
-                                create a new one
-                            </a>
+                        <p class="o_view_nocontent_smiling_face fw-bold fst-italic py-2" t-if="employeeNumber > 1 || !hasAppraisalRight">
+                            No Appraisals found!<br/>
+                            <span class="fw-normal">Keep track of how your employees are doing...</span><br/>
+                            <div class="justify-content-center p-2">
+                                <a
+                                    class="btn btn-primary"
+                                    type="object"
+                                    t-on-click="() => this.loadAppraisalCampaignWizard()">
+                                        Schedule Appraisals
+                                </a>
+                            </div>
                         </p>
                         <div t-else="" class="py-2">
                             <div class="py-2">

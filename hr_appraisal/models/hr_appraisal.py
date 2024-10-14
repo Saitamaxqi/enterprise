@@ -540,6 +540,25 @@ class HrAppraisal(models.Model):
             'context': {'default_appraisal_id': self.id},
         }
 
+    def action_open_appraisal_campaign_wizard(self):
+        employee_ids = False
+        if self.env.context.get('active_model') == 'hr.employee':
+            employee_ids = self.env.context.get('active_ids')
+        elif self.env.context.get('active_model') == 'hr.appraisal':
+            appraisals = self.env['hr.appraisal'].browse(self.env.context.get('active_ids'))
+            employee_ids = appraisals.employee_id.ids
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Appraisal Campaign'),
+            'res_model': 'hr.appraisal.campaign.wizard',
+            'view_mode': 'form',
+            'context': {
+                'default_mode': 'employee',
+                'default_employee_ids': employee_ids,
+            },
+            'target': 'new',
+        }
+
     @api.model
     def has_demo_data(self):
         if not self.env.user.has_group("hr_appraisal.group_hr_appraisal_user"):

@@ -92,10 +92,12 @@
         <field name="inherit_id" ref="hr.view_employee_tree"/>
         <field name="arch" type="xml">
             <xpath expr="//header" position="inside">
-                <button name="%(action_create_multi_appraisals)d"
-                        string="Request Appraisals"
+                <button name="%(action_open_appraisal_campaign_wizard)d"
+                        class="btn btn-secondary"
+                        string="Launch Campaign"
                         type="action"
-                        groups="hr_appraisal.group_hr_appraisal_user"/>
+                        groups="hr_appraisal.group_hr_appraisal_user"
+                        display="always"/>
             </xpath>
             <xpath expr="//list" position="inside">
                 <field name="next_appraisal_date" optional="hide"/>

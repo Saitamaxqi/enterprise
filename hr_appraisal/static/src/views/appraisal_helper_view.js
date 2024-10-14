@@ -48,4 +48,15 @@ export class AppraisalActionHelper extends Component {
             target: "current",
         });
     }
+
+    loadAppraisalCampaignWizard(){
+        this.actionService.doAction({
+            name: _t("Appraisal Campaign"),
+            res_model: "hr.appraisal.campaign.wizard",
+            type: "ir.actions.act_window",
+            views: [[false, "form"]],
+            view_mode: "form",
+            target: "new",
+        });
+    }
 };

@@ -4,3 +4,4 @@
 
 from . import request_appraisal
 from . import hr_departure_wizard
+from . import hr_appraisal_campaign_wizard
