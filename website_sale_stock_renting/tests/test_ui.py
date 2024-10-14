@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import freezegun
 
-from odoo import http
+from odoo import http, Command
 from odoo.tests import HttpCase, tagged
 from odoo.addons.website_sale_renting.tests.common import TestWebsiteSaleRentingCommon
 
@@ -49,6 +49,64 @@ class TestUi(HttpCase, TestWebsiteSaleRentingCommon):
         transfer_provider._transfer_ensure_pending_msg_is_set()
 
         self.start_tour("/odoo", 'shop_buy_rental_stock_product', login='admin')
+
+    def test_website_availability_update(self):
+        product_template = self.env['product.template'].create({
+            'name': 'Test Product with Variants',
+            'type': 'consu',
+            'rent_ok': True,
+            'is_published': True,
+            'website_published': True,
+            'show_availability': True,
+            'allow_out_of_stock_order': False,
+            'is_storable': True,
+        })
+
+        attribute = self.env['product.attribute'].create({
+            'name': 'Size',
+        })
+
+        attribute_value_small = self.env['product.attribute.value'].create({
+            'name': 'Small',
+            'attribute_id': attribute.id,
+        })
+        attribute_value_large = self.env['product.attribute.value'].create({
+            'name': 'Large',
+            'attribute_id': attribute.id,
+        })
+
+        product_template.attribute_line_ids = [(Command.create({
+            'attribute_id': attribute.id,
+            'value_ids': [Command.set([attribute_value_small.id, attribute_value_large.id])],
+        }))]
+
+        recurrence = self.env['sale.temporal.recurrence'].sudo().create({'duration': 1, 'unit': 'hour'})
+        self.env['product.pricing'].create([
+            {
+                'recurrence_id': recurrence.id,
+                'price': 1000,
+                'product_template_id': product_template.id,
+                'product_variant_ids': product_template.product_variant_ids,
+            },
+        ])
+
+        # Get the product variants
+        variant_small = product_template.product_variant_ids.filtered(lambda v: attribute_value_small in v.product_template_attribute_value_ids.product_attribute_value_id)
+        variant_large = product_template.product_variant_ids.filtered(lambda v: attribute_value_large in v.product_template_attribute_value_ids.product_attribute_value_id)
+
+        self.env['stock.quant'].create({
+            'product_id': variant_small.id,
+            'location_id': self.env.ref('stock.stock_location_stock').id,
+            'quantity': 1,
+        })
+
+        self.env['stock.quant'].create({
+            'product_id': variant_large.id,
+            'location_id': self.env.ref('stock.stock_location_stock').id,
+            'quantity': 0,
+        })
+
+        self.start_tour("/web", 'website_availability_update', login='admin')
 
     @freezegun.freeze_time('2020-01-01')
     def test_visitor_browse_rental_products(self):

@@ -92,3 +92,38 @@ registry.category("web_tour.tours").add('shop_buy_rental_stock_product', {
         ...tourUtils.payWithTransfer(true),
     ]
 });
+
+
+registry.category("web_tour.tours").add("website_availability_update", {
+    url: "/shop",
+    steps: () => [
+        {
+            trigger: 'form input[name="search"]',
+            run: "edit Test Product with Variants",
+        },
+        {
+            trigger: 'form:has(input[name="search"]) .oe_search_button',
+        },
+        {
+            trigger: ".oe_search_button",
+            run: "click",
+        },
+        {
+            content: "Select Product",
+            trigger: '.oe_product:first a:contains("Test Product with Variants")',
+            run: "click",
+        },
+        {
+            trigger:
+                '#threshold_message_renting:contains("Only 1 Units still available during the selected period.")',
+        },
+        {
+            trigger: '.o_wsale_product_attribute li:eq(1) input[type="radio"]',
+            run: "click",
+        },
+        {
+            trigger: 'span[name="renting_warning_message"]',
+            run: () => {},
+        },
+    ],
+});
