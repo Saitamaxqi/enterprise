@@ -5,7 +5,7 @@
         <field name="arch" type="xml">
             <t>
                 <t t-set="sale_model" t-value="'sale_line_ids' in record.invoice_line_ids._fields"/>
-                <t t-set="sale_id" t-value="record.mapped('invoice_line_ids.sale_line_ids.order_id') if sale_model else False"/>
+                <t t-set="sale_id" t-value="record.invoice_line_ids.sale_line_ids.order_id[:1] if sale_model else False"/>
                 <ADDENDA10
                     xmlns:cfdi="http://www.sat.gob.mx/cfd/3"
                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -15,7 +15,7 @@
                     t-att-BUYER="record.partner_id.name"
                     t-att-VENDOR_ID="record.user_id.partner_id.ref"
                     t-att-POID="record.name"
-                    t-att-PODATE="time.strftime('%Y-%m-%d', time.strptime(sale_id.date_order, '%Y-%m-%d %H:%M:%S')) if sale_id else False"
+                    t-att-PODATE="sale_id.date_order.strftime('%Y-%m-%d') if sale_id else False"
                     t-att-EMAIL="record.company_id.partner_id.email"/>
             </t>
         </field>
