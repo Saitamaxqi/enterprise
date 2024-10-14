@@ -52,9 +52,9 @@ class HrPayslipWorked_Days(models.Model):
                 # to a basic salary = 0, which is in that case unfair. Switch to another method in which
                 # we compute the amount from the paid hours using the hourly formula
                 paid_hours = sum(worked_day.payslip_id.worked_days_line_ids.filtered(
-                    lambda wd: wd.is_paid and wd.work_entry_type_id.code not in ['OUT', 'LEAVE300', 'LEAVE301']
+                    lambda wd: wd.is_paid and wd.work_entry_type_id.code not in ['OUT', 'LEAVE300', 'LEAVE301', 'MEDIC01']
                 ).mapped('number_of_hours'))
-                if paid_hours < hours_per_week and worked_day.work_entry_type_id.code not in ['OUT', 'LEAVE300', 'LEAVE301']:
+                if paid_hours < hours_per_week and worked_day.work_entry_type_id.code not in ['OUT', 'LEAVE300', 'LEAVE301', 'MEDIC01']:
                     worked_day.amount = wage * 3 / (13 * hours_per_week) * worked_day.number_of_hours
                     continue
 
@@ -79,12 +79,12 @@ class HrPayslipWorked_Days(models.Model):
                 #  TOTAL PAID : WORK100 + PAID + UNPAID = (1 - 3/13/38 * 15 ) * wage
                 ####################################################################################
                 paid_worked_days = worked_day.payslip_id.worked_days_line_ids.filtered(
-                    lambda wd: wd.is_paid and wd.code not in ['OUT', 'LEAVE300', 'LEAVE301', 'LEAVE260', 'LEAVE216', 'LEAVE1731', 'LEAVE6665', 'LEAVE214']
+                    lambda wd: wd.is_paid and wd.code not in ['OUT', 'LEAVE300', 'LEAVE301', 'LEAVE260', 'LEAVE216', 'LEAVE1731', 'LEAVE6665', 'LEAVE214', 'MEDIC01']
                 ).sorted('number_of_hours', reverse=True)
                 if not paid_worked_days:
                     # In case there is only european time off for instance
                     paid_worked_days = worked_day.payslip_id.worked_days_line_ids.filtered(
-                        lambda wd: wd.is_paid and wd.code not in ['LEAVE300', 'LEAVE301'])
+                        lambda wd: wd.is_paid and wd.code not in ['LEAVE300', 'LEAVE301', 'MEDIC01'])
                 main_worked_day = paid_worked_days[0].code if paid_worked_days else False
 
                 worked_day_amount = 0

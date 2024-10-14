@@ -211,7 +211,7 @@
         <field name="code">MEDIC01</field>
         <field name="is_leave">True</field>
         <field name="color">5</field>
-        <field name="dmfa_code">24</field>
+        <field name="dmfa_code">-1</field>
         <field name="country_id" ref="base.be"/>
     </record>
 

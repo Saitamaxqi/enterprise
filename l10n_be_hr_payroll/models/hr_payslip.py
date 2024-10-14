@@ -831,7 +831,7 @@ class HrPayslip(models.Model):
             paid_hours = 1
             total_hours = 1
         else:
-            worked_days = self.worked_days_line_ids.filtered(lambda wd: wd.code not in ['LEAVE300', 'LEAVE301'])
+            worked_days = self.worked_days_line_ids.filtered(lambda wd: wd.code not in ['LEAVE300', 'LEAVE301', 'MEDIC01'])
             paid_hours = sum(worked_days.filtered(lambda wd: wd.amount).mapped('number_of_hours'))  # H
             total_hours = sum(worked_days.mapped('number_of_hours'))  # U
 
@@ -871,7 +871,7 @@ class HrPayslip(models.Model):
             paid_hours = 1
             total_hours = 1
         else:
-            worked_days = self.worked_days_line_ids.filtered(lambda wd: wd.code not in ['LEAVE300', 'LEAVE301'])
+            worked_days = self.worked_days_line_ids.filtered(lambda wd: wd.code not in ['LEAVE300', 'LEAVE301', 'MEDIC01'])
             paid_hours = sum(worked_days.filtered(lambda wd: wd.amount).mapped('number_of_hours'))  # H
             total_hours = sum(worked_days.mapped('number_of_hours'))  # U
 
@@ -924,7 +924,7 @@ class HrPayslip(models.Model):
             paid_hours = 1
             total_hours = 1
         else:
-            worked_days = self.worked_days_line_ids.filtered(lambda wd: wd.code not in ['LEAVE300', 'LEAVE301'])
+            worked_days = self.worked_days_line_ids.filtered(lambda wd: wd.code not in ['LEAVE300', 'LEAVE301', 'MEDIC01'])
             paid_hours = sum(worked_days.filtered(lambda wd: wd.amount).mapped('number_of_hours'))  # H
             total_hours = sum(worked_days.mapped('number_of_hours'))  # U
 

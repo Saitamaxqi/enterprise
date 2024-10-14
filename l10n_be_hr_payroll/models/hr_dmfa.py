@@ -679,7 +679,7 @@ class DMFAOccupation(DMFANode):
 
         # See: https://www.socialsecurity.be/employer/instructions/dmfa/fr/latest/instructions/fill_in_dmfa/dmfa_fillinrules/workerrecord_occupationrecords/occupationrecord.html
         if contract.time_credit or contract.resource_calendar_id.work_time_rate < 100:
-            if contract.time_credit and contract.time_credit_type_id.code in ['LEAVE300', 'LEAVE301', 'LEAVE281']:
+            if contract.time_credit and contract.time_credit_type_id.code in ['LEAVE300', 'LEAVE301', 'LEAVE281', 'MEDIC01']:
                 hours_per_week = contract.standard_calendar_id.hours_per_week
             else:
                 hours_per_week = contract.company_id.resource_calendar_id.hours_per_week
@@ -688,7 +688,7 @@ class DMFAOccupation(DMFANode):
         self.ref_mean_working_hours = ('%.2f' % hours_per_week).replace('.', '').zfill(4)
 
         # Voir Annexe 44: Réorganisation du temps de travail
-        if contract.time_credit and contract.time_credit_type_id.code in ['LEAVE300', 'LEAVE301']:
+        if contract.time_credit and contract.time_credit_type_id.code in ['LEAVE300', 'LEAVE301', 'MEDIC01']:
             if not contract.resource_calendar_id.hours_per_week:
                 self.reorganisation_measure = 3
             else:
@@ -736,7 +736,7 @@ class DMFAOccupation(DMFANode):
         services_by_dmfa_code = defaultdict(lambda: self.env['hr.payslip.worked_days'])
         for wd in self.payslips.mapped('worked_days_line_ids'):
             # Don't declare out of contract + credit time
-            if wd.work_entry_type_id.dmfa_code != '-1' and wd.work_entry_type_id.code not in ['OUT', 'LEAVE300', 'LEAVE510']:
+            if wd.work_entry_type_id.dmfa_code != '-1' and wd.work_entry_type_id.code not in ['OUT', 'LEAVE300', 'LEAVE510', 'MEDIC01']:
                 services_by_dmfa_code[wd.work_entry_type_id.dmfa_code] |= wd
         skip_remun = all(dmfa_code in ['30', '50', '52'] for dmfa_code in services_by_dmfa_code.keys())
         return (DMFAService.init_multi([(wds,) for wds in services_by_dmfa_code.values()]), skip_remun)
