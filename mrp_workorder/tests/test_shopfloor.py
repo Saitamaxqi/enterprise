@@ -226,6 +226,74 @@ class TestShopFloor(HttpCase):
         all_mo[1].workorder_ids[0].button_done()
         self.start_tour("/odoo/shop-floor", "test_shop_floor_auto_select_workcenter", login='admin')
 
+    def test_shop_floor_catalog_add_component_in_two_steps(self):
+        """ Ensures when a component is added through the Shop Floor catalog,
+        the Pick Component operation is correctly created/updated."""
+        # Set the manufacture in 2 steps.
+        self.warehouse.write({'manufacture_steps': 'pbm'})
+        # Create a product with a BoM and two components.
+        # Create some products.
+        product_final = self.env['product.product'].create({
+            'name': 'Pot',
+            'is_storable': True,
+        })
+        product_comp1, product_comp2 = self.env['product.product'].create([{
+            'name': 'C1 - Earthenware Clay',
+            'is_storable': True,
+        }, {
+            'name': 'C2 - Stoneware Clay',
+            'is_storable': True,
+        }])
+        bom = self.env['mrp.bom'].create({
+            'product_id': product_final.id,
+            'product_tmpl_id': product_final.product_tmpl_id.id,
+            'product_uom_id': product_final.uom_id.id,
+            'product_qty': 1.0,
+            'consumption': 'flexible',
+            'bom_line_ids': [
+                Command.create({'product_id': product_comp1.id, 'product_qty': 1, 'manual_consumption': True}),
+            ]
+        })
+        # Adds some quantity in stock.
+        self.env['stock.quant']._update_available_quantity(product_comp1, self.stock_location, quantity=999)
+        self.env['stock.quant']._update_available_quantity(product_comp2, self.stock_location, quantity=999)
+        # Create a Manufacturing Order.
+        mo = self.env['mrp.production'].create({
+            'product_id': product_final.id,
+            'product_qty': 1,
+            'bom_id': bom.id,
+        })
+        mo.action_confirm()
+        mo.action_assign()
+        mo.button_plan()
+        # Validate the MO's Pick Component.
+        self.assertEqual(len(mo.picking_ids), 1)
+        mo.picking_ids.button_validate()
+        # Simulate "Add Component" from the Shop Floor.
+        kwargs = {'from_shop_floor': True}
+        mo._update_order_line_info(product_comp2.id, 1, 'move_raw_ids', **kwargs)
+        self.assertEqual(len(mo.picking_ids), 2, "A second picking should have been created for the MO")
+        self.assertEqual(mo.components_availability_state, 'available', "MO should still be ready nevertheless")
+        second_picking = mo.picking_ids.filtered(lambda p: p.state == 'assigned')
+        self.assertRecordValues(second_picking.move_ids, [
+            {'product_id': product_comp2.id, 'product_uom_qty': 1, 'picked': False},
+        ])
+        self.assertRecordValues(mo.move_raw_ids, [
+            {'product_id': product_comp1.id, 'product_uom_qty': 1, 'quantity': 1, 'picked': False},
+            {'product_id': product_comp2.id, 'product_uom_qty': 1, 'quantity': 1, 'picked': False},
+        ])
+        # Simulate adding more quantity from the Shop Floor.
+        mo._update_order_line_info(product_comp2.id, 2, 'move_raw_ids', **kwargs)
+        self.assertEqual(len(mo.picking_ids), 2, "No other picking should have been created")
+        self.assertEqual(mo.components_availability_state, 'available', "MO should still be ready")
+        self.assertRecordValues(second_picking.move_ids, [
+            {'product_id': product_comp2.id, 'product_uom_qty': 2, 'picked': False},
+        ])
+        self.assertRecordValues(mo.move_raw_ids, [
+            {'product_id': product_comp1.id, 'product_uom_qty': 1, 'quantity': 1, 'picked': False},
+            {'product_id': product_comp2.id, 'product_uom_qty': 2, 'quantity': 2, 'picked': False},
+        ])
+
     def test_generate_serials_in_shopfloor(self):
         component1 = self.env['product.product'].create({
             'name': 'comp1',

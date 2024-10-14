@@ -109,7 +109,7 @@ class MrpProduction(models.Model):
         values = super()._get_new_catalog_line_values(product_id, quantity)
         if kwargs.get('from_shop_floor'):
             values.update({
-                'quantity': quantity,
+                'additional': True,
                 'manual_consumption': True,
             })
         return values
