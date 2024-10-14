@@ -138,7 +138,7 @@ class ApprovalRequest(models.Model):
         # make sure that the manager is present in the list if he is required
         self.ensure_one()
         if self.category_id.manager_approval == 'required':
-            employee = self.env['hr.employee'].search([('user_id', '=', self.request_owner_id.id)], limit=1)
+            employee = self.env['hr.employee'].search([('user_id', '=', self.request_owner_id.id), ('company_id', '=', self.company_id.id)], limit=1)
             if not employee.parent_id:
                 raise UserError(_('This request needs to be approved by your manager. There is no manager linked to your employee profile.'))
             if not employee.parent_id.user_id:
