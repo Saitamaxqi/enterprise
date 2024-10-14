@@ -55,8 +55,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         with freeze_time("2021-01-03"):
             sub = self.subscription
             sub.order_line = [Command.clear()]
-            context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True}
-            sub_product_tmpl = self.env['product.template'].with_context(context_no_mail).create({
+            sub_product_tmpl = self.ProductTmpl.create({
                 'name': 'Subscription Product',
                 'type': 'service',
                 'recurring_invoice': True,
@@ -391,8 +390,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertEqual(self.product.type, 'service')
         sub = self.subscription
         sub.order_line = [Command.clear()]
-        context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True}
-        delivered_product_tmpl = self.env['product.template'].with_context(context_no_mail).create({
+        delivered_product_tmpl = self.ProductTmpl.create({
             'name': 'Delivery product',
             'type': 'service',
             'recurring_invoice': True,
@@ -843,8 +841,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             sub2.action_confirm()
         # order linked to subscription with recurring product and no recurrence: it was created before the upgrade
         # of sale.subscription into sale.order
-        context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True, }
-        delivered_product_tmpl = self.env['product.template'].with_context(context_no_mail).create({
+        delivered_product_tmpl = self.ProductTmpl.create({
             'name': 'Delivery product',
             'type': 'service',
             'recurring_invoice': False,
@@ -1334,14 +1331,13 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertEqual(sub.close_reason_id.id, self.env.ref('sale_subscription.close_reason_auto_close_limit_reached').id)
 
     def test_subscription_pricelist_discount(self):
-        context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True, }
         pricelist = self.company_data['default_pricelist']
         pricelist.item_ids.create({
             'pricelist_id': pricelist.id,
             'compute_price': 'percentage',
             'percent_price': 50,
         })
-        sub = self.env["sale.order"].with_context(**context_no_mail).create({
+        sub = self.env["sale.order"].with_context(**self.context_no_mail).create({
             'name': 'TestSubscription',
             'is_subscription': True,
             'plan_id': self.plan_month.id,
@@ -1364,14 +1360,13 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
              "Discounts should not be reset on confirmation.")
 
     def test_non_subscription_pricelist_discount(self):
-        context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True, }
         pricelist = self.company_data['default_pricelist']
         pricelist.item_ids.create({
             'pricelist_id': pricelist.id,
             'compute_price': 'percentage',
             'percent_price': 50,
         })
-        so = self.env["sale.order"].with_context(**context_no_mail).create({
+        so = self.env["sale.order"].with_context(**self.context_no_mail).create({
             'name': 'TestNonSubscription',
             'is_subscription': False,
             'partner_id': self.user_portal.partner_id.id,

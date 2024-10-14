@@ -9,11 +9,9 @@ from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSub
 class TestSubscriptionPlan(TestSubscriptionCommon):
 
     def test_check_count_of_subscription_items_on_plan(self):
-        context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True}
-        SubPlan = self.env['sale.subscription.plan'].with_context(context_no_mail)
 
         # Create a subscription plan
-        sub_monthly_plan = SubPlan.create({
+        sub_monthly_plan = self.SubPlan.create({
             'name': 'Monthly Plan',
             'billing_period_value': 1,
             'billing_period_unit': 'month'

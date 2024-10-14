@@ -19,16 +19,13 @@ from odoo.addons.payment.tests.http_common import PaymentHttpCommon
 class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscriptionCommon):
     def setUp(self):
         super().setUp()
-        context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True,}
-        SaleOrder = self.env['sale.order'].with_context(context_no_mail)
-        ProductTmpl = self.env['product.template'].with_context(context_no_mail)
 
         self.user = new_test_user(self.env, "test_user_1", email="test_user_1@nowhere.com", tz="UTC")
         self.other_user = new_test_user(self.env, "test_user_2", email="test_user_2@nowhere.com", password="P@ssw0rd!", tz="UTC")
 
         self.partner = self.user.partner_id
         # Test products
-        self.sub_product_tmpl = ProductTmpl.sudo().create({
+        self.sub_product_tmpl = self.ProductTmpl.sudo().create({
             'name': 'TestProduct',
             'type': 'service',
             'recurring_invoice': True,
@@ -58,7 +55,7 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
 
         })
         # Test Subscription
-        self.subscription = SaleOrder.create({
+        self.subscription = self.SaleOrder.create({
             'name': 'TestSubscription',
             'is_subscription': True,
             'note': "original subscription description",

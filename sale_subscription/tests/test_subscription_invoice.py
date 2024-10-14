@@ -91,24 +91,23 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
 
     def test_invoicing_with_section(self):
         """ Test invoicing when order has section/note."""
-        context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True, }
 
         # create specific test products
-        sub_product1_tmpl = self.env['product.template'].with_context(context_no_mail).create({
+        sub_product1_tmpl = self.env['product.template'].with_context(self.context_no_mail).create({
             'name': 'Subscription #A',
             'type': 'service',
             'recurring_invoice': True,
             'uom_id': self.env.ref('uom.product_uom_unit').id,
         })
         sub_product1 = sub_product1_tmpl.product_variant_id
-        sub_product2_tmpl = self.env['product.template'].with_context(context_no_mail).create({
+        sub_product2_tmpl = self.env['product.template'].with_context(self.context_no_mail).create({
             'name': 'Subscription #B',
             'type': 'service',
             'recurring_invoice': True,
             'uom_id': self.env.ref('uom.product_uom_unit').id,
         })
         sub_product2 = sub_product2_tmpl.product_variant_id
-        sub_product_onetime_discount_tmpl = self.env['product.template'].with_context(context_no_mail).create({
+        sub_product_onetime_discount_tmpl = self.env['product.template'].with_context(self.context_no_mail).create({
             'name': 'Initial discount',
             'type': 'service',
             'recurring_invoice': False,
@@ -117,7 +116,7 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
         sub_product_onetime_discount = sub_product_onetime_discount_tmpl.product_variant_id
 
         with freeze_time("2021-01-03"):
-            sub = self.env["sale.order"].with_context(**context_no_mail).create({
+            sub = self.env["sale.order"].with_context(**self.context_no_mail).create({
                 'name': 'TestSubscription',
                 'is_subscription': True,
                 'plan_id': self.plan_month.id,
@@ -310,8 +309,7 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
         with freeze_time("2021-01-15"):
             sub = self.subscription
             sub.order_line = [Command.clear()]
-            context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True}
-            sub_product_tmpl = self.env['product.template'].with_context(context_no_mail).create({
+            sub_product_tmpl = self.ProductTmpl.create({
                 'name': 'Subscription Product',
                 'type': 'service',
                 'recurring_invoice': True,
@@ -408,8 +406,7 @@ class TestSubscriptionInvoice(TestSubscriptionCommon):
     def test_product_invoice_delivery(self):
         sub = self.subscription
         sub.order_line = [Command.clear()]
-        context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True, }
-        delivered_product_tmpl = self.env['product.template'].with_context(context_no_mail).create({
+        delivered_product_tmpl = self.env['product.template'].with_context(self.context_no_mail).create({
             'name': 'Delivery product',
             'type': 'service',
             'recurring_invoice': True,

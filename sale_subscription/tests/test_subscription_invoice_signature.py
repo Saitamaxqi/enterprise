@@ -96,9 +96,8 @@ class TestSubscriptionInvoiceSignature(TestInvoiceSignature, TestSubscription):
             self.assertEqual(pricing_2.pricelist_id, pricing_1.pricelist_id)
 
     def test_renewed_churned_canceled(self):
-        context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True}
         with freeze_time("2024-07-03"):
-            subscription = self.env['sale.order'].with_context(context_no_mail).create({
+            subscription = self.env['sale.order'].with_context(self.context_no_mail).create({
                 'name': 'TestSubscription',
                 'is_subscription': True,
                 'plan_id': self.plan_month.id,
