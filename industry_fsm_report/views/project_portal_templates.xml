@@ -2,7 +2,7 @@
 <odoo>
 
     <template id="portal_my_task" inherit_id="industry_fsm.portal_my_task">
-        <xpath expr="//div[@t-if='timesheets and allow_timesheets']" position="after">
+        <xpath expr="//div[@t-if='timesheets and allow_timesheets' and hasclass('nav-item')]" position="after">
             <li t-if="task.worksheet_count and task.worksheet_template_id.report_view_id and worksheet_map.get(task.id) and task.allow_worksheets" class="nav-item">
                 <a class="nav-link p-0" href="#task_worksheet">Worksheet</a>
             </li>
