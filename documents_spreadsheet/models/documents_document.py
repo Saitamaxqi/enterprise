@@ -174,6 +174,14 @@ class Document(models.Model):
         spreadsheet_docs.file_extension = False
         super(Document, self - spreadsheet_docs)._compute_file_extension()
 
+    @api.depends("attachment_id", "handler")
+    def _compute_spreadsheet_data(self):
+        for document in self.with_context(bin_size=False):
+            if document.handler in ("spreadsheet", "frozen_spreadsheet"):
+                document.spreadsheet_data = document.attachment_id.raw
+            else:
+                document.spreadsheet_data = False
+
     @api.depends("datas", "handler")
     def _compute_spreadsheet_binary_data(self):
         for document in self:
