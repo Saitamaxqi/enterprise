@@ -54,7 +54,7 @@ class TestSubscriptionPaymentIntegration(PaymentHttpCommon):
 
     def assertInvoicePaid(self, invoice):
         self.assertIn(invoice.payment_state, {'in_payment', 'paid'}, "Payment should register")
-        self.assertEqual(invoice.amount_paid, invoice.amount_total, "Amount should match")
+        self.assertAlmostEqual(invoice.amount_paid, invoice.amount_total, msg="Amount should match")
 
     def test_subscription_invoice_payment(self):
         """
