@@ -10,6 +10,9 @@ class ResPartner(models.Model):
 
     account_represented_company_ids = fields.One2many('res.company', 'account_representative_id')
 
+    def _get_followup_responsible(self):
+        return self.env.user
+
     def open_partner_ledger(self):
         action = self.env["ir.actions.actions"]._for_xml_id("account_reports.action_account_report_partner_ledger")
         action['params'] = {

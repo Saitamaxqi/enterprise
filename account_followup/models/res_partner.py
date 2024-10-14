@@ -208,7 +208,7 @@ class ResPartner(models.Model):
         if most_delayed_aml and most_delayed_aml.move_id.invoice_user_id:
             return most_delayed_aml.move_id.invoice_user_id
 
-        return self.env.user
+        return super()._get_followup_responsible()
 
     def _get_all_followup_contacts(self):
         """ Returns every contact of type 'followup' in the children of self.
