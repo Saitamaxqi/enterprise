@@ -47,6 +47,8 @@ class MrpRoutingWorkcenter(models.Model):
             operation.quality_point_count = data.get(operation.id, 0)
 
     def write(self, vals):
+        if 'active' in vals:
+            self.with_context(active_test=False).quality_point_ids.write({'active': vals['active']})
         res = super().write(vals)
         if 'bom_id' in vals:
             self.quality_point_ids._change_product_ids_for_bom(self.bom_id)
@@ -58,10 +60,6 @@ class MrpRoutingWorkcenter(models.Model):
             for new_workcenter in new_workcenters:
                 new_workcenter.quality_point_ids._change_product_ids_for_bom(new_workcenter.bom_id)
         return new_workcenters
-
-    def toggle_active(self):
-        self.with_context(active_test=False).quality_point_ids.toggle_active()
-        return super().toggle_active()
 
     def action_mrp_workorder_show_steps(self):
         self.ensure_one()

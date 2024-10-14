@@ -47,7 +47,7 @@ class ProductProduct(models.Model):
 
     def _configure_for_amazon(self):
         """ Archive products and their templates and define their invoice policy. """
-        # Archiving is achieved by the mean of write instead of toggle_active to allow this method
+        # Archiving is achieved by the mean of write instead of action_archive to allow this method
         # to be called from data without restoring the products when they were already archived.
         self.write({'active': False})
         for product_template in self.product_tmpl_id:

@@ -301,7 +301,7 @@
                 <templates>
                     <t t-name="menu">
                         <t t-if="widget.editable"><a type="open" class="dropdown-item" role="menuitem">Edit</a></t>
-                        <a name="toggle_active" type="object" class="dropdown-item" role="menuitem" t-if="! record.active.value">Restore</a>
+                        <a name="action_unarchive" type="object" class="dropdown-item" role="menuitem" t-if="! record.active.value">Restore</a>
                         <field name="color" widget="kanban_color_picker"/>
                     </t>
                     <t t-name="card">

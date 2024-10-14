@@ -16,10 +16,8 @@
                         <a role="menuitem" type="object" name="get_formview_action" class="dropdown-item">Details</a>
                         <a role="menuitem" type="object" name="open_template" class="dropdown-item">Template</a>
                         <a role="menuitem" type="object" name="cancel" class="dropdown-item" invisible="state in ('signed', 'canceled')">Cancel</a>
-                        <a role="menuitem" type="object" name="toggle_active" class="dropdown-item" invisible="state not in ('sent', 'signed', 'canceled')">
-                            <t t-if="!record.active.raw_value">Restore</t>
-                            <t t-if="record.active.raw_value">Archive</t>
-                        </a>
+                        <a role="menuitem" type="object" name="action_archive" class="dropdown-item" invisible="state not in ('sent', 'signed', 'canceled')" t-if="record.active.raw_value">Archive</a>
+                        <a role="menuitem" type="object" name="action_unarchive" class="dropdown-item" invisible="state not in ('sent', 'signed', 'canceled')" t-if="!record.active.raw_value">Restore</a>
                         <a role="menuitem" type="delete" invisible="state != 'shared'" class="dropdown-item">Stop Sharing</a>
                         <field name="color" widget="kanban_color_picker"/>
                     </div>

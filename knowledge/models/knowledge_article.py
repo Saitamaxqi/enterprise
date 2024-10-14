@@ -1334,7 +1334,7 @@ class KnowledgeArticle(models.Model):
         # _detach_unwritable_descendants calls _filtered_access() which returns
         # a sudo-ed recordset
         articles = self + self._detach_unwritable_descendants().with_env(self.env)
-        articles.filtered('active').toggle_active()
+        articles.filtered('active').active = False
         if send_to_trash:
             articles.to_delete = True
             articles._send_trash_notifications()

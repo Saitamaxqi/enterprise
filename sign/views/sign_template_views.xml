@@ -17,10 +17,8 @@
                         <a role="menuitem" type="object" name="open_requests" class="dropdown-item">Signed Documents</a>
                         <a role="menuitem" type="object" name="stop_sharing" class="dropdown-item" invisible="not is_sharing">Stop Sharing</a>
                         <a role="menuitem" type="action" name="%(sign.action_sign_duplicate_template_with_pdf)d" class="dropdown-item">Use Layout</a>
-                        <a role="menuitem" type="object" name="toggle_active" class="dropdown-item">
-                            <t t-if="!record.active.raw_value">Restore</t>
-                            <t t-if="record.active.raw_value">Archive</t>
-                        </a>
+                        <a role="menuitem" type="object" name="action_archive" class="dropdown-item" t-if="record.active.raw_value">Archive</a>
+                        <a role="menuitem" type="object" name="action_unarchive" class="dropdown-item" t-if="!record.active.raw_value">Restore</a>
                         <a role="menuitem" type="delete" class="dropdown-item">Delete</a>
 
                         <field name="color" widget="kanban_color_picker"/>

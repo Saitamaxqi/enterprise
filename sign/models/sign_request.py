@@ -199,9 +199,9 @@ class SignRequest(models.Model):
             new_request.message_subscribe(partner_ids=old_request.cc_partner_ids.ids)
         return sign_requests
 
-    def toggle_active(self):
+    def action_archive(self):
         self.filtered(lambda sr: sr.active and sr.state == 'sent').cancel()
-        super(SignRequest, self).toggle_active()
+        return super().action_archive()
 
     def _check_senders_validity(self):
         invalid_senders = self.create_uid.filtered(lambda u: not u.email_formatted)
