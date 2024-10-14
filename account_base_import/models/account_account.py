@@ -14,20 +14,25 @@ class AccountAccount(models.Model):
         instead of trying to create it.
         """
         if "import_file" in self.env.context:
-            if 'code' not in fields:
-                raise UserError(_("The import file must contain the 'code' column"))
-            accounts_codes_ids = {}
-            fields.append(".id")
-            code_index = fields.index("code")
-            account_codes = self.search_read(
-                domain=self._check_company_domain(self.env.company),
-                fields=["code"]
-            )
-            for account in account_codes:
-                accounts_codes_ids[account["code"]] = account["id"]
-            for row in data:
-                account_code = row[code_index]
-                account_id = accounts_codes_ids.get(account_code)
-                if account_id:
-                    row.append(account_id)
+            if len({'code_mapping_ids/company_id', 'code_mapping_ids/code'} & set(fields)) == 1:
+                raise UserError(_(
+                    "You must provide both the `code_mapping_ids/company_id` "
+                    "and the `code_mapping_ids/code` columns."
+                ))
+
+            # If the accounts are referenced by their code, retrieve database IDs for them.
+            if not {'id', '.id'} & set(fields) and 'code' in fields:
+
+                accounts = self.search_fetch(
+                    domain=self._check_company_domain(self.env.company),
+                    field_names=['code'],
+                )
+                account_id_by_code = {account.code: account.id for account in accounts}
+
+                fields.append('.id')
+                code_index = fields.index('code')
+                for row in data:
+                    account_code = row[code_index]
+                    row.append(account_id_by_code.get(account_code, False))
+
         return super().load(fields, data)

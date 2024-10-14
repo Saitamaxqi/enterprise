@@ -16,23 +16,33 @@ class TestBaseImport(AccountTestInvoicingCommon):
     def setUpClass(cls):
         super().setUpClass()
         coa_file = "account_base_import/static/src/xls/coa_import.xlsx"
+        coa_file_with_code_mapping = "account_base_import/static/src/csv/coa_import_with_code_mapping.csv"
+        coa_file_with_code_mapping_and_no_code = "account_base_import/static/src/csv/coa_import_with_code_mapping_and_no_code.csv"
         journal_items_file = "account_base_import/static/src/xls/journal_items_import.xlsx"
         duplicate_journals_file = "account_base_import/static/src/xls/duplicate_journals_import.xlsx"
         with file_open(coa_file, "rb") as f:
             cls.coa_file_content = f.read()
+        with file_open(coa_file_with_code_mapping, "rb") as f:
+            cls.coa_file_with_code_mapping_content = f.read()
+        with file_open(coa_file_with_code_mapping_and_no_code, "rb") as f:
+            cls.coa_file_with_code_mapping_and_no_code_content = f.read()
         with file_open(journal_items_file, "rb") as f:
             cls.journal_items_file_content = f.read()
         with file_open(duplicate_journals_file, "rb") as f:
             cls.duplicate_journals_file_content = f.read()
 
-    def _create_save_import(self, res_model, file):
-        import_wizard = self.env["base_import.import"].create({
+    def _create_save_import(self, res_model, file, companies=None, is_csv=False):
+        if companies is None:
+            companies = self.env.company
+
+        import_wizard = self.env["base_import.import"].with_context(allowed_company_ids=companies.ids).create({
             "res_model": res_model,
             "file": file,
-            "file_type": "application/vnd.ms-excel"
+            "file_type": "application/vnd.ms-excel" if not is_csv else "text/csv",
         })
         preview = import_wizard.parse_preview({
             "has_headers": True,
+            "quoting": '"',
         })
         preview["options"]["name_create_enabled_fields"] = {
             "journal_id": True,
@@ -40,7 +50,7 @@ class TestBaseImport(AccountTestInvoicingCommon):
             "partner_id": True,
         }
 
-        return import_wizard.with_company(self.env.company).execute_import(
+        return import_wizard.with_context(allowed_company_ids=companies.ids).execute_import(
             preview["headers"],
             preview["headers"],
             preview["options"]
@@ -78,6 +88,81 @@ class TestBaseImport(AccountTestInvoicingCommon):
         self.assertEqual(len(result["ids"]), 14, "14 Accounts should have been imported")
         self.assertEqual(existing_account.name, "Bank", "The existing account should have been updated")
         self.assertEqual(existing_account.current_balance, -3500.0, "The balance should have been updated")
+
+    @unittest.skipUnless(can_import('xlrd.xlsx'), "XLRD module not available")
+    def test_account_xlsx_import_fresh_company(self):
+        """ Test importing new accounts in a fresh company with nothing but a MISC journal. """
+        new_company = self.env['res.company'].create({'name': 'New Test Company'})
+
+        self.env['account.journal'].create({
+            'name': 'Miscellaneous',
+            'code': 'MISC',
+            'type': 'general',
+            'company_id': new_company.id,
+        })
+
+        result = self._create_save_import('account.account', self.coa_file_content, companies=new_company)
+        self.cr.precommit.run()
+        new_company.account_opening_move_id.action_post()
+
+        self.assertEqual(result['messages'], [], "The import should have been successful without error")
+        self.assertEqual(len(result['ids']), 14, "14 Accounts should have been imported")
+
+        bank_account = self.env['account.account'].with_company(new_company).search([('code', '=', '550003')])
+        self.assertRecordValues(bank_account, [{
+            'name': "Bank",
+            'current_balance': -3500,
+        }])
+
+        # Check that there are now 15 accounts in the company: 14 imported + the unaffected earnings account.
+        num_accounts = self.env['account.account'].with_company(new_company).search_count([])
+        self.assertEqual(num_accounts, 15)
+
+    def test_account_csv_import_with_code_mapping(self):
+        # Create other companies referenced in the imported XLSX
+        company_2, company_3 = self.env['res.company'].create([
+            {'name': 'Company 2'},
+            {'name': 'Company 3'},
+        ])
+
+        existing_id = self.env['account.account'].with_context(import_file=True).create({'code': '550003', 'name': "Existing Account"}).id
+
+        result = self._create_save_import('account.account', self.coa_file_with_code_mapping_content, is_csv=True)
+        self.assertEqual(result['messages'], [], "The import should have been successful without error")
+        self.assertEqual(len(result['ids']), 14, "14 Accounts should have been imported")
+
+        first_account = self.env['account.account'].browse(result['ids'][0])
+        self.assertRecordValues(first_account, [{
+            'company_ids': self.company_data['company'].ids,
+            'code': '100000',
+        }])
+        self.assertRecordValues(first_account.with_company(company_2.id), [{'code': '100001'}])
+        self.assertRecordValues(first_account.with_company(company_3.id), [{'code': '100002'}])
+
+        existing_account = self.env['account.account'].browse(existing_id)
+        self.assertEqual(existing_account.name, "Bank", "The existing account should have been updated")
+        self.assertRecordValues(existing_account.with_company(company_2.id), [{'code': '550004'}])
+        self.assertRecordValues(existing_account.with_company(company_3.id), [{'code': '550005'}])
+
+    def test_account_csv_import_with_code_mapping_and_no_code(self):
+        # Create other companies referenced in the imported XLSX
+        company_2 = self.env['res.company'].create([{'name': "Company 2"}])
+
+        result = self._create_save_import(
+            'account.account',
+            self.coa_file_with_code_mapping_and_no_code_content,
+            companies=(self.company_data['company'] | company_2),
+            is_csv=True,
+        )
+        self.assertEqual(result['messages'], [], "The import should have been successful without error")
+        self.assertEqual(len(result['ids']), 15, "15 Accounts should have been imported")
+
+        first_account = self.env['account.account'].browse(result['ids'][0])
+        self.assertRecordValues(first_account, [{
+            'company_ids': (self.company_data['company'] | company_2).ids,
+            'code': '100000',
+        }])
+        self.assertRecordValues(first_account.with_company(company_2.id), [{'code': '100001'}])
 
     @unittest.skipUnless(can_import("xlrd.xlsx"), "XLRD module not available")
     def test_account_move_line_xlsx_import(self):
