@@ -16,7 +16,7 @@
                 <field name="expression_label">tax_cgst</field>
             </record>
             <record id="account_report_gstr1_sgst_column" model="account.report.column">
-                <field name="name">SGST</field>
+                <field name="name">SGST/UTGST</field>
                 <field name="expression_label">tax_sgst</field>
             </record>
             <record id="account_report_gstr1_igst_column" model="account.report.column">
