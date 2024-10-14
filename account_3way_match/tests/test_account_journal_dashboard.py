@@ -43,7 +43,7 @@ class AccountJournalDashboard3WayWatchTest(TestAccountJournalDashboardCommon):
         expected_vals_list = [
             # number_draft, sum_draft, number_waiting, sum_waiting, number_late, sum_late, currency
             [            1,       100,              1,         100,           1,      100, company_currency],
-            [            1,       200,              1,         100,           1,      100, foreign_currency],
+            [            1,       200,              1,         200,           1,      200, foreign_currency],
             [            1,       400,              1,         400,           1,      400, foreign_currency],
             [            1,       200,              1,         200,           1,      200, company_currency],
             [            1,       100,              1,         100,           1,      100, company_currency],
@@ -69,12 +69,12 @@ class AccountJournalDashboard3WayWatchTest(TestAccountJournalDashboardCommon):
         self._create_test_vendor_bills(journal)
 
         dashboard_data = journal._get_journal_dashboard_data_batched()[journal.id]
-        # Expected behavior is to have six amls waiting for payment for a total amount of 4440$
-        # three of which would be late for a total amount of 140$
-        self.assertEqual(6, dashboard_data['number_waiting'])
-        self.assertEqual(format_amount(self.env, 8880, company_currency), dashboard_data['sum_waiting'])
-        self.assertEqual(3, dashboard_data['number_late'])
-        self.assertEqual(format_amount(self.env, 480, company_currency), dashboard_data['sum_late'])
+        # Expected behavior is to have three moves waiting for payment for a total amount of 4440$ one of which would be late
+        # for a total amount of 40$ (second move has one of three lines late but that's not enough to make the move late)
+        self.assertEqual(3, dashboard_data['number_waiting'])
+        self.assertEqual(format_amount(self.env, 4440, company_currency), dashboard_data['sum_waiting'])
+        self.assertEqual(1, dashboard_data['number_late'])
+        self.assertEqual(format_amount(self.env, 40, company_currency), dashboard_data['sum_late'])
 
     @freeze_time("2019-01-22")
     def test_customer_invoice_dashboard(self):
