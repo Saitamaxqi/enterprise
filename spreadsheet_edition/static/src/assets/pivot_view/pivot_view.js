@@ -62,7 +62,6 @@ patch(PivotRenderer.prototype, {
         const actionOptions = {
             preProcessingAsyncAction: "insertPivot",
             preProcessingAsyncActionData: {
-                data: this.model.data,
                 metaData: this.model.metaData,
                 searchParams: {
                     ...this.model.searchParams,
