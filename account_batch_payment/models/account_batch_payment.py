@@ -175,8 +175,6 @@ class AccountBatchPayment(models.Model):
             payment_null = record.payment_ids.filtered(lambda p: p.amount == 0)
             if payment_null:
                 raise ValidationError(_('You cannot add payments with zero amount in a Batch Payment.'))
-            if record.state == 'draft' and record.payment_ids.filtered(lambda p: p.state != 'in_process'):
-                raise ValidationError(_('You cannot add payments that are not posted.'))
 
     @api.model_create_multi
     def create(self, vals_list):
