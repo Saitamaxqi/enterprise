@@ -86,7 +86,7 @@
             <field name="name">crm.lead.view.map</field>
             <field name="model">crm.lead</field>
             <field name="arch" type="xml">
-                <map res_partner="partner_id">
+                <map res_partner="partner_id" routing="1">
                     <field name="partner_id" string="Customer"/>
                 </map>
             </field>
