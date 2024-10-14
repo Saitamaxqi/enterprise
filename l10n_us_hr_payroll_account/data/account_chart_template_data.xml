@@ -4,7 +4,7 @@
         <function model="account.chart.template" name="_load_payroll_accounts">
             <value eval="[]"/>
             <value>generic_coa</value>
-            <value model="res.company" eval="obj().search([('chart_template', '=', 'us'), ('partner_id.country_id.code', '=', 'US')])"/>
+            <value model="res.company" eval="obj().search([('chart_template', '=', 'generic_coa'), ('partner_id.country_id.code', '=', 'US')])"/>
         </function>
     </data>
 </odoo>
