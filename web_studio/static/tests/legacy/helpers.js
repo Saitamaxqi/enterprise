@@ -57,40 +57,6 @@ export function leaveStudio(target) {
     return click(target.querySelector(".o_studio_navbar .o_web_studio_leave a"));
 }
 
-export function getReportServerData() {
-    const models = {
-        "ir.actions.report": {
-            fields: {
-                model: { type: "char" },
-                report_name: { type: "char" },
-                report_type: { type: "char" },
-            },
-            records: [{ id: 11, model: "foo", report_name: "foo_report", report_type: "pdf" }],
-        },
-    };
-
-    const views = {
-        "ir.actions.report,false,kanban": `
-            <kanban js_class="studio_report_kanban">
-                <field name="report_name"/>
-                <field name="report_type"/>
-                <field name="id"/>
-                <templates>
-                    <t t-name="kanban-box">
-                        <div t-att-data-id="record.id.value">
-                            <div class="oe_kanban_details">
-                                <field name="report_name" groups="base.group_no_one"/>
-                            </div>
-                        </div>
-                    </t>
-                </templates>
-            </kanban>`,
-        "ir.actions.report,false,search": `<search />`,
-    };
-
-    return { models, views };
-}
-
 export function fillActionFieldsDefaults(action) {
     if (action.type !== "ir.actions.act_window") {
         return action;

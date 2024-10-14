@@ -53,37 +53,6 @@ class Product extends models.Model {
 
 defineModels([Coucou, Product, Partner]);
 
-test("template without t-name='card' load the legacy kanban editor", async () => {
-    // avoid "kanban-box" deprecation warnings in this suite, which
-    // defines legacy kanban on purpose
-    const originalConsoleWarn = console.warn;
-    patchWithCleanup(console, {
-        warn: (msg) => {
-            if (msg !== "'kanban-box' is deprecated, use 'kanban-card' API instead") {
-                originalConsoleWarn(msg);
-            }
-        },
-    });
-    await mountViewEditor({
-        type: "kanban",
-        resModel: "coucou",
-        arch: `<kanban>
-        <templates>
-            <t t-name="kanban-box">
-                <div>
-                    <field name="char_field"/>
-                </div>
-            </t>
-        </templates>
-    </kanban>
-    `,
-    });
-    expect(".o_web_studio_kanban_view_editor_legacy").toHaveCount(1);
-    expect(".o_kanban_record .o_web_studio_kanban_hook").toHaveCount(4, {
-        message: "hooks are present inside the card",
-    });
-});
-
 test("empty kanban editor", async () => {
     await mountViewEditor({
         type: "kanban",
@@ -656,7 +625,7 @@ test("sortby and orderby field in kanban sidebar", async () => {
         const operation = params.operations[0];
         expect(operation.new_attrs.default_order).toBe("char_field asc");
         expect(operation.position).toBe("attributes");
-        expect(operation.target.xpath_info).toEqual([{tag: "kanban", indice: 1}]);
+        expect(operation.target.xpath_info).toEqual([{ tag: "kanban", indice: 1 }]);
         expect.step("edit_view");
         const newArch = `
             <kanban default_order="char_field asc">
