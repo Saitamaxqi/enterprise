@@ -126,7 +126,7 @@ class AccountMove(models.Model):
         report = self.tax_closing_report_id
         options = self._get_tax_closing_report_options(self.company_id, self.fiscal_position_id, report, self.date)
 
-        if not self.company_id.tax_lock_date or self.date > self.company_id.tax_lock_date:
+        if not self.fiscal_position_id and (not self.company_id.tax_lock_date or self.date > self.company_id.tax_lock_date):
             self.company_id.sudo().tax_lock_date = self.date
             self.env['account.report']._generate_default_external_values(options['date']['date_from'], options['date']['date_to'], True)
 
