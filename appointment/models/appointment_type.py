@@ -71,10 +71,10 @@ class AppointmentType(models.Model):
     end_datetime = fields.Datetime('End Datetime')
     # mail templates
     booked_mail_template_id = fields.Many2one(
-        'mail.template', string='Confirmation Email', ondelete='restrict',
+        'mail.template', string='Booking Email', ondelete='restrict',
         domain=[('model', '=', 'calendar.attendee')],
         default=_default_booked_mail_template_id,
-        help="If set an email will be sent to the customer when the appointment is confirmed.")
+        help="If set an email will be sent to the customer when the appointment is booked.")
     canceled_mail_template_id = fields.Many2one(
         'mail.template', string='Cancellation Email', ondelete='restrict',
         domain=[('model', '=', 'calendar.event')],

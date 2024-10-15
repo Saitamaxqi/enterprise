@@ -1481,3 +1481,30 @@ class AppointmentTest(AppointmentCommon, HttpCaseWithUserDemo):
              'slots_day_specific': {date(2022, 2, 28): [{'start':1}]}
              }
         )
+
+    def test_no_activity_creation_on_apt_booking(self):
+        """ Test that no activity is created on appointment booking. """
+        apt_type = self.apt_type_bxls_2days
+        self.env['calendar.event'].with_user(self.apt_manager).with_context(
+            default_res_model=apt_type._name,
+            default_res_id=apt_type.id,
+        ).create({
+            'name': 'Appointment Meeting',
+            'start': datetime(2022, 2, 1, 10, 0, 0),
+            'stop': datetime(2022, 2, 1, 11, 0, 0),
+            'appointment_type_id': apt_type.id,
+        })
+        self.assertEqual(len(apt_type.activity_ids), 0)
+        # Ensure that activities are created if model is not appointment.type
+        test_record = self.env['res.partner'].create({
+            'name': 'User 0',
+        })
+        self.env['calendar.event'].with_user(self.user_demo).with_context(
+            default_res_model=test_record._name,
+            default_res_id=test_record.id,
+        ).create({
+            'name': 'Normal Meeting',
+            'start': datetime(2022, 2, 1, 11, 0, 0),
+            'stop': datetime(2022, 2, 1, 12, 0, 0),
+        })
+        self.assertEqual(len(test_record.activity_ids), 1)

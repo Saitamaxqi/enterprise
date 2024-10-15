@@ -436,6 +436,10 @@ class CalendarEvent(models.Model):
             link_html,
         ])
 
+    @api.model
+    def _get_activity_excluded_models(self):
+        return super()._get_activity_excluded_models() + ['appointment.type']
+
     def _get_attendee_description(self):
         """:return (html): Sanitized HTML description of attendees and their responses to the questions"""
         include_phone_partners = self.attendee_ids.filtered(lambda attendee: attendee.partner_id in (self.appointment_booker_id + self.partner_id))

@@ -6,7 +6,7 @@
             <attribute name="menuClass" add="' min-w-0'" separator="+"/>
         </xpath>
         <xpath expr="//div[hasclass('o_dropdown_kanban')]" position="attributes">
-            <attribute name="class" add="appointment_type_action_toggler" separator=" "/>
+            <attribute name="class" add="appointment_type_action_toggler visible" separator=" "/>
         </xpath>
         <xpath expr="//span[hasclass('fa-ellipsis-v')]" position="after">
             <span class="text-large appointment_type_action_toggler_text d-none">Action</span>

@@ -216,7 +216,7 @@
                     </div>
                     <div class="oe_title mb-4">
                         <label for="name"/>
-                        <h1><field name="name" placeholder='e.g. "Technical Demo"'/></h1>
+                        <h1><field name="name" placeholder='e.g. "Technical Demo"' widget="text" options="{'line_breaks': False}"/></h1>
                     </div>
                     <group>
                         <group name="left_details">

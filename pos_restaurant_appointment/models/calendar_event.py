@@ -68,6 +68,7 @@ class CalendarEvent(models.Model):
             'context': {
                 'appointment_booking_gantt_show_all_resources': True,
                 'active_model': 'appointment.type',
+                'default_partner_ids': [],
                 "search_default_appointment_type_id": appointment_type_id,
                 "no_breadcrumbs": True,
             }
