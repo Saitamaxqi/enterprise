@@ -20,4 +20,4 @@ class StockMove(models.Model):
                 new_move_line_vals.append(move_line_vals)
         if new_move_line_vals:
             self.env['stock.move.line'].create(new_move_line_vals)
-        super(StockMove, self - production_moves).split_uncompleted_moves()
+        return super(StockMove, self - production_moves).split_uncompleted_moves()
