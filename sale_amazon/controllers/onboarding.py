@@ -32,7 +32,9 @@ def compute_oauth_signature(account_id):
 
 class AmazonController(http.Controller):
 
-    @http.route('/amazon/return', type='http', methods=['GET'], auth='user')
+    @http.route(
+        '/amazon/return', type='http', methods=['GET'], auth='user', website=True, sitemap=False
+    )
     def amazon_return_from_authorization(self, **data):
         """ Request a refresh token from the OAuth token and redirect to the account form.
 
@@ -72,7 +74,7 @@ class AmazonController(http.Controller):
         except (UserError, ValidationError) as e:
             return request.render(
                 'sale_amazon.authorization_error',
-                qcontext={'error_message': e['name'], 'account_url': account_url},
+                qcontext={'error_message': str(e), 'account_url': account_url},
             )
 
         return request.redirect(account_url, local=False)

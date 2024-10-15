@@ -2,9 +2,9 @@
 <odoo>
 
     <template id="authorization_error" name="Authorization Error">
-        <!-- Variables description:
-            - 'error_message' - The reason of the error.
-            - 'account_url' - The URL to the Amazon account.
+        <!-- Parameters description:
+            - error_message: The reason of the error.
+            - account_url: The URL to the Amazon account.
         -->
         <t t-call="portal.frontend_layout">
             <div class="wrap">

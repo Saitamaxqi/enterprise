@@ -103,7 +103,10 @@ def make_proxy_request(endpoint, env, payload=None):
                 error_code, error_description, pformat(data)
             )
             raise ValidationError(
-                env._("Error code: %(error_code)s; description: %(error_message)s", error_code=error_code, error_message=error_description)
+                env._(
+                    "Error code: %(error_code)s; description: %(error_message)s",
+                    error_code=error_code, error_message=error_description
+                )
             )
     except (requests.exceptions.ConnectionError, requests.exceptions.Timeout):
         _logger.warning("Could not establish the connection to the proxy.", exc_info=True)
