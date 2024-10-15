@@ -2,14 +2,16 @@ import base64
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from freezegun import freeze_time
+import io
+import json
 
-from odoo import Command, fields
+from odoo import Command, fields, http
 from odoo.addons.mail.tests.common import MailCommon
-from odoo.tests import Form, RecordCapturer
+from odoo.tests import Form, RecordCapturer, HttpCase
 from odoo.tools import mute_logger
 
 
-class TestDocumentRequest(MailCommon):
+class TestDocumentRequest(MailCommon, HttpCase):
 
     @classmethod
     def setUpClass(cls):
@@ -171,3 +173,40 @@ class TestDocumentRequest(MailCommon):
         self.assertEqual(message.body, '<p>Hello</p>')
         self.assertEqual(message.partner_ids, self.doc_partner_1)
         self.assertEqual(message.subject, 'Example of document required')
+
+    def test_request_document_upload_through_activity_popover(self):
+        wizard = self.env['documents.request_wizard'].with_user(self.user_employee).create({
+            'name': 'Wizard Request',
+            'requestee_id': self.doc_partner_1.id,
+            'activity_type_id': self.activity_type.id,
+            'folder_id': self.folder_a.id,
+        })
+        with self.mock_mail_gateway():
+            document = wizard.request_document()
+
+        self.assertEqual(document.request_activity_id.user_id, self.doc_user, "Activity assigned to the requestee")
+        self.assertEqual(document.owner_id, self.user_employee, "Owner of the document is the requester")
+        document.action_update_access_rights(partners={self.user_admin.partner_id: ('edit', False)})
+
+        self.authenticate("admin", "admin")
+        with io.StringIO("Hello world!") as file:
+            response = self.opener.post(
+                url=f"{self.base_url()}/mail/attachment/upload",
+                files={"ufile": file},
+                data={
+                    "activity_id": document.activity_ids.id,
+                    "thread_id": document.id,
+                    "thread_model": "documents.document",
+                    "csrf_token": http.Request.csrf_token(self),
+                },
+            )
+        self.assertEqual(response.status_code, 200)
+        response_content = response.json()
+        data_attachment = response_content.get('data', {}).get('ir.attachment', {})
+        self.assertTrue(data_attachment)
+        self.assertEqual(len(data_attachment), 1)
+        data_attachment_id = data_attachment[0].get('id')
+        self.assertTrue(data_attachment_id, "We should have the id of the attachment upload inside the response.")
+        document.activity_ids.action_feedback(attachment_ids=[data_attachment_id])
+        self.assertEqual(document.attachment_id.id, data_attachment_id,
+                         "Attachment should be linked to document only once.")
