@@ -147,7 +147,7 @@ class HrLeave(models.Model):
                 is_validated = False
             else:
                 dt_delta = (leave.date_to - leave.date_from)
-                if leave.holiday_id and not (leave.holiday_id.request_unit_half or leave.holiday_id.request_unit_hours):
+                if leave.holiday_id and not (leave.holiday_id.sudo().request_unit_half or leave.holiday_id.sudo().request_unit_hours):
                     number_of_days = dt_delta.days + 1
                 else:
                     number_of_days = dt_delta.days + ((dt_delta.seconds / 3600) / 24)
