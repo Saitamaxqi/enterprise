@@ -918,15 +918,17 @@ class AccountMove(models.Model):
             if not move_form.currency_id.is_zero(tax_amount_rounding_error) and self.is_indian_taxes():
                 fixed_rounding_error = total_ocr - total_tax_amount_ocr - self.tax_totals['base_amount_currency']
                 tax_totals = self.tax_totals
-                tax_groups = tax_totals['groups_by_subtotal']['Untaxed Amount']
-                if move_form.currency_id.is_zero(fixed_rounding_error) and tax_groups:
-                    tax = total_tax_amount_ocr / len(tax_groups)
-                    for tax_total in tax_groups:
-                        tax_total.update({
-                            'tax_group_amount': tax,
-                            'formatted_tax_group_amount': formatLang(self.env, tax, currency_obj=self.currency_id),
-                        })
-                    self.tax_totals = tax_totals
+                if move_form.currency_id.is_zero(fixed_rounding_error) and tax_totals['has_tax_groups']:
+                    max_tax_group = max(
+                        [
+                            tax_group
+                            for subtotal in tax_totals['subtotals']
+                            for tax_group in subtotal['tax_groups']
+                        ],
+                        key=lambda tax_group: tax_group['tax_amount_currency'],
+                    )
+                    max_tax_group['tax_amount_currency'] += fixed_rounding_error
+                self.tax_totals = tax_totals
 
             # Set the imported flag after taxes have been computed
             move_form.invoice_line_ids.is_imported = True
