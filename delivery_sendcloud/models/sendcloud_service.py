@@ -574,7 +574,7 @@ class SendCloud:
             currency_name = picking.company_id.currency_id.name
 
         parcel_common = {
-            'name': to_partner_id.name[:75],
+            'name': (to_partner_id.name or to_partner_id.parent_id.name or '')[:75],
             'company_name': to_partner_id.commercial_company_name[:50] if to_partner_id.commercial_company_name else '',
             'address': to_partner_id.street,
             'address_2': to_partner_id.street2 or '',
@@ -605,7 +605,7 @@ class SendCloud:
             # we only use from_partner_id in case sender_id is false
             self._validate_partner_details(from_partner_id)
             parcel_common.update({
-                'from_name': from_partner_id.name[:75],
+                'from_name': (from_partner_id.name or from_partner_id.parent_id.name or '')[:75],
                 'from_company_name': from_partner_id.commercial_company_name[:50] if from_partner_id.commercial_company_name else '',
                 'from_house_number': self._get_house_number(from_partner_id.street),
                 'from_address_1': from_partner_id.street or '',
