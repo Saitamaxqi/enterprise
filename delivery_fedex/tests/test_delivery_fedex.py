@@ -70,7 +70,7 @@ class TestDeliveryFedex(TransactionCase):
         wiz_action = picking.action_put_in_pack()
         self.assertEqual(wiz_action['res_model'], 'choose.delivery.package', 'Wrong wizard returned')
         wiz = Form.from_action(self.env, wiz_action)
-        wiz.delivery_package_type_id: picking.carrier_id.fedex_default_package_type_id
+        wiz.delivery_package_type_id = picking.carrier_id.fedex_default_package_type_id
         wiz.save().action_put_in_pack()
 
     def test_01_fedex_basic_us_domestic_flow(self):
