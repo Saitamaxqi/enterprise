@@ -4,23 +4,36 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 15.5alpha1+e\n"
+"Project-Id-Version: Odoo Server 18.1alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-03-27 09:47+0000\n"
-"PO-Revision-Date: 2023-03-27 11:55+0200\n"
+"POT-Creation-Date: 2024-12-11 10:42+0000\n"
+"PO-Revision-Date: 2024-12-11 10:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
-"Language: et\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.2.2\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
 
 #. module: l10n_ee_reports
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_assets
 msgid "ASSETS"
 msgstr "VARAD"
+
+#. module: l10n_ee_reports
+#: model:ir.model.fields,help:l10n_ee_reports.field_res_config_settings__l10n_ee_rounding_difference_loss_account_id
+msgid ""
+"Account used for losses from rounding the lines of Estonian tax reports"
+msgstr ""
+"Konto, mida kasutatakse Eesti maksuaruannete ridade ümardamisest tekkinud "
+"kahjude katteks"
+
+#. module: l10n_ee_reports
+#: model:ir.model.fields,help:l10n_ee_reports.field_res_config_settings__l10n_ee_rounding_difference_profit_account_id
+msgid ""
+"Account used for profits from rounding the lines of Estonian tax reports"
+msgstr ""
+"Konto, mida kasutatakse Eesti maksuaruannete ridade ümardamise kasumiks"
 
 #. module: l10n_ee_reports
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_acc_pay
@@ -44,6 +57,16 @@ msgstr "Bilanss"
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_lt_bio_assets
 msgid "Biological Assets"
 msgstr "Bioloogilised varad"
+
+#. module: l10n_ee_reports
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_a_report_buyer_name
+msgid "Buyer Name"
+msgstr "Ostja nimi"
+
+#. module: l10n_ee_reports
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_a_report_buyer_reg_code
+msgid "Buyer Register Code"
+msgstr "Ostja registri või isikukood"
 
 #. module: l10n_ee_reports
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_pl_1_exp_man_fa
@@ -79,10 +102,20 @@ msgstr "Valige kuu käibemaksuaruande eksportimiseks"
 
 #. module: l10n_ee_reports
 #. odoo-python
-#: code:addons/l10n_ee_reports/models/account_report.py:0
 #: code:addons/l10n_ee_reports/models/account_sales_report.py:0
 msgid "Company Settings"
 msgstr "Ettevõtte seaded"
+
+#. module: l10n_ee_reports
+#. odoo-python
+#: code:addons/l10n_ee_reports/models/account_report.py:0
+msgid "Company: %s"
+msgstr "Ettevõte: %s"
+
+#. module: l10n_ee_reports
+#: model:ir.model,name:l10n_ee_reports.model_res_config_settings
+msgid "Config Settings"
+msgstr "Seadistused"
 
 #. module: l10n_ee_reports
 #: model:account.report.column,name:l10n_ee_reports.account_financial_report_ec_sales_country
@@ -109,6 +142,14 @@ msgstr "Tulevaste perioodide tulud"
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_pl_1_dep_fa
 msgid "Depreciations and Amortizations of Fixed Assets"
 msgstr "Põhivarade kulum ja väärtuse langus"
+
+#. module: l10n_ee_reports
+#: model:ir.model.fields,field_description:l10n_ee_reports.field_l10n_ee_ec_sales_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_ee_reports.field_l10n_ee_kmd_inf_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_ee_reports.field_l10n_ee_tax_report_handler__display_name
+#: model:ir.model.fields,field_description:l10n_ee_reports.field_res_config_settings__display_name
+msgid "Display Name"
+msgstr "Näidatav nimi"
 
 #. module: l10n_ee_reports
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_equity
@@ -148,6 +189,12 @@ msgid "Finished Goods"
 msgstr "Valmistoodang"
 
 #. module: l10n_ee_reports
+#. odoo-python
+#: code:addons/l10n_ee_reports/models/account_report.py:0
+msgid "Go to Company"
+msgstr "Mine ettevõttesse"
+
+#. module: l10n_ee_reports
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_goods_resale
 msgid "Goods for Resale"
 msgstr "Müügiks ostetud kaubad"
@@ -169,6 +216,14 @@ msgid "IC Supply Report (VD)"
 msgstr "Ühendusesisese käibe aruanne (VD)"
 
 #. module: l10n_ee_reports
+#: model:ir.model.fields,field_description:l10n_ee_reports.field_l10n_ee_ec_sales_report_handler__id
+#: model:ir.model.fields,field_description:l10n_ee_reports.field_l10n_ee_kmd_inf_report_handler__id
+#: model:ir.model.fields,field_description:l10n_ee_reports.field_l10n_ee_tax_report_handler__id
+#: model:ir.model.fields,field_description:l10n_ee_reports.field_res_config_settings__id
+msgid "ID"
+msgstr ""
+
+#. module: l10n_ee_reports
 #: model:account.report,name:l10n_ee_reports.account_financial_report_pl_1
 msgid "Income Statement (Scheme 1)"
 msgstr "Kasumiaruanne (Skeem 1)"
@@ -179,9 +234,11 @@ msgid "Income Taxes"
 msgstr "Tulumaks"
 
 #. module: l10n_ee_reports
-#: model:account.report.column,name:l10n_ee_reports.kmd_inf_report_vat_in_period
-msgid "Input VAT on KMD"
-msgstr "Sisendkäibemaks vormil KMD"
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_b_report_vat_in_period
+msgid ""
+"Input VAT Amount Presented in Field 5 of Form KMD for the Taxation Period"
+msgstr ""
+"Maksustamisperioodil vormi KMD lahtris 5 kajastatud sisendkäibemaksu summa"
 
 #. module: l10n_ee_reports
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_intan_noncur_assets
@@ -209,19 +266,31 @@ msgid "Investments in Subsidiaries and Affiliates"
 msgstr "Investeeringud tütar- ja sidusettevõtjatesse"
 
 #. module: l10n_ee_reports
-#: model:account.report.column,name:l10n_ee_reports.kmd_inf_report_invoice_date
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_a_report_invoice_date
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_b_report_invoice_date
 msgid "Invoice Date"
 msgstr "Arve kuupäev"
 
 #. module: l10n_ee_reports
-#: model:account.report.column,name:l10n_ee_reports.kmd_inf_report_invoice_number
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_a_report_invoice_number
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_b_report_invoice_number
 msgid "Invoice Number"
 msgstr "Arve number"
 
 #. module: l10n_ee_reports
-#: model:account.report.column,name:l10n_ee_reports.kmd_inf_report_invoice_total
-msgid "Invoice Total"
-msgstr "Arve kogusumma"
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_b_report_invoice_sum_vat
+msgid "Invoice Total with VAT"
+msgstr "Arve kogusumma koos käibemaksuga"
+
+#. module: l10n_ee_reports
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_a_report_invoice_sum
+msgid "Invoice Total without VAT"
+msgstr "Arve kogusumma ilma käibemaksuta"
+
+#. module: l10n_ee_reports
+#: model_terms:ir.ui.view,arch_db:l10n_ee_reports.vat_report_xml
+msgid "KMD4"
+msgstr ""
 
 #. module: l10n_ee_reports
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_liabilities
@@ -251,21 +320,35 @@ msgid "Loan Receivables"
 msgstr "Laenunõuded"
 
 #. module: l10n_ee_reports
+#: model:ir.model.fields,field_description:l10n_ee_reports.field_res_config_settings__l10n_ee_rounding_difference_loss_account_id
+msgid "Loss Account for VAT Rounding"
+msgstr "Käibemaksu ümardamise kahjukonto"
+
+#. module: l10n_ee_reports
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_pl_1_misc_op_exp
 msgid "Miscellaneous Operating Expenses"
 msgstr "Mitmesugused tegevuskulud"
 
 #. module: l10n_ee_reports
 #. odoo-python
+#: code:addons/l10n_ee_reports/models/account_report.py:0
+msgid "Missing partners"
+msgstr "Puuduvad partnerid"
+
+#. module: l10n_ee_reports
+#. odoo-python
 #: code:addons/l10n_ee_reports/models/account_sales_report.py:0
 msgid "No VAT number defined for the following partners: %s"
-msgstr "Järgmiste partnerite jaoks ei ole käibemaksukohustuslase numbrit määratletud: %s"
+msgstr ""
+"Järgmiste partnerite jaoks ei ole käibemaksukohustuslase numbrit "
+"määratletud: %s"
 
 #. module: l10n_ee_reports
 #. odoo-python
 #: code:addons/l10n_ee_reports/models/account_report.py:0
 #: code:addons/l10n_ee_reports/models/account_sales_report.py:0
-msgid "No company registry number associated with your company. Please define one."
+msgid ""
+"No company registry number associated with your company. Please define one."
 msgstr "Teie ettevõttega seotud registrinumber puudub. Palun määratlege üks."
 
 #. module: l10n_ee_reports
@@ -343,30 +426,25 @@ msgid "Own Shares"
 msgstr "Oma aktsiad või osad"
 
 #. module: l10n_ee_reports
-#: model:account.report.line,name:l10n_ee_reports.kmd_inf_report_a_line
+#: model:account.report.line,name:l10n_ee_reports.kmd_inf_report_a
 msgid "Part A - Invoices Issued"
 msgstr "A osa - Väljastatud arved"
 
 #. module: l10n_ee_reports
-#: model:account.report.line,name:l10n_ee_reports.kmd_inf_report_b_line
+#: model:account.report.line,name:l10n_ee_reports.kmd_inf_report_b
 msgid "Part B - Invoices Received"
 msgstr "B osa - Saadud arved"
-
-#. module: l10n_ee_reports
-#: model:account.report.column,name:l10n_ee_reports.kmd_inf_report_partner_name
-msgid "Partner Name"
-msgstr "Tehingupartneri nimi"
-
-#. module: l10n_ee_reports
-#: model:account.report.column,name:l10n_ee_reports.kmd_inf_report_partner_reg_code
-msgid "Partner Reg Code"
-msgstr "Tehingupartneri registrikood"
 
 #. module: l10n_ee_reports
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_lt_pay_prep
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_pay_prep
 msgid "Payables and Prepayments"
 msgstr "Võlad ja ettemaksed"
+
+#. module: l10n_ee_reports
+#: model_terms:ir.ui.view,arch_db:l10n_ee_reports.res_config_settings_view_form
+msgid "Post difference from rounding tax closing entries in:"
+msgstr "Postita erinevus ümardamismaksu sulgemiskannetest:"
 
 #. module: l10n_ee_reports
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_lt_def_tax
@@ -384,6 +462,11 @@ msgstr "Ettemaksed"
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_prep_sup
 msgid "Prepayments to Suppliers"
 msgstr "Ettemaksed varude eest"
+
+#. module: l10n_ee_reports
+#: model:ir.model.fields,field_description:l10n_ee_reports.field_res_config_settings__l10n_ee_rounding_difference_profit_account_id
+msgid "Profit Account for VAT Rounding"
+msgstr "Käibemaksu ümardamise kasumikonto"
 
 #. module: l10n_ee_reports
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_pl_1_before_tax
@@ -455,6 +538,16 @@ msgid "Sales Revenue"
 msgstr "Müügitulu"
 
 #. module: l10n_ee_reports
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_b_report_seller_name
+msgid "Seller Name"
+msgstr "Müüja nimi"
+
+#. module: l10n_ee_reports
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_b_report_seller_reg_code
+msgid "Seller Register Code"
+msgstr "Seller's registry or personal identification number"
+
+#. module: l10n_ee_reports
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_share_cap
 msgid "Share Capital (Nominal Value)"
 msgstr "Aktsiakapital või osakapital nimiväärtuses"
@@ -480,7 +573,8 @@ msgid "Significant Impairment of Current Assets"
 msgstr "Olulised käibevara allahindlused"
 
 #. module: l10n_ee_reports
-#: model:account.report.column,name:l10n_ee_reports.kmd_inf_report_comments
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_a_report_comments
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_b_report_comments
 msgid "Special Code"
 msgstr "Erisuse kood"
 
@@ -501,14 +595,16 @@ msgid "Tax Provisions"
 msgstr "Maksueraldis"
 
 #. module: l10n_ee_reports
-#: model:account.report.column,name:l10n_ee_reports.kmd_inf_report_tax_rate
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_a_report_tax_rate
 msgid "Tax Rate"
 msgstr "Maksumäär"
 
 #. module: l10n_ee_reports
-#: model:account.report.column,name:l10n_ee_reports.kmd_inf_report_sum_for_rate_in_period
-msgid "Taxable Supply on KMD"
-msgstr "Maksustatav käive vormil KMD"
+#: model:account.report.column,name:l10n_ee_reports.kmd_inf_a_report_sum_for_rate_in_period
+msgid "Taxable Supply for the Taxation Period"
+msgstr ""
+"Maksustamisperioodil vormi KMD lahtrites 1, 1^1, 2 ja 2^1 kajastatud "
+"maksustatav käive"
 
 #. module: l10n_ee_reports
 #: model:account.report.column,name:l10n_ee_reports.account_financial_report_ec_sales_goods
@@ -573,6 +669,16 @@ msgid "VAT Report Annex (KMD INF)"
 msgstr "Käibedeklaratsiooni lisa (KMD INF)"
 
 #. module: l10n_ee_reports
+#: model:account.report,name:l10n_ee_reports.kmd_inf_report_part_a
+msgid "VAT Report Annex KMD INF Part A"
+msgstr "Vormi KMD INF A-osa"
+
+#. module: l10n_ee_reports
+#: model:account.report,name:l10n_ee_reports.kmd_inf_report_part_b
+msgid "VAT Report Annex KMD INF Part B"
+msgstr "Vormi KMD INF B-osa"
+
+#. module: l10n_ee_reports
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_lt_warr_prov
 #: model:account.report.line,name:l10n_ee_reports.account_financial_report_bs_warr_prov
 msgid "Warranty Provisions"
@@ -591,11 +697,51 @@ msgid "XML"
 msgstr ""
 
 #. module: l10n_ee_reports
+#. odoo-javascript
+#: code:addons/l10n_ee_reports/static/src/components/kmd_inf_report/warnings.xml:0
+msgid "You have"
+msgstr "Teil on"
+
+#. module: l10n_ee_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ee_reports.vat_report_xml
 msgid "false"
 msgstr ""
 
 #. module: l10n_ee_reports
+#. odoo-javascript
+#: code:addons/l10n_ee_reports/static/src/components/kmd_inf_report/warnings.xml:0
+msgid "here"
+msgstr "Loetelu vaatamiseks klõpsake siin"
+
+#. module: l10n_ee_reports
+#. odoo-javascript
+#: code:addons/l10n_ee_reports/static/src/components/kmd_inf_report/warnings.xml:0
+msgid "to see the list."
+msgstr "."
+
+#. module: l10n_ee_reports
+#. odoo-javascript
+#: code:addons/l10n_ee_reports/static/src/components/kmd_inf_report/warnings.xml:0
+msgid "transaction partner"
+msgstr "tehingupartner"
+
+#. module: l10n_ee_reports
+#. odoo-javascript
+#: code:addons/l10n_ee_reports/static/src/components/kmd_inf_report/warnings.xml:0
+msgid "transaction partners"
+msgstr "tehingupartnerit"
+
+#. module: l10n_ee_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ee_reports.vat_report_xml
 msgid "true"
 msgstr ""
+
+#. module: l10n_ee_reports
+#. odoo-javascript
+#: code:addons/l10n_ee_reports/static/src/components/kmd_inf_report/warnings.xml:0
+msgid ""
+"with eligible invoices in the selected period who are not included in the "
+"report due to a missing tax number or missing country. Click"
+msgstr ""
+"kellel on valitud perioodil abikõlblikud arved, kuid kes ei ole aruandesse "
+"kaasatud puuduva maksunumbri või riigi puudumise tõttu."

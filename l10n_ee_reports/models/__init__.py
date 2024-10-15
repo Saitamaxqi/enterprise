@@ -2,3 +2,4 @@
 
 from . import account_report
 from . import account_sales_report
+from . import res_config_settings
