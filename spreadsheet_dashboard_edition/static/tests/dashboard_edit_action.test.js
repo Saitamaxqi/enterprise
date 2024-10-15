@@ -1,5 +1,5 @@
 import { Deferred } from "@web/core/utils/concurrency";
-import { patchWithCleanup, MockServer, contains } from "@web/../tests/web_test_helpers";
+import { patchWithCleanup, contains, onRpc } from "@web/../tests/web_test_helpers";
 import { animationFrame } from "@odoo/hoot-mock";
 import { expect, test, getFixture } from "@odoo/hoot";
 import { registry } from "@web/core/registry";
@@ -140,20 +140,24 @@ test("publish dashboard from control panel", async function () {
 
 test("unpublish dashboard from control panel", async function () {
     const fixture = getFixture();
+    onRpc(
+        "/spreadsheet/data/spreadsheet.dashboard/*",
+        () => {
+            return {
+                data: {},
+                revisions: [],
+                name: "Dashboard",
+                isReadonly: false,
+                is_published: true,
+            };
+        },
+        { pure: true }
+    );
     await createDashboardEditAction({
         mockRPC: async function (route, args, performRPC) {
             if (args.model === "spreadsheet.dashboard" && args.method === "write") {
                 expect.step("dashboard_unpublished");
                 expect(args.args[1]).toEqual({ is_published: false });
-            }
-            if (
-                args.model === "spreadsheet.dashboard" &&
-                args.method === "join_spreadsheet_session"
-            ) {
-                return {
-                    ...(await MockServer.current.callOrm({ route, ...args })),
-                    is_published: true,
-                };
             }
         },
     });

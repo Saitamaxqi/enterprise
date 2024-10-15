@@ -37,7 +37,6 @@ class TestSpreadsheetBus(SpreadsheetTestCommon, MailCase):
 
     def test_active_spreadsheet(self):
         spreadsheet = self.create_spreadsheet()
-        spreadsheet.join_spreadsheet_session()
         commands = self.new_revision_data(spreadsheet)
         spreadsheet.dispatch_spreadsheet_message(commands)
         self.assertEqual(
@@ -49,7 +48,6 @@ class TestSpreadsheetBus(SpreadsheetTestCommon, MailCase):
     def test_archived_active_spreadsheet(self):
         spreadsheet = self.create_spreadsheet()
         spreadsheet.active = False
-        spreadsheet.join_spreadsheet_session()
         commands = self.new_revision_data(spreadsheet)
         spreadsheet.dispatch_spreadsheet_message(commands)
         self.assertEqual(
@@ -96,7 +94,6 @@ class TestSpreadsheetBus(SpreadsheetTestCommon, MailCase):
 
     def test_poll_access(self):
         spreadsheet = self.create_spreadsheet()
-        spreadsheet.join_spreadsheet_session()
         commands = self.new_revision_data(spreadsheet)
         spreadsheet.dispatch_spreadsheet_message(commands)
         spreadsheet.folder_id.access_via_link = 'none'

@@ -18,6 +18,7 @@ import {
     getService,
     mountWithCleanup,
     patchWithCleanup,
+    onRpc,
 } from "@web/../tests/web_test_helpers";
 import { downloadFile } from "@web/core/network/download";
 import { WebClient } from "@web/webclient/webclient";
@@ -63,16 +64,11 @@ const TEST_LOCALES = [
 
 test("open spreadsheet with deprecated `active_id` params", async function () {
     await prepareWebClientForSpreadsheet();
+    onRpc("/spreadsheet/data/documents.document/1", () => expect.step("spreadsheet-loaded"), {
+        pure: true,
+    });
     await makeDocumentsSpreadsheetMockEnv({
         serverData: { models: getBasicData() },
-        mockRPC: async function (route, args) {
-            if (args.method === "join_spreadsheet_session") {
-                expect.step("spreadsheet-loaded");
-                expect(args.args[0]).toBe(1, {
-                    message: "It should load the correct spreadsheet",
-                });
-            }
-        },
     });
     await mountWithCleanup(WebClient);
     await getService("action").doAction({
@@ -128,39 +124,41 @@ test("breadcrumb is rendered the navbar", async function () {
 });
 
 test("Can open a spreadsheet in readonly", async function () {
-    const { model } = await createSpreadsheet({
-        mockRPC: async function (route, args) {
-            if (args.method === "join_spreadsheet_session") {
-                return {
-                    data: {},
-                    name: "name",
-                    revisions: [],
-                    isReadonly: true,
-                };
-            }
+    onRpc(
+        "/spreadsheet/data/documents.document/*",
+        () => {
+            return {
+                data: {},
+                name: "name",
+                revisions: [],
+                isReadonly: true,
+            };
         },
-    });
+        { pure: true }
+    );
+    const { model } = await createSpreadsheet();
     expect(model.getters.isReadonly()).toBe(true);
 });
 
 test("format menu with default currency", async function () {
-    const { model, env } = await createSpreadsheet({
-        mockRPC: async function (route, args) {
-            if (args.method === "join_spreadsheet_session") {
-                return {
-                    data: {},
-                    name: "name",
-                    revisions: [],
-                    default_currency: {
-                        code: "θdoo",
-                        symbol: "θ",
-                        position: "after",
-                        decimalPlaces: 2,
-                    },
-                };
-            }
+    onRpc(
+        "/spreadsheet/data/documents.document/*",
+        () => {
+            return {
+                data: {},
+                name: "name",
+                revisions: [],
+                default_currency: {
+                    code: "θdoo",
+                    symbol: "θ",
+                    position: "after",
+                    decimalPlaces: 2,
+                },
+            };
         },
-    });
+        { pure: true }
+    );
+    const { model, env } = await createSpreadsheet();
     await doMenuAction(
         topbarMenuRegistry,
         ["format", "format_number", "format_number_currency"],

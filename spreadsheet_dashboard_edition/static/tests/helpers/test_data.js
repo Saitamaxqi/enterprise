@@ -7,18 +7,8 @@ import {
     SpreadsheetDashboard as SpreadsheetDashboardCommunity,
     SpreadsheetDashboardGroup as SpreadsheetDashboardGroupCommunity,
 } from "@spreadsheet_dashboard/../tests/helpers/data";
-import { mockJoinSpreadsheetSession } from "@spreadsheet_edition/../tests/helpers/mock_server";
 
 export class SpreadsheetDashboard extends SpreadsheetDashboardCommunity {
-    join_spreadsheet_session(resId, shareId, accessTokens) {
-        return mockJoinSpreadsheetSession("spreadsheet.dashboard").call(
-            this,
-            resId,
-            shareId,
-            accessTokens
-        );
-    }
-
     _records = [];
 }
 

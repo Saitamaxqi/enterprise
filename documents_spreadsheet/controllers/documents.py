@@ -1,10 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import json
 import re
 
 from odoo.http import request, route
 from odoo.addons.documents.controllers.documents import ShareRoute
+from odoo.addons.spreadsheet.utils.json import extend_serialized_json
 
 # ends with .osheet.json or .osheet (6).json
 SPREADSHEET_RE = re.compile(r'\.osheet(\s?\(\d+\))?\.json$')
@@ -55,9 +55,16 @@ class SpreadsheetShareRoute(ShareRoute):
         if not document_sudo:
             raise request.not_found()
 
-        spreadsheet_data = document_sudo._get_spreadsheet_snapshot()
-        spreadsheet_data['revisions'] = document_sudo._build_spreadsheet_messages()
-        return json.dumps(spreadsheet_data)
+        # handcraft the json response body, avoiding the need for parsing and re-serializing
+        # the spreadsheet file and the revisions, which can be expensive for large files.
+        spreadsheet_data = document_sudo._get_spreadsheet_serialized_snapshot()
+        serialized_revisions = ','.join(document_sudo._get_spreadsheet_serialized_revisions())
+        body = extend_serialized_json(spreadsheet_data, [('revisions', '[%s]' % serialized_revisions)])
+        headers = [
+            ('Content-Length', len(body)),
+            ('Content-Type', 'application/json; charset=utf-8'),
+        ]
+        return request.make_response(body, headers)
 
     def _documents_upload_create_write(self, *args, **kwargs):
         """Set the correct handler when uploading a spreadsheet"""

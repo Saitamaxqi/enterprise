@@ -2,6 +2,7 @@ import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests
 import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { expect, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
+import { onRpc } from "@web/../tests/web_test_helpers";
 
 defineDocumentSpreadsheetModels();
 
@@ -26,54 +27,57 @@ const fr_FR = {
 };
 
 test("No locale icon if user locale matched spreadsheet locale", async function () {
-    await createSpreadsheet({
-        mockRPC: async function (route, args) {
-            if (args.method === "join_spreadsheet_session") {
-                return {
-                    name: "Untitled spreadsheet",
-                    user_locale: en_US,
-                    data: {
-                        settings: { locale: en_US },
-                    },
-                };
-            }
+    onRpc(
+        "/spreadsheet/data/*",
+        () => {
+            return {
+                name: "Untitled spreadsheet",
+                user_locale: en_US,
+                data: {
+                    settings: { locale: en_US },
+                },
+            };
         },
-    });
+        { pure: true }
+    );
+    await createSpreadsheet();
     const icon = document.querySelector(".o-spreadsheet-topbar .fa-globe");
     expect(icon).toBe(null);
 });
 
 test("No locale icon if no user locale is given", async function () {
-    await createSpreadsheet({
-        mockRPC: async function (route, args) {
-            if (args.method === "join_spreadsheet_session") {
-                return {
-                    name: "Untitled spreadsheet",
-                    data: {
-                        settings: { locale: en_US },
-                    },
-                };
-            }
+    onRpc(
+        "/spreadsheet/data/*",
+        () => {
+            return {
+                name: "Untitled spreadsheet",
+                data: {
+                    settings: { locale: en_US },
+                },
+            };
         },
-    });
+        { pure: true }
+    );
+    await createSpreadsheet();
     const icon = document.querySelector(".o-spreadsheet-topbar .fa-globe");
     expect(icon).toBe(null);
 });
 
 test("Different locales between user and spreadsheet: display icon as info", async function () {
-    await createSpreadsheet({
-        mockRPC: async function (route, args) {
-            if (args.method === "join_spreadsheet_session") {
-                return {
-                    name: "Untitled spreadsheet",
-                    user_locale: fr_FR,
-                    data: {
-                        settings: { locale: en_US },
-                    },
-                };
-            }
+    onRpc(
+        "/spreadsheet/data/*",
+        () => {
+            return {
+                name: "Untitled spreadsheet",
+                user_locale: fr_FR,
+                data: {
+                    settings: { locale: en_US },
+                },
+            };
         },
-    });
+        { pure: true }
+    );
+    await createSpreadsheet();
     const icon = document.querySelector(".o-spreadsheet-topbar .fa-globe");
     expect(icon).not.toBe(null);
     expect(icon.classList.contains("text-info")).toBe(true);
@@ -85,37 +89,39 @@ test("Different locales between user and spreadsheet: display icon as info", asy
 });
 
 test("no warning with different locale codes but same formats", async function () {
-    await createSpreadsheet({
-        mockRPC: async function (route, args) {
-            if (args.method === "join_spreadsheet_session") {
-                return {
-                    name: "Untitled spreadsheet",
-                    user_locale: { ...fr_FR, code: "fr_BE" },
-                    data: {
-                        settings: { locale: fr_FR },
-                    },
-                };
-            }
+    onRpc(
+        "/spreadsheet/data/*",
+        () => {
+            return {
+                name: "Untitled spreadsheet",
+                user_locale: { ...fr_FR, code: "fr_BE" },
+                data: {
+                    settings: { locale: fr_FR },
+                },
+            };
         },
-    });
+        { pure: true }
+    );
+    await createSpreadsheet();
     const icon = document.querySelector(".o-spreadsheet-topbar .fa-globe");
     expect(icon).toBe(null);
 });
 
 test("changing spreadsheet locale to user locale: remove icon", async function () {
-    const { model } = await createSpreadsheet({
-        mockRPC: async function (route, args) {
-            if (args.method === "join_spreadsheet_session") {
-                return {
-                    name: "Untitled spreadsheet",
-                    user_locale: en_US,
-                    data: {
-                        settings: { locale: fr_FR },
-                    },
-                };
-            }
+    onRpc(
+        "/spreadsheet/data/*",
+        () => {
+            return {
+                name: "Untitled spreadsheet",
+                user_locale: en_US,
+                data: {
+                    settings: { locale: fr_FR },
+                },
+            };
         },
-    });
+        { pure: true }
+    );
+    const { model } = await createSpreadsheet();
     const icon = document.querySelector(".o-spreadsheet-topbar .fa-globe");
     expect(icon).not.toBe(null);
     model.dispatch("UPDATE_LOCALE", { locale: en_US });

@@ -51,7 +51,7 @@ class SpreadsheetSharing(SpreadsheetTestCommon):
         self.assertEqual(access.partner_id, alice.partner_id)
 
     @mute_logger('odoo.addons.base.models.ir_rule')
-    def test_collaborative_spreadsheet_with_token(self):
+    def test_collaborative_dispatch_spreadsheet_with_token(self):
         document = self.create_spreadsheet()
 
         document.access_via_link = 'view'
@@ -70,13 +70,6 @@ class SpreadsheetSharing(SpreadsheetTestCommon):
         })
 
         document = document.with_user(alice)
-        with self.assertRaises(AccessError):
-            # join without token
-            document.join_spreadsheet_session()
-
-        with self.assertRaises(AccessError):
-            # join with wrong token
-            document.join_spreadsheet_session("a wrong token")
 
         revision = self.new_revision_data(document)
 
@@ -114,11 +107,6 @@ class SpreadsheetSharing(SpreadsheetTestCommon):
         self.assertTrue(document._check_collaborative_spreadsheet_access(
             "write", access_token, raise_exception=False))
 
-        # join with access
-        data = document.join_spreadsheet_session(access_token)
-        self.assertTrue(data)
-        self.assertEqual(data["isReadonly"], False)
-
         revision = self.new_revision_data(document)
 
         # dispatch revision with access
@@ -136,7 +124,7 @@ class SpreadsheetSharing(SpreadsheetTestCommon):
         self.assertEqual(accepted, True)
 
     @mute_logger('odoo.addons.base.models.ir_rule')
-    def test_collaborative_readonly_spreadsheet_with_token(self):
+    def test_collaborative_readonly_dispatch_spreadsheet_with_token(self):
         """Readonly access"""
         document = self.create_spreadsheet()
 
@@ -150,13 +138,6 @@ class SpreadsheetSharing(SpreadsheetTestCommon):
         user = new_test_user(self.env, login="raoul")
         document = document.with_user(user)
         with self.with_user("raoul"):
-            # join without token
-            with self.assertRaises(AccessError):
-                document.join_spreadsheet_session()
-
-            # join with token
-            data = document.join_spreadsheet_session(access_token)
-            self.assertEqual(data["isReadonly"], True)
 
             revision = self.new_revision_data(document)
             # dispatch revision without token
@@ -190,14 +171,6 @@ class SpreadsheetSharing(SpreadsheetTestCommon):
             }
             with self.assertRaises(AccessError):
                 document.dispatch_spreadsheet_message(snapshot_revision, access_token)
-
-    def test_spreadsheet_with_token_from_workspace_share(self):
-        document_1 = self.create_spreadsheet()
-        self.create_spreadsheet()
-        folder = document_1.folder_id
-        self.assertEqual(len(folder.children_ids), 2, "there are more than one document in the folder")
-        result = document_1.join_spreadsheet_session(document_1.access_token)
-        self.assertTrue(result, "it should grant access")
 
     @mute_logger('odoo.sql_db')
     def test_spreadsheet_can_not_share_write_access_to_portal(self):

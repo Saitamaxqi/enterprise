@@ -33,8 +33,8 @@ class QualityCheckSpreadsheet(models.Model):
             },
         }
 
-    def join_spreadsheet_session(self, access_token=None):
-        data = super().join_spreadsheet_session(access_token)
+    def _get_spreadsheet_metadata(self, access_token=None):
+        data = super()._get_spreadsheet_metadata(access_token)
         check = self.env['quality.check'].search([('spreadsheet_id', '=', self.id)], limit=1)
         data['quality_check_display_name'] = check.display_name
         data['quality_check_cell'] = self.check_cell

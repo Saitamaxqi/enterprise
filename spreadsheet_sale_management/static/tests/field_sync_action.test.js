@@ -77,7 +77,7 @@ describe("field sync action", () => {
 
     test("auto resize list columns", async () => {
         onRpc(
-            "/web/dataset/call_kw/sale.order.spreadsheet/join_spreadsheet_session",
+            "/spreadsheet/data/sale.order.spreadsheet/*",
             async (request, args) => {
                 const data = getSaleOrderSpreadsheetData();
                 const commands = [
@@ -105,7 +105,8 @@ describe("field sync action", () => {
                         },
                     ],
                 };
-            }
+            },
+            { pure: true }
         );
         const { model } = await mountSaleOrderSpreadsheetAction();
         const sheetId = model.getters.getActiveSheetId();

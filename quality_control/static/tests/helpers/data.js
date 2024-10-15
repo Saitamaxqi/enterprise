@@ -1,6 +1,5 @@
-import { defineModels, fields } from "@web/../tests/web_test_helpers";
+import { defineModels, fields, onRpc } from "@web/../tests/web_test_helpers";
 import { SpreadsheetMixin } from "@spreadsheet/../tests/helpers/data";
-import { mockJoinSpreadsheetSession } from "@spreadsheet_edition/../tests/helpers/mock_server";
 
 
 class QualityCheckSpreadsheet extends SpreadsheetMixin {
@@ -24,20 +23,21 @@ class QualityCheckSpreadsheet extends SpreadsheetMixin {
         },
     ];
 
-    join_spreadsheet_session(resId, shareId, accessToken) {
-        const result = mockJoinSpreadsheetSession(this._name).call(
-            this,
-            resId,
-            shareId,
-            accessToken
-        );
-        result.quality_check_display_name = "The check name";
-        result.quality_check_cell = this[0].check_cell;
-        return result;
-    }
-
     dispatch_spreadsheet_message() {}
 }
+
+onRpc("/spreadsheet/data/quality.check.spreadsheet/*", async function (request) {
+    const resId = parseInt(request.url.split('/').at(-1));
+    const spreadsheet = this.env["quality.check.spreadsheet"].find((r) =>  r.id === resId);
+    return {
+        data: JSON.parse(spreadsheet.spreadsheet_data),
+        name: spreadsheet.name,
+        revisions: [],
+        isReadonly: false,
+        quality_check_display_name: "The check name",
+        quality_check_cell: spreadsheet.check_cell,
+    };
+}, { pure: true });
 
 export function defineQualitySpreadsheetModels() {
     defineModels({

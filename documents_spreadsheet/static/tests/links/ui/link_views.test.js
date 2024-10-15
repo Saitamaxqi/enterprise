@@ -11,6 +11,7 @@ import {
     getService,
     mockService,
     mountWithCleanup,
+    onRpc,
     patchWithCleanup,
     toggleMenu,
     toggleMenuItem,
@@ -167,16 +168,10 @@ test("list view with custom domain and groupby", async function () {
 });
 
 test("insert list in existing spreadsheet", async function () {
-    await openView("list", {
-        mockRPC: function (route, args) {
-            if (args.method === "join_spreadsheet_session") {
-                expect.step("spreadsheet-joined");
-                expect(args.args[0]).toBe(2, {
-                    message: "It should join the selected spreadsheet",
-                });
-            }
-        },
+    onRpc("/spreadsheet/data/documents.document/2", () => expect.step("spreadsheet-joined"), {
+        pure: true,
     });
+    await openView("list");
     await loadJS("/web/static/lib/Chart/Chart.js");
     await toggleSearchBarMenu();
     await contains(".o_insert_action_spreadsheet_menu").click();

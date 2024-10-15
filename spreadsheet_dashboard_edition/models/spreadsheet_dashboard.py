@@ -1,12 +1,14 @@
+import json
+
 from odoo import api, models, _
 
 
 class SpreadsheetDashboard(models.Model):
     _inherit = ['spreadsheet.dashboard', 'spreadsheet.mixin']
 
-    def join_spreadsheet_session(self, *args, **kwargs):
+    def _get_spreadsheet_metadata(self, *args, **kwargs):
         return dict(
-            super().join_spreadsheet_session(*args, **kwargs),
+            super()._get_spreadsheet_metadata(*args, **kwargs),
             is_published=self.is_published
         )
 
@@ -20,28 +22,25 @@ class SpreadsheetDashboard(models.Model):
             },
         }
 
-    def get_readonly_dashboard(self):
+    def _get_serialized_readonly_dashboard(self):
         self.ensure_one()
-        data = self.join_spreadsheet_session()
-        if self._dashboard_is_empty() and self.sample_dashboard_file_path:
-            sample_data = self._get_sample_dashboard()
-            if sample_data:
-                return {
-                    "snapshot": sample_data,
-                    "is_sample": True,
-                }
         update_locale_command = {
             "type": "UPDATE_LOCALE",
             "locale": self.env["res.lang"]._get_user_spreadsheet_locale(),
         }
-        snapshot = data["data"]
-        revisions = data["revisions"]
-        revisions.append(self._build_new_revision_data([update_locale_command]))
-        return {
-            "snapshot": snapshot,
-            "revisions": revisions,
-            "default_currency": data["default_currency"],
-        }
+        self._check_collaborative_spreadsheet_access("read")
+        revisions = self.sudo()._get_spreadsheet_serialized_revisions()
+        revisions.append(json.dumps(self._build_new_revision_data([update_locale_command])))
+        serialized_revisions = "[%s]" % ",".join(revisions)
+        serialized_snapshot = self._get_spreadsheet_serialized_snapshot()
+        default_currency = self._get_spreadsheet_metadata()["default_currency"]
+        serialized_default_currency = json.dumps(default_currency, ensure_ascii=False)
+        serialized_data = '{"snapshot": %s,"revisions": %s,"default_currency": %s}' % (
+            serialized_snapshot,
+            serialized_revisions,
+            serialized_default_currency
+        )
+        return serialized_data
 
     def _dashboard_is_empty(self):
         self._check_collaborative_spreadsheet_access("read")

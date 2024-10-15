@@ -138,10 +138,15 @@ class DocumentsDocument(models.Model):
             return False
         return super().dispatch_spreadsheet_message(message, access_token)
 
-    def join_spreadsheet_session(self, access_token=None):
+    def _get_serialized_spreadsheet_data_body(self, access_token=None):
+        body = super()._get_serialized_spreadsheet_data_body(access_token)
+        self._update_spreadsheet_contributors()
+        return body
+
+    def _get_spreadsheet_metadata(self, access_token=None):
         if self.sudo().handler not in ("spreadsheet", "frozen_spreadsheet"):
             raise ValidationError(_("The spreadsheet you are trying to access does not exist."))
-        data = super().join_spreadsheet_session(access_token)
+        data = super()._get_spreadsheet_metadata(access_token)
         self._update_spreadsheet_contributors()
         return {
             **data,
@@ -485,16 +490,15 @@ class DocumentsDocument(models.Model):
         if self.handler != 'spreadsheet':
             return False
 
-        snapshot = self._get_spreadsheet_snapshot()
+        snapshot = json.loads(self._get_spreadsheet_serialized_snapshot())
         if snapshot.get("lists") or snapshot.get("pivots") or snapshot.get("chartOdooMenusReferences"):
             return True
 
-        revisions = self._build_spreadsheet_messages()
         return any(  # modification not yet committed in snapshot
             command.get("type")
             in ("INSERT_ODOO_LIST", "ADD_PIVOT", "LINK_ODOO_MENU_TO_CHART")
-            for revision in revisions
-            for command in revision.get("commands", [])
+            for revision in self.spreadsheet_revision_ids
+            for command in json.loads(revision.commands).get("commands", [])
         )
 
     def _get_writable_record_name_field(self):

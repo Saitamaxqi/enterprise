@@ -45,12 +45,9 @@ describe("quality check spreadsheet action", () => {
     test("pass wizard with a truthy cell, do next action", async () => {
         const qualityCheckWizardId = 1;
         const nextCheckSpreadsheetId = 1111;
-        onRpc("/web/dataset/call_kw/quality.check.spreadsheet/join_spreadsheet_session", async function (request, args) {
-            const { params } = await request.json();
-            if (params.args[0] === nextCheckSpreadsheetId) {
-                expect.step("join next check")
-            }
-        });
+        onRpc(`/spreadsheet/data/quality.check.spreadsheet/${nextCheckSpreadsheetId}`, async function (request, args) {
+            expect.step("join next check")
+        }, { pure: true });
         onRpc("/web/dataset/call_kw/quality.check.wizard/do_pass", async function (request, args) {
             const { params } = await request.json();
             expect(params.args).toEqual([qualityCheckWizardId]);
@@ -137,12 +134,16 @@ describe("quality check spreadsheet action", () => {
 
     test("invalid check cell is equivalent to no condition", async () => {
         const checkId = 1;
-        onRpc("/web/dataset/call_kw/quality.check.spreadsheet/join_spreadsheet_session", async function (request, args) {
-            const { params } = await request.json();
-            const data = this.env["quality.check.spreadsheet"].join_spreadsheet_session(...params.args)
-            data.quality_check_cell = "not a valid cell reference";
-            return data;
-        });
+        onRpc("/spreadsheet/data/quality.check.spreadsheet/*", async function (request, args) {
+            return {
+                data: {},
+                name: "spreadsheet name",
+                revisions: [],
+                isReadonly: false,
+                quality_check_display_name: "The check name",
+                quality_check_cell: "not a valid cell reference",
+            };
+        }, { pure: true });
         onRpc("/web/dataset/call_kw/quality.check/do_pass", async function (request, args) {
             expect.step("do_pass");
             return true;
@@ -155,12 +156,16 @@ describe("quality check spreadsheet action", () => {
 
     test("no check cell is equivalent to no condition", async () => {
         const checkId = 1;
-        onRpc("/web/dataset/call_kw/quality.check.spreadsheet/join_spreadsheet_session", async function (request, args) {
-            const { params } = await request.json();
-            const data = this.env["quality.check.spreadsheet"].join_spreadsheet_session(...params.args)
-            data.quality_check_cell = false; // False = no value in the py orm
-            return data;
-        });
+        onRpc("/spreadsheet/data/quality.check.spreadsheet/*", async function (request, args) {
+            return {
+                data: {},
+                name: "spreadsheet name",
+                revisions: [],
+                isReadonly: false,
+                quality_check_display_name: "The check name",
+                quality_check_cell: false, // False = no value in the py orm
+            };
+        }, { pure: true });
         onRpc("/web/dataset/call_kw/quality.check/do_pass", async function (request, args) {
             expect.step("do_pass");
             return true;

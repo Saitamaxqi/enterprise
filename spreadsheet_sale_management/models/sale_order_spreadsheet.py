@@ -45,8 +45,8 @@ class SaleOrderSpreadsheet(models.Model):
             },
         }
 
-    def join_spreadsheet_session(self, access_token=None):
-        data = super().join_spreadsheet_session(access_token)
+    def _get_spreadsheet_metadata(self, access_token=None):
+        data = super()._get_spreadsheet_metadata(access_token)
         data["order_id"] = self.order_id.id
         data["order_display_name"] = self.order_id.display_name
         return data

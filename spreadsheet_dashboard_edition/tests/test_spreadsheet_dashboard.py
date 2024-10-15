@@ -1,34 +1,48 @@
 import json
+
+from odoo import Command
 from odoo.tools import file_open
+from odoo.tests.common import HttpCase
 from odoo.addons.spreadsheet_dashboard.tests.common import DashboardTestCommon
 from odoo.addons.spreadsheet_edition.tests.spreadsheet_test_case import SpreadsheetTestCase
 
 
-class TestSpreadsheetDashboard(DashboardTestCommon, SpreadsheetTestCase):
-    def test_computed_name(self):
-        group = self.env["spreadsheet.dashboard.group"].create(
-            {"name": "a group"}
-        )
+class TestSpreadsheetDashboard(DashboardTestCommon, SpreadsheetTestCase, HttpCase):
+
+    def test_join_new_dashboard_user(self):
+        self.authenticate(self.user.login, self.user.password)
+        dashboard_group = self.env["spreadsheet.dashboard.group"].create({
+            "name": "Dashboard group"
+        })
         dashboard = self.env["spreadsheet.dashboard"].create(
             {
-                "name": "My Dashboard",
-                "dashboard_group_id": group.id,
+                "name": "a dashboard",
                 "spreadsheet_data": "{}",
+                "group_ids": [Command.set(self.group.ids)],
+                "dashboard_group_id": dashboard_group.id,
             }
         )
-        self.assertEqual(dashboard.spreadsheet_file_name, "My Dashboard.osheet.json")
+        # only read access, no one ever joined this dashboard
+        response = self.url_open('/spreadsheet/data/spreadsheet.dashboard/%s' % dashboard.id)
+        result = response.json()
+        self.assertEqual(result["data"], {})
+        self.assertEqual(result["isReadonly"], True)
 
     def test_join_published(self):
         dashboard = self.create_dashboard().with_user(self.user)
-        self.assertTrue(dashboard.join_spreadsheet_session()["is_published"])
+        self.authenticate(self.user.login, self.user.password)
+        response = self.url_open('/spreadsheet/data/spreadsheet.dashboard/%s' % dashboard.id)
+        self.assertTrue(response.json()["is_published"])
         dashboard.sudo().is_published = False
-        self.assertFalse(dashboard.join_spreadsheet_session()["is_published"])
+        response = self.url_open('/spreadsheet/data/spreadsheet.dashboard/%s' % dashboard.id)
+        self.assertFalse(response.json()["is_published"])
 
     def test_load_with_user_locale(self):
         dashboard = self.create_dashboard().with_user(self.user)
-
+        self.authenticate(self.user.login, self.user.password)
         self.user.lang = "en_US"
-        data = dashboard.get_readonly_dashboard()
+        response = self.url_open('/spreadsheet/dashboard/data/%s' % dashboard.id)
+        data = response.json()
         snapshot = data["snapshot"]
         snapshot_locale = snapshot["settings"]["locale"]
         self.assertEqual(snapshot_locale["code"], "en_US")
@@ -43,7 +57,8 @@ class TestSpreadsheetDashboard(DashboardTestCommon, SpreadsheetTestCase):
         self.env.ref("base.lang_fr").active = True
         self.user.lang = "fr_FR"
 
-        data = dashboard.get_readonly_dashboard()
+        response = self.url_open('/spreadsheet/dashboard/data/%s' % dashboard.id)
+        data = response.json()
         snapshot = data["snapshot"]
         snapshot_locale = snapshot["settings"]["locale"]
         self.assertEqual(
@@ -57,18 +72,22 @@ class TestSpreadsheetDashboard(DashboardTestCommon, SpreadsheetTestCase):
         self.assertEqual(locale_revision["commands"][0]["locale"]["weekStart"], 1)
 
     def test_load_with_company_currency(self):
+        self.authenticate(self.user.login, self.user.password)
         dashboard = self.create_dashboard().with_user(self.user)
-        data = dashboard.get_readonly_dashboard()
+        response = self.url_open('/spreadsheet/dashboard/data/%s' % dashboard.id)
+        data = response.json()
         self.assertEqual(
             data["default_currency"],
             self.env["res.currency"].get_company_currency_for_spreadsheet()
         )
 
     def test_load_with_user_locale_existing_revisions(self):
+        self.authenticate(self.user.login, self.user.password)
         dashboard = self.create_dashboard()
         dashboard.dispatch_spreadsheet_message(self.new_revision_data(dashboard))
 
-        data = dashboard.with_user(self.user).get_readonly_dashboard()
+        response = self.url_open('/spreadsheet/dashboard/data/%s' % dashboard.id)
+        data = response.json()
         revisions = data["revisions"]
         self.assertEqual(len(revisions), 2)
         self.assertEqual(
@@ -78,31 +97,35 @@ class TestSpreadsheetDashboard(DashboardTestCommon, SpreadsheetTestCase):
         )
 
     def test_load_sample_dashboard(self):
+        self.authenticate(self.user.login, self.user.password)
         sample_dashboard_path = "spreadsheet_dashboard_edition/tests/data/sample_dashboard.json"
 
         def get_sample_data():
             with file_open(sample_dashboard_path, 'rb') as f:
                 return json.load(f)
         dashboard = self.create_dashboard()
-        dashboard.main_data_model_ids = [(4, self.env.ref("base.model_res_users").id)]
+        dashboard.main_data_model_ids = [(4, self.env.ref("base.model_res_bank").id)]
         dashboard.sample_dashboard_file_path = sample_dashboard_path
 
         # when no records are available for the main data model and no revisions, the sample data is loaded
-        self.env["res.users"].search([]).action_archive()
+        self.env["res.bank"].search([]).action_archive()
         self.env["spreadsheet.revision"].search([]).unlink()
-        data = dashboard.get_readonly_dashboard()
+        response = self.url_open('/spreadsheet/dashboard/data/%s' % dashboard.id)
+        data = response.json()
         self.assertTrue(data["is_sample"])
         self.assertEqual(data["snapshot"], get_sample_data())
 
         # when there are revisions, the sample data is not loaded
         dashboard.dispatch_spreadsheet_message(self.new_revision_data(dashboard))
-        data = dashboard.get_readonly_dashboard()
+        response = self.url_open('/spreadsheet/dashboard/data/%s' % dashboard.id)
+        data = response.json()
         self.assertFalse(data.get("is_sample"))
         self.assertNotEqual(data["snapshot"], get_sample_data())
 
         # when no revisions, but we have records for the main data model, the sample data is not loaded
         self.env["spreadsheet.revision"].search([]).unlink()
-        self.env["res.users"].create({"login": "new_user", "name": "New User"})
-        data = dashboard.get_readonly_dashboard()
+        self.env["res.bank"].create({"name": "My bank"})
+        response = self.url_open('/spreadsheet/dashboard/data/%s' % dashboard.id)
+        data = response.json()
         self.assertFalse(data.get("is_sample"))
         self.assertNotEqual(data["snapshot"], get_sample_data())

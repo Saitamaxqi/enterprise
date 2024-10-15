@@ -1,22 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import json
 
 from odoo.tests.common import TransactionCase
 
 
 class SaleOrderSpreadsheet(TransactionCase):
-
-    def test_create_spreadsheet(self):
-        spreadsheet = self.env["sale.order.spreadsheet"].create({"name": "spreadsheet"})
-        data = spreadsheet.join_spreadsheet_session()["data"]
-        self.assertTrue(data["lists"])
-        self.assertTrue(data["globalFilters"])
-        revision = spreadsheet.spreadsheet_revision_ids
-        self.assertEqual(len(revision), 1)
-        commands = json.loads(revision.commands)["commands"]
-        self.assertEqual(commands[0]["type"], "RE_INSERT_ODOO_LIST")
-        self.assertEqual(commands[1]["type"], "CREATE_TABLE")
 
     def test_sale_order_action_open(self):
         spreadsheet = self.env["sale.order.spreadsheet"].create({"name": "spreadsheet"})

@@ -302,10 +302,7 @@ export class AbstractSpreadsheetAction extends Component {
      * @returns {Promise<SpreadsheetData>}
      */
     async _fetchData() {
-        return this.orm.call(this.resModel, "join_spreadsheet_session", [
-            this.resId,
-            this.accessToken,
-        ]);
+        return this.http.get(`/spreadsheet/data/${this.resModel}/${this.resId}`);
     }
 
     /**

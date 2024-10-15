@@ -1,11 +1,13 @@
-from odoo.tests.common import TransactionCase, new_test_user
+from odoo.tests.common import HttpCase, new_test_user
 
-class TestDocumentsDocument(TransactionCase):
+
+class TestDocumentsDocument(HttpCase):
     def test_can_add_to_dashboard_admin(self):
         admin = new_test_user(
             self.env, "Test user",
             groups="spreadsheet_dashboard.group_dashboard_manager,documents.group_documents_user"
         )
+        self.authenticate(admin.login, admin.password)
         document = self.env["documents.document"].with_user(admin).create(
             {
                 "name": "a document",
@@ -14,13 +16,14 @@ class TestDocumentsDocument(TransactionCase):
                 "mimetype": "application/o-spreadsheet",
             }
         )
-        data = document.with_user(admin).join_spreadsheet_session()
-        self.assertTrue(data['can_add_to_dashboard'])
+        response = self.url_open('/spreadsheet/data/documents.document/%s' % document.id)
+        self.assertTrue(response.json()['can_add_to_dashboard'])
 
     def test_can_add_to_dashboard_non_admin(self):
         user = new_test_user(
             self.env, "Test user", groups="base.group_user,documents.group_documents_user"
         )
+        self.authenticate(user.login, user.password)
         document = self.env["documents.document"].with_user(user).create(
             {
                 "name": "a document",
@@ -29,5 +32,5 @@ class TestDocumentsDocument(TransactionCase):
                 "mimetype": "application/o-spreadsheet",
             }
         )
-        data = document.with_user(user).join_spreadsheet_session()
-        self.assertFalse(data['can_add_to_dashboard'])
+        response = self.url_open('/spreadsheet/data/documents.document/%s' % document.id)
+        self.assertFalse(response.json()['can_add_to_dashboard'])

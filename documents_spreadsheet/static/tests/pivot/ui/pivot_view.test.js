@@ -528,12 +528,10 @@ test("Can save a pivot in existing spreadsheet", async () => {
         expect.step("write");
         return { id: 1, type: "ir.actions.act_window_close" };
     });
+    onRpc("/spreadsheet/data/*", () => expect.step("/spreadsheet/data/"), { pure: true });
     await makeDocumentsSpreadsheetMockEnv({
         serverData,
         mockRPC: function (route, args) {
-            if (route.includes("join_spreadsheet_session")) {
-                expect.step("join_spreadsheet_session");
-            }
             if (args.model === "documents.document") {
                 switch (args.method) {
                     case "get_spreadsheets_to_display":
@@ -554,7 +552,7 @@ test("Can save a pivot in existing spreadsheet", async () => {
     await contains(".modal-content > .modal-footer > .btn-primary").click();
     expect(".o_spreadsheet_pivot_side_panel").toHaveCount(1);
     await getService("action").doAction(1); // leave the spreadsheet action
-    expect.verifySteps(["join_spreadsheet_session", "write"]);
+    expect.verifySteps(["/spreadsheet/data/", "write"]);
 });
 
 test("Add pivot sheet at the end of existing sheets", async () => {

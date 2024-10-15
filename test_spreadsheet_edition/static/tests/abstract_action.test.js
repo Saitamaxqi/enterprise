@@ -6,7 +6,7 @@ import { EventBus } from "@odoo/owl";
 import { registries, helpers } from "@odoo/o-spreadsheet";
 import { WebClient } from "@web/webclient/webclient";
 
-import { contains, mountWithCleanup, mockService, getService } from "@web/../tests/web_test_helpers";
+import { contains, mountWithCleanup, mockService, getService, onRpc } from "@web/../tests/web_test_helpers";
 import { createSpreadsheetTestAction } from "@test_spreadsheet_edition/../tests/helpers/helpers";
 import { defineTestSpreadsheetEditionModels, SpreadsheetTest } from "@test_spreadsheet_edition/../tests/helpers/data";
 import { insertPivot } from "@spreadsheet_edition/../tests/helpers/collaborative_helpers";
@@ -19,17 +19,14 @@ const { toZone } = helpers;
 defineTestSpreadsheetEditionModels();
 
 test("custom colors in color picker", async function () {
-    const { model } = await createSpreadsheetTestAction("spreadsheet_test_action", {
-        mockRPC: async function (route, args) {
-            if (args.method === "join_spreadsheet_session") {
-                return {
-                    data: {},
-                    name: "test",
-                    company_colors: ["#875A7B", "not a valid color"],
-                };
-            }
-        },
-    });
+    onRpc("/spreadsheet/data/*", () => {
+        return {
+            data: {},
+            name: "test",
+            company_colors: ["#875A7B", "not a valid color"],
+        };
+    }, { pure: true })
+    const { model } = await createSpreadsheetTestAction("spreadsheet_test_action");
     expect(model.getters.getCustomColors()).toEqual(["#875A7B"]);
 });
 

@@ -16,7 +16,6 @@ class SpreadsheetCollaborative(SpreadsheetTestCommon):
 
     def test_compute_revision_with_session(self):
         spreadsheet = self.create_spreadsheet()
-        spreadsheet.join_spreadsheet_session()
         commands = self.new_revision_data(spreadsheet)
         spreadsheet.dispatch_spreadsheet_message(commands)
         revision_data2 = self.new_revision_data(spreadsheet, nextRevisionId="nextone")
@@ -26,7 +25,6 @@ class SpreadsheetCollaborative(SpreadsheetTestCommon):
     def test_dispatch_new_revision(self):
         spreadsheet = self.create_spreadsheet()
         commands = self.new_revision_data(spreadsheet)
-        spreadsheet.join_spreadsheet_session()
         spreadsheet.dispatch_spreadsheet_message(commands)
         self.assertEqual(
             len(spreadsheet.spreadsheet_revision_ids),
@@ -46,7 +44,6 @@ class SpreadsheetCollaborative(SpreadsheetTestCommon):
 
     def test_dispatch_revision_concurrent_first_revision_id(self):
         spreadsheet = self.create_spreadsheet()
-        spreadsheet.join_spreadsheet_session()
         start_revision = spreadsheet.current_revision_uuid
         revision1 = self.new_revision_data(spreadsheet, serverRevisionId=start_revision)
         spreadsheet.dispatch_spreadsheet_message(revision1)
@@ -67,22 +64,6 @@ class SpreadsheetCollaborative(SpreadsheetTestCommon):
             revision1["nextRevisionId"],
             "The revision should not have been updated",
         )
-
-    def test_join_spreadsheet_session(self):
-        spreadsheet = self.create_spreadsheet()
-        data = spreadsheet.join_spreadsheet_session()
-        self.assertEqual(data["data"], {})
-        self.assertEqual(data["revisions"], [], "It should not have past revisions")
-
-    def test_join_active_spreadsheet_session(self):
-        spreadsheet = self.create_spreadsheet()
-        commands = self.new_revision_data(spreadsheet)
-        spreadsheet.join_spreadsheet_session()
-        spreadsheet.dispatch_spreadsheet_message(commands)
-        spreadsheet = spreadsheet.join_spreadsheet_session()
-        del commands["clientId"]
-        self.assertEqual(spreadsheet["data"], {})
-        self.assertEqual(spreadsheet["revisions"], [commands], "It should have past revisions")
 
     def test_snapshot_spreadsheet_save_data(self):
         spreadsheet = self.create_spreadsheet()
@@ -124,7 +105,6 @@ class SpreadsheetCollaborative(SpreadsheetTestCommon):
 
     def test_snapshot_spreadsheet_with_invalid_revision(self):
         spreadsheet = self.create_spreadsheet()
-        spreadsheet.join_spreadsheet_session()
         first_revision = spreadsheet.current_revision_uuid
         spreadsheet.dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
         current_data = spreadsheet.spreadsheet_snapshot
@@ -184,7 +164,6 @@ class SpreadsheetORMAccess(SpreadsheetTestCommon):
             }
         )
         cls.env['documents.access'].create({'document_id': cls.spreadsheet.id, 'partner_id': cls.admin.partner_id.id, 'role': 'edit'})
-        cls.spreadsheet.join_spreadsheet_session()
 
     def test_create_user(self):
         with self.assertRaises(AccessError):
@@ -297,58 +276,13 @@ class SpreadsheetORMAccess(SpreadsheetTestCommon):
         self.spreadsheet.with_user(self.admin).spreadsheet_revision_ids.unlink()
         self.assertFalse(self.spreadsheet.spreadsheet_revision_ids)
 
-    def test_join_user(self):
-        with self.assertRaises(AccessError):
-            self.spreadsheet.with_user(self.user).join_spreadsheet_session()
-
-    def test_join_user_with_doc_access(self):
-        self._give_user_access()
-        self.env.invalidate_all()
-        self.spreadsheet.with_user(self.user).join_spreadsheet_session()
-
-    def test_join_user_with_read_doc_access(self):
+    def test_dispatch_user_with_read_doc_access(self):
         self.spreadsheet.access_internal = 'view'
 
         self.env.invalidate_all()
-        self.spreadsheet.with_user(self.user).join_spreadsheet_session()
         with self.assertRaises(AccessError):
             self.spreadsheet.with_user(self.user).dispatch_spreadsheet_message(
                 self.new_revision_data(self.spreadsheet)
-            )
-
-    def test_join_new_spreadsheet_user(self):
-        # only read access
-        self.spreadsheet.access_internal = 'view'
-        spreadsheet = self.env["documents.document"].create(
-            {
-                "spreadsheet_data": b"{}",
-                "folder_id": self.folder.id,
-                "handler": "spreadsheet",
-                "mimetype": "application/o-spreadsheet",
-                "access_internal": "edit",
-            }
-        )
-        # no one ever joined this spreadsheet
-        result = spreadsheet.with_user(self.user).join_spreadsheet_session()
-        self.assertEqual(result["data"], {})
-
-    def test_join_snapshot_request(self):
-        with self._freeze_time("2020-02-02 18:00"):
-            self.spreadsheet.dispatch_spreadsheet_message(
-                self.new_revision_data(self.spreadsheet)
-            )
-        self.spreadsheet.access_internal = 'view'
-        with self._freeze_time("2020-02-03 18:00"):
-            self.assertFalse(
-                self.spreadsheet.with_user(self.user).join_spreadsheet_session().get("snapshot_requested"),
-                "It should not have requested a snapshot",
-            )
-            self.spreadsheet.access_internal = 'edit'
-            self.folder.access_internal = 'edit'
-            self.assertTrue(self.spreadsheet._should_be_snapshotted())
-            self.assertTrue(
-                self.spreadsheet.with_user(self.user).join_spreadsheet_session().get("snapshot_requested"),
-                "It should have requested a snapshot",
             )
 
     def test_snapshot_user(self):
@@ -397,7 +331,7 @@ class SpreadsheetORMAccess(SpreadsheetTestCommon):
             {"commands": commands["commands"], "id": self.spreadsheet.id, "type": commands["type"]},
         )
 
-    def test_dispatch_user_with_read_doc_access(self):
+    def test_dispatch_user_with_partner_read_doc_access(self):
         self._give_user_access()
         commands = self.new_revision_data(self.spreadsheet)
         with self.assertRaises(AccessError):
@@ -405,7 +339,7 @@ class SpreadsheetORMAccess(SpreadsheetTestCommon):
                 commands
             )
 
-    def test_dispatch_user_with_read_doc_access_move(self):
+    def test_dispatch_user_with_partner_read_doc_access_move(self):
         self._give_user_access()
         self.env.invalidate_all()
         self.spreadsheet.with_user(self.user).dispatch_spreadsheet_message(

@@ -1,7 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import json
-
 
 from odoo import api, fields, models
 
@@ -38,13 +36,12 @@ class SpreadsheetDocumentToDashboard(models.TransientModel):
 
     def create_dashboard(self):
         self.ensure_one()
-        spreadsheet_data = self.document_id._get_spreadsheet_snapshot()
         dashboard = self.env["spreadsheet.dashboard"].create(
             {
                 "name": self.name,
                 "dashboard_group_id": self.dashboard_group_id.id,
                 "group_ids": self.group_ids.ids,
-                "spreadsheet_data": json.dumps(spreadsheet_data),
+                "spreadsheet_data": self.document_id._get_spreadsheet_serialized_snapshot(),
             }
         )
         # transfer the comments to the dashboard

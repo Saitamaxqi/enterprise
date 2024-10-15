@@ -13,22 +13,18 @@ class SpreadsheetDashboardAccess(TransactionCase):
         cls.user = new_test_user(cls.env, login="Raoul")
         cls.user.groups_id |= cls.group
 
-
-    def test_join_new_dashboard_user(self):
-        dashboard_group = self.env["spreadsheet.dashboard.group"].create({
-            "name": "Dashboard group"
-        })
+    def test_computed_name(self):
+        group = self.env["spreadsheet.dashboard.group"].create(
+            {"name": "a group"}
+        )
         dashboard = self.env["spreadsheet.dashboard"].create(
             {
-                "name": "a dashboard",
+                "name": "My Dashboard",
+                "dashboard_group_id": group.id,
                 "spreadsheet_data": "{}",
-                "group_ids": [Command.set(self.group.ids)],
-                "dashboard_group_id": dashboard_group.id,
             }
         )
-        # only read access, no one ever joined this dashboard
-        result = dashboard.with_user(self.user).join_spreadsheet_session()
-        self.assertEqual(result["data"], {})
+        self.assertEqual(dashboard.spreadsheet_file_name, "My Dashboard.osheet.json")
 
     def test_update_data_reset_collaborative(self):
         dashboard_group = self.env["spreadsheet.dashboard.group"].create({

@@ -1,6 +1,5 @@
-import { defineModels, fields, models } from "@web/../tests/web_test_helpers";
+import { defineModels, fields, models, onRpc } from "@web/../tests/web_test_helpers";
 import { SpreadsheetMixin } from "@spreadsheet/../tests/helpers/data";
-import { mockJoinSpreadsheetSession } from "@spreadsheet_edition/../tests/helpers/mock_server";
 
 export class SaleOrder extends models.Model {
     _name = "sale.order";
@@ -43,25 +42,27 @@ export class SaleOrderSpreadsheet extends SpreadsheetMixin {
         },
     ];
 
-    join_spreadsheet_session(resId, shareId, accessToken) {
-        const result = mockJoinSpreadsheetSession(this._name).call(
-            this,
-            resId,
-            shareId,
-            accessToken
-        );
-        const order = this.env["sale.order"].find((r) => r.id === this[0].order_id);
-        if (order) {
-            result.order_id = order.id;
-            result.order_display_name = order.display_name;
-        }
-        return result;
-    }
-
     dispatch_spreadsheet_message() {}
 }
 
 export function defineSpreadsheetSaleModels() {
+    onRpc(
+        "/spreadsheet/data/sale.order.spreadsheet/*",
+        function (request) {
+            const resId = parseInt(request.url.split("/").at(-1));
+            const spreadsheet = this.env["sale.order.spreadsheet"].find((r) => r.id === resId);
+            const order = this.env["sale.order"].find((r) => r.id === spreadsheet.order_id);
+            return {
+                data: JSON.parse(spreadsheet.spreadsheet_data),
+                name: spreadsheet.name,
+                revisions: [],
+                isReadonly: false,
+                order_id: order?.id,
+                order_display_name: order?.display_name,
+            };
+        },
+        { pure: true }
+    );
     defineModels({
         SaleOrder,
         Product,

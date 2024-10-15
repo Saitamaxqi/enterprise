@@ -8,10 +8,7 @@ import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/sprea
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { Model } from "@odoo/o-spreadsheet";
-import {
-    getBasicData,
-    getBasicServerData,
-} from "@spreadsheet/../tests/helpers/data";
+import { getBasicData, getBasicServerData } from "@spreadsheet/../tests/helpers/data";
 import { contains, getService, patchWithCleanup } from "@web/../tests/web_test_helpers";
 import { browser } from "@web/core/browser/browser";
 
@@ -71,7 +68,7 @@ test("untitled spreadsheet", async function () {
     await createSpreadsheet({ spreadsheetId: 3 });
     const input = target.querySelector(".o_sp_name input");
     expect(input).toHaveClass("o-sp-untitled", {
-        message: "It should be styled as untitled"
+        message: "It should be styled as untitled",
     });
     expect(input).toHaveValue("", { message: "It should be empty" });
     expect(input.placeholder).toBe("Untitled spreadsheet", {

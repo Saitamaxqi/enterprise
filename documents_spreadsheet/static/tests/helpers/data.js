@@ -1,6 +1,5 @@
 import { SpreadsheetModels, defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
-import { defineActions, fields, models, webModels } from "@web/../tests/web_test_helpers";
-import { mockJoinSpreadsheetSession } from "@spreadsheet_edition/../tests/helpers/mock_server";
+import { defineActions, fields, models, onRpc, webModels } from "@web/../tests/web_test_helpers";
 import { Domain } from "@web/core/domain";
 
 export class DocumentsDocument extends models.Model {
@@ -74,18 +73,6 @@ export class DocumentsDocument extends models.Model {
             }));
         const sliced = records.slice(offset, limit ? offset + limit : undefined);
         return { records: sliced, total: records.length };
-    }
-
-    join_spreadsheet_session(resId, accessToken) {
-        const result = mockJoinSpreadsheetSession("documents.document").call(
-            this,
-            resId,
-            accessToken
-        );
-        const record = this.env["documents.document"].search_read([["id", "=", resId]])[0];
-        result.is_favorited = record.is_favorited;
-        result.folder_id = record.folder_id[0];
-        return result;
     }
 
     dispatch_spreadsheet_message() {
@@ -231,14 +218,6 @@ export class SpreadsheetTemplate extends models.Model {
         };
     }
 
-    join_spreadsheet_session(resId, accessTokens) {
-        return mockJoinSpreadsheetSession("spreadsheet.template").call(
-            this,
-            resId,
-            accessTokens
-        );
-    }
-
     _records = [
         { id: 1, name: "Template 1", spreadsheet_data: "" },
         { id: 2, name: "Template 2", spreadsheet_data: "" },
@@ -275,6 +254,23 @@ export class ResCompany extends webModels.ResCompany {
         default: 1,
     });
 }
+
+onRpc(
+    "/spreadsheet/data/documents.document/*",
+    function (request) {
+        const resId = parseInt(request.url.split("/").at(-1));
+        const document = this.env["documents.document"].search_read([["id", "=", resId]])[0];
+        return {
+            data: JSON.parse(document.spreadsheet_data),
+            name: document.name,
+            revisions: [],
+            isReadonly: false,
+            is_favorited: document.is_favorited,
+            folder_id: document.folder_id[0],
+        };
+    },
+    { pure: true }
+);
 
 export function defineDocumentSpreadsheetModels() {
     const SpreadsheetDocumentModels = {

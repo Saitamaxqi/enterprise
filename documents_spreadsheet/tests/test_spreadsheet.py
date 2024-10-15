@@ -60,7 +60,6 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         document = self.env["documents.document"].browse(spreadsheet_id)
         self.assertTrue(document.exists())
 
-        data = document.join_spreadsheet_session()["data"]
         expected_locale = {
             "code": "en_FR",
             "name": "Custom Locale",
@@ -71,7 +70,7 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             "formulaArgSeparator": ";",
             "weekStart": 1,
         }
-        self.assertEqual(data["settings"]["locale"], expected_locale)
+        self.assertEqual(json.loads(document.spreadsheet_data)["settings"]["locale"], expected_locale)
 
     def test_action_open_new_spreadsheet_in_folder(self):
         action = self.env["documents.document"].action_open_new_spreadsheet({
@@ -283,7 +282,7 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             spreadsheet1 = self.create_spreadsheet()
         with self._freeze_time("2020-02-15 18:00"):
             spreadsheet2 = self.create_spreadsheet()
-        spreadsheet1.join_spreadsheet_session()
+        spreadsheet1._get_serialized_spreadsheet_data_body()
         spreadsheets = self.env["documents.document"]._get_spreadsheets_to_display([])
         spreadsheet_ids = [s["id"] for s in spreadsheets]
         self.assertEqual(spreadsheet_ids, [spreadsheet1.id, spreadsheet2.id])
@@ -720,13 +719,6 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             self.env["documents.document"]._gc_spreadsheet()
         self.assertEqual(len(self.env["documents.document"].search([('handler', '=', 'spreadsheet')])), 1)
 
-    def test_join_session_name_is_a_string(self):
-        spreadsheet = self.create_spreadsheet(name="")
-        self.assertEqual(spreadsheet.name, "")
-        self.assertFalse(spreadsheet.display_name)
-        session_data = spreadsheet.join_spreadsheet_session()
-        self.assertEqual(session_data["name"], "")
-
     def test_copy_image_in_snapshot(self):
         spreadsheet = self.create_spreadsheet()
         image = self.env["ir.attachment"].create({
@@ -775,7 +767,7 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             "spreadsheet_snapshot": spreadsheet.spreadsheet_snapshot,
         })
         copied_data = json.loads(copy.spreadsheet_data)
-        copied_snapshot = copy._get_spreadsheet_snapshot()
+        copied_snapshot = json.loads(copy._get_spreadsheet_serialized_snapshot())
         for data_copy in (copied_data, copied_snapshot):
             [figure, figure_with_token] = data_copy["sheets"][0]["figures"]
             image_definition = figure["data"]
