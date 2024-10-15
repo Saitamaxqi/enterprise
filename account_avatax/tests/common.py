@@ -1,5 +1,5 @@
 import os
-from contextlib import contextmanager, ExitStack
+from contextlib import contextmanager
 from unittest import SkipTest
 from unittest.mock import patch
 
@@ -50,40 +50,6 @@ class TestAvataxCommon(TransactionCase):
         })
 
         return res
-
-    @classmethod
-    @contextmanager
-    def _client_patched(cls, create_transaction_details=None, **kwargs):
-        # Unused items are used through locals().
-        # pylint: disable=possibly-unused-variable
-        if kwargs.get('create_transaction') is None and create_transaction_details is not None:
-            def create_transaction(self, transaction, include=None):
-                return {
-                    'lines': [{
-                        'lineNumber': line['number'],
-                        'details': create_transaction_details,
-                    } for line in transaction['lines']],
-                    'summary': create_transaction_details,
-                }
-
-        if kwargs.get('uncommit_transaction') is None:
-            def uncommit_transaction(self, companyCode, transactionCode, include=None):
-                return {}
-
-        def request(self, method, *args, **kwargs):
-            assert False, "Request not authorized in mock"
-
-        fnames = {fname for fname in dir(AvataxClient) if not fname.startswith('_')} - {
-            'add_credentials',
-        }
-        methods = {**{fname: None for fname in fnames}, **kwargs, **locals()}
-        with ExitStack() as stack:
-            for _patch in [
-                patch(f'{AvataxClient.__module__}.AvataxClient.{fname}', methods[fname])
-                for fname in fnames
-            ]:
-                stack.enter_context(_patch)
-            yield
 
     @classmethod
     @contextmanager
