@@ -514,12 +514,12 @@ class TestAnalyticReport(TestAccountReportsCommon):
         self.assertLinesValues(
             general_ledger_report._get_lines(options),
             #   Name                                    Debit           Credit          Balance
-            [   0,                                      5,              6,              7],
+            [   0,                                      4,              5,              6],
             [
                 ['400000 Product Sales',                0.00,           100.00,         -100.00],
-                ['INV/2023/00001',                      0.00,           100.00,         -100.00],
+                ['INV/2023/00001 test line',            0.00,           100.00,         -100.00],
                 ['Total 400000 Product Sales',          0.00,           100.00,         -100.00],
-                ['Total',                               0.00,           100.00,         -100.00],
+                ['Total General Ledger',                0.00,           100.00,         -100.00],
             ],
             options,
         )

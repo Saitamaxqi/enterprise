@@ -46,31 +46,52 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         :return: False if no account type needed, otherwise a string with the account type"""
         return False
 
+    def _get_report_values(self, report, options):
+        """
+        Get the report values based on lines
+        :return dict:    Keys are account_ids pointing to a dict of values
+            - account_id:
+                - sum                               {'debit': float, 'credit': float, 'balance': float}
+                - (optional) initial_balance:       float
+        """
+        options = report.get_options(previous_options={**options, 'export_mode': 'file', 'ignore_totals_below_sections': True, 'unfold_all': True})
+        lines = report._get_lines(options)
+
+        colname_to_idx = {col['expression_label']: idx for idx, col in enumerate(options.get('columns', []))}
+        current_account_id = 0
+        report_values = defaultdict(dict)
+
+        for line in lines:
+            model, res_id = report._get_model_info_from_id(line['id'])
+            if model == 'account.account':
+                current_account_id = res_id
+                report_values[current_account_id]['sum'] = {
+                    'debit': line['columns'][colname_to_idx['debit']]['no_format'],
+                    'credit': line['columns'][colname_to_idx['credit']]['no_format'],
+                    'balance': line['columns'][colname_to_idx['balance']]['no_format'],
+                }
+            if (isinstance(res_id, str) and 'balance_line' in res_id) or (model == 'account.account' and not line['unfoldable']):  # balance_line or unaffected earnings account line
+                report_values[current_account_id]['initial_balance'] = line['columns'][colname_to_idx['balance']]['no_format']
+
+        return report_values
+
     @api.model
     def _saft_fill_report_general_ledger_accounts(self, report, options, values):
         res = {
             'account_vals_list': [],
         }
+        report = self.env['account.report'].browse(options['report_id'])
+        report_values = self._get_report_values(report, options)
+        accounts = self.env['account.account'].browse(report_values.keys())
 
-        accounts_results = self._query_values(report, options)
-        rslts_array = tuple((account, res_col_gr[options['single_column_group']]) for account, res_col_gr in accounts_results)
-        init_bal_res = self._get_initial_balance_values(report, tuple(account.id for account, results in rslts_array), options)
-        initial_balances_map = {}
-        initial_balance_gen = ((account, init_bal_dict.get(options['single_column_group'])) for account, init_bal_dict in init_bal_res.values())
-        for account, initial_balance in initial_balance_gen:
-            initial_balances_map[account.id] = initial_balance
-        for account, results in rslts_array:
-            account_init_bal = initial_balances_map[account.id]
-            account_un_earn = results.get('unaffected_earnings', {})
-            account_balance = results.get('sum', {})
-            opening_balance = account_init_bal.get('balance', 0.0) + account_un_earn.get('balance', 0.0)
-            closing_balance = account_balance.get('balance', 0.0)
+        for account in accounts:
+            account_group_value = report_values[account.id]
             res['account_vals_list'].append({
                 'account': account,
                 'account_type': dict(self.env['account.account']._fields['account_type']._description_selection(self.env))[account.account_type],
                 'saft_account_type': self._saft_get_account_type(account.account_type),
-                'opening_balance': opening_balance,
-                'closing_balance': closing_balance,
+                'opening_balance': account_group_value.get('initial_balance', 0.0),
+                'closing_balance': account_group_value.get('sum', {}).get('balance', 0.0),
             })
 
         values.update(res)

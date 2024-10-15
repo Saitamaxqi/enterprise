@@ -66,6 +66,7 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
                 'mode': 'range',
                 'filter': 'custom',
             },
+            'export_mode': 'file',
         })
 
     @api.model
@@ -98,6 +99,33 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
         return sie4_coa_lines
 
     @api.model
+    def _l10n_se_sie4_get_initial_balances_values(self, report, options, filtered_accounts):
+        def get_dict_values_from_report_line(line):
+            return {
+                'balance': line['columns'][colname_to_idx['balance']]['no_format'],
+                'debit': line['columns'][colname_to_idx['debit']]['no_format'],
+                'credit': line['columns'][colname_to_idx['credit']]['no_format'],
+            }
+        options = {
+            **options,
+            'unfold_all': True,
+        }
+        colname_to_idx = {col['expression_label']: idx for idx, col in enumerate(options.get('columns', []))}
+        lines = report._get_lines(options)
+        initial_balances = {}
+        account_by_ids = {account.id: account for account in filtered_accounts}
+        for line in lines:
+            _model, res_id = report._get_model_info_from_id(line['id'])
+
+            if isinstance(res_id, str) and 'balance_line' in res_id:
+                account_id = report._get_res_id_from_line_id(line['id'], 'account.account')
+                account = account_by_ids.get(account_id, False)
+                if account:
+                    initial_balances[account] = get_dict_values_from_report_line(line)
+
+        return initial_balances
+
+    @api.model
     def _export_l10n_se_sie4_bs_balance(self, options):
         """ Generates the opening/closing balance lines and return them as a list of string line.
         In SIE 4, the opening/closing balance lines are saved with the following keywords:
@@ -125,13 +153,12 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
         report._init_currency_table(prev_year_options)
         report._init_currency_table(options)
         report._init_currency_table(next_year_options)
-        prev_ib_values = self.with_company(company_id)._get_initial_balance_values(report, bs_accounts.ids, prev_year_options)
-        curr_ib_values = self.with_company(company_id)._get_initial_balance_values(report, bs_accounts.ids, options)
-        next_ib_values = self.with_company(company_id)._get_initial_balance_values(report, bs_accounts.ids, next_year_options)
+        prev_ib_values = self.with_company(company_id)._l10n_se_sie4_get_initial_balances_values(report, prev_year_options, bs_accounts)
+        curr_ib_values = self.with_company(company_id)._l10n_se_sie4_get_initial_balances_values(report, options, bs_accounts)
+        next_ib_values = self.with_company(company_id)._l10n_se_sie4_get_initial_balances_values(report, next_year_options, bs_accounts)
 
         for ib_values in (prev_ib_values, curr_ib_values, next_ib_values):
-            for account_id, (account, ib_map) in ib_values.items():
-                ib_item = next(iter(ib_map.values()))
+            for account, ib_item in ib_values.items():
                 if ib_item != {}:
                     seen_bs_account_codes.add(account.code)
                     if ib_values is prev_ib_values:  # for [IB/-1] (previous year opening balance)

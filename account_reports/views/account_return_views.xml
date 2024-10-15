@@ -84,7 +84,7 @@
                                         <button invisible="not is_report_set" class="btn btn-secondary" type="object" name="action_open_report"><field name="report_name"/></button>
                                         <button invisible="state != 'reviewed' or is_completed or not is_main_company_active" class="btn btn-primary" type="object" name="action_submit">Submit</button>
                                     </t>
-                                    
+
                                     <t t-if="0">
                                     </t>
                                     <t id="default_buttons" t-else="">

@@ -144,7 +144,7 @@ class TestNoSaftReport(TestNoSaftReportCommon):
                                 <GroupingCode>2099</GroupingCode>
                                 <AccountType>GL</AccountType>
                                 <OpeningDebitBalance>8000.00</OpeningDebitBalance>
-                                <ClosingDebitBalance>0.00</ClosingDebitBalance>
+                                <ClosingDebitBalance>8000.00</ClosingDebitBalance>
                             </Account>
                             <Account>
                                 <AccountID>___ignore___</AccountID>

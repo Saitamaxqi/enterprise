@@ -2499,36 +2499,24 @@ class AccountReport(models.Model):
         # When coming from a specific account, the unfold must only be retained
         # on the specified account. Better performance and more ergonomic
         # as it opens what client asked. And "Unfold All" is 1 clic away.
-        options["unfold_all"] = False
-
-        records_to_unfold = []
-        for _dummy, model, record_id in self._parse_line_id(params['line_id']):
-            if model in ('account.group', 'account.account'):
-                records_to_unfold.append((model, record_id))
-
-        if not records_to_unfold or records_to_unfold[-1][0] != 'account.account':
+        options["unfold_all"] = True
+        general_ledger = self.env.ref('account_reports.general_ledger_report')
+        record_id_to_search = self._get_res_id_from_line_id(params['line_id'], 'account.account')
+        if not record_id_to_search:
             raise UserError(_("'Open General Ledger' caret option is only available form report lines targetting accounts."))
 
-        general_ledger = self.env.ref('account_reports.general_ledger_report')
-        lines_to_unfold = []
-        for model, record_id in records_to_unfold:
-            parent_line_id = lines_to_unfold[-1] if lines_to_unfold else None
-            # Re-create the hierarchy of account groups that should be unfolded in GL
-            generic_line_id = general_ledger._get_generic_line_id(model, record_id, parent_line_id=parent_line_id)
-            lines_to_unfold.append(generic_line_id)
-
-        options['not_reset_journals_filter'] = True  # prevents resetting the default journal group
+        account = self.env['account.account'].browse(record_id_to_search)
         gl_options = general_ledger.get_options(options)
         gl_options['not_reset_journals_filter'] = True  # prevents resetting the default journal group
-        gl_options['unfolded_lines'] = lines_to_unfold
+        gl_options['unfold_all'] = True
+        gl_options['filter_search_bar'] = account.code
 
-        account_id = self.env['account.account'].browse(records_to_unfold[-1][1])
         action_vals = self.env['ir.actions.actions']._for_xml_id('account_reports.action_account_report_general_ledger')
         action_vals['params'] = {
             'options': gl_options,
             'ignore_session': True,
         }
-        action_vals['context'] = dict(ast.literal_eval(action_vals['context']), default_filter_accounts=account_id.code)
+        action_vals['context'] = dict(ast.literal_eval(action_vals['context']), default_filter_accounts=account.code)
 
         return action_vals
 
@@ -4782,6 +4770,22 @@ class AccountReport(models.Model):
                 'search_default_group_by_move': True,
                 'expand': True,
             }
+        }
+
+    @api.model
+    def _get_unaffected_earnings_accounts_per_company(self, options):
+        """ Return the unaffected earnings accounts for the report's companies. """
+        unaffected_earnings_accounts = self.env['account.account']._read_group(
+            domain=[
+                *self.env['account.account']._check_company_domain(self.env['account.report'].get_report_company_ids(options)),
+                ('account_type', '=', 'equity_unaffected'),
+            ],
+            groupby=['company_ids'],
+            aggregates=['id:min'],
+        )
+        return {
+            company.id: account_id
+            for company, account_id in unaffected_earnings_accounts
         }
 
     def action_modify_manual_value(self, line_id, options, column_group_key, new_value_str, target_expression_id, rounding, json_friendly_column_group_totals):
@@ -7219,7 +7223,7 @@ class AccountReportLine(models.Model):
 
         else:
             if custom_groupby_name_builder:
-                keys_and_names_in_sequence = custom_groupby_name_builder(group_lines_by_keys.keys()) # Batch this when we have a label builder. This function also ensures the order of the name sequence
+                keys_and_names_in_sequence = custom_groupby_name_builder(group_lines_by_keys.keys())  # Batch this when we have a label builder. This function also ensures the order of the name sequence
             else:
                 for non_relational_key in sorted(group_lines_by_keys.keys(), key=lambda k: (k is None, isinstance(k, str), k)):
                     if non_relational_key is None:

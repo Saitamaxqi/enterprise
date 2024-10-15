@@ -6,6 +6,7 @@ from markupsafe import Markup
 from itertools import chain
 
 from dateutil.rrule import rrule, MONTHLY
+from datetime import timedelta
 
 from odoo import models, fields, release, _
 from odoo.exceptions import RedirectWarning, UserError
@@ -39,9 +40,14 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
 
     def _l10n_nl_reports_get_opening_balance_query(self, options):
         report = self.env['account.report'].browse(options['report_id'])
-        new_options = self._get_options_initial_balance(options)
+
+        # Create options for initial balance
+        opening_balance_options = options.copy()
+        new_date_to = fields.Date.from_string(opening_balance_options['date']['date_from']) - timedelta(days=1)
+        opening_balance_options['date'] = self.env['account.report']._get_dates_period(None, new_date_to, 'single')
+
         query = report._get_report_query(
-            new_options,
+            opening_balance_options,
             'from_beginning',
             domain=[('account_id.include_initial_balance', '=', True)],
         )

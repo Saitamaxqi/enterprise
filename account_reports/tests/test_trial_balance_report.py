@@ -471,8 +471,7 @@ class TestTrialBalanceReport(TestAccountReportsCommon):
         self.assertEqual(res['context']['default_filter_accounts'], '600000')
         general_ledger_lines = general_ledger._get_lines(res['params']['options'])
         unfolded_lines = [line for line in general_ledger_lines if line.get("unfolded")]
-        # Since the line 600000 Expenses has no child, unfolded is set to False. That's why we have only one element in the list
-        self.assertEqual(len(unfolded_lines), 1)
+        self.assertEqual(len(unfolded_lines), 9)
 
     def test_trial_balance_comparisons_continuous_months(self):
         # Ensure that when comparing multiple months, an initial and end balance appear when the fiscal year changes.

@@ -196,16 +196,29 @@ class CarbonReportHandler(models.AbstractModel):
                 col_dict['auditable'] = True
 
     def _get_custom_groupby_map(self):
+        def carbon_report_source_hierarchy_label_builder(grouping_keys):
+            keys_and_names_in_sequence = {}
+            for emission_source in self.env['esg.emission.source'].browse(grouping_keys):
+                keys_and_names_in_sequence[emission_source.id] = emission_source.name
+            return keys_and_names_in_sequence
+
+        def carbon_report_source_scope_label_builder(grouping_keys):
+            keys_and_names_in_sequence = {}
+            labels_dict = dict(self.env['esg.emission.source']._fields['scope']._description_selection(self.env))
+            for grouping_key in grouping_keys:
+                keys_and_names_in_sequence[grouping_key] = labels_dict[grouping_key]
+            return keys_and_names_in_sequence
+
         return {
             'carbon_report_source_hierarchy': {
                 'model': 'esg.emission.source',
                 'domain_builder': lambda source_id: [('esg_emission_factor_id.source_id', 'child_of', source_id)],
-                'label_builder': lambda source_id: self.env['esg.emission.source'].browse(source_id).name,
+                'label_builder': carbon_report_source_hierarchy_label_builder,
             },
             'carbon_report_source_scope': {
                 'model': None,
                 'domain_builder': lambda scope: [('esg_emission_factor_id.source_id.scope', '=', scope)],
-                'label_builder': lambda scope: dict(self.env['esg.emission.source']._fields['scope']._description_selection(self.env))[scope],
+                'label_builder': carbon_report_source_scope_label_builder,
             },
         }
 

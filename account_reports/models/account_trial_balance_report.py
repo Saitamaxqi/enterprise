@@ -323,7 +323,7 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         """ Get an SQL expression for the given field on account.move.line. """
         if field == 'account_or_unaff_id':
             if fiscalyear_start := options.get('trial_balance_block_fiscalyear_start'):
-                unaffected_earnings_accounts_per_company = self._get_unaffected_earnings_accounts_per_company(options)
+                unaffected_earnings_accounts_per_company = self.env['account.report']._get_unaffected_earnings_accounts_per_company(options)
 
                 if 'account_move_line__account_id' not in query._joins:
                     account_alias = query.join("account_move_line", "account_id", "account_account", "id", "account_id")
@@ -353,21 +353,6 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
                 field = 'account_id'
 
         return self.env['account.move.line']._field_to_sql("account_move_line", field, query)
-
-    def _get_unaffected_earnings_accounts_per_company(self, options):
-        """ Return the unaffected earnings accounts for the report's companies. """
-        unaffected_earnings_accounts = self.env['account.account']._read_group(
-            domain=[
-                *self.env['account.account']._check_company_domain(self.env['account.report'].get_report_company_ids(options)),
-                ('account_type', '=', 'equity_unaffected'),
-            ],
-            groupby=['company_ids'],
-            aggregates=['id:min'],
-        )
-        return {
-            company.id: account_id
-            for company, account_id in unaffected_earnings_accounts
-        }
 
     def _get_custom_groupby_map(self):
         return {

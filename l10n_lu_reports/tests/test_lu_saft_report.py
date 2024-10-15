@@ -127,7 +127,7 @@ class TestLuSaftReport(TestSaftReport):
                                 <StandardAccountID>142000</StandardAccountID>
                                 <AccountType>Current Year Earni</AccountType>
                                 <OpeningDebitBalance>8000.00</OpeningDebitBalance>
-                                <ClosingDebitBalance>0.00</ClosingDebitBalance>
+                                <ClosingDebitBalance>8000.00</ClosingDebitBalance>
                             </Account>
                             <Account>
                                 <AccountID>___ignore___</AccountID>

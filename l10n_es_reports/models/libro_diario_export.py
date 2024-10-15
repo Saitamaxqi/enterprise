@@ -76,15 +76,11 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
         if any(companies.filtered(lambda company: company.partner_id.country_id.code != 'ES')):
             raise UserError(_('This report export is only available for ES companies.'))
 
-        report = self.env['account.report'].browse(options['report_id'])
-        report._init_currency_table(options)
-        aml_query = self._get_query_amls(report, options, None)
-
         custom_libro_diario_columns = {
             'entry': _("Entry"),
             'line':  _("Line"),
             'date': _("Date"),
-            'name': _("Description"),
+            'line_name': _("Description"),
             'move_name': _("Document"),
             'account_code': _("Account Code"),
             'account_name': _("Account Name"),
@@ -93,6 +89,8 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
         }
 
         # Add company data and report dates
+        report = self.env['account.report'].browse(options['report_id'])
+        report._init_currency_table(options)
         company = report._get_sender_company_for_export(options)
         company_data = [company.name, company.vat or ""]
         report_data = [_("General Ledger - %(date_from)s_%(date_to)s", date_from=options['date']['date_from'], date_to=options['date']['date_to'])]
@@ -102,13 +100,15 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
         # Add the column names
         data = [list(custom_libro_diario_columns.values())]
 
+        engine_result = self._report_custom_engine_general_ledger(None, options, None, 'id_with_accumulated_balance', None)
         # Add lines data
         current_move = ''
         entry_index = 0
-        self._cr.execute(aml_query)
-        for aml in self._cr.dictfetchall():
-            if not current_move or current_move != aml['move_name']:
-                current_move = aml['move_name']
+        for aml_key, engine_result_dict in engine_result:
+            if 'balance_line' in aml_key:
+                continue
+            if not current_move or current_move != engine_result_dict['move_name']:
+                current_move = engine_result_dict['move_name']
                 entry_index += 1
                 line_index = 1
             else:
@@ -121,9 +121,9 @@ class GeneralLedgerCustomHandler(models.AbstractModel):
                 elif column == 'line':
                     res_line.append(line_index)
                 elif column == 'date':
-                    res_line.append(aml['date'].strftime("%d/%m/%Y"))
+                    res_line.append(engine_result_dict['date'].strftime("%d/%m/%Y"))
                 else:
-                    res_line.append(aml[column])
+                    res_line.append(engine_result_dict[column])
             data.append(res_line)
 
         return header, data
