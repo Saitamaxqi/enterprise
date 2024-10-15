@@ -72,7 +72,6 @@ class AccountMove(models.Model):
         uy_invoices = self.filtered(
             lambda m: m.l10n_uy_edi_is_needed
             and m.state == "posted"
-            and not m.l10n_uy_edi_cfe_state
         )
 
         super(AccountMove, self - uy_invoices)._compute_name()
