@@ -81,7 +81,7 @@ class Data_MergeGroup(models.Model):
         """
         for group in self:
             if hasattr(self.env[group.res_model_name], '_elect_method'):
-                elect_master = getattr(self.env[group.res_model_name], '_elect_method')
+                elect_master = self.env[group.res_model_name]._elect_method
             else:
                 elect_master = group._elect_method
 
@@ -147,7 +147,7 @@ class Data_MergeGroup(models.Model):
 
         model = self.env[self.res_model_name]
         if hasattr(model, '_merge_method'):
-            merge = getattr(model, '_merge_method')
+            merge = model._merge_method
         else:
             merge = self._merge_method
 

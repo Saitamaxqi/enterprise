@@ -4,6 +4,8 @@ from datetime import date, datetime
 
 from odoo.addons.project_forecast.tests.common import TestCommonForecast
 
+from odoo.tests import freeze_time
+
 
 class TestPlanningTimesheet(TestCommonForecast):
 
@@ -63,27 +65,27 @@ class TestPlanningTimesheet(TestCommonForecast):
         values = self.env["planning.slot"]._gantt_progress_bar_project_id(res_ids, start_date, end_date)
         self.assertDictEqual(values, expected_values)
 
+    @freeze_time('2019-06-06 01:00:00')
     def test_timesheets_forecast_analysis_with_weekend_included(self):
-        with self._patch_now('2019-06-06 01:00:00'):
-            self.project_opera.write({'allow_timesheets': True})
-            self.env['planning.slot'].create({
-                'project_id': self.project_opera.id,
-                'employee_id': self.employee_bert.id,
-                'resource_id': self.resource_bert.id,
-                'allocated_hours': 40,
-                'start_datetime': datetime(2019, 6, 6, 8, 0, 0),
-                # 6/8/2019 and 6/9/2019 are weekend days
-                'end_datetime': datetime(2019, 6, 12, 17, 0, 0),
-                'allocated_percentage': 100,
-                'state': 'draft',
-            })
-            self.env['planning.slot'].flush_model()
-            result = self.env['project.timesheet.forecast.report.analysis'].read_group(
-                domain=[["project_id", "=", self.project_opera.id]],
-                fields=["planned_hours:sum", 'effective_hours:sum', 'difference:sum'],
-                groupby=["entry_date:month"], lazy=False
-            )
-            self.assertEqual((result[0]['planned_hours']), 40)
+        self.project_opera.write({'allow_timesheets': True})
+        self.env['planning.slot'].create({
+            'project_id': self.project_opera.id,
+            'employee_id': self.employee_bert.id,
+            'resource_id': self.resource_bert.id,
+            'allocated_hours': 40,
+            'start_datetime': datetime(2019, 6, 6, 8, 0, 0),
+            # 6/8/2019 and 6/9/2019 are weekend days
+            'end_datetime': datetime(2019, 6, 12, 17, 0, 0),
+            'allocated_percentage': 100,
+            'state': 'draft',
+        })
+        self.env['planning.slot'].flush_model()
+        result = self.env['project.timesheet.forecast.report.analysis'].read_group(
+            domain=[["project_id", "=", self.project_opera.id]],
+            fields=["planned_hours:sum", 'effective_hours:sum', 'difference:sum'],
+            groupby=["entry_date:month"], lazy=False
+        )
+        self.assertEqual((result[0]['planned_hours']), 40)
 
     def test_compute_slot_effective_hours(self):
         slot = self.env["planning.slot"].create({

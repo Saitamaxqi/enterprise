@@ -1,10 +1,5 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details
-
-from contextlib import contextmanager
-
-from odoo import fields
-
 from odoo.addons.planning.tests.common import TestCommonPlanning
 
 
@@ -33,31 +28,6 @@ class TestCommonForecast(TestCommonPlanning):
             'name': 'Dawn',
             'project_id': cls.project_horizon.id,
         })
-
-    # --------------------------------------------------------------------------
-    # Helpers
-    # --------------------------------------------------------------------------
-
-    @contextmanager
-    def _patch_now(self, datetime_str):
-        datetime_now_old = getattr(fields.Datetime, 'now')
-        datetime_today_old = getattr(fields.Datetime, 'today')
-
-        def new_now():
-            return fields.Datetime.from_string(datetime_str)
-
-        def new_today():
-            return fields.Datetime.from_string(datetime_str).replace(hour=0, minute=0, second=0)
-
-        try:
-            setattr(fields.Datetime, 'now', new_now)
-            setattr(fields.Datetime, 'today', new_today)
-
-            yield
-        finally:
-            # back
-            setattr(fields.Datetime, 'now', datetime_now_old)
-            setattr(fields.Datetime, 'today', datetime_today_old)
 
     def get_by_employee(self, employee):
         return self.env['planning.slot'].search([('employee_id', '=', employee.id)])
