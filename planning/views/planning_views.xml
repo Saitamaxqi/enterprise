@@ -196,22 +196,27 @@
                         <t t-if="widget.editable"><a role="menuitem" type="edit" class="dropdown-item">Edit</a></t>
                         <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
                     </t>
+                    <t t-name="AllocatedTimeSpan">
+                    </t>
                     <t t-name="card">
-                        <div name="card_top" class="d-flex flex-wrap gap-1 fw-bold fs-5 fst-italic mb-1">
-                            <i class="mt-1 fa fa-clock-o" role="img" aria-label="Date" title="Date"/>
-                            <t t-if="record.start_datetime.raw_value and record.end_datetime.raw_value">
-                                <field name="start_datetime"/> - <field name="end_datetime"/>
+                        <div name="card_top" class="fw-bold">
+                            <i class="me-1 mt-1 fa fa-clock-o" role="img" aria-label="Date" title="Date"/>
+                            <t t-if="luxon.DateTime.fromISO(record.start_datetime.raw_value).hasSame(luxon.DateTime.fromISO(record.end_datetime.raw_value), 'days')">
+                                <field name="start_datetime" options="{'show_seconds': False}" />
+                                <span class="fa fa-long-arrow-right mx-1 mt-1" aria-label="Arrow icon" title="Arrow"/>
+                                <t t-out="luxon.DateTime.fromISO(record.end_datetime.raw_value).toFormat('HH:mm')"/>
                             </t>
-                            <span class="d-inline-flex">
-                                <t t-if="record.start_datetime.raw_value and record.end_datetime.raw_value">
-                                    (<field name="allocated_hours" widget="float_time"/>)
-                                </t>
+                            <t t-else="">
+                                <field name="start_datetime" options="{'show_seconds': False}"/>
+                                <span class="fa fa-long-arrow-right mx-2 mt-1" aria-label="Arrow icon" title="Arrow"/>
+                                <field name="end_datetime" options="{'show_seconds': False}"/>
+                            </t>
+                            <span class="d-inline-flex fw-bold ps-1">
+                                <t t-if="record.start_datetime.raw_value and record.end_datetime.raw_value">(<field name="allocated_hours" widget="float_time"/>)</t>
                                 <t t-else="">
-                                    <field name="allocated_hours" widget="float_time" class="ms-1"/>
+                                    <field name="allocated_hours" widget="float_time"/>
                                 </t>
-                                <t t-if="record.resource_type.raw_value == 'user'">
-                                    (<field name="allocated_percentage"/>%)
-                                </t>
+                                <t t-if="record.resource_type.raw_value == 'user'"> (<field name="allocated_percentage" digits="[0,0]"/>%)</t>
                             </span>
                         </div>
                         <div>
@@ -354,7 +359,7 @@
                         ('end_datetime', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(days=1,weekday=0), datetime.time(0,0,0)).to_utc()),
                         ('end_datetime', '&lt;', datetime.datetime.combine(context_today() + relativedelta(weeks=1,days=1,weekday=0), datetime.time(0,0,0)).to_utc()),
                     ]"/>
-                </filter>    
+                </filter>
                 <group string="Group By">
                     <filter name="group_by_department" string="Department" context="{'group_by': 'department_id'}" groups="planning.group_planning_user"/>
                     <filter name="group_by_manager" string="Manager" context="{'group_by': 'manager_id'}" groups="planning.group_planning_user"/>
