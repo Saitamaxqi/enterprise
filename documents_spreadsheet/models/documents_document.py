@@ -332,7 +332,7 @@ class DocumentsDocument(models.Model):
             "attachment_id": False,
             "handler": "spreadsheet",
             "mimetype": "application/o-spreadsheet",
-            "name": self.name.rstrip(".xlsx"),
+            "name": self.name.removesuffix(".xlsx"),
             "spreadsheet_data": json.dumps(unzipped),
         })
 

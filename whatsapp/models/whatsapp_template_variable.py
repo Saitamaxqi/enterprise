@@ -154,6 +154,6 @@ class WhatsappTemplateVariable(models.Model):
         """ Extract variable index, located between '{{}}' markers. """
         self.ensure_one()
         try:
-            return int(self.name.lstrip('{{').rstrip('}}'))
+            return int(self.name.removeprefix('{{').removesuffix('}}'))
         except ValueError:
             return None
