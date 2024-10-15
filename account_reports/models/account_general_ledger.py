@@ -250,8 +250,6 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         # 1) Get sums for all accounts.
         # ============================================
         for column_group_key, options_group in options_by_column_group.items():
-            if not options.get('general_ledger_strict_range'):
-                options_group = self._get_options_sum_balance(options_group)
 
             # Sum is computed including the initial balance of the accounts configured to do so, unless a special option key is used
             # (this is required for trial balance, which is based on general ledger)
@@ -260,14 +258,16 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             query_domain = []
 
             if not options_group.get('general_ledger_strict_range'):
+                date_from = fields.Date.from_string(options_group['date']['date_from'])
+                current_fiscalyear_dates = self.env.company.compute_fiscalyear_dates(date_from)
                 query_domain += [
                     '|',
-                    ('date', '>=', options_group['date']['date_from']),
+                    ('date', '>=', current_fiscalyear_dates['date_from']),
                     ('account_id.include_initial_balance', '=', True),
                 ]
 
-            if options.get('export_mode') == 'print' and options.get('filter_search_bar'):
-                query_domain.append(('account_id', 'ilike', options['filter_search_bar']))
+            if options_group.get('export_mode') == 'print' and options_group.get('filter_search_bar'):
+                query_domain.append(('account_id', 'ilike', options_group['filter_search_bar']))
 
             if options_group.get('include_current_year_in_unaff_earnings'):
                 query_domain += [('account_id.include_initial_balance', '=', True)]
@@ -589,25 +589,6 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             'range',
         )
         new_options['include_current_year_in_unaff_earnings'] = include_current_year_in_unaff_earnings
-
-        return new_options
-
-    def _get_options_sum_balance(self, options):
-        new_options = options.copy()
-
-        if not options.get('general_ledger_strict_range'):
-            # Date from
-            date_from = fields.Date.from_string(new_options['date']['date_from'])
-            current_fiscalyear_dates = self.env.company.compute_fiscalyear_dates(date_from)
-            new_date_from = current_fiscalyear_dates['date_from']
-
-            new_date_to = fields.Date.from_string(new_options['date']['date_to'])
-
-            new_options['date'] = self.env['account.report']._get_dates_period(
-                new_date_from,
-                new_date_to,
-                'range',
-            )
 
         return new_options
 

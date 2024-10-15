@@ -377,13 +377,12 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         return header_values
 
     def _get_xaf_stream(self, options):
-        new_options = self._get_options_sum_balance(options)
-        header_values = self._l10n_nl_get_header_values(new_options)
+        header_values = self._l10n_nl_get_header_values(options)
         header_content = self.env['ir.qweb']._render('l10n_nl_reports.xaf_audit_file', header_values)
         header, footer = header_content.split('</transactions>')
         return chain(
             [header],
-            self._get_xaf_lines_stream(new_options),
+            self._get_xaf_lines_stream(options),
             [Markup("""
                 </transactions>""") + footer],
         )
