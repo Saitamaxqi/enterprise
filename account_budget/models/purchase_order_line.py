@@ -40,7 +40,7 @@ class PurchaseOrderLine(models.Model):
                     ])
 
         for domain, lines in self.grouped(get_domain).items():
-            lines.budget_line_ids = bool(domain) and self.env['budget.line'].search(list(domain))
+            lines.budget_line_ids = bool(domain) and self.sudo().env['budget.line'].search(list(domain))
 
     @api.depends('budget_line_ids', 'price_unit', 'product_qty', 'qty_invoiced')
     def _compute_above_budget(self):
