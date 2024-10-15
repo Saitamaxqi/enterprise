@@ -98,7 +98,7 @@ class AppointmentPortal(portal.CustomerPortal):
         appointment_count = Event.search_count(domain)
         pager = portal_pager(
             url="/my/appointments",
-            url_args={'sortby': sortby, 'search_in': search_in, 'search': search, 'groupby': groupby},
+            url_args={'sortby': sortby, 'search_in': search_in, 'search': search, 'groupby': groupby, 'filterby': filterby},
             total=appointment_count,
             page=page,
             step=self._items_per_page
