@@ -226,12 +226,16 @@ class SpreadsheetMixin(models.AbstractModel):
         return is_accepted
 
     def _get_spreadsheet_snapshot(self):
-        snapshot = self.with_context(bin_size=False).spreadsheet_snapshot
-        if snapshot is False and self.spreadsheet_data is False:
+        snapshot_attachment = self.env['ir.attachment'].with_context(bin_size=False).search([
+            ('res_model', '=', self._name),
+            ('res_field', '=', 'spreadsheet_snapshot'),
+            ('res_id', '=', self.id),
+        ])
+        if not snapshot_attachment and self.spreadsheet_data is False:
             return False
-        elif snapshot is False:
+        elif not snapshot_attachment:
             return json.loads(self.spreadsheet_data)
-        return json.loads(base64.decodebytes(snapshot) or '{}')
+        return json.loads(snapshot_attachment.raw)
 
     def _should_be_snapshotted(self):
         if not self.spreadsheet_revision_ids:
