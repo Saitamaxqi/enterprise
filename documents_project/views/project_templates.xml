@@ -3,7 +3,7 @@
     <template id="documents_project.portal_tasks_list" inherit_id="project.portal_tasks_list">
         <xpath expr="//div[@name='project_name']" position="inside">
             <t t-set="project" t-value="project or tasks[0].project_id"/>
-            <span t-if="uid" class="ms-auto">
+            <span t-if="uid and project.document_count" class="ms-auto">
                 <a class="btn btn-light px-1 py-0" target="_blank"
                    t-attf-href="/my/projects/#{project.id}/documents?access_token=#{project.access_token}">
                     <t t-out="project.document_count"/> Documents
@@ -11,8 +11,7 @@
             </span>
         </xpath>
         <xpath expr="//div[@name='stage_name']" position="inside">
-            <t t-set="project" t-value="project or (grouped_tasks[0].project_id if tasks == grouped_tasks[0] else grouped_tasks[0].project_id.browse())"/>
-            <span t-if="uid" class="ms-auto">
+            <span t-if="project and uid and project.document_count and grouped_tasks[0] == tasks" class="ms-auto">
                 <a class="btn btn-light px-1 py-0" target="_blank"
                    t-attf-href="/my/projects/#{project.id}/documents?access_token=#{project.access_token}">
                     <t t-out="project.document_count"/> Documents
