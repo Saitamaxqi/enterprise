@@ -5942,19 +5942,19 @@ class AccountReport(models.Model):
             x_offset = original_x_offset + 1
             if lines[y]['id'] in account_lines_split_names:
                 code, name = account_lines_split_names[lines[y]['id']]
-                write_cell(sheet, x_offset - 2, y + y_offset, name, col1_style)
-                write_cell(sheet, x_offset - 1, y + y_offset, code, col2_style)
+                write_cell(sheet, 0, y + y_offset, name, col1_style)
+                write_cell(sheet, 1, y + y_offset, code, col2_style)
             else:
                 cell_type, cell_value = self._get_cell_type_value(lines[y])
                 if cell_type == 'date':
-                    write_cell(sheet, x_offset - 2, y + y_offset, cell_value, date_default_col1_style, datetime=True)
+                    write_cell(sheet, 0, y + y_offset, cell_value, date_default_col1_style, datetime=True)
                 else:
-                    write_cell(sheet, x_offset - 2, y + y_offset, cell_value, col1_style)
+                    write_cell(sheet, 0, y + y_offset, cell_value, col1_style)
 
                 if lines[y].get('parent_id') and lines[y]['parent_id'] in account_lines_split_names:
-                    write_cell(sheet, x_offset - 1, y + y_offset, account_lines_split_names[lines[y]['parent_id']][0], col2_style)
+                    write_cell(sheet, 1, y + y_offset, account_lines_split_names[lines[y]['parent_id']][0], col2_style)
                 elif account_lines_split_names:
-                    write_cell(sheet, x_offset - 1, y + y_offset, "", col2_style)
+                    write_cell(sheet, 1, y + y_offset, "", col2_style)
 
             #write all the remaining cells
             columns = lines[y]['columns']
