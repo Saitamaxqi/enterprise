@@ -1332,13 +1332,15 @@
                                             <record id="account_financial_report_bs_p_i_a_rpa_net_pend" model="account.report.expression">
                                                 <field name="label">net_pend</field>
                                                 <field name="engine">domain</field>
-                                                <field name="formula" eval="[
-                                                    '|',
-                                                    ('account_id.account_type', '=', 'equity_unaffected'),
-                                                    ('account_id.internal_group', 'in', ('income', 'expense')),
-                                                ]"/>
+                                                <field name="formula" eval="[('account_id.internal_group', 'in', ('income', 'expense'))]"/>
                                                 <field name="subformula">-sum</field>
                                                 <field name="date_scope">to_beginning_of_fiscalyear</field>
+                                            </record>
+                                            <record id="account_financial_report_bs_p_i_a_rpa_affected" model="account.report.expression">
+                                                <field name="label">affected</field>
+                                                <field name="engine">domain</field>
+                                                <field name="formula" eval="[('account_id.account_type', '=', 'equity_unaffected')]"/>
+                                                <field name="subformula">-sum</field>
                                             </record>
                                             <record id="account_financial_report_bs_p_i_a_rpa_net_bs" model="account.report.expression">
                                                 <field name="label">net_bs</field>
@@ -1348,7 +1350,7 @@
                                             <record id="account_financial_report_bs_p_i_a_rpa_net" model="account.report.expression">
                                                 <field name="label">net</field>
                                                 <field name="engine">aggregation</field>
-                                                <field name="formula">MA_BS_P_I_A_RPA.net_pend + MA_BS_P_I_A_RPA.net_bs</field>
+                                                <field name="formula">MA_BS_P_I_A_RPA.net_pend + MA_BS_P_I_A_RPA.net_bs + MA_BS_P_I_A_RPA.affected</field>
                                             </record>
                                         </field>
                                     </record>
