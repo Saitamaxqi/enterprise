@@ -1724,9 +1724,11 @@ class L10n_InGstReturnPeriod(models.Model):
             ]
             to_match_bills = AccountMove.search(domain)
             for late_bill in gstr2b_late_streamline_bills:
+                bill_month_start, bill_month_end = date_utils.get_month(late_bill.get('bill_date'))
                 to_match_bills += AccountMove.search([
                     ('l10n_in_gst_return_period_id', '!=', self.id),
-                    ("invoice_date", "<", self.start_date),
+                    ("invoice_date", ">=", bill_month_start),
+                    ("invoice_date", "<=", bill_month_end),
                     ("company_id", "in", self.company_ids.ids or self.company_id.ids),
                     ("move_type", "in", AccountMove.get_purchase_types()),
                     ('ref', '=', late_bill.get('bill_number')),
