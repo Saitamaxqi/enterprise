@@ -2701,17 +2701,17 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
 
             self.assertEqual(self.subscription.invoice_count, 1)
             invoice = self.subscription.invoice_ids.sorted('id')[-1]
-            self.assertAlmostEqual(invoice.amount_total, 10, 4, 'Downpayment price should be 10')
+            self.assertAlmostEqual(invoice.amount_total, 10, 4, msg='Downpayment price should be 10')
             invoice._post()
             self.assertEqual(self.subscription.next_invoice_date, datetime.date(2021, 1, 3))
             invoice = self.subscription._create_invoices(final=True)  # manual
-            self.assertAlmostEqual(invoice.amount_total, total - 10, 4, 'Downpayment should be deducted from the price')
+            self.assertAlmostEqual(invoice.amount_total, total - 10, 4, msg='Downpayment should be deducted from the price')
             invoice._post()
             self.assertEqual(self.subscription.next_invoice_date, datetime.date(2021, 2, 3))
 
         with freeze_time('2021-02-03'):
             inv = self.subscription._create_recurring_invoice()
-            self.assertAlmostEqual(inv.amount_total, total, 4, 'Downpayment should not be deducted from the price anymore')
+            self.assertAlmostEqual(inv.amount_total, total, 4, msg='Downpayment should not be deducted from the price anymore')
 
     def test_downpayment_manual_invoice(self):
         """ Test invoice with a way of downpayment and check downpayment's SO line is created
@@ -2739,18 +2739,18 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
 
             self.assertEqual(self.subscription.invoice_count, 1)
             invoice = self.subscription.invoice_ids.sorted('id')[-1]
-            self.assertAlmostEqual(invoice.amount_total, 10, 4, 'Downpayment price should be 10')
+            self.assertAlmostEqual(invoice.amount_total, 10, 4, msg='Downpayment price should be 10')
             invoice._post()
 
             invoice = self.subscription._create_invoices(final=True)
             invoice._post()
 
-            self.assertAlmostEqual(invoice.amount_total, total - 10, 4, 'Downpayment should be deducted from the price')
+            self.assertAlmostEqual(invoice.amount_total, total - 10, 4, msg='Downpayment should be deducted from the price')
 
         with freeze_time('2021-02-03'):
             invoice = self.subscription._create_invoices(final=True)
             self.assertAlmostEqual(invoice.amount_total, total, 4,
-                                   'Downpayment should not be deducted from the price anymore')
+                                   msg='Downpayment should not be deducted from the price anymore')
 
     def test_upsell_with_different_currency_throws_error(self):
         pricelist_eur = self.env['product.pricelist'].create({
