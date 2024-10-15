@@ -563,3 +563,56 @@ class TestSignRequest(SignRequestCommon, MockEmail):
                 2, len(completion_mail_to_partner),
                 'Two emails should have been sent to the partner: the initial sign request and the completion email'
             )
+
+    def test_check_state_for_download(self):
+        """Test downloading a completed document for signed requests and validation for unsigned requests."""
+
+        # Create sign request with 3 roles (customer, employee, company, cc partners)
+        sign_request_3_roles = self.create_sign_request_3_roles(
+            customer=self.partner_1,
+            employee=self.partner_2,
+            company=self.partner_3,
+            cc_partners=self.partner_4
+        )
+        # Map role to corresponding sign request item using a dictionary comprehension
+        role2sign_request_item = {
+            sign_request_item.role_id: sign_request_item
+            for sign_request_item in sign_request_3_roles.request_item_ids
+        }
+        # Retrieve individual sign request items for customer, employee, and company
+        sign_request_item_customer = role2sign_request_item[self.role_customer]
+        sign_request_item_employee = role2sign_request_item[self.role_employee]
+        sign_request_item_company = role2sign_request_item[self.role_company]
+        # Get template and sign item IDs
+        template = sign_request_3_roles.template_id
+        sign_item_ids = template.sign_item_ids.ids
+        # Edit and sign the customer sign request item
+        value = 'edit and sign'
+        new_sign_item_config = self.get_sign_item_config(sign_request_item_customer.role_id.id)
+        # The key '-1' is used as a placeholder for newly added sign items
+        # that do not have an assigned ID yet. This ensures they are processed correctly.
+        sign_request_item_customer._edit_and_sign(
+            dict(self.customer_sign_values, **{'-1': value}),
+            new_sign_items={'-1': new_sign_item_config}
+        )
+
+        # Assertions after signing the customer sign request item
+        self.assertEqual(sign_request_item_customer.state, 'completed', 'The sign.request.item should be completed')
+        self.assertEqual(sign_request_3_roles.state, 'sent', 'The sign request should be signed')
+        self.assertEqual(template.sign_item_ids.ids, sign_item_ids, 'The original template should not be changed')
+        self.assertEqual(
+            len(sign_request_3_roles.sign_log_ids.filtered(
+                lambda log: log.action == 'sign' and log.sign_request_item_id == sign_request_item_customer
+            )),
+            1, 'A log with action="sign" should be created'
+        )
+        # Sign the employee sign request item
+        sign_request_item_employee._edit_and_sign(
+            self.create_sign_values(sign_request_3_roles.template_id.sign_item_ids, sign_request_item_employee.role_id.id)
+        )
+        # Assertions after signing the employee sign request item
+        self.assertEqual(sign_request_item_customer.state, 'completed', 'The sign.request.item should be completed')
+        self.assertEqual(sign_request_item_employee.state, 'completed', 'The sign.request.item should be completed')
+        self.assertEqual(sign_request_item_company.state, 'sent', 'The sign.request.item should be sent')
+        completed_document = sign_request_3_roles.get_completed_document()
+        self.assertIsNotNone(completed_document, 'The completed document should be available for download.')

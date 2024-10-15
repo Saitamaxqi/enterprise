@@ -64,7 +64,7 @@
             <list multi_edit="1" sample="1" js_class="sign_list" decoration-info="state in ('shared', 'sent')" decoration-muted="state == 'canceled'">
                 <header>
                     <button type="object" name="send_signature_accesses" class="btn btn-secondary" string="Resend"/>
-                    <button type="object" name="get_completed_document" class="btn btn-secondary" string="Download"/>
+                    <button type="action" name="%(action_view_sign_requests)d" class="btn btn-secondary" string="Download"/>
                 </header>
                 <field name="reference" readonly="1"/>
                 <field name="template_id" readonly="1" optional="hide"/>
