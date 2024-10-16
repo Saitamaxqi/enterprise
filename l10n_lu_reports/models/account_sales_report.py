@@ -240,7 +240,7 @@ class L10n_LuEcSalesReportHandler(models.AbstractModel):
 
         # The correction of reports having the same declaring period isn't allowed,
         # and the correction of reports having later declaring periods doesn't make sense
-        for dummy, ctype, cyear, cperiod in compared_declarations:
+        for _dummy, ctype, cyear, cperiod in compared_declarations:
             # convert quarters to months to compare; because any overlap has to be avoided,
             # take last month of the quarter of the compared declarations,
             # and the first of the present declaration

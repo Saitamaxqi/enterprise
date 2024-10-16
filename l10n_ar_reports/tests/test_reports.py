@@ -320,11 +320,11 @@ class TestReports(TestAr, TestAccountReportsCommon):
 
         # ==== Create VAT BOOK demo data ====
         cls._create_test_invoices_like_demo(cls, use_current_date=False)
-        for _key, inv in cls.demo_invoices.items():
+        for inv in cls.demo_invoices.values():
             inv.action_post()
 
         cls._create_test_vendor_bill_invoice_demo(cls)
-        for _key, inv in cls.demo_bills.items():
+        for inv in cls.demo_bills.values():
             inv.action_post()
 
         # demo_credit_notes are automatically posted thanks to the refund type

@@ -66,7 +66,7 @@ class ShiftController(http.Controller):
             return [vals]
 
         res = []
-        for start, stop, dummy in attendance_intervals:
+        for start, stop, _dummy in attendance_intervals:
             if datetime_start < stop and datetime_end > start:
                 vals = self._get_slot_vals(slot)
                 vals['start'] = str(max(datetime_start, start).astimezone(employee_tz).replace(tzinfo=None))
@@ -184,7 +184,7 @@ class ShiftController(http.Controller):
         if employee_sudo.resource_calendar_id and attendance_intervals:
             checkin_min = 24
             checkout_max = 0
-            for start, end, dummy in attendance_intervals:
+            for start, end, _dummy in attendance_intervals:
                 checkin_min = min(checkin_min, start.hour)
                 checkout_max = max(checkout_max, end.hour)
         # We calculate the earliest/latest hour of the slots. It is used in the weekview.

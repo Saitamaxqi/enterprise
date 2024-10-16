@@ -98,7 +98,7 @@ class ProjectProject(models.Model):
             }
         )
 
-        for budget_analytic, dummy, allocated, spent, ids in budget_lines:
+        for budget_analytic, _dummy, allocated, spent, ids in budget_lines:
             budget_data = budget_data_per_budget[budget_analytic]
             budget_data['id'] = budget_analytic.id
             budget_data['name'] = budget_analytic.display_name

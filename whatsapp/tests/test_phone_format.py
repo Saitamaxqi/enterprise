@@ -27,7 +27,7 @@ class PhoneFormat(WhatsAppCommon):
             "+32 485 22 11 00",  # INTL
             "0032485221100",
         ]
-        expected = [
+        expecteds = [
             # formats are: E164, INTL, WHATSAPP
             "+32485221100", "+32 485 22 11 00", "32485221100",
             "+32485221100", "+32 485 22 11 00", "32485221100",
@@ -39,7 +39,7 @@ class PhoneFormat(WhatsAppCommon):
             product(
                 test_numbers,
                 ('E164', 'INTERNATIONAL', 'WHATSAPP')
-            ), expected):
+            ), expecteds):
             with self.subTest(number=number, force_format=force_format):
                 formatted = wa_phone_validation.wa_phone_format(
                     base_record,

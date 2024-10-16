@@ -74,7 +74,7 @@ class ReportMrp_Account_EnterpriseMrp_Cost_Structure(models.AbstractModel):
                     currency_table=currency_table,
                     workorder_ids=tuple(Workorders.ids))
         self.env.cr.execute(query)
-        for mo_id, dummy_wo_id, op_id, wo_name, wc_name, duration, cost_hour, currency_rate, employee_total_cost in self.env.cr.fetchall():
+        for mo_id, _wo_id, op_id, wo_name, wc_name, duration, cost_hour, currency_rate, employee_total_cost in self.env.cr.fetchall():
             cost = duration / 60.0 * cost_hour * currency_rate
             employee_total_cost = employee_total_cost or 0
             total_cost_by_mo[mo_id] += cost + employee_total_cost

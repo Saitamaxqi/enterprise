@@ -28,7 +28,7 @@ class TestAccountBatchPayment(AccountTestInvoicingCommon):
 
     def test_create_batch_payment_from_payment(self):
         payments = self.env['account.payment']
-        for dummy in range(2):
+        for _i in range(2):
             payments += self.env['account.payment'].create({
                 'amount': 100.0,
                 'payment_type': 'outbound',

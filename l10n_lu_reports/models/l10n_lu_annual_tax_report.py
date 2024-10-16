@@ -323,7 +323,7 @@ class L10n_LuAppendixOpexTaxReportHandler(models.AbstractModel):
         for appendix_line in appendix_lines:
             values = {}
             year = appendix_line['year']
-            for column_group_key, column_group_options in grouped_columns[year]:
+            for column_group_key, column_group_options in grouped_columns[year]:  # noqa: B007
                 values[column_group_key] = {
                     'vat_excluded': appendix_line['report_section_412'],
                     'vat_invoiced': appendix_line['report_section_413'],

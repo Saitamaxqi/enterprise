@@ -831,7 +831,7 @@ class MrpWorkorder(models.Model):
         for time in self.time_ids:
             loss_type_times[time.loss_id.loss_type] |= time
         duration = 0
-        for dummy, times in loss_type_times.items():
+        for times in loss_type_times.values():
             duration += self._intervals_duration([(t.date_start, t.date_end or now, t) for t in times])
         return duration
 

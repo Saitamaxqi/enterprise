@@ -88,10 +88,10 @@ class WhatsAppControllerSecurity(MockIncomingWhatsApp, WhatsAppSecurityCase):
     def test_signature_verification(self):
         # valid signature for
         # >>> {"entry": [{"id": "abcdef123456"}]}
-        signature = '0a354a1c094d43355c4b478408ba4344564de72fc8ff9699a64ea9095ecb5415'
+        sig = '0a354a1c094d43355c4b478408ba4344564de72fc8ff9699a64ea9095ecb5415'
         response = self._make_webhook_request(
             self.whatsapp_account,
-            headers={'X-Hub-Signature-256': f'sha256={signature}'})
+            headers={'X-Hub-Signature-256': f'sha256={sig}'})
         # the endpoint return nothing when everything is fine
         self.assertFalse(response.get('result'))
 
@@ -99,8 +99,8 @@ class WhatsAppControllerSecurity(MockIncomingWhatsApp, WhatsAppSecurityCase):
         for signature in [
             False,  # no signature
             'sha256=',  # empty
-            signature,  # wrong format
-            f'sha256=a{signature[1:]}',  # wrong
+            sig,  # wrong format
+            f'sha256=a{sig[1:]}',  # wrong
         ]:
             with self.subTest(signature=signature):
                 headers = {'X-Hub-Signature-256': signature} if signature else None

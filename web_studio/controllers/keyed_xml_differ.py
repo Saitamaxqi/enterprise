@@ -522,8 +522,8 @@ class KeyedXmlDiffer:
             xpath = self._get_xpath(subtree)
         else:
             xpath = ""
-        for node in chain(reversed(ancestors), [node]):
-            xpath += self._get_node_xpath(node)
+        for ancestor in chain(reversed(ancestors), [node]):
+            xpath += self._get_node_xpath(ancestor)
         return xpath
 
     def _get_subtree_and_ancestors(self, node: etree._Element) -> tuple[etree._Element | None, list[etree._Element]]:
@@ -673,8 +673,8 @@ class KeyedXmlDiffer:
     def _visit_new_node(self, new_node):
         yield from visit(new_node, lambda n: not n.get(DIFF_ATTRIBUTE))
 
-    def _visit_new_node_collect_holes(self, node):
-        for node in self._visit_new_node(node):
+    def _visit_new_node_collect_holes(self, base):
+        for node in self._visit_new_node(base):
             nid = node.get(DIFF_ATTRIBUTE)
             if nid:
                 node.clear()

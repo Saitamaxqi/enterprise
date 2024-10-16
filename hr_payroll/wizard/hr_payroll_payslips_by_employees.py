@@ -138,8 +138,7 @@ class HrPayslipEmployees(models.TransientModel):
             ])
             payslip_work_entries._check_undefined_slots(slip.date_from, slip.date_to)
 
-
-        if(self.structure_id.type_id.default_struct_id == self.structure_id):
+        if self.structure_id.type_id.default_struct_id == self.structure_id:
             work_entries = work_entries.filtered(lambda work_entry: work_entry.state != 'validated')
             if work_entries._check_if_error():
                 work_entries_by_contract = defaultdict(lambda: self.env['hr.work.entry'])
@@ -147,9 +146,9 @@ class HrPayslipEmployees(models.TransientModel):
                 for work_entry in work_entries.filtered(lambda w: w.state == 'conflict'):
                     work_entries_by_contract[work_entry.contract_id] |= work_entry
 
-                for contract, work_entries in work_entries_by_contract.items():
+                for work_entries in work_entries_by_contract.values():
                     conflicts = work_entries._to_intervals()
-                    time_intervals_str = "\n - ".join(['', *["%s -> %s (%s)" % (s[0], s[1], s[2].employee_id.name) for s in conflicts._items]])
+                    time_intervals_str = "".join(f"\n - {start} -> {end} ({entry.employee_id.name})" for start, end, entry in conflicts._items)
                 return {
                     'type': 'ir.actions.client',
                     'tag': 'display_notification',

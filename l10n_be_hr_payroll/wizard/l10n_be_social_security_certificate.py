@@ -335,7 +335,7 @@ class L10nBeSocialSecurityCertificate(models.TransientModel):
             company_worksheet.write(current_line, 0, aggregation_header, style_vertical_header)
             current_line += 1
             company_worksheet.write(current_line, 0, aggregation_data, style_vertical_header)
-            for department, dummy in reports_data:
+            for department, _dummy in reports_data:
                 current_line += 1
                 company_worksheet.write(current_line, 0, department, style_normal)
         else:
@@ -343,7 +343,7 @@ class L10nBeSocialSecurityCertificate(models.TransientModel):
             company_worksheet.write(current_line, 0, aggregation_header, style_vertical_header)
             current_line += 1
             company_worksheet.write(current_line, 0, aggregation_data, style_vertical_header)
-            for employee, dummy in reports_data:
+            for employee, _dummy in reports_data:
                 current_line += 1
                 company_worksheet.write(current_line, 0, employee, style_normal)
 

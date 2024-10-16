@@ -34,7 +34,7 @@ class AccountAutoTransferTestCase(AccountTestInvoicingCommon):
     def _create_accounts(self, amount_of_master_accounts=2, amount_of_slave_accounts=4):
         master_ids = self.env['account.account']
 
-        for i in range(amount_of_master_accounts):
+        for _i in range(amount_of_master_accounts):
             self.master_account_index += 1
             master_ids += self.env['account.account'].create({
                 'name': 'MASTER %s' % self.master_account_index,
@@ -44,7 +44,7 @@ class AccountAutoTransferTestCase(AccountTestInvoicingCommon):
             })
 
         slave_ids = self.env['account.account']
-        for i in range(amount_of_slave_accounts):
+        for _i in range(amount_of_slave_accounts):
             self.slave_account_index += 1
             slave_ids += self.env['account.account'].create({
                 'name': 'SLAVE %s' % self.slave_account_index,

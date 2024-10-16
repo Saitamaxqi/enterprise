@@ -569,9 +569,9 @@ class L10n_InGstReturnPeriod(models.Model):
             }]
             """
             b2b_json = []
-            for partner, journal_items in _group_aml('move_id.commercial_partner_id', journal_items).items():
+            for partner, items in _group_aml('move_id.commercial_partner_id', journal_items).items():
                 inv_json_list = []
-                for move_id in journal_items.mapped('move_id'):
+                for move_id in items.mapped('move_id'):
                     if is_einvoice_skippable(move_id):
                         continue
                     lines_json = {}
@@ -649,9 +649,9 @@ class L10n_InGstReturnPeriod(models.Model):
             }]
             """
             b2cl_json = []
-            for state_id, journal_items in _group_aml('move_id.l10n_in_state_id', journal_items).items():
+            for state_id, items in _group_aml('move_id.l10n_in_state_id', journal_items).items():
                 inv_json_list = []
-                for move_id in journal_items.mapped('move_id'):
+                for move_id in items.mapped('move_id'):
                     lines_json = {}
                     tax_details = tax_details_by_move.get(move_id)
                     for line_tax_details in tax_details.values():
@@ -757,9 +757,9 @@ class L10n_InGstReturnPeriod(models.Model):
             }]
             """
             cdnr_json = []
-            for partner, journal_items in _group_aml('move_id.commercial_partner_id', journal_items).items():
+            for partner, items in _group_aml('move_id.commercial_partner_id', journal_items).items():
                 inv_json_list = []
-                for move_id in journal_items.mapped('move_id'):
+                for move_id in items.mapped('move_id'):
                     if is_einvoice_skippable(move_id):
                         continue
                     lines_json = {}

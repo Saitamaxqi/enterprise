@@ -36,7 +36,7 @@ class HrRecruitmentPlatform(models.Model):
             ),
         )
 
-        for not_used in range(3):
+        for _i in range(3):
             # service can be down for a short time
             try:
                 monster_response = monster_soap_client.service.UpdateJobs(Job=data)

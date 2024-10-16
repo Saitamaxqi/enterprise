@@ -211,7 +211,7 @@ class UPSRequest():
             if error_lines:
                 return _("The estimated shipping price cannot be computed because the weight is missing for the following product(s): \n %s", ", ".join(error_lines.product_id.mapped('name')))
         if picking:
-            for ml in picking.move_line_ids.filtered(lambda ml: not ml.result_package_id and not ml.product_id.weight):
+            if not all(ml.result_package_id or ml.product_id.weight for ml in picking.move_line_ids):
                 return _("The delivery cannot be done because the weight of your product is missing.")
             packages_without_weight = picking.move_line_ids.mapped('result_package_id').filtered(lambda p: not p.shipping_weight)
             if packages_without_weight:
@@ -257,7 +257,7 @@ class UPSRequest():
             MeasurementType = self.factory_ns2.CodeDescriptionType
         elif request_type == "shipping":
             MeasurementType = self.factory_ns2.ShipUnitOfMeasurementType
-        for i, p in enumerate(packages):
+        for p in packages:
             package = self.factory_ns2.PackageType()
             if hasattr(package, 'Packaging'):
                 package.Packaging = self.factory_ns2.PackagingType()

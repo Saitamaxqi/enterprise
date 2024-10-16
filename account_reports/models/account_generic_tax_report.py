@@ -321,9 +321,8 @@ class AccountTaxReportHandler(models.AbstractModel):
             # ignore line that have no property defined on tax group
             if not tg.tax_receivable_account_id or not tg.tax_payable_account_id:
                 continue
-            for dummy, value in values.items():
-                for v in value:
-                    tax_name, account_id, amt = v
+            for value in values.values():
+                for tax_name, account_id, amt in value:
                     # Line to balance
                     move_vals_lines.append((0, 0, {'name': tax_name, 'debit': abs(amt) if amt < 0 else 0, 'credit': amt if amt > 0 else 0, 'account_id': account_id}))
                     total += amt
@@ -1106,7 +1105,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
     def _check_line_consistency(self, report, options, report_line, tax, warnings=None):
         tax_applied = tax.amount * sum(tax.invoice_repartition_line_ids.filtered(lambda tax_rep: tax_rep.repartition_type == 'tax').mapped('factor')) / 100
 
-        for column_group_key, column_group_options in report._split_options_per_column_group(options).items():
+        for column_group_key in report._split_options_per_column_group(options):
             net_value = next((col['no_format'] for col in report_line['columns'] if col['column_group_key'] == column_group_key and col['expression_label'] == 'net'), 0)
             tax_value = next((col['no_format'] for col in report_line['columns'] if col['column_group_key'] == column_group_key and col['expression_label'] == 'tax'), 0)
 

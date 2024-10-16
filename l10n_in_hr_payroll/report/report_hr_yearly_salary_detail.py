@@ -17,19 +17,13 @@ class ReportL10n_In_Hr_PayrollReport_Hryearlysalary(models.AbstractModel):
     def _get_periods_new(self, form):
         months = []
         # Get start year-month-date and end year-month-date
-        first_year = int(form['year'])
-        first_month = 1
+        year = int(form['year'])
 
         # Get name of the months from integer
         month_name = []
-        for count in range(0, 12):
-            m = date(first_year, first_month, 1).strftime('%b')
-            month_name.append(m)
-            months.append(f"{first_month:02d}-{first_year}")
-            if first_month == 12:
-                first_month = 0
-                first_year += 1
-            first_month += 1
+        for month in range(1, 13):
+            month_name.append(date(year, month, 1).strftime('%b'))
+            months.append(f"{month:02d}-{year}")
         return [month_name], months
 
     def _get_employee(self, form):

@@ -47,7 +47,7 @@ class StockMove(models.Model):
             check_vals_list += mo_check_vals_list
 
         # QC of operation type
-        for production, moves in mo_moves.items():
+        for production in mo_moves:
             quality_points_operation = self._search_quality_points(self.env['product.product'], production.picking_type_id, 'operation')
 
             for point in quality_points_operation:

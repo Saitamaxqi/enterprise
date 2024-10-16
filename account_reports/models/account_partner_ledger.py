@@ -431,7 +431,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             raise UserError(_("Wrong ID for partner ledger line to expand: %s", line_dict_id))
 
         prefix_groups_count = 0
-        for markup, dummy1, dummy2 in report._parse_line_id(line_dict_id):
+        for markup, _model, _record_id in report._parse_line_id(line_dict_id):
             if isinstance(markup, dict) and 'groupby_prefix_group' in markup:
                 prefix_groups_count += 1
         level_shift = prefix_groups_count * 2

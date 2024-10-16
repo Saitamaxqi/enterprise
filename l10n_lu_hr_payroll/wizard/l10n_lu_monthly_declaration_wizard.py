@@ -153,7 +153,7 @@ class L10nLuMonthlyDeclarationWizard(models.TransientModel):
         for payslip in payslips:
             grouped_payslips[(payslip.employee_id.id, payslip.struct_type_id.id)] |= payslip
 
-        for dummy, payslips in grouped_payslips.items():
+        for payslips in grouped_payslips.values():
             situational_unemployment = self.situational_unemployment_ids.filtered(lambda s: s.payslip_id in payslips)
             regular_payslips = payslips.filtered(lambda p: p.struct_id == p.struct_type_id.default_struct_id)
             gratification_payslips = payslips.filtered(lambda p: p.struct_id.code in ['LUX_GRATIFICATION', 'LUX_13TH_MONTH'])

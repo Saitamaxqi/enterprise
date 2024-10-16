@@ -229,7 +229,7 @@ class AccountChangeLockDate(models.TransientModel):
             if self[field] != self.env.company[field]
         }
 
-        for field, lock_date in lock_date_values.items():
+        for lock_date in lock_date_values.values():
             if lock_date and lock_date > fields.Date.context_today(self):
                 raise UserError(_('You cannot set a Lock Date in the future.'))
 

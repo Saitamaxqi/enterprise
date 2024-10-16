@@ -215,7 +215,7 @@ class IoTController(http.Controller):
         log_details = map(log_line_transformation, request_data_split)
         init_log_message = "IoT box log '%s' #%d received:" % (iot_box.name, iot_box.id)
 
-        for log_level, log_group in itertools.groupby(log_details, key=lambda log: log['levelno']):
+        for log_level, log_group in itertools.groupby(log_details, key=lambda log: log['levelno']):  # noqa: B007
             log_lines = [log_line['line_formatted'] for log_line in log_group]
             log_current_level()
 

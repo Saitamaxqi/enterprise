@@ -1635,7 +1635,7 @@ class HrPayslip(models.Model):
                     employer_cost['data']['yearly'][code_desc][idx]['label'] = period_str
         # Nullify empty sections
         for i in range(3):
-            for code, code_desc in cost_codes.items():
+            for code_desc in cost_codes.values():
                 if not employer_cost['data']['monthly'][code_desc][i]:
                     value = 0 if not employer_cost['is_sample'] else random.randint(1000, 1500)
                     employer_cost['data']['monthly'][code_desc][i]['value'] = value
@@ -1649,8 +1649,8 @@ class HrPayslip(models.Model):
                         label = format_date(self.env, today + relativedelta(years=i-2), date_format=date_formats['yearly'])
                         employer_cost['data']['yearly'][code_desc][i]['label'] = label
         # Format/Round at the end as the method cost is heavy
-        for dummy, data_by_code in employer_cost['data'].items():
-            for code, data_by_type in data_by_code.items():
+        for data_by_code in employer_cost['data'].values():
+            for data_by_type in data_by_code.values():
                 for data_dict in data_by_type:
                     value = round(data_dict['value'], 2)
                     data_dict['value'] = value
@@ -1759,7 +1759,7 @@ class HrPayslip(models.Model):
             make_data = make_sample_data
 
         # Go through all the data and create null or sample values where necessary
-        for start, dummy, p_types in periods:
+        for start, _dummy, p_types in periods:
             _type, _time = p_types.split(',')
             i = period_indexes[_time]
             for period in period_types:

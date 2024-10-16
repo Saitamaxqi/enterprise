@@ -29,7 +29,7 @@ class Website_GeneratorRequest(models.Model):
         # First extract all the product.template vals
         products = odoo_blocks.get('products', {})
         all_product_vals = []
-        for page_name, product_data in products.items():
+        for product_data in products.values():
             # Create the product vals
             product_vals = {
                 'name': product_data.get('name'),
@@ -40,9 +40,7 @@ class Website_GeneratorRequest(models.Model):
             }
 
             # Create the category and link it if needed
-            category = None
-            product_category = product_data.get('category')
-            if product_category:
+            if product_category := product_data.get('category'):
                 category = self._find_or_create(
                     model='product.category',
                     domain=[('name', '=', product_category)],
@@ -88,7 +86,7 @@ class Website_GeneratorRequest(models.Model):
 
         # Now we make the attributes and set the public category ids
         all_variant_image_vals = []
-        for i, (page_name, product_data) in enumerate(products.items()):
+        for i, product_data in enumerate(products.values()):
             created_product = created_products[i]
             public_categ_ids = []
             for public_categ_name in product_data.get('public_categories', []):

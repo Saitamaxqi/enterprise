@@ -93,13 +93,14 @@ class ResConfigSettings(models.TransientModel):
                     else:
                         raise UserError(result['message'])
 
-            errors = result.get('errors')
-            if errors:
-                msg = []
-                for key, errors in errors.items():
-                    curr = [key + ':'] + [f' - {error}' for error in errors]
-                    msg.append('\n'.join(curr))
-                raise UserError('\n'.join(msg))
+            if errors := result.get('errors'):
+                raise UserError('\n'.join(
+                    '{}:\n{}'.format(
+                        key,
+                        "\n".join(f" - {error}" for error in errs)
+                    )
+                    for key, errs in errors.items()
+                ))
 
     def button_l10n_br_avatax_ping(self):
         if not self.env.is_system():

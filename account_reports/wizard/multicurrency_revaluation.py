@@ -106,7 +106,7 @@ class AccountMulticurrencyRevaluationWizard(models.TransientModel):
     @api.model
     def _get_move_vals(self):
         def _get_model_id(parsed_line, selected_model):
-            for dummy, parsed_res_model, parsed_res_id in parsed_line:
+            for _dummy, parsed_res_model, parsed_res_id in parsed_line:
                 if parsed_res_model == selected_model:
                     return parsed_res_id
 

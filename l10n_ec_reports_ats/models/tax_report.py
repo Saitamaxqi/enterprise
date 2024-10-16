@@ -358,7 +358,7 @@ class AccountTaxReportHandler(models.AbstractModel):
         reimbursements_vals = []
         # Whether there are more than one reimbursement with the same document_number, it's because this invoice has multiple vat tax
         # In the ATS we must group by document number and accumulate the tax bases
-        for number_and_partner, reimburs_move in groupby(in_inv.l10n_ec_reimbursement_ids.sorted(lambda l: l.document_number), lambda i: (i.document_number, i.partner_id.commercial_partner_id)):
+        for _number_and_partner, reimburs_move in groupby(in_inv.l10n_ec_reimbursement_ids.sorted(lambda l: l.document_number), lambda i: (i.document_number, i.partner_id.commercial_partner_id)):
             amounts_vals = defaultdict(float)
             reimburs_list = list(reimburs_move)
             reimbursement_val = {}

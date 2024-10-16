@@ -30,7 +30,7 @@ class AccountChartTemplate(models.AbstractModel):
 
         data = super()._get_chart_template_data(chart_template)
 
-        for _company_id, company_data in data['res.company'].items():
+        for company_data in data['res.company'].values():
             company_data['deferred_expense_journal_id'] = (
                 company_data.get('deferred_expense_journal_id')
                 or next((xid for xid, d in data['account.journal'].items() if d['type'] == 'general'), None)

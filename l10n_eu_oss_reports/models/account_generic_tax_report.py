@@ -77,7 +77,7 @@ class L10n_Eu_OssTaxReportHandler(models.AbstractModel):
         tax_type_markups = {'sale', 'purchase'}
         tax_lines_by_country = defaultdict(lambda: [])
         last_tax_type_line = None
-        for (dummy, line) in lines:
+        for _seq, line in lines:
             markup, model, model_id = report._parse_line_id(line['id'])[-1]
 
             if markup in tax_type_markups:

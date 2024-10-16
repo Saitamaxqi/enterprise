@@ -57,7 +57,7 @@ class HrContract(models.Model):
             return res
         overtime_hours = 0
         new_res = res.copy()
-        for work_type, dummy in res.items():
+        for work_type in res:
             if work_type[1] == overtime_work_entry_type.id:
                 dummy, hours = new_res.pop(work_type)
                 overtime_hours += hours

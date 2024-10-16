@@ -3,6 +3,7 @@
 
 import ast
 import base64
+import contextlib
 import datetime
 import io
 import json
@@ -342,7 +343,7 @@ class AccountReport(models.Model):
 
         # 4. Unselect all journals if all are selected and no group is specifically selected
         if journals_selected == set(all_journals.ids) and not options['selected_journal_groups']:
-            for company, journals in company_journals_map.items():
+            for journals in company_journals_map.values():
                 for journal in journals:
                     journal['selected'] = False
 
@@ -757,7 +758,7 @@ class AccountReport(models.Model):
             ))
         elif options_filter in ('previous_period', 'same_last_year'):
             previous_period = options['date']
-            for dummy in range(0, number_period):
+            for _i in range(number_period):
                 if options_filter == 'previous_period':
                     period_vals = self._get_shifted_dates_period(options, previous_period, -1)
                 elif options_filter == 'same_last_year':
@@ -1889,13 +1890,16 @@ class AccountReport(models.Model):
         if previous_options.get('_running_export_test'):
             options['_running_export_test'] = True
 
-        # We need report_id to be initialized. Compute the necessary options to check for reroute.
-        for reroute_initializer_index, initializer in enumerate(initializers_in_sequence):
-            initializer(options, previous_options=previous_options)
+        idx = None
+        with contextlib.suppress(ValueError):
+            idx = initializers_in_sequence.index(self._init_options_report_id) + 1
 
-            # pylint: disable=W0143
-            if initializer == self._init_options_report_id:
-                break
+        before_report = initializers_in_sequence[:idx]
+        after_report = initializers_in_sequence[idx:]
+
+        # We need report_id to be initialized. Compute the necessary options to check for reroute.
+        for initializer in before_report:
+            initializer(options, previous_options=previous_options)
 
         # Stop the computation to check for reroute once we have computed the necessary information
         if (not self.root_report_id or (self.use_sections and self.section_report_ids)) and options['report_id'] != self.id:
@@ -1909,8 +1913,7 @@ class AccountReport(models.Model):
             return self.env['account.report'].browse(options['report_id']).get_options(variant_options)
 
         # No reroute; keep on and compute the other options
-        for initializer_index in range(reroute_initializer_index + 1, len(initializers_in_sequence)):
-            initializer = initializers_in_sequence[initializer_index]
+        for initializer in after_report:
             initializer(options, previous_options=previous_options)
 
         # Sort the buttons list by sequence, for rendering
@@ -2250,7 +2253,7 @@ class AccountReport(models.Model):
         """
         result = {}
         models_to_find = set(target_model_names)
-        for dummy, model, value in reversed(self._parse_line_id(line_id)):
+        for _markup, model, value in reversed(self._parse_line_id(line_id)):
             if model in models_to_find:
                 result[model] = value
                 models_to_find.remove(model)
@@ -2489,7 +2492,7 @@ class AccountReport(models.Model):
 
             lines.append(line_dict)
 
-        for dummy, left_dynamic_line in dynamic_lines:
+        for _dummy, left_dynamic_line in dynamic_lines:
             lines.append(left_dynamic_line)
 
         # Manage growth comparison
@@ -4370,7 +4373,7 @@ class AccountReport(models.Model):
     def _get_audit_line_groupby_domain(self, calling_line_dict_id):
         parsed_line_dict_id = self._parse_line_id(calling_line_dict_id)
         groupby_domain = []
-        for markup, dummy, grouping_key in parsed_line_dict_id:
+        for markup, _model, grouping_key in parsed_line_dict_id:
             if isinstance(markup, dict) and 'groupby' in markup:
                 groupby_field_name = markup['groupby']
                 custom_handler_model = self._get_custom_handler_model()
@@ -5290,7 +5293,7 @@ class AccountReport(models.Model):
     def _report_expand_unfoldable_line_with_groupby(self, line_dict_id, groupby, options, progress, offset, unfold_all_batch_data=None):
         # The line we're expanding might be an inner groupby; we first need to find the report line generating it
         report_line_id = None
-        for dummy, model, model_id in reversed(self._parse_line_id(line_dict_id)):
+        for _markup, model, model_id in reversed(self._parse_line_id(line_dict_id)):
             if model == 'account.report.line':
                 report_line_id = model_id
                 break
@@ -5454,7 +5457,7 @@ class AccountReport(models.Model):
     @api.model
     def _get_prefix_groups_matched_prefix_from_line_id(self, line_dict_id):
         matched_prefix = ''
-        for markup, dummy1, dummy2 in self._parse_line_id(line_dict_id):
+        for markup, _model, _record_id in self._parse_line_id(line_dict_id):
             if markup and isinstance(markup, dict) and 'groupby_prefix_group' in markup:
                 prefix_piece = markup['groupby_prefix_group']
                 matched_prefix += prefix_piece.upper()

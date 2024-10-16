@@ -22,7 +22,7 @@ class SaleOrder(models.Model):
         self.sign_request_ids = False
         self.sign_request_count = 0
         # We group the sign requests by orders
-        for dummy, sign_requests in sign_data:
+        for _dummy, sign_requests in sign_data:
             order = sign_requests[:1].reference_doc
             order.sign_request_ids = [Command.set(sign_requests.ids)]
             order.sign_request_count = len(sign_requests)

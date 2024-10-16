@@ -51,10 +51,10 @@ class RoomBooking(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
-        bookings = super(RoomBooking, self).create(vals_list)
+        bookings = super().create(vals_list)
         # Notify frontend views of new bookings
-        for room, bookings in bookings.grouped("room_id").items():
-            room._notify_booking_view("create", bookings)
+        for room, bookings_ in bookings.grouped("room_id").items():
+            room._notify_booking_view("create", bookings_)
         return bookings
 
     def unlink(self):

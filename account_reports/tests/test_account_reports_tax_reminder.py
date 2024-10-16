@@ -85,7 +85,7 @@ class TestAccountReportsTaxReminder(TestAccountReportsCommon):
         """
         # Cancel the main one to be able to create new ones for this closing
         self.tax_return_move.button_cancel()
-        for i in range(0, 2):
+        for _i in range(0, 2):
             action = self.env['account.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(self.options)
             move = self.env['account.move'].browse(action['res_id'])
             move.button_cancel()

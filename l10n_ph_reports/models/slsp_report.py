@@ -566,5 +566,5 @@ class L10n_PhSlspReportHandler(models.AbstractModel):
                 sheet.merge_range(y, x, y, x + colspan - 1, value, style)
             x += colspan
         # Fill the remaining cells with empty values so that the style is applied.
-        for x in range(x, col_amount):
-            sheet.write(y, x, '', sheet.styles['text'])
+        for xx in range(x, col_amount):
+            sheet.write(y, xx, '', sheet.styles['text'])

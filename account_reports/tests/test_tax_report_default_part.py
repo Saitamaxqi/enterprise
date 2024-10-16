@@ -513,7 +513,7 @@ class TestTaxReportDefaultPart(TestAccountReportsCommon):
 
         move_form = Form(self.env['account.move'].with_context(default_move_type='entry'))
         move_form.date = fields.Date.from_string('2019-01-01')
-        for dummy in range(2):
+        for _i in range(2):
             for tax in tax_10 + tax_20 + tax_30:
                 with move_form.line_ids.new() as line_form:
                     line_form.name = 'debit line'

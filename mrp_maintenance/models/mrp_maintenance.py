@@ -189,7 +189,7 @@ class MaintenanceRequest(models.Model):
             if request.maintenance_type == 'preventive' and request.recurring_maintenance:
                 count += request.recurring_leaves_count
             leave_ids_vals = []
-            for dummy in range(count):
+            for _i in range(count):
                 from_date, to_date = request.workcenter_id._get_first_available_slot(date, duration * 60)
                 leave_ids_vals.append(Command.create({
                     'name': request.display_name,

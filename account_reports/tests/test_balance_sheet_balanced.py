@@ -655,7 +655,7 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
 
         # Group AMLs in account/counterpart pairs
         aml_pairs = []
-        for i, account in enumerate(coa_setup_data['tested_accounts']):
+        for i, _account in enumerate(coa_setup_data['tested_accounts']):
             aml_id = aml_ids[2 * i]
             counterpart_aml_id = aml_ids[2 * i + 1]
             aml_pairs.append((aml_id, counterpart_aml_id))

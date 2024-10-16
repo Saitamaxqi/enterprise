@@ -62,7 +62,7 @@ class WorksheetTemplate(models.Model):
             for template in self:
                 template_dict[template.res_model] |= template
             for res_model, templates in template_dict.items():
-                for model, name in self._get_models_to_check_dict()[res_model]:
+                for model, _name in self._get_models_to_check_dict()[res_model]:
                     records = self.env[model].search([('worksheet_template_id', 'in', templates.ids)])
                     for record in records:
                         if record.company_id not in record.worksheet_template_id.company_id:

@@ -17,6 +17,6 @@ class StockQuant(models.Model):
             ('location_id', '=', self.location_id.id),
             ('company_id.account_fiscal_country_id.code', '=', 'KE'),
         ]
-        for location, quantity in self._read_group(domain, ['location_id'], ['quantity:sum']):
+        for _location, quantity in self._read_group(domain, ['location_id'], ['quantity:sum']):
             if quantity < 0:
                 raise ValidationError(_("You cannot end up with a negative stock quantity!"))

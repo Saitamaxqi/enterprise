@@ -74,7 +74,7 @@ class TestSubscriptionPayments(PaymentCommon, TestSubscriptionCommon, MockEmail)
                 'payment_token_id': None})
 
             failing_subs |= subscription_mail_fail
-            for dummy in range(5):
+            for _i in range(5):
                 failing_subs |= subscription_mail_fail.copy({'is_batch': True})
             failing_subs.action_confirm()
             # issue: two problems:

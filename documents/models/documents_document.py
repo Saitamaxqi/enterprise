@@ -1348,7 +1348,7 @@ class DocumentsDocument(models.Model):
         if 'name' not in default:
             for document, vals in zip(self, vals_list):
                 vals['name'] = document.name if document.type == 'folder' else _("%s (copy)", document.name)
-        for document, vals in zip(self, vals_list):
+        for vals in vals_list:
             # Avoid to propagate folder access as we want to copy the document accesses alone
             vals['access_ids'] = default.get('access_ids', False)
             if 'owner_id' not in vals:

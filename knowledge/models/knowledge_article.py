@@ -961,7 +961,7 @@ class KnowledgeArticle(models.Model):
             if can_sudo
         ]).with_env(self.env))
         articles = self.env['knowledge.article']
-        for vals, is_sudo in zip(vals_list, vals_as_sudo):
+        for is_sudo in vals_as_sudo:
             if is_sudo:
                 articles += next(sudo_articles)
             else:

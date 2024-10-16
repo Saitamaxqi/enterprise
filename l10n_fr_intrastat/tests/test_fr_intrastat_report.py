@@ -166,6 +166,6 @@ class TestFRIntrastatReport(TestAccountReportsCommon):
                 'products_commodity_code_missing',
                 'settings_region_id_missing',
             })
-            for error_key, error in arfde.errors.items():
+            for error in arfde.errors.values():
                 self.assertEqual({'action', 'action_text', 'message'}, set(error.keys()))
                 self.assertTrue('name' in error['action'])

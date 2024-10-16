@@ -185,7 +185,7 @@ class AccountDisallowedExpensesReportHandler(models.AbstractModel):
         if not line_id:
             return current
 
-        for dummy, model, record_id in self.env['account.report']._parse_line_id(line_id):
+        for _markup, model, record_id in self.env['account.report']._parse_line_id(line_id):
             if model == 'account.disallowed.expenses.category':
                 current['category_id'] = record_id
             if model == 'account.account':

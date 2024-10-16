@@ -122,7 +122,7 @@ class TestMrpWorkorderPlm(TestPlmCommon):
     def test_add_new_step_to_multi_mo(self):
         """ Test that adding a step to multiple MOs of the same bom does not trigger
         singleton errors. """
-        for i in range(3):
+        for _i in range(3):
             mo_form = Form(self.env['mrp.production'])
             mo_form.bom_id = self.bom_table
             mo_form.product_qty = 1

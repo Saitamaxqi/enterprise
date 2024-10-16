@@ -84,7 +84,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
             workers_data = collections.defaultdict(lambda: dict(full=0, part=0, fte=0))
 
-            for period, employee_payslips in mapped_payslips.items():
+            for employee_payslips in mapped_payslips.values():
                 if len(employee_payslips) > 1:
                     # What matters is the occupation at the end of the month. Take the most recent contract
                     payslip = employee_payslips.sorted(lambda p: p.contract_id.date_start, reverse=True)[-1]
@@ -289,7 +289,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
 
             in_employees = self.env['hr.employee']
             out_employees = self.env['hr.employee']
-            for period, employee_payslips in mapped_payslips.items():
+            for employee_payslips in mapped_payslips.values():
                 if len(employee_payslips) > 1:
                     # What matters is the occupation at the end of the month. Take the most recent contract
                     payslip = employee_payslips.sorted(lambda p: p.contract_id.date_start, reverse=True)[-1]
@@ -297,7 +297,6 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     payslip = employee_payslips
                 employee = payslip.employee_id
                 contract = payslip.contract_id
-                gender = payslip.employee_id.gender
                 calendar = contract.resource_calendar_id
                 contract_time = 'full' if calendar.full_time_required_hours == calendar.hours_per_week else 'part'
                 if employee not in in_employees and employee.first_contract_date and (date_from <= employee.first_contract_date <= date_to):
@@ -987,7 +986,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             }
 
             for inner_dictionary in data_eoe.values():
-                for i, data in enumerate(inner_dictionary.values()):
+                for data in inner_dictionary.values():
                     current_line += 1
                     if data['header'].startswith(_('By')):
                         current_worksheet.write(current_line, 0, data['header'], style_special_vertical_header)

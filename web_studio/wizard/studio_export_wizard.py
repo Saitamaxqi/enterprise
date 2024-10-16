@@ -598,7 +598,7 @@ class StudioExportWizard(models.TransientModel):
 
         path_counter = Counter()
         models_to_export, circular_dependencies = self._get_models_to_export()
-        for model, is_demo, fields_by_group, data, real_records in models_to_export:
+        for model, _is_demo, fields_by_group, data, real_records in models_to_export:
 
             def add(info, records_data, suffix="", force_exclude=[]):
                 if not records_data:

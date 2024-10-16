@@ -402,8 +402,8 @@ class HrPayslip(models.Model):
                     days_by_contract_by_year[day.year][day.month][day] = 'holiday'
 
         months = 0
-        for year, invalid_days_by_months in days_by_contract_by_year.items():
-            for month, days in invalid_days_by_months.items():
+        for invalid_days_by_months in days_by_contract_by_year.values():
+            for days in invalid_days_by_months.values():
                 counter = Counter(days.values())
                 if None in counter:
                     continue

@@ -731,7 +731,7 @@ class ProjectTask(models.Model):
 
             while not compute_date_end or hours_to_plan > 0:
                 used_intervals = []
-                for start_date, end_date, dummy in valid_intervals_per_user[user_ids]:
+                for start_date, end_date, _dummy in valid_intervals_per_user[user_ids]:
                     if first_possible_start_date and end_date <= first_possible_start_date:
                         continue
 
@@ -825,7 +825,7 @@ class ProjectTask(models.Model):
                 date_start, date_end,
                 resource=user._get_project_task_resource(),
                 company=company)
-            for start, stop, dummy in validity_intervals['invalid']:
+            for start, stop, _dummy in validity_intervals['invalid']:
                 schedule |= calendar._work_intervals_batch(start, stop)[False]
 
             return validity_intervals['invalid'], schedule
@@ -875,7 +875,7 @@ class ProjectTask(models.Model):
 
     def _check_concurrent_tasks(self, date_begin, date_end, concurrent_tasks):
         current_date_end = None
-        for start, stop, dummy in concurrent_tasks:
+        for start, stop, _dummy in concurrent_tasks:
             if start <= date_end and stop >= date_begin:
                 current_date_end = stop
             elif start > date_end:
@@ -883,7 +883,7 @@ class ProjectTask(models.Model):
         return current_date_end
 
     def _get_end_interval(self, date, intervals):
-        for start, stop, dummy in intervals:
+        for start, stop, _dummy in intervals:
             if start <= date <= stop:
                 return stop
         return date
@@ -908,7 +908,7 @@ class ProjectTask(models.Model):
             task_start, task_end = task[start_date_field_name].astimezone(utc), task[stop_date_field_name].astimezone(utc)
             user_id = (task.user_ids.id, ) if len(task.user_ids) == 1 else False
             work_intervals = valid_intervals_per_user.get(user_id, Intervals())
-            for start, end, dummy in work_intervals:
+            for start, end, _dummy in work_intervals:
                 start, end = start.astimezone(utc), end.astimezone(utc)
                 if task_start < end and task_end > start:
                     duration_per_task[task.id] += (min(task_end, end) - max(task_start, start)).total_seconds()

@@ -58,7 +58,7 @@ class ResCompany(models.Model):
         if not years:
             years = 0
         first_day = start_of(subtract(fields.Date.today(), years=years), period)
-        for columns in range(self['manufacturing_period_to_display_%s' % period]):
+        for _i in range(self['manufacturing_period_to_display_%s' % period]):
             last_day = end_of(first_day, period)
             date_range.append((first_day, last_day))
             first_day = add(last_day, days=1)

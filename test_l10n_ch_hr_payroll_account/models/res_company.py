@@ -935,7 +935,7 @@ class ResCompany(models.Model):
             ('VD_N_B_0', 'VD_B0N.json'),
         ]
         rates_to_unlink = self.env['hr.rule.parameter']
-        for xml_id, file_name in rates_to_load:
+        for xml_id, _file_name in rates_to_load:
             rates_to_unlink += self.env['hr.rule.parameter'].search([('code', '=', f'l10n_ch_withholding_tax_rates_{xml_id}')])
         if rates_to_unlink:
             rates_to_unlink.unlink()

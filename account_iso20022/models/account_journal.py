@@ -118,7 +118,7 @@ class AccountJournal(models.Model):
             required_payment_date = max(payment['payment_date'], today)
             currency = payment['currency_id'] or self.company_id.currency_id.id
             payments_date_instr_wise[(required_payment_date, currency)].append(payment)
-        for count, ((payment_date, currency), payments_list) in enumerate(payments_date_instr_wise.items()):
+        for count, ((payment_date, _currency), payments_list) in enumerate(payments_date_instr_wise.items()):
             PmtInf = etree.SubElement(CstmrCdtTrfInitn, "PmtInf")
             PmtInfId = etree.SubElement(PmtInf, "PmtInfId")
             PmtInfId.text = (val_MsgId + str(self.id) + str(count))[-30:]

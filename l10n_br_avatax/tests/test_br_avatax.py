@@ -261,7 +261,7 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
             })
 
         # (line amount, freight, insurance, other) per line
-        expected = [
+        expecteds = [
             (35.00, 3.68, 7.37, 11.05),
             (30.00, 3.16, 6.32, 9.47),
             (15.00, 1.58, 3.16, 4.74),
@@ -270,9 +270,9 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
 
         api_request = invoice._l10n_br_get_calculate_payload()
         actual_lines = api_request['lines']
-        self.assertEqual(len(expected), len(actual_lines), 'Different amount of expected and actual lines.')
+        self.assertEqual(len(expecteds), len(actual_lines), 'Different amount of expected and actual lines.')
 
-        for expected, line in zip(expected, actual_lines):
+        for expected, line in zip(expecteds, actual_lines):
             amount, freight, insurance, other = expected
             self.assertEqual(amount, line['lineAmount'])
             self.assertEqual(freight, line['freightAmount'])

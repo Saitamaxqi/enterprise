@@ -248,7 +248,7 @@ class SocialStreamPost(models.Model):
                 headers=self.account_id._linkedin_bearer_headers(),
                 timeout=5).json()
 
-            for person_id, person_values in response_json.get('results', {}).items():
+            for person_values in response_json.get('results', {}).values():
                 person_urn = id_to_urn(person_values['id'], "li:person")
                 image_id = urn_to_id(person_values.get('profilePicture', {}).get('displayImage'))
                 images_ids.append(image_id)
