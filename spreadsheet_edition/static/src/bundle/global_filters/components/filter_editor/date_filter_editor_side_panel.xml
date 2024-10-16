@@ -2,7 +2,7 @@
 <templates>
     <t t-name="spreadsheet_edition.DateFilterEditorFieldMatching" t-inherit="spreadsheet_edition.FilterEditorFieldMatching">
         <xpath expr="//ModelFieldSelector" position="before">
-            <span class="text-muted">Date field</span>
+            <span class="text-muted w-50">Date field</span>
         </xpath>
         <xpath expr="//div[@name='field-match']" position="after">
             <FilterFieldOffset

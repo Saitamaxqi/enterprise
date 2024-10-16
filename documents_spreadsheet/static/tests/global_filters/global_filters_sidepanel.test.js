@@ -982,13 +982,15 @@ test("Create a new date filter with period offsets", async function () {
     // pivot
     await selectFieldMatching("date", pivotFieldMatching);
     await contains(pivotFieldMatching.querySelector("select")).select("-1");
+    await contains(pivotFieldMatching.querySelector("input.o_filter_offset_input")).edit("1");
 
     //list
     await selectFieldMatching("date", listFieldMatching);
 
     // chart
     await selectFieldMatching("date", chartFieldMatching);
-    await contains(chartFieldMatching.querySelector("select")).select("-2");
+    await contains(chartFieldMatching.querySelector("select")).select("-1");
+    await contains(chartFieldMatching.querySelector("input.o_filter_offset_input")).edit("2");
 
     await saveGlobalFilter();
 
@@ -1009,7 +1011,7 @@ test("Create a new date filter with period offsets", async function () {
     assertDateDomainEqual("date", "2022-05-01", "2022-05-31", chartDomain);
 });
 
-test("Cannot a new date filter with period offsets without setting the field chain first", async () => {
+test("Cannot create a new date filter with period offsets without setting the field chain first", async () => {
     await createSpreadsheetFromPivotView();
     await animationFrame();
     await openGlobalFilterSidePanel();
@@ -1017,11 +1019,37 @@ test("Cannot a new date filter with period offsets without setting the field cha
     await editGlobalFilterLabel("My Label");
 
     const pivotFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[0];
-    expect(".o_filter_field_offset select.o-input").toHaveProperty("disabled", true);
+    expect(".o_filter_field_offset select.o-input").toHaveCount(0);
 
     // pivot
     await selectFieldMatching("date", pivotFieldMatching);
+    expect(".o_filter_field_offset select.o-input").toHaveCount(1);
     expect(".o_filter_field_offset select.o-input").toHaveProperty("disabled", false);
+});
+
+test("Creating a new date filter with large period offsets defaults to 50", async () => {
+    mockDate("2022-07-14 00:00:00");
+    const { model, pivotId } = await createSpreadsheetFromPivotView();
+    await animationFrame();
+    await openGlobalFilterSidePanel();
+    await clickCreateFilter("date");
+    await editGlobalFilterLabel("My Label");
+    const range = target.querySelector(".o-filter-range-type");
+    await contains(range).select("relative");
+    const relativeSelection = target.querySelector("select.o_relative_date_selection");
+    const values = relativeSelection.querySelectorAll("option");
+    expect([...values].map((val) => val.value)).toEqual([
+        "",
+        ...RELATIVE_DATE_RANGE_TYPES.map((item) => item.type),
+    ]);
+    await contains(relativeSelection).select("last_month");
+    const pivotFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[0];
+    await selectFieldMatching("date", pivotFieldMatching);
+    await contains(pivotFieldMatching.querySelector("select")).select("-1");
+    await contains(pivotFieldMatching.querySelector("input.o_filter_offset_input")).edit("9999");
+    await saveGlobalFilter();
+    const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
+    assertDateDomainEqual("date", "2018-05-07", "2018-06-05", pivotDomain);
 });
 
 test("Create a new relative date filter with an empty default value", async () => {
@@ -1055,7 +1083,8 @@ test("Create a new relative date filter with an empty default value", async () =
     await selectFieldMatching("date", listFieldMatching);
     await selectFieldMatching("date", graphFieldMatching);
 
-    await contains(graphFieldMatching.querySelector("select")).select("-2");
+    await contains(graphFieldMatching.querySelector("select")).select("-1");
+    await contains(graphFieldMatching.querySelector("input.o_filter_offset_input")).edit("2");
 
     await saveGlobalFilter();
 
@@ -1102,10 +1131,16 @@ test("Create a new relative date filter", async function () {
     const graphFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[2];
 
     await selectFieldMatching("date", pivotFieldMatching);
-    await selectFieldMatching("date", listFieldMatching);
-    await selectFieldMatching("date", graphFieldMatching);
+    await contains(pivotFieldMatching.querySelector("select")).select("-1");
+    await contains(pivotFieldMatching.querySelector("input.o_filter_offset_input")).edit("7");
 
-    await contains(graphFieldMatching.querySelector("select")).select("-2");
+    await selectFieldMatching("date", listFieldMatching);
+    await contains(listFieldMatching.querySelector("select")).select("1");
+    await contains(listFieldMatching.querySelector("input.o_filter_offset_input")).edit("2");
+
+    await selectFieldMatching("date", graphFieldMatching);
+    await contains(graphFieldMatching.querySelector("select")).select("-1");
+    await contains(graphFieldMatching.querySelector("input.o_filter_offset_input")).edit("3");
 
     await saveGlobalFilter();
 
@@ -1115,9 +1150,65 @@ test("Create a new relative date filter", async function () {
     expect(globalFilter.rangeType).toBe("relative");
     expect(globalFilter.type).toBe("date");
     const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
-    assertDateDomainEqual("date", "2022-06-15", "2022-07-14", pivotDomain);
+    assertDateDomainEqual("date", "2021-11-17", "2021-12-16", pivotDomain);
     const listDomain = model.getters.getListComputedDomain("1");
-    assertDateDomainEqual("date", "2022-06-15", "2022-07-14", listDomain);
+    assertDateDomainEqual("date", "2022-08-14", "2022-09-12", listDomain);
+    const chartId = model.getters.getOdooChartIds()[0];
+    const chartDomain = model.getters.getChartDataSource(chartId).getComputedDomain();
+    assertDateDomainEqual("date", "2022-03-17", "2022-04-15", chartDomain);
+});
+
+test("Create a new relative date filter with a negative offset should save the absolute value", async function () {
+    mockDate("2022-07-14 00:00:00");
+    const { model, pivotId } = await createSpreadsheetFromPivotView();
+    insertListInSpreadsheet(model, {
+        model: "partner",
+        columns: ["foo", "bar", "date", "product_id"],
+    });
+    insertChartInSpreadsheet(model);
+    await animationFrame();
+    await openGlobalFilterSidePanel();
+    await clickCreateFilter("date");
+    await editGlobalFilterLabel("My Label");
+
+    const range = target.querySelector(".o-filter-range-type");
+    await contains(range).select("relative");
+
+    const relativeSelection = target.querySelector("select.o_relative_date_selection");
+    const values = relativeSelection.querySelectorAll("option");
+    expect([...values].map((val) => val.value)).toEqual([
+        "",
+        ...RELATIVE_DATE_RANGE_TYPES.map((item) => item.type),
+    ]);
+    await contains(relativeSelection).select("last_month");
+
+    const pivotFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[0];
+    const listFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[1];
+    const graphFieldMatching = target.querySelectorAll(".o_spreadsheet_field_matching")[2];
+
+    await selectFieldMatching("date", pivotFieldMatching);
+    await contains(pivotFieldMatching.querySelector("select")).select("-1");
+    await contains(pivotFieldMatching.querySelector("input.o_filter_offset_input")).edit("-7");
+
+    await selectFieldMatching("date", listFieldMatching);
+    await contains(listFieldMatching.querySelector("select")).select("1");
+    await contains(listFieldMatching.querySelector("input.o_filter_offset_input")).edit("-2");
+
+    await selectFieldMatching("date", graphFieldMatching);
+    await contains(graphFieldMatching.querySelector("select")).select("-1");
+    await contains(graphFieldMatching.querySelector("input.o_filter_offset_input")).edit("-2");
+
+    await saveGlobalFilter();
+
+    const [globalFilter] = model.getters.getGlobalFilters();
+    expect(globalFilter.label).toBe("My Label");
+    expect(globalFilter.defaultValue).toBe("last_month");
+    expect(globalFilter.rangeType).toBe("relative");
+    expect(globalFilter.type).toBe("date");
+    const pivotDomain = model.getters.getPivotComputedDomain(pivotId);
+    assertDateDomainEqual("date", "2021-11-17", "2021-12-16", pivotDomain);
+    const listDomain = model.getters.getListComputedDomain("1");
+    assertDateDomainEqual("date", "2022-08-14", "2022-09-12", listDomain);
     const chartId = model.getters.getOdooChartIds()[0];
     const chartDomain = model.getters.getChartDataSource(chartId).getComputedDomain();
     assertDateDomainEqual("date", "2022-04-16", "2022-05-15", chartDomain);
