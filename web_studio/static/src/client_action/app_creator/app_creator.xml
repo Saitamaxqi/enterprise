@@ -66,7 +66,7 @@
             </div>
         </div>
         <div t-if="state.step === 'model_configuration'" class="o_web_studio_model_configurator container bg-light p-0 rounded">
-            <header class="modal-header">
+            <header class="p-3 border rounded-2">
                 <h4 class="modal-title text-break">Suggested features for your new model</h4>
             </header>
             <ModelConfigurator
