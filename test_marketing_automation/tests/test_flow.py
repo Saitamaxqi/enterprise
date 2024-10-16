@@ -228,6 +228,7 @@ for record in records:
             [{
                 'status': 'processed',
                 'records': test_records_1_ok,
+                'records_to_partner': {r.id: r.customer_id for r in test_records_1_ok},
                 'trace_status': 'sent',
                 'fields_values': {
                     'schedule_date': date_reference,
@@ -322,6 +323,7 @@ for record in records:
             [{
                 'status': 'processed',
                 'records': test_records_1_replied,
+                'records_to_partner': {r.id: r.customer_id for r in test_records_1_replied},
                 'trace_status': 'reply',
                 'fields_values': {
                     'schedule_date': date_reference,
@@ -329,6 +331,7 @@ for record in records:
             }, {
                 'status': 'processed',
                 'records': test_records_1_ok - test_records_1_replied,
+                'records_to_partner': {r.id: r.customer_id for r in test_records_1_ok - test_records_1_replied},
                 'trace_status': 'sent',
                 'fields_values': {
                     'schedule_date': date_reference,
