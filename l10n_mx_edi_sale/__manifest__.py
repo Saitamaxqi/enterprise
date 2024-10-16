@@ -1,5 +1,3 @@
-# coding: utf-8
-
 {
     'name': 'CFDI 4.0 fields for sale orders',
     'version': '1.0',
@@ -9,6 +7,7 @@
         'l10n_mx_edi',
     ],
     'data': [
+        'report/sale_order_templates.xml',
         'views/sale_order_view.xml',
     ],
     'installable': True,

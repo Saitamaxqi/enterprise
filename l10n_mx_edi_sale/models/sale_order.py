@@ -72,3 +72,10 @@ class SaleOrder(models.Model):
         vals['l10n_mx_edi_usage'] = self.l10n_mx_edi_usage
         vals['l10n_mx_edi_payment_method_id'] = self.l10n_mx_edi_payment_method_id.id
         return vals
+
+    def _get_name_proforma_report(self):
+        # EXTENDS sale
+        self.ensure_one()
+        if self.company_id.country_code == 'MX':
+            return 'l10n_mx_edi_sale.report_saleorder_document_proforma'
+        return super()._get_name_proforma_report()
