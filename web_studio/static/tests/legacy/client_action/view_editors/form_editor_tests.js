@@ -2415,7 +2415,7 @@ QUnit.module("View Editors", (hooks) => {
                     assert.step("onchange");
                     const error = new RPCError();
                     error.exceptionName = "odoo.exceptions.ValidationError";
-                    error.code = 200;
+                    error.code = 0;
                     return Promise.reject(error);
                 }
             },

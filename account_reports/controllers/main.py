@@ -60,7 +60,7 @@ class AccountReportController(http.Controller):
 
     def _generate_response(self, data):
         error = {
-            'code': 200,
+            'code': 0,
             'message': 'Odoo Server Error',
             'data': data,
         }

@@ -95,7 +95,7 @@ class AccountOnlineSynchronizationCommon(AccountTestInvoicingCommon):
         }
         return mock_response
 
-    def _mock_odoofin_error_response(self, code=200, message='Default', data=None):
+    def _mock_odoofin_error_response(self, code=0, message='Default', data=None):
         if not data:
             data = {}
         mock_response = MagicMock()

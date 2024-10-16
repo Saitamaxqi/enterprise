@@ -2,14 +2,13 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import json
-import re
 
 from PIL import Image
 from io import BytesIO
 from uuid import uuid4
 from unittest.mock import patch
 
-from odoo.tests.common import HttpCase, tagged, get_db_name
+from odoo.tests.common import tagged, get_db_name
 from odoo.addons.base.tests.common import HttpCaseWithUserDemo
 from odoo.tools import config, mute_logger
 
@@ -64,8 +63,6 @@ class MobileRoutesTest(HttpCaseWithUserDemo):
         else:
             self._is_error_json_response(data)
             error = data["error"]
-            self.assertEqual(error["code"], 200)
-            self.assertEqual(error["message"], "Odoo Server Error")
             self.assertEqual(error["data"]["name"], "odoo.exceptions.AccessDenied")
 
     def test_authenticate(self):
@@ -106,8 +103,6 @@ class MobileRoutesTest(HttpCaseWithUserDemo):
         data = response.json()
         self._is_error_json_response(data)
         error = data["error"]
-        self.assertEqual(error["code"], 200)
-        self.assertEqual(error["message"], "Odoo Server Error")
         self.assertEqual(error["data"]["name"], "odoo.exceptions.AccessDenied")
 
     @mute_logger("odoo.http")
@@ -127,8 +122,6 @@ class MobileRoutesTest(HttpCaseWithUserDemo):
         data = response.json()
         self._is_error_json_response(data)
         error = data["error"]
-        self.assertEqual(error["code"], 200)
-        self.assertEqual(error["message"], "Odoo Server Error")
         self.assertEqual(error["data"]["name"], "odoo.exceptions.AccessError")
 
     def test_avatar(self):

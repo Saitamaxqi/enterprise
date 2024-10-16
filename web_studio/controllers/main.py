@@ -814,7 +814,7 @@ Are you sure you want to remove the selection values of those records?""", len(r
             _logger.warning("Error while generating studio export %s", studio_module.name, exc_info=True)
             se = http.serialize_exception(e)
             error = {
-                'code': 200,
+                'code': 0,
                 'message': "Odoo Server Error",
                 'data': se
             }

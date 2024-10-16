@@ -24,7 +24,7 @@ function recordSetReprToData(string) {
 }
 
 export function humanReadableError(error) {
-    if (error.code === 200 && error.data) {
+    if (error.data) {
         error = error.data;
     }
     let viewError;
