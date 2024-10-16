@@ -177,5 +177,8 @@ class ResCompany(models.Model):
     def _compute_is_there_shared_cert(self):
         cl_certificate = self.env['certificate.certificate']
         for company in self:
-            domain = [('user_id', '=', False), ('company_id', '=', company.id)]
-            company.l10n_cl_is_there_shared_certificate = cl_certificate.search(domain, limit=1)
+            if company._origin.id:
+                domain = [('user_id', '=', False), ('company_id', '=', company._origin.id)]
+                company.l10n_cl_is_there_shared_certificate = cl_certificate.search(domain, limit=1)
+            else:
+                company.l10n_cl_is_there_shared_certificate = False
