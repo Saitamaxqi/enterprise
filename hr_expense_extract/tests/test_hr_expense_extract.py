@@ -226,3 +226,17 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         with Form(expense) as form:
             form.quantity = 2
             self.assertEqual(form.price_unit, 800)
+
+    def test_extract_multi_currencies(self):
+        """Test that exchange rate is fetched during extraction"""
+        self.env['res.currency.rate'].create({
+                'name': '2022-01-01',
+                'rate': 3,
+                'currency_id': self.env.ref('base.EUR').id,
+                'company_id': self.env.company.id,
+            })
+        ocr_results = self.get_result_success_response()['results'][0]
+        self.expense.name = ""
+        self.expense._fill_document_with_results(ocr_results=ocr_results)
+
+        self.assertEqual(self.expense.total_amount, 33.33)

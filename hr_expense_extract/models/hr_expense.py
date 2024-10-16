@@ -66,27 +66,28 @@ class HrExpense(models.Model):
 
     def _fill_document_with_results(self, ocr_results):
         if ocr_results is not None:
+            vals = {'state': 'draft'}
+
             description_ocr = self._get_ocr_selected_value(ocr_results, 'description', "")
             total_ocr = self._get_ocr_selected_value(ocr_results, 'total', 0.0)
             date_ocr = self._get_ocr_selected_value(ocr_results, 'date', "")
             currency_ocr = self._get_ocr_selected_value(ocr_results, 'currency', "")
 
-            self.state = 'draft'
             if description_ocr and not self.name or self.name == self.message_main_attachment_id.name.split('.')[0]:
                 predicted_product_id = self._predict_product(description_ocr, category=True)
                 if predicted_product_id:
-                    self.product_id = predicted_product_id if predicted_product_id else self.product_id
-                    self.total_amount_currency = total_ocr
-            self.name = description_ocr
+                    vals['product_id'] = predicted_product_id or self.product_id
+                    vals['total_amount_currency'] = total_ocr
+            vals['name'] = description_ocr
             # We need to set the name after the product change as changing the product may change the name
-            self.predicted_category = description_ocr
+            vals['predicted_category'] = description_ocr
 
             context_create_date = fields.Date.context_today(self, self.create_date)
             if date_ocr and not self.date or self.date == context_create_date:
-                self.date = date_ocr
+                vals['date'] = date_ocr
 
             if total_ocr and not self.total_amount_currency:
-                self.total_amount_currency = total_ocr
+                vals['total_amount_currency'] = total_ocr
 
             self.flush_model()
 
@@ -99,8 +100,17 @@ class HrExpense(models.Model):
                         ('symbol', comparison, currency_ocr),
                     ])
                     if len(possible_currencies) == 1:
-                        self.currency_id = possible_currencies
+                        vals['currency_id'] = possible_currencies
                         break
+            if vals['currency_id'] != self.company_currency_id:
+                currency_rate = self.env['res.currency']._get_conversion_rate(
+                    from_currency=vals['currency_id'],
+                    to_currency=self.company_currency_id,
+                    company=self.company_id,
+                    date=vals['date'],
+                )
+                vals['total_amount'] = vals['total_amount_currency'] * currency_rate
+            self.write(vals)
 
     @api.model
     def get_empty_list_help(self, help_message):
