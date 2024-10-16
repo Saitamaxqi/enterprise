@@ -12,14 +12,14 @@
             <field name="name">Mug</field>
             <field name="cost">100</field>
             <field name="description">Beautiful mug</field>
-            <field name="image" type="base64" file="hr_referral/static/src/img/mug.jpeg"/>
+            <field name="image" type="base64" file="hr_referral/static/src/img/mug.jpg"/>
         </record>
 
         <record id="shop_voucher" model="hr.referral.reward">
-            <field name="name">Amazon Vouchers</field>
+            <field name="name">Gift Card</field>
             <field name="cost">750</field>
-            <field name="description">Buy what you want on Amazon!</field>
-            <field name="image" type="base64" file="hr_referral/static/src/img/amazon-vouchers.png"/>
+            <field name="description">Buy what you want on partners website!</field>
+            <field name="image" type="base64" file="hr_referral/static/src/img/giftcard.png"/>
         </record>
 
         <record id="hr_recruitment.hr_case_financejob0" model="hr.applicant">
