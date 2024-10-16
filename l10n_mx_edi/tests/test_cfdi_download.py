@@ -37,6 +37,7 @@ class TestCFDIDownload(TestMxEdiCommon, HttpCase):
         res_2 = self.url_open(action_download['url'])
         self.assertEqual(res_2.status_code, 200)
         with ZipFile(BytesIO(res_2.content)) as zip_file:
-            self.assertEqual(len(zip_file.filelist), 2)
-            self.assertTrue(zip_file.NameToInfo.get(invoice_2.l10n_mx_edi_cfdi_attachment_id.name))
-            self.assertTrue(zip_file.NameToInfo.get(invoice_3.l10n_mx_edi_cfdi_attachment_id.name))
+            self.assertEqual(
+                zip_file.namelist(),
+                (invoice_2 | invoice_3).l10n_mx_edi_cfdi_attachment_id.mapped('name'),
+            )

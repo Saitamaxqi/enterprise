@@ -84,7 +84,7 @@ class TestShareController(SpreadsheetTestCommon, HttpCase):
 
         self.assertTrue(response.ok)
         with ZipFile(BytesIO(response.content)) as zip_file:
-            self.assertIn(b"test", zip_file.open(zip_file.filelist[3]).read())
+            self.assertIn(b"test", zip_file.open("xl/sharedStrings.xml").read())
 
     @mute_logger('odoo.http')
     def test_download_document_wrong_token(self):
@@ -108,10 +108,8 @@ class TestShareController(SpreadsheetTestCommon, HttpCase):
             self.assertEqual(zip_file.namelist(), [
                 'Frozen at 2024-01-01: Untitled Spreadsheet.xlsx',
             ])
-            with ZipFile(BytesIO(zip_file.open(zip_file.filelist[0]).read())) as zip_file:
-                sharedStrings = zip_file.filelist[3]
-                assert sharedStrings.filename == 'xl/sharedStrings.xml'
-                with zip_file.open(sharedStrings) as shared_strings_file:
+            with ZipFile(BytesIO(zip_file.open(zip_file.infolist()[0]).read())) as z:
+                with z.open('xl/sharedStrings.xml') as shared_strings_file:
                     self.assertIn(b"test", shared_strings_file.read())
 
     @mute_logger('odoo.http')
