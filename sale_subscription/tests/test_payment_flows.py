@@ -2,11 +2,13 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from unittest.mock import patch
+import datetime
 
 from odoo.exceptions import AccessError
-from odoo.tests import tagged, JsonRpcException
+from odoo.tests import tagged, JsonRpcException, freeze_time
 from odoo.tools import mute_logger
 
+from odoo.addons.mail.tests.common import MockEmail
 from odoo.addons.payment.tests.http_common import PaymentHttpCommon
 from odoo.addons.sale.controllers.portal import CustomerPortal as SaleCustomerPortal
 from odoo.addons.sale_subscription.tests.test_sale_subscription import TestSubscriptionCommon
@@ -14,7 +16,7 @@ from odoo.addons.website.tools import MockRequest
 
 
 @tagged('post_install', '-at_install')
-class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon):
+class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon, MockEmail):
 
     @classmethod
     def setUpClass(cls):
@@ -191,3 +193,53 @@ class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon):
             JsonRpcException, msg='odoo.exceptions.ValidationError'
         ):
             self.make_jsonrpc_request(url, route_kwargs)
+
+    def test_subscription_online_payment_with_token(self):
+        with freeze_time("2024-05-01"):
+            self.subscription.require_payment = True
+            self.subscription.payment_token_id = self.payment_token.id
+            self.subscription.end_date = datetime.date(2024, 8, 1)
+            self.subscription.action_confirm()
+            with patch('odoo.addons.sale_subscription.models.sale_order.SaleOrder._do_payment', wraps=self._mock_subscription_do_payment):
+                self.env['sale.order']._cron_recurring_create_invoice()
+                self.subscription.transaction_ids._get_last()._post_process()
+            # it should create an invoice
+            self.assertEqual(self.subscription.invoice_count, 1)
+        with freeze_time("2024-06-01"):
+            with patch('odoo.addons.sale_subscription.models.sale_order.SaleOrder._do_payment', wraps=self._mock_subscription_do_payment):
+                self.env['sale.order']._cron_recurring_create_invoice()
+                self.subscription.transaction_ids._get_last()._post_process()
+            # it should create an invoice
+            self.assertEqual(self.subscription.invoice_count, 2)
+        with freeze_time("2024-07-01"):
+            with patch('odoo.addons.sale_subscription.models.sale_order.SaleOrder._do_payment', wraps=self._mock_subscription_do_payment):
+                self.env['sale.order']._cron_recurring_create_invoice()
+                self.subscription.transaction_ids._get_last()._post_process()
+            # it should create an invoice
+            self.assertEqual(self.subscription.invoice_count, 3)
+        with freeze_time("2024-08-01"):
+            with patch('odoo.addons.sale_subscription.models.sale_order.SaleOrder._do_payment', wraps=self._mock_subscription_do_payment):
+                self.env['sale.order']._cron_recurring_create_invoice()
+            # subscription should be closed on end date
+            self.assertEqual(self.subscription.subscription_state, '6_churn')
+
+    def test_portal_pay_subscription(self):
+        # When portal pays a subscription, a success mail is sent.
+        # This calls AccountMove.amount_by_group, which triggers _compute_invoice_taxes_by_group().
+        # As this method writes on this field and also reads tax_ids, which portal has no rights to,
+        # it might cause some access rights issues. This test checks that no error is raised.
+        portal_partner = self.user_portal.partner_id
+        portal_partner.country_id = self.env['res.country'].search([('code', '=', 'US')])
+        self.env['account.move'].create({
+            'move_type': 'out_invoice',
+        })
+        provider = self.env['payment.provider'].create({
+            'name': 'Test',
+        })
+        self.env['payment.transaction'].create({
+            'amount': 100,
+            'provider_id': provider.id,
+            'payment_method_id': self.payment_method_id,
+            'currency_id': self.env.company.currency_id.id,
+            'partner_id': portal_partner.id,
+        })
