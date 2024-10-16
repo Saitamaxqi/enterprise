@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-12-05 22:48+0000\n"
-"PO-Revision-Date: 2024-10-14 20:06+0000\n"
+"POT-Creation-Date: 2024-10-23 17:32+0000\n"
+"PO-Revision-Date: 2024-10-23 16:15-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -16,12 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Generator: Poedit 3.0.1\n"
-
-#. module: l10n_br_edi
-#. odoo-python
-#: code:addons/l10n_br_edi/models/account_move.py:0
-msgid "%(field)s on partner %(partner)s is required for e-invoicing"
-msgstr "%(field)s no parceiro %(partner)s é necessário para faturamento eletrônico"
 
 #. module: l10n_br_edi
 #: model:mail.template,body_html:l10n_br_edi.mail_template_move_update
@@ -39,8 +33,8 @@ msgid ""
 "        <br><br>\n"
 "\n"
 "        We hope you are well. We want to inform you about an update regarding\n"
-"        invoice <span style=\"font-weight:bold;\" t-out=\"object.name or "
-"''\">INV/2021/05/0005</span>\n"
+"        invoice <span style=\"font-weight:bold;\" t-out=\"object.name or ''\">INV/2021/05/0005</"
+"span>\n"
 "        <t t-if=\"object.invoice_origin\">\n"
 "            (with reference: <t t-out=\"object.invoice_origin or ''\">SUB003</t>)\n"
 "        </t>\n"
@@ -76,10 +70,10 @@ msgstr ""
 "        </t>\n"
 "        <br><br>\n"
 "\n"
-"        Esperamos que você esteja bem. Gostaríamos de informá-lo sobre uma atualização "
-"referente à\n"
-"        fatura <span style=\"font-weight:bold;\" t-out=\"object.name or "
-"''\">FAT/2021/05/0005</span>\n"
+"        Esperamos que você esteja bem. Gostaríamos de informá-lo sobre uma atualização referente "
+"à\n"
+"        fatura <span style=\"font-weight:bold;\" t-out=\"object.name or ''\">FAT/2021/05/0005</"
+"span>\n"
 "        <t t-if=\"object.invoice_origin\">\n"
 "            (com a referência: <t t-out=\"object.invoice_origin or ''\">SUB003</t>)\n"
 "        </t>\n"
@@ -200,21 +194,21 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_br_edi.field_account_bank_statement_line__l10n_br_nfse_number
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move__l10n_br_nfse_number
 msgid ""
-"Brazil: After an NFS-e invoice is issued and confirmed by the municipality, an NFS-e number "
-"is provided."
+"Brazil: After an NFS-e invoice is issued and confirmed by the municipality, an NFS-e number is "
+"provided."
 msgstr ""
 "Brasil: Após a emissão e confirmação da NFS-e pelo município, é fornecido o número da NFS-e."
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_account_move_line__l10n_br_cfop
 msgid ""
-"Brazil: CFOP returned from the tax calculation that will be used for "
-"submitting your electronic invoice per line. This is computed based on the "
-"Operation Type, product, contact and company configuration."
+"Brazil: CFOP returned from the tax calculation that will be used for submitting your electronic "
+"invoice per line. This is computed based on the Operation Type, product, contact and company "
+"configuration."
 msgstr ""
-"Brasil: CFOP retornado no cálculo de impostos e será usado no envio da Nota "
-"fiscal eletrônica por linha. Essa informação é determinada com base nas "
-"configurações como tipo de operação, produto, contato e informações da empresa."
+"Brasil: CFOP retornado no cálculo de impostos e será usado no envio da Nota fiscal eletrônica por "
+"linha. Essa informação é determinada com base nas configurações como tipo de operação, produto, "
+"contato e informações da empresa."
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_res_country__l10n_br_edi_code
@@ -301,14 +295,14 @@ msgstr "Brasil: Usado para determinar o modelo de frete usado nessa transação.
 msgid ""
 "Brazilian e-invoicing was enabled but the following invoices cannot be e-invoiced:\n"
 "%s\n"
-"If this is not intended, please check if an Avatax fiscal position is used on those invoices "
-"and if the invoice isn't already e-invoiced."
+"If this is not intended, please check if an Avatax fiscal position is used on those invoices and "
+"if the invoice isn't already e-invoiced."
 msgstr ""
-"O faturamento eletrônico brasileiro foi ativado, mas as seguintes faturas não podem ser "
-"faturadas eletronicamente:\n"
+"O faturamento eletrônico brasileiro foi ativado, mas as seguintes faturas não podem ser faturadas "
+"eletronicamente:\n"
 "%s\n"
-"Se isso não for intencional, verifique se uma posição fiscal do Avatax está sendo usada "
-"nessas faturas e se a fatura não já foi faturada eletronicamente."
+"Se isso não for intencional, verifique se uma posição fiscal do Avatax está sendo usada nessas "
+"faturas e se a fatura não já foi faturada eletronicamente."
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move_line__l10n_br_cfop
@@ -331,11 +325,11 @@ msgstr "Cancelado"
 #. odoo-python
 #: code:addons/l10n_br_edi/wizard/l10n_br_edi_cancel_range.py:0
 msgid ""
-"Cancelled range %(start_number)s - %(end_number)s for document type %(document_type)s for "
-"reason \"%(reason)s\"."
+"Cancelled range %(start_number)s - %(end_number)s for document type %(document_type)s for reason "
+"\"%(reason)s\"."
 msgstr ""
-"Intervalo cancelado %(start_number)s - %(end_number)s para o documento do tipo "
-"%(document_type)s pelo motivo \"%(reason)s\"."
+"Intervalo cancelado %(start_number)s - %(end_number)s para o documento do tipo %(document_type)s "
+"pelo motivo \"%(reason)s\"."
 
 #. module: l10n_br_edi
 #: model:ir.model.fields.selection,name:l10n_br_edi.selection__account_move__l10n_br_edi_payment_method__02
@@ -352,7 +346,7 @@ msgstr "Verificar fatura(s)"
 #. module: l10n_br_edi
 #: model_terms:ir.ui.view,arch_db:l10n_br_edi.account_move_form_inherit_l10n_br_edi
 msgid "Check NFS-e Status"
-msgstr "Verificar status da NFS-e\t"
+msgstr "Verificar status da NFS-e"
 
 #. module: l10n_br_edi
 #: model_terms:ir.ui.view,arch_db:l10n_br_edi.portal_invoice_page
@@ -415,8 +409,14 @@ msgid "Debit Card"
 msgstr "Cartão de débito"
 
 #. module: l10n_br_edi
+#: model:ir.model.fields,field_description:l10n_br_edi.field_account_external_tax_mixin__display_name
+#: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__display_name
+#: model:ir.model.fields,field_description:l10n_br_edi.field_account_move_line__display_name
+#: model:ir.model.fields,field_description:l10n_br_edi.field_account_move_send__display_name
 #: model:ir.model.fields,field_description:l10n_br_edi.field_l10n_br_edi_cancel_range__display_name
 #: model:ir.model.fields,field_description:l10n_br_edi.field_l10n_br_edi_invoice_update__display_name
+#: model:ir.model.fields,field_description:l10n_br_edi.field_payment_method__display_name
+#: model:ir.model.fields,field_description:l10n_br_edi.field_res_country__display_name
 msgid "Display Name"
 msgstr "Nome exibido"
 
@@ -442,8 +442,7 @@ msgstr "Fatura eletrônica aceita:"
 #: code:addons/l10n_br_edi/wizard/l10n_br_edi_invoice_update.py:0
 msgid "E-invoice cancelled in Odoo, make sure to also cancel it in your city's portal."
 msgstr ""
-"Fatura eletrônica cancelada no Odoo. Certifique-se de também cancelá-la no portal do "
-"município."
+"Fatura eletrônica cancelada no Odoo. Certifique-se de também cancelá-la no portal do município."
 
 #. module: l10n_br_edi
 #. odoo-python
@@ -496,7 +495,7 @@ msgstr "Erro"
 
 #. module: l10n_br_edi
 #. odoo-python
-#: code:addons/l10n_br_edi/wizard/account_move_send.py:0
+#: code:addons/l10n_br_edi/models/account_move_send.py:0
 msgid "Errors when submitting the e-invoice:"
 msgstr "Erros ao enviar a fatura eletrônica:"
 
@@ -519,6 +518,17 @@ msgid "Food voucher"
 msgstr "Vale-alimentação"
 
 #. module: l10n_br_edi
+#. odoo-python
+#: code:addons/l10n_br_edi/models/account_move.py:0
+msgid ""
+"For Brazilian electronic invoicing, contacts must have a complete address, VAT number and "
+"identification type:\n"
+"%s"
+msgstr ""
+"Para faturamento eletrônico brasileiro, os contatos devem ter CPF/CNPJ, tipo de identificação e "
+"endereço completos:"
+
+#. module: l10n_br_edi
 #: model:ir.model.fields.selection,name:l10n_br_edi.selection__account_move__l10n_br_edi_freight_model__freeshipping
 msgid "Free shipping"
 msgstr "Frete grátis"
@@ -526,7 +536,6 @@ msgstr "Frete grátis"
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_freight_model
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_move__l10n_br_edi_freight_model
-#: model:ir.model.fields,field_description:l10n_br_edi.field_account_payment__l10n_br_edi_freight_model
 msgid "Freight Model"
 msgstr "Modelo de frete"
 
@@ -775,8 +784,7 @@ msgstr "Crédito na loja"
 #. odoo-python
 #: code:addons/l10n_br_edi/models/account_move.py:0
 msgid "Tax has never been calculated on this invoice, please \"Reset to Draft\" and re-post."
-msgstr ""
-"O imposto não foi calculado nessa fatura. Redefina-a como provisória e publique novamente."
+msgstr "O imposto não foi calculado nessa fatura. Redefina-a como provisória e publique novamente."
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_l10n_br_edi_invoice_update__mode
@@ -823,8 +831,8 @@ msgstr "A movimentação a ser cancelada."
 #: code:addons/l10n_br_edi/models/account_move.py:0
 msgid ""
 "The originating invoice (%(origin_invoice)s) must have an access key before electronically "
-"invoicing %(current_invoice)s. The access key can be set manually or by electronically "
-"invoicing %(origin_invoice)s."
+"invoicing %(current_invoice)s. The access key can be set manually or by electronically invoicing "
+"%(origin_invoice)s."
 msgstr ""
 "A fatura de origem (%(origin_invoice)s) deve ter uma chave de acesso antes de faturar "
 "eletronicamente %(current_invoice)s. A chave de acesso pode ser definida manualmente ou pelo "
@@ -838,27 +846,27 @@ msgstr "O motivo para invalidar esse intervalo."
 #. module: l10n_br_edi
 #. odoo-python
 #: code:addons/l10n_br_edi/wizard/l10n_br_edi_invoice_update.py:0
-#, python-format
 msgid ""
 "The reason must contain at least 15 characters and cannot exceed a maximum of 255 characters."
 msgstr ""
-"O motivo do cancelamento deve conter, pelo menos, 15 caracteres e não pode exceder o máximo de 255 caracteres."
+"O motivo do cancelamento deve conter, pelo menos, 15 caracteres e não pode exceder o máximo de "
+"255 caracteres."
 
 #. module: l10n_br_edi
 #: model:ir.model,name:l10n_br_edi.model_l10n_br_edi_cancel_range
 msgid "This allows a user to inform the government a range of sequence numbers won't be used."
 msgstr ""
-"Isso permite que um usuário informe ao governo que um intervalo de números de sequência não "
-"será usado."
+"Isso permite que um usuário informe ao governo que um intervalo de números de sequência não será "
+"usado."
 
 #. module: l10n_br_edi
 #: model_terms:ir.ui.view,arch_db:l10n_br_edi.l10n_br_edi_invoice_update_form
 msgid ""
-"This invoice will only be cancelled in Odoo. Make sure to cancel it through your city portal "
-"as well."
+"This invoice will only be cancelled in Odoo. Make sure to cancel it through your city portal as "
+"well."
 msgstr ""
-"Esta fatura será cancelada somente no Odoo. Certifique-se de cancelá-la também pelo portal "
-"do seu município."
+"Esta fatura será cancelada somente no Odoo. Certifique-se de cancelá-la também pelo portal do seu "
+"município."
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,field_description:l10n_br_edi.field_account_bank_statement_line__l10n_br_edi_transporter_id
@@ -876,7 +884,19 @@ msgstr "Código %(code)s de status de fatura eletrônica desconhecido: %(descrip
 #. odoo-python
 #: code:addons/l10n_br_edi/models/account_move_send.py:0
 msgid "View Invoice(s)"
-msgstr "Ver fatura(s)\t"
+msgstr "Ver fatura(s)"
+
+#. module: l10n_br_edi
+#. odoo-python
+#: code:addons/l10n_br_edi/models/account_move.py:0
+msgid "View contacts"
+msgstr "Visualizar contatos"
+
+#. module: l10n_br_edi
+#. odoo-python
+#: code:addons/l10n_br_edi/models/account_move.py:0
+msgid "View invoice"
+msgstr "Visualizar faturas"
 
 #. module: l10n_br_edi
 #: model:ir.model.fields,help:l10n_br_edi.field_l10n_br_edi_invoice_update__send_email
@@ -884,8 +904,8 @@ msgid ""
 "When checked an email will be sent informing the customer of the changes and the new EDI "
 "documents."
 msgstr ""
-"Quando a caixa estiver marcada, será enviado um e-mail informando o cliente sobre as "
-"alterações e os novos documentos EDI."
+"Quando a caixa estiver marcada, será enviado um e-mail informando o cliente sobre as alterações e "
+"os novos documentos EDI."
 
 #. module: l10n_br_edi
 #. odoo-python
@@ -898,3 +918,6 @@ msgstr "fatura eletrônica (Brasil)"
 msgid "{{ object.company_id.name }} Invoice (Ref {{ object.name or 'n/a' }}): Important Update"
 msgstr ""
 "{{ object.company_id.name }} Fatura (Ref. {{ object.name or 'n/d' }}): Atualização importante"
+
+#~ msgid "%(field)s on partner %(partner)s is required for e-invoicing"
+#~ msgstr "%(field)s no parceiro %(partner)s é necessário para faturamento eletrônico"

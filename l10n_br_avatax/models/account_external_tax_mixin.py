@@ -20,7 +20,15 @@ AVATAX_PRECISION_DIGITS = 2  # defined by API
 
 
 class AccountExternalTaxMixin(models.AbstractModel):
-    _inherit = 'account.external.tax.mixin'
+    """ Brazilian Avatax adaptations. This class requires the following fields on the inherited model:
+    - company_id (res.company): the company the record belongs to,
+    - country_code (Char): the country code of the company this record belongs to,
+    - fiscal_position_id (account.fiscal.position): fiscal position used for this record,
+    - currency_id (res.currency): currency used on the record,
+    - partner_shipping_id (res.partner): delivery address, where services are rendered or goods are delivered,
+    - partner_id (res.partner): the end customer of the transaction,
+    """
+    _inherit = ['account.external.tax.mixin']
 
     l10n_br_is_service_transaction = fields.Boolean(
         "Is Service Transaction",
@@ -49,6 +57,8 @@ class AccountExternalTaxMixin(models.AbstractModel):
         string="Is Brazilian Avatax",
         help="Technical field used to check if this record requires tax calculation or EDI via Avatax."
     )
+    # Technical field that holds errors meant for the actionable_errors widget.
+    l10n_br_avatax_warnings = fields.Json(compute="_compute_l10n_br_avatax_warnings")
 
     def _compute_l10n_br_is_service_transaction(self):
         """Should be overridden. Used to determine if we should treat this record as a service (NFS-e) record."""
@@ -77,6 +87,155 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
     def _l10n_br_is_avatax(self):
         return self.country_code == 'BR' and self.fiscal_position_id.l10n_br_is_avatax
+
+    def _depends_l10n_br_avatax_warnings(self):
+        """Provides dependencies that trigger recomputation of l10n_br_avatax. Model-specific fields should be added
+        with an override."""
+        return ["l10n_br_is_avatax", "l10n_br_is_service_transaction", "currency_id", "company_id"]
+
+    def _l10n_br_avatax_check_company(self):
+        company_sudo = self.company_id.sudo()
+        api_id, api_key = company_sudo.l10n_br_avatax_api_identifier, company_sudo.l10n_br_avatax_api_key
+        if not api_id or not api_key:
+            return {
+                "missing_avatax_account": {
+                    "message": _("Please create an Avatax account"),
+                    "action_text": _("Go to the configuration panel"),
+                    "action": self.env.ref('account.action_account_config').with_company(company_sudo)._get_action_dict(),
+                    "level": "danger",
+                }
+            }
+
+        return {}
+
+    def _l10n_br_avatax_check_currency(self):
+        if self.currency_id.name != 'BRL':
+            return {
+                "bad_currency": {
+                    "message": _("Brazilian Real is required to calculate taxes with Avatax."),
+                    "level": "danger",
+                }
+            }
+
+        return {}
+
+    def _l10n_br_avatax_check_lines(self, lines):
+        errors = {}
+        for line in lines:
+            product = line['tempProduct']
+            cean = line['itemDescriptor']['cean']
+            if not product:
+                errors["required_product"] = {
+                    "message": _("A product is required on each line when using Avatax."),
+                    "level": "danger",
+                }
+            elif cean and (not cean.isdigit() or not (len(cean) == 8 or 12 <= len(cean) <= 14)):
+                errors["bad_cean"] = {
+                    "message": _("The barcode of %s must have either 8, or 12 to 14 digits when using Avatax.", product.display_name),
+                    "level": "danger",
+                }
+
+            if line['lineAmount'] < 0:
+                errors["negative_line"] = {
+                    "message": _("Avatax Brazil doesn't support negative lines."),
+                    "level": "danger",
+                }
+
+        if not self._l10n_br_get_non_transport_lines(lines):
+            errors["non_transport_line"] = {
+                "message": _("Avatax requires at least one non-transport line."),
+                "level": "danger",
+            }
+
+        service_lines, consumable_lines = partition(
+            lambda line: line["tempProduct"].product_tmpl_id._l10n_br_is_only_allowed_on_service_invoice(), lines
+        )
+
+        if not self.l10n_br_is_service_transaction:
+            if service_lines:
+                service_products = self.env["product.product"].union(*[line["tempProduct"] for line in service_lines])
+                errors["disallowed_service_products"] = {
+                    "message": _(
+                        "%(transaction)s is a goods transaction but has service products:\n%(products)s.",
+                        transaction=self.display_name,
+                        products=format_list(self.env, service_products.mapped('display_name')),
+                    ),
+                    "action_text": _("View products"),
+                    "action": service_products._get_records_action(name=_("View Product(s)")),
+                    "level": "danger",
+                }
+        else:
+            if consumable_lines:
+                consumable_products = self.env["product.product"].union(*[line["tempProduct"] for line in consumable_lines])
+                errors["disallowed_goods_products"] = {
+                    "message": _(
+                        "%(transaction)s is a service transaction but has non-service products:\n%(products)s",
+                        transaction=self.display_name,
+                        products=format_list(self.env, consumable_products.mapped('display_name')),
+                    ),
+                    "action_text": _("View products"),
+                    "action": consumable_products._get_records_action(name=_("View Product(s)")),
+                    "level": "danger",
+                }
+
+        return errors
+
+    def _l10n_br_avatax_check_missing_fields_product(self, lines):
+        res = {}
+        incomplete_products = self.env['product.product']
+
+        for line in lines:
+            product = line['tempProduct']
+            if product and not product.l10n_br_ncm_code_id:
+                incomplete_products |= product
+
+        if incomplete_products:
+            res["products_missing_fields_danger"] = {
+                    "message": _(
+                        "For Brazilian tax calculation you must set a Mercosul NCM Code on the following:\n%(products)s",
+                        products=format_list(self.env, incomplete_products.mapped("display_name"))
+                    ),
+                    "action_text": _("View products"),
+                    "action": incomplete_products._l10n_br_avatax_action_missing_fields(self.l10n_br_is_service_transaction),
+                    "level": "danger",
+                }
+
+        return res
+
+    def _l10n_br_avatax_check_partner(self):
+        res = {}
+        if self.l10n_br_is_service_transaction:
+            partner = self.partner_shipping_id
+            city = partner.city_id
+            if not city or city.country_id.code != "BR":
+                res["missing_city"] = {
+                    "message": _("%s must have a city selected in the list of Brazil's cities.", partner.display_name),
+                    "action_text": _("View customer"),
+                    "action": partner._get_records_action(),
+                    "level": "danger",
+                }
+
+        return res
+
+    @api.depends(lambda self: self._depends_l10n_br_avatax_warnings())
+    def _compute_l10n_br_avatax_warnings(self):
+        for record in self:
+            if not record.l10n_br_is_avatax:
+                record.l10n_br_avatax_warnings = False
+                continue
+
+            lines = self._l10n_br_get_calculate_lines_payload()
+            record.l10n_br_avatax_warnings = {
+                **record._l10n_br_avatax_check_company(),
+                **record._l10n_br_avatax_check_currency(),
+                **record._l10n_br_avatax_check_lines(lines),
+                **record._l10n_br_avatax_check_missing_fields_product(lines),
+                **record._l10n_br_avatax_check_partner(),
+            }
+
+    def _l10n_br_avatax_blocking_errors(self):
+        """Only consider 'danger' level errors to be blocking. Other ones are considered warnings."""
+        return [error for error in (self.l10n_br_avatax_warnings or {}).values() if error.get('level') == 'danger']
 
     def _l10n_br_avatax_log(self):
         self.env['account.external.tax.mixin']._enable_external_tax_logging(ICP_LOG_NAME)
@@ -130,65 +289,6 @@ class AccountExternalTaxMixin(models.AbstractModel):
                     inner_errors.append('- %s: %s' % (where_key, where_value))
 
             return '%s\n%s\n%s' % (title, response['error']['message'], '\n'.join(inner_errors))
-
-    def _l10n_br_avatax_validate_lines(self, lines):
-        """ Avoids doing requests to Avatax that are guaranteed to fail. """
-        errors = []
-        for line in lines:
-            product = line['tempProduct']
-            cean = line['itemDescriptor']['cean']
-            if not product:
-                errors.append(_('- A product is required on each line when using Avatax.'))
-            elif not product.l10n_br_ncm_code_id:
-                errors.append(_('- Please configure a Mercosul NCM Code on %s.', product.display_name))
-            elif line['lineAmount'] < 0:
-                errors.append(_("- Avatax Brazil doesn't support negative lines."))
-            elif cean and (not cean.isdigit() or not (len(cean) == 8 or 12 <= len(cean) <= 14)):
-                errors.append(_("- The barcode of %s must have either 8, or 12 to 14 digits when using Avatax.", product.display_name))
-
-        service_lines, consumable_lines = partition(
-            lambda line: line["tempProduct"].product_tmpl_id._l10n_br_is_only_allowed_on_service_invoice(), lines
-        )
-
-        if not self.l10n_br_is_service_transaction:
-            if service_lines:
-                # Without l10n_br_edi_sale_services, all sale.order documents will be considered non-service ones because
-                # of the missing _compute_l10n_br_is_service_transaction() override.
-                raise ValidationError(
-                    _(
-                        '%(transaction)s is a goods transaction but has service products:\n%(products)s.',
-                        transaction=self.display_name,
-                        products=format_list(self.env, [line["tempProduct"].display_name for line in service_lines]),
-                    )
-                )
-        else:
-            if consumable_lines:
-                raise ValidationError(
-                    _(
-                        "%(transaction)s is a service transaction but has non-service products:\n%(products)s",
-                        transaction=self.display_name,
-                        products=format_list(self.env, [line["tempProduct"].display_name for line in consumable_lines]),
-                    )
-                )
-
-            errors = []
-
-            partner = self.partner_shipping_id
-            city = partner.city_id
-            if not city or city.country_id.code != "BR":
-                errors.append(
-                    _(
-                        "%s must have a city selected in the list of Brazil's cities.",
-                        partner.display_name,
-                    )
-                )
-
-            for line in lines:
-                if not line["itemDescriptor"]["serviceCodeOrigin"]:
-                    errors.append(_("%s must have a Service Code Origin.", line["tempProduct"].display_name))
-
-        if errors:
-            raise ValidationError('\n'.join(errors))
 
     def _l10n_br_build_avatax_line(self, product, qty, unit_price, total, discount, line_id):
         """ Prepares the line data for the /calculations API call. temp* values are here to help with post-processing
@@ -246,6 +346,9 @@ class AccountExternalTaxMixin(models.AbstractModel):
 
         return line
 
+    def _l10n_br_get_non_transport_lines(self, lines):
+        return [line for line in lines if not line['tempTransportCostType']]
+
     def _l10n_br_distribute_transport_cost_over_lines(self, lines, transport_cost_type):
         """ Avatax requires transport costs to be specified per line. This distributes transport costs (indicated by
         their product's l10n_br_transport_cost_type) over the lines in proportion to their subtotals. """
@@ -257,11 +360,12 @@ class AccountExternalTaxMixin(models.AbstractModel):
         api_field = type_to_api_field[transport_cost_type]
 
         transport_lines = [line for line in lines if line['tempTransportCostType'] == transport_cost_type]
-        regular_lines = [line for line in lines if not line['tempTransportCostType']]
+        regular_lines = self._l10n_br_get_non_transport_lines(lines)
         total = sum(line['lineAmount'] for line in regular_lines)
 
         if not regular_lines:
-            raise UserError(_('Avatax requires at least one non-transport line.'))
+            # _compute_l10n_br_avatax_warnings() will inform the user about this
+            return []
 
         for transport_line in transport_lines:
             transport_net = transport_line['lineAmount'] - transport_line['lineTaxedDiscount']
@@ -298,15 +402,6 @@ class AccountExternalTaxMixin(models.AbstractModel):
         if not self:
             return {}
 
-        company_sudo = self.company_id.sudo()
-        api_id, api_key = company_sudo.l10n_br_avatax_api_identifier, company_sudo.l10n_br_avatax_api_key
-        if not api_id or not api_key:
-            raise RedirectWarning(
-                _('Please create an Avatax account'),
-                self.env.ref('base_setup.action_general_configuration').id,
-                _('Go to the configuration panel'),
-            )
-
         transactions = {record: record._l10n_br_get_calculate_payload() for record in self}
         return {
             record: record._l10n_br_iap_calculate_tax(transaction)
@@ -336,13 +431,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
         else:
             return {'icmsTaxPayer': partner.l10n_br_taxpayer == 'icms'}
 
-    def _l10n_br_get_calculate_payload(self):
-        """ Returns the full payload containing one record to be used in a /transactions API call. """
-        self.ensure_one()
-        transaction_date = self._get_date_for_external_taxes()
-        partner = self.partner_id
-        company = self.company_id.partner_id
-
+    def _l10n_br_get_calculate_lines_payload(self):
         lines = [
             self._l10n_br_build_avatax_line(
                 line['product_id'],
@@ -359,7 +448,16 @@ class AccountExternalTaxMixin(models.AbstractModel):
         lines = self._l10n_br_distribute_transport_cost_over_lines(lines, 'insurance')
         lines = self._l10n_br_distribute_transport_cost_over_lines(lines, 'other')
 
-        self._l10n_br_avatax_validate_lines(lines)
+        return lines
+
+    def _l10n_br_get_calculate_payload(self):
+        """ Returns the full payload containing one record to be used in a /transactions API call. """
+        self.ensure_one()
+        transaction_date = self._get_date_for_external_taxes()
+        partner = self.partner_id
+        company = self.company_id.partner_id
+
+        lines = self._l10n_br_get_calculate_lines_payload()
         self._l10n_br_remove_temp_values_lines(lines)
         self._l10n_br_repr_amounts(lines)
 
@@ -485,9 +583,16 @@ class AccountExternalTaxMixin(models.AbstractModel):
         tax_cache = {}
 
         br_records = self.filtered(lambda record: record.l10n_br_is_avatax)
+        errors = []
         for record in br_records:
-            if record.currency_id.name != 'BRL':
-                raise UserError(_('%s has to use Brazilian Real to calculate taxes with Avatax.', record.display_name))
+            if blocking := record._l10n_br_avatax_blocking_errors():
+                errors.append(_(
+                    "Taxes cannot be calculated for %(record)s:\n%(errors)s",
+                    record=record.display_name, errors="\n".join(f"- {msg['message']}" for msg in blocking)
+                ))
+
+        if errors:
+            raise ValidationError('\n\n'.join(errors))
 
         query_results = br_records._l10n_br_call_avatax_taxes()
         errors = []

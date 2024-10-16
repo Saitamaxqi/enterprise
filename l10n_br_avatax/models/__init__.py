@@ -7,6 +7,7 @@ from . import account_move
 from . import l10n_br_ncm_code
 from . import l10n_br_cnae_code
 from . import l10n_br_operation_type
+from . import product_product
 from . import product_template
 from . import res_partner
 from . import res_company

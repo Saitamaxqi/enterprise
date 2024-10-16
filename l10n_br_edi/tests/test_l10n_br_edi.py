@@ -27,6 +27,10 @@ class TestL10nBREDICommon(TestAccountMoveSendCommon):
     def setUpClass(cls):
         super().setUpClass()
         company = cls.company_data["company"]
+        company.write({
+            "l10n_br_avatax_api_identifier": "DUMMY",
+            "l10n_br_avatax_api_key": "DUMMY",
+        })
         company.partner_id.write(
             {
                 "street": "Rua Marechal Deodoro",

@@ -3,8 +3,7 @@ from json import JSONDecodeError
 from pprint import pformat
 
 from odoo import fields, models, api, _
-from odoo.exceptions import UserError, AccessError
-from odoo.tools import street_split
+from odoo.exceptions import UserError, AccessError, RedirectWarning, ValidationError
 from odoo.tools.safe_eval import json
 
 
@@ -56,11 +55,34 @@ class ResConfigSettings(models.TransientModel):
         for settings in self:
             settings.l10n_br_avatax_show_overwrite_warning = bool(settings.l10n_br_avatax_api_identifier)
 
+    def _validate_create_account_data(self):
+        """ Raises actionable errors in case there is missing required data. """
+        partner = self.company_id.partner_id
+        if not self.l10n_br_avatax_portal_email:
+            # Don't redirect, the user is already on in the Accounting settings.
+            raise ValidationError(_("Please set a valid Avatax portal email."))
+
+        if not partner.vat:
+            raise RedirectWarning(
+                _("Please set a valid Tax ID on your company."),
+                partner._get_records_action(),
+                _("Go to company configuration")
+            )
+
+        required_address_fields = ("street_name", "street2", "street_number", "zip")
+        for field in required_address_fields:
+            if not partner[field]:
+                raise RedirectWarning(
+                    _("Please set a complete address on your company."),
+                    partner._get_records_action(),
+                    _("Go to company configuration")
+                )
+
     def create_account(self):
         """ This gathers all metadata needed to create an account, does the request to the IAP server and parses
         the response. """
+        self._validate_create_account_data()
         partner = self.company_id.partner_id
-        street_data = street_split(partner.street)
         result = self.env['account.external.tax.mixin']._l10n_br_iap_create_account({
             'subscriptionName': self.company_name,
             'corporateName': self.company_name,
@@ -69,9 +91,9 @@ class ResConfigSettings(models.TransientModel):
             'municipalRegistration': partner.l10n_br_im_code,
             'stateRegistration': partner.l10n_br_ie_code,
             'suframa': partner.l10n_br_isuf_code,
-            'address': street_data['street_name'],
+            'address': partner.street_name,
             'neighborhood': partner.street2,
-            'addressNumber': street_data['street_number'],
+            'addressNumber': partner.street_number,
             'corporateContactEmailAddress': self.l10n_br_avatax_portal_email,
             'zipCode': partner.zip,
         }, self.company_id)

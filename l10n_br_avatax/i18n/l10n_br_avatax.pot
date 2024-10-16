@@ -6,10 +6,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 17.5alpha1+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-13 20:16+0000\n"
-"PO-Revision-Date: 2023-09-13 20:16+0000\n"
+"POT-Creation-Date: 2024-10-23 17:02+0000\n"
+"PO-Revision-Date: 2024-10-23 17:02+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
@@ -34,37 +35,7 @@ msgstr ""
 #. module: l10n_br_avatax
 #. odoo-python
 #: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
-msgid "%s has to use Brazilian Real to calculate taxes with Avatax."
-msgstr ""
-
-#. module: l10n_br_avatax
-#. odoo-python
-#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
-msgid "%s must have a Service Code Origin."
-msgstr ""
-
-#. module: l10n_br_avatax
-#. odoo-python
-#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
 msgid "%s must have a city selected in the list of Brazil's cities."
-msgstr ""
-
-#. module: l10n_br_avatax
-#. odoo-python
-#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
-msgid "- A product is required on each line when using Avatax."
-msgstr ""
-
-#. module: l10n_br_avatax
-#. odoo-python
-#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
-msgid "- Avatax Brazil doesn't support negative lines."
-msgstr ""
-
-#. module: l10n_br_avatax
-#. odoo-python
-#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
-msgid "- Please configure a Mercosul NCM Code on %s."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -76,57 +47,66 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
 msgid ""
-"- The barcode of %s must have either 8, or 12 to 14 digits when using Avatax."
+"The barcode of %s must have either 8, or 12 to 14 digits when using Avatax."
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Create a new account\" role=\"img\" aria-label=\"Create a new account\" class=\"fa fa-plug fa-fw\"/>\n"
-"                                    Create a new account"
+"<i title=\"Create a new account\" role=\"img\" aria-label=\"Create a new account\" class=\"fa fa-"
+"plug fa-fw\"/>\n"
+"                                        Create a new account"
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Create account\" role=\"img\" aria-label=\"Create account\" class=\"fa fa-plug fa-fw\"/>\n"
-"                                    Create account"
+"<i title=\"Create account\" role=\"img\" aria-label=\"Create account\" class=\"fa fa-plug fa-fw\"/"
+">\n"
+"                                        Create account"
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
 msgid ""
 "<i title=\"Show logs\" role=\"img\" aria-label=\"Show logs\" class=\"fa fa-file-text-o\"/>\n"
-"                                Show logs"
+"                                    Show logs"
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Start logging for 30 minutes\" role=\"img\" aria-label=\"Start logging for 30 minutes\" class=\"fa fa-file-text-o\"/>\n"
-"                                Start logging for 30 minutes"
+"<i title=\"Start logging for 30 minutes\" role=\"img\" aria-label=\"Start logging for 30 "
+"minutes\" class=\"fa fa-file-text-o\"/>\n"
+"                                    Start logging for 30 minutes"
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
 msgid ""
-"<i title=\"Test connection\" role=\"img\" aria-label=\"Test connection\" class=\"fa fa-plug fa-fw\"/>\n"
-"                                Test connection"
+"<i title=\"Test connection\" role=\"img\" aria-label=\"Test connection\" class=\"fa fa-plug fa-"
+"fw\"/>\n"
+"                                    Test connection"
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
-msgid "<span class=\"o_form_label\">Transfer API credentials</span>"
+msgid "<span class=\"o_form_label\">Transfer Avalara API credentials</span>"
+msgstr ""
+
+#. module: l10n_br_avatax
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
+msgid "A product is required on each line when using Avatax."
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_product__l10n_br_cest_code
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_template__l10n_br_cest_code
 msgid ""
-"A tax classification code used to identify goods and products subject to tax"
-" substitution under ICMS regulations.It helps determine the applicable tax "
-"treatment and procedures for specific items.Check if your product is subject"
-" or not to this in https://www.codigocest.com.br/."
+"A tax classification code used to identify goods and products subject to tax substitution under "
+"ICMS regulations.It helps determine the applicable tax treatment and procedures for specific "
+"items.Check if your product is subject or not to this in https://www.codigocest.com.br/."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -140,13 +120,15 @@ msgid "API Key"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_190
-msgid "Abaetetuba"
+#: model:ir.model,name:l10n_br_avatax.model_account_chart_template
+msgid "Account Chart Template"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:ir.model,name:l10n_br_avatax.model_account_chart_template
-msgid "Account Chart Template"
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid ""
+"Accounts in sandbox and production are independent. Create a new account in each environment when "
+"needed. It is not recommended to use sandbox credentials on a production database."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -165,128 +147,23 @@ msgid "Agricultural production"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_199
-msgid "Alagoinhas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_253
-msgid "Almirante Tamandaré"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_241
-msgid "Altamira"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_160
-msgid "Alvorada"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_124
-msgid "Americana"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_046
-msgid "Ananindeua"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_175
-msgid "Angra dos Reis"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_062
-msgid "Anápolis"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_040
-msgid "Aparecida de Goiânia"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_231
-msgid "Apucarana"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_036
-msgid "Aracaju"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_261
-msgid "Araguari"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_170
-msgid "Araguaína"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_127
-msgid "Arapiraca"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_254
-msgid "Arapongas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_121
-msgid "Araraquara"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_230
-msgid "Araras"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_232
-msgid "Araruama"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_198
-msgid "Araucária"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_281
-msgid "Araxá"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_152
-msgid "Araçatuba"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_318
-msgid "Assis"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_188
-msgid "Atibaia"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
-msgid "Automatically compute tax rates"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
 msgid "AvaTax Brazil"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "AvaTax Company Configuration"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "AvaTax Configuration Steps"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "AvaTax Credentials"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -317,6 +194,17 @@ msgid "Avalara Logging"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "Avalara portal"
+msgstr ""
+
+#. module: l10n_br_avatax
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
+msgid "Avatax Brazil doesn't support negative lines."
+msgstr ""
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_tax__l10n_br_avatax_code
 msgid "Avatax Code"
 msgstr ""
@@ -335,106 +223,6 @@ msgid "Avatax requires at least one non-transport line."
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_292
-msgid "Açailândia"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_307
-msgid "Bacabal"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_260
-msgid "Bagé"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_214
-msgid "Balneário Camboriú"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_316
-msgid "Balsas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_242
-msgid "Barbacena"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_239
-msgid "Barcarena"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_172
-msgid "Barra Mansa"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_185
-msgid "Barreiras"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_250
-msgid "Barretos"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_088
-msgid "Barueri"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_066
-msgid "Bauru"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_043
-msgid "Belford Roxo"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_006
-msgid "Belo Horizonte"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_012
-msgid "Belém"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_248
-msgid "Bento Gonçalves"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_060
-msgid "Betim"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_255
-msgid "Birigui"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_071
-msgid "Blumenau"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_059
-msgid "Boa Vista"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:l10n_br.operation.type,name:l10n_br_avatax.operation_type_72
 msgid "Bomb packaging delivery vasil. sac. similar pallets"
 msgstr ""
@@ -447,26 +235,6 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:l10n_br.operation.type,name:l10n_br_avatax.operation_type_65
 msgid "Bonus shipment"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_208
-msgid "Botucatu"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_249
-msgid "Bragança"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_168
-msgid "Bragança Paulista"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_003
-msgid "Brasília"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -492,11 +260,10 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_br_avatax.field_res_partner__l10n_br_is_subject_csll
 #: model:ir.model.fields,help:l10n_br_avatax.field_res_users__l10n_br_is_subject_csll
 msgid ""
-"Brazil: If not checked, then it will be treated as Exempt. There are cases "
-"where both seller, buyer, and items are taxable but a special situation "
-"forces the transaction to be CSLL exempt. This attribute allows users to "
-"identify such scenarios and trigger the exemption despite all other "
-"settings."
+"Brazil: If not checked, then it will be treated as Exempt. There are cases where both seller, "
+"buyer, and items are taxable but a special situation forces the transaction to be CSLL exempt. "
+"This attribute allows users to identify such scenarios and trigger the exemption despite all "
+"other settings."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -509,8 +276,8 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_br_avatax.field_res_partner__l10n_br_iss_simples_rate
 #: model:ir.model.fields,help:l10n_br_avatax.field_res_users__l10n_br_iss_simples_rate
 msgid ""
-"Brazil: In case the customer or the seller - company - is in the Simplified "
-"Regime, the seller - company - needs to inform the ISS rate."
+"Brazil: In case the customer or the seller - company - is in the Simplified Regime, the seller - "
+"company - needs to inform the ISS rate."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -527,34 +294,31 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_product__l10n_br_ncm_code_id
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_template__l10n_br_ncm_code_id
-msgid ""
-"Brazil: NCM (Nomenclatura Comun do Mercosul) Code from the Mercosur List"
+msgid "Brazil: NCM (Nomenclatura Comun do Mercosul) Code from the Mercosur List"
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_product__l10n_br_source_origin
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_template__l10n_br_source_origin
 msgid ""
-"Brazil: Product Source of Origin indicates if the product has a foreing or "
-"national origin with different variations and characteristics dependin on "
-"the product use case"
+"Brazil: Product Source of Origin indicates if the product has a foreing or national origin with "
+"different variations and characteristics dependin on the product use case"
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_res_partner__l10n_br_taxpayer
 #: model:ir.model.fields,help:l10n_br_avatax.field_res_users__l10n_br_taxpayer
 msgid ""
-"Brazil: Taxpayer Type informs whether the contact is within the ICMS regime,"
-" if it is Exempt, or if it is a Non-Taxpayer"
+"Brazil: Taxpayer Type informs whether the contact is within the ICMS regime, if it is Exempt, or "
+"if it is a Non-Taxpayer"
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_product__l10n_br_service_code_ids
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_template__l10n_br_service_code_ids
 msgid ""
-"Brazil: The service codes for this product, as defined by the cities in "
-"which you wish to sell it. If no city-specific code is provided, the Service"
-" Code Origin will be used instead."
+"Brazil: The service codes for this product, as defined by the cities in which you wish to sell "
+"it. If no city-specific code is provided, the Service Code Origin will be used instead."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -563,10 +327,9 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_br_avatax.field_res_users__l10n_br_subject_cofins
 #: model:ir.model.fields,help:l10n_br_avatax.field_res_users__l10n_br_subject_pis
 msgid ""
-"Brazil: There are cases where both seller, buyer, and items are taxable but "
-"a special situation forces the transaction to be exempt especially for PIS "
-"and COFINS. This attribute allows users to identify such scenarios and "
-"trigger the exemption despite all other settings."
+"Brazil: There are cases where both seller, buyer, and items are taxable but a special situation "
+"forces the transaction to be exempt especially for PIS and COFINS. This attribute allows users to "
+"identify such scenarios and trigger the exemption despite all other settings."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -579,15 +342,15 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_product__l10n_br_transport_cost_type
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_template__l10n_br_transport_cost_type
 msgid ""
-"Brazil: select whether this product will be use to register Freight, "
-"Insurance or Other Costs amounts related to the transaction."
+"Brazil: select whether this product will be use to register Freight, Insurance or Other Costs "
+"amounts related to the transaction."
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_bank_statement_line__l10n_br_cnae_code_id
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_cnae_code_id
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_move__l10n_br_cnae_code_id
-#: model:ir.model.fields,help:l10n_br_avatax.field_account_payment__l10n_br_cnae_code_id
+#: model:ir.model.fields,help:l10n_br_avatax.field_sale_order__l10n_br_cnae_code_id
 msgid "Brazil: the company's CNAE code for tax calculation and EDI."
 msgstr ""
 
@@ -595,20 +358,16 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_bank_statement_line__l10n_br_goods_operation_type_id
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_goods_operation_type_id
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_move__l10n_br_goods_operation_type_id
-#: model:ir.model.fields,help:l10n_br_avatax.field_account_payment__l10n_br_goods_operation_type_id
+#: model:ir.model.fields,help:l10n_br_avatax.field_sale_order__l10n_br_goods_operation_type_id
 msgid ""
-"Brazil: this is the operation type related to the goods transaction. This "
-"will define the CFOP used on the NF-e."
+"Brazil: this is the operation type related to the goods transaction. This will define the CFOP "
+"used on the NF-e."
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_291
-msgid "Breves"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_212
-msgid "Brusque"
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
+msgid "Brazilian Real is required to calculate taxes with Avatax."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -622,9 +381,9 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_bank_statement_line__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__l10n_br_cnae_code_id
-#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_payment__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_company__l10n_br_cnae_code_id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_config_settings__l10n_br_cnae_code_id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_sale_order__l10n_br_cnae_code_id
 #: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
 msgid "CNAE Code"
 msgstr ""
@@ -642,76 +401,6 @@ msgid "CSLL Taxable"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_142
-msgid "Cabo Frio"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_149
-msgid "Cabo de Santo Agostinho"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_218
-msgid "Cachoeirinha"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_162
-msgid "Cachoeiro de Itapemirim"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_203
-msgid "Camaragibe"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_092
-msgid "Camaçari"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_312
-msgid "Camboriú"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_290
-msgid "Cambé"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_221
-msgid "Cametá"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_055
-msgid "Campina Grande"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_014
-msgid "Campinas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_017
-msgid "Campo Grande"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_217
-msgid "Campo Largo"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_042
-msgid "Campos dos Goytacazes"
-msgstr ""
-
-#. module: l10n_br_avatax
 #. odoo-python
 #: code:addons/l10n_br_avatax/models/product_template.py:0
 msgid "Can't have more than one service code for %s."
@@ -723,94 +412,20 @@ msgid "Cancellation of values related to transport service"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_079
-msgid "Canoas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_219
-msgid "Caraguatatuba"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_064
-msgid "Carapicuíba"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_074
-msgid "Cariacica"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_067
-msgid "Caruaru"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_078
-msgid "Cascavel"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_157
-msgid "Castanhal"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_272
-msgid "Catalão"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_266
-msgid "Catanduva"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_073
-msgid "Caucaia"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_192
-msgid "Caxias"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_048
-msgid "Caxias do Sul"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_114
-msgid "Chapecó"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_service_code__city_id
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_partner_view_list
 msgid "City"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "Click <i>Meu primeiro acesso</i>, enter the email used here, and request a password."
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_cnae_code__code
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_ncm_code__code
 msgid "Code"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_273
-msgid "Codó"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_252
-msgid "Colatina"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_130
-msgid "Colombo"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -839,8 +454,13 @@ msgid "Config Settings"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_227
-msgid "Conselheiro Lafaiete"
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "Configure your company"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "Configure your company to work with AvaTax"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -859,23 +479,9 @@ msgid "Contact"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_033
-msgid "Contagem"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_301
-msgid "Coronel Fabriciano"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_100
-msgid "Cotia"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_229
-msgid "Crato"
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/res_partner.py:0
+msgid "Contacts"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -897,29 +503,13 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
 msgid ""
-"Creating a new account will permanently remove your current Avatax account "
-"from Odoo, but it won't delete the account on the Avatax side. Do you wish "
-"to proceed?"
+"Creating a new account will permanently remove your current Avatax account from Odoo, but it "
+"won't delete the account on the Avatax side. Do you wish to proceed?"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_145
-msgid "Criciúma"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_278
-msgid "Cubatão"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_031
-msgid "Cuiabá"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_008
-msgid "Curitiba"
+#: model:iap.service,unit_name:l10n_br_avatax.iap_service_br_avatax
+msgid "Credits"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -933,36 +523,21 @@ msgid "Demonstration return entry"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_063
-msgid "Diadema"
-msgstr ""
-
-#. module: l10n_br_avatax
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_chart_template__display_name
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__display_name
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_fiscal_position__display_name
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__display_name
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_tax__display_name
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_cnae_code__display_name
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_ncm_code__display_name
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_operation_type__display_name
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_service_code__display_name
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_product_product__display_name
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_product_template__display_name
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_res_company__display_name
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_res_config_settings__display_name
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_res_partner__display_name
 msgid "Display Name"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_131
-msgid "Divinópolis"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_120
-msgid "Dourados"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_022
-msgid "Duque de Caxias"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_116
-msgid "Embu das Artes"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1016,24 +591,9 @@ msgid "Environment"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_295
-msgid "Erechim"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_274
-msgid "Eunápolis"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_subject_cofins__e
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_subject_pis__e
 msgid "Exempt"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_202
-msgid "Fazenda Rio Grande"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1042,13 +602,8 @@ msgid "Feedstock"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_035
-msgid "Feira de Santana"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_166
-msgid "Ferraz de Vasconcelos"
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "Finish the Avalara setup before using Odoo."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1063,8 +618,11 @@ msgid "Fixed assets"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_039
-msgid "Florianópolis"
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
+msgid ""
+"For Brazilian tax calculation you must set a Mercosul NCM Code on the following:\n"
+"%(products)s"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1079,58 +637,26 @@ msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_source_origin__2
-msgid ""
-"Foreign goods - Acquired in the internal market (inside Brazil), except "
-"those in code 7"
+msgid "Foreign goods - Acquired in the internal market (inside Brazil), except those in code 7"
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_source_origin__7
 msgid ""
-"Foreign goods - Acquired inside Brazil, without a National Equivalent as "
-"listed by Comex and natural gas"
+"Foreign goods - Acquired inside Brazil, without a National Equivalent as listed by Comex and "
+"natural gas"
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_source_origin__6
 msgid ""
-"Foreign goods - Directly imported by Seller, without a National Equivalent "
-"as listed by Comex and natural gas"
+"Foreign goods - Directly imported by Seller, without a National Equivalent as listed by Comex and "
+"natural gas"
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_source_origin__1
 msgid "Foreign goods - Imported directly by seller, except those in code 6"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_268
-msgid "Formosa"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_004
-msgid "Fortaleza"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_097
-msgid "Foz do Iguaçu"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_075
-msgid "Franca"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_180
-msgid "Francisco Morato"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_209
-msgid "Franco da Rocha"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1155,11 +681,6 @@ msgid "Fusca Repair"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_210
-msgid "Garanhuns"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:l10n_br.operation.type,name:l10n_br_avatax.operation_type_62
 msgid "Gifts"
 msgstr ""
@@ -1176,13 +697,22 @@ msgstr ""
 
 #. module: l10n_br_avatax
 #. odoo-python
+#: code:addons/l10n_br_avatax/models/res_config_settings.py:0
+msgid "Go to company configuration"
+msgstr ""
+
+#. module: l10n_br_avatax
+#. odoo-python
 #: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
 msgid "Go to the configuration panel"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_010
-msgid "Goiânia"
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_bank_statement_line__l10n_br_goods_operation_type_id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_goods_operation_type_id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__l10n_br_goods_operation_type_id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_sale_order__l10n_br_goods_operation_type_id
+msgid "Goods Operation Type"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1193,46 +723,6 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:l10n_br.operation.type,name:l10n_br_avatax.operation_type_58
 msgid "Goods transfer entry"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_111
-msgid "Governador Valadares"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_107
-msgid "Gravataí"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_243
-msgid "Guarapari"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_165
-msgid "Guarapuava"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_259
-msgid "Guaratinguetá"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_095
-msgid "Guarujá"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_013
-msgid "Guarulhos"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_125
-msgid "Hortolândia"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1247,10 +737,20 @@ msgid "ICMS Taxpayer Type"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_chart_template__id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_fiscal_position__id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_tax__id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_cnae_code__id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_ncm_code__id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_operation_type__id
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_l10n_br_service_code__id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_product_product__id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_product_template__id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_res_company__id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_res_config_settings__id
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_res_partner__id
 msgid "ID"
 msgstr ""
 
@@ -1261,33 +761,8 @@ msgid "ISS Simplified Rate"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_171
-msgid "Ibirité"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_270
-msgid "Igarassu"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_167
-msgid "Ilhéus"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_102
-msgid "Imperatriz"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:l10n_br.operation.type,name:l10n_br_avatax.operation_type_126
 msgid "Ind entry by non-trans merchant purchaser"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_112
-msgid "Indaiatuba"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1337,15 +812,10 @@ msgid "Intermediate product"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_134
-msgid "Ipatinga"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_bank_statement_line__l10n_br_is_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_is_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__l10n_br_is_avatax
-#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_payment__l10n_br_is_avatax
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_sale_order__l10n_br_is_avatax
 msgid "Is Brazilian Avatax"
 msgstr ""
 
@@ -1353,148 +823,8 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_bank_statement_line__l10n_br_is_service_transaction
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_is_service_transaction
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__l10n_br_is_service_transaction
-#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_payment__l10n_br_is_service_transaction
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_sale_order__l10n_br_is_service_transaction
 msgid "Is Service Transaction"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_309
-msgid "Itabaiana"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_275
-msgid "Itabira"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_139
-msgid "Itaboraí"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_161
-msgid "Itabuna"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_308
-msgid "Itacoatiara"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_264
-msgid "Itaguaí"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_247
-msgid "Itaituba"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_109
-msgid "Itajaí"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_277
-msgid "Itanhaém"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_189
-msgid "Itapecerica da Serra"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_319
-msgid "Itaperuna"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_191
-msgid "Itapetininga"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_129
-msgid "Itapevi"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_228
-msgid "Itapipoca"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_069
-msgid "Itaquaquecetuba"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_251
-msgid "Itatiba"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_173
-msgid "Itu"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_314
-msgid "Ituiutaba"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_287
-msgid "Itumbiara"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_032
-msgid "Jaboatão dos Guararapes"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_122
-msgid "Jacareí"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_258
-msgid "Jandira"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_164
-msgid "Jaraguá do Sul"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_294
-msgid "Jataí"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_223
-msgid "Jaú"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_187
-msgid "Jequié"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_244
-msgid "Ji-Paraná"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_034
-msgid "Joinville"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1503,33 +833,16 @@ msgid "Journal Entry"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_020
-msgid "João Pessoa"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_126
-msgid "Juazeiro"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_096
-msgid "Juazeiro do Norte"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_038
-msgid "Juiz de Fora"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_051
-msgid "Jundiaí"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_config_settings__l10n_br_avatax_show_overwrite_warning
 msgid "L10N Br Avatax Show Overwrite Warning"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_bank_statement_line__l10n_br_avatax_warnings
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_avatax_warnings
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__l10n_br_avatax_warnings
+#: model:ir.model.fields,field_description:l10n_br_avatax.field_sale_order__l10n_br_avatax_warnings
+msgid "L10N Br Avatax Warnings"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1542,16 +855,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_product_product__l10n_br_labor
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_product_template__l10n_br_labor
 msgid "Labor Assignment"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_317
-msgid "Lagarto"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_182
-msgid "Lages"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1576,61 +879,6 @@ msgid "Launch made as a reduction of inventory"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_148
-msgid "Lauro de Freitas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_300
-msgid "Lavras"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_094
-msgid "Limeira"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_177
-msgid "Linhares"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_037
-msgid "Londrina"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_146
-msgid "Luziânia"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_288
-msgid "Luís Eduardo Magalhães"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_052
-msgid "Macapá"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_117
-msgid "Macaé"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_016
-msgid "Maceió"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_132
-msgid "Magé"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_partner__l10n_br_activity_sector
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_users__l10n_br_activity_sector
 msgid "Main Activity Sector"
@@ -1643,58 +891,8 @@ msgid "Main CNAE code registered with the government."
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_315
-msgid "Manacapuru"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_007
-msgid "Manaus"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_105
-msgid "Marabá"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_128
-msgid "Maracanaú"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_298
-msgid "Maranguape"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_154
-msgid "Maricá"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_061
-msgid "Maringá"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_285
-msgid "Marituba"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_123
-msgid "Marília"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_sped_type__material_for_usage_and_consumption
 msgid "Material for usage and consumption"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_057
-msgid "Mauá"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1724,38 +922,8 @@ msgid "Mercosul NCM Code"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_176
-msgid "Mesquita"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model,name:l10n_br_avatax.model_account_external_tax_mixin
 msgid "Mixin to manage common parts of external tax calculation"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_196
-msgid "Mogi Guaçu"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_050
-msgid "Mogi das Cruzes"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_058
-msgid "Montes Claros"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_108
-msgid "Mossoró"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_302
-msgid "Muriaé"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1771,28 +939,20 @@ msgid "Name"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_024
-msgid "Natal"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_source_origin__3
 msgid ""
-"National goods - Merchandise or goods with imported content above 40% and "
-"with less than or equal to 70%"
+"National goods - Merchandise or goods with imported content above 40% and with less than or equal "
+"to 70%"
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_source_origin__8
-msgid ""
-"National goods - Merchandise or goods with imported content above 70% (pt)"
+msgid "National goods - Merchandise or goods with imported content above 70% (pt)"
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_source_origin__5
-msgid ""
-"National goods - Merchandise or goods with imported content equal or below "
-"40%"
+msgid "National goods - Merchandise or goods with imported content equal or below 40%"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1803,19 +963,13 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_source_origin__4
 msgid ""
-"National goods from production following 'standard basic processes' as "
-"stablished by legislation (standard basic processes are devised to separate "
-"simple assembly from manufaturing processes)"
+"National goods from production following 'standard basic processes' as stablished by legislation "
+"(standard basic processes are devised to separate simple assembly from manufaturing processes)"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_204
-msgid "Nilópolis"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_044
-msgid "Niterói"
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_partner_view_list
+msgid "Neighborhood"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1826,11 +980,6 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_taxpayer__non
 msgid "Non-Taxpayer"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_156
-msgid "Nossa Senhora do Socorro"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1845,44 +994,9 @@ msgid "Not applicable"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_159
-msgid "Nova Friburgo"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_023
-msgid "Nova Iguaçu"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_280
-msgid "Nova Lima"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_296
-msgid "Nova Serrana"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_305
-msgid "Novo Gama"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_133
-msgid "Novo Hamburgo"
-msgstr ""
-
-#. module: l10n_br_avatax
 #. odoo-python
 #: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
 msgid "Odoo could not fetch the taxes related to %(document)s."
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_076
-msgid "Olinda"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1893,10 +1007,6 @@ msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model,name:l10n_br_avatax.model_l10n_br_operation_type
-#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_bank_statement_line__l10n_br_goods_operation_type_id
-#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_goods_operation_type_id
-#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_move__l10n_br_goods_operation_type_id
-#: model:ir.model.fields,field_description:l10n_br_avatax.field_account_payment__l10n_br_goods_operation_type_id
 msgid "Operation Type"
 msgstr ""
 
@@ -1904,11 +1014,6 @@ msgstr ""
 #: model:ir.actions.act_window,name:l10n_br_avatax.l10n_br_operation_type_action
 #: model:ir.ui.menu,name:l10n_br_avatax.l10n_br_operation_type_menu
 msgid "Operation Types"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_026
-msgid "Osasco"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -1937,11 +1042,6 @@ msgid "Other merchandise output not specified above"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_304
-msgid "Ourinhos"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_partner__l10n_br_subject_pis
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_res_users__l10n_br_subject_pis
 msgid "PIS Details"
@@ -1953,123 +1053,8 @@ msgid "Packaging"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_141
-msgid "Palhoça"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_091
-msgid "Palmas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_297
-msgid "Paragominas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_205
-msgid "Paranaguá"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_106
-msgid "Parauapebas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_115
-msgid "Parnamirim"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_184
-msgid "Parnaíba"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:l10n_br.operation.type,name:l10n_br_avatax.operation_type_148
 msgid "Partial import shipment"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_147
-msgid "Passo Fundo"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_279
-msgid "Passos"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_311
-msgid "Patos"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_186
-msgid "Patos de Minas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_080
-msgid "Paulista"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_276
-msgid "Paulo Afonso"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_284
-msgid "Paulínia"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_206
-msgid "Paço do Lumiar"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_086
-msgid "Pelotas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_065
-msgid "Petrolina"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_099
-msgid "Petrópolis"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_179
-msgid "Pindamonhangaba"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_237
-msgid "Pinhais"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_054
-msgid "Piracicaba"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_256
-msgid "Piraquara"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_299
-msgid "Planaltina"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -2079,53 +1064,31 @@ msgid "Please create an Avatax account"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_072
-msgid "Ponta Grossa"
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/res_config_settings.py:0
+msgid "Please set a complete address on your company."
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_011
-msgid "Porto Alegre"
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/res_config_settings.py:0
+msgid "Please set a valid Avatax portal email."
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_174
-msgid "Porto Seguro"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_049
-msgid "Porto Velho"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_197
-msgid "Pouso Alegre"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_306
-msgid "Poá"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_183
-msgid "Poços de Caldas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_077
-msgid "Praia Grande"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_138
-msgid "Presidente Prudente"
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/res_config_settings.py:0
+msgid "Please set a valid Tax ID on your company."
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model,name:l10n_br_avatax.model_product_template
 msgid "Product"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model:ir.model,name:l10n_br_avatax.model_product_product
+msgid "Product Variant"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -2142,6 +1105,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_use_type__production
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_company__l10n_br_avalara_environment__production
 msgid "Production"
+msgstr ""
+
+#. module: l10n_br_avatax
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/product_product.py:0
+msgid "Products"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -2196,11 +1165,6 @@ msgid "Purpose of Use"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_213
-msgid "Queimados"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:l10n_br.operation.type,name:l10n_br_avatax.operation_type_159
 msgid "Receipt of goods or goods received for repair or repair"
 msgstr ""
@@ -2208,11 +1172,6 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:l10n_br.operation.type,name:l10n_br_avatax.operation_type_13
 msgid "Received merchandise received in sale to order"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_009
-msgid "Recife"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -2241,11 +1200,6 @@ msgid "Resale"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_233
-msgid "Resende"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:l10n_br.operation.type,name:l10n_br_avatax.operation_type_73
 #: model:l10n_br.operation.type,name:l10n_br_avatax.operation_type_75
 msgid "Return bomb packaging vasil sac similar pallets"
@@ -2263,8 +1217,7 @@ msgstr ""
 
 #. module: l10n_br_avatax
 #: model:l10n_br.operation.type,name:l10n_br_avatax.operation_type_155
-msgid ""
-"Return input industr. on account/order of the purchaser of the merchandise"
+msgid "Return input industr. on account/order of the purchaser of the merchandise"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -2338,64 +1291,9 @@ msgid "Return of shipment for sale out of the establishment"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_269
-msgid "Ribeirão Pires"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_029
-msgid "Ribeirão Preto"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_084
-msgid "Ribeirão das Neves"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_070
-msgid "Rio Branco"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_151
-msgid "Rio Claro"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_158
-msgid "Rio Grande"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_136
-msgid "Rio Verde"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_193
-msgid "Rio das Ostras"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_002
-msgid "Rio de Janeiro"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_118
-msgid "Rondonópolis"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_product_product__l10n_br_sped_type
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_product_template__l10n_br_sped_type
 msgid "SPED Fiscal Product Type"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_234
-msgid "Sabará"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -2474,16 +1372,6 @@ msgid "Sales shipment for future delivery"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_220
-msgid "Salto"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_005
-msgid "Salvador"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_company__l10n_br_avalara_environment__sandbox
 msgid "Sandbox"
 msgstr ""
@@ -2494,83 +1382,8 @@ msgid "Sanitized Code"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_163
-msgid "Santa Bárbara d'Oeste"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_224
-msgid "Santa Cruz do Sul"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_143
-msgid "Santa Luzia"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_103
-msgid "Santa Maria"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_201
-msgid "Santa Rita"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_289
-msgid "Santana"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_195
-msgid "Santana de Parnaíba"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_082
-msgid "Santarém"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_025
-msgid "Santo André"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_313
-msgid "Santo Antônio de Jesus"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_056
-msgid "Santos"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_226
-msgid "Sapucaia do Sul"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_257
-msgid "Sarandi"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_194
-msgid "Senador Canedo"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_041
-msgid "Serra"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_238
-msgid "Sertãozinho"
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "See"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -2604,8 +1417,22 @@ msgid "Service Codes"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_135
-msgid "Sete Lagoas"
+#: model:iap.service,description:l10n_br_avatax.iap_service_br_avatax
+msgid ""
+"Service that allows computing taxes in the Avalara Tax Engine for Brazil. The credits acquired "
+"through these packages will be consumed in your production database each time a tax is computed. "
+"For more details on the credits consumption, you can consult the Brazilian Functional User "
+"Documentation."
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "Set up to calculate taxes and issue electronic invoices with Avalara AvaTax Brazil."
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "Set up your AvaTax account"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -2736,11 +1563,6 @@ msgid "Simplified Regime ICMS Rate"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_271
-msgid "Simões Filho"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:l10n_br.operation.type,name:l10n_br_avatax.operation_type_149
 msgid "Single entry invoice. from purchase to receipt. future with stock"
 msgstr ""
@@ -2748,26 +1570,6 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:l10n_br.operation.type,name:l10n_br_avatax.operation_type_151
 msgid "Single entry invoice. from purchase to receipt. future without stock"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_155
-msgid "Sinop"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_150
-msgid "Sobral"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_027
-msgid "Sorocaba"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_283
-msgid "Sorriso"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -2787,6 +1589,16 @@ msgid "Standard purchase"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "Steps to configure tax calculation & electronic invoicing"
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_partner_view_list
+msgid "Street Name"
+msgstr ""
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__product_template__l10n_br_sped_type__subproduct
 msgid "Subproduct"
 msgstr ""
@@ -2797,19 +1609,9 @@ msgid "Subtracted Consumable Product"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_098
-msgid "Sumaré"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_subject_cofins__h
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_subject_pis__h
 msgid "Suspended"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_090
-msgid "Suzano"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -2853,116 +1655,6 @@ msgid "Symbolic shipment of merchandise sent to general warehouse"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_021
-msgid "São Bernardo do Campo"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_178
-msgid "São Caetano do Sul"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_113
-msgid "São Carlos"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_018
-msgid "São Gonçalo"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_265
-msgid "São Gonçalo do Amarante"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_104
-msgid "São José"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_119
-msgid "São José de Ribamar"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_045
-msgid "São José do Rio Preto"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_030
-msgid "São José dos Campos"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_085
-msgid "São José dos Pinhais"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_053
-msgid "São João de Meriti"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_144
-msgid "São Leopoldo"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_282
-msgid "São Lourenço da Mata"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_015
-msgid "São Luís"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_246
-msgid "São Mateus"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_001
-msgid "São Paulo"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_303
-msgid "São Pedro da Aldeia"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_083
-msgid "São Vicente"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_101
-msgid "Taboão da Serra"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_293
-msgid "Tangará da Serra"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_245
-msgid "Tatuí"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_089
-msgid "Taubaté"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model,name:l10n_br_avatax.model_account_tax
 msgid "Tax"
 msgstr ""
@@ -2987,6 +1679,14 @@ msgid "Taxable With Rate=0.00"
 msgstr ""
 
 #. module: l10n_br_avatax
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
+msgid ""
+"Taxes cannot be calculated for %(record)s:\n"
+"%(errors)s"
+msgstr ""
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_taxpayer__exempt
 msgid "Taxpayer Exempt"
 msgstr ""
@@ -3004,73 +1704,54 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_l10n_br_cnae_code__sanitized_code
 msgid ""
-"Technical field that contains the code without special characters, as "
-"expected by the Avalara API."
+"Technical field that contains the code without special characters, as expected by the Avalara API."
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_bank_statement_line__l10n_br_is_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_is_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_move__l10n_br_is_avatax
-#: model:ir.model.fields,help:l10n_br_avatax.field_account_payment__l10n_br_is_avatax
-msgid ""
-"Technical field used to check if this record requires tax calculation or EDI"
-" via Avatax."
+#: model:ir.model.fields,help:l10n_br_avatax.field_sale_order__l10n_br_is_avatax
+msgid "Technical field used to check if this record requires tax calculation or EDI via Avatax."
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_bank_statement_line__l10n_br_is_service_transaction
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_external_tax_mixin__l10n_br_is_service_transaction
 #: model:ir.model.fields,help:l10n_br_avatax.field_account_move__l10n_br_is_service_transaction
-#: model:ir.model.fields,help:l10n_br_avatax.field_account_payment__l10n_br_is_service_transaction
+#: model:ir.model.fields,help:l10n_br_avatax.field_sale_order__l10n_br_is_service_transaction
 msgid ""
-"Technical field used to determine if this transaction should be sent to the "
-"service or goods API."
+"Technical field used to determine if this transaction should be sent to the service or goods API."
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_res_config_settings__l10n_br_avatax_show_overwrite_warning
 msgid ""
-"Technical field used to determine whether or not the user is about to "
-"overwrite his current API credentialswith new ones, since the old "
-"credentials won't be recoverable we warn."
+"Technical field used to determine whether or not the user is about to overwrite his current API "
+"credentialswith new ones, since the old credentials won't be recoverable we warn."
 msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_product__l10n_br_company_city_id
 #: model:ir.model.fields,help:l10n_br_avatax.field_product_template__l10n_br_company_city_id
 msgid ""
-"Technical field used to determined the default of a service code when "
-"configured as a service code origin."
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_207
-msgid "Teixeira de Freitas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_019
-msgid "Teresina"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_181
-msgid "Teresópolis"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_215
-msgid "Teófilo Otoni"
+"Technical field used to determined the default of a service code when configured as a service "
+"code origin."
 msgstr ""
 
 #. module: l10n_br_avatax
 #. odoo-python
 #: code:addons/l10n_br_avatax/models/res_config_settings.py:0
 msgid ""
-"The Avatax platform failed to create your account. Please ensure the address"
-" on your company is correct. If it is please contact support at "
-"odoo.com/help."
+"The Avatax platform failed to create your account. Please ensure the address on your company is "
+"correct. If it is please contact support at odoo.com/help."
+msgstr ""
+
+#. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid ""
+"The Avatax portal email is used to create an Avalara account from Odoo. Complete the account "
+"setup in the"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -3085,8 +1766,7 @@ msgstr ""
 
 #. module: l10n_br_avatax
 #: model:ir.model.fields,help:l10n_br_avatax.field_l10n_br_operation_type__technical_name
-msgid ""
-"The name that will be sent as operationType to the Brazilian Avatax API."
+msgid "The name that will be sent as operationType to the Brazilian Avatax API."
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -3106,13 +1786,17 @@ msgid "This only applies if you are a simplified tax regime company."
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_169
-msgid "Timon"
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_move.py:0
+msgid "To avoid tax miscalculations make sure to set up %(fields)s on %(partner_name)s."
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_200
-msgid "Toledo"
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_move.py:0
+msgid ""
+"To avoid tax miscalculations make sure to set up %(fields)s on the following:\n"
+"%(products)s"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -3152,46 +1836,6 @@ msgid "Transport Cost Type"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_211
-msgid "Trindade"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_225
-msgid "Três Lagoas"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_286
-msgid "Tubarão"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_081
-msgid "Uberaba"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_028
-msgid "Uberlândia"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_310
-msgid "Ubá"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_263
-msgid "Umuarama"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_262
-msgid "Uruguaiana"
-msgstr ""
-
-#. module: l10n_br_avatax
 #: model:ir.model.fields,field_description:l10n_br_avatax.field_account_fiscal_position__l10n_br_is_avatax
 msgid "Use Avatax Brazil API"
 msgstr ""
@@ -3204,73 +1848,35 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
 msgid ""
-"Use this only when you already created an account in another Odoo instance "
-"and wish to reuse it."
+"Use this only when you already created an Avalara account in another Odoo database or company and "
+"wish to reuse it."
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_240
-msgid "Valinhos"
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.product_product_view_goods_list
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.product_product_view_services_list
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_partner_view_list
+msgid "View"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_153
-msgid "Valparaíso de Goiás"
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
+msgid "View Product(s)"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_216
-msgid "Varginha"
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
+#: code:addons/l10n_br_avatax/models/account_move.py:0
+msgid "View customer"
 msgstr ""
 
 #. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_235
-msgid "Vespasiano"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_140
-msgid "Viamão"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_047
-msgid "Vila Velha"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_087
-msgid "Vitória"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_068
-msgid "Vitória da Conquista"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_222
-msgid "Vitória de Santo Antão"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_110
-msgid "Volta Redonda"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_236
-msgid "Votorantim"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_093
-msgid "Várzea Grande"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_267
-msgid "Várzea Paulista"
+#. odoo-python
+#: code:addons/l10n_br_avatax/models/account_external_tax_mixin.py:0
+#: code:addons/l10n_br_avatax/models/account_move.py:0
+msgid "View products"
 msgstr ""
 
 #. module: l10n_br_avatax
@@ -3371,6 +1977,11 @@ msgid "finalConsumer"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "for detailed setup instructions and the onboarding process."
+msgstr ""
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_activity_sector__fueldistributor
 msgid "fuelDistributor"
 msgstr ""
@@ -3451,6 +2062,11 @@ msgid "ruralProducer"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "sandbox Avalara portal"
+msgstr ""
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_activity_sector__securitypublicagency
 msgid "securityPublicAgency"
 msgstr ""
@@ -3486,6 +2102,11 @@ msgid "telco"
 msgstr ""
 
 #. module: l10n_br_avatax
+#: model_terms:ir.ui.view,arch_db:l10n_br_avatax.res_config_settings_view_form
+msgid "the Odoo documentation"
+msgstr ""
+
+#. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_activity_sector__transporter
 msgid "transporter"
 msgstr ""
@@ -3503,9 +2124,4 @@ msgstr ""
 #. module: l10n_br_avatax
 #: model:ir.model.fields.selection,name:l10n_br_avatax.selection__res_partner__l10n_br_activity_sector__wholesale
 msgid "wholesale"
-msgstr ""
-
-#. module: l10n_br_avatax
-#: model:res.city,name:l10n_br_avatax.city_br_137
-msgid "Águas Lindas de Goiás"
 msgstr ""

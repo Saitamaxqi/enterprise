@@ -1,5 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import models, fields
+from odoo import models, fields, _
 
 
 class ResPartner(models.Model):
@@ -96,3 +96,24 @@ class ResPartner(models.Model):
         help="Brazil: In case the customer or the seller - company - is in the "
         "Simplified Regime, the seller - company - needs to inform the ISS rate.",
     )
+
+    def l10n_br_action_open_res_partner(self):
+        self.ensure_one()
+        return {
+            "type": "ir.actions.act_window",
+            "res_model": "res.partner",
+            "view_mode": "form",
+            "res_id": self.id,
+        }
+
+    def _l10n_br_avatax_action_missing_fields(self):
+        """A list view for filling in missing fields required for Avatax Brazil."""
+        return {
+            "name": _("Contacts"),
+            "type": "ir.actions.act_window",
+            "res_model": "res.partner",
+            "domain": [("id", "in", self.ids)],
+            "view_mode": "list",
+            "views": [(self.env.ref("l10n_br_avatax.res_partner_view_list").id, "list"), (False, "form")],
+            "context": {"create": False, "delete": False},
+        }

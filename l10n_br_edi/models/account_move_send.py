@@ -69,11 +69,16 @@ class AccountMoveSend(models.AbstractModel):
         for invoice, invoice_data in invoices_data.items():
             # Not all invoices may need EDI.
             if 'br_edi' in invoice_data['extra_edis']:
-                if errors := invoice.with_company(invoice.company_id)._l10n_br_edi_send():
-                    invoice.l10n_br_edi_error = "\n".join(errors)
+                if validation_errors := invoice._l10n_br_avatax_blocking_errors():
                     invoice_data["error"] = {
                         "error_title": _("Errors when submitting the e-invoice:"),
-                        "errors": errors,
+                        "errors": [error["message"] for error in validation_errors],
+                    }
+                elif api_error := invoice.with_company(invoice.company_id)._l10n_br_edi_send():
+                    invoice.l10n_br_edi_error = api_error
+                    invoice_data["error"] = {
+                        "error_title": _("Errors when submitting the e-invoice:"),
+                        "errors": [api_error],
                     }
                 else:
                     invoice.l10n_br_edi_error = False

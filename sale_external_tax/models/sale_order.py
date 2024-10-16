@@ -89,10 +89,6 @@ class SaleOrder(models.Model):
         """ account.external.tax.mixin override. """
         res = []
         for line in self._get_lines_eligible_for_external_taxes():
-            # Clear all taxes (e.g. default customer tax). Not every line will be sent to the external tax
-            # calculation service, those lines would keep their default taxes otherwise.
-            line.tax_ids = False
-
             res.append({
                 "id": line.id,
                 "model_name": line._name,
@@ -108,6 +104,11 @@ class SaleOrder(models.Model):
 
     def _set_external_taxes(self, mapped_taxes, summary):
         """ account.external.tax.mixin override. """
+        # Clear all taxes (e.g. default customer tax). Not every line will be sent to the external tax
+        # calculation service, those lines would keep their default taxes otherwise.
+        for line in self._get_lines_eligible_for_external_taxes():
+            line.tax_ids = False
+
         to_flush = self.env['sale.order.line']
         for line, detail in mapped_taxes.items():
             line.tax_ids = detail['tax_ids']

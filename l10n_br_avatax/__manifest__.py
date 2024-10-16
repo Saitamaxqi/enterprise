@@ -11,6 +11,7 @@
         'views/account_fiscal_position_views.xml',
         'views/res_partner_views.xml',
         'views/account_move_views.xml',
+        'views/product_product_views.xml',
         'views/product_template_views.xml',
         'views/l10n_br_operation_type_views.xml',
         'views/l10n_br_service_code_views.xml',

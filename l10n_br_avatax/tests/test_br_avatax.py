@@ -234,7 +234,7 @@ class TestAvalaraBrInvoice(TestAvalaraBrInvoiceCommon):
         invoice, _ = self._create_invoice_01_and_expected_response()
         invoice.currency_id = self.env.ref('base.USD')
 
-        with self.assertRaisesRegex(UserError, r'.* has to use Brazilian Real to calculate taxes with Avatax.'):
+        with self.assertRaisesRegex(UserError, r'.* Brazilian Real is required to calculate taxes with Avatax.'):
             self.assertInvoice(invoice, test_exact_response=None)
 
     def test_03_transport_cost(self):
@@ -316,6 +316,8 @@ class TestAvalaraBrSettings(TestAvalaraBrInvoiceCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.settings = cls.env['res.config.settings'].create({})
+        cls.settings.l10n_br_avatax_portal_email = "test@example.com"
+        cls.settings.company_id.vat = "862.714.984-42"
 
     def test_01_create_account_success(self):
         return_value = {

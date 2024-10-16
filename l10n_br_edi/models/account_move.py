@@ -9,8 +9,8 @@ from stdnum.br.cpf import format as format_cpf
 
 from odoo import models, fields, api, _, Command
 from odoo.addons.iap import InsufficientCreditError
-from odoo.exceptions import UserError, ValidationError
-from odoo.tools import html2plaintext
+from odoo.exceptions import UserError
+from odoo.tools import html2plaintext, format_list
 from odoo.tools.xml_utils import find_xml_value
 
 _logger = logging.getLogger(__name__)
@@ -161,6 +161,95 @@ class AccountMove(models.Model):
         # EXTENDS 'account' to add dependencies
         super()._compute_need_cancel_request()
 
+    def _l10n_br_edi_check_calculated_tax(self):
+        if self.state != "posted":
+            return {}
+
+        if not self.l10n_br_edi_avatax_data:
+            return {
+                "tax_not_calculated": {
+                    "message": _('Tax has never been calculated on this invoice, please "Reset to Draft" and re-post.'),
+                    "level": "danger",
+                }
+            }
+
+        return {}
+
+    def _l10n_br_edi_check_partners(self, partners):
+        if self.state != "posted":  # only required for EDI
+            return {}
+
+        if not partners:
+            return {}
+
+        partners_missing_fields = self.env["res.partner"]
+        for partner in partners:
+            requires_minimal_info = (
+                self.l10n_br_is_service_transaction and
+                partner.l10n_br_tax_regime == "individual" and
+                partner.l10n_br_activity_sector == "finalConsumer" and
+                partner.l10n_latam_identification_type_id == self.env.ref("l10n_br.cpf")
+            )
+            required_fields = ("zip",) if requires_minimal_info else ("street", "street2", "zip", "vat", "l10n_latam_identification_type_id")
+
+            for field in required_fields:
+                if not partner[field]:
+                    partners_missing_fields |= partner
+
+        if partners_missing_fields:
+            return {
+                "partners_missing_fields": {
+                    "message": _(
+                        "For Brazilian electronic invoicing, contacts must have a complete address, VAT number and identification type:\n%s",
+                        format_list(self.env, partners_missing_fields.mapped('display_name')),
+                    ),
+                    "action_text": _("View contacts"),
+                    "action": partners_missing_fields._l10n_br_avatax_action_missing_fields(),
+                    "level": "danger",
+                }
+            }
+
+        return {}
+
+    def _l10n_br_check_origin_access_key(self):
+        if origin := self._l10n_br_get_origin_invoice():
+            if not origin.l10n_br_access_key:
+                return {
+                    "origin_missing_access_key": {
+                        "message": _(
+                            "The originating invoice (%(origin_invoice)s) must have an access key before electronically invoicing %(current_invoice)s. The access key can be set manually or by electronically invoicing %(origin_invoice)s.",
+                            origin_invoice=origin.display_name,
+                            current_invoice=self.display_name,
+                        ),
+                        "action_text": _("View invoice"),
+                        "action": origin._get_records_action(),
+                        "level": "danger",
+                    }
+                }
+
+        return {}
+
+    @api.depends(lambda self: self._depends_l10n_br_avatax_warnings())
+    def _compute_l10n_br_avatax_warnings(self):
+        """Override."""
+        super()._compute_l10n_br_avatax_warnings()
+
+        for move in self:
+            if not move.l10n_br_is_avatax:
+                move.l10n_br_avatax_warnings = False
+                continue
+
+            move.l10n_br_avatax_warnings = {
+                **(move.l10n_br_avatax_warnings or {}),
+                **move._l10n_br_edi_check_calculated_tax(),
+                **move._l10n_br_edi_check_partners(self.partner_id | self.company_id.partner_id | self._l10n_br_get_transporter()),
+                **move._l10n_br_check_origin_access_key(),
+            }
+
+    def _depends_l10n_br_avatax_warnings(self):
+        """Override."""
+        return super()._depends_l10n_br_avatax_warnings() + ["partner_id", "l10n_br_edi_avatax_data", "l10n_br_edi_transporter_id"]
+
     def _need_cancel_request(self):
         # EXTENDS 'account'
         return super()._need_cancel_request() or self.l10n_br_last_edi_status == "accepted"
@@ -268,11 +357,6 @@ class AccountMove(models.Model):
     def _l10n_br_iap_cancel_range_goods(self, transaction, company):
         return self._l10n_br_iap_request("cancel_range_goods", transaction, company=company)
 
-    def _l10n_br_edi_check_calculated_tax(self):
-        if not self.l10n_br_edi_avatax_data:
-            return [_('Tax has never been calculated on this invoice, please "Reset to Draft" and re-post.')]
-        return []
-
     def _l10n_br_edi_get_xml_attachment_name(self):
         return f"{self.name}_edi.xml"
 
@@ -317,26 +401,21 @@ class AccountMove(models.Model):
     def _l10n_br_edi_send(self):
         """Sends the e-invoice and returns an array of error strings."""
         for invoice in self:
-            payload, validation_errors = invoice._l10n_br_prepare_invoice_payload()
-
-            if validation_errors:
-                return validation_errors
+            payload = invoice._l10n_br_prepare_invoice_payload()
+            response, api_error = self._l10n_br_submit_invoice(invoice, payload)
+            if api_error:
+                invoice.l10n_br_last_edi_status = "error"
+                return api_error
             else:
-                response, api_error = self._l10n_br_submit_invoice(invoice, payload)
-                if api_error:
-                    invoice.l10n_br_last_edi_status = "error"
-                    return [api_error]
-                else:
-                    invoice.l10n_br_last_edi_status = "pending" if invoice.l10n_br_is_service_transaction else "accepted"
-                    invoice.l10n_br_access_key = response["key"]
+                invoice.l10n_br_last_edi_status = "pending" if invoice.l10n_br_is_service_transaction else "accepted"
+                invoice.l10n_br_access_key = response["key"]
+                invoice.with_context(no_new_invoice=True).message_post(
+                    body=_("E-invoice submitted successfully."),
+                    attachment_ids=invoice._l10n_br_edi_attachments_from_response(response).ids,
+                )
 
-                    invoice.with_context(no_new_invoice=True).message_post(
-                        body=_("E-invoice submitted successfully."),
-                        attachment_ids=invoice._l10n_br_edi_attachments_from_response(response).ids,
-                    )
-
-                    # Now that the invoice is submitted and accepted we no longer need the saved tax computation data.
-                    invoice.l10n_br_edi_avatax_data = False
+                # Now that the invoice is submitted and accepted we no longer need the saved tax computation data.
+                invoice.l10n_br_edi_avatax_data = False
 
     def _l10n_br_edi_vat_for_api(self, vat):
         # Typically users enter the VAT as e.g. "xx.xxx.xxx/xxxx-xx", but the API errors on non-digit characters
@@ -357,18 +436,10 @@ class AccountMove(models.Model):
         For EDI the government requires these references as refNFe instead. They should contain the access key
         assigned when the original invoice was e-invoiced. Returns a (dict, errors) tuple."""
         if origin := self._l10n_br_get_origin_invoice():
-            if not origin.l10n_br_access_key:
-                return {}, (
-                    _(
-                        "The originating invoice (%(origin_invoice)s) must have an access key before electronically invoicing %(current_invoice)s. The access key can be set manually or by electronically invoicing %(origin_invoice)s.",
-                        origin_invoice=origin.display_name,
-                        current_invoice=self.display_name,
-                    )
-                )
+            # origin.l10n_br_access_key's existence is checked by l10n_br_avatax_warnings
+            return self._l10n_br_invoice_refs_for_code("refNFe", origin.l10n_br_access_key)
 
-            return self._l10n_br_invoice_refs_for_code("refNFe", origin.l10n_br_access_key), None
-
-        return {}, None
+        return {}
 
     def _l10n_br_edi_get_tax_data(self):
         """Due to Avalara bugs they're unable to resolve we have to change their tax calculation response before
@@ -385,31 +456,6 @@ class AccountMove(models.Model):
                         del detail[key]
 
         return tax_calculation_response, tax_calculation_response.pop("header")
-
-    def _l10n_br_edi_validate_partner(self, partner):
-        if not partner:
-            return []
-
-        errors = []
-        requires_minimal_info = (
-            self.l10n_br_is_service_transaction and
-            partner.l10n_br_tax_regime == "individual" and
-            partner.l10n_br_activity_sector == "finalConsumer" and
-            partner.l10n_latam_identification_type_id == self.env.ref("l10n_br.cpf")
-        )
-        required_fields = ("zip",) if requires_minimal_info else ("street", "street2", "zip", "vat")
-
-        for field in required_fields:
-            if not partner[field]:
-                errors.append(
-                    _(
-                        "%(field)s on partner %(partner)s is required for e-invoicing",
-                        field=partner._fields[field].string,
-                        partner=partner.display_name,
-                    )
-                )
-
-        return errors
 
     def _l10n_br_prepare_payment_mode(self):
         payment_value = False
@@ -525,6 +571,17 @@ class AccountMove(models.Model):
             "additionalInfo": {"otherInfo" if self.l10n_br_is_service_transaction else "complementaryInfo": info}
         }
 
+    def _l10n_br_get_transporter(self):
+        customer = self.partner_id
+        transporter = self.l10n_br_edi_transporter_id
+        is_invoice = self.move_type == "out_invoice"
+        if self.l10n_br_edi_freight_model == "SenderVehicle":
+            transporter = self.company_id.partner_id if is_invoice else customer
+        elif self.l10n_br_edi_freight_model == "ReceiverVehicle":
+            transporter = customer if is_invoice else self.company_id.partner_id
+
+        return transporter
+
     def _l10n_br_prepare_invoice_payload(self):
         def deep_update(d, u):
             """Like {}.update but handles nested dicts recursively. Based on https://stackoverflow.com/a/3233356."""
@@ -545,35 +602,14 @@ class AccountMove(models.Model):
                     cleaned_dict[k] = v
             return cleaned_dict or None
 
-        errors = []
-
-        # Don't raise because it would break account.move.send's async batch mode.
-        try:
-            # The /transaction payload requires a superset of the /calculate payload we use for tax calculation.
-            payload = self._l10n_br_get_calculate_payload()
-        except (UserError, ValidationError) as e:
-            payload = {}
-            errors.append(str(e).replace("- ", ""))
+        # The /transaction payload requires a superset of the /calculate payload we use for tax calculation.
+        payload = self._l10n_br_get_calculate_payload()
 
         customer = self.partner_id
         company_partner = self.company_id.partner_id
+        transporter = self._l10n_br_get_transporter()
 
-        transporter = self.l10n_br_edi_transporter_id
-        is_invoice = self.move_type == "out_invoice"
-        if self.l10n_br_edi_freight_model == "SenderVehicle":
-            transporter = self.company_id.partner_id if is_invoice else customer
-        elif self.l10n_br_edi_freight_model == "ReceiverVehicle":
-            transporter = customer if is_invoice else self.company_id.partner_id
-
-        errors.extend(self._l10n_br_edi_check_calculated_tax())
-        errors.extend(self._l10n_br_edi_validate_partner(customer))
-        errors.extend(self._l10n_br_edi_validate_partner(company_partner))
-        errors.extend(self._l10n_br_edi_validate_partner(transporter))
-
-        invoice_refs, error = self._l10n_br_edi_get_invoice_refs()
-        if error:
-            errors.append(error)
-
+        invoice_refs = self._l10n_br_edi_get_invoice_refs()
         tax_data_to_include, tax_data_header = self._l10n_br_edi_get_tax_data()
         extra_payload = {
             "header": {
@@ -610,7 +646,7 @@ class AccountMove(models.Model):
         if self.l10n_br_is_service_transaction:
             self._l10n_br_remove_informative_taxes(payload)
 
-        return payload, errors
+        return payload
 
     def _l10n_br_get_error_from_response(self, response):
         if error := response.get("error"):

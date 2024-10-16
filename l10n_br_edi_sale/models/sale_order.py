@@ -26,7 +26,7 @@ class SaleOrder(models.Model):
     @api.depends("order_line.product_id.l10n_br_transport_cost_type", "order_line.product_id.type")
     def _compute_l10n_br_is_service_transaction(self):
         """Override. Set this if all products are only allowed on service invoices. If goods and service lines are mixed
-        we default to a goods transaction and raise a ValidationError in _l10n_br_avatax_validate_lines()."""
+        we default to a goods transaction and the error will be detected in l10n_br_avatax_warnings."""
         for order in self:
             order.l10n_br_is_service_transaction = (
                 order.l10n_br_is_avatax
