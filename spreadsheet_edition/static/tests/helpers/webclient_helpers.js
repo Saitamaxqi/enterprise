@@ -9,6 +9,7 @@ import { registry } from "@web/core/registry";
 
 export async function prepareWebClientForSpreadsheet() {
     await loadJS("/web/static/lib/Chart/Chart.js");
+    await loadJS("/spreadsheet/static/lib/chartjs-chart-geo/chartjs-chart-geo.js");
     mockService("spreadsheet_collaborative", makeFakeSpreadsheetService());
 
     registry.category("favoriteMenu").add(

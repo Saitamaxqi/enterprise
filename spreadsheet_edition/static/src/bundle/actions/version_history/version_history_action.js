@@ -49,6 +49,7 @@ export class VersionHistoryAction extends Component {
         this.loadLocales = useSpreadsheetLocales();
         this.loadCurrencies = useSpreadsheetCurrencies();
         this.getThumbnail = useSpreadsheetThumbnail();
+        this.geoJsonService = useService("geo_json_service");
 
         useSubEnv({
             historyManager: {
@@ -251,6 +252,7 @@ export class VersionHistoryAction extends Component {
                 external: {
                     loadCurrencies: this.loadCurrencies,
                     loadLocales: this.loadLocales,
+                    geoJsonService: this.geoJsonService,
                 },
                 mode: "readonly",
             },

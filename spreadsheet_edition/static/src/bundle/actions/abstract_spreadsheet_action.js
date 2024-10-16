@@ -71,6 +71,7 @@ export class AbstractSpreadsheetAction extends Component {
         this.loadLocales = useSpreadsheetLocales();
         this.loadCurrencies = useSpreadsheetCurrencies();
         this.getThumbnail = useSpreadsheetThumbnail();
+        this.geoJsonService = useService("geo_json_service");
         this.fileStore = new RecordFileStore(this.resModel, this.resId, this.http, this.orm);
         this.spreadsheetService = useService("spreadsheet_collaborative");
         this.stores = useStoreProvider();
@@ -185,6 +186,7 @@ export class AbstractSpreadsheetAction extends Component {
                 fileStore: this.fileStore,
                 loadCurrencies: this.loadCurrencies,
                 loadLocales: this.loadLocales,
+                geoJsonService: this.geoJsonService,
             },
             defaultCurrency: createDefaultCurrency(this.data.default_currency),
             transportService,

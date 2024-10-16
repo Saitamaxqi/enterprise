@@ -1,5 +1,5 @@
 import { expect, test } from "@odoo/hoot";
-import { animationFrame, rightClick, waitFor } from "@odoo/hoot-dom";
+import { animationFrame, rightClick, waitFor, runAllTimers } from "@odoo/hoot-dom";
 import { EventBus } from "@odoo/owl";
 
 import { helpers, registries } from "@odoo/o-spreadsheet";
@@ -151,4 +151,34 @@ test("receives collaborative messages when action is restored", async function (
     await animationFrame();
     await contains(".o_back_button").click();
     expect('.o-menu-item-button[title="Bold (Ctrl+B)"]').toHaveClass("active");
+});
+
+test("The geoJson service is given to the model for geo charts", async function () {
+    const mockGeoJson = {
+        type: "FeatureCollection",
+        features: [{ type: "Feature", id: "BE", properties: { name: "Belgium" }, geometry: {} }],
+    };
+    onRpc("/spreadsheet/static/topojson/world.topo.json", () => mockGeoJson, { pure: true });
+    const { model } = await createSpreadsheetTestAction("spreadsheet_test_action", {});
+
+    expect(model.getters.getGeoChartAvailableRegions().map((r) => r.label)).toEqual([
+        "World",
+        "Africa",
+        "Asia",
+        "Europe",
+        "North America",
+        "United States",
+        "South America",
+    ]);
+
+    expect(model.getters.getGeoJsonFeatures("world")).toEqual(undefined);
+    await runAllTimers();
+    expect(model.getters.getGeoJsonFeatures("world")).toEqual([
+        {
+            type: "Feature",
+            id: "BE",
+            properties: { name: "Belgium" },
+            geometry: {},
+        },
+    ]);
 });
