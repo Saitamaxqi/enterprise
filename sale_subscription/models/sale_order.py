@@ -1504,6 +1504,7 @@ class SaleOrder(models.Model):
                 invoiceable_lines = all_invoiceable_lines.filtered(lambda l: l.order_id.id in subscription.ids)
                 invoice_is_free, is_exception = subscription._invoice_is_considered_free(invoiceable_lines)
                 if not invoiceable_lines or invoice_is_free:
+                    updatable_invoice_date = subscription.filtered(lambda sub: sub.next_invoice_date and sub.next_invoice_date <= today)
                     if is_exception:
                         for sub in subscription:
                             # Mix between recurring and non-recurring lines. We let the contract in exception, it should be
@@ -1515,12 +1516,12 @@ class SaleOrder(models.Model):
                             sub.message_post(body=msg_body)
                         subscription.payment_exception = True
                     # We still update the next_invoice_date if it is due
-                    elif subscription.next_invoice_date and subscription.next_invoice_date <= today:
-                        subscription._update_next_invoice_date()
+                    elif updatable_invoice_date:
+                        updatable_invoice_date._update_next_invoice_date()
                         if invoice_is_free:
                             for line in invoiceable_lines:
                                 line.qty_invoiced = line.product_uom_qty
-                            subscription._subscription_post_success_free_renewal()
+                            updatable_invoice_date._subscription_post_success_free_renewal()
                     continue
 
                 try:
