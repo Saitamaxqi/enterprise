@@ -64,20 +64,18 @@ class PaymentTransaction(models.Model):
         return mandate_values
 
     def _create_or_link_to_invoice(self):
-        tx_to_invoice = self.env['payment.transaction']
-        for tx in self:
-            if len(tx.sale_order_ids) > 1 or tx.invoice_ids or not tx.sale_order_ids.is_subscription:
-                continue
-            elif tx.renewal_state in ['draft', 'pending', 'cancel']:
-                # tx should be in an authorized renewal_state otherwise _reconcile_after_done will not be called
-                # but this is a safety to prevent issue when the code is called manually
-                continue
-            tx_to_invoice += tx
-            tx._cancel_draft_invoices()
-
-        tx_to_invoice._invoice_sale_orders()
-        tx_to_invoice.invoice_ids._post()
-        tx_to_invoice.filtered(lambda t: not t.subscription_action).invoice_ids.transaction_ids._send_invoice()
+        self.ensure_one()
+        if len(self.sale_order_ids) > 1 or self.invoice_ids or not self.sale_order_ids.is_subscription:
+            return
+        elif self.renewal_state in ['draft', 'pending', 'cancel']:
+            # tx should be in an authorized renewal_state otherwise _reconcile_after_done will not be called
+            # but this is a safety to prevent issue when the code is called manually
+            return
+        self._cancel_draft_invoices()
+        self._invoice_sale_orders()
+        self.invoice_ids._post()
+        if not self.subscription_action:
+            self.invoice_ids.transaction_ids._send_invoice()
 
     def _get_invoiced_subscription_transaction(self):
         # create the invoices for the transactions that are not yet linked to invoice
