@@ -205,7 +205,7 @@
         <field name="path">sign-documents</field>
         <field name="view_mode">kanban,list,form,activity</field>
         <field name="search_view_id" ref="sign_request_view_search"/>
-        <field name="context">{'search_default_my_docs': 1, 'search_default_my_sign_request': 1}</field>
+        <field name="context">{'search_default_my_docs': 1, 'search_default_my_sign_request': 1, 'show_upload_button': False}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 No document yet
@@ -221,6 +221,7 @@
         <field name="res_model">sign.request</field>
         <field name="path">sign-all-documents</field>
         <field name="view_mode">kanban,list,form,activity</field>
+        <field name="context">{'show_upload_button': False}</field>
         <field name="search_view_id" ref="sign_request_view_search"/>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
@@ -247,6 +248,21 @@
                     <button string="Sign Now" name="go_to_signable_document" type="object" invisible="not share_link" data-hotkey="q"/>
                 </footer>
             </form>
+        </field>
+    </record>
+
+    <record id="sign_request_view_activity" model="ir.ui.view">
+        <field name="name">sign.request.actvity</field>
+        <field name="model">sign.request</field>
+        <field name="arch" type="xml">
+            <activity string="Sign Activity" js_class="sign_activity">
+                <field name="subject"/>
+                <templates>
+                    <div t-name="activity-box">
+                        <field name="template_id" />
+                    </div>
+                </templates>
+            </activity>
         </field>
     </record>
 

@@ -84,6 +84,10 @@ Let your customers follow the signature process easily.
             'sign/static/src/dialogs/**/*',
             'sign/static/src/services/**/*',
             'sign/static/src/fields/**/*',
+            ('remove', 'sign/static/src/views/sign_request_activity/**'),
+        ],
+        'web.assets_backend_lazy': [
+            'sign/static/src/views/sign_request_activity/**',
         ],
         'web.assets_frontend': [
             'sign/static/src/components/**/*',
