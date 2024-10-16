@@ -3,7 +3,6 @@
     'version': '1.0',
     'website': 'https://www.odoo.com/documentation/17.0/applications/finance/fiscal_localizations/united_arab_emirates.html',
     'icon': '/account/static/description/l10n.png',
-    'countries': ['ae'],
     'category': 'Accounting/Localizations/Account Charts',
     'description': """
 United Arab Emirates Corporate Tax Report
