@@ -8,7 +8,7 @@
         <field name="filter_period_comparison" eval="False"/>
         <field name="filter_growth_comparison" eval="False"/>
         <field name="custom_handler_model_id" ref="model_l10n_ar_tax_report_handler"/>
-        <field name="load_more_limit" eval="80"/>
+        <field name="load_more_limit" eval="4000"/>
         <field name="column_ids">
             <record id="l10n_ar_vat_book_report_column_invoice_date" model="account.report.column">
                 <field name="name">Date</field>

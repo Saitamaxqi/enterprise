@@ -4,7 +4,7 @@ from odoo.exceptions import UserError, RedirectWarning
 from odoo.tools import SQL
 from odoo.tools.float_utils import float_split_str
 
-from collections import OrderedDict
+from collections import defaultdict, OrderedDict
 import re
 import zipfile
 import io
@@ -31,7 +31,8 @@ class L10n_ArTaxReportHandler(models.AbstractModel):
 
         # Build full query
         query_list = []
-        for column_group_key, column_group_options in report._split_options_per_column_group(options).items():
+        options_per_col_group = report._split_options_per_column_group(options)
+        for column_group_key, column_group_options in options_per_col_group.items():
             query = self._build_query(report, column_group_options, column_group_key)
             query_list.append(SQL("(%s)", query))
 
@@ -68,11 +69,43 @@ class L10n_ArTaxReportHandler(models.AbstractModel):
             # 1 line for each move_id
             line = self._create_report_line(report, options, move_info, move_id, number_keys)
             lines.append((0, line))
+
+        # WHen not printing, avoid displaying too many lines (would crash the browser), by using the load_more_limit.
+        if not options['export_mode'] and len(lines) > (report.load_more_limit or 0):
+            if warnings is not None:
+                warnings['l10n_ar_reports.skipped_lines_warning'] = {}
+            lines_to_hide = lines[report.load_more_limit:]
+            lines = lines[:report.load_more_limit]
+            col_indices_to_sum = [
+                i
+                for i, col_data in enumerate(options['columns'])
+                if col_data['expression_label'] in {'taxed', 'not_taxed', 'vat_25', 'vat_5', 'vat_10', 'vat_21', 'vat_27', 'vat_per', 'other_taxes', 'total'}
+            ]
+
+            column_sums = defaultdict(float)
+            for _line_sequence, line in lines_to_hide:
+                for col_index in col_indices_to_sum:
+                    column_sums[col_index] += line['columns'][col_index]['no_format']
+
+            lines.append((0, {
+                'id': report._get_generic_line_id(None, None, markup='placeholder'),
+                'name': _("+%s non-previewed lines", len(lines_to_hide)),
+                'columns': [
+                    {
+                        'class': 'number',
+                        'no_format': column_sums[col_index],
+                        'name': report.format_value(options_per_col_group[col['column_group_key']], column_sums[col_index], figure_type='monetary'),
+                    }
+                    if col_index in column_sums
+                    else {}
+                    for col_index, col in enumerate(options['columns'])
+                ],
+                'level': 2,
+            }))
+
         # Single total line if only one type of journal is selected
-        selected_tax_types = self._vat_book_get_selected_tax_types(options)
-        if len(selected_tax_types) < 2:
-            total_line = self._create_report_total_line(report, options, total_values_dict)
-            lines.append((0, total_line))
+        if len(self._vat_book_get_selected_tax_types(options)) < 2:
+            lines.append((0, self._create_report_total_line(report, options, total_values_dict)))
 
         return lines
 
