@@ -381,7 +381,7 @@ class AccountReport(models.Model):
                 options['journals'] += journals
 
         else:
-            options['journals'].extend(next(iter(company_journals_map.values())))
+            options['journals'].extend(next(iter(company_journals_map.values()), []))
 
         # 7 Compute the name to display on the widget
         if options.get('selected_journal_groups'):
