@@ -52,8 +52,6 @@ export async function toggleArchive(model, resModel, resIds, doArchive) {
     if (action && Object.keys(action).length !== 0) {
         model.action.doAction(action);
     }
-    await model.load();
-    await model.notify();
     if (doArchive) {
         await model.env.documentsView.bus.trigger("documents-close-preview");
     }

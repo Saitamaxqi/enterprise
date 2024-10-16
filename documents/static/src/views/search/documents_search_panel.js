@@ -341,6 +341,9 @@ export class DocumentsSearchPanel extends SearchPanel {
         if (target_folder_id === "TRASH") {
             const model = this.env.model;
             await toggleArchive(model, model.root.resModel, data.recordIds, true);
+            await model.load();
+            await model.notify();
+            await model.env.searchModel._reloadSearchModel(true);
             return;
         }
         if (data.lockedCount) {
