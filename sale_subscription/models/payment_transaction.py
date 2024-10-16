@@ -132,9 +132,11 @@ class PaymentTransaction(models.Model):
 
         :return: None
         """
-        super()._post_process()
+        # Avoid post processing tx whose SO is still being processed by the invoice cron
+        process_tx = self.filtered(lambda tx: not any(tx.sale_order_ids.mapped('is_invoice_cron')))
+        res = super(PaymentTransaction, process_tx)._post_process()
         any_paid_subscription = False
-        for tx in self:
+        for tx in process_tx:
             orders = tx.sale_order_ids or tx.invoice_ids.line_ids.subscription_id
             subscriptions = orders.filtered(lambda order: order.is_subscription)
             if tx.state == 'done' and len(subscriptions) > 0:
@@ -151,6 +153,8 @@ class PaymentTransaction(models.Model):
                 tx._handle_unsuccessful_transaction()
         if any_paid_subscription:
             self._post_subscription_action()
+        return res
+
 
     def _post_subscription_action(self):
         """
