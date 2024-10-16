@@ -62,14 +62,14 @@ class AccountMove(models.Model):
     # CFDI
     # -------------------------------------------------------------------------
 
-    def _l10n_mx_edi_add_invoice_cfdi_values(self, cfdi_values, global_invoice=False):
+    def _l10n_mx_edi_add_invoice_cfdi_values(self, cfdi_values):
         # EXTENDS 'l10n_mx_edi'
         self.ensure_one()
 
         if self.journal_id.l10n_mx_address_issued_id:
             cfdi_values['issued_address'] = self.journal_id.l10n_mx_address_issued_id
 
-        super()._l10n_mx_edi_add_invoice_cfdi_values(cfdi_values, global_invoice=global_invoice)
+        super()._l10n_mx_edi_add_invoice_cfdi_values(cfdi_values)
         if cfdi_values.get('errors'):
             return
 

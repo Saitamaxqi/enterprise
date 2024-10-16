@@ -114,22 +114,22 @@
             </cfdi:Impuestos>
             <cfdi:Complemento t-if="local_retenciones_list or local_traslados_list">
                 <implocal:ImpuestosLocales
-                    t-att-TotaldeRetenciones="format_float(total_local_impuestos_retenidos)"
-                    t-att-TotaldeTraslados="format_float(total_local_impuestos_trasladados)"
+                    t-att-TotaldeRetenciones="format_float(total_local_impuestos_retenidos, 2)"
+                    t-att-TotaldeTraslados="format_float(total_local_impuestos_trasladados, 2)"
                     t-att-version="1.0"
                 >
                     <t t-foreach="local_retenciones_list" t-as="tax_values">
                         <implocal:RetencionesLocales
                             t-att-ImpLocRetenido="tax_values['local_tax_name']"
-                            t-att-Importe="tax_values['importe']"
-                            t-att-TasadeRetencion="tax_values['tasa_o_cuota']"
+                            t-att-Importe="format_float(tax_values['importe'], 2)"
+                            t-att-TasadeRetencion="format_float(tax_values['tasa_o_cuota'], 2)"
                         />
                     </t>
                     <t t-foreach="local_traslados_list" t-as="tax_values">
                         <implocal:TrasladosLocales
                             t-att-ImpLocTrasladado="tax_values['local_tax_name']"
-                            t-att-Importe="tax_values['importe']"
-                            t-att-TasadeTraslado="tax_values['tasa_o_cuota']"/>
+                            t-att-Importe="format_float(tax_values['importe'], 2)"
+                            t-att-TasadeTraslado="format_float(tax_values['tasa_o_cuota'], 2)"/>
                     </t>
                 </implocal:ImpuestosLocales>
             </cfdi:Complemento>

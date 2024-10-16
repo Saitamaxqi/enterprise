@@ -307,6 +307,8 @@ class AccountMove(models.Model):
             raise UserError(_("Invoices %s are not posted.", invoices_str))
         if len(self.company_id) != 1 or len(self.journal_id) != 1:
             raise UserError(_("You can only process invoices sharing the same company and journal."))
+        if any(inv.currency_id != inv.company_currency_id for inv in self):
+            raise UserError(_("You can't process invoices having a foreign currency."))
 
         refunds = self.reversal_move_ids
         invoices = self | refunds
@@ -769,16 +771,15 @@ class AccountMove(models.Model):
 
     def _post(self, soft=True):
         # OVERRIDE
+        Document = self.env['l10n_mx_edi.document']
         certificate_date = datetime.now(timezone('America/Mexico_City'))
 
         for move in self.filtered('l10n_mx_edi_is_cfdi_needed'):
 
-            cfdi_values = self.env['l10n_mx_edi.document']._get_company_cfdi_values(move.company_id)
-            self.env['l10n_mx_edi.document']._add_customer_cfdi_values(
-                cfdi_values,
-                customer=move.partner_id,
-            )
-            move.l10n_mx_edi_post_time = fields.Datetime.to_string(move._l10n_mx_edi_get_datetime_now_with_mx_timezone(cfdi_values))
+            cfdi_values = Document._get_company_cfdi_values(move.company_id)
+            Document._add_customer_cfdi_values(cfdi_values, customer=move.partner_id)
+            timezoned_now = Document._get_datetime_now_with_mx_timezone(cfdi_values, journal=move.journal_id)
+            move.l10n_mx_edi_post_time = fields.Datetime.to_string(timezoned_now)
 
             # Assign time and date coming from a certificate.
             if move.is_invoice() and move.l10n_mx_edi_is_cfdi_needed and not move.invoice_date:
@@ -902,21 +903,6 @@ class AccountMove(models.Model):
     # CFDI Generation: Generic
     # -------------------------------------------------------------------------
 
-    def _l10n_mx_edi_get_datetime_now_with_mx_timezone(self, cfdi_values):
-        """ Get datetime.now() but with the mexican timezone depending the CFDI issued address.
-
-        :param cfdi_values: The values to create the CFDI collected so far.
-        :return: A datetime object.
-        """
-        self.ensure_one()
-        issued_address = cfdi_values['issued_address']
-        tz = issued_address._l10n_mx_edi_get_cfdi_timezone()
-        tz_force = self.env['ir.config_parameter'].sudo().get_param(f'l10n_mx_edi_tz_{self.journal_id.id}', default=None)
-        if tz_force:
-            tz = timezone(tz_force)
-
-        return datetime.now(tz)
-
     def _l10n_mx_edi_add_common_cfdi_values(self, cfdi_values):
         ''' Populate cfdi values to generate a cfdi for a journal entry. '''
         self.ensure_one()
@@ -968,13 +954,14 @@ class AccountMove(models.Model):
             ))
         return errors
 
-    def _l10n_mx_edi_add_invoice_cfdi_values(self, cfdi_values, global_invoice=False):
+    def _l10n_mx_edi_get_invoice_cfdi_base_lines(self, global_invoice=False):
         self.ensure_one()
         Document = self.env['l10n_mx_edi.document']
 
         base_lines = [
             {
                 **self._prepare_product_base_line_for_taxes_computation(invl),
+                'quantity': (-1 if global_invoice and invl.move_id.move_type in ('out_refund', 'in_refund') else 1) * invl.quantity,
                 'uom_id': invl.product_uom_id,
                 'name': invl._l10n_mx_edi_get_cfdi_line_name(),
                 'product_unspsc_code': invl._get_product_unspsc_code(),
@@ -982,38 +969,29 @@ class AccountMove(models.Model):
             }
             for invl in self._l10n_mx_edi_cfdi_invoice_line_ids()
         ]
-        tax_amls = self.line_ids.filtered('tax_repartition_line_id')
-        tax_lines = [self._prepare_tax_line_for_taxes_computation(tax_line) for tax_line in tax_amls]
-        Document._add_base_lines_tax_amounts(base_lines, self.company_id, tax_lines=tax_lines)
-        lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
-        base_lines = lines_dispatching['result_lines'] + lines_dispatching['orphan_negative_lines']
-        has_refunds = global_invoice and self.reversal_move_ids
-        if has_refunds:
-            refund_base_lines = [
-                {
-                    **self._prepare_product_base_line_for_taxes_computation(invl),
-                    'uom_id': invl.product_uom_id,
-                    'name': invl.name,
-                }
-                for invl in self.reversal_move_ids._l10n_mx_edi_cfdi_invoice_line_ids()
-            ]
-            for refund_base_line in refund_base_lines:
-                refund_base_line['quantity'] *= -1
-            Document._add_base_lines_tax_amounts(refund_base_lines, self.company_id)
-            lines_dispatching = Document._dispatch_cfdi_base_lines(refund_base_lines)
-            base_lines += lines_dispatching['result_lines'] + lines_dispatching['orphan_negative_lines']
+        Document._add_base_lines_tax_amounts(base_lines, self.company_id)
+        return base_lines
+
+    def _l10n_mx_edi_add_invoice_cfdi_values(self, cfdi_values):
+        self.ensure_one()
+        Document = self.env['l10n_mx_edi.document']
 
         # Manage the negative lines.
-        if has_refunds:
-            lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
+        base_lines = self._l10n_mx_edi_get_invoice_cfdi_base_lines()
+        lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
         if lines_dispatching['orphan_negative_lines']:
             cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
             return
+
+        # Nothing left. Everything is refunded or empty.
         cfdi_lines = lines_dispatching['result_lines']
         if not cfdi_lines:
             cfdi_values['errors'] = ['empty_cfdi']
             return
 
+        tax_amls = self.line_ids.filtered('tax_repartition_line_id')
+        tax_lines = [self._prepare_tax_line_for_taxes_computation(tax_line) for tax_line in tax_amls]
+        self.env['account.tax']._round_base_lines_tax_details(base_lines, self.company_id, tax_lines=tax_lines)
         self._l10n_mx_edi_add_common_cfdi_values(cfdi_values)
         cfdi_values['tipo_de_comprobante'] = 'I' if self.move_type == 'out_invoice' else 'E'
         Document._add_customer_cfdi_values(
@@ -1024,24 +1002,14 @@ class AccountMove(models.Model):
         )
         Document._add_tax_objected_cfdi_values(cfdi_values, cfdi_lines)
         Document._add_base_lines_cfdi_values(cfdi_values, cfdi_lines)
-
-        # Date.
-        timezoned_now = self._l10n_mx_edi_get_datetime_now_with_mx_timezone(cfdi_values)
-        timezoned_today = timezoned_now.date()
-        if self.invoice_date >= timezoned_today:
-            cfdi_values['fecha'] = timezoned_now.strftime(CFDI_DATE_FORMAT)
-        else:
-            cfdi_time = datetime.strptime('23:59:00', '%H:%M:%S').time()
-            cfdi_values['fecha'] = datetime\
-                .combine(fields.Datetime.from_string(self.invoice_date), cfdi_time)\
-                .strftime(CFDI_DATE_FORMAT)
+        Document._add_date_cfdi_values(cfdi_values, self.invoice_date, journal=self.journal_id)
+        Document._add_payment_policy_cfdi_values(
+            cfdi_values,
+            payment_policy=self.l10n_mx_edi_payment_policy,
+            payment_method=self.l10n_mx_edi_payment_method_id,
+        )
 
         # Payment terms.
-        cfdi_values['metodo_pago'] = self.l10n_mx_edi_payment_policy
-        if cfdi_values['metodo_pago'] == 'PPD':
-            cfdi_values['forma_pago'] = '99'
-        else:
-            cfdi_values['forma_pago'] = (self.l10n_mx_edi_payment_method_id.code or '').replace('NA', '99')
         cfdi_values['condiciones_de_pago'] = self.invoice_payment_term_id.name
 
         # Currency.
@@ -1071,6 +1039,7 @@ class AccountMove(models.Model):
         :return: The dictionary to render the xml.
         """
         self.ensure_one()
+        Document = self.env['l10n_mx_edi.document']
 
         self._l10n_mx_edi_add_common_cfdi_values(cfdi_values)
         company = cfdi_values['company']
@@ -1109,8 +1078,8 @@ class AccountMove(models.Model):
         for invoice_values in pay_results['invoice_results']:
             invoice = invoice_values['invoice']
 
-            inv_cfdi_values = self.env['l10n_mx_edi.document']._get_company_cfdi_values(invoice.company_id)
-            self.env['l10n_mx_edi.document']._add_certificate_cfdi_values(inv_cfdi_values)
+            inv_cfdi_values = Document._get_company_cfdi_values(invoice.company_id)
+            Document._add_certificate_cfdi_values(inv_cfdi_values)
             invoice._l10n_mx_edi_add_invoice_cfdi_values(inv_cfdi_values)
 
             # Apply the percentage paid to the tax amounts.
@@ -1186,7 +1155,7 @@ class AccountMove(models.Model):
 
         # Date.
         cfdi_date = datetime.combine(fields.Datetime.from_string(self.date), datetime.strptime('12:00:00', '%H:%M:%S').time())
-        cfdi_values['fecha'] = self._l10n_mx_edi_get_datetime_now_with_mx_timezone(cfdi_values).strftime(CFDI_DATE_FORMAT)
+        cfdi_values['fecha'] = Document._get_datetime_now_with_mx_timezone(cfdi_values, journal=self.journal_id).strftime(CFDI_DATE_FORMAT)
         cfdi_values['fecha_pago'] = cfdi_date.strftime(CFDI_DATE_FORMAT)
 
         # Bank information.
@@ -2254,12 +2223,11 @@ class AccountMove(models.Model):
         :param periodicity:     The value to fill the 'Periodicidad' value.
         :param origin:          The origin of the GI when cancelling an existing one.
         """
-        cfdi_date = fields.Date.context_today(self)
-
-        invoices = self._l10n_mx_edi_check_invoices_for_global_invoice(origin=origin)
+        Document = self.env['l10n_mx_edi.document']
 
         # == Check the config ==
         errors = []
+        invoices = self._l10n_mx_edi_check_invoices_for_global_invoice(origin=origin)
         for invoice in invoices:
             errors += invoice._l10n_mx_edi_cfdi_check_invoice_config()
         if errors:
@@ -2271,49 +2239,75 @@ class AccountMove(models.Model):
 
         # == Send ==
         def on_populate(cfdi_values):
-            invoices_per_error = defaultdict(lambda: self.env['account.move'])
-            inv_cfdi_values_list = []
+            cfdi_lines = []
             for invoice in invoices:
-
                 # The refund are managed by the invoice.
                 if invoice.reversed_entry_id:
                     continue
 
-                inv_cfdi_values = dict(cfdi_values)
-                invoice._l10n_mx_edi_add_invoice_cfdi_values(inv_cfdi_values, global_invoice=True)
+                # Dispatch the negative lines on the invoice itself.
+                base_lines = invoice._l10n_mx_edi_get_invoice_cfdi_base_lines(global_invoice=True)
+                lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
+                if lines_dispatching['orphan_negative_lines']:
+                    cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
+                    return
 
-                inv_errors = inv_cfdi_values.get('errors')
-                if inv_errors:
-                    for error in inv_cfdi_values['errors']:
+                base_lines = lines_dispatching['result_lines']
+                base_line_ids = {x['id'] for x in base_lines}
+                for base_line in base_lines:
+                    base_line['document_name'] = invoice.name
 
-                        # The invoice is empty. Skip it.
-                        if error == 'empty_cfdi':
-                            break
+                # Manage the refunds.
+                all_refund_base_lines = []
+                for refund in invoice.reversal_move_ids:
 
-                        invoices_per_error[error] |= invoice
-                else:
-                    inv_cfdi_values_list.append(inv_cfdi_values)
+                    # Dispatch the positive lines on the refund itself.
+                    refund_base_lines = refund._l10n_mx_edi_get_invoice_cfdi_base_lines(global_invoice=True)
+                    lines_dispatching = Document._dispatch_cfdi_base_lines(refund_base_lines)
+                    if lines_dispatching['result_lines']:
+                        cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
+                        return
 
-            if invoices_per_error:
-                errors = []
-                for error, invoices_in_error in invoices_per_error.items():
-                    invoices_str = format_list(self.env, invoices_in_error.mapped('name'))
-                    errors.append(_("On %(invoices)s: %(error)s", invoices=invoices_str, error=error))
-                cfdi_values['errors'] = errors
-                return
+                    # Dispatch the remaining negative lines from the refund on the invoice.
+                    refund_base_lines = lines_dispatching['orphan_negative_lines']
+                    lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines + refund_base_lines)
+                    if lines_dispatching['orphan_negative_lines']:
+                        cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
+                        return
 
-            # The global invoice is empty.
-            if not inv_cfdi_values_list:
+                    all_refund_base_lines += [x for x in lines_dispatching['result_lines'] if x['id'] not in base_line_ids]
+                cfdi_lines += base_lines + all_refund_base_lines
+
+            # Nothing left. Everything is refunded or empty.
+            cfdi_lines = [x for x in cfdi_lines if not x['currency_id'].is_zero(x['tax_details']['total_excluded_currency'])]
+            if not cfdi_lines:
                 cfdi_values['errors'] = ['empty_cfdi']
                 return
 
-            cfdi_values.update(
-                **self.env['l10n_mx_edi.document']._get_global_invoice_cfdi_values(
-                    inv_cfdi_values_list,
-                    cfdi_date,
-                    periodicity=periodicity,
-                    origin=origin,
-                )
+            self.env['account.tax']._round_base_lines_tax_details(cfdi_lines, cfdi_values['company'])
+            _biggest_amount_total, biggest_used_payment_method = max(
+                [
+                    (invoice.amount_total, invoice.l10n_mx_edi_payment_method_id)
+                    for invoice in invoices
+                ],
+                key=lambda x: x[0],
+            )
+            Document._add_payment_policy_cfdi_values(cfdi_values, payment_method=biggest_used_payment_method)
+
+            # Periodicity.
+            document_dates = []
+            for invoice in invoices:
+                inv_cfdi_values = dict(cfdi_values)
+                Document._add_date_cfdi_values(inv_cfdi_values, invoice.invoice_date, journal=invoice.journal_id)
+                document_dates.append(datetime.strptime(inv_cfdi_values['fecha'], CFDI_DATE_FORMAT).date())
+            document_date = max(document_dates)
+
+            Document._add_global_invoice_cfdi_values(
+                cfdi_values,
+                cfdi_lines,
+                document_date=document_date,
+                periodicity=periodicity,
+                origin=origin,
             )
 
             self.env['res.company']._with_locked_records(cfdi_values['sequence'])

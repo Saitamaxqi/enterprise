@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-from collections import defaultdict
-from datetime import datetime
-
 from odoo import _, api, models, fields, Command
 from odoo.addons.l10n_mx_edi.models.l10n_mx_edi_document import CANCELLATION_REASON_SELECTION, CFDI_DATE_FORMAT, USAGE_SELECTION
 from odoo.exceptions import UserError, ValidationError
@@ -174,6 +171,8 @@ class PosOrder(models.Model):
 
         if len(orders.company_id) != 1:
             raise UserError(_("You can only process orders sharing the same company."))
+        if any(order.currency_id != order.company_id.currency_id for order in self):
+            raise UserError(_("You can't process orders having a foreign currency."))
 
         if not origin:
             failed_orders = orders.filtered(lambda x: (
@@ -316,99 +315,6 @@ class PosOrder(models.Model):
                     "generate the CFDI.",
                 ))
         return errors
-
-    def _l10n_mx_edi_add_cfdi_values(self, cfdi_values, is_refund_gi=False):
-        self.ensure_one()
-        Document = self.env['l10n_mx_edi.document']
-
-        order_lines = self.lines._l10n_mx_edi_cfdi_lines()
-        base_lines = order_lines._prepare_tax_base_line_values()
-        Document._add_base_lines_tax_amounts(base_lines, cfdi_values['company'])
-        lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
-        base_lines = lines_dispatching['result_lines'] + lines_dispatching['orphan_negative_lines']
-        if lines_dispatching['orphan_negative_lines']:
-            cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
-            return
-
-        # When creating a global invoice for both orders and refunds, add the refund to the corresponding order in order to deal with
-        # negative lines.
-        has_refunds = False
-        if not is_refund_gi:
-            # Find the refund lines targeting this order.
-            refund_order_lines = self.env['pos.order.line']\
-                .search([('refunded_orderline_id', 'in', order_lines.ids)])\
-                ._l10n_mx_edi_cfdi_lines()
-            has_refunds = bool(refund_order_lines)
-            for refund_lines in refund_order_lines.grouped('order_id').values():
-                refund_base_lines = refund_lines._prepare_tax_base_line_values()
-                for refund_base_line in refund_base_lines:
-                    refund_base_line['quantity'] *= -1
-                Document._add_base_lines_tax_amounts(refund_base_lines, cfdi_values['company'])
-                lines_dispatching = Document._dispatch_cfdi_base_lines(refund_base_lines)
-                base_lines += lines_dispatching['result_lines'] + lines_dispatching['orphan_negative_lines']
-
-        # Add the document to dispatch the negative lines first onto the line belonging to the same document.
-        for base_line in base_lines:
-            base_line['prior_record_ids'] = base_line['record'].refunded_orderline_id.ids
-            base_line['record_id'] = base_line['record'].id
-            base_line['document_id'] = base_line['record'].order_id.id
-
-        # After the distribution of negative lines on each pos order separately, it's time to distribute the negative
-        # lines of refund orders on the refunded orders.
-        if has_refunds:
-            lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
-        if lines_dispatching['orphan_negative_lines']:
-            cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
-            return
-        cfdi_lines = lines_dispatching['result_lines']
-        if not cfdi_lines:
-            cfdi_values['errors'] = ['empty_cfdi']
-            return
-
-        if is_refund_gi:
-            # In case of refund of a CFDI, we need to generate the CFDI as a refund.
-            cfdi_values['tipo_de_comprobante'] = 'E'
-            if self.amount_total < 0:
-                # The order is a refund.
-                Document._add_document_origin_cfdi_values(cfdi_values, f"01|{self.refunded_order_id.l10n_mx_edi_cfdi_uuid}")
-            else:
-                # Refund of the pos order itself.
-                Document._add_document_origin_cfdi_values(cfdi_values, f'01|{self.l10n_mx_edi_cfdi_uuid}')
-        else:
-            cfdi_values['tipo_de_comprobante'] = 'I' if self.amount_total >= 0 else 'E'
-            Document._add_document_origin_cfdi_values(cfdi_values, None)
-
-        Document._add_base_cfdi_values(cfdi_values)
-        Document._add_currency_cfdi_values(cfdi_values, self.currency_id)
-        Document._add_document_name_cfdi_values(cfdi_values, self.name)
-        Document._add_customer_cfdi_values(
-            cfdi_values,
-            self.partner_id,
-            usage=self.l10n_mx_edi_usage,
-            to_public=self.l10n_mx_edi_cfdi_to_public,
-        )
-        Document._add_tax_objected_cfdi_values(cfdi_values, cfdi_lines)
-        Document._add_base_lines_cfdi_values(cfdi_values, cfdi_lines)
-
-        cfdi_values.update({
-            'metodo_pago': 'PUE',
-            'forma_pago': (self.l10n_mx_edi_payment_method_id.code or '').replace('NA', '99'),
-            'condiciones_de_pago': None,
-        })
-
-        # Dates.
-        issued_address = cfdi_values['issued_address']
-        mx_timezone = issued_address._l10n_mx_edi_get_cfdi_timezone()
-        timezoned_now = datetime.now(mx_timezone)
-        cfdi_values['fecha'] = timezoned_now.strftime(CFDI_DATE_FORMAT)
-
-        # Currency.
-        if self.currency_id.name == 'MXN':
-            cfdi_values['tipo_cambio'] = None
-        else:
-            company_currency = self.company_id.currency_id
-            rate = self.currency_id._get_conversion_rate(self.currency_id, company_currency, self.company_id, self.date_order)
-            cfdi_values['tipo_cambio'] = rate
 
     # -------------------------------------------------------------------------
     # CFDI: DOCUMENTS
@@ -626,7 +532,56 @@ class PosOrder(models.Model):
 
         # == Send ==
         def on_populate(cfdi_values):
-            self._l10n_mx_edi_add_cfdi_values(cfdi_values, is_refund_gi=True)
+            self.ensure_one()
+            Document = self.env['l10n_mx_edi.document']
+            order_lines = self.lines._l10n_mx_edi_cfdi_lines()
+            base_lines = order_lines._prepare_tax_base_line_values()
+            Document._add_base_lines_tax_amounts(base_lines, cfdi_values['company'])
+            lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
+            if lines_dispatching['orphan_negative_lines']:
+                cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
+                return
+
+            cfdi_lines = lines_dispatching['result_lines']
+            if not cfdi_lines:
+                cfdi_values['errors'] = ['empty_cfdi']
+                return
+
+            self.env['account.tax']._round_base_lines_tax_details(cfdi_lines, self.company_id)
+
+            cfdi_values['tipo_de_comprobante'] = 'E'
+            if self.amount_total < 0:
+                # The order is a refund.
+                Document._add_document_origin_cfdi_values(cfdi_values, f"01|{self.refunded_order_id.l10n_mx_edi_cfdi_uuid}")
+            else:
+                # Refund of the pos order itself.
+                Document._add_document_origin_cfdi_values(cfdi_values, f'01|{self.l10n_mx_edi_cfdi_uuid}')
+
+            Document._add_base_cfdi_values(cfdi_values)
+            Document._add_currency_cfdi_values(cfdi_values, self.currency_id)
+            Document._add_document_name_cfdi_values(cfdi_values, self.name)
+            Document._add_customer_cfdi_values(
+                cfdi_values,
+                self.partner_id,
+                usage=self.l10n_mx_edi_usage,
+                to_public=self.l10n_mx_edi_cfdi_to_public,
+            )
+            Document._add_tax_objected_cfdi_values(cfdi_values, cfdi_lines)
+            Document._add_base_lines_cfdi_values(cfdi_values, cfdi_lines)
+            Document._add_payment_policy_cfdi_values(cfdi_values, payment_method=self.l10n_mx_edi_payment_method_id)
+            cfdi_values['condiciones_de_pago'] = None
+
+            # Dates.
+            timezoned_now = Document._get_datetime_now_with_mx_timezone(cfdi_values)
+            cfdi_values['fecha'] = timezoned_now.strftime(CFDI_DATE_FORMAT)
+
+            # Currency.
+            if self.currency_id.name == 'MXN':
+                cfdi_values['tipo_cambio'] = None
+            else:
+                company_currency = self.company_id.currency_id
+                rate = self.currency_id._get_conversion_rate(self.currency_id, company_currency, self.company_id, self.date_order)
+                cfdi_values['tipo_cambio'] = rate
 
         def on_failure(error, cfdi_filename=None, cfdi_str=None):
             if error == 'empty_cfdi':
@@ -704,7 +659,7 @@ class PosOrder(models.Model):
         :param periodicity: The value to fill the 'Periodicidad' value.
         :param origin:      The origin of the GI when cancelling an existing one.
         """
-        cfdi_date = fields.Date.context_today(self)
+        Document = self.env['l10n_mx_edi.document']
         orders = self._l10n_mx_edi_check_orders_for_global_invoice(origin=origin)
 
         # == Check the config ==
@@ -722,50 +677,77 @@ class PosOrder(models.Model):
 
         # == Send ==
         def on_populate(cfdi_values):
-            orders_per_error = defaultdict(lambda: self.env['pos.order'])
-            inv_cfdi_values_list = []
+            cfdi_lines = []
             for order in orders:
-
                 # The refund are managed by the refunded order.
                 if order.refunded_order_id:
                     continue
 
-                inv_cfdi_values = dict(cfdi_values)
-                order._l10n_mx_edi_add_cfdi_values(inv_cfdi_values)
+                # Dispatch the negative lines on the order itself.
+                order_lines = order.lines._l10n_mx_edi_cfdi_lines()
+                base_lines = order_lines._prepare_tax_base_line_values()
+                Document._add_base_lines_tax_amounts(base_lines, cfdi_values['company'])
+                lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines)
+                if lines_dispatching['orphan_negative_lines']:
+                    cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
+                    return
 
-                inv_errors = inv_cfdi_values.get('errors')
-                if inv_errors:
-                    for error in inv_cfdi_values['errors']:
+                base_lines = lines_dispatching['result_lines']
+                base_line_ids = {x['id'] for x in base_lines}
+                for base_line in base_lines:
+                    base_line['document_name'] = order.name
 
-                        # The invoice is empty. Skip it.
-                        if error == 'empty_cfdi':
-                            break
+                # Find the refund lines targeting this order.
+                all_refund_order_lines = self.env['pos.order.line']\
+                    .search([('refunded_orderline_id', 'in', order_lines.ids)])\
+                    ._l10n_mx_edi_cfdi_lines()
 
-                        orders_per_error[error] |= order
-                else:
-                    inv_cfdi_values_list.append(inv_cfdi_values)
+                # Manage the refunds.
+                all_refund_base_lines = []
+                for refund_order_lines in all_refund_order_lines.grouped('order_id').values():
 
-            if orders_per_error:
-                errors = []
-                for error, orders_in_error in orders_per_error.items():
-                    orders_str = ",".join(orders_in_error.mapped('name'))
-                    errors.append(_("On %(orders)s: %(error)s", orders=orders_str, error=error))
-                cfdi_values['errors'] = errors
-                return
+                    # Dispatch the positive lines on the refund itself.
+                    refund_base_lines = refund_order_lines._prepare_tax_base_line_values()
+                    for refund_base_line in refund_base_lines:
+                        refund_base_line['quantity'] *= -1
+                    Document._add_base_lines_tax_amounts(refund_base_lines, cfdi_values['company'])
+                    lines_dispatching = Document._dispatch_cfdi_base_lines(refund_base_lines)
+                    if lines_dispatching['result_lines']:
+                        cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
+                        return
 
-            # The global invoice is empty.
-            if not inv_cfdi_values_list:
+                    # Dispatch the remaining negative lines from the refund on the invoice.
+                    refund_base_lines = lines_dispatching['orphan_negative_lines']
+                    lines_dispatching = Document._dispatch_cfdi_base_lines(base_lines + refund_base_lines)
+                    if lines_dispatching['orphan_negative_lines']:
+                        cfdi_values['errors'] = [_("Failed to distribute some negative lines")]
+                        return
+
+                    all_refund_base_lines += [x for x in lines_dispatching['result_lines'] if x['id'] not in base_line_ids]
+                cfdi_lines += base_lines + all_refund_base_lines
+
+            # Nothing left. Everything is refunded or empty.
+            cfdi_lines = [x for x in cfdi_lines if not x['currency_id'].is_zero(x['tax_details']['total_excluded_currency'])]
+            if not cfdi_lines:
                 cfdi_values['errors'] = ['empty_cfdi']
                 return
 
-            cfdi_values.update(
-                **self.env['l10n_mx_edi.document']._get_global_invoice_cfdi_values(
-                    inv_cfdi_values_list,
-                    cfdi_date,
-                    periodicity=periodicity,
-                    origin=origin,
-                )
+            self.env['account.tax']._round_base_lines_tax_details(cfdi_lines, cfdi_values['company'])
+            _biggest_amount_total, biggest_used_payment_method = max(
+                [
+                    (order.amount_total, order.l10n_mx_edi_payment_method_id)
+                    for order in orders
+                ],
+                key=lambda x: x[0],
             )
+            Document._add_payment_policy_cfdi_values(cfdi_values, payment_method=biggest_used_payment_method)
+            Document._add_global_invoice_cfdi_values(
+                cfdi_values,
+                cfdi_lines,
+                periodicity=periodicity,
+                origin=origin,
+            )
+
             self.env['res.company']._with_locked_records(cfdi_values['sequence'])
             return cfdi_values['sequence']
 

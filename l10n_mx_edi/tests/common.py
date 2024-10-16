@@ -118,23 +118,38 @@ class TestMxEdiCommon(AccountTestInvoicingCommon):
         cls.tax_10_ret_isr.type_tax_use = 'sale'
         cls.tax_10_67_ret = cls.env["account.chart.template"].ref('tax8')
         cls.tax_10_67_ret.type_tax_use = 'sale'
-        cls.local_tax_16_transferred = cls.tax_16.copy(default={'name': 'local 16%'})
-        cls.local_tax_8_withholding = cls.tax_8.copy(default={'name': 'local -8%', 'amount': -8})
-        cls.local_tax_16_transferred.l10n_mx_tax_type = cls.local_tax_8_withholding.l10n_mx_tax_type = 'local'
+        cls.local_tax_group = cls.env['account.tax.group'].create({'name': "Local VAT"})
+        cls.local_tax_16_transferred = cls.tax_16.copy(default={
+            'name': 'local 16%',
+            'tax_group_id': cls.local_tax_group.id,
+        })
+        cls.local_tax_16_transferred.l10n_mx_tax_type = 'local'
+        cls.local_tax_8_withholding = cls.tax_8.copy(default={
+            'name': 'local -8%',
+            'amount': -8.0,
+            'tax_group_id': cls.local_tax_group.id,
+        })
+        cls.local_tax_8_withholding.l10n_mx_tax_type = 'local'
+        cls.local_tax_3_5_withholding = cls.tax_8.copy(default={
+            'name': 'local -3.5%',
+            'amount': -3.5,
+            'tax_group_id': cls.local_tax_group.id,
+        })
+        cls.local_tax_3_5_withholding.l10n_mx_tax_type = 'local'
         cls.existing_taxes_combinations_to_test = [
             # pylint: disable=bad-whitespace
-            # Line 1                                                Line 2                  Line 3
+            # Line 1                                                Line 2                          Line 3                          Line 4
             (cls.env['account.tax'],),
             (cls.tax_0_exento,                                      cls.tax_0),
             (cls.tax_0_exento,                                      cls.tax_16),
             (cls.tax_0,                                             cls.tax_16),
-            (cls.tax_0_exento,                                      cls.tax_0,              cls.tax_16),
+            (cls.tax_0_exento,                                      cls.tax_0,                      cls.tax_16),
             (cls.tax_0_exento,),
             (cls.tax_0,),
             (cls.tax_16 + cls.tax_10_ret_isr + cls.tax_10_67_ret,),
             (cls.tax_8_ieps + cls.tax_0,),
             (cls.tax_53_ieps + cls.tax_16,),
-            (cls.local_tax_16_transferred,                  cls.local_tax_8_withholding,    cls.tax_16),
+            (cls.local_tax_16_transferred,                          cls.local_tax_8_withholding,    cls.local_tax_3_5_withholding,  cls.tax_16),
         ]
 
         (cls.product_a + cls.product_b).unlink()

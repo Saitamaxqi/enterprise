@@ -2005,6 +2005,12 @@ msgstr ""
 
 #. module: l10n_mx_edi
 #. odoo-python
+#: code:addons/l10n_mx_edi/models/account_move.py:0
+msgid "You can't process invoices having a foreign currency."
+msgstr ""
+
+#. module: l10n_mx_edi
+#. odoo-python
 #: code:addons/l10n_mx_edi/models/l10n_mx_edi_document.py:0
 msgid ""
 "You can't make a global invoice for invoices having different currencies."
