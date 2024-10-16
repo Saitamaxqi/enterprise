@@ -130,7 +130,15 @@ class AccountEcSalesReportHandler(models.AbstractModel):
             {'id': 'triangular', 'name': _('Triangular'), 'selected': True},
             {'id': 'services', 'name': _('Services'), 'selected': True},
         ]
-        options['ec_tax_filter_selection'] = previous_options.get('ec_tax_filter_selection', default_tax_filter)
+
+        ec_tax_filter_selection = previous_options.get('ec_tax_filter_selection', default_tax_filter)
+        # In case we have a EC sale list report with more ec_tax_filter_selection the previous options will have extra
+        # item we just keep the default ones, and we let variant extend the function to add the ones they need
+        if ec_tax_filter_selection != default_tax_filter:
+            filtered_ec_tax_filter_selection = [item for item in ec_tax_filter_selection if item['id'] in {item['id'] for item in default_tax_filter}]
+            options['ec_tax_filter_selection'] = filtered_ec_tax_filter_selection
+        else:
+            options['ec_tax_filter_selection'] = ec_tax_filter_selection
 
     def _get_report_line_partner(self, report, options, partner, partner_values, markup=''):
         """
