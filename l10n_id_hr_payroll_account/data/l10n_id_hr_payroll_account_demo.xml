@@ -5,6 +5,7 @@
             <value eval="[]"/>
             <value>id</value>
             <value model="res.company" eval="obj().env.ref('base.demo_company_id')"/>
+            <value name="install_demo" eval="True"/>
         </function>
     </data>
 </odoo>

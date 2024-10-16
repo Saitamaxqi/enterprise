@@ -40,6 +40,7 @@
             <value eval="[]"/>
             <value name="template_code" eval="'mx'"/>
             <value name="company" model="res.company" eval="ref('base.demo_company_mx')"/>
+            <value name="install_demo" eval="True"/>
         </function>
     </data>
 </odoo>

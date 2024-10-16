@@ -6,6 +6,7 @@
             <value eval="[]"/>
             <value>generic_coa</value>
             <value model="res.company" eval="obj().env.ref('base.main_company')"/>
+            <value name="install_demo" eval="True"/>
         </function>
     </data>
 </odoo>

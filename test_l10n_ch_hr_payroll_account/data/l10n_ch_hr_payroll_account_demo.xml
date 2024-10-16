@@ -10,6 +10,7 @@
             <value eval="[]"/>
             <value>ch</value>
             <value model="res.company" eval="obj().env.ref('base.demo_company_ch')"/>
+            <value name="install_demo" eval="True"/>
         </function>
 
         <function model="res.company" name="_l10n_ch_generate_swissdec_demo_data">
