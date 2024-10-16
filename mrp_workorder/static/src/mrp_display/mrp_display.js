@@ -385,12 +385,16 @@ export class MrpDisplay extends Component {
         return [...workorderIds];
     }
 
-    async selectWorkcenter(workcenterId) {
+    async selectWorkcenter(workcenterId, filterMO = false) {
         // Waits all the MO under validation are actually validated before to change the WC.
         const result = await this.processValidationStack();
         await this.useEmployee.getConnectedEmployees();
         if (result.success) {
-            this.env.searchModel.invalidateRecordCache();
+            if (filterMO) {
+                await this._onProductionBarcodeScanned(filterMO);
+            } else {
+                this.env.searchModel.invalidateRecordCache();
+            }
             const workcenterIds = this.state.workcenters.map((wc) => wc.id);
             this.state.activeWorkcenter = Number(workcenterId);
             this.state.activeResModel = this.state.activeWorkcenter

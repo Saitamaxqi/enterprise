@@ -11,7 +11,7 @@
             </span>
 
             <button t-if="!isComplete" class="btn flex-grow-1 flex-basis-0"
-                t-on-click.stop="() => props.selectWorkcenter(workcenter[0])"
+                t-on-click.stop="() => props.selectWorkcenter(workcenter[0], props.record.data.production_id[1])"
                 t-attf-class="o_workcenter_item_color_{{workcenter[0] % 11}}">
                 <span class="text-truncate" t-out="workcenter[1]"/>
                 <i class="oi oi-arrow-right ms-2"/>
