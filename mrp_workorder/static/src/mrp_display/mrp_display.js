@@ -119,7 +119,6 @@ export class MrpDisplay extends Component {
         );
         this.notification = useService("notification");
         this.orm = useService("orm");
-
         onWillStart(async () => {
             this.groups = {
                 byproducts: await user.hasGroup("mrp.group_mrp_byproducts"),
@@ -129,6 +128,7 @@ export class MrpDisplay extends Component {
             };
             this.env.searchModel.workorders = this.groups.workorders;
             this.group_mrp_routings = await user.hasGroup("mrp.group_mrp_routings");
+            this.env.searchModel.setWorkcenterFilter(this.state.workcenters);
             await this.useEmployee.getConnectedEmployees(true);
             // select the workcenter received in the context
             if (this.props.context.workcenter_id) {
@@ -258,6 +258,7 @@ export class MrpDisplay extends Component {
         const localStorageName = this.env.localStorageName;
         localStorage.setItem(localStorageName, JSON.stringify(workcenters));
         this.state.workcenters = workcenters;
+        this.env.searchModel.setWorkcenterFilter(workcenters);
     }
 
     toggleEmployeesPanel() {

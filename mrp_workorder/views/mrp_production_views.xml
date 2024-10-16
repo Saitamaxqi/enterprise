@@ -47,6 +47,10 @@
             <filter name="filter_planned" position="attributes">
                 <attribute name="domain">[('is_planned', '=', True)]</attribute>
             </filter>
+            <filter name="starred" position="after">
+                <separator/>
+                <filter string="This Station" name="shop_floor_this_station" groups="mrp.group_mrp_routings"/>
+            </filter>
         </field>
     </record>
 
