@@ -4,7 +4,7 @@ import { TemplateDialog } from "@documents_spreadsheet/spreadsheet_template/spre
 import { useService } from "@web/core/utils/hooks";
 
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
-import { SpreadsheetCloneXlsxDialog } from "@documents_spreadsheet/spreadsheet_clone_xlsx_dialog/spreadsheet_clone_xlsx_dialog";
+import { SpreadsheetCloneCSVXlsxDialog } from "@documents_spreadsheet/spreadsheet_clone_xlsx_dialog/spreadsheet_clone_xlsx_dialog";
 import { _t } from "@web/core/l10n/translation";
 
 import { XLSX_MIME_TYPES } from "@documents_spreadsheet/helpers";
@@ -46,7 +46,10 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
                     spreadsheet_id: mainDocument.resId,
                 },
             });
-        } else if (XLSX_MIME_TYPES.includes(mainDocument.data.mimetype)) {
+        } else if (
+            XLSX_MIME_TYPES.includes(mainDocument.data.mimetype) ||
+            mainDocument.data.mimetype === "text/csv"
+        ) {
             if (!mainDocument.data.active) {
                 this.dialogService.add(ConfirmationDialog, {
                     title: _t("Restore file?"),
@@ -63,8 +66,9 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
                     confirmLabel: _t("Restore"),
                 });
             } else {
-                this.dialogService.add(SpreadsheetCloneXlsxDialog, {
-                    title: _t("Excel file preview"),
+                const fileType = mainDocument.data.mimetype === "text/csv" ? "CSV" : "Excel";
+                this.dialogService.add(SpreadsheetCloneCSVXlsxDialog, {
+                    title: fileType + _t(" file preview"),
                     cancel: () => {},
                     cancelLabel: _t("Discard"),
                     documentId: mainDocument.resId,

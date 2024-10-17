@@ -6,8 +6,8 @@ import { useService } from "@web/core/utils/hooks";
 
 import { useState } from "@odoo/owl";
 
-export class SpreadsheetCloneXlsxDialog extends ConfirmationDialog {
-    static template = "documents_spreadsheet.SpreadsheetCloneXlsxDialog";
+export class SpreadsheetCloneCSVXlsxDialog extends ConfirmationDialog {
+    static template = "documents_spreadsheet.SpreadsheetCloneCSVXlsxDialog";
     static props = {
         ...omit(ConfirmationDialog.props, "body", "confirm"),
         documentId: { type: Number },
@@ -19,6 +19,7 @@ export class SpreadsheetCloneXlsxDialog extends ConfirmationDialog {
         this.action = useService("action");
         this.orm = useService("orm");
     }
+
     /**
      * @override
      */
@@ -28,7 +29,7 @@ export class SpreadsheetCloneXlsxDialog extends ConfirmationDialog {
             // archiving behavior makes a more unified component.
             const spreadsheetId = await this.orm.call(
                 "documents.document",
-                "clone_xlsx_into_spreadsheet",
+                "import_to_spreadsheet",
                 [this.props.documentId],
                 { archive_source: this.archiveDocumentState.willArchive }
             );

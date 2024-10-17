@@ -6,7 +6,7 @@
     'category': 'Productivity/Documents',
     'summary': 'Documents Spreadsheet',
     'description': 'Documents Spreadsheet',
-    'depends': ['documents', 'spreadsheet_edition'],
+    'depends': ['documents', 'spreadsheet_edition', 'base_import'],
     'data': [
         'data/documents_folder_data.xml',
         'data/res_company_data.xml',

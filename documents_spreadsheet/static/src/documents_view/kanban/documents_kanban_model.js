@@ -13,6 +13,7 @@ patch(DocumentsKanbanRecord.prototype, {
         return (
             ["spreadsheet", "frozen_spreadsheet"].includes(this.data.handler) ||
             XLSX_MIME_TYPES.includes(this.data.mimetype) ||
+            this.data.mimetype === "text/csv" ||
             super.isViewable(...arguments)
         );
     },

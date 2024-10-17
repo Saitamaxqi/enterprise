@@ -327,9 +327,8 @@ class DocumentsDocument(models.Model):
             docs = docs[offset:]
         return docs.read(["display_name", "thumbnail"])
 
-    def clone_xlsx_into_spreadsheet(self, archive_source=False):
+    def _clone_xlsx_into_spreadsheet(self, archive_source=False):
         """Clone an XLSX document into a new document with its content unzipped, and return the new document id"""
-        self.ensure_one()
 
         unzipped, attachments = self._unzip_xlsx()
 
@@ -344,10 +343,61 @@ class DocumentsDocument(models.Model):
         for attachment in attachments:
             attachment.write({'res_id': doc.id})
 
-        if archive_source:
-            self.action_archive()
+        return doc.id
+
+    def _clone_csv_into_spreadsheet(self):
+        csv_data = self._read_csv()
+        spreadsheet_data = self._convert_csv_to_spreadsheet_data(csv_data)
+
+        doc = self.copy({
+            'attachment_id': False,
+            'handler': 'spreadsheet',
+            'mimetype': 'application/o-spreadsheet',
+            'name': self.name.removesuffix('.csv'),
+            'spreadsheet_data': json.dumps(spreadsheet_data),
+        })
 
         return doc.id
+
+    def import_to_spreadsheet(self, archive_source=False):
+        self.ensure_one()
+        if self.mimetype == 'text/csv':
+            document_id = self._clone_csv_into_spreadsheet()
+        else:
+            document_id = self._clone_xlsx_into_spreadsheet()
+        if archive_source:
+            self.action_archive()
+        return document_id
+
+    def _read_csv(self):
+        base_import_record = self.env['base_import.import'].create({
+            'file': self.attachment_id.raw,
+            'file_type': 'text/csv',
+        })
+        _, csv_content = base_import_record._read_csv({'encoding': 'utf-8', 'quoting': '"'})
+        return csv_content
+
+    def _convert_csv_to_spreadsheet_data(self, csv_data):
+        def get_column_name(n):
+            """Helper function to get the spreadsheet column
+            name in letters (A -> Z) from the column index.
+            Example: 1 -> A, 2 -> B, 27 -> AA, 28 -> AB, etc.
+            """
+            res = []
+            while n > 0:
+                n, remainder = divmod(n - 1, 26)
+                res.append(chr(65 + remainder))
+            return ''.join(res[::-1])
+
+        data = {'sheets': [{'cells': {}}]}
+
+        for row_index, row in enumerate(csv_data):
+            for col_index, cell_content in enumerate(row):
+                if cell_content:
+                    col_name = get_column_name(col_index + 1)
+                    cell_ref = f'{col_name}{row_index + 1}'
+                    data['sheets'][0]['cells'][cell_ref] = {'content': cell_content}
+        return data
 
     def _get_is_multipage(self):
         """Override for spreadsheets and xlsx."""

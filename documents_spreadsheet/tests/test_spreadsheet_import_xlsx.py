@@ -22,7 +22,7 @@ class SpreadsheetImportXlsx(HttpCase, SpreadsheetTestCommon):
                 'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
                 'folder_id': folder.id
             })
-            spreadsheet_id = document_xlsx.clone_xlsx_into_spreadsheet()
+            spreadsheet_id = document_xlsx.import_to_spreadsheet()
             spreadsheet = self.env["documents.document"].browse(spreadsheet_id).exists()
             self.assertTrue(spreadsheet)
 
@@ -37,7 +37,7 @@ class SpreadsheetImportXlsx(HttpCase, SpreadsheetTestCommon):
                 'mimetype': 'application/wps-office.xlsx',
                 'folder_id': folder.id
             })
-            spreadsheet_id = document_xlsx.clone_xlsx_into_spreadsheet()
+            spreadsheet_id = document_xlsx.import_to_spreadsheet()
             spreadsheet = self.env["documents.document"].browse(spreadsheet_id).exists()
             self.assertTrue(spreadsheet)
 
@@ -53,7 +53,7 @@ class SpreadsheetImportXlsx(HttpCase, SpreadsheetTestCommon):
                 'folder_id': folder.id
             })
             with self.assertRaises(UserError) as error_catcher:
-                document_xlsx.clone_xlsx_into_spreadsheet()
+                document_xlsx.import_to_spreadsheet()
 
             self.assertEqual(error_catcher.exception.args[0], ("The file is not a xlsx file"))
 
@@ -68,7 +68,7 @@ class SpreadsheetImportXlsx(HttpCase, SpreadsheetTestCommon):
             'folder_id': folder.id
         })
         with self.assertRaises(UserError) as error_catcher:
-            document_xlsx.clone_xlsx_into_spreadsheet()
+            document_xlsx.import_to_spreadsheet()
 
         self.assertEqual(error_catcher.exception.args[0], ("The file is not a xlsx file"))
 
@@ -83,7 +83,7 @@ class SpreadsheetImportXlsx(HttpCase, SpreadsheetTestCommon):
             'folder_id': folder.id
         })
         with self.assertRaises(UserError) as error_catcher:
-            document_xlsx.clone_xlsx_into_spreadsheet()
+            document_xlsx.import_to_spreadsheet()
 
         self.assertEqual(error_catcher.exception.args[0], ("The xlsx file is corrupted"))
 
@@ -107,7 +107,7 @@ class SpreadsheetImportXlsx(HttpCase, SpreadsheetTestCommon):
                 with self.subTest(is_multipage=is_multipage, kind="xlsx"):
                     self.assertEqual(document_xlsx.is_multipage, is_multipage)
 
-            spreadsheet_id = document_xlsx.clone_xlsx_into_spreadsheet()
+            spreadsheet_id = document_xlsx.import_to_spreadsheet()
             spreadsheet = self.env["documents.document"].browse(spreadsheet_id).exists()
             with self.subTest(is_multipage=is_multipage, kind="spreadsheet"):
                 self.assertEqual(spreadsheet.is_multipage, is_multipage)

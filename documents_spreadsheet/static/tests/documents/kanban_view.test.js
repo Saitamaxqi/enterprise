@@ -270,7 +270,7 @@ test("open xlsx converts to o-spreadsheet, clone it and opens the spreadsheet", 
     await makeDocumentsSpreadsheetMockEnv({
         serverData,
         mockRPC: async (route, args) => {
-            if (args.method === "clone_xlsx_into_spreadsheet") {
+            if (args.method === "import_to_spreadsheet") {
                 expect.step("spreadsheet_cloned");
                 expect(args.model).toBe("documents.document");
                 expect(args.args).toEqual([spreadsheetId]);
@@ -310,7 +310,7 @@ test("open WPS-marked xlsx converts to o-spreadsheet, clone it and opens the spr
     await makeDocumentsSpreadsheetMockEnv({
         serverData,
         mockRPC: async (route, args) => {
-            if (args.method === "clone_xlsx_into_spreadsheet") {
+            if (args.method === "import_to_spreadsheet") {
                 expect.step("spreadsheet_cloned");
                 expect(args.model).toBe("documents.document");
                 expect(args.args).toEqual([spreadsheetId]);
@@ -329,6 +329,46 @@ test("open WPS-marked xlsx converts to o-spreadsheet, clone it and opens the spr
         expect(action.params.spreadsheet_id).toEqual(spreadsheetCopyId);
     });
     await contains(".oe_kanban_previewer").click();
+
+    // confirm conversion to o-spreadsheet
+    await contains(".modal-content .btn.btn-primary").click();
+    expect.verifySteps(["spreadsheet_cloned", "action_open_spreadsheet"]);
+});
+
+test("open csv converts to o-spreadsheet, clone it and opens the spreadsheet", async function () {
+    const spreadsheetId = 1;
+    const spreadsheetCopyId = 99;
+    const serverData = getTestServerData();
+    serverData.models["documents.document"].records = [
+        {
+            id: spreadsheetId,
+            name: "My CSV file",
+            mimetype: "text/csv",
+            thumbnail_status: "present",
+        },
+    ];
+    await makeDocumentsSpreadsheetMockEnv({
+        serverData,
+        mockRPC: async (route, args) => {
+            if (args.method === "import_to_spreadsheet") {
+                expect.step("spreadsheet_cloned");
+                expect(args.model).toBe("documents.document");
+                expect(args.args).toEqual([spreadsheetId]);
+                return spreadsheetCopyId;
+            }
+        },
+    });
+    await mountView({
+        type: "kanban",
+        resModel: "documents.document",
+        arch: basicDocumentKanbanArch,
+        searchViewArch: getEnrichedSearchArch(),
+    });
+    mockActionService((action) => {
+        expect.step(action.tag);
+        expect(action.params.spreadsheet_id).toEqual(spreadsheetCopyId);
+    });
+    await contains(".o_kanban_image_wrapper").click();
 
     // confirm conversion to o-spreadsheet
     await contains(".modal-content .btn.btn-primary").click();
