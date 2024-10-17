@@ -6,7 +6,7 @@
 import time
 import re
 
-from odoo import models, fields, tools
+from odoo import api, models, fields, tools
 from odoo.exceptions import UserError
 from odoo.tools.translate import LazyTranslate
 
@@ -316,6 +316,24 @@ transaction_code = safedict(**{
 })
 
 
+def rmspaces(s):
+    return " ".join(s.split())
+
+
+def parsedate(s):
+    if s == '999999':
+        return _lt('No date')
+    return f"{s[:2]}/{s[2:4]}/{s[4:]}"
+
+
+def parsehour(s):
+    return f"{s[:2]}:{s[2:]}"
+
+
+def parsefloat(s, precision):
+    return str(float(rmspaces(s) or 0) / (10 ** precision))
+
+
 class AccountJournal(models.Model):
     _inherit = ['account.journal']
 
@@ -330,224 +348,190 @@ class AccountJournal(models.Model):
             return True
         return super()._statement_import_check_bank_account(account_number)
 
-
     def _get_bank_statements_available_import_formats(self):
         rslt = super(AccountJournal, self)._get_bank_statements_available_import_formats()
         rslt.append('CODA')
         return rslt
 
-    def _check_coda(self, coda_string):
-        # Matches the first 24 characters of a CODA file, as defined by the febelfin specifications
-        return re.match(r'0{5}\d{9}05[ D] +', coda_string) is not None
-
-    def _parse_bank_statement_file(self, attachment):
+    @api.model
+    def _parse_structured_communication(self, co_type, communication):
         _ = self.env._
-        pattern = re.compile("[\u0020-\u1EFF\n\r]+")  # printable characters
-
-        # Try different encodings for the file
-        for encoding in ('utf_8', 'cp850', 'cp858', 'cp1140', 'cp1252', 'iso8859_15', 'utf_32', 'utf_16', 'windows-1252'):
-            try:
-                record_data = attachment.raw.decode(encoding)
-            except UnicodeDecodeError:
-                continue
-            if pattern.fullmatch(record_data, re.MULTILINE):
-                break  # We only have printable characters, stick with this one
-
-        if not self._check_coda(record_data):
-            return super()._parse_bank_statement_file(attachment)
-
-        def rmspaces(s):
-            return " ".join(s.split())
-
-        def parsedate(s):
-            if s == '999999':
-                return _('No date')
-            return "{day}/{month}/{year}".format(day=s[:2], month=s[2:4], year=s[4:])
-
-        def parsehour(s):
-            return "{hour}:{minute}".format(hour=s[:2], minute=s[2:])
-
-        def parsefloat(s, precision):
-            return str(float(rmspaces(s) or 0) / (10 ** precision))
 
         def parse_terminal(s):
             return _('Name: %(name)s, Town: %(city)s', name=rmspaces(s[:16]), city=rmspaces(s[16:]))
 
-        def parse_operation(tr_type, family, operation, category):
-            transaction_type = sepa_transaction_type[tr_type]
-            transaction_family, transaction_operations = transaction_code[family]
-            transaction_operation = transaction_operations.get(operation, default_transaction_code.get(operation, _lt('undefined')))
-            tr_type = _(transaction_type)  # pylint: disable=gettext-variable
-            tr_family = _(transaction_family)  # pylint: disable=gettext-variable
-            tr_operation = _(transaction_operation)  # pylint: disable=gettext-variable
-            return f"{tr_type}: {tr_family} ({tr_operation})"
+        # pylint: disable=C0321,C0326
+        # ruff: noqa: E702, E222
+        note = []
+        p_idx = 0; o_idx = 0
+        if co_type == '100':  # RF Creditor Reference
+            structured_com = rmspaces(communication[:25])
+        elif co_type in ('101', '102'):  # Credit transfer or cash payment with structured format communication or with reconstituted structured format communication
+            structured_com = '+++' + communication[:3] + '/' + communication[3:7] + '/' + communication[7:12] + '+++'
+        elif co_type == '103':  # number (e.g. of the cheque, of the card, etc.)
+            structured_com = rmspaces(communication[:12])
+        elif co_type == '105':  # Original amount of the transaction
+            structured_com = _('Original amount of the transaction')
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('Gross amount in the currency of the account') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('Gross amount in the original currency') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('Rate') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
+            o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('Currency') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('Structured format communication') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  2; note.append(_('Detail') + ': ' + _('Country code of the principal') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('Equivalent in EUR') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+        elif co_type == '106':  # Method of calculation (VAT, withholding tax on income, commission, etc.)
+            structured_com = _('Method of calculation (VAT, withholding tax on income, commission, etc.)')
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('equivalent in the currency of the account') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('amount on which % is calculated') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('percent') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('minimum') + ': ' + minimum[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('equivalent in EUR') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+        elif co_type == '108':  # Closing
+            structured_com = _('Closing')
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('equivalent in the currency of the account') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('interest rates, calculation basis') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('interest') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('period from %(start)s to %(end)s', start=parsedate(communication[o_idx:o_idx + 6]), end=parsedate(communication[o_idx + 6:o_idx + 12])))
+        elif co_type == '111':  # POS credit - Globalisation
+            structured_com = _('POS credit – Globalisation')
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('card scheme') + ': ' + card_scheme[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('POS number') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('period number') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('sequence number of first transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('date of first transaction') + ': ' + parsedate(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('sequence number of last transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('date of last transaction') + ': ' + parsedate(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('transaction type') + ': ' + transaction_type[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx += 26; note.append(_('Detail') + ': ' + _('identification of terminal') + ': ' + parse_terminal(communication[o_idx:p_idx]))
+        elif co_type == '113':  # ATM/POS debit
+            structured_com = _('ATM/POS debit')
+            o_idx = p_idx; p_idx += 16; note.append(_('Detail') + ': ' + _('Masked PAN or card number') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('card scheme') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('terminal number') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('sequence number of transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('date of transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  4; note.append(_('Detail') + ': ' + _('hour of transaction') + ': ' + parsehour(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('transaction type') + ': ' + transaction_type[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx += 26; note.append(_('Detail') + ': ' + _('identification of terminal') + ': ' + parse_terminal(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('original amount') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('rate') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
+            o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('currency') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  5; note.append(_('Detail') + ': ' + _('volume') + ': ' + parsefloat(communication[o_idx:p_idx], 2))
+            o_idx = p_idx; p_idx +=  2; note.append(_('Detail') + ': ' + _('product code') + ': ' + product_code[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx +=  5; note.append(_('Detail') + ': ' + _('unit price') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+        elif co_type == '114':  # POS credit - individual transaction
+            structured_com = _('POS credit - individual transaction')
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('card scheme') + ': ' + card_scheme[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('POS number') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('period number') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('sequence number of transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('date of transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  4; note.append(_('Detail') + ': ' + _('hour of transaction') + ': ' + parsehour(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('transaction type') + ': ' + transaction_type[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx += 26; note.append(_('Detail') + ': ' + _('identification of terminal') + ': ' + parse_terminal(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 16; note.append(_('Detail') + ': ' + _('reference of transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
+        elif co_type == '115':  # Terminal cash deposit
+            structured_com = _('Terminal cash deposit')
+            o_idx = p_idx; p_idx += 16; note.append(_('Detail') + ': ' + _('PAN or card number') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('card scheme') + ': ' + card_scheme[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('terminal number') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('sequence number of transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('payment day') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  4; note.append(_('Detail') + ': ' + _('hour of payment') + ': ' + parsehour(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('validation date') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('sequence number of validation') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('original amount (given by the customer)') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('conformity code or blank') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 26; note.append(_('Detail') + ': ' + _('identification of terminal') + ': ' + parse_terminal(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('message (structured of free)') + ': ' + rmspaces(communication[o_idx:p_idx]))
+        elif co_type == '121':  # Commercial bills
+            structured_com = _('Commercial bills')
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('amount of the bill') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('maturity date of the bill') + ': ' + parsedate(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('conventional maturity date') + ': ' + parsedate(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('date of issue of the bill') + ': ' + parsedate(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 11; note.append(_('Detail') + ': ' + _('company number') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('currency') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  3  # blanks
+            o_idx = p_idx; p_idx += 13; note.append(_('Detail') + ': ' + _('number of the bill') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('exchange rate') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
+        elif co_type == '122':  # Bills - calculation of interest
+            structured_com = _('Bills - calculation of interest')
+            o_idx = p_idx; p_idx +=  4; note.append(_('Detail') + ': ' + _('number of days') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('interest rate') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('basic amount of the calculation') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('minimum rate') + ': ' + minimum[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx += 13; note.append(_('Detail') + ': ' + _('number of the bill') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('maturity date of the bill') + ': ' + parsedate(communication[o_idx:p_idx]))
+        elif co_type == '123':  # Fees and commissions
+            structured_com = _('Fees and commissions')
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('starting date') + ': ' + parsedate(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('maturity date') + ': ' + parsedate(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('basic amount') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('percentage') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
+            o_idx = p_idx; p_idx +=  4; note.append(_('Detail') + ': ' + _('term in days') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('minimum rate') + ': ' + minimum[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx += 13; note.append(_('Detail') + ': ' + _('guarantee number (no. allocated by the bank)') + ': ' + rmspaces(communication[o_idx:p_idx]))
+        elif co_type == '124':  # Number of the credit card
+            structured_com = _('Number of the credit card')
+            o_idx = p_idx; p_idx += 20; note.append(_('Detail') + ': ' + _('Masked PAN or card number') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('issuing institution') + ': ' + issuing_institution[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('invoice number') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('identification number') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('date') + ': ' + parsedate(communication[o_idx:p_idx]))
+        elif co_type == '125':  # Credit
+            structured_com = _('Credit')
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('account number of the credit') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('extension zone of account number of the credit') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('old balance of the credit') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('new balance of the credit') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('amount (equivalent in foreign currency)') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('currency') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('starting date') + ': ' + parsedate(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('end date') + ': ' + parsedate(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('nominal interest rate or rate of charge') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
+            o_idx = p_idx; p_idx += 13; note.append(_('Detail') + ': ' + _('reference of transaction on credit account') + ': ' + rmspaces(communication[o_idx:p_idx]))
+        elif co_type == '126':  # Term Investments
+            structured_com = _('Term Investments')
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('deposit number') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('deposit amount') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('equivalent in the currency of the account') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('starting date') + ': ' + parsedate(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('end date') + ': ' + parsedate(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('interest rate') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
+            o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('amount of interest') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('currency') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('rate') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
+        elif co_type == '127':  # SEPA
+            structured_com = _('SEPA Direct Debit')
+            o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('Settlement Date') + ': ' + parsedate(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('Type Direct Debit') + ': ' + type_direct_debit[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('Direct Debit scheme') + ': ' + direct_debit_scheme[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('Paid or reason for refused payment') + ': ' + payment_reason[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx += 35; note.append(_('Detail') + ': ' + _('Creditor’s identification code') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 35; note.append(_('Detail') + ': ' + _('Mandate reference') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx += 62; note.append(_('Detail') + ': ' + _('Communicaton') + ': ' + rmspaces(communication[o_idx:p_idx]))
+            o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('Type of R transaction') + ': ' + sepa_type[communication[o_idx:p_idx]])
+            o_idx = p_idx; p_idx +=  4; note.append(_('Detail') + ': ' + _('Reason') + ': ' + rmspaces(communication[o_idx:p_idx]))
+        else:
+            structured_com = _('Type of structured communication not supported: %(type)s', type=co_type)
+            note.append(communication)
+        return structured_com, note
 
-        def parse_structured_communication(co_type, communication):
-            # pylint: disable=C0321,C0326
-            note = []
-            p_idx = 0 ; o_idx = 0
-            if co_type == '100':  # RF Creditor Reference
-                structured_com = rmspaces(communication[:25])
-            elif co_type in ('101', '102'):  # Credit transfer or cash payment with structured format communication or with reconstituted structured format communication
-                structured_com = '+++' + communication[:3] + '/' + communication[3:7] + '/' + communication[7:12] + '+++'
-            elif co_type == '103':  # number (e.g. of the cheque, of the card, etc.)
-                structured_com = rmspaces(communication[:12])
-            elif co_type == '105':  # Original amount of the transaction
-                structured_com = _('Original amount of the transaction')
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('Gross amount in the currency of the account') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('Gross amount in the original currency') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('Rate') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
-                o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('Currency') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('Structured format communication') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  2; note.append(_('Detail') + ': ' + _('Country code of the principal') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('Equivalent in EUR') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-            elif co_type == '106':  # Method of calculation (VAT, withholding tax on income, commission, etc.)
-                structured_com = _('Method of calculation (VAT, withholding tax on income, commission, etc.)')
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('equivalent in the currency of the account') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('amount on which % is calculated') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('percent') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('minimum') + ': ' + minimum[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('equivalent in EUR') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-            elif co_type == '108':  # Closing
-                structured_com = _('Closing')
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('equivalent in the currency of the account') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('interest rates, calculation basis') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('interest') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('period from %(start)s to %(end)s', start=parsedate(communication[o_idx:o_idx + 6]), end=parsedate(communication[o_idx + 6:o_idx + 12])))    # noqa: E702
-            elif co_type == '111':  # POS credit – Globalisation
-                structured_com = _('POS credit – Globalisation')
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('card scheme') + ': ' + card_scheme[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('POS number') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('period number') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('sequence number of first transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('date of first transaction') + ': ' + parsedate(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('sequence number of last transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('date of last transaction') + ': ' + parsedate(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('transaction type') + ': ' + transaction_type[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx += 26; note.append(_('Detail') + ': ' + _('identification of terminal') + ': ' + parse_terminal(communication[o_idx:p_idx]))
-            elif co_type == '113':  # ATM/POS debit
-                structured_com = _('ATM/POS debit')
-                o_idx = p_idx; p_idx += 16; note.append(_('Detail') + ': ' + _('Masked PAN or card number') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('card scheme') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('terminal number') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('sequence number of transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('date of transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  4; note.append(_('Detail') + ': ' + _('hour of transaction') + ': ' + parsehour(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('transaction type') + ': ' + transaction_type[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx += 26; note.append(_('Detail') + ': ' + _('identification of terminal') + ': ' + parse_terminal(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('original amount') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('rate') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
-                o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('currency') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  5; note.append(_('Detail') + ': ' + _('volume') + ': ' + parsefloat(communication[o_idx:p_idx], 2))
-                o_idx = p_idx; p_idx +=  2; note.append(_('Detail') + ': ' + _('product code') + ': ' + product_code[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx +=  5; note.append(_('Detail') + ': ' + _('unit price') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-            elif co_type == '114':  # POS credit - individual transaction
-                structured_com = _('POS credit - individual transaction')
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('card scheme') + ': ' + card_scheme[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('POS number') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('period number') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('sequence number of transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('date of transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  4; note.append(_('Detail') + ': ' + _('hour of transaction') + ': ' + parsehour(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('transaction type') + ': ' + transaction_type[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx += 26; note.append(_('Detail') + ': ' + _('identification of terminal') + ': ' + parse_terminal(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 16; note.append(_('Detail') + ': ' + _('reference of transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
-            elif co_type == '115':  # Terminal cash deposit
-                structured_com = _('Terminal cash deposit')
-                o_idx = p_idx; p_idx += 16; note.append(_('Detail') + ': ' + _('PAN or card number') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('card scheme') + ': ' + card_scheme[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('terminal number') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('sequence number of transaction') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('payment day') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  4; note.append(_('Detail') + ': ' + _('hour of payment') + ': ' + parsehour(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('validation date') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('sequence number of validation') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('original amount (given by the customer)') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('conformity code or blank') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 26; note.append(_('Detail') + ': ' + _('identification of terminal') + ': ' + parse_terminal(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('message (structured of free)') + ': ' + rmspaces(communication[o_idx:p_idx]))
-            elif co_type == '121':  # Commercial bills
-                structured_com = _('Commercial bills')
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('amount of the bill') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('maturity date of the bill') + ': ' + parsedate(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('conventional maturity date') + ': ' + parsedate(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('date of issue of the bill') + ': ' + parsedate(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 11; note.append(_('Detail') + ': ' + _('company number') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('currency') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  3  # blanks
-                o_idx = p_idx; p_idx += 13; note.append(_('Detail') + ': ' + _('number of the bill') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('exchange rate') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
-            elif co_type == '122':  # Bills - calculation of interest
-                structured_com = _('Bills - calculation of interest')
-                o_idx = p_idx; p_idx +=  4; note.append(_('Detail') + ': ' + _('number of days') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('interest rate') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('basic amount of the calculation') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('minimum rate') + ': ' + minimum[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx += 13; note.append(_('Detail') + ': ' + _('number of the bill') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('maturity date of the bill') + ': ' + parsedate(communication[o_idx:p_idx]))
-            elif co_type == '123':  # Fees and commissions
-                structured_com = _('Fees and commissions')
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('starting date') + ': ' + parsedate(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('maturity date') + ': ' + parsedate(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('basic amount') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('percentage') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
-                o_idx = p_idx; p_idx +=  4; note.append(_('Detail') + ': ' + _('term in days') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('minimum rate') + ': ' + minimum[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx += 13; note.append(_('Detail') + ': ' + _('guarantee number (no. allocated by the bank)') + ': ' + rmspaces(communication[o_idx:p_idx]))
-            elif co_type == '124':  # Number of the credit card
-                structured_com = _('Number of the credit card')
-                o_idx = p_idx; p_idx += 20; note.append(_('Detail') + ': ' + _('Masked PAN or card number') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('issuing institution') + ': ' + issuing_institution[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('invoice number') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('identification number') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('date') + ': ' + parsedate(communication[o_idx:p_idx]))
-            elif co_type == '125':  # Credit
-                structured_com = _('Credit')
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('account number of the credit') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('extension zone of account number of the credit') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('old balance of the credit') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('new balance of the credit') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('amount (equivalent in foreign currency)') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('currency') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('starting date') + ': ' + parsedate(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('end date') + ': ' + parsedate(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('nominal interest rate or rate of charge') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
-                o_idx = p_idx; p_idx += 13; note.append(_('Detail') + ': ' + _('reference of transaction on credit account') + ': ' + rmspaces(communication[o_idx:p_idx]))
-            elif co_type == '126':  # Term Investments
-                structured_com = _('Term Investments')
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('deposit number') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('deposit amount') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('equivalent in the currency of the account') + ': ' + parsefloat(communication[o_idx:p_idx], 3))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('starting date') + ': ' + parsedate(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('end date') + ': ' + parsedate(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('interest rate') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
-                o_idx = p_idx; p_idx += 15; note.append(_('Detail') + ': ' + _('amount of interest') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  3; note.append(_('Detail') + ': ' + _('currency') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 12; note.append(_('Detail') + ': ' + _('rate') + ': ' + parsefloat(communication[o_idx:p_idx], 8))
-            elif co_type == '127':  # SEPA
-                structured_com = _('SEPA Direct Debit')
-                o_idx = p_idx; p_idx +=  6; note.append(_('Detail') + ': ' + _('Settlement Date') + ': ' + parsedate(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('Type Direct Debit') + ': ' + type_direct_debit[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('Direct Debit scheme') + ': ' + direct_debit_scheme[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('Paid or reason for refused payment') + ': ' + payment_reason[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx += 35; note.append(_('Detail') + ': ' + _('Creditor’s identification code') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 35; note.append(_('Detail') + ': ' + _('Mandate reference') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx += 62; note.append(_('Detail') + ': ' + _('Communicaton') + ': ' + rmspaces(communication[o_idx:p_idx]))
-                o_idx = p_idx; p_idx +=  1; note.append(_('Detail') + ': ' + _('Type of R transaction') + ': ' + sepa_type[communication[o_idx:p_idx]])
-                o_idx = p_idx; p_idx +=  4; note.append(_('Detail') + ': ' + _('Reason') + ': ' + rmspaces(communication[o_idx:p_idx]))
-            else:
-                structured_com = _('Type of structured communication not supported: %(type)s', type=co_type)
-                note.append(communication)
-            return structured_com, note
+    def _check_coda(self, coda_string):
+        # Matches the first 24 characters of a CODA file, as defined by the febelfin specifications
+        return re.match(r'0{5}\d{9}05[ D] +', coda_string) is not None
 
-        recordlist = record_data.split(u'\n')
+    def _get_coda_file_statements(self, coda_data):
+        _ = self.env._
+        recordlist = coda_data.split("\n")
         statements = []
         globalisation_comm = {}
         for line in recordlist:
             if not line:
                 pass
             elif line[0] == '0':
-                #Begin of a new Bank statement
+                # Begin of a new Bank statement
                 statement = {}
                 statements.append(statement)
                 statement['version'] = line[127]
@@ -562,7 +546,7 @@ class AccountJournal(models.Model):
                 statement['date'] = time.strftime(tools.DEFAULT_SERVER_DATE_FORMAT, time.strptime(rmspaces(line[5:11]), '%d%m%y'))
                 statement['separateApplication'] = rmspaces(line[83:88])
             elif line[0] == '1':
-                #Statement details
+                # Statement details
                 if statement['version'] == '1':
                     statement['acc_number'] = rmspaces(line[5:17])
                     statement['currency'] = rmspaces(line[18:21])
@@ -595,7 +579,7 @@ class AccountJournal(models.Model):
                 statement['codaSeqNumber'] = rmspaces(line[125:128])
             elif line[0] == '2':
                 if line[1] == '1':
-                    #New statement line
+                    # New statement line
                     statementLine = {}
                     statementLine['ref'] = rmspaces(line[2:10])
                     statementLine['ref_move'] = rmspaces(line[2:6])
@@ -612,12 +596,12 @@ class AccountJournal(models.Model):
                     statementLine['transaction_code'] = rmspaces(line[56:58])
                     statementLine['transaction_category'] = rmspaces(line[58:61])
                     if line[61] == '1':
-                        #Structured communication
+                        # Structured communication
                         statementLine['communication_struct'] = True
                         statementLine['communication_type'] = line[62:65]
                         statementLine['communication'] = line[65:115]
                     else:
-                        #Non-structured communication
+                        # Non-structured communication
                         statementLine['communication_struct'] = False
                         statementLine['communication'] = rmspaces(line[62:115])
                     statementLine['entryDate'] = time.strftime(tools.DEFAULT_SERVER_DATE_FORMAT, time.strptime(rmspaces(line[115:121]), '%d%m%y'))
@@ -686,12 +670,12 @@ class AccountJournal(models.Model):
                     infoLine['transaction_code'] = rmspaces(line[34:36])
                     infoLine['transaction_category'] = rmspaces(line[36:39])
                     if line[39] == '1':
-                        #Structured communication
+                        # Structured communication
                         infoLine['communication_struct'] = True
                         infoLine['communication_type'] = line[40:43]
                         infoLine['communication'] = line[43:113]
                     else:
-                        #Non-structured communication
+                        # Non-structured communication
                         infoLine['communication_struct'] = False
                         infoLine['communication'] = line[40:113]
                     statement['lines'].append(infoLine)
@@ -733,6 +717,20 @@ class AccountJournal(models.Model):
                 statement['balancePlus'] = float(rmspaces(line[37:52])) / 1000
                 if not statement.get('balance_end_real'):
                     statement['balance_end_real'] = statement['balance_start'] + statement['balancePlus'] - statement['balanceMin']
+        return statements
+
+    def _get_coda_final_statements(self, statements):
+        _ = self.env._
+
+        def parse_operation(tr_type, family, operation, category):
+            transaction_type = sepa_transaction_type[tr_type]
+            transaction_family, transaction_operations = transaction_code[family]
+            transaction_operation = transaction_operations.get(operation, default_transaction_code.get(operation, _lt('undefined')))
+            tr_type = _(transaction_type)  # pylint: disable=gettext-variable
+            tr_family = _(transaction_family)  # pylint: disable=gettext-variable
+            tr_operation = _(transaction_operation)  # pylint: disable=gettext-variable
+            return f"{tr_type}: {tr_family} ({tr_operation})"
+
         ret_statements = []
         for statement in statements:
             statement['coda_note'] = ''
@@ -748,7 +746,7 @@ class AccountJournal(models.Model):
                 to_add = statement_line and statement_line[-1]['ref'][:4] == line.get('ref_move') and statement_line[-1] or temp_data
                 if line['type'] == 'information':
                     if line['communication_struct']:
-                        to_add['narration'] = "\n".join([to_add.get('narration', ''), 'Communication: '] + parse_structured_communication(line['communication_type'], line['communication'])[1])
+                        to_add['narration'] = "\n".join([to_add.get('narration', ''), 'Communication: '] + self._parse_structured_communication(line['communication_type'], line['communication'])[1])
                     else:
                         to_add['narration'] = "\n".join([to_add.get('narration', ''), line['communication']])
                 elif line['type'] == 'communication':
@@ -780,7 +778,7 @@ class AccountJournal(models.Model):
                         note.append(_('Counter Party Address: %s', line['counterpartyAddress']))
                     structured_com = False
                     if line['communication_struct']:
-                        structured_com, extend_notes = parse_structured_communication(line['communication_type'], line['communication'])
+                        structured_com, extend_notes = self._parse_structured_communication(line['communication_type'], line['communication'])
                         note.extend(extend_notes)
                     elif line.get('communication'):
                         note.append(_('Communication: %s', rmspaces(line['communication'])))
@@ -809,6 +807,25 @@ class AccountJournal(models.Model):
                 statement_data.update({'coda_note': _('Communication:\n%s', statement['coda_note'])})
             statement_data.update({'transactions': statement_line})
             ret_statements.append(statement_data)
+        return ret_statements
+
+    def _parse_bank_statement_file(self, attachment):
+        pattern = re.compile("[\u0020-\u1EFF\n\r]+")  # printable characters
+
+        # Try different encodings for the file
+        for encoding in ('utf_8', 'cp850', 'cp858', 'cp1140', 'cp1252', 'iso8859_15', 'utf_32', 'utf_16', 'windows-1252'):
+            try:
+                record_data = attachment.raw.decode(encoding)
+            except UnicodeDecodeError:
+                continue
+            if pattern.fullmatch(record_data, re.MULTILINE):
+                break  # We only have printable characters, stick with this one
+
+        if not self._check_coda(record_data):
+            return super()._parse_bank_statement_file(attachment)
+
+        statements = self._get_coda_file_statements(record_data)
+        ret_statements = self._get_coda_final_statements(statements)
 
         # Order the transactions according the newly created statements to ensure valid balances.
         line_sequence = 1
@@ -817,6 +834,6 @@ class AccountJournal(models.Model):
                 statement_line_vals['sequence'] = line_sequence
                 line_sequence += 1
 
-        currency_code = statement['currency']
+        currency_code = statements and statements[-1]['currency']
         acc_number = statements[0] and statements[0]['acc_number'] or False
         return currency_code, acc_number, ret_statements
