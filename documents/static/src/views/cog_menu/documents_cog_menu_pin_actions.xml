@@ -8,8 +8,8 @@
             <t t-set-slot="content">
                 <span t-foreach="this.documentsState.actions" t-as="action" t-key="action.id"
                     t-on-click.stop.prevent="() => this.onEnableAction(action.id)"
-                    class="o-dropdown-item dropdown-item">
-                    <i t-if="action.is_embedded" class="fa fa-thumb-tack me-1"/>
+                    class="o-dropdown-item dropdown-item"
+                    t-att-class="{'selected': action.is_embedded}">
                     <t t-out="action.name"/>
                 </span>
             </t>
