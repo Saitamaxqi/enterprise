@@ -6,40 +6,38 @@
         <field name="arch" type="xml">
             <form string="Salary Rule Parameter">
                 <sheet>
-                    <group>
-                        <field name="name"/>
-                        <field name="code"/>
-                    </group>
-                    <div class="o_salary_rule_container position-relative" invisible="id">
-                        <group class="pe-none user-select-none mt-4 opacity-25 lh-1">
-                            <div>
-                                <span>Versions</span>
-                                <field name="parameter_version_ids" nolabel="1">
-                                    <list>
-                                        <field name="date_from"/>
-                                        <field name="parameter_value"/>
-                                    </list>
-                                </field>
+                    <div name="button_box" class="oe_button_box">
+                        <button name="action_open_salary_rules"
+                            class="oe_stat_button"
+                            icon="fa-list-ul"
+                            type="object"
+                            groups="hr_payroll.group_hr_payroll_manager">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Salary Rules</span>
+                                <span class="o_stat_value"><field name="salary_rule_count"/></span>
                             </div>
-                        </group>
-                        <span class="bg-white opacity-75 w-100 h-100 o_salary_rule_overlay position-absolute top-0 end-0 w-100 h-100 text-center d-flex justify-content-center flex-column fs-3">
-                            Save your Salary Rule in order to add Parameter Values.
-                        </span>
+                        </button>
                     </div>
-                    <group string="Versions" invisible="not id">
-                        <field name="parameter_version_ids" nolabel="1"
-                                context="{'default_rule_parameter_id': id}">
-                            <list editable="bottom">
-                                <field name="date_from"/>
-                                <field name="parameter_value"/>
-                            </list>
-                        </field>
+                    <h1 class="w-100"><field name="name"/></h1>
+                    <group>
+                        <field name="code"/>
+                        <field name="current_value"/>
+                        <field name="valid_since"/>
                     </group>
                     <notebook>
                         <page string="Description" name="description">
                             <field name="description" type="html"
                                 options="{'collaborative': true, 'resizable': false}"
                                 placeholder="Note a description of your parameter, when it's used, how is it computed, what's the source, ..."/>
+                        </page>
+                        <page string="History" name="history">
+                            <field name="parameter_version_ids" nolabel="1"
+                                    context="{'default_rule_parameter_id': id}">
+                                <list editable="top">
+                                    <field name="date_from"/>
+                                    <field name="parameter_value"/>
+                                </list>
+                            </field>
                         </page>
                     </notebook>
                 </sheet>
@@ -51,9 +49,13 @@
         <field name="name">hr.rule.parameter.list</field>
         <field name="model">hr.rule.parameter</field>
         <field name="arch" type="xml">
-            <list>
+            <list expand="1">
                 <field name="name"/>
                 <field name="code"/>
+                <field name="current_value_one_line" string="Current Value"/>
+                <field name="valid_since"/>
+                <field name="salary_rule_ids"/>
+                <button name="action_open_salary_rules" type="object" icon="fa-external-link" string="Salary Rules" invisible="salary_rule_count == 0"/>
             </list>
         </field>
     </record>
@@ -64,6 +66,7 @@
         <field name="arch" type="xml">
             <search>
                 <field name="name" filter_domain="['|', ('name', 'ilike', self), ('code', 'ilike', self)]"/>
+                <filter string="Country" name="group_by_country" context="{'group_by': 'country_id'}"/>
             </search>
         </field>
     </record>
@@ -72,6 +75,9 @@
         <field name="name">Salary Rule Parameters</field>
         <field name="res_model">hr.rule.parameter</field>
         <field name="view_mode">list,form</field>
+        <field name="context">{
+            'search_default_group_by_country': 1
+        }</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">
                 Create a new salary rule parameter

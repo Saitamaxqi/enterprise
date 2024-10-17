@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.tools.safe_eval import safe_eval
@@ -58,6 +57,11 @@ class HrRuleParameter(models.Model):
     description = fields.Html()
     country_id = fields.Many2one('res.country', string='Country', default=lambda self: self.env.company.country_id)
     parameter_version_ids = fields.One2many('hr.rule.parameter.value', 'rule_parameter_id', string='Versions')
+    current_value = fields.Text(compute='_compute_current_value')
+    current_value_one_line = fields.Text(string='Current Value (short)', compute='_compute_current_value')
+    valid_since = fields.Date(compute='_compute_current_value')
+    salary_rule_ids = fields.One2many('hr.salary.rule', compute='_compute_salary_rule', string='Salary Rules')
+    salary_rule_count = fields.Integer(compute='_compute_salary_rule')
 
     __unique = models.Constraint(
         'unique (code)',
@@ -80,3 +84,51 @@ class HrRuleParameter(models.Model):
             raise UserError(_('No rule parameter with code "%(code)s" was found for %(date)s', code=code, date=date))
         else:
             return None
+
+    @api.depends('parameter_version_ids')
+    def _compute_current_value(self):
+        for rule_parameter in self:
+            if not rule_parameter.parameter_version_ids:
+                rule_parameter.current_value = False
+                rule_parameter.current_value_one_line = False
+                rule_parameter.valid_since = False
+                continue
+
+            # All values are already order from most recent to oldest.
+            # Here we get the first value that is not in the future, i.e. the current value.
+            for value_id in rule_parameter.parameter_version_ids:
+                if value_id.date_from <= fields.Date.today():
+                    rule_parameter.current_value = value_id.parameter_value
+                    is_number = value_id.parameter_value.replace('-', '').replace('.', '').isnumeric()
+                    rule_parameter.current_value_one_line = value_id.parameter_value if is_number else '(...)'
+                    rule_parameter.valid_since = value_id.date_from
+                    break
+
+    def _compute_salary_rule(self):
+        for rule_parameter in self:
+            rule_parameter.salary_rule_ids = self.env['hr.salary.rule'].search([
+                '|',
+                '|',
+                ('condition_python', 'like', "'" + rule_parameter.code + "'"),
+                ('amount_python_compute', 'like', "'" + rule_parameter.code + "'"),
+                '|',
+                ('condition_python', 'like', '"' + rule_parameter.code + '"'),
+                ('amount_python_compute', 'like', '"' + rule_parameter.code + '"'),
+            ])
+            rule_parameter.salary_rule_count = len(rule_parameter.salary_rule_ids)
+
+    def action_open_salary_rules(self):
+        self.ensure_one()
+        action = self.env['ir.actions.actions']._for_xml_id('hr_payroll.action_salary_rule_form')
+        action.update({
+            'domain': [
+                '|',
+                '|',
+                ('condition_python', 'like', "'" + self.code + "'"),
+                ('amount_python_compute', 'like', "'" + self.code + "'"),
+                '|',
+                ('condition_python', 'like', '"' + self.code + '"'),
+                ('amount_python_compute', 'like', '"' + self.code + '"'),
+            ],
+        })
+        return action

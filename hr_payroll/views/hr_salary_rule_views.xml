@@ -4,7 +4,7 @@
         <field name="name">hr.salary.rule.list</field>
         <field name="model">hr.salary.rule</field>
         <field name="arch" type="xml">
-            <list string="Salary Rules">
+            <list string="Salary Rules" expand="1">
                 <field name="name"/>
                 <field name="code"/>
                 <field name="category_id"/>
