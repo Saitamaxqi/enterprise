@@ -140,10 +140,10 @@ class L10nThaiTaxReportTest(AccountSalesReportCommon):
         report_data = self.env['l10n_th.tax.report.handler'].l10n_th_print_sale_tax_report(options)['file_content']
         expected = [
             ['No.', 'Tax Invoice No.', 'Reference', 'Invoice Date', 'Contact Name', 'Tax ID', 'Company Information', 'Total Amount', 'Total Excluding VAT Amount', 'Vat Amount'],
-            [1, 'INV/2023/00001', '', datetime(2023, 5, 20), 'Partner B', '12345678', 'Branch 12345678', 2080.0, 2000.0, 140.0],
+            [1, 'INV/2023/00001', '', datetime(2023, 5, 20), 'Partner B', '12345678', 'Branch 12345678', 2140.0, 2000.0, 140.0],
             ['', '', '', '', '', '', '', '', '', ''],
             ['', '', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', 'Total', 2080.0, 2000.0, 140]
+            ['', '', '', '', '', '', 'Total', 2140.0, 2000.0, 140]
         ]
         self.compare_xlsx_data(report_data, expected)
 
@@ -159,10 +159,10 @@ class L10nThaiTaxReportTest(AccountSalesReportCommon):
         report_data = self.env['l10n_th.tax.report.handler'].l10n_th_print_sale_tax_report(options)['file_content']
         expected = [
             ['No.', 'Tax Invoice No.', 'Reference', 'Invoice Date', 'Contact Name', 'Tax ID', 'Company Information', 'Total Amount', 'Total Excluding VAT Amount', 'Vat Amount'],
-            [1, 'INV/2023/00001', '', datetime(2023, 5, 20), 'Partner B', '12345678', '', 2080.0, 2000.0, 140.0],
+            [1, 'INV/2023/00001', '', datetime(2023, 5, 20), 'Partner B', '12345678', '', 2140.0, 2000.0, 140.0],
             ['', '', '', '', '', '', '', '', '', ''],
             ['', '', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', 'Total', 2080.0, 2000.0, 140]
+            ['', '', '', '', '', '', 'Total', 2140.0, 2000.0, 140]
         ]
         self.compare_xlsx_data(report_data, expected)
 
@@ -182,10 +182,12 @@ class L10nThaiTaxReportTest(AccountSalesReportCommon):
         report_data = self.env['l10n_th.tax.report.handler'].l10n_th_print_purchase_tax_report(options)['file_content']
         expected = [
             ['No.', 'Tax Invoice No.', 'Reference', 'Invoice Date', 'Contact Name', 'Tax ID', 'Company Information', 'Total Amount', 'Total Excluding VAT Amount', 'Vat Amount'],
-            [1, 'BILL/2023/05/0001', '', datetime(2023, 5, 20), 'Partner B', '12345678', '', 2080.0, 2000.0, 140.0],
+            [1, 'RBILL/2023/05/0001', '', datetime(2023, 5, 31), 'Partner B', '12345678', '', -2140.0, -2000.0, -140.0],
+            [2, 'BILL/2023/05/0002', '', datetime(2023, 5, 20), 'Partner B', '12345678', '', 2140.0, 2000.0, 140.0],
+            [3, 'BILL/2023/05/0001', '', datetime(2023, 5, 20), 'Partner B', '12345678', '', 2140.0, 2000.0, 140.0],
             ['', '', '', '', '', '', '', '', '', ''],
             ['', '', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', 'Total', 2080.0, 2000.0, 140.0]
+            ['', '', '', '', '', '', 'Total', 2140.0, 2000.0, 140.0]
         ]
         self.compare_xlsx_data(report_data, expected)
 
@@ -207,10 +209,10 @@ class L10nThaiTaxReportTest(AccountSalesReportCommon):
         report_data = self.env['l10n_th.tax.report.handler'].l10n_th_print_purchase_tax_report(options)['file_content']
         expected = [
             ['No.', 'Tax Invoice No.', 'Reference', 'Invoice Date', 'Contact Name', 'Tax ID', 'Company Information', 'Total Amount', 'Total Excluding VAT Amount', 'Vat Amount'],
-            [1, 'RBILL/2023/05/0001', '', datetime(2023, 5, 20), 'Partner B', '12345678', '', -1040.0, -1000.0, -70.0],
-            [2, 'BILL/2023/05/0001', '', datetime(2023, 5, 20), 'Partner B', '12345678', '', 2080.0, 2000.0, 140.0],
+            [1, 'RBILL/2023/05/0001', '', datetime(2023, 5, 20), 'Partner B', '12345678', '', -1070.0, -1000.0, -70.0],
+            [2, 'BILL/2023/05/0001', '', datetime(2023, 5, 20), 'Partner B', '12345678', '', 2140.0, 2000.0, 140.0],
             ['', '', '', '', '', '', '', '', '', ''],
             ['', '', '', '', '', '', '', '', '', ''],
-            ['', '', '', '', '', '', 'Total', 1040.0, 1000.0, 70.0]
+            ['', '', '', '', '', '', 'Total', 1070.0, 1000.0, 70.0]
         ]
         self.compare_xlsx_data(report_data, expected)

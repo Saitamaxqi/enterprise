@@ -2,10 +2,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import io
-from math import copysign
 from odoo import _, models
 from odoo.tools.misc import xlsxwriter
 from odoo import fields
+from odoo.osv import expression
 
 
 class L10n_ThTaxReportHandler(models.AbstractModel):
@@ -37,9 +37,10 @@ class L10n_ThTaxReportHandler(models.AbstractModel):
         return []
 
     def l10n_th_print_sale_tax_report(self, options):
-        domain = [('journal_id.type', '=', 'sale'), ('payment_state', '!=', 'reversed'),
-                  '|', ('reversed_entry_id.payment_state', '!=', 'reversed'), ('reversed_entry_id', '=', False)]
-        data = self._l10n_th_print_tax_report(options, domain, origin_type='sale')
+        report = self.env['account.report'].browse(options['report_id'])
+        base_tags = self.env['account.account.tag']._get_tax_tags('1. Sales amount', report.country_id.id)
+        tax_tags = self.env['account.account.tag']._get_tax_tags('5. Output tax', report.country_id.id)
+        data = self._generate_data(base_tags, tax_tags, 'sale', options)
         return {
             "file_name": _("Sales Tax Report"),
             "file_content": data,
@@ -47,27 +48,24 @@ class L10n_ThTaxReportHandler(models.AbstractModel):
         }
 
     def l10n_th_print_purchase_tax_report(self, options):
-        domain = [('journal_id.type', '=', 'purchase'), ('payment_state', '!=', 'reversed'),
-                  '|', ('reversed_entry_id.payment_state', '!=', 'reversed'), ('reversed_entry_id', '=', False)]
-        data = self._l10n_th_print_tax_report(options, domain, origin_type='purchase')
+        report = self.env['account.report'].browse(options['report_id'])
+        base_tags = self.env['account.account.tag']._get_tax_tags('6. Purchase amount that is entitled to deduction of input tax from output tax in tax computation', report.country_id.id)
+        tax_tags = self.env['account.account.tag']._get_tax_tags('7. Input tax (according to invoice of purchase amount in 6.)', report.country_id.id)
+        data = self._generate_data(base_tags, tax_tags, 'purchase', options)
         return {
             "file_name": _("Purchase Tax Report"),
             "file_content": data,
             "file_type": "xlsx",
         }
 
-    def _l10n_th_print_tax_report(self, options, domain, origin_type='sale'):
+    def _generate_data(self, base_tags, tax_tags, origin_type, options):
+        # Dates are taken from the report options
         date_from = options['date'].get('date_from')
         date_to = options['date'].get('date_to')
-        domain += [('date', '>=', date_from), ('date', '<=', date_to)]
-        if options.get('all_entries'):
-            domain += [('state', 'in', ['draft', 'posted'])]
-        else:
-            domain += [('state', '=', 'posted')]
-        moves = self.env['account.move'].search(domain)
-        return self._generate_data(moves, origin_type, date_from, date_to)
+        # We find the related move lines based on the report options and provided tags.
+        domain = expression.AND([self.env.ref('account.generic_tax_report')._get_options_domain(options, 'strict_range'), [('tax_tag_ids', 'in', (base_tags | tax_tags).ids)]])
+        move_lines_per_move = self.env['account.move.line'].search(domain).grouped('move_id')
 
-    def _generate_data(self, moves, origin_type, date_from, date_to):
         file_data = io.BytesIO()
         workbook = xlsxwriter.Workbook(file_data, {
             'in_memory': True,
@@ -121,30 +119,48 @@ class L10n_ThTaxReportHandler(models.AbstractModel):
         accumulate_untaxed_signed = 0
         accumulate_tax = 0
 
-        tax_group_vat_7 = self.env['account.chart.template'].ref('tax_group_vat_7')
-        for index, move in enumerate(moves):
-            sign = move.reversed_entry_id.payment_state == 'partial' and -1 or 1
-            amount_total = sign * copysign(move.amount_total_signed, move.amount_total)
-            amount_untaxed_signed = sign * abs(move.amount_untaxed_signed)
-            # Only include tax amount from VAT 7% tax group
-            amount_tax = 0.0
-            for subtotal in move.tax_totals['subtotals']:
-                for tax_group in subtotal['tax_groups']:
-                    if tax_group['id'] == tax_group_vat_7.id:
-                        amount_tax += sign * tax_group['tax_amount']
+        for index, (move, move_lines) in enumerate(move_lines_per_move.items()):
+            base_lines_per_tag = {}
+            tax_lines_per_tag = {}
+            for line in move_lines:
+                for tag in base_tags:
+                    if tag in line.tax_tag_ids:
+                        base_lines_per_tag.setdefault(tag, []).append(line)
+                for tag in tax_tags:
+                    if tag in line.tax_tag_ids:
+                        tax_lines_per_tag.setdefault(tag, []).append(line)
+
+            total_base = total_tax = 0
+            # Sum the base lines, minding the sign on the tag (tax_negate) and the line (tax_tag_invert)
+            for base_tag_id, base_lines in base_lines_per_tag.items():
+                tag_sign = -1 if base_tag_id.tax_negate else 1
+                for line in base_lines:
+                    line_sign = -1 if line.tax_tag_invert else 1
+                    total_base += line.balance * line_sign * tag_sign
+            # Repeat that for the tax lines
+            for tax_tag_id, tax_lines in tax_lines_per_tag.items():
+                tag_sign = -1 if tax_tag_id.tax_negate else 1
+                for line in tax_lines:
+                    line_sign = -1 if line.tax_tag_invert else 1
+                    total_tax += line.balance * line_sign * tag_sign
+            # Get the amount including taxes
+            total = total_base + total_tax
+
             sheet.write(y_offset, 0, index + 1, default_style)
             sheet.write(y_offset, 1, move.name, default_style)
             sheet.write(y_offset, 2, move.ref or '', default_style)
             sheet.write(y_offset, 3, move.date, date_default_style)
-            sheet.write(y_offset, 4, move.partner_id.name or '', default_style)
+            # If no partner is provided:
+            # (4) In other cases, such as a simplified tax invoice, fill in “Selling goods or providing services”
+            sheet.write(y_offset, 4, move.partner_id.name or _('Selling goods or providing services'), default_style)
             sheet.write(y_offset, 5, move.partner_id.vat or '', default_style)
-            sheet.write(y_offset, 6, move.partner_id.l10n_th_branch_name, default_style)
-            sheet.write(y_offset, 7, amount_total, currency_default_style)
-            sheet.write(y_offset, 8, amount_untaxed_signed, currency_default_style)
-            sheet.write(y_offset, 9, amount_tax, currency_default_style)
-            accumulate_total += amount_total
-            accumulate_untaxed_signed += amount_untaxed_signed
-            accumulate_tax += amount_tax
+            sheet.write(y_offset, 6, move.partner_id.l10n_th_branch_name or '', default_style)
+            sheet.write(y_offset, 7, total, currency_default_style)
+            sheet.write(y_offset, 8, total_base, currency_default_style)
+            sheet.write(y_offset, 9, total_tax, currency_default_style)
+            accumulate_total += total
+            accumulate_untaxed_signed += total_base
+            accumulate_tax += total_tax
             y_offset += 1
         y_offset += 1
         y_offset += 1
