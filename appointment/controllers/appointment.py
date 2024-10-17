@@ -272,7 +272,7 @@ class AppointmentController(http.Controller):
         :param page_values: dict containing common appointment page values. See _prepare_appointment_type_page_values for details.
         :param state: the type of message that will be displayed in case of an error/info. See appointment_type_page.
         """
-        request.session.timezone = self._get_default_timezone(appointment_type)
+        request.session['timezone'] = self._get_default_timezone(appointment_type)
         asked_capacity = int(kwargs.get('asked_capacity', 1))
         filter_prefix = 'user' if appointment_type.schedule_based_on == "users" else 'resource'
         slots_values = self._get_slots_values(appointment_type,
@@ -824,7 +824,7 @@ class AppointmentController(http.Controller):
             timezone of the appointment type.
         """
         if 'timezone' in request.session:
-            return request.session.timezone
+            return request.session['timezone']
         if appointment_type.location_id:
             return appointment_type.appointment_tz
         cookie = request.cookies.get('tz')

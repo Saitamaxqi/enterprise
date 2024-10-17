@@ -30,7 +30,7 @@
             <t t-set="object" t-value="event or booking"/>
             <div class="row mx-0 my-2 border o_wappointment_sale_confirmation_card"
                 t-att-data-event-access-token="event.access_token">
-                <t t-set="tz" t-value="request.session.timezone or object.appointment_type_id.appointment_tz"/>
+                <t t-set="tz" t-value="request.session.get('timezone') or object.appointment_type_id.appointment_tz"/>
                 <div class="col-5 d-flex justify-content-center">
                     <div class="position-relative w-100 m-2 o_cc o_cc3">
                         <div t-field="object.appointment_type_id.image_1920" class="d-block h-100 w-100 overflow-hidden ratio ratio-4x3" role="img"

@@ -61,7 +61,7 @@
                                 </div>
                                 <div class="col-9">
                                     <strong t-out="datetime_start"/>
-                                    <span t-if="not appointment_type.hide_timezone" class="text-muted"> (<t t-out="request.session.timezone"/>)</span>
+                                    <span t-if="not appointment_type.hide_timezone" class="text-muted"> (<t t-out="request.session.get('timezone')"/>)</span>
                                     <div t-if="not is_cancelled" class="o_appointment_add_to_calendar_btns d-flex flex-wrap gap-3 mt-2">
                                         <a role="button" class="o_outlook_calendar btn btn-block bg-white" t-attf-href="/calendar/ics/#{event.access_token}.ics">
                                             <img src="/appointment/static/src/img/outlook-calendar.svg" alt="Outlook"/>
