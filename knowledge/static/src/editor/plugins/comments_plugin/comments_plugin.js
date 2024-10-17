@@ -93,6 +93,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
         handle_delete_forward: withSequence(1, this.handleDeleteForward.bind(this)),
         handle_delete_backward: withSequence(1, this.handleDeleteBackward.bind(this)),
         arrows_should_skip: this.arrowShouldSkip.bind(this),
+        onExternalHistorySteps: this.updateBeacons.bind(this),
     };
 
     setup() {
@@ -166,7 +167,6 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 this.normalize(payload.node);
                 break;
             case "RESTORE_SAVEPOINT":
-            case "ADD_EXTERNAL_STEP":
             case "HISTORY_RESET_FROM_STEPS":
             case "HISTORY_RESET":
                 this.updateBeacons();
