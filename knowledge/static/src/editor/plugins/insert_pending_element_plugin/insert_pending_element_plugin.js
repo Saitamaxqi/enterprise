@@ -2,16 +2,11 @@ import { Plugin } from "@html_editor/plugin";
 import { isPhrasingContent } from "@html_editor/utils/dom_info";
 
 export class InsertPendingElementPlugin extends Plugin {
-    static name = "insertPendingElement";
-    static dependencies = ["dom", "selection", "embedded_components"];
-
-    handleCommand(command, payload) {
-        switch (command) {
-            case "START_EDITION":
-                this.insertEmbeddedBluePrint();
-                break;
-        }
-    }
+    static id = "insertPendingElement";
+    static dependencies = ["history", "dom", "selection"];
+    resources = {
+        start_edition_handlers: this.insertEmbeddedBluePrint.bind(this),
+    };
 
     insertEmbeddedBluePrint() {
         const { resModel, resId } = this.config.getRecordInfo();
@@ -28,20 +23,20 @@ export class InsertPendingElementPlugin extends Plugin {
                     // insert phrasing content
                     const paragraph = document.createElement("p");
                     paragraph.appendChild(embeddedBlueprint);
-                    this.shared.setCursorEnd(this.editable);
-                    this.shared.domInsert(paragraph);
-                    this.dispatch("ADD_STEP");
+                    this.dependencies.selection.setCursorEnd(this.editable);
+                    this.dependencies.dom.insert(paragraph);
+                    this.dependencies.history.addStep();
                 };
             } else {
                 insert = () => {
                     // insert block content
-                    this.shared.setCursorEnd(this.editable);
-                    this.shared.domInsert(embeddedBlueprint);
+                    this.dependencies.selection.setCursorEnd(this.editable);
+                    this.dependencies.dom.insert(embeddedBlueprint);
                     const paragraph = document.createElement("p");
                     paragraph.appendChild(document.createElement("br"));
-                    this.shared.setCursorEnd(this.editable);
-                    this.shared.domInsert(paragraph);
-                    this.dispatch("ADD_STEP");
+                    this.dependencies.selection.setCursorEnd(this.editable);
+                    this.dependencies.dom.insert(paragraph);
+                    this.dependencies.history.addStep();
                 };
             }
             insert();

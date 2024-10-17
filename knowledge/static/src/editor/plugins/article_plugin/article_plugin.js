@@ -6,36 +6,31 @@ import { renderToElement } from "@web/core/utils/render";
 
 const ARTICLE_LINKS_SELECTOR = ".o_knowledge_article_link";
 export class KnowledgeArticlePlugin extends Plugin {
-    static name = "article";
-    static dependencies = ["dom", "selection", "dialog"];
+    static id = "article";
+    static dependencies = ["history", "dom", "selection", "dialog"];
     resources = {
-        powerboxItems: [
+        user_commands: [
             {
-                category: "navigation",
-                name: _t("Article"),
+                id: "insertArticle",
+                title: _t("Article"),
                 description: _t("Insert an Article shortcut"),
-                fontawesome: "fa-newspaper-o",
-                action: () => {
-                    this.addArticle();
-                },
+                icon: "fa-newspaper-o",
+                run: this.addArticle.bind(this),
             },
         ],
+        powerbox_items: [
+            {
+                categoryId: "navigation",
+                commandId: "insertArticle",
+            },
+        ],
+        clean_for_save_handlers: this.cleanForSave.bind(this),
+        normalize_handlers: this.normalize.bind(this),
     };
 
     setup() {
         super.setup();
         this.boundOpenArticle = this.openArticle.bind(this);
-    }
-
-    handleCommand(command, payload) {
-        switch (command) {
-            case "CLEAN_FOR_SAVE":
-                this.cleanForSave(payload.root);
-                break;
-            case "NORMALIZE":
-                this.normalize(payload.node);
-                break;
-        }
     }
 
     addArticle() {
@@ -44,7 +39,7 @@ export class KnowledgeArticlePlugin extends Plugin {
         if (recordInfo.resModel === "knowledge.article" && recordInfo.resId) {
             parentArticleId = recordInfo.resId;
         }
-        this.shared.addDialog(ArticleSelectionDialog, {
+        this.dependencies.dialog.addDialog(ArticleSelectionDialog, {
             title: _t("Link an Article"),
             confirmLabel: _t("Insert Link"),
             articleSelected: (article) => {
@@ -54,10 +49,10 @@ export class KnowledgeArticlePlugin extends Plugin {
                     displayName: article.displayName,
                 });
 
-                this.shared.domInsert(articleLinkBlock);
-                this.dispatch("ADD_STEP");
+                this.dependencies.dom.insert(articleLinkBlock);
+                this.dependencies.history.addStep();
                 const [anchorNode, anchorOffset] = rightPos(articleLinkBlock);
-                this.shared.setSelection({ anchorNode, anchorOffset });
+                this.dependencies.selection.setSelection({ anchorNode, anchorOffset });
             },
             parentArticleId,
         });
@@ -90,7 +85,7 @@ export class KnowledgeArticlePlugin extends Plugin {
         }
     }
 
-    cleanForSave(root) {
+    cleanForSave({ root }) {
         const articleLinks = this.scanForArticleLinks(root);
         for (const articleLink of articleLinks) {
             articleLink.removeAttribute("contenteditable");

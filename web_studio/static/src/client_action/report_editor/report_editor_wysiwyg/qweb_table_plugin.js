@@ -16,11 +16,12 @@ class TableMenu extends Component {
     static template = "html_editor.TableMenu";
     static props = {
         type: String, // column or row
-        dispatch: Function,
         overlay: Object,
         dropdownState: Object,
         target: { validate: (el) => el.nodeType === Node.ELEMENT_NODE },
         editable: { validate: (el) => el.nodeType === Node.ELEMENT_NODE },
+        addColumn: Function,
+        removeColumn: Function,
     };
     static components = { Dropdown, DropdownItem };
 
@@ -52,12 +53,12 @@ class TableMenu extends Component {
     }
 
     insertColumn(position, target) {
-        this.props.dispatch("ADD_QWEB_COLUMN", { position, reference: target });
+        this.props.addColumn({ position, reference: target });
         this.props.editable.focus();
     }
 
     deleteColumn(target) {
-        this.props.dispatch("REMOVE_QWEB_COLUMN", { cell: target });
+        this.props.removeColumn({ cell: target });
         this.props.editable.focus();
     }
     onSelected(item) {
@@ -135,8 +136,12 @@ const CELL_TAGS = ["Q-TH", "Q-TD"];
 const CSS_COL_COUNT_PROP = "--q-table-col-count";
 const CSS_COL_SIZE_PROP = "--q-cell-col-size";
 export class QWebTablePlugin extends Plugin {
-    static name = "qweb_table_plugin";
-    static dependencies = ["qweb", "overlay", "selection", "history"];
+    static id = "qweb_table_plugin";
+    static dependencies = ["overlay", "selection", "history"];
+    resources = {
+        clean_for_save_handlers: ({ root }) => this.clean(root),
+        normalize_handlers: this.normalize.bind(this),
+    };
 
     setup() {
         for (const table of this.editable.querySelectorAll("q-table")) {
@@ -148,7 +153,7 @@ export class QWebTablePlugin extends Plugin {
             });
         }
         /** @type {import("@html_editor/core/overlay_plugin").Overlay} */
-        this.colMenu = this.shared.createOverlay(
+        this.colMenu = this.dependencies.overlay.createOverlay(
             TableMenu,
             {
                 positionOptions: {
@@ -168,29 +173,6 @@ export class QWebTablePlugin extends Plugin {
         };
         this.addDomListener(this.document, "scroll", closeMenus, true);
         this.addDomListener(this.document, "pointermove", this.onMouseMove);
-    }
-
-    handleCommand(cmd, payload) {
-        switch (cmd) {
-            case "ADD_QWEB_COLUMN": {
-                this.addColumn(payload);
-                break;
-            }
-            case "REMOVE_QWEB_COLUMN": {
-                this.removeColumn(payload);
-                break;
-            }
-            case "NORMALIZE": {
-                for (const table of payload.node.querySelectorAll("q-table")) {
-                    this._normalize(table);
-                }
-                break;
-            }
-            case "CLEAN_FOR_SAVE": {
-                this.clean(payload.root);
-                break;
-            }
-        }
     }
 
     onMouseMove(ev) {
@@ -231,10 +213,11 @@ export class QWebTablePlugin extends Plugin {
                 props: {
                     editable: this.editable,
                     type: "column",
-                    dispatch: this.dispatch,
                     overlay: this.colMenu,
                     target: td,
                     dropdownState: this.createDropdownState(),
+                    addColumn: this.addColumn.bind(this),
+                    removeColumn: this.removeColumn.bind(this),
                 },
             });
         }
@@ -258,8 +241,8 @@ export class QWebTablePlugin extends Plugin {
 
     addColumn(payload) {
         const insertedCells = this._addColumn(payload);
-        this.shared.setCursorStart(insertedCells[0]);
-        this.dispatch("ADD_STEP");
+        this.dependencies.selection.setCursorStart(insertedCells[0]);
+        this.dependencies.history.addStep();
     }
 
     _addColumn({ position, reference }) {
@@ -323,8 +306,8 @@ export class QWebTablePlugin extends Plugin {
         const table = closestElement(payload.cell, "q-table");
         this._removeColumn(payload);
         const firstCell = table.querySelector(CELL_TAGS.join(","));
-        this.shared.setCursorEnd(firstCell);
-        this.dispatch("ADD_STEP");
+        this.dependencies.selection.setCursorEnd(firstCell);
+        this.dependencies.history.addStep();
     }
 
     _removeColumn({ cell }) {
@@ -384,6 +367,11 @@ export class QWebTablePlugin extends Plugin {
         return newElement;
     }
 
+    normalize(el) {
+        for (const table of el.querySelectorAll("q-table")) {
+            this._normalize(table);
+        }
+    }
     _normalize(table) {
         const { cells, baseLineRow } = new TableSizeComputer().compute(table);
 

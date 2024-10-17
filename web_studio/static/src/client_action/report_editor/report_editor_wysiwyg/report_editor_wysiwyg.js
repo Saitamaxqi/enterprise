@@ -38,6 +38,7 @@ import { closestElement } from "@html_editor/utils/dom_traversal";
 import { QWebTablePlugin } from "./qweb_table_plugin";
 import { visitNode } from "../utils";
 import { TablePlugin } from "@html_editor/main/table/table_plugin";
+import { withSequence } from "@html_editor/utils/resource";
 
 class __Record extends _Record.components._Record {
     setup() {
@@ -249,8 +250,8 @@ export class ReportEditorWysiwyg extends Component {
         this.undoRedoState = reactive({
             canUndo: false,
             canRedo: false,
-            undo: () => this.editor?.dispatch("HISTORY_UNDO"),
-            redo: () => this.editor?.dispatch("HISTORY_REDO"),
+            undo: () => this.editor?.shared.history.undo(),
+            redo: () => this.editor?.shared.history.redo(),
         });
 
         onWillStart(async () => {
@@ -274,11 +275,11 @@ export class ReportEditorWysiwyg extends Component {
         this.undoRedoState.canUndo = false;
         this.undoRedoState.canRedo = false;
         const onEditorChange = () => {
-            const canUndo = this.editor.shared.canUndo();
+            const canUndo = this.editor.shared.history.canUndo();
             this.reportEditorModel.isDirty = canUndo;
             Object.assign(this.undoRedoState, {
                 canUndo: canUndo,
-                canRedo: this.editor.shared.canRedo(),
+                canRedo: this.editor.shared.history.canRedo(),
             });
         };
 
@@ -291,7 +292,7 @@ export class ReportEditorWysiwyg extends Component {
                 Plugins: Object.values(REPORT_EDITOR_PLUGINS_MAP),
                 onChange: onEditorChange,
                 getRecordInfo: () => {
-                    const { anchorNode } = this.editor.shared.getEditableSelection();
+                    const { anchorNode } = this.editor.shared.selection.getEditableSelection();
                     if (!anchorNode) {
                         return {};
                     }
@@ -304,12 +305,12 @@ export class ReportEditorWysiwyg extends Component {
                 },
                 resources: {
                     handleNewRecords: this.handleMutations.bind(this),
-                    powerboxCategory: {
+                    powerbox_categories: withSequence(5, {
                         id: "report_tools",
                         name: _t("Report Tools"),
-                        sequence: 10,
-                    },
-                    powerboxItems: this.getPowerboxCommands(),
+                    }),
+                    user_commands: this.getUserCommands(),
+                    powerbox_items: this.getPowerboxCommands(),
                 },
             },
             this.env.services
@@ -482,24 +483,35 @@ export class ReportEditorWysiwyg extends Component {
         });
     }
 
-    getPowerboxCommands() {
+    getUserCommands() {
         return [
             {
-                category: "report_tools",
-                name: _t("Field"),
-                priority: 150,
+                id: "insertField",
+                title: _t("Field"),
                 description: _t("Insert a field"),
-                fontawesome: "fa-magic",
-                action: () => this.insertField(),
+                icon: "fa-magic",
+                run: this.insertField.bind(this),
             },
             {
-                category: "report_tools",
-                name: _t("Dynamic Table"),
-                priority: 140,
+                id: "insertDynamicTable",
+                title: _t("Dynamic Table"),
                 description: _t("Insert a table based on a relational field."),
-                fontawesome: "fa-magic",
-                action: () => this.insertTableX2Many(),
+                icon: "fa-magic",
+                run: this.insertTableX2Many.bind(this),
             },
+        ];
+    }
+
+    getPowerboxCommands() {
+        return [
+            withSequence(20, {
+                categoryId: "report_tools",
+                commandId: "insertField",
+            }),
+            withSequence(25, {
+                categoryId: "report_tools",
+                commandId: "insertDynamicTable",
+            }),
         ];
     }
 
@@ -508,7 +520,7 @@ export class ReportEditorWysiwyg extends Component {
         const doc = odooEditor.document;
 
         const resModel = this.reportEditorModel.reportResModel;
-        const docSelection = odooEditor.shared.getEditableSelection();
+        const docSelection = odooEditor.shared.selection.getEditableSelection();
         const { anchorNode } = docSelection;
         const isEditingFooterHeader =
             !!(doc.querySelector(".header") && doc.querySelector(".header").contains(anchorNode)) ||
@@ -586,9 +598,12 @@ export class ReportEditorWysiwyg extends Component {
                 td.textContent = _t("Insert a field...");
                 tr.appendChild(td);
 
-                this.editor.shared.domInsert(table);
-                this.editor.shared.setSelection({ anchorNode: td, focusOffset: nodeSize(td) });
-                this.editor.dispatch("ADD_STEP");
+                this.editor.shared.dom.insert(table);
+                this.editor.shared.selection.setSelection({
+                  anchorNode: td,
+                  focusOffset: nodeSize(td),
+                });
+                this.editor.shared.history.addStep();
             },
         });
     }
@@ -624,9 +639,9 @@ export class ReportEditorWysiwyg extends Component {
                     span.setAttribute("t-options-widget", "'image'");
                     span.setAttribute("t-options-qweb_img_raw_data", 1);
                 }
-                this.editor.shared.domInsert(span);
+                this.editor.shared.dom.insert(span);
                 this.editor.editable.focus();
-                this.editor.dispatch("ADD_STEP");
+                this.editor.shared.history.addStep();
             },
         });
     }

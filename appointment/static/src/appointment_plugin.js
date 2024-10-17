@@ -16,21 +16,28 @@ class AppointmentFormViewDialog extends FormViewDialog {
 }
 
 class AppointmentPlugin extends Plugin {
-    static dependencies = ["dom", "selection", "link", "dialog"];
+    static id = "appointment";
+    static dependencies = ["selection", "link", "dialog"];
      resources = {
-        powerboxItems: [
+        user_commands: [
             {
-                name: _t("Appointment"),
+                id: "insertAppointment",
+                title: _t("Appointment"),
                 description: _t("Add a specific appointment"),
-                category: "navigation",
-                fontawesome: "fa-calendar",
-                action: () => this.addAppointment(),
+                icon: "fa-calendar",
+                run: this.addAppointment.bind(this),
+            },
+        ],
+        powerbox_items: [
+            {
+                categoryId: "navigation",
+                commandId: "insertAppointment",
             },
         ],
     };
 
     addAppointment() {
-        this.shared.addDialog(AppointmentFormViewDialog, {
+        this.dependencies.dialog.addDialog(AppointmentFormViewDialog, {
             resModel: "appointment.invite",
             context: {
                 form_view_ref: "appointment.appointment_invite_view_form_insert_link",
@@ -40,7 +47,8 @@ class AppointmentPlugin extends Plugin {
             size: "md",
             title: _t("Insert Appointment Link"),
             mode: "edit",
-            insertLink: (url) => this.shared.insertLink(url, _t("Schedule an Appointment")),
+            insertLink: (url) =>
+                this.dependencies.link.insertLink(url, _t("Schedule an Appointment")),
         });
     }
 }

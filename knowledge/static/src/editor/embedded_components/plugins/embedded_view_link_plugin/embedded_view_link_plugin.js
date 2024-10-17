@@ -4,26 +4,21 @@ import { EMBEDDED_COMPONENT_PLUGINS } from "@html_editor/plugin_sets";
 import { _t } from "@web/core/l10n/translation";
 
 export class EmbeddedViewLinkPlugin extends Plugin {
-    static name = "embeddedViewLink";
-    static dependencies = ["dom", "selection"];
-
-    handleCommand(command, payload) {
-        switch (command) {
-            case "SETUP_NEW_COMPONENT":
-                this.setupNewComponent(payload);
-                break;
-        }
-    }
+    static id = "embeddedViewLink";
+    static dependencies = ["history", "dom", "selection"];
+    resources = {
+        mount_component_handlers: this.setupNewComponent.bind(this),
+    };
 
     setupNewComponent({ name, props }) {
         if (name === "viewLink") {
             Object.assign(props, {
                 removeViewLink: (text) => {
                     this.replaceElementWith(props.host, text);
-                    this.dispatch("ADD_STEP");
+                    this.dependencies.history.addStep();
                 },
                 copyViewLink: () => {
-                    const cursors = this.shared.preserveSelection();
+                    const cursors = this.dependencies.selection.preserveSelection();
                     this.copyElementToClipboard(props.host);
                     cursors?.restore();
                 },
@@ -33,8 +28,13 @@ export class EmbeddedViewLinkPlugin extends Plugin {
 
     replaceElementWith(target, element) {
         const [anchorNode, anchorOffset, focusNode, focusOffset] = boundariesOut(target);
-        this.shared.setSelection({ anchorNode, anchorOffset, focusNode, focusOffset });
-        this.shared.domInsert(element);
+        this.dependencies.selection.setSelection({
+          anchorNode,
+          anchorOffset,
+          focusNode,
+          focusOffset,
+        });
+        this.dependencies.dom.insert(element);
     }
 
     copyElementToClipboard(element) {

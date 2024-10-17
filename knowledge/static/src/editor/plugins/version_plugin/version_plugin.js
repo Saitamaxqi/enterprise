@@ -6,18 +6,11 @@ import {
 import { Plugin } from "@html_editor/plugin";
 
 export class VersionPlugin extends Plugin {
-    static name = "version";
-
-    handleCommand(command, payload) {
-        switch (command) {
-            case "CLEAN_FOR_SAVE":
-                this.cleanForSave(payload.root);
-                break;
-            case "NORMALIZE":
-                this.normalize(payload.node);
-                break;
-        }
-    }
+    static id = "version";
+    resources = {
+        clean_for_save_handlers: this.cleanForSave.bind(this),
+        normalize_handlers: this.normalize.bind(this),
+    };
 
     normalize(parent) {
         if (parent.matches(VERSION_SELECTOR) && parent !== this.editable) {
@@ -26,7 +19,7 @@ export class VersionPlugin extends Plugin {
         stripVersion(parent);
     }
 
-    cleanForSave(root) {
+    cleanForSave({ root }) {
         const VERSIONS = htmlEditorVersions();
         const firstChild = root.firstElementChild;
         const version = VERSIONS.at(-1);

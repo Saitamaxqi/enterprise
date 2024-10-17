@@ -2,17 +2,11 @@ import { Plugin } from "@html_editor/plugin";
 import { paragraphRelatedElements } from "@html_editor/utils/dom_info";
 
 export class AutofocusPlugin extends Plugin {
-    static name = "autofocus";
+    static id = "autofocus";
     static dependencies = ["selection"];
-
-    handleCommand(command, payload) {
-        switch (command) {
-            case "START_EDITION": {
-                this.focusFirstElement();
-                break;
-            }
-        }
-    }
+    resources = {
+        start_edition_handlers: this.focusFirstElement.bind(this),
+    };
 
     focusFirstElement() {
         for (const paragraph of this.editable.querySelectorAll(
@@ -20,11 +14,11 @@ export class AutofocusPlugin extends Plugin {
         )) {
             if (paragraph.isContentEditable) {
                 const { anchorNode, anchorOffset, focusNode, focusOffset } =
-                    this.shared.setSelection({
+                    this.dependencies.selection.setSelection({
                         anchorNode: paragraph,
                         anchorOffset: 0,
                     });
-                const selectionData = this.shared.getSelectionData();
+                const selectionData = this.dependencies.selection.getSelectionData();
                 if (!selectionData.documentSelectionIsInEditable) {
                     const selection = this.document.getSelection();
                     selection.setBaseAndExtent(anchorNode, anchorOffset, focusNode, focusOffset);
