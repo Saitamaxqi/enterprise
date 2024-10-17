@@ -73,7 +73,7 @@
     <!-- One journal for Support Documents -->
     <record id="l10n_co_dian.support_document_journal" model="account.journal">
         <field name="name">DIAN Support Documents</field>
-        <field name="code">DS</field>
+        <field name="code">SEDS</field>
         <field name="type">purchase</field>
         <field name="l10n_co_edi_is_support_document" eval="True"/>
         <field name="default_account_id" model="res.company"
