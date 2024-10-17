@@ -20,7 +20,7 @@ patch(PosStore.prototype, {
     createNewOrder() {
         const order = super.createNewOrder(...arguments);
         if (!order.partner_id && this.isEcuadorianCompany()) {
-            order.update({ partner_id: this.session._final_consumer_id });
+            order.partner_id = this.session._final_consumer_id;
         }
         return order;
     },
