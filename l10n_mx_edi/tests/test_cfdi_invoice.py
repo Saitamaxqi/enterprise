@@ -1709,6 +1709,104 @@ class TestCFDIInvoice(TestMxEdiCommon):
             self._assert_invoice_payment_cfdi(payment4.move_id, 'test_partial_payment_3_pay4')
             self.assertRecordValues(invoice, [{'amount_residual': 464.0}])
 
+    def test_foreign_curr_statement_and_invoice_modify_exchange_move(self):
+        """ Test a bank reconciliation multi currency reconcliation with remaining amount in company currency """
+        date1 = self.frozen_today - relativedelta(days=1)
+        date2 = self.frozen_today
+        # Rates for how much USD for 1 MXN
+        usd = self.setup_other_currency('USD', rates=[(date1, 1.5), (date2, 2.0001)])
+
+        with self.mx_external_setup(date1):
+            # 2 MXN invoices at rate 100 USD + 16% = 116 USD = 77.3 MXN (1:1.5)
+            invoice1 = self._create_invoice(
+                currency_id=usd.id,
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 100,
+                    }),
+                ],
+            )
+            invoice2 = self._create_invoice(
+                currency_id=usd.id,
+                invoice_line_ids=[
+                    Command.create({
+                        'product_id': self.product.id,
+                        'price_unit': 100,
+                    }),
+                ],
+            )
+
+            with self.with_mocked_pac_sign_success():
+                invoice1._l10n_mx_edi_cfdi_invoice_try_send()
+                invoice2._l10n_mx_edi_cfdi_invoice_try_send()
+
+        bank_journal = self.env['account.journal'].create({
+            'name': 'Bank 123456',
+            'code': 'BNK67',
+            'type': 'bank',
+            'bank_acc_number': '123456',
+            'currency_id': self.env.ref('base.USD').id,
+            'l10n_mx_edi_payment_method_id': self.env.ref('l10n_mx_edi.payment_method_transferencia').id,  # To default to this payment method
+        })
+
+        with self.mx_external_setup(date2):
+            # Bank transaction 232 USD = 115.9942 MXN ≃ 115.99 MXN (1:2.0001)
+            # At this rate 116 USD = 57.9971 MXN ≃ 58.00 MXN which is not half of 115.99 MXN
+            # => create a 0.01 MXN auto balance line
+
+            statement_line1 = self.env['account.bank.statement.line'].create({
+                'journal_id': bank_journal.id,
+                'amount': 232.0,
+                'date': date2,
+                'payment_ref': 'test'
+            })
+
+            # Open bank reconciliation widget
+            wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=statement_line1.id).new({})
+
+            invoice_lines = (invoice1 | invoice2).line_ids.filtered(lambda l: l.account_id.account_type == 'asset_receivable')
+            wizard._action_add_new_amls(invoice_lines)
+
+            self.assertRecordValues(wizard.line_ids, [
+                # pylint: disable=C0326
+                {'flag': 'liquidity',       'amount_currency': 232.0,      'currency_id': usd.id,   'balance': 115.99},
+                {'flag': 'new_aml',         'amount_currency': -116.0,     'currency_id': usd.id,   'balance': -77.34},
+                {'flag': 'exchange_diff',   'amount_currency': 0.0,        'currency_id': usd.id,   'balance': 19.34},
+                {'flag': 'new_aml',         'amount_currency': -116.0,     'currency_id': usd.id,   'balance': -77.34},
+                {'flag': 'exchange_diff',   'amount_currency': 0.0,        'currency_id': usd.id,   'balance': 19.34},
+                {'flag': 'auto_balance',    'amount_currency': 0.00,       'currency_id': usd.id,   'balance': 0.01},
+            ])
+
+            # Remove 0.01 in the balance of first exchange line
+            first_exchange_line = wizard.line_ids.filtered(lambda x: x.flag == 'exchange_diff')[:1]
+            wizard._js_action_mount_line_in_edit(first_exchange_line.index)
+            first_exchange_line.balance = 19.35
+            wizard._line_value_changed_balance(first_exchange_line)
+
+            # Every line balance so no 'auto_balance' is generated
+            self.assertRecordValues(wizard.line_ids, [
+                # pylint: disable=C0326
+                {'flag': 'liquidity',       'amount_currency': 232.0,      'currency_id': usd.id,   'balance': 115.99},
+                {'flag': 'new_aml',         'amount_currency': -116.0,     'currency_id': usd.id,   'balance': -77.34},
+                {'flag': 'exchange_diff',   'amount_currency': 0.0,        'currency_id': usd.id,   'balance': 19.35},
+                {'flag': 'new_aml',         'amount_currency': -116.0,     'currency_id': usd.id,   'balance': -77.34},
+                {'flag': 'exchange_diff',   'amount_currency': 0.0,        'currency_id': usd.id,   'balance': 19.34},
+            ])
+
+            self.assertRecordValues(wizard, [{'state': 'valid'}])
+
+            wizard._action_validate()
+
+            self.assertRecordValues(statement_line1, [{'is_reconciled': True}])
+            self.assertRecordValues(invoice1, [{'payment_state': 'paid'}])
+            self.assertRecordValues(invoice2, [{'payment_state': 'paid'}])
+
+            with self.with_mocked_pac_sign_success():
+                statement_line1.move_id._l10n_mx_edi_cfdi_payment_try_send()
+
+            self._assert_invoice_payment_cfdi(statement_line1.move_id, 'test_foreign_curr_statement_and_invoice_modify_exchange_move')
+
     def test_foreign_curr_payment_comp_curr_invoice_forced_balance(self):
         date1 = self.frozen_today - relativedelta(days=1)
         date2 = self.frozen_today

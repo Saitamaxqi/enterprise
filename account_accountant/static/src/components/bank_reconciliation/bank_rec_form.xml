@@ -328,7 +328,7 @@
         <div t-if="line" class="bank_rec_widget_manual_operations_anchor">
             <t t-set="invalidFields" t-value="this.getBankRecLineInvalidFields(line)"/>
             <t t-set="hasForcedNegativeValue"
-               t-value="line.data.flag === 'new_aml' and (line.data.source_balance lt 0.0 || line.data.source_amount_currency lt 0.0)"/>
+               t-value="['new_aml', 'exchange_diff'].includes(line.data.flag) and (line.data.source_balance lt 0.0 || line.data.source_amount_currency lt 0.0)"/>
             <t t-set="reconciled"
                t-value="data.state === 'reconciled'"/>
 
@@ -637,7 +637,7 @@
 
                     <!-- balance (in company currency) -->
                     <t t-set="amountFieldReadonly"
-                       t-value="reconciled || (['liquidity', 'exchange_diff'].includes(line.data.flag) and line.data.company_currency_id[0] !== line.data.currency_id[0])"/>
+                       t-value="reconciled || (line.data.flag == 'liquidity' and line.data.company_currency_id[0] !== line.data.currency_id[0])"/>
                     <div name="balance"
                          t-if="line.data.company_currency_id[0] !== line.data.currency_id[0] and line.data.company_currency_id[0] !== line.data.transaction_currency_id[0]"
                          class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">

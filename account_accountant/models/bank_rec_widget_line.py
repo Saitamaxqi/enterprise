@@ -350,7 +350,7 @@ class BankRecWidgetLine(models.Model):
     def _compute_display_stroked_balance(self):
         for line in self:
             line.display_stroked_balance = \
-                line.flag == 'new_aml' \
+                line.flag in ('new_aml', 'exchange_diff') \
                 and line.currency_id.compare_amounts(line.balance, line.source_balance) != 0
 
     @api.depends('flag')
