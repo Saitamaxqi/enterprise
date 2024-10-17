@@ -58,7 +58,7 @@ class AppraisalAskFeedback(models.TransientModel):
     @api.depends('employee_id')
     def _compute_subject(self):
         for wizard_su in self.filtered(lambda w: w.employee_id and w.template_id).sudo():
-            wizard_su.subject = wizard_su._render_template(
+            wizard_su.subject = wizard_su.with_context(employee_id=wizard_su.employee_id)._render_template(
                 wizard_su.template_id.subject,
                 'hr.appraisal',
                 wizard_su.appraisal_id.ids,

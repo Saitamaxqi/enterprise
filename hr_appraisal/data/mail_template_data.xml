@@ -64,7 +64,7 @@
 
         <record id="mail_template_appraisal_request_from_employee" model="mail.template">
             <field name="name">HR: Employee Appraisal Request</field>
-            <field name="model_id" ref="hr_appraisal.model_hr_appraisal"/>
+            <field name="model_id" ref="hr_appraisal.model_res_users"/>
             <field name="subject">{{ hasattr(object, 'name') and object.name or '' }} requests an Appraisal</field>
             <field name="description">Sent manually to the employee by the manager who wants to do an appraisal</field>
             <field name="body_html" type="html">
