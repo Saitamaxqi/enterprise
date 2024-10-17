@@ -104,7 +104,6 @@ class ResConfigSettings(models.TransientModel):
         return super().create(vals_list)
 
     def execute(self):
-        res = super().execute()
         if self.sign_invoice and (sign_module := self.env['ir.module.module'].search([('name', '=', 'sign'), ('state', '!=', 'installed')])):
             sign_module.sudo().button_immediate_install()
-        return res
+        return super().execute()
