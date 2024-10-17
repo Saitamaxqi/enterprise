@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import date, datetime, timedelta
@@ -400,6 +399,38 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
             grid_anchor = datetime(2023, 1, d)
             dummy, last_week = AnalyticLine.with_context(grid_anchor=grid_anchor)._get_last_week()
             self.assertEqual(last_week, date(2023, 1, ((d - 1) // 7 - 1) * 7 + 1))
+
+    def test_get_daily_working_hours(self):
+        """
+        Check number of daily working hours for different timezones.
+        """
+        employee = self.user_employee.employee_id
+        employee.resource_calendar_id = self.env['resource.calendar'].create({
+            'name': 'Employee calendar',
+            'tz': 'Etc/GMT+12',
+            'attendance_ids': [
+                (0, 0, {'name': 'Monday early morning', 'dayofweek': '0', 'hour_from': 0.5, 'hour_to': 4.5, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Monday lunch', 'dayofweek': '0', 'hour_from': 12, 'hour_to': 13, 'day_period': 'lunch'}),
+                (0, 0, {'name': 'Tuesday early morning', 'dayofweek': '1', 'hour_from': 0.5, 'hour_to': 2.5, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Tuesday late evening', 'dayofweek': '1', 'hour_from': 21.5, 'hour_to': 23.5, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Friday late evening', 'dayofweek': '4', 'hour_from': 19.5, 'hour_to': 23.5, 'day_period': 'afternoon'}),
+            ]
+        })
+        self.user_employee.tz = 'Etc/GMT+12'
+        working_hours_gmt_plus_12 = self.user_employee.with_user(self.user_employee).get_daily_working_hours('2021-3-22', '2021-3-26')
+
+        self.user_employee.tz = employee.resource_calendar_id.tz = 'Etc/GMT-12'
+        working_hours_gmt_minus_12 = self.user_employee.with_user(self.user_employee).get_daily_working_hours('2021-3-22', '2021-3-26')
+
+        expected_hours = {
+            '2021-03-22': 4.0,
+            '2021-03-23': 4.0,
+            '2021-03-24': 0,
+            '2021-03-25': 0,
+            '2021-03-26': 4.0,
+        }
+        self.assertEqual(working_hours_gmt_plus_12, expected_hours)
+        self.assertEqual(working_hours_gmt_minus_12, expected_hours)
 
     def test_action_start_timer_on_old_timesheet(self):
         """ Test start timer in timesheet with a date before the current one.

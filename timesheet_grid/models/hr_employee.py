@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 from collections import defaultdict
 from datetime import datetime, time, timedelta
-from pytz import UTC
+from pytz import timezone, UTC
 
 from odoo import api, fields, models, _
 from odoo.tools import float_round
@@ -89,8 +89,8 @@ class HrEmployee(models.Model):
         delta = date_stop_date - date_start_date
 
         # Change the type of the date from date to datetime and add UTC as the timezone time standard
-        datetime_min = datetime.combine(date_start_date, time.min).replace(tzinfo=UTC)
-        datetime_max = datetime.combine(date_stop_date, time.max).replace(tzinfo=UTC)
+        datetime_min = timezone(self.env.user.tz or self.resource_id.tz or 'UTC').localize(datetime.combine(date_start_date, time.min)).astimezone(UTC)
+        datetime_max = timezone(self.env.user.tz or self.resource_id.tz or 'UTC').localize(datetime.combine(date_stop_date, time.max)).astimezone(UTC)
         # Collect the number of hours that an employee should work according to their schedule without counting timeoff
         resource_work_intervals, dummy = self.resource_id._get_valid_work_intervals(datetime_min, datetime_max, compute_leaves=False)
 
