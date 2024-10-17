@@ -140,6 +140,30 @@
 
                                 <li invisible="gstr1_status != 'sent'"><button name="button_gstr1_filed" type="object" class="btn btn-link p-0" string="Mark as Filed"/>
                                 </li>
+                                <li>
+                                    <span invisible="gstr1_spreadsheet_id">
+                                        <button name="generate_gstr1_spreadsheet"
+                                                string="Generate"
+                                                class="btn btn-link p-0"
+                                                type="object"
+                                        />
+                                        and
+                                        View
+                                    </span>
+                                    <span invisible="not gstr1_spreadsheet_id">
+                                        <button name="generate_gstr1_spreadsheet"
+                                                string="Regenerate"
+                                                class="btn btn-link p-0"
+                                                type="object"
+                                        />
+                                        and
+                                        <button name="action_open_gstr1_spreadsheet"
+                                                class="btn btn-link p-0"
+                                                type="object"
+                                                string="View"
+                                        />
+                                    </span>
+                                </li>
                             </ol>
                         </div>
 

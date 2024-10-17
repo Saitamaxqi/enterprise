@@ -11,10 +11,11 @@ from dateutil import relativedelta
 from itertools import groupby
 from markupsafe import Markup
 
-from odoo import api, fields, models, tools, _
+from odoo import _, api, Command, fields, models, tools
 from odoo.exceptions import UserError, AccessError, ValidationError, RedirectWarning
 from odoo.tools import date_utils, get_lang, html_escape, SQL
 from odoo.tools.misc import format_date
+from odoo.addons.l10n_in_reports_gstr.tools.gstr1_spreadsheet_generator import GSTR1SpreadsheetGenerator
 from .irn_exception import IrnException
 
 import logging
@@ -154,6 +155,7 @@ class L10n_InGstReturnPeriod(models.Model):
     ], string="IRN Status", readonly=True, tracking=True)
     list_of_irn_json_attachment_ids = fields.Many2many('ir.attachment', 'irn_attachment_portal_json', string='JSON with list of IRNs')
     l10n_in_gstr_activate_einvoice_fetch = fields.Selection(related="company_id.l10n_in_gstr_activate_einvoice_fetch")
+    gstr1_spreadsheet_id = fields.Many2one('documents.document')
 
     # ===============================
     # GSTR Common Methods
@@ -347,6 +349,50 @@ class L10n_InGstReturnPeriod(models.Model):
             "type": "ir.actions.act_window",
             "views": [[self.env.ref('l10n_in_reports_gstr.l10n_in_gst_return_period_form_view').id, "form"]],
         }
+
+    def action_open_gstr1_spreadsheet(self):
+        return {
+            'type': "ir.actions.client",
+            'tag': "action_open_spreadsheet",
+            'params': {
+                'spreadsheet_id': self.gstr1_spreadsheet_id.id,
+            }
+        }
+
+    def generate_gstr1_spreadsheet(self):
+        gstr1_json = self._get_gstr1_json()
+        if self.gstr1_spreadsheet_id:
+            # archive the old file
+            self.gstr1_spreadsheet_id.active = False
+        xlsx_data = GSTR1SpreadsheetGenerator(gstr1_json).generate()
+        xlsx_doc = self.env['documents.document'].create({
+            'name': 'gstr1_%s_monthly_report.xlsx' % self.return_period_month_year,
+            'raw': xlsx_data,
+            'folder_id': self._get_gstr_document_folder().id,
+            'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        })
+        self.gstr1_spreadsheet_id = xlsx_doc.clone_xlsx_into_spreadsheet(archive_source=True)
+        return self.action_open_gstr1_spreadsheet()
+
+    def _get_gstr_document_folder(self):
+        xml_id = 'l10n_in_reports_gstr_spreadsheet.%s_gstr_folder' % self.company_id.id
+        gstr_folder = self.env.ref(xml_id, raise_if_not_found=False)
+        if not gstr_folder:
+            gstr_folder = self.env['documents.document'].create({
+                'type': 'folder',
+                'name': 'GSTR',
+                'company_id': self.company_id.id,
+                'access_internal': 'none',
+                'access_via_link': 'none',
+                'access_ids': [Command.create({'partner_id': partner.id, 'role': 'edit'})
+                               for partner in self.env.ref('account.group_account_manager').users.partner_id]
+            })
+            self.env['ir.model.data']._update_xmlids([{
+                'xml_id': xml_id,
+                'record': gstr_folder,
+                'noupdate': True,
+            }])
+        return gstr_folder
 
     def _get_error_lavel(self, error_codes):
         blocking_level = "error"

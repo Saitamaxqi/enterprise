@@ -1,85 +1,50 @@
-# -*- coding: utf-8 -*-
-# Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 import io
 from datetime import datetime
 
-from odoo import Command, fields, models
 from odoo.tools.misc import xlsxwriter
 
 
-class L10n_InGstReturnPeriod(models.Model):
+class GSTR1SpreadsheetGenerator:
 
-    _inherit = ["l10n_in.gst.return.period"]
+    def __init__(self, gstr1_json):
+        self.gstr1_json = gstr1_json
 
-    gstr1_spreadsheet = fields.Many2one('documents.document')
-
-    def action_open_gstr1_spreadsheet(self):
-        return {
-            'type': "ir.actions.client",
-            'tag': "action_open_spreadsheet",
-            'params': {
-                'spreadsheet_id': self.gstr1_spreadsheet.id,
-            }
-        }
+    def generate(self):
+        output = io.BytesIO()
+        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
+        cell_formats = self._get_gstr1_cell_formats(workbook)
+        self._prepare_b2b_sheet(self.gstr1_json.get('b2b', {}), workbook, cell_formats)
+        self._prepare_b2cl_sheet(self.gstr1_json.get('b2cl', {}), workbook, cell_formats)
+        self._prepare_b2cs_sheet(self.gstr1_json.get('b2cs', {}), workbook, cell_formats)
+        self._prepare_cdnr_sheet(self.gstr1_json.get('cdnr', {}), workbook, cell_formats)
+        self._prepare_cdnur_sheet(self.gstr1_json.get('cdnur', {}), workbook, cell_formats)
+        self._prepare_exp_sheet(self.gstr1_json.get('exp', {}), workbook, cell_formats)
+        self._prepare_nil_sheet(self.gstr1_json.get('nil', {}), workbook, cell_formats)
+        self._prepare_hsn_sheet(self.gstr1_json.get('hsn', {}), workbook, cell_formats)
+        # self._prepare_supeco_sheet(gstr1_json.get('supeco', {}), 'clttx', workbook, cell_formats) # Table 14(a) u/s 52(TCS)
+        # self._prepare_supeco_sheet(gstr1_json.get('supeco', {}), 'paytx', workbook, cell_formats) # Table 14 (b) u/s 9(5)
+        workbook.close()
+        return output.getvalue()
 
     def _get_gstr1_cell_formats(self, workbook):
         return {
-            'primary_header': workbook.add_format({'bold': True, 'bg_color': '#0070C0', 'color': '#FFFFFF', 'font_size': 8, 'border': 1, 'align': 'center'}),
-            'secondary_header': workbook.add_format({'bg_color': '#F8CBAD', 'font_size': 8, 'align': 'center'}),
+            'primary_header': workbook.add_format({
+                'bold': True,
+                'bg_color': '#0070C0',
+                'color': '#FFFFFF',
+                'font_size': 8,
+                'border': 1,
+                'align': 'center'
+            }),
+            'secondary_header': workbook.add_format({
+                'bg_color': '#F8CBAD',
+                'font_size': 8,
+                'align': 'center'
+            }),
             'regular': workbook.add_format({'font_size': 8}),
             'date': workbook.add_format({'font_size': 8, 'num_format': 'dd-mm-yy'}),
             'number': workbook.add_format({'font_size': 8, 'num_format': '0.00'}),
         }
-
-    def generate_gstr1_spreadsheet(self):
-        gstr1_json = self._get_gstr1_json()
-        if self.gstr1_spreadsheet:
-            # archive the old file
-            self.gstr1_spreadsheet.active = False
-        output = io.BytesIO()
-        workbook = xlsxwriter.Workbook(output, {'in_memory': True})
-        cell_formats = self._get_gstr1_cell_formats(workbook)
-        self._prepare_b2b_sheet(gstr1_json.get('b2b', {}), workbook, cell_formats)
-        self._prepare_b2cl_sheet(gstr1_json.get('b2cl', {}), workbook, cell_formats)
-        self._prepare_b2cs_sheet(gstr1_json.get('b2cs', {}), workbook, cell_formats)
-        self._prepare_cdnr_sheet(gstr1_json.get('cdnr', {}), workbook, cell_formats)
-        self._prepare_cdnur_sheet(gstr1_json.get('cdnur', {}), workbook, cell_formats)
-        self._prepare_exp_sheet(gstr1_json.get('exp', {}), workbook, cell_formats)
-        self._prepare_nil_sheet(gstr1_json.get('nil', {}), workbook, cell_formats)
-        self._prepare_hsn_sheet(gstr1_json.get('hsn', {}), workbook, cell_formats)
-        # self._prepare_supeco_sheet(gstr1_json.get('supeco', {}), 'clttx', workbook, cell_formats) # Table 14(a) u/s 52(TCS)
-        # self._prepare_supeco_sheet(gstr1_json.get('supeco', {}), 'paytx', workbook, cell_formats) # Table 14 (b) u/s 9(5)
-        workbook.close()
-        xlsx_data = output.getvalue()
-        xlsx_doc = self.env['documents.document'].create({
-            'name': 'gstr1_%s_monthly_report.xlsx' % self.return_period_month_year,
-            'raw': xlsx_data,
-            'folder_id': self._get_gstr_document_folder().id,
-            'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
-        })
-        self.gstr1_spreadsheet = xlsx_doc.clone_xlsx_into_spreadsheet(archive_source=True)
-        return self.action_open_gstr1_spreadsheet()
-
-    def _get_gstr_document_folder(self):
-        xml_id = 'l10n_in_reports_gstr_spreadsheet.%s_gstr_folder' % self.company_id.id
-        gstr_folder = self.env.ref(xml_id, raise_if_not_found=False)
-        if not gstr_folder:
-            gstr_folder = self.env['documents.document'].create({
-                'type': 'folder',
-                'name': 'GSTR',
-                'company_id': self.company_id.id,
-                'access_internal': 'none',
-                'access_via_link': 'none',
-                'access_ids': [Command.create({'partner_id': partner.id, 'role': 'edit'})
-                               for partner in self.env.ref('account.group_account_manager').users.partner_id]
-            })
-            self.env['ir.model.data']._update_xmlids([{
-                'xml_id': xml_id,
-                'record': gstr_folder,
-                'noupdate': True,
-            }])
-        return gstr_folder
 
     def _set_spreadsheet_row(self, spreadsheet_data, row_data, cell_row, cell_format=None):
         row_data = (isinstance(row_data, dict) and row_data.values()) or row_data
@@ -269,11 +234,11 @@ class L10n_InGstReturnPeriod(models.Model):
             {'val': 'Cess Amount', 'column': 'J'},
         ]
         totals_row_data = {
-            'total_receiptients': {'val':0, 'column': 'A'},
-            'total_invoices': {'val':0, 'column': 'B'},
-            'total_invoices_val': {'val':0, 'column': 'G', 'format': cell_formats.get('number')},
-            'total_taxable_val': {'val':0, 'column': 'I', 'format': cell_formats.get('number')},
-            'total_cess': {'val':0, 'column': 'J', 'format': cell_formats.get('number')},
+            'total_receiptients': {'val': 0, 'column': 'A'},
+            'total_invoices': {'val': 0, 'column': 'B'},
+            'total_invoices_val': {'val': 0, 'column': 'G', 'format': cell_formats.get('number')},
+            'total_taxable_val': {'val': 0, 'column': 'I', 'format': cell_formats.get('number')},
+            'total_cess': {'val': 0, 'column': 'J', 'format': cell_formats.get('number')},
         }
         self._set_spreadsheet_row(worksheet, primary_headers, primary_header_row)
         self._set_spreadsheet_row(worksheet, secondary_headers, secondary_header_row)
@@ -494,13 +459,13 @@ class L10n_InGstReturnPeriod(models.Model):
             {'val': 'Cess Amount', 'column': 'J'},
         ]
         totals_row_data = {
-            'total_hsn': {'val': 0, 'column': 'A', 'row':3},
-            'total_value': {'val': 0, 'column': 'D', 'row':3, 'format': cell_formats.get('number')},
-            'total_taxable_val': {'val': 0, 'column': 'F', 'row':3, 'format': cell_formats.get('number')},
-            'total_igst': {'val': 0, 'column': 'G', 'row':3, 'format': cell_formats.get('number')},
-            'total_cgst': {'val': 0, 'column': 'H', 'row':3, 'format': cell_formats.get('number')},
-            'total_sgst': {'val': 0, 'column': 'I', 'row':3, 'format': cell_formats.get('number')},
-            'total_cess': {'val': 0, 'column': 'J', 'row':3, 'format': cell_formats.get('number')},
+            'total_hsn': {'val': 0, 'column': 'A', 'row': 3},
+            'total_value': {'val': 0, 'column': 'D', 'row': 3, 'format': cell_formats.get('number')},
+            'total_taxable_val': {'val': 0, 'column': 'F', 'row': 3, 'format': cell_formats.get('number')},
+            'total_igst': {'val': 0, 'column': 'G', 'row': 3, 'format': cell_formats.get('number')},
+            'total_cgst': {'val': 0, 'column': 'H', 'row': 3, 'format': cell_formats.get('number')},
+            'total_sgst': {'val': 0, 'column': 'I', 'row': 3, 'format': cell_formats.get('number')},
+            'total_cess': {'val': 0, 'column': 'J', 'row': 3, 'format': cell_formats.get('number')},
         }
         self._set_spreadsheet_row(worksheet, primary_headers, primary_header_row)
         self._set_spreadsheet_row(worksheet, secondary_headers, secondary_header_row)

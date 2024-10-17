@@ -13,7 +13,7 @@ GST return filing using IAP
 ** GSTR-3B: view report
     """,
     "category": "Accounting/Localizations/Reporting",
-    "depends": ["l10n_in_reports", "l10n_in_edi"],
+    "depends": ["l10n_in_reports", "l10n_in_edi", "l10n_in_documents"],
     "data": [
         "data/service_cron.xml",
         "security/ir.model.access.csv",
