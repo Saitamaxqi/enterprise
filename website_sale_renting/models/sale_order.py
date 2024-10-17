@@ -169,6 +169,8 @@ class SaleOrder(models.Model):
                 'rental_return_date': current_end_date,
             })
         else:
+            rental_lines = self.order_line.filtered('is_rental')
+            self.env.add_to_compute(rental_lines._fields['name'], rental_lines)
             self._recompute_rental_prices()
 
     def _available_dates_for_renting(self):
