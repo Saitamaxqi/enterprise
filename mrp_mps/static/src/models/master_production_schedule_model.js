@@ -270,10 +270,10 @@ export class MasterProductionScheduleModel extends EventBus {
      */
     _saveCompanySettings(values) {
         this.mutex.exec(() => {
-            this.orm.write(
+            this.orm.call(
                 'res.company',
-                [this.data.company_id],
-                values,
+                'save_company_settings',
+                [this.data.company_id, values],
             ).then(() => {
                 this.load();
             });

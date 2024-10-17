@@ -91,3 +91,7 @@ class ResCompany(models.Model):
                 or ('manufacturing_period_to_display_day' in vals and vals['manufacturing_period_to_display_day'] <= 0)):
             raise UserError(_("Manufacturing Settings: Your Master Production Schedule must always display at least 1 period."))
         return super().write(vals)
+
+    def save_company_settings(self, vals):
+        """ Function to call from JS to avoid a full reload of the page and context. """
+        return self.write(vals)
