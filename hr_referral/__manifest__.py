@@ -30,6 +30,7 @@
         'views/hr_referral_views.xml',
         'views/res_config_settings_views.xml',
         'report/hr_referral_report_views.xml',
+        'report/hr_referral_reward_report_views.xml',
     ],
     'demo': ['data/hr_referral_demo.xml'],
     'installable': True,

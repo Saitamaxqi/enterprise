@@ -9,6 +9,7 @@ access_hr_referral_reward_admin,hr.referral.reward.admin,model_hr_referral_rewar
 access_hr_referral_alert_admin,hr.referral.alert.admin,model_hr_referral_alert,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
 access_hr_referral_alert_user,hr.referral.alert.user,model_hr_referral_alert,hr_referral.group_hr_recruitment_referral_user,1,0,0,0
 access_hr_referral_report,hr.referral.report,model_hr_referral_report,hr_recruitment.group_hr_recruitment_manager,1,0,0,0
+access_hr_referral_reward_report,hr.referral.reward.report,model_hr_referral_reward_report,hr_recruitment.group_hr_recruitment_manager,1,0,0,0
 access_hr_referral_onboarding_admin,hr.referral.onboarding.admin,model_hr_referral_onboarding,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
 access_hr_referral_onboarding_user,hr.referral.onboarding.user,model_hr_referral_onboarding,hr_referral.group_hr_recruitment_referral_user,1,0,0,0
 access_hr_referral_level_admin,hr.referral.level.admin,model_hr_referral_level,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
