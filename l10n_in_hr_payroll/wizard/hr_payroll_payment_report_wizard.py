@@ -4,7 +4,7 @@ import io
 import base64
 from datetime import datetime, date
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 from odoo.tools.misc import xlsxwriter
 from odoo.exceptions import UserError
 
@@ -74,12 +74,14 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
             'target': 'new',
         }
 
+    @api.model_create_multi
     def create(self, vals_list):
         date = datetime.now()
-        if not vals_list.get('l10n_in_reference'):
-            advice_year = date.strftime('%m-%Y')
-            number = self.env['ir.sequence'].next_by_code('payment.advice')
-            vals_list['l10n_in_reference'] = f"PAY/{advice_year}/{number}"
+        for vals in vals_list:
+            if not vals.get('l10n_in_reference'):
+                advice_year = date.strftime('%m-%Y')
+                number = self.env['ir.sequence'].next_by_code('payment.advice')
+                vals['l10n_in_reference'] = f"PAY/{advice_year}/{number}"
         return super().create(vals_list)
 
     def generate_payment_report_pdf(self):
