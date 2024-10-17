@@ -355,6 +355,10 @@ class AccountReport(models.Model):
                 'model': 'account.journal.group',
             }] + options_journal_groups
 
+        if not company_journals_map:
+            options['name_journal_group'] = _("No Journal")
+            return
+
         # 6. Build journals options
         if len(company_journals_map) > 1 or all_journal_groups:
             for company, journals in company_journals_map.items():

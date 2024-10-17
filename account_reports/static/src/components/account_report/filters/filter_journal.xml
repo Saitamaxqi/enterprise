@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-name="account_reports.AccountReportFilterJournal">
-        <Dropdown>
+        <Dropdown disabled="!controller.options.journals.length">
             <button class="btn btn-secondary">
                 <i class="fa fa-book me-1"/><t t-out="controller.options.name_journal_group"/>
             </button>
