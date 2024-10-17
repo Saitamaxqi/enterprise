@@ -49,11 +49,7 @@ class Sign(http.Controller):
         if current_request_item:
             for item_type in sign_item_types:
                 if item_type['auto_field']:
-                    try:
-                        auto_field = current_request_item.partner_id.mapped(item_type['auto_field'])
-                        item_type['auto_value'] = auto_field[0] if auto_field and not isinstance(auto_field, models.BaseModel) else ''
-                    except Exception:
-                        item_type['auto_value'] = ''
+                    item_type['auto_value'] = current_request_item._get_auto_field_value(item_type)
                 if item_type['item_type'] in ['signature', 'initial']:
                     signature_field_name = 'sign_signature' if item_type['item_type'] == 'signature' else 'sign_initials'
                     user_signature = current_request_item._get_user_signature(signature_field_name)

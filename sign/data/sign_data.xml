@@ -46,6 +46,7 @@
     <record model="sign.item.type" id="sign_item_type_name">
         <field name="name">Name</field>
         <field name="placeholder">Name</field>
+        <field name="model_id" ref="model_res_partner"/>
         <field name="auto_field">name</field>
         <field name="icon">fa-user</field>
     </record>
@@ -53,6 +54,7 @@
     <record model="sign.item.type" id="sign_item_type_email">
         <field name="name">Email</field>
         <field name="placeholder">Email</field>
+        <field name="model_id" ref="model_res_partner"/>
         <field name="auto_field">email</field>
         <field name="icon">fa-envelope-o</field>
     </record>
@@ -60,6 +62,7 @@
     <record model="sign.item.type" id="sign_item_type_phone">
         <field name="name">Phone</field>
         <field name="placeholder">Phone</field>
+        <field name="model_id" ref="model_res_partner"/>
         <field name="auto_field">phone</field>
         <field name="icon">fa-phone</field>
     </record>

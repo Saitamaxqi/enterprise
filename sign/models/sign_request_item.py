@@ -449,3 +449,25 @@ class SignRequestItem(models.Model):
     def _compute_email(self):
         for sign_request_item in self.filtered(lambda sri: sri.state == "sent" or not sri.signer_email):
             sign_request_item.signer_email = sign_request_item.partner_id.email_normalized
+
+    def _get_auto_field_value(self, item_type):
+        """ Return the automatic value of a sign item based on the linked model and partner access
+        :return: str: auto_value
+        """
+        self.ensure_one()
+        item_type_sudo = self.env['sign.item.type'].sudo().browse(item_type['id'])
+        record = None
+        if item_type_sudo.model_id.model == 'res.partner':
+            record = self.partner_id
+        else:
+            linked_record = self.sign_request_id.reference_doc
+            model = linked_record and self.env['ir.model']._get(linked_record._name)
+            if not model or not model.is_mail_thread:
+                return ''
+            record = linked_record
+        try:
+            auto_field = record.mapped(item_type['auto_field'])
+            auto_value = auto_field[0] if auto_field and not isinstance(auto_field, models.BaseModel) else ''
+        except (KeyError, TypeError):
+            auto_value = ""
+        return auto_value
