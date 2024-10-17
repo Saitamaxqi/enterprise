@@ -204,7 +204,6 @@ class PosConfig(models.Model):
         """
         Activate and Deactivate store
         """
-        self._check_required_request_params()
         up = UrbanPiperClient(self)
         up.configure_webhook()
         up.urbanpiper_store_status_update(status=status)
