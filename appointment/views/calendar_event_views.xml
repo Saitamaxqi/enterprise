@@ -191,7 +191,6 @@
                     <button string="Remove" name="unlink" type="object" data-hotkey="x" invisible="not id"
                             class="btn btn-secondary o_form_button_remove" close="1" confirm-title="Delete Booking" confirm-label="Delete Booking"
                             confirm="Are you sure you want to delete this Booking? Once it's gone, it's gone for good!"/>
-                    <button string="More Options" name="action_calendar_more_options" type="object" class="btn btn-link ms-auto" close="1"/>
                 </footer>
             </form>
         </field>

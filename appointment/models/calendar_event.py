@@ -330,6 +330,7 @@ class CalendarEvent(models.Model):
             event.access_token = self._default_access_token()
 
     def action_calendar_more_options(self):
+        # this method is deprecated and will be removed in the master
         self.ensure_one()
         action = self.env["ir.actions.actions"]._for_xml_id("calendar.action_calendar_event")
         action["views"] = [(False, 'form')]

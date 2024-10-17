@@ -9,9 +9,6 @@
             <xpath expr="//footer/button[@special='cancel']" position="attributes">
                 <attribute name="class">btn-secondary mx-1</attribute>
             </xpath>
-            <xpath expr="//footer/button[@name='action_calendar_more_options']" position="attributes">
-                <attribute name="invisible">1</attribute>
-            </xpath>
         </field>
     </record>
     <record id="calendar_event_view_gantt_booking_resource_inherited" model="ir.ui.view">
