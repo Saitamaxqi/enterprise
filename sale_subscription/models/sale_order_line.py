@@ -297,10 +297,11 @@ class SaleOrderLine(models.Model):
                  l.order_id.currency_id.round(l.price_unit) if l.order_id.currency_id else round(l.price_unit, 2)) ==
                 (line.order_id.subscription_id, line.product_id, line.product_uom, line.order_id.currency_id, line.order_id.plan_id,
                  line.order_id.currency_id.round(line.price_unit) if line.order_id.currency_id else round(line.price_unit, 2)
-                 )
+                ) and l.id in parent_line_ids.ids
             )
             if matching_line_ids:
-                line.parent_line_id = matching_line_ids.ids[-1]
+                line.parent_line_id = matching_line_ids._origin[-1]
+                parent_line_ids -= matching_line_ids._origin[-1]
             else:
                 line.parent_line_id = False
 

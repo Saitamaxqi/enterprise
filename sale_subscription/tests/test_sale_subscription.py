@@ -527,7 +527,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         upsell_so.start_date = False
         upsell_so.action_confirm()
         upsell_so._create_invoices()
-        self.assertEqual(self.subscription.order_line.sorted('id').mapped('product_uom_qty'), [1.0, 1.0, 14.0, 15.0], "Quantities should be equal to 1.0, 1.0, 14.0, 15.0")
+        self.assertEqual(self.subscription.order_line.sorted('id').mapped('product_uom_qty'), [7.0, 7.0, 8.0, 9.0])
 
     def test_upsell_via_so(self):
         # Test the upsell flow using an intermediary upsell quote.
@@ -4540,3 +4540,33 @@ class TestSubscriptionInvoiceSignature(TestInvoiceSignature, TestSubscription):
         purchase_order_invoice.action_post()
 
         self.assertEqual(purchase_order_invoice.state, 'posted')
+
+    def test_uspell_same_product_different_discount(self):
+        subscription = self.env['sale.order'].create({
+            'name': 'Original subscription',
+            'is_subscription': True,
+            'partner_id': self.user_portal.partner_id.id,
+            'plan_id': self.plan_month.id,
+            'order_line': [
+                Command.create({
+                    'name': self.product2.name,
+                    'product_id': self.product2.id,
+                    'product_uom_qty': 1,
+                    'product_uom': self.env.ref('uom.product_uom_unit').id,
+                    'discount': 0,
+                }),
+                Command.create({
+                    'name': self.product2.name,
+                    'product_id': self.product2.id,
+                    'product_uom_qty': 1,
+                    'product_uom': self.env.ref('uom.product_uom_unit').id,
+                    'discount': 50,
+                })
+            ]
+        })
+
+        subscription.action_confirm()
+        self.env['sale.order']._cron_recurring_create_invoice()
+        action = subscription.prepare_upsell_order()
+        upsell = self.env['sale.order'].browse(action['res_id'])
+        self.assertEqual(set(upsell.order_line.mapped('discount')), {0, 50}, 'Upsell discounts should match subscription discounts')
