@@ -67,7 +67,7 @@
                     <field name="company_ids" column_invisible="True"/>
                     <field name="account_type"/>
                     <field name="current_balance"/>
-                    <field name="tax_ids" optional="hide" widget="many2many_tags"/>
+                    <field name="tax_ids" optional="hide" widget="many2many_tax_tags"/>
                     <field name="tag_ids" optional="hide" widget="many2many_tags"/>
                     <field name="allowed_journal_ids" optional="hide" widget="many2many_tags"/>
                 </list>

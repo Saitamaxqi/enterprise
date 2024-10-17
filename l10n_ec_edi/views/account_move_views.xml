@@ -68,7 +68,7 @@
                         <field name="l10n_ec_withhold_line_ids" mode="list,kanban">
                             <list editable="bottom">
                                 <field name="l10n_ec_code_taxsupport"  column_invisible="parent.l10n_ec_withhold_type == 'out_withhold'" />
-                                <field name="tax_ids" string="Tax" widget="many2many_tags"/>
+                                <field name="tax_ids" string="Tax" widget="many2many_tax_tags"/>
                                 <field name="l10n_ec_withhold_invoice_id"/>
                                 <field name="balance" string="Base Amount"/>
                                 <field name="l10n_ec_withhold_tax_amount"/>
@@ -110,7 +110,7 @@
                                 <field name="partner_id" required="1"/>
                                 <field name="l10n_latam_document_type_id" required="1" options="{'no_create': True, 'no_open': True}"/>
                                 <field name="document_number" required="1"/>
-                                <field name="tax_id" string="Tax"/>
+                                <field name="tax_id" widget="many2one_tax_tags" string="Tax"/>
                                 <field name="tax_base"/>
                                 <field name="tax_amount"/>
                                 <field name="total"/>
