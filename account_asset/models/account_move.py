@@ -277,7 +277,6 @@ class AccountMove(models.Model):
             'account_id': asset.account_depreciation_id.id,
             'debit': 0.0 if float_compare(amount, 0.0, precision_digits=prec) > 0 else -amount,
             'credit': amount if float_compare(amount, 0.0, precision_digits=prec) > 0 else 0.0,
-            'analytic_distribution': analytic_distribution,
             'currency_id': current_currency.id,
             'amount_currency': -amount_currency,
         }
@@ -287,10 +286,14 @@ class AccountMove(models.Model):
             'account_id': asset.account_depreciation_expense_id.id,
             'credit': 0.0 if float_compare(amount, 0.0, precision_digits=prec) > 0 else -amount,
             'debit': amount if float_compare(amount, 0.0, precision_digits=prec) > 0 else 0.0,
-            'analytic_distribution': analytic_distribution,
             'currency_id': current_currency.id,
             'amount_currency': amount_currency,
         }
+        # Only set the 'analytic_distribution' key if there is an analytic distribution on the asset.
+        # Otherwise, it prevents the computation of the analytic distribution.
+        if analytic_distribution:
+            move_line_1['analytic_distribution'] = analytic_distribution
+            move_line_2['analytic_distribution'] = analytic_distribution
         move_vals = {
             'partner_id': partner.id,
             'date': depreciation_date,
