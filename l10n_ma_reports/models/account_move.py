@@ -16,6 +16,8 @@ class AccountMove(models.Model):
         ],
         string='Payment Channel',
         compute='_compute_l10n_ma_reports_payment_method',
+        readonly=False,
+        store=True,
         help='Payment method for Moroccan EDI. If left empty it will default to "Other" on the EDI declaration.'
     )
 
@@ -25,5 +27,3 @@ class AccountMove(models.Model):
             payments = move.sudo()._get_reconciled_payments()
             if payments:
                 move.l10n_ma_reports_payment_method = payments.sorted(lambda p: p.date)[-1].l10n_ma_reports_payment_method
-            else:
-                move.l10n_ma_reports_payment_method = False
