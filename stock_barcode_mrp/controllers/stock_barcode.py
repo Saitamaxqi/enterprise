@@ -12,9 +12,10 @@ class MRPStockBarcode(StockBarcodeController):
 
     @http.route()
     def main_menu(self, barcode):
-        ret_open_production = self._try_open_production(barcode)
-        ret_new_production = self._try_create_production(barcode)
-        return ret_open_production or ret_new_production or super().main_menu(barcode)
+        action = self._try_open_production(barcode)
+        if not action:
+            action = self._try_create_production(barcode)
+        return action or super().main_menu(barcode)
 
     @http.route('/stock_barcode_mrp/save_barcode_data', type='json', auth='user')
     def save_barcode_mrp_data(self, model_vals):
@@ -61,7 +62,8 @@ class MRPStockBarcode(StockBarcodeController):
         ], limit=1)
         if picking_type:
             return request.env['mrp.production'].with_context({
-                'default_company_id': picking_type.company_id.id
+                'default_company_id': picking_type.company_id.id,
+                'default_picking_type_id': picking_type.id,
             })._get_new_production_client_action()
         return False
 

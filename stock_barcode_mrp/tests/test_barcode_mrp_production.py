@@ -697,6 +697,7 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
 
         mo2_operation_type = self.env['stock.picking.type'].create({
             'name': 'MO2',
+            'barcode': 'MO2_BARCODE',
             'code': 'mrp_operation',
             'sequence_code': 'MO2',
             'warehouse_id': self.env.ref('stock.warehouse0').id,
@@ -707,12 +708,12 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
             'is_storable': True,
             'barcode': 'MO2_TEST_PRODUCT',
         })
-        url = "/odoo/action-stock_barcode.stock_picking_type_action_kanban"
-        self.start_tour(url, 'test_barcode_mo_creation_in_mo2', login='admin', timeout=180)
+        self.start_tour('/odoo/barcode', 'test_barcode_mo_creation_in_mo2', login='admin')
 
-        mo = self.env['mrp.production'].search([('product_id', '=', product_to_manufacture.id)], limit=1)
-        self.assertTrue(mo, "The Manufacturing Order was not created.")
-        self.assertEqual(mo.picking_type_id, mo2_operation_type, "The MO was not created with the correct operation type (MO2).")
+        mos = self.env['mrp.production'].search([('product_id', '=', product_to_manufacture.id)])
+        self.assertEqual(len(mos), 2, "Two Manufacturing Orders must have been created.")
+        self.assertEqual(mos[0].picking_type_id, mo2_operation_type, "The first MO was not created with the correct operation type (MO2).")
+        self.assertEqual(mos[1].picking_type_id, mo2_operation_type, "The second MO was not created with the correct operation type (MO2).")
 
     def test_barcode_mo_creation_in_scan_mo2(self):
         """
