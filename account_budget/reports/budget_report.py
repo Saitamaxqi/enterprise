@@ -86,6 +86,26 @@ class BudgetReport(models.Model):
         )
 
     def _get_pol_query(self, plan_fnames):
+        qty_invoiced_table = SQL(
+            """
+               SELECT SUM(
+                          CASE WHEN COALESCE(uom_aml.id != uom_pol.id, FALSE)
+                               THEN ROUND((aml.quantity / uom_aml.factor) * uom_pol.factor, -LOG(uom_pol.rounding)::integer)
+                               ELSE COALESCE(aml.quantity, 0)
+                          END
+                          * CASE WHEN aml.balance < 0 THEN -1 ELSE 1 END
+                      ) AS qty_invoiced,
+                      pol.id AS pol_id
+                 FROM purchase_order po
+            LEFT JOIN purchase_order_line pol ON pol.order_id = po.id
+            LEFT JOIN account_move_line aml ON aml.purchase_line_id = pol.id
+            LEFT JOIN uom_uom uom_aml ON uom_aml.id = aml.product_uom_id
+            LEFT JOIN uom_uom uom_pol ON uom_pol.id = pol.product_uom_id
+            LEFT JOIN uom_category uom_category_aml ON uom_category_aml.id = uom_pol.category_id
+            LEFT JOIN uom_category uom_category_pol ON uom_category_pol.id = uom_pol.category_id
+                WHERE aml.parent_state = 'posted'
+             GROUP BY pol.id
+        """)
         return SQL(
             """
             SELECT (pol.id::TEXT || '-' || ROW_NUMBER() OVER (PARTITION BY pol.id ORDER BY pol.id)) AS id,
@@ -99,10 +119,11 @@ class BudgetReport(models.Model):
                    po.user_id AS user_id,
                    'committed' AS line_type,
                    0 AS budget,
-                   (pol.product_qty - pol.qty_invoiced) / po.currency_rate * pol.price_unit::FLOAT * (a.rate)::FLOAT AS committed,
+                   (pol.product_qty - COALESCE(qty_invoiced_table.qty_invoiced, 0)) / po.currency_rate * pol.price_unit::FLOAT * (a.rate)::FLOAT AS committed,
                    0 AS achieved,
                    %(analytic_fields)s
               FROM purchase_order_line pol
+         LEFT JOIN (%(qty_invoiced_table)s) qty_invoiced_table ON qty_invoiced_table.pol_id = pol.id
               JOIN purchase_order po ON pol.order_id = po.id AND po.state in ('purchase', 'done')
         CROSS JOIN JSONB_TO_RECORDSET(pol.analytic_json) AS a(rate FLOAT, %(field_cast)s)
          LEFT JOIN budget_line bl ON po.company_id = bl.company_id
@@ -110,10 +131,11 @@ class BudgetReport(models.Model):
                                  AND po.date_order <= bl.date_to
                                  AND %(condition)s
          LEFT JOIN budget_analytic ba ON ba.id = bl.budget_analytic_id
-             WHERE pol.qty_invoiced < pol.product_qty
+             WHERE pol.product_qty > COALESCE(qty_invoiced_table.qty_invoiced, 0)
                AND ba.budget_type != 'revenue'
             """,
             analytic_fields=SQL(', ').join(self.env['account.analytic.line']._field_to_sql('a', fname) for fname in plan_fnames),
+            qty_invoiced_table=qty_invoiced_table,
             field_cast=SQL(', ').join(SQL(f'{fname} FLOAT') for fname in plan_fnames),
             condition=SQL(' AND ').join(SQL(
                 "(%(bl)s IS NULL OR %(a)s = %(bl)s)",
@@ -124,6 +146,7 @@ class BudgetReport(models.Model):
 
     @property
     def _table_query(self):
+        self.env['account.move.line'].flush_model()
         self.env['budget.line'].flush_model()
         self.env['account.analytic.line'].flush_model()
         self.env['purchase.order'].flush_model()

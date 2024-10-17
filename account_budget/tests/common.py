@@ -201,3 +201,7 @@ class TestAccountBudgetCommon(AccountTestInvoicingCommon):
                 }),
             ]
         })
+
+    def assertBudgetLine(self, budget_line, *, committed, achieved):
+        budget_line.invalidate_recordset(['achieved_amount', 'committed_amount'])
+        self.assertRecordValues(budget_line, [{'committed_amount': committed, 'achieved_amount': achieved}])

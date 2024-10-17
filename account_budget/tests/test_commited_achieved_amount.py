@@ -1,5 +1,4 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 from odoo import Command
 from .common import TestAccountBudgetCommon
 from odoo.tests import tagged
@@ -108,6 +107,126 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
         # Product B have 1 PO line line[3] with 10 order and 5 received with analytic_account_partner_b and analytic_account_administratif
         # Committed = ((order - received) * price) + achieved = ((10-5) * 100 + 500 = 1000
         self.assertEqual(plan_b_admin_line.committed_amount, 1000.0)
+
+    def test_budget_analytic_expense_committed_amount_draft_bill(self):
+        """ Test that the committed amount stays correct while a PO has a bill which is still unposted.
+        The amount should not be 0.
+        """
+        # Draft the test purchase order.
+        self.purchase_order.button_draft()
+        # Create a new purchase order
+        purchase_order = self.env['purchase.order'].create({
+            'partner_id': self.partner_a.id,
+            'date_order': '2019-01-10',
+            'order_line': [
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'product_qty': 1,
+                    'analytic_distribution': {self.analytic_account_partner_a.id: 100},
+                }),
+            ]
+        })
+        purchase_order.button_confirm()
+        purchase_order.order_line.qty_received = 1
+
+        # The confirmed purchase order should impact the analytic line committed amount.
+        plan_a_line = self.budget_analytic_expense.budget_line_ids[0]
+        # One PO line with an amount of 100 should be committed.
+        self.assertBudgetLine(plan_a_line, committed=100, achieved=0)
+
+        # Create the bill for the PO but do not post it. Committed amount should still be 100.
+        bill = self.env['account.move'].browse(purchase_order.action_create_invoice()['res_id'])
+        bill.invoice_date = '2019-01-10'
+        self.assertBudgetLine(plan_a_line, committed=100, achieved=0)
+
+        # Finally we post the bill. Committed amount AND achieved amount should be 100.
+        purchase_order.invoice_ids.action_post()
+        self.assertBudgetLine(plan_a_line, committed=100, achieved=100)
+
+    def test_budget_analytic_multiple_bills_from_po(self):
+        """ Test with multiple bills linked to a PO. """
+        # Draft the test purchase order.
+        self.purchase_order.button_draft()
+        # Create a new purchase order
+        purchase_order = self.env['purchase.order'].create({
+            'partner_id': self.partner_a.id,
+            'date_order': '2019-01-10',
+            'order_line': [
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'product_qty': 10,
+                    'analytic_distribution': {self.analytic_account_partner_a.id: 100},
+                }),
+            ]
+        })
+        purchase_order.button_confirm()
+        plan_a_line = self.budget_analytic_expense.budget_line_ids[0]
+        self.assertBudgetLine(plan_a_line, committed=1000, achieved=0)
+
+        # Create bill for 5 units
+        purchase_order.order_line.qty_received = 5
+        bill = self.env['account.move'].browse(purchase_order.action_create_invoice()['res_id'])
+        bill.invoice_date = '2019-01-10'
+        self.assertBudgetLine(plan_a_line, committed=1000, achieved=0)
+        bill.action_post()
+        self.assertBudgetLine(plan_a_line, committed=1000, achieved=500)
+
+        # Create another bill for another 2 units
+        purchase_order.order_line.qty_received = 7
+        bill = self.env['account.move'].browse(purchase_order.action_create_invoice()['res_id'])
+        bill.invoice_date = '2019-01-10'
+        bill.action_post()
+        self.assertBudgetLine(plan_a_line, committed=1000, achieved=700)
+
+    def test_multiple_bills_from_po_multiple_uom(self):
+        """ Test with multiple bills linked to a PO and multiple UoM. """
+        self.purchase_order.button_draft()
+        gravel_ton = self.env['product.product'].create({
+            'name': 'Gravel 1T',
+            'uom_id': self.env.ref('uom.product_uom_ton').id,
+            'uom_po_id': self.env.ref('uom.product_uom_ton').id,
+            'standard_price': 1000,
+        })
+        gravel_kilo = self.env['product.product'].create({
+            'name': 'Gravel 1kg',
+            'uom_id': self.env.ref('uom.product_uom_kgm').id,
+            'uom_po_id': self.env.ref('uom.product_uom_kgm').id,
+            'standard_price': 1,
+        })
+        # Create a new purchase order
+        purchase_order = self.env['purchase.order'].create({
+            'partner_id': self.partner_a.id,
+            'date_order': '2019-01-10',
+            'order_line': [
+                Command.create({
+                    'product_id': gravel_ton.id,
+                    'product_qty': 3.5,
+                    'analytic_distribution': {self.analytic_account_partner_a.id: 100},
+                }),
+            ]
+        })
+        purchase_order.button_confirm()
+        plan_a_line = self.budget_analytic_expense.budget_line_ids[0]
+        self.assertBudgetLine(plan_a_line, committed=3500, achieved=0)
+
+        # Create bill for 2 tons
+        purchase_order.order_line.qty_received = 2
+        bill = self.env['account.move'].browse(purchase_order.action_create_invoice()['res_id'])
+        bill.invoice_date = '2019-01-10'
+        bill.action_post()
+        self.assertBudgetLine(plan_a_line, committed=3500, achieved=2000)
+
+        # Create another bill for 1500 kg
+        purchase_order.order_line.qty_received = 3.5
+        bill = self.env['account.move'].browse(purchase_order.action_create_invoice()['res_id'])
+        bill.invoice_line_ids.write({
+            'product_id': gravel_kilo.id,
+            'quantity': 1500,
+        })
+        bill.invoice_date = '2019-01-10'
+        self.assertBudgetLine(plan_a_line, committed=3500, achieved=2000)
+        bill.action_post()
+        self.assertBudgetLine(plan_a_line, committed=3500, achieved=3500)
 
     def test_budget_analytic_both_committed_achieved_amount(self):
         plan_a_line, plan_b_line, plan_b_admin_line = self.budget_analytic_both.budget_line_ids
