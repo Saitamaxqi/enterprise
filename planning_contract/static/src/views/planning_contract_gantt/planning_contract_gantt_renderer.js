@@ -20,11 +20,6 @@ patch(PlanningGanttRenderer.prototype, {
         const { workingPeriods } = row;
         const { interval } = this.model.metaData.scale;
         const { start, stop } = column;
-        const isFlexibleHours = this.model.data.isFlexibleHours;
-        // If the resource has flexible hours, we consider it as having working periods
-        if (row.resId && isFlexibleHours && isFlexibleHours[row.resId]) {
-            return true;
-        }
         if (workingPeriods?.length) {
             return workingPeriods.some(
                 (workingPeriod) =>

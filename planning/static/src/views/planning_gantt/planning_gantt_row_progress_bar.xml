@@ -13,7 +13,7 @@
                         t-if="show"
                         class="position-absolute top-0 end-0 h-100 d-flex align-items-center px-1 o_gantt_group_hours"
                         t-esc="props.progressBar.value_formatted"
-                        style="background-color: #fff; padding: 0 5px;"
+                        style="padding: 0 5px;"
                     />
                 </t>
                 <!-- for standard and flexible contract, show the progressBar, hours ratio and % -->

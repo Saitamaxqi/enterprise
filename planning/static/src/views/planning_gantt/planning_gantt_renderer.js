@@ -390,7 +390,8 @@ export class PlanningGanttRenderer extends GanttRenderer {
 
     _computeResourceOvertimeColors(pill, workHours) {
         const progressBar = this.row.progressBar;
-        if (!progressBar?.employee_id || ["day", "year"].includes(this.model.metaData.scale.id)) {
+        const isFullyFlexibleHours = this.isFlexibleHours(this.row.resId) && workHours === 24;
+        if (!progressBar?.employee_id || ["day", "year"].includes(this.model.metaData.scale.id) || isFullyFlexibleHours){
             return "bg-primary border-primary";
         }
         return workHours == pill.aggregateValue ? 'bg-success border-success' : workHours > pill.aggregateValue ? 'bg-warning border-warning' : 'bg-danger border-danger';

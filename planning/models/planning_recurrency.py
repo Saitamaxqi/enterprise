@@ -171,7 +171,8 @@ class PlanningRecurrency(models.Model):
                         latest_end = max([overlapping_slot['end_datetime'] for overlapping_slot in overlapping_slots])
                         total_hours_planned = sum([slot['allocated_hours'] for slot in overlapping_slots])
                         total_hours_in_overlap = (latest_end - earliest_start).total_seconds() / 3600
-                        is_resource_busy = total_hours_planned > total_hours_in_overlap
+                        if not resource._is_fully_flexible():
+                            is_resource_busy = total_hours_planned > total_hours_in_overlap
                     # Then we check whether the resource is working at that time (they have intervals or are flexible)
                     # (if the initial shift is planned outside working hours, then the recurring shifts will be normaly assigned)
                     is_resource_working = any(

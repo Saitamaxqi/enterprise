@@ -330,6 +330,7 @@
             <field name="resource_calendar_id" eval="False"/>
             <field name="default_planning_role_id" ref="planning.planning_maintenance_technician"></field>
             <field name="planning_role_ids" eval="[Command.set([ref('planning.planning_maintenance_technician'), ref('planning.planning_furniture_assembler')])]"/>
+            <field name="hourly_cost">20</field>
         </record>
 
         <!--                                     Previous week                                    -->
