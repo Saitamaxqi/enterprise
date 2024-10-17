@@ -16,9 +16,9 @@ class AddIotBox(models.TransientModel):
     _description = 'Add IoT Box wizard'
 
     def _default_token(self):
-        web_base_url = self.env['ir.config_parameter'].search([('key', '=', 'web.base.url')], limit=1)
+        web_base_url = self.get_base_url()
         token = str(random.randint(1000000000, 9999999999))
-        iot_token = self.env['ir.config_parameter'].search([('key', '=', 'iot_token')], limit=1)
+        iot_token = self.env['ir.config_parameter'].sudo().search([('key', '=', 'iot_token')], limit=1)
         if iot_token:
             # token valable 60 minutes
             if iot_token.write_date + timedelta(minutes=60) > fields.datetime.now():
@@ -26,10 +26,10 @@ class AddIotBox(models.TransientModel):
             else:
                 iot_token.write({'value': token})
         else:
-            self.env['ir.config_parameter'].create({'key': 'iot_token', 'value': token})
-        db_uuid = self.env['ir.config_parameter'].search([('key', '=', 'database.uuid')], limit=1).value or ''
-        enterprise_code = self.env['ir.config_parameter'].search([('key', '=', 'database.enterprise_code')], limit=1).value or ''
-        return web_base_url.value + '?token=' + token + '&db_uuid=' + db_uuid + '&enterprise_code=' + enterprise_code
+            self.env['ir.config_parameter'].sudo().create({'key': 'iot_token', 'value': token})
+        db_uuid = self.env['ir.config_parameter'].sudo().get_param('database.uuid', default='')
+        enterprise_code = self.env['ir.config_parameter'].sudo().get_param('database.enterprise_code', default='')
+        return web_base_url + '?token=' + token + '&db_uuid=' + db_uuid + '&enterprise_code=' + enterprise_code
 
     token = fields.Char(string='Token', default=_default_token, store=False)
     pairing_code = fields.Char(string='Pairing Code')
