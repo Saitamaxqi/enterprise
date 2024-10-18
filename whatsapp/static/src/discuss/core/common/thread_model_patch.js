@@ -12,7 +12,7 @@ const threadPatch = {
             compute() {
                 return (
                     this.channel_type === "whatsapp" &&
-                    this.channelMembers.find((member) =>
+                    this.channel_member_ids.find((member) =>
                         member.persona?.eq(this.whatsapp_partner_id)
                     )
                 );

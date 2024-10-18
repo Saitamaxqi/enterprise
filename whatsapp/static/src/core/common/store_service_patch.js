@@ -18,8 +18,8 @@ patch(Store.prototype, {
             model: "discuss.channel",
             name,
         });
-        if (!thread.avatarCacheKey) {
-            thread.avatarCacheKey = "hello";
+        if (!thread.avatar_cache_key) {
+            thread.avatar_cache_key = "hello";
         }
         if (!thread.hasSelfAsMember) {
             const data = await this.env.services.orm.call(

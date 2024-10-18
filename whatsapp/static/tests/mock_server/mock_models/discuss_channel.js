@@ -65,7 +65,7 @@ export class DiscussChannel extends mailModels.DiscussChannel {
                 })
             );
             const broadcast_store = new mailDataHelpers.Store(this.browse(channel.id), {
-                memberCount: DiscussChannelMember.search_count([["channel_id", "=", channel.id]]),
+                member_count: DiscussChannelMember.search_count([["channel_id", "=", channel.id]]),
             });
             broadcast_store.add(DiscussChannelMember.browse(selfMemberId));
             BusBus._sendone(channel, "mail.record/insert", broadcast_store.get_result());

@@ -225,7 +225,7 @@ class DiscussChannel(models.Model):
             }])
             message_body = Markup(f'<div class="o_mail_notification">{_("joined the channel")}</div>')
             new_member.channel_id.message_post(body=message_body, message_type="notification", subtype_xmlid="mail.mt_comment")
-            self._bus_send_store(Store(new_member).add(self, {"memberCount": self.member_count}))
+            self._bus_send_store(Store(new_member).add(self, {"member_count": self.member_count}))
         return Store(self).get_result()
 
     # ------------------------------------------------------------

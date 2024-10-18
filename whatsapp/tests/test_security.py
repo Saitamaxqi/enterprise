@@ -264,7 +264,7 @@ class WhatsAppDiscussSecurity(WhatsAppSecurityCase):
                     {
                         "type": "mail.record/insert",
                         "payload": {
-                            "discuss.channel": [{"id": employee_channel.id, "memberCount": 2}],
+                            "discuss.channel": [{"id": employee_channel.id, "member_count": 2}],
                             "discuss.channel.member": [
                                 {
                                     "create_date": member_create_date,
