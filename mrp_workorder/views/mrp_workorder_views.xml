@@ -387,20 +387,17 @@
         </field>
     </record>
 
-
     <record id="mrp_workorder_view_kanban_inherit_quality" model="ir.ui.view">
         <field name="name">mrp.workorder.view.kanban.inherit.quality</field>
         <field name="model">mrp.workorder</field>
         <field name="inherit_id" ref="mrp.workcenter_line_kanban"/>
         <field name="arch" type="xml">
-            <xpath expr="//t[@name='user_avatar']" position="after">
-                <field t-if="record.employee_ids.raw_value" name="employee_ids" widget="list.many2many_avatar_user" class="ms-1 mt-1"/>
-            </xpath>
-            <xpath expr="//t[@name='user_avatar']" position='attributes'>
-                <attribute name="t-if">false</attribute>
+            <xpath expr="//div[hasclass('o_kanban_workorder_status')]//field[@name='last_working_user_id']" position="replace">
+                <field t-if="record.employee_ids.raw_value" name="employee_ids" widget="list.many2many_avatar_user" class="ms-1"/>
             </xpath>
         </field>
     </record>
+
     <record id="view_routing_steps_search" model="ir.ui.view">
         <field name="name">view.routing.steps.search</field>
         <field name="model">quality.point</field>
