@@ -83,7 +83,7 @@
                     <div class="row mt16 o_settings_container" id="productivity">
                         <setting
                             help="People to whom this team and its tickets will be visible"
-                            documentation="/applications/services/helpdesk/overview/getting_started.html#teams-productivity-and-visibility"
+                            documentation="/applications/services/helpdesk.html#visibility-assignment"
                         >
                             <field name="privacy_visibility" class="mt16 o_light_label" widget="radio"/>
                             <div>
@@ -124,7 +124,7 @@
                     <h2>Channels</h2>
                     <div class="row mt16 o_settings_container" id="channels">
                         <setting id="alias_channels" help="Create tickets by sending an email to an alias"
-                            documentation="/applications/services/helpdesk/overview/receiving_tickets.html">
+                            documentation="/applications/services/helpdesk/overview/receiving_tickets.html#email-alias">
                             <field name="use_alias" string="Email Alias"/>
                             <div invisible="not use_alias" class="mt16">
                                 <div class="oe_edit_only" dir="ltr">
@@ -168,10 +168,10 @@
                         <setting help="Centralize, manage, share and grow your knowledge library. Allow customers to search your articles in the help center for answers to their questions." documentation="/applications/services/helpdesk/overview/help_center.html#knowledge">
                             <field name="use_website_helpdesk_knowledge"/>
                         </setting>
-                        <setting help="Allow customers to help each other on a forum. Share answers from your tickets directly." documentation="/applications/services/helpdesk/overview/forum_and_elearning.html">
+                        <setting help="Allow customers to help each other on a forum. Share answers from your tickets directly." documentation="/applications/services/helpdesk/overview/help_center.html#community-forum">
                             <field name="use_website_helpdesk_forum"/>
                         </setting>
-                        <setting help="Share presentations and videos, and organize them into courses. Allow customers to search your eLearning courses in the help center for answers to their questions." documentation="/applications/services/helpdesk/overview/forum_and_elearning.html#elearning">
+                        <setting help="Share presentations and videos, and organize them into courses. Allow customers to search your eLearning courses in the help center for answers to their questions." documentation="/applications/services/helpdesk/overview/help_center.html#elearning">
                             <field name="use_website_helpdesk_slides"/>
                         </setting>
                     </div>
