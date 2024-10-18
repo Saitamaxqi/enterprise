@@ -115,9 +115,9 @@
                     <field name="recurrence_update" widget="radio" class="mb-0 d-sm-block d-lg-none" options="{'horizontal': false}"/>
                     <field name="recurrence_update" widget="radio" class="mb-0 d-lg-block d-none" options="{'horizontal': true}"/>
                 </div>
-                <div role="alert" class="alert alert-warning text-center pt-4" invisible="overlap_slot_count == 0 and (not request_to_switch or allow_self_unassign)">
+                <div role="alert" class="alert alert-warning text-center py-2 mb-2" invisible="overlap_slot_count == 0 and (not request_to_switch or allow_self_unassign)">
                     <field name="conflicting_slot_ids" widget="conflicting_slot_ids" invisible="not conflicting_slot_ids.length"/>
-                    <p class="align-middle"
+                    <p class="align-middle mb-0"
                         invisible="not request_to_switch or allow_self_unassign">
                         <span>The employee assigned would like to switch shifts with someone else.</span>
                     </p>
