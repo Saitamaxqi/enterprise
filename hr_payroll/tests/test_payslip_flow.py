@@ -3,6 +3,7 @@
 
 import datetime
 
+from odoo import Command
 from odoo.addons.hr_payroll.tests.common import TestPayslipBase
 from dateutil.relativedelta import relativedelta
 
@@ -106,7 +107,11 @@ class TestPayslipFlow(TestPayslipBase):
 
         payslip_employee = self.env['hr.payslip.employees'].create({
             'structure_id': specific_structure.id,
+            'selection_mode': 'structure',
+            'structure_type_ids': [Command.link(specific_structure_type.id)],
         })
+
+        self.richard_emp.structure_type_id = specific_structure_type.id
 
         # I generate the payslip by clicking on Generat button wizard.
         payslip_employee.with_context(active_id=payslip_run.id)._compute_employee_ids()
@@ -184,3 +189,104 @@ class TestPayslipFlow(TestPayslipBase):
         self.assertEqual(payslip_run.state, 'paid', 'State not changed!')
         self.assertTrue(all(payslip.state == 'paid' for payslip in payslip_run.slip_ids), 'State not changed!')
         self.assertEqual(payslip_run.slip_ids[0].paid_date, paid_date, 'payslip paid date should not be changed')
+
+    def test_04_payslip_batch_wizard_for_employee_selection_mode(self):
+        '''
+            Test employee_ids selection in batch payslip generating wizard
+            based on employee selection mode fields
+        '''
+
+        self.richard_emp.contract_ids[0].state = 'open'
+        self.richard_emp.contract_ids[0].date_end = False
+        self.contract_jules = self.env['hr.contract'].create({
+            'date_start': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
+            'name': 'Contract for Jules',
+            'wage': 5000.33,
+            'employee_id': self.jules_emp.id,
+            'state': 'open',
+        })
+
+        payslip_employee = self.env['hr.payslip.employees'].create({
+            'selection_mode': 'employee',
+            'select_employee_ids': [Command.link(self.richard_emp.id), Command.link(self.jules_emp.id)],
+        })
+        payslip_employee._compute_employee_ids()
+
+        self.assertEqual(len(payslip_employee.employee_ids), 2)
+        self.assertTrue(all(employee in [self.richard_emp, self.jules_emp] for employee in payslip_employee.employee_ids))
+
+    def test_05_payslip_batch_wizard_for_department_selection_mode(self):
+        '''
+            Test employee_ids selection in batch payslip generating wizard
+            based on department selection mode fields
+        '''
+
+        self.richard_emp.contract_ids[0].state = 'open'
+        self.richard_emp.contract_ids[0].date_end = False
+        self.contract_jules = self.env['hr.contract'].create({
+            'date_start': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
+            'name': 'Contract for Jules',
+            'wage': 5000.33,
+            'employee_id': self.jules_emp.id,
+            'state': 'open',
+        })
+        self.richard_emp.department_id = False
+        payslip_employee = self.env['hr.payslip.employees'].create({
+            'selection_mode': 'department',
+            'department_ids': [Command.link(self.dep_rd.id)],
+        })
+        payslip_employee._compute_employee_ids()
+
+        self.assertEqual(len(payslip_employee.employee_ids), 1)
+        self.assertEqual(payslip_employee.employee_ids[0], self.jules_emp)
+
+    def test_06_payslip_batch_wizard_for_job_selection_mode(self):
+        '''
+            Test employee_ids selection in batch payslip generating wizard
+            based on job selection mode fields
+        '''
+
+        self.richard_emp.contract_ids[0].state = 'open'
+        self.richard_emp.contract_ids[0].date_end = False
+        job_developer = self.env['hr.job'].create({
+            'name': 'Experienced Developer',
+            'department_id': self.dep_rd.id,
+            'no_of_recruitment': 5,
+        })
+        self.richard_emp.job_id = job_developer.id
+
+        payslip_employee = self.env['hr.payslip.employees'].create({
+            'selection_mode': 'job',
+            'job_ids': [Command.link(job_developer.id)],
+        })
+        payslip_employee._compute_employee_ids()
+
+        self.assertEqual(len(payslip_employee.employee_ids), 1)
+        self.assertEqual(payslip_employee.employee_ids[0], self.richard_emp)
+
+    def test_07_payslip_batch_wizard_for_category_selection_mode(self):
+        '''
+            Test employee_ids selection in batch payslip generating wizard
+            based on category selection mode fields
+        '''
+
+        self.richard_emp.contract_ids[0].state = 'open'
+        self.richard_emp.contract_ids[0].date_end = False
+        self.contract_jules = self.env['hr.contract'].create({
+            'date_start': datetime.date.today() + relativedelta(years=-1, month=8, day=1),
+            'name': 'Contract for Jules',
+            'wage': 5000.33,
+            'employee_id': self.jules_emp.id,
+            'state': 'open',
+        })
+        category_tag = self.env['hr.employee.category'].create({'name': 'Test category'})
+        self.jules_emp.category_ids = [Command.link(category_tag.id)]
+
+        payslip_employee = self.env['hr.payslip.employees'].create({
+            'selection_mode': 'category',
+            'category_ids': [Command.link(category_tag.id)],
+        })
+        payslip_employee._compute_employee_ids()
+
+        self.assertEqual(len(payslip_employee.employee_ids), 1)
+        self.assertEqual(payslip_employee.employee_ids[0], self.jules_emp)

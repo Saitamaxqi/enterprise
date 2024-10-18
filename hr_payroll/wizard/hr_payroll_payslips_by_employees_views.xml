@@ -10,22 +10,20 @@
                     <separator string="Employees Selection"/>
                     <div class="o_row ms-2">
                         <group>
-                            <field name="department_id" class="w-75"
-                                help="Set a specific department if you wish to select all the employees from this department (and subdepartments) at once."/>
-                            <field name="job_id" class="w-75" invisible="not department_id" domain="[('department_id', 'child_of', department_id)]"
-                                help="Set a specific job if you wish to select all the employees from this job at once."/>
-                            <field name="job_id" class="w-75" invisible="department_id"
-                                help="Set a specific job if you wish to select all the employees from this job at once."/>
-                            <field name="structure_type_id" class="w-75"
-                                help="Set a specific structure type if you wish to select all the employees from this structure type at once."/>
+                            <field name="selection_mode"/>
+                            <field name="select_employee_ids" string="Employees" invisible="selection_mode != 'employee'" widget="many2many_avatar_user" placeholder="All Employees"/>
+                            <field name="department_ids" invisible="selection_mode != 'department'" widget="many2many_tags" placeholder="All Departments"/>
+                            <field name="job_ids" invisible="selection_mode != 'job'" widget="many2many_tags" placeholder="All Job Positions"/>
+                            <field name="structure_type_ids" invisible="selection_mode != 'structure'" widget="many2many_tags" placeholder="All Salary Structure Types"/>
+                            <field name="category_ids" invisible="selection_mode != 'category'" widget="many2many_tags" placeholder="All Employee Tags"/>
                         </group>
                     </div>
                     <separator string="Payslip Generation" colspan="2"/>
                     <div class="o_row ms-2">
                         <group>
-                            <field name="structure_id" class="w-75" invisible="not structure_type_id" domain="[('type_id', '=', structure_type_id)]"
+                            <field name="structure_id" class="w-75" invisible="not structure_type_ids" domain="[('type_id', 'in', structure_type_ids)]"
                                 help="If empty, the default salary structure from the Salary structure type of the employee will be used"/>
-                            <field name="structure_id" class="w-75" invisible="structure_type_id"
+                            <field name="structure_id" class="w-75" invisible="structure_type_ids"
                                 help="If empty, the default salary structure from the Salary structure type of the employee will be used"/>
                         </group>
                     </div>
@@ -36,7 +34,6 @@
                             <field name="work_email"/>
                             <field name="department_id"/>
                             <field name="job_id"/>
-                            <field name="structure_type_id"/>
                         </list>
                     </field>
                     <footer>

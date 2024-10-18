@@ -17,7 +17,14 @@ class HrPayslipEmployees(models.TransientModel):
     _description = 'Generate payslips for all selected employees'
 
     def _get_available_contracts_domain(self):
-        return [('contract_ids.state', 'in', ('open', 'close')), ('company_id', '=', self.env.company.id)]
+        payslip_run = self.env['hr.payslip.run'].browse(self.env.context.get('active_id'))
+        domain = ['|',
+            ('contract_ids.date_end', '=', False),
+            ('contract_ids.date_end', '>', payslip_run.date_start),
+            ('contract_ids.state', 'in', ('open', 'close')),
+            ('company_id', '=', self.env.company.id),
+        ]
+        return domain
 
     def _get_employees(self):
         active_employee_ids = self.env.context.get('active_employee_ids', False)
@@ -29,48 +36,67 @@ class HrPayslipEmployees(models.TransientModel):
     employee_ids = fields.Many2many('hr.employee', 'hr_employee_group_rel', 'payslip_id', 'employee_id', 'Employees',
                                     default=lambda self: self._get_employees(), required=True,
                                     compute='_compute_employee_ids', store=True, readonly=False)
+    selection_mode = fields.Selection([
+        ('employee', 'By Employee'),
+        ('department', 'By Department'),
+        ('job', 'By Job Position'),
+        ('structure', 'By Salary Structure Types'),
+        ('category', 'By Employee Tags')],
+        string='Selection Mode', readonly=False, required=True, default='employee',
+        help="Allow to select employees in batchs:\n- By Employee: for a specific employee"
+             "\n- By Department: all employees of the specified department"
+             "\n- By Job Position: all employees of the specified job position"
+             "\n- By Salary Structure Types: all employees of the specified salary structure types"
+             "\n- By Employee Tags: all employees of the specific employee group category")
     structure_id = fields.Many2one('hr.payroll.structure', string='Salary Structure', compute='_compute_structure_id', readonly=False, store=True)
-    structure_type_id = fields.Many2one('hr.payroll.structure.type', string='Salary Structure Type')
-    job_id = fields.Many2one('hr.job', string='Job Position', compute='_compute_job_id', readonly=False, store=True)
-    department_id = fields.Many2one('hr.department')
+    structure_type_ids = fields.Many2many('hr.payroll.structure.type', string='Salary Structure Type')
+    job_ids = fields.Many2many('hr.job', string='Job Position')
+    department_ids = fields.Many2many('hr.department')
+    select_employee_ids = fields.Many2many('hr.employee', string='Select Employees', domain="[('company_id', 'in', allowed_company_ids)]")
+    category_ids = fields.Many2many('hr.employee.category', string='Employee Tag')
 
-    @api.depends('structure_id', 'department_id', 'structure_type_id', 'job_id')
+    @api.depends('structure_id', 'department_ids', 'structure_type_ids', 'job_ids', 'selection_mode', 'select_employee_ids', 'category_ids')
     def _compute_employee_ids(self):
         for wizard in self:
             domain = wizard.get_employees_domain()
             wizard.employee_ids = self.env['hr.employee'].search(domain)
 
-    @api.depends('department_id')
-    def _compute_job_id(self):
-        for wizard in self:
-            wizard.job_id = False
-
-    @api.depends('structure_type_id')
+    @api.depends('structure_type_ids')
     def _compute_structure_id(self):
         for wizard in self:
-            wizard.structure_id = wizard.structure_type_id.default_struct_id if wizard.structure_type_id else False
+            wizard.structure_id = wizard.structure_type_ids[0].default_struct_id if wizard.structure_type_ids else False
 
     def get_employees_domain(self):
         domain = self._get_available_contracts_domain()
-        if self.department_id:
+        if self.selection_mode == 'employee' and self.select_employee_ids:
             domain = expression.AND([
                 domain,
-                [('department_id', 'child_of', self.department_id.id)]
+                [('id', 'in', self.select_employee_ids.ids)]
             ])
-        if self.structure_type_id:
+        elif self.selection_mode == 'department' and self.department_ids:
             domain = expression.AND([
                 domain,
-                [('structure_type_id', '=', self.structure_type_id.id)]
+                [('department_id', 'child_of', self.department_ids.ids)]
             ])
-        if self.job_id:
+        elif self.selection_mode == 'structure' and self.structure_type_ids:
             domain = expression.AND([
                 domain,
-                [('job_id', '=', self.job_id.id)]
+                [('contract_ids.structure_type_id', 'in', self.structure_type_ids.ids)]
+            ])
+        elif self.selection_mode == 'job' and self.job_ids:
+            domain = expression.AND([
+                domain,
+                [('job_id', 'in', self.job_ids.ids)]
+            ])
+        elif self.selection_mode == 'category' and self.category_ids:
+            domain = expression.AND([
+                domain,
+                [('category_ids', 'in', self.category_ids.ids)]
             ])
         if self.structure_id:
             domain = expression.AND([
                 domain,
-                [('structure_type_id', '=', self.structure_id.type_id.id)]
+                [('contract_ids.structure_type_id', '=', self.structure_id.type_id.id)]
             ])
         return domain
 
