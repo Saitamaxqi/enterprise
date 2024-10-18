@@ -137,7 +137,7 @@ registry
 registry.category("web_tour.tours").add("test_process_confirmed_mo", {
     steps: () => [
         {
-            trigger: '.o_kanban_record_title:contains("Manufacturing")',
+            trigger: 'div[name="o_kanban_record_title"]:contains("Manufacturing")',
             run: "click",
         },
         {
@@ -182,7 +182,7 @@ registry.category("web_tour.tours").add("test_process_confirmed_mo", {
 registry.category("web_tour.tours").add("test_barcode_production_create", {
     steps: () => [
         {
-            trigger: ".o_kanban_record_title:contains('Manufacturing')",
+            trigger: "div[name='o_kanban_record_title']:contains('Manufacturing')",
             run: "click",
         },
         {
@@ -260,7 +260,7 @@ registry.category("web_tour.tours").add("test_barcode_production_create_bom", {
     steps: () => [
         // Creates a new production from the Barcode App.
         {
-            trigger: ".o_kanban_record_title:contains('Manufacturing')",
+            trigger: "div[name='o_kanban_record_title']:contains('Manufacturing')",
             run: "click",
         },
         {
@@ -329,7 +329,7 @@ registry.category("web_tour.tours").add("test_barcode_production_create_bom", {
 registry.category("web_tour.tours").add("test_barcode_production_create_tracked_bom", {
     steps: () => [
         {
-            trigger: '.o_kanban_record_title:contains("Manufacturing")',
+            trigger: 'div[name="o_kanban_record_title"]:contains("Manufacturing")',
             run: "click",
         },
         {
@@ -716,7 +716,7 @@ registry.category("web_tour.tours").add("test_barcode_production_component_no_st
     steps: () => [
         // Creates a new production from the Barcode App.
         {
-            trigger: ".o_kanban_record_title:contains('Manufacturing')",
+            trigger: "div[name='o_kanban_record_title']:contains('Manufacturing')",
             run: "click",
         },
         {
@@ -832,7 +832,7 @@ registry.category("web_tour.tours").add("test_barcode_production_add_scrap", {
     steps: () => [
         // Creates a new production from the Barcode App.
         {
-            trigger: ".o_kanban_record_title:contains('Manufacturing')",
+            trigger: "div[name='o_kanban_record_title']:contains('Manufacturing')",
             run: "click",
         },
         {
@@ -899,7 +899,7 @@ registry.category("web_tour.tours").add("test_barcode_production_add_byproduct",
     steps: () => [
         // Creates a new production from the Barcode App.
         {
-            trigger: ".o_kanban_record_title:contains('Manufacturing')",
+            trigger: "div[name='o_kanban_record_title']:contains('Manufacturing')",
             run: "click",
         },
         {
@@ -1072,7 +1072,7 @@ registry.category("web_tour.tours").add("test_barcode_production_component_diffe
     steps: () => [
         // Creates a new production from the Barcode App.
         {
-            trigger: ".o_kanban_record_title:contains('Manufacturing')",
+            trigger: "div[name='o_kanban_record_title']:contains('Manufacturing')",
             run: "click",
         },
         {
@@ -1201,7 +1201,7 @@ registry.category("web_tour.tours").add("test_kit_bom_decomposition_keeps_locati
 
 registry.category("web_tour.tours").add("test_always_backorder_mo", {
     steps: () => [
-        { trigger: ".o_kanban_record_title:contains(Manufacturing)", run: "click" },
+        { trigger: "div[name='o_kanban_record_title']:contains(Manufacturing)", run: "click" },
         { trigger: ".o_kanban_record:contains(Final Product)", run: "click" },
         { trigger: ".o_barcode_line.o_header .fa-pencil", run: "click" },
         { trigger: ".o_digipad_increment", run: "click" },
@@ -1243,7 +1243,7 @@ registry.category("web_tour.tours").add("test_backorder_partial_completion_save_
 registry.category("web_tour.tours").add("test_barcode_mo_creation_in_mo2", {
     steps: () => [
         { trigger: "button.o_button_operations", run: "click" },
-        { trigger: ".o_kanban_record_title:contains('MO2')", run: "click" },
+        { trigger: "div[name='o_kanban_record_title']:contains('MO2')", run: "click" },
         { trigger: ".o-kanban-button-new", run: "click" },
         {
             content: "Click on the button to add a product",
@@ -1274,7 +1274,7 @@ registry.category("web_tour.tours").add("test_barcode_mo_creation_in_mo2", {
 
 registry.category("web_tour.tours").add("test_barcode_mo_creation_in_scan_mo2", {
     steps: () => [
-        { trigger: ".o_kanban_record_title:contains('MO2')", run: "click" },
+        { trigger: "div[name='o_kanban_record_title']:contains('MO2')", run: "click" },
         { trigger: ".o-kanban-button-new", run: "click" },
         { trigger: ".o_barcode_client_action", run: "scan MO2_TEST_PRODUCT" },
         { trigger: "button.o_validate_page:enabled", run: "click" },

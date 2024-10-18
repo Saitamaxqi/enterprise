@@ -73,7 +73,7 @@
                             <field name="l10n_au_withholding_variation_amount"
                                 invisible="l10n_au_withholding_variation == 'none'" nolabel="1"
                                 widget="float" class="oe_inline o_input_6ch" />
-                            <span invisible="l10n_au_withholding_variation == 'none'" class="oe_grey p-2"> %</span>
+                            <span invisible="l10n_au_withholding_variation == 'none'" class="opacity-50 p-2"> %</span>
                         </div>
                         <field name="l10n_au_additional_withholding_amount" />
                     </group>

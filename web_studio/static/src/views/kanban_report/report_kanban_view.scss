@@ -2,10 +2,4 @@
     .o_kanban_image {
         width: 40px;
     }
-    .oe_kanban_details {
-        padding-left: 48px;
-        > small {
-            @include o-text-overflow(block);
-        }
-    }
 }

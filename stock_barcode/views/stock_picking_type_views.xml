@@ -16,7 +16,7 @@
                     <t t-name="card" class="o_barcode_picking_type">
                         <div t-if="record.is_barcode_picking_type"
                              class="d-flex justify-content-between py-3">
-                            <div class="fw-bold fs-5 o_kanban_record_title">
+                            <div name="o_kanban_record_title" class="fw-bold fs-5">
                                 <field name="name" class="text-uppercase"/>
                                 <br/>
                                 <field name="warehouse_id" readonly="1" class="text-muted" groups="stock.group_stock_multi_warehouses"/>

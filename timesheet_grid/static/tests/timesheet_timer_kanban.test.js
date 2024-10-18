@@ -25,14 +25,12 @@ beforeEach(() => {
             <templates>
                 <field name="name"/>
                 <t t-name="card">
-                    <div class="oe_kanban_global_click">
-                        <field name="employee_id"/>
-                        <field name="project_id"/>
-                        <field name="task_id"/>
-                        <field name="date"/>
-                        <field name="display_timer"/>
-                        <field name="unit_amount"/>
-                    </div>
+                    <field name="employee_id"/>
+                    <field name="project_id"/>
+                    <field name="task_id"/>
+                    <field name="date"/>
+                    <field name="display_timer"/>
+                    <field name="unit_amount"/>
                 </t>
             </templates>
         </kanban>

@@ -76,7 +76,7 @@
                                     </t>
                                 </div>
                             </div>
-                            <div id="post-stats" class="bg-100 px-3 py-1 border-bottom">
+                            <div name="post-stats" class="bg-100 px-3 py-1 border-bottom">
                                 <div class="d-flex justify-content-between py-1 m-0 small">
                                     Clicks: <field name="click_count" class="fw-bold d-inline-block ms-auto"/>
                                 </div>

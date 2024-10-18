@@ -5574,7 +5574,7 @@ registry.category("web_tour.tours").add("test_sml_sort_order_by_product_category
 registry.category("web_tour.tours").add("test_barcode_signature_flow", {
     steps: () => [
         {
-            trigger: "div.o_kanban_record_title > span:contains(Delivery Orders)",
+            trigger: "div[name='o_kanban_record_title'] > span:contains(Delivery Orders)",
             run: "click",
         },
         {
@@ -5649,7 +5649,7 @@ registry.category("web_tour.tours").add("test_open_picking_dont_override_assigne
             run: "click",
         },
         {
-            trigger: ".o_kanban_record_title > span:contains(Receipts)",
+            trigger: "div[name='o_kanban_record_title'] > span:contains(Receipts)",
             run: "click",
         },
         {
@@ -5779,7 +5779,7 @@ registry.category("web_tour.tours").add("test_scan_location_destination_for_inte
         },
         {
             trigger:
-                ".o_barcode_picking_type:has(.o_kanban_record_title:contains('Internal Transfers'))",
+                ".o_barcode_picking_type:has(div[name='o_kanban_record_title']:contains('Internal Transfers'))",
             run: "click",
         },
         {

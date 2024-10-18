@@ -28,7 +28,7 @@
             <xpath expr="//field[@name='live_posts_by_media']" position="after">
                 <field name="use_leads"/>
             </xpath>
-            <xpath expr="//div[@id='post-stats']" position="inside">
+            <xpath expr="//div[@name='post-stats']" position="inside">
                 <div class="d-flex justify-content-between py-1 border-top" groups="sales_team.group_sale_salesman">
                     <small t-if="record.use_leads.raw_value" class="pe-1">Leads:</small>
                     <small t-else="" class="pe-1">Opportunities:</small> <field name="leads_opportunities_count" class="fw-bold small"/>

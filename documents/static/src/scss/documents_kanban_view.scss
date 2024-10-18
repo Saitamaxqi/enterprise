@@ -146,10 +146,6 @@
                 cursor: zoom-in;
             }
 
-            .o_kanban_record_title {
-                margin-bottom: 0;
-            }
-
             .o_record_selector {
                 @include o-hover-text-color($gray-400, $gray-800 );
                 @include o-position-absolute($o-kanban-inside-vgutter - 4px , $o-kanban-inside-hgutter - 4px);
