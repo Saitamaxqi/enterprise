@@ -54,18 +54,19 @@ export class GridTimesheetTimerHeader extends Component {
 
     getFieldInfo(fieldName) {
         const field = this.fields[fieldName];
-        let fieldType = field.type;
-        if (fieldName === "task_id") {
-            fieldType = 'task_with_hours';
-        }
         const domain = field.domain || "[]";
-        const fieldInfo = getPropertyFieldInfo({
-            field: field,
+        const propertyField = {
+            field,
             name: fieldName,
-            type: fieldType,
             domain,
             required: "False",
-        });
+        };
+        propertyField.type = field.type;
+        if (fieldName === "task_id") {
+            propertyField.type = "many2one";
+            propertyField.widget = "task_with_hours";
+        }
+        const fieldInfo = getPropertyFieldInfo(propertyField);
         fieldInfo.placeholder = field.string || "";
         if (fieldName === "project_id") {
             fieldInfo.domain = Domain.and([
