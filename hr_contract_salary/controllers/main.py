@@ -668,7 +668,7 @@ class HrContractSalary(http.Controller):
 
         return new_contract, contract_diff
 
-    @http.route('/salary_package/update_salary', type="json", auth="public")
+    @http.route('/salary_package/update_salary', type="jsonrpc", auth="public")
     def update_salary(self, contract_id=None, offer_id=None, benefits=None, **kw):
         result = {}
         contract = self._check_access_rights(contract_id)
@@ -738,7 +738,7 @@ class HrContractSalary(http.Controller):
             result['resume_lines_mapped'][resume_line.category_id.name][resume_line.code] = (resume_line.name, round(float(monthly_total), 2), uoms['currency'], uoms['position'], resume_explanation, resume_line.uom)
         return result
 
-    @http.route(['/salary_package/onchange_benefit'], type='json', auth='public')
+    @http.route(['/salary_package/onchange_benefit'], type='jsonrpc', auth='public')
     def onchange_benefit(self, benefit_field, new_value, contract_id, benefits):
         # Return a dictionary describing the new benefit configuration:
         # - new_value: The benefit new_value (same by default)
@@ -757,7 +757,7 @@ class HrContractSalary(http.Controller):
             description = benefit.description
         return {'new_value': new_value, 'description': description, 'extra_values': False}
 
-    @http.route(['/salary_package/onchange_personal_info'], type='json', auth='public')
+    @http.route(['/salary_package/onchange_personal_info'], type='jsonrpc', auth='public')
     def onchange_personal_info(self, field, value):
         # sudo as public users can't access ir.model.fields
         info = request.env['hr.contract.salary.personal.info'].sudo().search([('field', '=', field)])
@@ -849,7 +849,7 @@ class HrContractSalary(http.Controller):
             {'differences': differences},
             new_contract_id)
 
-    @http.route(['/salary_package/submit'], type='json', auth='public')
+    @http.route(['/salary_package/submit'], type='jsonrpc', auth='public')
     def submit(self, contract_id=None, offer_id=None, benefits=None, **kw):
         offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id).exists()
         if not offer.applicant_id and not offer.employee_contract_id:
@@ -990,7 +990,7 @@ class HrContractSalary(http.Controller):
             'new_contract_id': new_contract.id
         }
 
-    @http.route(['/salary_package/post_feedback'], type='json', auth='public')
+    @http.route(['/salary_package/post_feedback'], type='jsonrpc', auth='public')
     def refuse(self, offer_id, feedback=None, token=None):
         offer = request.env['hr.contract.salary.offer'].sudo().browse(offer_id).exists()
         if not offer.applicant_id and not offer.employee_contract_id:

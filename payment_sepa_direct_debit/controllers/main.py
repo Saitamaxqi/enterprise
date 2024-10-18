@@ -13,7 +13,7 @@ from odoo.addons.payment import utils as payment_utils
 
 class SepaDirectDebitController(Controller):
 
-    @route('/payment/sepa_direct_debit/set_mandate', type='json', auth='public')
+    @route('/payment/sepa_direct_debit/set_mandate', type='jsonrpc', auth='public')
     def sdd_set_mandate(self, reference, iban, access_token):
         """ Assign the SDD mandate corresponding to the given IBAN to the transaction.
 

@@ -12,7 +12,7 @@ from odoo.tools.misc import file_open
 
 class StockBarcodeController(http.Controller):
 
-    @http.route('/stock_barcode/scan_from_main_menu', type='json', auth='user')
+    @http.route('/stock_barcode/scan_from_main_menu', type='jsonrpc', auth='user')
     def main_menu(self, barcode):
         """ Receive a barcode scanned from the main menu and return the appropriate
             action (open an existing / new picking) or warning.
@@ -68,7 +68,7 @@ class StockBarcodeController(http.Controller):
         else:
             return {'warning': _('No picking or product corresponding to barcode %(barcode)s', barcode=barcode)}
 
-    @http.route('/stock_barcode/save_barcode_data', type='json', auth='user')
+    @http.route('/stock_barcode/save_barcode_data', type='jsonrpc', auth='user')
     def save_barcode_data(self, model, res_id, write_field, write_vals):
         if not res_id:
             return request.env[model].barcode_write(write_vals)
@@ -76,7 +76,7 @@ class StockBarcodeController(http.Controller):
         target_record.write({write_field: write_vals})
         return target_record._get_stock_barcode_data()
 
-    @http.route('/stock_barcode/get_barcode_data', type='json', auth='user')
+    @http.route('/stock_barcode/get_barcode_data', type='jsonrpc', auth='user')
     def get_barcode_data(self, model, res_id):
         """ Returns a dict with values used by the barcode client:
         {
@@ -104,7 +104,7 @@ class StockBarcodeController(http.Controller):
             'groups': self._get_groups_data(),
         }
 
-    @http.route('/stock_barcode/get_main_menu_data', type='json', auth='user')
+    @http.route('/stock_barcode/get_main_menu_data', type='jsonrpc', auth='user')
     def get_main_menu_data(self):
         user = request.env.user
         groups = {
@@ -125,7 +125,7 @@ class StockBarcodeController(http.Controller):
             'quant_count': quant_count,
         }
 
-    @http.route('/stock_barcode/get_specific_barcode_data', type='json', auth='user')
+    @http.route('/stock_barcode/get_specific_barcode_data', type='jsonrpc', auth='user')
     def get_specific_barcode_data(self, barcode, model_name, domains_by_model=False):
         nomenclature = request.env.company.nomenclature_id
         # Adapts the search parameters for GS1 specifications.
@@ -169,7 +169,7 @@ class StockBarcodeController(http.Controller):
                 result[res_model] += records_data_by_model[res_model]
         return result
 
-    @http.route('/stock_barcode/get_specific_barcode_data_batch', type='json', auth='user')
+    @http.route('/stock_barcode/get_specific_barcode_data_batch', type='jsonrpc', auth='user')
     def get_specific_barcode_data_batch(self, kwargs):
         """ Batched version of `get_specific_barcode_data`, where its purpose is to get multiple
         records data from different models. The goal is to do one search by model (plus the
@@ -211,7 +211,7 @@ class StockBarcodeController(http.Controller):
                 result[f_model_name] = result[f_model_name] + fetched_data[f_model_name]
         return result
 
-    @http.route('/stock_barcode/rid_of_message_demo_barcodes', type='json', auth='user')
+    @http.route('/stock_barcode/rid_of_message_demo_barcodes', type='jsonrpc', auth='user')
     def rid_of_message_demo_barcodes(self, **kw):
         """ Edit the main_menu client action so that it doesn't display the 'print demo barcodes sheet' message """
         if not request.env.user.has_group('stock.group_stock_user'):

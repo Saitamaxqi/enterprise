@@ -92,12 +92,12 @@ class SocialYoutubeController(SocialController):
         stream_post = self._get_social_stream_post(stream_post_id, 'youtube')
         return json.dumps(stream_post._youtube_comment_add(comment_id, message, is_edit=is_edit))
 
-    @http.route('/social_youtube/delete_comment', type='json', auth='user')
+    @http.route('/social_youtube/delete_comment', type='jsonrpc', auth='user')
     def social_youtube_delete_comment(self, stream_post_id=None, comment_id=None):
         stream_post = self._get_social_stream_post(stream_post_id, 'youtube')
         return stream_post._youtube_comment_delete(comment_id)
 
-    @http.route('/social_youtube/get_comments', type='json', auth='user')
+    @http.route('/social_youtube/get_comments', type='jsonrpc', auth='user')
     def social_youtube_get_comments(self, stream_post_id, next_page_token=False, comments_count=20):
         stream_post = self._get_social_stream_post(stream_post_id, 'youtube')
         return stream_post._youtube_comment_fetch(next_page_token, count=comments_count)

@@ -274,7 +274,7 @@ class Sign(http.Controller):
     # -------------
     #  JSON Routes
     # -------------
-    @http.route(["/sign/get_document/<int:request_id>/<token>"], type='json', auth='user')
+    @http.route(["/sign/get_document/<int:request_id>/<token>"], type='jsonrpc', auth='user')
     def get_document(self, request_id, token):
         context = self.get_document_qweb_context(request_id, token)
         return {
@@ -285,7 +285,7 @@ class Sign(http.Controller):
             }
         }
 
-    @http.route(["/sign/update_user_signature"], type="json", auth="user")
+    @http.route(["/sign/update_user_signature"], type="jsonrpc", auth="user")
     def update_signature(self, sign_request_id, role, signature_type=None, datas=None, frame_datas=None):
         sign_request_item_sudo = http.request.env['sign.request.item'].sudo().search([('sign_request_id', '=', sign_request_id), ('role_id', '=', role)], limit=1)
         user = http.request.env.user
@@ -297,7 +297,7 @@ class Sign(http.Controller):
             user[signature_type+'_frame'] = frame_datas[frame_datas.find(',') + 1:]
         return True
 
-    @http.route(['/sign/new_partners'], type='json', auth='user')
+    @http.route(['/sign/new_partners'], type='jsonrpc', auth='user')
     def new_partners(self, partners=[]):
         ResPartner = http.request.env['res.partner']
         pIDs = []
@@ -306,7 +306,7 @@ class Sign(http.Controller):
             pIDs.append(existing.id if existing else ResPartner.create({'name': p[0], 'email': p[1]}).id)
         return pIDs
 
-    @http.route(['/sign/send_public/<int:request_id>/<token>'], type='json', auth='public')
+    @http.route(['/sign/send_public/<int:request_id>/<token>'], type='jsonrpc', auth='public')
     def make_public_user(self, request_id, token, name=None, mail=None):
         sign_request = http.request.env['sign.request'].sudo().search([('id', '=', request_id), ('access_token', '=', token)])
         if not sign_request or len(sign_request.request_item_ids) != 1 or sign_request.request_item_ids.partner_id:
@@ -329,7 +329,7 @@ class Sign(http.Controller):
 
     @http.route([
         '/sign/send-sms/<int:request_id>/<token>/<phone_number>',
-        ], type='json', auth='public')
+        ], type='jsonrpc', auth='public')
     def send_sms(self, request_id, token, phone_number):
         request_item = http.request.env['sign.request.item'].sudo().search([('sign_request_id', '=', request_id), ('access_token', '=', token), ('state', '=', 'sent')], limit=1)
         if not request_item:
@@ -369,7 +369,7 @@ class Sign(http.Controller):
     @http.route([
         '/sign/sign/<int:sign_request_id>/<token>',
         '/sign/sign/<int:sign_request_id>/<token>/<sms_token>'
-    ], type='json', auth='public')
+    ], type='jsonrpc', auth='public')
     def sign(self, sign_request_id, token, sms_token=False, signature=None, **kwargs):
         request_item_sudo = http.request.env['sign.request.item'].sudo().search([
             ('sign_request_id', '=', sign_request_id),
@@ -394,7 +394,7 @@ class Sign(http.Controller):
         request_item_sudo._edit_and_sign(signature, **kwargs)
         return result
 
-    @http.route(['/sign/refuse/<int:sign_request_id>/<token>'], type='json', auth='public')
+    @http.route(['/sign/refuse/<int:sign_request_id>/<token>'], type='jsonrpc', auth='public')
     def refuse(self, sign_request_id, token, refusal_reason=""):
         request_item = request.env["sign.request.item"].sudo().search(
             [
@@ -414,7 +414,7 @@ class Sign(http.Controller):
         request_item._refuse(refusal_reason)
         return True
 
-    @http.route(['/sign/password/<int:sign_request_id>'], type='json', auth='public')
+    @http.route(['/sign/password/<int:sign_request_id>'], type='jsonrpc', auth='public')
     def check_password(self, sign_request_id, password=None):
         request_item = http.request.env['sign.request.item'].sudo().search([
             ('sign_request_id', '=', sign_request_id),
@@ -432,7 +432,7 @@ class Sign(http.Controller):
         request_item.sign_request_id._send_completed_document()
         return True
 
-    @http.route(['/sign/encrypted/<int:sign_request_id>'], type='json', auth='public')
+    @http.route(['/sign/encrypted/<int:sign_request_id>'], type='jsonrpc', auth='public')
     def check_encrypted(self, sign_request_id):
         request_item = http.request.env['sign.request.item'].sudo().search([('sign_request_id', '=', sign_request_id)], limit=1)
         if not request_item:
@@ -446,17 +446,17 @@ class Sign(http.Controller):
         old_pdf = PdfFileReader(io.BytesIO(base64.b64decode(template_id.attachment_id.datas)), strict=False, overwriteWarnings=False)
         return True if old_pdf.isEncrypted else False
 
-    @http.route(['/sign/save_location/<int:request_id>/<token>'], type='json', auth='public')
+    @http.route(['/sign/save_location/<int:request_id>/<token>'], type='jsonrpc', auth='public')
     def save_location(self, request_id, token, latitude=0, longitude=0):
         sign_request_item = http.request.env['sign.request.item'].sudo().search([('sign_request_id', '=', request_id), ('access_token', '=', token)], limit=1)
         sign_request_item.write({'latitude': latitude, 'longitude': longitude})
 
-    @http.route("/sign/render_assets_pdf_iframe", type="json", auth="public")
+    @http.route("/sign/render_assets_pdf_iframe", type="jsonrpc", auth="public")
     def render_assets_pdf_iframe(self, **kw):
         context = {'debug': kw.get('debug')} if 'debug' in kw else {}
         return request.env['ir.ui.view'].sudo()._render_template('sign.compiled_assets_pdf_iframe', context)
 
-    @http.route(['/sign/has_sms_credits'], type='json', auth='public')
+    @http.route(['/sign/has_sms_credits'], type='jsonrpc', auth='public')
     def has_sms_credits(self):
         return request.env['iap.account'].sudo().get_credits('sms') >= 1
 
@@ -485,7 +485,7 @@ class Sign(http.Controller):
                 })
         return warnings
 
-    @http.route(['/sign/sign_request_state/<int:request_id>/<token>'], type='json', auth='public')
+    @http.route(['/sign/sign_request_state/<int:request_id>/<token>'], type='jsonrpc', auth='public')
     def get_sign_request_state(self, request_id, token):
         """
         Returns the state of a sign request.
@@ -498,7 +498,7 @@ class Sign(http.Controller):
             return http.request.not_found()
         return sign_request.state
 
-    @http.route(['/sign/sign_request_items'], type='json', auth='user')
+    @http.route(['/sign/sign_request_items'], type='jsonrpc', auth='user')
     def get_sign_request_items(self, request_id, token):
         """
         Finds up to 3 most important sign request items for the current user to sign,

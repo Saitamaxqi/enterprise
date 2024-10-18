@@ -12,7 +12,7 @@ from werkzeug.exceptions import Forbidden
 
 class ArticleThreadController(KnowledgeController):
 
-    @http.route('/knowledge/thread/create', type='json', auth='user')
+    @http.route('/knowledge/thread/create', type='jsonrpc', auth='user')
     def create_thread(self, article_id, article_anchor_text="", fields=["id", "article_anchor_text"]):
         article_thread = request.env['knowledge.article.thread'].create({
             'article_id': article_id,
@@ -32,7 +32,7 @@ class ArticleThreadController(KnowledgeController):
 
 class KnowledgeThreadController(ThreadController):
 
-    @http.route("/knowledge/threads/messages", methods=["POST"], type="json", auth="user")
+    @http.route("/knowledge/threads/messages", methods=["POST"], type="jsonrpc", auth="user")
     def mail_threads_messages(self, thread_model, thread_ids, limit=30):
         thread_ids = [int(thread_id) for thread_id in thread_ids]
         output = {}

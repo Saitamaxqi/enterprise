@@ -63,7 +63,7 @@ rider_status_update_schema = object_of({
 
 class PosUrbanPiperController(http.Controller):
 
-    @http.route('/urbanpiper/webhook/<string:event_type>', type='json', methods=['POST'], auth='public')
+    @http.route('/urbanpiper/webhook/<string:event_type>', type='jsonrpc', methods=['POST'], auth='public')
     def webhook(self, event_type):
         if not consteq(request.httprequest.headers.get('X-Urbanpiper-Uuid'), request.env['ir.config_parameter'].sudo().get_param('pos_urban_piper.uuid')):
             # Ignore request if it's not from the same database

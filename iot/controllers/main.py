@@ -61,7 +61,7 @@ class IoTController(http.Controller):
                 urls[device.identifier] = device.display_url
         return json.dumps(urls)
 
-    @http.route('/iot/printer/status', type='json', auth='public')
+    @http.route('/iot/printer/status', type='jsonrpc', auth='public')
     def listen_iot_printer_status(self, print_id, device_identifier, iot_mac):
         """
         Called by the IoT once the printing operation is over. We then forward
@@ -90,7 +90,7 @@ class IoTController(http.Controller):
                 'device_identifier': device_identifier
             })
 
-    @http.route('/iot/setup', type='json', auth='public')
+    @http.route('/iot/setup', type='jsonrpc', auth='public')
     def update_box(self, **kwargs):
         """
         This function receives a dict from the iot box with information from it 

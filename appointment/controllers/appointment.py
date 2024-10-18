@@ -833,7 +833,7 @@ class AppointmentController(http.Controller):
     # APPOINTMENT TYPE JSON DATA
     # ------------------------------------------------------------
 
-    @http.route(['/appointment/get_upcoming_appointments'], type="json", auth="public")
+    @http.route(['/appointment/get_upcoming_appointments'], type="jsonrpc", auth="public")
     def get_upcoming_appointments(self, calendar_event_access_tokens=False):
         """ Get up to the next 20 upcoming appointments data based on either logged user or info given by list of calendar event tokens
         :param <list> calendar_event_access_tokens: list of booked appointment access tokens.
@@ -866,7 +866,7 @@ class AppointmentController(http.Controller):
         }
 
     @http.route(['/appointment/<int:appointment_type_id>/get_message_intro'],
-                type="json", auth="public", methods=['POST'], website=True)
+                type="jsonrpc", auth="public", methods=['POST'], website=True)
     def get_appointment_message_intro(self, appointment_type_id, **kwargs):
         domain = self._appointments_base_domain(
             filter_appointment_type_ids=kwargs.get('filter_appointment_type_ids'),
@@ -889,7 +889,7 @@ class AppointmentController(http.Controller):
         return appointment_type.message_intro or ''
 
     @http.route(['/appointment/<int:appointment_type_id>/update_available_slots'],
-                type="json", auth="public", website=True)
+                type="jsonrpc", auth="public", website=True)
     def appointment_update_available_slots(self, appointment_type_id, staff_user_id=None, resource_selected_id=None, asked_capacity=1, timezone=None, **kwargs):
         """
             Route called when the selected user or resource or asked_capacity or the timezone is modified to adapt the possible slots accordingly

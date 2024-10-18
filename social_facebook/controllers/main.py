@@ -85,22 +85,22 @@ class SocialFacebookController(SocialController):
         result['formatted_created_time'] = request.env['social.stream.post']._format_facebook_published_date(result)
         return json.dumps(result)
 
-    @http.route('/social_facebook/delete_comment', type='json', auth='user')
+    @http.route('/social_facebook/delete_comment', type='jsonrpc', auth='user')
     def social_facebook_delete_comment(self, stream_post_id, comment_id):
         stream_post = self._get_social_stream_post(stream_post_id, 'facebook')
         stream_post._facebook_comment_delete(comment_id)
 
-    @http.route('/social_facebook/get_comments', type='json', auth='user')
+    @http.route('/social_facebook/get_comments', type='jsonrpc', auth='user')
     def social_facebook_get_comments(self, stream_post_id, next_records_token=False, comments_count=20):
         stream_post = self._get_social_stream_post(stream_post_id, 'facebook')
         return stream_post._facebook_comment_fetch(next_records_token, count=comments_count)
 
-    @http.route('/social_facebook/like_comment', type='json', auth='user')
+    @http.route('/social_facebook/like_comment', type='jsonrpc', auth='user')
     def social_facebook_like_comment(self, stream_post_id, comment_id, like):
         stream_post = self._get_social_stream_post(stream_post_id, 'facebook')
         stream_post._facebook_like(comment_id, like)
 
-    @http.route('/social_facebook/like_post', type='json', auth='user')
+    @http.route('/social_facebook/like_post', type='jsonrpc', auth='user')
     def social_facebook_like_post(self, stream_post_id, like):
         stream_post = self._get_social_stream_post(stream_post_id, 'facebook')
         stream_post._facebook_like(stream_post.facebook_post_id, like)

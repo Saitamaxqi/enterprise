@@ -6,7 +6,7 @@ from odoo.http import request
 
 class WebsiteSale(main.WebsiteSale):
 
-    @http.route("/shop/ups_check_service_type", type='json', auth="public", website=True, sitemap=False)
+    @http.route("/shop/ups_check_service_type", type='jsonrpc', auth="public", website=True, sitemap=False)
     def ups_check_service_type_is_available(self, **post):
         return request.env['sale.order'].sudo().check_ups_service_type(post)
 

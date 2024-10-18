@@ -99,7 +99,7 @@ class AppointmentCalendarController(CalendarController):
             'is_cancelled': not event.active,
         }, headers={'Cache-Control': 'no-store'})
 
-    @route(['/calendar/<string:access_token>/add_attendees_from_emails'], type="json", auth="public", website=True)
+    @route(['/calendar/<string:access_token>/add_attendees_from_emails'], type="jsonrpc", auth="public", website=True)
     def appointment_add_attendee(self, access_token, emails_str):
         """
         Add the attendee at the time of the validation of an appointment page

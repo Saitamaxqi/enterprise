@@ -16,7 +16,7 @@ class MRPStockBarcode(StockBarcodeController):
             action = self._try_create_production(barcode)
         return action or super().main_menu(barcode)
 
-    @http.route('/stock_barcode_mrp/save_barcode_data', type='json', auth='user')
+    @http.route('/stock_barcode_mrp/save_barcode_data', type='jsonrpc', auth='user')
     def save_barcode_mrp_data(self, model_vals):
         """ Saves data from the barcode app, allows multiple model saves in the same http call
 

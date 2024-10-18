@@ -110,7 +110,7 @@ class L10nCOWebsiteSale(WebsiteSale):
 
     @http.route(
         ['/shop/l10n_co_state_infos/<model("res.country.state"):state>'],
-        type="json",
+        type="jsonrpc",
         auth="public",
         methods=["POST"],
         website=True,

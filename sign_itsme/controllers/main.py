@@ -50,7 +50,7 @@ class SignItsme(SignController):
         else:
             return super()._validate_auth_method(request_item_sudo, **kwargs)
 
-    @http.route(['/itsme_sign/itsme_successful'], type='json', auth='public', csrf='false')
+    @http.route(['/itsme_sign/itsme_successful'], type='jsonrpc', auth='public', csrf='false')
     def sign_itsme_complete(self, itsme_state, name, birthdate, itsme_hash):
         if not itsme_state:
             return {
@@ -89,7 +89,7 @@ class SignItsme(SignController):
             'success': True
         }
 
-    @http.route(['/itsme/has_itsme_credits'], type="json", auth="public")
+    @http.route(['/itsme/has_itsme_credits'], type="jsonrpc", auth="public")
     def has_itsme_credits(self):
         return request.env['iap.account'].sudo().get_credits(IAP_SERVICE_NAME) >= 1
 

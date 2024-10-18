@@ -24,8 +24,8 @@ class TestFiskalyPoS(TestFrontend):
             )
 
         self.env.registry.clear_cache('routing')
-        PosController.auth_hook_v0 = http.route("/fake_fiskaly/api/v0/auth", type="json", methods=["POST"], csrf=False)(auth_hook)
-        PosController.auth_hook_v1 = http.route("/fake_fiskaly/api/v1/auth", type="json", methods=["POST"], csrf=False)(auth_hook)
+        PosController.auth_hook_v0 = http.route("/fake_fiskaly/api/v0/auth", type="jsonrpc", methods=["POST"], csrf=False)(auth_hook)
+        PosController.auth_hook_v1 = http.route("/fake_fiskaly/api/v1/auth", type="jsonrpc", methods=["POST"], csrf=False)(auth_hook)
         PosController.tss_hook = http.route(["/fake_fiskaly/api/v1/tss/<int:tss_id>/tx/<string:tx_id>"], methods=["PUT"], type="http", csrf=False)(tss_hook)
         PosController.vat_definition_hook = http.route(["/fake_fiskaly/api/v0/vat_definitions"], type="http")(vat_definition_hook)
 

@@ -354,7 +354,7 @@ class PaymentPortal(payment_portal.PaymentPortal):
             subscriptions.pending_transaction = True
         return tx_sudo
 
-    @http.route('/my/subscriptions/<int:order_id>/transaction', type='json', auth='public')
+    @http.route('/my/subscriptions/<int:order_id>/transaction', type='jsonrpc', auth='public')
     def subscription_transaction(
         self, order_id, access_token, is_validation=False, **kwargs
     ):
@@ -430,7 +430,7 @@ class PaymentPortal(payment_portal.PaymentPortal):
 
         return tx_sudo._get_processing_values()
 
-    @http.route('/my/subscriptions/invoice/<int:invoice_id>/transaction', type='json', auth='public')
+    @http.route('/my/subscriptions/invoice/<int:invoice_id>/transaction', type='jsonrpc', auth='public')
     def subscription_transaction_from_invoice(
         self, invoice_id, access_token, is_validation=False, **kwargs
     ):
@@ -467,7 +467,7 @@ class PaymentPortal(payment_portal.PaymentPortal):
         )
         return tx_sudo._get_processing_values()
 
-    @http.route('/my/subscriptions/assign_token/<int:order_id>', type='json', auth='user')
+    @http.route('/my/subscriptions/assign_token/<int:order_id>', type='jsonrpc', auth='user')
     def subscription_assign_token(self, order_id, token_id, access_token=None):
         """ Assign a token to a subscription.
 

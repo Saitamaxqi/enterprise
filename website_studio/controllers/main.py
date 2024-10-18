@@ -10,7 +10,7 @@ import werkzeug.exceptions
 
 
 class WebsiteStudioController(http.Controller):
-    @http.route('/website_studio/create_form', type='json', auth='user')
+    @http.route('/website_studio/create_form', type='jsonrpc', auth='user')
     def create_website_form(self, res_model):
         """ Create a new website page containing a form for the model.
 
@@ -49,7 +49,7 @@ class WebsiteStudioController(http.Controller):
         view.arch = self._post_process_arch(view.arch, model)
         return new_page['url']
 
-    @http.route('/website_studio/get_forms', type='json', auth='user')
+    @http.route('/website_studio/get_forms', type='jsonrpc', auth='user')
     def get_website_form(self, res_model):
         """ Search and return all the website views containing forms linked to the model.
 
@@ -108,7 +108,7 @@ class WebsiteStudioController(http.Controller):
         arch = re.sub(r'data-model_name=""', 'data-model_name="%s"' % res_model.model, arch)
         return arch
 
-    @http.route("/website_studio/get_website_pages", type="json", auth="user")
+    @http.route("/website_studio/get_website_pages", type="jsonrpc", auth="user")
     def get_website_pages(self, res_model=None):
         pages = request.env["website.controller.page"].search_read(
             [("model", "=", res_model)],

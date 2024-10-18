@@ -417,7 +417,7 @@ class HrContractSalary(main.HrContractSalary):
         result['resume_lines_mapped']['Monthly Salary'] = {field: resume.get(field, 0) for field in ordered_fields}
         return result
 
-    @route('/salary_package/update_salary', type="json")
+    @route('/salary_package/update_salary', type="jsonrpc")
     def update_salary(self, contract_id=None, offer_id=None, benefits=None, **kw):
         result = super().update_salary(contract_id, offer_id, benefits, **kw)
         wishlist_result = {}

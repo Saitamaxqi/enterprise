@@ -8,7 +8,7 @@ from odoo.addons.website_sale_renting.controllers.main import WebsiteSaleRenting
 class WebsiteSaleStockRenting(WebsiteSaleRenting):
 
     @route(
-        '/rental/product/availabilities', type='json', auth='public', methods=['POST'], website=True
+        '/rental/product/availabilities', type='jsonrpc', auth='public', methods=['POST'], website=True
     )
     def renting_product_availabilities(self, product_id, min_date, max_date):
         """ Return rental product availabilities.

@@ -67,12 +67,12 @@ class SocialLinkedinController(SocialController):
             result = {'error': str(e)}
         return json.dumps(result)
 
-    @http.route('/social_linkedin/delete_comment', type='json', auth='user')
+    @http.route('/social_linkedin/delete_comment', type='jsonrpc', auth='user')
     def social_linkedin_delete_comment(self, stream_post_id, comment_id, **kwargs):
         stream_post = self._get_social_stream_post(stream_post_id, 'linkedin')
         return stream_post._linkedin_comment_delete(comment_id)
 
-    @http.route('/social_linkedin/get_comments', type='json', auth='user')
+    @http.route('/social_linkedin/get_comments', type='jsonrpc', auth='user')
     def social_linkedin_get_comments(self, stream_post_id, comment_urn=None, offset=0, comments_count=20):
         stream_post = self._get_social_stream_post(stream_post_id, 'linkedin')
         return stream_post._linkedin_comment_fetch(
@@ -81,7 +81,7 @@ class SocialLinkedinController(SocialController):
             count=comments_count
         )
 
-    @http.route('/social_linkedin/like_comment', type='json', auth='user')
+    @http.route('/social_linkedin/like_comment', type='jsonrpc', auth='user')
     def social_linkedin_like_comment(self, stream_post_id, comment_id, like):
         stream_post = self._get_social_stream_post(stream_post_id, 'linkedin')
         return stream_post._linkedin_like_comment(comment_id, like)
@@ -90,12 +90,12 @@ class SocialLinkedinController(SocialController):
     # POST EDITION
     # ========================================================
 
-    @http.route('/social_linkedin/edit_post', type='json', auth='user')
+    @http.route('/social_linkedin/edit_post', type='jsonrpc', auth='user')
     def social_linkedin_edit_post(self, stream_post_id, new_message):
         stream_post = self._get_social_stream_post(stream_post_id, 'linkedin')
         return stream_post._linkedin_edit_post(new_message)
 
-    @http.route('/social_linkedin/delete_post', type='json', auth='user')
+    @http.route('/social_linkedin/delete_post', type='jsonrpc', auth='user')
     def social_linkedin_delete_post(self, stream_post_id):
         stream_post = self._get_social_stream_post(stream_post_id, 'linkedin')
         return stream_post._linkedin_delete_post()

@@ -83,17 +83,17 @@ class SocialTwitterController(SocialController):
         except Exception as e:
             return json.dumps({'error': str(e)})
 
-    @http.route('/social_twitter/delete_tweet', type='json')
+    @http.route('/social_twitter/delete_tweet', type='jsonrpc')
     def social_twitter_delete_tweet(self, stream_post_id, comment_id):
         stream_post = self._get_social_stream_post(stream_post_id, 'twitter')
         return stream_post._twitter_tweet_delete(comment_id)
 
-    @http.route('/social_twitter/get_comments', type='json')
+    @http.route('/social_twitter/get_comments', type='jsonrpc')
     def social_twitter_get_comments(self, stream_post_id, page=1):
         stream_post = self._get_social_stream_post(stream_post_id, 'twitter')
         return stream_post._twitter_comment_fetch(page)
 
-    @http.route('/social_twitter/<int:stream_id>/like_tweet', type='json')
+    @http.route('/social_twitter/<int:stream_id>/like_tweet', type='jsonrpc')
     def social_twitter_like_tweet(self, stream_id, tweet_id, like):
         stream = request.env['social.stream'].browse(stream_id)
         if not stream.exists() or stream.media_id.media_type != 'twitter':
@@ -101,7 +101,7 @@ class SocialTwitterController(SocialController):
 
         return request.env['social.stream.post']._twitter_tweet_like(stream, tweet_id, like)
 
-    @http.route('/social_twitter/<int:stream_id>/retweet', type='json', auth='user')
+    @http.route('/social_twitter/<int:stream_id>/retweet', type='jsonrpc', auth='user')
     def social_twitter_do_retweet(self, stream_id, tweet_id):
         """
         :param string stream_id: ID of the stream
@@ -122,7 +122,7 @@ class SocialTwitterController(SocialController):
                 'error': str(error)
             })
 
-    @http.route('/social_twitter/<int:stream_id>/unretweet', type='json', auth='user')
+    @http.route('/social_twitter/<int:stream_id>/unretweet', type='jsonrpc', auth='user')
     def social_twitter_undo_retweet(self, stream_id, tweet_id):
         """
         :param string stream_id: ID of the stream

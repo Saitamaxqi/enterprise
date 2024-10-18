@@ -27,7 +27,7 @@ class CustomerPortal(portal.CustomerPortal):
     def portal_worksheet_outdated(self, **kwargs):
         return request.redirect(request.httprequest.path.replace('/my/task/', '/my/tasks/'))
 
-    @route(['/my/tasks/<int:task_id>/worksheet/sign/<string:source>'], type='json', auth="public", website=True)
+    @route(['/my/tasks/<int:task_id>/worksheet/sign/<string:source>'], type='jsonrpc', auth="public", website=True)
     def portal_worksheet_sign(self, task_id, access_token=None, source=False, name=None, signature=None):
         # get from query string if not on json param
         access_token = access_token or request.httprequest.args.get('access_token')

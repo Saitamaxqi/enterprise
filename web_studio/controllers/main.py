@@ -46,7 +46,7 @@ OPERATIONS_WHITELIST = [
 
 class WebStudioController(http.Controller):
 
-    @http.route('/web_studio/chatter_allowed', type='json', auth='user')
+    @http.route('/web_studio/chatter_allowed', type='jsonrpc', auth='user')
     def is_chatter_allowed(self, model):
         """ Returns True iff a chatter can be activated on the model's form views, i.e. if
             - it is a custom model (since we can make it inherit from mail.thread), or
@@ -55,7 +55,7 @@ class WebStudioController(http.Controller):
         Model = request.env[model]
         return Model._custom or isinstance(Model, request.env.registry['mail.thread'])
 
-    @http.route('/web_studio/activity_allowed', type='json', auth='user')
+    @http.route('/web_studio/activity_allowed', type='jsonrpc', auth='user')
     def is_activity_allowed(self, model):
         """ Returns True iff an activity view can be activated on the model's action, i.e. if
             - it is a custom model (since we can make it inherit from mail.thread), or
@@ -64,7 +64,7 @@ class WebStudioController(http.Controller):
         Model = request.env[model]
         return Model._custom or isinstance(Model, request.env.registry['mail.activity.mixin'])
 
-    @http.route('/web_studio/get_studio_action', type='json', auth='user')
+    @http.route('/web_studio/get_studio_action', type='jsonrpc', auth='user')
     def get_studio_action(self, action_name, model, view_id=None, view_type=None):
         model = request.env['ir.model']._get(model)
 
@@ -168,7 +168,7 @@ class WebStudioController(http.Controller):
             """),
         }
 
-    @http.route('/web_studio/create_new_app', type='json', auth='user')
+    @http.route('/web_studio/create_new_app', type='jsonrpc', auth='user')
     def create_new_app(self, app_name=False, menu_name=False, model_choice=False, model_id=False, model_options=False, icon=None, context=None):
         """Create a new app @app_name, linked to a new action associated to the model_id or the newlyy created model.
             @param menu_name: name of the first menu (and model if model_choice is 'new') of the app
@@ -224,7 +224,7 @@ class WebStudioController(http.Controller):
             'action_id': action.id,
         }
 
-    @http.route('/web_studio/create_new_menu', type='json', auth='user')
+    @http.route('/web_studio/create_new_menu', type='jsonrpc', auth='user')
     def create_new_menu(self, menu_name=False, model_choice=False, model_id=False, model_options=False, parent_menu_id=None, context=None):
         """ Create a new menu @menu_name, linked to a new action associated to the model_id
             @param model_choice: 'new' for a new model, 'existing' for an existing model selected in the wizard
@@ -287,7 +287,7 @@ class WebStudioController(http.Controller):
             'action_id': action.id,
         }
 
-    @http.route('/web_studio/edit_menu_icon', type='json', auth='user')
+    @http.route('/web_studio/edit_menu_icon', type='jsonrpc', auth='user')
     def edit_menu_icon(self, menu_id, icon, context=None):
         if context:
             request.update_context(**context)
@@ -306,7 +306,7 @@ class WebStudioController(http.Controller):
         else:
             raise UserError(_('The icon has not a correct format'))
 
-    @http.route('/web_studio/set_background_image', type='json', auth='user')
+    @http.route('/web_studio/set_background_image', type='jsonrpc', auth='user')
     def set_background_image(self, attachment_id, context=None):
         if context:
             request.update_context(**context)
@@ -314,7 +314,7 @@ class WebStudioController(http.Controller):
         if attachment:
             request.env.company.background_image = attachment.datas
 
-    @http.route('/web_studio/reset_background_image', type='json', auth='user')
+    @http.route('/web_studio/reset_background_image', type='jsonrpc', auth='user')
     def reset_background_image(self, context=None):
         if context:
             request.update_context(**context)
@@ -393,7 +393,7 @@ class WebStudioController(http.Controller):
 
         return new_field
 
-    @http.route('/web_studio/add_view_type', type='json', auth='user')
+    @http.route('/web_studio/add_view_type', type='jsonrpc', auth='user')
     def add_view_type(self, action_type, action_id, res_model, view_type, args, context=None):
         if context:
             request.update_context(**context)
@@ -411,7 +411,7 @@ class WebStudioController(http.Controller):
         self.edit_action(action_type, action_id, args)
         return True
 
-    @http.route('/web_studio/edit_action', type='json', auth='user')
+    @http.route('/web_studio/edit_action', type='jsonrpc', auth='user')
     def edit_action(self, action_type, action_id, args):
 
         action_id = request.env[action_type].browse(action_id)
@@ -462,7 +462,7 @@ class WebStudioController(http.Controller):
     def _generate_studio_view_name(self, view):
         return "Odoo Studio: %s customization" % (view.name)
 
-    @http.route('/web_studio/get_studio_view_arch', type='json', auth='user')
+    @http.route('/web_studio/get_studio_view_arch', type='jsonrpc', auth='user')
     def get_studio_view_arch(self, model, view_type, view_id=False, context=None):
         if context:
             request.update_context(**context)
@@ -497,7 +497,7 @@ class WebStudioController(http.Controller):
             'models': {model: {"fields": request.env[model].fields_get()} for model in models}
         }
 
-    @http.route('/web_studio/restore_default_view', type='json', auth='user')
+    @http.route('/web_studio/restore_default_view', type='jsonrpc', auth='user')
     def restore_default_view(self, view_id):
         view = request.env['ir.ui.view'].browse(view_id)
         self._set_studio_view(view, "")
@@ -506,7 +506,7 @@ class WebStudioController(http.Controller):
 
         return self._return_view(view, studio_view)
 
-    @http.route('/web_studio/edit_approval', type='json', auth='user')
+    @http.route('/web_studio/edit_approval', type='jsonrpc', auth='user')
     def edit_approval(self, model, method, action, operations=None):
         for operation in operations:
             rule_id = operation[1]
@@ -517,7 +517,7 @@ class WebStudioController(http.Controller):
                 rule.exclusive_user = operation[2]
         return True
 
-    @http.route('/web_studio/edit_view', type='json', auth='user')
+    @http.route('/web_studio/edit_view', type='jsonrpc', auth='user')
     def edit_view(self, view_id, studio_view_arch, operations=None, model=None, context=None):
         if context:
             context_cleaned = clean_context(context)
@@ -708,7 +708,7 @@ class WebStudioController(http.Controller):
 
         return self._return_view(view, studio_view, context)
 
-    @http.route('/web_studio/rename_field', type='json', auth='user')
+    @http.route('/web_studio/rename_field', type='jsonrpc', auth='user')
     def rename_field(self, studio_view_id, studio_view_arch, model, old_name, new_name, new_label=None):
         studio_view = request.env['ir.ui.view'].browse(studio_view_id)
 
@@ -750,7 +750,7 @@ class WebStudioController(http.Controller):
             'name': self._generate_studio_view_name(view),
         })
 
-    @http.route('/web_studio/edit_field', type='json', auth='user')
+    @http.route('/web_studio/edit_field', type='jsonrpc', auth='user')
     def edit_field(self, model_name, field_name, values, force_edit=False):
         field = request.env['ir.model.fields'].search([('model', '=', model_name), ('name', '=', field_name)])
 
@@ -773,7 +773,7 @@ Are you sure you want to remove the selection values of those records?""", len(r
                 if current_default not in [x[0] for x in selection_values]:
                     request.env['ir.default'].discard_values(model_name, field_name, [current_default])
 
-    @http.route('/web_studio/edit_view_arch', type='json', auth='user')
+    @http.route('/web_studio/edit_view_arch', type='jsonrpc', auth='user')
     def edit_view_arch(self, view_id, view_arch, context=None):
         if context:
             context_cleaned = clean_context(context)
@@ -821,7 +821,7 @@ Are you sure you want to remove the selection values of those records?""", len(r
             res = request.make_response(html_escape(json.dumps(error)))
             raise werkzeug.exceptions.InternalServerError(response=res) from e
 
-    @http.route('/web_studio/create_default_view', type='json', auth='user')
+    @http.route('/web_studio/create_default_view', type='jsonrpc', auth='user')
     def create_default_view(self, model, view_type, attrs):
         attrs['string'] = "Default %s view for %s" % (view_type, model)
         arch = self._get_default_view(view_type, attrs)
@@ -1433,7 +1433,7 @@ Are you sure you want to remove the selection values of those records?""", len(r
                 }
                 self._operation_remove(arch, op)
 
-    @http.route('/web_studio/get_email_alias', type='json', auth='user')
+    @http.route('/web_studio/get_email_alias', type='jsonrpc', auth='user')
     def get_email_alias(self, model_name):
         """ Returns the email alias associated to the model @model_name. Only
         free aliases (not owned by a document using 'parent_*' fields')
@@ -1456,7 +1456,7 @@ Are you sure you want to remove the selection values of those records?""", len(r
         result['email_alias'] = email_alias.alias_name
         return result
 
-    @http.route('/web_studio/set_email_alias', type='json', auth='user')
+    @http.route('/web_studio/set_email_alias', type='jsonrpc', auth='user')
     def set_email_alias(self, model_name, value):
         """ Set the email alias associated to the model @model_name. Only
         free aliases (not owned by a document using 'parent_*' fields')
@@ -1487,24 +1487,24 @@ Are you sure you want to remove the selection values of those records?""", len(r
                 'alias_name': alias_name,
             })
 
-    @http.route('/web_studio/get_default_value', type='json', auth='user')
+    @http.route('/web_studio/get_default_value', type='jsonrpc', auth='user')
     def get_default_value(self, model_name, field_name):
         """ Return the default value associated to the given field. """
         return {
             'default_value': request.env['ir.default']._get(model_name, field_name, company_id=True)
         }
 
-    @http.route('/web_studio/set_default_value', type='json', auth='user')
+    @http.route('/web_studio/set_default_value', type='jsonrpc', auth='user')
     def set_default_value(self, model_name, field_name, value):
         """ Set the default value associated to the given field. """
         request.env['ir.default'].with_context(studio=True).set(model_name, field_name, value, company_id=True)
 
-    @http.route('/web_studio/set_currency', type='json', auth='user')
+    @http.route('/web_studio/set_currency', type='jsonrpc', auth='user')
     def set_currency(self, model_name, field_name, value):
         """ Set the currency value associated to the given monetary field. """
         return request.env['ir.model.fields'].with_context(studio=True).search([["model", "=", model_name], ["name", "=", field_name]]).write({'currency_field': value})
 
-    @http.route('/web_studio/create_inline_view', type='json', auth='user')
+    @http.route('/web_studio/create_inline_view', type='jsonrpc', auth='user')
     def create_inline_view(self, model, view_id, field_name, subview_type, subview_xpath, context=None):
         # Forward context to forward `_view_ref` keys
         # e.g. `test_enter_x2many_edition_and_add_field`
@@ -1547,7 +1547,7 @@ Are you sure you want to remove the selection values of those records?""", len(r
 
         return inline_view_etree
 
-    @http.route('/web_studio/check_method', type='json', auth='user')
+    @http.route('/web_studio/check_method', type='jsonrpc', auth='user')
     def check_method(self, model_name, method_name):
         """check if a method exists and is callable for a model"""
         model = request.env[model_name]

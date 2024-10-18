@@ -5,7 +5,7 @@ from odoo.http import request
 
 class WebStudioController(http.Controller):
 
-    @http.route("/web_studio/get_xml_editor_resources", type="json", auth="user")
+    @http.route("/web_studio/get_xml_editor_resources", type="jsonrpc", auth="user")
     def get_xml_editor_resources(self, key):
         views = request.env["ir.ui.view"].with_context(no_primary_children=True, __views_get_original_hierarchy=[]).get_related_views(key)
         views = views.read(['name', 'id', 'key', 'xml_id', 'arch', 'active', 'inherit_id'])

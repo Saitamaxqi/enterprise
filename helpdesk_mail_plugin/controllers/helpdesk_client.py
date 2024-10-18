@@ -8,7 +8,7 @@ from odoo.tools import html2plaintext
 
 class HelpdeskClientController(http.Controller):
 
-    @http.route('/mail_plugin/ticket/create', type='json', auth='outlook',
+    @http.route('/mail_plugin/ticket/create', type='jsonrpc', auth='outlook',
                 cors="*")
     def helpdesk_ticket_create(self, partner_id, email_body, email_subject):
         partner = request.env['res.partner'].browse(partner_id).exists()

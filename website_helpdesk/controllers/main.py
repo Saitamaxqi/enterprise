@@ -96,7 +96,7 @@ class WebsiteHelpdesk(http.Controller):
 
         return request.render("website_helpdesk.knowledge_base", self._get_knowledge_base_values(team))
 
-    @http.route(['/helpdesk/<model("helpdesk.team"):team>/knowledgebase/autocomplete'], type='json', auth="public", website=True, sitemap=True)
+    @http.route(['/helpdesk/<model("helpdesk.team"):team>/knowledgebase/autocomplete'], type='jsonrpc', auth="public", website=True, sitemap=True)
     def website_helpdesk_autocomplete(self, team, **kwargs):
         if not team.show_knowledge_base:
             raise NotFound()

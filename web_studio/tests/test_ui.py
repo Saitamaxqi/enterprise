@@ -114,7 +114,7 @@ def watch_edit_view(test, on_edit_view):
     clear_routing()
     edit_view = WebStudioController.edit_view
 
-    @http.route('/web_studio/edit_view', type='json', auth='user')
+    @http.route('/web_studio/edit_view', type='jsonrpc', auth='user')
     def edit_view_mocked(*args, **kwargs):
         on_edit_view(*args, **kwargs)
         return edit_view(*args, **kwargs)

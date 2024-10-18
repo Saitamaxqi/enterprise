@@ -476,7 +476,8 @@ class TestReportEditorUIUnit(HttpCase):
         self.addCleanup(self._clear_routing)
 
         error = None
-        @route('/web_studio/save_report', type='json', auth='user')
+
+        @route('/web_studio/save_report', type='jsonrpc', auth='user')
         def save_report_mocked(*args, **kwargs):
             try:
                 return save_report(*args, **kwargs)
@@ -507,7 +508,8 @@ class TestReportEditorUIUnit(HttpCase):
         self.addCleanup(self._clear_routing)
 
         error = None
-        @route('/web_studio/save_report', type='json', auth='user')
+
+        @route('/web_studio/save_report', type='jsonrpc', auth='user')
         def save_report_mocked(*args, **kwargs):
             try:
                 return save_report(*args, **kwargs)

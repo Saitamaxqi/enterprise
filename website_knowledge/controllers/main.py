@@ -60,7 +60,7 @@ class KnowledgeWebsiteController(KnowledgeController):
     # Articles tree generation
     # ------------------------
 
-    @http.route('/knowledge/public_sidebar', type='json', auth='public')
+    @http.route('/knowledge/public_sidebar', type='jsonrpc', auth='public')
     def get_public_sidebar(self, active_article_id=False, unfolded_articles_ids=False, search_term=False):
         """ Public access for the sidebar.
         If a search_term is given, show the articles matching this search_term in the sidebar.
@@ -73,7 +73,7 @@ class KnowledgeWebsiteController(KnowledgeController):
             public_sidebar_values = self._prepare_public_sidebar_values(active_article_id, unfolded_articles_ids)
         return request.env['ir.qweb']._render('website_knowledge.public_sidebar', public_sidebar_values)
 
-    @http.route('/knowledge/public_sidebar/load_more', type='json', auth='public')
+    @http.route('/knowledge/public_sidebar/load_more', type='jsonrpc', auth='public')
     def public_sidebar_load_more(self, limit, offset, active_article_id=False, parent_id=False):
         """" Route called when loading more articles in a particular sub-tree.
 
@@ -147,7 +147,7 @@ class KnowledgeWebsiteController(KnowledgeController):
             "unfolded_articles_ids": unfolded_articles_ids,
         })
 
-    @http.route('/knowledge/public_sidebar/children', type='json', auth='public')
+    @http.route('/knowledge/public_sidebar/children', type='jsonrpc', auth='public')
     def get_public_sidebar_children(self, parent_id):
         parent = request.env['knowledge.article'].search([('id', '=', parent_id)])
         if not parent:

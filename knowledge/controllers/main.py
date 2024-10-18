@@ -100,7 +100,7 @@ class KnowledgeController(http.Controller):
     # Article permission panel
     # ------------------------
 
-    @http.route('/knowledge/get_article_permission_panel_data', type='json', auth='user')
+    @http.route('/knowledge/get_article_permission_panel_data', type='jsonrpc', auth='user')
     def get_article_permission_panel_data(self, article_id):
         """
         Returns a dictionary containing all values required to render the permission panel.
@@ -181,7 +181,7 @@ class KnowledgeController(http.Controller):
             'show_admin_tip': user_is_admin and article.user_permission != 'write',
         }
 
-    @http.route('/knowledge/article/set_member_permission', type='json', auth='user')
+    @http.route('/knowledge/article/set_member_permission', type='jsonrpc', auth='user')
     def article_set_member_permission(self, article_id, permission, member_id=False, inherited_member_id=False):
         """ Sets the permission of the given member for the given article.
 
@@ -216,7 +216,7 @@ class KnowledgeController(http.Controller):
 
         return {}
 
-    @http.route('/knowledge/article/remove_member', type='json', auth='user')
+    @http.route('/knowledge/article/remove_member', type='jsonrpc', auth='user')
     def article_remove_member(self, article_id, member_id=False, inherited_member_id=False):
         """ Removes the given member from the given article.
 
@@ -257,7 +257,7 @@ class KnowledgeController(http.Controller):
 
         return {}
 
-    @http.route('/knowledge/article/set_internal_permission', type='json', auth='user')
+    @http.route('/knowledge/article/set_internal_permission', type='jsonrpc', auth='user')
     def article_set_internal_permission(self, article_id, permission):
         """ Sets the internal permission of the given article.
 

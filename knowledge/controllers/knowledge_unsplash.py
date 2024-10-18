@@ -11,7 +11,7 @@ UNSPLASH_COLLECTION_ID = 317099
 
 class KnowledgeUnsplash(main.Web_Unsplash):
 
-    @http.route('/knowledge/article/<model("knowledge.article"):article>/add_random_cover', type='json', auth='user')
+    @http.route('/knowledge/article/<model("knowledge.article"):article>/add_random_cover', type='jsonrpc', auth='user')
     def add_random_cover(self, article, **kwargs):
         """ This route will try to fetch a random image from unsplash using the
         params in kwargs. If successful, the image will be saved as a knowledge

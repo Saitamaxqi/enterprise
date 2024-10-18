@@ -9,7 +9,7 @@ from odoo.addons.website_sale.controllers.main import WebsiteSale
 
 class WebsiteSaleRenting(WebsiteSale):
 
-    @route('/shop/cart/update_renting', type='json', auth="public", methods=['POST'], website=True)
+    @route('/shop/cart/update_renting', type='jsonrpc', auth="public", methods=['POST'], website=True)
     def cart_update_renting(self, start_date=None, end_date=None):
         """Route to check the cart availability when changing the dates on the cart.
         """
@@ -86,7 +86,7 @@ class WebsiteSaleRenting(WebsiteSale):
         )
 
     @route(
-        '/rental/product/constraints', type='json', auth="public", methods=['POST'], website=True
+        '/rental/product/constraints', type='jsonrpc', auth="public", methods=['POST'], website=True
     )
     def renting_product_constraints(self):
         """ Return rental product constraints.

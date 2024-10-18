@@ -20,7 +20,7 @@ class WebsiteForumHelpdesk(WebsiteForum):
             'forums': forums
         })
 
-    @route('/forum/<model("forum.forum"):forum>/<model("forum.post"):question>/get-forum-data', type='json', auth="user", website=True)
+    @route('/forum/<model("forum.forum"):forum>/<model("forum.post"):question>/get-forum-data', type='jsonrpc', auth="user", website=True)
     def create_ticket_and_view(self, forum, question):
         teams = []
         teams_per_forum_read_group = request.env['helpdesk.team']._read_group(

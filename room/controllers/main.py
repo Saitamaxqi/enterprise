@@ -20,7 +20,7 @@ class RoomController(http.Controller):
             raise exceptions.NotFound()
         return request.render("room.room_booking", {"room": room_sudo})
 
-    @http.route("/room/<string:access_token>/get_existing_bookings", type="json", auth="public")
+    @http.route("/room/<string:access_token>/get_existing_bookings", type="jsonrpc", auth="public")
     def get_existing_bookings(self, access_token):
         room_sudo = self._fetch_room_from_access_token(access_token)
         return request.env["room.booking"].sudo().search_read(
@@ -36,7 +36,7 @@ class RoomController(http.Controller):
             return ""
         return request.env['ir.binary']._get_image_stream_from(room_sudo, "room_background_image").get_response()
 
-    @http.route("/room/<string:access_token>/booking/create", type="json", auth="public")
+    @http.route("/room/<string:access_token>/booking/create", type="jsonrpc", auth="public")
     def room_booking_create(self, access_token, name, start_datetime, stop_datetime):
         room_sudo = self._fetch_room_from_access_token(access_token)
         return request.env["room.booking"].sudo().create({
@@ -46,11 +46,11 @@ class RoomController(http.Controller):
             "stop_datetime": stop_datetime,
         }).id
 
-    @http.route("/room/<string:access_token>/booking/<int:booking_id>/delete", type="json", auth="public")
+    @http.route("/room/<string:access_token>/booking/<int:booking_id>/delete", type="jsonrpc", auth="public")
     def room_booking_delete(self, access_token, booking_id):
         return self._fetch_booking(booking_id, access_token).unlink()
 
-    @http.route("/room/<string:access_token>/booking/<int:booking_id>/update", type="json", auth="public")
+    @http.route("/room/<string:access_token>/booking/<int:booking_id>/update", type="jsonrpc", auth="public")
     def room_booking_update(self, access_token, booking_id, **kwargs):
         fields_allowlist = {"name", "start_datetime", "stop_datetime"}
         return self._fetch_booking(booking_id, access_token).write({

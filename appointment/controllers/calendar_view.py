@@ -14,7 +14,7 @@ class AppointmentCalendarView(http.Controller):
     # APPOINTMENT JSON ROUTES FOR BACKEND
     # ------------------------------------------------------------
 
-    @route('/appointment/appointment_type/create_custom', type='json', auth='user')
+    @route('/appointment/appointment_type/create_custom', type='jsonrpc', auth='user')
     def appointment_type_create_custom(self, slots, context=None):
         """
         Return the info (id and url) of the custom appointment type
@@ -65,7 +65,7 @@ class AppointmentCalendarView(http.Controller):
 
         return self._get_staff_user_appointment_invite_info(appointment_type)
 
-    @route('/appointment/appointment_type/update_custom', type='json', auth='user')
+    @route('/appointment/appointment_type/update_custom', type='jsonrpc', auth='user')
     def appointment_type_update_custom(self, appointment_type_id, slots):
         """
             Updates the slots of a custom appointment when a user changes them on
@@ -90,7 +90,7 @@ class AppointmentCalendarView(http.Controller):
         })
         return True
 
-    @route('/appointment/appointment_type/get_book_url', type='json', auth='user')
+    @route('/appointment/appointment_type/get_book_url', type='jsonrpc', auth='user')
     def appointment_get_book_url(self, appointment_type_id, context=None):
         """
         Get the information of the appointment invitation used to share the link
@@ -103,7 +103,7 @@ class AppointmentCalendarView(http.Controller):
             raise ValidationError(_("An appointment type is needed to get the link."))
         return self._get_staff_user_appointment_invite_info(appointment_type)
 
-    @route('/appointment/appointment_type/get_staff_user_appointment_types', type='json', auth='user')
+    @route('/appointment/appointment_type/get_staff_user_appointment_types', type='jsonrpc', auth='user')
     def appointment_get_user_appointment_types(self):
         appointment_types_info = []
         domain = [('staff_user_ids', 'in', [request.env.user.id]), ('category', 'in', ['punctual', 'recurring'])]
@@ -112,7 +112,7 @@ class AppointmentCalendarView(http.Controller):
             'appointment_types_info': appointment_types_info,
         }
 
-    @route('/appointment/appointment_type/search_create_anytime', type='json', auth='user')
+    @route('/appointment/appointment_type/search_create_anytime', type='jsonrpc', auth='user')
     def appointment_type_search_create_anytime(self, context=None):
         """
         Return the info (id and url) of the anytime appointment type of the actual user.

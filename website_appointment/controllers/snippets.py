@@ -8,7 +8,7 @@ from odoo.http import request
 
 
 class AppointmentSnippets(http.Controller):
-    @http.route('/appointment/get_snippet_data', type='json', auth='user')
+    @http.route('/appointment/get_snippet_data', type='jsonrpc', auth='user')
     def get_snippet_data(self, appointment_type_id=None):
         """
         :param int appointment_type_id: Optional: Only fetch this appointment type's data
