@@ -39,7 +39,7 @@ class AccountPayment(models.Model):
     @api.constrains('payment_method_line_id', 'currency_id')
     def _check_sepa_currency(self):
         for rec in self:
-            if rec.payment_method_id.code == 'sepa_ct' and self.currency_id.name != 'EUR':
+            if rec.payment_method_id.code == 'sepa_ct' and rec.currency_id.name != 'EUR':
                 raise ValidationError(_("SEPA only accepts payments in EUR."))
 
     def _get_payment_method_codes_to_exclude(self):
