@@ -184,3 +184,34 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
         project.documents_folder_id = other_folder
         self.assertEqual(project_document.folder_id, other_folder)
         self.assertEqual(project_document, project.document_ids)
+
+    def test_delete_folder_used_by_project(self):
+        """
+        It shouldn't be possible to delete a folder that is used by one or multiple projects.
+        """
+        project = self.env['project.project'].create({
+            'name': "Test",
+        })
+        with self.assertRaises(UserError):
+            project.documents_folder_id.unlink()
+        project.use_documents = False
+        project.documents_folder_id.unlink()
+
+        project_1, project_2, project_3 = self.env['project.project'].create([{
+            'name': f"Test Project {i}",
+        } for i in range(3)])
+        project_2.documents_folder_id = project_3.documents_folder_id
+        (project_1 | project_2).documents_folder_id.folder_id = parent_folder = self.env['documents.document'].create({
+            'name': "Test Folder",
+            'type': 'folder',
+        })
+        with self.assertRaises(UserError, msg="It shouldn't be possible to delete a folder that is used by one or multiple projects."):
+            parent_folder.unlink()
+
+        (project_1 | project_3).use_documents = False
+        with self.assertRaises(UserError, msg="It shouldn't be possible to delete a folder that is used by one or multiple projects."):
+            parent_folder.unlink()
+
+        project_2.use_documents = False
+        # Should not raise an error
+        parent_folder.unlink()

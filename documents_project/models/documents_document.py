@@ -46,6 +46,12 @@ class DocumentsDocument(models.Model):
         project_folder = self.env.ref('documents_project.document_project_folder')
         if self._project_folder_or_ancestor_in_self(project_folder):
             raise UserError(_('The "%s" folder is required by the Project application and cannot be deleted.', project_folder.name))
+        projects_with_folder = self.env['project.project'].search([('use_documents', '=', True), ('documents_folder_id', 'child_of', self.ids)])
+        if projects_with_folder:
+            raise UserError(_(
+                "This action can't be performed, as it would remove the folders used by the following projects:\n%(projects)s\nTo continue, choose different folders or turn off the Documents feature for these projects.",
+                projects="\n".join(f"- {project.name}" for project in projects_with_folder),
+            ))
 
     @api.constrains('active')
     def _archive_except_project_folder(self):
