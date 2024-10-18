@@ -493,7 +493,7 @@ class HelpdeskTicket(models.Model):
 
         all_partner_emails = []
         for ticket in tickets:
-            all_partner_emails += tools.email_split(ticket.email_cc)
+            all_partner_emails += tools.email_normalize_all(ticket.email_cc)
         partners = self.env['res.partner'].search([('email', 'in', all_partner_emails)])
         partner_per_email = {
             partner.email: partner
@@ -508,7 +508,7 @@ class HelpdeskTicket(models.Model):
                 partner_ids = ticket.partner_id.ids
             if ticket.email_cc:
                 partners_with_internal_user = self.env['res.partner']
-                for email in tools.email_split(ticket.email_cc):
+                for email in tools.email_normalize_all(ticket.email_cc):
                     new_partner = partner_per_email.get(email)
                     if new_partner:
                         partners_with_internal_user |= new_partner
