@@ -13,7 +13,7 @@
                     </t>
                     <t t-set-slot="footer">
                         <button class="btn btn-primary" t-att-class="{'disabled': props.radioMode &amp;&amp; !state.activeWorkcenters.length}" t-on-click="confirm">Confirm</button>
-                        <a t-if="!isDisplayStandalone" class="btn btn-secondary" t-attf-href="/scoped_app?app_id=mrp_shop_floor&amp;path=scoped_app/shop-floor&amp;app_name={{appName}}" target="_blank">Install App</a>
+                        <a t-if="!isDisplayStandalone &amp;&amp; !props.radioMode" class="btn btn-secondary" t-attf-href="/scoped_app?app_id=mrp_shop_floor&amp;path=scoped_app/shop-floor&amp;app_name={{appName}}" target="_blank">Install App</a>
                     </t>
                 </div>
         </Dialog>
