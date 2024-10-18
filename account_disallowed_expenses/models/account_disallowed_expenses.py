@@ -16,9 +16,10 @@ class AccountDisallowedExpensesCategory(models.Model):
     account_ids = fields.One2many('account.account', 'disallowed_expenses_category_id', check_company=True)
     current_rate = fields.Char(compute='_compute_current_rate', string='Current Rate')
 
-    _sql_constraints = [
-        ('unique_code', 'UNIQUE(code)', 'Disallowed expenses category code should be unique.')
-    ]
+    _unique_code = models.Constraint(
+        'UNIQUE(code)',
+        "Disallowed expenses category code should be unique.",
+    )
 
     @api.depends('current_rate', 'code')
     def _compute_display_name(self):

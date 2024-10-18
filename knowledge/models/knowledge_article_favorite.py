@@ -19,11 +19,10 @@ class KnowledgeArticleFavorite(models.Model):
         store=True, readonly=True)
     sequence = fields.Integer(default=0)
 
-    _sql_constraints = [
-        ('unique_article_user',
-         'unique(article_id, user_id)',
-         'User already has this article in favorites.')
-    ]
+    _unique_article_user = models.Constraint(
+        'unique(article_id, user_id)',
+        "User already has this article in favorites.",
+    )
 
     @api.model_create_multi
     def create(self, vals_list):

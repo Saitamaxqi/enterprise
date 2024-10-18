@@ -16,9 +16,10 @@ class SaleOrderTemplate(models.Model):
     duration_value = fields.Integer(string="End After", default=1, required=True) # old recurring_rule_count
     duration_unit = fields.Selection([('month', 'Months'), ('year', 'Years')], help="Contract duration", default='month', required=True) # old duration_unit
 
-    _sql_constraints = [
-        ('check_duration_value', 'CHECK(is_unlimited OR duration_value > 0)', 'The duration can\'t be negative or 0.'),
-    ]
+    _check_duration_value = models.Constraint(
+        'CHECK(is_unlimited OR duration_value > 0)',
+        "The duration can't be negative or 0.",
+    )
 
     @property
     def duration(self):

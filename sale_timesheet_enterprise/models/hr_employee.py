@@ -21,10 +21,7 @@ class HrEmployee(models.Model):
             return self.sudo().search_read([("company_id", "=", self.env.user.company_id.id)], ["billable_time_target"])
         return []
 
-    _sql_constraints = [
-        (
-            "check_billable_time_target",
-            "CHECK(billable_time_target >= 0)",
-            "The billable time target cannot be negative."
-        ),
-    ]
+    _check_billable_time_target = models.Constraint(
+        'CHECK(billable_time_target >= 0)',
+        "The billable time target cannot be negative.",
+    )

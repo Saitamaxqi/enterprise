@@ -79,9 +79,10 @@ class WhatsappMessage(models.Model):
     mail_message_id = fields.Many2one(comodel_name='mail.message', index=True)
     body = fields.Html(related='mail_message_id.body', string="Body", related_sudo=False)
 
-    _sql_constraints = [
-        ('unique_msg_uid', 'unique(msg_uid)', "Each whatsapp message should correspond to a single message uuid.")
-    ]
+    _unique_msg_uid = models.Constraint(
+        'unique(msg_uid)',
+        "Each whatsapp message should correspond to a single message uuid.",
+    )
 
     @api.depends('mobile_number')
     def _compute_mobile_number_formatted(self):

@@ -35,9 +35,10 @@ class SocialStreamPost(models.Model):
     twitter_quoted_tweet_author_link = fields.Char('Quoted post author Link')
     twitter_quoted_tweet_profile_image_url = fields.Char('Quoted post profile image URL')
 
-    _sql_constraints = [
-        ('tweet_uniq', 'UNIQUE (twitter_tweet_id, stream_id)', 'You can not store two times the same post on the same stream!')
-    ]
+    _tweet_uniq = models.Constraint(
+        'UNIQUE (twitter_tweet_id, stream_id)',
+        "You can not store two times the same post on the same stream!",
+    )
 
     def _compute_author_link(self):
         twitter_posts = self._filter_by_media_types(['twitter'])

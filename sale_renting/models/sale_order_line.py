@@ -69,11 +69,10 @@ class SaleOrderLine(models.Model):
         super(SaleOrderLine, self - rental_lines)._compute_pricelist_item_id()
         rental_lines.pricelist_item_id = False
 
-    _sql_constraints = [
-        ('rental_stock_coherence',
-            "CHECK(NOT is_rental OR qty_returned <= qty_delivered)",
-            "You cannot return more than what has been picked up."),
-    ]
+    _rental_stock_coherence = models.Constraint(
+        'CHECK(NOT is_rental OR qty_returned <= qty_delivered)',
+        "You cannot return more than what has been picked up.",
+    )
 
     def _get_sale_order_line_multiline_description_sale(self):
         """Add Rental information to the SaleOrderLine name."""

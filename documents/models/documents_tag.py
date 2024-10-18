@@ -21,9 +21,10 @@ class DocumentsTag(models.Model):
     tooltip = fields.Char(help="Text shown when hovering on this tag", string="Tooltip")
     document_ids = fields.Many2many('documents.document', 'document_tag_rel')
 
-    _sql_constraints = [
-        ('tag_name_unique', 'unique (name)', "Tag name already used"),
-    ]
+    _tag_name_unique = models.Constraint(
+        'unique (name)',
+        "Tag name already used",
+    )
 
     @api.model
     def _get_tags(self, domain):

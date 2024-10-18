@@ -135,9 +135,10 @@ class WhatsappTemplate(models.Model):
     messages_count = fields.Integer(string="Messages Count", compute='_compute_messages_count')
     has_action = fields.Boolean(string="Has Action", compute='_compute_has_action')
 
-    _sql_constraints = [
-        ('unique_name_account_template', 'unique(template_name, lang_code, wa_account_id)', "Duplicate template is not allowed for one Meta account.")
-    ]
+    _unique_name_account_template = models.Constraint(
+        'unique(template_name, lang_code, wa_account_id)',
+        "Duplicate template is not allowed for one Meta account.",
+    )
 
     @api.constrains('header_text')
     def _check_header_text(self):

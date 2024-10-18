@@ -18,9 +18,10 @@ class Data_MergeRule(models.Model):
         default='exact', string='Merge If', required=True)
     sequence = fields.Integer(string='Sequence', default=1)
 
-    _sql_constraints = [
-        ('uniq_model_id_field_id', 'unique(model_id, field_id)', 'A field can only appear once!'),
-    ]
+    _uniq_model_id_field_id = models.Constraint(
+        'unique(model_id, field_id)',
+        "A field can only appear once!",
+    )
 
     def _available_match_modes(self):
         modes = [('exact', self.env._("Exact Match"))]

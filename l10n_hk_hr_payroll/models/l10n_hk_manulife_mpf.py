@@ -270,9 +270,10 @@ class L10n_HkManulifeMpf(models.Model):
 class L10n_HkManulifeMpfLine(models.Model):
     _description = 'Manulife MPF Line'
 
-    _sql_constraints = [
-        ('unique_employee', 'unique(employee_id, sheet_id)', 'An employee can only have one line per sheet'),
-    ]
+    _unique_employee = models.Constraint(
+        'unique(employee_id, sheet_id)',
+        "An employee can only have one line per sheet",
+    )
 
     employee_id = fields.Many2one('hr.employee', required=True)
     surcharge_percentage = fields.Float('Surcharge Percentage')

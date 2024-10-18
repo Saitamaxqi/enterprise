@@ -70,9 +70,10 @@ class MrpProductionSchedule(models.Model):
     mps_sequence = fields.Integer('Sequence', default=10)
     is_indirect = fields.Boolean('Indirect demand product', default=False)
 
-    _sql_constraints = [
-        ('warehouse_product_ref_uniq', 'unique (warehouse_id, product_id)', 'The combination of warehouse and product must be unique!'),
-    ]
+    _warehouse_product_ref_uniq = models.Constraint(
+        'unique (warehouse_id, product_id)',
+        "The combination of warehouse and product must be unique!",
+    )
 
     # TODO: move logic to stock.replenish.mixin
     @api.depends('product_id', 'product_id.route_ids')

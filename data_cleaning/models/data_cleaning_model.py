@@ -46,9 +46,10 @@ class Data_CleaningModel(models.Model):
         ('months', 'Months')], string='Notify Frequency Period', default='weeks')
     last_notification = fields.Datetime(readonly=True)
 
-    _sql_constraints = [
-        ('check_notif_freq', 'CHECK(notify_frequency > 0)', 'The notification frequency should be greater than 0'),
-    ]
+    _check_notif_freq = models.Constraint(
+        'CHECK(notify_frequency > 0)',
+        "The notification frequency should be greater than 0",
+    )
 
     @api.onchange('res_model_id')
     def _compute_name(self):

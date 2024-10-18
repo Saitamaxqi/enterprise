@@ -149,10 +149,14 @@ class HrContract(models.Model):
     l10n_be_is_below_scale_warning = fields.Char(compute='_compute_l10n_be_is_below_scale', compute_sudo=True)
     l10n_be_canteen_cost = fields.Monetary(string="Canteen Cost")
 
-    _sql_constraints = [
-        ('check_percentage_ip_rate', 'CHECK(ip_wage_rate >= 0 AND ip_wage_rate <= 100)', 'The IP rate on wage should be between 0 and 100.'),
-        ('check_percentage_group_insurance_rate', 'CHECK(l10n_be_group_insurance_rate >= 0 AND l10n_be_group_insurance_rate <= 100)', 'The group insurance salary sacrifice rate on wage should be between 0 and 100.'),
-    ]
+    _check_percentage_ip_rate = models.Constraint(
+        'CHECK(ip_wage_rate >= 0 AND ip_wage_rate <= 100)',
+        "The IP rate on wage should be between 0 and 100.",
+    )
+    _check_percentage_group_insurance_rate = models.Constraint(
+        'CHECK(l10n_be_group_insurance_rate >= 0 AND l10n_be_group_insurance_rate <= 100)',
+        "The group insurance salary sacrifice rate on wage should be between 0 and 100.",
+    )
 
     @api.depends(
         'wage', 'state', 'employee_id.l10n_be_scale_seniority', 'job_id.l10n_be_scale_category',

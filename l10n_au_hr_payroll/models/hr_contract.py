@@ -74,19 +74,18 @@ class HrContract(models.Model):
     wage = fields.Monetary(compute="_compute_wage", readonly=False, store=True)
     hourly_wage = fields.Monetary(compute="_compute_hourly_wage", readonly=False, store=True)
 
-    _sql_constraints = [(
-        "l10n_au_casual_loading_span",
-        "CHECK(l10n_au_casual_loading >= 0 AND l10n_au_casual_loading <= 1)",
-        "The casual loading is a percentage and should have a value between 0 and 100."
-    ), (
-        "l10n_au_extra_negotiated_super_span",
-        "CHECK(l10n_au_extra_negotiated_super >= 0 AND l10n_au_extra_negotiated_super <= 1)",
+    _l10n_au_casual_loading_span = models.Constraint(
+        'CHECK(l10n_au_casual_loading >= 0 AND l10n_au_casual_loading <= 1)',
+        "The casual loading is a percentage and should have a value between 0 and 100.",
+    )
+    _l10n_au_extra_negotiated_super_span = models.Constraint(
+        'CHECK(l10n_au_extra_negotiated_super >= 0 AND l10n_au_extra_negotiated_super <= 1)',
         "The Extra Negotiated super is a percentage and should have a value between 0 and 100.",
-    ), (
-        "l10n_au_extra_compulsory_super_span",
-        "CHECK(l10n_au_extra_compulsory_super >= 0 AND l10n_au_extra_compulsory_super <= 1)",
+    )
+    _l10n_au_extra_compulsory_super_span = models.Constraint(
+        'CHECK(l10n_au_extra_compulsory_super >= 0 AND l10n_au_extra_compulsory_super <= 1)',
         "The Extra Compulsory super is a percentage and should have a value between 0 and 100.",
-    )]
+    )
 
     @api.constrains('employee_id', 'schedule_pay')
     def _check_l10n_au_schedule_pay(self):

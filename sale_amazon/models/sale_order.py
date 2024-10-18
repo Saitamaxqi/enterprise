@@ -14,11 +14,10 @@ class SaleOrder(models.Model):
         selection=[('fbm', "Fulfillment by Merchant"), ('fba', "Fulfillment by Amazon")],
     )
 
-    _sql_constraints = [(
-        'unique_amazon_order_ref',
+    _unique_amazon_order_ref = models.Constraint(
         'UNIQUE(amazon_order_ref)',
-        "There can only exist one sale order for a given Amazon Order Reference."
-    )]
+        "There can only exist one sale order for a given Amazon Order Reference.",
+    )
 
     def _action_cancel(self):
         out_of_sync_orders = self.env[self._name]

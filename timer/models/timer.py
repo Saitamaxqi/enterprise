@@ -15,9 +15,10 @@ class TimerTimer(models.Model):
     res_id = fields.Integer(required=True, export_string_translation=False)
     user_id = fields.Many2one('res.users', export_string_translation=False)
 
-    _sql_constraints = [(
-        'unique_timer', 'UNIQUE(res_model, res_id, user_id)',
-        'Only one timer occurrence by model, record and user')]
+    _unique_timer = models.Constraint(
+        'UNIQUE(res_model, res_id, user_id)',
+        "Only one timer occurrence by model, record and user",
+    )
 
     @api.depends('timer_start', 'timer_pause')
     def _compute_is_timer_running(self):

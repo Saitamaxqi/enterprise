@@ -79,10 +79,14 @@ class Data_MergeModel(models.Model):
     ### Contextual menu action
     is_contextual_merge_action = fields.Boolean(string='Merge action attached', help='If True, this record is used for contextual menu action "Merge" on the target model.')
 
-    _sql_constraints = [
-        ('uniq_name', 'UNIQUE(name)', 'This name is already taken'),
-        ('check_notif_freq', 'CHECK(notify_frequency > 0)', 'The notification frequency should be greater than 0'),
-    ]
+    _uniq_name = models.Constraint(
+        'UNIQUE(name)',
+        "This name is already taken",
+    )
+    _check_notif_freq = models.Constraint(
+        'CHECK(notify_frequency > 0)',
+        "The notification frequency should be greater than 0",
+    )
 
     @api.depends('res_model_id')
     def _compute_name(self):

@@ -22,9 +22,10 @@ class WebsiteVisitorPushSubscription(models.Model):
         required=True, readonly=True, index=True, ondelete='cascade')
     push_token = fields.Char("Push Subscription", required=True, readonly=True)
 
-    _sql_constraints = [
-        ('push_token_uniq', 'unique (push_token)', "Push token can't be duplicated!"),
-    ]
+    _push_token_uniq = models.Constraint(
+        'unique (push_token)',
+        "Push token can't be duplicated!",
+    )
 
     @api.model_create_multi
     def create(self, vals_list):

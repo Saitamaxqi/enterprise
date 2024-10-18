@@ -7002,9 +7002,10 @@ class AccountReportHorizontalGroup(models.Model):
     rule_ids = fields.One2many(string="Rules", comodel_name='account.report.horizontal.group.rule', inverse_name='horizontal_group_id', required=True)
     report_ids = fields.Many2many(string="Reports", comodel_name='account.report')
 
-    _sql_constraints = [
-        ('name_uniq', 'unique (name)', "A horizontal group with the same name already exists."),
-    ]
+    _name_uniq = models.Constraint(
+        'unique (name)',
+        "A horizontal group with the same name already exists.",
+    )
 
     def _get_header_levels_data(self):
         return [

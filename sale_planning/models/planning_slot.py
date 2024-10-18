@@ -35,11 +35,10 @@ class PlanningSlot(models.Model):
     sale_line_plannable = fields.Boolean(related='sale_line_id.product_id.planning_enabled', export_string_translation=False)
     allocated_hours = fields.Float(compute_sudo=True)
 
-    _sql_constraints = [
-        ('check_datetimes_set_or_plannable_slot',
-         'CHECK((start_datetime IS NOT NULL AND end_datetime IS NOT NULL) OR sale_line_id IS NOT NULL)',
-         'Only slots linked to a Sales Order with a plannable service can be unscheduled.')
-    ]
+    _check_datetimes_set_or_plannable_slot = models.Constraint(
+        'CHECK((start_datetime IS NOT NULL AND end_datetime IS NOT NULL) OR sale_line_id IS NOT NULL)',
+        "Only slots linked to a Sales Order with a plannable service can be unscheduled.",
+    )
 
     @api.depends('sale_line_id')
     def _compute_role_id(self):

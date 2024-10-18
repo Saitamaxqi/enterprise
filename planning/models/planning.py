@@ -134,10 +134,14 @@ class PlanningSlot(models.Model):
 
     slot_properties = fields.Properties('Properties', definition='role_id.slot_properties_definition', precompute=False)
 
-    _sql_constraints = [
-        ('check_start_date_lower_end_date', 'CHECK(end_datetime > start_datetime)', 'The end date of a shift should be after its start date.'),
-        ('check_allocated_hours_positive', 'CHECK(allocated_hours >= 0)', 'Allocated hours and allocated time percentage cannot be negative.'),
-    ]
+    _check_start_date_lower_end_date = models.Constraint(
+        'CHECK(end_datetime > start_datetime)',
+        "The end date of a shift should be after its start date.",
+    )
+    _check_allocated_hours_positive = models.Constraint(
+        'CHECK(allocated_hours >= 0)',
+        "Allocated hours and allocated time percentage cannot be negative.",
+    )
 
     @api.depends('role_id.color', 'resource_id.color')
     def _compute_color(self):

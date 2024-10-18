@@ -14,11 +14,18 @@ class HrEmployee(models.Model):
     l10n_in_relationship = fields.Char("Relationship", groups="hr.group_hr_user", tracking=True)
     l10n_in_residing_child_hostel = fields.Integer("Child Residing in hostel", groups="hr.group_hr_user", tracking=True)
 
-    _sql_constraints = [
-        ('unique_l10n_in_uan', 'unique (l10n_in_uan)', 'This UAN already exists'),
-        ('unique_l10n_in_pan', 'unique (l10n_in_pan)', 'This PAN already exists'),
-        ('unique_l10n_in_esic_number', 'unique (l10n_in_esic_number)', 'This ESIC Number already exists'),
-    ]
+    _unique_l10n_in_uan = models.Constraint(
+        'unique (l10n_in_uan)',
+        "This UAN already exists",
+    )
+    _unique_l10n_in_pan = models.Constraint(
+        'unique (l10n_in_pan)',
+        "This PAN already exists",
+    )
+    _unique_l10n_in_esic_number = models.Constraint(
+        'unique (l10n_in_esic_number)',
+        "This ESIC Number already exists",
+    )
 
     def _get_employees_with_invalid_ifsc(self):
         return self.filtered(lambda emp: not bool(re.match("^[A-Z]{4}0[A-Z0-9]{6}$", emp.bank_account_id.bank_bic)))

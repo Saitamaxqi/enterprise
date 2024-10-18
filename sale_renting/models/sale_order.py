@@ -22,11 +22,10 @@ RENTAL_STATUS = [
 class SaleOrder(models.Model):
     _inherit = ['sale.order']
 
-    _sql_constraints = [(
-        'rental_period_coherence',
-        "CHECK(rental_start_date < rental_return_date)",
+    _rental_period_coherence = models.Constraint(
+        'CHECK(rental_start_date < rental_return_date)',
         "The rental start date must be before the rental return date if any.",
-    )]
+    )
 
     #=== FIELDS ===#
 

@@ -7,7 +7,10 @@ from odoo import fields, models
 class ProjectTaskCreateTimesheet(models.TransientModel):
     _description = "Create Timesheet from task"
 
-    _sql_constraints = [('time_positive', 'CHECK(time_spent > 0)', 'The timesheet\'s time must be positive')]
+    _time_positive = models.Constraint(
+        'CHECK(time_spent > 0)',
+        "The timesheet's time must be positive",
+    )
 
     time_spent = fields.Float('Time')
     description = fields.Char('Description')

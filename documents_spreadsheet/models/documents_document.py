@@ -55,15 +55,14 @@ class DocumentsDocument(models.Model):
         ("frozen_spreadsheet", "Frozen Spreadsheet"),
     ], ondelete={"spreadsheet": "cascade", "frozen_folder": "cascade", "frozen_spreadsheet": "cascade"})
 
-    _sql_constraints = [(
-        'spreadsheet_access_via_link',
+    _spreadsheet_access_via_link = models.Constraint(
         "CHECK((handler != 'spreadsheet') OR access_via_link != 'edit')",
-        "To share a spreadsheet in edit mode, add the user in the accesses"
-    ), (
-        'frozen_spreadsheet_access_via_link_access_internal',
+        "To share a spreadsheet in edit mode, add the user in the accesses",
+    )
+    _frozen_spreadsheet_access_via_link_access_internal = models.Constraint(
         "CHECK((handler != 'frozen_spreadsheet') OR (access_via_link != 'edit' AND access_internal != 'edit'))",
-        "A frozen spreadsheet can not be editable"
-    )]
+        "A frozen spreadsheet can not be editable",
+    )
 
     @api.returns('documents.document', lambda d: {'id': d.id, 'shortcut_document_id': d.shortcut_document_id.id})
     def action_freeze_and_copy(self, spreadsheet_data, excel_files):

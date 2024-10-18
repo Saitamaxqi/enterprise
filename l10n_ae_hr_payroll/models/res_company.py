@@ -9,7 +9,7 @@ class ResCompany(models.Model):
     l10n_ae_employer_code = fields.Char(string="Employer Unique ID")
     l10n_ae_bank_account_id = fields.Many2one("res.partner.bank", domain="[('bank_id.country.code', '=', 'AE')]", string="Salaries Bank Account")
 
-    _sql_constraints = [
-        ('l10n_ae_unique_l10n_ae_employer_code', 'UNIQUE(l10n_ae_employer_code)',
-         'UAE Employeer ID must be unique.')
-    ]
+    _l10n_ae_unique_l10n_ae_employer_code = models.Constraint(
+        'UNIQUE(l10n_ae_employer_code)',
+        "UAE Employeer ID must be unique.",
+    )

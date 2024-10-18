@@ -49,9 +49,10 @@ class L10n_AuPreviousPayrollTransferEmployee(models.TransientModel):
     )
     import_ytd = fields.Boolean("Import YTD Balances", default=True)
 
-    _sql_constraints = [
-        ("unique_employee_transfer", "unique(employee_id, l10n_au_previous_payroll_transfer_id)", "An employee can only be transferred once.")
-    ]
+    _unique_employee_transfer = models.Constraint(
+        'unique(employee_id, l10n_au_previous_payroll_transfer_id)',
+        "An employee can only be transferred once.",
+    )
 
     @api.depends("employee_id")
     def _compute_payroll_id(self):

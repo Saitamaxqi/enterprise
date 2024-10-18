@@ -16,9 +16,10 @@ class HrAppraisalGoalTag(models.Model):
     name = fields.Char(required=True, translate=True)
     color = fields.Integer('Color', default=_get_default_color)
 
-    _sql_constraints = [
-        ('name_uniq', 'unique (name)', "A tag with the same name already exists."),
-    ]
+    _name_uniq = models.Constraint(
+        'unique (name)',
+        "A tag with the same name already exists.",
+    )
 
     @api.model
     def name_create(self, name):

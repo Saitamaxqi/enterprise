@@ -161,11 +161,10 @@ class L10n_InGstReturnPeriod(models.Model):
     # GSTR Common Methods
     # ===============================
 
-    _sql_constraints = [(
-        'unique_period',
+    _unique_period = models.Constraint(
         'UNIQUE(company_id, month, year, quarter)',
-        "Return period must be unique."
-    )]
+        "Return period must be unique.",
+    )
 
     @api.constrains('tax_unit_id')
     def _check_tax_unit(self):

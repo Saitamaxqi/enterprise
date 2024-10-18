@@ -22,13 +22,10 @@ class StockLandedCost(models.Model):
         ' - 6 digits of the progressive numbering of the custom.',
         string='Customs number', size=21, copy=False)
 
-    _sql_constraints = [
-        (
-            'l10n_mx_edi_customs_number',
-            'UNIQUE (l10n_mx_edi_customs_number)',
-            'The custom number must be unique!',
-        )
-    ]
+    _l10n_mx_edi_customs_number = models.Constraint(
+        'UNIQUE (l10n_mx_edi_customs_number)',
+        "The custom number must be unique!",
+    )
 
     fiscal_country_codes = fields.Char(related="company_id.country_code")
 

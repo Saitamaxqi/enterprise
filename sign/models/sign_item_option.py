@@ -10,9 +10,10 @@ class SignItemOption(models.Model):
     value = fields.Text(string="Option", readonly=True)
     available = fields.Boolean(string="Available in new templates", default=True)
 
-    _sql_constraints = [
-        ('value_uniq', 'unique (value)', "Value already exists!"),
-    ]
+    _value_uniq = models.Constraint(
+        'unique (value)',
+        "Value already exists!",
+    )
 
     @api.model
     def name_create(self, name):

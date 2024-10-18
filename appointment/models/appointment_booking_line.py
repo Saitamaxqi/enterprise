@@ -23,10 +23,14 @@ class AppointmentBookingLine(models.Model):
     event_start = fields.Datetime('Booking Start', related="calendar_event_id.start", readonly=True, store=True)
     event_stop = fields.Datetime('Booking End', related="calendar_event_id.stop", readonly=True, store=True)
 
-    _sql_constraints = [
-        ('check_capacity_reserved', 'CHECK(capacity_reserved >= 0)', 'The capacity reserved should be positive.'),
-        ('check_capacity_used', 'CHECK(capacity_used >= capacity_reserved)', 'The capacity used can not be lesser than the capacity reserved'),
-    ]
+    _check_capacity_reserved = models.Constraint(
+        'CHECK(capacity_reserved >= 0)',
+        "The capacity reserved should be positive.",
+    )
+    _check_capacity_used = models.Constraint(
+        'CHECK(capacity_used >= capacity_reserved)',
+        "The capacity used can not be lesser than the capacity reserved",
+    )
 
     @api.constrains('appointment_resource_id', 'appointment_type_id')
     def _check_resources_match_appointment_type(self):

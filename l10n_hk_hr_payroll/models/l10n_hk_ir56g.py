@@ -213,9 +213,10 @@ class L10n_HkIr56gLine(models.Model):
     amount_non_exercised_stock_options = fields.Float(string='Amount of Non-Exercised Stock Options')
     date_grant = fields.Date(string='Date of Grant')
 
-    _sql_constraints = [
-        ('unique_employee', 'unique(employee_id, sheet_id)', 'An employee can only have one IR56G line per sheet.'),
-    ]
+    _unique_employee = models.Constraint(
+        'unique(employee_id, sheet_id)',
+        "An employee can only have one IR56G line per sheet.",
+    )
 
     def _get_line_details(self):
         self.ensure_one()

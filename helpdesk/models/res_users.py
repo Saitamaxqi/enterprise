@@ -11,11 +11,18 @@ class ResUsers(models.Model):
     helpdesk_target_rating = fields.Float(export_string_translation=False, default=4.5)
     helpdesk_target_success = fields.Float(export_string_translation=False, default=85)
 
-    _sql_constraints = [
-        ('target_closed_not_zero', 'CHECK(helpdesk_target_closed > 0)', 'You cannot have negative targets'),
-        ('target_rating_not_zero', 'CHECK(helpdesk_target_rating > 0)', 'You cannot have negative targets'),
-        ('target_success_not_zero', 'CHECK(helpdesk_target_success > 0)', 'You cannot have negative targets'),
-    ]
+    _target_closed_not_zero = models.Constraint(
+        'CHECK(helpdesk_target_closed > 0)',
+        "You cannot have negative targets",
+    )
+    _target_rating_not_zero = models.Constraint(
+        'CHECK(helpdesk_target_rating > 0)',
+        "You cannot have negative targets",
+    )
+    _target_success_not_zero = models.Constraint(
+        'CHECK(helpdesk_target_success > 0)',
+        "You cannot have negative targets",
+    )
 
     @property
     def SELF_READABLE_FIELDS(self):

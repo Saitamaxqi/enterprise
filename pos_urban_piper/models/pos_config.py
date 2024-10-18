@@ -78,9 +78,10 @@ class PosConfig(models.Model):
         default=_default_urbanpiper_delivery_providers,
     )
 
-    _sql_constraints = [('urbanpiper_store_identifier_uniq',
-                         'unique(urbanpiper_store_identifier)',
-                         'Store ID must be unique for every pos configuration.')]
+    _urbanpiper_store_identifier_uniq = models.Constraint(
+        'unique(urbanpiper_store_identifier)',
+        "Store ID must be unique for every pos configuration.",
+    )
 
     def _init_column(self, column_name):
         if column_name != 'urbanpiper_store_identifier':

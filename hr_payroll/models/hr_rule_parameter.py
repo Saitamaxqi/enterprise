@@ -20,9 +20,10 @@ class HrRuleParameterValue(models.Model):
     parameter_value = fields.Text(help="Python data structure")
     country_id = fields.Many2one(related="rule_parameter_id.country_id")
 
-    _sql_constraints = [
-        ('_unique', 'unique (rule_parameter_id, date_from)', "Two rules with the same code cannot start the same day"),
-    ]
+    __unique = models.Constraint(
+        'unique (rule_parameter_id, date_from)',
+        "Two rules with the same code cannot start the same day",
+    )
 
     @api.constrains('parameter_value')
     def _check_parameter_value(self):
@@ -56,9 +57,10 @@ class HrRuleParameter(models.Model):
     country_id = fields.Many2one('res.country', string='Country', default=lambda self: self.env.company.country_id)
     parameter_version_ids = fields.One2many('hr.rule.parameter.value', 'rule_parameter_id', string='Versions')
 
-    _sql_constraints = [
-        ('_unique', 'unique (code)', "Two rule parameters cannot have the same code."),
-    ]
+    __unique = models.Constraint(
+        'unique (code)',
+        "Two rule parameters cannot have the same code.",
+    )
 
     @api.model
     @ormcache('code', 'date', 'tuple(self.env.context.get("allowed_company_ids", []))')

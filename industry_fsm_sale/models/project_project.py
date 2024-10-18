@@ -17,10 +17,14 @@ class ProjectProject(models.Model):
     sale_line_id = fields.Many2one(
         compute="_compute_sale_line_id", store=True, readonly=False)
 
-    _sql_constraints = [
-        ('material_imply_billable', "CHECK((allow_material = 't' AND allow_billable = 't') OR (allow_material = 'f'))", 'The material can be allowed only when the task can be billed.'),
-        ('fsm_imply_task_rate', "CHECK((is_fsm = 't' AND sale_line_id IS NULL) OR (is_fsm = 'f'))", 'An FSM project must be billed at task rate or employee rate.'),
-    ]
+    _material_imply_billable = models.Constraint(
+        "CHECK((allow_material = 't' AND allow_billable = 't') OR (allow_material = 'f'))",
+        "The material can be allowed only when the task can be billed.",
+    )
+    _fsm_imply_task_rate = models.Constraint(
+        "CHECK((is_fsm = 't' AND sale_line_id IS NULL) OR (is_fsm = 'f'))",
+        "An FSM project must be billed at task rate or employee rate.",
+    )
     _timesheet_product_required_if_billable_and_time = models.Constraint(
         """
         CHECK(

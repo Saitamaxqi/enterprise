@@ -21,7 +21,10 @@ class BacsDdi(models.Model):
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'BACS Direct Debit Instruction'
 
-    _sql_constraints = [('name_unique', 'unique(name)', "Direct Debit Instruction identifier must be unique! Please choose another one.")]
+    _name_unique = models.Constraint(
+        'unique(name)',
+        "Direct Debit Instruction identifier must be unique! Please choose another one.",
+    )
 
 
     name = fields.Char(string='Identifier', required=True, help="The unique identifier of this DDI.", default=lambda self: datetime.now().strftime('%f%S%M%H%d%m%y'), copy=False)

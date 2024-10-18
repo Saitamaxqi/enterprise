@@ -17,7 +17,10 @@ class SddMandate(models.Model):
     _check_company_auto = True
     _order = 'start_date, id'
 
-    _sql_constraints = [('name_unique', 'unique(name)', "Mandate identifier must be unique! Please choose another one.")]
+    _name_unique = models.Constraint(
+        'unique(name)',
+        "Mandate identifier must be unique! Please choose another one.",
+    )
 
     def _get_default_start_date(self):
         return fields.Date.context_today(self)

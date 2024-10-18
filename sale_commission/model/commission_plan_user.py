@@ -17,9 +17,10 @@ class SaleCommissionPlanUser(models.Model):
 
     other_plans = fields.Many2many('sale.commission.plan', string="Other plans", compute='_compute_other_plans', readonly=False)
 
-    _sql_constraints = [
-        ('user_uniq', 'unique (plan_id, user_id)', "The user is already present in the plan"),
-    ]
+    _user_uniq = models.Constraint(
+        'unique (plan_id, user_id)',
+        "The user is already present in the plan",
+    )
 
     @api.constrains('date_from', 'date_to')
     def _date_constraint(self):

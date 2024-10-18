@@ -37,7 +37,10 @@ class SocialAccount(models.Model):
     notification_request_delay = fields.Integer('Notification Request Delay (seconds)', related='website_id.notification_request_delay')
     notification_request_icon = fields.Binary("Notification Request Icon", related='website_id.notification_request_icon')
 
-    _sql_constraints = [('website_unique', 'unique(website_id)', 'There is already a configuration for this website.')]
+    _website_unique = models.Constraint(
+        'unique(website_id)',
+        "There is already a configuration for this website.",
+    )
 
     @api.ondelete(at_uninstall=False)
     def _unlink_except_push_notification_account(self):

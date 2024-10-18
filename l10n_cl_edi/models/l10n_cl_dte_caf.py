@@ -37,9 +37,10 @@ class L10n_ClDteCaf(models.Model):
         help='In Use: means that the CAF file is being used. Spent: means that the number interval '
              'has been exhausted.')
 
-    _sql_constraints = [
-        ('filename_unique', 'unique(filename)', 'Error! Filename Already Exist!')
-    ]
+    _filename_unique = models.Constraint(
+        'unique(filename)',
+        "Error! Filename Already Exist!",
+    )
 
     def _decode_caf(self):
         """

@@ -17,9 +17,10 @@ class HrPayrollHeadcount(models.Model):
     date_from = fields.Date(string='From', default=lambda self: fields.Date.today(), required=True)
     date_to = fields.Date(string='To')
 
-    _sql_constraints = [
-        ('date_range', 'CHECK (date_from <= date_to)', 'The start date must be anterior to the end date.'),
-    ]
+    _date_range = models.Constraint(
+        'CHECK (date_from <= date_to)',
+        "The start date must be anterior to the end date.",
+    )
 
     @api.depends('date_from', 'date_to', 'company_id')
     def _compute_name(self):

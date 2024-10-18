@@ -38,10 +38,14 @@ class Account_FollowupFollowupLine(models.Model):
 
     auto_execute = fields.Boolean(string="Automatic", default=False)
 
-    _sql_constraints = [
-        ('days_uniq', 'unique(company_id, delay)', 'Days of the follow-up lines must be different per company'),
-        ('uniq_name', 'unique(company_id, name)', 'A follow-up action name must be unique. This name is already set to another action.'),
-    ]
+    _days_uniq = models.Constraint(
+        'unique(company_id, delay)',
+        "Days of the follow-up lines must be different per company",
+    )
+    _uniq_name = models.Constraint(
+        'unique(company_id, name)',
+        "A follow-up action name must be unique. This name is already set to another action.",
+    )
 
     def copy_data(self, default=None):
         vals_list = super().copy_data(default=default)

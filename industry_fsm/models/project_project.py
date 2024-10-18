@@ -23,9 +23,10 @@ class ProjectProject(models.Model):
             if project.is_fsm and project.name == fsm_project_default_name and not project.is_internal_project:
                 project.display_name = f'{project.display_name} - {project.company_id.name}'
 
-    _sql_constraints = [
-        ('company_id_required_for_fsm_project', "CHECK((is_fsm = 't' AND company_id IS NOT NULL) OR is_fsm = 'f')", 'A fsm project must be company restricted'),
-    ]
+    _company_id_required_for_fsm_project = models.Constraint(
+        "CHECK((is_fsm = 't' AND company_id IS NOT NULL) OR is_fsm = 'f')",
+        "A fsm project must be company restricted",
+    )
 
     @api.depends('is_fsm')
     def _compute_allow_task_dependencies(self):

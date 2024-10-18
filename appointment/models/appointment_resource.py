@@ -50,9 +50,10 @@ class AppointmentResource(models.Model):
         relation="appointment_type_appointment_resource_rel",
         domain="[('schedule_based_on', '=', 'resources')]")
 
-    _sql_constraints = [
-        ('check_capacity', 'check(capacity >= 1)', 'The resource should have at least one capacity.')
-    ]
+    _check_capacity = models.Constraint(
+        'check(capacity >= 1)',
+        "The resource should have at least one capacity.",
+    )
 
     @api.depends('source_resource_ids', 'destination_resource_ids')
     def _compute_linked_resource_ids(self):

@@ -30,11 +30,10 @@ class AmazonMarketplace(models.Model):
         string="Tax Included", help="Whether the price includes the tax amount or not."
     )
 
-    _sql_constraints = [(
-        'unique_api_ref',
+    _unique_api_ref = models.Constraint(
         'UNIQUE(api_ref)',
-        "There can only exist one marketplace for a given API Identifier."
-    )]
+        "There can only exist one marketplace for a given API Identifier.",
+    )
 
     @api.ondelete(at_uninstall=False)
     def _unlink_never(self):

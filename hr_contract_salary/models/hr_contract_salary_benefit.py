@@ -144,13 +144,10 @@ class HrContractSalaryBenefit(models.Model):
              '- When the benefit is set: Unique signature request the first time the employee will take the benefit\n'
              '- When the benefit is modified: Signature request will be created for each change regarding the benefit.')
 
-    _sql_constraints = [
-        (
-            'required_fold_res_field_id',
-            'check (folded = FALSE OR (folded = TRUE AND fold_res_field_id IS NOT NULL))',
-            'A folded field is required'
-        )
-    ]
+    _required_fold_res_field_id = models.Constraint(
+        'check (folded = FALSE OR (folded = TRUE AND fold_res_field_id IS NOT NULL))',
+        "A folded field is required",
+    )
 
     @api.depends('res_field_id')
     def _compute_res_field_public(self):

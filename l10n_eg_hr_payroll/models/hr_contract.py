@@ -25,9 +25,11 @@ class HrContract(models.Model):
         for contract in self:
             contract.l10n_eg_total_eos_benefit = ((contract._get_contract_wage() + contract.l10n_eg_transportation_allowance + contract.l10n_eg_other_allowances) / 30) * contract.l10n_eg_total_number_of_days
 
-    _sql_constraints = [
-        ('check_l10n_eg_number_of_days_positive', 'CHECK(l10n_eg_number_of_days >= 0)',
-         'Provision Number of Days must be equal to or greater than 0'),
-        ('check_l10n_eg_total_number_of_days_positive', 'CHECK(l10n_eg_total_number_of_days >= 0)',
-         'Benefit Number of Days must be equal to or greater than 0')
-    ]
+    _check_l10n_eg_number_of_days_positive = models.Constraint(
+        'CHECK(l10n_eg_number_of_days >= 0)',
+        "Provision Number of Days must be equal to or greater than 0",
+    )
+    _check_l10n_eg_total_number_of_days_positive = models.Constraint(
+        'CHECK(l10n_eg_total_number_of_days >= 0)',
+        "Benefit Number of Days must be equal to or greater than 0",
+    )

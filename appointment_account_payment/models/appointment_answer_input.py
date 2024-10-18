@@ -11,8 +11,7 @@ class AppointmentAnswerInput(models.Model):
     calendar_booking_id = fields.Many2one("calendar.booking", "Meeting Booking")
     calendar_event_id = fields.Many2one(required=False)
 
-    _sql_constraints = [
-        ('check_event_or_booking',
-         'CHECK(calendar_booking_id IS NOT NULL OR calendar_event_id IS NOT NULL)',
-         'The answer inputs must be linked to a meeting or to a booking')
-    ]
+    _check_event_or_booking = models.Constraint(
+        'CHECK(calendar_booking_id IS NOT NULL OR calendar_event_id IS NOT NULL)',
+        "The answer inputs must be linked to a meeting or to a booking",
+    )

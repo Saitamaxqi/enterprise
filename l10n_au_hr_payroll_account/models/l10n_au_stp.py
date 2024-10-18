@@ -99,10 +99,14 @@ class L10n_AuStp(models.Model):
     is_zeroing = fields.Boolean("Zero Out YTD")
 
     # constraints ffr, cannot be true if type is update
-    _sql_constraints = [
-        ("ffr", "CHECK(ffr = false OR payevent_type = 'submit')", "Full File Replacement cannot be true if type is 'update'."),
-        ("l10n_au_l10n_au_previous_report", "CHECK(previous_report_id != id)", "A report can't update iself.")
-    ]
+    _ffr = models.Constraint(
+        "CHECK(ffr = false OR payevent_type = 'submit')",
+        "Full File Replacement cannot be true if type is 'update'.",
+    )
+    _l10n_au_l10n_au_previous_report = models.Constraint(
+        'CHECK(previous_report_id != id)',
+        "A report can't update iself.",
+    )
 
     @api.model_create_multi
     def create(self, vals_list):

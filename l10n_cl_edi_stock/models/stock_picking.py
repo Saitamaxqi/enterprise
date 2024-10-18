@@ -79,9 +79,10 @@ class StockPicking(models.Model):
     l10n_cl_dte_file = fields.Many2one('ir.attachment', string='DTE file', copy=False)
     l10n_cl_sii_send_ident = fields.Text(string='SII Send Identification(Track ID)', copy=False, tracking=True)
 
-    _sql_constraints = [
-        ('unique_document_number_in_company', 'UNIQUE(l10n_latam_document_number, company_id)',
-         'You should have a unique document number within the company. ')]
+    _unique_document_number_in_company = models.Constraint(
+        'UNIQUE(l10n_latam_document_number, company_id)',
+        "You should have a unique document number within the company. ",
+    )
 
     def action_cancel(self):
         for record in self.filtered(

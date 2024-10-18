@@ -6,9 +6,10 @@ class L10n_Ro_SaftAccountAssetCategory(models.Model):
     _order = "code"
     _rec_names_search = ['code', 'description']
 
-    _sql_constraints = [
-        ('code_unique', 'unique (code)', 'The code of the asset category must be unique !'),
-    ]
+    _code_unique = models.Constraint(
+        'unique (code)',
+        "The code of the asset category must be unique !",
+    )
 
     description = fields.Char(string="Description", required=True, translate=True)
     code = fields.Char(string="Code", required=True)

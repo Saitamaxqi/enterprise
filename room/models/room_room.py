@@ -31,10 +31,14 @@ class RoomRoom(models.Model):
     booked_background_color = fields.Char("Booked Background Color", default="#dd2d4a")
     room_background_image = fields.Image("Background Image")
 
-    _sql_constraints = [
-        ("uniq_access_token", "unique(access_token)", "The access token must be unique"),
-        ("uniq_short_code", "unique(short_code)", "The short code must be unique."),
-    ]
+    _uniq_access_token = models.Constraint(
+        'unique(access_token)',
+        "The access token must be unique",
+    )
+    _uniq_short_code = models.Constraint(
+        'unique(short_code)',
+        "The short code must be unique.",
+    )
 
     @api.depends("office_id")
     def _compute_display_name(self):

@@ -28,9 +28,10 @@ class HrEmployee(models.Model):
     disabled = fields.Boolean(string="Disabled", help="If the employee is declared disabled by law", groups="hr.group_hr_user", tracking=True)
     structure_type_id = fields.Many2one(string="Salary Structure Type", related="contract_ids.structure_type_id", groups="hr.group_hr_user")
 
-    _sql_constraints = [
-        ('unique_registration_number', 'UNIQUE(registration_number, company_id)', 'No duplication of registration numbers is allowed')
-    ]
+    _unique_registration_number = models.Constraint(
+        'UNIQUE(registration_number, company_id)',
+        "No duplication of registration numbers is allowed",
+    )
 
     def _compute_payslip_count(self):
         for employee in self:

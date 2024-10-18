@@ -28,10 +28,14 @@ class PlanningRecurrency(models.Model):
     last_generated_end_datetime = fields.Datetime(readonly=True, export_string_translation=False)
     company_id = fields.Many2one('res.company', string="Company", readonly=True, required=True, default=lambda self: self.env.company)
 
-    _sql_constraints = [
-        ('check_repeat_interval_positive', 'CHECK(repeat_interval >= 1)', 'The recurrence should be greater than 0.'),
-        ('check_until_limit', "CHECK((repeat_type = 'until' AND repeat_until IS NOT NULL) OR (repeat_type != 'until'))", 'A recurrence repeating itself until a certain date must have its limit set'),
-    ]
+    _check_repeat_interval_positive = models.Constraint(
+        'CHECK(repeat_interval >= 1)',
+        "The recurrence should be greater than 0.",
+    )
+    _check_until_limit = models.Constraint(
+        "CHECK((repeat_type = 'until' AND repeat_until IS NOT NULL) OR (repeat_type != 'until'))",
+        "A recurrence repeating itself until a certain date must have its limit set",
+    )
 
     @api.constrains('repeat_number', 'repeat_type')
     def _check_repeat_number(self):

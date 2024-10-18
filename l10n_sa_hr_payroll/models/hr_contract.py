@@ -13,7 +13,7 @@ class HrContract(models.Model):
                                             help='Number of days of basic salary to be added to the end of service provision per year')
     l10n_sa_wps_description = fields.Char(string="WPS Payment Description")
 
-    _sql_constraints = [
-        ('l10n_sa_hr_payroll_number_of_days_constraint', 'CHECK(l10n_sa_number_of_days >= 0)',
-         'Number of Days must be equal to or greater than 0')
-    ]
+    _l10n_sa_hr_payroll_number_of_days_constraint = models.Constraint(
+        'CHECK(l10n_sa_number_of_days >= 0)',
+        "Number of Days must be equal to or greater than 0",
+    )

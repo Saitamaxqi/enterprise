@@ -30,13 +30,10 @@ class WhatsappTemplateButton(models.Model):
         compute='_compute_variable_ids', precompute=True, store=True,
         copy=True)
 
-    _sql_constraints = [
-        (
-            'unique_name_per_template',
-            'UNIQUE(name, wa_template_id)',
-            "Button names must be unique in a given template"
-        )
-    ]
+    _unique_name_per_template = models.Constraint(
+        'UNIQUE(name, wa_template_id)',
+        "Button names must be unique in a given template",
+    )
 
     @api.depends('button_type', 'call_number')
     def _compute_has_invalid_number(self):

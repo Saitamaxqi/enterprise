@@ -94,9 +94,10 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
         help="Should be between 0 and 100 %",
         groups="hr_payroll.group_hr_payroll_user")
 
-    _sql_constraints = [
-        ('check_percentage_fiscal_voluntary_rate', 'CHECK(fiscal_voluntary_rate >= 0 AND fiscal_voluntary_rate <= 100)', 'The Fiscal Voluntary rate on wage should be between 0 and 100.'),
-    ]
+    _check_percentage_fiscal_voluntary_rate = models.Constraint(
+        'CHECK(fiscal_voluntary_rate >= 0 AND fiscal_voluntary_rate <= 100)',
+        "The Fiscal Voluntary rate on wage should be between 0 and 100.",
+    )
 
     @api.constrains('children', 'disabled_children_number',
                     'other_senior_dependent', 'other_disabled_senior_dependent',

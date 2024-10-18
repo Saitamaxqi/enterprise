@@ -29,9 +29,10 @@ class HrPayrollEmployeeDeclaration(models.Model):
         ('pdf_generated', 'Generated PDF'),
     ], compute='_compute_state', store=True)
 
-    _sql_constraints = [
-        ('unique_employee_sheet', 'unique(employee_id, res_model, res_id)', 'An employee can only have one declaration per sheet.'),
-    ]
+    _unique_employee_sheet = models.Constraint(
+        'unique(employee_id, res_model, res_id)',
+        "An employee can only have one declaration per sheet.",
+    )
 
     @api.depends('pdf_to_generate', 'pdf_file')
     def _compute_state(self):

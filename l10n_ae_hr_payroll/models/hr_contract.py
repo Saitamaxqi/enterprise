@@ -17,7 +17,7 @@ class HrContract(models.Model):
                                                                help="If True, The EOS will be computed based on the daily salary provided rather than the basic salary")
     l10n_ae_eos_daily_salary = fields.Float(string="Daily Salary")
 
-    _sql_constraints = [
-        ('l10n_ae_hr_payroll_number_of_leave_days_constraint', 'CHECK(l10n_ae_number_of_leave_days >= 0)',
-         'Number of Leave Days must be equal to or greater than 0')
-    ]
+    _l10n_ae_hr_payroll_number_of_leave_days_constraint = models.Constraint(
+        'CHECK(l10n_ae_number_of_leave_days >= 0)',
+        "Number of Leave Days must be equal to or greater than 0",
+    )

@@ -8,10 +8,10 @@ class HrPayslipRun(models.Model):
 
     l10n_sa_wps_file_reference = fields.Char(string="WPS File Reference", copy=False)
 
-    _sql_constraints = [
-        ('l10n_sa_wps_unique_reference', 'UNIQUE(l10n_sa_wps_file_reference)',
-         'WPS File reference must be unique'),
-    ]
+    _l10n_sa_wps_unique_reference = models.Constraint(
+        'UNIQUE(l10n_sa_wps_file_reference)',
+        "WPS File reference must be unique",
+    )
 
     def _l10n_sa_wps_generate_file_reference(self):
         self.ensure_one()

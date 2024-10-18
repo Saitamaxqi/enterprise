@@ -14,12 +14,14 @@ class DocumentsAccess(models.Model):
     last_access_date = fields.Datetime('Last Accessed On', required=False)
     expiration_date = fields.Datetime('Expiration', index=True)
 
-    _sql_constraints = [
-        ('unique_document_access_partner', 'unique(document_id, partner_id)',
-         'This partner is already set on this document.'),
-        ('role_or_last_access_date', 'check (role IS NOT NULL or last_access_date IS NOT NULL)',
-         'NULL roles must have a set last_access_date'),
-    ]
+    _unique_document_access_partner = models.Constraint(
+        'unique(document_id, partner_id)',
+        "This partner is already set on this document.",
+    )
+    _role_or_last_access_date = models.Constraint(
+        'check (role IS NOT NULL or last_access_date IS NOT NULL)',
+        "NULL roles must have a set last_access_date",
+    )
 
     def _prepare_create_values(self, vals_list):
         vals_list = super()._prepare_create_values(vals_list)

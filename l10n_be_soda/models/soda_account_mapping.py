@@ -18,9 +18,10 @@ class SodaAccountMapping(models.Model):
         check_company=True
     )
 
-    _sql_constraints = [
-        ('code_company_uniq', 'unique (code, company_id)', 'The code of the SODA account must be unique per company')
-    ]
+    _code_company_uniq = models.Constraint(
+        'unique (code, company_id)',
+        "The code of the SODA account must be unique per company",
+    )
 
     @api.depends('code', 'company_id')
     def _compute_account_id(self):

@@ -50,9 +50,10 @@ class L10nChLocationUnit(models.Model):
     weekly_hours = fields.Float(string="Weekly Hours")
     weekly_lessons = fields.Float(string="Weekly Lessons")
 
-    _sql_constraints = [
-        ('_unique', 'unique (company_id, partner_id)', "A work location cannot be set more than once for the same company and partner."),
-    ]
+    __unique = models.Constraint(
+        'unique (company_id, partner_id)',
+        "A work location cannot be set more than once for the same company and partner.",
+    )
 
     @api.constrains('bur_ree_number')
     def _check_bur_ree_number(self):

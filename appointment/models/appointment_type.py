@@ -174,11 +174,10 @@ class AppointmentType(models.Model):
                                            help="Contacts that need to be notified whenever a new appointment is booked or cancelled, \
                                                  regardless of whether they attend or not")
 
-    _sql_constraints = [
-        ('check_resource_manual_confirmation_percentage',
-         'check(resource_manual_confirmation_percentage >= 0 and resource_manual_confirmation_percentage <= 1)',
-         'The capacity percentage should be between 0 and 100%')
-    ]
+    _check_resource_manual_confirmation_percentage = models.Constraint(
+        'check(resource_manual_confirmation_percentage >= 0 and resource_manual_confirmation_percentage <= 1)',
+        "The capacity percentage should be between 0 and 100%",
+    )
 
     @api.depends('meeting_ids')
     def _compute_appointment_counts(self):

@@ -203,11 +203,10 @@ class HrEmployee(models.Model):
         groups="hr.group_hr_user",
         help="Additional amount will be withheld from the employee's salary after PAYG withholding. (Schedule 14)")
 
-    _sql_constraints = [
-        ("l10n_au_child_support_garnishee_amount_span",
-        "CHECK(l10n_au_child_support_garnishee_amount >= 0 AND l10n_au_child_support_garnishee_amount <= 1)",
-        "Child Support Garnishee is a percentage and should have a value between 0 and 100."),
-    ]
+    _l10n_au_child_support_garnishee_amount_span = models.Constraint(
+        'CHECK(l10n_au_child_support_garnishee_amount >= 0 AND l10n_au_child_support_garnishee_amount <= 1)',
+        "Child Support Garnishee is a percentage and should have a value between 0 and 100.",
+    )
     # == CRUD Methods ==
 
     def write(self, vals):

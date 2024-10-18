@@ -167,12 +167,22 @@ class DocumentsDocument(models.Model):
         ('3_day', 'Today'),
     ], string="Last Accessed On", compute='_compute_last_access_date_group', search='_search_last_access_date_group')
 
-    _sql_constraints = [
-        ('attachment_unique', 'unique (attachment_id)', "This attachment is already a document"),
-        ('document_token_unique', 'unique (document_token)', "Access tokens already used."),
-        ('folder_id_not_id', 'check(folder_id <> id)', "A folder cannot be included in itself"),
-        ('shortcut_document_id_not_id', 'check(shortcut_document_id <> id)', "A shortcut cannot point to itself"),
-    ]
+    _attachment_unique = models.Constraint(
+        'unique (attachment_id)',
+        "This attachment is already a document",
+    )
+    _document_token_unique = models.Constraint(
+        'unique (document_token)',
+        "Access tokens already used.",
+    )
+    _folder_id_not_id = models.Constraint(
+        'check(folder_id <> id)',
+        "A folder cannot be included in itself",
+    )
+    _shortcut_document_id_not_id = models.Constraint(
+        'check(shortcut_document_id <> id)',
+        "A shortcut cannot point to itself",
+    )
 
     def init(self):
         super().init()

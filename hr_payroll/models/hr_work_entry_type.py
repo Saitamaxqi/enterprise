@@ -8,9 +8,10 @@ class HrWorkEntryType(models.Model):
     _inherit = ['hr.work.entry.type']
     _description = 'HR Work Entry Type'
 
-    _sql_constraints = [
-        ('is_unforeseen_is_leave', 'check (is_unforeseen IS NOT TRUE OR (is_leave = TRUE and is_unforeseen = TRUE))', 'A unforeseen absence must be a leave.')
-    ]
+    _is_unforeseen_is_leave = models.Constraint(
+        'check (is_unforeseen IS NOT TRUE OR (is_leave = TRUE and is_unforeseen = TRUE))',
+        "A unforeseen absence must be a leave.",
+    )
 
     is_unforeseen = fields.Boolean(default=False, string="Unforeseen Absence", help="The Work Entry checked as Unforeseen Absence will be counted in absenteeism at work report.")
     round_days = fields.Selection(

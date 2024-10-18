@@ -17,8 +17,7 @@ class AccountMove(models.Model):
     # Solutions:
     # - (Solution 1) remove the 'l10n_mx_closing_move' flag from that entry.
     # - (Solution 2) reset the entry to draft and change the accounting date.
-    _sql_constraints = [(
-        "l10n_mx_closing_move_on_dec_31",
+    _l10n_mx_closing_move_on_dec_31 = models.Constraint(
         "CHECK(DATE_PART('month', date) = 12 AND DATE_PART('day', date) = 31 OR l10n_mx_closing_move = FALSE)",
-        "Month 13 closing entries should be done on December 31st."
-    )]
+        "Month 13 closing entries should be done on December 31st.",
+    )

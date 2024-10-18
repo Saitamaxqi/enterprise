@@ -215,9 +215,10 @@ RELATED_MODELS_TO_EXCLUDE = [
 class StudioExportModel(models.Model):
     _description = "Studio Export Models"
     _order = "sequence,id"
-    _sql_constraints = [
-        ("unique_model", "unique(model_id)", "This model is already being exported."),
-    ]
+    _unique_model = models.Constraint(
+        'unique(model_id)',
+        "This model is already being exported.",
+    )
 
     sequence = fields.Integer()
     model_id = fields.Many2one(

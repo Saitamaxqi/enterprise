@@ -145,16 +145,18 @@ class SaleOrder(models.Model):
     user_quantity = fields.Boolean(related="plan_id.user_quantity")
     user_extend = fields.Boolean(related="plan_id.user_extend")
 
-    _sql_constraints = [
-        ('sale_subscription_state_coherence',
-         "CHECK(NOT (is_subscription=TRUE AND state = 'sale' AND subscription_state='1_draft'))",
-         "You cannot set to draft a confirmed subscription. Please create a new quotation"),
-        ('sale_subscription_state_coherence_2',
-         "CHECK(NOT (is_subscription=TRUE AND state in ('draft', 'sent') AND subscription_state in ('3_progress', '4_paused')) )",
-         "You cannot have a draft SO be a confirmed subscription."),
-        ('check_start_date_lower_next_invoice_date', 'CHECK((next_invoice_date IS NULL OR start_date IS NULL) OR (next_invoice_date >= start_date))',
-         'The next invoice date of a sale order should be after its start date.'),
-    ]
+    _sale_subscription_state_coherence = models.Constraint(
+        "CHECK(NOT (is_subscription=TRUE AND state = 'sale' AND subscription_state='1_draft'))",
+        "You cannot set to draft a confirmed subscription. Please create a new quotation",
+    )
+    _sale_subscription_state_coherence_2 = models.Constraint(
+        "CHECK(NOT (is_subscription=TRUE AND state in ('draft', 'sent') AND subscription_state in ('3_progress', '4_paused')) )",
+        "You cannot have a draft SO be a confirmed subscription.",
+    )
+    _check_start_date_lower_next_invoice_date = models.Constraint(
+        'CHECK((next_invoice_date IS NULL OR start_date IS NULL) OR (next_invoice_date >= start_date))',
+        "The next invoice date of a sale order should be after its start date.",
+    )
 
     @api.constrains('subscription_state', 'subscription_id', 'pricelist_id')
     def _constraint_subscription_upsell_multi_currency(self):

@@ -40,9 +40,10 @@ class ProjectTask(models.Model):
     partner_id = fields.Many2one(group_expand="_group_expand_partner_ids")
     project_id = fields.Many2one(group_expand="_group_expand_project_ids")
 
-    _sql_constraints = [
-        ('planned_dates_check', "CHECK ((planned_date_begin <= date_deadline))", "The planned start date must be before the planned end date."),
-    ]
+    _planned_dates_check = models.Constraint(
+        'CHECK ((planned_date_begin <= date_deadline))',
+        "The planned start date must be before the planned end date.",
+    )
 
     # action_gantt_reschedule utils
     _WEB_GANTT_RESCHEDULE_WORK_INTERVALS_CACHE_KEY = 'work_intervals'

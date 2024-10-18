@@ -26,9 +26,10 @@ class HrEmployee(models.Model):
     employee_token = fields.Char('Security Token', default=_default_employee_token, groups='hr.group_hr_user',
                                  copy=False, readonly=True, export_string_translation=False)
 
-    _sql_constraints = [
-        ('employee_token_unique', 'unique(employee_token)', 'Error: each employee token must be unique')
-    ]
+    _employee_token_unique = models.Constraint(
+        'unique(employee_token)',
+        "Error: each employee token must be unique",
+    )
 
     @api.depends('job_title')
     @api.depends_context('show_job_title')

@@ -85,9 +85,10 @@ class HrAppraisalSkill(models.Model):
     justification = fields.Char()
     employee_skill_id = fields.Many2one('hr.employee.skill')
 
-    _sql_constraints = [
-        ('_unique_skill', 'unique (appraisal_id, skill_id)', "Two levels for the same skill is not allowed"),
-    ]
+    __unique_skill = models.Constraint(
+        'unique (appraisal_id, skill_id)',
+        "Two levels for the same skill is not allowed",
+    )
 
     @api.depends('appraisal_id')
     def _compute_manager_ids(self):

@@ -11,8 +11,7 @@ class SaleOrderLine(models.Model):
         string="Amazon Offer", comodel_name='amazon.offer', ondelete='set null'
     )
 
-    _sql_constraints = [(
-        'unique_amazon_item_ref',
+    _unique_amazon_item_ref = models.Constraint(
         'UNIQUE(amazon_item_ref)',
-        "There can only exist one sale order line for a given Amazon Item Reference."
-    )]
+        "There can only exist one sale order line for a given Amazon Item Reference.",
+    )

@@ -117,14 +117,14 @@ class StudioApprovalRule(models.Model):
     entry_ids = fields.One2many('studio.approval.entry', 'rule_id', string='Entries')
     entries_count = fields.Integer('Number of Entries', compute='_compute_entries_count')
 
-    _sql_constraints = [
-        ('method_or_action_together',
-         'CHECK(method IS NULL OR action_id IS NULL)',
-         'A rule must apply to an action or a method (but not both).'),
-        ('method_or_action_not_null',
-         'CHECK(method IS NOT NULL OR action_id IS NOT NULL)',
-         'A rule must apply to an action or a method.'),
-    ]
+    _method_or_action_together = models.Constraint(
+        'CHECK(method IS NULL OR action_id IS NULL)',
+        "A rule must apply to an action or a method (but not both).",
+    )
+    _method_or_action_not_null = models.Constraint(
+        'CHECK(method IS NOT NULL OR action_id IS NOT NULL)',
+        "A rule must apply to an action or a method.",
+    )
 
     @api.depends("notification_order")
     def _compute_display_name(self):
@@ -1184,7 +1184,10 @@ class StudioApprovalEntry(models.Model):
     reference = fields.Char(string='Reference', compute='_compute_reference')
     approved = fields.Boolean(string='Approved')
 
-    _sql_constraints = [('uniq_combination', 'unique(rule_id,model,res_id)', 'A rule can only be approved/rejected once per record.')]
+    _uniq_combination = models.Constraint(
+        'unique(rule_id,model,res_id)',
+        "A rule can only be approved/rejected once per record.",
+    )
 
     def init(self):
         self._cr.execute("""SELECT indexname FROM pg_indexes WHERE indexname = 'studio_approval_entry_model_res_id_idx'""")

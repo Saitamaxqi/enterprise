@@ -28,11 +28,10 @@ class ResCompany(models.Model):
     duration_first_appraisal = fields.Integer(string="Create a first Appraisal after", default=6)
     duration_next_appraisal = fields.Integer(string="Create a second Appraisal after", default=12)
 
-    _sql_constraints = [(
-        'positif_number_months',
+    _positif_number_months = models.Constraint(
         'CHECK(duration_after_recruitment > 0 AND duration_first_appraisal > 0 AND duration_next_appraisal > 0)',
-        "The duration time must be bigger or equal to 1 month."),
-    ]
+        "The duration time must be bigger or equal to 1 month.",
+    )
 
     @api.model
     def _get_default_assessment_note_ids(self):

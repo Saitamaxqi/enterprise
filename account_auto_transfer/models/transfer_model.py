@@ -359,11 +359,10 @@ class AccountTransferModelLine(models.Model):
     percent_is_readonly = fields.Boolean(compute="_compute_percent_is_readonly")
     sequence = fields.Integer("Sequence")
 
-    _sql_constraints = [
-        (
-            'unique_account_by_transfer_model', 'UNIQUE(transfer_model_id, account_id)',
-            'Only one account occurrence by transfer model')
-    ]
+    _unique_account_by_transfer_model = models.Constraint(
+        'UNIQUE(transfer_model_id, account_id)',
+        "Only one account occurrence by transfer model",
+    )
 
     @api.onchange('analytic_account_ids', 'partner_ids')
     def set_percent_if_analytic_account_ids(self):

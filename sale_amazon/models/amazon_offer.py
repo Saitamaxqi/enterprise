@@ -69,9 +69,10 @@ class AmazonOffer(models.Model):
     )
     amazon_feed_ref = fields.Char(string="Amazon Feed Reference", readonly=True)
 
-    _sql_constraints = [(
-        'unique_sku', 'UNIQUE(account_id, sku)', "SKU must be unique for a given account."
-    )]
+    _unique_sku = models.Constraint(
+        'UNIQUE(account_id, sku)',
+        "SKU must be unique for a given account.",
+    )
 
     @api.onchange('product_id')
     def _onchange_product_id(self):

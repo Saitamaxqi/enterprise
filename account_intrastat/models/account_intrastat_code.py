@@ -77,6 +77,7 @@ class AccountIntrastatCode(models.Model):
             text = r.name or r.description
             r.display_name = f'{r.code} {text}' if text else r.code
 
-    _sql_constraints = [
-        ('intrastat_region_code_unique', 'UNIQUE (code, type, country_id)', 'Triplet code/type/country_id must be unique.'),
-    ]
+    _intrastat_region_code_unique = models.Constraint(
+        'UNIQUE (code, type, country_id)',
+        "Triplet code/type/country_id must be unique.",
+    )

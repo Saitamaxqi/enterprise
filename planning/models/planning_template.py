@@ -18,11 +18,18 @@ class PlanningSlotTemplate(models.Model):
     end_time = fields.Float('End Hour', aggregator=None, default_export_compatible=True, default=17.0)
     duration_days = fields.Integer('Duration Days', default=1, aggregator=None, default_export_compatible=True)
 
-    _sql_constraints = [
-        ('check_start_time_lower_than_24', 'CHECK(start_time < 24)', 'The start hour cannot be greater than 24.'),
-        ('check_start_time_positive', 'CHECK(start_time >= 0)', 'The start hour cannot be negative.'),
-        ('check_duration_days_positive', 'CHECK(duration_days > 0)', 'The span must be at least 1 working day.'),
-    ]
+    _check_start_time_lower_than_24 = models.Constraint(
+        'CHECK(start_time < 24)',
+        "The start hour cannot be greater than 24.",
+    )
+    _check_start_time_positive = models.Constraint(
+        'CHECK(start_time >= 0)',
+        "The start hour cannot be negative.",
+    )
+    _check_duration_days_positive = models.Constraint(
+        'CHECK(duration_days > 0)',
+        "The span must be at least 1 working day.",
+    )
 
     @api.constrains('start_time', 'end_time', 'duration_days')
     def _check_start_and_end_times(self):

@@ -170,36 +170,34 @@ class KnowledgeArticle(models.Model):
     template_preview = fields.Html(string="Template Preview", compute="_compute_template_preview")
     template_sequence = fields.Integer(string="Template Sequence", help="It determines the display order of the template within its category")
 
-    _sql_constraints = [
-        ('check_permission_on_root',
-         'check(parent_id IS NOT NULL OR internal_permission IS NOT NULL)',
-         'Root articles must have internal permission.'
-        ),
-        ('check_permission_on_desync',
-         'check(is_desynchronized IS NOT TRUE OR internal_permission IS NOT NULL)',
-         'Desynchronized articles must have internal permission.'
-        ),
-        ('check_desync_on_root',
-         'check(parent_id IS NOT NULL OR is_desynchronized IS NOT TRUE)',
-         'Root articles cannot be desynchronized.'
-        ),
-        ('check_article_item_parent',
-         'check(is_article_item IS NOT TRUE OR parent_id IS NOT NULL)',
-         'Article items must have a parent.'
-         ),
-        ('check_trash',
-         'check(to_delete IS NOT TRUE or active IS NOT TRUE)',
-         'Trashed articles must be archived.'
-        ),
-        ('check_template_category_on_root',
-         'check(is_template IS NOT TRUE OR parent_id IS NOT NULL OR template_category_id IS NOT NULL)',
-         'Root templates must have a category.'
-        ),
-        ('check_template_name_required',
-         'check(is_template IS NOT TRUE OR template_name IS NOT NULL)',
-         'Templates should have a name.'
-        ),
-    ]
+    _check_permission_on_root = models.Constraint(
+        'check(parent_id IS NOT NULL OR internal_permission IS NOT NULL)',
+        "Root articles must have internal permission.",
+    )
+    _check_permission_on_desync = models.Constraint(
+        'check(is_desynchronized IS NOT TRUE OR internal_permission IS NOT NULL)',
+        "Desynchronized articles must have internal permission.",
+    )
+    _check_desync_on_root = models.Constraint(
+        'check(parent_id IS NOT NULL OR is_desynchronized IS NOT TRUE)',
+        "Root articles cannot be desynchronized.",
+    )
+    _check_article_item_parent = models.Constraint(
+        'check(is_article_item IS NOT TRUE OR parent_id IS NOT NULL)',
+        "Article items must have a parent.",
+    )
+    _check_trash = models.Constraint(
+        'check(to_delete IS NOT TRUE or active IS NOT TRUE)',
+        "Trashed articles must be archived.",
+    )
+    _check_template_category_on_root = models.Constraint(
+        'check(is_template IS NOT TRUE OR parent_id IS NOT NULL OR template_category_id IS NOT NULL)',
+        "Root templates must have a category.",
+    )
+    _check_template_name_required = models.Constraint(
+        'check(is_template IS NOT TRUE OR template_name IS NOT NULL)',
+        "Templates should have a name.",
+    )
 
     def init(self):
         super().init()

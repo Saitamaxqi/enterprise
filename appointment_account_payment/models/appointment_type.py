@@ -24,11 +24,10 @@ class AppointmentType(models.Model):
     product_currency_id = fields.Many2one(related='product_id.currency_id')
     product_lst_price = fields.Float(related='product_id.lst_price')
 
-    _sql_constraints = [
-        ('check_product_and_payment_step',
-         'CHECK(has_payment_step IS NULL OR NOT has_payment_step OR product_id IS NOT NULL)',
-         'Activating the payment step requires a product')
-    ]
+    _check_product_and_payment_step = models.Constraint(
+        'CHECK(has_payment_step IS NULL OR NOT has_payment_step OR product_id IS NOT NULL)',
+        "Activating the payment step requires a product",
+    )
 
     @api.depends('has_payment_step')
     def _compute_product_id(self):

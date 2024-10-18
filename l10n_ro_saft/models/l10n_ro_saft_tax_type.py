@@ -8,9 +8,10 @@ class L10n_Ro_SaftTaxType(models.Model):
     code = fields.Char('Code', required=True)
     description = fields.Char('Description', required=True, translate=True)
 
-    _sql_constraints = [
-        ('code_unique', 'unique (code)', 'The code of the tax type must be unique !'),
-    ]
+    _code_unique = models.Constraint(
+        'unique (code)',
+        "The code of the tax type must be unique !",
+    )
 
     @api.depends('code', 'description')
     def _compute_display_name(self):

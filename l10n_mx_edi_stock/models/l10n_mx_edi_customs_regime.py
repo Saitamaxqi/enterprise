@@ -16,6 +16,7 @@ class L10n_Mx_EdiCustomsRegime(models.Model):
         required=True,
     )
 
-    _sql_constraints = [
-        ('uniq_code', 'UNIQUE(code)', 'This code is already used.'),
-    ]
+    _uniq_code = models.Constraint(
+        'UNIQUE(code)',
+        "This code is already used.",
+    )

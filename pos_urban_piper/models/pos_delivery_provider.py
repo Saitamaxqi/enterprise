@@ -17,9 +17,10 @@ class PosDeliveryProvider(models.Model):
         help='Countries where this provider is available'
     )
 
-    _sql_constraints = [('technical_name_uniq',
-                         'unique(technical_name)',
-                         'Provider Name must be unique.')]
+    _technical_name_uniq = models.Constraint(
+        'unique(technical_name)',
+        "Provider Name must be unique.",
+    )
 
     @api.model
     def _load_pos_data_domain(self, data):

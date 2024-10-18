@@ -25,11 +25,10 @@ class L10n_AuSuperAccount(models.Model):
     super_account_warning = fields.Text(related="employee_id.super_account_warning")
     company_id = fields.Many2one('res.company', related='employee_id.company_id', string='Company', store=True)
 
-    _sql_constraints = [
-        ('check_proportion',
-         'check(proportion >= 0 and proportion <= 1)',
-         'The Proportion percentage should be between 0 and 100%')
-    ]
+    _check_proportion = models.Constraint(
+        'check(proportion >= 0 and proportion <= 1)',
+        "The Proportion percentage should be between 0 and 100%",
+    )
 
     @api.depends('employee_id', 'fund_id')
     def _compute_display_name(self):

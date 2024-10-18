@@ -29,13 +29,10 @@ class WhatsappTemplateVariable(models.Model):
     field_name = fields.Char(string="Field")
     demo_value = fields.Char(string="Sample Value", default="Sample Value", required=True)
 
-    _sql_constraints = [
-        (
-            'name_type_template_unique',
-            'UNIQUE(name, line_type, wa_template_id, button_id)',
-            'Variable names must be unique for a given template'
-        ),
-    ]
+    _name_type_template_unique = models.Constraint(
+        'UNIQUE(name, line_type, wa_template_id, button_id)',
+        "Variable names must be unique for a given template",
+    )
 
     @api.constrains("field_type", "demo_value", "button_id")
     def _check_demo_values(self):

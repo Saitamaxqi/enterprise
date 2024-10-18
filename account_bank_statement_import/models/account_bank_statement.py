@@ -14,9 +14,10 @@ class AccountBankStatementLine(models.Model):
     # Ensure transactions can be imported only once (if the import format provides unique transaction ids)
     unique_import_id = fields.Char(string='Import ID', readonly=True, copy=False)
 
-    _sql_constraints = [
-        ('unique_import_id', 'unique (unique_import_id)', 'A bank account transactions can be imported only once!')
-    ]
+    _unique_import_id = models.Constraint(
+        'unique (unique_import_id)',
+        "A bank account transactions can be imported only once!",
+    )
 
     def _action_open_bank_reconciliation_widget(self, extra_domain=None, default_context=None, name=None, kanban_first=True):
         res = super()._action_open_bank_reconciliation_widget(extra_domain, default_context, name, kanban_first)

@@ -65,15 +65,11 @@ class HrContract(models.Model):
         'l10n.us.worker.compensation',
         string="Worker Compensation")
 
-    _sql_constraints = [
-        (
-            'l10n_us_pre_retirement_amount_is_percentage',
-            "CHECK(l10n_us_pre_retirement_type IS NULL OR l10n_us_pre_retirement_type='fixed' OR (l10n_us_pre_retirement_type='percent' AND l10n_us_pre_retirement_amount >= 0 AND l10n_us_pre_retirement_amount <= 100))",
-            'The contribution rate must be a percentage between 0 and 100.'
-        ),
-        (
-            'l10n_us_post_roth_401k_amount_is_percentage',
-            "CHECK(l10n_us_post_roth_401k_type IS NULL OR l10n_us_post_roth_401k_type='fixed' OR (l10n_us_post_roth_401k_type='percent' AND l10n_us_post_roth_401k_amount >= 0 AND l10n_us_post_roth_401k_amount <= 100))",
-            'The contribution rate must be a percentage between 0 and 100.'
-        ),
-    ]
+    _l10n_us_pre_retirement_amount_is_percentage = models.Constraint(
+        "CHECK(l10n_us_pre_retirement_type IS NULL OR l10n_us_pre_retirement_type='fixed' OR (l10n_us_pre_retirement_type='percent' AND l10n_us_pre_retirement_amount >= 0 AND l10n_us_pre_retirement_amount <= 100))",
+        "The contribution rate must be a percentage between 0 and 100.",
+    )
+    _l10n_us_post_roth_401k_amount_is_percentage = models.Constraint(
+        "CHECK(l10n_us_post_roth_401k_type IS NULL OR l10n_us_post_roth_401k_type='fixed' OR (l10n_us_post_roth_401k_type='percent' AND l10n_us_post_roth_401k_amount >= 0 AND l10n_us_post_roth_401k_amount <= 100))",
+        "The contribution rate must be a percentage between 0 and 100.",
+    )

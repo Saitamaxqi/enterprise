@@ -27,9 +27,7 @@ class AppointmentAnswerInput(models.Model):
     partner_id = fields.Many2one('res.partner', 'Customer')
     question_type = fields.Selection(related='question_id.question_type')
 
-    _sql_constraints = [
-        ('value_check',
-         "CHECK(value_answer_id IS NOT NULL OR COALESCE(value_text_box, '') <> '')",
-         "An answer input must either have a text value or a predefined answer."
-        )
-    ]
+    _value_check = models.Constraint(
+        "CHECK(value_answer_id IS NOT NULL OR COALESCE(value_text_box, '') <> '')",
+        "An answer input must either have a text value or a predefined answer.",
+    )

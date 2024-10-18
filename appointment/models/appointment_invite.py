@@ -55,9 +55,10 @@ class AppointmentInvite(models.Model):
     calendar_event_ids = fields.One2many('calendar.event', 'appointment_invite_id', string="Booked Appointments", readonly=True)
     calendar_event_count = fields.Integer('# Bookings', compute="_compute_calendar_event_count")
 
-    _sql_constraints = [
-        ('short_code_uniq', 'UNIQUE (short_code)', 'The URL is already taken, please pick another code.')
-    ]
+    _short_code_uniq = models.Constraint(
+        'UNIQUE (short_code)',
+        "The URL is already taken, please pick another code.",
+    )
 
     @api.depends('short_code_format_warning',
             'short_code_unique_warning',

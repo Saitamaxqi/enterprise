@@ -20,9 +20,10 @@ class SignItemRole(models.Model):
 
     change_authorized = fields.Boolean('Change Authorized', help="If checked, recipient of a document with this role can be changed after having sent the request. Useful to replace a signatory who is out of office, etc.")
 
-    _sql_constraints = [
-        ('name_uniq', 'unique (name)', "Name already exists!"),
-    ]
+    _name_uniq = models.Constraint(
+        'unique (name)',
+        "Name already exists!",
+    )
 
     def write(self, vals):
         vals.pop('default', None)
