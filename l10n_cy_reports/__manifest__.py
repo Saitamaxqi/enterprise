@@ -1,6 +1,5 @@
 {
     "name": "Cyprus - Accounting Reports",
-    "countries": ['cy'],
     "version": "1.0",
     "category": "Accounting/Localizations/Reporting",
     "description": """

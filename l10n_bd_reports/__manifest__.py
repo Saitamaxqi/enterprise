@@ -2,7 +2,6 @@
 {
     'name': 'Bangladesh - Accounting Reports',
     'website': 'https://www.odoo.com/documentation/18.0/applications/finance/fiscal_localizations.html',
-    'countries': ['bd'],
     'version': '1.0.0',
     'description': """
         Accounting reports for Bangladesh

@@ -1,6 +1,5 @@
 {
     'name': 'Belgium - Accounting Reports - Prorata Deduction',
-    'countries': ['be'],
     'version': '1.0',
     'category': 'Accounting/Localizations/Reporting',
     'description': """

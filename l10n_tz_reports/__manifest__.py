@@ -1,6 +1,5 @@
 {
     'name': 'Tanzania - Accounting Reports',
-    'countries': ['tz'],
     'version': '1.0',
     'category': 'Accounting/Localizations/Reporting',
     'description': """

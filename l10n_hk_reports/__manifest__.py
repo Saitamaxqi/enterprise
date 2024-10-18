@@ -2,7 +2,6 @@
 
 {
     'name': 'Hong Kong - Accounting Reports',
-    'countries': ['hk'],
     'version': '1.0',
     'category': 'Accounting/Localizations/Reporting',
     'description': """

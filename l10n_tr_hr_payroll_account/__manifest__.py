@@ -4,7 +4,6 @@
     'name': 'Türkiye - Payroll with Accounting',
     'version': '1.0',
     'category': 'Human Resources',
-    'countries': ['tr'],
     'description': """
 Accounting Data for Türkiye Payroll Rules
 ==========================================

@@ -4,7 +4,6 @@
     'name': 'Türkiye - Accounting Reports',
     'version': '1.0',
     'category': 'Accounting/Localizations/Reporting',
-    'countries': ['tr'],
     'description': """
 Accounting reports for Türkiye
 

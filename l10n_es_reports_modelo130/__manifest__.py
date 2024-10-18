@@ -1,6 +1,5 @@
 {
     'name': 'Spain - Modelo 130',
-    'countries': ['es'],
     'version': '1.0',
     'depends': [
         'l10n_es_modelo130',
