@@ -323,7 +323,11 @@ class HrContract(models.Model):
         # when based on a flat fee, is computed as 71.8% of the actual cost, capped at the
         # reimbursement for 7 km of train-based transportation (34.00 EUR)
         # Source: http://www.cnt-nar.be/CCT-COORD/cct-019-09.pdf (Art. 4)
-        return min(amount * 0.718, 34)
+        public_transport_max_amount = self.env['hr.rule.parameter'].sudo()._get_parameter_from_code(
+            'public_transport_max_amount', date=self.env.context.get('payslip_date'), raise_if_not_found=False)
+        if not public_transport_max_amount:
+            public_transport_max_amount = 43
+        return min(amount * 0.718, public_transport_max_amount)
 
     @api.depends('km_home_work', 'transport_mode_private_car')
     def _compute_private_car_reimbursed_amount(self):

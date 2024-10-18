@@ -498,7 +498,8 @@ if contract.mobile:
 if not categories['BASIC']:
     result = 0
 else:
-    result = contract.public_transport_reimbursed_amount + contract.train_transport_reimbursed_amount
+    public_transport_reimbursed_amount = contract.with_context(payslip_date=payslip.date_from)._get_public_transport_reimbursed_amount(contract.public_transport_employee_amount)
+    result = public_transport_reimbursed_amount + contract.train_transport_reimbursed_amount
     salary_simulation = payslip.env.context.get('salary_simulation')
     if not salary_simulation:
         first_period_contract_ids = payslip._get_period_contracts()
@@ -507,7 +508,7 @@ else:
         )
         if first_period_contracts:
             first_period_contract = first_period_contracts
-            result = (contract.public_transport_reimbursed_amount + contract.train_transport_reimbursed_amount) if (first_period_contract and payslip.contract_id == first_period_contract[0]) else 0
+            result = (public_transport_reimbursed_amount + contract.train_transport_reimbursed_amount) if (first_period_contract and payslip.contract_id == first_period_contract[0]) else 0
         else:
             result = 0
         </field>

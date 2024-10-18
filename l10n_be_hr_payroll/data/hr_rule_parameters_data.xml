@@ -1752,5 +1752,21 @@ covered for the company (teleworking costs, mobile phone, internet, etc., namely
             <field name="rule_parameter_id" ref="rule_parameter_duration_notice_fired"/>
             <field name="date_from" eval="datetime(2020, 1, 1).date()"/>
         </record>
+
+        <record id="rule_parameter_cp200_public_transport_max_amount" model="hr.rule.parameter">
+            <field name="name">CP200: Public Transport Reimbursement Max Amount</field>
+            <field name="code">public_transport_max_amount</field>
+            <field name="country_id" ref="base.be"/>
+        </record>
+        <record id="rule_parameter_cp200_public_transport_max_amount_2020" model="hr.rule.parameter.value">
+            <field name="parameter_value">34</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_public_transport_max_amount"/>
+            <field name="date_from" eval="datetime(2020, 1, 1).date()"/>
+        </record>
+        <record id="rule_parameter_cp200_public_transport_max_amount_2024" model="hr.rule.parameter.value">
+            <field name="parameter_value">43</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_public_transport_max_amount"/>
+            <field name="date_from" eval="datetime(2024, 10, 1).date()"/>
+        </record>
     </data>
 </odoo>
