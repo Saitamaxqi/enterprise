@@ -3068,6 +3068,32 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         url = self._get_client_action_url(delivery.id)
         self.start_tour(url, 'test_barcode_picking_return', login='admin', timeout=180)
 
+    def test_scan_location_destination_for_internal_transfers(self):
+        """
+        This test ensures that destination location scan is taken into
+        account when proposed by the UI.
+        """
+        self.clean_access_rights()
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'groups_id': [Command.link(grp_multi_loc.id)]})
+        self.picking_type_internal.active = True
+
+        # Create a sibling stock location to use a destination
+        location_dest = self.env['stock.location'].create({
+            'name': "Lovely Location",
+            'location_id': self.stock_location.location_id.id,
+            'barcode': 'WH-LOVE',
+        })
+        self.product1.name = "Lovely Product"
+        action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = "/web#action=" + str(action_id.id)
+        self.start_tour(url, 'test_scan_location_destination_for_internal_transfers', login='admin', timeout=180)
+        internal_transfer = self.env['stock.picking'].search([('picking_type_id', '=', self.picking_type_internal.id)], limit=1)
+        self.assertRecordValues(internal_transfer.move_ids.move_line_ids, [{
+            "product_id": self.product1.id,
+            "location_dest_id": location_dest.id,
+        }])
+
     # === GS1 TESTS ===#
     def test_gs1_delivery_ambiguous_lot_number(self):
         """

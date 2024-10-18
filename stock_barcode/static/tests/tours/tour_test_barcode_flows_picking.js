@@ -5663,3 +5663,61 @@ registry.category("web_tour.tours").add("test_barcode_pack_lot_tour", {
         { trigger: ".o_notification_bar.bg-success" },
     ],
 });
+
+registry.category("web_tour.tours").add("test_scan_location_destination_for_internal_transfers", {
+    steps: () => [
+        {
+            trigger: ".o_button_operations",
+            run: "click",
+        },
+        {
+            trigger:
+                ".o_barcode_picking_type:has(.o_kanban_record_title:contains('Internal Transfers'))",
+            run: "click",
+        },
+        {
+            trigger: "button.o-kanban-button-new",
+        },
+        {
+            trigger: "button.o-kanban-button-new",
+            run: "click",
+        },
+        {
+            trigger: "button.o_add_line:contains('Add Product')",
+            run: "click",
+        },
+        {
+            trigger: ".o_field_widget[name='product_id'] input.o_input",
+            run: "click",
+        },
+        {
+            trigger: ".o_field_widget[name='product_id'] input.o_input",
+            run: "edit Lovely Product",
+        },
+        {
+            trigger: ".dropdown-item:contains('Lovely Product')",
+            run: "click",
+        },
+        {
+            trigger: ".o_save",
+            run: "click",
+        },
+        {
+            trigger: ".o_scan_message.o_scan_product_or_dest",
+        },
+        {
+            trigger: ".o_barcode_line",
+            run: "scan WH-LOVE",
+        },
+        {
+            trigger: "div[name='destination_location']:contains(Lovely)",
+        },
+        {
+            trigger: ".o_validate_page",
+            run: "click",
+        },
+        {
+            trigger: ".o_notification_bar.bg-success",
+        },
+    ],
+});
