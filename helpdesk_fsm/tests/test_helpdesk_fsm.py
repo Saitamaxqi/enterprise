@@ -66,3 +66,20 @@ class TestHelpdeskFsm(HelpdeskCommon):
         action_context = action['context']
         self.assertEqual(action_context['default_project_id'], ticket.team_id.fsm_project_id.id)
         self.assertEqual(action_context['default_helpdesk_ticket_id'], ticket.id)
+
+    def test_generate_fsm_task_no_partner(self):
+        self.test_team.use_fsm = True
+        ticket = self.env['helpdesk.ticket'].with_user(self.helpdesk_manager).create({
+            'name': 'Ticket',
+            'team_id': self.test_team.id,
+            'user_id': self.helpdesk_user.id,
+        })
+        wizard_action = ticket.action_generate_fsm_task()
+        context = wizard_action['context']
+        self.assertFalse(context['default_partner_id'])
+        wizard = self.env[wizard_action['res_model']].with_context(context).new()
+        wizard.partner_id = self.partner
+        task_action = wizard.action_generate_and_view_task()
+        task = self.env['project.task'].browse(task_action['res_id'])
+        self.assertEqual(task.project_id, wizard.project_id)
+        self.assertTrue(task.partner_id == wizard.partner_id == ticket.partner_id)

@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details
 
 from odoo import models, fields, api, _
@@ -38,8 +37,11 @@ class HelpdeskCreateFsmTask(models.TransientModel):
 
     def action_generate_task(self):
         self.ensure_one()
+        ticket = self.helpdesk_ticket_id
+        if not ticket.partner_id:
+            ticket.partner_id = self.partner_id
         new_task = self.env['project.task'].create(self._generate_task_values())
-        self.helpdesk_ticket_id.message_post_with_source(
+        ticket.message_post_with_source(
             'helpdesk.ticket_conversion_link',
             render_values={'created_record': new_task, 'message': _('Task created')},
             subtype_xmlid='mail.mt_note',

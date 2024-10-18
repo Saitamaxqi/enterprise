@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details
 from ast import literal_eval
 
@@ -32,7 +31,7 @@ class HelpdeskTicket(models.Model):
 
     def action_generate_fsm_task(self):
         self.ensure_one()
-        if not self.partner_id:
+        if not self.partner_id and (self.partner_name or self.partner_email):
             self.partner_id = self._find_or_create_partner(self.partner_name, self.partner_email, self.company_id.id)
         return {
             'type': 'ir.actions.act_window',
