@@ -428,35 +428,52 @@ registry.category("web_tour.tours").add('test_change_qty_produced', { steps: () 
     ]
 });
 
-registry.category("web_tour.tours").add('test_updated_quality_checks', {test: true, steps: () => [
+registry.category("web_tour.tours").add('test_updated_quality_checks', {steps: () => [
     {
         content: 'Make sure workcenter is available',
-        trigger: 'button:has(input[name="Assembly Line"])',
+        trigger: '.form-check:has(input[name="Assembly Line"])',
+        run: 'click',
+    },
+    {
+        trigger: '.form-check:has(input[name="Assembly Line"])',
     },
     {
         content: 'Confirm workcenter',
-        extra_trigger: 'button.active:has(input[name="Assembly Line"])',
         trigger: 'button:contains("Confirm")',
+        run: 'click',
     },
     {
         content: 'Select workcenter',
         trigger: 'button.btn-light:contains("Assembly Line")',
+        run: 'click',
+    },
+    {
+        trigger: '.o_control_panel_actions button.active:contains("Assembly Line")',
+    },
+    {
+        content: 'Open quality check dropdown',
+        trigger: '.accordion-button',
+        run: 'click',
     },
     {
         content: 'Open register production',
-        extra_trigger: '.o_control_panel_actions button.active:contains("Assembly Line")',
         trigger: '.o_mrp_record_line span:contains("Register Production")',
+        run: 'click',
+    },
+    {
+        trigger: '.o_workorder_lot span:contains("serial")',
     },
     {
         content: 'Register production check',
         trigger: '.o_workorder_lot .btn.fa-plus',
-        extra_trigger: '.o_workorder_lot span:contains("serial")',
+        run: 'click',
     },
-    { trigger: 'button[barcode_trigger="next"]' },
+    { trigger: 'button[barcode_trigger="NEXT"]', run: 'click' },
+    {
+        trigger: '.o_field_widget[name="qty_done"] input:value("1.00")',
+    },
     {
         content: 'Quantity shown 1 of 1',
-        extra_trigger: '.o_field_widget[name="qty_done"] input:propValue("1.00")',
         trigger: 'span[name="component_remaining_qty"]:contains("1.00")',
-        isCheck: true,
     },
 ]})

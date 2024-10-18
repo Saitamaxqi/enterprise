@@ -276,12 +276,12 @@ class TestShopFloor(HttpCase):
     def test_quality_checks_updated_in_shop_floor(self):
         component1 = self.env['product.product'].create({
             'name': 'comp1',
-            'type': 'product',
+            'is_storable': True,
             'tracking': 'lot',
         })
         finished = self.env['product.product'].create({
             'name': 'finish',
-            'type': 'product',
+            'is_storable': True,
             'tracking': 'serial',
         })
         warehouse = self.env['stock.warehouse'].search([], limit=1)

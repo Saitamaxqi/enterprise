@@ -495,10 +495,8 @@ class QualityCheck(models.Model):
                     })
                 else:
                     new_qty_reserved = self.move_line_id.quantity - self.qty_done
-                    default = {
-                        'quantity': new_qty_reserved,
-                    }
-                    self.move_line_id.copy(default=default)
+                    if float_compare(new_qty_reserved, 0, precision_rounding=rounding) >= 0:
+                        self.move_line_id.copy(default={'quantity': new_qty_reserved})
                     self.move_line_id.write({
                         'quantity': self.qty_done,
                         'picked': True,
