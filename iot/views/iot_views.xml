@@ -34,7 +34,7 @@
                     </group>
                     <notebook>
                         <page string="Devices" name="devices">
-                            <field name="device_ids" readonly="False">
+                            <field name="device_ids" readonly="False" widget="device_list_field">
                                 <list>
                                     <field name="name"/>
                                     <field name="identifier"/>
