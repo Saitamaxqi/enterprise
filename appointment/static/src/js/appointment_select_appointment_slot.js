@@ -387,7 +387,7 @@ publicWidget.registry.appointmentSlotSelect = publicWidget.Widget.extend({
             const filterResourceIds = this.el.querySelector(
                 "input[name='filter_resource_ids']"
             ).value;
-            const timezone = this.el.querySelector("select[name='timezone']").value;
+            const timezone = this.el.querySelector("select[name='timezone']")?.value;
             const resourceCapacity =
                 (this.el.querySelector("select[name='resourceCapacity']") &&
                     parseInt(this.el.querySelector("select[name='resourceCapacity']").value)) ||
