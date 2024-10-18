@@ -21,11 +21,12 @@
                                     decoration-success="state in ['confirmed', 'progress', 'to_close']"
                                     decoration-info="state == 'draft'" class="fw-bolder ms-auto"/>
                         </div>
-                        <footer class="pt-0">
-                            <div class="d-flex">
-                                <field name="product_id" class="me-1"/>-<field name="product_qty" class="ms-1 me-1 text-nowrap"/><field name="product_uom_id" class="text-nowrap"/>
+                        <footer class="pt-0 align-items-end">
+                            <div class="d-flex flex-column">
+                                <field name="product_id" class="me-1"/>
+                                <span><field name="product_qty" class="me-1 text-nowrap"/><field name="product_uom_id" class="text-nowrap"/></span>
                             </div>
-                            <div class="d-flex ms-auto">
+                            <div class="d-flex ms-auto align-items-center">
                                 <field name="date_start" options="{'show_time': false}" class="text-nowrap"/>
                                 <field name="user_id" widget="many2one_avatar_user" invisible="not user_id" readonly="state in ['cancel', 'done']" class="ms-1"/>
                             </div>
