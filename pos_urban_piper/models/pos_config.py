@@ -110,7 +110,7 @@ class PosConfig(models.Model):
         pos_configs = super().create(vals_list)
         for config in pos_configs:
             if config.module_pos_urban_piper:
-                config.setup_journals_and_payment_methods()
+                config._setup_journals_and_payment_methods()
                 config._configure_fiscal_position_and_pricelist()
         return pos_configs
 

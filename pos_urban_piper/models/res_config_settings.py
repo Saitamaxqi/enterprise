@@ -1,5 +1,5 @@
 from odoo import fields, models, _
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, RedirectWarning
 
 from .pos_urban_piper_request import UrbanPiperClient
 
@@ -59,6 +59,26 @@ class ResConfigSettings(models.TransientModel):
         string='Online Delivery Providers',
         help='The delivery providers used for online delivery through UrbanPiper.'
     )
+
+    def urbanpiper_create_store(self):
+        """
+        Create the store in UrbanPiper.
+        """
+        self.pos_config_id._check_required_request_params()
+        if not self.pos_config_id.company_id.city:
+            msg = _('Your company %s needs to have a correct city in order create the store.', self.pos_config_id.company_id.name)
+            action = {
+                'view_mode': 'form',
+                'res_model': 'res.company',
+                'type': 'ir.actions.act_window',
+                'res_id': self.pos_config_id.company_id.id,
+                'views': [[self.env.ref('base.view_company_form').id, 'form']],
+            }
+            raise RedirectWarning(msg, action, _('Go to Company configuration'))
+        up = UrbanPiperClient(self.pos_config_id)
+        up.configure_webhook()
+        response_json = up.request_store_create()
+        return self.pos_config_id._urbanpiper_handle_response(response_json)
 
     def urbanpiper_sync_menu(self):
         """

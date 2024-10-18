@@ -13,8 +13,7 @@ from werkzeug.urls import url_join
 _logger = logging.getLogger(__name__)
 
 EVENT_TYPES = [
-    'order_placed', 'order_status_update',
-    'rider_status_update', 'item_state_toggle', 'store_action'
+    'store_creation', 'store_action', 'item_state_toggle', 'order_placed', 'order_status_update', 'rider_status_update'
 ]
 UP_LANGUAGES = ['hi', 'ar', 'ja', 'pt', 'fr', 'es']
 
@@ -81,6 +80,23 @@ class UrbanPiperClient:
                 }
             }
             self._make_api_request(endpoint, data=payload)
+
+    def request_store_create(self):
+        """
+        Request to create a store in UrbanPiper.
+        """
+        endpoint = 'external/api/v1/stores/'
+        data = {
+            'stores': [
+                {
+                    'name': self.config.name,
+                    'city': self.config.company_id.city,
+                    'ref_id': self.config.urbanpiper_store_identifier
+                }
+            ]
+        }
+        response_json = self._make_api_request(endpoint, data=data)
+        return response_json
 
     def request_sync_menu(self):
         """
@@ -335,8 +351,7 @@ class UrbanPiperClient:
                 'platforms': [delivery_provider.technical_name],
                 'action': status and 'enable' or 'disable',
             }
-            response_json = self._make_api_request('hub/api/v1/location/', data=payload)
-            return response_json
+            self._make_api_request('hub/api/v1/location/', data=payload)
 
     def _get_public_image_url(self, record):
         """
