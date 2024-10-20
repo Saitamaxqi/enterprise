@@ -13,9 +13,9 @@ class CalendarEvent(models.Model):
     def _load_pos_data_domain(self, data):
         now = fields.Datetime.now()
         dayAfter = fields.Date.today() + timedelta(days=1)
-        appointment_type_id = [config['appointment_type_id'] for config in data['pos.config']['data']]
+        appointment_type_id = [config['appointment_type_id'] for config in data['pos.config']]
         return [
-            ('booking_line_ids.appointment_resource_id', 'in', [table['appointment_resource_id'] for table in data['restaurant.table']['data']]),
+            ('booking_line_ids.appointment_resource_id', 'in', [table['appointment_resource_id'] for table in data['restaurant.table']]),
             ('appointment_type_id', 'in', appointment_type_id),
             '|', '&', ('start', '>=', now), ('start', '<=', dayAfter), '&', ('stop', '>=', now), ('stop', '<=', dayAfter),
         ]

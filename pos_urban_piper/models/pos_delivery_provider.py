@@ -4,6 +4,7 @@ from odoo import api, fields, models
 class PosDeliveryProvider(models.Model):
     _name = 'pos.delivery.provider'
     _description = 'Online Delivery Providers'
+    _inherit = ['pos.load.mixin']
 
     name = fields.Char(string='Name', required=True, help='Name of the delivery provider i.e. Zomato, UberEats, etc.')
     technical_name = fields.Char(string='Provider Name', help='Technical name of the provider used by UrbanPiper')
@@ -24,18 +25,5 @@ class PosDeliveryProvider(models.Model):
     )
 
     @api.model
-    def _load_pos_data_domain(self, data):
-        return []
-
-    @api.model
     def _load_pos_data_fields(self, config_id):
         return ['id', 'name', 'technical_name']
-
-    def _load_pos_data(self, data):
-        domain = self._load_pos_data_domain(data)
-        fields = self._load_pos_data_fields(data['pos.config']['data'][0]['id'])
-        delivery_providers = self.search_read(domain, fields, load=False)
-        return {
-            'data': delivery_providers,
-            'fields': fields,
-        }

@@ -25,7 +25,7 @@ class Pos_Preparation_DisplayDisplay(models.Model):
 
     @api.model
     def _load_pos_data_domain(self, data):
-        return ['|', ('pos_config_ids', '=', data['pos.config']['data'][0]['id']), ('pos_config_ids', '=', False)]
+        return ['|', ('pos_config_ids', '=', data['pos.config'][0]['id']), ('pos_config_ids', '=', False)]
 
     @api.model_create_multi
     def create(self, vals_list):

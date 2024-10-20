@@ -5,12 +5,12 @@ from odoo import models, api
 class PosSession(models.Model):
     _inherit = 'pos.session'
 
-    def _load_pos_data(self, data):
-        data = super()._load_pos_data(data)
+    def _load_pos_data(self, response):
+        data = super()._load_pos_data(response)
         if self.env.company.country_id.code == 'CL':
-            data['data'][0]['_sii_taxpayer_types'] = self.env['res.partner'].get_sii_taxpayer_types()
-            data['data'][0]['_consumidor_final_anonimo_id'] = self.env.ref('l10n_cl.par_cfa').id
-            data['data'][0]['_l10n_cl_sii_regional_office_selection'] = dict(self.env.company._fields['l10n_cl_sii_regional_office'].selection)
+            data[0]['_sii_taxpayer_types'] = self.env['res.partner'].get_sii_taxpayer_types()
+            data[0]['_consumidor_final_anonimo_id'] = self.env.ref('l10n_cl.par_cfa').id
+            data[0]['_l10n_cl_sii_regional_office_selection'] = dict(self.env.company._fields['l10n_cl_sii_regional_office'].selection)
         return data
 
     @api.model

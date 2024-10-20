@@ -12,6 +12,7 @@ class PosPaymentMethod(models.Model):
         for pm in self:
             pm.is_card_payment = pm.journal_id.type == 'bank'
 
+    @api.model
     def _load_pos_data_fields(self, config_id):
         data = super()._load_pos_data_fields(config_id)
         if self.env.company.country_id.code == 'CL':

@@ -9,7 +9,7 @@ class IotBox(models.Model):
 
     @api.model
     def _load_pos_data_domain(self, data):
-        return [('id', 'in', [device['iot_id'] for device in data['iot.device']['data'] if device['iot_id']])]
+        return [('id', 'in', [device['iot_id'] for device in data['iot.device'] if device['iot_id']])]
 
     @api.model
     def _load_pos_data_fields(self, config_id):

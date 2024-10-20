@@ -12,7 +12,7 @@ class AppointmentResource(models.Model):
 
     @api.model
     def _load_pos_data_domain(self, data):
-        return [('pos_table_ids', 'in', [table['id'] for table in data['restaurant.table']['data']])]
+        return [('pos_table_ids', 'in', [table['id'] for table in data['restaurant.table']])]
 
     @api.model
     def _load_pos_data_fields(self, config_id):

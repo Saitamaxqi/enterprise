@@ -8,7 +8,7 @@ class PosSession(models.Model):
         data = super()._load_pos_data(data)
         if self.env.company.country_id.code == 'EC':
             final_consumer = self.env.ref('l10n_ec.ec_final_consumer', raise_if_not_found=False)
-            data['data'][0]['_final_consumer_id'] = final_consumer.id if final_consumer else None
+            data[0]['_final_consumer_id'] = final_consumer.id if final_consumer else None
         return data
 
     @api.model

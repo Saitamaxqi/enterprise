@@ -9,7 +9,12 @@ export class IoTLongpolling {
     }
     // setup to allow patching
     async setup({ dialog }) {
-        await ensureJQuery();
+        try {
+            await ensureJQuery();
+        } catch {
+            console.info("IoTLongpolling: jQuery is not available, IoTLongpolling will not work.");
+        }
+
         // CONSTANTS
         this.POLL_TIMEOUT = 60000;
         this.POLL_ROUTE = '/hw_drivers/event';

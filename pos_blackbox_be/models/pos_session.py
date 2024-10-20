@@ -42,8 +42,8 @@ class PosSession(models.Model):
     def _load_pos_data(self, data):
         data = super()._load_pos_data(data)
         if self.config_id.iface_fiscal_data_module:
-            data["data"][0]["_product_product_work_in"] = self.env.ref("pos_blackbox_be.product_product_work_in").id
-            data["data"][0]["_product_product_work_out"] = self.env.ref("pos_blackbox_be.product_product_work_out").id
+            data[0]["_product_product_work_in"] = self.env.ref("pos_blackbox_be.product_product_work_in").id
+            data[0]["_product_product_work_out"] = self.env.ref("pos_blackbox_be.product_product_work_out").id
         return data
 
     @api.depends("order_ids")
