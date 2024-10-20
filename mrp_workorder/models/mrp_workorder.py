@@ -853,7 +853,7 @@ class MrpWorkorder(models.Model):
 
     def _cal_cost(self, date=False):
         if date:
-            return super()._cal_cost(date) + sum(self.time_ids.filtered(lambda t: t.date_end <= date).mapped('total_cost'))
+            return super()._cal_cost(date) + sum(self.time_ids.filtered(lambda t: t.date_end and t.date_end <= date).mapped('total_cost'))
         else:
             return super()._cal_cost(date) + sum(self.time_ids.mapped('total_cost'))
 
