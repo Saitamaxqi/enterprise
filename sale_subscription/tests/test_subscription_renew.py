@@ -10,6 +10,7 @@ from odoo.exceptions import ValidationError
 from odoo.tests import tagged, freeze_time
 from odoo.tools import mute_logger
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
+from odoo.addons.sale_subscription.models.sale_order import SaleOrder
 
 
 @tagged('post_install', '-at_install')
@@ -106,9 +107,9 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
         # Then we renew it with a MRR of 42
         # After a few months the MRR of the renewal is 63
         # We also create and renew a free subscription
-        SaleOrder = self.env["sale.order"]
-        with freeze_time("2021-01-01"), patch.object(type(SaleOrder), '_get_unpaid_subscriptions', lambda x: []):
-            self.subscription.plan_id.auto_close_limit = 5000 # don't close automatically contract if unpaid invoices
+
+        with freeze_time("2021-01-01"), patch.object(SaleOrder, '_get_unpaid_subscriptions', lambda x: []):
+            self.subscription.plan_id.auto_close_limit = 5000  # don't close automatically contract if unpaid invoices
             # so creation with mail tracking
             context_mail = {'tracking_disable': False}
             sub = self.env['sale.order'].with_context(context_mail).create({
@@ -244,7 +245,7 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
             self.assertEqual(renewal_so.recurring_monthly, 83)
             self.flush_tracking()
 
-        with freeze_time("2021-07-01"), patch.object(type(SaleOrder), '_get_unpaid_subscriptions', lambda x: []):
+        with freeze_time("2021-07-01"), patch.object(SaleOrder, '_get_unpaid_subscriptions', lambda x: []):
             # Total MRR is 42 coming from renew
             self.subscription._cron_update_kpi()
             self.env['sale.order']._cron_recurring_create_invoice()
@@ -254,7 +255,7 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
             self.assertEqual(renewal_so.recurring_monthly, 83)
             self.flush_tracking()
 
-        with freeze_time("2021-08-03"), patch.object(type(SaleOrder), '_get_unpaid_subscriptions', lambda x: []):
+        with freeze_time("2021-08-03"), patch.object(SaleOrder, '_get_unpaid_subscriptions', lambda x: []):
             # We switch the cron the X of august to make sure the day of the cron does not affect the numbers
             renewal_so.end_date = datetime.date(2032, 1, 1)
             self.flush_tracking()
@@ -265,7 +266,7 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
             self.assertEqual(renewal_so.recurring_monthly, 83)
             self.assertEqual(sub.subscription_state, '5_renewed')
             self.flush_tracking()
-        with freeze_time("2021-09-01"), patch.object(type(SaleOrder), '_get_unpaid_subscriptions', lambda x: []):
+        with freeze_time("2021-09-01"), patch.object(SaleOrder, '_get_unpaid_subscriptions', lambda x: []):
             renewal_so.order_line.product_uom_qty = 5
             # We update the MRR of the renewed
             self.env['sale.order']._cron_recurring_create_invoice()
@@ -425,8 +426,8 @@ class TestSubscriptionRenew(TestSubscriptionCommon):
         # 1) create a renewal quote
         # 2) close the parent
         # 3) confirm the renewal
-        SaleOrder = self.env["sale.order"]
-        with freeze_time("2021-01-01"), patch.object(type(SaleOrder), '_get_unpaid_subscriptions', lambda x: []):
+
+        with freeze_time("2021-01-01"), patch.object(SaleOrder, '_get_unpaid_subscriptions', lambda x: []):
             # so creation with mail tracking
             context_mail = {'tracking_disable': False}
             sub = self.env['sale.order'].with_context(context_mail).create({
