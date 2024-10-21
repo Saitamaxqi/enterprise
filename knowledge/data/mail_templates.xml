@@ -3,7 +3,7 @@
 <data noupdate="1">
 
     <template id="knowledge_article_mail_invite">
-<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: white; padding: 0; border-collapse:separate;">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding: 0; border-collapse:separate;">
     <tr><td valign="top">
         <div style="margin: 0px; padding: 0px; font-size: 13px;">
             <p style="margin: 0px; padding: 0px; font-size: 13px;">
@@ -13,10 +13,7 @@
                 <t t-else="">
                     <t t-out="user.name or ''"/> invited you to access an article.<br/>
                 </t>
-                <div class="text-muted">
-                    <t t-if="message" t-out="message"/>
-                    <t t-else=""><br/></t>
-                </div>
+                <div t-if="message" t-out="message" class="text-muted"/>
             </p>
         </div>
     </td></tr>
@@ -24,7 +21,7 @@
     </template>
 
         <template id="knowledge_article_trash_notification">
-<table border="0" cellpadding="0" cellspacing="0" width="100%" style="background-color: white; padding: 0; border-collapse:separate;">
+<table border="0" cellpadding="0" cellspacing="0" width="100%" style="padding: 0; border-collapse:separate;">
     <tr><td valign="top">
         <div style="margin: 0px; padding: 0px; font-size: 13px;">
             <p style="margin: 0px; padding: 0px; font-size: 13px;">
@@ -33,7 +30,7 @@
                      <a t-att-href="article.article_url"><t t-out="article.name"/></a><t t-if="article_last">,</t>
                 </t>
                 <t t-if="child_articles">and the following child article(s) have</t><t t-elif="len(articles) > 1">have</t><t t-else="">has</t>
-                been sent to Trash.<br/><br/>
+                been sent to Trash.<br/>
                 <ul t-if="child_articles">
                     <li t-foreach="child_articles" t-as="article">
                         <a t-att-href="article.article_url"><t t-out="article.name"/></a>
