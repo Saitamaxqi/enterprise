@@ -15,6 +15,7 @@
                             <field name="activity_type" widget="radio" options="{'horizontal': true}" />
                             <label for="mass_mailing_id" string="Mail Template" invisible="activity_type != 'email'"/>
                             <field name="mass_mailing_id"
+                                widget="mailing_many2one"
                                 domain="[
                                     ('mailing_model_id', '=', model_id),
                                     ('use_in_marketing_automation', '=', True),
@@ -24,10 +25,8 @@
                                     'default_mailing_model_id': model_id,
                                     'default_use_in_marketing_automation': True,
                                     'default_campaign_id': utm_campaign_id,
-                                    'default_mailing_type': mass_mailing_id_mailing_type,
-                                    'form_view_ref': 'marketing_automation.mailing_mailing_view_form_marketing_activity'}"
+                                    'default_mailing_type': mass_mailing_id_mailing_type}"
                                 invisible="activity_type != 'email'"
-                                required="activity_type == 'email'"
                                 options="{'no_quick_create': True}"
                                 placeholder="Pick or Create a Template..."
                                 nolabel="1"/>

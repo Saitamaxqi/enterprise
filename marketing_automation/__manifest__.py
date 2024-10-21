@@ -42,6 +42,7 @@
             'marketing_automation/static/src/scss/*.scss',
             'marketing_automation/static/src/xml/*.xml',
             'marketing_automation/static/src/components/**/*',
+            'marketing_automation/static/src/views/**/*',
 
             # Don't include dark mode files in light mode
             ('remove', 'marketing_automation/static/src/scss/*.dark.scss'),

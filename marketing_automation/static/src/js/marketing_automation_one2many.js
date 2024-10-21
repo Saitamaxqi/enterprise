@@ -338,6 +338,12 @@ export class HierarchyKanban extends X2ManyField {
         });
     }
 
+    async onAdd() {
+        if (!(await this.props.record.save())) {
+            return;
+        }
+        return super.onAdd(...arguments);
+    }
 }
 
 export const hierarchyKanban = {

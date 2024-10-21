@@ -10,7 +10,6 @@
             </xpath>
             <xpath expr="//field[@name='mass_mailing_id']" position="attributes">
                 <attribute name="invisible">activity_type not in ['email', 'sms']</attribute>
-                <attribute name="required">activity_type in ['email', 'sms']</attribute>
             </xpath>
         </field>
     </record>

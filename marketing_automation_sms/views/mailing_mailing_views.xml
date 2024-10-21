@@ -1,51 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
 <odoo>
-    <record id="mailing_mailing_view_form_marketing_activity" model="ir.ui.view">
-        <field name="name">mailing.mailing.view.form.marketing.activity.inherit.sms</field>
-        <field name="model">mailing.mailing</field>
-        <field name="inherit_id" ref="marketing_automation.mailing_mailing_view_form_marketing_activity"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='email_from']" position="attributes">
-                <attribute name="invisible">mailing_type != 'mail'</attribute>
-                <attribute name="readonly">state in ('sending', 'done') and not use_in_marketing_automation</attribute>
-            </xpath>
-            <xpath expr="//field[@name='subject']" position="attributes">
-                <attribute name="invisible">mailing_type != 'mail'</attribute>
-            </xpath>
-            <xpath expr="//field[@name='subject']" position="after">
-                <field name="sms_subject" invisible="mailing_type != 'sms'"/>
-            </xpath>
-            <xpath expr="//button[@name='action_set_favorite']" position="attributes">
-                <attribute name="invisible">mailing_type != 'mail' or favorite</attribute>
-            </xpath>
-            <xpath expr="//button[@name='action_remove_favorite']" position="attributes">
-                <attribute name="invisible">mailing_type != 'mail' or not favorite</attribute>
-            </xpath>
-            <xpath expr="//page[@name='mail_body']" position="attributes">
-                <attribute name="invisible">mailing_type != 'mail'</attribute>
-            </xpath>
-            <xpath expr="//group[@name='group_mailing']" position="attributes">
-                <attribute name="invisible">mailing_type != 'mail'</attribute>
-            </xpath>
-            <xpath expr="//group[@name='group_mailing']" position="after">
-                <group string="SMS Options" name="group_sms" invisible="mailing_type == 'mail'">
-                    <field name="keep_archives" groups="base.group_no_one"/>
-                    <field name="sms_allow_unsubscribe"/>
-                </group>
-            </xpath>
-            <xpath expr="//page[@name='mail_body']" position="after">
-                <page string="SMS Content" name="sms_body" invisible="mailing_type != 'sms'">
-                    <field name="sms_template_id" domain="[('model', '=', mailing_model_real)]" invisible="1"/>
-                    <field name="body_plaintext" widget="sms_widget" required="mailing_type == 'sms'"
-                           options="{'dynamic_placeholder': true}" default_focus="1"/>
-                </page>
-            </xpath>
-            <xpath expr="//group[@name='group_advanced']" position="attributes">
-                <attribute name="invisible" add="mailing_type != 'mail'" separator=" or "/>
-            </xpath>
-         </field>
-    </record>
-
     <record id="mailing_mailing_view_form_marketing_automation" model="ir.ui.view">
         <field name="name">mailing.mailing.view.form.marketing.activity.inherit.sms</field>
         <field name="model">mailing.mailing</field>
@@ -61,10 +15,14 @@
             <xpath expr="//field[@name='sms_subject']" position="attributes">
                 <attribute name="invisible">mailing_type == 'mail'</attribute>
                 <attribute name="required">mailing_type == 'sms'</attribute>
+                <attribute name="readonly">0</attribute>
             </xpath>
             <xpath expr="//field[@name='body_plaintext']" position="attributes">
                 <attribute name="readonly">mailing_type == 'mail'</attribute>
                 <attribute name="required">mailing_type == 'sms'</attribute>
+            </xpath>
+            <xpath expr="//field[@name='sms_allow_unsubscribe']" position="attributes">
+                <attribute name="readonly">0</attribute>
             </xpath>
         </field>
     </record>
