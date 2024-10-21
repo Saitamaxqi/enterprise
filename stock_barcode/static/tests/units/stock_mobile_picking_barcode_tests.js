@@ -41,6 +41,8 @@ QUnit.module("stock_mobile_barcode", {}, function () {
                     return Promise.resolve(self.clientData.currentState);
                 } else if (route === "/stock_barcode/static/img/barcode.svg") {
                     return Promise.resolve();
+                } else if (route === "/web/dataset/call_kw/stock.move/split_uncompleted_moves") {
+                    return Promise.resolve([]);
                 }
             };
         },

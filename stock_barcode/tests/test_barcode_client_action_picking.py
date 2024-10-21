@@ -3086,6 +3086,32 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             "location_dest_id": location_dest.id,
         }])
 
+    def test_split_uncomplete_moves_on_exit(self):
+        """
+        Check that the uncompleted moves are splitted in the backend when you exit
+        the barcode, so that the demand of the picking is correctly displayed the
+        next time you open the record.
+        """
+        self.clean_access_rights()
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'groups_id': [Command.link(grp_multi_loc.id)]})
+        # Create a receipt and confirm it.
+        receipt_form = Form(self.env['stock.picking'])
+        receipt_form.picking_type_id = self.picking_type_in
+        with receipt_form.move_ids_without_package.new() as move:
+            move.product_id = self.product2
+            move.product_uom_qty = 5
+        receipt_picking = receipt_form.save()
+        receipt_picking.action_confirm()
+        receipt_picking.action_assign()
+
+        url = self._get_client_action_url(receipt_picking.id)
+        self.start_tour(url, 'test_split_uncomplete_moves_on_exit', login='admin', timeout=180)
+        self.assertRecordValues(receipt_picking.move_ids, [
+            {"quantity": 1.0, "picked": True},
+            {"quantity": 4.0, "picked": False},
+        ])
+
     # === GS1 TESTS ===#
     def test_gs1_delivery_ambiguous_lot_number(self):
         """

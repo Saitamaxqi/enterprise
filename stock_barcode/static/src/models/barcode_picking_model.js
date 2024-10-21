@@ -901,11 +901,6 @@ export default class BarcodePickingModel extends BarcodeModel {
         return this.currentState !== undefined;
     }
 
-    async beforeQuit() {
-        await super.beforeQuit();
-        return this.orm.call("stock.move", "split_uncompleted_moves", [this.moveIds]);
-    }
-
     async save() {
         if (this.linesToSave.length > 0) {
             await this._setUser();
@@ -1603,6 +1598,10 @@ export default class BarcodePickingModel extends BarcodeModel {
         }
 
         return Array.from(new Set(lines));
+    }
+
+    _onExit() {
+        this.orm.call("stock.move", "split_uncompleted_moves", [this.moveIds]);
     }
 
     async _processLocationDestination(barcodeData) {
