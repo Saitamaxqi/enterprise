@@ -23,6 +23,7 @@ class SpreadsheetDashboard(models.Model):
             "spreadsheet_binary_data": document.datas,
         })
         document._copy_revisions_to(dashboard)
+        document.action_archive()
         dashboard._delete_comments_from_data()
 
     @api.model

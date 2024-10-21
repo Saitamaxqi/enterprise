@@ -120,6 +120,7 @@ class TestSpreadsheetDocumentToDashboard(TransactionCase):
         self.assertEqual(dashboard_revision.revision_uuid, revision.revision_uuid)
         self.assertEqual(dashboard_revision.res_id, dashboard.id)
         self.assertEqual(dashboard_revision.res_model, "spreadsheet.dashboard")
+        self.assertFalse(document.active, "The original document should be archived")
 
     def test_action_open_new_dashboard(self):
         group = self.env["spreadsheet.dashboard.group"].create(

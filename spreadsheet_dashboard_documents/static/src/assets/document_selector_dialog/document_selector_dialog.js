@@ -1,6 +1,7 @@
 import { SpreadsheetSelectorPanel } from "@spreadsheet_edition/assets/components/spreadsheet_selector_dialog/spreadsheet_selector_panel";
 import { Dialog } from "@web/core/dialog/dialog";
 import { useService } from "@web/core/utils/hooks";
+import { _t } from "@web/core/l10n/translation";
 
 import { Component } from "@odoo/owl";
 
@@ -32,6 +33,12 @@ export class DocumentSelectorDialog extends Component {
             this.actionService.switchView("form", {
                 resId: this.props.dashboardGroupId,
             });
+            this.env.services.notification.add(
+                _t(
+                    "We're sending the original spreadsheet to the trash. No worries, though! You can still make edits by heading over to the Dashboard configuration."
+                ),
+                { type: "warning", sticky: true }
+            );
         } else {
             const action = await this.orm.call(
                 "spreadsheet.dashboard",
