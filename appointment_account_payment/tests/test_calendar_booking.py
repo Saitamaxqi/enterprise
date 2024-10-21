@@ -60,8 +60,8 @@ class AppointmentAccountPaymentTest(AppointmentAccountPaymentCommon):
         self.assertEqual(calendar_booking.account_move_id, invoice)
         self.assertFalse(invoice.calendar_booking_ids.calendar_event_id)
 
-        # Paying invoice creates event and reserve space
-        invoice._invoice_paid_hook()
+        # Posting invoice (at transaction post processing or manually) creates event and reserve space
+        invoice._post()
         event = invoice.calendar_booking_ids.calendar_event_id
         self.assertEqual(len(event), 1)
         self.assertTrue(invoice.calendar_booking_ids.calendar_event_id)
@@ -133,8 +133,8 @@ class AppointmentAccountPaymentTest(AppointmentAccountPaymentCommon):
         slots_list = self._filter_appointment_slots(slots)
         self.assertEqual(len(slots_list), 1)
 
-        # Paying invoice creates event and reserve space
-        invoice._invoice_paid_hook()
+        # Posting invoice (at transaction post processing or manually) creates event and reserve space
+        invoice._post()
         event = invoice.calendar_booking_ids.calendar_event_id
         self.assertEqual(len(event), 1)
         slots = appointment_type._get_appointment_slots('UTC')

@@ -9,9 +9,8 @@ class AccountMove(models.Model):
 
     calendar_booking_ids = fields.One2many("calendar.booking", "account_move_id", string="Meeting Booking")
 
-    def _invoice_paid_hook(self):
-        """ Override: when an invoice linked to appointment bookings is paid,
-            create events corresponding to the calendar bookings """
-        res = super()._invoice_paid_hook()
-        self.calendar_booking_ids._make_event_from_paid_booking()
-        return res
+    def _post(self, soft=True):
+        """ Either when posting manually or when transaction is done. """
+        posted = super()._post(soft=soft)
+        posted.calendar_booking_ids._make_event_from_paid_booking()
+        return posted
