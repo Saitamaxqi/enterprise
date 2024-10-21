@@ -1,6 +1,6 @@
 import { _t } from "@web/core/l10n/translation";
 import { Component, onWillUnmount, useEffect, useRef, useSubEnv } from "@odoo/owl";
-import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { deleteConfirmationMessage, ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 import { Layout } from "@web/search/layout";
 import { standardViewProps } from "@web/views/standard_view_props";
@@ -137,12 +137,15 @@ export class GanttController extends Component {
             removeRecord = () => {
                 return new Promise((resolve) => {
                     this.dialogService.add(ConfirmationDialog, {
-                        body: _t("Are you sure to delete this record?"),
+                        title: _t("Bye-bye, record!"),
+                        body: deleteConfirmationMessage,
+                        confirmLabel: _t("Delete"),
                         confirm: async () => {
                             await this.orm.unlink(resModel, [props.resId]);
                             resolve();
                         },
                         cancel: () => {},
+                        cancelLabel: _t("No, keep it"),
                     });
                 });
             };

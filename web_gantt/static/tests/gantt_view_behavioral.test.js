@@ -583,7 +583,7 @@ test("clicking on delete button in edit dialog triggers a confirmation dialog, c
     expect(".o_dialog").toHaveCount(2);
 
     const button = queryOne(".o_dialog:not(.o_inactive_modal) footer .btn-secondary");
-    expect(button).toHaveText("Cancel");
+    expect(button).toHaveText("No, keep it");
     await contains(button).click();
     expect(".o_dialog").toHaveCount(1);
     expect.verifySteps([]);
@@ -608,7 +608,7 @@ test("clicking on delete button in edit dialog triggers a confirmation dialog, c
     await contains(".o_dialog .o_form_button_remove").click();
     expect(".o_dialog").toHaveCount(2);
     const button = queryOne(".o_dialog:not(.o_inactive_modal) footer .btn-primary");
-    expect(button).toHaveText("Ok");
+    expect(button).toHaveText("Delete");
     await contains(button).click();
     expect(".o_dialog").toHaveCount(0);
     expect.verifySteps(["unlink"]);
