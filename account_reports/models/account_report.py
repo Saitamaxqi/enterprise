@@ -5106,7 +5106,7 @@ class AccountReport(models.Model):
 
         elif self.availability_condition == 'coa':
             # When restricting to 'coa', the report is only available is all the companies have the same CoA as the report
-            return {self.chart_template} == set(companies.mapped('chart_template'))
+            return self.chart_template in set(companies.mapped('chart_template'))
 
         return True
 
