@@ -4,7 +4,7 @@
     <!-- Kanban controller -->
     <t t-name="account.BankRecoKanbanController" t-inherit="web.KanbanView" t-inherit-mode="primary">
         <xpath expr="//Layout" position="attributes">
-            <attribute name="className">this.model.root.records.length ? 'o_bank_rec_main_div overflow-auto' : ''</attribute>
+            <attribute name="className">'o_bank_rec_main_div overflow-auto'</attribute>
         </xpath>
         <xpath expr="//t[@t-component='props.Renderer']" position="after">
             <div class="o_bank_rec_right_div">
