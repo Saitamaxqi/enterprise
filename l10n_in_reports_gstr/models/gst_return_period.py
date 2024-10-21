@@ -484,6 +484,7 @@ class L10n_InGstReturnPeriod(models.Model):
             tax_vals_map.setdefault(move_id, {}).setdefault(base_line, {
                 'base_amount': tax_vals['base_amount'],
                 'l10n_in_reverse_charge': False,
+                'rate_by_tax_tag': {},
                 'gst_tax_rate': 0.00,
                 'igst': 0.00,
                 'cgst': 0.00,
@@ -494,9 +495,10 @@ class L10n_InGstReturnPeriod(models.Model):
                 if tag_id in tax_line.tax_tag_ids:
                     tax_vals_map[move_id][base_line][tax_type] += tax_vals['tax_amount']
                     if tax_type in ['igst', 'cgst', 'sgst']:
-                        tax_vals_map[move_id][base_line]['gst_tax_rate'] += tax_line.tax_line_id.amount
+                        tax_vals_map[move_id][base_line]['rate_by_tax_tag'][tax_type] = tax_line.tax_line_id.amount
                     if tax_line.tax_line_id.l10n_in_reverse_charge:
                         tax_vals_map[move_id][base_line]['l10n_in_reverse_charge'] = True
+            tax_vals_map[move_id][base_line]['gst_tax_rate'] = sum(tax_vals_map[move_id][base_line]['rate_by_tax_tag'].values())
         # IF line have 0% tax or not have tax then we add it manually
         for journal_item in journal_items:
             move_id = journal_item.move_id
