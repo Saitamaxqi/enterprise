@@ -1,4 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 import datetime
 from datetime import date
 from freezegun import freeze_time
