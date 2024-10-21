@@ -7218,10 +7218,10 @@ class AccountReportLine(models.Model):
                 keys_and_names_in_sequence[out_of_sorting_record.id] = out_of_sorting_record.display_name
 
         else:
-            for non_relational_key in sorted(group_lines_by_keys.keys(), key=lambda k: (k is None, isinstance(k, str), k)):
-                if custom_groupby_name_builder:
-                    keys_and_names_in_sequence[non_relational_key] = custom_groupby_name_builder(non_relational_key)
-                else:
+            if custom_groupby_name_builder:
+                keys_and_names_in_sequence = custom_groupby_name_builder(group_lines_by_keys.keys()) # Batch this when we have a label builder. This function also ensures the order of the name sequence
+            else:
+                for non_relational_key in sorted(group_lines_by_keys.keys(), key=lambda k: (k is None, isinstance(k, str), k)):
                     if non_relational_key is None:
                         keys_and_names_in_sequence[non_relational_key] = _("Undefined")
                     else:

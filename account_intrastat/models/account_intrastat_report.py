@@ -409,9 +409,14 @@ class AccountIntrastatReportHandler(models.AbstractModel):
             }
         }
 
-    def _intrastat_groupby_label_builder(self, grouping_key):
-        parsed_key = loads(grouping_key)
-        return f"{parsed_key['intrastat_type']} - {parsed_key['partner_vat']} - {parsed_key['commodity_code']} - {parsed_key['country_code']}"
+    def _intrastat_groupby_label_builder(self, grouping_keys):
+        keys_names_in_sequence = {}
+
+        for grouping_key in sorted(grouping_keys):
+            parsed_key = loads(grouping_key)
+            keys_names_in_sequence[grouping_key] = f"{parsed_key['intrastat_type']} - {parsed_key['partner_vat']} - {parsed_key['commodity_code']} - {parsed_key['country_code']}"
+
+        return keys_names_in_sequence
 
     def _build_intrastat_custom_domain_blocks(self, grouping_key_dict):
         """
