@@ -75,7 +75,7 @@
                             <record id="account_financial_report_pk_other_income_balance" model="account.report.expression">
                                 <field name="label">balance</field>
                                 <field name="engine">account_codes</field>
-                                <field name="formula">3112</field>
+                                <field name="formula">-3112</field>
                             </record>
                         </field>
                     </record>
