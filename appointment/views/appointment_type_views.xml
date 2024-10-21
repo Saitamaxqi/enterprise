@@ -227,9 +227,9 @@
                                 </span>
                                 <span class="d-flex flex-nowrap" invisible="category_time_display != 'punctual_fields'">
                                     From
-                                    <field name="start_datetime" placeholder="Date" class="oe_inline px-2" widget="date" required="category_time_display == 'punctual_fields'"/>
+                                    <field name="start_datetime" placeholder="Date" class="oe_inline px-2" required="category_time_display == 'punctual_fields'"/>
                                     to
-                                    <field name="end_datetime" placeholder="Date" class="oe_inline px-2" widget="date" required="category_time_display == 'punctual_fields'"/>
+                                    <field name="end_datetime" placeholder="Date" class="oe_inline px-2" required="category_time_display == 'punctual_fields'"/>
                                 </span>
                             </div>
                             <label for="min_cancellation_hours" string="Allow Cancelling"/>
