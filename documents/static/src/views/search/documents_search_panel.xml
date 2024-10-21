@@ -38,7 +38,7 @@
             <attribute name="t-on-dragenter.stop.prevent">(ev) => this.onDragEnter(section, value, ev)</attribute>
             <attribute name="t-on-dragleave.stop.prevent">(ev) => this.onDragLeave(section, ev)</attribute>
             <attribute name="t-on-dragover.stop.prevent">(ev) => this.onDragOver(section, value, ev)</attribute>
-            <attribute name="t-on-drop.stop.prevent">(ev) => this.onDrop(section, value, ev)</attribute>
+            <attribute name="t-on-drop.prevent">(ev) => this.onDrop(section, value, ev)</attribute>
         </xpath>
         <xpath expr="//*[hasclass('o_search_panel_label')]" position="inside">
             <div class="ms-auto">
@@ -77,7 +77,7 @@
             <attribute name="t-on-dragenter.stop.prevent">(ev) => this.onDragEnter(section, values.get(valueId), ev)</attribute>
             <attribute name="t-on-dragleave.stop.prevent">(ev) => this.onDragLeave(section, ev)</attribute>
             <attribute name="t-on-dragover.stop.prevent"> </attribute>
-            <attribute name="t-on-drop.stop.prevent">(ev) => this.onDrop(section, values.get(valueId), ev)</attribute>
+            <attribute name="t-on-drop.prevent">(ev) => this.onDrop(section, values.get(valueId), ev)</attribute>
             <attribute name="class">o_documents_search_panel_editable</attribute>
         </xpath>
         <xpath expr="//div//label//span[hasclass('o_search_panel_counter')]" position="replace"/>
