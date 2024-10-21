@@ -24,6 +24,7 @@ export class CarrierTypeSelection extends SelectionField {
 
 export const carrierTypeSelection = {
     ...selectionField,
+    supportedTypes: ["char"],
     component: CarrierTypeSelection,
 };
 
