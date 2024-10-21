@@ -1524,7 +1524,10 @@ class DocumentsDocument(models.Model):
                 [('id', 'parent_of', self_archived.ids)],
                 [('id', 'not in', self_archived.ids)],
                 [('active', '=', False)],
-                [('folder_id', 'any', expression.OR([[('id', '=', False)], [('active', '=', True)]]))],
+                expression.OR([
+                    [('folder_id', '=', False)],
+                    [('folder_id.active', '=', True)],
+                ])
             ])
         ).sudo(False)
         if archived_top_parent_documents:

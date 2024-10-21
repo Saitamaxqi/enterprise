@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from unittest import skip
 
 from odoo import Command, http
-from odoo.exceptions import ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tests.common import new_test_user
 from odoo.tests import users
 
@@ -335,6 +335,28 @@ class TestCaseDocuments(TransactionCaseDocuments):
         self.assertFalse(self.document_txt.active, 'the document should be inactive')
         self.document_txt.action_unarchive()
         self.assertTrue(self.document_txt.active, 'the document should be active')
+
+    def test_unarchive_document_with_archived_parent(self):
+        """Unarchive a document whose parent folder is archived should send an error."""
+        document = self.document_txt
+
+        def check_error_message(document):
+            with self.assertRaises(UserError) as err:
+                document.action_unarchive()
+            self.assertEqual(
+                err.exception.args[0],
+                "Item(s) you wish to restore are included in archived folders. "
+                "To restore these items, you must restore the following including folders instead:"
+                "\n"
+                "- folder B"
+            )
+
+        self.folder_b.folder_id = self.folder_a  # when the parent has folder_id
+        self.folder_b.action_archive()
+        check_error_message(document)
+
+        self.folder_b.folder_id = False  # when the parent has folder_id False
+        check_error_message(document)
 
     def test_delete_document(self):
         self.document_txt.action_archive()
