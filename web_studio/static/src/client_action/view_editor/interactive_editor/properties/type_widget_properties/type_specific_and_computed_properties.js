@@ -40,6 +40,7 @@ const EDITABLE_FIELD_ATTRIBUTES = {
         name: "placeholder",
         label: _t("Placeholder"),
         type: "string",
+        help: _t("Displays a textual hint that helps the user when the field is empty."),
     },
 };
 
@@ -131,9 +132,8 @@ export const COMPUTED_DISPLAY_OPTIONS = {
         superOption: "zoom",
         getInvisible: (value) => !value,
     },
-    dynamic_placeholder_model_reference_field: {
-        superOption: "dynamic_placeholder",
-        getInvisible: (value) => !value,
+    placeholder_field: {
+        superOption: "placeholder",
     },
     edit_max_value: {
         superOption: "editable",

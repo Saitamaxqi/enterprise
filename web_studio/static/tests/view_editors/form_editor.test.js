@@ -761,17 +761,17 @@ test("never save record -- hiding tab", async () => {
     patchWithCleanup(formEditor, {
         props() {
             const props = super.props(...arguments);
-            class TestModel extends props.Model {};
+            class TestModel extends props.Model {}
             TestModel.Record = class extends TestModel.Record {
                 _save() {
                     steps.push("_save");
                     return super._save(...arguments);
                 }
-            }
+            };
             props.Model = TestModel;
             return props;
-        }
-    })
+        },
+    });
     const arch = `<form><field name="display_name"/></form>`;
     await mountViewEditor({
         type: "form",
@@ -779,7 +779,10 @@ test("never save record -- hiding tab", async () => {
         arch,
     });
 
-    const visibilityStateProp = Object.getOwnPropertyDescriptor(Document.prototype, "visibilityState");
+    const visibilityStateProp = Object.getOwnPropertyDescriptor(
+        Document.prototype,
+        "visibilityState"
+    );
     const prevVisibilitySate = document.visibilityState;
     Object.defineProperty(document, "visibilityState", {
         value: "hidden",
@@ -789,7 +792,44 @@ test("never save record -- hiding tab", async () => {
 
     document.dispatchEvent(new Event("visibilitychange"));
     await animationFrame();
-    expect(steps).toEqual(["_save"]) ;
+    expect(steps).toEqual(["_save"]);
     Object.defineProperty(document, "visibilityState", visibilityStateProp);
     expect(document.visibilityState).toBe(prevVisibilitySate);
+});
+
+test("CharField can edit its placeholder_field option", async () => {
+    await mountViewEditor({
+        type: "form",
+        resModel: "coucou",
+        arch: `<form>
+        <header>
+            <button string="Test" type="object" class="oe_highlight"/>
+        </header>
+        <sheet>
+            <group>
+                <field name="display_name" class="studio"/>
+            </group>
+        </sheet>
+    </form>
+    `,
+    });
+    await contains(".o_cell[data-field-name=display_name]").click();
+    expect(".o_web_studio_property[name=placeholder_field]").toHaveCount(1);
+    expect(".o_web_studio_property label[for=placeholder_field]").toHaveText(
+        "Dynamic Placeholder?",
+        {
+            message: "the option is title Dynamic Placeholder and has a tooltip",
+        }
+    );
+    expect(".o_web_studio_property[name=dynamic_placeholder]").toHaveCount(0, {
+        message:
+            "this options is not documented, because it does not make sense to edit this from studio",
+    });
+    expect(".o_web_studio_property[name=dynamic_placeholder_model_reference_field]").toHaveCount(
+        0,
+        {
+            message:
+                "this options is not documented, because it does not make sense to edit this from studio",
+        }
+    );
 });
