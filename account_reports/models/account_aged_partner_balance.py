@@ -259,8 +259,8 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
             date_to=date_to,
             search_condition=query.where_clause,
             groupby_clause=groupby_clause,
-            having_debit=report._currency_table_apply_rate(SQL("account_move_line.debit - COALESCE(part_debit.amount, 0)")),
-            having_credit=report._currency_table_apply_rate(SQL("account_move_line.credit - COALESCE(part_credit.amount, 0)")),
+            having_debit=report._currency_table_apply_rate(SQL("CASE WHEN account_move_line.balance > 0  THEN account_move_line.balance else 0 END - COALESCE(part_debit.amount, 0)")),
+            having_credit=report._currency_table_apply_rate(SQL("CASE WHEN account_move_line.balance < 0  THEN -account_move_line.balance else 0 END - COALESCE(part_credit.amount, 0)")),
             currency_precision=self.env.company.currency_id.decimal_places,
             tail_query=tail_query,
         )

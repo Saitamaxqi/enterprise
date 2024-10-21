@@ -760,3 +760,39 @@ class TestAgedPayableReport(TestAccountReportsCommon):
             ],
             options
         )
+
+    def test_storno_refund_account_payable(self):
+        self.env.company.account_storno = True
+
+        great_partner = self.env['res.partner'].create({'name': 'Great Partner'})
+        refund = self.env['account.move'].create({
+            'move_type': 'in_refund',
+            'partner_id': great_partner.id,
+            'invoice_date': '2010-02-01',
+            'date': '2010-02-01',
+            'invoice_date_due': '2010-02-01',
+            'invoice_line_ids': [Command.create({
+                'name': 'Great Product',
+                'price_unit': 100,
+                'tax_ids': [],
+            })]
+        })
+        refund.action_post()
+        self.env['account.payment.register'].with_context(active_model='account.move', active_ids=refund.ids).create({
+            'payment_date': '2010-02-01',
+            'amount': 100.0,
+        })._create_payments()
+
+        options = self._generate_options(self.report, '2010-02-01', '2010-02-01')
+        self.env.company.totals_below_sections = False
+
+        self.assertLinesValues(
+            # pylint: disable=C0326
+            self.report._get_lines(options),
+            #   Name               Due Date     Not Due On      1 - 30     31 - 60     61 - 90    91 - 120       Older        Total
+            [   0,                       1,             3,          4,          5,          6,          7,          8,           9],
+            [
+                ('Aged Payable',        '',           0.0,        0.0,        0.0,        0.0,        0.0,        0.0,         0.0),
+            ],
+            options,
+        )
