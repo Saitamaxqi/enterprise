@@ -785,3 +785,34 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             # Ensure a new picking is created for the second invoice
             self.assertEqual(len(sub.picking_ids), initial_picking_count + 1, "A new picking should be created for the second invoice")
             self.assertEqual(picking.state, 'done', "New picking should be in 'done' state")
+
+    def test_forecast_renewed_subscription_stock(self):
+        product = self.env['product.product'].create({
+            'name': "Storable product",
+            'standard_price': 0.0,
+            'type': 'consu',
+            'is_storable': True,
+            'uom_id': self.uom_unit.id,
+            'invoice_policy': 'order',
+            'recurring_invoice': True,
+        })
+
+        subscription = self.env['sale.order'].create({
+            'name': 'Original Subscription',
+            'is_subscription': True,
+            'partner_id': self.user_portal.partner_id.id,
+            'plan_id': self.plan_month.id,
+            'order_line': [Command.create({
+                'product_id': product.id,
+                'product_uom_qty': 1,
+            })]
+        })
+
+        subscription.action_confirm()
+        subscription._cron_recurring_create_invoice()
+        action = subscription.prepare_renewal_order()
+        renewal_so = self.env['sale.order'].browse(action['res_id'])
+        renewal_so.action_confirm()
+
+        forecast_data = self.env['stock.forecasted_product_product']._get_report_data(product_ids=[product.id])
+        self.assertEqual(forecast_data['subscription_qty'], 1, 'Renewed subscription should no longer require stock')

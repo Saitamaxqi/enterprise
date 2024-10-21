@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models
+from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_CLOSED_STATE
 
 
 class StockForecasted_Product_Product(models.AbstractModel):
@@ -22,7 +23,11 @@ class StockForecasted_Product_Product(models.AbstractModel):
         return res
 
     def _product_active_subscription_domain(self, product_template_ids, product_variant_ids):
-        domain = [('state', '=', 'sale'), ('product_template_id.recurring_invoice', '=', True)]
+        domain = [
+            ('state', '=', 'sale'),
+            ('product_template_id.recurring_invoice', '=', True),
+            ('order_id.subscription_state', 'not in', SUBSCRIPTION_CLOSED_STATE)
+        ]
         if product_template_ids:
             domain += [('product_template_id', 'in', product_template_ids)]
         elif product_variant_ids:
