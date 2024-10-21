@@ -17,6 +17,7 @@ class TestUiCommon(HttpCase):
             'tz': 'UTC',
             'hours_per_day': 8.0,
             'flexible_hours': True,
+            'full_time_required_hours': 40,
         })
         cls.employee_thibault = cls.env['hr.employee'].create({
             'name': 'Aaron',
