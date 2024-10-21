@@ -135,9 +135,16 @@ class SaleSubscriptionPlan(models.Model):
     @api.depends_context('lang')
     @api.depends('billing_period_value', 'billing_period_unit')
     def _compute_billing_period_display(self):
-        labels = dict(self._fields['billing_period_unit']._description_selection(self.env))
         for plan in self:
-            plan.billing_period_display = f"{plan.billing_period_value} {labels[plan.billing_period_unit]}"
+            value = plan.billing_period_value
+            if plan.billing_period_unit == 'week':
+                plan.billing_period_display = _('%s Weeks', value) if value > 1 else _('1 Week')
+            elif plan.billing_period_unit == 'month':
+                plan.billing_period_display = _('%s Months', value) if value > 1 else _('1 Month')
+            elif plan.billing_period_unit == 'year':
+                plan.billing_period_display = _('%s Years', value) if value > 1 else _('1 Year')
+            else:
+                raise ValueError(f"Invalid Billing Period Unit {plan.billing_period_unit!r}")
 
     @api.depends_context('lang')
     @api.depends('billing_period_value', 'billing_period_unit')

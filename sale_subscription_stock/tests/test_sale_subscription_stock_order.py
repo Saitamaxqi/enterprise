@@ -30,7 +30,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             self.assertEqual(sub.order_line.qty_invoiced, 1, 'Order line should now be marked as invoiced')
             self.assertEqual(sub.invoice_ids.amount_total, 45)
             invoice_line = sub.invoice_ids.invoice_line_ids
-            self.assertEqual(invoice_line.name.split('\n')[1], '1 Months 03/02/2022 to 04/01/2022')
+            self.assertEqual(invoice_line.name.split('\n')[1], '1 Month 03/02/2022 to 04/01/2022')
             self.assertEqual(invoice_line.product_id, self.sub_product_order)
             self.assertEqual(invoice_line.quantity, 1)
             self.assertEqual(sub.order_line.qty_invoiced, 1, 'Order line should still be marked as invoiced')

@@ -146,9 +146,9 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
             inv = self.subscription.invoice_ids.sorted('date')[-1]
             invoice_periods = inv.invoice_line_ids.sorted('id').mapped('name')
             first_period = invoice_periods[0].split('\n')[1]
-            self.assertEqual(first_period, "1 Months 08/01/2021 to 08/31/2021")
+            self.assertEqual(first_period, "1 Month 08/01/2021 to 08/31/2021")
             second_period = invoice_periods[1].split('\n')[1]
-            self.assertEqual(second_period, "1 Months 08/01/2021 to 08/31/2021")
+            self.assertEqual(second_period, "1 Month 08/01/2021 to 08/31/2021")
 
         self.assertEqual(len(self.subscription.order_line), 4)
 
@@ -253,7 +253,7 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
             line_names = inv.invoice_line_ids.mapped('name')
             periods = [n.split('\n')[1] for n in line_names]
             for p in periods:
-                self.assertEqual(p, '1 Years 01/01/2022 to 12/31/2022', 'the first year should be invoiced')
+                self.assertEqual(p, '1 Year 01/01/2022 to 12/31/2022', 'the first year should be invoiced')
 
         with freeze_time("2022-06-20"):
             action = sub.prepare_upsell_order()
