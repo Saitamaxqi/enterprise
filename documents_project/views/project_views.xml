@@ -108,8 +108,7 @@
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button class="oe_stat_button" name="action_open_documents_portal" type="object"
                     icon="fa-file-text-o"
-                    invisible="not project_use_documents or folder_user_permission == 'none'
-                               or (folder_user_permission == 'none' == 'view' and not document_count)">
+                    invisible="not project_use_documents or folder_user_permission == 'none'">
                     <field string="Documents" name="document_count" widget="statinfo"/>
                 </button>
             </xpath>
@@ -124,8 +123,7 @@
         <field name="arch" type="xml">
             <xpath expr="//div[@name='card_menu_view']" position="inside">
                 <div role="menuitem"
-                    invisible="not use_documents or documents_folder_id.user_permission == 'none'
-                               or (documents_folder_id.user_permission == 'view' and not document_count)">
+                    invisible="not use_documents or documents_folder_id.user_permission == 'none'">
                     <a name="action_view_documents_project" type="object">Documents</a>
                 </div>
             </xpath>
