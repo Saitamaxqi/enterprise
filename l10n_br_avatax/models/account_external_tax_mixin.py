@@ -208,8 +208,6 @@ class AccountExternalTaxMixin(models.AbstractModel):
             'numberOfItems': qty,
             'itemDescriptor': {
                 'description': product.display_name or '',
-                # The periods in the code work during tax calculation, but not EDI. Removing them works in both.
-                'hsCode': (product.l10n_br_ncm_code_id.code or '').replace('.', ''),
             },
             'tempTransportCostType': product.l10n_br_transport_cost_type,
             'tempProduct': product,
@@ -225,6 +223,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
             line['benefitsAbroad'] = self.partner_shipping_id.country_id.code != 'BR'
             descriptor['serviceCodeOrigin'] = product.l10n_br_property_service_code_origin_id.code
             descriptor['withLaborAssignment'] = product.l10n_br_labor
+            descriptor['hsCode'] = (product.l10n_br_ncm_code_id.code or '').lstrip('0')
 
             # Explicitly filter on company, this can be called via controllers which run as superuser and bypass record rules.
             service_codes = product.product_tmpl_id.l10n_br_service_code_ids.filtered(lambda code: code.company_id == self.env.company)
@@ -236,6 +235,7 @@ class AccountExternalTaxMixin(models.AbstractModel):
             descriptor['cest'] = product.l10n_br_cest_code or ''
             descriptor['source'] = product.l10n_br_source_origin or ''
             descriptor['productType'] = product.l10n_br_sped_type or ''
+            descriptor['hsCode'] = (product.l10n_br_ncm_code_id.code or '').replace('.', '')
 
         return line
 
