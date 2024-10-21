@@ -8,9 +8,9 @@ export class PaymentIngenico extends PaymentInterface {
         return this.payment_method_id.terminal_proxy;
     }
 
-    send_payment_request(uuid) {
+    sendPaymentRequest(uuid) {
         var self = this;
-        super.send_payment_request(...arguments);
+        super.sendPaymentRequest(...arguments);
         const terminal_proxy = self.get_terminal();
 
         if (!terminal_proxy) {
@@ -21,14 +21,14 @@ export class PaymentIngenico extends PaymentInterface {
         return new Promise(function (resolve) {
             self._waitingResponse = self._waitingPayment;
             terminal_proxy.addListener(
-                self._onValueChange.bind(self, resolve, self.pos.get_order())
+                self._onValueChange.bind(self, resolve, self.pos.getOrder())
             );
-            self._send_request(self.get_payment_data(uuid));
+            self._send_request(self.getPaymentData(uuid));
         });
     }
 
-    get_payment_data(uuid) {
-        const paymentline = this.pos.get_order().get_paymentline_by_uuid(uuid);
+    getPaymentData(uuid) {
+        const paymentline = this.pos.getOrder().getPaymentlineByUuid(uuid);
         return {
             messageType: "Transaction",
             // The last 13 characters of the uuid is a 52-bit integer, fits in the Number data type.
@@ -39,11 +39,11 @@ export class PaymentIngenico extends PaymentInterface {
         };
     }
 
-    send_payment_cancel(order, uuid) {
+    sendPaymentCancel(order, uuid) {
         var self = this;
         var terminal = this.get_terminal();
         if (terminal) {
-            super.send_payment_cancel(...arguments);
+            super.sendPaymentCancel(...arguments);
             var data = {
                 messageType: "Cancel",
                 reason: "manual",
@@ -76,8 +76,8 @@ export class PaymentIngenico extends PaymentInterface {
                 title: _t("Connection to terminal failed"),
                 body: _t("Please check if the terminal is still connected."),
             });
-            if (this.pos.get_order().get_selected_paymentline()) {
-                this.pos.get_order().get_selected_paymentline().set_payment_status("force_done");
+            if (this.pos.getOrder().getSelectedPaymentline()) {
+                this.pos.getOrder().getSelectedPaymentline().setPaymentStatus("force_done");
             }
         }
     }
@@ -86,8 +86,8 @@ export class PaymentIngenico extends PaymentInterface {
             title: _t("Connection to IoT Box failed"),
             body: _t("Please check if the IoT Box is still connected."),
         });
-        if (this.pos.get_order().get_selected_paymentline()) {
-            this.pos.get_order().get_selected_paymentline().set_payment_status("force_done");
+        if (this.pos.getOrder().getSelectedPaymentline()) {
+            this.pos.getOrder().getSelectedPaymentline().setPaymentStatus("force_done");
         }
     }
     _showErrorConfig() {
@@ -109,7 +109,7 @@ export class PaymentIngenico extends PaymentInterface {
             this.get_terminal().removeListener();
             resolve(true);
         } else if (["WaitingForCard", "WaitingForPin"].includes(data.Stage)) {
-            line.set_payment_status("waitingCard");
+            line.setPaymentStatus("waitingCard");
         }
     }
 
@@ -133,7 +133,7 @@ export class PaymentIngenico extends PaymentInterface {
      * @param {Object} data.Card
      */
     _onValueChange(resolve, order, data) {
-        const line = order.get_paymentline_by_uuid(data.cid);
+        const line = order.getPaymentlineByUuid(data.cid);
         const terminal_proxy = line.payment_method_id.terminal_proxy;
         if (
             line &&
@@ -142,7 +142,7 @@ export class PaymentIngenico extends PaymentInterface {
         ) {
             this._waitingResponse(resolve, data, line);
             if (data.Ticket) {
-                line.set_receipt_info(data.Ticket);
+                line.setReceiptInfo(data.Ticket);
             }
             if (data.Card) {
                 line.card_type = data.Card;
@@ -152,7 +152,7 @@ export class PaymentIngenico extends PaymentInterface {
 }
 
 export class PaymentWorldline extends PaymentIngenico {
-    send_payment_cancel(order, uuid) {
+    sendPaymentCancel(order, uuid) {
         if (this.get_terminal()) {
             this._send_request({ messageType: "Cancel", cid: uuid });
         }
@@ -162,15 +162,15 @@ export class PaymentWorldline extends PaymentIngenico {
         });
     }
 
-    send_payment_request(uuid) {
-        const paymentline = this.pos.get_order().get_paymentline_by_uuid(uuid);
+    sendPaymentRequest(uuid) {
+        const paymentline = this.pos.getOrder().getPaymentlineByUuid(uuid);
         paymentline.transaction_id = Math.floor(Math.random() * Math.pow(2, 32)); // 4 random bytes
-        return super.send_payment_request(...arguments);
+        return super.sendPaymentRequest(...arguments);
     }
 
-    get_payment_data(uuid) {
-        var data = super.get_payment_data(...arguments);
-        data.actionIdentifier = this.pos.get_order().get_paymentline_by_uuid(uuid).transaction_id;
+    getPaymentData(uuid) {
+        var data = super.getPaymentData(...arguments);
+        data.actionIdentifier = this.pos.getOrder().getPaymentlineByUuid(uuid).transaction_id;
         return data;
     }
 
@@ -180,7 +180,7 @@ export class PaymentWorldline extends PaymentIngenico {
             if (data.Error) {
                 // Cancel failed, wait for transaction response
                 this.cancel_resolve(false);
-                line.set_payment_status("waitingCard");
+                line.setPaymentStatus("waitingCard");
                 this.env.services.dialog.add(AlertDialog, {
                     title: _t("Transaction could not be cancelled"),
                     body: data.Error,
@@ -192,7 +192,7 @@ export class PaymentWorldline extends PaymentIngenico {
             }
         } else if (data.Disconnected) {
             // Terminal disconnected
-            line.set_payment_status("force_done");
+            line.setPaymentStatus("force_done");
             this.env.services.dialog.add(AlertDialog, {
                 title: _t("Terminal Disconnected"),
                 body: _t(

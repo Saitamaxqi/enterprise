@@ -6,10 +6,10 @@ patch(TicketScreen.prototype, {
         if (this.pos.isEcuadorianCompany()) {
             if (
                 partner &&
-                (!destinationOrder.get_partner() ||
-                    destinationOrder.get_partner().id === this.pos.session.final_consumer_id)
+                (!destinationOrder.getPartner() ||
+                    destinationOrder.getPartner().id === this.pos.session.final_consumer_id)
             ) {
-                destinationOrder.set_partner(partner);
+                destinationOrder.setPartner(partner);
             }
         } else {
             super.setPartnerToRefundOrder(...arguments);

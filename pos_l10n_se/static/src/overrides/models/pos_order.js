@@ -6,8 +6,8 @@ patch(PosOrder.prototype, {
     useBlackBoxSweden() {
         return !!this.config.iface_sweden_fiscal_data_module;
     },
-    get_specific_tax(amount) {
-        const tax = this.get_tax_details().find((tax) => tax.tax.amount === amount);
+    getSpecificTax(amount) {
+        const tax = this.getTaxDetails().find((tax) => tax.tax.amount === amount);
 
         if (tax) {
             return tax.amount;
@@ -15,13 +15,13 @@ patch(PosOrder.prototype, {
 
         return false;
     },
-    wait_for_push_order() {
-        var result = super.wait_for_push_order(...arguments);
+    waitForPushOrder() {
+        var result = super.waitForPushOrder(...arguments);
         result = Boolean(this.useBlackBoxSweden() || result);
         return result;
     },
-    export_for_printing(baseUrl, headerData) {
-        const result = super.export_for_printing(...arguments);
+    exportForPrinting(baseUrl, headerData) {
+        const result = super.exportForPrinting(...arguments);
         if (!this.useBlackBoxSweden()) {
             return result;
         }

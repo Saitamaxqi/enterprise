@@ -37,12 +37,12 @@ patch(TicketScreen.prototype, {
     _getSearchFields() {
         return Object.assign({}, super._getSearchFields(...arguments), {
             DELIVERYPROVIDER: {
-                repr: (order) => order.get_delivery_provider_name(),
+                repr: (order) => order.getDeliveryProviderName(),
                 displayName: _t("Delivery Channel"),
                 modelField: "delivery_provider_id.name",
             },
             ORDERSTATUS: {
-                repr: (order) => order.get_order_status(),
+                repr: (order) => order.getOrderStatus(),
                 displayName: _t("Delivery Order Status"),
                 modelField: "delivery_status",
             },
@@ -141,10 +141,10 @@ patch(TicketScreen.prototype, {
                         await this.pos.sendOrderInPreparation(order, true);
                     }
                     order.uiState.displayed = false;
-                    if (order.id === this.pos.get_order()?.id) {
+                    if (order.id === this.pos.getOrder()?.id) {
                         const orderList = this._getOrderList();
                         if (orderList.length == 1) {
-                            this.pos.add_new_order();
+                            this.pos.addNewOrder();
                         } else {
                             this._selectNextOrder(order);
                         }
@@ -166,7 +166,7 @@ patch(TicketScreen.prototype, {
 
         // make sure the order is identified as paid.
         order = this.pos.models["pos.order"].get(order.id);
-        order.set_screen_data({ name: "" });
+        order.setScreenData({ name: "" });
         order.uiState.locked = true;
     },
 

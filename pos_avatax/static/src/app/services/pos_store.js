@@ -10,7 +10,7 @@ patch(PosStore.prototype, {
         }
 
         try {
-            const order = this.get_order();
+            const order = this.getOrder();
             if (this.env.services.ui.isBlocked || !order.partner_id) {
                 return;
             } else {

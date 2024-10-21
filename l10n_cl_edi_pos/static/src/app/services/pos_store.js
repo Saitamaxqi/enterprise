@@ -57,7 +57,7 @@ patch(PosStore.prototype, {
         result.date = formatDateTime(parseUTCString(order.date_order));
         result.partner = order.isFactura()
             ? pick(
-                  order.get_partner(),
+                  order.getPartner(),
                   "name",
                   "vat",
                   "street",

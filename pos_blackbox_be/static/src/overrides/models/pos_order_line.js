@@ -2,13 +2,13 @@ import { PosOrderline } from "@point_of_sale/app/models/pos_order_line";
 import { patch } from "@web/core/utils/patch";
 
 patch(PosOrderline.prototype, {
-    can_be_merged_with(orderline) {
+    canBeMergedWith(orderline) {
         // The Blackbox doesn't allow lines with a quantity of 5 numbers.
         if (
             !this.order_id.useBlackBoxBe() ||
-            (this.order_id.useBlackBoxBe() && this.get_quantity() < 9999)
+            (this.order_id.useBlackBoxBe() && this.getQuantity() < 9999)
         ) {
-            return super.can_be_merged_with(orderline);
+            return super.canBeMergedWith(orderline);
         }
         return false;
     },
@@ -67,8 +67,8 @@ patch(PosOrderline.prototype, {
         // 3. build PLU line
 
         let amount = this._getAmountForPlu();
-        let description = this.get_product().display_name;
-        let price_in_eurocent = this.get_display_price() * 100;
+        let description = this.getProduct().display_name;
+        let price_in_eurocent = this.getDisplayPrice() * 100;
         const tax_labels = this.getLineTaxLabels();
 
         amount = this._prepareNumberForPlu(amount, 4);
@@ -111,8 +111,8 @@ patch(PosOrderline.prototype, {
         return description;
     },
     _getAmountForPlu() {
-        let amount = this.get_quantity();
-        const uom = this.get_unit();
+        let amount = this.getQuantity();
+        const uom = this.getUnit();
 
         if (uom.is_unit) {
             return amount;

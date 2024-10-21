@@ -16,18 +16,18 @@ patch(PosOrder.prototype, {
     isChileanCompany() {
         return this.company.country_id?.code == "CL";
     },
-    is_to_invoice() {
+    isToInvoice() {
         if (this.isChileanCompany()) {
             return true;
         }
-        return super.is_to_invoice(...arguments);
+        return super.isToInvoice(...arguments);
     },
-    set_to_invoice(to_invoice) {
+    setToInvoice(to_invoice) {
         if (this.isChileanCompany()) {
-            this.assert_editable();
+            this.assetEditable();
             this.to_invoice = true;
         } else {
-            super.set_to_invoice(...arguments);
+            super.setToInvoice(...arguments);
         }
     },
     isFactura() {
@@ -36,8 +36,8 @@ patch(PosOrder.prototype, {
         }
         return true;
     },
-    export_for_printing(baseUrl, headerData) {
-        const result = super.export_for_printing(...arguments);
+    exportForPrinting(baseUrl, headerData) {
+        const result = super.exportForPrinting(...arguments);
         if (!this.isChileanCompany()) {
             return result;
         }

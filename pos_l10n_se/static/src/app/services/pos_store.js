@@ -9,10 +9,10 @@ patch(PosStore.prototype, {
     },
     hasNegativeAndPositiveProducts(product) {
         const isPositive = product.lst_price >= 0;
-        const order = this.get_order();
+        const order = this.getOrder();
 
-        for (const id in order.get_orderlines()) {
-            const line = order.get_orderlines()[id];
+        for (const id in order.getOrderlines()) {
+            const line = order.getOrderlines()[id];
             if (
                 (line.product_id.lst_price >= 0 && !isPositive) ||
                 (line.product_id.lst_price < 0 && isPositive)
@@ -43,7 +43,7 @@ patch(PosStore.prototype, {
                 ),
             });
             return;
-        } else if (this.useBlackBoxSweden() && this.get_order().lines.find((l) => l.is_return)) {
+        } else if (this.useBlackBoxSweden() && this.getOrder().lines.find((l) => l.is_return)) {
             this.dialog.add(AlertDialog, {
                 title: _t("POS error"),
                 body: _t("Cannot modify a refund order."),
@@ -74,7 +74,7 @@ patch(PosStore.prototype, {
                     });
                 } else {
                     order.receipt_type = "kopia";
-                    await this.push_single_order(order);
+                    await this.pushSingleOrder(order);
                     order.receipt_type = false;
                     order.isReprint = true;
                     await this.data.call("pos.order", "set_is_reprint", [

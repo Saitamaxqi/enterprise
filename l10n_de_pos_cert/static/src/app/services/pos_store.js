@@ -143,7 +143,7 @@ patch(PosStore.prototype, {
             SPECIAL_RATE_2: [],
             NULL: [],
         };
-        order.get_tax_details().forEach((detail) => {
+        order.getTaxDetails().forEach((detail) => {
             rateIds[this.vatRateMapping[detail.tax_percentage]].push(detail.id);
         });
         const amountPerVatRate = {
@@ -155,7 +155,7 @@ patch(PosStore.prototype, {
         };
         for (var rate in rateIds) {
             rateIds[rate].forEach((id) => {
-                amountPerVatRate[rate] += order.get_total_for_taxes(id);
+                amountPerVatRate[rate] += order.getTotalForTaxes(id);
             });
         }
         return Object.keys(amountPerVatRate)

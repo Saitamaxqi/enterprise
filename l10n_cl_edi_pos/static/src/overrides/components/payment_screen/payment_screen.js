@@ -22,7 +22,7 @@ patch(PaymentScreen.prototype, {
         if (this.pos.isChileanCompany()) {
             return this.currentOrder.isFactura();
         }
-        return this.currentOrder.is_to_invoice();
+        return this.currentOrder.isToInvoice();
     },
     async _isOrderValid(isForceValidate) {
         const result = await super._isOrderValid(...arguments);
@@ -32,7 +32,7 @@ patch(PaymentScreen.prototype, {
             }
             if (
                 this.currentOrder._isRefundOrder() &&
-                this.currentOrder.get_partner().id === this.pos.session._consumidor_final_anonimo_id
+                this.currentOrder.getPartner().id === this.pos.session._consumidor_final_anonimo_id
             ) {
                 this.dialog.add(AlertDialog, {
                     title: _t("Refund not possible"),
@@ -49,7 +49,7 @@ patch(PaymentScreen.prototype, {
                 "vat",
             ];
             const missingFields = [];
-            const partner = this.currentOrder.get_partner();
+            const partner = this.currentOrder.getPartner();
             if (this.currentOrder.invoice_type == "factura" || this.currentOrder._isRefundOrder()) {
                 for (const field of mandatoryFacturaFields) {
                     if (!partner[field]) {

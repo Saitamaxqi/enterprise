@@ -21,7 +21,7 @@ patch(ControlButtons.prototype, {
         });
     },
     async getUserSessionStatus() {
-        let cashier = this.pos.get_cashier();
+        let cashier = this.pos.getCashier();
 
         if (cashier.model.pythonModel === "hr.employee") {
             cashier = this.pos.user.id;
@@ -37,7 +37,7 @@ patch(ControlButtons.prototype, {
         );
     },
     async setUserSessionStatus(status) {
-        let cashier = this.pos.get_cashier();
+        let cashier = this.pos.getCashier();
 
         if (cashier.model.pythonModel === "hr.employee") {
             cashier = this.pos.user.id;
@@ -59,7 +59,7 @@ patch(ControlButtons.prototype, {
         }
     },
     async clickWorkButton() {
-        if (this.pos.get_order().orderlines.length) {
+        if (this.pos.getOrder().orderlines.length) {
             this.pos.env.services.dialog.add(AlertDialog, {
                 title: _t("Fiscal Data Module error"),
                 body: _t("Cannot clock in/out if the order is not empty"),
@@ -92,14 +92,14 @@ patch(ControlButtons.prototype, {
         this.state.status = false;
     },
     async createOrderForClocking() {
-        const order = this.pos.get_order();
+        const order = this.pos.getOrder();
         order.add_product(this.state.status ? this.pos.workOutProduct : this.pos.workInProduct, {
             force: true,
         });
         order.draft = false;
         order.clock = this.state.status ? "out" : "in";
 
-        await this.pos.push_single_order(order);
+        await this.pos.pushSingleOrder(order);
         await this.printer.print(OrderReceipt, {
             data: this.pos.orderExportForPrinting(order),
             formatCurrency: this.env.utils.formatCurrency,
@@ -108,7 +108,7 @@ patch(ControlButtons.prototype, {
         if (this.pos.config.module_pos_restaurant) {
             this.pos.showScreen("FloorScreen");
         } else {
-            this.pos.add_new_order();
+            this.pos.addNewOrder();
             this.pos.showScreen("ProductScreen");
         }
     },
@@ -123,8 +123,8 @@ patch(ControlButtons.prototype, {
         super.clickRefund();
     },
     async clickPrintBill() {
-        const order = this.pos.get_order();
-        if (this.pos.useBlackBoxBe() && order.get_orderlines().length > 0) {
+        const order = this.pos.getOrder();
+        if (this.pos.useBlackBoxBe() && order.getOrderlines().length > 0) {
             await this.pos.pushProFormaOrder(order);
         }
         await super.clickPrintBill();

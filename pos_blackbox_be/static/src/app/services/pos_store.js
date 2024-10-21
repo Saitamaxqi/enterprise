@@ -20,7 +20,7 @@ patch(PosStore.prototype, {
     },
     async addLineToCurrentOrder(vals, opt = {}, configure = true) {
         const product = vals.product_tmpl_id;
-        if (this.useBlackBoxBe() && product.get_price() < 0) {
+        if (this.useBlackBoxBe() && product.getPrice() < 0) {
             this.dialog.add(AlertDialog, {
                 title: _t("POS error"),
                 body: _t(
@@ -96,7 +96,7 @@ patch(PosStore.prototype, {
         return this.config.iface_fiscal_data_module;
     },
     checkIfUserClocked() {
-        const cashierId = this.get_cashier().id;
+        const cashierId = this.getCashier().id;
         if (this.config.module_pos_hr) {
             return this.session.employees_clocked_ids.find((elem) => elem === cashierId);
         }
@@ -111,7 +111,7 @@ patch(PosStore.prototype, {
         return this.useBlackBoxBe() || result;
     },
     async pushProFormaOrder(order) {
-        order.receipt_type = order.get_total_with_tax() >= 0 ? "PS" : "PR";
+        order.receipt_type = order.getTotalWithTax() >= 0 ? "PS" : "PR";
         await this.syncAllOrders();
         await this.pushToBlackbox(order);
     },
@@ -145,12 +145,12 @@ patch(PosStore.prototype, {
             }
         }
     },
-    async push_single_order(order, opts) {
+    async pushSingleOrder(order, opts) {
         if (this.useBlackBoxBe() && order) {
             order.receipt_type = false;
             await this.pushToBlackbox(order);
         }
-        return await super.push_single_order(order, opts);
+        return await super.pushSingleOrder(order, opts);
     },
     createPinCodeDataForBlackbox(code) {
         return "P040" + code;
@@ -164,18 +164,15 @@ patch(PosStore.prototype, {
             date: luxon.DateTime.now().toFormat("yyyyMMdd"),
             ticket_time: luxon.DateTime.now().toFormat("HHmmss"),
             insz_or_bis_number: this.config.module_pos_hr
-                ? this.get_cashier().insz_or_bis_number
+                ? this.getCashier().insz_or_bis_number
                 : this.user.insz_or_bis_number,
             ticket_number: order.sequence_number.toString(),
             type: order.receipt_type
                 ? order.receipt_type
-                : order.get_total_with_tax() >= 0
+                : order.getTotalWithTax() >= 0
                 ? "NS"
                 : "NR",
-            receipt_total: Math.abs(order.get_total_with_tax())
-                .toFixed(2)
-                .toString()
-                .replace(".", ""),
+            receipt_total: Math.abs(order.getTotalWithTax()).toFixed(2).toString().replace(".", ""),
             vat1: order.blackbox_tax_category_a
                 ? Math.abs(order.blackbox_tax_category_a).toFixed(2).replace(".", "")
                 : "",
@@ -211,7 +208,7 @@ patch(PosStore.prototype, {
     setDataForPushOrderFromBlackbox(order, data) {
         order.receipt_type = order.receipt_type
             ? order.receipt_type
-            : order.get_total_with_tax() >= 0
+            : order.getTotalWithTax() >= 0
             ? "NS"
             : "NR";
         order.blackbox_signature = data.value.signature;

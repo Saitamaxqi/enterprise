@@ -10,7 +10,7 @@ patch(PaymentScreen.prototype, {
     },
     //@override
     async toggleIsToInvoice() {
-        if (this.pos.company.country_id?.code === "MX" && !this.currentOrder.is_to_invoice()) {
+        if (this.pos.company.country_id?.code === "MX" && !this.currentOrder.isToInvoice()) {
             const payload = await makeAwaitable(this.dialog, AddInfoPopup, {
                 order: this.currentOrder,
             });
@@ -20,12 +20,12 @@ patch(PaymentScreen.prototype, {
                     payload.l10n_mx_edi_cfdi_to_public === "1";
                 this.currentOrder.l10n_mx_edi_usage = payload.l10n_mx_edi_usage;
             } else {
-                this.currentOrder.set_to_invoice(!this.currentOrder.is_to_invoice());
+                this.currentOrder.setToInvoice(!this.currentOrder.isToInvoice());
             }
         }
         super.toggleIsToInvoice(...arguments);
     },
     areMxFieldsVisible() {
-        return this.pos.company.country_id?.code === "MX" && this.currentOrder.is_to_invoice();
+        return this.pos.company.country_id?.code === "MX" && this.currentOrder.isToInvoice();
     },
 });

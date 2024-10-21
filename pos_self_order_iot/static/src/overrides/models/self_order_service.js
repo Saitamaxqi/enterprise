@@ -23,7 +23,7 @@ patch(SelfOrder.prototype, {
 
         this.printer.setPrinter(new IoTPrinter({ device }));
     },
-    create_printer(printer) {
+    createPrinter(printer) {
         if (printer.device_identifier && printer.printer_type === "iot") {
             const device = new DeviceController(this.iot_longpolling, {
                 iot_ip: printer.proxy_ip,
@@ -31,7 +31,7 @@ patch(SelfOrder.prototype, {
             });
             return new IoTPrinter({ device });
         } else {
-            return super.create_printer(...arguments);
+            return super.createPrinter(...arguments);
         }
     },
 });

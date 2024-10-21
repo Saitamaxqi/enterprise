@@ -85,7 +85,7 @@ patch(PosStore.prototype, {
                                 },
                                 filter: "ACTIVE_ORDERS",
                             };
-                            this.set_order(deliveryOrder);
+                            this.setOrder(deliveryOrder);
                             if (this.mainScreen.component?.name == "TicketScreen") {
                                 this.env.services.ui.block();
                                 if (this.config.module_pos_restaurant) {
@@ -112,10 +112,10 @@ patch(PosStore.prototype, {
      */
     addOrderIfEmpty() {
         if (
-            !this.get_order() ||
-            (this.get_order().delivery_identifier && this.get_order().state == "paid")
+            !this.getOrder() ||
+            (this.getOrder().delivery_identifier && this.getOrder().state == "paid")
         ) {
-            return this.add_new_order();
+            return this.addNewOrder();
         }
         return super.addOrderIfEmpty(...arguments);
     },

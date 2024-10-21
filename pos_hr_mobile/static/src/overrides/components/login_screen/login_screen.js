@@ -13,7 +13,7 @@ patch(LoginScreen.prototype, {
         this.barcodeReader = useService("barcode_reader");
         this.hasMobileScanner = isBarcodeScannerSupported() && this.barcodeReader;
     },
-    async open_mobile_scanner() {
+    async openMobileScanner() {
         if (!this.hasMobileScanner) {
             return;
         }

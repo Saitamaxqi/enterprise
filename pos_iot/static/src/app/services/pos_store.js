@@ -39,7 +39,7 @@ patch(PosStore.prototype, {
             }
         }
     },
-    create_printer(config) {
+    createPrinter(config) {
         if (config.device_identifier && config.printer_type === "iot") {
             const device = new DeviceController(this.env.services.iot_longpolling, {
                 iot_ip: config.proxy_ip,
@@ -47,14 +47,14 @@ patch(PosStore.prototype, {
             });
             return new IoTPrinter({ device });
         } else {
-            return super.create_printer(...arguments);
+            return super.createPrinter(...arguments);
         }
     },
 
     showScreen() {
         if (
             this.mainScreen.component === PaymentScreen &&
-            this.get_order().payment_ids.some(
+            this.getOrder().payment_ids.some(
                 (pl) =>
                     pl.payment_method_id.use_payment_terminal === "worldline" &&
                     ["waiting", "waitingCard", "waitingCancel"].includes(pl.payment_status)

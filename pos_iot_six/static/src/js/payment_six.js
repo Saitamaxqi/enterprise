@@ -1,8 +1,8 @@
 import { PaymentWorldline } from "@pos_iot/app/payment";
 
 export class PaymentSix extends PaymentWorldline {
-    get_payment_data(uuid) {
-        const paymentline = this.pos.get_order().get_paymentline_by_uuid(uuid);
+    getPaymentData(uuid) {
+        const paymentline = this.pos.getOrder().getPaymentlineByUuid(uuid);
         const pos = this.pos;
         return {
             messageType: "Transaction",
@@ -15,10 +15,10 @@ export class PaymentSix extends PaymentWorldline {
         };
     }
 
-    send_payment_request(uuid) {
-        const paymentline = this.pos.get_order().get_paymentline_by_uuid(uuid);
+    sendPaymentRequest(uuid) {
+        const paymentline = this.pos.getOrder().getPaymentlineByUuid(uuid);
         paymentline.transactionType = "Payment";
 
-        return super.send_payment_request(uuid);
+        return super.sendPaymentRequest(uuid);
     }
 }

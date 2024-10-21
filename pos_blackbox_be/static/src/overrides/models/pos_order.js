@@ -18,21 +18,21 @@ patch(PosOrder.prototype, {
         return this.session.users_clocked_ids.find((elem) => elem === cashierId);
     },
     getSpecificTax(amount) {
-        const tax = this.get_tax_details().find((tax) => tax.tax.amount === amount);
+        const tax = this.getTaxDetails().find((tax) => tax.tax.amount === amount);
         return tax ? tax.amount : false;
     },
-    wait_for_push_order() {
-        const result = super.wait_for_push_order();
+    waitForPushOrder() {
+        const result = super.waitForPushOrder();
         return Boolean(this.useBlackBoxBe() || result);
     },
     getPlu() {
         let order_str = "";
-        this.get_orderlines().forEach((line) => (order_str += line.generatePluLine()));
+        this.getOrderlines().forEach((line) => (order_str += line.generatePluLine()));
         const sha1 = Sha1.hash(order_str);
         return sha1.slice(sha1.length - 8);
     },
-    export_for_printing(baseUrl, headerData) {
-        const result = super.export_for_printing(...arguments);
+    exportForPrinting(baseUrl, headerData) {
+        const result = super.exportForPrinting(...arguments);
         result.useBlackboxBe = Boolean(this.useBlackBoxBe());
         if (this.useBlackBoxBe()) {
             const order = this;

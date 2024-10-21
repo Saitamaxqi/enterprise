@@ -5,10 +5,10 @@ import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_p
 
 patch(PosStore.prototype, {
     getPartnerCredit(partner) {
-        const order = this.get_order();
+        const order = this.getOrder();
         const partnerInfos = {
             totalDue: 0,
-            totalWithCart: order ? order.get_total_with_tax() : 0,
+            totalWithCart: order ? order.getTotalWithTax() : 0,
             creditLimit: 0,
             useLimit: false,
             overDue: false,
@@ -71,13 +71,13 @@ patch(PosStore.prototype, {
                 if (emptyOrder) {
                     newOrder = emptyOrder;
                     // Set the empty order as the current order.
-                    this.set_order(newOrder);
+                    this.setOrder(newOrder);
                 } else {
-                    newOrder = this.add_new_order();
+                    newOrder = this.addNewOrder();
                 }
-                const payment = newOrder.add_paymentline(selectedPaymentMethod);
-                payment.set_amount(totalDue);
-                newOrder.set_partner(partner);
+                const payment = newOrder.addPaymentline(selectedPaymentMethod);
+                payment.setAmount(totalDue);
+                newOrder.setPartner(partner);
                 this.showScreen("PaymentScreen", { orderUuid: this.selectedOrderUuid });
             },
         });

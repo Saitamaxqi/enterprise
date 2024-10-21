@@ -5,7 +5,7 @@ patch(NoteButton.prototype, {
     // Override
     async onClick() {
         const { confirmed, inputNote, oldNote } = await super.onClick();
-        const selectedOrderline = this.pos.get_order().get_selected_orderline();
+        const selectedOrderline = this.pos.getOrder().getSelectedOrderline();
         if (!this.props.type === "internal" || !selectedOrderline) {
             return { confirmed, inputNote, oldNote };
         }

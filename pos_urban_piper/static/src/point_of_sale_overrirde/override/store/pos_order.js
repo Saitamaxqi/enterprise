@@ -7,16 +7,16 @@ patch(PosOrder.prototype, {
         this.isDeliveryRefundOrder = false;
     },
 
-    get_delivery_provider_name() {
+    getDeliveryProviderName() {
         return this.delivery_provider_id ? this.delivery_provider_id.name : "";
     },
 
-    get_order_status() {
+    getOrderStatus() {
         return this.delivery_status ? this.delivery_status : "";
     },
 
-    export_for_printing(baseUrl, headerData) {
-        const data = super.export_for_printing(baseUrl, headerData);
+    exportForPrinting(baseUrl, headerData) {
+        const data = super.exportForPrinting(baseUrl, headerData);
         data.headerData.deliveryId = this.delivery_identifier;
         data.headerData.deliveryChannel = this.delivery_provider_id?.name;
         return data;

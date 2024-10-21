@@ -15,7 +15,7 @@ export class AddInfoPopup extends Component {
     setup() {
         this.pos = usePos();
         const order = this.props.order;
-        const partner = order.get_partner() || this.props.newPartner;
+        const partner = order.getPartner() || this.props.newPartner;
         // when opening the popup for the first time, both variables are undefined !
         this.state = useState({
             l10n_mx_edi_usage: partner?.l10n_mx_edi_usage || order.l10n_mx_edi_usage || "G01",

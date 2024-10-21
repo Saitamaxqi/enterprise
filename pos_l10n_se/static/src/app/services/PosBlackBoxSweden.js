@@ -18,17 +18,17 @@ patch(PosStore.prototype, {
         const result = super.disallowLineQuantityChange(...arguments);
         return this.useBlackBoxSweden() || result;
     },
-    async push_single_order(order) {
+    async pushSingleOrder(order) {
         if (this.useBlackBoxSweden() && order) {
             if (!order.receipt_type) {
                 order.receipt_type = "normal";
-                order.sequence_number = await this.get_order_sequence_number();
+                order.sequence_number = await this.getOrderSequenceNumber();
             }
             try {
-                order.blackbox_tax_category_a = order.get_specific_tax(25);
-                order.blackbox_tax_category_b = order.get_specific_tax(12);
-                order.blackbox_tax_category_c = order.get_specific_tax(6);
-                order.blackbox_tax_category_d = order.get_specific_tax(0);
+                order.blackbox_tax_category_a = order.getSpecificTax(25);
+                order.blackbox_tax_category_b = order.getSpecificTax(12);
+                order.blackbox_tax_category_c = order.getSpecificTax(6);
+                order.blackbox_tax_category_d = order.getSpecificTax(0);
                 const data = await this.pushOrderToSwedenBlackbox(order);
                 if (data.value.error && data.value.error.errorCode != "000000") {
                     throw data.value.error;
@@ -42,7 +42,7 @@ patch(PosStore.prototype, {
                 return;
             }
         }
-        return super.push_single_order(...arguments);
+        return super.pushSingleOrder(...arguments);
     },
     async pushOrderToSwedenBlackbox(order) {
         const fdm = this.hardwareProxy.deviceControllers.fiscal_data_module;
@@ -51,10 +51,10 @@ patch(PosStore.prototype, {
             receipt_id: order.sequence_number.toString(),
             pos_id: order.pos.config.id.toString(),
             organisation_number: this.company.company_registry,
-            receipt_total: order.get_total_with_tax().toFixed(2).toString().replace(".", ","),
+            receipt_total: order.getTotalWithTax().toFixed(2).toString().replace(".", ","),
             negative_total:
-                order.get_total_with_tax() < 0
-                    ? Math.abs(order.get_total_with_tax()).toFixed(2).toString().replace(".", ",")
+                order.getTotalWithTax() < 0
+                    ? Math.abs(order.getTotalWithTax()).toFixed(2).toString().replace(".", ",")
                     : "0,00",
             receipt_type: order.receipt_type,
             vat1: order.blackbox_tax_category_a
@@ -83,10 +83,10 @@ patch(PosStore.prototype, {
         order.blackbox_signature = data.signature_control;
         order.blackbox_unit_id = data.unit_id;
     },
-    async get_order_sequence_number() {
-        return await this.data.call("pos.config", "get_order_sequence_number", [this.config.id]);
+    async getOrderSequenceNumber() {
+        return await this.data.call("pos.config", "getOrderSequenceNumber", [this.config.id]);
     },
-    async get_profo_order_sequence_number() {
+    async getProfoOrderSequenceNumber() {
         return await this.data.call("pos.config", "get_profo_order_sequence_number", [
             this.config.id,
         ]);

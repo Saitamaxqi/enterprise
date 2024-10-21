@@ -37,8 +37,8 @@ patch(PosStore.prototype, {
         if (this.models["pos_preparation_display.display"].length > 0) {
             for (const note of Object.values(o.uiState.noteHistory)) {
                 for (const n of note) {
-                    const line = o.get_orderline(n.lineId);
-                    n.qty = line?.get_quantity();
+                    const line = o.getOrderline(n.lineId);
+                    n.qty = line?.getQuantity();
                 }
             }
             try {

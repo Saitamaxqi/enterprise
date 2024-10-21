@@ -56,8 +56,8 @@ patch(PosOrder.prototype, {
         return this.transactionState === "finished" || this.l10n_de_fiskaly_time_start;
     },
     // @Override
-    export_for_printing(baseUrl, headerData) {
-        const receipt = super.export_for_printing(...arguments);
+    exportForPrinting(baseUrl, headerData) {
+        const receipt = super.exportForPrinting(...arguments);
         if (this.isCountryGermanyAndFiskaly()) {
             if (this.isTransactionFinished()) {
                 receipt["tss"] = {
@@ -70,7 +70,7 @@ patch(PosOrder.prototype, {
                     signature_algorithm: this.l10n_de_fiskaly_signature_algorithm,
                     signature_public_key: this.l10n_de_fiskaly_signature_public_key,
                     client_serial_number: this.l10n_de_fiskaly_client_serial_number,
-                    erstBestellung: this.get_orderlines()[0].get_product().display_name,
+                    erstBestellung: this.getOrderlines()[0].getProduct().display_name,
                 };
             } else {
                 receipt["tss_issue"] = true;
@@ -92,7 +92,7 @@ patch(PosOrder.prototype, {
                 amount: roundCurrency(line.amount, this.currency).toFixed(2),
             });
         });
-        const change = this.get_change();
+        const change = this.getChange();
         if (change) {
             amountPerPaymentTypeArray.push({
                 payment_type: "CASH",

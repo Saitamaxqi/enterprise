@@ -28,15 +28,15 @@ patch(PosStore.prototype, {
         if (!this.isEcuadorianCompany()) {
             return super.selectPartner(...arguments);
         }
-        const currentOrder = this.get_order();
+        const currentOrder = this.getOrder();
         if (!currentOrder) {
             return;
         }
-        const currentPartner = currentOrder.get_partner();
+        const currentPartner = currentOrder.getPartner();
         if (currentPartner && currentPartner.id === this.session._final_consumer_id) {
             this.dialog.add(PartnerList, {
                 partner: currentPartner,
-                getPayload: (newPartner) => currentOrder.set_partner(newPartner),
+                getPayload: (newPartner) => currentOrder.setPartner(newPartner),
             });
             return currentPartner;
         }

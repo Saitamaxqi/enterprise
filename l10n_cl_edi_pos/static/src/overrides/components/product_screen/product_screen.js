@@ -7,8 +7,8 @@ patch(ProductScreen.prototype, {
         super.setup(...arguments);
 
         onMounted(() => {
-            if (this.pos.isChileanCompany() && !this.pos.get_order().partner_id) {
-                this.pos.get_order().partner_id = this.pos.session._consumidor_final_anonimo_id;
+            if (this.pos.isChileanCompany() && !this.pos.getOrder().partner_id) {
+                this.pos.getOrder().partner_id = this.pos.session._consumidor_final_anonimo_id;
             }
         });
     },
