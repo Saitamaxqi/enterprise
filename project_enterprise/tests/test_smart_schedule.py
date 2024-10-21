@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details
 
 from datetime import datetime
@@ -140,25 +139,19 @@ class TestSmartSchedule(TestProjectCommon):
             "user_ids": [self.user_projectuser.id],
         })
 
-        self.env["hr.employee"].create([{
-            "name": self.user_projectuser.name,
-            "user_id": self.user_projectuser.id
-        }, {
-            "name": self.user_projectmanager.name,
-            "user_id": self.user_projectmanager.id
-        }])
+        self.user_projectmanager.resource_calendar_id = self.user_projectmanager.resource_calendar_id.copy()
 
         self.env['resource.calendar.leaves'].create([{
             'name': 'scheduled leave',
             'date_from': datetime(2023, 1, 3, 0),
             'date_to': datetime(2023, 1, 6, 23),
-            'resource_id': self.user_projectuser.employee_id.resource_id.id,
+            'calendar_id': self.user_projectuser.resource_calendar_id.id,
             'time_type': 'leave',
         }, {
             'name': 'scheduled leave',
             'date_from': datetime(2023, 1, 5, 0),
             'date_to': datetime(2023, 1, 10, 23),
-            'resource_id': self.user_projectmanager.employee_id.resource_id.id,
+            'calendar_id': self.user_projectmanager.resource_calendar_id.id,
             'time_type': 'leave',
         }])
 
