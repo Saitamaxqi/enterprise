@@ -1261,13 +1261,11 @@ class AccountReport(models.Model):
     ####################################################
 
     def _init_options_companies(self, options, previous_options):
-        if self.filter_multi_company == 'selector':
-            companies = self.env.companies
-        elif self.filter_multi_company == 'tax_units':
+        if self.filter_multi_company == 'tax_units':
             companies = self._multi_company_tax_units_init_options(options, previous_options=previous_options)
         else:
-            # Multi-company is disabled for this report ; only accept the sub-branches of the current company from the selector
-            companies = self.env.company._accessible_branches()
+            # self.filter_multi_company == 'selector'
+            companies = self.env.companies
 
         options['companies'] = [{'name': c.name, 'id': c.id, 'currency_id': c.currency_id.id} for c in companies]
 

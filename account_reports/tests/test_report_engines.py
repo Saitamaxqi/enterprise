@@ -679,6 +679,8 @@ class TestReportEngines(TestAccountReportsCommon):
         )
 
     def test_engine_external_editable_percentage(self):
+        self.env.companies = self.env.company
+
         # Create the report.
         test_rounding_4 = self._prepare_test_report_line(
             self._prepare_test_expression_external(
@@ -1188,6 +1190,8 @@ class TestReportEngines(TestAccountReportsCommon):
         )
 
     def test_load_more(self):
+        self.env.companies = self.env.company
+
         partner_a, partner_b, partner_c = self.env['res.partner'].create([
             {'name': 'Partner A'},
             {'name': 'Partner B'},

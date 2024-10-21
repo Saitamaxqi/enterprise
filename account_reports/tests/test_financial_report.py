@@ -184,7 +184,6 @@ class TestFinancialReport(TestAccountReportsCommon):
 
     def test_financial_report_strict_range_on_report_lines_with_no_parent_id(self):
         """ Tests that lines with no parent can be correctly filtered by date range """
-        self.report_no_parent_id.filter_multi_company = 'disabled'
         options = self._generate_options(self.report_no_parent_id, fields.Date.from_string('2019-01-01'), fields.Date.from_string('2019-12-31'))
 
         lines = self.report_no_parent_id._get_lines(options)
@@ -203,7 +202,6 @@ class TestFinancialReport(TestAccountReportsCommon):
 
     def test_financial_report_strict_empty_range_on_report_lines_with_no_parent_id(self):
         """ Tests that lines with no parent can be correctly filtered by date range with no invoices"""
-        self.report_no_parent_id.filter_multi_company = 'disabled'
         options = self._generate_options(self.report_no_parent_id, fields.Date.from_string('2019-03-01'), fields.Date.from_string('2019-03-31'))
 
         lines = self.report_no_parent_id._get_lines(options)
@@ -233,7 +231,6 @@ class TestFinancialReport(TestAccountReportsCommon):
         })
         invoice.action_post()
 
-        self.report.filter_multi_company = 'disabled'
         options = self._generate_options(self.report, fields.Date.from_string('2016-06-01'), fields.Date.from_string('2016-06-06'))
         options['date']['filter'] = 'today'
 
@@ -330,7 +327,6 @@ class TestFinancialReport(TestAccountReportsCommon):
                 ('LIABILITIES + EQUITY',                        6000.0),
 
             ]
-        self.report.filter_multi_company = 'disabled'
         options = self._generate_options(self.report, fields.Date.from_string('2016-05-05'), fields.Date.from_string('2016-05-05'))
 
         # End of Last Month
@@ -355,8 +351,9 @@ class TestFinancialReport(TestAccountReportsCommon):
         )
 
     def test_financial_report_single_company(self):
+        self.env.companies = self.env.company
+
         line_id = self._get_basic_line_dict_id_from_report_line_ref('account_reports.account_financial_report_bank_view0')
-        self.report.filter_multi_company = 'disabled'
         options = self._generate_options(self.report, fields.Date.from_string('2019-01-01'), fields.Date.from_string('2019-12-31'))
         options['unfolded_lines'] = [line_id]
 

@@ -1423,25 +1423,24 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
         branch_2_1 = self.env['res.company'].create({'name': "Branch 2 sub-branch 1", 'parent_id': branch_2.id})
         other_company = self.env['res.company'].create({'name': "Other company"})
 
-        # Test 'disabled' filter, as well as 'tax_units' when no tax unit is defined and VAT is shared (they should behave in the same way)
-        for company_filter in ('disabled', 'tax_units'):
-            self.single_date_report.filter_multi_company = company_filter
+        # Test 'tax_units' when no tax unit is defined and VAT is shared
+        self.single_date_report.filter_multi_company = 'tax_units'
 
-            _check_company_filter(
-                main_company + branch_1 + branch_1_1 + branch_1_2 + branch_2 + branch_2_1 + other_company,
-                main_company + branch_1 + branch_1_1 + branch_1_2 + branch_2 + branch_2_1,
-                "The main company and all of its sub-branches should be selected",
-            )
-            _check_company_filter(
-                branch_1 + main_company + branch_1_1 + branch_1_2 + branch_2 + branch_2_1 + other_company,
-                branch_1 + branch_1_1 + branch_1_2,
-                "When the active company is a branch of another active company, it should only be selected with its sub-branches.",
-            )
-            _check_company_filter(
-                main_company + branch_1 + branch_1_2 + branch_2_1 + other_company,
-                main_company + branch_1 + branch_1_2 + branch_2_1,
-                "Choosing a subset of branches in the company selector should keep that selection in the report.",
-            )
+        _check_company_filter(
+            main_company + branch_1 + branch_1_1 + branch_1_2 + branch_2 + branch_2_1 + other_company,
+            main_company + branch_1 + branch_1_1 + branch_1_2 + branch_2 + branch_2_1,
+            "The main company and all of its sub-branches should be selected",
+        )
+        _check_company_filter(
+            branch_1 + main_company + branch_1_1 + branch_1_2 + branch_2 + branch_2_1 + other_company,
+            branch_1 + branch_1_1 + branch_1_2,
+            "When the active company is a branch of another active company, it should only be selected with its sub-branches.",
+        )
+        _check_company_filter(
+            main_company + branch_1 + branch_1_2 + branch_2_1 + other_company,
+            main_company + branch_1 + branch_1_2 + branch_2_1,
+            "Choosing a subset of branches in the company selector should keep that selection in the report.",
+        )
 
         # Test 'selector' filter
         self.single_date_report.filter_multi_company = 'selector'

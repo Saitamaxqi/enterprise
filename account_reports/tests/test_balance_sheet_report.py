@@ -79,7 +79,6 @@ class TestBalanceSheetReport(TestAccountReportsCommon):
 
     def test_balance_sheet_custom_date(self):
         line_id = self.env.ref('account_reports.account_financial_report_bank_view0').id
-        self.report.filter_multi_company = 'disabled'
         options = self._generate_options(self.report, fields.Date.from_string('2020-02-01'), fields.Date.from_string('2020-02-28'))
         options['date']['filter'] = 'custom'
         options['unfolded_lines'] = [line_id]

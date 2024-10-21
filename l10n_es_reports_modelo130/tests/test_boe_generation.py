@@ -28,7 +28,6 @@ class TestBOEGenerationModelo130(TestBOEGeneration):
     def _check_boe_130(self):
         self.init_invoice('out_invoice', partner=self.spanish_partner, amounts=[10000], invoice_date=fields.Date.today(), taxes=self.spanish_test_tax, post=True)
         report = self.env.ref('l10n_es_modelo130.mod_130')
-        report.filter_multi_company = 'disabled'
         options = self._generate_options(report, '2020-12-01', '2020-12-31')
         self._check_boe_130_export(report, options)
 

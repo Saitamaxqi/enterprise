@@ -447,6 +447,8 @@ class TestBudgetReport(TestAccountReportsCommon):
             is returning all the income accounts (as our test report is working with
             income accounts only).
         """
+        self.env.companies = self.env.company
+
         budget_2024 = self._create_budget({self.account_1.id: 300}, '2024-01-01', '2024-12-31')
 
         options = self._generate_options(
