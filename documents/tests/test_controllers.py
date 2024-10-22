@@ -8,11 +8,12 @@ from urllib.parse import urlencode
 
 from PIL import Image
 from freezegun import freeze_time
+from reportlab.pdfgen import canvas
 from urllib3.util import parse_url
 
 from odoo import Command, fields, http
-from odoo.tests.common import RecordCapturer
-from odoo.tools import file_open
+from odoo.tests.common import RecordCapturer, tagged
+from odoo.tools import file_open, mute_logger
 from odoo.tools.image import image_process
 
 from odoo.addons.base.tests.common import HttpCaseWithUserDemo
@@ -903,3 +904,105 @@ class TestDocumentsControllers(HttpCaseWithUserDemo):
         )
         self.assertEqual(res.status_code, 200)
         self.assertEqual(res.text, '{"jsonrpc": "2.0", "id": null, "result": {}}')
+
+
+@tagged('post_install', '-at_install')
+class TestCaseSecurityRoutes(HttpCaseWithUserDemo):
+
+    def setUp(self):
+        super(TestCaseSecurityRoutes, self).setUp()
+
+        self.raw_gif = b"R0lGODdhAQABAIAAAP///////ywAAAAAAQABAAACAkQBADs="
+        pdf_buffer = BytesIO()
+        canva = canvas.Canvas(pdf_buffer, pagesize=(600, 800))
+        canva.drawString(100, 750, "Minimal PDF")
+        canva.save()
+        self.raw_pdf = b64encode(pdf_buffer.getvalue())
+
+        self.user_attachment_gif, self.admin_attachment_gif, \
+        self.user_attachment_pdf, self.admin_attachment_pdf = self.env['ir.attachment'].create([
+            {
+                'datas': self.raw_gif,
+                'name': 'attachmentGif_A.gif',
+                'res_model': 'documents.document',
+                'res_id': 0,
+            },
+            {
+                'datas': self.raw_gif,
+                'name': 'attachmentGif_B.gif',
+                'res_model': 'documents.document',
+                'res_id': 0,
+            },
+            {
+                'datas': self.raw_pdf,
+                'name': 'attachmentPdf_A.pdf',
+                'mimetype': 'application/pdf',
+                'res_model': 'documents.document',
+                'res_id': 0,
+            },
+            {
+                'datas': self.raw_pdf,
+                'name': 'attachmentPdf_B.pdf',
+                'mimetype': 'application/pdf',
+                'res_model': 'documents.document',
+                'res_id': 0,
+            }
+        ])
+        self.user_document_gif, self.admin_document_gif, \
+        self.user_document_pdf, self.admin_document_pdf = self.env['documents.document'].create([
+            {
+                'name': 'GIF A',
+                'attachment_id': self.user_attachment_gif.id,
+            },
+            {
+                'name': 'GIF B',
+                'attachment_id': self.admin_attachment_gif.id,
+            },
+            {
+                'name': 'PDF A',
+                'attachment_id': self.user_attachment_pdf.id,
+            },
+            {
+                'name': 'PDF B',
+                'attachment_id': self.admin_attachment_pdf.id,
+            }
+        ])
+        self.document_user = self.env['res.users'].create({
+            'name': "user",
+            'login': "user",
+            'password': "useruser",
+            'email': "user@yourcompany.com",
+            'groups_id': [(6, 0, [self.ref('documents.group_documents_user')])]
+        })
+
+    @mute_logger('odoo.http')
+    def test_documents_zip_access(self):
+        self.authenticate("user", "useruser")
+        response = self.url_open('/document/zip', data={
+            'file_ids': ','.join(map(str, [self.user_document_gif.id, self.admin_document_gif.id])),
+            'zip_name': 'testZip.zip',
+            'csrf_token': http.Request.csrf_token(self),
+        })
+        self.assertNotEqual(response.status_code, 200)
+
+    @mute_logger('odoo.http')
+    def test_documents_split_access(self):
+        self.authenticate("user", "useruser")
+        response = self.url_open('/documents/pdf_split', data={
+            'vals': json.dumps({
+                "tag_ids": [],
+                "owner_id": self.document_user.id,
+                "active": True
+            }),
+            'new_files': json.dumps([{
+                "name": "Test",
+                "new_pages": [{
+                    "old_file_type": "document",
+                    "old_file_index": self.admin_document_pdf.id,
+                    "old_page_number": 1
+                }]
+            }]),
+            'archive': False,
+            'csrf_token': http.Request.csrf_token(self),
+        })
+        self.assertNotEqual(response.status_code, 200)
