@@ -202,8 +202,15 @@ class SignSendRequest(models.TransientModel):
         self._create_request_log_note(request)
         if self.activity_id:
             self._activity_done()
-            return {'type': 'ir.actions.act_window_close'}
-        return request.go_to_document()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'display_notification',
+            'params': {
+                'type': 'success',
+                'message': _("Request sent successfully"),
+                'next': {'type': 'ir.actions.client', 'tag': 'soft_reload'},
+            },
+        }
 
     def _create_request_log_note(self, request):
         if request.reference_doc:
