@@ -10,7 +10,7 @@
                 <t t-set-slot="content">
                     <t t-foreach="cogButtons" t-as="cogButton" t-key="cogButton_index">
                         <DropdownItem
-                            class="o_cog_menu"
+                            class="{'disabled': cogButton.disabled}"
                             onSelected="(ev) => controller.reportAction(ev, cogButton.action, cogButton.action_param, true)"
                         >
                             <t t-out="cogButton.name"/>
@@ -22,4 +22,3 @@
     </t>
 
 </templates>
-
