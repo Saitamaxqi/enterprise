@@ -197,16 +197,12 @@
                         <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
                     </t>
                     <t t-name="card">
-                        <div name="card_top">
-                            <div class="d-flex fw-bold fs-5 fst-italic">
-                                <i class="me-1 mt-1 fa fa-clock-o" role="img" aria-label="Date" title="Date"/>
-                                <t t-if="record.start_datetime.raw_value and record.end_datetime.raw_value">
-                                    <field name="start_datetime"/>
-                                    -
-                                    <field name="end_datetime"/>
-                                </t>
-                            </div>
-                            <span class="d-flex fw-bold fs-5 fst-italic">
+                        <div name="card_top" class="d-flex flex-wrap gap-1 fw-bold fs-5 fst-italic mb-1">
+                            <i class="mt-1 fa fa-clock-o" role="img" aria-label="Date" title="Date"/>
+                            <t t-if="record.start_datetime.raw_value and record.end_datetime.raw_value">
+                                <field name="start_datetime"/> - <field name="end_datetime"/>
+                            </t>
+                            <span class="d-inline-flex">
                                 <t t-if="record.start_datetime.raw_value and record.end_datetime.raw_value">
                                     (<field name="allocated_hours" widget="float_time"/>)
                                 </t>
