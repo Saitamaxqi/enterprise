@@ -5,7 +5,7 @@ from collections import defaultdict
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError
 from odoo.tools import _, frozendict
-from odoo.models import PREFETCH_MAX
+from odoo.tools.constants import PREFETCH_MAX
 
 
 class ProjectProject(models.Model):

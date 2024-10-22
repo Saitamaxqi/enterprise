@@ -301,7 +301,7 @@ class AppointmentType(models.Model):
             } for appointment_type, count, total_capacity in resource_data}
 
         for appointment_type in self:
-            if isinstance(appointment_type.id, models.NewId):
+            if not appointment_type.id:  # new record
                 appointment_type.resource_count = len(appointment_type.resource_ids)
                 appointment_type.resource_total_capacity = sum(resource.capacity for resource in appointment_type.resource_ids)
             else:

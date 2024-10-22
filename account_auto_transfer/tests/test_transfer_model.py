@@ -9,7 +9,7 @@ from dateutil.relativedelta import relativedelta
 from odoo.addons.account_auto_transfer.tests.account_auto_transfer_test_classes import AccountAutoTransferTestCase
 
 from odoo import Command, fields
-from odoo.models import UserError, ValidationError
+from odoo.exceptions import UserError, ValidationError
 from odoo.tests import tagged
 
 # ############################################################################ #

@@ -106,8 +106,7 @@ class HrAppraisal(models.Model):
         ], order='date_close')
         self.duplicate_appraisal_id = False
         for appraisal in self:
-            if not isinstance(appraisal.id, models.NewId)\
-                    or appraisal.state != 'new':
+            if appraisal.id or appraisal.state != 'new':
                 continue
             for ongoing_appraisal in ongoing_appraisals:
                 if ongoing_appraisals.manager_ids == appraisal.manager_ids._origin\

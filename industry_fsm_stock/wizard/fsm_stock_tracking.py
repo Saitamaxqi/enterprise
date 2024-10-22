@@ -202,7 +202,7 @@ class FsmStockTrackingLine(models.TransientModel):
     def _compute_warehouse(self):
         default_warehouse = self.env.user._get_default_warehouse_id()
         for line in self:
-            if not isinstance(line.id, models.NewId):
+            if line.id:  # not a new record
                 so_lines_warehouses = line.sale_order_line_id.move_ids.warehouse_id
                 if len(so_lines_warehouses) > 1:
                     # If there is more than one we ensure not taking the default warehouse in order to avoid unwanted

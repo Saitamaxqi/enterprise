@@ -336,7 +336,7 @@ class SaleOrder(models.Model):
         so_by_origin = defaultdict(lambda: self.env['sale.order'])
         parent_order_ids = []
         for order in self:
-            if order.is_subscription and not isinstance(order.id, models.NewId):
+            if order.is_subscription and order.id:  # not a new record
                 subscription_ids.append(order.id)
                 origin_key = order.origin_order_id.id if order.origin_order_id else order.id
                 parent_order_ids.append(origin_key)

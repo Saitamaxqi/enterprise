@@ -57,7 +57,7 @@ class AccountTaxUnit(models.Model):
         for unit in self:
             synced = True
             for company in unit.company_ids:
-                origin_company = company._origin if isinstance(company.id, models.NewId) else company
+                origin_company = company._origin
                 fp = unit._get_tax_unit_fiscal_positions(companies=origin_company)
                 all_partners_with_fp = self.env['res.company'].search([]).with_company(origin_company).partner_id\
                     .filtered(lambda p: p.property_account_position_id == fp) if fp else self.env['res.partner']

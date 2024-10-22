@@ -121,7 +121,7 @@ class AppointmentInvite(models.Model):
         )
         mapped_data = {appointment_invite.id: count for appointment_invite, count in appointment_data}
         for invite in self:
-            if isinstance(invite.id, models.NewId):
+            if not invite.id:  # new record
                 invite.appointment_type_count = len(invite.appointment_type_ids)
             else:
                 invite.appointment_type_count = mapped_data.get(invite.id, 0)
