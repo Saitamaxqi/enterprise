@@ -201,7 +201,7 @@ class MockIncomingWhatsApp(common.HttpCase):
             }
         )
 
-    def _receive_whatsapp_message(self, account, body, sender_phone_number, additional_message_values=None):
+    def _receive_whatsapp_message(self, account, body, sender_phone_number, additional_message_values=None, msg_id=None):
         message_data = json.dumps({
             "entry": [{
                 "id": account.account_uid,
@@ -211,7 +211,7 @@ class MockIncomingWhatsApp(common.HttpCase):
                         "metadata": {"phone_number_id": account.phone_uid},
                         "messages": [
                             dict({
-                                "id": f"test_wa_{time.time():.9f}",
+                                "id": msg_id or f"test_wa_{time.time():.9f}",
                                 "from": sender_phone_number,
                                 "type": "text",
                                 "text": {"body": body}

@@ -1,14 +1,15 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import time
 
 from datetime import datetime, timedelta
 from freezegun import freeze_time
 
-from odoo.addons.whatsapp.tests.common import WhatsAppCommon
+from odoo.addons.whatsapp.tests.common import WhatsAppCommon, MockIncomingWhatsApp
 from odoo.tests import tagged, users
 
 
 @tagged('wa_message')
-class DiscussChannel(WhatsAppCommon):
+class DiscussChannel(WhatsAppCommon, MockIncomingWhatsApp):
 
     @classmethod
     def setUpClass(cls):
@@ -121,3 +122,31 @@ class DiscussChannel(WhatsAppCommon):
                         subtype_xmlid='mail.mt_comment',
                         whatsapp_inbound_msg_uid='msg.uid.123456789',
                     )
+
+    def test_parent_msg_reciever(self):
+        template = self.env['whatsapp.template'].create({
+            'body': 'Hello World',
+            'model_id': self.env['ir.model']._get_id('res.partner'),
+            'name': 'Test-basic',
+            'status': 'approved',
+            'wa_account_id': self.whatsapp_account.id,
+        })
+        test_partner = self.env['res.partner'].create({
+            'country_id': self.env.ref('base.be').id,
+            'mobile': '+32455001122',
+            'name': 'Test Partner',
+        })
+        composer = self._instanciate_wa_composer_from_records(template, from_records=test_partner)
+        with self.mockWhatsappGateway():
+            msg = composer.action_send_whatsapp_template()
+
+        with self.mockWhatsappGateway():
+            self._receive_whatsapp_message(
+                self.whatsapp_account,
+                "Hello, it's reply",
+                test_partner.mobile,
+                additional_message_values={
+                    'context': {'id': msg.msg_uid},
+                },
+            )
+        self.assertEqual(self._new_wa_msg.mail_message_id.parent_id, msg.mail_message_id)
