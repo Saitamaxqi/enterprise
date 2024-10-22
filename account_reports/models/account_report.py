@@ -1923,7 +1923,7 @@ class AccountReport(models.Model):
         options_companies = self.env['res.company'].browse(self.get_report_company_ids(options))
         if not options_companies._all_branches_selected():
             for button in filter(lambda x: not x.get('branch_allowed'), options['buttons']):
-                button['disabled'] = True
+                button['error_action'] = 'show_error_branch_allowed'
 
         options['buttons'] = sorted(options['buttons'], key=lambda x: x.get('sequence', 90))
 
