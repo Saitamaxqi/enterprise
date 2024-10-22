@@ -4,7 +4,7 @@ from datetime import datetime
 
 from odoo import Command, api, fields, models, _
 from odoo.exceptions import RedirectWarning, UserError
-from odoo.tools import SQL
+from odoo.tools import date_utils
 
 
 class SddMandate(models.Model):
@@ -183,7 +183,7 @@ class SddMandate(models.Model):
         for mandate in active_mandates:
             expiry_date = expiry_date_per_mandate[mandate]
             if mandate.start_date <= today <= expiry_date:
-                if today + fields.date_utils.relativedelta(days=30) >= expiry_date:
+                if today + date_utils.relativedelta(days=30) >= expiry_date:
                     expiring_mandates += mandate  # Used to send warnings
                 else:
                     valid_mandates += mandate
@@ -205,7 +205,7 @@ class SddMandate(models.Model):
         - SEPA regulation
         """
         expiry_date_per_mandate = {}
-        delay_36_months = fields.date_utils.relativedelta(months=36)
+        delay_36_months = date_utils.relativedelta(months=36)
         payments_collected_per_mandate = dict(self.env['account.payment']._read_group([
                 ('sdd_mandate_id', 'in', self.ids),
                 ('payment_method_code', 'in', self.env['account.payment.method']._get_sdd_payment_method_code()),
