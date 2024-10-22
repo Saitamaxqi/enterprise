@@ -178,3 +178,26 @@ class TestCFDIPickingXml(TestMXEdiStockCommon):
                 picking.l10n_mx_edi_cfdi_try_send()
 
             self._assert_picking_cfdi(picking, 'test_delivery_guide_maybe_hazardous_product_outgoing_1')
+
+    def test_delivery_guide_outgoing_delivery_address(self):
+        '''Test the delivery guide with a delivery address different than main address'''
+        delivery_address = self.env['res.partner'].create({
+            'parent_id': self.partner_mx.id,
+            'type': 'delivery',
+            'street': 'XYZ 1234 - 5678',
+            'city_id': self.env.ref('l10n_mx_edi_extended.res_city_mx_mex_002').id,
+            'state_id': self.env.ref('base.state_mx_mex').id,
+            'zip': '55870',
+            'country_id': self.env.ref('base.mx').id,
+        })
+        with self.mx_external_setup(self.frozen_today):
+            warehouse = self._create_warehouse()
+            picking = self._create_picking(
+                warehouse,
+                picking_vals={'partner_id': delivery_address.id}
+            )
+
+            with self.with_mocked_pac_sign_success():
+                picking.l10n_mx_edi_cfdi_try_send()
+
+            self._assert_picking_cfdi(picking, 'test_delivery_guide_outgoing_delivery_address')

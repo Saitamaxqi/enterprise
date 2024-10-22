@@ -477,7 +477,7 @@ class StockPicking(models.Model):
             else:
                 cfdi_values['origen']['rfc_remitente_destinatario'] = emisor['rfc']
             self._l10n_mx_edi_add_domicilio_cfdi_values(cfdi_values['origen'], warehouse_partner)
-            self._l10n_mx_edi_add_domicilio_cfdi_values(cfdi_values['destino'], receptor['customer'])
+            self._l10n_mx_edi_add_domicilio_cfdi_values(cfdi_values['destino'], self.partner_id)
         else:
             cfdi_values['origen']['rfc_remitente_destinatario'] = receptor['rfc']
             if warehouse_partner.country_id.l10n_mx_edi_code != 'MEX':
@@ -486,7 +486,7 @@ class StockPicking(models.Model):
                 cfdi_values['destino']['residencia_fiscal'] = warehouse_partner.country_id.l10n_mx_edi_code
             else:
                 cfdi_values['destino']['rfc_remitente_destinatario'] = emisor['rfc']
-            self._l10n_mx_edi_add_domicilio_cfdi_values(cfdi_values['origen'], receptor['customer'])
+            self._l10n_mx_edi_add_domicilio_cfdi_values(cfdi_values['origen'], self.partner_id)
             self._l10n_mx_edi_add_domicilio_cfdi_values(cfdi_values['destino'], warehouse_partner)
 
         if self.l10n_mx_edi_external_trade:
