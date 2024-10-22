@@ -18,6 +18,9 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
             self.env.ref('base.group_user').write({"implied_ids": [(4, group_order_template.id)]})
         self.start_tour("/odoo", 'sign_widgets_tour', login='admin')
 
+        # make sure that we only have the required template.
+        self.env['sign.template'].search([('name', '!=', 'template_1_role')]).write({'active': False})
+
         self.start_tour("/odoo", 'shared_sign_request_tour', login='admin')
         shared_sign_request = self.env['sign.request'].search([('reference', '=', 'template_1_role-Shared'), ('state', '=', 'shared')])
         self.assertTrue(shared_sign_request.exists(), 'A shared sign request should be created')
