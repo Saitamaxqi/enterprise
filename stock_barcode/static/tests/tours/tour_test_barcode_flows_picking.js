@@ -5581,10 +5581,7 @@ registry.category("web_tour.tours").add("test_serial_product_packaging", {
                 helper.assertButtonIsVisible(0, "edit");
             },
         },
-        { trigger: ".o_barcode_client_action", run: "scan sn1" },
-        { trigger: ".o_barcode_client_action", run: "scan sn2" },
-        { trigger: ".o_barcode_client_action", run: "scan sn3" },
-        { trigger: ".o_barcode_client_action", run: "scan sn4" },
+        { trigger: ".o_barcode_client_action", run: "scan sn1,sn2,sn3,sn4" },
         {
             trigger: ".o_barcode_line.o_selected.o_line_completed .o_line_button.o_toggle_sublines",
             run: "click",
