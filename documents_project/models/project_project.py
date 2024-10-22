@@ -5,6 +5,7 @@ from collections import defaultdict
 from odoo import api, fields, models
 from odoo.exceptions import AccessError, UserError
 from odoo.tools import _, frozendict
+from odoo.models import PREFETCH_MAX
 
 
 class ProjectProject(models.Model):
@@ -48,6 +49,11 @@ class ProjectProject(models.Model):
             task_ids += ids
             for task_id in ids:
                 project_id_per_task_id[task_id] = project.id
+
+        # perf optimization:
+        # prefer a subquery when searching documents on too many tasks
+        if len(task_ids) > PREFETCH_MAX:
+            task_ids = self.env['project.task']._search([('project_id', 'in', self.ids)])
 
         documents_read_group = self.env['documents.document']._read_group(
             [
