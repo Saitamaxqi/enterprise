@@ -1,5 +1,5 @@
 {
-    "version": 21,
+    "version": 22,
     "sheets": [
         {
             "id": "sheet1",
@@ -1276,76 +1276,76 @@
                     "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K4)"
                 },
                 "L5": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"10/2021\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K5)"
                 },
                 "L6": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"11/2021\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K6)"
                 },
                 "L7": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"12/2021\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K7)"
                 },
                 "L8": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"01/2022\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K8)"
                 },
                 "L9": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"02/2022\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K9)"
                 },
                 "L10": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"03/2022\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K10)"
                 },
                 "L11": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"04/2022\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K11)"
                 },
                 "L12": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"05/2022\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K12)"
                 },
                 "L13": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"06/2022\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K13)"
                 },
                 "L14": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"07/2022\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K14)"
                 },
                 "L15": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"08/2022\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K15)"
                 },
                 "L16": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"09/2022\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K16)"
                 },
                 "L17": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"10/2022\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K17)"
                 },
                 "L18": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"11/2022\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K18)"
                 },
                 "L19": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"12/2022\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K19)"
                 },
                 "L20": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"01/2023\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K20)"
                 },
                 "L21": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"02/2023\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K21)"
                 },
                 "L22": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"03/2023\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K22)"
                 },
                 "L23": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"04/2023\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K23)"
                 },
                 "L24": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"05/2023\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K24)"
                 },
                 "L25": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"06/2023\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K25)"
                 },
                 "L26": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"07/2023\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K26)"
                 },
                 "L27": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"08/2023\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K27)"
                 },
                 "L28": {
-                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",\"09/2023\")"
+                    "content": "=PIVOT.VALUE(21,\"__count\",\"first_contract_date:month\",K28)"
                 },
                 "M2": {
                     "content": "=L2-sum(L4:L28)"
@@ -1435,79 +1435,79 @@
                     "content": "Departure"
                 },
                 "N4": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"09/2021\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K4)"
                 },
                 "N5": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"10/2021\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K5)"
                 },
                 "N6": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"11/2021\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K6)"
                 },
                 "N7": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"12/2021\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K7)"
                 },
                 "N8": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"01/2022\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K8)"
                 },
                 "N9": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"02/2022\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K9)"
                 },
                 "N10": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"03/2022\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K10)"
                 },
                 "N11": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"04/2022\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K11)"
                 },
                 "N12": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"05/2022\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K12)"
                 },
                 "N13": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"06/2022\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K13)"
                 },
                 "N14": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"07/2022\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K14)"
                 },
                 "N15": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"08/2022\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K15)"
                 },
                 "N16": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"09/2022\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K16)"
                 },
                 "N17": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"10/2022\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K17)"
                 },
                 "N18": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"11/2022\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K18)"
                 },
                 "N19": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"12/2022\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K19)"
                 },
                 "N20": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"01/2023\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K20)"
                 },
                 "N21": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"02/2023\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K21)"
                 },
                 "N22": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"03/2023\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K22)"
                 },
                 "N23": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"04/2023\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K23)"
                 },
                 "N24": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"05/2023\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K24)"
                 },
                 "N25": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"06/2023\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K25)"
                 },
                 "N26": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"07/2023\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K26)"
                 },
                 "N27": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"08/2023\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K27)"
                 },
                 "N28": {
-                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",I28)"
+                    "content": "=PIVOT.VALUE(22,\"__count\",\"departure_date:month\",K28)"
                 },
                 "O2": {
                     "content": "=N2-sum(N4:N28)"
