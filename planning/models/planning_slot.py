@@ -1870,7 +1870,7 @@ class PlanningSlot(models.Model):
                         # 2) The unassigned intervals represents the slots where the employee should be unassigned
                         #    (when the company is not unavailable and the employee is unavailable)
                         work_interval_employee = (attendance_interval_resource - unavailable_interval_resource)
-                        unassigned_interval = unavailable_interval_resource - unavailable_interval_company
+                        unassigned_interval = (unavailable_interval_resource - unavailable_interval_company) & (attendance_interval_company - unavailable_interval_company)
                         split_slot_values = slot._get_split_slot_values(values, work_interval_employee, remaining_hours_to_plan)
                         if slot.resource_type == 'user':
                             split_slot_values += slot._get_split_slot_values(values, unassigned_interval, remaining_hours_to_plan, unassign=True)

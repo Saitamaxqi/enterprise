@@ -38,28 +38,6 @@ class TestPlanning(TestCommonPlanning, MockEmail):
                 (0, 0, {'name': 'Thursday Morning', 'dayofweek': '3', 'hour_from': 13, 'hour_to': 17, 'day_period': 'morning'}),
             ],
         })
-        cls.company_calendar = cls.env['resource.calendar'].create({
-            'name': 'Classic 40h/week',
-            'tz': 'UTC',
-            'hours_per_day': 8.0,
-            'attendance_ids': [
-                (0, 0, {'name': 'Monday Morning', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
-                (0, 0, {'name': 'Monday Lunch', 'dayofweek': '0', 'hour_from': 12, 'hour_to': 13, 'day_period': 'lunch'}),
-                (0, 0, {'name': 'Monday Afternoon', 'dayofweek': '0', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'}),
-                (0, 0, {'name': 'Tuesday Morning', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
-                (0, 0, {'name': 'Tuesday Lunch', 'dayofweek': '1', 'hour_from': 12, 'hour_to': 13, 'day_period': 'lunch'}),
-                (0, 0, {'name': 'Tuesday Afternoon', 'dayofweek': '1', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'}),
-                (0, 0, {'name': 'Wednesday Morning', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
-                (0, 0, {'name': 'Wednesday Lunch', 'dayofweek': '2', 'hour_from': 12, 'hour_to': 13, 'day_period': 'lunch'}),
-                (0, 0, {'name': 'Wednesday Afternoon', 'dayofweek': '2', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'}),
-                (0, 0, {'name': 'Thursday Morning', 'dayofweek': '3', 'hour_from': 6, 'hour_to': 12, 'day_period': 'morning'}),
-                (0, 0, {'name': 'Thursday Lunch', 'dayofweek': '3', 'hour_from': 12, 'hour_to': 13, 'day_period': 'lunch'}),
-                (0, 0, {'name': 'Thursday Afternoon', 'dayofweek': '3', 'hour_from': 13, 'hour_to': 15, 'day_period': 'afternoon'}),
-                (0, 0, {'name': 'Friday Morning', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
-                (0, 0, {'name': 'Friday Lunch', 'dayofweek': '4', 'hour_from': 12, 'hour_to': 13, 'day_period': 'lunch'}),
-                (0, 0, {'name': 'Friday Afternoon', 'dayofweek': '4', 'hour_from': 13, 'hour_to': 17, 'day_period': 'afternoon'})
-            ]
-        })
         cls.env.user.company_id.resource_calendar_id = cls.company_calendar
         cls.employee_joseph.resource_calendar_id = calendar_joseph
         cls.employee_bert.resource_calendar_id = calendar_bert
@@ -1035,3 +1013,62 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         self.assertEqual(slot_joseph_2.end_datetime.strftime('%Y-%m-%d %H:%M:%S'), '2025-04-14 12:00:00')
         self.assertEqual(slot_bert_1.end_datetime.strftime('%Y-%m-%d %H:%M:%S'), '2025-04-11 12:00:00')
         self.assertEqual(slot_bert_2.end_datetime.strftime('%Y-%m-%d %H:%M:%S'), '2025-04-12 12:00:00')
+
+    def test_copy_slots_when_time_off(self):
+        """
+        week_1: 19-01-2020 -> 25-01-2020
+            original slot: 20-01-2020 08:00 -> 24-01-2020 17:00 (5 days)
+            allocated_hours: 50 hours and allocated_percentage: 125
+        --------------------------------------------------------------------------------------------
+        week_2: 26-01-2020 -> 01-02-2020
+            resource on leave: 28-01-2020 8:00 -> 29-01-2020 17:00 (2 days i.e 16 hours)
+            copy slot: 27-01-2020 08:00 -> 31-01-2020 17:00
+        -------------------------------------------------------------------------------------------
+        Expected result:
+        Total 4 slots will create, 3 slot assigned to resource and 1 open slot
+            1) 27-01-2020 08:00 -> 27-01-2020 12:00 (4 hrs)(assigned slot)
+            2) 27-01-2020 13:00 -> 27-01-2020 19:00 (4 hrs)(assigned slot)
+            3) 28-01-2020 08:00 -> 29-01-2020 19:00 (16 hrs)(open slot)
+            4) 30-01-2020 08:00 -> 31-01-2020 19:00 (16 hrs)(assigned slot)
+        """
+        employee_bert = self.env['hr.employee'].create({
+            'name': 'Test',
+            'work_email': 'test@test.in',
+            'tz': 'UTC',
+            'employee_type': 'freelance',
+            'create_date': '2015-01-01 00:00:00',
+            'resource_calendar_id': self.company_calendar.id,
+        })
+
+        PlanningSlot = self.env['planning.slot']
+        dt = datetime(2020, 1, 20, 0, 0)
+
+        slot = PlanningSlot.create({
+            'resource_id': employee_bert.resource_id.id,
+            'start_datetime': dt + relativedelta(hours=8),
+            'end_datetime': dt + relativedelta(days=4, hours=17),
+        })
+
+        self.env['resource.calendar.leaves'].create({
+            'name': "I go to my father-in-law's",
+            'calendar_id': employee_bert.resource_id.calendar_id.id,
+            'date_from': dt + relativedelta(weeks=1, days=1),
+            'date_to': dt + relativedelta(weeks=1, days=2, hours=17),
+            'resource_id': employee_bert.resource_id.id,
+        })
+
+        copied, _dummy = PlanningSlot.action_copy_previous_week(
+            str(dt + relativedelta(weeks=1)), [
+                ['start_datetime', '<=', dt + relativedelta(weeks=1)],
+                ['end_datetime', '>=', dt],
+                ['resource_id', '=', employee_bert.resource_id.id],
+            ]
+        )
+
+        copied_slot = PlanningSlot.browse(copied)
+        open_slot = copied_slot.filtered(lambda x: not x.resource_id)
+
+        self.assertEqual(len(open_slot), 4, "4 shift should be copied as open, as the employee is on off")
+        self.assertEqual(sum(open_slot.mapped('allocated_hours')), 16, "16 hours should be allocated to open slot")
+        self.assertEqual(slot.allocated_hours, sum(copied_slot.mapped('allocated_hours')),
+            "The allocated hours of slot and allocated hours of copied slots must be same")

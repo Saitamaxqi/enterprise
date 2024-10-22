@@ -389,7 +389,16 @@ class TestPeriodDuplication(TestCommonPlanning):
     def test_duplication_forecasted_slot_when_unavailabilities(self):
         """ When copying a forecasted slot (> 24 hours) through the copy previous week action, we need to ensure that
             the copied slots are correctly split in case of unavailabilities from the resource.
+        test:
+            21 August : working day
+            22 August : public holiday (2 slots created)
+            23 August : working day
+            24 August : public holiday (2 slots created)
+            25 August : working day
         """
+        self.env.user.company_id.resource_calendar_id = self.company_calendar
+        self.employee_joseph.resource_calendar_id = self.company_calendar
+
         PlanningSlot = self.env['planning.slot']
         dt = datetime(2023, 8, 14, 0, 0)
         # create a slot from Monday to Friday (forecasted slot) and assign it to the resource
@@ -421,23 +430,36 @@ class TestPeriodDuplication(TestCommonPlanning):
             ]
         )
         copied_slots = PlanningSlot.browse(copied_slots_ids).sorted('start_datetime')
-        self.assertEqual(len(copied_slots), 5, "There should be 5 resulting slots after copying previous week.")
-        for i in range(len(copied_slots)):
-            self.assertEqual(
-                copied_slots[i].start_datetime,
-                dt_next_week + relativedelta(days=i, hours=8),
-                "The start date of the copied slot should be one week after the original one.",
-            )
-            self.assertEqual(copied_slots[i].end_datetime,
-                dt_next_week + relativedelta(days=i, hours=17),
-                "The end date of the copied slot should be one week after the original one.",
-            )
+        self.assertEqual(len(copied_slots), 7, "There should be 7 resulting slots after copying previous week.")
+
+        actual_date_times = [
+            [slot.start_datetime.strftime("%Y-%m-%d %H:%M"),
+             slot.end_datetime.strftime("%Y-%m-%d %H:%M")]
+            for slot in copied_slots
+        ]
+
+        expected_date_times = [
+            ['2023-08-21 08:00', '2023-08-21 17:00'],
+            ['2023-08-22 08:00', '2023-08-22 12:00'],
+            ['2023-08-22 13:00', '2023-08-22 17:00'],
+            ['2023-08-23 08:00', '2023-08-23 17:00'],
+            ['2023-08-24 08:00', '2023-08-24 12:00'],
+            ['2023-08-24 13:00', '2023-08-24 15:00'],
+            ['2023-08-25 08:00', '2023-08-25 17:00'],
+        ]
+
+        self.assertListEqual(
+            actual_date_times,
+            expected_date_times,
+            "Mismatch between actual copied slot date-times and expected date times."
+        )
+
         self.assertEqual(
             (copied_slots[0] + copied_slots[2] + copied_slots[4]).resource_id ,
             self.resource_bert,
             "The copied slots on Monday, Wednesday and Friday should be assigned to the resource, as the resource works on those days.",
         )
         self.assertFalse(
-            (copied_slots[1] + copied_slots[3]).resource_id,
+            (copied_slots[1] + copied_slots[2] + copied_slots[4] + copied_slots[5]).resource_id,
             "The copied slots on Tuesday and Thursday should be open shifts, as the resource has leaves planned on those days.",
         )
