@@ -8,7 +8,6 @@
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='name']" position="after">
                     <field name="iso20022_batch_booking" string="Batch Booking" invisible="payment_method_code not in ['sepa_ct', 'iso20022', 'iso20022_se', 'iso20022_ch']"/>
-                    <field name="iso20022_charge_bearer" invisible="payment_method_code not in ['iso20022', 'iso20022_se', 'iso20022_ch']" required="1"/>
                 </xpath>
             </field>
         </record>

@@ -8,12 +8,12 @@ from odoo.addons.account_batch_payment.models.sepa_mapping import sanitize_commu
 class AccountJournal(models.Model):
     _inherit = "account.journal"
 
-    def create_iso20022_credit_transfer(self, payments, payment_method_code, batch_booking=False, charge_bearer=None):
+    def create_iso20022_credit_transfer(self, payments, payment_method_code, batch_booking=False):
         if (payments and payment_method_code == 'sepa_ct'
                 and self.sepa_pain_version == "pain.001.001.09"
                 and any(not payment['iso20022_uetr'] for payment in payments)):
             raise UserError(_("Some payments are missing a value for 'UETR', required for the SEPA Pain.001.001.09 format."))
-        return super().create_iso20022_credit_transfer(payments, payment_method_code, batch_booking=batch_booking, charge_bearer=charge_bearer)
+        return super().create_iso20022_credit_transfer(payments, payment_method_code, batch_booking=batch_booking)
 
     def _get_ReqdExctnDt_content(self, payment_date, payment_method_code):
         ReqdExctnDt = etree.Element("ReqdExctnDt")
@@ -59,8 +59,8 @@ class AccountJournal(models.Model):
                 return PstlAdr
         return super()._get_PstlAdr(partner_id, payment_method_code)
 
-    def _get_CdtTrfTxInf(self, PmtInfId, payment, payment_method_code):
-        CdtTrfTxInf = super()._get_CdtTrfTxInf(PmtInfId, payment, payment_method_code)
+    def _get_CdtTrfTxInf(self, PmtInfId, payment, payment_method_code, include_charge_bearer=True):
+        CdtTrfTxInf = super()._get_CdtTrfTxInf(PmtInfId, payment, payment_method_code, include_charge_bearer)
         if payment_method_code == 'sepa_ct':
             PmtId = CdtTrfTxInf.find(".//PmtId")
             Cdtr = CdtTrfTxInf.find("Cdtr")

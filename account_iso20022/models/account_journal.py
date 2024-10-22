@@ -11,6 +11,7 @@ from odoo.tools import float_repr, float_round
 
 import odoo.addons.account.tools.structured_reference as sr
 from odoo.addons.account_batch_payment.models.sepa_mapping import sanitize_communication
+from odoo.addons.account_iso20022.models.account_payment import ISO20022_CHARGE_BEARER_SELECTION
 
 
 class AccountJournal(models.Model):
@@ -23,13 +24,21 @@ class AccountJournal(models.Model):
             ('pain.001.001.09', 'pain.001.001.09'),
             ('pain.001.001.03', 'pain.001.001.03'),
         ],
-        string='XML Format',
+        string="SEPA XML Format",
         compute='_compute_sepa_pain_version',
         store=True,
         readonly=False,
         help="SEPA version to use to generate Credit Transfer XML files from this journal",
     )
     has_sepa_ct_payment_method = fields.Boolean(compute='_compute_has_sepa_ct_payment_method')
+
+    iso20022_charge_bearer = fields.Selection(
+        string="ISO 20022 Charge Bearer",
+        selection=ISO20022_CHARGE_BEARER_SELECTION,
+        default='SHAR',
+        help="Specifies which party/parties will bear the charges associated with the processing of ISO 20022 payment transactions from this journal."
+    )
+    has_iso20022_payment_method = fields.Boolean(compute='_compute_has_iso20022_payment_method')
 
     # -------------------------------------------------------------------------
     # COMPUTE METHODS
@@ -61,6 +70,14 @@ class AccountJournal(models.Model):
         for rec in self:
             rec.has_sepa_ct_payment_method = 'sepa_ct' in rec.mapped('outbound_payment_method_line_ids.payment_method_id.code')
 
+    @api.depends('outbound_payment_method_line_ids.payment_method_id.code')
+    def _compute_has_iso20022_payment_method(self):
+        for journal in self:
+            journal.has_iso20022_payment_method = any(
+                code.startswith('iso20022')
+                for code in journal.mapped('outbound_payment_method_line_ids.payment_method_id.code')
+            )
+
     # -------------------------------------------------------------------------
     # GENERIC OVERRIDES
     # -------------------------------------------------------------------------
@@ -81,12 +98,12 @@ class AccountJournal(models.Model):
     # DOCUMENT CREATION
     # -------------------------------------------------------------------------
 
-    def create_iso20022_credit_transfer(self, payments, payment_method_code, batch_booking=False, charge_bearer=None):
+    def create_iso20022_credit_transfer(self, payments, payment_method_code, batch_booking=False):
         """Returns the content of the XML file."""
-        Document = self.create_iso20022_credit_transfer_content(payments, payment_method_code, batch_booking=batch_booking, charge_bearer=charge_bearer)
+        Document = self.create_iso20022_credit_transfer_content(payments, payment_method_code, batch_booking=batch_booking)
         return etree.tostring(Document, pretty_print=True, xml_declaration=True, encoding='utf-8')
 
-    def create_iso20022_credit_transfer_content(self, payments, payment_method_code, batch_booking=False, charge_bearer=None):
+    def create_iso20022_credit_transfer_content(self, payments, payment_method_code, batch_booking=False):
         """
             Creates the body of the XML file for the ISO20022 document.
         """
@@ -152,11 +169,17 @@ class AccountJournal(models.Model):
                 Othr = etree.SubElement(FinInstnId, "Othr")
                 Id = etree.SubElement(Othr, "Id")
                 Id.text = "NOTPROVIDED"
-            PmtInf.append(self._get_ChrgBr(payment_method_code, charge_bearer))
+
+            unique_chrgbr_values = {payment.get('iso20022_charge_bearer') for payment in payments_list}
+            unique_chrgbr = unique_chrgbr_values.pop() if len(unique_chrgbr_values) == 1 else None
+            if unique_chrgbr:
+                PmtInf.append(self._get_ChrgBr(payment_method_code, unique_chrgbr))
 
             # One CdtTrfTxInf per transaction
             for payment in payments_list:
-                PmtInf.append(self._get_CdtTrfTxInf(PmtInfId, payment, payment_method_code))
+                PmtInf.append(self._get_CdtTrfTxInf(
+                    PmtInfId, payment, payment_method_code, include_charge_bearer=not unique_chrgbr
+                ))
         return Document
 
     # -------------------------------------------------------------------------
@@ -221,7 +244,7 @@ class AccountJournal(models.Model):
         ChrgBr.text = forced_value or "SHAR"
         return ChrgBr
 
-    def _get_CdtTrfTxInf(self, PmtInfId, payment, payment_method_code):
+    def _get_CdtTrfTxInf(self, PmtInfId, payment, payment_method_code, include_charge_bearer=True):
         CdtTrfTxInf = etree.Element("CdtTrfTxInf")
         PmtId = etree.SubElement(CdtTrfTxInf, "PmtId")
         if payment['name']:
@@ -237,6 +260,9 @@ class AccountJournal(models.Model):
         val_InstdAmt = float_repr(float_round(payment['amount'], 2), 2)
         InstdAmt = etree.SubElement(Amt, "InstdAmt", Ccy=val_Ccy)
         InstdAmt.text = val_InstdAmt
+
+        if include_charge_bearer:
+            CdtTrfTxInf.append(self._get_ChrgBr(payment_method_code, payment['iso20022_charge_bearer']))
 
         partner = self.env['res.partner'].sudo().browse(payment['partner_id'])
 

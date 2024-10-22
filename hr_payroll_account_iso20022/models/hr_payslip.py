@@ -27,6 +27,7 @@ class HrPayslip(models.Model):
             'memo': str(self.id),
             'partner_id': self.employee_id.work_contact_id.id,
             'partner_bank_id': self.employee_id.bank_account_id.id,
+            'iso20022_charge_bearer': journal_id.iso20022_charge_bearer,
         }
         if journal_id.sepa_pain_version == 'pain.001.001.09':
             if not self.iso20022_uetr:

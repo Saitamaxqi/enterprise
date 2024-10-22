@@ -4,6 +4,13 @@ from uuid import uuid4
 from odoo import models, fields, api, _
 from odoo.exceptions import ValidationError
 
+ISO20022_CHARGE_BEARER_SELECTION = [
+    ('CRED', "Creditor"),
+    ('DEBT', "Debtor"),
+    ('SHAR', "Shared"),
+    ('SLEV', "Service Level"),
+]
+
 
 class AccountPayment(models.Model):
     _inherit = "account.payment"
@@ -15,6 +22,24 @@ class AccountPayment(models.Model):
         store=True,
         help='Unique end-to-end transaction reference',
     )
+
+    iso20022_charge_bearer = fields.Selection(
+        string="Charge Bearer",
+        selection=ISO20022_CHARGE_BEARER_SELECTION,
+        compute='_compute_iso20022_charge_bearer',
+        readonly=False,
+        store=True,
+        tracking=True,
+        help="Specifies which party/parties will bear the charges associated with the processing of the payment transaction."
+    )
+
+    @api.depends('payment_method_id')
+    def _compute_iso20022_charge_bearer(self):
+        for payment in self:
+            if payment.payment_method_id.code == 'sepa_ct':
+                payment.iso20022_charge_bearer = 'SLEV'
+            else:
+                payment.iso20022_charge_bearer = payment.journal_id.iso20022_charge_bearer
 
     @api.model
     def _get_method_codes_using_bank_account(self):

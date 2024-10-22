@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models, fields, _
+from odoo import models, fields, _
 from odoo.exceptions import RedirectWarning, UserError
 
 import base64
@@ -14,23 +14,6 @@ class AccountBatchPayment(models.Model):
         string="SCT Batch Booking",
         default=True,
         help="Request batch booking from the bank for the related bank statements.")
-
-    iso20022_charge_bearer = fields.Selection(
-        string="Charge Bearer",
-        selection=[('CRED', 'Creditor'), ('DEBT', 'Debtor'), ('SLEV', 'Service Level'), ('SHAR', 'Shared')],
-        compute='_compute_charge_bearer',
-        readonly=False,
-        store=True,
-        help="Specifies which party/parties will bear the charges associated with the processing of the payment transaction."
-    )
-
-    @api.depends('payment_method_id')
-    def _compute_charge_bearer(self):
-        for record in self:
-            if record.payment_method_id.code == 'sepa_ct':
-                record.iso20022_charge_bearer = 'SLEV'
-            else:
-                record.iso20022_charge_bearer = 'SHAR'
 
     def _get_methods_generating_files(self):
         rslt = super()._get_methods_generating_files()
@@ -124,7 +107,6 @@ class AccountBatchPayment(models.Model):
                 payment_dicts,
                 payment_method_code,
                 batch_booking=self.iso20022_batch_booking,
-                charge_bearer=self.iso20022_charge_bearer,
             )
             prefix = "SCT-" if self.payment_method_code == 'sepa_ct' else "PAIN-"
             return {
@@ -147,6 +129,7 @@ class AccountBatchPayment(models.Model):
             'partner_bank_id': payment.partner_bank_id.id,
             'partner_country_code': payment.partner_id.country_id.code,
             'iso20022_uetr': payment.iso20022_uetr,
+            'iso20022_charge_bearer': payment.iso20022_charge_bearer,
         }
 
     def _generate_payment_template(self, payments):

@@ -7,8 +7,9 @@
             <field name="inherit_id" ref="account.view_account_journal_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//page[@id='outbound_payment_settings']//group[@name='outgoing_payment']" position="inside">
-                    <group string="SEPA Credit Transfer" invisible="not has_sepa_ct_payment_method">
-                        <field name="sepa_pain_version" required="1"/>
+                    <group string="Credit Transfer" invisible="not (has_sepa_ct_payment_method or has_iso20022_payment_method)">
+                        <field name="sepa_pain_version" required="1" invisible="not has_sepa_ct_payment_method"/>
+                        <field name="iso20022_charge_bearer" invisible="not has_iso20022_payment_method"/>
                     </group>
                 </xpath>
             </field>

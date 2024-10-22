@@ -48,9 +48,9 @@ class AccountJournal(models.Model):
             return pstl_addr_list[0]
         return super().get_postal_address(partner_id, payment_method_code)
 
-    def _get_CdtTrfTxInf(self, PmtInfId, payment, payment_method_code):
+    def _get_CdtTrfTxInf(self, PmtInfId, payment, payment_method_code, include_charge_bearer=True):
         # For Sweden, country is sufficient ; handle the case where the city was not specified beforehand
-        CdtTrfTxInf = super()._get_CdtTrfTxInf(PmtInfId, payment, payment_method_code)
+        CdtTrfTxInf = super()._get_CdtTrfTxInf(PmtInfId, payment, payment_method_code, include_charge_bearer)
         if payment_method_code == 'iso20022_se':
             partner = self.env['res.partner'].sudo().browse(payment['partner_id'])
             if not partner.city and partner.country_id.code:
