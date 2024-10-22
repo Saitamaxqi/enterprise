@@ -3586,7 +3586,7 @@ result = contract.l10n_ch_compensation_fund_id
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = categories['GROSS']
+result = categories['AVSSALARY']
 result_rate = - contract.l10n_ch_compensation_fund_id._get_caf_rates(payslip.date_from, 'employee_rate')
 </field>
         <field name="note">CAF Contribution (Family Allowances)</field>
@@ -3613,7 +3613,7 @@ result = contract.l10n_ch_compensation_fund_id
         </field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = categories['GROSS']
+result = categories['AVSSALARY']
 result_rate = contract.l10n_ch_compensation_fund_id._get_caf_rates(payslip.date_from, 'company_rate')
 </field>
         <field name="note">CAF Contribution (Family Allowances) Company</field>
