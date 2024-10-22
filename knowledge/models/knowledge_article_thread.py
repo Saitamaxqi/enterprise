@@ -125,15 +125,12 @@ class KnowledgeArticleThread(models.Model):
             return groups
 
         self.ensure_one()
-        action = self._notify_get_action_link('controller', controller='/knowledge/thread/resolve', **msg_vals)
-        user_actions = [{'url': action, 'title': _('Mark Comment as Closed')}]
 
         new_groups = [(
             'group_knowledge_article_thread_portal_and_users',
             lambda pdata:
                 pdata['uid'] and self.article_id.with_user(pdata['uid']).user_has_access,
             {
-                'actions': user_actions,
                 'active': True,
                 'has_button_access': True,
             }
