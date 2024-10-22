@@ -1481,8 +1481,8 @@ class TestAccountReportsFilters(TestAccountReportsCommon, odoo.tests.HttpCase):
         )
 
         # Test 'tax_units' filter, with an existing tax unit object
-        self.single_date_report.availability_condition = 'country'
         self.single_date_report.country_id = self.env.ref('base.be')
+        self.single_date_report.availability_condition = 'country'
 
         tax_unit = self.env['account.tax.unit'].create({
             'name': "Test Tax Unit",
