@@ -6,6 +6,7 @@ import {
     click,
     editInput,
     getFixture,
+    getNodesTextContent,
     nextTick,
     patchWithCleanup,
     triggerEvent,
@@ -2571,8 +2572,8 @@ QUnit.module(
             assert.containsN(
                 target,
                 ".o_web_studio_sidebar_checkbox",
-                4,
-                "four boolean properties can be edited in the sidebar"
+                5,
+                "five boolean properties can be edited in the sidebar"
             );
 
             await editAnySelect(
@@ -2609,6 +2610,53 @@ QUnit.module(
                 2,
                 "'View' button are present in the list view"
             );
+        });
+
+        QUnit.test("multi_edit is visible when can_edit is true", async function (assert) {
+            assert.expect(4);
+
+            const viewResults = [
+                {
+                    new_attrs: { edit: true },
+                    result: `<list edit="true"><field name="display_name"/></list>`,
+                },
+                {
+                    new_attrs: { multi_edit: true },
+                    result: `<list multi_edit="true" edit="true"><field name="display_name"/></list>`,
+                },
+            ];
+
+            await createViewEditor({
+                serverData,
+                arch: '<list edit="false"><field name="display_name"/></list>',
+                resModel: "coucou",
+                type: "list",
+                mockRPC: {
+                    "/web_studio/edit_view": (route, args) => {
+                        const { new_attrs, result } = viewResults.shift();
+                        assert.deepEqual(args.operations.at(-1).new_attrs, new_attrs);
+                        return createMockViewResult(serverData, "list", result, "coucou");
+                    },
+                },
+            });
+
+            await click(target.querySelector(".nav-tabs > li:nth-child(2) a"));
+
+            assert.notOk(
+                getNodesTextContent(target.querySelectorAll(".o_web_studio_sidebar_checkbox"))
+                    .map((e) => e.trim())
+                    .includes("Enable Mass Editing")
+            );
+
+            await click(target.querySelector("#edit"));
+
+            assert.ok(
+                getNodesTextContent(target.querySelectorAll(".o_web_studio_sidebar_checkbox"))
+                    .map((e) => e.trim())
+                    .includes("Enable Mass Editing")
+            );
+
+            await click(target.querySelector("#multi_edit"));
         });
 
         QUnit.test("groupby fields should not be included", async function (assert) {

@@ -44,7 +44,7 @@
                     When Creating Record
                 </Property>
                 <Property
-                    t-if="archInfo.editable"
+                    t-if="archInfo.activeActions.edit === true"
                     name="'multi_edit'"
                     type="'boolean'"
                     value="archInfo.multiEdit === true"
