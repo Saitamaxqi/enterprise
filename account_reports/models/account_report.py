@@ -6743,6 +6743,14 @@ class AccountReportLine(models.Model):
             # For this, we emulate a dict formatted like the result of _compute_expression_totals_for_each_column_group, so that we can call
             # _build_static_line_columns like on non-grouped lines
             line_id = self.report_id._get_generic_line_id(groupby_model, grouping_key, parent_line_id=line_dict_id, markup={'groupby': current_groupby})
+            caret_option = None
+            if not next_groupby:
+                caret_builder = custom_groupby_map.get('current_groupby', {}).get('caret_builder', {})
+                if caret_builder:
+                    caret_option = caret_builder(grouping_key)
+                else:
+                    caret_option = groupby_model
+
             group_line_dict = {
                 # 'name' key will be set later, so that we can browse all the records of this expansion at once (in case we're dealing with records)
                 'id': line_id,
@@ -6753,7 +6761,7 @@ class AccountReportLine(models.Model):
                 'level': self.hierarchy_level + 2 * (prefix_groups_count + len(sub_groupby_domain) + 1) + (group_indent - 1),
                 'parent_id': line_dict_id,
                 'expand_function': '_report_expand_unfoldable_line_with_groupby' if next_groupby else None,
-                'caret_options': groupby_model if not next_groupby else None,
+                'caret_options': caret_option,
             }
 
             if self.report_id.custom_handler_model_id:
@@ -7047,6 +7055,7 @@ class AccountReportCustomHandler(models.AbstractModel):
                                  This function must accept a single parameter, corresponding to the groupby value to compute the domain for.
                         - label_builder is a function to be called to compute a label for the groupby value, that will be shown as the line name
                                  in the UI. This ways, translatable labels and multi-values keys serialized to json can be fully supported.
+                        - caret_builder is a function called with the grouping_key as parameter and that returns a custom caret identifier for this grouping key
         """
         return {}
 
