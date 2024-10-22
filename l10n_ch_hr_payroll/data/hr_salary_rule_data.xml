@@ -2097,29 +2097,10 @@ else:
         <field name="l10n_ch_code">5020</field>
         <field name="sequence">111</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">
-if not payslip.l10n_ch_avs_status:
-    start = contract.employee_id.birthday
-    if start:
-        end = payslip.date_from
-        age = end.year - start.year - ((end.month, end.day) &lt; (start.month, start.day))
-        result = age >= payslip.l10n_ch_social_insurance_id.age_start
-    else:
-        result = True
-else:
-    result = False
-        </field>
+        <field name="condition_python">result = not payslip.l10n_ch_avs_status</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-payslips_values = previous_payslips._get_line_values(
-    ['ACSALARY', 'AC'],
-    vals_list=['amount', 'total'],
-    compute_sum=True)
-previous_ac_salary = payslips_values['ACSALARY']['sum']['total']
-previous_ac_deduction = payslips_values['AC']['sum']['amount']
-
-ac_salary = previous_ac_salary + categories['ACSALARY']
-result = ac_salary - previous_ac_deduction
+result = categories['ACSALARY']
 result_rate = - contract.l10n_ch_social_insurance_id._get_ac_rates(payslip.date_from)[0]
         </field>
         <field name="note">
@@ -2145,29 +2126,10 @@ Source: https://www.cvcicaisseavs.ch/en/employer/unemployment-insurance-ac.html
         <field name="code">AC.COMP</field>
         <field name="sequence">111</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">
-if not payslip.l10n_ch_avs_status:
-    start = contract.employee_id.birthday
-    if start:
-        end = payslip.date_from
-        age = end.year - start.year - ((end.month, end.day) &lt; (start.month, start.day))
-        result = age >= payslip.l10n_ch_social_insurance_id.age_start
-    else:
-        result = True
-else:
-    result = False
-        </field>
+        <field name="condition_python">result = not payslip.l10n_ch_avs_status</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-payslips_values = previous_payslips._get_line_values(
-    ['ACSALARY', 'AC.COMP'],
-    vals_list=['amount', 'total'],
-    compute_sum=True)
-previous_ac_salary = payslips_values['ACSALARY']['sum']['total']
-previous_ac_deduction = payslips_values['AC.COMP']['sum']['amount']
-
-ac_salary = previous_ac_salary + categories['ACSALARY']
-result = ac_salary - previous_ac_deduction
+result = categories['ACSALARY']
 result_rate = contract.l10n_ch_social_insurance_id._get_ac_rates(payslip.date_from)[1]
         </field>
         <field name="appears_on_payslip" eval="False"/>
@@ -2240,15 +2202,7 @@ result = max(min(trimmed_base, max_cum_acc_possible), 0) - acc_salary_cum
         <field name="condition_python">result = not payslip.l10n_ch_avs_status</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-payslips_values = previous_payslips._get_line_values(
-    ['ACCSALARY', 'ACC'],
-    vals_list=['amount', 'total'],
-    compute_sum=True)
-previous_acc_salary = payslips_values['ACCSALARY']['sum']['total']
-previous_acc_deduction = payslips_values['ACC']['sum']['amount']
-
-ac_salary = previous_acc_salary + categories['ACCSALARY']
-result = ac_salary - previous_acc_deduction
+result = categories['ACCSALARY']
 result_rate = - contract.l10n_ch_social_insurance_id._get_additional_ac_rates(payslip.date_from)[0]
         </field>
         <field name="note">Additional Unemployment Insurance</field>
@@ -2274,15 +2228,7 @@ result_rate = - contract.l10n_ch_social_insurance_id._get_additional_ac_rates(pa
         <field name="condition_python">result = not payslip.l10n_ch_avs_status</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-payslips_values = previous_payslips._get_line_values(
-    ['ACCSALARY', 'ACC.COMP'],
-    vals_list=['amount', 'total'],
-    compute_sum=True)
-previous_acc_salary = payslips_values['ACCSALARY']['sum']['total']
-previous_acc_deduction = payslips_values['ACC.COMP']['sum']['amount']
-
-ac_salary = previous_acc_salary + categories['ACCSALARY']
-result = ac_salary - previous_acc_deduction
+result = categories['ACCSALARY']
 result_rate = contract.l10n_ch_social_insurance_id._get_additional_ac_rates(payslip.date_from)[1]
         </field>
         <field name="appears_on_payslip" eval="False"/>
