@@ -320,6 +320,14 @@ class AccountOnlineAccount(models.Model):
             })
         return formatted_transactions
 
+    def action_reset_fetching_status(self):
+        """
+            This action will reset the fetching status to avoid the problem when there is an error during the
+            synchronisation that would block the customer with his connection since we block the fetch due that value.
+            With this he has a button that can reset the fetching status.
+        """
+        self.fetching_status = None
+
 
 class AccountOnlineLink(models.Model):
     _description = 'Bank Connection'
@@ -1034,6 +1042,7 @@ class AccountOnlineLink(models.Model):
         return self._open_iframe('updateCredentials')
 
     def action_fetch_transactions(self):
+        self.account_online_account_ids.fetching_status = None
         action = self._fetch_transactions()
         return action or self.env['ir.actions.act_window']._for_xml_id('account.open_account_journal_dashboard_kanban')
 
