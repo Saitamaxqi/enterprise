@@ -8,7 +8,7 @@ class ResConfigSettings(models.TransientModel):
     _inherit = 'res.config.settings'
 
     urbanpiper_username = fields.Char(
-        string='Username',
+        string='UrbanPiper Username',
         config_parameter='pos_urban_piper.urbanpiper_username',
         help='The username for the UrbanPiper account.'
     )

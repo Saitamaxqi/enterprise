@@ -185,6 +185,9 @@ class PosConfig(models.Model):
                         })]
                     })
                 self.urbanpiper_pricelist_id = pricelist.id
+        self._add_line_to_fiscal_position(fiscal_position)
+
+    def _add_line_to_fiscal_position(self, fiscal_position):
         source_taxes = self.env['account.tax'].search([('type_tax_use', '=', 'sale'), ('company_id', '=', self.company_id.id)])
         if fiscal_position and fiscal_position.tax_ids.tax_src_id.ids != source_taxes.ids:
             lines = []

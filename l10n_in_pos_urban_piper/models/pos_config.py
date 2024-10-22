@@ -14,7 +14,7 @@ class PosConfig(models.Model):
 
     def prepare_taxes_data(self, pos_products):
         tax_lst = super().prepare_taxes_data(pos_products)
-        if self.env.ref('pos_urban_piper_swiggy.pos_delivery_provider_swiggy', False) in self.urbanpiper_delivery_provider_ids:
+        if self.company_id.country_id.code == 'IN':
             for tax in pos_products.taxes_id:
                 if tax.type_tax_use == 'sale' and tax.tax_group_id.with_context(lang="en_US").name == 'GST':
                     product = pos_products.filtered(lambda p: tax.id in p.taxes_id.ids)
@@ -34,3 +34,9 @@ class PosConfig(models.Model):
                                 }
                             )
         return tax_lst
+
+    def _add_line_to_fiscal_position(self, fiscal_position):
+        super()._add_line_to_fiscal_position(fiscal_position)
+        if self.company_id.country_code == 'IN':
+            tax_line_to_remove = fiscal_position.tax_ids.filtered(lambda l: l.tax_src_id.amount != 5 or l.tax_src_id.tax_group_id.name != 'GST')
+            fiscal_position.tax_ids -= tax_line_to_remove
