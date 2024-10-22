@@ -6773,7 +6773,8 @@ class AccountReportLine(models.Model):
         # Sort grouping keys in the right order and generate line names
         keys_and_names_in_sequence = {}  # Order of this dict will matter
 
-        if groupby_model:
+        custom_groupby_name_builder = custom_groupby_map.get(current_groupby, {}).get('label_builder')
+        if groupby_model and not custom_groupby_name_builder:
             browsed_groupby_keys = self.env[groupby_model].browse(list(key for key in group_lines_by_keys if key is not None))
 
             out_of_sorting_record = None
@@ -6792,8 +6793,8 @@ class AccountReportLine(models.Model):
                 keys_and_names_in_sequence[out_of_sorting_record.id] = out_of_sorting_record.display_name
 
         else:
-            for non_relational_key in sorted(group_lines_by_keys.keys(), key=lambda k: (k is None, k)):
-                if custom_groupby_name_builder := custom_groupby_map.get(current_groupby, {}).get('label_builder'):
+            for non_relational_key in sorted(group_lines_by_keys.keys(), key=lambda k: (k is None, isinstance(k, str), k)):
+                if custom_groupby_name_builder:
                     keys_and_names_in_sequence[non_relational_key] = custom_groupby_name_builder(non_relational_key)
                 else:
                     keys_and_names_in_sequence[non_relational_key] = str(non_relational_key) if non_relational_key is not None else _("Unknown")
