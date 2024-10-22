@@ -7,7 +7,8 @@
         <field name="model_id" ref="sale_subscription.model_sale_order"/>
         <field name="subject">Termination of subscription {{ object.client_order_ref or object.name }}</field>
         <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email or user.email_formatted) }}</field>
-        <field name="email_to">{{ object.partner_id.email_formatted }}</field>
+        <field name="email_to" eval="False"/>
+        <field name="use_default_to" eval="True"/>
         <field name="description">Sent to customer to indicate that subscription is automatically terminated</field>
         <field name="body_html" type="html">
 <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
@@ -106,7 +107,8 @@
         <field name="model_id" ref="sale_subscription.model_sale_order"/>
         <field name="subject">Payment reminder for subscription {{ object.client_order_ref or object.name }}</field>
         <field name="email_from">{{ (object.user_id.email_formatted or object.company_id.email or user.email_formatted) }}</field>
-        <field name="email_to">{{ object.partner_id.email_formatted }}</field>
+        <field name="email_to" eval="False"/>
+        <field name="use_default_to" eval="True"/>
         <field name="description">Sent to customer when payment failed but subscription is not yet cancelled</field>
         <field name="body_html" type="html">
 <table border="0" cellpadding="0" cellspacing="0" style="padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;"><tr><td align="center">
@@ -215,7 +217,8 @@
         <field name="model_id" ref="sale_subscription.model_sale_order"/>
         <field name="subject">{{ object.company_id.name }}: Service Rating Request</field>
         <field name="email_from">{{ (object._rating_get_operator().email_formatted or user.email_formatted) }}</field>
-        <field name="partner_to" >{{ object._rating_get_partner().id }}</field>
+        <field name="partner_to" eval="False"/>
+        <field name="use_default_to" eval="True"/>
         <field name="auto_delete" eval="True"/>
         <field name="description">Set on subscription's stage (e.g. Closed, Upsell) to ask a rating to customers</field>
         <field name="body_html" type="html">
@@ -293,7 +296,8 @@
         <field name="model_id" ref="sale_subscription.model_sale_order"/>
         <field name="subject">{{ object.company_id.name }}: Please check the subscription {{ object.name }}</field>
         <field name="email_from">{{ (object.user_id.email_formatted or user.email_formatted) }}</field>
-        <field name="partner_to" >{{ object.partner_id.id }}</field>
+        <field name="partner_to" eval="False"/>
+        <field name="use_default_to" eval="True"/>
         <field name="auto_delete" eval="True"/>
         <field name="description">Template to be used on customized alerts for subscriptions requiring attention</field>
         <field name="body_html" type="html">

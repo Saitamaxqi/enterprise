@@ -6,6 +6,7 @@
             <field name="subject">Your bank connection is expiring soon</field>
             <field name="email_from">{{ object.company_id.email_formatted or user.email_formatted }}</field>
             <field name="email_to">{{ object.renewal_contact_email }}</field>
+            <field name="use_default_to" eval="False"/>
             <field name="model_id" ref="account_online_synchronization.model_account_journal"/>
             <field name="auto_delete" eval="True"/>
             <field name="body_html" type="html">

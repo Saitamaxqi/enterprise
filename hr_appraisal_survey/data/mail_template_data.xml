@@ -30,6 +30,7 @@
                 </div>
             </field>
             <field name="auto_delete" eval="True"/>
+            <field name="use_default_to" eval="False"/>
         </record>
     </data>
 </odoo>

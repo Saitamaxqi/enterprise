@@ -7,6 +7,7 @@
             <field name="email_from">{{ object.company_id.email_formatted }}</field>
             <field name="subject">{{ ctx.get('mail_subject', '') }} {{ ctx.get('start_datetime' , '') }}</field>
             <field name="email_to">{{ ctx.get('work_email', '') }}</field>
+            <field name="use_default_to" eval="False"/>
             <field name="model_id" ref="model_planning_slot"/>
             <field name="auto_delete" eval="True"/>
             <field name="description">Email sent automatically when publishing a shift</field>
@@ -103,6 +104,7 @@
             <field name="email_from">{{ object.company_id.email_formatted }}</field>
             <field name="subject">Your planning from {{ format_date(ctx.get('start_datetime')) }} to {{ format_date(ctx.get('end_datetime')) }}</field>
             <field name="email_to"></field><!-- Set in the code  -->
+            <field name="use_default_to" eval="False"/>
             <field name="model_id" ref="model_planning_planning"/>
             <field name="auto_delete" eval="True"/>
             <field name="description">Email sent automatically when publishing the schedule of your employees</field>
@@ -156,6 +158,7 @@
             <field name="email_from">{{ object.company_id.email_formatted }}</field>
             <field name="subject">Your shift on {{ ctx.get('start_datetime') }} was re-assigned to {{ ctx.get('new_assignee_name', 'Marc Demo') }}</field>
             <field name="email_to"></field><!-- Set in the code  -->
+            <field name="use_default_to" eval="False"/>
             <field name="model_id" ref="model_planning_slot"/>
             <field name="auto_delete" eval="True"/>
             <field name="description">Email sent automatically when an employee self-assigns to the unwanted shift of another employee, notifying the person who requested to switch that the shift has been taken</field>

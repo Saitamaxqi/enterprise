@@ -26,6 +26,7 @@ class ActivityTriggersCase(TestMACommon):
         # --------------------------------------------------
         cls.test_records_base = cls._create_marketauto_records(model='marketing.test.sms', count=2)
         cls.test_records = cls.test_records_base
+        cls.test_customers = cls.test_records.customer_id
         cls.test_records_ko = cls.test_records_base[4] + cls.test_records_base[9]
         cls.test_records_ok = cls.test_records - cls.test_records_ko
 
@@ -126,6 +127,11 @@ class TestActivityTriggers(ActivityTriggersCase):
             trigger_type='sms_not_click',
         )
 
+    def test_assert_initial_values(self):
+        """ Check initial state, notably partners """
+        self.assertEqual(len(self.test_records), 10)
+        self.assertEqual(len(self.test_customers), 6)
+
     @users('user_marketing_automation')
     def test_mail_open(self):
         """ Test mail triggers (open / not_open) """
@@ -160,6 +166,7 @@ class TestActivityTriggers(ActivityTriggersCase):
         self.assertMarketAutoTraces(
             [{
                 'records': test_records_ok,
+                'records_to_partner': {r.id: r.customer_id for r in test_records_ok},
                 'status': 'processed',
                 'fields_values': {
                     'schedule_date': self.date_reference + timedelta(hours=1),

@@ -156,7 +156,7 @@ class MarketingAutomationCase(MassMailCase):
                         elif 'trace_email_to_mail' in info:
                             add_info['email_to_mail'] = info['trace_email_to_mail']
                         elif not partners.get(record.id):
-                            add_info['email_to_mail'] = record.email_normalized or record[record._primary_email]
+                            add_info['email_to_mail'] = record[record._primary_email] or ''
 
                         if record.id in email_emails:
                             add_info['email_to_recipients'] = email_emails[record.id]

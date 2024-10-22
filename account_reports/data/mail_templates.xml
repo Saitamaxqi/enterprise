@@ -3,6 +3,7 @@
         <field name="name">Customer Statement</field>
         <field name="model_id" ref="base.model_res_partner"/>
         <field name="email_from">{{ object._get_followup_responsible().email_formatted }}</field>
+        <field name="use_default_to" eval="True"/>
         <field name="subject">{{ (object.company_id or object._get_followup_responsible().company_id).name }} Statement - {{ object.commercial_company_name }}</field>
         <field name="body_html" type="html">
             <div style="margin: 0px; padding: 0px;">

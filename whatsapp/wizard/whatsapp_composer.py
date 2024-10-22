@@ -251,7 +251,7 @@ class WhatsappComposer(models.TransientModel):
                 'attachment_ids': [self.attachment_id.id] if self.attachment_id else [],
                 'body': body,
                 'message_type': 'whatsapp_message',
-                'partner_ids': hasattr(rec, '_mail_get_partners') and rec._mail_get_partners()[rec.id].ids or rec._whatsapp_get_responsible().partner_id.ids,
+                'partner_ids': rec._mail_get_partners()[rec.id].ids or rec._whatsapp_get_responsible().partner_id.ids,
             }
             if hasattr(records, '_message_log'):
                 message = rec._message_log(**post_values)
