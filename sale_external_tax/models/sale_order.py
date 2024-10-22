@@ -17,7 +17,7 @@ class SaleOrder(models.Model):
         super()._compute_tax_totals()
         for order in self.filtered('is_tax_computed_externally'):
             tax_totals = order.tax_totals
-            subtotal = tax_totals['subtotals'][0]
+            subtotal = tax_totals['subtotals'] and tax_totals['subtotals'][0] or {}
             tax_totals['same_tax_base'] = True
             tax_totals['total_amount_currency'] = order.amount_total
             tax_totals['base_amount_currency'] = order.amount_untaxed
@@ -30,7 +30,7 @@ class SaleOrder(models.Model):
                     'tax_groups': [],
                 }
             ]
-            if subtotal['tax_groups']:
+            if subtotal.get('tax_groups'):
                 tax_group = subtotal['tax_groups'][0]
                 tax_totals['subtotals'][0]['tax_groups'].append({
                     **tax_group,
