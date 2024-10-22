@@ -129,3 +129,11 @@ class TestSpreadsheetDashboard(DashboardTestCommon, SpreadsheetTestCase, HttpCas
         data = response.json()
         self.assertFalse(data.get("is_sample"))
         self.assertNotEqual(data["snapshot"], get_sample_data())
+
+    def test_get_selector_spreadsheet_models(self):
+        result = self.env["spreadsheet.mixin"].with_user(self.user).get_selector_spreadsheet_models()
+        self.assertFalse(any(r["model"] == "spreadsheet.dashboard" for r in result))
+
+        self.user.groups_id |= self.env.ref("spreadsheet_dashboard.group_dashboard_manager")
+        result = self.env["spreadsheet.mixin"].with_user(self.user).get_selector_spreadsheet_models()
+        self.assertTrue(any(r["model"] == "spreadsheet.dashboard" for r in result))
