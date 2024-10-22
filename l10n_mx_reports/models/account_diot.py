@@ -4,10 +4,10 @@ from __future__ import division
 
 import re
 import logging
+from datetime import datetime
 from unicodedata import normalize
 
-
-from odoo import _, fields, models
+from odoo import _, models
 from odoo.exceptions import RedirectWarning, UserError
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT, get_lang, SQL
 
@@ -171,7 +171,7 @@ class L10n_MxReportHandler(models.AbstractModel):
 
         self.check_for_error_on_partner([partner for partner in partner_and_values_to_report])
 
-        date = fields.datetime.strptime(options['date']['date_from'], DEFAULT_SERVER_DATE_FORMAT)
+        date = datetime.strptime(options['date']['date_from'], DEFAULT_SERVER_DATE_FORMAT)
         month = {
             '01': 'Enero',
             '02': 'Febrero',

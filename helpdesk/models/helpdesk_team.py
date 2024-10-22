@@ -981,7 +981,7 @@ class HelpdeskTeam(models.Model):
                 'to_stage_id']
         )
         teams_dict = defaultdict(dict)  # key: team_id, values: the remaining result of the search_group
-        today = fields.datetime.today()
+        today = fields.Datetime.today()
         for team in teams:
             # Compute the threshold_date
             team['threshold_date'] = today - relativedelta.relativedelta(days=team['auto_close_day'])

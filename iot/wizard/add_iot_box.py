@@ -21,7 +21,7 @@ class AddIotBox(models.TransientModel):
         iot_token = self.env['ir.config_parameter'].sudo().search([('key', '=', 'iot_token')], limit=1)
         if iot_token:
             # token valable 60 minutes
-            if iot_token.write_date + timedelta(minutes=60) > fields.datetime.now():
+            if iot_token.write_date + timedelta(minutes=60) > fields.Datetime.now():
                 token = iot_token.value
             else:
                 iot_token.write({'value': token})

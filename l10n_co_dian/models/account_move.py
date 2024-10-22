@@ -2,11 +2,11 @@ from pytz import timezone
 from lxml import etree
 
 from collections import defaultdict
+from datetime import datetime
 import re
 
 from odoo import models, fields, api, _
 from odoo.exceptions import UserError
-from odoo.fields import datetime
 
 DESCRIPTION_CREDIT_CODE = [
     ("1", "Devolución parcial de los bienes y/o no aceptación parcial del servicio"),

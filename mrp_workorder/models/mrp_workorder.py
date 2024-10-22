@@ -612,7 +612,7 @@ class MrpWorkorder(models.Model):
         last30op = self.env['mrp.workorder'].search_read([
             ('operation_id', '=', self.operation_id.id),
             ('state', '=', 'done'),
-            ('date_finished', '>', fields.datetime.today() - relativedelta(days=30)),
+            ('date_finished', '>', fields.Date.today() - relativedelta(days=30)),
         ], ['duration', 'qty_produced'])
         last30op = sorted([item['duration'] / item['qty_produced'] for item in last30op])
         # show rainbow man only for the best time in the last 30 days.

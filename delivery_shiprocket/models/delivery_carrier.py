@@ -80,7 +80,7 @@ class DeliveryCarrier(models.Model):
             if response_json.get('token'):
                 self.write({
                     'shiprocket_access_token': response_json['token'],
-                    'shiprocket_token_valid_upto': fields.datetime.now() + timedelta(days=9)
+                    'shiprocket_token_valid_upto': fields.Datetime.now() + timedelta(days=9)
                 })
                 message_type = 'success'
                 message = _("Access token is generated successfully!")

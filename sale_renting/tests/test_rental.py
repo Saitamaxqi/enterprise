@@ -355,7 +355,7 @@ class TestRentalCommon(TransactionCase):
         self.assertEqual(price, 7, "Contextual price should take pickup and return date into account")
 
     def test_discount_on_sol_remains(self):
-        now = fields.date.today()
+        now = fields.Date.today()
         one_day_later = now + relativedelta(days=1)
         discount = 10
 

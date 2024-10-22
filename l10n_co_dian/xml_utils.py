@@ -121,7 +121,7 @@ def _uuid1():
 
 def _build_and_send_request(self, payload, service, company):
     cert_sudo = company.sudo().l10n_co_dian_certificate_ids[-1]
-    dt_now = fields.datetime.utcnow()
+    dt_now = fields.Datetime.now()
     vals = {
         'creation_time': dt_now.isoformat(timespec='milliseconds') + "Z",
         'expiration_time': (dt_now + timedelta(seconds=60000)).isoformat(timespec='milliseconds') + "Z",

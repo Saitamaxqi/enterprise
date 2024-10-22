@@ -82,7 +82,7 @@ class HrPayslipEmployees(models.TransientModel):
         if not self.env.context.get('active_id'):
             from_date = fields.Date.to_date(self.env.context.get('default_date_start'))
             end_date = fields.Date.to_date(self.env.context.get('default_date_end'))
-            today = fields.date.today()
+            today = fields.Date.today()
             first_day = today + relativedelta(day=1)
             last_day = today + relativedelta(day=31)
             if from_date == first_day and end_date == last_day:

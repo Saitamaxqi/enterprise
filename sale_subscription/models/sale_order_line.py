@@ -547,7 +547,7 @@ class SaleOrderLine(models.Model):
         if self.recurring_invoice:
             pricing = self.env['sale.subscription.pricing']._get_first_suitable_recurring_pricing(self.product_id, self.order_id.plan_id, self.order_id.pricelist_id)
             if pricing:
-                return pricing.currency_id._convert(pricing.price, self.currency_id, self.company_id, fields.date.today())
+                return pricing.currency_id._convert(pricing.price, self.currency_id, self.company_id, fields.Date.today())
             return super()._get_pricelist_price() or self.price_unit
         return super()._get_pricelist_price()
 

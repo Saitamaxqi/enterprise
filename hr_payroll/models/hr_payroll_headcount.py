@@ -14,7 +14,7 @@ class HrPayrollHeadcount(models.Model):
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company.id)
     line_ids = fields.One2many('hr.payroll.headcount.line', 'headcount_id')
     employee_count = fields.Integer(string='Employee Count')
-    date_from = fields.Date(string='From', default=lambda self: fields.date.today(), required=True)
+    date_from = fields.Date(string='From', default=lambda self: fields.Date.today(), required=True)
     date_to = fields.Date(string='To')
 
     _sql_constraints = [

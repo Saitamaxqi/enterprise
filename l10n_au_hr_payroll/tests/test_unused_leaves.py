@@ -749,7 +749,7 @@ class TestPayrollUnusedLeaves(TestPayrollCommon):
         self.env["hr.rule.parameter.value"].create(
             {
                 "rule_parameter_id": self.env.ref("l10n_au_hr_payroll.rule_parameter_withholding_schedule_1").id,
-                "date_from": fields.datetime(2014, 7, 1).date(),
+                "date_from": date(2014, 7, 1),
                 "parameter_value": {
                     "tax-free": [
                         (355, 0.0, 0.0),
@@ -791,7 +791,7 @@ class TestPayrollUnusedLeaves(TestPayrollCommon):
         self.env["hr.rule.parameter.value"].create(
             {
                 "rule_parameter_id": self.env.ref("l10n_au_hr_payroll.rule_parameter_super").id,
-                "date_from": fields.datetime(2014, 7, 1).date(),
+                "date_from": date(2014, 7, 1),
                 "parameter_value": 9.50,
             }
         )

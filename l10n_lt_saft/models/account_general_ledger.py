@@ -37,7 +37,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
 
         template_vals.update({
             # Special LT SAF-T date format: YYYY-MM-DDThh:mm:ss
-            'today_str': fields.datetime.now().strftime('%Y-%m-%dT%H:%M:%S'),
+            'today_str': fields.Datetime.now().strftime('%Y-%m-%dT%H:%M:%S'),
             'xmlns': 'https://www.vmi.lt/cms/saf-t',
             'file_version': '2.01',
             'accounting_basis': 'K',  # K (accrual - when recorded) or P (cash - when received)

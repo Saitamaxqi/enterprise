@@ -14,7 +14,7 @@ class TestControllersRoute(HttpCase, TestCommonPlanning):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.classPatch(cls.env.cr, 'now', fields.datetime.now)
+        cls.classPatch(cls.env.cr, 'now', datetime.now)
         with freeze_time('2023-6-1'):
             cls.setUpEmployees()
 

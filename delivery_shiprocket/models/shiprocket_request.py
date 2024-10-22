@@ -75,13 +75,13 @@ class ShipRocket:
             )
         if not self.carrier.shiprocket_access_token or (
             self.carrier.shiprocket_token_valid_upto and
-            self.carrier.shiprocket_token_valid_upto < fields.datetime.today()
+            self.carrier.shiprocket_token_valid_upto < fields.Datetime.today()
         ):
             response_json = self._authorize_generate_token()
             if 'token' in response_json:
                 self.carrier.write({
                     'shiprocket_access_token': response_json['token'],
-                    'shiprocket_token_valid_upto': fields.datetime.today() + timedelta(days=9)
+                    'shiprocket_token_valid_upto': fields.Datetime.today() + timedelta(days=9)
                 })
         return self.carrier.shiprocket_access_token
 

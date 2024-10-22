@@ -2,7 +2,7 @@ from lxml import etree
 from pytz import timezone
 
 from collections import defaultdict
-from datetime import timedelta
+from datetime import datetime, timedelta
 import re
 from hashlib import sha384
 
@@ -984,7 +984,7 @@ class AccountEdiXmlUbl_Dian(models.AbstractModel):
             'x509_certificates': x509_certificates,
             'signature_value': 'to be filled later',
             # Colombia time (UTC-5): p.556 "Anexo-Tecnico-Resolucion[...].pdf"
-            'signing_time': fields.datetime.now(tz=timezone('America/Bogota')).isoformat(timespec='milliseconds'),
+            'signing_time': datetime.now(tz=timezone('America/Bogota')).isoformat(timespec='milliseconds'),
             'sigcertif_digest': cert_sudo._get_fingerprint_bytes(formatting='base64').decode(),
             'claimed_role': "supplier",
         }

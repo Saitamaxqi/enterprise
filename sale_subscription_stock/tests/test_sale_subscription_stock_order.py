@@ -147,7 +147,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
         sub.order_line.product_uom_qty = 2
 
         with freeze_time("2022-03-02"):
-            sub.write({'start_date': fields.date.today(), 'next_invoice_date': False})
+            sub.write({'start_date': fields.Date.today(), 'next_invoice_date': False})
             sub.action_confirm()
             picking_id = sub.picking_ids  # only one picking
             self.assertEqual(len(picking_id), 1, 'After confirming we should create a delivery')
@@ -391,7 +391,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
         })
 
         with freeze_time("2024-02-02"):
-            self.subscription_order_with_bom.write({'start_date': fields.date.today(), 'next_invoice_date': False})
+            self.subscription_order_with_bom.write({'start_date': fields.Date.today(), 'next_invoice_date': False})
             self.subscription_order_with_bom.action_confirm()
             self.assertEqual(self.subscription_order_with_bom.invoice_count, 0,
                              'No invoices should be present initially')

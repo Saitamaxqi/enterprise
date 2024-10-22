@@ -128,7 +128,7 @@ class HrEmployee(models.Model):
         for employee in self:
             contracts = employee.contract_ids.filtered(lambda c: c.state not in ['draft', 'cancel']).sorted('date_start', reverse=True)
             if contracts:
-                contract_end_date = contracts[0].date_end or fields.datetime.today().date()
+                contract_end_date = contracts[0].date_end or fields.Date.today()
                 employee.l10n_hk_years_of_service = ((contract_end_date - employee.first_contract_date).days + 1) / 365
 
     def get_l10n_hk_autopay_bank_code(self) -> str:

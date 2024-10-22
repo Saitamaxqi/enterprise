@@ -139,8 +139,8 @@ class TestSubscriptionStockCommon(TestSubscriptionCommon, ValuationReconciliatio
         # cls.subscription_delivery._compute_is_deferred()
 
         with freeze_time("2022-03-02"):
-            cls.subscription_order.write({'start_date': fields.date.today(), 'next_invoice_date': False})
-            cls.subscription_delivery.write({'start_date': fields.date.today(), 'next_invoice_date': False})
+            cls.subscription_order.write({'start_date': fields.Date.today(), 'next_invoice_date': False})
+            cls.subscription_delivery.write({'start_date': fields.Date.today(), 'next_invoice_date': False})
             cls.subscription_order.action_confirm()
             cls.subscription_delivery.action_confirm()
             cls.subscription_order.picking_ids.move_ids.write({'quantity': cls.subscription_order.order_line.product_uom_qty, 'picked': True})

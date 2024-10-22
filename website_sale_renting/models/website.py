@@ -37,7 +37,7 @@ class Website(models.Model):
         :return: Whether the customer is on the same timezone as the website or not.
         :rtype: bool
         """
-        now = fields.datetime.now()
+        now = fields.Datetime.now()
         customer_tz = request.cookies.get('tz') if request else None
         return pytz.timezone(self.tz).utcoffset(now) != pytz.timezone(
             customer_tz or 'UTC'
@@ -49,5 +49,5 @@ class Website(models.Model):
         :rtype: string
         """
         # strftime('%z') return the UTC offset in this form: ±HHMM[SS[.ffffff]]
-        utcoffset = pytz.timezone(tz).localize(fields.datetime.now()).strftime('%z')
+        utcoffset = pytz.timezone(tz).localize(fields.Datetime.now()).strftime('%z')
         return f'(UTC {utcoffset[0]} {utcoffset[1:3]}:{utcoffset[3:5]})'

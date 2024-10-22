@@ -41,7 +41,7 @@ class TestMxEdiCommon(AccountTestInvoicingCommon):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.frozen_today = fields.datetime.now()
+        cls.frozen_today = fields.Datetime.now()
 
         # Allow to see the full result of AssertionError.
         cls.maxDiff = None
