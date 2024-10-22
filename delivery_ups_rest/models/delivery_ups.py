@@ -222,7 +222,7 @@ class DeliveryCarrier(models.Model):
             raise UserError(check_value)
 
         result = ups._send_shipping(
-            shipment_info=shipment_info, packages=packages, carrier=self, shipper=picking.partner_id, ship_from=picking.partner_id,
+            shipment_info=shipment_info, packages=packages, carrier=self, shipper=picking.company_id.partner_id, ship_from=picking.partner_id,
             ship_to=picking.picking_type_id.warehouse_id.partner_id, service_type=ups_service_type, duty_payment='RECIPIENT', saturday_delivery=picking.carrier_id.ups_saturday_delivery,
             cod_info=cod_info, label_file_type=self.ups_label_file_type, ups_carrier_account=ups_carrier_account, is_return=True)
 

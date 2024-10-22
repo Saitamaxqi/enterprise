@@ -269,7 +269,7 @@ class DeliveryCarrier(models.Model):
             raise UserError(check_value)
 
         srm.send_shipping(
-            carrier=picking.carrier_id, shipment_info=shipment_info, packages=packages, shipper=picking.partner_id, ship_from=picking.partner_id,
+            carrier=picking.carrier_id, shipment_info=shipment_info, packages=packages, shipper=picking.company_id.partner_id, ship_from=picking.partner_id,
             ship_to=picking.picking_type_id.warehouse_id.partner_id, service_type=ups_service_type, duty_payment='RECIPIENT', label_file_type=self.ups_label_file_type, ups_carrier_account=ups_carrier_account,
             saturday_delivery=picking.carrier_id.ups_saturday_delivery, cod_info=cod_info)
         srm.return_label()
