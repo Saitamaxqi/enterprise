@@ -384,10 +384,9 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
         self.assertEqual(result["records"][0]["id"], first.id)
         self.assertEqual(result["total"], 1)
 
-    def get_selector_spreadsheet_models(self):
+    def test_get_selector_spreadsheet_models(self):
         result = self.env["spreadsheet.mixin"].get_selector_spreadsheet_models()
-        self.assertEqual(len(result), 1)
-        self.assertEqual(result[0]["model"], "spreadsheet.test")
+        self.assertTrue(any(r["model"] == "spreadsheet.test" for r in result))
 
     def test_action_open_new_spreadsheet(self):
         action = self.env["spreadsheet.test"].action_open_new_spreadsheet()
