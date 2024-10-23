@@ -549,7 +549,7 @@ export class SignTemplateIframe extends EditablePDFIframeMixin(PDFIframe) {
     }
 
     insertRotatePDFButton() {
-        const printButton = this.root.querySelector("#print");
+        const printButton = this.root.querySelector("#printButton");
         const button = this.root.createElement("button");
         button.setAttribute("id", "pageRotateCw");
         button.className = "toolbarButton o_sign_rotate rotateCw";

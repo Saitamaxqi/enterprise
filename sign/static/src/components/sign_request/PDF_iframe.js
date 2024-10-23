@@ -82,13 +82,14 @@ export class PDFIframe {
             "#openFile",
             "#presentationMode",
             "#viewBookmark",
-            "#print",
-            "#download",
+            "#printButton",
+            "#downloadButton",
             "#secondaryOpenFile",
             "#secondaryPresentationMode",
             "#secondaryViewBookmark",
             "#secondaryPrint",
             "#secondaryDownload",
+            "#editorModeButtons",
         ];
         const elements = this.root.querySelectorAll(selectors.join(", "));
         elements.forEach((element) => {
@@ -153,8 +154,8 @@ export class PDFIframe {
     startPinchService() {
         const pinchTarget = this.root.querySelector("#viewerContainer #viewer");
         const pinchServiceCleanup = pinchService(pinchTarget, {
-            decreaseDistanceHandler: () => this.root.querySelector("button#zoomIn").click(),
-            increaseDistanceHandler: () => this.root.querySelector("button#zoomOut").click(),
+            decreaseDistanceHandler: () => this.root.querySelector("button#zoomInButton").click(),
+            increaseDistanceHandler: () => this.root.querySelector("button#zoomOutButton").click(),
         });
         this.cleanupFns.push(pinchServiceCleanup);
     }
@@ -283,9 +284,9 @@ export class PDFIframe {
     }
 
     setInitialZoom() {
-        let button = this.root.querySelector("button#zoomIn");
+        let button = this.root.querySelector("button#zoomInButton");
         if (!this.env.isSmall) {
-            button = this.root.querySelector("button#zoomOut");
+            button = this.root.querySelector("button#zoomOutButton");
             button.click();
         }
         button.click();

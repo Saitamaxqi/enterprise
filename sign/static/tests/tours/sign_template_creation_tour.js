@@ -35,6 +35,7 @@ function dragAndDropSignItemAtHeight(type, page, height = 0.5, width = 0.5) {
             return dataTransferObject[key];
         },
         setDragImage: () => {},
+        items: [],
     };
 
     triggerDragEvent(from, "dragstart", {
