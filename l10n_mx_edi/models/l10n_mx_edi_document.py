@@ -988,8 +988,8 @@ class L10n_Mx_EdiDocument(models.Model):
             tax = tax_data['tax']
             is_local_tax = tax.l10n_mx_tax_type == 'local'
             return {
-                'objeto_imp': base_line['objeto_imp'],
-                'is_local_tax': is_local_tax,
+                'account_base': base_line['objeto_imp'] != '02' or not is_local_tax,
+                'account_tax_in_base': base_line['objeto_imp'] != '02' and not is_local_tax,
             }
 
         transferred_tax_amounts = [x['importe'] for x in cfdi_values['traslados_list'] if x['tipo_factor'] != 'Exento']
@@ -1013,10 +1013,12 @@ class L10n_Mx_EdiDocument(models.Model):
         cfdi_values['subtotal'] = cfdi_values['descuento']
         cfdi_values['total'] = 0.0
         for grouping_key, values in values_per_grouping_key.items():
-            if grouping_key and grouping_key['objeto_imp'] != '02' and not grouping_key['is_local_tax']:
+            if grouping_key and grouping_key['account_tax_in_base']:
                 cfdi_values['subtotal'] += values['tax_amount_currency']
-            cfdi_values['subtotal'] += values['base_amount_currency']
-            cfdi_values['total'] += values['base_amount_currency'] + values['tax_amount_currency']
+            cfdi_values['total'] += values['tax_amount_currency']
+            if not grouping_key or grouping_key['account_base']:
+                cfdi_values['subtotal'] += values['base_amount_currency']
+                cfdi_values['total'] += values['base_amount_currency']
 
         if currency.is_zero(cfdi_values['descuento']):
             cfdi_values['descuento'] = None

@@ -136,7 +136,6 @@ class TestCFDIInvoice(TestMxEdiCommon):
                     self._assert_invoice_payment_cfdi(payment.move_id, f'test_invoice_taxes_{index}_payment')
 
                     # Test the global invoice CFDI.
-                    # Note: The local taxes are not managed in the global invoice CFDI.
                     invoice = create_invoice(taxes_list, l10n_mx_edi_cfdi_to_public=True)
                     with self.with_mocked_pac_sign_success():
                         invoice._l10n_mx_edi_cfdi_global_invoice_try_send()
@@ -1460,6 +1459,21 @@ class TestCFDIInvoice(TestMxEdiCommon):
             with self.with_mocked_pac_sign_success():
                 invoice._l10n_mx_edi_cfdi_global_invoice_try_send()
             self._assert_global_invoice_cfdi_from_invoices(invoice, 'test_cfdi_rounding_12_ginvoice')
+
+    def test_cfdi_rounding_13(self):
+        with self.mx_external_setup(self.frozen_today):
+            invoice = self._create_invoice(
+                invoice_line_ids=[
+                     Command.create({
+                         'product_id': self.product.id,
+                         'price_unit': 4000.0,
+                         'tax_ids': [Command.set((self.tax_16 + self.local_tax_3_5_withholding).ids)],
+                     }),
+                ],
+            )
+            with self.with_mocked_pac_sign_success():
+                invoice._l10n_mx_edi_cfdi_invoice_try_send()
+            self._assert_invoice_cfdi(invoice, 'test_cfdi_rounding_13_inv')
 
     def test_partial_payment_1(self):
         date1 = self.frozen_today - relativedelta(days=2)
