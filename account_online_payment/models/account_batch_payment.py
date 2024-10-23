@@ -61,10 +61,16 @@ class AccountBatchPayment(models.Model):
                     break
                 data['next_data'] = response['next_data']
 
-            self.write({
-                'payment_identifier': response.get('payment_identifier'),
-                'payment_online_status': response.get('payment_online_status'),
-            })
+            if response.get('kyc_flow'):
+                self.with_user(SUPERUSER_ID).message_post(body=_("""
+                    This payment requires a KYC flow. As this process can take a few days, please use SEPA XML export in the meantime.
+                    You will be notified once the KYC flow is completed and you can proceed with the online payment.
+                """))
+            else:
+                self.write({
+                    'payment_identifier': response.get('payment_identifier'),
+                    'payment_online_status': response.get('payment_online_status'),
+                })
 
             return {
                 'type': 'ir.actions.act_url',

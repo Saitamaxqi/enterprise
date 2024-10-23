@@ -25,7 +25,7 @@
                     invisible="not account_online_linked or state != 'draft' or payment_online_status not in ['uninitiated'] or batch_type != 'outbound' or payment_method_code != 'sepa_ct'"
                 />
                 <button
-                    name="validate_batch_button"
+                    name="export_batch_payment"
                     type="object"
                     string="XML"
                     context="{'xml_export': True}"
