@@ -62,6 +62,7 @@ export class Document extends Component {
         this.requestToken = parentEl.querySelector("#o_sign_input_sign_request_token")?.value;
         this.requestState = parentEl.querySelector("#o_sign_input_sign_request_state")?.value;
         this.accessToken = parentEl.querySelector("#o_sign_input_access_token")?.value;
+        this.todayFormattedDate = parentEl.querySelector("#o_sign_input_today_formatted_date")?.value;
         this.templateEditable = Boolean(parentEl.querySelector("#o_sign_input_template_editable"));
         this.authMethod = parentEl.querySelector("#o_sign_input_auth_method")?.value;
         this.signerName = parentEl.querySelector("#o_sign_signer_name_input_info")?.value;
