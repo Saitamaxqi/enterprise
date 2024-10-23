@@ -31,8 +31,6 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
             ]
         })
 
-        cls.env.ref('l10n_hk_hr_payroll.holiday_type_hk_annual_leave').write({'requires_allocation': 'no'})
-
     def test_001_a_regular_payslip(self):
         payslip = self._generate_payslip(date(2023, 1, 1), date(2023, 1, 31))
 
@@ -44,7 +42,7 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
             'HKLEAVE600': (9.0, 72.0, 5806.45),
         })
 
-        payslip_results = {'BASIC': 20000.0, 'ALW.INT': 200.0, '713_GROSS': 20200.0, 'MPF_GROSS': 20200.0, 'EEMC': 0.0, 'ERMC': 0.0, 'GROSS': 20200.0, 'NET': 20200.0, 'MEA': 20200.0}
+        payslip_results = {'BASIC': 20000.0, 'ALW.INT': 200.0, '713_GROSS': 20200.0, 'MPF_GROSS': 20200.0, 'GROSS': 20200.0, 'NET': 20200.0, 'MEA': 20200.0}
         self._validate_payslip(payslip, payslip_results)
 
     def test_001_b_moving_daily_wage_computation(self):
@@ -140,7 +138,7 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
             'HKLEAVE600': (9.0, 36.0, 2903.23),
         })
 
-        payslip_results = {'BASIC': 10000.0, 'ALW.INT': 200.0, '713_GROSS': 10200.0, 'MPF_GROSS': 10200.0, 'EEMC': 0.0, 'ERMC': 0.0, 'GROSS': 10200.0, 'NET': 10200.0, 'MEA': 10200.0}
+        payslip_results = {'BASIC': 10000.0, 'ALW.INT': 200.0, '713_GROSS': 10200.0, 'MPF_GROSS': 10200.0, 'GROSS': 10200.0, 'NET': 10200.0, 'MEA': 10200.0}
         self._validate_payslip(payslip, payslip_results)
 
     def test_002_b_credit_time_moving_daily_wage(self):
@@ -199,7 +197,7 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
 
     def test_004_a_mpf_computation(self):
         payslip_results = {
-            1: {'BASIC': 20000.0, 'ALW.INT': 200.0, '713_GROSS': 20200.0, 'MPF_GROSS': 20200.0, 'EEMC': 0.0, 'ERMC': 0.0, 'GROSS': 20200.0, 'NET': 20200.0, 'MEA': 20200.0},
+            1: {'BASIC': 20000.0, 'ALW.INT': 200.0, '713_GROSS': 20200.0, 'MPF_GROSS': 20200.0, 'GROSS': 20200.0, 'NET': 20200.0, 'MEA': 20200.0},
             2: {'BASIC': 20000.0, 'ALW.INT': 200.0, '713_GROSS': 20200.0, 'MPF_GROSS': 20200.0, 'EEMC': -1010.0, 'ERMC': -2020.0, 'GROSS': 22220.0, 'NET': 19190.0, 'MEA': 19190.0},
             3: {'BASIC': 20000.0, 'COMMISSION': 10000.0, 'ALW.INT': 200.0, '713_GROSS': 30200.0, 'MPF_GROSS': 30200.0, 'EEMC': -1500.0, 'ERMC': -1500.0, 'GROSS': 31700.0, 'NET': 28700.0, 'MEA': 28700.0},
         }
