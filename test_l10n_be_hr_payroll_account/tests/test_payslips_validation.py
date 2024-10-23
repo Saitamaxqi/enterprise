@@ -1273,8 +1273,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertAlmostEqual(payslip.worked_days_line_ids[2].amount, 244.62, places=2)
         self.assertAlmostEqual(payslip.worked_days_line_ids[3].amount, 2283.08, places=2)
 
-        self.assertAlmostEqual(payslip.worked_days_line_ids[0].number_of_days, 1.0, places=2)
-        self.assertAlmostEqual(payslip.worked_days_line_ids[1].number_of_days, 1.0, places=2)
+        self.assertAlmostEqual(payslip.worked_days_line_ids[0].number_of_days, 0.5, places=2)
+        self.assertAlmostEqual(payslip.worked_days_line_ids[1].number_of_days, 0.5, places=2)
         self.assertAlmostEqual(payslip.worked_days_line_ids[2].number_of_days, 2.0, places=2)
         self.assertAlmostEqual(payslip.worked_days_line_ids[3].number_of_days, 19.0, places=2)
 
@@ -1480,7 +1480,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertAlmostEqual(payslip.worked_days_line_ids[0].amount, 224.23, places=2)
         self.assertAlmostEqual(payslip.worked_days_line_ids[1].amount, 1100.77, places=2)
 
-        self.assertAlmostEqual(payslip.worked_days_line_ids[0].number_of_days, 5.0, places=2)
+        self.assertAlmostEqual(payslip.worked_days_line_ids[0].number_of_days, 2.5, places=2)
         self.assertAlmostEqual(payslip.worked_days_line_ids[1].number_of_days, 9.0, places=2)
 
         self.assertAlmostEqual(payslip.worked_days_line_ids[0].number_of_hours, 19.0, places=2)
@@ -1520,7 +1520,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertAlmostEqual(payslip.worked_days_line_ids[2].amount, 896.92, places=2)
 
         self.assertAlmostEqual(payslip.worked_days_line_ids[0].number_of_days, 1.0, places=2)
-        self.assertAlmostEqual(payslip.worked_days_line_ids[1].number_of_days, 5.0, places=2)
+        self.assertAlmostEqual(payslip.worked_days_line_ids[1].number_of_days, 2.5, places=2)
         self.assertAlmostEqual(payslip.worked_days_line_ids[2].number_of_days, 8.0, places=2)
 
         self.assertAlmostEqual(payslip.worked_days_line_ids[0].number_of_hours, 7.6, places=2)
@@ -1573,9 +1573,9 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertAlmostEqual(payslip.worked_days_line_ids[2].amount, 244.62, places=2)
         self.assertAlmostEqual(payslip.worked_days_line_ids[3].amount, 896.92, places=2)
 
-        self.assertAlmostEqual(paid_leaves_data['number_of_days'], 1.0, places=2)
+        self.assertAlmostEqual(paid_leaves_data['number_of_days'], 0.5, places=2)
         self.assertAlmostEqual(unpaid_leaves_data['number_of_days'], 1.0, places=2)
-        self.assertAlmostEqual(payslip.worked_days_line_ids[2].number_of_days, 4.0, places=2)
+        self.assertAlmostEqual(payslip.worked_days_line_ids[2].number_of_days, 2.0, places=2)
         self.assertAlmostEqual(payslip.worked_days_line_ids[3].number_of_days, 8.0, places=2)
 
         self.assertAlmostEqual(paid_leaves_data['number_of_hours'], 3.8, places=2)
@@ -1767,8 +1767,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertAlmostEqual(payslip.worked_days_line_ids[2].amount, 0.0, places=2)
         self.assertAlmostEqual(payslip.worked_days_line_ids[3].amount, 2283.08, places=2)
 
-        self.assertAlmostEqual(payslip.worked_days_line_ids[0].number_of_days, 1.0, places=2)
-        self.assertAlmostEqual(payslip.worked_days_line_ids[1].number_of_days, 1.0, places=2)
+        self.assertAlmostEqual(payslip.worked_days_line_ids[0].number_of_days, 0.5, places=2)
+        self.assertAlmostEqual(payslip.worked_days_line_ids[1].number_of_days, 0.5, places=2)
         self.assertAlmostEqual(payslip.worked_days_line_ids[2].number_of_days, 2.0, places=2)
         self.assertAlmostEqual(payslip.worked_days_line_ids[3].number_of_days, 19.0, places=2)
 
@@ -3511,8 +3511,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertAlmostEqual(payslip.worked_days_line_ids[1].amount, 60.73, places=2) # LEAVE110
         self.assertAlmostEqual(payslip.worked_days_line_ids[2].amount, 2384.62, places=2) # WORK100
 
-        self.assertAlmostEqual(payslip.worked_days_line_ids[0].number_of_days, 1.0, places=2)
-        self.assertAlmostEqual(payslip.worked_days_line_ids[1].number_of_days, 1.0, places=2)
+        self.assertAlmostEqual(payslip.worked_days_line_ids[0].number_of_days, 0.5, places=2)
+        self.assertAlmostEqual(payslip.worked_days_line_ids[1].number_of_days, 0.5, places=2)
         self.assertAlmostEqual(payslip.worked_days_line_ids[2].number_of_days, 22.0, places=2)
 
         self.assertAlmostEqual(payslip.worked_days_line_ids[0].number_of_hours, 3.6, places=2)
@@ -3628,8 +3628,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertEqual(len(payslip.line_ids), 31)
 
         self._validate_worked_days(payslip, {
-            'WORK100': (3.0, 11.4, 245.67),
-            'LEAVE281': (3.0, 11.4, 0.0),
+            'WORK100': (1.5, 11.4, 245.67),
+            'LEAVE281': (1.5, 11.4, 0.0),
             'OUT': (20.0, 152.0, 0.0),
         })
 
@@ -3687,10 +3687,10 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertEqual(len(payslip.line_ids), 30)
 
         self._validate_worked_days(payslip, {
-            'WORK100': (20.0, 76.0, 791.61),
-            'LEAVE213': (1.0, 3.8, 40.95),
-            'LEAVE281': (22.0, 83.6, 0.0),
-            'LEAVE500': (1.0, 3.8, 40.95),
+            'WORK100': (10.0, 76.0, 791.61),
+            'LEAVE213': (0.5, 3.8, 40.95),
+            'LEAVE281': (11.0, 83.6, 0.0),
+            'LEAVE500': (0.5, 3.8, 40.95),
         })
 
         payslip_results = {'BASIC': 873.51, 'SALARY': 873.51, 'ONSS': -114.17, 'EmpBonus.1': 94.87, 'ONSSTOTAL': 19.3, 'ATN.CAR': 150.53, 'GROSSIP': 1004.74, 'IP.PART': -174.7, 'GROSS': 830.04, 'P.P': 0.0, 'P.P.DED': 0.0, 'PPTOTAL': 0.0, 'ATN.CAR.2': -150.53, 'M.ONSS': 0.0, 'MEAL_V_EMP': -21.8, 'CAR.PRIV': 76.25, 'REP.FEES': 279.31, 'REP.FEES.VOLATILE': 59.85, 'IP': 174.7, 'IP.DED': -13.1, 'NET': 1234.71, 'REMUNERATION': 698.81, 'ONSSEMPLOYERBASIC': 218.55, 'ONSSEMPLOYERFFE': 1.14, 'ONSSEMPLOYERMFFE': 0.87, 'ONSSEMPLOYERCPAE': 2.01, 'ONSSEMPLOYERRESTREINT': 14.76, 'ONSSEMPLOYERUNEMP': 0.87, 'ONSSEMPLOYER': 238.21, 'CO2FEE': 21.16}
@@ -6349,7 +6349,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         payslip = self._generate_payslip(datetime.date(2023, 3, 1), datetime.date(2023, 3, 31))
 
         wds = payslip.worked_days_line_ids.sorted("number_of_hours")
-        self.assertAlmostEqual(wds[0].number_of_days, 1, places=2)
+        self.assertAlmostEqual(wds[0].number_of_days, 0.5, places=2)
         self.assertAlmostEqual(wds[0].number_of_hours, 5.75, places=2)
         self.assertAlmostEqual(wds[0].amount, 43.83, places=2)
         self.assertEqual(wds[0].work_entry_type_id.code, "LEAVE110")

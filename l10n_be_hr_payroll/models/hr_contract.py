@@ -492,11 +492,11 @@ class HrContract(models.Model):
                 else:
                     number_of_days = 1 # If not supposed to work in calendar attendances, then there
                                        # are not time offs
-                work_data[('full', work_entry_type_id)][0] += number_of_days
-                work_data[('full', work_entry_type_id)][1] += duration_sum
+                work_data['full', work_entry_type_id][0] += number_of_days
+                work_data['full', work_entry_type_id][1] += duration_sum
             else:
-                work_data[('half', work_entry_type_id)][0] += 1
-                work_data[('half', work_entry_type_id)][1] += duration_sum
+                work_data['half', work_entry_type_id][0] += 0.5
+                work_data['half', work_entry_type_id][1] += duration_sum
 
         # Second, find work entry that exceeds interval and compute right duration.
         work_entries = self.env['hr.work.entry'].search(self._get_work_hours_domain(date_from, date_to, domain=domain, inside=False))
