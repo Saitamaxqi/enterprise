@@ -9,8 +9,10 @@
     'description': " ",  # Non-empty string to avoid loading the README file.
     'depends': ['account_sepa_direct_debit', 'account_payment', 'payment_custom'],
     'data': [
+        'report/empty_mandate_report.xml',
         'views/payment_provider_views.xml',
         'views/payment_sepa_direct_debit_templates.xml',
+        'views/sdd_mandate_views.xml',
 
         'data/ir_cron.xml',
         'data/mail_template_data.xml',

@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import _, fields, models
+from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 
 from odoo.addons.payment import utils as payment_utils
@@ -9,7 +9,21 @@ from odoo.addons.payment import utils as payment_utils
 class PaymentTransaction(models.Model):
     _inherit = 'payment.transaction'
 
-    mandate_id = fields.Many2one(comodel_name='sdd.mandate')
+    mandate_id = fields.Many2one(comodel_name='sdd.mandate', index=True)
+
+    # === CRUD METHODS === #
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        txs = super().create(vals_list)
+        sepa_txs = txs.filtered(
+            lambda t: t.provider_code == 'custom'
+            and t.provider_id.custom_mode == 'sepa_direct_debit'
+            and t.token_id.sdd_mandate_id
+        )
+        for tx in sepa_txs:
+            tx.mandate_id = tx.token_id.sdd_mandate_id
+        return txs
 
     #=== BUSINESS METHODS ===#
 
@@ -114,7 +128,8 @@ class PaymentTransaction(models.Model):
                 existing_token
                 or tx.provider_id._sdd_create_token_for_mandate(tx.partner_id, tx.mandate_id)
             )
-            tx.mandate_id._confirm()
+            if tx.mandate_id.state == 'draft':
+                tx.mandate_id._confirm()
         return confirmed_txs
 
     def _get_communication(self):
