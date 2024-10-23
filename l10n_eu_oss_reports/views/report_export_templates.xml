@@ -15,7 +15,7 @@
                      <ns2:IntNumber t-att-issuedBy="IntNumber[:2]" t-if="IntNumber" t-out="IntNumber[2:]"/>
                   </ns2:IOSSNumbers>
                   <ns2:VoesNumber t-elif="VoesNumber" t-att-issuedBy="VoesNumber[:2]" t-esc="VoesNumber[2:]"/>
-                  <ns2:VATNumber t-elif="PartnerVATNumber" t-att-issuedBy="PartnerVATNumber[:2]" t-esc="PartnerVATNumber[2:]"/>
+                  <ns2:VATNumber t-elif="VATNumber" t-att-issuedBy="VATNumber[:2]" t-esc="VATNumber[2:]"/>
                </ns0:Trader_ID>
                <ns0:Period>
                   <ns2:Year><t t-out="Year"/></ns2:Year>
@@ -30,9 +30,6 @@
                      <t t-foreach="country_value" t-as="line" t-if="line['tax_amt']">
                         <ns2:OSSDeclarationRows t-att-SequenceNumber="line_index + 1">
                            <ns2:SupplyType t-out="line['supply_type']"/>
-                           <ns2:FixedEstablishment t-if="id_number">
-                              <ns2:VATIdentificationNumber t-att-issuedBy="id_number[:2]" t-out="id_number[2:]"/>
-                           </ns2:FixedEstablishment>
                            <ns2:VatRateType t-att-type="line['rate_type']" t-out="'{:.2f}'.format(line['tax'].amount)"/>
                            <ns2:VatAmount t-att-currency="line['currency'].name" t-out="line['tax_amt']"/>
                            <ns2:TaxableAmount t-att-currency="line['currency'].name" t-out="line['net_amt']"/>
