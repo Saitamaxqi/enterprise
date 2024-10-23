@@ -48,6 +48,9 @@ export class PivotAutofillPlugin extends UIPlugin {
             this.getters.getActiveSheetId(),
             tokens
         );
+        if (args.some((arg) => arg === undefined)) {
+            return formula;
+        }
         const evaluatedArgs = args.map((arg) => arg.toString());
         const pivotId = this.getters.getPivotId(evaluatedArgs[0]);
         if (!pivotId) {

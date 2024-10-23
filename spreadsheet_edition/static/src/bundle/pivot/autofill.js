@@ -4,6 +4,25 @@ import { Component } from "@odoo/owl";
 import { containsReferences } from "@spreadsheet/helpers/helpers";
 
 const { autofillModifiersRegistry, autofillRulesRegistry } = spreadsheet.registries;
+const tokenize = spreadsheet.tokenize;
+const { getNumberOfPivotFunctions } = spreadsheet.helpers;
+
+function isOdooPivotFormula(formula, getters) {
+    const tokens = tokenize(formula);
+    if (getNumberOfPivotFunctions(tokens) !== 1) {
+        return false;
+    }
+    const { args } = getters.getFirstPivotFunction(getters.getActiveSheetId(), tokens);
+    const argPivotId = args.length > 0 && args[0]?.toString();
+    if (!argPivotId) {
+        return false;
+    }
+    const pivotId = getters.getPivotId(args[0].toString());
+    if (!pivotId) {
+        return false;
+    }
+    return getters.getPivotCoreDefinition(pivotId).type === "ODOO";
+}
 
 //--------------------------------------------------------------------------
 // Autofill Component
@@ -37,6 +56,9 @@ autofillRulesRegistry
 autofillModifiersRegistry
     .add("PIVOT_UPDATER", {
         apply: (rule, data, getters, direction) => {
+            if (!isOdooPivotFormula(data.cell.content, getters)) {
+                return { cellData: data.cell, tooltip: undefined };
+            }
             rule.current += rule.increment;
             let isColumn;
             let steps;

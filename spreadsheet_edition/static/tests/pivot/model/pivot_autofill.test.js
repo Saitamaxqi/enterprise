@@ -2,7 +2,7 @@ import { defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
 import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import * as spreadsheet from "@odoo/o-spreadsheet";
-const { toCartesian } = spreadsheet.helpers;
+const { toCartesian, toZone } = spreadsheet.helpers;
 import {
     autofill,
     selectCell,
@@ -13,6 +13,7 @@ import {
 } from "@spreadsheet/../tests/helpers/commands";
 import { getCellFormula, getCell } from "@spreadsheet/../tests/helpers/getters";
 import { createSpreadsheetWithPivot } from "@spreadsheet/../tests/helpers/pivot";
+import { createModelFromGrid } from "@spreadsheet/../tests/helpers/model";
 import { patchTranslations } from "@web/../tests/web_test_helpers";
 
 describe.current.tags("headless");
@@ -153,6 +154,33 @@ test("Autofill with references works like any regular function (no custom autofi
     model.dispatch("AUTOFILL_SELECT", { col: 0, row: 1 });
     model.dispatch("AUTOFILL");
     expect(getCellFormula(model, "A2")).toBe(`=PIVOT.VALUE(1,"probability","bar",B3,"foo",$C$3)`);
+});
+
+test("Autofill non-odoo pivot should copy the formula", function () {
+    patchTranslations();
+    const grid = {
+        A1: "Customer",   B1: "Price", C1: `=PIVOT.VALUE(1, "Price")`,
+        A2: "Alice",      B2: "10",
+        A3: "",           B3: "20",
+        A4: "Olaf",       B4: "30",
+    }
+    const model = createModelFromGrid(grid);
+    const pivot = {
+        name: "Pivot",
+        type: "SPREADSHEET",
+        dataSet: {
+            zone: toZone("A1:B4"),
+            sheetId: model.getters.getActiveSheetId(),
+        },
+        rows: [{ fieldName: "Customer", order: "asc" }],
+        columns: [],
+        measures: [{ id: "price", fieldName: "Price", aggregator: "sum" }],
+    }
+    model.dispatch("ADD_PIVOT", { pivot, pivotId: "1" });
+    selectCell(model, "C1");
+    model.dispatch("AUTOFILL_SELECT", { col: 2, row: 1 });
+    model.dispatch("AUTOFILL");
+    expect(getCellFormula(model, "C2")).toBe(`=PIVOT.VALUE(1, "Price")`);
 });
 
 test("Can autofill positional col headers horizontally", async () => {
