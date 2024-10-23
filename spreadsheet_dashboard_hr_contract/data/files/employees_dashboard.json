@@ -620,8 +620,8 @@
                         },
                         "type": "scorecard",
                         "background": "#EFF6FF",
-                        "baseline": "Data!C13",
-                        "keyValue": "Data!B13",
+                        "baseline": "Data!C10",
+                        "keyValue": "Data!B10",
                         "humanize": false
                     }
                 },
@@ -643,8 +643,8 @@
                         },
                         "type": "scorecard",
                         "background": "#EFF6FF",
-                        "baseline": "Data!E9",
-                        "keyValue": "Data!D3",
+                        "baseline": "Data!C7",
+                        "keyValue": "Data!B7",
                         "humanize": false
                     }
                 },
@@ -716,7 +716,7 @@
         {
             "id": "0467c29d-1d03-4f8e-a8f0-d90c86e0bb6b",
             "name": "Data",
-            "colNumber": 38,
+            "colNumber": 34,
             "rowNumber": 1113,
             "rows": {},
             "cols": {
@@ -754,27 +754,18 @@
                     "content": "=_t(\"Turnover rate\")"
                 },
                 "A6": {
-                    "content": "=_t(\"Contracts\")"
-                },
-                "A7": {
                     "content": "=_t(\"New contracts\")"
                 },
+                "A7": {
+                    "content": "=_t(\"Running and new contracts\")"
+                },
                 "A8": {
-                    "content": "=_t(\"Running contracts\")"
-                },
-                "A9": {
-                    "content": "=_t(\"New + Running\")"
-                },
-                "A10": {
                     "content": "=_t(\"Expired contracts\")"
                 },
-                "A11": {
-                    "content": "=_t(\"Cancelled contracts\")"
-                },
-                "A12": {
+                "A9": {
                     "content": "=_t(\"Total Duration\")"
                 },
-                "A13": {
+                "A10": {
                     "content": "=_t(\"Avg Duration\")"
                 },
                 "A16": {
@@ -829,28 +820,19 @@
                     "content": "=IFERROR(((B4+B3)/2)/C2)"
                 },
                 "B6": {
-                    "content": "=R28+T28-V28-X28"
+                    "content": "=Q28"
                 },
                 "B7": {
-                    "content": "=S28"
+                    "content": "=Q2-S2"
                 },
                 "B8": {
-                    "content": "=R28"
+                    "content": "=S28"
                 },
                 "B9": {
-                    "content": "=B7+B8"
-                },
-                "B10": {
-                    "content": "=U28"
-                },
-                "B11": {
-                    "content": "=W28"
-                },
-                "B12": {
                     "content": "=PIVOT.VALUE(13,\"age_sum\")"
                 },
-                "B13": {
-                    "content": "=B12/(R28+V28)"
+                "B10": {
+                    "content": "=B9/(Q2+S2)"
                 },
                 "B15": {
                     "content": "=PIVOT.HEADER(10)"
@@ -907,22 +889,13 @@
                     "content": "=P27"
                 },
                 "C6": {
-                    "content": "=PIVOT.VALUE(9,\"__count\")"
+                    "content": "=Q27"
                 },
                 "C7": {
-                    "content": "=S27"
+                    "content": "=R27-T27"
                 },
                 "C8": {
-                    "content": "=R27"
-                },
-                "C9": {
-                    "content": "=C7+C8"
-                },
-                "C10": {
-                    "content": "=U27"
-                },
-                "C11": {
-                    "content": "=W27"
+                    "content": "=S27"
                 },
                 "C17": {
                     "content": "=iferror(B17/$B$27)"
@@ -984,15 +957,6 @@
                 "D10": {
                     "content": "=FORMAT.LARGE.NUMBER(B10)"
                 },
-                "D11": {
-                    "content": "=FORMAT.LARGE.NUMBER(B11)"
-                },
-                "D12": {
-                    "content": "=FORMAT.LARGE.NUMBER(B12)"
-                },
-                "D13": {
-                    "content": "=FORMAT.LARGE.NUMBER(B13)"
-                },
                 "E1": {
                     "content": "Previous period"
                 },
@@ -1021,16 +985,7 @@
                     "content": "=FORMAT.LARGE.NUMBER(C9)"
                 },
                 "E10": {
-                    "content": "=FORMAT.LARGE.NUMBER(C10)"
-                },
-                "E11": {
-                    "content": "=FORMAT.LARGE.NUMBER(C11)"
-                },
-                "E12": {
-                    "content": "=FORMAT.LARGE.NUMBER(C12)"
-                },
-                "E13": {
-                    "content": "=iferror(FORMAT.LARGE.NUMBER(C13),\" \")"
+                    "content": "=iferror(FORMAT.LARGE.NUMBER(C10),\" \")"
                 },
                 "I4": {
                     "content": "=K4"
@@ -1429,7 +1384,7 @@
                     "content": "=M27+L28"
                 },
                 "N2": {
-                    "content": "=PIVOT.VALUE(22,\"__count\")-PIVOT.VALUE(22,\"__count\",\"departure_date:month\",\"false\")"
+                    "content": "=PIVOT.VALUE(22,\"__count\")"
                 },
                 "N3": {
                     "content": "Departure"
@@ -1669,85 +1624,85 @@
                     "content": "=IFERROR(((L28+N28)/2)/(M27-O27))"
                 },
                 "Q2": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\")"
+                    "content": "=PIVOT.VALUE(23,\"__count\")"
                 },
                 "Q3": {
-                    "content": "Contracts "
+                    "content": "Contract started "
                 },
                 "Q4": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I4)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I4)"
                 },
                 "Q5": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I5)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I5)"
                 },
                 "Q6": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I6)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I6)"
                 },
                 "Q7": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I7)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I7)"
                 },
                 "Q8": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I8)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I8)"
                 },
                 "Q9": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I9)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I9)"
                 },
                 "Q10": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I10)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I10)"
                 },
                 "Q11": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I11)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I11)"
                 },
                 "Q12": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I12)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I12)"
                 },
                 "Q13": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I13)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I13)"
                 },
                 "Q14": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I14)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I14)"
                 },
                 "Q15": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I15)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I15)"
                 },
                 "Q16": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I16)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I16)"
                 },
                 "Q17": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I17)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I17)"
                 },
                 "Q18": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I18)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I18)"
                 },
                 "Q19": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I19)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I19)"
                 },
                 "Q20": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I20)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I20)"
                 },
                 "Q21": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I21)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I21)"
                 },
                 "Q22": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I22)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I22)"
                 },
                 "Q23": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I23)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I23)"
                 },
                 "Q24": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I24)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I24)"
                 },
                 "Q25": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I25)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I25)"
                 },
                 "Q26": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I26)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I26)"
                 },
                 "Q27": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I27)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I27)"
                 },
                 "Q28": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"open\",\"date_start:month\",I28)"
+                    "content": "=PIVOT.VALUE(23,\"__count\",\"date_start:month\",I28)"
                 },
                 "R2": {
                     "content": "=Q2-sum(Q4:Q28)"
@@ -1831,85 +1786,85 @@
                     "content": "=R27+Q28"
                 },
                 "S2": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\")"
+                    "content": "=PIVOT.VALUE(25,\"__count\")"
                 },
                 "S3": {
-                    "content": "New Contracts "
+                    "content": "Contract ended"
                 },
                 "S4": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I4)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I4)"
                 },
                 "S5": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I5)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I5)"
                 },
                 "S6": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I6)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I6)"
                 },
                 "S7": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I7)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I7)"
                 },
                 "S8": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I8)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I8)"
                 },
                 "S9": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I9)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I9)"
                 },
                 "S10": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I10)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I10)"
                 },
                 "S11": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I11)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I11)"
                 },
                 "S12": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I12)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I12)"
                 },
                 "S13": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I13)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I13)"
                 },
                 "S14": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I14)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I14)"
                 },
                 "S15": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I15)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I15)"
                 },
                 "S16": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I16)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I16)"
                 },
                 "S17": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I17)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I17)"
                 },
                 "S18": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I18)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I18)"
                 },
                 "S19": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I19)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I19)"
                 },
                 "S20": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I20)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I20)"
                 },
                 "S21": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I21)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I21)"
                 },
                 "S22": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I22)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I22)"
                 },
                 "S23": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I23)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I23)"
                 },
                 "S24": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I24)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I24)"
                 },
                 "S25": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I25)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I25)"
                 },
                 "S26": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I26)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I26)"
                 },
                 "S27": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I27)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I27)"
                 },
                 "S28": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"draft\",\"date_start:month\",I28)"
+                    "content": "=PIVOT.VALUE(25,\"__count\",\"date_end:month\",I28)"
                 },
                 "T2": {
                     "content": "=S2-sum(S4:S28)"
@@ -1991,336 +1946,12 @@
                 },
                 "T28": {
                     "content": "=T27+S28"
-                },
-                "U2": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\")"
-                },
-                "U3": {
-                    "content": "Expired"
-                },
-                "U4": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I4)"
-                },
-                "U5": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I5)"
-                },
-                "U6": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I6)"
-                },
-                "U7": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I7)"
-                },
-                "U8": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I8)"
-                },
-                "U9": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I9)"
-                },
-                "U10": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I10)"
-                },
-                "U11": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I11)"
-                },
-                "U12": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I12)"
-                },
-                "U13": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I13)"
-                },
-                "U14": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I14)"
-                },
-                "U15": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I15)"
-                },
-                "U16": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I16)"
-                },
-                "U17": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I17)"
-                },
-                "U18": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I18)"
-                },
-                "U19": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I19)"
-                },
-                "U20": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I20)"
-                },
-                "U21": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I21)"
-                },
-                "U22": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I22)"
-                },
-                "U23": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I23)"
-                },
-                "U24": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I24)"
-                },
-                "U25": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I25)"
-                },
-                "U26": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I26)"
-                },
-                "U27": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I27)"
-                },
-                "U28": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"close\",\"date_start:month\",I28)"
-                },
-                "V2": {
-                    "content": "=U2-sum(U4:U28)"
-                },
-                "V3": {
-                    "content": "Cumul"
-                },
-                "V4": {
-                    "content": "=V2+U4"
-                },
-                "V5": {
-                    "content": "=V4+U5"
-                },
-                "V6": {
-                    "content": "=V5+U6"
-                },
-                "V7": {
-                    "content": "=V6+U7"
-                },
-                "V8": {
-                    "content": "=V7+U8"
-                },
-                "V9": {
-                    "content": "=V8+U9"
-                },
-                "V10": {
-                    "content": "=V9+U10"
-                },
-                "V11": {
-                    "content": "=V10+U11"
-                },
-                "V12": {
-                    "content": "=V11+U12"
-                },
-                "V13": {
-                    "content": "=V12+U13"
-                },
-                "V14": {
-                    "content": "=V13+U14"
-                },
-                "V15": {
-                    "content": "=V14+U15"
-                },
-                "V16": {
-                    "content": "=V15+U16"
-                },
-                "V17": {
-                    "content": "=V16+U17"
-                },
-                "V18": {
-                    "content": "=V17+U18"
-                },
-                "V19": {
-                    "content": "=V18+U19"
-                },
-                "V20": {
-                    "content": "=V19+U20"
-                },
-                "V21": {
-                    "content": "=V20+U21"
-                },
-                "V22": {
-                    "content": "=V21+U22"
-                },
-                "V23": {
-                    "content": "=V22+U23"
-                },
-                "V24": {
-                    "content": "=V23+U24"
-                },
-                "V25": {
-                    "content": "=V24+U25"
-                },
-                "V26": {
-                    "content": "=V25+U26"
-                },
-                "V27": {
-                    "content": "=V26+U27"
-                },
-                "V28": {
-                    "content": "=V27+U28"
-                },
-                "W2": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\")"
-                },
-                "W3": {
-                    "content": "Cancelled"
-                },
-                "W4": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I4)"
-                },
-                "W5": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I5)"
-                },
-                "W6": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I6)"
-                },
-                "W7": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I7)"
-                },
-                "W8": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I8)"
-                },
-                "W9": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I9)"
-                },
-                "W10": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I10)"
-                },
-                "W11": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I11)"
-                },
-                "W12": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I12)"
-                },
-                "W13": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I13)"
-                },
-                "W14": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I14)"
-                },
-                "W15": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I15)"
-                },
-                "W16": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I16)"
-                },
-                "W17": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I17)"
-                },
-                "W18": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I18)"
-                },
-                "W19": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I19)"
-                },
-                "W20": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I20)"
-                },
-                "W21": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I21)"
-                },
-                "W22": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I22)"
-                },
-                "W23": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I23)"
-                },
-                "W24": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I24)"
-                },
-                "W25": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I25)"
-                },
-                "W26": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I26)"
-                },
-                "W27": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I27)"
-                },
-                "W28": {
-                    "content": "=PIVOT.VALUE(23,\"__count\",\"state\",\"cancel\",\"date_start:month\",I28)"
-                },
-                "X2": {
-                    "content": "=W2-sum(W4:W28)"
-                },
-                "X3": {
-                    "content": "Cumul"
-                },
-                "X4": {
-                    "content": "=X2+W4"
-                },
-                "X5": {
-                    "content": "=X4+W5"
-                },
-                "X6": {
-                    "content": "=X5+W6"
-                },
-                "X7": {
-                    "content": "=X6+W7"
-                },
-                "X8": {
-                    "content": "=X7+W8"
-                },
-                "X9": {
-                    "content": "=X8+W9"
-                },
-                "X10": {
-                    "content": "=X9+W10"
-                },
-                "X11": {
-                    "content": "=X10+W11"
-                },
-                "X12": {
-                    "content": "=X11+W12"
-                },
-                "X13": {
-                    "content": "=X12+W13"
-                },
-                "X14": {
-                    "content": "=X13+W14"
-                },
-                "X15": {
-                    "content": "=X14+W15"
-                },
-                "X16": {
-                    "content": "=X15+W16"
-                },
-                "X17": {
-                    "content": "=X16+W17"
-                },
-                "X18": {
-                    "content": "=X17+W18"
-                },
-                "X19": {
-                    "content": "=X18+W19"
-                },
-                "X20": {
-                    "content": "=X19+W20"
-                },
-                "X21": {
-                    "content": "=X20+W21"
-                },
-                "X22": {
-                    "content": "=X21+W22"
-                },
-                "X23": {
-                    "content": "=X22+W23"
-                },
-                "X24": {
-                    "content": "=X23+W24"
-                },
-                "X25": {
-                    "content": "=X24+W25"
-                },
-                "X26": {
-                    "content": "=X25+W26"
-                },
-                "X27": {
-                    "content": "=X26+W27"
-                },
-                "X28": {
-                    "content": "=X27+W28"
                 }
             },
             "styles": {
-                "A2:A13": 5,
+                "A2:A10": 5,
                 "B1:E1": 5,
-                "L3:X3": 5,
+                "L3:T3": 5,
                 "A15:A16": 6,
                 "M2": 6,
                 "M4:M28": 6,
@@ -2330,27 +1961,21 @@
                 "R4:R28": 6,
                 "T2": 6,
                 "T4:T28": 6,
-                "V2": 6,
-                "V4:V28": 6,
-                "X2": 6,
-                "X4:X28": 6,
                 "A17:A27": 7,
                 "B15": 7,
                 "B2:C2": 8,
-                "B3:C13": 9,
-                "D2:E13": 9,
+                "B3:C10": 9,
+                "D2:E10": 9,
                 "B16": 10
             },
             "formats": {
                 "B5": 1,
                 "D5:E5": 1,
                 "P4:P28": 1,
-                "B12:B13": 2,
+                "B9:B10": 2,
                 "I4:I28": 3
             },
-            "borders": {
-                "A9": 10
-            },
+            "borders": {},
             "conditionalFormats": [],
             "figures": [],
             "tables": [],
@@ -2513,12 +2138,6 @@
                 "style": "thick",
                 "color": "#FFFFFF"
             }
-        },
-        "10": {
-            "left": {
-                "style": "thin",
-                "color": "#2D7E84"
-            }
         }
     },
     "revisionId": "START_REVISION",
@@ -2663,55 +2282,6 @@
                 }
             ]
         },
-        "9": {
-            "type": "ODOO",
-            "fieldMatching": {
-                "c565eee4-374b-4779-8c12-f59634a490bf": {
-                    "chain": "department_id",
-                    "type": "many2one"
-                },
-                "d9698d62-24b9-4afe-b55f-371ea9c9cb19": {
-                    "chain": "first_contract_date",
-                    "type": "date",
-                    "offset": 0
-                },
-                "4b226847-bd33-4c77-8f0f-69c77b04b898": {
-                    "chain": "job_id",
-                    "type": "many2one"
-                },
-                "50cd1288-ab3f-4ac2-ad27-74a87954b81b": {
-                    "chain": "company_id",
-                    "type": "many2one"
-                }
-            },
-            "context": {
-                "search_default_group_by_state": 1
-            },
-            "domain": [
-                [
-                    "employee_id",
-                    "!=",
-                    false
-                ]
-            ],
-            "id": "9",
-            "measures": [
-                {
-                    "id": "__count",
-                    "fieldName": "__count"
-                }
-            ],
-            "model": "hr.contract",
-            "name": "Employee Contract by Status",
-            "sortedColumn": null,
-            "formulaId": "9",
-            "columns": [],
-            "rows": [
-                {
-                    "fieldName": "state"
-                }
-            ]
-        },
         "10": {
             "type": "ODOO",
             "fieldMatching": {
@@ -2802,16 +2372,8 @@
             "id": "13",
             "measures": [
                 {
-                    "id": "__count",
-                    "fieldName": "__count"
-                },
-                {
                     "id": "age_sum",
                     "fieldName": "age_sum"
-                },
-                {
-                    "id": "count_new_employee",
-                    "fieldName": "count_new_employee"
                 }
             ],
             "model": "hr.contract.employee.report",
@@ -2845,7 +2407,16 @@
             "context": {
                 "chat_icon": true
             },
-            "domain": [],
+            "domain": [
+                [
+                    "active",
+                    "in",
+                    [
+                        true,
+                        false
+                    ]
+                ]
+            ],
             "id": "21",
             "measures": [
                 {
@@ -2854,7 +2425,7 @@
                 }
             ],
             "model": "hr.employee",
-            "name": "New Employees Over Time by First Contract Date (Month)",
+            "name": "Employees first contract date",
             "sortedColumn": null,
             "formulaId": "21",
             "columns": [],
@@ -2886,16 +2457,19 @@
                 "chat_icon": true
             },
             "domain": [
-                "|",
+                "&",
                 [
-                    "active",
-                    "=",
-                    true
+                    "departure_date",
+                    "!=",
+                    false
                 ],
                 [
                     "active",
-                    "=",
-                    false
+                    "in",
+                    [
+                        true,
+                        false
+                    ]
                 ]
             ],
             "id": "22",
@@ -2906,7 +2480,7 @@
                 }
             ],
             "model": "hr.employee",
-            "name": "New Employees Over Time by Departure Date (Month)",
+            "name": "Employees departures",
             "sortedColumn": null,
             "formulaId": "22",
             "columns": [],
@@ -2936,10 +2510,16 @@
             },
             "context": {},
             "domain": [
+                "&",
                 [
                     "employee_id",
                     "!=",
                     false
+                ],
+                [
+                    "state",
+                    "!=",
+                    "cancel"
                 ]
             ],
             "id": "23",
@@ -2950,22 +2530,82 @@
                 }
             ],
             "model": "hr.contract",
-            "name": "Employee Contract by Status",
+            "name": "All contract start date",
             "sortedColumn": null,
             "formulaId": "23",
-            "columns": [],
-            "rows": [
+            "columns": [
                 {
-                    "fieldName": "state"
-                },
+                    "fieldName": "date_end",
+                    "order": "asc",
+                    "granularity": "month"
+                }
+            ],
+            "rows": [
                 {
                     "fieldName": "date_start",
                     "granularity": "month"
                 }
             ]
+        },
+        "a63fe76c-8dba-4924-a6db-a375eb629bfd": {
+            "type": "ODOO",
+            "fieldMatching": {
+                "d9698d62-24b9-4afe-b55f-371ea9c9cb19": {
+                    "chain": "date_end",
+                    "type": "date",
+                    "offset": 0
+                },
+                "4b226847-bd33-4c77-8f0f-69c77b04b898": {
+                    "chain": "job_id",
+                    "type": "many2one"
+                },
+                "50cd1288-ab3f-4ac2-ad27-74a87954b81b": {
+                    "chain": "company_id",
+                    "type": "many2one"
+                }
+            },
+            "context": {},
+            "domain": [
+                "&",
+                "&",
+                [
+                    "employee_id",
+                    "!=",
+                    false
+                ],
+                [
+                    "date_end",
+                    "!=",
+                    false
+                ],
+                [
+                    "state",
+                    "=",
+                    "close"
+                ]
+            ],
+            "id": "23",
+            "measures": [
+                {
+                    "id": "__count",
+                    "fieldName": "__count"
+                }
+            ],
+            "model": "hr.contract",
+            "name": "Expiration contract dates",
+            "sortedColumn": null,
+            "formulaId": "25",
+            "columns": [],
+            "rows": [
+                {
+                    "fieldName": "date_end",
+                    "order": "asc",
+                    "granularity": "month"
+                }
+            ]
         }
     },
-    "pivotNextId": 25,
+    "pivotNextId": 26,
     "customTableStyles": {},
     "odooVersion": 12,
     "globalFilters": [
@@ -2973,7 +2613,8 @@
             "id": "d9698d62-24b9-4afe-b55f-371ea9c9cb19",
             "type": "date",
             "label": "Date",
-            "rangeType": "from_to"
+            "rangeType": "from_to",
+            "disabledPeriods": []
         },
         {
             "id": "c565eee4-374b-4779-8c12-f59634a490bf",
