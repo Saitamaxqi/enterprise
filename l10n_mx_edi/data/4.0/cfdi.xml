@@ -122,14 +122,14 @@
                         <implocal:RetencionesLocales
                             t-att-ImpLocRetenido="tax_values['local_tax_name']"
                             t-att-Importe="format_float(tax_values['importe'], 2)"
-                            t-att-TasadeRetencion="format_float(tax_values['tasa_o_cuota'], 2)"
+                            t-att-TasadeRetencion="format_float(tax_values['tasade'], 2)"
                         />
                     </t>
                     <t t-foreach="local_traslados_list" t-as="tax_values">
                         <implocal:TrasladosLocales
                             t-att-ImpLocTrasladado="tax_values['local_tax_name']"
                             t-att-Importe="format_float(tax_values['importe'], 2)"
-                            t-att-TasadeTraslado="format_float(tax_values['tasa_o_cuota'], 2)"/>
+                            t-att-TasadeTraslado="format_float(tax_values['tasade'], 2)"/>
                     </t>
                 </implocal:ImpuestosLocales>
             </cfdi:Complemento>

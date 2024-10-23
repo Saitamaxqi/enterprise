@@ -22,9 +22,9 @@
 	</cfdi:Conceptos>
 	<cfdi:Complemento>
 		<implocal:ImpuestosLocales TotaldeRetenciones="1060.00" TotaldeTraslados="640.00" version="1.0">
-			<implocal:RetencionesLocales ImpLocRetenido="Local VAT" Importe="640.00" TasadeRetencion="0.08"/>
-			<implocal:RetencionesLocales ImpLocRetenido="Local VAT" Importe="420.00" TasadeRetencion="0.04"/>
-			<implocal:TrasladosLocales ImpLocTrasladado="Local VAT" Importe="640.00" TasadeTraslado="0.16"/>
+			<implocal:RetencionesLocales ImpLocRetenido="Local VAT" Importe="640.00" TasadeRetencion="8.00"/>
+			<implocal:RetencionesLocales ImpLocRetenido="Local VAT" Importe="420.00" TasadeRetencion="3.50"/>
+			<implocal:TrasladosLocales ImpLocTrasladado="Local VAT" Importe="640.00" TasadeTraslado="16.00"/>
 		</implocal:ImpuestosLocales>
 		<tfd:TimbreFiscalDigital xmlns:tfd="http://www.sat.gob.mx/TimbreFiscalDigital" xsi:schemaLocation="http://www.sat.gob.mx/TimbreFiscalDigital http://www.sat.gob.mx/sitio_internet/cfd/TimbreFiscalDigital/TimbreFiscalDigitalv11.xsd" Version="1.1" UUID="___ignore___" FechaTimbrado="___ignore___" NoCertificadoSAT="___ignore___" RfcProvCertif="___ignore___" SelloCFD="___ignore___" SelloSAT="___ignore___"/>
 	</cfdi:Complemento>
