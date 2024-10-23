@@ -30,7 +30,7 @@ registry.category("web_tour.tours").add('shop_buy_rental_stock_product', {
         },
         { // ensures only one day is selected
             content:  "Select Date field",
-            trigger:  ".o_date_picker .o_highlight_end",
+            trigger:  ".o_date_picker .o_selected",
             run: "click",
         },
         {
