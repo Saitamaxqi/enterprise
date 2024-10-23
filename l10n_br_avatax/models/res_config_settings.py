@@ -114,3 +114,6 @@ class ResConfigSettings(models.TransientModel):
 
     def button_l10n_br_avatax_log(self):
         return self.env['account.external.tax.mixin']._l10n_br_avatax_log()
+
+    def button_l10n_br_avatax_open_company_partner(self):
+        return self.company_id.partner_id._get_records_action()
