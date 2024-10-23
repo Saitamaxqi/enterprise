@@ -130,6 +130,10 @@ export class ListDetailsSidePanel extends Component {
         const result = this.env.model.dispatch("DUPLICATE_ODOO_LIST", {
             listId: this.props.listId,
             newListId,
+            duplicatedListName: _t(
+                "%s (copy)",
+                this.getters.getListDefinition(this.props.listId).name
+            ),
         });
         const msg = result.isSuccessful
             ? _t('List duplicated. Use the "Re-insert list" menu item to insert it in a sheet.')
