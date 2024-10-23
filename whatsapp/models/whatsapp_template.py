@@ -34,7 +34,7 @@ COMMON_WHATSAPP_PHONE_SAFE_FIELDS = {
 class WhatsappTemplate(models.Model):
     _inherit = ['mail.thread']
     _description = 'WhatsApp Template'
-    _order = 'sequence asc, id'
+    _order = 'sequence asc, write_date desc, id'
 
     @api.model
     def _get_default_wa_account_id(self):

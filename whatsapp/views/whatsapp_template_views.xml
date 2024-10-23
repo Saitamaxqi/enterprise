@@ -150,7 +150,10 @@
         <field name="name">whatsapp.template.view.list</field>
         <field name="model">whatsapp.template</field>
         <field name="arch" type="xml">
-            <list string="WhatsApp Template">
+            <!-- The `default_order` is essential here because when a handle widget is used,
+                 the default behavior prioritizes ordering by the field name and ID and it doesn't consider
+                 ordering defined on model level, therfore we should specify the ordering explicitly to the list view. -->
+            <list string="WhatsApp Template" default_order="sequence asc, write_date desc, id asc">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="model_id"/>
