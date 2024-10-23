@@ -3,12 +3,14 @@
 import base64
 import io
 
-from odoo import models, api
+from odoo import models, api, fields
 from PyPDF2 import PdfFileWriter, PdfFileReader
 
 
 class IrAttachment(models.Model):
     _inherit = ['ir.attachment']
+
+    document_ids = fields.One2many('documents.document', 'attachment_id', export_string_translation=False)
 
     @api.model
     def _pdf_split(self, new_files=None, open_files=None):
