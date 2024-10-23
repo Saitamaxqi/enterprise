@@ -49,9 +49,7 @@ class TestHrRecruitmentSign(HttpCase):
             'email': self.applicant.email_from,
         })
         wizard = self.env['hr.recruitment.sign.document.wizard'].create({
-            'applicant_id': self.applicant.id,
-            'partner_id': self.applicant.partner_id.id,
-            'partner_name': self.applicant.partner_name,
+            'applicant_ids': self.applicant.ids,
             'sign_template_ids': self.template,
             'applicant_role_id': self.env.ref('sign.sign_item_role_customer').id,
             'subject': 'Signature Request Test',

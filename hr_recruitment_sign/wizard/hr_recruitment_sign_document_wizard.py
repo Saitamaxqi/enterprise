@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _, Command
@@ -19,9 +18,7 @@ class HrRecruitmentSignDocumentWizard(models.TransientModel):
     def _default_get_template_warning(self):
         return not bool(self._get_sign_template_ids()) and _('No appropriate template could be found, please make sure you configured them properly.')
 
-    applicant_id = fields.Many2one('hr.applicant')
-    partner_id = fields.Many2one(related='applicant_id.partner_id', store=True)
-    partner_name = fields.Char(related='applicant_id.partner_name', readonly=True)
+    applicant_ids = fields.Many2many('hr.applicant', string="Applicants", default=lambda self: self.env.context.get('active_ids', []))
     applicant_role_id = fields.Many2one(
         "sign.item.role",
         string="Applicant Role", required=True,
@@ -95,32 +92,33 @@ class HrRecruitmentSignDocumentWizard(models.TransientModel):
         sign_templates_applicant_ids = self.sign_template_ids.filtered(lambda t: len(t.sign_item_ids.mapped('responsible_id')) == 1)
         sign_templates_both_ids = self.sign_template_ids - sign_templates_applicant_ids
 
-        for sign_template_id in sign_templates_applicant_ids:
-            sign_values.append((
-                sign_template_id,
-                [{
-                    'role_id': self.applicant_role_id.id,
-                    'partner_id': self.partner_id.id
-                }]
-            ))
-        for sign_template_id in sign_templates_both_ids:
-            second_role = sign_template_id.sign_item_ids.responsible_id - self.applicant_role_id
-            sign_values.append((
-                sign_template_id,
-                [{
-                    'role_id': self.applicant_role_id.id,
-                    'partner_id': self.partner_id.id
-                }, {
-                    'role_id': second_role.id,
-                    'partner_id': self.responsible_id.partner_id.id
-                }]
-            ))
+        for applicant in self.applicant_ids:
+            for sign_template_id in sign_templates_applicant_ids:
+                sign_values.append((
+                    sign_template_id, applicant,
+                    [{
+                        'role_id': self.applicant_role_id.id,
+                        'partner_id': applicant.partner_id.id,
+                    }]
+                ))
+            for sign_template_id in sign_templates_both_ids:
+                second_role = sign_template_id.sign_item_ids.responsible_id - self.applicant_role_id
+                sign_values.append((
+                    sign_template_id, applicant,
+                    [{
+                        'role_id': self.applicant_role_id.id,
+                        'partner_id': applicant.partner_id.id
+                    }, {
+                        'role_id': second_role.id,
+                        'partner_id': self.responsible_id.partner_id.id
+                    }]
+                ))
 
         sign_requests = self.sudo().env['sign.request'].create([{
             'template_id': sign_request_values[0].id,
             'request_item_ids': [Command.create({
-                'partner_id': signer['partner_id'],
-                'role_id': signer['role_id'],
+                'partner_id': signer['partner_id'].id,
+                'role_id': self.applicant_role_id.id,
             }) for signer in sign_request_values[1]],
             'reference': _('Signature Request - %s', sign_request_values[0].name),
             'subject': self.subject,
@@ -135,20 +133,21 @@ class HrRecruitmentSignDocumentWizard(models.TransientModel):
         for sign_request in sign_requests:
             sign_request.toggle_favorited()
 
-        if self.responsible_id and sign_templates_both_ids:
-            signatories_text = _('%(partner)s and %(responsible)s are the signatories.', partner=self.partner_id.display_name, responsible=self.responsible_id.display_name)
-        else:
-            signatories_text = _('Only %s has to sign.', self.partner_id.display_name)
-        record_to_post = self.applicant_id
-        record_to_post.message_post_with_source(
-            'hr_recruitment_sign.message_signature_request',
-            render_values={
-                'user_name': self.env.user.display_name,
-                'document_names': self.sign_template_ids.mapped('name'),
-                'signatories_text': signatories_text
-            },
-            subtype_xmlid='mail.mt_comment',
-        )
+        for applicant in self.applicant_ids:
+            if self.responsible_id and sign_templates_both_ids:
+                signatories_text = _('%(partner)s and %(responsible)s are the signatories.', partner=applicant.display_name, responsible=self.responsible_id.display_name)
+            else:
+                signatories_text = _('Only %s has to sign.', applicant.display_name)
+            record_to_post = applicant
+            record_to_post.message_post_with_source(
+                'hr_recruitment_sign.message_signature_request',
+                render_values={
+                    'user_name': self.env.user.display_name,
+                    'document_names': self.sign_template_ids.mapped('name'),
+                    'signatories_text': signatories_text
+                },
+                subtype_xmlid='mail.mt_comment',
+            )
 
         if len(sign_requests) == 1 and self.env.user.id == self.responsible_id.id:
             return sign_requests.go_to_document()

@@ -11,7 +11,6 @@
                     <span class="fa fa-exclamation-triangle"/>
                     <field name="template_warning" nolabel="1" readonly="1"/>
                 </div>
-                <field name="applicant_id" invisible="1"/>
                 <field name="has_both_template" invisible="1"/>
                 <field name="sign_template_responsible_ids" invisible="1"/>
                 <field name="possible_template_ids" invisible="1"/>
@@ -21,7 +20,7 @@
                         context="{'kanban_view_ref': 'sign.sign_template_view_kanban_mobile'}"
                         widget="many2many_tags"
                         force_save="1"/>
-                    <field name="partner_name"/>
+                    <field name="applicant_ids" widget="many2many_avatar_employee" string="Applicants"/>
                 </group>
                 <group invisible="not sign_template_ids" string="Sign Request Options">
                     <field name="applicant_role_id" options="{'no_create': True}"/>

@@ -50,7 +50,7 @@ class SignSendRequest(models.TransientModel):
         if not template:
             return []
         template._check_send_ready()
-        default_signer = self.env.context.get("default_signer_id", self.env.user.partner_id.id)
+        default_signer = self._get_default_signer()
         roles = template.sign_item_ids.responsible_id.sorted()
         signer_ids = []
         user_role_id = self.env['ir.model.data']._xmlid_to_res_id('sign.sign_item_role_user')
@@ -109,6 +109,12 @@ class SignSendRequest(models.TransientModel):
         if self.reminder > 365:
             self.reminder = 365
 
+    def _get_default_signer(self):
+        """
+        Helper method to define default signer (see hr_recruitment_sign/wizard/sign_send_request.py).
+        """
+        return self.env.context.get("default_signer_id", self.env.user.partner_id.id)
+
     @api.onchange('template_id', 'set_sign_order')
     def _onchange_template_id(self):
         self.signer_id = False
@@ -129,7 +135,7 @@ class SignSendRequest(models.TransientModel):
             }) for default_signing_order, role in enumerate(roles)]
         sign_item_role_user = self.env.ref('sign.sign_item_role_user', raise_if_not_found=False)
         if self.env.context.get('sign_directly_without_mail') or sign_item_role_user:
-            default_signer = self.env.context.get("default_signer_id", self.env.user.partner_id.id)
+            default_signer = self._get_default_signer()
             if len(roles) == 1 and signer_ids:
                 signer_ids[0][2]['partner_id'] = default_signer
             elif not roles:

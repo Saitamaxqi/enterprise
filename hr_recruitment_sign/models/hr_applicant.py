@@ -9,26 +9,6 @@ class HrApplicant(models.Model):
 
     sign_request_count = fields.Integer(related="partner_id.signature_count")
 
-    def _send_applicant_sign_request(self):
-        self.ensure_one()
-
-        # if an applicant does not already has associated partner_id create it
-        if not self.partner_id:
-            if not self.partner_name:
-                raise UserError(_('You must define a Contact Name for this applicant.'))
-            self.partner_id = self.env['res.partner'].create({
-                'is_company': False,
-                'name': self.partner_name,
-                'email': self.email_from,
-                'phone': self.partner_phone,
-                'mobile': self.partner_phone,
-            })
-
-        action = self.env['ir.actions.actions']\
-            ._for_xml_id('hr_recruitment_sign.sign_recruitment_wizard_action')
-        action['context'] = {'default_applicant_id': self.id}
-        return action
-
     def open_applicant_sign_requests(self):
         self.ensure_one()
         if self.partner_id:
@@ -45,8 +25,21 @@ class HrApplicant(models.Model):
                 'view_mode': 'kanban,list',
                 'res_model': 'sign.request',
                 'view_ids': [(view_id, 'kanban'), (False, 'list')],
-                'domain': [('id', 'in', request_ids.ids)]
+                'domain': [('id', 'in', request_ids.ids)],
+                'context': {
+                    'applicant_id': self.id,
+                    'active_model': 'hr.applicant',
+                },
             }
+
+    def _open_applicant_sign_requests(self):
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _('Signature Request'),
+            'res_model': 'hr.recruitment.sign.document.wizard',
+            'view_mode': 'form',
+            'target': 'new',
+        }
 
     def _get_employee_create_vals(self):
         vals = super()._get_employee_create_vals()
