@@ -33,7 +33,7 @@ registry.category("web_tour.tours").add("ticket_create_sol_tour", {
         content: "Select the product in the autocomplete dropdown",
         run: "click",
     }, {
-        trigger: ".o_form_button_save",
+        trigger: ".modal .o_form_button_save",
         content: "Save task",
         run: "click",
     },

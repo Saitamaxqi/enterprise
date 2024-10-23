@@ -36,6 +36,7 @@ registry.category("web_tour.tours").add("SettleDueButtonPresent", {
     steps: () =>
         [
             Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
             ProductScreen.clickPartnerButton(),
             PartnerList.clickPartnerOptions("A Partner"),
             PartnerList.checkDropDownItemText("Deposit money"),
@@ -48,6 +49,7 @@ registry.category("web_tour.tours").add("pos_settle_account_due_update_instantly
     steps: () =>
         [
             Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
             ProductScreen.clickPartnerButton(),
             ProductScreen.clickCustomer("A Partner"),
             ProductScreen.addOrderline("Desk Pad", "10"),
