@@ -22,7 +22,7 @@
                         <span t-else="" class="fa fa-lg fa-check"/>
                     </button>
                 </div>
-                <t t-foreach="packagingButtons" t-as="packaging" t-key="packaging.id">
+                <t t-foreach="state.packagingButtons" t-as="packaging" t-key="packaging.id">
                     <div class="col-6">
                         <button t-on-click="() => this._increment(packaging.qty, this.quantity === 1)"
                                 class="btn btn-secondary w-100" t-out="packaging.name"/>

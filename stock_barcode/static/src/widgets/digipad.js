@@ -1,8 +1,9 @@
 import { registry } from "@web/core/registry";
+import { useRecordObserver } from "@web/model/relational_model/utils";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
-import { Component, onWillStart } from "@odoo/owl";
+import { Component, onWillStart, useState } from "@odoo/owl";
 
 export class Digipad extends Component {
     static template = "stock_barcode.DigipadTemplate";
@@ -18,7 +19,6 @@ export class Digipad extends Component {
         const context = this.props.record.evalContext.context;
         this.quantity = data[this.props.fieldToEdit];
         this.value = String(this.quantity);
-        this.precision = 2;
         this.fulfillQuantity =
             this.props.fulfilledAt && !context.hide_qty_to_count ? data[this.props.fulfilledAt] : 0;
         if (context.force_fullfil_quantity) {
@@ -26,6 +26,16 @@ export class Digipad extends Component {
         }
         const field = this.props.record.model.config.fields[this.props.fieldToEdit];
         this.precision = field.digits[1];
+        this.productId = this.props.record.data.product_id[0];
+        this.state = useState({
+            packagingButtons: [],
+        });
+        useRecordObserver(async (record) => {
+            if (this.productId != record.data.product_id[0]) {
+                this.productId = record.data.product_id[0];
+                await this._fetchPackagingButtons();
+            }
+        });
         onWillStart(async () => {
             this.displayUOM = await user.hasGroup("uom.group_uom");
             await this._fetchPackagingButtons();
@@ -102,19 +112,20 @@ export class Digipad extends Component {
      */
     async _fetchPackagingButtons() {
         const record = this.props.record.data;
-        const domain = [["product_id", "=", record.product_id[0]]];
-        if (this.quantityToFulfill) {
-            // Doesn't fetch packaging with a too high quantity.
-            domain.push(["qty", "<=", this.quantityToFulfill]);
+        if (record.product_id[0]) {
+            const domain = [["product_id", "=", record.product_id[0]]];
+            if (this.quantityToFulfill) {
+                // Doesn't fetch packaging with a too high quantity.
+                domain.push(["qty", "<=", this.quantityToFulfill]);
+            }
+            this.state.packagingButtons = await this.orm.searchRead(
+                "product.packaging",
+                domain,
+                ["name", "product_uom_id", "qty"],
+                { limit: 2 }
+            );
         }
-        this.packagingButtons = await this.orm.searchRead(
-            "product.packaging",
-            domain,
-            ["name", "product_uom_id", "qty"],
-            { limit: 2 }
-        );
     }
-
     //--------------------------------------------------------------------------
     // Handlers
     //--------------------------------------------------------------------------

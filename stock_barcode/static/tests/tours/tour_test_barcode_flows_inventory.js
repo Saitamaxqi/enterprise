@@ -995,6 +995,48 @@ registry.category("web_tour.tours").add("test_inventory_serial_product_packaging
     ],
 });
 
+registry.category("web_tour.tours").add("test_inventory_packaging_button", {
+    steps: () => [
+        {
+            trigger: ".o_button_inventory",
+            run: "click",
+        },
+        {
+            trigger: "button.o_add_line",
+            run: "click",
+        },
+        {
+            trigger: ".o_field_widget[name='product_id'] .o_input",
+            run: "click",
+        },
+        {
+            trigger: ".o_field_widget[name='product_id'] .o_input",
+            run: "edit Lovely Product",
+        },
+        {
+            trigger: ".dropdown-item:contains('Lovely Product')",
+            run: "click",
+        },
+        {
+            content: "check that the packaging buttons were updated.",
+            trigger: ".o_digipad_digit_buttons button:contains(LP x15)",
+        },
+        {
+            content: "Add 15 units via the button.",
+            trigger: ".o_digipad_digit_buttons button:contains(LP x15)",
+            run: "click",
+        },
+        {
+            trigger: ".o_save",
+            run: "click",
+        },
+        {
+            content: "Check that the inventory adjustment was registered.",
+            trigger: ".o_barcode_lines .qty-done:contains(15)",
+        },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_inventory_owner_scan_package", {
     steps: () => [
         {
