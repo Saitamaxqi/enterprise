@@ -4,7 +4,6 @@ from datetime import datetime
 from math import ceil
 
 from odoo import api, models, fields, _
-from odoo.exceptions import UserError
 
 
 class L10nBeHrPayrollExportPrisma(models.Model):
@@ -38,10 +37,6 @@ class L10nBeHrPayrollExportPrisma(models.Model):
         eg: '12345678          00001YYYYMMDD0001000101999,99'
         """
         work_entry = we_dotdict.work_entries[0]
-        if not work_entry.work_entry_type_id.prisma_code:
-            raise UserError(_(
-                'Prisma code is missing for work entry type %(work_entry_type)s',
-                work_entry_type=work_entry.work_entry_type_id.name))
         duration = we_dotdict.duration
         return self.company_id.prisma_code + ' ' * 10 + employee.prisma_code.zfill(5) \
             + work_entry.date_start.strftime('%Y%m%d') + '0' \
@@ -51,13 +46,6 @@ class L10nBeHrPayrollExportPrisma(models.Model):
 
     def _generate_export_file(self):
         self.ensure_one()
-        names = [
-            employee.name for employee in self.eligible_employee_line_ids.employee_id
-            if not employee.prisma_code]
-        if names:
-            raise UserError(_(
-                'The following employees do not have a Prisma code: %(names)s',
-                names=', '.join(names)))
         file = ''
         for employee_line in self.eligible_employee_line_ids:
             we_by_day_and_code = employee_line._get_work_entries_by_day_and_code()
@@ -83,3 +71,10 @@ class L10nBeHrPayrollExportPrismaEmployee(models.Model):
     _inherit = 'hr.work.entry.export.employee.mixin'
 
     export_id = fields.Many2one('l10n.be.hr.payroll.export.prisma')
+
+    def _relations_to_check(self):
+        return super()._relations_to_check() + [
+            (self.env._('companies'), 'export_id.company_id.prisma_code'),
+            (self.env._('employees'), 'employee_ids.prisma_code'),
+            (self.env._('work entry types'), 'work_entry_ids.work_entry_type_id.prisma_code'),
+        ]

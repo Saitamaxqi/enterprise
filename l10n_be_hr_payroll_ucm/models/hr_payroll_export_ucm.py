@@ -2,8 +2,7 @@
 
 from datetime import datetime
 
-from odoo import api, models, fields, _
-from odoo.exceptions import UserError
+from odoo import api, models, fields
 
 
 class L10nBeHrPayrollExportUcm(models.Model):
@@ -22,11 +21,6 @@ class L10nBeHrPayrollExportUcm(models.Model):
         Generate a line for the export file.
         """
         ucm_code = work_entry_collection.work_entries[0].work_entry_type_id.ucm_code
-        if not ucm_code:
-            raise UserError(_(
-                'The work entry type %(we)s does not have a UCM code',
-                we=work_entry_collection.work_entries[0].work_entry_type_id
-            ))
         hours = f'{int(work_entry_collection.duration // 3600):02d}'
         hundredth_of_hours = f'{int((work_entry_collection.duration % 3600) // 36):02d}'
         return self.company_id.ucm_company_code + f'{employee.ucm_code:0>5}' \
@@ -35,13 +29,6 @@ class L10nBeHrPayrollExportUcm(models.Model):
 
     def _generate_export_file(self):
         self.ensure_one()
-        names = [
-            employee.name for employee in self.eligible_employee_line_ids.employee_id
-            if not employee.ucm_code]
-        if names:
-            raise UserError(_(
-                'The following employees do not have a ucm code: %(names)s',
-                names=', '.join(names)))
         file = ''
         for employee_line in self.eligible_employee_line_ids:
             we_by_day_and_code = employee_line._get_work_entries_by_day_and_code()
@@ -58,7 +45,7 @@ class L10nBeHrPayrollExportUcm(models.Model):
         }
 
     def _get_name(self):
-        return _('Export to UCM')
+        return self.env._('Export to UCM')
 
 
 class L10nBeHrPayrollExportUcmEmployee(models.Model):
@@ -67,3 +54,10 @@ class L10nBeHrPayrollExportUcmEmployee(models.Model):
     _inherit = ['hr.work.entry.export.employee.mixin']
 
     export_id = fields.Many2one('l10n.be.hr.payroll.export.ucm')
+
+    def _relations_to_check(self):
+        return super()._relations_to_check() + [
+            (self.env._('companies'), 'export_id.company_id.ucm_code'),
+            (self.env._('employees'), 'employee_id.ucm_code'),
+            (self.env._('work entry types'), 'work_entry_ids.work_entry_type_id.ucm_code'),
+        ]

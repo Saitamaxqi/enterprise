@@ -10,6 +10,7 @@
     'depends': ['l10n_be_hr_payroll'],
     'data': [
         'security/ir.model.access.csv',
+        'data/hr_payroll_dashboard_warning_data.xml',
         'views/hr_employee_views.xml',
         'views/hr_work_entry_type_views.xml',
         'views/res_config_settings_views.xml',

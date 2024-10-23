@@ -4,7 +4,6 @@ from datetime import datetime
 from math import ceil
 
 from odoo import api, models, fields, _
-from odoo.exceptions import UserError
 
 
 class L10nBeHrPayrollExportAcerta(models.Model):
@@ -37,14 +36,6 @@ class L10nBeHrPayrollExportAcerta(models.Model):
         """
 
         work_entry = we_dotdict.work_entries[0]
-        if not work_entry.work_entry_type_id.acerta_code:
-            raise UserError(_(
-                'Acerta code is missing for work entry type %(work_entry_type)s',
-                work_entry_type=work_entry.work_entry_type_id.name))
-        if not self.company_id.acerta_code:
-            raise UserError(_(
-                'Acerta Affiliation Number is missing for company: %(company)s',
-                company=self.company_id.name))
         duration = we_dotdict.duration
         return 'KLX1' + self.company_id.acerta_code + contract.acerta_code.zfill(20) \
             + work_entry.date_start.strftime('%d/%m/%Y') + '  '  \
@@ -56,11 +47,6 @@ class L10nBeHrPayrollExportAcerta(models.Model):
         we_by_day_and_code = employee_line._get_work_entries_by_day_and_code()
         employee_entries = ''
         for contract in employee_line.version_ids:
-            if not contract.acerta_code:
-                raise UserError(_(
-                    'Acerta code is missing for contract: %(contract)s',
-                    contract=contract.name
-                ))
             if len(employee_line.version_ids) > 1:
                 we_by_day_and_code_in_contract = {
                     date: we_by_code for date, we_by_code in we_by_day_and_code.items()
@@ -97,3 +83,10 @@ class L10nBeHrPayrollExportAcertaEmployee(models.Model):
     _inherit = 'hr.work.entry.export.employee.mixin'
 
     export_id = fields.Many2one('l10n.be.hr.payroll.export.acerta')
+
+    def _relations_to_check(self):
+        return super()._relations_to_check() + [
+            (self.env._('companies'), 'export_id.company_id.acerta_code'),
+            (self.env._('versions'), 'version_ids.acerta_code'),
+            (self.env._('work entry types'), 'work_entry_ids.work_entry_type_id.acerta_code'),
+        ]

@@ -11,6 +11,7 @@
     'data': [
         'security/ir.model.access.csv',
         # 'views/hr_employee_views.xml',
+        'data/hr_payroll_dashboard_warning_data.xml',
         'views/hr_work_entry_type_views.xml',
         'views/res_config_settings_views.xml',
         'views/hr_payroll_export_partena_views.xml',

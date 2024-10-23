@@ -3,10 +3,9 @@
 from datetime import datetime, timedelta
 from math import ceil
 
-from odoo import api, models, fields, _
-from odoo.exceptions import UserError
+from odoo import api, models, fields
 
-MINIUTES_PER_DAY = 8 * 60
+MINUTES_PER_DAY = 8 * 60
 
 
 class L10nBeHrPayrollExportPartena(models.Model):
@@ -36,7 +35,7 @@ class L10nBeHrPayrollExportPartena(models.Model):
         """
         if work_entry_collection is None:
             partena_code = '---  '
-            duration = MINIUTES_PER_DAY
+            duration = MINUTES_PER_DAY
         else:
             partena_code = work_entry_collection.work_entries[0].work_entry_type_id.partena_code
             duration = ceil(work_entry_collection.duration / 60)  # in minutes
@@ -50,13 +49,6 @@ class L10nBeHrPayrollExportPartena(models.Model):
 
     def _generate_export_file(self):
         self.ensure_one()
-        names = [
-            employee.name for employee in self.eligible_employee_line_ids.employee_id
-            if not employee.partena_code]
-        if names:
-            raise UserError(_(
-                'The following employees do not have a Partena code: %(names)s',
-                names=', '.join(names)))
         file = self._generate_header()
         days_in_period = (self.period_stop - self.period_start).days + 1
         for employee_line in self.eligible_employee_line_ids:
@@ -77,7 +69,7 @@ class L10nBeHrPayrollExportPartena(models.Model):
         }
 
     def _get_name(self):
-        return _('Export to Partena')
+        return self.env._('Export to Partena')
 
 
 class L10nBeHrPayrollExportPartenaEmployee(models.Model):
@@ -86,3 +78,10 @@ class L10nBeHrPayrollExportPartenaEmployee(models.Model):
     _inherit = ['hr.work.entry.export.employee.mixin']
 
     export_id = fields.Many2one('l10n.be.hr.payroll.export.partena')
+
+    def _relations_to_check(self):
+        return super()._relations_to_check() + [
+            (self.env._('companies'), 'export_id.company_id.partena_code'),
+            (self.env._('employees'), 'employee_id.partena_code'),
+            (self.env._('work entry types'), 'work_entry_ids.work_entry_type_id.partena_code'),
+        ]
