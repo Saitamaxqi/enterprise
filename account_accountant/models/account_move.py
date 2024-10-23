@@ -180,13 +180,14 @@ class AccountMove(models.Model):
         """
         Returns the amount to defer for the given period taking into account the deferred method (day/month/full_months).
         """
+        is_valid_period = period_end > line_start and period_end > period_start
         if method == 'day':
             amount_per_day = balance / (line_end - line_start).days
-            return (period_end - period_start).days * amount_per_day if period_end > line_start else 0
+            return (period_end - period_start).days * amount_per_day if is_valid_period else 0
         elif method == "month":
             amount_per_month = balance / self._get_deferred_diff_dates(line_end, line_start)
             nb_months_period = self._get_deferred_diff_dates(period_end, period_start)
-            return nb_months_period * amount_per_month if period_end > line_start and period_end > period_start else 0
+            return nb_months_period * amount_per_month if is_valid_period else 0
         elif method == "full_months":
             line_diff = self._get_deferred_diff_dates(line_end, line_start)
             period_diff = self._get_deferred_diff_dates(period_end, period_start)
@@ -203,7 +204,7 @@ class AccountMove(models.Model):
                     period_diff = math.floor(period_diff)
                 amount_per_month = balance / line_diff
                 amount = period_diff * amount_per_month
-            return amount if period_end > line_start and period_end > period_start else 0
+            return amount if is_valid_period else 0
 
     @api.model
     def _get_deferred_amounts_by_line(self, lines, periods, deferred_type):

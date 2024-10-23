@@ -392,6 +392,25 @@ class TestDeferredReports(TestAccountReportsCommon, HttpCase):
             options,
         )
 
+        # April 2023
+        options = self.get_options('2023-04-01', '2023-04-30')
+        lines = self.deferred_expense_report._get_lines(options)
+        self.assertLinesValues(
+
+            # ruff: noqa: E202
+
+            lines,
+            #    Name                Total          Not Started   Before    Current   Later
+            [    0,                  1,             2,            3,        4,        5         ],
+            [
+                ('EXP0 Expense 0',   1000 + 1050,   0,            1500,     550,      0         ),
+                ('EXP1 Expense 1',   1225,          0,            1050,     175,      0         ),
+                ('EXP2 Expense 2',   1680 + 225,    0,            1400,     505,      0         ),
+                ('Total',            5180,          0,            3950,     1230,     0         ),
+            ],
+            options,
+        )
+
         # Q1 2023
         options = self.get_options('2023-01-01', '2023-03-31')
         lines = self.deferred_expense_report._get_lines(options)
