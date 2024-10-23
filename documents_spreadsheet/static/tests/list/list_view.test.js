@@ -43,6 +43,7 @@ import {
     pagerNext,
     patchWithCleanup,
     toggleActionMenu,
+    makeServerError,
 } from "@web/../tests/web_test_helpers";
 import { registry } from "@web/core/registry";
 import { user } from "@web/core/user";
@@ -171,6 +172,33 @@ test("json fields are not exported", async () => {
 test("list side panel is open at insertion", async function () {
     await createSpreadsheetFromListView();
     expect(".o-listing-details-side-panel").toHaveCount(1);
+});
+
+test("An error is displayed in the side panel if the list has invalid model", async function () {
+    const { model, env } = await createSpreadsheetFromListView({
+        mockRPC: async function (route, { model, method, kwargs }) {
+            if (model === "unknown" && method === "fields_get") {
+                throw makeServerError({ code: 404 });
+            }
+        },
+    });
+    await contains(".o-sidePanelClose").click();
+    const listId = model.getters.getListIds()[0];
+    const listDefinition = model.getters.getListModelDefinition(listId);
+    model.dispatch("UPDATE_ODOO_LIST", {
+        listId,
+        list: {
+            ...listDefinition,
+            metaData: {
+                ...listDefinition.metaData,
+                resModel: "unknown",
+            },
+        },
+    });
+    env.openSidePanel("LIST_PROPERTIES_PANEL", { listId });
+    await animationFrame();
+
+    expect(".o-validation-error").toHaveCount(1);
 });
 
 test("Open list properties", async function () {

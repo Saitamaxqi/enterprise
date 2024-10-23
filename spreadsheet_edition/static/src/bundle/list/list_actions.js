@@ -4,6 +4,7 @@ export const REINSERT_LIST_CHILDREN = (env) =>
             id: `reinsert_list_${listId}`,
             name: env.model.getters.getListDisplayName(listId),
             sequence: index,
+            isVisible: (env) => env.model.getters.getListDataSource(listId).isModelValid(),
             execute: async (env) => {
                 const zone = env.model.getters.getSelectedZone();
                 const dataSource = await env.model.getters.getAsyncListDataSource(listId);

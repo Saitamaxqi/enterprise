@@ -31,16 +31,18 @@ export class ListDetailsSidePanel extends Component {
         this.notification = useService("notification");
         const loadData = async (listId) => {
             const dataSource = await this.env.model.getters.getAsyncListDataSource(listId);
-            this.modelDisplayName = await dataSource.getModelLabel();
+            this.isModelValid = dataSource.isModelValid();
+            if (this.isModelValid) {
+                this.modelDisplayName = await dataSource.getModelLabel();
+                // Store the fields here because the data source can be reset when updating the list.
+                // Forcing a reload with onWillUpdateProps would introduce flickering
+                // and the fields never change anyway.
+                this.listFields = dataSource.getFields();
+            }
         };
         onWillStart(async () => {
             // it's assumed `this.props.listId` never changes (t-key is required when using this component)
             await loadData(this.props.listId);
-            const dataSource = this.env.model.getters.getListDataSource(this.props.listId);
-            // Store the fields here because the data source can be reset when updating the list.
-            // Forcing a reload with onWillUpdateProps would introduce flickering
-            // and the fields never change anyway.
-            this.listFields = dataSource.getFields();
         });
         useHighlights(this);
     }
@@ -69,6 +71,16 @@ export class ListDetailsSidePanel extends Component {
             domain: new Domain(def.domain).toString(),
             orderBy: def.orderBy,
         };
+    }
+
+    get invalidListModel() {
+        const model = this.env.model.getters.getListDefinition(this.props.listId).model;
+        return _t(
+            "The model (%(model)s) of this list is not valid (it may have been renamed/deleted). Please re-insert a new list.",
+            {
+                model,
+            }
+        );
     }
 
     getLastUpdate() {

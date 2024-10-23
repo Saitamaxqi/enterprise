@@ -7,9 +7,14 @@ import { useService } from "@web/core/utils/hooks";
 import { MultiRecordSelector } from "@web/core/record_selectors/multi_record_selector";
 import { Domain } from "@web/core/domain";
 import { user } from "@web/core/user";
+import { components } from "@odoo/o-spreadsheet";
+import { _t } from "@web/core/l10n/translation";
 
 import { useState } from "@odoo/owl";
 import { SidePanelDomain } from "../../../components/side_panel_domain/side_panel_domain";
+import { ModelNotFoundError } from "@spreadsheet/data_sources/data_source";
+
+const { ValidationMessages } = components;
 
 /**
  * @typedef {import("@spreadsheet").OdooField} OdooField
@@ -34,6 +39,7 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
         MultiRecordSelector,
         FilterEditorFieldMatching,
         SidePanelDomain,
+        ValidationMessages,
     };
     setup() {
         super.setup();
@@ -113,7 +119,18 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
     }
 
     async onWillStart() {
-        await super.onWillStart();
+        this.isValid = true;
+        try {
+            await super.onWillStart();
+        } catch (e) {
+            if (e instanceof ModelNotFoundError) {
+                console.error(e);
+                this.isValid = false;
+                return;
+            } else {
+                throw e;
+            }
+        }
         const promises = [this.fetchModelFromName()];
         if (this.relationState.includeChildren) {
             this.relationState.relatedModel.hasParentRelation = true;
@@ -121,6 +138,12 @@ export class RelationFilterEditorSidePanel extends AbstractFilterEditorSidePanel
             promises.push(this.fetchModelRelation());
         }
         await Promise.all(promises);
+    }
+
+    get invalidModel() {
+        return _t(
+            "At least one data source has an invalid model. Please delete it before editing this global filter."
+        );
     }
 
     /**

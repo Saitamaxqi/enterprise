@@ -140,7 +140,10 @@ const reInsertListMenu = {
     name: _t("Re-insert list"),
     sequence: 1021,
     children: [REINSERT_LIST_CHILDREN],
-    isVisible: (env) => env.model.getters.getListIds().length,
+    isVisible: (env) =>
+        env.model.getters
+            .getListIds()
+            .some((id) => env.model.getters.getListDataSource(id).isModelValid()),
     icon: "o-spreadsheet-Icon.INSERT_LIST",
 };
 

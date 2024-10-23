@@ -15,7 +15,7 @@ import {
     insertPivotInSpreadsheet,
 } from "@spreadsheet/../tests/helpers/pivot";
 import * as dsHelpers from "@web/../tests/core/tree_editor/condition_tree_editor_test_helpers";
-import { contains, fields, onRpc } from "@web/../tests/web_test_helpers";
+import { contains, fields, onRpc, makeServerError } from "@web/../tests/web_test_helpers";
 
 defineDocumentSpreadsheetModels();
 describe.current.tags("desktop");
@@ -206,6 +206,28 @@ test("A warning is displayed in the side panel if the pivot is unused", async fu
     model.dispatch("REQUEST_UNDO");
     await animationFrame();
     expect(".o-validation-warning").toHaveCount(0);
+});
+
+test("An error is displayed in the side panel if the pivot has invalid model", async function () {
+    const { model, env, pivotId } = await createSpreadsheetFromPivotView({
+        mockRPC: async function (route, { model, method, kwargs }) {
+            if (model === "unknown" && method === "fields_get") {
+                throw makeServerError({ code: 404 });
+            }
+        },
+    });
+    const pivot = model.getters.getPivotCoreDefinition(pivotId);
+    env.model.dispatch("UPDATE_PIVOT", {
+        pivotId,
+        pivot: {
+            ...pivot,
+            model: "unknown",
+        },
+    });
+    env.openSidePanel("PivotSidePanel", { pivotId });
+    await animationFrame();
+
+    expect(".o-validation-error").toHaveCount(1);
 });
 
 test("Deleting the pivot open the side panel with all pivots", async function () {
