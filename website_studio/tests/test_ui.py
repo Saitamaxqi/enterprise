@@ -239,7 +239,7 @@ class TestUi(odoo.tests.HttpCase):
                                 <form action="/website/form/" method="post" enctype="multipart/form-data" class="o_mark_required" data-mark="*" data-pre-fill="true" data-model_name="mail.mail" data-success-mode="redirect" data-success-page="/contactus-thank-you">
                                     <div class="row text-center">
                                         <div class="col-12 pb16 o_colored_level">
-                                            <h2 class="o_default_snippet_text">Let's Connect</h2>
+                                            <h2>Let's Connect</h2>
                                         </div>
                                     </div>
                                     <div class="s_website_form_rows row s_col_no_bgcolor">
@@ -254,7 +254,7 @@ class TestUi(odoo.tests.HttpCase):
                                     <div class="mb-0 py-2 col-12 s_website_form_submit text-end s_website_form_no_submit_label" data-name="Submit Button">
                                             <div style="width: 200px;" class="s_website_form_label"/>
                                             <span id="s_website_form_result"/>
-                                            <a href="#" role="button" class="btn btn-primary s_website_form_send o_default_snippet_text">Submit</a>
+                                            <a href="#" role="button" class="btn btn-primary s_website_form_send">Submit</a>
                                         </div>
                                     </div>
                                 </form>

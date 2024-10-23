@@ -153,23 +153,23 @@
         </div>
         <div class="s_footer_social o_mail_block_footer_social o_mail_footer_social_center o_mail_snippet_general o_cc o_cc1 pt0 pb0" data-snippet="s_mail_block_footer_social" data-name="Footer Center">
           <div class="container" style="text-align: center; color: rgb(183, 191, 199) !important">
-            <span style="font-size: 12px" class="o_default_snippet_text">
+            <span style="font-size: 12px">
               <font style="color: rgb(183, 191, 199)">250 Executive Park Blvd</font></span>
             <br/>
             <span style="font-size: 12px"><font style="color: rgb(183, 191, 199)">San Francisco, California 94134</font></span>
             <br/>
-            <span style="font-size: 12px" class="o_default_snippet_text">
+            <span style="font-size: 12px">
               <font style="color: rgb(183, 191, 199)">You received this email from</font>
             </span>
             <a href="mailto:" target="_blank">
-              <span style="font-size: 12px" class="o_default_snippet_text"><font style="color: rgb(183, 191, 199)">info@mycompany.com</font></span></a>
+              <span style="font-size: 12px"><font style="color: rgb(183, 191, 199)">info@mycompany.com</font></span></a>
             <br/>
-            <span style="font-size: 12px" class="o_default_snippet_text">
+            <span style="font-size: 12px">
               <font style="color: rgb(183, 191, 199)">To unsubscribe,</font></span>
               <a href="/unsubscribe_from_list" target="_blank">
-                <span style="font-size: 12px" class="o_default_snippet_text"><font style="color: rgb(183, 191, 199)">click here</font></span>
+                <span style="font-size: 12px"><font style="color: rgb(183, 191, 199)">click here</font></span>
               </a>
-              <span style="font-size: 12px" class="o_default_snippet_text"><font style="color: rgb(183, 191, 199)">.</font></span>
+              <span style="font-size: 12px"><font style="color: rgb(183, 191, 199)">.</font></span>
           </div>
         </div>
       </div>

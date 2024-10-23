@@ -122,7 +122,7 @@ registry.category("web_tour.tours").add("website_studio_website_form", {
             trigger: "#snippet_groups",
         },
         {
-            trigger: ":iframe .odoo-editor-editable .s_website_form .o_default_snippet_text",
+            trigger: ":iframe .odoo-editor-editable .s_website_form h2",
             run: "click",
         },
         {
