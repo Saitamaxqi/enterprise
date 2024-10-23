@@ -718,9 +718,19 @@ class SignRequest(models.Model):
                             y -= normalFontSize * 0.1
 
                     elif item.type_id.item_type == "checkbox":
-                        can.setFont(font, height*item.height*0.8)
-                        value = 'X' if value == 'on' else ''
-                        can.drawString(width*item.posX, height*(1-item.posY-item.height*0.9), value)
+                        itemW, itemH = item.width * width, item.height * height
+                        itemX, itemY = item.posX * width, (1 - item.posY) * height
+                        meanSize = (itemW + itemH) // 2
+                        can.setLineWidth(max(meanSize // 30, 1))
+                        can.rect(itemX, itemY - itemH, itemW, itemH)
+                        if value == 'on':
+                            can.setLineWidth(max(meanSize // 20, 1))
+                            can.bezier(
+                                itemX + 0.20 * itemW, itemY - 0.35 * itemH,
+                                itemX + 0.30 * itemW, itemY - 0.8 * itemH,
+                                itemX + 0.30 * itemW, itemY - 1.2 * itemH,
+                                itemX + 0.85 * itemW, itemY - 0.15 * itemH,
+                            )
                     elif item.type_id.item_type == "radio":
                         x = width * item.posX
                         y = height * (1 - item.posY)

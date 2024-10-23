@@ -89,8 +89,8 @@
         <field name="name">Checkbox</field>
         <field name="placeholder">&#9745;</field>
         <field name="item_type">checkbox</field>
-        <field name="default_width" type="float">0.05</field>
-        <field name="default_height" type="float">0.025</field>
+        <field name="default_width" type="float">0.0525</field>
+        <field name="default_height" type="float">0.0353</field>
         <field name="icon">fa-check-square-o</field>
     </record>
 
