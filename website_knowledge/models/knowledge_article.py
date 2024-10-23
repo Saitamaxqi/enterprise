@@ -109,6 +109,6 @@ class KnowledgeArticle(models.Model):
             'search_fields': ['name', 'body'],
             'fetch_fields': ['id', 'name', 'body', 'website_url'],
             'mapping': mapping,
-            'icon': 'fa-comment-o',
+            'icon': 'fa-book',
             'order': order,
         }

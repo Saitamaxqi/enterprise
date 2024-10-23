@@ -4,3 +4,4 @@
 from . import test_appointment
 from . import test_appointment_type_security
 from . import test_appointment_ui
+from . import test_searchbar_appointment
