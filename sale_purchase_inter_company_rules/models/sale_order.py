@@ -102,6 +102,6 @@ class SaleOrder(models.Model):
             'product_uom': so_line.product_id and so_line.product_id.uom_po_id.id or so_line.product_uom.id,
             'price_unit': price or 0.0,
             'company_id': company.id,
-            'date_planned': so_line.order_id.expected_date or date_order,
+            'date_planned': so_line.order_id.commitment_date or so_line.order_id.expected_date or date_order,
             'display_type': so_line.display_type,
         }

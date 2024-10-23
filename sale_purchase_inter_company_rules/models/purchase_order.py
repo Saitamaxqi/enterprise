@@ -105,6 +105,7 @@ class PurchaseOrder(models.Model):
             'auto_generated': True,
             'auto_purchase_order_id': self.id,
             'partner_shipping_id': direct_delivery_address or partner_addr['delivery'],
+            'commitment_date': self.date_planned,
             'order_line': [],
         }
 

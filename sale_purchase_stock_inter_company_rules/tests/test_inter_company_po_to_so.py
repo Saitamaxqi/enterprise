@@ -1,6 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.fields import Command
+from dateutil.relativedelta import relativedelta
+
+from odoo import Command, fields
 from odoo.tests import Form, tagged
 from .common import TestInterCompanyRulesCommonStock
 
@@ -86,6 +88,7 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         self.assertTrue(sale_order.partner_shipping_id == purchase_order.picking_type_id.warehouse_id.partner_id, "Partner shipping is incorrect.")
 
     def test_02_inter_company_sale_purchase_auto_validation(self):
+        today = fields.Datetime.today()
         (self.company_b | self.company_a).update({
             'intercompany_generate_sales_orders': True,
             'intercompany_generate_purchase_orders': True,
@@ -134,6 +137,7 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
             with po.order_line.new() as line:
                 line.product_id = product_storable
 
+        purchase_order.date_planned = today + relativedelta(days=7)
         # Confirm Purchase order
         purchase_order.with_company(self.company_b).button_confirm()
         # Check purchase order state should be purchase.
@@ -146,6 +150,7 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         self.assertTrue(sale_order)
         self.assertEqual(len(sale_order.order_line), 1)
         self.assertEqual(sale_order.order_line.product_id, product_storable)
+        self.assertEqual(sale_order.commitment_date, today + relativedelta(days=7))
         # Check the MTO purchase, the seller should be the correct one
         po = self.env['purchase.order'].with_company(self.company_a).search([
             ('company_id', '=', self.company_a.id)

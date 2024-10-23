@@ -1,7 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from dateutil.relativedelta import relativedelta
 from .common import TestInterCompanyRulesCommonSOPO
-from odoo import Command
+from odoo import Command, fields
 from odoo.tests import Form, tagged
 
 
@@ -174,6 +175,21 @@ class TestInterCompanySaleToPurchase(TestInterCompanyRulesCommonSOPO):
         purchase_order = self.env['purchase.order'].search([('partner_id', '=', self.company_b.partner_id.id)], limit=1)
         self.assertTrue(purchase_order)
         purchase_order.with_user(self.res_users_company_a).button_confirm()
+
+    def test_05_inter_company_delivery_date(self):
+        """ Ensures the SO's commitment date is properly reflected on the PO's expected arrival.
+        """
+        today = fields.Datetime.today()
+        self.company_b.update({
+            'intercompany_generate_purchase_orders': True,
+        })
+
+        sale_order = self._generate_draft_sale_order(self.company_a, self.company_b.partner_id, self.res_users_company_a)
+        sale_order.commitment_date = today + relativedelta(days=7)
+        sale_order.with_user(self.res_users_company_a).action_confirm()
+
+        purchase_order = self.env['purchase.order'].search([('company_id', '=', self.company_b.id)], limit=1)
+        self.assertEqual(purchase_order.date_planned, today + relativedelta(days=7))
 
     def test_sale_to_specific_partner(self):
         """
