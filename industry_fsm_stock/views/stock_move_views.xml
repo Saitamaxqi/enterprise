@@ -24,4 +24,26 @@
             </xpath>
         </field>
     </record>
+
+    <record id="view_move_kanban_picking_redirect" model="ir.ui.view">
+        <field name="name">stock.move.kanban.picking.redirect</field>
+        <field name="model">stock.move</field>
+        <field name="arch" type="xml">
+            <kanban class="o_kanban_mobile" action="action_open_reference" type="object">
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex">
+                            <field name="product_id" class="fw-bold fs-5 text-truncate"/>
+                            <field name="state" widget="label_selection" options="{'classes': {'draft': 'default', 'cancel': 'danger',
+                            'waiting': 'warning', 'partially_available': 'warning', 'confirmed': 'warning', 'done': 'success'}}" class="ms-auto mt-1"/>
+                        </div>
+                        <span>Source Location: <field name="location_id"/></span>
+                        <span>
+                            Quantity: <field name="quantity" /> / <field name="product_uom_qty"/> <field name="product_uom"/>
+                        </span>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
 </odoo>

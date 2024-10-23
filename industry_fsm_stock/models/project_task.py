@@ -137,10 +137,13 @@ class ProjectTask(models.Model):
         return {
             'type': 'ir.actions.act_window',
             'name': _('Pick Up Material'),
-            'view_mode': 'list',
+            'view_mode': 'list,kanban',
             'domain': [('id', 'in', stock_move_ids.ids)],
             'res_model': 'stock.move',
-            'views': [(self.env.ref('industry_fsm_stock.view_move_tree_picking_redirect').id, 'list')],
+            'views': [
+                (self.env.ref('industry_fsm_stock.view_move_tree_picking_redirect').id, 'list'),
+                (self.env.ref('industry_fsm_stock.view_move_kanban_picking_redirect').id, 'kanban'),
+            ],
         }
 
     def _fsm_ensure_sale_order(self):
