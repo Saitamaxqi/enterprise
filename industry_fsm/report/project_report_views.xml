@@ -17,9 +17,6 @@
             <field name="allocated_hours" position="attributes">
                 <attribute name="type"/>
             </field>
-            <field name="total_hours_spent" position="attributes">
-                <attribute name="type"/>
-            </field>
             <field name="remaining_hours" position="attributes">
                 <attribute name="type"/>
             </field>
@@ -30,9 +27,6 @@
                 <attribute name="type">measure</attribute>
             </field>
             <field name="working_hours_close" position="attributes">
-                <attribute name="type">measure</attribute>
-            </field>
-            <field name="total_hours_spent" position="attributes">
                 <attribute name="type">measure</attribute>
             </field>
         </field>
