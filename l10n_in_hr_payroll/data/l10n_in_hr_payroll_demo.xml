@@ -259,7 +259,7 @@
             <field name="name">Vihaan Sengupta Contract</field>
             <field name="department_id" ref="l10n_in_hr_department_rd"/>
             <field name="employee_id" ref="l10n_in_hr_employee_vihaan"/>
-            <field name="structure_type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_emp"/>
+            <field name="structure_type_id" ref="l10n_in_hr_payroll.hr_payroll_salary_structure_type_ind_emp_pay"/>
             <field name="wage">50000</field>
             <field name="state">open</field>
             <field name="company_id" ref="base.demo_company_in"/>
