@@ -414,7 +414,7 @@
                 t-att-required="personal_info.is_required and not initial_values[personal_info.field]"
                 t-att-accept="document_accept"/>
             <t t-if="initial_values[personal_info.field]">
-                <span class="py-10 px-10">
+                <span class="form-text">
                     Existing file:
                     <a t-att-href="initial_values[personal_info.field]" download="">
                         <i class="fa fa-download"/>
