@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.1alpha1+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-29 08:06+0000\n"
-"PO-Revision-Date: 2022-12-29 08:06+0000\n"
+"POT-Creation-Date: 2024-11-04 08:41+0000\n"
+"PO-Revision-Date: 2024-11-04 08:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,15 +18,13 @@ msgstr ""
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
-#, python-format
-msgid "%s has an invalid siret: %s."
+msgid "%(company)s has an invalid siret: %(siret)s."
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
-#, python-format
-msgid "%s is required on %s"
+msgid "%(field)s is required on %(model)s"
 msgstr ""
 
 #. module: l10n_fr_reports
@@ -52,21 +50,6 @@ msgstr ""
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
-msgid "<b> The report has been fully processed by the recipient </b>"
-msgstr ""
-
-#. module: l10n_fr_reports
-#. odoo-python
-#: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
-msgid "<b> The report has been rejected </b>"
-msgstr ""
-
-#. module: l10n_fr_reports
-#. odoo-python
-#: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid ""
 "<b> Warning, the report has not been fully processed by the recipient yet "
 "</b>"
@@ -77,6 +60,26 @@ msgstr ""
 msgid ""
 "<i class=\"fa fa-exclamation-triangle\"/>\n"
 "                        Tax export(s) rejected"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid ""
+"<span invisible=\"not has_wrongly_configured_account\">\n"
+"                            Some accounts are wrongly configured. For the VAT declaration we need an account number and\n"
+"                            the BIC code.\n"
+"                        </span>\n"
+"                        <span invisible=\"bank_account_line_count &lt;= 3\">\n"
+"                            You can't use more than 3 accounts.\n"
+"                        </span>\n"
+"                        <span invisible=\"is_vat_due or computed_vat_amount &gt;= vat_amount\">\n"
+"                            The VAT amount does not match to the amount you want to receive.<br/>\n"
+"                            If you proceed without matching the VAT amount,\n"
+"                            the difference will be carried over to the next period.\n"
+"                        </span>\n"
+"                        <span invisible=\"not is_vat_due or computed_vat_amount &gt;= vat_amount\">\n"
+"                            The VAT amount does not match to the amount you have to pay to the administration.\n"
+"                        </span>"
 msgstr ""
 
 #. module: l10n_fr_reports
@@ -127,6 +130,12 @@ msgid "Advances and deposits received on orders in progress"
 msgstr ""
 
 #. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "All the selected bank accounts should have an IBAN and a bic code."
+msgstr ""
+
+#. module: l10n_fr_reports
 #: model:account.report.column,name:l10n_fr_reports.account_financial_report_l10n_fr_bilan_column01
 msgid "Amort. & Prov"
 msgstr ""
@@ -137,42 +146,52 @@ msgid "Amortization, depreciation and operating provisions (g)"
 msgstr ""
 
 #. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "Amount"
+msgstr ""
+
+#. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_03_0_1_fr_bilan_passif
 msgid "Amount of equity issues"
 msgstr ""
 
 #. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "Amount to pay"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "Amount to receive"
+msgstr ""
+
+#. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid "An error has occurred when trying to verify your subscription."
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid "An error occurred while getting the attachments: "
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid "An error occurred while getting the declaration details: "
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid "An error occurred while getting the interchange details: "
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid "An error occurred while trying to send the document: "
 msgstr ""
 
@@ -187,6 +206,16 @@ msgid "Availability"
 msgstr ""
 
 #. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "BIC"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__bank_bic
+msgid "BIC Code"
+msgstr ""
+
+#. module: l10n_fr_reports
 #: model:account.report.column,name:l10n_fr_reports.account_financial_report_l10n_fr_cdr_column
 #: model:account.report.column,name:l10n_fr_reports.l10n_fr_pl_imb_column_balance
 msgid "Balance"
@@ -195,6 +224,31 @@ msgstr ""
 #. module: l10n_fr_reports
 #: model:account.report,name:l10n_fr_reports.account_financial_report_l10n_fr_bilan
 msgid "Balance sheet"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__bank_id
+msgid "Bank"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__bank_account_line_ids
+msgid "Bank Account Line"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__bank_account_line_count
+msgid "Bank Account Line Count"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model,name:l10n_fr_reports.model_l10n_fr_reports_send_vat_report_bank_account_line
+msgid "Bank Account Line for French Vat Report"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__bank_partner_id
+msgid "Bank Partner"
 msgstr ""
 
 #. module: l10n_fr_reports
@@ -224,6 +278,12 @@ msgid "Capitalized production"
 msgstr ""
 
 #. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "Carryover reimbursement from %(date_from)s to %(date_to)s"
+msgstr ""
+
+#. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrc2
 msgid "Change in inventories (goods)"
 msgstr ""
@@ -246,6 +306,16 @@ msgstr ""
 #. module: l10n_fr_reports
 #: model:ir.model,name:l10n_fr_reports.model_res_company
 msgid "Companies"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__company_partner_id
+msgid "Company Partner"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__computed_vat_amount
+msgid "Computed Vat Amount"
 msgstr ""
 
 #. module: l10n_fr_reports
@@ -276,13 +346,21 @@ msgstr ""
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__create_uid
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__create_uid
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__create_uid
 msgid "Created by"
 msgstr ""
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__create_date
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__create_date
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__create_date
 msgid "Created on"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__currency_id
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__currency_id
+msgid "Currency"
 msgstr ""
 
 #. module: l10n_fr_reports
@@ -303,11 +381,13 @@ msgstr ""
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__date_from
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__date_from
 msgid "Date From"
 msgstr ""
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__date_to
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__date_to
 msgid "Date To"
 msgstr ""
 
@@ -370,23 +450,15 @@ msgid ""
 msgstr ""
 
 #. module: l10n_fr_reports
-#. odoo-python
-#: code:addons/l10n_fr_reports/models/tax_report.py:0
-#, python-format
-msgid "Difference from rounding taxes"
-msgstr ""
-
-#. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__display_name
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__display_name
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__display_name
 msgid "Display Name"
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/tax_report.py:0
-#: code:addons/l10n_fr_reports/models/tax_report.py:0
-#, python-format
 msgid "EDI VAT"
 msgstr ""
 
@@ -395,7 +467,6 @@ msgstr ""
 #: code:addons/l10n_fr_reports/models/account_journal_dashboard.py:0
 #: model:ir.actions.act_window,name:l10n_fr_reports.action_account_report_async_export
 #: model:ir.ui.menu,name:l10n_fr_reports.menu_action_account_report_async_export
-#, python-format
 msgid "EDI exports"
 msgstr ""
 
@@ -422,8 +493,8 @@ msgstr ""
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
-#, python-format
-msgid "Error occured while sending the report to the government : '%s'"
+msgid ""
+"Error occured while sending the report to the government : '%(response)s'"
 msgstr ""
 
 #. module: l10n_fr_reports
@@ -465,6 +536,24 @@ msgstr ""
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_VIII
 msgid "Extraordinary result VIII (m-n)"
+msgstr ""
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/fec_report.py:0
+#: model:ir.actions.act_window,name:l10n_fr_reports.fec_wizard_action
+#: model:ir.ui.menu,name:l10n_fr_reports.fec_report_menu_item
+msgid "FEC"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model,name:l10n_fr_reports.model_account_general_ledger_report_handler
+msgid "FEC Report Custom Handler"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model,name:l10n_fr_reports.model_l10n_fr_fec_export_wizard
+msgid "Fichier Echange Informatise"
 msgstr ""
 
 #. module: l10n_fr_reports
@@ -528,8 +617,20 @@ msgid "Group By"
 msgstr ""
 
 #. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__has_wrongly_configured_account
+msgid "Has Wrongly Configured Account"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__account_number
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "IBAN"
+msgstr ""
+
+#. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__id
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__id
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__id
 msgid "ID"
 msgstr ""
 
@@ -574,8 +675,28 @@ msgid "Investment grants"
 msgstr ""
 
 #. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__is_vat_due
+msgid "Is Vat Due"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__is_wrongly_configured
+msgid "Is Wrongly Configured"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "It seems you're trying to"
+msgstr ""
+
+#. module: l10n_fr_reports
 #: model:ir.model,name:l10n_fr_reports.model_account_journal
 msgid "Journal"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__l10n_fr_send_vat_report_id
+msgid "L10N Fr Send Vat Report"
 msgstr ""
 
 #. module: l10n_fr_reports
@@ -586,12 +707,14 @@ msgstr ""
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__write_uid
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__write_uid
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__write_uid
 msgid "Last Updated by"
 msgstr ""
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__write_date
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__write_date
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -658,14 +781,12 @@ msgstr ""
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid "No declaration_uid was provided."
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid "No deposit_uid was provided."
 msgstr ""
 
@@ -950,7 +1071,20 @@ msgstr ""
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__report_id
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__report_id
 msgid "Report"
+msgstr ""
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "Report_%(date_from)s"
+msgstr ""
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "Report_%(date_from)s-%(date_to)s"
 msgstr ""
 
 #. module: l10n_fr_reports
@@ -1063,6 +1197,11 @@ msgstr ""
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrc10
 msgid "Social security charges"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,help:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__bank_bic
+msgid "Sometimes called BIC or Swift."
 msgstr ""
 
 #. module: l10n_fr_reports
@@ -1179,35 +1318,48 @@ msgstr ""
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
+msgid "The report has been fully processed by the recipient"
+msgstr ""
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
+msgid "The report has been rejected"
+msgstr ""
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/fec_report.py:0
+msgid "The start date must be inferior to the end date."
+msgstr ""
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
 msgid "The structure of the xml document is invalid."
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
-#, python-format
 msgid "The tax report is empty."
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
-#, python-format
 msgid "The xml file generated contains an invalid character: '%s'"
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid "This declaration is unknown from Odoo."
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid "This deposit is unknown from Odoo."
 msgstr ""
 
@@ -1265,16 +1417,14 @@ msgstr ""
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid ""
-"Unexpected response from proxy: '%s %s'.\n"
+"Unexpected response from proxy: '%(response_type)s %(message)s'.\n"
 "Please contact the support."
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid ""
 "Unexpected result: the interchange should contain at most one declarationId."
 msgstr ""
@@ -1282,14 +1432,12 @@ msgstr ""
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid "Unexpected result: the response should contain an interchange."
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid ""
 "Unexpected result: the response should contain at most one interchange."
 msgstr ""
@@ -1305,6 +1453,22 @@ msgid "VAT Report"
 msgstr ""
 
 #. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "VAT receivable"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "VAT to pay"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "VAT to receive"
+msgstr ""
+
+#. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_IV
 msgid "Value Added IV (I+II-III)"
 msgstr ""
@@ -1312,6 +1476,12 @@ msgstr ""
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_03_01_3_fr_bilan_actif
 msgid "Various"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__vat_amount
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__vat_amount
+msgid "Vat Amount"
 msgstr ""
 
 #. module: l10n_fr_reports
@@ -1326,28 +1496,80 @@ msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
-#: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
-msgid "You do not have an Odoo enterprise subscription."
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "You can use maximum 3 accounts."
+msgstr ""
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "You can't set an amount with a negative value or a value set to 0."
+msgstr ""
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/fec_report.py:0
+msgid "You could not set the start date or the end date in the future."
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
+msgid "You do not have an Odoo enterprise subscription."
+msgstr ""
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/tax_report.py:0
+msgid ""
+"You need to complete the tax closing process for this period before "
+"submitting the report to the French administration."
+msgstr ""
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
 msgid "Your database is not used for a production environment."
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid "Your database is not yet activated."
 msgstr ""
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid "Your database uuid does not exist"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "by"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "more money than the amount due"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "receive"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "send"
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "the administration."
+msgstr ""
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "to"
 msgstr ""

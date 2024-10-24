@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.3alpha1+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-04-21 16:05+0000\n"
-"PO-Revision-Date: 2024-04-21 16:05+0000\n"
+"POT-Creation-Date: 2024-11-04 08:41+0000\n"
+"PO-Revision-Date: 2024-11-04 08:41+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,18 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_fr_fec_import/wizard/import_wizard.py:0
 msgid "%s not found"
+msgstr ""
+
+#. module: l10n_fr_fec_import
+#: model_terms:ir.ui.view,arch_db:l10n_fr_fec_import.fec_import_form
+msgid "<span colspan=\"2\" class=\"fw-bold\">Import options</span>"
+msgstr ""
+
+#. module: l10n_fr_fec_import
+#: model_terms:ir.ui.view,arch_db:l10n_fr_fec_import.fec_import_form
+msgid ""
+"<span colspan=\"2\" class=\"fw-bold\">Import your accounting data from FEC "
+"file formats.</span>"
 msgstr ""
 
 #. module: l10n_fr_fec_import
@@ -142,19 +154,9 @@ msgid "Import FEC"
 msgstr ""
 
 #. module: l10n_fr_fec_import
-#: model_terms:ir.ui.view,arch_db:l10n_fr_fec_import.fec_import_form
-msgid "Import options"
-msgstr ""
-
-#. module: l10n_fr_fec_import
 #. odoo-python
 #: code:addons/l10n_fr_fec_import/wizard/import_wizard.py:0
 msgid "Import rounding difference"
-msgstr ""
-
-#. module: l10n_fr_fec_import
-#: model_terms:ir.ui.view,arch_db:l10n_fr_fec_import.fec_import_form
-msgid "Import your accounting data from FEC file formats.<br/>"
 msgstr ""
 
 #. module: l10n_fr_fec_import
@@ -176,7 +178,7 @@ msgstr ""
 #. module: l10n_fr_fec_import
 #. odoo-python
 #: code:addons/l10n_fr_fec_import/wizard/import_wizard.py:0
-msgid "Move with name '%s' has a balance of %s\n"
+msgid "Move with name '%(name)s' has a balance of %(balance)s\n"
 msgstr ""
 
 #. module: l10n_fr_fec_import

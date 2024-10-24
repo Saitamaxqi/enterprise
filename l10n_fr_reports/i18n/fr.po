@@ -4,29 +4,29 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 16.1alpha1+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-12-29 08:06+0000\n"
-"PO-Revision-Date: 2022-12-29 08:06+0000\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2024-11-04 08:41+0000\n"
+"PO-Revision-Date: 2024-11-04 08:41+0000\n"
+"Last-Translator: Manon Rondou <ronm@odoo.com>\n"
 "Language-Team: \n"
-"Language: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
-msgid "%s has an invalid siret: %s."
-msgstr "%s comporte un siret invalide: %s."
+msgid "%(company)s has an invalid siret: %(siret)s."
+msgstr "%(company)s comporte un SIRET invalide : %(siret)s."
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
-msgid "%s is required on %s"
-msgstr "%s est requis sur %s"
+msgid "%(field)s is required on %(model)s"
+msgstr "%(field)s est requis sur %(model)s"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.p_n_l_1_resultat_exploitation
@@ -51,21 +51,12 @@ msgstr "4.Résultat exceptionnel (VII-VIII)"
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-msgid "<b> The report has been fully processed by the recipient </b>"
-msgstr "<b> Le rapport a été entièrement traité par le destinataire. </b>"
-
-#. module: l10n_fr_reports
-#. odoo-python
-#: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-msgid "<b> The report has been rejected </b>"
-msgstr "<b> Le rapport a été rejeté </b>"
-
-#. module: l10n_fr_reports
-#. odoo-python
-#: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
-msgid "<b> Warning, the report has not been fully processed by the recipient yet </b>"
-msgstr "<b> Attention, le rapport n'a pas encore été entièrement traité par le destinataire. </b>"
+msgid ""
+"<b> Warning, the report has not been fully processed by the recipient yet </"
+"b>"
+msgstr ""
+"<b> Attention, le rapport n'a pas encore été entièrement traité par le "
+"destinataire. </b>"
 
 #. module: l10n_fr_reports
 #: model_terms:ir.ui.view,arch_db:l10n_fr_reports.inherit_view_account_journal_dashboard_kanban
@@ -74,7 +65,56 @@ msgid ""
 "                        Tax export(s) rejected"
 msgstr ""
 "<i class=\"fa fa-exclamation-triangle\"/>\n"
-"                        Export(s) de taxes rejeté(s)"
+"                        Exportation(s) de taxes rejeté(s)"
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid ""
+"<span invisible=\"not has_wrongly_configured_account\">\n"
+"                            Some accounts are wrongly configured. For the "
+"VAT declaration we need an account number and\n"
+"                            the BIC code.\n"
+"                        </span>\n"
+"                        <span invisible=\"bank_account_line_count &lt;= "
+"3\">\n"
+"                            You can't use more than 3 accounts.\n"
+"                        </span>\n"
+"                        <span invisible=\"is_vat_due or computed_vat_amount "
+"&gt;= vat_amount\">\n"
+"                            The VAT amount does not match to the amount you "
+"want to receive.<br/>\n"
+"                            If you proceed without matching the VAT amount,\n"
+"                            the difference will be carried over to the next "
+"period.\n"
+"                        </span>\n"
+"                        <span invisible=\"not is_vat_due or "
+"computed_vat_amount &gt;= vat_amount\">\n"
+"                            The VAT amount does not match to the amount you "
+"have to pay to the administration.\n"
+"                        </span>"
+msgstr ""
+"<span invisible=\"not has_wrongly_configured_account\">\n"
+"                            Certains comptes sont mal configurés. La "
+"déclaration TVA nécessite un numéro de compte et un code BIC.\n"
+"                        </span>\n"
+"                        <span invisible=\"bank_account_line_count &lt;= "
+"3\">\n"
+"                            Vous ne pouvez pas utiliser plus de 3 comptes.\n"
+"                        </span>\n"
+"                        <span invisible=\"is_vat_due or computed_vat_amount "
+"&gt;= vat_amount\">\n"
+"                            Le montant de la TVA ne correspond pas au "
+"montant que vous souhaitez recevoir.<br/>\n"
+"                            Si vous continuez sans faire correspondre le "
+"montant de la TVA,\n"
+"                            la différence sera reportée à la période "
+"suivante.\n"
+"                        </span>\n"
+"                        <span invisible=\"not is_vat_due or "
+"computed_vat_amount &gt;= vat_amount\">\n"
+"                            Le montant de la TVA ne correspond pas au "
+"montant que vous devez payer à l'administration.\n"
+"                        </span>"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_bilan_actif_passif_total
@@ -90,17 +130,21 @@ msgstr "Accepté"
 #. module: l10n_fr_reports
 #: model:ir.model,name:l10n_fr_reports.model_account_report_async_export
 msgid "Account Report Async Export"
-msgstr ""
+msgstr "Exportation asynchrone du rapport de compte"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,help:l10n_fr_reports.field_res_config_settings__l10n_fr_rounding_difference_loss_account_id
 msgid "Account used for losses from rounding the lines of French tax reports"
-msgstr "Compte à utiliser pour les écarts (pertes) causés par l'arrondi dans les rapports de taxe français"
+msgstr ""
+"Compte à utiliser pour les écarts (pertes) causés par l'arrondi dans les "
+"rapports de taxe français"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,help:l10n_fr_reports.field_res_config_settings__l10n_fr_rounding_difference_profit_account_id
 msgid "Account used for profits from rounding the lines of French tax reports"
-msgstr "Compte à utiliser pour les écarts (gains) causés par l'arrondi dans les rapports de taxe français"
+msgstr ""
+"Compte à utiliser pour les écarts (gains) causés par l'arrondi dans les "
+"rapports de taxe français"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_04_0_fr_bilan_actif
@@ -124,6 +168,13 @@ msgid "Advances and deposits received on orders in progress"
 msgstr "Avances et acomptes reçus sur commandes en cours"
 
 #. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "All the selected bank accounts should have an IBAN and a bic code."
+msgstr ""
+"Tous les comptes bancaires sélectionnés doivent avoir un IBAN et un code BIC."
+
+#. module: l10n_fr_reports
 #: model:account.report.column,name:l10n_fr_reports.account_financial_report_l10n_fr_bilan_column01
 msgid "Amort. & Prov"
 msgstr "Amort. & Prov"
@@ -134,9 +185,24 @@ msgid "Amortization, depreciation and operating provisions (g)"
 msgstr "Dotations aux amort., dépréciations et provisions d'exploitation (g)"
 
 #. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "Amount"
+msgstr "Montant"
+
+#. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_03_0_1_fr_bilan_passif
 msgid "Amount of equity issues"
 msgstr "Montant des émissions de titres participatifs"
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "Amount to pay"
+msgstr "Montant à payer"
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "Amount to receive"
+msgstr "Montant à percevoir"
 
 #. module: l10n_fr_reports
 #. odoo-python
@@ -154,13 +220,15 @@ msgstr "Une erreur s'est produite lors de l'obtention des pièces jointes :"
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
 msgid "An error occurred while getting the declaration details: "
-msgstr "Une erreur s'est produite lors de l'obtention des détails de la déclaration :"
+msgstr ""
+"Une erreur s'est produite lors de l'obtention des détails de la déclaration :"
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
 msgid "An error occurred while getting the interchange details: "
-msgstr "Une erreur s'est produite lors de l'obtention des détails de l'interchange :"
+msgstr ""
+"Une erreur s'est produite lors de l'obtention des détails de l'interchange :"
 
 #. module: l10n_fr_reports
 #. odoo-python
@@ -179,15 +247,50 @@ msgid "Availability"
 msgstr "Disponibilités"
 
 #. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "BIC"
+msgstr "BIC"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__bank_bic
+msgid "BIC Code"
+msgstr "Code BIC"
+
+#. module: l10n_fr_reports
 #: model:account.report.column,name:l10n_fr_reports.account_financial_report_l10n_fr_cdr_column
 #: model:account.report.column,name:l10n_fr_reports.l10n_fr_pl_imb_column_balance
 msgid "Balance"
-msgstr "Balance"
+msgstr "Solde"
 
 #. module: l10n_fr_reports
 #: model:account.report,name:l10n_fr_reports.account_financial_report_l10n_fr_bilan
 msgid "Balance sheet"
 msgstr "Bilan comptable"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__bank_id
+msgid "Bank"
+msgstr "Banque"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__bank_account_line_ids
+msgid "Bank Account Line"
+msgstr "Ligne de compte bancaire"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__bank_account_line_count
+msgid "Bank Account Line Count"
+msgstr "Nombre de lignes du compte bancaire"
+
+#. module: l10n_fr_reports
+#: model:ir.model,name:l10n_fr_reports.model_l10n_fr_reports_send_vat_report_bank_account_line
+msgid "Bank Account Line for French Vat Report"
+msgstr "Ligne de compte bancaire pour les déclarations TVA en France"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__bank_partner_id
+msgid "Bank Partner"
+msgstr "Banque partenaire"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_05_0_3_fr_bilan_passif
@@ -216,6 +319,12 @@ msgid "Capitalized production"
 msgstr "Production immobilisée"
 
 #. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "Carryover reimbursement from %(date_from)s to %(date_to)s"
+msgstr "Report du remboursement du %(date_from)s au %(date_to)s"
+
+#. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrc2
 msgid "Change in inventories (goods)"
 msgstr "Variation de stocks (marchandises)"
@@ -239,6 +348,16 @@ msgstr "Fonds commercial"
 #: model:ir.model,name:l10n_fr_reports.model_res_company
 msgid "Companies"
 msgstr "Sociétés"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__company_partner_id
+msgid "Company Partner"
+msgstr "Société partenaire"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__computed_vat_amount
+msgid "Computed Vat Amount"
+msgstr "Montant calculé de la TVA"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_02_1_0_3_fr_bilan_actif
@@ -268,14 +387,22 @@ msgstr "Emprunts obligataires convertibles"
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__create_uid
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__create_uid
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__create_uid
 msgid "Created by"
 msgstr "Créé par"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__create_date
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__create_date
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__create_date
 msgid "Created on"
 msgstr "Créé le"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__currency_id
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__currency_id
+msgid "Currency"
+msgstr "Devise"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_03_0_fr_bilan_actif
@@ -291,17 +418,19 @@ msgstr "Résultat courant avant impôt VII (VI+i+j-k-l)"
 #: model:ir.model.fields.selection,name:l10n_fr_reports.selection__account_report_async_export__recipient__dgi_edi_tva
 #: model:ir.model.fields.selection,name:l10n_fr_reports.selection__l10n_fr_reports_send_vat_report__recipient__dgi_edi_tva
 msgid "DGFiP"
-msgstr ""
+msgstr "DGFiP"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__date_from
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__date_from
 msgid "Date From"
-msgstr ""
+msgstr "Date de début"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__date_to
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__date_to
 msgid "Date To"
-msgstr ""
+msgstr "Date de fin"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_05_0_fr_bilan_passif
@@ -316,7 +445,7 @@ msgstr "Dettes sur immobilisations et comptes rattachés"
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__declaration_uid
 msgid "Declaration Uid"
-msgstr ""
+msgstr "UID de déclaration"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_04_01_2_fr_bilan_actif
@@ -331,7 +460,7 @@ msgstr "Produits constatés d'avance"
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__deposit_uid
 msgid "Deposit Uid"
-msgstr ""
+msgstr "UID de dépôt"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrc17
@@ -342,40 +471,43 @@ msgstr "Dotations aux amortissements et provisions"
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrc13
 msgid "Depreciation and provisions on current assets: provisions"
-msgstr "Dotations aux amortissements et aux provisions sur actif circulant : dotations aux provisions"
+msgstr ""
+"Dotations aux amortissements et aux provisions sur actif circulant : "
+"dotations aux provisions"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrc11
 msgid "Depreciation and provisions on fixed assets: depreciation allowances"
-msgstr "Dotations aux amortissements et aux provisions sur immobilisations : dotations aux amortissements"
+msgstr ""
+"Dotations aux amortissements et aux provisions sur immobilisations : "
+"dotations aux amortissements"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrc12
 msgid "Depreciation and provisions on fixed assets: provisions"
-msgstr "Dotations aux amortissements et aux provisions sur immobilisations : dotations aux provisions"
+msgstr ""
+"Dotations aux amortissements et aux provisions sur immobilisations : "
+"dotations aux provisions"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrc14
-msgid "Depreciation, amortisation and provisions for liabilities and charges: provisions"
-msgstr "Dotations aux amortissements et aux provisions pour risques et charges: dotations aux provisions"
-
-#. module: l10n_fr_reports
-#. odoo-python
-#: code:addons/l10n_fr_reports/models/tax_report.py:0
-#, python-format
-msgid "Difference from rounding taxes"
-msgstr "Écart d'arrondi de taxe"
+msgid ""
+"Depreciation, amortisation and provisions for liabilities and charges: "
+"provisions"
+msgstr ""
+"Dotations aux amortissements et aux provisions pour risques et charges: "
+"dotations aux provisions"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__display_name
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__display_name
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/tax_report.py:0
-#, python-format
 msgid "EDI VAT"
 msgstr "EDI TVA"
 
@@ -384,7 +516,6 @@ msgstr "EDI TVA"
 #: code:addons/l10n_fr_reports/models/account_journal_dashboard.py:0
 #: model:ir.actions.act_window,name:l10n_fr_reports.action_account_report_async_export
 #: model:ir.ui.menu,name:l10n_fr_reports.menu_action_account_report_async_export
-#, python-format
 msgid "EDI exports"
 msgstr "Exports EDI"
 
@@ -411,8 +542,11 @@ msgstr "Écart d'équivalence"
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
-msgid "Error occured while sending the report to the government : '%s'"
-msgstr "Une erreur s'est produite lors de l'envoi du rapport au gouvernement: '%s'"
+msgid ""
+"Error occured while sending the report to the government : '%(response)s'"
+msgstr ""
+"Une erreur s'est produite lors de l'envoi du rapport au gouvernement: "
+"'%(response)s'"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_02_1_0_1_fr_bilan_actif
@@ -456,6 +590,24 @@ msgid "Extraordinary result VIII (m-n)"
 msgstr "Résultat exceptionnel VIII (m-n)"
 
 #. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/fec_report.py:0
+#: model:ir.actions.act_window,name:l10n_fr_reports.fec_wizard_action
+#: model:ir.ui.menu,name:l10n_fr_reports.fec_report_menu_item
+msgid "FEC"
+msgstr "FEC"
+
+#. module: l10n_fr_reports
+#: model:ir.model,name:l10n_fr_reports.model_account_general_ledger_report_handler
+msgid "FEC Report Custom Handler"
+msgstr "Gestionnaire personnalisé du rapport FEC"
+
+#. module: l10n_fr_reports
+#: model:ir.model,name:l10n_fr_reports.model_l10n_fr_fec_export_wizard
+msgid "Fichier Echange Informatise"
+msgstr "Fichier Échange Informatisé"
+
+#. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_02_3_fr_bilan_actif
 msgid "Financial assets"
 msgstr "Immobilisations financières"
@@ -493,7 +645,7 @@ msgstr "Titres immobilisés de l'activité de portefeuille"
 #. module: l10n_fr_reports
 #: model:ir.model,name:l10n_fr_reports.model_l10n_fr_report_handler
 msgid "French Report Custom Handler"
-msgstr ""
+msgstr "Gestionnaire personnalisé du rapport français"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_03_3_1_5_fr_bilan_actif
@@ -513,18 +665,30 @@ msgstr "Excédent Brut d'Exploitation V (IV+a-b-c)"
 #. module: l10n_fr_reports
 #: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_account_report_async_export_search
 msgid "Group By"
-msgstr ""
+msgstr "Regrouper par"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__has_wrongly_configured_account
+msgid "Has Wrongly Configured Account"
+msgstr "Compte mal configuré"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__account_number
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "IBAN"
+msgstr "IBAN"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__id
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__id
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_fr_reports
 #: model:account.report,name:l10n_fr_reports.l10n_fr_pl_imb_account_financial_report
 msgid "IMB - Intermediate management balances"
-msgstr "SIG - Soldes intermédiaires de Gestion"
+msgstr "SIG - Soldes intermédiaires de gestion"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_01_fr_cdr25
@@ -562,9 +726,29 @@ msgid "Investment grants"
 msgstr "Subventions d'investissement"
 
 #. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__is_vat_due
+msgid "Is Vat Due"
+msgstr "TVA due"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__is_wrongly_configured
+msgid "Is Wrongly Configured"
+msgstr "Est mal configuré"
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "It seems you're trying to"
+msgstr "Il semble que vous essayez"
+
+#. module: l10n_fr_reports
 #: model:ir.model,name:l10n_fr_reports.model_account_journal
 msgid "Journal"
-msgstr ""
+msgstr "Journal"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__l10n_fr_send_vat_report_id
+msgid "L10N Fr Send Vat Report"
+msgstr "Envoyer la déclaration TVA"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_02_2_0_1_fr_bilan_actif
@@ -574,12 +758,14 @@ msgstr "Terrains"
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__write_uid
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__write_uid
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__write_uid
 msgid "Last Updated by"
 msgstr "Dernière mise à jour par"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__write_date
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__write_date
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__write_date
 msgid "Last Updated on"
 msgstr "Dernière mise à jour le"
 
@@ -616,12 +802,12 @@ msgstr "Valeurs mobilières de placement"
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__message
 msgid "Message"
-msgstr ""
+msgstr "Message"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__name
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrc19
@@ -659,7 +845,7 @@ msgstr "Aucun deposit_uid n'a été fourni."
 #: model:ir.model.fields.selection,name:l10n_fr_reports.selection__account_report_async_export__recipient__oga_edi_tva
 #: model:ir.model.fields.selection,name:l10n_fr_reports.selection__l10n_fr_reports_send_vat_report__recipient__oga_edi_tva
 msgid "OGA"
-msgstr ""
+msgstr "OGA"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrp9
@@ -722,7 +908,7 @@ msgstr "Subventions d'exploitation (a)"
 #. module: l10n_fr_reports
 #: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
 msgid "Options"
-msgstr ""
+msgstr "Options"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_02_3_0_6_fr_bilan_actif
@@ -936,8 +1122,21 @@ msgstr "Rejeté"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__report_id
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__report_id
 msgid "Report"
 msgstr "Rapport"
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "Report_%(date_from)s"
+msgstr "Rapport_%(date_from)s"
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "Report_%(date_from)s-%(date_to)s"
+msgstr "Rapport_%(date_from)s-%(date_to)s"
 
 #. module: l10n_fr_reports
 #: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_account_report_async_export_tree
@@ -1052,6 +1251,11 @@ msgid "Social security charges"
 msgstr "Charges sociales"
 
 #. module: l10n_fr_reports
+#: model:ir.model.fields,help:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__bank_bic
+msgid "Sometimes called BIC or Swift."
+msgstr "Parfois appelé BIC ou SWIFT."
+
+#. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__state
 #: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_account_report_async_export_search
 msgid "State"
@@ -1065,12 +1269,12 @@ msgstr "Réserves statutaires ou contractuelles"
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__step_1_logs
 msgid "Step 1 Logs"
-msgstr ""
+msgstr "Journaux de l'étape 1"
 
 #. module: l10n_fr_reports
 #: model:ir.model.fields,field_description:l10n_fr_reports.field_account_report_async_export__step_2_logs
 msgid "Step 2 Logs"
-msgstr ""
+msgstr "Journaux de l'étape 2"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_03_01_1_fr_bilan_actif
@@ -1165,6 +1369,24 @@ msgstr "Interchange de test"
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
+msgid "The report has been fully processed by the recipient"
+msgstr "Le rapport a été entièrement traité par le bénéficiaire"
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
+msgid "The report has been rejected"
+msgstr "Le rapport a été rejeté"
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/fec_report.py:0
+msgid "The start date must be inferior to the end date."
+msgstr "La date de début doit être antérieure à la date de fin."
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
 msgid "The structure of the xml document is invalid."
 msgstr "La structure du document xml n'est pas valide."
 
@@ -1247,18 +1469,19 @@ msgstr "Fonds fiduciaires"
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
 msgid ""
-"Unexpected response from proxy: '%s %s'.\n"
+"Unexpected response from proxy: '%(response_type)s %(message)s'.\n"
 "Please contact the support."
 msgstr ""
-"Réponse inattendue du proxy : '%s %s'.\n"
+"Réponse inattendue du proxy : '%(response_type)s %(message)s'.\n"
 "Veuillez contacter le support."
 
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
-msgid "Unexpected result: the interchange should contain at most one declarationId."
-msgstr "Résultat inattendu : l'échange devrait contenir au plus un declarationId."
+msgid ""
+"Unexpected result: the interchange should contain at most one declarationId."
+msgstr ""
+"Résultat inattendu : l'échange devrait contenir au plus un declarationId."
 
 #. module: l10n_fr_reports
 #. odoo-python
@@ -1269,9 +1492,9 @@ msgstr "Résultat inattendu : la réponse devrait contenir un échange."
 #. module: l10n_fr_reports
 #. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
-#, python-format
 msgid "Unexpected result: the response should contain at most one interchange."
-msgstr "Résultat inattendu : la réponse devrait contenir au plus un interchange."
+msgstr ""
+"Résultat inattendu : la réponse devrait contenir au plus un interchange."
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_06_0_fr_bilan_passif
@@ -1284,6 +1507,22 @@ msgid "VAT Report"
 msgstr "Rapport de TVA"
 
 #. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "VAT receivable"
+msgstr "TVA recevable"
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "VAT to pay"
+msgstr "TVA à payer"
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "VAT to receive"
+msgstr "TVA à recevoir"
+
+#. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.l10n_fr_pl_imb_IV
 msgid "Value Added IV (I+II-III)"
 msgstr "Valeur Ajoutée IV (I+II-III)"
@@ -1292,6 +1531,12 @@ msgstr "Valeur Ajoutée IV (I+II-III)"
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_03_01_3_fr_bilan_actif
 msgid "Various"
 msgstr "Divers"
+
+#. module: l10n_fr_reports
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report__vat_amount
+#: model:ir.model.fields,field_description:l10n_fr_reports.field_l10n_fr_reports_send_vat_report_bank_account_line__vat_amount
+msgid "Vat Amount"
+msgstr "Montant de la TVA"
 
 #. module: l10n_fr_reports
 #: model:account.report.line,name:l10n_fr_reports.account_financial_report_line_fr_cdrc9
@@ -1305,15 +1550,46 @@ msgstr "En-cours de production [biens et services]"
 
 #. module: l10n_fr_reports
 #. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "You can use maximum 3 accounts."
+msgstr "Vous pouvez utiliser un maximum de 3 comptes."
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/wizard/l10n_fr_send_vat_report.py:0
+msgid "You can't set an amount with a negative value or a value set to 0."
+msgstr ""
+"Vous ne pouvez pas définir un montant dont la valeur est négative ou égale à "
+"0."
+
+#. module: l10n_fr_reports
+#. odoo-python
+#: code:addons/l10n_fr_reports/models/fec_report.py:0
+msgid "You could not set the start date or the end date in the future."
+msgstr "Vous ne pouvez pas utiliser une date de début ou de fin dans le futur."
+
+#. module: l10n_fr_reports
+#. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
 msgid "You do not have an Odoo enterprise subscription."
 msgstr "Vous n'avez pas d'abonnement Odoo enterprise."
 
 #. module: l10n_fr_reports
 #. odoo-python
+#: code:addons/l10n_fr_reports/models/tax_report.py:0
+msgid ""
+"You need to complete the tax closing process for this period before "
+"submitting the report to the French administration."
+msgstr ""
+"Terminez le processus de clôture fiscale pour cette période afin de "
+"soumettre le rapport à l'administration française."
+
+#. module: l10n_fr_reports
+#. odoo-python
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
 msgid "Your database is not used for a production environment."
-msgstr "Votre base de données n'est pas utilisée dans un environnement de production."
+msgstr ""
+"Votre base de données n'est pas utilisée dans un environnement de production."
 
 #. module: l10n_fr_reports
 #. odoo-python
@@ -1326,3 +1602,33 @@ msgstr "Votre base de données n'est pas encore activée."
 #: code:addons/l10n_fr_reports/models/account_report_async_export.py:0
 msgid "Your database uuid does not exist"
 msgstr "L'identifiant de votre base de données n'existe pas."
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "by"
+msgstr "par"
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "more money than the amount due"
+msgstr "plus d'argent que le montant dû"
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "receive"
+msgstr "de recevoir"
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "send"
+msgstr "d'envoyer"
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "the administration."
+msgstr "l'administration."
+
+#. module: l10n_fr_reports
+#: model_terms:ir.ui.view,arch_db:l10n_fr_reports.view_l10n_fr_reports_report_form
+msgid "to"
+msgstr "à"

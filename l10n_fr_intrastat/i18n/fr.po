@@ -4,16 +4,26 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.1alpha1+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-01-19 14:21+0000\n"
-"PO-Revision-Date: 2024-01-19 14:21+0000\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2024-11-04 08:41+0000\n"
+"PO-Revision-Date: 2024-11-04 08:41+0000\n"
+"Last-Translator: Manon Rondou <ronm@odoo.com>\n"
 "Language-Team: \n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: \n"
-"Plural-Forms: \n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. module: l10n_fr_intrastat
+#: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.res_config_settings_view_form
+msgid ""
+"<span class=\"fa fa-lg fa-building-o ms-2\" title=\"Values set here are "
+"company-specific.\"/>"
+msgstr ""
+"<span class=\"fa fa-lg fa-building-o ms-2\" title=\"Les valeurs définies ici "
+"sont spécifiques à l'entreprise.\"/>"
 
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields,help:l10n_fr_intrastat.field_res_company__l10n_fr_intrastat_envelope_id
@@ -21,7 +31,9 @@ msgstr ""
 msgid ""
 "Approval number issued by the local collection center (mode DTI+), with a "
 "size of 4 characters"
-msgstr "Numéro d’habilité délivré par le centre de collecte de rattachement (mode DTI+), avec un maximum de 4 caractères"
+msgstr ""
+"Numéro d’habilité délivré par le centre de collecte de rattachement (mode "
+"DTI+), avec un maximum de 4 caractères"
 
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields.selection,name:l10n_fr_intrastat.selection__l10n_fr_intrastat_export_wizard__emebi_flow__arrivals
@@ -31,12 +43,18 @@ msgstr "Introductions"
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields.selection,name:l10n_fr_intrastat.selection__l10n_fr_intrastat_export_wizard__emebi_flow__arrivals_and_dispatches
 msgid "Arrivals and dispatches"
-msgstr "Introduction et expéditions"
+msgstr "Introductions et expéditions"
 
 #. module: l10n_fr_intrastat
 #: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.l10n_fr_intrastat_export_wizard
 msgid "Cancel"
 msgstr "Annuler"
+
+#. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
+msgid "Check Company Data"
+msgstr "Vérifiez les données de la société"
 
 #. module: l10n_fr_intrastat
 #: model:ir.model,name:l10n_fr_intrastat.model_res_company
@@ -47,18 +65,6 @@ msgstr "Sociétés"
 #: model:ir.model,name:l10n_fr_intrastat.model_res_config_settings
 msgid "Config Settings"
 msgstr "Paramètres de configuration"
-
-#. module: l10n_fr_intrastat
-#. odoo-python
-#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
-msgid "Configure company"
-msgstr "Configurer la société"
-
-#. module: l10n_fr_intrastat
-#. odoo-python
-#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
-msgid "Configure settings"
-msgstr "Configurer les paramètres"
 
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__create_uid
@@ -84,7 +90,7 @@ msgstr "Expéditions"
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__display_name
 msgid "Display Name"
-msgstr "Nom d'Affichage"
+msgstr "Nom d'affichage"
 
 #. module: l10n_fr_intrastat
 #: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.l10n_fr_intrastat_export_wizard
@@ -94,37 +100,49 @@ msgstr "Télécharger le XML"
 #. module: l10n_fr_intrastat
 #: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.l10n_fr_intrastat_export_wizard
 msgid "EMEBI export type"
-msgstr "Type d'export EMEBI"
+msgstr "Type d'exportation EMEBI"
 
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__emebi_flow_visible
 msgid "Emebi Flow Visible"
-msgstr "Flux d'Emebi Visible"
+msgstr "Flux d'EMEBI visible"
 
 #. module: l10n_fr_intrastat
 #: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.l10n_fr_intrastat_export_wizard
 msgid "Export Options"
-msgstr "Options d'Export"
+msgstr "Options d'exportation"
 
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__export_type
 msgid "Export type"
-msgstr "Type d'Export"
+msgstr "Type d'exportation"
 
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__emebi_flow
 msgid "Flow Direction"
-msgstr "Direction du Flux"
+msgstr "Direction du flux"
 
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_fr_intrastat
 #: model:ir.model,name:l10n_fr_intrastat.model_account_intrastat_report_handler
 msgid "Intrastat Report Custom Handler"
-msgstr ""
+msgstr "Gestionnaire personnalisé du rapport Intrastat"
+
+#. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
+msgid "Invalid Partner(s)"
+msgstr "Partenaire(s) invalide(s)"
+
+#. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
+msgid "Invalid transaction intrastat code entries."
+msgstr "Saisies de code Intrastat de transaction invalides."
 
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__write_uid
@@ -135,11 +153,6 @@ msgstr "Dernière mise à jour par"
 #: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__write_date
 msgid "Last Updated on"
 msgstr "Dernière mise à jour le"
-
-#. module: l10n_fr_intrastat
-#: model:ir.model,name:l10n_fr_intrastat.model_account_report_file_download_error_wizard
-msgid "Manage the file generation errors from report exports."
-msgstr "Gère les erreurs de génération de fichiers lors de l'exportation de rapports."
 
 #. module: l10n_fr_intrastat
 #. odoo-python
@@ -153,13 +166,15 @@ msgstr "Code marchandise manquant pour certains produits"
 msgid ""
 "Missing country of origin for journal items, 'QU' will be set as default "
 "value"
-msgstr "Pays d'origine manquant pour des pièces comptables, 'QU' sera appliqué comme valeur par défaut"
+msgstr ""
+"Pays d'origine manquant pour des pièces comptables, 'QU' sera appliqué comme "
+"valeur par défaut"
 
 #. module: l10n_fr_intrastat
 #. odoo-python
 #: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
-msgid "Missing department code for journal entries"
-msgstr "Code de département manquant pour des pièces comptables"
+msgid "Missing department code for journal entries on the company"
+msgstr "Code de département manquant pour des pièces comptables sur la société"
 
 #. module: l10n_fr_intrastat
 #. odoo-python
@@ -193,39 +208,23 @@ msgstr "Veuillez choisir les options avant d'exporter le XML"
 #. odoo-python
 #: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
 msgid ""
-"Please set the approval number issued by your local collection center in the"
-" Accounting settings"
-msgstr "Veuillez indiquer le numéro d'habilité délivré par votre centre de recouvrement local dans les Paramètres de Comptabilité."
+"Please set the approval number issued by your local collection center in the "
+"Accounting settings"
+msgstr ""
+"Veuillez indiquer le numéro d'habilité délivré par votre centre de "
+"recouvrement local dans les Paramètres de Comptabilité."
 
 #. module: l10n_fr_intrastat
 #. odoo-python
 #: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
-msgid "Set commodity code"
-msgstr "Définir le code marchandise"
+msgid "Products with no commodity code"
+msgstr "Produits sans code marchandise"
 
 #. module: l10n_fr_intrastat
 #. odoo-python
 #: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
-msgid "Set country of origin"
-msgstr "Définir le pays d'origine"
-
-#. module: l10n_fr_intrastat
-#. odoo-python
-#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
-msgid "Set department code"
-msgstr "Définir le code de département"
-
-#. module: l10n_fr_intrastat
-#. odoo-python
-#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
-msgid "Set transaction code"
-msgstr "Définir le code de transaction"
-
-#. module: l10n_fr_intrastat
-#. odoo-python
-#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
-msgid "Set transport code"
-msgstr "Définir le code de transport"
+msgid "Settings"
+msgstr "Paramètres"
 
 #. module: l10n_fr_intrastat
 #: model:ir.model.fields.selection,name:l10n_fr_intrastat.selection__l10n_fr_intrastat_export_wizard__export_type__statistical_survey
@@ -240,14 +239,15 @@ msgstr "Enquête statistique (EMEBI) et état récapitulatif TVA"
 #. module: l10n_fr_intrastat
 #. odoo-python
 #: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
-msgid "The VAT or SIRET code is not properly set on company '%s'."
-msgstr "Le numéro TVA ou SIRET n'est pas correctement défini sur la société '%s'"
+msgid "The VAT or SIRET code is not properly set on the company."
+msgstr "Le numéro TVA ou SIRET n'est pas correctement défini sur la société."
 
 #. module: l10n_fr_intrastat
 #. odoo-python
 #: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
 msgid "The currency of the company must be EUR to generate the XML export"
-msgstr "La devise de la société doit être l'EURO pour pouvoir générer l'export XML"
+msgstr ""
+"La devise de la société doit être l'EURO pour pouvoir générer l'export XML"
 
 #. module: l10n_fr_intrastat
 #. odoo-python
@@ -261,14 +261,39 @@ msgid "VAT summary statement"
 msgstr "État récapitulatif TVA"
 
 #. module: l10n_fr_intrastat
-#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__warning_incompatible_options
-msgid "Warning Incompatible Options"
-msgstr "Avertissement Options Incompatible"
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
+msgid "View Company/ies"
+msgstr "Voir les sociétés"
 
 #. module: l10n_fr_intrastat
-#: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.res_config_settings_view_form
-msgid "Write the provided code"
-msgstr "Inscrivez le code fourni"
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
+msgid "View Partner(s)"
+msgstr "Voir les partenaires"
+
+#. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
+msgid "View Product(s)"
+msgstr "Voir les produits"
+
+#. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
+msgid "View Settings"
+msgstr "Voir les paramètres"
+
+#. module: l10n_fr_intrastat
+#. odoo-python
+#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
+msgid "View journal item(s)"
+msgstr "Voir les écritures comptables"
+
+#. module: l10n_fr_intrastat
+#: model:ir.model.fields,field_description:l10n_fr_intrastat.field_l10n_fr_intrastat_export_wizard__warning_incompatible_options
+msgid "Warning Incompatible Options"
+msgstr "Avertissement options incompatibles"
 
 #. module: l10n_fr_intrastat
 #. odoo-python
@@ -276,18 +301,21 @@ msgstr "Inscrivez le code fourni"
 msgid ""
 "Wrong date range selected. The intrastat declaration export has to be done "
 "monthly."
-msgstr "Mauvaise plage de dates sélectionnée. L'exportation de la déclaration intrastat doit être effectuée mensuellement."
+msgstr ""
+"Mauvaise plage de dates sélectionnée. L'exportation de la déclaration "
+"intrastat doit être effectuée mensuellement."
 
 #. module: l10n_fr_intrastat
 #. odoo-python
 #: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
-#: code:addons/l10n_fr_intrastat/models/account_intrastat_report.py:0
 msgid "XML (DEBWEB2)"
-msgstr ""
+msgstr "XML (DEBWEB2)"
 
 #. module: l10n_fr_intrastat
 #: model_terms:ir.ui.view,arch_db:l10n_fr_intrastat.l10n_fr_intrastat_export_wizard
 msgid ""
 "You have selected filters that are incompatible with the selected options, "
 "please include both arrivals and dispatches for this export type"
-msgstr "Les filtres utilisés sont incompatibles avec les options sélectionnées, veuillez inclure les introductions et les expéditions pour ce type d'export."
+msgstr ""
+"Les filtres utilisés sont incompatibles avec les options sélectionnées. "
+"Veuillez inclure les introductions et les expéditions pour ce type d'export."
