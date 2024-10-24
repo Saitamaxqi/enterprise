@@ -32,6 +32,7 @@
         <field name="arch" type="xml">
             <kanban class="o_appointment_kanban"
                 js_class="appointment_type_kanban" type="object" action="action_calendar_meetings">
+                <field name="category" readonly="true"/>
                 <field name="schedule_based_on"/>
                 <field name="sequence" widget="handle" groups="appointment.group_appointment_manager"/>
                 <templates>
