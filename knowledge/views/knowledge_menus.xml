@@ -15,7 +15,7 @@
 
     <menuitem
         id="knowledge_menu_article"
-        name="Search"
+        name="Articles"
         parent="knowledge_menu_root"
         action="knowledge.knowledge_article_action"
         sequence="2"/>

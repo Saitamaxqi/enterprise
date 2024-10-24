@@ -22,8 +22,8 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
     trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
     run: "click",
 }, {
-    // click on the main "New" action
-    trigger: '.o_knowledge_header .btn:contains("New")',
+    // click on the "New Article" action
+    trigger: '.o_knowledge_create_article',
     run: "click",
 }, {
     // check that the article is correctly created (private section)
@@ -240,8 +240,8 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
         }
     }
 }, {
-    // click on the main "New" action
-    trigger: '.o_knowledge_header .btn:contains("New")',
+    // click on the "New Article" action
+    trigger: '.o_knowledge_create_article',
     run: "click",
 }, {
     trigger: 'section[data-section="private"] .o_article .o_article_name:contains("Untitled")',
@@ -277,7 +277,7 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
     run: 'click'
 }, {
     // open the trash
-    trigger: '.o_knowledge_sidebar_trash div[role="button"]',
+    trigger: '.o_knowledge_sidebar_trash a:contains("Open the Trash")',
     run: "click",
 },
 {

@@ -49,6 +49,9 @@
 
         span {
             @include o-position-absolute(0, auto, 0, $-resizer-spacing + ($-resizer-line-width * -0.5));
+            &.o_resizer_bg, &:hover {
+                background-color: rgb(169, 169, 169);
+            }
         }
     }
 

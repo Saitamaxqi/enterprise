@@ -44,7 +44,6 @@ class KnowledgeTopbar extends Component {
 
         this.state = useState({
             displayChatter: false,
-            displayHistory: false,
             displayPropertyPanel: !this.articlePropertiesIsEmpty,
             addingProperty: false,
             displaySharePanel: false,
@@ -109,6 +108,14 @@ class KnowledgeTopbar extends Component {
 
     get removeFavoriteLabel(){
         return _t("Remove from favorites");
+    }
+
+    get chatterButtonTitle() {
+        return this.state.displayChatter ? _t("Close chatter panel") : _t("Open chatter panel");
+    }
+
+    get commentButtonTitle() {
+        return this.commentsState.displayMode === "panel" ? _t("Close comments panel") : _t("Open comments panel");
     }
 
     get displayCommentsPanelButton() {
@@ -249,7 +256,6 @@ class KnowledgeTopbar extends Component {
      */
     async openHistory() {
         if (this.props.record.resId) {
-            this.state.displayHistory = true;
             await this.env.model.root.save();
 
             const versionedFieldName = 'body';
@@ -272,9 +278,6 @@ class KnowledgeTopbar extends Component {
                             ...READONLY_MAIN_EMBEDDINGS,
                             ...KNOWLEDGE_READONLY_EMBEDDINGS,
                         ],
-                    },
-                    {
-                        onClose: () => this.state.displayHistory = false
                     }
                 );
             }

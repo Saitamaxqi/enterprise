@@ -97,9 +97,6 @@ export class KnowledgeSidebarRow extends Component {
      * (Un)fold the row
      */
     onCaretClick() {
-        if (!this.props.article.has_article_children) {
-            return;
-        }
         if (this.props.unfolded) {
             this.env.fold(this.props.article.id);
         } else if (!this.state.loading) {

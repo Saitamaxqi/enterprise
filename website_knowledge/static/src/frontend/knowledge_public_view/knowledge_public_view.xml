@@ -3,7 +3,7 @@
     <t t-name="website_knowledge.knowledgePublic">
         <div t-attf-class="container-fluid h-100 o_knowledge_public_view p-0 #{ state.showAsideMobile ? 'o_toggle_aside' : ''}">
             <div class="d-sm-flex h-100">
-                <aside t-if="props.showSidebar" class="o_knowledge_sidebar flex-shrink-0 p-0"
+                <aside t-if="props.showSidebar" class="o_knowledge_sidebar flex-shrink-0 p-0 bg-100"
                     t-attf-style="--knowledge-article-sidebar-size: #{state.sidebarSize}px">
                     <div class="d-flex flex-column h-100">
                         <div class="p-3 d-flex">
@@ -28,7 +28,7 @@
                 <div class="flex-grow-1 position-relative min-w-0">
                     <div class="d-flex flex-column h-100">
                         <!-- Article header -->
-                        <header class="o_knowledge_header justify-content-between border-bottom flex-shrink-1">
+                        <header class="o_knowledge_header justify-content-between flex-shrink-1">
                             <div class="d-flex align-items-center p-3 flex-grow-1">
                                 <a t-if="props.showSidebar" role="button" class="d-md-none btn align-self-start px-2 me-2 py-1" t-on-click="toggleAsideMobile">
                                     <i class="fa fa-lg fa-bars" title="Toggle aside menu"/>
@@ -56,6 +56,7 @@
                         <main t-else="" class="flex-grow-1 position-relative">
                             <div class="o_scroll_view">
                                 <!-- Article Cover -->
+                                <div class="pt-md-5" t-if="!props.record.data.cover_image_id"/>
                                 <div t-if="props.record.data.cover_image_id" class="o_knowledge_cover">
                                     <img t-att-src="props.record.data.cover_image_url" t-attf-style="object-position: 50% #{props.record.data.cover_image_position or 50}%;"/>
                                 </div>
@@ -77,7 +78,7 @@
                     </div>
                     <div class="o_knowledge_article_form_resizer d-print-none d-none d-sm-block opacity-75 opacity-100-hover"
                         t-on-pointerdown="resizeSidebar">
-                        <span class="bg-300 pe-1"/>
+                        <span t-attf-class="pe-1 border-end #{state.resizing ? 'o_resizer_bg' : ''}"/>
                     </div>
                 </div>
             </div>

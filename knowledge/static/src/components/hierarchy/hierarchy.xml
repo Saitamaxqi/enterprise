@@ -8,7 +8,7 @@
                 t-on-click="() => this.env.openArticle(this.rootId)"
                 t-out="rootName"
                 t-att-title="rootName"/>
-            <i class="fa fa-caret-right"/>
+            <span>/</span>
         </div>
         <!-- Dropdown with all articles between the root and the direct parent -->
         <div t-if="displayDropdownToggle" class="o_hierarchy_item d-flex w-auto align-items-center">
@@ -30,7 +30,7 @@
                     </t>
                 </t>
             </Dropdown>
-            <i class="fa fa-caret-right"/>
+            <span>/</span>
         </div>
         <!-- Parent Article -->
         <div t-if="parentId and parentId !== rootId" class="o_hierarchy_item d-flex min-w-0 align-items-center">
@@ -38,7 +38,7 @@
                 t-on-click="() => this.env.openArticle(this.parentId)"
                 t-out="parentName"
                 t-att-title="parentName"/>
-            <i class="fa fa-caret-right"/>
+            <span>/</span>
         </div>
         <!-- Current Article -->
         <div class="o_hierarchy_item d-flex min-w-0 align-items-center ms-2">

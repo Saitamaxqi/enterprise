@@ -43,7 +43,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
         user_commands: [
             {
                 id: "addComments",
-                icon: "fa-commenting",
+                icon: "fa-commenting-o",
                 run: this.addCommentToSelection.bind(this),
             },
         ],

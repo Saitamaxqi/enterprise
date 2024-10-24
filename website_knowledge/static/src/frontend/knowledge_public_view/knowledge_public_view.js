@@ -13,6 +13,7 @@ import { rpc } from "@web/core/network/rpc";
 import { registry } from "@web/core/registry";
 import { KeepLast } from "@web/core/utils/concurrency";
 import { debounce, throttleForAnimation } from "@web/core/utils/timing";
+import { renderToElement } from "@web/core/utils/render";
 import { KNOWLEDGE_PUBLIC_EMBEDDINGS } from "@website_knowledge/frontend/editor/embedded_components/embedding_sets";
 import { PublicHtmlViewer } from "@website_knowledge/frontend/editor/html_viewer/public_html_viewer";
 
@@ -44,6 +45,7 @@ class KnowledgePublic extends Component {
             tree: undefined,
             sidebarSize: 300,
             showAsideMobile: false,
+            resizing: false,
         });
         this.keepLastRender = new KeepLast();
         this.renderTree();
@@ -88,7 +90,7 @@ class KnowledgePublic extends Component {
 
     addFoldHandlers(el = undefined) {
         if (el) {
-            el.querySelector(".o_article_caret").addEventListener("click", this.boundFoldArticle);
+            el.querySelector(".o_article_caret")?.addEventListener("click", this.boundFoldArticle);
             return;
         }
         for (const loadMoreEl of this.treeRef.el?.querySelectorAll(".o_article_caret") || []) {
@@ -140,9 +142,11 @@ class KnowledgePublic extends Component {
                 const newUlEl = document.createElement("ul");
                 childrenEls = new DOMParser().parseFromString(childrenEls, "text/html").body
                     .childNodes;
-                childrenEls.forEach((child) => {
-                    newUlEl.appendChild(child);
-                });
+                if (childrenEls.length === 0) {
+                    newUlEl.appendChild(renderToElement("website_knowledge.NoChildArticle"));
+                } else {
+                    childrenEls.forEach((child) => newUlEl.appendChild(child));
+                }
                 this.addFoldHandlers(newUlEl);
                 liEl.appendChild(newUlEl);
             }
@@ -234,6 +238,7 @@ class KnowledgePublic extends Component {
         });
         const onPointerUp = () => {
             document.removeEventListener("pointermove", onPointerMove);
+            this.state.resizing = false;
             document.body.style.cursor = "auto";
             document.body.style.userSelect = "auto";
         };
@@ -241,6 +246,7 @@ class KnowledgePublic extends Component {
         // meaning that the cursor is not always on top of the resizer.
         document.body.style.cursor = "col-resize";
         document.body.style.userSelect = "none";
+        this.state.resizing = true;
         document.addEventListener("pointermove", onPointerMove);
         document.addEventListener("pointerup", onPointerUp, { once: true });
     }

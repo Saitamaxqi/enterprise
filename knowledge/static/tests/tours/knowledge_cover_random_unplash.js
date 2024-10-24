@@ -15,8 +15,8 @@ registry.category("web_tour.tours").add('knowledge_random_cover_tour', {
     trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
     run: "click",
 }, {
-    // Click on the "Create" action
-    trigger: '.o_knowledge_header .btn-create',
+    // Click on the "New Article" action
+    trigger: '.o_knowledge_create_article',
     run: "click",
 }, {
     // Make the add cover button visible (only visible on hover)

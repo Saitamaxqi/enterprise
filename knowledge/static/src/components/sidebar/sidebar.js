@@ -85,6 +85,7 @@ export class KnowledgeSidebar extends Component {
         this.state = useState({
             dragging: false,
             sidebarSize: localStorage.getItem(this.storageKeys.size) || 300,
+            resizing: false,
         });
 
         this.loadArticles();
@@ -134,6 +135,7 @@ export class KnowledgeSidebar extends Component {
         // Resequencing and rehierarchisation of articles
         useNestedSortable({
             ref: this.mainTree,
+            elements: "li.o_article",
             groups: () => this.isInternalUser ? ".o_section" : ".o_section[data-section='private']",
             connectGroups: () => this.isInternalUser,
             nest: true,
@@ -177,22 +179,10 @@ export class KnowledgeSidebar extends Component {
             /**
              * @param {DOMElement} element - moved element
              * @param {DOMElement} parent - parent element of where the element was moved
-             * @param {DOMElement} group - initial (=current) group of the moved element
              * @param {DOMElement} newGroup - group in which the element was moved
-             * @param {DOMElement} prevPos.parent - element's parent before the move
              * @param {DOMElement} placeholder - hint element showing the current position
              */
-            onMove: ({element, parent, group, newGroup, prevPos, placeholder}) => {
-                if (prevPos.parent) {
-                    const prevParent = this.getArticle(parseInt(prevPos.parent.dataset.articleId));
-                    // Remove caret if article has no child
-                    if (!prevParent.has_article_children ||
-                        prevParent.child_ids.length === 1 &&
-                        prevParent.child_ids[0] === parseInt(element.dataset.articleId)
-                    ) {
-                        prevPos.parent.classList.remove('o_article_has_children');
-                    }
-                }
+            onMove: ({element, parent, newGroup, placeholder}) => {
                 if (parent) {
                     // Cannot add child to readonly articles, unless it is the
                     // current parent.
@@ -202,8 +192,6 @@ export class KnowledgeSidebar extends Component {
                         placeholder.classList.add('bg-danger');
                         return;
                     }
-                    // Add caret
-                    parent.classList.add('o_article_has_children');
                 } else if (newGroup.dataset.section === "shared") {
                     // Private articles cannot be dropped in the shared section
                     const article = this.getArticle(parseInt(element.dataset.articleId));
@@ -218,6 +206,7 @@ export class KnowledgeSidebar extends Component {
 
         onWillStart(async () => {
             this.isInternalUser = await user.hasGroup('base.group_user');
+            this.isPortalUser = await user.hasGroup('base.group_portal');
         });
 
         useRecordObserver(async (record) => {
@@ -863,6 +852,7 @@ export class KnowledgeSidebar extends Component {
         });
         const onPointerUp = () => {
             document.removeEventListener('pointermove', onPointerMove);
+            this.state.resizing = false;
             document.body.style.cursor = "auto";
             document.body.style.userSelect = "auto";
             localStorage.setItem(this.storageKeys.size, this.state.sidebarSize);
@@ -871,6 +861,7 @@ export class KnowledgeSidebar extends Component {
         // meaning that the cursor is not always on top of the resizer.
         document.body.style.cursor = "col-resize";
         document.body.style.userSelect = "none";
+        this.state.resizing = true;
         document.addEventListener('pointermove', onPointerMove);
         document.addEventListener('pointerup', onPointerUp, {once: true});
     }

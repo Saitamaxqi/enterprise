@@ -12,7 +12,7 @@ registry.category("web_tour.tours").add('knowledge_resequence_children_of_readon
 },
 {
     trigger:
-        ".o_article_has_children:has(li:nth-child(1):contains(Child 1)):has(li:nth-child(2):contains(Child 2))",
+        "li.o_article:has(li:nth-child(1):contains(Child 1)):has(li:nth-child(2):contains(Child 2))",
 },
 { // check existence and order of children, and reorder children
     trigger: '.o_article_active:contains(Readonly Parent)',
@@ -24,7 +24,7 @@ registry.category("web_tour.tours").add('knowledge_resequence_children_of_readon
 },
 {
     trigger:
-        ".o_article_has_children:has(li:nth-child(1):contains(Child 2)):has(li:nth-child(2):contains(Child 1))",
+        "li.o_article:has(li:nth-child(1):contains(Child 2)):has(li:nth-child(2):contains(Child 1))",
 },
 { // check that the children were correctly reordered, and try to make a root from one children
     trigger: '.o_article_active:contains(Readonly Parent)',

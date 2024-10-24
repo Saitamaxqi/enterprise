@@ -45,8 +45,8 @@ registry.category("web_tour.tours").add('knowledge_history_tour', {
         trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
         run: "click",
     }, {
-        // click on the main "New" action
-        trigger: '.o_knowledge_header .btn:contains("New")',
+        // click on the "New Article" action
+        trigger: '.o_knowledge_create_article',
         run: "click",
     }, {
         // check that the article is correctly created (private section)
@@ -57,8 +57,13 @@ registry.category("web_tour.tours").add('knowledge_history_tour', {
         ...changeArticleContentAndSave('Modified Title 02'),
         ...changeArticleContentAndSave('Modified Title 03'),
     {
+        // Open dropdown 'More actions'
+        trigger: '#dropdown_tools_panel',
+        run: "click",
+    },
+    {
         // Open history dialog
-        trigger: '.btn.btn-history',
+        trigger: '.dropdown-item:contains("Open Version History")',
         run: "click",
     }, {
         // check the history dialog is opened

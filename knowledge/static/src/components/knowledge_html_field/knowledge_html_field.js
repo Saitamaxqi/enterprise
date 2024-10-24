@@ -1,4 +1,5 @@
 import { HtmlField, htmlField } from "@html_editor/fields/html_field";
+import { withSequence } from "@html_editor/utils/resource";
 import {
     KNOWLEDGE_EMBEDDINGS,
     KNOWLEDGE_READONLY_EMBEDDINGS,
@@ -14,6 +15,7 @@ import { KnowledgeWysiwyg } from "../knowledge_wysiwyg/knowledge_wysiwyg";
 import { CallbackRecorder } from "@web/search/action_hook";
 import { useRecordObserver } from "@web/model/relational_model/utils";
 import { useService } from "@web/core/utils/hooks";
+import { _t } from "@web/core/l10n/translation";
 
 export class KnowledgeHtmlField extends HtmlField {
     static components = {
@@ -49,6 +51,13 @@ export class KnowledgeHtmlField extends HtmlField {
             ];
             config.Plugins.push(...KNOWLEDGE_EMBEDDED_COMPONENT_PLUGINS);
         }
+        config.resources.hints = [
+            ...(config.resources.hints || []),
+            withSequence(20, {
+                selector: ".odoo-editor-editable > h1:only-child",
+                text: _t("Start with a title..."),
+            }),
+        ];
         config.Plugins.push(...KNOWLEDGE_PLUGINS);
         config.onLayoutGeometryChange = () => this.onLayoutGeometryChange();
         return config;

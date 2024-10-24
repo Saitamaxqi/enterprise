@@ -10,8 +10,8 @@ registry.category("web_tour.tours").add("knowledge_load_template", {
             // open the Knowledge App
             trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
             run: "click",
-        }, { // click on the main "New" action
-            trigger: '.o_knowledge_header .btn:contains("New")',
+        }, { // click on the "New Article" action
+            trigger: '.o_knowledge_create_article',
             run: "click",
         }, { // open the template picker dialog
             trigger: '.o_knowledge_helper .o_knowledge_load_template',

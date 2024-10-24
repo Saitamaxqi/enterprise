@@ -74,6 +74,7 @@
                                              <span class="o_knowledge_article_view_form_dynamic_width d-none"
                                                    invisible="full_width"/>
                                             <!-- Article Cover -->
+                                            <span class="pt-md-5" invisible="cover_image_id"/>
                                             <field name="cover_image_url" invisible="1" />
                                             <field name="cover_image_position" invisible="1" />
                                             <widget name="knowledge_cover" invisible="not cover_image_id"/>

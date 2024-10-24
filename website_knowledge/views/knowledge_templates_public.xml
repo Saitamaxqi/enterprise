@@ -107,7 +107,6 @@
             <t t-set="is_active" t-value="article.id == active_article_id if active_article_id else False"/>
             <li t-attf-class="o_article position-relative
                               #{ 'o_article_tree_child' if has_parent else ''}
-                              #{ 'o_article_has_children' if article.has_article_children else ''}
                               #{ 'o_knowledge_article_force_show_active_article' if is_force_show_active_article else ''}"
                 t-att-data-article-id="article.id">
                 <div t-attf-class="o_article_handle d-flex align-items-center #{ 'o_article_active' if is_active else 'text-muted' }">

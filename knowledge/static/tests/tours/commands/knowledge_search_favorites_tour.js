@@ -63,7 +63,7 @@ const embedKnowledgeKanbanViewSteps = function (article) {
         trigger: ".o_app[data-menu-xmlid='knowledge.knowledge_menu_root']",
         run: "click",
     }, { // click on the search menu
-        trigger: "[role='menuitem']:contains(Search)",
+        trigger: "[role='menuitem']:contains(Articles)",
         run: "click",
     }, { // toggle on the kanban view
         trigger: ".o_switch_view.o_kanban",

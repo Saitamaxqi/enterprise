@@ -2,8 +2,8 @@
 <templates id="template" xml:space="preserve">
     <t t-name="knowledge.SidebarSection">
         <section t-attf-class="o_section #{sectionClass || ''}" t-att-data-section="dataSection">
-            <div class="o_section_header d-flex h4 mb-0">
-                <div class="flex-grow-1 text-truncate" t-out="sectionName"/>
+            <div class="o_section_header d-flex h6 mb-0 ps-1">
+                <div class="flex-grow-1 align-content-center text-truncate" t-out="sectionName"/>
                 <t t-out="headerButtons"/>
             </div>
             <ul t-if="props.rootIds.length" class="o_tree">

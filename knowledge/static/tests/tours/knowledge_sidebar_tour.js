@@ -175,7 +175,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 // Open an article using the searchBox
 {
     // Open the CP
-    trigger: '#knowledge_search_bar',
+    trigger: '.o_knowledge_search',
     run: "click",
 }, {
     trigger: '.o_command_palette_search input',
@@ -190,7 +190,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 },
 // Open the trash
 {
-    trigger: '.o_knowledge_sidebar_trash > div[role="button"]',
+    trigger: '.o_knowledge_sidebar_trash a:contains("Open the Trash")',
     run: "click",
 }, {
     // Check that trash has been opened
@@ -493,7 +493,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     run: "click",
         },
         {
-            trigger: 'section[data-section="workspace"] .o_article:contains("Workspace Article"):not(.o_article_has_children)',
+            trigger: 'section[data-section="workspace"] .o_article:contains("Workspace Article")',
         },
         {
     // Check that article has been removed from the sidebar
@@ -532,7 +532,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     run: "click",
         },
         {
-            trigger: 'section[data-section="workspace"] .o_article:contains("Workspace Article"):not(.o_article_has_children)',
+            trigger: 'section[data-section="workspace"] .o_article:contains("Workspace Article")',
         },
         {
     // Check that article has been removed from the main tree but not from the favorite tree

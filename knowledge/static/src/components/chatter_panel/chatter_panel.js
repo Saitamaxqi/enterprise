@@ -42,6 +42,7 @@ export const knowledgeChatterPanel = {
     component: KnowledgeArticleChatter,
     additionalClasses: [
         'o_knowledge_chatter',
+        'border-top',
         'col-12',
         'col-lg-4',
         'position-relative',

@@ -9,8 +9,8 @@ registry.category("web_tour.tours").add('knowledge_pick_emoji_tour', {
     trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
     run: "click",
 }, {
-    // click on the main "New" action
-    trigger: '.o_knowledge_header .btn:contains("New")',
+    // click on the "New Article" action
+    trigger: '.o_knowledge_create_article',
     run: "click",
 }, {
     trigger: 'section[data-section="private"] .o_article .o_article_name:contains("Untitled")',

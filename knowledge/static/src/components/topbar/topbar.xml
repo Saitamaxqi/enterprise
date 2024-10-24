@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <templates>
     <t t-name="knowledge.KnowledgeTopbar">
-        <div class="o_knowledge_header d-flex flex-wrap flex-md-nowrap border-bottom d-print-none bg-view px-0 py-2 px-sm-2">
+        <div class="o_knowledge_header d-flex flex-wrap flex-md-nowrap d-print-none bg-view px-0 py-2 px-sm-2">
             <div class="d-flex flex-wrap flex-md-nowrap flex-grow-1 gap-1 px-2 px-sm-0 pt-2 pt-sm-0 align-items-center min-w-0">
                 <a role="button" class="d-md-none btn btn-light align-self-start px-2 py-1" t-on-click="() => this.env.toggleAsideMobile()">
                     <i class="fa fa-lg fa-bars" title="Toggle aside menu"/>
@@ -16,10 +16,8 @@
             </div>
             <!-- Buttons -->
             <div class="d-flex gap-1 flex-md-nowrap mx-auto justify-content-end">
-                <a role="button" t-on-click="() => this.env.createArticle('private')" class="btn btn-primary btn-create text-nowrap" data-hotkey="n">New</a>
                 <div class="o-dropdown dropdown" t-if="props.record.resId and props.record.data.active">
                     <a t-ref="sharePanel_button" role="button" class="btn btn-light btn-share dropdown-toggle o-no-caret" id="dropdown_share_panel" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hotkey="shift+s">
-                        <i class="fa fa-fw fs-6 fa-share-alt me-1 o_knowledge_share_panel_icon"/>
                         <t t-if="isInternalUser">Share</t>
                         <t t-else="">Members</t>
                     </a>
@@ -27,29 +25,22 @@
                         <PermissionPanel t-if="state.displaySharePanel and props.record.resId and props.record.data.active" record="props.record"/>
                     </div>
                 </div>
-                <a role="button" class="btn btn-light o_knowledge_toggle_favorite" t-on-click="env.toggleFavorite" t-if="props.record.resId" data-hotkey="t" t-att-title="props.record.data.is_user_favorite ? removeFavoriteLabel : addFavoriteLabel">
-                    <i class="fa fa-fw fs-6 fa-star" t-if="props.record.data.is_user_favorite"/>
-                    <i class="fa fa-fw fs-6 fa-star-o" t-if="!props.record.data.is_user_favorite"/>
-                </a>
                 <a t-ref="btn_chatter" t-if="props.record.resId and isInternalUser" role="button"
-                    t-attf-class="btn btn-light btn-chatter #{state.displayChatter ? 'active' : ''}" data-hotkey="d" t-on-click="toggleChatter" title="Toggle chatter">
-                    <i class="fa fa-fw fs-6 fa-comments"/>
-                </a>
-                <a t-ref="btn_history"
-                   t-if="props.record.resId and isInternalUser and props.record.data.user_can_write and props.record.data['html_field_history_metadata']?.['body']"
-                   role="button"
-                   t-attf-class="btn btn-light btn-history #{state.displayHistory ? 'active' : ''}"
-                   data-hotkey="y"
-                   t-on-click="openHistory"
-                   title="Open history">
-                    <i class="fa fa-fw fs-6 fa-history"/>
+                    t-attf-class="btn btn-light btn-chatter #{state.displayChatter ? 'active' : ''}" data-hotkey="d" t-on-click="toggleChatter"
+                    t-att-title="chatterButtonTitle">
+                    <i class="fa fa-fw fs-6 fa-comments-o"/>
                 </a>
                 <a t-ref="btn_properties" t-if="state.addingProperty or props.record.resId and props.record.data.article_properties.length and isInternalUser" role="button" t-attf-class="btn btn-light btn-properties #{state.displayPropertyPanel ? 'active' : ''}" data-hotkey="o" title="Show Properties" t-on-click="toggleProperties">
                     <i class="fa fa-fw fs-6 fa-cogs"/>
                 </a>
                 <a t-ref="btn_comments" t-if="props.record.resId and displayCommentsPanelButton" role="button"
-                    t-attf-class="btn btn-light btn-comments #{commentsState.displayMode === 'panel' ? 'active' : ''}" t-on-click="toggleComments">
-                    <i class="fa fa-fw fs-6 fa-commenting" title="Open comments panel"/>
+                    t-attf-class="btn btn-light btn-comments #{commentsState.displayMode === 'panel' ? 'active' : ''}" t-on-click="toggleComments"
+                    t-att-title="commentButtonTitle">
+                    <i class="fa fa-fw fs-6 fa-commenting-o"/>
+                </a>
+                <a role="button" class="btn btn-light o_knowledge_toggle_favorite" t-on-click="env.toggleFavorite" t-if="props.record.resId" data-hotkey="t" t-att-title="props.record.data.is_user_favorite ? removeFavoriteLabel : addFavoriteLabel">
+                    <i class="fa fa-fw fs-4 fa-star" t-if="props.record.data.is_user_favorite"/>
+                    <i class="fa fa-fw fs-4 fa-star-o" t-if="!props.record.data.is_user_favorite"/>
                 </a>
                 <div class="o-dropdown dropdown" t-if="props.record.resId">
                     <a role="button" class="btn btn-light dropdown-toggle o-no-caret" data-bs-toggle="dropdown" id="dropdown_tools_panel" aria-haspopup="true" aria-expanded="false" data-hotkey="p" title="More actions" t-ref="optionsBtn">
@@ -119,6 +110,11 @@
                             </button>
                             <button class="dropdown-item" t-on-click="this.cloneArticle">
                                 <i class="me-2 fa fa-fw fa-lg fa-copy"/> Create a Copy
+                            </button>
+                            <button class="dropdown-item"
+                                t-if="props.record.resId and isInternalUser and props.record.data.user_can_write and props.record.data['html_field_history_metadata']?.['body']"
+                                t-on-click="openHistory">
+                                <i class="me-2 fa fa-fw fa-lg fa-history"/> Open Version History
                             </button>
                             <button class="dropdown-item"
                                 title="Article items are not showed in the left-side menu&#10;but are shown in inserted kanban/list views"

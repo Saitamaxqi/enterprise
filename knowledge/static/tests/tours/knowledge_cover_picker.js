@@ -24,8 +24,8 @@ registry.category("web_tour.tours").add("knowledge_cover_selector_tour", {
             run: "click",
         },
         {
-            content: "Click on the 'Create' button",
-            trigger: ".o_knowledge_header .btn-create",
+            content: "Click on the 'New Article' button",
+            trigger: ".o_knowledge_create_article",
             run: "click",
         },
         {
@@ -128,7 +128,7 @@ registry.category("web_tour.tours").add("knowledge_cover_selector_tour", {
         },
         {
             content: "Create another article",
-            trigger: ".o_knowledge_header .btn-create",
+            trigger: ".o_knowledge_create_article",
             run: "click",
         },
         {
