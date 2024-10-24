@@ -7,6 +7,9 @@
                 <span t-esc="this.props.order.customer_count" />
             </div>
         </xpath>
+        <xpath expr="//div[hasclass('o_pdis_tracker')]//t" position="attributes">
+            <attribute name="t-esc">this.props.order.floating_order_name || this.props.order.tracking_number</attribute>
+        </xpath>
         <xpath expr="//div[hasclass('o_pdis_tracker')]" position="before">
             <div class="o_pdis_table" t-if="this.props.order.table and this.props.order.table.table_number">
                 <span>T<t t-esc="this.props.order.table.table_number"/> </span>

@@ -17,6 +17,7 @@ class Pos_Preparation_DisplayOrder(models.Model):
                 'table_number': self.pos_order_id.table_id.table_number,
                 'color': self.pos_order_id.table_id.color,
             }
+            order_for_ui['floating_order_name'] = self.pos_order_id.floating_order_name
 
         return order_for_ui
 

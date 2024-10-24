@@ -5,5 +5,6 @@ patch(Order.prototype, {
     setup(order) {
         super.setup(...arguments);
         this.table = order.table;
+        this.floating_order_name = order.floating_order_name;
     },
 });
