@@ -130,7 +130,7 @@
                 </div>
                 <div name="subscription_closing_pill"
                      class="o_field_badge float-end fs-6 mx-1"
-                     invisible="subscription_state != '3_progress' or not end_date or end_date &gt; next_invoice_date">
+                     invisible="not is_closing">
                     <span class="badge rounded-pill text-bg-warning">Closing</span>
                 </div>
             </xpath>

@@ -177,7 +177,7 @@
             </div>
             <div class="alert alert-warning"
                 role="alert"
-                t-if="closable and end_date_reached">
+                t-if="sale_order.is_closing">
                 <span>Your subscription is about to end on the <span t-field="sale_order.end_date"/>.</span>
             </div>
         </div>
@@ -199,7 +199,7 @@
                 <span t-elif="sale_order.subscription_state == '5_renewed'" class="badge rounded-pill text-bg-secondary align-middle smaller"><i class="fa fa-fw fa-check"/> Renewed</span>
                 <span t-elif="sale_order.subscription_state == '6_churn'" class="badge rounded-pill text-bg-dark align-middle smaller"><i class="fa fa-fw fa-remove"/> Closed</span>
                 <span
-                    t-if="closable and end_date_reached"
+                    t-if="sale_order.is_closing"
                     class="badge rounded-pill text-bg-warning align-middle smaller">
                     <i class="fa fa-fw fa-remove"/> Closing
                 </span>

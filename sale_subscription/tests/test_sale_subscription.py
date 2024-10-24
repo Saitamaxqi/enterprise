@@ -2252,3 +2252,29 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         self.assertFalse(log2.effective_date)
         self.assertEqual(log3.effective_date, datetime.date(2025, 4, 1))
         self.assertEqual(log1.effective_date, datetime.date(2025, 1, 1))
+
+    def test_is_closing(self):
+        """
+        Test subscription to ensure is_closing is set correctly based on
+        subscription state, recurring invoices, and user-closing options.
+        """
+        with freeze_time("2024-07-30"):
+            # Confirm subscription and generate an recurring invoice
+            subscription = self.subscription
+            subscription.action_confirm()
+            subscription._create_recurring_invoice()
+            self.assertFalse(subscription.is_closing, "Subscription should not be marked for closure upon confirmation.")
+            self.assertEqual(subscription.subscription_state, '3_progress', "Subscription state should be 'in progress'.")
+
+            subscription.plan_id.user_closable = True
+            subscription.plan_id.user_closable_options = 'end_of_period'
+            subscription.with_context(allow_future_end_date=True).set_close()
+            # Verify that the subscription is now marked for closure
+            self.assertTrue(subscription.is_closing, "Subscription should be marked for closure.")
+
+        with freeze_time("2024-08-30"):
+            self.env['sale.order']._cron_subscription_expiration()
+
+            # Validate that the subscription is closed and is not marked for closure
+            self.assertFalse(subscription.is_closing, "Subscription should not be marked for closure after churn.")
+            self.assertEqual(subscription.subscription_state, '6_churn', "Subscription state should be 'churn'.")

@@ -122,6 +122,7 @@ class SaleOrder(models.Model):
     note_order = fields.Many2one('sale.order', compute='_compute_note_order', search='_search_note_order')
     internal_note = fields.Html()
     internal_note_display = fields.Html(compute='_compute_internal_note_display', inverse='_inverse_internal_note_display')
+    is_closing = fields.Boolean(string="To Be Closed", compute='_compute_is_closing', store=True)
 
     ###########
     # UI / UX #
@@ -337,6 +338,18 @@ class SaleOrder(models.Model):
             else:
                 # First contract of the sequence
                 so.first_contract_date = so.start_date
+
+    @api.depends('next_invoice_date', 'end_date', 'subscription_state')
+    def _compute_is_closing(self):
+        """ Compute if each order is to be closed based on subscription state, end date, and next invoice date."""
+        for order in self:
+            order.is_closing = (
+                order.subscription_state in SUBSCRIPTION_PROGRESS_STATE
+                and order.user_closable
+                and order.end_date
+                and order.next_invoice_date
+                and order.end_date <= order.next_invoice_date
+            )
 
     @api.depends('subscription_child_ids', 'origin_order_id')
     def _get_invoiced(self):
