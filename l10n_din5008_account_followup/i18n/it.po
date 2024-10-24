@@ -23,7 +23,7 @@ msgstr "Contatto"
 #. module: l10n_din5008_account_followup
 #: model_terms:ir.ui.view,arch_db:l10n_din5008_account_followup.report_followup_print_all
 msgid "Customer ref:"
-msgstr "Cliente rif:"
+msgstr "Rif. cliente:"
 
 #. module: l10n_din5008_account_followup
 #: model_terms:ir.ui.view,arch_db:l10n_din5008_account_followup.report_followup_print_all
@@ -34,7 +34,7 @@ msgstr "Data:"
 #: model:ir.model.fields,field_description:l10n_din5008_account_followup.field_res_partner__l10n_din5008_date
 #: model:ir.model.fields,field_description:l10n_din5008_account_followup.field_res_users__l10n_din5008_date
 msgid "L10N Din5008 Date"
-msgstr ""
+msgstr "Data L10N Din5008"
 
 #. module: l10n_din5008_account_followup
 #: model_terms:ir.ui.view,arch_db:l10n_din5008_account_followup.report_followup_print_all

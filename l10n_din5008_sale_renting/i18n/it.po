@@ -16,8 +16,7 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: l10n_din5008_sale_renting
-#. odoo-python
-#: code:addons/l10n_din5008_sale_renting/models/sale_order.py:0
+#: model_terms:ir.ui.view,arch_db:l10n_din5008_sale_renting.report_rental_order_document
 msgid "Pickup Receipt"
 msgstr "Ricevuta di ritiro"
 
@@ -29,10 +28,9 @@ msgstr "Fattura proforma"
 #. module: l10n_din5008_sale_renting
 #: model_terms:ir.ui.view,arch_db:l10n_din5008_sale_renting.report_rental_order_document
 msgid "Quotation"
-msgstr "Citazione"
+msgstr "Preventivo"
 
 #. module: l10n_din5008_sale_renting
-#: model:ir.model,name:l10n_din5008_sale_renting.model_sale_order
 #: model_terms:ir.ui.view,arch_db:l10n_din5008_sale_renting.report_rental_order_document
 msgid "Sales Order"
 msgstr "Ordine di vendita"

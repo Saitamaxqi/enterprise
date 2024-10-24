@@ -23,7 +23,7 @@ msgstr "Datum:"
 #. module: l10n_din5008_industry_fsm
 #: model:ir.model.fields,field_description:l10n_din5008_industry_fsm.field_project_task__l10n_din5008_date
 msgid "L10N Din5008 Date"
-msgstr ""
+msgstr "L10N Din5008 Datum"
 
 #. module: l10n_din5008_industry_fsm
 #: model:ir.model,name:l10n_din5008_industry_fsm.model_project_task
