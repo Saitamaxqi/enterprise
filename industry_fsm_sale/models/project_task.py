@@ -286,12 +286,12 @@ class ProjectTask(models.Model):
         action['context'] = context
         return action
 
-    def _get_last_sol_of_customer(self):
+    def _get_last_sol_of_customer_domain(self):
         self.ensure_one()
         # For FSM task, we don't want to search the last SOL of the customer.
         if self.is_fsm:
-            return False
-        return super()._get_last_sol_of_customer()
+            return []
+        return super()._get_last_sol_of_customer_domain()
 
     def _show_time_and_material(self):
         # check time and material section should visible or not in portal
