@@ -1,48 +1,14 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
-import io
-import os
 import time
 import uuid
-
-from reportlab.lib.utils import ImageReader
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.rl_config import TTFSearchPath
-from reportlab.pdfgen import canvas
-from reportlab.platypus import Paragraph
-from reportlab.lib.styles import ParagraphStyle
-from reportlab.pdfbase.pdfmetrics import stringWidth
 from werkzeug.urls import url_join, url_quote
 from markupsafe import Markup
-from PIL import UnidentifiedImageError
 
 from odoo import _, api, fields, models, Command
-from odoo.tools import config, format_list, get_lang, is_html_empty, format_date
+from odoo.tools import format_list, get_lang, is_html_empty, format_date
 from odoo.exceptions import UserError, ValidationError
-from odoo.tools.pdf import PdfFileReader, PdfFileWriter, PdfReadError, reshape_text
-
-
-TTFSearchPath.append(os.path.join(config.root_path, "../addons/web/static/fonts/sign"))
-
-
-def _fix_image_transparency(image):
-    """ Modify image transparency to minimize issue of grey bar artefact.
-
-    When an image has a transparent pixel zone next to white pixel zone on a
-    white background, this may cause on some renderer grey line artefacts at
-    the edge between white and transparent.
-
-    This method sets transparent pixel to white transparent pixel which solves
-    the issue for the most probable case. With this the issue happen for a
-    black zone on black background but this is less likely to happen.
-    """
-    pixels = image.load()
-    for x in range(image.size[0]):
-        for y in range(image.size[1]):
-            if pixels[x, y] == (0, 0, 0, 0):
-                pixels[x, y] = (255, 255, 255, 0)
 
 
 class SignRequest(models.Model):
@@ -452,7 +418,7 @@ class SignRequest(models.Model):
         if self.state != 'sent' or any(sri.state != 'completed' for sri in self.request_item_ids):
             raise UserError(_("This sign request cannot be signed"))
         self.write({'state': 'signed'})
-        if not self._check_is_encrypted():
+        if not self.template_id._check_is_encrypted():
             # if the file is encrypted, we must wait that the document is decrypted
             self._send_completed_document()
 
@@ -476,14 +442,6 @@ class SignRequest(models.Model):
 
                         })
                     self.env["ir.attachment"].create(attachment_values)
-
-    def _check_is_encrypted(self):
-        self.ensure_one()
-        if not self.template_id.sign_item_ids:
-            return False
-
-        old_pdf = PdfFileReader(io.BytesIO(base64.b64decode(self.template_id.attachment_id.datas)), strict=False, overwriteWarnings=False)
-        return old_pdf.isEncrypted
 
     def cancel(self):
         for sign_request in self:
@@ -561,25 +519,9 @@ class SignRequest(models.Model):
             lang=partner_lang,
         )
 
-    def _get_font(self):
-        custom_font = self.env["ir.config_parameter"].sudo().get_param("sign.use_custom_font")
-        # The font must be a TTF font. The tool 'otf2ttf' may be useful for conversion.
-        if custom_font:
-            pdfmetrics.registerFont(TTFont(custom_font, custom_font + ".ttf"))
-            return custom_font
-        return "Helvetica"
-
-    def _get_normal_font_size(self):
-        return 0.015
-
-    @staticmethod
-    def get_page_size(pdf_reader):
-        first_page = pdf_reader.pages and pdf_reader.pages[0]
-        media_box = first_page and first_page.mediaBox
-        width = media_box and media_box.getWidth()
-        height = media_box and media_box.getHeight()
-
-        return (width, height) if width and height else None
+    ##################
+    # PDF Rendering  #
+    ##################
 
     def _get_user_formatted_datetime(self, datetime_val):
         """
@@ -587,32 +529,16 @@ class SignRequest(models.Model):
         """
         lang = self.env['res.lang']._lang_get(self.create_uid.lang)
         user_date_format, user_time_format = lang.date_format, lang.time_format
-
         return datetime_val.strftime(f"{user_date_format} {user_time_format}")
 
-    def _generate_completed_document(self, password=""):
-        self.ensure_one()
+    def _generate_completed_document(self, password="", preview=False):
+        if not preview:
+            self.ensure_one()
         if self.state != 'signed':
             raise UserError(_("The completed document cannot be created because the sign request is not fully signed"))
         if not self.template_id.sign_item_ids:
             self.completed_document = self.template_id.attachment_id.datas
         else:
-            try:
-                old_pdf = PdfFileReader(io.BytesIO(base64.b64decode(self.template_id.attachment_id.datas)), strict=False, overwriteWarnings=False)
-                old_pdf.getNumPages()
-            except:
-                raise ValidationError(_("ERROR: Invalid PDF file!"))
-
-            isEncrypted = old_pdf.isEncrypted
-            if isEncrypted and not old_pdf.decrypt(password):
-                # password is not correct
-                return
-
-            font = self._get_font()
-            normalFontSize = self._get_normal_font_size()
-
-            packet = io.BytesIO()
-            can = canvas.Canvas(packet, pagesize=self.get_page_size(old_pdf))
             itemsByPage = self.template_id._get_sign_items_by_page()
             items_ids = [id for items in itemsByPage.values() for id in items.ids]
             values_dict = self.env['sign.request.item.value']._read_group(
@@ -620,7 +546,7 @@ class SignRequest(models.Model):
                 groupby=['sign_item_id'],
                 aggregates=['value:array_agg', 'frame_value:array_agg', 'frame_has_hash:array_agg']
             )
-            values = {
+            signed_values = {
                 sign_item.id : {
                     'value': values[0],
                     'frame': frame_values[0],
@@ -628,151 +554,7 @@ class SignRequest(models.Model):
                 }
                 for sign_item, values, frame_values, frame_has_hashes in values_dict
             }
-
-            for p in range(0, old_pdf.getNumPages()):
-                page = old_pdf.getPage(p)
-                # Absolute values are taken as it depends on the MediaBox template PDF metadata, they may be negative
-                width = float(abs(page.mediaBox.getWidth()))
-                height = float(abs(page.mediaBox.getHeight()))
-
-                # Set page orientation (either 0, 90, 180 or 270)
-                rotation = page['/Rotate'] if '/Rotate' in page else 0
-                if rotation and isinstance(rotation, int):
-                    can.rotate(rotation)
-                    # Translate system so that elements are placed correctly
-                    # despite of the orientation
-                    if rotation == 90:
-                        width, height = height, width
-                        can.translate(0, -height)
-                    elif rotation == 180:
-                        can.translate(-width, -height)
-                    elif rotation == 270:
-                        width, height = height, width
-                        can.translate(-width, 0)
-
-                items = itemsByPage[p + 1] if p + 1 in itemsByPage else []
-                for item in items:
-                    value_dict = values.get(item.id)
-                    if not value_dict:
-                        continue
-                    # only get the 1st
-                    value = value_dict['value']
-                    frame = value_dict['frame']
-
-                    if frame:
-                        try:
-                            image_reader = ImageReader(io.BytesIO(base64.b64decode(frame[frame.find(',')+1:])))
-                        except UnidentifiedImageError:
-                            raise ValidationError(_("There was an issue downloading your document. Please contact an administrator."))
-                        _fix_image_transparency(image_reader._image)
-                        can.drawImage(
-                            image_reader,
-                            width*item.posX,
-                            height*(1-item.posY-item.height),
-                            width*item.width,
-                            height*item.height,
-                            'auto',
-                            True
-                        )
-
-                    if item.type_id.item_type == "text":
-                        value = reshape_text(value)
-                        can.setFont(font, height*item.height*0.8)
-                        if item.alignment == "left":
-                            can.drawString(width*item.posX, height*(1-item.posY-item.height*0.9), value)
-                        elif item.alignment == "right":
-                            can.drawRightString(width*(item.posX+item.width), height*(1-item.posY-item.height*0.9), value)
-                        else:
-                            can.drawCentredString(width*(item.posX+item.width/2), height*(1-item.posY-item.height*0.9), value)
-
-                    elif item.type_id.item_type == "selection":
-                        content = []
-                        for option in item.option_ids:
-                            if option.id != int(value):
-                                content.append("<strike>%s</strike>" % (option.value))
-                            else:
-                                content.append(option.value)
-                        font_size = height * normalFontSize * 0.8
-                        text = " / ".join(content)
-                        string_width = stringWidth(text.replace("<strike>", "").replace("</strike>", ""), font, font_size)
-                        p = Paragraph(text, ParagraphStyle(name='Selection Paragraph', fontName=font, fontSize=font_size, leading=12))
-                        posX = width * (item.posX + item.width * 0.5) - string_width // 2
-                        posY = height * (1 - item.posY - item.height * 0.5) - p.wrap(width, height)[1] // 2
-                        p.drawOn(can, posX, posY)
-
-                    elif item.type_id.item_type == "textarea":
-                        font_size = height * normalFontSize * 0.8
-                        can.setFont(font, font_size)
-                        lines = value.split('\n')
-                        y = (1-item.posY)
-                        for line in lines:
-                            empty_space = width * item.width - can.stringWidth(line, font, font_size)
-                            x_shift = 0
-                            if item.alignment == 'center':
-                                x_shift = empty_space / 2
-                            elif item.alignment == 'right':
-                                x_shift = empty_space
-                            y -= normalFontSize * 0.9
-                            line = reshape_text(line)
-                            can.drawString(width * item.posX + x_shift, height * y, line)
-                            y -= normalFontSize * 0.1
-
-                    elif item.type_id.item_type == "checkbox":
-                        itemW, itemH = item.width * width, item.height * height
-                        itemX, itemY = item.posX * width, (1 - item.posY) * height
-                        meanSize = (itemW + itemH) // 2
-                        can.setLineWidth(max(meanSize // 30, 1))
-                        can.rect(itemX, itemY - itemH, itemW, itemH)
-                        if value == 'on':
-                            can.setLineWidth(max(meanSize // 20, 1))
-                            can.bezier(
-                                itemX + 0.20 * itemW, itemY - 0.35 * itemH,
-                                itemX + 0.30 * itemW, itemY - 0.8 * itemH,
-                                itemX + 0.30 * itemW, itemY - 1.2 * itemH,
-                                itemX + 0.85 * itemW, itemY - 0.15 * itemH,
-                            )
-                    elif item.type_id.item_type == "radio":
-                        x = width * item.posX
-                        y = height * (1 - item.posY)
-                        w = item.width * width
-                        h = item.height * height
-                        # Calculate the center of the sign item rectangle.
-                        c_x = x + w * 0.5
-                        c_y = y - h * 0.5
-                        # Draw the outer empty circle.
-                        can.circle(c_x, c_y, h * 0.5)
-                        if value == "on":
-                            # Draw the inner filled circle.
-                            can.circle(x_cen=c_x, y_cen=c_y, r=h * 0.5 * 0.75, fill=1)
-                    elif item.type_id.item_type == "signature" or item.type_id.item_type == "initial":
-                        try:
-                            image_reader = ImageReader(io.BytesIO(base64.b64decode(value[value.find(',')+1:])))
-                        except UnidentifiedImageError:
-                            raise ValidationError(_("There was an issue downloading your document. Please contact an administrator."))
-                        _fix_image_transparency(image_reader._image)
-                        can.drawImage(image_reader, width*item.posX, height*(1-item.posY-item.height), width*item.width, height*item.height, 'auto', True)
-
-                can.showPage()
-
-            can.save()
-
-            item_pdf = PdfFileReader(packet, overwriteWarnings=False)
-            new_pdf = PdfFileWriter()
-
-            for p in range(0, old_pdf.getNumPages()):
-                page = old_pdf.getPage(p)
-                page.mergePage(item_pdf.getPage(p))
-                new_pdf.addPage(page)
-
-            if isEncrypted:
-                new_pdf.encrypt(password)
-
-            try:
-                output = io.BytesIO()
-                new_pdf.write(output)
-            except PdfReadError:
-                raise ValidationError(_("There was an issue downloading your document. Please contact an administrator."))
-
+            output = self.template_id._render_template_with_items(password=password, signed_values=signed_values, values_dict=values_dict)
             self.completed_document = base64.b64encode(output.getvalue())
             output.close()
 
@@ -806,6 +588,10 @@ class SignRequest(models.Model):
             'res_id': self.id,
         })
         self.completed_document_attachment_ids = [Command.set([attachment.id, attachment_log.id])]
+
+    ##################
+    # Mail overrides #
+    ##################
 
     @api.model
     def _message_send_mail(self, body, email_layout_xmlid, message_values, notif_values, mail_values, force_send=False, **kwargs):

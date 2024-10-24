@@ -179,7 +179,7 @@ class Sign(http.Controller):
         elif download_type == "completed":
             document = sign_request.completed_document
             if not document:
-                if sign_request._check_is_encrypted():# if the document is completed but the document is encrypted
+                if sign_request.template_id._check_is_encrypted():  # if the document is completed but the document is encrypted
                     return request.redirect('/sign/password/%(request_id)s/%(access_token)s' % {'request_id': request_id, 'access_token': token})
                 sign_request._generate_completed_document()
                 document = sign_request.completed_document
@@ -264,6 +264,7 @@ class Sign(http.Controller):
         if current_request_item.state != 'sent':
             return http.request.render('sign.deleted_sign_request')
         current_request_item.send_signature_accesses()
+
 
         return request.render('sign.sign_request_expired', {
             'state': 'sent',

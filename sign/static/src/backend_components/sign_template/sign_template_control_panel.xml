@@ -10,6 +10,7 @@
                         <t t-if="showShareButton">
                             <button type="button" class="btn btn-secondary o_sign_template_share" t-on-click="onShareClick">Share</button>
                         </t>
+                        <button type="button" class="btn btn-secondary o_sign_template_preview" t-on-click="onPreviewClick">Preview</button>
                     </t>
                     <t t-elif="props.actionType === 'sign_template_edit'">
                         <button type="button" class="btn btn-primary o_sign_template_save" t-on-click="props.goBackToKanban">Save</button>

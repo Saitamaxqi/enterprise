@@ -70,4 +70,14 @@ export class SignTemplateControlPanel extends Component {
             },
         });
     }
+
+    onPreviewClick() {
+        this.action.doActionButton({
+            type: "object",
+            resModel: "sign.template",
+            name:"action_template_preview",
+            resIds: [this.props.signTemplate.id],
+        })
+    }
+
 }

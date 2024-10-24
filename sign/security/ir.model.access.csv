@@ -15,3 +15,4 @@ access_sign_log_group_user,sign.log.user,model_sign_log,group_sign_user,1,0,0,0
 access_sign_send_request_user,sign.send.request.user,model_sign_send_request,sign.group_sign_user,1,1,1,0
 access_sign_send_request_signer_user,sign.send.request.signer.user,model_sign_send_request_signer,sign.group_sign_user,1,1,1,0
 access_sign_duplicate_template_with_pdf_user,sign.duplicate.template.pdf.user,model_sign_duplicate_template_pdf,sign.group_sign_user,1,1,1,0
+access_sign_template_preview,sign.template.preview.user,model_sign_template_preview,sign.group_sign_user,1,1,1,0
