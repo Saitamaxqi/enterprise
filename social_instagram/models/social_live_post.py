@@ -18,7 +18,7 @@ class SocialLivePost(models.Model):
         super(SocialLivePost, (self - instagram_live_posts))._compute_live_post_link()
 
         for post in instagram_live_posts:
-            post.live_post_link = f'https://www.instagram.com/p/{post.instagram_post_id}'
+            post.live_post_link = f'https://www.instagram.com/{post.account_id.social_account_handle}'
 
     def _refresh_statistics(self):
         super()._refresh_statistics()
