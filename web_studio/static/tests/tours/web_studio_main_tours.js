@@ -1206,8 +1206,19 @@ registry.category("web_tour.tours").add("web_studio_approval_tour", {
             run: "click",
         },
         {
+            trigger: ".o_web_studio_form_view_editor",
+        },
+        {
+            trigger: ".o_web_studio_sidebar .o_web_studio_view",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar #show_invisible",
+            run: "click",
+        },
+        {
             // click on first button it finds that has a node id
-            trigger: ".o_web_studio_form_view_editor button.o-web-studio-editor--element-clickable",
+            trigger: ".o_web_studio_form_view_editor button[name='button_immediate_upgrade'].o-web-studio-editor--element-clickable",
             run: "click",
         },
         {
@@ -1285,8 +1296,16 @@ registry.category("web_tour.tours").add("web_studio_approval_tour", {
             trigger: "body",
         },
         {
+            trigger: ".o_searchview_dropdown_toggler",
+            run: "click",
+        },
+        {
+            trigger: ".o-dropdown-item:contains(Not Installed)",
+            run: "click",
+        },
+        {
             // open first record (should be the one that was used, so the button should be there)
-            trigger: ".o_kanban_view .o_kanban_record .o_dropdown_kanban .dropdown-toggle",
+            trigger: ".o_kanban_view .o_kanban_record:not(:has(button[name='button_immediate_install'])) .o_dropdown_kanban .dropdown-toggle",
             run: "click",
         },
         {
@@ -1295,7 +1314,7 @@ registry.category("web_tour.tours").add("web_studio_approval_tour", {
         },
         {
             // try to do the action
-            trigger: "button[studio_approval]",
+            trigger: "button[name='button_immediate_upgrade']",
             run: "click",
         },
         {
