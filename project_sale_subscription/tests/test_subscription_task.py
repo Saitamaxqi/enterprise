@@ -79,7 +79,7 @@ class TestSubscriptionTask(TestSubscriptionCommon):
                     self.assertEqual(task_recurrence.repeat_type, 'forever',
                         "No end date on the subscription must result in a task with a recurrence of type 'forever'")
 
-    def test_task_plan_stop(self):
+    def test_task_plan_close(self):
         order = self.env['sale.order'].create({
             'is_subscription': True,
             'plan_id': self.plan_month.id,
@@ -99,6 +99,27 @@ class TestSubscriptionTask(TestSubscriptionCommon):
         order.set_close()
         self.assertFalse(task.recurring_task, "Closing a subscription must stop the task recurrence")
         self.assertFalse(task.recurrence_id, "Closing a subscription must stop the task recurrence")
+
+    def test_task_plan_cancel(self):
+        order = self.env['sale.order'].create({
+            'is_subscription': True,
+            'plan_id': self.plan_month.id,
+            'note': "original subscription description",
+            'partner_id': self.partner.id,
+        })
+        order_line = self.env['sale.order.line'].create({
+            'order_id': order.id,
+            'product_id': self.product_recurrence.product_variant_id.id,
+        })
+
+        order.action_confirm()
+        task = order_line.task_id
+        self.assertTrue(task.recurring_task, "Task should be recurrent")
+        self.assertTrue(task.recurrence_id, "Task should be recurrent")
+
+        order._action_cancel()
+        self.assertFalse(task.recurring_task, "Cancelling a subscription must stop the task recurrence")
+        self.assertFalse(task.recurrence_id, "Cancelling a subscription must stop the task recurrence")
 
     def test_task_plan_quotation_template(self):
         order = self.env['sale.order'].create({
