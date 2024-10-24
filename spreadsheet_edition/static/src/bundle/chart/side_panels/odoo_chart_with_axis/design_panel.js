@@ -1,11 +1,12 @@
 import { components, constants } from "@odoo/o-spreadsheet";
 import { _t } from "@web/core/l10n/translation";
 
-const { ChartWithAxisDesignPanel } = components;
+const { ChartWithAxisDesignPanel, RadioSelection } = components;
 const { CHART_AXIS_CHOICES } = constants;
 
 export class OdooChartWithAxisDesignPanel extends ChartWithAxisDesignPanel {
     static template = "spreadsheet_edition.OdooChartWithAxisDesignPanel";
+    static components = { ...ChartWithAxisDesignPanel.components, RadioSelection };
 
     axisChoices = CHART_AXIS_CHOICES;
 
