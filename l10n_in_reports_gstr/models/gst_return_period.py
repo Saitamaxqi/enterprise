@@ -213,9 +213,9 @@ class L10n_InGstReturnPeriod(models.Model):
 
     def _compute_name(self):
         for period in self:
-            if period.periodicity == "monthly":
+            if period.periodicity == "monthly" and period.start_date:
                 period.name = format_date(self.env, period.start_date, date_format="MMM-yyyy")
-            elif period.periodicity == "trimester":
+            elif period.periodicity == "trimester" and period.start_date and period.end_date:
                 quarter_names = get_quarter_names("abbreviated", locale=get_lang(self.env).code)
                 period.name = quarter_names[date_utils.get_quarter_number(period.end_date)]
                 period.name += format_date(self.env, period.start_date, date_format="-yyyy")
@@ -233,12 +233,14 @@ class L10n_InGstReturnPeriod(models.Model):
     @api.depends('month', 'quarter', 'year')
     def _compute_period_dates(self):
         for record in self:
-            if record.periodicity == "monthly":
+            if record.periodicity == "monthly" and record.month:
                 period_start = fields.Date.context_today(self).replace(day=1, month=int(record.month), year=int(record.year))
                 time_period = date_utils.get_month(period_start)
-            else:
+            elif record.periodicity == "trimester" and record.quarter:
                 period_start = fields.Date.context_today(self).replace(day=1, month=int(record.quarter), year=int(record.year))
                 time_period = date_utils.get_quarter(period_start)
+            else:
+                time_period = (False, False)
             record.start_date, record.end_date = time_period
 
     @api.depends("start_date")
