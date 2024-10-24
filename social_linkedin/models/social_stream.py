@@ -60,7 +60,7 @@ class SocialStream(models.Model):
             'socialActions',
             params={'count': 100},
             object_ids=linkedin_post_data,
-        )
+        ).json()
 
         if 'results' in stats_response:
             for post_urn, post_data in stats_response['results'].items():
