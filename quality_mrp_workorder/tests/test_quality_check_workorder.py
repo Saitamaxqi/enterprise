@@ -7,6 +7,7 @@ from odoo.tests import Form, HttpCase, tagged, loaded_demo_data
 from odoo.addons.mrp.tests.common import TestMrpCommon
 from odoo.addons.mrp_workorder.tests import test_tablet_client_action
 from odoo.exceptions import UserError
+from odoo import Command
 
 _logger = logging.getLogger(__name__)
 
@@ -191,6 +192,71 @@ class TestQualityCheckWorkorder(TestMrpCommon):
         backorder.workorder_ids[1].button_finish()
         backorder.button_mark_done()
         self.assertEqual(backorder.state, 'done')
+
+    def test_compute_lot_quality_checks(self):
+        """
+        Ensure that the quantity of quality checks related to a lot is properly computed,
+        whether the lot is used as a finished product or a component.
+        """
+        self.product_2.tracking = 'serial'
+        self.env['quality.point'].create({
+            'title': 'Test Step',
+            'picking_type_ids': [(Command.link(self.warehouse_1.manu_type_id.id))],
+            'measure_on': 'product',
+        })
+        finished_sn = self.env['stock.lot'].create([{
+            'name': self.product_2.name,
+            'product_id': self.product_2.id,
+            'company_id': self.env.company.id,
+        }])
+        mo = self.env['mrp.production'].create({
+            'product_id': self.product_2.id,
+            'product_qty': 1,
+            'picking_type_id': self.warehouse_1.manu_type_id.id,
+        })
+        mo.action_confirm()
+        self.assertEqual(mo.state, 'confirmed')
+        mo_form = Form(mo)
+        mo_form.lot_producing_id = finished_sn
+        mo = mo_form.save()
+        mo.check_ids.do_pass()
+        mo.button_mark_done()
+        self.assertEqual(mo.state, 'done')
+        self.assertEqual(finished_sn.quality_check_qty, 1)
+        # use the finished product as component in another mo
+        bom_2 = self.env['mrp.bom'].create({
+            'product_id': self.product_3.id,
+            'product_tmpl_id': self.product_3.product_tmpl_id.id,
+            'product_qty': 1,
+            'operation_ids': [
+                Command.create({'name': 'OP2', 'workcenter_id': self.workcenter_1.id, 'sequence': 1}),
+            ],
+            'bom_line_ids': [
+                Command.create({'product_id': self.product_2.id, 'product_qty': 1}),
+            ]
+        })
+        self.env['quality.point'].create({
+            'title': 'Test Step',
+            'picking_type_ids': [(Command.link(self.warehouse_1.manu_type_id.id))],
+            'operation_id': bom_2.operation_ids.id,
+            'measure_on': 'product',
+            'test_type_id': self.env.ref('mrp_workorder.test_type_register_consumed_materials').id,
+            'component_id': self.product_2.id,
+        })
+        mo = self.env['mrp.production'].create({
+            'product_id': self.product_3.id,
+            'product_qty': 1,
+            'bom_id': bom_2.id,
+            'picking_type_id': self.warehouse_1.manu_type_id.id,
+        })
+        mo.action_confirm()
+        self.assertEqual(len(mo.move_raw_ids), 1)
+        self.assertEqual(mo.state, 'confirmed')
+        self.assertEqual(len(mo.workorder_ids), 1)
+        quality_check = mo.workorder_ids.check_ids
+        self.assertEqual(quality_check.component_id, self.product_2)
+        self.assertEqual(quality_check.qty_done, 1)
+        self.assertEqual(finished_sn.quality_check_qty, 2)
 
 
 @tagged('post_install', '-at_install')

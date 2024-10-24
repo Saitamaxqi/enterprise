@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models
+from odoo.osv import expression
 
 
 class StockLot(models.Model):
@@ -12,10 +13,11 @@ class StockLot(models.Model):
 
     def _compute_quality_check_qty(self):
         for prod_lot in self:
-            prod_lot.quality_check_qty = self.env['quality.check'].search_count([
-                ('lot_id', '=', prod_lot.id),
-                ('company_id', '=', self.env.company.id)
-            ])
+            domain = expression.AND([self._get_quality_check_domain(prod_lot), [('company_id', '=', self.env.company.id)]])
+            prod_lot.quality_check_qty = self.env['quality.check'].search_count(domain)
+
+    def _get_quality_check_domain(self, prod_lot):
+        return [('lot_id', '=', prod_lot.id)]
 
     def _compute_quality_alert_qty(self):
         for prod_lot in self:
