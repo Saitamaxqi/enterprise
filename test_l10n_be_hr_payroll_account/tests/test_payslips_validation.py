@@ -640,7 +640,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.date(2025, 12, 31),
         })
 
-        (cls.allocation_2019 + cls.allocation_2020).action_validate()
+        (cls.allocation_2019 + cls.allocation_2020).action_approve()
 
         cls.unpaid_leave_2019 = cls.env['hr.leave'].create({
             'name': 'Unpaid Time Off 2019',

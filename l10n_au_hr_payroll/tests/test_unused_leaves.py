@@ -91,7 +91,7 @@ class TestPayrollUnusedLeaves(TestPayrollCommon):
                     'date_from': start_date,
                     'date_to': end_date,
                 }])
-                allocation.action_validate()
+                allocation.action_approve()
 
                 self.assertAlmostEqual(allocation.number_of_days, number_of_days)
 

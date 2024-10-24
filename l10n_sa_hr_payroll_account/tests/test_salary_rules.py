@@ -90,7 +90,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'holiday_status_id': cls.compensable_timeoff_type.id,
             'number_of_days': 25,
             'state': 'confirm',
-        }).action_validate()
+        }).action_approve()
 
     @classmethod
     def _lay_off_employee(cls, saudi_or_expat='saudi', reason=None):

@@ -438,7 +438,7 @@ class TestPayroll(TestPayrollCommon):
             'state': 'confirm',
             'date_from': date(2023, 7, 1),
             'date_to': date(2024, 6, 30),
-        }]).action_validate()
+        }]).action_approve()
 
         # This would be done by the wizard.
         contract_id.date_end = date(2023, 8, 31)

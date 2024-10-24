@@ -29,7 +29,7 @@ class TestPayrollCreditTime(TestPayrollCommon):
             view = cls.wizard.generate_allocation()
         cls.allocations = cls.env['hr.leave.allocation'].search(view['domain'])
         for allocation in cls.allocations:
-            allocation.action_validate()
+            allocation.action_approve()
 
     def test_credit_time_for_georges(self):
         """

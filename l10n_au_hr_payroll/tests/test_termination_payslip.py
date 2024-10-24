@@ -40,7 +40,7 @@ class TestPayrollTerminationPayment(TestPayrollCommon):
             'state': 'confirm',
             'date_from': date(2023, 7, 1),
             'date_to': date(2024, 6, 30),
-        }]).action_validate()
+        }]).action_approve()
         # Use two day leaves in the payslip period leaving two unused day leave.
         leave = self.env['hr.leave'].create({
             'name': 'Holiday Request',

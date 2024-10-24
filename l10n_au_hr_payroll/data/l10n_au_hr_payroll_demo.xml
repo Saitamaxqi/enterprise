@@ -187,11 +187,11 @@
         <field name="employee_id" ref="l10n_au_hr_payroll.hr_employee_au"/>
     </record>
 
-    <function model="hr.leave.allocation" name="action_validate" eval="[ref('l10n_au_hr_payroll.hr_leave_allocation_long_service_pre_78')]" />
-    <function model="hr.leave.allocation" name="action_validate" eval="[ref('l10n_au_hr_payroll.hr_leave_allocation_long_service_78_to_93')]" />
-    <function model="hr.leave.allocation" name="action_validate" eval="[ref('l10n_au_hr_payroll.hr_leave_allocation_long_service_post_93')]" />
-    <function model="hr.leave.allocation" name="action_validate" eval="[ref('l10n_au_hr_payroll.hr_leave_allocation_annual_pre_93')]" />
-    <function model="hr.leave.allocation" name="action_validate" eval="[ref('l10n_au_hr_payroll.hr_leave_allocation_annual_post_93')]" />
+    <function model="hr.leave.allocation" name="action_approve" eval="[ref('l10n_au_hr_payroll.hr_leave_allocation_long_service_pre_78')]" />
+    <function model="hr.leave.allocation" name="action_approve" eval="[ref('l10n_au_hr_payroll.hr_leave_allocation_long_service_78_to_93')]" />
+    <function model="hr.leave.allocation" name="action_approve" eval="[ref('l10n_au_hr_payroll.hr_leave_allocation_long_service_post_93')]" />
+    <function model="hr.leave.allocation" name="action_approve" eval="[ref('l10n_au_hr_payroll.hr_leave_allocation_annual_pre_93')]" />
+    <function model="hr.leave.allocation" name="action_approve" eval="[ref('l10n_au_hr_payroll.hr_leave_allocation_annual_post_93')]" />
 
     <record id="hr_leave_long_service_pre_78" model="hr.leave">
         <field name="request_date_from" eval="datetime(1975, 8, 2).date()"/>

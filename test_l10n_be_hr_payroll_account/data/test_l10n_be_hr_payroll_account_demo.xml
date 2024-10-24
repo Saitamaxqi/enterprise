@@ -2060,7 +2060,7 @@
     </record>
 
     <!-- validate leave allocations -->
-    <function model="hr.leave.allocation" name="action_validate">
+    <function model="hr.leave.allocation" name="action_approve">
         <value model="hr.leave.allocation" eval="obj().search([('state', '=', 'confirm'), ('employee_id.company_id', '=', obj().env.ref('base.demo_company_be').id)]).ids"/>
     </function>
 
@@ -2303,7 +2303,7 @@
         <field name="date_to" eval="time.strftime('2020-12-31')"/>
     </record>
 
-    <function model="hr.leave.allocation" name="action_validate">
+    <function model="hr.leave.allocation" name="action_approve">
         <value model="hr.leave.allocation" eval="obj().search([
             ('state', '=', 'confirm'),
             ('id', 'in', [

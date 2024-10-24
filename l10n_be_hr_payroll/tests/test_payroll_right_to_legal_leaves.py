@@ -93,7 +93,7 @@ class TestPayrollRightToLegalLeaves(TestPayrollCommon):
 
         view = wizard.generate_allocation()
         allocation = self.env['hr.leave.allocation'].search(view['domain'])
-        allocation.action_validate()
+        allocation.action_approve()
 
         self.assertEqual(allocation.number_of_days, 20)
         self.assertEqual(allocation.max_leaves_allocated, 152)
@@ -133,7 +133,7 @@ class TestPayrollRightToLegalLeaves(TestPayrollCommon):
 
         view = wizard.generate_allocation()
         allocation = self.env['hr.leave.allocation'].search(view['domain'])
-        allocation.action_validate()
+        allocation.action_approve()
 
         self.assertEqual(allocation.number_of_days, 20)
         self.assertEqual(allocation.max_leaves_allocated, 152)
@@ -221,7 +221,7 @@ class TestPayrollRightToLegalLeaves(TestPayrollCommon):
 
         view = wizard.generate_allocation()
         allocation = self.env['hr.leave.allocation'].search(view['domain'])
-        allocation.action_validate()
+        allocation.action_approve()
 
         self.assertEqual(allocation.number_of_days, 10)
         self.assertAlmostEqual(allocation.max_leaves_allocated, 15 * 7.6, places=0)
