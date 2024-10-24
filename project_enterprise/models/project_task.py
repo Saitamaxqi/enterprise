@@ -462,7 +462,7 @@ class ProjectTask(models.Model):
             date_deadline = vals.get('date_deadline', False)
 
             # Then sort the tasks by resource_calendar and finally compute the planned dates
-            tasks_by_resource_calendar_dict = compute_default_planned_dates._get_tasks_by_resource_calendar_dict()
+            tasks_by_resource_calendar_dict = compute_default_planned_dates.sudo()._get_tasks_by_resource_calendar_dict()
             for (calendar, tasks) in tasks_by_resource_calendar_dict.items():
                 date_start, date_stop = self._calculate_planned_dates(planned_date_begin, date_deadline, calendar=calendar)
                 super(ProjectTask, tasks).write({
@@ -479,7 +479,7 @@ class ProjectTask(models.Model):
             if not stop.tzinfo:
                 stop = stop.replace(tzinfo=utc)
 
-            resource = compute_allocated_hours.user_ids._get_project_task_resource()
+            resource = compute_allocated_hours.sudo().user_ids._get_project_task_resource()
             if len(resource) == 1:
                 # First case : trying to plan tasks for a single user that has its own calendar => using user's calendar
                 calendar = resource.calendar_id
@@ -508,7 +508,7 @@ class ProjectTask(models.Model):
 
                 # 4) Split capacity for every task and plan them
                 if capacity > 0:
-                    compute_allocated_hours.write({"allocated_hours": capacity / len(compute_allocated_hours)})
+                    compute_allocated_hours.sudo().write({"allocated_hours": capacity / len(compute_allocated_hours)})
 
         return res
 
