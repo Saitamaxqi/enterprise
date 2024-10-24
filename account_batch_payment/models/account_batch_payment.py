@@ -70,6 +70,9 @@ class AccountBatchPayment(models.Model):
 
     file_generation_enabled = fields.Boolean(help="Whether or not this batch payment should display the 'Generate File' button instead of 'Print' in form view.", compute='_compute_file_generation_enabled')
 
+    def _valid_payment_states(self):
+        return ['in_process', 'paid'] if self.env['account.move']._get_invoice_in_payment_state() == 'paid' else ['in_process']
+
     @api.depends('batch_type', 'journal_id', 'payment_ids')
     def _compute_payment_method_id(self):
         ''' Compute the 'payment_method_id' field.
@@ -130,11 +133,12 @@ class AccountBatchPayment(models.Model):
 
     @api.depends('currency_id', 'payment_ids.amount', 'payment_ids.is_matched', 'payment_ids.state')
     def _compute_from_payment_ids(self):
+        valid_payment_states = self._valid_payment_states()
         for batch in self:
             amount = 0.0
             amount_residual = 0.0
             amount_residual_currency = 0.0
-            for payment in batch.payment_ids.filtered(lambda p: p.state == 'in_process'):
+            for payment in batch.payment_ids.filtered(lambda p: p.state in valid_payment_states):
                 if payment.move_id:
                     liquidity_lines, _counterpart_lines, _writeoff_lines = payment._seek_for_lines()
                     for line in liquidity_lines:
@@ -222,7 +226,8 @@ class AccountBatchPayment(models.Model):
         if not self.payment_ids:
             raise UserError(_("Cannot validate an empty batch. Please add some payments to it first."))
 
-        if self.payment_ids.filtered(lambda p: p.state != 'in_process'):
+        valid_payment_states = self._valid_payment_states()
+        if self.payment_ids.filtered(lambda p: p.state not in valid_payment_states):
             raise ValidationError(_("All payments must be posted to validate the batch."))
 
         errors = not self.export_file and self.check_payments_for_errors() or []  # We don't re-check for errors if we are regenerating the file (we know there aren't any)
@@ -288,7 +293,8 @@ class AccountBatchPayment(models.Model):
         #We first try to post all the draft batch payments
         rslt = self._check_and_post_draft_payments(self.payment_ids.filtered(lambda x: x.state == 'draft'))
 
-        wrong_state_payments = self.payment_ids.filtered(lambda x: x.state != 'in_process')
+        valid_payment_states = self._valid_payment_states()
+        wrong_state_payments = self.payment_ids.filtered(lambda x: x.state not in valid_payment_states)
 
         if wrong_state_payments:
             rslt.append({

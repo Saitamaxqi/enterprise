@@ -3,11 +3,43 @@ from unittest.mock import patch
 
 from odoo import Command
 from odoo.addons.account_accountant.tests.test_bank_rec_widget_common import TestBankRecWidgetCommon
-from odoo.tests import tagged
+from odoo.tests import tagged, TransactionCase
+
+
+class CommonAccountingInstalled(TransactionCase):
+    module = 'accounting'
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.classPatch(cls.env.registry['account.move'], '_get_invoice_in_payment_state', lambda self: 'in_payment')
+
+
+class CommonInvoicingOnly(TransactionCase):
+    module = 'invoicing_only'
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.classPatch(cls.env.registry['account.move'], '_get_invoice_in_payment_state', lambda self: 'paid')
+        # When accounting is not installed, outstanding accounts are created and referenced only by xmlid
+        xml_id = f"account.{cls.env.company.id}_account_journal_payment_debit_account_id"
+        if not cls.env.ref(xml_id, raise_if_not_found=False):
+            cls.env['account.account']._load_records([
+                {
+                    'xml_id': xml_id,
+                    'values': {
+                        'name': "Outstanding Receipts",
+                        'prefix': '123456',
+                        'code_digits': 6,
+                        'account_type': 'asset_current',
+                        'reconcile': True,
+                    },
+                    'noupdate': True,
+                }
+            ])
 
 
 @tagged('post_install', '-at_install')
-class TestBankRecWidgetWithoutEntry(TestBankRecWidgetCommon):
+class TestBankRecWidgetWithoutEntry(CommonAccountingInstalled, TestBankRecWidgetCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -29,18 +61,16 @@ class TestBankRecWidgetWithoutEntry(TestBankRecWidgetCommon):
             'amount': 1000,
         })
         from_scratch_payment.action_post()
-        for payment, expect_reconcile in [(invoice_payment, True), (from_scratch_payment, False)]:
-            self.assertFalse(payment.move_id)
+        for payment, expect_reconcile in [(invoice_payment, True), (from_scratch_payment, self.module == 'invoicing_only')]:
+            self.assertFalse(payment.move_id and self.module == 'accounting')
             batch = self.env['account.batch.payment'].create({
                 'journal_id': self.company_data['default_journal_bank'].id,
                 'payment_ids': [Command.set(payment.ids)],
                 'payment_method_id': self.payment_method_line.payment_method_id.id,
             })
             batch.validate_batch()
-            self.assertRecordValues(payment, [{
-                'state': 'in_process',
-                'is_sent': True,
-            }])
+            self.assertIn(payment.state, self.env['account.batch.payment']._valid_payment_states())
+            self.assertEqual(payment.is_sent, True)
             self.assertRecordValues(batch, [{'state': 'sent'}])
 
             st_line = self._create_st_line(1000.0, payment_ref=batch.name, partner_id=self.partner_a.id)
@@ -53,9 +83,13 @@ class TestBankRecWidgetWithoutEntry(TestBankRecWidgetCommon):
             ])
             wizard._action_validate()
 
-            self.assertRecordValues(st_line.move_id.line_ids, [
-                {'account_id': self.partner_a.property_account_receivable_id.id, 'balance': -1000.0, 'reconciled': expect_reconcile},
-                {'account_id': st_line.journal_id.default_account_id.id,         'balance':  1000.0, 'reconciled': False},
+            if self.module == 'accounting':
+                counterpart_account = self.partner_a.property_account_receivable_id
+            else:
+                counterpart_account = self.env['account.payment']._get_outstanding_account('inbound')
+            self.assertRecordValues(st_line.move_id.line_ids.sorted('balance'), [
+                {'account_id': counterpart_account.id,                   'balance': -1000.0, 'reconciled': expect_reconcile},
+                {'account_id': st_line.journal_id.default_account_id.id, 'balance':  1000.0, 'reconciled': False},
             ])
             self.assertRecordValues(payment, [{
                 'state': 'paid',
@@ -97,13 +131,20 @@ class TestBankRecWidgetWithoutEntry(TestBankRecWidgetCommon):
         ])
         wizard._action_validate()
 
-        self.assertRecordValues(st_line.move_id.line_ids, [
-            {'account_id': self.partner_a.property_account_receivable_id.id, 'balance': -1000.0, 'reconciled': True},
-            {'account_id': st_line.journal_id.default_account_id.id,         'balance':   900.0, 'reconciled': False},
+        if self.module == 'accounting':
+            counterpart_account = self.partner_a.property_account_receivable_id
+        else:
+            counterpart_account = self.env['account.payment']._get_outstanding_account('inbound')
+
+        self.assertRecordValues(st_line.move_id.line_ids.sorted('balance'), [
+            {'account_id': counterpart_account.id,                           'balance': -1000.0, 'reconciled': True},
             {'account_id': self.partner_a.property_account_receivable_id.id, 'balance':   100.0, 'reconciled': False},
+            {'account_id': st_line.journal_id.default_account_id.id,         'balance':   900.0, 'reconciled': False},
         ])
 
     def test_multiple_exchange_diffs_in_batch(self):
+        if self.module == 'invoicing_only':
+            self.skipTest('Already tested in TestBankRecWidgetWithEntry')
         # Create a statement line when the currency rate is 1 USD == 2 EUR == 4 CAD
         st_line = self._create_st_line(
             1000.0,
@@ -198,7 +239,12 @@ class TestBankRecWidgetWithoutEntry(TestBankRecWidgetCommon):
 
 
 @tagged('post_install', '-at_install')
-class TestBankRecWidgetWithEntry(TestBankRecWidgetCommon):
+class TestBankRecWidgetWithoutEntryInvoicingOnly(CommonInvoicingOnly, TestBankRecWidgetWithoutEntry):
+    allow_inherited_tests_method=True
+
+
+@tagged('post_install', '-at_install')
+class TestBankRecWidgetWithEntry(CommonAccountingInstalled, TestBankRecWidgetCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -419,3 +465,8 @@ class TestBankRecWidgetWithEntry(TestBankRecWidgetCommon):
             {'balance':     80.0, 'amount_currency':    240.0, 'amount_residual':      0.0},
             {'balance':     50.0, 'amount_currency':    300.0, 'amount_residual':      0.0},
         ])
+
+
+@tagged('post_install', '-at_install')
+class TestBankRecWidgetWithEntryInvoicingOnly(CommonInvoicingOnly, TestBankRecWidgetWithEntry):
+    allow_inherited_tests_method=True
