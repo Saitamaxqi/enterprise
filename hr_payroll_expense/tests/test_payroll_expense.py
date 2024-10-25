@@ -657,6 +657,50 @@ class TestPayrollExpense(TestExpenseCommon, TestHrPayrollAccountCommon):
         ])
 
     @freeze_time('2024-01-01')
+    def test_no_expense_rule_means_no_linkage(self):
+        new_structure_rules = [
+            Command.link(rule.copy().id) for rule in self.expense_hr_structure.rule_ids.filtered(lambda rule: rule.code != 'EXPENSES')
+        ]
+        new_structure_rules.append(Command.create({
+            'name': 'Flat rate to ensure at least one move line',
+            'amount_select': 'code',
+            'amount_python_compute': 'result = 1000',
+            'code': 'FLAT',
+            'category_id': self.env.ref('hr_payroll.BASIC').id,
+            'sequence': 1000,
+            'account_debit': self.env['account.account'].create({
+                'name': 'random account',
+                'code': '652222',
+                'account_type': 'expense',
+                'tax_ids': [],
+                'company_ids': [Command.set(self.company_data['company'].ids)],
+            }).id,
+        }))
+        structure_without_expense_rule = self.expense_hr_structure.copy({
+            'rule_ids': new_structure_rules
+        })
+
+        sheet = self.create_expense_report()
+        sheet._do_submit()
+        sheet._do_approve()
+        sheet.action_report_in_next_payslip()
+
+        payslip = self.create_payslip({
+            'struct_id': structure_without_expense_rule.id,
+        })
+
+        # No expense linked if there are no expense rule in the structure
+        self.assertFalse(payslip.expense_sheet_ids)
+        self.payslip_run.slip_ids.compute_sheet()
+        self.payslip_run.action_validate()
+        payslip.move_id.action_post()
+
+        self.assertFalse(payslip.expense_sheet_ids)
+        self.assertRecordValues(sheet, [
+            {'state': 'approve', 'payment_state': 'not_paid', 'refund_in_payslip': True},
+        ])
+
+    @freeze_time('2024-01-01')
     def test_unlink_payslip_moves_user(self):
         """ Test Account user are able to reset to draft payslip move and unlink them """
         user = self.env['res.users'].create({
