@@ -178,7 +178,7 @@ class PosUrbanPiperController(http.Controller):
             'amount_return': 0.0,
             'delivery_identifier': details['id'],
             'delivery_status': details['order_state'].lower(),
-            'general_note': details.get('instructions'),
+            'general_customer_note': details.get('instructions'),
             'delivery_provider_id': pos_delivery_provider.id,
             'prep_time': get_prep_time(details),
             'delivery_json': json.dumps(data),

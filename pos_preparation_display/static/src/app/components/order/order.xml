@@ -20,13 +20,15 @@
                 </div>
                 <div class="o_pdis_order_card_header_bottom d-grid p-2 bg-100">
                     <div class="o_pdis_table-info d-flex justify-content-between align-items-center">
-                        <div t-esc="this.stage.name" class=" o_pdis_stage py-1 px-3 rounded-pill" t-att-style="`background-color: ${this.stage.color} !important; color: ${this.fondColor}`" />
+                        <div t-esc="this.stage.name" class=" o_pdis_stage py-1 px-3 rounded-pill"
+                            t-att-style="`background-color: ${this.stage.color} !important; color: ${this.fondColor}`"/>
                         <div class="o_pdis_alert-timer" t-attf-class="{{ this.preparationDisplay.lastStage.id !== this.props.order.stageId ? '' : 'd-none' }}">
                             <div class="rounded-pill py-1 px-3"
                                 t-att-class="{ 'bg-white': !this.isAlert, 'o_pdis_is_alert text-bg-danger': this.isAlert, 'o_pdis_archive-order cursor-pointer': this.preparationDisplay.lastStage.id === this.props.order.stageId }">
                                 <div t-if="this.preparationDisplay.lastStage.id !== this.props.order.stageId">
                                     <i class="fa fa-clock-o pe-1" aria-hidden="true"></i>
-                                    <span t-esc="this.state.duration" />'
+                                    <span
+                                        t-esc="this.state.duration"/>'
                                 </div>
                             </div>
                         </div>
@@ -50,14 +52,31 @@
                     <i class="ms-2 oi oi-arrow-down" aria-hidden="true"></i>
                 </div>
             </div>
-
-            <div class="m-2 text-break" t-if="this.props.order.generalNote?.length > 0" t-on-click="clickOrder">
-                <p class="fw-bold mb-2 px-2 fs-6">General Note</p>
-                <ul class="small text-muted px-4">
-                    <t t-foreach="this.props.order.generalNote.split('\n')" t-as="subNote" t-key="general_note">
-                        <li><t t-esc="subNote"/></li>
-                    </t>
-                </ul>
+            <div t-if="this.props.order.pdis_general_customer_note"
+                t-on-click="clickOrder"
+                class="customer-note w-100 p-2 text-break pb-1">
+                <div class="row m-0">
+                    <div class="col-auto px-1">
+                        <i class="fa fa-sticky-note me-1 fa-lg" role="img"
+                            aria-label="Customer Note" title="Customer Note"/>
+                    </div>
+                    <div class="col ps-0">
+                        <t t-foreach="props.order.pdis_general_customer_note.split('\n')" t-as="subNote"
+                            t-key="subNote_index">
+                            <t t-esc="subNote"/><br/>
+                        </t>
+                    </div>
+                </div>
+            </div>
+            <div t-if="this.props.order.pdis_internal_note"
+                class="list-inline o_pdis_note d-flex ms-4 px-2"
+                t-att-class="{ 'o_pdis_orderline_blinking': this.props.order.blinkingNote }">
+                <t t-foreach="props.order.pdis_internal_note?.split?.('\n') or []" t-as="note"
+                    t-key="note_index">
+                    <li t-if="note.trim() !== ''" t-esc="note"
+                        class="internal-note badge m-1 px-1 rounded-pill bg-warning text-warning bg-opacity-25 "
+                        style="font-size: 0.85rem;"/>
+                </t>
             </div>
             <div class="o_pdis_order_card_footer bg-100">
                 <t t-set="o_pdis_last_stage" t-value="this.preparationDisplay.lastStage.id == this.props.order.stageId"/>

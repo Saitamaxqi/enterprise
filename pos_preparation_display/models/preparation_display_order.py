@@ -1,4 +1,3 @@
-
 from odoo import fields, models, api
 from datetime import timedelta
 
@@ -15,10 +14,11 @@ class Pos_Preparation_DisplayOrder(models.Model):
         'preparation_display_order_id',
         string="Order Lines",
         readonly=True)
-    pdis_general_note = fields.Text("General Note", help="Current general-note displayed on preparation display")
+    pdis_general_customer_note = fields.Text("General Customer Note", help="Current general-customer-note displayed on preparation display")
+    pdis_internal_note = fields.Text("General Note", help="Current general-note displayed on preparation display")
 
     @api.model
-    def process_order(self, order_id, cancelled=False, general_note=None, note_history=None):
+    def process_order(self, order_id, cancelled=False, general_customer_note=None, note_history=None, internal_note=None):
         if not order_id:
             return
 
@@ -26,7 +26,7 @@ class Pos_Preparation_DisplayOrder(models.Model):
         if not order:
             return
 
-        data = order._process_preparation_changes(cancelled, general_note, note_history)
+        data = order._process_preparation_changes(cancelled, general_customer_note, note_history, internal_note)
         preparation_displays = self.env['pos_preparation_display.display'].search([
             '&',
             '|', ('pos_config_ids', '=', False),
@@ -162,7 +162,8 @@ class Pos_Preparation_DisplayOrder(models.Model):
                 'displayed': self.displayed,
                 'orderlines': preparation_display_orderlines,
                 'tracking_number': self.pos_order_id.tracking_number,
-                'generalNote': self.pdis_general_note or '',
+                'pdis_internal_note': self.pdis_internal_note or '',
+                'pdis_general_customer_note': self.pdis_general_customer_note or '',
             }
 
     @api.model

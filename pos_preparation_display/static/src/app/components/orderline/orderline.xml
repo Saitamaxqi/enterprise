@@ -26,8 +26,8 @@
             </div>
 
             <div class="o_pdis_orderline_warning" t-att-class="{ 'o_pdis_orderline--done': this.props.orderline.todo === false }">
-                <div t-if="this.props.orderline.internalNote" class="list-inline o_pdis_note d-flex ms-4 px-2" t-att-class="{ 'o_pdis_orderline_blinking': this.props.orderline.blinkingNote }">
-                    <t t-foreach="this.props.orderline.internalNote.split('\n')" t-as="note" t-key="note">
+                <div t-if="this.props.orderline.internal_note" class="list-inline o_pdis_note d-flex ms-4 px-2" t-att-class="{ 'o_pdis_orderline_blinking': this.props.orderline.blinkingNote }">
+                    <t t-foreach="this.props.orderline.internal_note.split('\n')" t-as="note" t-key="note">
                         <li t-if="note and note.trim() !== ''" class="internal-note px-1 m-1 badge rounded-pill bg-warning text-warning bg-opacity-25 small" style="font-size: 0.85rem;">
                             <t t-esc="note" />
                         </li>

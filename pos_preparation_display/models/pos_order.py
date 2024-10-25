@@ -18,7 +18,7 @@ class PosOrder(models.Model):
 
         return data
 
-    def _process_preparation_changes(self, cancelled=False, general_note=None, note_history=None):
+    def _process_preparation_changes(self, cancelled=False, general_customer_note=None, note_history=None, internal_note=None):
         self.ensure_one()
         flag_change = False
         sound = False
@@ -108,7 +108,8 @@ class PosOrder(models.Model):
                 'displayed': True,
                 'pos_order_id': self.id,
                 'pos_config_id': self.config_id.id,
-                'pdis_general_note': self.general_note or '',
+                'pdis_general_customer_note': self.general_customer_note or '',
+                'pdis_internal_note': self.internal_note or '',
             })
 
         product_ids = self.env['product.product'].browse([data['product_id'] for data in quantity_data.values()])
@@ -162,10 +163,16 @@ class PosOrder(models.Model):
                         qty_to_cancel -= pdis_qty
                     category_ids.update(line.product_id.pos_categ_ids.ids)
 
-        if general_note is not None:
+        if general_customer_note is not None:
             for order in pdis_order:
-                if order.pdis_general_note != general_note:
-                    order.pdis_general_note = general_note or ''
+                if order.pdis_general_customer_note != general_customer_note:
+                    order.pdis_general_customer_note = general_customer_note or ''
+                    flag_change = True
+                    category_ids.update(pdis_lines[0].product_id.pos_categ_ids.ids)  # necessary to send when only ordernote changed
+        if internal_note is not None:
+            for order in pdis_order:
+                if order.pdis_internal_note != internal_note:
+                    order.pdis_internal_note = internal_note or ''
                     flag_change = True
                     category_ids.update(pdis_lines[0].product_id.pos_categ_ids.ids)  # necessary to send when only ordernote changed
 

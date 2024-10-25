@@ -1,14 +1,14 @@
-import { OrderlineNoteButton } from "@point_of_sale/app/screens/product_screen/control_buttons/customer_note_button/customer_note_button";
+import { NoteButton } from "@point_of_sale/app/screens/product_screen/control_buttons/note_button/note_button";
 import { patch } from "@web/core/utils/patch";
 
-patch(OrderlineNoteButton.prototype, {
+patch(NoteButton.prototype, {
     // Override
     async onClick() {
         const { confirmed, inputNote, oldNote } = await super.onClick();
-        if (!this._isInternalNote()) {
+        const selectedOrderline = this.pos.get_order().get_selected_orderline();
+        if (!this.props.type === "internal" || !selectedOrderline) {
             return { confirmed, inputNote, oldNote };
         }
-        const selectedOrderline = this.pos.get_order().get_selected_orderline();
         const productId = selectedOrderline.product_id.id;
         const order = selectedOrderline.order_id;
 

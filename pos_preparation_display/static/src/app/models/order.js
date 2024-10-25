@@ -2,27 +2,31 @@ import { Reactive } from "@web/core/utils/reactive";
 import { deserializeDateTime } from "@web/core/l10n/dates";
 
 export class Order extends Reactive {
-    constructor({
-        id,
-        stage_id,
-        generalNote,
-        displayed,
-        responsible,
-        orderlines,
-        create_date,
-        last_stage_change,
-        pos_order_id,
-        customer_count,
-        tracking_number,
-    }) {
+    constructor(
+        {
+            id,
+            stage_id,
+            pdis_general_customer_note,
+            displayed,
+            responsible,
+            orderlines,
+            create_date,
+            last_stage_change,
+            pos_order_id,
+            customer_count,
+            tracking_number,
+        },
+        blinkingNote
+    ) {
         super();
-        this.setup(...arguments);
+        this.setup(...arguments, blinkingNote);
     }
 
-    setup(order) {
+    setup(order, blinkingNote) {
         this.id = order.id;
         this.stageId = order.stage_id;
-        this.generalNote = order.generalNote;
+        this.pdis_general_customer_note = order.pdis_general_customer_note;
+        this.pdis_internal_note = order.pdis_internal_note;
         this.displayed = order.displayed;
         this.responsible = order.responsible;
         this.orderlines = order.orderlines;
@@ -32,6 +36,13 @@ export class Order extends Reactive {
         this.customer_count = order.customer_count;
         this.changeStageTimeout = null;
         this.tracking_number = order.tracking_number;
+        this.blinkingNote = blinkingNote || false;
+
+        if (this.blinkingNote) {
+            setTimeout(() => {
+                this.blinkingNote = false;
+            }, 20000);
+        }
     }
 
     clearChangeTimeout() {

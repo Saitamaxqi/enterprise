@@ -41,13 +41,13 @@ patch(PosStore.prototype, {
                     n.qty = line?.get_quantity();
                 }
             }
-
             try {
                 await this.data.call("pos_preparation_display.order", "process_order", [
                     o.id,
                     cancelled,
-                    o.general_note || "",
+                    o.general_customer_note || "",
                     o.uiState.noteHistory,
+                    o.internal_note || "",
                 ]);
             } catch (error) {
                 console.warn(error);

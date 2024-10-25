@@ -30,6 +30,7 @@ export class PreparationDisplay extends Reactive {
         this.selectedProducts = new Set();
         this.filteredOrders = [];
         this.noteByLines = {};
+        this.noteByOrders = {};
         this.rawData = {
             categories: data.categories,
             orders: data.orders,
@@ -236,17 +237,24 @@ export class PreparationDisplay extends Reactive {
         for (const index in this.categories) {
             this.categories[index].orderlines = [];
         }
-
+        let playBellOrder = false;
         this.orders = this.rawData.orders.reduce((orders, order) => {
             if (order.stage_id === null) {
                 order.stage_id = this.firstStage.id;
             }
-
-            const orderObj = new Order(order);
+            let blinkingOrder = false;
+            if (
+                this.noteByOrders[order.id] &&
+                order.pdis_internal_note !== this.noteByOrders[order.id]
+            ) {
+                blinkingOrder = true;
+                playBellOrder = true;
+            }
+            const orderObj = new Order(order, blinkingOrder);
+            this.noteByOrders[order.id] = order.pdis_internal_note;
 
             orderObj.orderlines = order.orderlines.map((line) => {
                 let blinking = false;
-
                 if (this.noteByLines[line.id] && line.internal_note !== this.noteByLines[line.id]) {
                     blinking = true;
                     this.env.services["mail.sound_effects"].play("bell");
@@ -272,6 +280,9 @@ export class PreparationDisplay extends Reactive {
 
             return orders;
         }, {});
+        if (playBellOrder) {
+            this.env.services["mail.sound_effects"].play("bell");
+        }
 
         this.filterOrders();
         return this.orders;

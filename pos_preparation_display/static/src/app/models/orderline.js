@@ -19,7 +19,7 @@ export class Orderline extends Reactive {
         super();
 
         this.id = id;
-        this.internalNote = internal_note;
+        this.internal_note = internal_note;
         this.productCancelled = product_cancelled;
         this.productCategoryIds = product_category_ids;
         this.productId = product_id;
