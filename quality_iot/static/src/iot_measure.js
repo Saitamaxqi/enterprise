@@ -49,6 +49,9 @@ export class IoTMeasureRealTimeValue extends FloatField {
             }
         }
     }
+    get hasDevice() {
+        return this.props.record.data[this.props.ip_field] != "";
+    }
 }
 IoTMeasureRealTimeValue.template = `quality_iot.IoTMeasureRealTimeValue`;
 IoTMeasureRealTimeValue.props = {
