@@ -76,9 +76,15 @@ patch(FloorScreen.prototype, {
                 appointment.start = serializeDateTime(startOfToday);
             }
         });
-        const possible_appointments = appointments.filter(
-            (a) => deserializeDateTime(a.start).ts > DateTime.now() - (a.duration / 2) * 3600000
-        );
+        const dt_now = DateTime.now();
+        const dt_tomorrow_ts = dt_now
+            .plus({ days: 1 })
+            .set({ hours: 0, minutes: 0, seconds: 0 }).ts;
+        const possible_appointments = appointments.filter((a) => {
+            const ts_now = dt_now - (a.duration / 2) * 3600000;
+            const dt_ts = deserializeDateTime(a.start).ts;
+            return dt_ts > ts_now && dt_ts < dt_tomorrow_ts;
+        });
         if (possible_appointments.length === 0) {
             return false;
         }
