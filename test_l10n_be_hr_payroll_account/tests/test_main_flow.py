@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
@@ -10,7 +9,6 @@ from contextlib import contextmanager
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.addons.mail.tests.common import mail_new_test_user
-from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.fields import Date, Datetime
 from odoo.tests import Form, tagged
 from odoo.tools import file_open
@@ -273,6 +271,7 @@ class TestHR(AccountTestInvoicingCommon):
         work_entry_type_form = Form(self.env['hr.work.entry.type'].with_user(user))
         work_entry_type_form.name = name
         work_entry_type_form.code = code
+        work_entry_type_form.country_id = user.company_id.country_id
         return work_entry_type_form.save()
 
     def link_leave_work_entry_type(self, user, work_entry_type, leave_type):

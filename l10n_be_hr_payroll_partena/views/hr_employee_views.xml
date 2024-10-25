@@ -6,9 +6,13 @@
         <field name="inherit_id" ref="l10n_be_hr_payroll.hr_employee_form_l10n_payroll"/>
         <field name="priority">41</field>
         <field name="arch" type="xml">
-            <group name="l10n_be_payroll_group" position="inside">
-                <field name="partena_code"/>
-            </group>
+            <page name="hr_settings" position="inside">
+                <group string="Partena" invisible="company_country_code != 'BE'">
+                    <group>
+                        <field name="partena_code"/>
+                    </group>
+                </group>
+            </page>
         </field>
     </record>
 </odoo>
