@@ -371,9 +371,9 @@ export class DocumentsSearchModel extends SearchModel {
             }
             browser.localStorage.setItem("searchpanel_documents_document", category.activeValueId);
         } else {
-            // If still not a valid value, default to COMPANY for internal users
+            // If still not a valid value, default to HOME(id=false) for internal users
             // or root folder for portal users
-            category.activeValueId = this.documentService.userIsInternal ? "COMPANY" : valueIds[0];
+            category.activeValueId = this.documentService.userIsInternal ? false : valueIds[0];
         }
     }
 

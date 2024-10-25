@@ -19,6 +19,11 @@ registry.category("web_tour.tours").add("spreadsheet_open_pivot_sheet", {
             run: "click",
         },
         {
+            trigger: "span.o_search_panel_label_title:contains('Company')",
+            content: "Open the company folder",
+            run: "click",
+        },
+        {
             trigger: 'li[title="Test folder"] header',
             content: "Open the test folder (in company folder)",
             run: "click",
