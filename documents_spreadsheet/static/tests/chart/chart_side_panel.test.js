@@ -330,7 +330,7 @@ test("Show values", async () => {
 
     expect(model.getters.getChartDefinition(chartId).showValues).toBe(undefined);
     let options = model.getters.getChartRuntime(chartId).chartJsConfig.options;
-    expect(options.plugins.chartShowValuesPlugin.showValues).toBe(undefined);
+    expect(options.plugins.chartShowValuesPlugin.showValues).toBe(false);
 
     await contains("input[name='showValues']").click();
 
