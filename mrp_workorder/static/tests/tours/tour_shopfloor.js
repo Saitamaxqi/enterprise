@@ -477,3 +477,125 @@ registry.category("web_tour.tours").add('test_updated_quality_checks', {steps: (
         trigger: 'span[name="component_remaining_qty"]:contains("1.00")',
     },
 ]})
+
+
+registry.category("web_tour.tours").add("test_update_tracked_consumed_materials_in_shopfloor", {
+    steps: () => [
+        {
+            content: "Make sure workcenter is available",
+            trigger: ".form-check:has(input[name='Lovely Workcenter'])",
+            run: "click",
+        },
+        {
+            trigger: ".form-check:has(input[name='Lovely Workcenter'])",
+        },
+        {
+            trigger: "button:contains('Confirm')",
+            run: "click",
+        },
+        {
+            content: "Check that we are in the MO view",
+            trigger: ".o_mrp_display_records button:contains('Lovely Workcenter')",
+        },
+        {
+            content: "Swap to the WO view of the Lovely Workcenter",
+            trigger: "button.btn-light:contains('Lovely Workcenter')",
+            run: "click",
+        },
+        {
+            content: "Open register production",
+            trigger: ".accordion button:contains('Instructions')",
+            run: "click",
+        },
+        {
+            trigger: ".modal-header .modal-title:contains('Register component')",
+        },
+        {
+            trigger: ".modal-header .modal-title:contains('Register component')",
+            run: "click",
+        },
+        {
+            content: "Register SN002",
+            trigger: ".o_workorder_lot input",
+            run: "edit SN002",
+        },
+        {
+            trigger: ".dropdown-item:contains('SN002')",
+            run: "click",
+        },
+        {
+            trigger: ".modal-header .modal-title:contains('Register component')",
+            run: "click",
+        },
+        {
+            content: "Check that SN002 was registered",
+            trigger: ".o_workorder_lot input:value('SN002')",
+        },
+        {
+            trigger: "button:contains('Continue consumption')",
+            run: "click",
+        },
+        {
+            trigger: ".modal-header .modal-title:contains('Register component')",
+            run: "click",
+        },
+        {
+            content: "check that the quantity was correctly updated",
+            trigger: "span[name='component_remaining_qty']:contains('1.00')",
+        },
+        //  Register SN004 => not available so should take from WH/Stock
+        {
+            content: "Register SN004",
+            trigger: ".o_workorder_lot input",
+            run: "edit SN004",
+        },
+        {
+            trigger: ".dropdown-item:contains('SN004')",
+            run: "click",
+        },
+        {
+            trigger: ".modal-header .modal-title:contains('Register component')",
+            run: "click",
+        },
+        {
+            content: "Check that SN004 was registered",
+            trigger: ".o_workorder_lot input:value('SN004')",
+        },
+        {
+            trigger: "button:contains('Continue consumption')",
+            run: "click",
+        },
+        {
+            trigger: ".modal-header .modal-title:contains('Register component')",
+            run: "click",
+        },
+        {
+            trigger: ".modal-content:not(:has(span[name=component_remaining_qty]))",
+        },
+        {
+            content: "Register SN003",
+            trigger: ".o_workorder_lot input",
+            run: "edit SN003",
+        },
+        {
+            trigger: ".dropdown-item:contains('SN003')",
+            run: "click",
+        },
+        {
+            trigger: ".modal-header .modal-title:contains('Register component')",
+            run: "click",
+        },
+        {
+            content: "Check that SN003 was registered",
+            trigger: ".o_workorder_lot input:value('SN003')",
+        },
+        {
+            trigger: "button:contains('Validate')",
+            run: "click",
+        },
+        {
+            content: "Check that 3 registrations were made",
+            trigger: ".accordion button:contains('Instructions'):contains(3/3)",
+        },
+    ],
+});

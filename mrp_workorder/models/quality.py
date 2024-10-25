@@ -477,8 +477,26 @@ class QualityCheck(models.Model):
             if float_compare(self.qty_done, 0, precision_rounding=rounding) < 0:
                 raise UserError(_('Please enter a positive quantity.'))
 
+            def _find_quant(lot, location):
+                quants = lot.quant_ids.filtered(lambda quant:
+                    float_compare(quant.quantity, 0, precision_rounding=rounding) > 0
+                    and float_compare(quant.quantity, quant.reserved_quantity, precision_rounding=rounding) > 0
+                    and quant.location_id.usage in ['internal', 'transit']
+                    and (quant.location_id._child_of(self.move_id.location_id) if self.move_id else True)
+                )
+                if not location:
+                    return quants[0] if quants else quants
+                lot_quant = self.env['stock.quant']
+                for quant in quants:
+                    if not lot_quant or quant.location_id._child_of(location):
+                        lot_quant = quant
+                        if quant.location_id == location:
+                            break
+                return lot_quant
+
             # Write the lot and qty to the move line
             if self.move_line_id:
+                sml_vals = {}
                 # In case of a tracked component, another SML may already exists for
                 # the reservation of self.lot_id, so let's try to find and use it
                 if self.move_line_id.product_id.tracking != 'none':
@@ -486,24 +504,40 @@ class QualityCheck(models.Model):
                                               for sml in self.move_line_id.move_id.move_line_ids
                                               if sml.lot_id == self.lot_id and not sml.picked),
                                              self.move_line_id)
+                    # in case the lot of the quality check does not match any reserved lot
+                    if self.test_type == 'register_consumed_materials' and self.move_line_id.lot_id != self.lot_id:
+                        quant = _find_quant(lot=self.lot_id, location=self.move_line_id.location_id)
+                        if quant:
+                            sml_vals.update({'quant_id': quant.id})
+                        else:
+                            sml_vals.update({'location_id': self.move_id.location_id})
                 rounding = self.move_line_id.product_uom_id.rounding
                 if float_compare(self.qty_done, self.move_line_id.quantity, precision_rounding=rounding) >= 0:
-                    self.move_line_id.write({
+                    sml_vals.update({
                         'quantity': self.qty_done,
                         'lot_id': self.lot_id.id,
                         'picked': True,
                     })
+                    self.move_line_id.write(sml_vals)
                 else:
                     new_qty_reserved = self.move_line_id.quantity - self.qty_done
-                    if float_compare(new_qty_reserved, 0, precision_rounding=rounding) >= 0:
-                        self.move_line_id.copy(default={'quantity': new_qty_reserved})
-                    self.move_line_id.write({
+                    new_picked = self.move_line_id.picked
+                    sml_vals.update({
                         'quantity': self.qty_done,
+                        'lot_id': self.lot_id.id,
                         'picked': True,
                     })
-                    self.move_line_id.lot_id = self.lot_id
+                    self.move_line_id.write(sml_vals)
+                    if float_compare(new_qty_reserved, 0, precision_rounding=rounding) >= 0:
+                        self.move_line_id.copy(default={'quantity': new_qty_reserved, 'picked': new_picked})
             else:
-                line = self.env['stock.move.line'].create(self._create_extra_move_lines())
+                sml_vals = self._create_extra_move_lines()
+                if self.test_type == 'register_consumed_materials' and self.lot_id:
+                    quant = _find_quant(lot=self.lot_id, location=self.env['stock.location'])
+                    if quant:
+                        for val in sml_vals:
+                            val.update({'quant_id': quant.id})
+                line = self.env['stock.move.line'].create(sml_vals)
                 self.move_line_id = line[:1]
             if continue_production:
                 self.workorder_id._create_subsequent_checks()
