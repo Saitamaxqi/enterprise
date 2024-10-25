@@ -1011,7 +1011,7 @@ class AccountReport(models.Model):
             return list(groups.sorted(reverse=True))
 
         def create_hierarchy_line(account_group, column_totals, level, parent_id):
-            line_id = self._get_generic_line_id('account.group', account_group.id if account_group else 0, parent_line_id=parent_id)
+            line_id = self._get_generic_line_id('account.group', account_group.id if account_group else None, parent_line_id=parent_id)
             unfolded = line_id in options.get('unfolded_lines') or options['unfold_all']
             name = account_group.display_name if account_group else _('(No Group)')
             columns = []
@@ -2176,7 +2176,7 @@ class AccountReport(models.Model):
         :param current (list<tuple>): list of tuple(markup, model, value)
         """
         def convert_none(x):
-            return x if x not in (None, False) else ''
+            return x if x is not None and x is not False else ''
         return LINE_ID_HIERARCHY_DELIMITER.join(f'{convert_none(markup)}~{convert_none(model)}~{convert_none(value)}' for markup, model, value in current)
 
     @api.model
