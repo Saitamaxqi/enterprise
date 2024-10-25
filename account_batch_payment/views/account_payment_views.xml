@@ -16,7 +16,7 @@
                     <filter string="Batch Payments"
                             name="batch_payments_filter"
                             domain="[('batch_payment_id', '!=', False)]"/>
-                    <filter string="Not Batch Payments"
+                    <filter string="Not in batch"
                             name="batch_payments_filter"
                             domain="[('batch_payment_id', '=', False)]"/>
                     <separator/>

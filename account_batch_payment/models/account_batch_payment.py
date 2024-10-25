@@ -12,6 +12,9 @@ class AccountBatchPayment(models.Model):
     _order = "date desc, id desc"
     _inherit = ["mail.thread", "mail.activity.mixin"]
 
+    def _get_default_journal(self):
+        return self.env['account.journal'].search([('type', '=', 'bank')], limit=1)
+
     name = fields.Char(required=True, copy=False, string='Reference')
     date = fields.Date(required=True, copy=False, default=fields.Date.context_today, tracking=True)
     state = fields.Selection([
@@ -25,6 +28,7 @@ class AccountBatchPayment(models.Model):
         check_company=True,
         domain=[('type', '=', 'bank')],
         tracking=True,
+        default=_get_default_journal,
     )
     company_id = fields.Many2one('res.company', related='journal_id.company_id', readonly=True)
     payment_ids = fields.One2many('account.payment', 'batch_payment_id', string="Payments", required=True)
