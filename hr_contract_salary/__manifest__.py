@@ -52,6 +52,8 @@
             'hr_contract_salary/static/src/js/hr_contract_salary.js',
             'hr_contract_salary/static/src/xml/resume_sidebar.xml',
             'hr_contract_salary/static/src/xml/select_menu_wrapper_template.xml',
+            'hr_contract_salary/static/src/xml/hr_contract_salary_select_menu_template.xml',
+            'hr_contract_salary/static/src/js/hr_contract_salary_select_menu.js',
         ],
         'web.assets_backend': [
             'hr_contract_salary/static/src/js/binary_field_contract.js',

@@ -597,7 +597,7 @@ class HrContractSalary(http.Controller):
                 tracking_disable=True,
                 salary_simulation=not no_write,
             ).create({
-                'name': 'Simulation Employee',
+                'name': applicant.partner_name if applicant else 'Simulation Employee',
                 'active': False,
                 'company_id': contract.company_id.id,
                 'lang': contract.company_id.partner_id.lang,

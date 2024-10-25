@@ -56,7 +56,7 @@ class SignContract(Sign):
                 if not owner:
                     owner = employee.search([('work_contact_id', '=', employee_partner.id)]).user_id
                 if not owner:
-                    owner = employee.contract_id.hr_responsible_id
+                    owner = contract.hr_responsible_id
 
                 request.env['documents.document'].sudo().create({
                     'partner_id': employee_partner.id,
