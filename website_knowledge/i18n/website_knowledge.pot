@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:29+0000\n"
-"PO-Revision-Date: 2024-09-25 09:29+0000\n"
+"POT-Creation-Date: 2024-10-25 09:16+0000\n"
+"PO-Revision-Date: 2024-10-25 09:16+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,36 +16,26 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: website_knowledge
-#: model_terms:ir.ui.view,arch_db:website_knowledge.article_view_public
-msgid "<i class=\"fa fa-circle-o-notch fa-2x fa-spin\" title=\"loader\" role=\"img\"/>"
-msgstr ""
-
-#. module: website_knowledge
 #. odoo-javascript
-#: code:addons/website_knowledge/static/src/js/components/website_knowledge.xml:0
+#: code:addons/website_knowledge/static/src/backend/components/permission_panel/permission_panel.xml:0
 msgid "Article not Published"
 msgstr ""
 
 #. module: website_knowledge
-#: model_terms:ir.ui.view,arch_db:website_knowledge.article_view_public
+#. odoo-javascript
+#: code:addons/website_knowledge/static/src/frontend/knowledge_public_view/knowledge_public_view.xml:0
 msgid "Article not found"
 msgstr ""
 
 #. module: website_knowledge
 #. odoo-javascript
-#: code:addons/website_knowledge/static/src/js/components/website_knowledge.xml:0
+#: code:addons/website_knowledge/static/src/backend/components/permission_panel/permission_panel.xml:0
 msgid "Article shared to web"
 msgstr ""
 
 #. module: website_knowledge
 #: model:ir.model.fields,field_description:website_knowledge.field_knowledge_article__can_publish
 msgid "Can Publish"
-msgstr ""
-
-#. module: website_knowledge
-#. odoo-javascript
-#: code:addons/website_knowledge/static/src/xml/knowledge_public.xml:0
-msgid "Download"
 msgstr ""
 
 #. module: website_knowledge
@@ -57,7 +47,7 @@ msgstr ""
 
 #. module: website_knowledge
 #. odoo-javascript
-#: code:addons/website_knowledge/static/src/js/components/website_knowledge.xml:0
+#: code:addons/website_knowledge/static/src/backend/components/permission_panel/permission_panel.xml:0
 msgid "It and its published children can be read by anyone"
 msgstr ""
 
@@ -73,7 +63,7 @@ msgstr ""
 
 #. module: website_knowledge
 #. odoo-javascript
-#: code:addons/website_knowledge/static/src/xml/knowledge_public.xml:0
+#: code:addons/website_knowledge/static/src/frontend/editor/embedded_components/view/view_placeholder.xml:0
 msgid "Log in"
 msgstr ""
 
@@ -84,7 +74,7 @@ msgstr ""
 
 #. module: website_knowledge
 #. odoo-javascript
-#: code:addons/website_knowledge/static/src/js/components/website_knowledge.xml:0
+#: code:addons/website_knowledge/static/src/backend/components/permission_panel/permission_panel.xml:0
 msgid "Only specific people can access"
 msgstr ""
 
@@ -95,24 +85,26 @@ msgstr ""
 
 #. module: website_knowledge
 #. odoo-javascript
-#: code:addons/website_knowledge/static/src/js/components/website_knowledge.xml:0
+#: code:addons/website_knowledge/static/src/backend/components/permission_panel/permission_panel.xml:0
 msgid "Publish this Article and its children on the web"
 msgstr ""
 
 #. module: website_knowledge
-#: model:ir.model,name:website_knowledge.model_ir_qweb
-msgid "Qweb"
-msgstr ""
-
-#. module: website_knowledge
-#: model_terms:ir.ui.view,arch_db:website_knowledge.article_view_public
+#. odoo-javascript
+#: code:addons/website_knowledge/static/src/frontend/knowledge_public_view/knowledge_public_view.xml:0
 msgid "Search an article..."
 msgstr ""
 
 #. module: website_knowledge
 #. odoo-javascript
-#: code:addons/website_knowledge/static/src/js/components/website_knowledge.xml:0
+#: code:addons/website_knowledge/static/src/backend/components/permission_panel/permission_panel.xml:0
 msgid "Share to web"
+msgstr ""
+
+#. module: website_knowledge
+#. odoo-javascript
+#: code:addons/website_knowledge/static/src/frontend/knowledge_public_view/knowledge_public_view.xml:0
+msgid "Sign in"
 msgstr ""
 
 #. module: website_knowledge
@@ -122,12 +114,7 @@ msgstr ""
 
 #. module: website_knowledge
 #. odoo-javascript
-#: code:addons/website_knowledge/static/src/xml/knowledge_public.xml:0
-msgid "The Excalidraw URL is not valid. Ask an internal user to update it."
-msgstr ""
-
-#. module: website_knowledge
-#: model_terms:ir.ui.view,arch_db:website_knowledge.article_view_public
+#: code:addons/website_knowledge/static/src/frontend/knowledge_public_view/knowledge_public_view.xml:0
 msgid ""
 "The article you are trying the read has either been removed or you do not "
 "have access to it."
@@ -148,8 +135,14 @@ msgstr ""
 
 #. module: website_knowledge
 #. odoo-javascript
-#: code:addons/website_knowledge/static/src/xml/knowledge_public.xml:0
+#: code:addons/website_knowledge/static/src/frontend/editor/embedded_components/view/view_placeholder.xml:0
 msgid "This view is only available for internal users"
+msgstr ""
+
+#. module: website_knowledge
+#. odoo-javascript
+#: code:addons/website_knowledge/static/src/frontend/knowledge_public_view/knowledge_public_view.xml:0
+msgid "Toggle aside menu"
 msgstr ""
 
 #. module: website_knowledge
@@ -158,7 +151,8 @@ msgid "Unpublish Articles"
 msgstr ""
 
 #. module: website_knowledge
-#: model_terms:ir.ui.view,arch_db:website_knowledge.article_view_public
+#. odoo-javascript
+#: code:addons/website_knowledge/static/src/frontend/knowledge_public_view/knowledge_public_view.xml:0
 msgid "Untitled"
 msgstr ""
 
@@ -175,4 +169,10 @@ msgstr ""
 #. module: website_knowledge
 #: model:ir.model.fields,field_description:website_knowledge.field_knowledge_article__website_url
 msgid "Website URL"
+msgstr ""
+
+#. module: website_knowledge
+#. odoo-javascript
+#: code:addons/website_knowledge/static/src/frontend/knowledge_public_view/knowledge_public_view.xml:0
+msgid "loader"
 msgstr ""

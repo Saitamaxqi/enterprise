@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-23 08:02+0000\n"
-"PO-Revision-Date: 2024-10-23 08:02+0000\n"
+"POT-Creation-Date: 2024-10-25 09:13+0000\n"
+"PO-Revision-Date: 2024-10-25 09:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1748,6 +1748,7 @@ msgid "Financial Budgets"
 msgstr ""
 
 #. module: account_reports
+#: model:ir.model,name:account_reports.model_account_fiscal_position
 #: model:ir.model.fields,field_description:account_reports.field_account_report_annotation__fiscal_position_id
 msgid "Fiscal Position"
 msgstr ""
@@ -3708,13 +3709,6 @@ msgstr ""
 msgid ""
 "This report contains inconsistencies. The affected lines are marked with a "
 "warning."
-msgstr ""
-
-#. module: account_reports
-#: model_terms:ir.ui.view,arch_db:account_reports.account_report_form
-msgid ""
-"This report is linked to a custom handler.\n"
-"                        You can customize it manually, but make sure your changes don't clash with what the handler does."
 msgstr ""
 
 #. module: account_reports

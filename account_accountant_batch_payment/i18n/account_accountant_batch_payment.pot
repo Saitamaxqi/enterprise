@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-09-25 09:26+0000\n"
-"PO-Revision-Date: 2024-09-25 09:26+0000\n"
+"POT-Creation-Date: 2024-10-25 09:13+0000\n"
+"PO-Revision-Date: 2024-10-25 09:13+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -38,14 +38,8 @@ msgid "Bank reconciliation widget for a single statement line"
 msgstr ""
 
 #. module: account_accountant_batch_payment
-#: model:ir.model.fields,field_description:account_accountant_batch_payment.field_bank_rec_widget_line__batch_pay_content
-msgid "Batch Pay Content"
-msgstr ""
-
-#. module: account_accountant_batch_payment
 #. odoo-python
 #: code:addons/account_accountant_batch_payment/models/account_batch_payment.py:0
-#: code:addons/account_accountant_batch_payment/models/bank_rec_widget.py:0
 #: model:ir.model,name:account_accountant_batch_payment.model_account_batch_payment
 #: model_terms:ir.ui.view,arch_db:account_accountant_batch_payment.view_account_batch_payment_rejection_form
 #: model_terms:ir.ui.view,arch_db:account_accountant_batch_payment.view_account_batch_payment_search_bank_rec_widget

@@ -1810,6 +1810,15 @@ resource_name          = pos_urban_piper
 replace_edited_strings = false
 keep_translations      = false
 
+[o:odoo:p:odoo-18:r:pos_urban_piper_ubereats]
+file_filter            = pos_urban_piper_ubereats/i18n/<lang>.po
+source_file            = pos_urban_piper_ubereats/i18n/pos_urban_piper_ubereats.pot
+type                   = PO
+minimum_perc           = 0
+resource_name          = pos_urban_piper_ubereats
+replace_edited_strings = false
+keep_translations      = false
+
 [o:odoo:p:odoo-18:r:pos_urban_piper_zomato]
 file_filter            = pos_urban_piper_zomato/i18n/<lang>.po
 source_file            = pos_urban_piper_zomato/i18n/pos_urban_piper_zomato.pot
