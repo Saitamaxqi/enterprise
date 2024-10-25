@@ -84,6 +84,7 @@ class TestBankStatementExtractProcess(AccountTestInvoicingCommon, TestExtractMix
             'user_infos': {
                 'user_email': self.user.email,
                 'user_lang': self.env.ref('base.user_root').lang,
+                'journal_type': self.bank_journal.type,
             },
             'webhook_url': f'{self.bank_statement.get_base_url()}/account_bank_statement_extract/request_done',
         }

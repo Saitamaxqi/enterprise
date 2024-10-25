@@ -30,6 +30,11 @@ class AccountBankStatement(models.Model):
     def _get_ocr_module_name(self):
         return 'account_bank_statement_extract'
 
+    def _get_user_infos(self):
+        user_infos = super()._get_user_infos()
+        user_infos['journal_type'] = self.journal_id.type
+        return user_infos
+
     def _contact_iap_extract(self, pathinfo, params):
         params['version'] = OCR_VERSION
         params['account_token'] = self._get_iap_account().account_token
