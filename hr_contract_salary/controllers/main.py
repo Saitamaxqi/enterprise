@@ -541,7 +541,7 @@ class HrContractSalary(http.Controller):
 
         # Update personal info on the private address
         if employee.work_contact_id:
-            if no_name_write:
+            if no_name_write or employee.user_id.name:
                 del work_contact_vals['name']
             partner = employee.work_contact_id
             # We shouldn't modify the partner email like this
