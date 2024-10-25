@@ -1165,7 +1165,7 @@ class AccountReport(models.Model):
 
     def _init_options_prefix_groups_threshold(self, options, previous_options):
         previous_threshold = previous_options.get('prefix_groups_threshold')
-        options['prefix_groups_threshold'] = previous_threshold or self.prefix_groups_threshold
+        options['prefix_groups_threshold'] = self.prefix_groups_threshold
 
     ####################################################
     # OPTIONS: fiscal position (multi vat)
