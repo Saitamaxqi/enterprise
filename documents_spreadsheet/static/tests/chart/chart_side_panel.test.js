@@ -246,9 +246,12 @@ describe("trend line", () => {
         await openChartSidePanel(model, env);
         await contains(".o-panel-design").click();
 
+        const collapsible = document.querySelectorAll(".collapsor");
+        await collapsible[1].click();
+
         await contains("input[name='showTrendLine']").click();
         const definition = model.getters.getChartDefinition(chartId);
-        expect(definition.trend).toEqual({
+        expect(definition.dataSets[0].trend).toEqual({
             type: "polynomial",
             order: 1,
             display: true,
@@ -263,10 +266,13 @@ describe("trend line", () => {
         const chartId = model.getters.getChartIds(sheetId)[0];
         await openChartSidePanel(model, env);
         await contains(".o-panel-design").click();
-        await contains("input[name='showTrendLine']").click();
 
+        const collapsible = document.querySelectorAll(".collapsor");
+        await collapsible[1].click();
+
+        await contains("input[name='showTrendLine']").click();
         let definition = model.getters.getChartDefinition(chartId);
-        expect(definition.trend).toEqual({
+        expect(definition.dataSets[0].trend).toEqual({
             type: "polynomial",
             order: 1,
             display: true,
@@ -274,7 +280,7 @@ describe("trend line", () => {
 
         await contains(".trend-type-selector").select("logarithmic");
         definition = model.getters.getChartDefinition(chartId);
-        expect(definition.trend?.type).toEqual("logarithmic");
+        expect(definition.dataSets[0].trend?.type).toEqual("logarithmic");
     });
 
     test("Can change polynomial degree", async function () {
@@ -306,27 +312,41 @@ describe("trend line", () => {
         const chartId = model.getters.getChartIds(sheetId)[0];
         await openChartSidePanel(model, env);
         await contains(".o-panel-design").click();
-        await contains("input[name='showTrendLine']").click();
 
+        const collapsible = document.querySelectorAll(".collapsor");
+        await collapsible[1].click();
+
+        await contains("input[name='showTrendLine']").click();
         let definition = model.getters.getChartDefinition(chartId);
-        expect(definition.trend).toEqual({
+        expect(definition.dataSets[0].trend).toEqual({
             type: "polynomial",
             order: 1,
             display: true,
         });
 
         await contains(".trend-type-selector").select("polynomial");
-        await contains(".trend-order-input").edit("3");
         definition = model.getters.getChartDefinition(chartId);
-        expect(definition.trend?.order).toEqual(3);
+        expect(definition.dataSets[0].trend).toEqual({
+            type: "polynomial",
+            order: 2,
+            display: true,
+        });
+
+        await contains(".trend-order-input").select("1");
+        definition = model.getters.getChartDefinition(chartId);
+        expect(definition.dataSets[0].trend?.order).toEqual(1);
     });
 });
+
 test("Show values", async () => {
     const { model, env } = await createSpreadsheetFromGraphView();
     const sheetId = model.getters.getActiveSheetId();
     const chartId = model.getters.getChartIds(sheetId)[0];
     await openChartSidePanel(model, env);
     await contains(".o-panel-design").click();
+
+    const collapsible = document.querySelectorAll(".collapsor");
+    await collapsible[1].click();
 
     expect(model.getters.getChartDefinition(chartId).showValues).toBe(undefined);
     let options = model.getters.getChartRuntime(chartId).chartJsConfig.options;
@@ -337,4 +357,50 @@ test("Show values", async () => {
     expect(model.getters.getChartDefinition(chartId).showValues).toBe(true);
     options = model.getters.getChartRuntime(chartId).chartJsConfig.options;
     expect(options.plugins.chartShowValuesPlugin.showValues).toBe(true);
+});
+
+describe("Can edit chart data series", () => {
+    test("Can edit bar chart data series ", async function () {
+        const { model, env } = await createSpreadsheetFromGraphView();
+        const sheetId = model.getters.getActiveSheetId();
+        const chartId = model.getters.getChartIds(sheetId)[0];
+        await openChartSidePanel(model, env);
+        await contains(".o-panel-design").click();
+
+        const collapsible = document.querySelectorAll(".collapsor");
+        await collapsible[1].click();
+
+        await contains(".o-radio input[value='right']").click();
+        await contains(".o-serie-label-editor").edit("Random name");
+        const definition = model.getters.getChartDefinition(chartId);
+        expect(definition.dataSets).toEqual([
+            {
+                label: "Random name",
+                yAxisId: "y1",
+            },
+        ]);
+    });
+
+    test("Can edit line chart data series ", async function () {
+        const { model, env } = await createSpreadsheetFromGraphView();
+        await changeChartType("odoo_line");
+
+        const sheetId = model.getters.getActiveSheetId();
+        const chartId = model.getters.getChartIds(sheetId)[0];
+        await openChartSidePanel(model, env);
+        await contains(".o-panel-design").click();
+
+        const collapsible = document.querySelectorAll(".collapsor");
+        await collapsible[1].click();
+
+        await contains(".o-radio input[value='right']").click();
+        await contains(".o-serie-label-editor").edit("Random name");
+        const definition = model.getters.getChartDefinition(chartId);
+        expect(definition.dataSets).toEqual([
+            {
+                label: "Random name",
+                yAxisId: "y1",
+            },
+        ]);
+    });
 });
