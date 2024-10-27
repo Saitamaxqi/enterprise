@@ -1,7 +1,7 @@
 {
     'name': 'United Arab Emirates - Corporate Tax Report',
     'version': '1.0',
-    'website': 'https://www.odoo.com/documentation/17.0/applications/finance/fiscal_localizations/united_arab_emirates.html',
+    'website': 'https://www.odoo.com/documentation/18.0/applications/finance/fiscal_localizations/united_arab_emirates.html',
     'icon': '/account/static/description/l10n.png',
     'category': 'Accounting/Localizations/Account Charts',
     'description': """
