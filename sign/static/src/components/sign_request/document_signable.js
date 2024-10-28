@@ -8,6 +8,7 @@ import { SignablePDFIframe } from "./signable_PDF_iframe";
 import { buildPDFViewerURL } from "@sign/components/sign_request/utils";
 import { _t } from "@web/core/l10n/translation";
 import { rpc } from "@web/core/network/rpc";
+import { hidePDFJSButtons } from "@web/core/utils/pdfjs";
 
 function datasetFromElements(elements) {
     return Array.from(elements).map((el) => {
@@ -92,9 +93,15 @@ export class Document extends Component {
             "src",
             buildPDFViewerURL(this.attachmentLocation, this.env.isSmall)
         );
-        this.PDFIframe.onload = () => {
+        hidePDFJSButtons(this.PDFIframe, {
+            hideDownload: true,
+            hidePrint: true,
+            hidePresentation: true,
+            hideRotation: true,
+        });
+        this.PDFIframe.addEventListener("load", () => {
             setTimeout(() => this.initializeIframe(), 1);
-        };
+        });
     }
     initializeIframe() {
         this.iframe = new this.props.PDFIframeClass(

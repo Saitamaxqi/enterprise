@@ -5,6 +5,7 @@ import { SignTemplateTopBar } from "./sign_template_top_bar";
 import { Component, useRef, useEffect, onWillUnmount } from "@odoo/owl";
 import { buildPDFViewerURL } from "@sign/components/sign_request/utils";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { hidePDFJSButtons } from "@web/core/utils/pdfjs";
 
 export class SignTemplateBody extends Component {
     static template = "sign.SignTemplateBody";
@@ -33,6 +34,19 @@ export class SignTemplateBody extends Component {
         this.dialog = useService("dialog");
         this.PDFIframe = useRef("PDFIframe");
         this.PDFViewerURL = buildPDFViewerURL(this.props.attachmentLocation, this.env.isSmall);
+        useEffect(
+            (el) => {
+                if (el) {
+                    hidePDFJSButtons(el, {
+                        hideDownload: true,
+                        hidePrint: true,
+                        hidePresentation: true,
+                        hideRotation: true,
+                    });
+                }
+            },
+            () => [this.PDFIframe.el]
+        );
         useEffect(
             () => {
                 return this.waitForPDF();
