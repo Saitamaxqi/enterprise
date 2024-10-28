@@ -234,7 +234,7 @@ class L10nBeHrPayrollExportGroupS(models.Model):
         ```
         """
         self.env.company.group_s_sequence_number += 1
-        if len(str(self.env.company.group_s_sequence_number)):
+        if len(str(self.env.company.group_s_sequence_number)) > 5:
             self.env.company.group_s_sequence_number = 0
         return '_'.join([
             'FIPAI', 'PTG',
