@@ -52,13 +52,15 @@ class TestWebsiteSaleSubscription(TestWebsiteSaleSubscriptionCommon):
 
     def test_combination_info_variant_products(self):
         template = self.sub_with_variants.with_context(website_id=self.current_website.id)
-        combination_info = template.product_variant_ids[0]._get_combination_info_variant()
+        with MockRequest(self.env, website=self.current_website):
+            combination_info = template.product_variant_ids[0]._get_combination_info_variant()
         self.assertEqual(combination_info['price'], 10)
         self.assertTrue(combination_info['is_subscription'])
         self.assertEqual(combination_info['subscription_default_pricing_plan_id'], self.plan_week.id)
         self.assertEqual(combination_info['subscription_default_pricing_price'], 'Weekly: $ 10.00')
 
-        combination_info_variant_2 = template.product_variant_ids[-1]._get_combination_info_variant()
+        with MockRequest(self.env, website=self.current_website):
+            combination_info_variant_2 = template.product_variant_ids[-1]._get_combination_info_variant()
         self.assertEqual(combination_info_variant_2['price'], 25)
         self.assertTrue(combination_info_variant_2['is_subscription'])
         self.assertEqual(combination_info_variant_2['subscription_default_pricing_plan_id'], self.plan_month.id)
