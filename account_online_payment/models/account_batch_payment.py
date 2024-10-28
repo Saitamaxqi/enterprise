@@ -15,7 +15,6 @@ class AccountBatchPayment(models.Model):
     _inherit = ['account.batch.payment']
 
     payment_identifier = fields.Char(string='Batch ID', readonly=True)
-    redirect_url = fields.Char(string='Redirect URL', readonly=True)
     payment_online_status = fields.Selection(selection=STATUSES, string='PIS Status', default='uninitiated', readonly=True)
     account_online_linked = fields.Boolean(compute='_compute_account_online_linked', search='_search_account_online_linked')
 
@@ -64,13 +63,12 @@ class AccountBatchPayment(models.Model):
 
             self.write({
                 'payment_identifier': response.get('payment_identifier'),
-                'redirect_url': response.get('redirect_url'),
                 'payment_online_status': response.get('payment_online_status'),
             })
 
             return {
                 'type': 'ir.actions.act_url',
-                'url': self.redirect_url,
+                'url': response.get('redirect_url'),
                 'target': '_blank',
             }
 
