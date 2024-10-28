@@ -1,12 +1,17 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from contextlib import contextmanager
+import json
 
-from odoo.fields import Command
-from odoo.addons.point_of_sale.tests.common import TestPoSCommon
+from datetime import date
+
 from odoo.addons.account.tests.common import TestTaxCommon
+from odoo.addons.l10n_in_pos.tests.common import TestInPosBase
+from odoo.tools import file_open
+
+TEST_DATE = date(2023, 5, 20)
+HSN_SCHEMA_TEST_DATE = date(2025, 5, 20)
 
 
-class TestInGstrPosBase(TestPoSCommon):
+class TestInGstrPosBase(TestInPosBase):
     """
     Base class for Indian GSTR and POS-related test cases.
     This class sets up the company, products, and configuration required
@@ -16,55 +21,29 @@ class TestInGstrPosBase(TestPoSCommon):
     @TestTaxCommon.setup_country('in')
     def setUpClass(cls):
         super().setUpClass()
-        country_in_id = cls.env.ref("base.in").id
-        cls.company_data["company"].write({
-            "vat": "24AAGCC7144L6ZE",
-            "state_id": cls.env.ref("base.state_in_gj").id,
-            "street": "street1",
-            "city": "city1",
-            "zip": "123456",
-            "country_id": country_in_id,
-            "l10n_in_is_gst_registered": True,
-            "l10n_in_gst_efiling_feature": True,
+        cls.gstr1_report = cls.env['l10n_in.gst.return.period'].create({
+            'company_id': cls.company_data["company"].id,
+            'periodicity': 'monthly',
+            'year': TEST_DATE.strftime('%Y'),
+            'month': TEST_DATE.strftime('%m'),
         })
-        cls.config = cls.basic_config
-        cls.gst_5 = cls.env['account.chart.template'].ref('sgst_sale_5')
-
-        # Common product setup for POS tests
-        cls._setup_products()
+        cls.gstr1_report_may_2025 = cls.env['l10n_in.gst.return.period'].create({
+            'company_id': cls.company_data["company"].id,
+            'periodicity': 'monthly',
+            'year': HSN_SCHEMA_TEST_DATE.strftime('%Y'),
+            'month': HSN_SCHEMA_TEST_DATE.strftime('%m'),
+        })
 
     @classmethod
-    def _setup_products(cls):
-        """Sets up products for POS testing with GST."""
-        cls.product_a.write({
-            'available_in_pos': True,
-            'l10n_in_hsn_code': '1111',
-            'list_price': 100,
-            'taxes_id': [Command.set(cls.gst_5.ids)],  # Tax: 10
-        })
-        cls.product_b.write({
-            'available_in_pos': True,
-            'l10n_in_hsn_code': '2222',
-            'list_price': 200,
-            'taxes_id': [Command.set(cls.gst_5.ids)],  # Tax: 20
-        })
+    def _read_mock_json(self, filename):
+        """
+        Reads a JSON file using Odoo's file_open and returns the parsed data.
 
-    @contextmanager
-    def with_pos_session(self):
-        """Opens a new POS session and ensures it is closed properly."""
-        session = self.open_new_session(0.0)
-        yield session
-        session.post_closing_cash_details(0.0)
-        session.close_session_from_ui()
+        :param filename: The name of the JSON file to read.
+        :return: Parsed JSON data.
+        """
+        # Use file_open to open the file from the module's directory
+        with file_open(f"{self.test_module}/tests/mock_jsons/{filename}", 'rb') as file:
+            data = json.load(file)
 
-    def _create_order(self, ui_data):
-        """Helper to create a POS order from UI data."""
-        order_data = self.create_ui_order_data(**ui_data)
-        results = self.env['pos.order'].sync_from_ui([order_data])
-        return self.env['pos.order'].browse([o['id'] for o in results['pos.order']])
-
-    @classmethod
-    def _create_categ_anglo(cls):
-        # Stock Valuation support is currently not implemented for Indian localization.
-        # Once support is added, this method override will be removed.
-        return False
+        return data
