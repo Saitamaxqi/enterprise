@@ -336,9 +336,9 @@
         <field name="arch" type="xml">
             <list create="false"
                   multi_edit="1"
-                  decoration-info="type == 'binary' and not datas"
+                  decoration-info="shortcut_document_id"
                   sample="1" default_order="is_folder, create_date DESC, id DESC">
-                <field name="type" optional="show"/>
+                <field name="type" width="25px" widget="documents_type_icon" string=" " optional="show"/>
                 <field name="id" optional="hide"/>
                 <field name="name" required="True" readonly="False"/>
                 <field name="display_name" column_invisible="1"/>
