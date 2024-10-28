@@ -94,7 +94,7 @@ class HrExpense(models.Model):
 
             if currency_ocr and (not self.currency_id or self.currency_id == self.env.company.currency_id):
                 for comparison in ['=ilike', 'ilike']:
-                    possible_currencies = self.env["res.currency"].search([
+                    possible_currencies = self.env["res.currency"].with_context(active_test=False).search([
                         '|', '|',
                         ('currency_unit_label', comparison, currency_ocr),
                         ('name', comparison, currency_ocr),
@@ -103,14 +103,15 @@ class HrExpense(models.Model):
                     if len(possible_currencies) == 1:
                         vals['currency_id'] = possible_currencies
                         break
-            if vals.get('currency_id') and vals['currency_id'] != self.company_currency_id:
-                currency_rate = self.env['res.currency']._get_conversion_rate(
-                    from_currency=vals['currency_id'],
-                    to_currency=self.company_currency_id,
-                    company=self.company_id,
-                    date=vals['date'],
-                )
-                vals['total_amount'] = vals['total_amount_currency'] * currency_rate
+
+                if vals.get('currency_id', self.company_currency_id) != self.company_currency_id:
+                    currency_rate = self.env['res.currency']._get_conversion_rate(
+                        from_currency=vals['currency_id'],
+                        to_currency=self.company_currency_id,
+                        company=self.company_id,
+                        date=vals['date'],
+                    )
+                    vals['total_amount'] = vals['total_amount_currency'] * currency_rate
             self.write(vals)
 
     @api.model
