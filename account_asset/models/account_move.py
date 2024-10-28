@@ -45,7 +45,7 @@ class AccountMove(models.Model):
     # -------------------------------------------------------------------------
     # COMPUTE METHODS
     # -------------------------------------------------------------------------
-    @api.depends('asset_id', 'depreciation_value', 'asset_id.total_depreciable_value', 'asset_id.already_depreciated_amount_import')
+    @api.depends('asset_id', 'depreciation_value', 'asset_id.total_depreciable_value', 'asset_id.already_depreciated_amount_import', 'state')
     def _compute_depreciation_cumulative_value(self):
         self.asset_depreciated_value = 0
         self.asset_remaining_value = 0
@@ -60,8 +60,9 @@ class AccountMove(models.Model):
                 depreciated = 0
                 remaining = asset.total_depreciable_value - asset.already_depreciated_amount_import
                 for move in asset.depreciation_move_ids.sorted(lambda mv: (mv.date, mv._origin.id)):
-                    remaining -= move.depreciation_value
-                    depreciated += move.depreciation_value
+                    if move.state != 'cancel':
+                        remaining -= move.depreciation_value
+                        depreciated += move.depreciation_value
                     move.asset_remaining_value = remaining
                     move.asset_depreciated_value = depreciated
 
@@ -151,8 +152,10 @@ class AccountMove(models.Model):
                 if first_draft:
                     # If there is a draft, simply move/add the depreciation amount here
                     first_draft.depreciation_value += move.depreciation_value
-                else:
-                    # If there was no draft move left, create one
+                elif move.asset_id.state != 'close':
+                    # If there was no draft move left, create one.
+                    # Unless the asset is being closed, then the closing move
+                    # takes care of balancing the asset.
                     last_date = max(move.asset_id.depreciation_move_ids.mapped('date'))
                     method_period = move.asset_id.method_period
 

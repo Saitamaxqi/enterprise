@@ -889,6 +889,7 @@ class AccountAsset(models.Model):
         if invoice_line_ids and self.children_ids.filtered(lambda a: a.state in ('draft', 'open') or a.value_residual > 0):
             raise UserError(_("You cannot automate the journal entry for an asset that has a running gross increase. Please use 'Dispose' on the increase(s)."))
         full_asset = self + self.children_ids
+        full_asset.state = 'close'
         move_ids = full_asset._get_disposal_moves([invoice_line_ids] * len(full_asset), disposal_date)
         for asset in full_asset:
             asset.message_post(body=
@@ -900,7 +901,6 @@ class AccountAsset(models.Model):
         selling_price = abs(sum(invoice_line.balance for invoice_line in invoice_line_ids))
         self.net_gain_on_sale = self.currency_id.round(selling_price - self.book_value)
 
-        full_asset.write({'state': 'close'})
         if move_ids:
             name = _('Disposal Move')
             view_mode = 'form'

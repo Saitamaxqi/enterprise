@@ -1,3 +1,4 @@
+from unittest.mock import patch
 from odoo.tests.common import tagged, freeze_time
 from odoo.addons.account_asset.tests.common import TestAccountAssetCommon
 from odoo import fields
@@ -1569,3 +1570,63 @@ class TestAccountAssetReevaluation(TestAccountAssetCommon):
 
         asset_modify.date = fields.Date.from_string('2022-06-30')
         self.assertEqual(asset_modify.gain_or_loss, 'no')
+
+    def test_asset_disposal_on_hashed_journal(self):
+        asset = self.create_asset(
+            value=3000,
+            periodicity='monthly',
+            periods=3,
+            method='linear',
+            acquisition_date='2022-05-01',
+            prorata_computation_type='constant_periods',
+        )
+        asset.journal_id.restrict_mode_hash_table = True
+        asset.validate()
+
+        self.env['asset.modify'].create({
+            'asset_id': asset.id,
+            'date':  fields.Date.to_date('2022-05-15'),
+            'modify_action': 'dispose',
+            'loss_account_id': self.company_data['default_account_expense'].copy().id,
+        }).sell_dispose()
+
+        self.assertRecordValues(asset.depreciation_move_ids.sorted(lambda mv: (mv.date, mv.id)), [
+            self._get_depreciation_move_values(date='2022-05-15', depreciation_value=483.87, remaining_value=2516.13, depreciated_value=483.87, state='posted'),
+            self._get_depreciation_move_values(date='2022-05-15', depreciation_value=2516.13, remaining_value=0, depreciated_value=3000, state='draft'),
+            # At this point the asset is disposed, which means its 'remaining_value' is 0.
+            # But the next 2 depreciation moves could not be removed due to the hash on the journal.
+            # This results in a negative 'remaining_value' and a 'depreciated_value' that exceeds the asset's initial value.
+            self._get_depreciation_move_values(date='2022-05-31', depreciation_value=1000, remaining_value=-1000, depreciated_value=4000, state='posted'),
+            self._get_depreciation_move_values(date='2022-06-30', depreciation_value=1000, remaining_value=-2000, depreciated_value=5000, state='posted'),
+            # The next 2 depreciation moves are reverting the previous 2,
+            # bringing the 'remaining_value' back to 0 on the last one, as it should be.
+            self._get_depreciation_move_values(date='2022-06-30', depreciation_value=-1000, remaining_value=-1000, depreciated_value=4000, state='posted'),
+            self._get_depreciation_move_values(date='2022-06-30', depreciation_value=-1000, remaining_value=0, depreciated_value=3000, state='posted'),
+        ])
+
+    def test_asset_disposal_with_audit_trail(self):
+        asset = self.create_asset(
+            value=3000,
+            periodicity='monthly',
+            periods=3,
+            method='linear',
+            acquisition_date='2022-05-01',
+            prorata_computation_type='constant_periods',
+        )
+        asset.validate()
+
+        with patch.object(self.env.registry['account.move'], '_is_protected_by_audit_trail', lambda move: True):
+            self.env['asset.modify'].create({
+                'asset_id': asset.id,
+                'date':  fields.Date.to_date('2022-06-15'),
+                'modify_action': 'dispose',
+                'loss_account_id': self.company_data['default_account_expense'].copy().id,
+            }).sell_dispose()
+
+        self.assertRecordValues(asset.depreciation_move_ids.sorted(lambda mv: (mv.date, mv.id)), [
+            self._get_depreciation_move_values(date='2022-05-31', depreciation_value=1000, remaining_value=2000, depreciated_value=1000, state='posted'),
+            self._get_depreciation_move_values(date='2022-06-15', depreciation_value=500, remaining_value=1500, depreciated_value=1500, state='posted'),
+            self._get_depreciation_move_values(date='2022-06-15', depreciation_value=1500, remaining_value=0, depreciated_value=3000, state='draft'),
+            self._get_depreciation_move_values(date='2022-06-30', depreciation_value=1000, remaining_value=0, depreciated_value=3000, state='cancel'),
+            self._get_depreciation_move_values(date='2022-07-31', depreciation_value=1000, remaining_value=0, depreciated_value=3000, state='cancel'),
+        ])
