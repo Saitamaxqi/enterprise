@@ -16,7 +16,7 @@ registry.category("web_tour.tours").add("PreparationDisplayTourResto", {
             Dialog.confirm("Open Register"),
 
             // Create first order
-            FloorScreen.clickTable("5"),
+            FloorScreen.clickTable("105"),
             ProductScreen.orderBtnIsPresent(),
             ProductScreen.clickDisplayedProduct("Coca-Cola"),
             ProductScreen.clickDisplayedProduct("Water"),
@@ -32,7 +32,7 @@ registry.category("web_tour.tours").add("PreparationDisplayTourResto", {
 
             // Create second order
             FloorScreen.isShown(),
-            FloorScreen.clickTable("4"),
+            FloorScreen.clickTable("104"),
             ProductScreen.orderBtnIsPresent(),
             ProductScreen.clickDisplayedProduct("Coca-Cola"),
             ProductScreen.orderlineIsToOrder("Coca-Cola"),
@@ -46,7 +46,7 @@ registry.category("web_tour.tours").add("PreparationDisplayTourResto", {
 
             // Create third order
             FloorScreen.isShown(),
-            FloorScreen.clickTable("4"),
+            FloorScreen.clickTable("104"),
             ProductScreen.orderBtnIsPresent(),
             ProductScreen.clickDisplayedProduct("Coca-Cola"),
             ProductScreen.clickDisplayedProduct("Water"),
@@ -72,7 +72,7 @@ registry.category("web_tour.tours").add("PreparationDisplayTourInternalNotes", {
         [
             Chrome.startPoS(),
             Dialog.confirm("Open Register"),
-            FloorScreen.clickTable("5"),
+            FloorScreen.clickTable("105"),
             ProductScreen.clickDisplayedProduct("Coca-Cola"),
             ProductScreen.orderlineIsToOrder("Coca-Cola"),
             ProductScreen.clickOrderButton(),
@@ -99,7 +99,7 @@ registry.category("web_tour.tours").add("PreparationDisplayTourResto2", {
             Dialog.confirm("Open Register"),
 
             // Create first order
-            FloorScreen.clickTable("5"),
+            FloorScreen.clickTable("105"),
             ProductScreen.orderBtnIsPresent(),
             ProductScreen.clickDisplayedProduct("Coca-Cola"),
             ProductScreen.orderlineIsToOrder("Coca-Cola"),

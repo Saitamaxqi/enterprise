@@ -13,7 +13,7 @@ registry.category("web_tour.tours").add("FiskalyTour", {
         [
             Chrome.startPoS(),
             Dialog.confirm("Open Register"),
-            FloorScreen.clickTable("5"),
+            FloorScreen.clickTable("105"),
             ProductScreen.clickPartnerButton(),
             ProductScreen.clickCustomer("AA Test Partner"),
             ProductScreen.addOrderline("Coca-Cola", "1", "3"),

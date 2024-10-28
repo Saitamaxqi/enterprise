@@ -15,7 +15,7 @@ registry.category("web_tour.tours").add("RestaurantAppointmentTour", {
             Dialog.confirm("Open Register"),
 
             // Make sure there is a currently active order.
-            FloorScreen.clickTable("4"),
+            FloorScreen.clickTable("104"),
             ProductScreen.clickDisplayedProduct("Coca-Cola", true),
 
             // Check that the booking gantt view is shown.
@@ -35,7 +35,7 @@ registry.category("web_tour.tours").add("RestaurantAppointmentTour", {
             RestaurantAppointment.appointmentLabel(5, "Test Lunch"),
 
             // Going back to the table, it should still be possible to add items
-            FloorScreen.clickTable("4"),
+            FloorScreen.clickTable("104"),
             ProductScreen.clickDisplayedProduct("Coca-Cola", true),
         ].flat(),
 });
