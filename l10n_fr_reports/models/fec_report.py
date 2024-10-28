@@ -10,8 +10,6 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
-        if self.env.company.account_fiscal_country_id.code != 'FR':
-            return
         options.setdefault('buttons', []).append(
             {'name': _('FEC'), 'sequence': 10, 'action': 'l10n_fr_reports_open_fec_wizard'}
         )

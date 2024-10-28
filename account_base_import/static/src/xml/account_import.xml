@@ -30,7 +30,7 @@
                         </p>
                     </div>
                 </t>
-                <t t-if="['FR', 'LU'].includes(countryCode)">
+                <t t-if="['FR', 'LU'].includes(countryCode) || isFecImportModuleInstalled">
                     <div class="fec-import pt-4">
                         <h2 class="text-primary">
                             FEC

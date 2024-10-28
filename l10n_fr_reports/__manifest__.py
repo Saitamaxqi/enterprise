@@ -28,7 +28,6 @@ in the "Statement Reports" section).
         'views/account_journal_dashboard_view.xml',
         'views/account_report_async_export_view.xml',
         'wizard/l10n_fr_send_vat_report_wizard.xml',
-        'wizard/fec_report.xml',
     ],
     'auto_install': ['l10n_fr_account', 'account_reports'],
     'installable': True,

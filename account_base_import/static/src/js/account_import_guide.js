@@ -16,6 +16,7 @@ export class AccountImportGuide extends Component {
         onWillStart(async () => {
             const current_company_id = this.env.services.company.currentCompany.id
             this.data = await this.orm.searchRead("res.company", [["id", "=", current_company_id]], ["country_code"])
+            this.isFecImportModuleInstalled = await this.orm.searchCount("ir.module.module", [["name", "=", "l10n_fr_fec_import"], ["state", "=", "installed"]]);
         });
         onWillRender(() => {
             this.countryCode = this.data[0].country_code
