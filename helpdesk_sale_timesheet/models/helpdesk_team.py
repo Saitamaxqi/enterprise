@@ -7,7 +7,7 @@ from odoo import fields, models
 class HelpdeskTeam(models.Model):
     _inherit = ['helpdesk.team']
 
-    project_id = fields.Many2one(domain="[('allow_timesheets', '=', True), ('company_id', '=', company_id), ('allow_billable', '=', use_helpdesk_sale_timesheet)]")
+    project_id = fields.Many2one(compute='_compute_project_id', store=True, readonly=False, domain="[('allow_timesheets', '=', True), '|', ('company_id', '=', False), ('company_id', '=', company_id), ('allow_billable', '=', use_helpdesk_sale_timesheet)]")
 
     def _create_project(self, name, allow_billable, other):
         new_values = dict(other, allow_billable=allow_billable)
