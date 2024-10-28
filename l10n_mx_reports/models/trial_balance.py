@@ -10,6 +10,7 @@ from odoo import _, fields, models, tools
 from odoo.exceptions import UserError, RedirectWarning
 
 CFDIBCE_XSLT_CADENA = 'l10n_mx_reports/data/xslt/1.3/BalanzaComprobacion_1_2.xslt'
+CFDICATALOGO_XSLT_CADENA = 'l10n_mx_reports/data/xslt/1.3/CatalogoCuentas_1_2.xslt'
 
 
 class AccountTrialBalanceReportHandler(models.AbstractModel):
@@ -109,7 +110,7 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         coa_values = self._l10n_mx_get_coa_values(options)
         file_name = f"{coa_values['vat']}{coa_values['year']}{coa_values['month']}CT"
         cfdi = self.env['ir.qweb']._render('l10n_mx_reports.cfdicoa', coa_values)
-        coa_report = self._l10n_mx_edi_add_digital_stamp(CFDIBCE_XSLT_CADENA, cfdi)
+        coa_report = self._l10n_mx_edi_add_digital_stamp(CFDICATALOGO_XSLT_CADENA, cfdi)
 
         return {
             'file_name': f"{file_name}.xml",
