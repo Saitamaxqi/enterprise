@@ -677,11 +677,9 @@ class AccountOnlineLink(models.Model):
                 resp_json = link.with_context(delete_sync=True)._fetch_odoo_fin('/proxy/v1/delete_user', data={'provider_data': link.provider_data}, ignore_status=True)  # delete proxy user
                 if resp_json.get('delete', True) is True:
                     to_unlink += link
-            except OdooFinRedirectException:
+            except (OdooFinRedirectException, UserError, RedirectWarning):
                 # Can happen that this call returns a redirect in mode link, in which case we delete the record
                 to_unlink += link
-                continue
-            except (UserError, RedirectWarning):
                 continue
         return super(AccountOnlineLink, to_unlink).unlink()
 
