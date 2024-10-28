@@ -89,16 +89,17 @@ export class TimesheetTimerHeader extends Component {
     }
 
     getFieldType(fieldName) {
-        if (fieldName === "task_id") {
-            return "task_with_hours";
-        }
         return this.props.fields[fieldName].type;
     }
 
     get fieldsInfo() {
         return {
             task_id: {
-                ...getPropertyFieldInfo({ name: "task_id", type: this.getFieldType("task_id") }),
+                ...getPropertyFieldInfo({
+                    name: "task_id",
+                    type: this.getFieldType("task_id"),
+                    widget: "task_with_hours",
+                }),
                 viewType: this.viewType,
                 context: this.props.fields.task_id.context,
             },
