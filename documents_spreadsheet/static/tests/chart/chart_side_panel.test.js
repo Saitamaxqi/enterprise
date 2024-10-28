@@ -238,6 +238,30 @@ test("Cumulative line chart", async () => {
     });
 });
 
+test("radar chart", async () => {
+    const { model, env } = await createSpreadsheetFromGraphView();
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    await openChartSidePanel(model, env);
+    await changeChartType("odoo_radar");
+
+    expect(model.getters.getChartDefinition(chartId).type).toBe("odoo_radar");
+    expect(model.getters.getChartRuntime(chartId).chartJsConfig.type).toBe("radar");
+});
+
+test("filled radar chart", async () => {
+    const { model, env } = await createSpreadsheetFromGraphView();
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    await openChartSidePanel(model, env);
+    await changeChartType("odoo_filled_radar");
+
+    expect(model.getters.getChartDefinition(chartId).type).toBe("odoo_radar");
+    const runtime = model.getters.getChartRuntime(chartId);
+    expect(runtime.chartJsConfig.type).toBe("radar");
+    expect(runtime.chartJsConfig.data.datasets[0].fill).toBe("start");
+});
+
 describe("trend line", () => {
     test("activate trend line with the checkbox", async function () {
         const { model, env } = await createSpreadsheetFromGraphView();

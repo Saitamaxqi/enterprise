@@ -5,7 +5,8 @@ import { OdooLineChartConfigPanel } from "./odoo_line/odoo_line_config_panel";
 import { _t } from "@web/core/l10n/translation";
 
 const { chartSidePanelComponentRegistry, chartSubtypeRegistry } = spreadsheet.registries;
-const { PieChartDesignPanel, ChartWithAxisDesignPanel } = spreadsheet.components;
+const { PieChartDesignPanel, ChartWithAxisDesignPanel, RadarChartDesignPanel } =
+    spreadsheet.components;
 
 chartSidePanelComponentRegistry
     .add("odoo_line", {
@@ -19,6 +20,10 @@ chartSidePanelComponentRegistry
     .add("odoo_pie", {
         configuration: CommonOdooChartConfigPanel,
         design: PieChartDesignPanel,
+    })
+    .add("odoo_radar", {
+        configuration: CommonOdooChartConfigPanel,
+        design: RadarChartDesignPanel,
     });
 
 chartSubtypeRegistry.add("odoo_line", {
@@ -85,4 +90,22 @@ chartSubtypeRegistry.add("odoo_pie", {
     chartType: "odoo_pie",
     category: "pie",
     preview: "o-spreadsheet-ChartPreview.PIE_CHART",
+});
+chartSubtypeRegistry.add("odoo_radar", {
+    matcher: (definition) => definition.type === "odoo_radar" && !definition.fillArea,
+    displayName: _t("Radar"),
+    chartSubtype: "odoo_radar",
+    chartType: "odoo_radar",
+    subtypeDefinition: { fillArea: false },
+    category: "misc",
+    preview: "o-spreadsheet-ChartPreview.RADAR_CHART",
+});
+chartSubtypeRegistry.add("odoo_filled_radar", {
+    matcher: (definition) => definition.type === "odoo_radar" && !!definition.fillArea,
+    displayName: _t("Filled Radar"),
+    chartType: "odoo_radar",
+    chartSubtype: "odoo_filled_radar",
+    subtypeDefinition: { fillArea: true },
+    category: "misc",
+    preview: "o-spreadsheet-ChartPreview.FILLED_RADAR_CHART",
 });
