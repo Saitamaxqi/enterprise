@@ -26,7 +26,7 @@ class AppraisalSurvey(Survey):
         access_data = super()._get_access_data(survey_token, answer_token, ensure_token, check_partner)
 
         if access_data.get('validity_code', False) == 'answer_deadline' and survey_sudo.survey_type == 'appraisal' \
-            and request.env.user.has_group('hr_appraisal.group_hr_appraisal_manager') and answer_sudo:
+            and request.env.user.has_group('hr_appraisal.group_hr_appraisal_user') and answer_sudo:
             # If the deadline is reached, Hr Manager should be able to consult answers
             access_data['can_answer'] = False
             access_data['validity_code'] = True
