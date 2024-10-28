@@ -7,7 +7,7 @@ Keeps track of loans, and creates corresponding journal entries.
     """,
     'category': 'Accounting/Accounting',
     'sequence': 32,
-    'depends': ['account_asset'],
+    'depends': ['account_asset', 'base_import'],
     'data': [
         'security/account_loans_security.xml',
         'security/ir.model.access.csv',
