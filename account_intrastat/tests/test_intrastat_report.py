@@ -24,6 +24,7 @@ class TestIntrastatReport(TestAccountReportsCommon):
         cls.company_data['company'].currency_id = cls.env.ref('base.EUR').id
         cls.company_data['currency'] = cls.env.ref('base.EUR')
         cls.report = cls.env.ref('account_intrastat.intrastat_report')
+        cls.env.company.totals_below_sections = False
         cls.partner_a = cls.env['res.partner'].create({
             'name': 'Yoyodyne BE',
             'country_id': cls.env.ref('base.be').id

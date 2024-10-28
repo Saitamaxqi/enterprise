@@ -158,6 +158,7 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         # Update options
         options['column_headers'][0] = initial_header_element + options['column_headers'][0] + end_header_element
         options['columns'] = initial_columns + options['columns'] + end_columns
+        options['ignore_totals_below_sections'] = True  # So that GL does not compute them
 
         report._init_options_order_column(options, previous_options)
 

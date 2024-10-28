@@ -410,6 +410,7 @@ class TestCashFlowReport(TestAccountReportsCommon):
             ['Advance Payments received from customers',                              0.0],
             ['Cash received from operating activities',                             115.0],
             ['121160 Account Operating',                                            115.0],
+            ['Total Cash received from operating activities',                       115.0],
             ['Advance payments made to suppliers',                                    0.0],
             ['Cash paid for operating activities',                                    0.0],
             ['Cash flows from investing & extraordinary activities',                  0.0],
@@ -423,6 +424,7 @@ class TestCashFlowReport(TestAccountReportsCommon):
             ['Cash out',                                                              0.0],
             ['Cash and cash equivalents, closing balance',                          115.0],
             ['101411 Bank',                                                         115.0],
+            ['Total Cash and cash equivalents, closing balance',                    115.0],
         ], options)
 
     def test_cash_flow_tricky_case_1(self):
@@ -1227,6 +1229,7 @@ class TestCashFlowReport(TestAccountReportsCommon):
         """ Test the 'hierarchy' option. I.e. we want to ensure that each section of the report (e.g. "Cash and cash equivalents, beginning of period" and "Cash and cash equivalents, closing balance") has its own dedicated hierarchy and they are not mixed up together.
         """
         options = self._generate_options(self.report, '2016-01-01', '2016-12-31')
+        self.env.company.totals_below_sections = True
 
         # Create the account groups for the bank and cash accounts
         self.env['account.group'].create([
@@ -1264,6 +1267,7 @@ class TestCashFlowReport(TestAccountReportsCommon):
             {'name': "Cash and cash equivalents, beginning of period",            'level': 0,    'book_value': '$\xa0150.00'},
               {'name': "10140499 Bank",                                           'level': 1,    'book_value': '$\xa0100.00'},
               {'name': "10150199 Cash",                                           'level': 1,    'book_value': '$\xa050.00'},
+              {'name': "Total Cash and cash equivalents, beginning of period",    'level': 1,    'book_value': '$\xa0150.00'},
             {'name': "Net increase in cash and cash equivalents",                 'level': 0,    'book_value': '$\xa00.00'},
                 {'name': "Cash flows from operating activities",                  'level': 2,    'book_value': '$\xa00.00'},
                   {'name': "Advance Payments received from customers",            'level': 4,    'book_value': '$\xa00.00'},
@@ -1282,6 +1286,7 @@ class TestCashFlowReport(TestAccountReportsCommon):
             {'name': "Cash and cash equivalents, closing balance",                'level': 0,    'book_value': '$\xa0150.00'},
               {'name': "10140499 Bank",                                           'level': 1,    'book_value': '$\xa0100.00'},
               {'name': "10150199 Cash",                                           'level': 1,    'book_value': '$\xa050.00'},
+              {'name': "Total Cash and cash equivalents, closing balance",        'level': 1,    'book_value': '$\xa0150.00'}
         ]
         # assertEqual is used and not assertLinesValues because we want to check the 'level'
         self.assertEqual(len(lines_wo_hierarchy), len(expected_values_wo_hierarchy))
@@ -1303,8 +1308,12 @@ class TestCashFlowReport(TestAccountReportsCommon):
               {'name': "10 Group Bank & Cash",                                    'level': 1,    'book_value': '$\xa0150.00'},
                 {'name': "1014 Group Bank",                                       'level': 2,    'book_value': '$\xa0100.00'},
                   {'name': "10140499 Bank",                                       'level': 3,    'book_value': '$\xa0100.00'},
+                {'name': "Total 1014 Group Bank",                                 'level': 2,    'book_value': '$\xa0100.00'},
                 {'name': "1015 Group Cash",                                       'level': 2,    'book_value': '$\xa050.00'},
                   {'name': "10150199 Cash",                                       'level': 3,    'book_value': '$\xa050.00'},
+                {'name': "Total 1015 Group Cash",                                 'level': 2,    'book_value': '$\xa050.00'},
+              {'name': "Total 10 Group Bank & Cash",                              'level': 1,    'book_value': '$\xa0150.00'},
+            {'name': "Total Cash and cash equivalents, beginning of period",      'level': 1,    'book_value': '$\xa0150.00'},
             {'name': "Net increase in cash and cash equivalents",                 'level': 0,    'book_value': '$\xa00.00'},
                 {'name': "Cash flows from operating activities",                  'level': 2,    'book_value': '$\xa00.00'},
                   {'name': "Advance Payments received from customers",            'level': 4,    'book_value': '$\xa00.00'},
@@ -1324,8 +1333,12 @@ class TestCashFlowReport(TestAccountReportsCommon):
               {'name': "10 Group Bank & Cash",                                    'level': 1,    'book_value': '$\xa0150.00'},
                 {'name': "1014 Group Bank",                                       'level': 2,    'book_value': '$\xa0100.00'},
                   {'name': "10140499 Bank",                                       'level': 3,    'book_value': '$\xa0100.00'},
+                {'name': "Total 1014 Group Bank",                                 'level': 2,    'book_value': '$\xa0100.00'},
                 {'name': "1015 Group Cash",                                       'level': 2,    'book_value': '$\xa050.00'},
                   {'name': "10150199 Cash",                                       'level': 3,    'book_value': '$\xa050.00'},
+                {'name': "Total 1015 Group Cash",                                 'level': 2,    'book_value': '$\xa050.00'},
+              {'name': "Total 10 Group Bank & Cash",                              'level': 1,    'book_value': '$\xa0150.00'},
+            {'name': "Total Cash and cash equivalents, closing balance",          'level': 1,    'book_value': '$\xa0150.00'}
         ]
         # assertEqual is used and not assertLinesValues because we want to check the 'level'
         self.assertEqual(len(lines), len(expected_values))

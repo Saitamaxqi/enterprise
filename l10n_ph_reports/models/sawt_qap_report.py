@@ -400,6 +400,7 @@ class L10n_PhSawt_QapReportHandler(models.AbstractModel):
         options.update({
             'unfold_all': True,
             'export_mode': 'print',
+            'ignore_totals_below_sections': True,
         })
 
         # Get the lines, according to the options.

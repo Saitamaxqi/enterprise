@@ -24,6 +24,7 @@ class AccountJournalReportHandler(models.AbstractModel):
         """ Initialize the options for the journal report. """
 
         # Initialise the custom option for this report.
+        options['ignore_totals_below_sections'] = True
         options['show_payment_lines'] = previous_options.get('show_payment_lines', True)
 
     def _get_custom_display_config(self):

@@ -12,6 +12,8 @@ from odoo.tools import date_utils
 class ResConfigSettings(models.TransientModel):
     _inherit = ['res.config.settings']
 
+    totals_below_sections = fields.Boolean(related='company_id.totals_below_sections', string='Add totals below sections', readonly=False,
+                                           help='When ticked, totals and subtotals appear below the sections of the report.')
     account_tax_periodicity = fields.Selection(related='company_id.account_tax_periodicity', string='Periodicity', readonly=False, required=True)
     account_tax_periodicity_reminder_day = fields.Integer(related='company_id.account_tax_periodicity_reminder_day', string='Reminder', readonly=False, required=True)
     account_tax_periodicity_journal_id = fields.Many2one(related='company_id.account_tax_periodicity_journal_id', string='Journal', readonly=False)

@@ -518,6 +518,7 @@ class TestAnalyticReport(TestAccountReportsCommon):
             [
                 ['400000 Product Sales',                0.00,           100.00,         -100.00],
                 ['INV/2023/00001',                      0.00,           100.00,         -100.00],
+                ['Total 400000 Product Sales',          0.00,           100.00,         -100.00],
                 ['Total',                               0.00,           100.00,         -100.00],
             ],
             options,

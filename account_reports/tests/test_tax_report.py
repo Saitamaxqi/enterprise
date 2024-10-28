@@ -800,14 +800,17 @@ class TestTaxReport(TestAccountReportsCommon):
                 ('Base',                                    200),
                 ('Base 42%',                                100),
                 ('Base 11%',                                100),
+                ('Total Base',                              200),
 
                 ('Tax',                                      95),
                 ('Tax 42%',                                  42),
                 ('Tax 10.5%',                                10.5),
                 ('Tax 31.5%',                                31.5),
+                ('Total Tax 42%',                            42),
 
                 ('Tax 11%',                                  11),
                 ('Tax -100%',                                42),
+                ('Total Tax',                                95),
 
                 ('Tax difference (42%-11%)',                 31),
             ],
@@ -831,14 +834,17 @@ class TestTaxReport(TestAccountReportsCommon):
                 ('Base',                                       0.0),
                 ('Base 42%',                                   0.0),
                 ('Base 11%',                                   0.0),
+                ('Total Base',                                 0.0),
 
                 ('Tax',                                        0.0),
                 ('Tax 42%',                                    0.0),
                 ('Tax 10.5%',                                  0.0),
                 ('Tax 31.5%',                                  0.0),
+                ('Total Tax 42%',                              0.0),
 
                 ('Tax 11%',                                    0.0),
                 ('Tax -100%',                                  0.0),
+                ('Total Tax',                                  0.0),
 
                 ('Tax difference (42%-11%)',                   0.0),
             ],
@@ -1200,6 +1206,7 @@ class TestTaxReport(TestAccountReportsCommon):
             [
                 ("Sales",                     '',               42),
                 ("Regular (42.0%)",          100,               42),
+                ("Total Sales",               '',               42),
             ],
             options,
         )
@@ -1220,6 +1227,7 @@ class TestTaxReport(TestAccountReportsCommon):
                 ("Sales",                      '',              47),
                 ("Regular (42.0%)",           100,              42),
                 ("Cash Basis (10.0%)",         50,               5),
+                ("Total Sales",                '',              47),
             ],
             options,
         )
@@ -1240,6 +1248,7 @@ class TestTaxReport(TestAccountReportsCommon):
                 ("Sales",                      '',              52),
                 ("Regular (42.0%)",           100,              42),
                 ("Cash Basis (10.0%)",        100,              10),
+                ("Total Sales",                '',              52),
             ],
             options,
         )
@@ -1283,18 +1292,21 @@ class TestTaxReport(TestAccountReportsCommon):
             [
                 ("Sales",                     '',            42),
                 ("Regular (42.0%)",          100,            42),
+                ("Total Sales",               '',            42),
             ],
             # After paying 30%
             [
                 ("Sales",                     '',            46.26),
                 ("Regular (42.0%)",          100,            42),
                 ("Cash Basis (10.0%)",        42.6,           4.26),
+                ("Total Sales",               '',            46.26),
             ],
             # After full payment
             [
                 ("Sales",                     '',             56.2),
                 ("Regular (42.0%)",          100,             42),
                 ("Cash Basis (10.0%)",       142,             14.2),
+                ("Total Sales",               '',             56.2),
             ]
         )
 
@@ -1313,18 +1325,21 @@ class TestTaxReport(TestAccountReportsCommon):
             [
                 ("Sales",                     '',             46.2),
                 ("Regular (42.0%)",          110,             46.2),
+                ("Total Sales",               '',             46.2),
             ],
             # After paying 30%
             [
                 ("Sales",                     '',             49.2),
                 ("Cash Basis (10.0%)",        30,              3),
                 ("Regular (42.0%)",          110,             46.2),
+                ("Total Sales",               '',             49.2),
             ],
             # After full payment
             [
                 ("Sales",                     '',             56.2),
                 ("Cash Basis (10.0%)",       100,             10),
                 ("Regular (42.0%)",          110,             46.2),
+                ("Total Sales",               '',             56.2),
             ]
         )
 
@@ -1563,6 +1578,7 @@ class TestTaxReport(TestAccountReportsCommon):
                 ("Sales",                           '',       108.2),
                 (f"{regular_tax.name} (42.0%)",    200,        84),
                 (f"{caba_tax.name} (10.0%)",       242,        24.2),
+                ("Total Sales",                     '',       108.2),
             ],
             report_options,
         )
@@ -1740,6 +1756,7 @@ class TestTaxReport(TestAccountReportsCommon):
                 ("Sales",                     '',              168),
                 ("Regular (42.0%)",          200,               84),
                 ("Cash Basis (42.0%)",       200,               84),
+                ("Total Sales",               '',              168),
             ],
             options,
         )
@@ -2727,6 +2744,7 @@ class TestTaxReport(TestAccountReportsCommon):
                 ('Sales',                                                                                   "",     0.63),
                 (f'{self.sale_tax_percentage_incl_1.name} ({self.sale_tax_percentage_incl_1.amount}%)',   1.05,     0.21),
                 (f'{tax.name} ({tax.amount}%)',                                                           1.92,     0.42),
+                ('Total Sales',                                                                            "",      0.63),
             ],
             options
         )
@@ -2743,6 +2761,8 @@ class TestTaxReport(TestAccountReportsCommon):
                 (self.company_data['default_account_revenue'].display_name,                                 "",     0.63),
                 (f'{self.sale_tax_percentage_incl_1.name} ({self.sale_tax_percentage_incl_1.amount}%)',   1.05,     0.21),
                 (f'{tax.name} ({tax.amount}%)',                                                           1.92,     0.42),
+                (f'Total {self.company_data["default_account_revenue"].display_name}',                      "",     0.63),
+                ('Total Sales',                                                                             "",     0.63),
             ],
             options
         )
@@ -2758,8 +2778,11 @@ class TestTaxReport(TestAccountReportsCommon):
                 ('Sales',                                                                                         "",     0.63),
                 (f'{self.sale_tax_percentage_incl_1.name} ({self.sale_tax_percentage_incl_1.amount}%)',           "",     0.21),
                 (self.company_data['default_account_revenue'].display_name,                                     1.05,     0.21),
+                (f'Total {self.sale_tax_percentage_incl_1.name} ({self.sale_tax_percentage_incl_1.amount}%)',     "",     0.21),
                 (f'{tax.name} ({tax.amount}%)',                                                                   "",     0.42),
                 (self.company_data['default_account_revenue'].display_name,                                     1.92,     0.42),
+                (f'Total {tax.name} ({tax.amount}%)',                                                             "",     0.42),
+                ('Total Sales',                                                                                   "",     0.63),
             ],
             options
         )

@@ -14,6 +14,9 @@ from odoo.tools.misc import format_date
 class ResCompany(models.Model):
     _inherit = ["res.company"]
 
+    totals_below_sections = fields.Boolean(
+        string='Add totals below sections',
+        help='When ticked, totals and subtotals appear below the sections of the report.')
     account_tax_periodicity = fields.Selection([
         ('year', 'annually'),
         ('semester', 'semi-annually'),

@@ -18,6 +18,7 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
         super()._custom_options_initializer(report, options, previous_options=previous_options)
 
         # Options is needed otherwise some elements added in the post processor go on the total line
+        options['ignore_totals_below_sections'] = True
         if 'active_id' in self._context and self._context.get('active_model') == 'account.journal':
             options['bank_reconciliation_report_journal_id'] = self._context['active_id']
         elif 'bank_reconciliation_report_journal_id' in previous_options:

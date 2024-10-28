@@ -23,26 +23,18 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
             run: "click",
         },
         {
-            content: "Extra Trigger step",
-            trigger: "tr:nth-child(5):not(.d-none) .name:contains('101401')",
-        },
-        {
             content: "Unfold second line",
-            trigger: "tr:nth-child(6) td:first()",
+            trigger: "tr:nth-child(7) td:first()",
             run: "click",
-        },
-        {
-            content: "Extra Trigger step",
-            trigger: "tr:nth-child(7):not(.d-none) .name:contains('121000')",
         },
         {
             content: "Unfold third line",
-            trigger: "tr:nth-child(8) td:first()",
+            trigger: "tr:nth-child(10) td:first()",
             run: "click",
         },
         {
             content: "Extra Trigger step",
-            trigger: "tr:nth-child(10):not(.d-none) .name:contains('101404')",
+            trigger: "tr:nth-child(12):not(.d-none) .name:contains('101404')",
         },
         {
             content: "Check there are two lines annotated initially",
@@ -60,21 +52,21 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
                 );
                 Asserts.isTrue(
                     annotations[1] ===
-                        document.querySelector("tr:nth-child(10)").querySelector(".fa-commenting")
+                        document.querySelector("tr:nth-child(12)").querySelector(".fa-commenting")
                 );
             },
         },
         // Test that we can add a new annotation
         {
             content: "Click to show caret option",
-            trigger: "tr:nth-child(7) .dropdown-toggle",
+            trigger: "tr:nth-child(8) .dropdown-toggle",
             run: "click",
         },
         {
             content: "Caret option is displayed",
-            trigger: "tr:nth-child(7)",
+            trigger: "tr:nth-child(8)",
             run: () => {
-                Asserts.hasClass("tr:nth-child(7) .o-dropdown", "show");
+                Asserts.hasClass("tr:nth-child(8) .o-dropdown", "show");
             },
         },
         {
@@ -98,7 +90,7 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
         },
         {
             content: "Wait for annotation created",
-            trigger: "tr:nth-child(7) .btn_annotation .fa-commenting",
+            trigger: "tr:nth-child(8) .btn_annotation .fa-commenting",
             run: () => {},
         },
         {
@@ -122,18 +114,18 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
                 );
                 Asserts.isTrue(
                     annotations[1] ===
-                        document.querySelector("tr:nth-child(7)").querySelector(".fa-commenting")
+                        document.querySelector("tr:nth-child(8)").querySelector(".fa-commenting")
                 );
                 Asserts.isTrue(
                     annotations[2] ===
-                        document.querySelector("tr:nth-child(10)").querySelector(".fa-commenting")
+                        document.querySelector("tr:nth-child(12)").querySelector(".fa-commenting")
                 );
             },
         },
         // Test that we can edit an annotation
         {
             content: "Open second annotated line annotation popover",
-            trigger: "tr:nth-child(7) .btn_annotation",
+            trigger: "tr:nth-child(8) .btn_annotation",
             run: "click",
         },
         {
@@ -150,7 +142,7 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
         },
         {
             content: "Annotation is edited",
-            trigger: "tr:nth-child(7) .btn_annotation",
+            trigger: "tr:nth-child(8) .btn_annotation",
             run: () => {
                 Asserts.isEqual(
                     document.querySelector(".annotation_popover_autoresize_textarea").value,
@@ -166,7 +158,7 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
         },
         {
             content: "Check there are now only two lines annotated",
-            trigger: "tr:nth-child(7):not(:has(.fa-commenting))",
+            trigger: "tr:nth-child(8):not(:has(.fa-commenting))",
             run: () => {
                 const annotations = document.querySelectorAll(".btn_annotation .fa-commenting");
 
@@ -180,14 +172,14 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
                 );
                 Asserts.isTrue(
                     annotations[1] ===
-                        document.querySelector("tr:nth-child(10)").querySelector(".fa-commenting")
+                        document.querySelector("tr:nth-child(12)").querySelector(".fa-commenting")
                 );
             },
         },
         // Test that we can add an annotation by clicking on the "New" button inside the popover
         {
             content: "Open an annotated line annotation popover",
-            trigger: "tr:nth-child(10) .btn_annotation",
+            trigger: "tr:nth-child(12) .btn_annotation",
             run: "click",
         },
         {
@@ -226,7 +218,7 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
                 );
                 Asserts.isTrue(
                     annotations[1] ===
-                        document.querySelector("tr:nth-child(10)").querySelector(".fa-commenting")
+                        document.querySelector("tr:nth-child(12)").querySelector(".fa-commenting")
                 );
             },
         },
@@ -235,7 +227,7 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
         //--------------------------------------------------------------------------------------------------------------
         {
             content:
-                "Remove first annotation to only have one annotation on line 10 (required setup step)",
+                "Remove first annotation to only have one annotation on line 12 (required setup step)",
             trigger: ".annotation_popover tr:nth-child(2) .btn_annotation_delete",
             run: "click",
         },
@@ -261,8 +253,8 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
             },
         },
         {
-            content: "Check that there is no annotation anymore on line 10",
-            trigger: "tr:nth-child(10):not(:has(.fa-commenting))",
+            content: "Check that there is no annotation anymore on line 12",
+            trigger: "tr:nth-child(12):not(:has(.fa-commenting))",
         },
         {
             content: "change date filter",
@@ -289,8 +281,8 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
             trigger: `#filter_date button:not(:contains(${new Date().getFullYear()}))`,
         },
         {
-            content: "Check there is one annotation on line 10",
-            trigger: "tr:nth-child(10):has(.fa-commenting)",
+            content: "Check there is one annotation on line 12",
+            trigger: "tr:nth-child(12):has(.fa-commenting)",
             run: () => {
                 const annotations = document.querySelectorAll(".btn_annotation .fa-commenting");
 
@@ -300,7 +292,7 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
                 // Check the annotation buttons are on the right lines
                 Asserts.isTrue(
                     annotations[0] ===
-                        document.querySelector("tr:nth-child(10)").querySelector(".fa-commenting")
+                        document.querySelector("tr:nth-child(12)").querySelector(".fa-commenting")
                 );
             }
         },

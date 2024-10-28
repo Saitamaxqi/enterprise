@@ -101,7 +101,7 @@ class TestAccountReports(TestAccountReportsCommon):
         )
 
         # Mark the '101200 Account Receivable' line to be unfolded.
-        line_id = lines[1]['id']  # Index 2, because there is the total line for bank in position 1
+        line_id = lines[2]['id']  # Index 2, because there is the total line for bank in position 1
         options['unfolded_lines'] = [line_id]
         self.assertLinesValues(
             report._get_lines(options),
@@ -119,6 +119,8 @@ class TestAccountReports(TestAccountReportsCommon):
                 ('BNK1/2016/00002',                     '03/01/2016',      0.00,        230.00,       -230.00),
                 ('MISC/2016/01/0001',                   '03/01/2016',     69.00,          0.00,       -161.00),
                 ('MISC/2016/01/0001',                   '03/01/2016',    161.00,          0.00,          0.00),
+                # Account Total.
+                ('Total 121000 Account Receivable',     '',              460.00,        460.00,          0.00),
                 ('400000 Product Sales',                '',                0.00,        460.00,       -460.00),
                 # Report Total.
                 ('Total',                               '',              920.00,        920.00,          0.00),
@@ -143,22 +145,29 @@ class TestAccountReports(TestAccountReportsCommon):
                 ('Receivables',                                   0.0),
                 ('Current Assets',                                0.0),
                 ('Prepayments',                                   0.0),
+                ('Total Current Assets',                        460.0),
                 ('Plus Fixed Assets',                             0.0),
                 ('Plus Non-current Assets',                       0.0),
+                ('Total ASSETS',                                460.0),
 
                 ('LIABILITIES',                                   0.0),
                 ('Current Liabilities',                           0.0),
                 ('Current Liabilities',                           0.0),
                 ('Payables',                                      0.0),
+                ('Total Current Liabilities',                     0.0),
                 ('Plus Non-current Liabilities',                  0.0),
+                ('Total LIABILITIES',                             0.0),
 
                 ('EQUITY',                                      460.0),
                 ('Unallocated Earnings',                        460.0),
                 ('Current Year Unallocated Earnings',           460.0),
                 ('Previous Years Unallocated Earnings',           0.0),
+                ('Total Unallocated Earnings',                  460.0),
                 ('Retained Earnings',                             0.0),
                 ('Current Year Retained Earnings',                0.0),
                 ('Previous Years Retained Earnings',              0.0),
+                ('Total Retained Earnings',                       0.0),
+                ('Total EQUITY',                                460.0),
 
                 ('LIABILITIES + EQUITY',                        460.0),
             ],
@@ -355,7 +364,7 @@ class TestAccountReports(TestAccountReportsCommon):
         options = self._generate_options(report, invoice_date, invoice_date)
         options['report_cash_basis'] = True
         lines = report._get_lines(options)
-        lines_to_unfold_id = lines[3]['id']  # Mark the '400000 Product Sales' line to be unfolded.
+        lines_to_unfold_id = lines[5]['id']  # Mark the '101200 Account Receivable' line to be unfolded.
         options['unfolded_lines'] = [lines_to_unfold_id]
         lines = report._get_lines(options)
         self.assertLinesValues(
@@ -371,6 +380,7 @@ class TestAccountReports(TestAccountReportsCommon):
                 ('400000 Product Sales',                0,          3000.0,     -3000.0),
                 ('INV/2023/00001',                      0,          2000.0,     -2000.0),  # The 2 first payments are grouped
                 ('Load more...',                        '',         '',          ''),
+                ('Total 400000 Product Sales',          0,          3000.0,     -3000.0),
                 ('999999 Undistributed Profits/Losses', 0,          460.0,      -460.0),
                 # Report Total.
                 ('Total',                               6920.0,     6920.0,     0),
@@ -380,11 +390,11 @@ class TestAccountReports(TestAccountReportsCommon):
 
         load_more_1 = report.get_expanded_lines(
             options,
-            lines[3]['id'],
-            lines[5]['groupby'],
+            lines[5]['id'],
+            lines[7]['groupby'],
             '_report_expand_unfoldable_line_general_ledger',
-            lines[5]['progress'],
-            lines[5]['offset'],
+            lines[7]['progress'],
+            lines[7]['offset'],
             None,
         )
 
@@ -600,22 +610,29 @@ class TestAccountReports(TestAccountReportsCommon):
                 ('Receivables', 0, 0),
                 ('Current Assets', 0, 0),
                 ('Prepayments', 0, 0),
+                ('Total Current Assets', 0, 690.0),
                 ('Plus Fixed Assets', 0, 0),
                 ('Plus Non-current Assets', 0, 0),
+                ('Total ASSETS', 0, 690.0),
 
                 ('LIABILITIES', 0, 0),
                 ('Current Liabilities', 0, 0),
                 ('Current Liabilities', 0, 0),
                 ('Payables', 0, 0),
+                ('Total Current Liabilities', 0, 0),
                 ('Plus Non-current Liabilities', 0, 0),
+                ('Total LIABILITIES', 0, 0),
 
                 ('EQUITY', 230.0, 690.0),
                 ('Unallocated Earnings', 230.0, 690.0),
                 ('Current Year Unallocated Earnings', 230.0, 690.0),
                 ('Previous Years Unallocated Earnings', 0, 0),
+                ('Total Unallocated Earnings', 230.0, 690.0),
                 ('Retained Earnings', 0, 0),
                 ('Current Year Retained Earnings', 0, 0),
                 ('Previous Years Retained Earnings', 0, 0),
+                ('Total Retained Earnings', 0, 0),
+                ('Total EQUITY', 230.0, 690.0),
 
                 ('LIABILITIES + EQUITY', 230.0, 690.0),
             ],
@@ -687,22 +704,29 @@ class TestAccountReports(TestAccountReportsCommon):
                 ('Receivables', 0, 0),
                 ('Current Assets', 0, 0),
                 ('Prepayments', 0, 0),
+                ('Total Current Assets', -100.0, 690.0),
                 ('Plus Fixed Assets', 0, 0),
                 ('Plus Non-current Assets', 0, 0),
+                ('Total ASSETS', -100.0, 690.0),
 
                 ('LIABILITIES', 0, 0),
                 ('Current Liabilities', 0, 0),
                 ('Current Liabilities', 0, 0),
                 ('Payables', 0, 0),
+                ('Total Current Liabilities', 0, 0),
                 ('Plus Non-current Liabilities', 0, 0),
+                ('Total LIABILITIES', 0, 0),
 
                 ('EQUITY', 0, 690.0),
                 ('Unallocated Earnings', 0, 690.0),
                 ('Current Year Unallocated Earnings', 0, 690.0),
                 ('Previous Years Unallocated Earnings', 0, 0),
+                ('Total Unallocated Earnings', 0, 690.0),
                 ('Retained Earnings', 0, 0),
                 ('Current Year Retained Earnings', 0, 0),
                 ('Previous Years Retained Earnings', 0, 0),
+                ('Total Retained Earnings', 0, 0),
+                ('Total EQUITY', 0, 690.0),
 
                 ('LIABILITIES + EQUITY', 0, 690.0),
             ],
@@ -765,22 +789,29 @@ class TestAccountReports(TestAccountReportsCommon):
                 ('Receivables', 0, 0),
                 ('Current Assets', 0, 0),
                 ('Prepayments', 0, 0),
+                ('Total Current Assets', 0, 460.0),
                 ('Plus Fixed Assets', 0, 0),
                 ('Plus Non-current Assets', 0, 0),
+                ('Total ASSETS', 0, 460.0),
 
                 ('LIABILITIES', 0, 0),
                 ('Current Liabilities', 0, 0),
                 ('Current Liabilities', 0, 0),
                 ('Payables', 0, 0),
+                ('Total Current Liabilities', 0, 0),
                 ('Plus Non-current Liabilities', 0, 0),
+                ('Total LIABILITIES', 0, 0),
 
                 ('EQUITY', -500.0, 460.0),
                 ('Unallocated Earnings', -500.0, 460.0),
                 ('Current Year Unallocated Earnings', -500.0, 460.0),
                 ('Previous Years Unallocated Earnings', 0, 0),
+                ('Total Unallocated Earnings', -500.0, 460.0),
                 ('Retained Earnings', 0, 0),
                 ('Current Year Retained Earnings', 0, 0),
                 ('Previous Years Retained Earnings', 0, 0),
+                ('Total Retained Earnings', 0, 0),
+                ('Total EQUITY', -500.0, 460.0),
 
                 ('LIABILITIES + EQUITY', -500.0, 460.0),
             ],
@@ -802,7 +833,7 @@ class TestAccountReports(TestAccountReportsCommon):
 
         # Check result of line Current Year Unallocated Earnings of the report
         self.assertLinesValues(
-            report._get_lines(options)[15:16],
+            report._get_lines(options)[21:22],
             list(range(len(list_values) + 1)),
             [('Current Year Unallocated Earnings', *list_values)],
             options,

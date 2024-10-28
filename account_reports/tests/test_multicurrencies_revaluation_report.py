@@ -170,6 +170,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 4.0 CAD)',                      -200.0,                 -200.0,                   -50.0,          150.0),
                 ('211000 Account Payable',                     -200.0,                 -200.0,                   -50.0,          150.0),
                 ('BILL/2023/01/0002',                          -200.0,                 -200.0,                   -50.0,          150.0),
+                ('Total 211000 Account Payable',               -200.0,                 -200.0,                   -50.0,          150.0),
+                ('Total CAD',                                  -200.0,                 -200.0,                   -50.0,          150.0),
             ],
             options,
             currency_map={
@@ -233,6 +235,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 4.0 CAD)',                      -200.0,                -200.0,                    -50.0,          150.0),
                 ('211000 Account Payable',                     -200.0,                -200.0,                    -50.0,          150.0),
                 ('BILL/2023/01/0002',                          -200.0,                -200.0,                    -50.0,          150.0),
+                ('Total 211000 Account Payable',               -200.0,                -200.0,                    -50.0,          150.0),
+                ('Total CAD',                                  -200.0,                -200.0,                    -50.0,          150.0),
             ],
             options,
             currency_map={
@@ -299,8 +303,11 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 4.0 CAD)',                      -100.0,                  -50.0,                   -25.0,           25.0),
                 ('121000 Account Receivable',                   100.0,                   50.0,                    25.0,          -25.0),
                 ('INV/2023/00001 INV/2023/00001',               100.0,                   50.0,                    25.0,          -25.0),
+                ('Total 121000 Account Receivable',             100.0,                   50.0,                    25.0,          -25.0),
                 ('211000 Account Payable',                     -200.0,                 -100.0,                   -50.0,           50.0),
                 ('BILL/2023/01/0001',                          -200.0,                 -100.0,                   -50.0,           50.0),
+                ('Total 211000 Account Payable',               -200.0,                 -100.0,                   -50.0,           50.0),
+                ('Total CAD',                                  -100.0,                  -50.0,                   -25.0,           25.0),
             ],
             options,
             currency_map={
@@ -325,11 +332,15 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 4.0 CAD)',                       100.0,                   50.0,                    25.0,          -25.0),
                 ('121000 Account Receivable',                   100.0,                   50.0,                    25.0,          -25.0),
                 ('INV/2023/00001 INV/2023/00001',               100.0,                   50.0,                    25.0,          -25.0),
+                ('Total 121000 Account Receivable',             100.0,                   50.0,                    25.0,          -25.0),
+                ('Total CAD',                                   100.0,                   50.0,                    25.0,          -25.0),
 
                 ('Excluded Accounts',                              '',                     '',                      '',             ''),
                 ('CAD (1 USD = 4.0 CAD)',                      -200.0,                 -100.0,                   -50.0,           50.0),
                 ('211000 Account Payable',                     -200.0,                 -100.0,                   -50.0,           50.0),
                 ('BILL/2023/01/0001',                          -200.0,                 -100.0,                   -50.0,           50.0),
+                ('Total 211000 Account Payable',               -200.0,                 -100.0,                   -50.0,           50.0),
+                ('Total CAD',                                  -200.0,                 -100.0,                   -50.0,           50.0),
             ],
             options,
             currency_map={
@@ -367,6 +378,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 1.0 CAD)',                     -1000.0,                -1000.0,                 -1000.0,            0.0),
                 ('211000 Account Payable',                    -1000.0,                -1000.0,                 -1000.0,            0.0),
                 ('BILL/2023/01/0001',                         -1000.0,                -1000.0,                 -1000.0,            0.0),
+                ('Total 211000 Account Payable',              -1000.0,                -1000.0,                 -1000.0,            0.0),
+                ('Total CAD',                                 -1000.0,                -1000.0,                 -1000.0,            0.0),
             ],
             options,
             currency_map={
@@ -410,6 +423,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 2.0 CAD)',                      -1000.0,               -1000.0,                  -500.0,          500.0),
                 ('211000 Account Payable',                     -1000.0,               -1000.0,                  -500.0,          500.0),
                 ('BILL/2023/01/0001',                          -1000.0,               -1000.0,                  -500.0,          500.0),
+                ('Total 211000 Account Payable',               -1000.0,               -1000.0,                  -500.0,          500.0),
+                ('Total CAD',                                  -1000.0,               -1000.0,                  -500.0,          500.0),
             ],
             options,
             currency_map={
@@ -447,6 +462,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 4.0 CAD)',                      -500.0,                 -500.0,                  -125.0,          375.0),
                 ('211000 Account Payable',                     -500.0,                 -500.0,                  -125.0,          375.0),
                 ('BILL/2023/01/0001',                          -500.0,                 -500.0,                  -125.0,          375.0),
+                ('Total 211000 Account Payable',               -500.0,                 -500.0,                  -125.0,          375.0),
+                ('Total CAD',                                  -500.0,                 -500.0,                  -125.0,          375.0),
             ],
             options,
             currency_map={
@@ -520,6 +537,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 2.0 CAD)',                      -400.0,                 -400.0,                  -200.0,          200.0),
                 ('211000 Account Payable',                     -400.0,                 -400.0,                  -200.0,          200.0),
                 ('BILL/2023/01/0001',                          -400.0,                 -400.0,                  -200.0,          200.0),
+                ('Total 211000 Account Payable',               -400.0,                 -400.0,                  -200.0,          200.0),
+                ('Total CAD',                                  -400.0,                 -400.0,                  -200.0,          200.0),
             ],
             options,
             currency_map={
@@ -540,6 +559,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 4.0 CAD)',                      -400.0,                 -400.0,                  -100.0,          300.0),
                 ('211000 Account Payable',                     -400.0,                 -400.0,                  -100.0,          300.0),
                 ('BILL/2023/01/0001',                          -400.0,                 -400.0,                  -100.0,          300.0),
+                ('Total 211000 Account Payable',               -400.0,                 -400.0,                  -100.0,          300.0),
+                ('Total CAD',                                  -400.0,                 -400.0,                  -100.0,          300.0),
             ],
             options,
             currency_map={
@@ -591,6 +612,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 2.0 CAD)',                     -1000.0,                -1000.0,                  -500.0,          500.0),
                 ('211000 Account Payable',                    -1000.0,                -1000.0,                  -500.0,          500.0),
                 ('BILL/2023/01/0001',                         -1000.0,                -1000.0,                  -500.0,          500.0),
+                ('Total 211000 Account Payable',              -1000.0,                -1000.0,                  -500.0,          500.0),
+                ('Total CAD',                                 -1000.0,                -1000.0,                  -500.0,          500.0),
             ],
             options,
             currency_map={
@@ -617,7 +640,7 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
 
         options = self._generate_options(self.report, '2023-01-01', '2023-01-30')
         options['unfold_all'] = True
-        self.assertEqual(len(self.report._get_lines(options)), 4)
+        self.assertEqual(len(self.report._get_lines(options)), 6)
 
         self.pay_move(
             bill,
@@ -649,6 +672,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 4.0 CAD)',                                              1000.0,                  500.0,                   250.0,         -250.0),
                 ('211000 Account Payable',                                             1000.0,                  500.0,                   250.0,         -250.0),
                 ('RBILL/2023/01/0001 (Reversal of: BILL/2023/01/0001)',                1000.0,                  500.0,                   250.0,         -250.0),
+                ('Total 211000 Account Payable',                                       1000.0,                  500.0,                   250.0,         -250.0),
+                ('Total CAD',                                                          1000.0,                  500.0,                   250.0,         -250.0),
             ],
             options,
             currency_map={
@@ -705,6 +730,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('211000 Account Payable',                    -1000.0,                -1000.0,                  -250.0,          750.0),
                 ('BILL/2023/01/0001 installment #1',           -300.0,                 -300.0,                   -75.0,          225.0),
                 ('BILL/2023/01/0001 installment #2',           -700.0,                 -700.0,                  -175.0,          525.0),
+                ('Total 211000 Account Payable',              -1000.0,                -1000.0,                  -250.0,          750.0),
+                ('Total CAD',                                 -1000.0,                -1000.0,                  -250.0,          750.0),
             ],
             options,
             currency_map={
@@ -731,6 +758,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 4.0 CAD)',                      -700.0,                 -700.0,                  -175.0,          525.0),
                 ('211000 Account Payable',                     -700.0,                 -700.0,                  -175.0,          525.0),
                 ('BILL/2023/01/0001 installment #2',           -700.0,                 -700.0,                  -175.0,          525.0),
+                ('Total 211000 Account Payable',               -700.0,                 -700.0,                  -175.0,          525.0),
+                ('Total CAD',                                  -700.0,                 -700.0,                  -175.0,          525.0),
             ],
             options,
             currency_map={
@@ -752,6 +781,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('211000 Account Payable',                    -1000.0,                -1000.0,                  -500.0,          500.0),
                 ('BILL/2023/01/0001 installment #1',           -300.0,                 -300.0,                  -150.0,          150.0),
                 ('BILL/2023/01/0001 installment #2',           -700.0,                 -700.0,                  -350.0,          350.0),
+                ('Total 211000 Account Payable',              -1000.0,                -1000.0,                  -500.0,          500.0),
+                ('Total CAD',                                 -1000.0,                -1000.0,                  -500.0,          500.0),
             ],
             options,
             currency_map={
@@ -812,6 +843,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 4.0 CAD)',                     -1000.0,                -1000.0,                  -250.0,          750.0),
                 ('211000 Account Payable',                    -1000.0,                -1000.0,                  -250.0,          750.0),
                 ('MISC/2023/01/0001',                         -1000.0,                -1000.0,                  -250.0,          750.0),
+                ('Total 211000 Account Payable',              -1000.0,                -1000.0,                  -250.0,          750.0),
+                ('Total CAD',                                 -1000.0,                -1000.0,                  -250.0,          750.0),
             ],
             options,
             currency_map={
@@ -862,6 +895,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 4.0 CAD)',                       700.0,                  700.0,                   175.0,         -525.0),
                 ('121000 Account Receivable',                   700.0,                  700.0,                   175.0,         -525.0),
                 ('INV/2023/00001 INV/2023/00001',               700.0,                  700.0,                   175.0,         -525.0),
+                ('Total 121000 Account Receivable',             700.0,                  700.0,                   175.0,         -525.0),
+                ('Total CAD',                                   700.0,                  700.0,                   175.0,         -525.0),
             ],
             options,
             currency_map={
@@ -890,6 +925,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('121000 Account Receivable',                                       700.0,                  850.0,                   175.0,         -675.0),
                 ('RINV/2023/00001 (Reversal of: INV/2023/00001)',                  -300.0,                 -150.0,                   -75.0,           75.0),
                 ('INV/2023/00001 INV/2023/00001',                                  1000.0,                 1000.0,                   250.0,         -750.0),
+                ('Total 121000 Account Receivable',                                 700.0,                  850.0,                   175.0,         -675.0),
+                ('Total CAD',                                                       700.0,                  850.0,                   175.0,         -675.0),
             ],
             options,
             currency_map={
@@ -944,6 +981,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 4.0 CAD)',                      -900.0,                 -300.0,                  -225.0,           75.0),
                 ('211000 Account Payable',                     -900.0,                 -300.0,                  -225.0,           75.0),
                 ('MISC/2023/01/0001 payable line',             -900.0,                 -300.0,                  -225.0,           75.0),
+                ('Total 211000 Account Payable',               -900.0,                 -300.0,                  -225.0,           75.0),
+                ('Total CAD',                                  -900.0,                 -300.0,                  -225.0,           75.0),
             ],
             options,
             currency_map={
@@ -1040,9 +1079,12 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('101401 Bank',                                  20.0,                    0.0,                     5.0,            5.0),
                 ('BNK1/2023/00002 revenue line',                 30.0,                   10.0,                     7.5,           -2.5),
                 ('BNK1/2023/00001 payment_move_line',           -10.0,                  -10.0,                    -2.5,            7.5),
+                ('Total 101401 Bank',                            20.0,                    0.0,                     5.0,            5.0),
                 ('201 201 GOL',                                  70.0,                   40.0,                    17.5,          -22.5),
                 ('BNK1/2023/00002 liability line',              -30.0,                  -10.0,                    -7.5,            2.5),
                 ('MISC/2023/01/0001 liability line',            100.0,                   50.0,                    25.0,          -25.0),
+                ('Total 201 201 GOL',                            70.0,                   40.0,                    17.5,          -22.5),
+                ('Total CAD',                                    90.0,                   40.0,                    22.5,          -17.5),
             ],
             options,
             currency_map={
@@ -1067,8 +1109,11 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('101401 Bank',                                  20.0,                    0.0,                     5.0,            5.0),
                 ('BNK1/2023/00002 revenue line',                 30.0,                   10.0,                     7.5,           -2.5),
                 ('BNK1/2023/00001 payment_move_line',           -10.0,                  -10.0,                    -2.5,            7.5),
+                ('Total 101401 Bank',                            20.0,                    0.0,                     5.0,            5.0),
                 ('201 201 GOL',                                  70.0,                   35.0,                    17.5,          -17.5),
                 ('MISC/2023/01/0001 liability line',             70.0,                   35.0,                    17.5,          -17.5),
+                ('Total 201 201 GOL',                            70.0,                   35.0,                    17.5,          -17.5),
+                ('Total CAD',                                    90.0,                   35.0,                    22.5,          -12.5),
             ],
             options,
             currency_map={
@@ -1107,6 +1152,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
                 ('CAD (1 USD = 2.0 CAD)',                     -1000.0,                 -1000.0,                  -500.0,         500.0),
                 ('211000 Account Payable',                    -1000.0,                 -1000.0,                  -500.0,         500.0),
                 ('BILL/2023/01/0001',                         -1000.0,                 -1000.0,                  -500.0,         500.0),
+                ('Total 211000 Account Payable',              -1000.0,                 -1000.0,                  -500.0,         500.0),
+                ('Total CAD',                                 -1000.0,                 -1000.0,                  -500.0,         500.0),
             ],
             options,
             currency_map={
