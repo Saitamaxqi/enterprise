@@ -48,11 +48,11 @@ class L10n_CoFuenteReportHandler(models.AbstractModel):
                 """,
                 column_group_key=column_group_key,
                 tax_base_amount_select=tax_base_amount_select,
-                account_name=SQL("%s || ' ' || %s AS account_name,", account_code, account_name) if account else SQL(),
+                account_name=SQL("%s || ' ' || (%s) AS account_name,", account_code, account_name) if account else SQL(),
                 account_id=SQL("%s AS account_id,", account_id) if account else SQL(),
                 table_references=query.from_clause,
                 search_condition=query.where_clause,
-                group_by_account_id=SQL(', aa.id') if account else SQL(),
+                group_by_account_id=SQL(', %s', account_id) if account else SQL(),
                 having_clause=SQL("HAVING %s != 0", tax_base_amount_select) if account else SQL(),
             ))
 
