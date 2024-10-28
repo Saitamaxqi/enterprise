@@ -27,10 +27,6 @@ registry.category("web_tour.tours").add("RestaurantAppointmentTour", {
                 content: "Check that the booking gantt view is shown",
                 trigger: ".pos-content .o_action_manager .o_gantt_view",
             },
-            {
-                content: "Close the booking gantt view",
-                trigger: ".o_control_panel:contains('Manage Bookings')",
-            },
             Chrome.clickPlanButton(),
             RestaurantAppointment.appointmentLabel(5, "Test Lunch"),
 

@@ -63,12 +63,13 @@ class CalendarEvent(models.Model):
             'name': 'Manage Bookings',
             'type': 'ir.actions.act_window',
             'res_model': 'calendar.event',
-            "views": [(self.env.ref("appointment.calendar_event_view_gantt_booking_resource").id, "gantt")],
+            "views": [(self.env.ref("pos_restaurant_appointment.calendar_event_view_gantt_booking_resource_inherited_restaurant_appointment").id, "gantt")],
             'target': 'current',
             'context': {
                 'appointment_booking_gantt_show_all_resources': True,
                 'active_model': 'appointment.type',
                 "search_default_appointment_type_id": appointment_type_id,
+                "no_breadcrumbs": True,
             }
         }
 
@@ -78,7 +79,7 @@ class CalendarEvent(models.Model):
             'target': 'new',
             'type': 'ir.actions.act_window',
             'res_model': 'calendar.event',
-            'views': [(self.env.ref('pos_restaurant_appointment.calendar_event_view_form_gantt_booking_inherit').id, 'form')],
+            'views': [(self.env.ref('pos_restaurant_appointment.calendar_event_view_form_gantt_booking_inherited_restaurant_appointment').id, 'form')],
             'res_id': self.id,
         }
 

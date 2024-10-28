@@ -12,6 +12,7 @@
     'data': [
         'views/pos_restaurant_views.xml',
         'views/res_config_settings_views.xml',
+        'views/calendar_event_views.xml',
     ],
     'demo': [
         'demo/pos_restaurant_appointment_demo.xml',
