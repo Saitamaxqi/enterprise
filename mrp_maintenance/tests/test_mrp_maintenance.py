@@ -19,6 +19,12 @@ class TestMrpMaintenance(common.TransactionCase):
 
         # User references
         cls.main_company = cls.env.ref('base.main_company')
+        calendar = cls.env['resource.calendar'].create({
+            'name': 'Main Company Calendar',
+            'company_id': cls.main_company.id,
+            'tz': 'UTC'
+        })
+        cls.main_company.resource_calendar_id = calendar
         cls.technician_user_id = cls.env.ref('base.user_root')
         cls.maintenance_team_id = cls.env.ref('maintenance.equipment_team_maintenance')
         cls.stage_repaired_id = cls.env.ref('maintenance.stage_3').id
@@ -299,6 +305,7 @@ class TestMrpMaintenance(common.TransactionCase):
 
     def test_workcenter_unavailability(self):
         # Required for `assign_date` to be visible in the view
+        self.env.user.groups_id += self.env.ref('mrp.group_mrp_routings')
         with self.debug_mode():
             # Create a new equipment
             equipment_form = Form(self.equipment)
@@ -318,5 +325,13 @@ class TestMrpMaintenance(common.TransactionCase):
         start_datetime = datetime(2017, 5, 3, 7)
         intervals_by_workcenter = self.workcenter_id._get_unavailability_intervals(start_datetime, start_datetime + timedelta(hours=4))
         intervals = intervals_by_workcenter[self.workcenter_id.id]
-        self.assertEqual(len(intervals_by_workcenter), 1)
-        self.assertEqual(intervals[0], (datetime(2017, 5, 3, 8, microsecond=500), datetime(2017, 5, 3, 11)))
+        # We will have two unavailabilities for the requested timeframe:
+        #  - From 7 to 8 -> outside of working hours (according to calendar)
+        #  - From 8:500 to 10:500 -> scheduled maintenance
+        self.assertEqual(len(intervals), 2)
+        self.assertListEqual(
+            intervals, [
+                (datetime(2017, 5, 3, 7), datetime(2017, 5, 3, 8)),
+                (datetime(2017, 5, 3, 8, microsecond=500), datetime(2017, 5, 3, 10, microsecond=500))
+            ]
+        )
