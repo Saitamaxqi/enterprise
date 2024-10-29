@@ -59,21 +59,24 @@ class AccountExternalTaxMixin(models.AbstractModel):
         for record in self:
             record.l10n_br_cnae_code_id = self.company_id.l10n_br_cnae_code_id
 
-    @api.depends('l10n_br_is_avatax')
+    @api.depends('country_code', 'fiscal_position_id')
     def _compute_l10n_br_goods_operation_type_id(self):
         """Set the default operation type which is standardSales. Should be overridden to determine
         the document type for the model."""
         for record in self:
-            record.l10n_br_goods_operation_type_id = self.env.ref("l10n_br_avatax.operation_type_1") if record.l10n_br_is_avatax else False
+            record.l10n_br_goods_operation_type_id = self.env.ref("l10n_br_avatax.operation_type_1") if record._l10n_br_is_avatax() else False
 
     @api.depends('country_code', 'fiscal_position_id')
     def _compute_l10n_br_is_avatax(self):
         for record in self:
-            record.l10n_br_is_avatax = record.country_code == 'BR' and record.fiscal_position_id.l10n_br_is_avatax
+            record.l10n_br_is_avatax = record._l10n_br_is_avatax()
 
     def _compute_is_tax_computed_externally(self):
         super()._compute_is_tax_computed_externally()
         self.filtered(lambda record: record.l10n_br_is_avatax).is_tax_computed_externally = True
+
+    def _l10n_br_is_avatax(self):
+        return self.country_code == 'BR' and self.fiscal_position_id.l10n_br_is_avatax
 
     def _l10n_br_avatax_log(self):
         self.env['account.external.tax.mixin']._enable_external_tax_logging(ICP_LOG_NAME)
