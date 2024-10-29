@@ -75,6 +75,7 @@ class TestWebsiteDeliverySendcloudLocationsController(TransactionCase):
                                 'state_id': False,
                                 'city': 'Ramillies',
                                 'zip': 1367,
+                                'email': 'odoo@example.com',
                                 'phone': '081813700',
                                 })
         # partner will be in europe
