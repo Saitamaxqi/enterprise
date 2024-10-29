@@ -139,7 +139,7 @@ class TestPayrollCommon(TransactionCase):
             'other_disabled_senior_dependent': 0,
             'other_juniors_dependent': 0,
             'other_disabled_juniors_dependent': 0,
-            'fiscal_voluntary_rate': 0.0,
+            'fiscal_voluntarism': 0.0,
         })
 
         first_contract_georges = cls.env['hr.contract'].create({

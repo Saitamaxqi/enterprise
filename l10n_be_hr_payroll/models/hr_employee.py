@@ -88,16 +88,14 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
     double_pay_line_ids = fields.One2many(
         'l10n.be.double.pay.recovery.line', 'employee_id',
         string='Previous Occupations', groups="hr_payroll.group_hr_payroll_user")
-    fiscal_voluntary_rate = fields.Float(
-        string="Fiscal Voluntary Rate",
+    fiscal_voluntarism = fields.Monetary(
+        string="Fiscal Voluntarism",
         tracking=True,
-        help="Should be between 0 and 100 %",
         groups="hr_payroll.group_hr_payroll_user")
 
-    _check_percentage_fiscal_voluntary_rate = models.Constraint(
-        'CHECK(fiscal_voluntary_rate >= 0 AND fiscal_voluntary_rate <= 100)',
-        "The Fiscal Voluntary rate on wage should be between 0 and 100.",
-    )
+    _positive_fiscal_voluntarism = models.Constraint(
+        'CHECK(fiscal_voluntarism >= 0)',
+        'The fiscal voluntarism should be above 0.')
 
     @api.constrains('children', 'disabled_children_number',
                     'other_senior_dependent', 'other_disabled_senior_dependent',

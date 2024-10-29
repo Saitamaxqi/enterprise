@@ -48,17 +48,24 @@
             <field name="study_school" position="after">
                 <field name="l10n_be_scale_seniority" invisible="company_country_code != 'BE'"/>
             </field>
-            <group name="application_group" position="before">
-                <group name="fiscal_voluntarism" string="Fiscal Voluntarism" invisible="company_country_code != 'BE'">
-                    <label for="fiscal_voluntary_rate"/>
-                    <div class="o_row">
-                        <field name="fiscal_voluntary_rate" class="o_hr_narrow_field" nolabel="1"/>
-                        <span>%</span>
-                    </div>
+        </field>
+    </record>
+
+    <record id="hr_employee_form_l10n_payroll" model="ir.ui.view">
+        <field name="name">hr.employee.inherit.form</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr_payroll.payroll_hr_employee_view_form"/>
+        <field name="priority">30</field>
+        <field name="arch" type="xml">
+            <group name="payroll_group" position="after">
+                <group name="l10n_be_payroll_group" string="Belgian Payroll">
+                    <field name="fiscal_voluntarism"/>
                 </group>
-                <notebook groups="hr_payroll.group_hr_payroll_user" invisible="company_country_code != 'BE'">
+            </group>
+            <page name="hr_payroll" position="inside">
+                <notebook invisible="company_country_code != 'BE'">
                     <page name="Attestation (N-1)">
-                        <strong class="o_horizontal_separator o_row" colspan="2" id="previous_employer_title" invisible="company_country_code != 'BE'">
+                        <strong class="o_horizontal_separator o_row mb-2" colspan="2" id="previous_employer_title">
                             Holiday Attest <span style="width: 30px !important;"><field name="first_contract_year_n1"/></span> - Simple Holiday Pay from previous employer to recover in <span style="width: 30px !important;"><field name="first_contract_year_n"/></span>
                         </strong>
                         <group invisible="company_country_code != 'BE'" groups="hr_payroll.group_hr_payroll_user">
@@ -80,7 +87,7 @@
                         </group>
                         <field name="first_contract_year" invisible="1"/>
                         <field name="double_pay_line_ids" invisible="1"/>
-                        <group id="recovery_pay_lines_n1" class="mt-3" colspan="2" invisible="company_country_code != 'BE'">
+                        <group id="recovery_pay_lines_n1" class="mt-3" colspan="2">
                             <strong class="o_horizontal_separator o_row" colspan="2">
                                     Holiday Attest <span style="width: 30px !important;"><field name="first_contract_year_n1"/></span> - Previous occupation for Double Holiday Pay Recovery in <span style="width: 30px !important;"><field name="first_contract_year_n"/></span>
                             </strong>
@@ -101,7 +108,7 @@
                     </page>
 
                     <page name="Attestation (N)">
-                        <strong class="o_horizontal_separator o_row" colspan="2" id="previous_employer_title" invisible="company_country_code != 'BE'">
+                        <strong class="o_horizontal_separator o_row mb-2" colspan="2" id="previous_employer_title">
                             Holiday Attest <span style="width: 30px !important;"><field name="first_contract_year_n"/></span> - Simple Holiday Pay from previous employer to recover in <span style="width: 30px !important;"><field name="first_contract_year_n_plus_1"/></span>
                         </strong>
                         <group invisible="company_country_code != 'BE'">
@@ -121,7 +128,7 @@
                                 <span>€</span>
                             </div>
                         </group>
-                        <group id="recovery_pay_lines_n" class="mt-3" colspan="2" invisible="company_country_code != 'BE'">
+                        <group id="recovery_pay_lines_n" class="mt-3" colspan="2">
                             <strong class="o_horizontal_separator o_row" colspan="2">
                                 Holiday Attest <span style="width: 30px !important;"><field name="first_contract_year_n"/></span> - Previous occupation for Double Holiday Pay Recovery in <span style="width: 30px !important;"><field name="first_contract_year_n_plus_1"/></span>
                             </strong>
@@ -142,7 +149,7 @@
                         </group>
                     </page>
                 </notebook>
-            </group>
+            </page>
         </field>
     </record>
 </odoo>

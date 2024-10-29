@@ -342,6 +342,19 @@ if not salary_simulation:
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
     </record>
 
+    <record id="cp200_employees_salary_fiscal_voluntarism" model="hr.salary.rule">
+        <field name="category_id" ref="hr_payroll.DED"/>
+        <field name="name">Fiscal Voluntarism</field>
+        <field name="code">FISC_VOL</field>
+        <field name="sequence">125</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = bool(employee.fiscal_voluntarism)</field>
+        <field name="appears_on_payslip" eval="True"/>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">result = -employee.fiscal_voluntarism</field>
+        <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
+    </record>
+
     <record id="cp200_employees_salary_withholding_reduction" model="hr.salary.rule">
         <field name="category_id" ref="hr_payroll.DED"/>
         <field name="name">Withholding reduction</field>
@@ -364,7 +377,7 @@ if not salary_simulation:
         <field name="appears_on_payslip" eval="False"/>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = -(categories['PP'] + (result_rules['P.P.DED']['total'] if bool(categories['EmpBonus']) else 0))
+result = -(categories['PP'] + (result_rules['P.P.DED']['total'] if bool(categories['EmpBonus']) else 0) + result_rules['FISC_VOL']['total'])
         </field>
         <field name="struct_id" ref="hr_payroll_structure_cp200_employee_salary"/>
         <field name="appears_on_employee_cost_dashboard" eval="True"/>

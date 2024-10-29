@@ -748,11 +748,6 @@ class HrPayslip(models.Model):
             if n_children > 8:
                 withholding_tax_amount -= children_deduction.get(8, 0.0) + (n_children - 8) * self._rule_parameter('dependent_children_deduction')
 
-        if self.employee_id.fiscal_voluntary_rate > 0:
-            voluntary_amount = categories['GROSS'] * self.employee_id.fiscal_voluntary_rate / 100
-            if voluntary_amount > withholding_tax_amount:
-                withholding_tax_amount = voluntary_amount
-
         return - max(withholding_tax_amount, 0.0)
 
     def _get_be_special_social_cotisations(self, localdict):
