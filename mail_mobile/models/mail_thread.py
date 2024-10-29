@@ -23,8 +23,7 @@ class MailThread(models.AbstractModel):
     _inherit = ['mail.thread']
 
     def _notify_thread(self, message, msg_vals=False, **kwargs):
-        """ Main notification method. Override to add support of sending OCN
-        notifications. """
+        # Main notification method. Override to add support of sending OCN notifications.
         scheduled_date = self._is_notification_scheduled(kwargs.get('scheduled_date'))
         recipients_data = super()._notify_thread(message, msg_vals=msg_vals, **kwargs)
 
@@ -38,21 +37,13 @@ class MailThread(models.AbstractModel):
         and every direct message. We have to take into account the risk of
         duplicated notifications in case of a mention in a channel of `chat` type.
 
-        :param message: ``mail.message`` record to notify;
-        :param recipients_data: list of recipients information (based on res.partner
-          records), formatted like
-            [{'active': partner.active;
-              'id': id of the res.partner being recipient to notify;
-              'groups': res.group IDs if linked to a user;
-              'notif': 'inbox', 'email', 'sms' (SMS App);
-              'share': partner.partner_share;
-              'type': 'customer', 'portal', 'user;'
-             }, {...}].
-          See ``MailThread._notify_get_recipients``;
-        :param msg_vals: dictionary of values used to create the message. If given it
-          may be used to access values related to ``message`` without accessing it
-          directly. It lessens query count in some optimized use cases by avoiding
-          access message content in db;
+        :param record message: <mail.message> record being notified. May be
+          void as 'msg_vals' superseeds it;
+        :param list recipients_data: list of recipients data based on <res.partner>
+          records formatted like a list of dicts containing information. See
+          ``MailThread._notify_get_recipients()``;
+        :param dict msg_vals: values dict used to create the message, allows to
+          skip message usage and spare some queries if given;
 
         """
         icp_sudo = self.env['ir.config_parameter'].sudo()
