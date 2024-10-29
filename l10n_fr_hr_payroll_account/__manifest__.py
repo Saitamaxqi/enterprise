@@ -11,7 +11,5 @@ Accounting Data for French Payroll Rules.
 This module is based on an unsupported France module. Please consider that we won't support this module.
 --------------------------------------------------------------------------------------------------------
     """,
-
-    'auto_install': True,
     'license': 'OEEL-1',
 }

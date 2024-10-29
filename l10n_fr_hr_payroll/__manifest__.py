@@ -7,7 +7,6 @@
     'category': 'Human Resources/Payroll',
     'author': 'Yannick Buron (SYNERPGY)',
     'depends': ['hr_payroll'],
-    'auto_install': True,
     'description': """
 French Payroll Rules.
 =====================
