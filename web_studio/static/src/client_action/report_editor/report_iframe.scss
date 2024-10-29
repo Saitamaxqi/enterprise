@@ -76,6 +76,14 @@ div.page {
     &:empty::before {
         content: attr(oe-expression-readable);
     }
+}
+
+/**
+  * When a `[t-field]` or `[t-out]` element has the `data-oe-demo` attribute, it will render that value
+  * as placeholder text inside the report editor.
+  */
+[t-field],
+[t-out] {
     &[data-oe-demo]:empty::before {
         content: attr(data-oe-demo);
     }
