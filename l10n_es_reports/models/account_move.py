@@ -25,10 +25,6 @@ class AccountMove(models.Model):
                 )
         return super()._auto_init()
 
-    def _default_mod_347_invoice_type(self):
-        if self.is_invoice(True):
-            return 'regular'
-
     def _default_mod_349_invoice_type(self):
         invoice_type = self.env.context.get('move_type', False)
 
@@ -70,7 +66,13 @@ class AccountMove(models.Model):
             ('C', _("C - Replacements of goods")),
         ]
 
-    l10n_es_reports_mod347_invoice_type = fields.Selection(string="Type for mod 347", selection=[('regular', "Regular operation"), ('insurance', "Insurance operation")], default=_default_mod_347_invoice_type, help="Defines the category into which this invoice falls for mod 347 report.")
+    l10n_es_reports_mod347_invoice_type = fields.Selection(
+        string="Type for mod 347",
+        selection=[('regular', "Regular operation"), ('insurance', "Insurance operation")],
+        compute='_compute_l10n_es_reports_mod347_invoice_type',
+        store=True,
+        help="Defines the category into which this invoice falls for mod 347 report.",
+    )
     l10n_es_reports_mod347_available = fields.Boolean(string="Available for Mod347", compute="_compute_l10n_es_reports_mod347_available", help="True if and only if the invoice MIGHT need to be reported on mod 347, i.e. it concerns an operation from a Spanish headquarter.")
     l10n_es_reports_mod349_invoice_type = fields.Selection(string="Type for mod 349", selection="_mod_349_selection_values", help="Defines the category into which this invoice falls for mod 349 report", default=_default_mod_349_invoice_type)
     l10n_es_reports_mod349_available = fields.Boolean(string="Available for Mod349", store=True, compute="_compute_l10n_es_reports_mod349_available", help="True if and only if the invoice must be reported on mod 349 report, i.e. it concerns an intracommunitary operation.")
@@ -94,10 +96,11 @@ class AccountMove(models.Model):
         rslt = super(AccountMove, self)._get_refund_copy_fields()
         return rslt + ['l10n_es_reports_mod347_invoice_type', 'l10n_es_reports_mod349_invoice_type']
 
-    @api.onchange('partner_id')
-    def _onchange_partner_id_set_347_invoice_type(self):
+    @api.depends('partner_id.country_code')
+    def _compute_l10n_es_reports_mod347_invoice_type(self):
         for record in self:
-            record.l10n_es_reports_mod347_invoice_type = False if record.partner_id.country_code != 'ES' else 'regular'
+            regular = record.is_invoice(True) and record.partner_id.country_code == 'ES'
+            record.l10n_es_reports_mod347_invoice_type = 'regular' if regular else False
 
     def _post(self, soft=True):
         """ Overridden to require Spanish invoice type to be set if the company
