@@ -60,7 +60,8 @@ publicWidget.registry.appointmentTypeSelect = publicWidget.Widget.extend({
             filter_staff_user_ids: filterUserIds,
             filter_resource_ids: filterResourceIds,
         }).then(function (message_intro) {
-            self.el.querySelector(".o_appointment_intro")?.replaceChildren(message_intro);
+            const parsedElements = new DOMParser().parseFromString(message_intro, 'text/html').body.childNodes;
+            self.el.querySelector(".o_appointment_intro")?.replaceChildren(...parsedElements);
         });
     },
 
