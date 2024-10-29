@@ -32,14 +32,16 @@
     <template id="address" inherit_id="website_sale.address">
 
         <div id="div_vat" position="before">
-            <t t-if="address_type == 'billing' and res_company.account_fiscal_country_id.code == 'CO'" >
+            <t t-if="(address_type == 'billing' or use_delivery_as_billing)
+                     and res_company.account_fiscal_country_id.code == 'CO'">
                 <div class="w-100" />
                 <t t-call="l10n_co_edi_website_sale.partner_info"/>
             </t>
         </div>
 
         <div id="div_vat" position="after">
-            <t t-if="address_type == 'billing' and res_company.account_fiscal_country_id.code == 'CO'">
+            <t t-if="(address_type == 'billing' or use_delivery_as_billing)
+                     and res_company.account_fiscal_country_id.code == 'CO'">
                 <!-- Show fiscal regimen and obligation types-->
                 <div id="div_obligation_types" class="col-xl-6 mb-3">
                     <label class="col-form-label" for="l10n_co_edi_obligation_type_ids">Obligaciones y Responsabilidades</label>

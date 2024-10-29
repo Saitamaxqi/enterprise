@@ -21,7 +21,7 @@ class L10nCOWebsiteSale(WebsiteSale):
         return mandatory_fields
 
     def _get_mandatory_delivery_address_fields(self, country_sudo):
-        mandatory_fields = super()._get_mandatory_billing_address_fields(country_sudo)
+        mandatory_fields = super()._get_mandatory_delivery_address_fields(country_sudo)
         company_country = request.website.sudo().company_id.account_fiscal_country_id
         if country_sudo.code == 'CO' and country_sudo.id == company_country.id:
             mandatory_fields |= {

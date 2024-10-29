@@ -37,10 +37,17 @@ websiteSaleAddress.include({
         this._super.apply(this, arguments);
         this.isColombianCompany = this.countryCode === "CO";
         this.elementCountry = this.addressForm.country_id;
+        this.useDeliveryAsBilling = this.addressForm["use_delivery_as_billing"].value;
+        this.vat = this.addressForm["o_vat"];
 
         if (this.isColombianCompany) {
             this.elementCities = this.addressForm.city_id;
             this.elementState = this.addressForm.state_id;
+
+            if (!this.vat || (this.addressType !== "billing" && !this.useDeliveryAsBilling)) {
+                return;
+            }
+
             const selectEl = this.el.querySelector("select[name='l10n_co_edi_obligation_type_ids']");
             attachComponent(this, selectEl.parentElement, SelectMenuWrapper, {
                 el: selectEl,
@@ -49,6 +56,10 @@ websiteSaleAddress.include({
         }
     },
     _onChangeIdentificationType(ev) {
+        if (!this.vat || (this.addressType !== "billing" && !this.useDeliveryAsBilling)) {
+            return;
+        }
+
         const selectedIdentificationType = this.addressForm.l10n_latam_identification_type_id.selectedOptions[0].text;
 
         if (selectedIdentificationType === "NIT") {
