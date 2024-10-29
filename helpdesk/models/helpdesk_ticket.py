@@ -883,15 +883,6 @@ class HelpdeskTicket(models.Model):
             return self.env.ref('helpdesk.mt_ticket_stage')
         return super()._track_subtype(init_values)
 
-    def _notify_get_recipients_groups(self, message, model_description, msg_vals=None):
-        """
-        Give access button to portal and portal customers.
-        If they are notified they should probably have access to the document.
-        """
-        return super()._notify_get_recipients_groups(
-            message, model_description, msg_vals=msg_vals
-        )
-
     def _notify_get_reply_to(self, default=None):
         """ Override to set alias of tickets to their team if any. """
         aliases = self.mapped('team_id').sudo()._notify_get_reply_to(default=default)
