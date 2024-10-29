@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="account.view_account_payment_form"/>
         <field name="arch" type="xml">
             <xpath expr="//button[@name='button_open_journal_entry']" position="attributes">
-                <attribute name="groups">account.group_account_manager</attribute>
+                <attribute name="groups">account.group_account_user</attribute>
             </xpath>
 
             <!-- Stat button to open the manual reconciliation widget -->
