@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
-from odoo import fields
+from odoo import fields, Command
 from odoo.tests import Form, tagged
 
 
@@ -151,6 +151,24 @@ class TestBillsPrediction(AccountTestInvoicingCommon):
         invoice = invoice_form.save()
         invoice.action_post()
 
+        self.product_a.supplier_taxes_id = [Command.set(self.tax_purchase_b.ids)]
+
+        invoice_form = Form(self.env['account.move'].with_context(default_move_type='in_invoice'))
+        invoice_form.partner_id = self.test_partners[0]
+        invoice_form.invoice_date = self.frozen_today
+        with invoice_form.invoice_line_ids.new() as invoice_line_form:
+            invoice_line_form.name = 'product_a'
+        invoice = invoice_form.save()
+
+        self.assertRecordValues(invoice.invoice_line_ids, [{
+            'quantity': 1.0,
+            'price_unit': 800.0,
+            'price_subtotal': 800.0,
+            'balance': 800.0,
+            'tax_ids': self.tax_purchase_b.ids,
+        }])
+
+        # In case a unit price is already set we do not update the unit price
         invoice_form = Form(self.env['account.move'].with_context(default_move_type='in_invoice'))
         invoice_form.partner_id = self.test_partners[0]
         invoice_form.invoice_date = self.frozen_today
@@ -161,7 +179,25 @@ class TestBillsPrediction(AccountTestInvoicingCommon):
 
         self.assertRecordValues(invoice.invoice_line_ids, [{
             'quantity': 1.0,
+            'price_unit': 42.0,
+            'price_subtotal': 42.0,
+            'balance': 42.0,
+            'tax_ids': self.tax_purchase_b.ids,
+        }])
+
+        # In case a tax is already set we do not update the taxes
+        invoice_form = Form(self.env['account.move'].with_context(default_move_type='in_invoice'))
+        invoice_form.partner_id = self.test_partners[0]
+        invoice_form.invoice_date = self.frozen_today
+        with invoice_form.invoice_line_ids.new() as invoice_line_form:
+            invoice_line_form.tax_ids = self.tax_purchase_a
+            invoice_line_form.name = 'product_a'
+        invoice = invoice_form.save()
+
+        self.assertRecordValues(invoice.invoice_line_ids, [{
+            'quantity': 1.0,
             'price_unit': 800.0,
             'price_subtotal': 800.0,
             'balance': 800.0,
+            'tax_ids': self.tax_purchase_a.ids,
         }])

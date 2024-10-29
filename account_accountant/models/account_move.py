@@ -808,9 +808,11 @@ class AccountMoveLine(models.Model):
             if not self.product_id:
                 predicted_product_id = self._predict_product()
                 if predicted_product_id:
-                    name = self.name
-                    self.product_id = predicted_product_id
-                    self.name = name
+                    # We only update the price_unit, tax_ids and name in case they evaluate to False
+                    protected_fields = ['price_unit', 'tax_ids', 'name']
+                    to_protect = [self._fields[fname] for fname in protected_fields if self[fname]]
+                    with self.env.protecting(to_protect, self):
+                        self.product_id = predicted_product_id
 
             # In case no product has been set, the account and taxes
             # will not depend on any product and can thus be predicted
