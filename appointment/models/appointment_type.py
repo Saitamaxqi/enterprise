@@ -352,6 +352,12 @@ class AppointmentType(models.Model):
             if appointment_type.ids != duplicate.ids:
                 raise ValidationError(_("Only one anytime appointment type is allowed for a specific user."))
 
+    def _can_return_content(self, field_name=None, access_token=None):
+        """Give the public users access to the unpublished appointment types images when they have an invitation link."""
+        if field_name in ["image_%s" % size for size in [1920, 1024, 512, 256, 128]]:
+            return True
+        return super()._can_return_content(field_name, access_token)
+
     @api.model_create_multi
     def create(self, vals_list):
         """ We don't want the current user to be follower of all created types """
