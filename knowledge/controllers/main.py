@@ -3,7 +3,7 @@
 
 import werkzeug
 
-from odoo import conf, http, tools, _
+from odoo import http, tools, _
 from odoo.exceptions import AccessError, ValidationError
 from odoo.http import request
 
@@ -72,10 +72,9 @@ class KnowledgeController(http.Controller):
         # We build the session information necessary for the web client to load
         session_info = request.env['ir.http'].session_info()
         user_context = dict(request.env.context)
-        mods = conf.server_wide_modules or []
         lang = user_context.get("lang")
         cache_hashes = {
-            "translations": request.env['ir.http'].get_web_translations_hash(mods, lang),
+            "translations": request.env['ir.http'].get_web_translations_hash(tools.config['server_wide_modules'], lang),
         }
 
         session_info.update(

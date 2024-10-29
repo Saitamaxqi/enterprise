@@ -13,11 +13,11 @@ from typing import NamedTuple
 
 from werkzeug.exceptions import BadRequest, Forbidden
 
-from odoo import conf, fields, http, _
+from odoo import fields, http, _
 from odoo.exceptions import MissingError
 from odoo.http import request, content_disposition
 from odoo.osv import expression
-from odoo.tools import replace_exceptions, str2bool, consteq
+from odoo.tools import config, replace_exceptions, str2bool, consteq
 
 from odoo.addons.mail.controllers.attachment import AttachmentController
 
@@ -339,10 +339,9 @@ class ShareRoute(http.Controller):
         """ Render the portal version (stripped version of the backend Documents app). """
         # We build the session information necessary for the web client to load
         session_info = request.env['ir.http'].session_info()
-        mods = conf.server_wide_modules or []
         lang = request.env.context.get('lang')
         cache_hashes = {
-            "translations": request.env['ir.http'].get_web_translations_hash(mods, lang),
+            "translations": request.env['ir.http'].get_web_translations_hash(config['server_wide_modules'], lang),
         }
 
         session_info.update(
