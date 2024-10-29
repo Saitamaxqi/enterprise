@@ -23,3 +23,11 @@ def uninstall_hook(env):
     # disable the a sign invoices while uninstalling a module
     if env['ir.module.module']._get('account_accountant').state == 'installed':
         env['res.company'].search([]).sign_invoice = False
+
+    if env['ir.module.module']._get('documents').state == 'installed':
+        document_query = env['documents.document']._search([('res_model', '=', 'sign.template')])
+        mail_activities = env['mail.activity'].search([
+            ('res_model', '=', 'documents.document'),
+            ('res_id', 'in', document_query)
+        ])
+        mail_activities.unlink()
