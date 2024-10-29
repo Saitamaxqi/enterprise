@@ -299,6 +299,10 @@ REPORT_CONFIG = {
         'asset_line_ref': 'l10n_zm_reports.balance_sheet_zm_assets',
         'liability_line_ref': 'l10n_zm_reports.balance_sheet_zm_liabilities_and_equities',
     },
+    'l10n_kr_reports.l10_kr_bs': {
+        'asset_line_ref': 'l10n_kr_reports.l10n_kr_bs_ta',
+        'liability_line_ref': 'l10n_kr_reports.l10n_kr_bs_le',
+    },
 }
 
 # === If some accounts should be excluded from the testing, specify them here === #
