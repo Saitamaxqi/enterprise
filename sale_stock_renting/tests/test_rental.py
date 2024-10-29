@@ -4,7 +4,7 @@ from datetime import timedelta
 
 from dateutil.relativedelta import relativedelta
 
-from odoo.fields import Command, Datetime, Date
+from odoo.fields import Command, Date, Datetime
 from odoo.tests import Form, tagged
 
 from odoo.addons.sale_stock_renting.tests.test_rental_common import TestRentalCommon

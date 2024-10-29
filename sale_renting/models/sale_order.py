@@ -8,6 +8,7 @@ from odoo import _, api, fields, models
 from odoo.osv import expression
 from odoo.tools import float_compare
 
+
 RENTAL_STATUS = [
     ('draft', "Quotation"),
     ('sent', "Quotation Sent"),

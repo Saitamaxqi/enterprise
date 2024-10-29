@@ -1,9 +1,7 @@
-/** @odoo-module **/
-
-import publicWidget from '@web/legacy/js/public/public_widget';
-import { msecPerUnit, RentingMixin } from '@website_sale_renting/js/renting_mixin';
 import { deserializeDateTime } from "@web/core/l10n/dates";
 import { rpc } from "@web/core/network/rpc";
+import publicWidget from '@web/legacy/js/public/public_widget';
+import { msecPerUnit, RentingMixin } from '@website_sale_renting/js/renting_mixin';
 
 const { DateTime } = luxon;
 

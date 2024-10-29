@@ -1,4 +1,6 @@
-from odoo import _, fields, models, Command
+from odoo import fields, models
+from odoo.fields import Command
+
 from odoo.addons.web.controllers.utils import clean_action
 
 

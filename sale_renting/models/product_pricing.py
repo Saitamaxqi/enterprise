@@ -1,12 +1,14 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from collections import defaultdict
 import math
+from collections import defaultdict
+
 from dateutil.relativedelta import relativedelta
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.tools import format_amount
+
 
 # For our use case: pricing depending on the duration, the values should be sufficiently different from one plan to
 # another to not suffer from the approcimation that all months are 31 longs.

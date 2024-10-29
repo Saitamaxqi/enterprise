@@ -1,12 +1,13 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import timedelta
+
 from dateutil.relativedelta import relativedelta
 
 from odoo import fields
 from odoo.fields import Command
+from odoo.tests import HttpCase, TransactionCase, tagged
 from odoo.tools import float_compare
-from odoo.tests import HttpCase, tagged, TransactionCase
 
 
 class TestRentalCommon(TransactionCase):

@@ -1,11 +1,14 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import Command, fields
+from odoo import fields
+from odoo.fields import Command
 from odoo.tests import tagged
-from odoo.addons.sale.tests.test_sale_product_attribute_value_config import TestSaleProductAttributeValueCommon
+
+from odoo.addons.sale.tests.test_sale_product_attribute_value_config import (
+    TestSaleProductAttributeValueCommon,
+)
 from odoo.addons.website.tools import MockRequest
 
 

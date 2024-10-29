@@ -1,9 +1,11 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.tests import HttpCase, tagged
-from .common import TestWebsiteSaleRentingCommon
 from freezegun import freeze_time
+
+from odoo.tests import HttpCase, tagged
+
+from odoo.addons.website_sale_renting.tests.common import TestWebsiteSaleRentingCommon
+
 
 @tagged('-at_install', 'post_install')
 class TestUi(HttpCase, TestWebsiteSaleRentingCommon):

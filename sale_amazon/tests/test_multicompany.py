@@ -1,13 +1,15 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
-
 from unittest.mock import patch
 
 from odoo.tests.common import tagged
 from odoo.tools import mute_logger
 
-from odoo.addons.sale_amazon.tests.common import OPERATIONS_RESPONSES_MAP, TestAmazonCommon
+from odoo.addons.sale_amazon.tests.common import (
+    OPERATIONS_RESPONSES_MAP,
+    TestAmazonCommon,
+)
 
 
 @tagged('post_install', '-at_install')

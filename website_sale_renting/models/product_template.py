@@ -1,9 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
 from math import ceil
-from pytz import timezone, UTC
+
+from dateutil.relativedelta import relativedelta
+from pytz import UTC, timezone
 
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError

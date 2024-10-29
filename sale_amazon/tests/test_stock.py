@@ -1,9 +1,10 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from unittest.mock import patch, Mock
+from unittest.mock import Mock, patch
 
-from odoo import Command, fields
+from odoo import fields
 from odoo.exceptions import UserError
+from odoo.fields import Command
 from odoo.tests.common import tagged
 from odoo.tools import mute_logger
 

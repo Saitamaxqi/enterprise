@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from pytz import timezone, UTC
+from pytz import UTC, timezone
 
 from odoo import _, api, fields, models
 from odoo.fields import Command

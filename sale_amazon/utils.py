@@ -1,7 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import hashlib
-import hmac
 import json
 import logging
 from contextlib import contextmanager
@@ -10,7 +8,7 @@ from pprint import pformat
 from xml.etree import ElementTree
 
 import requests
-from werkzeug.urls import url_encode, url_join, url_parse
+from werkzeug.urls import url_join, url_parse
 
 from odoo.exceptions import UserError, ValidationError
 

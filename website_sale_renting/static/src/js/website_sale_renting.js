@@ -1,16 +1,14 @@
-/** @odoo-module **/
-
-import { WebsiteSale } from '@website_sale/js/website_sale';
-import { RentingMixin } from '@website_sale_renting/js/renting_mixin';
-import wSaleUtils from "@website_sale/js/website_sale_utils";
-import '@website_sale_renting/js/variant_mixin';
 import {
     deserializeDateTime,
-    serializeDateTime,
     formatDate,
     formatDateTime,
+    serializeDateTime,
 } from "@web/core/l10n/dates";
 import { rpc } from "@web/core/network/rpc";
+import { WebsiteSale } from '@website_sale/js/website_sale';
+import wSaleUtils from "@website_sale/js/website_sale_utils";
+import { RentingMixin } from '@website_sale_renting/js/renting_mixin';
+import '@website_sale_renting/js/variant_mixin';
 
 WebsiteSale.include(RentingMixin);
 WebsiteSale.include({

@@ -2,9 +2,9 @@
 
 import pytz
 
-from odoo import models, fields
-from odoo.osv import expression
+from odoo import fields, models
 from odoo.http import request
+from odoo.osv import expression
 
 
 class Website(models.Model):

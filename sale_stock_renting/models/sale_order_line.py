@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
 from datetime import timedelta
 
-from odoo import _, api, Command, fields, models
+from odoo import Command, _, api, fields, models
 from odoo.exceptions import ValidationError
 from odoo.osv import expression
 from odoo.tools.misc import groupby as tools_groupby

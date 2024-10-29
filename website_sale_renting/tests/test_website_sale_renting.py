@@ -1,13 +1,13 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from dateutil.relativedelta import relativedelta, FR, SA, SU
-
+from dateutil.relativedelta import FR, SA, SU, relativedelta
 from freezegun import freeze_time
 
 from odoo import fields
 from odoo.tests import tagged
-from .common import TestWebsiteSaleRentingCommon
+
+from odoo.addons.website_sale_renting.tests.common import TestWebsiteSaleRentingCommon
+
 
 @tagged('post_install', '-at_install')
 class TestWebsiteSaleRenting(TestWebsiteSaleRentingCommon):

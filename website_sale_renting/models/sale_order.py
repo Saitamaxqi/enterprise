@@ -1,7 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-import pytz
 from datetime import timedelta
+
+import pytz
 
 from odoo import _, fields, models
 from odoo.exceptions import ValidationError

@@ -1,7 +1,5 @@
-/** @odoo-module **/
-
-import { _t } from "@web/core/l10n/translation";
 import { formatDate, formatDateTime } from "@web/core/l10n/dates";
+import { _t } from "@web/core/l10n/translation";
 import { RentingMixin } from '@website_sale_renting/js/renting_mixin';
 
 const oldGetInvalidMessage = RentingMixin._getInvalidMessage;

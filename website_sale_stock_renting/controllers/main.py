@@ -5,6 +5,7 @@ from odoo.http import request, route
 
 from odoo.addons.website_sale_renting.controllers.main import WebsiteSaleRenting
 
+
 class WebsiteSaleStockRenting(WebsiteSaleRenting):
 
     @route(

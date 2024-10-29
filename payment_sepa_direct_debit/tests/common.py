@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import Command, fields
+from odoo import fields
+from odoo.fields import Command
 
 from odoo.addons.account_payment.tests.common import AccountPaymentCommon
 from odoo.addons.payment_custom.tests.common import PaymentCustomCommon

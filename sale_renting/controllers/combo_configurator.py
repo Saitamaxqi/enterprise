@@ -2,7 +2,9 @@
 
 from odoo.http import route
 
-from odoo.addons.sale.controllers.combo_configurator import SaleComboConfiguratorController
+from odoo.addons.sale.controllers.combo_configurator import (
+    SaleComboConfiguratorController,
+)
 from odoo.addons.sale_renting.controllers.utils import _convert_rental_dates
 
 

@@ -3,6 +3,7 @@
 from odoo import fields, models
 from odoo.tools import LazyTranslate
 
+
 _lt = LazyTranslate(__name__)
 
 SINGULAR_LABELS = {

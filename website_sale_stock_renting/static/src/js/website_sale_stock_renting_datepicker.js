@@ -1,8 +1,6 @@
-/** @odoo-module **/
-
 import { deserializeDateTime, serializeDateTime } from "@web/core/l10n/dates";
-import WebsiteSaleDaterangePicker from '@website_sale_renting/js/website_sale_renting_daterangepicker';
 import { rpc } from "@web/core/network/rpc";
+import WebsiteSaleDaterangePicker from '@website_sale_renting/js/website_sale_renting_daterangepicker';
 
 WebsiteSaleDaterangePicker.include({
     events: Object.assign({}, WebsiteSaleDaterangePicker.prototype.events, {

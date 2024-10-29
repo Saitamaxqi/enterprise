@@ -1,8 +1,6 @@
-/** @odoo-module **/
-
-import { serializeDateTime, deserializeDateTime, parseDateTime, ConversionError, parseDate } from "@web/core/l10n/dates";
-import { sprintf } from "@web/core/utils/strings";
+import { ConversionError, deserializeDateTime, parseDate, parseDateTime, serializeDateTime } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
+import { sprintf } from "@web/core/utils/strings";
 
 export const msecPerUnit = {
     hour: 3600 * 1000,

@@ -1,8 +1,6 @@
-/** @odoo-module **/
-
-import { patch } from '@web/core/utils/patch';
-import { serializeDateTime } from "@web/core/l10n/dates";
 import { SaleOrderLineProductField } from '@sale/js/sale_product_field';
+import { serializeDateTime } from "@web/core/l10n/dates";
+import { patch } from '@web/core/utils/patch';
 
 patch(SaleOrderLineProductField.prototype, {
     _getAdditionalRpcParams() {

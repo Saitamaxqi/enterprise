@@ -1,8 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from unittest.mock import patch
-
 from odoo.tests import TransactionCase
+
 
 ORDER_BUYER_INFO_MOCK = {
     'BuyerEmail': 'iliketurtles@marketplace.amazon.com',

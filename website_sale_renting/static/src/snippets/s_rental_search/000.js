@@ -1,7 +1,5 @@
-/** @odoo-module **/
-
+import { parseDate, parseDateTime, serializeDateTime } from "@web/core/l10n/dates";
 import publicWidget from '@web/legacy/js/public/public_widget';
-import { serializeDateTime, parseDateTime, parseDate } from "@web/core/l10n/dates";
 import { RentingMixin } from '@website_sale_renting/js/renting_mixin';
 
 

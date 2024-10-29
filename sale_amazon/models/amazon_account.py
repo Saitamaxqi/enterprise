@@ -13,8 +13,9 @@ from odoo import _, api, exceptions, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.service.model import PG_CONCURRENCY_EXCEPTIONS_TO_RETRY as CONCURRENCY_ERRORS
 
-from .. import const, utils as amazon_utils
-from ..controllers.onboarding import compute_oauth_signature
+from odoo.addons.sale_amazon import const
+from odoo.addons.sale_amazon import utils as amazon_utils
+from odoo.addons.sale_amazon.controllers.onboarding import compute_oauth_signature
 
 
 _logger = logging.getLogger(__name__)

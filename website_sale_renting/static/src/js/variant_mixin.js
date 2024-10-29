@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import VariantMixin from '@website_sale/js/sale_variant_mixin';
 import { RentingMixin } from '@website_sale_renting/js/renting_mixin';
 

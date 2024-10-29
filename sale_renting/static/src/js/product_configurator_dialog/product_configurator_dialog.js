@@ -1,9 +1,7 @@
-/** @odoo-module **/
-
-import { patch } from '@web/core/utils/patch';
 import {
     ProductConfiguratorDialog
 } from '@sale/js/product_configurator_dialog/product_configurator_dialog';
+import { patch } from '@web/core/utils/patch';
 
 patch(ProductConfiguratorDialog, {
     props: {
