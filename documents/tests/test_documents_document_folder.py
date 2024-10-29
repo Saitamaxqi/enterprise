@@ -106,9 +106,15 @@ class TestDocumentsDocumentFolder(TransactionCase):
     def test_folder_copy(self):
         folder_copy = self.folder.copy()
         self.assertNotEqual(folder_copy.id, self.folder.id)
-        self.assertEqual(folder_copy.name, self.folder.name)
+        self.assertEqual(folder_copy.name, f'{self.folder.name} (copy)')
         self.assertEqual(folder_copy.type, 'folder')
         self.assertEqual(folder_copy.folder_id, self.parent_folder)
+
+        folder_shortcut = self.folder.action_create_shortcut()
+        self.assertNotEqual(folder_shortcut.id, self.folder.id)
+        folder_shortcut_copy = folder_shortcut.copy()
+        self.assertNotEqual(folder_shortcut_copy.id, folder_shortcut.id)
+        self.assertEqual(folder_shortcut_copy.name, f'{folder_shortcut.name} (copy)')
 
         child_copy = folder_copy.children_ids.ensure_one()
         self.assertNotEqual(child_copy.id, self.child_folder.id)
@@ -118,7 +124,7 @@ class TestDocumentsDocumentFolder(TransactionCase):
 
         document_copy = child_copy.children_ids.ensure_one()
         self.assertNotEqual(document_copy.id, self.document.id)
-        self.assertEqual(document_copy.name, f'{self.document.name} (copy)')
+        self.assertEqual(document_copy.name, self.document.name)
         self.assertEqual(document_copy.type, 'binary')
         self.assertEqual(document_copy.folder_id, child_copy)
 

@@ -1355,7 +1355,7 @@ class DocumentsDocument(models.Model):
         vals_list = super().copy_data(default=default)
         if 'name' not in default:
             for document, vals in zip(self, vals_list):
-                vals['name'] = document.name if document.type == 'folder' else _("%s (copy)", document.name)
+                vals['name'] = document.name if self.env.context.get('documents_copy_skip_rename') else _("%s (copy)", document.name)
         for vals in vals_list:
             # Avoid to propagate folder access as we want to copy the document accesses alone
             vals['access_ids'] = default.get('access_ids', False)
@@ -1387,6 +1387,7 @@ class DocumentsDocument(models.Model):
             for destination, targets in shortcuts.grouped('folder_id').items():
                 new_shortcuts = targets.action_create_shortcut(destination.id)
                 for new_shortcut, target in zip(new_shortcuts, targets):
+                    new_shortcut.name = _("%s (copy)", target.name)
                     new_documents[documents_order[target.id]] = new_shortcut
 
         folders = (self - shortcuts).filtered(lambda d: d.type == 'folder')
@@ -1398,7 +1399,7 @@ class DocumentsDocument(models.Model):
                     embedded_actions_copies = folder_embedded_actions.copy()
                     embedded_actions_copies.parent_res_id = new_folder.id
                 #  no need to check for permission as user is owner of copies (see copy_data).
-                old_folder.children_ids.copy({'folder_id': new_folder.id})
+                old_folder.children_ids.with_context(documents_copy_skip_rename=True).copy({'folder_id': new_folder.id})
                 new_documents[documents_order[old_folder.id]] = new_folder
 
         if not skip_documents and (documents_sudo := (self - shortcuts - folders).sudo()):
