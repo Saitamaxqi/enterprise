@@ -211,7 +211,7 @@ class AccountOnlineAccount(models.Model):
             'start_date': start_date and format_date(self.env, start_date, date_format='yyyy-MM-dd'),
             'account_id': self.online_identifier,
             'last_transaction_identifier': last_stmt_line.online_transaction_identifier if not include_pendings else None,
-            'currency_code': self.journal_ids[0].currency_id.name,
+            'currency_code': self.currency_id.name or self.journal_ids[0].currency_id.name or self.company_id.currency_id.name,
             'include_pendings': include_pendings,
             'include_foreign_currency': True,
         }
