@@ -7,7 +7,6 @@
             <field name="inherit_id" ref="l10n_be_reports.view_account_financial_report_export"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='comment']" position="after">
-                    <field name="show_prorata" invisible="1"/>
                     <field name="is_prorata_necessary" invisible="not show_prorata"/>
                     <field name="prorata_year" invisible="not is_prorata_necessary" required="is_prorata_necessary"/>
                     <field name="prorata" invisible="not is_prorata_necessary"/>
