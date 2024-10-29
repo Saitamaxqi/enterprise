@@ -86,7 +86,8 @@ class MrpProduction(models.Model):
 
     def pre_button_mark_done(self):
         res = super().pre_button_mark_done()
-        self.workorder_ids.verify_quality_checks()
+        if res is True:
+            self.workorder_ids.verify_quality_checks()
         return res
 
     def _update_catalog_line_quantity(self, line, quantity, **kwargs):
