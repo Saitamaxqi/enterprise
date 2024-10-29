@@ -3,8 +3,9 @@
 from unittest.mock import patch
 
 import odoo
-from odoo import Command
+from odoo import Command, http
 from odoo.tests import Form, tagged
+from odoo.addons.stock_barcode.controllers.stock_barcode import StockBarcodeController
 from odoo.addons.stock_barcode.tests.test_barcode_client_action import TestBarcodeClientAction
 
 
@@ -3180,6 +3181,59 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             {"quantity": 1.0, "picked": True},
             {"quantity": 4.0, "picked": False},
         ])
+
+    def test_barcode_create_serials_in_batch_with_single_scan(self):
+        """ Check that it is possible to generate 1000 serial numbers with a signle scan."""
+        self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
+        self.clean_access_rights()
+        group_tracking = self.env.ref('stock.group_tracking_lot')
+        self.env.user.write({'groups_id': [Command.link(group_tracking.id)]})
+        # Enable "Show reserved lots/SN"
+        self.picking_type_out.write({
+            'show_reserved_sns': True,
+            'restrict_scan_source_location': 'no',
+            'use_create_lots': True,
+        })
+
+        # Patch controller method to be able to count amount of calls.
+        self1 = self
+        get_specific_barcode_data_orig = StockBarcodeController.get_specific_barcode_data
+        @http.route('/stock_barcode/get_specific_barcode_data', type='jsonrpc', auth='user')
+        def mocked_data_batch_method(self, **kwargs):
+            if self1.call_count == 0:
+                self1.assertTrue('barcodes_by_model' in kwargs)
+                self1.assertFalse('barcodes' in kwargs)
+            elif self1.call_count == 1:
+                self1.assertFalse('barcodes_by_model' in kwargs)
+                self1.assertTrue('barcodes' in kwargs)
+            self1.call_count += 1
+            return get_specific_barcode_data_orig(self, **kwargs)
+
+        self.env['stock.quant']._update_available_quantity(self.productlot1, self.stock_location, 1500)
+        delivery = self.env['stock.picking'].create({
+            'name': "Lovely delivery",
+            'location_id': self.stock_location.id,
+            'location_dest_id': self.customer_location.id,
+            'picking_type_id': self.picking_type_out.id,
+            'move_ids': [Command.create({
+                'name': 'Lovely move',
+                'location_id': self.stock_location.id,
+                'location_dest_id': self.customer_location.id,
+                'product_id': self.productlot1.id,
+                'product_uom': self.productlot1.uom_id.id,
+                'product_uom_qty': 1000,
+            })],
+        })
+        delivery.action_confirm()
+        self.assertFalse(delivery.move_line_ids.lot_id)
+        url = self._get_client_action_url(delivery.id)
+        with patch.object(
+            StockBarcodeController,
+            'get_specific_barcode_data',
+            mocked_data_batch_method
+        ):
+            self.start_tour(url, 'test_barcode_create_serials_in_batch_with_single_scan', login='admin')
+            self.assertEqual(self.call_count, 2)
 
     # === GS1 TESTS ===#
     def test_gs1_delivery_ambiguous_lot_number(self):

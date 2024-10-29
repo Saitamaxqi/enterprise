@@ -50,4 +50,14 @@ export const stepUtils = {
             },
         ];
     },
+    // RFID utils.
+    countUniqRFID(count) {
+        return [{ trigger: `.o_barcode_count_rfid .o_rfid_unique_tags:contains(${count})` }];
+    },
+    countTotalRFID(count) {
+        return [{ trigger: `.o_barcode_count_rfid .o_rfid_total_read:contains(${count})` }];
+    },
+    closeCountRFID() {
+        return [{ trigger: ".o_barcode_count_rfid button.btn-close" }];
+    },
 };

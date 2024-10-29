@@ -295,6 +295,12 @@ export default class BarcodeQuantModel extends BarcodeModel {
         });
     }
 
+    _getMissingRecordsParams() {
+        const params = super._getMissingRecordsParams();
+        params.fetch_quants = true;
+        return params;
+    }
+
     _getNewLineDefaultContext() {
         return {
             default_company_id: this.companyIds[0],
@@ -341,31 +347,15 @@ export default class BarcodeQuantModel extends BarcodeModel {
             this.notification(message, { type: "warning" });
             return false;
         }
-        const domain = [
-            ["location_id", "=", this.location.id],
-            ["product_id", "=", product.id],
-        ];
-        const { lot_id, package_id } = params.fieldsParams;
-        if (product.tracking !== "none") {
-            if (params.fieldsParams.lot_name) {
-                // Search for a quant with the exact same lot.
-                domain.push(["lot_id.name", "=", params.fieldsParams.lot_name]);
-            } else if (params.fieldsParams.lot_id) {
-                // Search for a quant with the exact same lot.
-                domain.push(["lot_id", "=", lot_id.id || lot_id]);
-            }
-        }
-        if (params.fieldsParams.package_id) {
-            domain.push(["package_id", "=", package_id.id || package_id]);
-        }
+        const location_id = this.location.id;
+        const { lot_id, lot_name, owner_id, package_id } = params.fieldsParams;
         let quants = [];
         if (!params.fieldsParams.packaging || product.tracking === "none") {
-            const res = await this.orm.call("stock.quant", "get_existing_quant_and_related_data", [
-                domain,
-            ]);
-            if (res) {
-                this.cache.setCache(res.records);
-                quants = res.records["stock.quant"];
+            if (!lot_id && !lot_name && !package_id && !owner_id) {
+                quants = await this.cache.getQuants(product, location_id);
+            } else {
+                const quantParams = { lot_id, lot_name, owner_id, package_id };
+                quants = await this.cache.getQuants(product, location_id, quantParams);
             }
         }
         if (
@@ -696,19 +686,15 @@ export default class BarcodeQuantModel extends BarcodeModel {
             return Promise.resolve();
         }
         line.lot_name = lotName;
-        // Checks if a quant exists for this line and updates the line in this case.
-        const domain = [
-            ["location_id", "=", line.location_id.id],
-            ["product_id", "=", line.product_id.id],
-            ["lot_id.name", "=", lotName],
-            ["owner_id", "=", line.owner_id && line.owner_id.id],
-            ["package_id", "=", line.package_id && line.package_id.id],
-        ];
-        const existingQuant = await this.orm.searchRead("stock.quant", domain, ["id", "quantity"], {
-            limit: 1,
-            load: false,
+        const owner_id = line.owner_id ? line.owner_id : false;
+        const package_id = line.package_id && line.package_id;
+        const existingQuant = await this.cache.getQuants(line.product_id, line.location_id.id, {
+            lot_id: line.lot_id,
+            lot_name: lotName,
+            owner_id,
+            package_id,
         });
-        if (existingQuant.length) {
+        if (existingQuant && existingQuant.length) {
             Object.assign(line, existingQuant[0]);
             if (line.lot_id) {
                 line.lot_id = await this.cache.getRecordByBarcode(lotName, "stock.lot");

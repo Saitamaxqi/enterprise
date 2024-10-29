@@ -46,11 +46,11 @@ export class BarcodeObject {
         };
         this.missingRecords = [];
         for (const barcodeData of this.parsedBarcode) {
-            const { type, value } = barcodeData;
+            const { type, code } = barcodeData;
             if (type === "product") {
-                await this.fetchProduct(value, options);
+                await this.fetchProduct(code, options);
             } else if (type === "lot") {
-                await this.fetchTrackingNumber(value, options);
+                await this.fetchTrackingNumber(code, options);
             }
         }
     }
@@ -85,13 +85,9 @@ export class BarcodeObject {
             options
         );
         if (!product) {
-            const packaging = await this.cache.getRecordByBarcode(
-                productBarcode,
-                "product.uom",
-                {
-                    onlyInCache: true,
-                }
-            );
+            const packaging = await this.cache.getRecordByBarcode(productBarcode, "product.uom", {
+                onlyInCache: true,
+            });
             if (packaging) {
                 product = this.cache.getRecord("product.product", packaging.product_id, false);
                 this.parsedData.packaging = packaging;

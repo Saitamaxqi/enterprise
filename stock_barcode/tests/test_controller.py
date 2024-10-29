@@ -46,7 +46,6 @@ class TestStockBarcodeController(HttpCase):
                     'params': {
                         'barcode': barcode,
                         'domains_by_model': {'all': [['company_id', 'in', [False, company.id]]]},
-                        'model_name': False,
                     },
                 })
                 self.env.ref('base.user_admin').company_id = company

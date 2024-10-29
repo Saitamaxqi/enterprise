@@ -129,59 +129,38 @@ class StockBarcodeController(http.Controller):
         }
 
     @http.route('/stock_barcode/get_specific_barcode_data', type='jsonrpc', auth='user')
-    def get_specific_barcode_data(self, barcode, model_name, domains_by_model=False):
-        nomenclature = request.env.company.nomenclature_id
-        # Adapts the search parameters for GS1 specifications.
-        operator = '='
-        limit = None if nomenclature.is_gs1_nomenclature else 1
-        if nomenclature.is_gs1_nomenclature:
-            try:
-                # If barcode is digits only, cut off the padding to keep the original barcode only.
-                barcode = str(int(barcode))
-                operator = 'ilike'
-            except ValueError:
-                pass  # Barcode isn't digits only.
-
-        domains_by_model = domains_by_model or {}
-        barcode_field_by_model = self._get_barcode_field_by_model()
-        result = defaultdict(list)
-        model_names = model_name and [model_name] or list(barcode_field_by_model.keys())
-        universal_domain = domains_by_model.get('all')
-        for model in model_names:
-            domain = [
-                (barcode_field_by_model[model], operator, barcode),
-            ]
-            domain_for_this_model = domains_by_model.get(model)
-            if domain_for_this_model:
-                domain = expression.AND([domain, domain_for_this_model])
-            if universal_domain:
-                domain = expression.AND([domain, universal_domain])
-            record = request.env[model].with_context(display_default_code=False).search(domain, limit=limit)
-            if record:
-                records_data_by_model = self._get_records_fields_stock_barcode(record)
-                for res_model in records_data_by_model:
-                    result[res_model] += records_data_by_model[res_model]
-        return result
-
-    def _get_records_fields_stock_barcode(self, records):
-        result = defaultdict(list)
-        result[records._name] = records.read(records._get_fields_stock_barcode(), load=False)
-        if hasattr(records, '_get_stock_barcode_specific_data'):
-            records_data_by_model = records._get_stock_barcode_specific_data()
-            for res_model in records_data_by_model:
-                result[res_model] += records_data_by_model[res_model]
-        return result
-
-    @http.route('/stock_barcode/get_specific_barcode_data_batch', type='jsonrpc', auth='user')
-    def get_specific_barcode_data_batch(self, kwargs):
-        """ Batched version of `get_specific_barcode_data`, where its purpose is to get multiple
-        records data from different models. The goal is to do one search by model (plus the
-        additional record, e.g. the UOM records when fetching product's records.)
+    def get_specific_barcode_data(self, **kwargs):
+        """ This method gets multiple records data from different models for the given barcode(s).
+        The goal is to do one search by model (plus the additional record, e.g. the UOM records when
+        fetching product's records.)
+        :param kwargs:
+            ''barcode'': a single barcode (string), used when not knowing which model is linked.
+            ''barcodes_by_model'': a dict of model_name -> barcode list
+            ''context''
+            ''domains_by_model'': a dict of model_name -> domain
+            ''fetch_quant'': Fetch extra quants based on products (used in inventory)
         """
+        request.env.context = {**kwargs.get('context', {}), **request.env.context, 'display_default_code': False}
+        barcodes_by_model = kwargs.get('barcodes_by_model')
+        domains_by_model = kwargs.get('domains_by_model', {})
+        universal_domain = domains_by_model.get('all')
+        fetch_quant = kwargs.get('fetch_quants')
         nomenclature = request.env.company.nomenclature_id
         result = defaultdict(list)
+        product_ids = set()
 
-        for model_name, barcodes in kwargs.items():
+        if barcodes_by_model and barcodes_by_model.get('product.product') and not barcodes_by_model.get('stock.lot'):
+            barcodes_by_model['stock.lot'] = []
+
+        # If a barcode was given but no model was specified, search for it for all relevant models.
+        if not barcodes_by_model:
+            barcode_field_by_model = self._get_barcode_field_by_model()
+            barcodes = kwargs.get('barcodes') or [kwargs.get('barcode')]
+            barcodes_by_model = {model_name: barcodes for model_name in barcode_field_by_model.keys()}
+
+        for model_name, barcodes in barcodes_by_model.items():
+            if not barcodes:
+                continue
             barcode_field = request.env[model_name]._barcode_field
             domain = [(barcode_field, 'in', barcodes)]
 
@@ -189,7 +168,7 @@ class StockBarcodeController(http.Controller):
                 # If we use GS1 nomenclature, the domain might need some adjustments.
                 converted_barcodes_domain = []
                 unconverted_barcodes = []
-                for barcode in barcodes:
+                for barcode in set(barcodes):
                     try:
                         # If barcode is digits only, cut off the padding to keep the original barcode only.
                         barcode = str(int(barcode))
@@ -210,12 +189,41 @@ class StockBarcodeController(http.Controller):
                             domain,
                             [(barcode_field, 'in', unconverted_barcodes)]
                         ])
-
+            # Adds additionnal domain if applicable.
+            domain_for_this_model = domains_by_model.get(model_name)
+            if domain_for_this_model:
+                domain = expression.AND([domain, domain_for_this_model])
+            if universal_domain:
+                domain = expression.AND([domain, universal_domain])
+            # Search for barcodes' records.
             records = request.env[model_name].search(domain)
             fetched_data = self._get_records_fields_stock_barcode(records)
+            if fetch_quant and model_name == 'product.product':
+                product_ids = records.ids
+            for f_model_name in fetched_data:
+                result[f_model_name] = result[f_model_name] + fetched_data[f_model_name]
+
+        if fetch_quant and product_ids:
+            quants = request.env['stock.quant'].search([('product_id', 'in', product_ids)])
+            fetched_data = self._get_records_fields_stock_barcode(quants)
+
             for f_model_name in fetched_data:
                 result[f_model_name] = result[f_model_name] + fetched_data[f_model_name]
         return result
+
+    def _get_records_fields_stock_barcode(self, records):
+        result = defaultdict(list)
+        result[records._name] = records.read(records._get_fields_stock_barcode(), load=False)
+        if hasattr(records, '_get_stock_barcode_specific_data'):
+            records_data_by_model = records._get_stock_barcode_specific_data()
+            for res_model in records_data_by_model:
+                result[res_model] += records_data_by_model[res_model]
+        return result
+
+    @http.route('/stock_barcode/get_quants', type='jsonrpc', auth='user')
+    def get_existing_quant_and_related_data(self, domain):
+        quants = request.env['stock.quant'].search(domain)
+        return quants.get_stock_barcode_data_records()
 
     @http.route('/stock_barcode/rid_of_message_demo_barcodes', type='jsonrpc', auth='user')
     def rid_of_message_demo_barcodes(self, **kw):

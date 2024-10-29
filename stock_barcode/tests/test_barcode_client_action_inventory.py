@@ -3,10 +3,11 @@
 import base64
 import logging
 
-from odoo import Command, fields
-from odoo.tests import tagged
+from odoo import Command, fields, http
+from odoo.tests import patch, tagged
 from odoo.tools.misc import file_open
 from odoo.addons.stock_barcode.tests.test_barcode_client_action import TestBarcodeClientAction
+from odoo.addons.stock_barcode.controllers.stock_barcode import StockBarcodeController
 
 _logger = logging.getLogger(__name__)
 
@@ -579,6 +580,84 @@ class TestInventoryAdjustmentBarcodeClientAction(TestBarcodeClientAction):
         self.assertEqual(productlot1_quant.quantity, 1.0)
         self.assertEqual(productlot1_quant.lot_id.name, 'toto-42')
         self.assertEqual(productlot1_quant.location_id.id, self.stock_location.id)
+
+    # === RFID TESTS ===#
+    def test_rfid_inventory_scan_sgtin(self):
+        """ Checks multiple products can be scanned at once for an Inventory
+        Adjustment using RFID."""
+        self.clean_access_rights()
+        group_lot = self.env.ref('stock.group_production_lot')
+        self.env.user.write({'groups_id': [Command.link(group_lot.id)]})
+        self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
+
+        # Create a bunch of products with EAN13.
+        product_common_vals = {
+            'is_storable': True,
+            'uom_id': self.env.ref('uom.product_uom_unit').id
+        }
+        products = self.env['product.product'].create([{
+            **product_common_vals,
+            'name': product_name,
+            'barcode': barcode,
+        } for (product_name, barcode) in [
+            ('Lunch box', '2300001000015'),
+            ('French wine', '2300001000084'),
+            ('Japanese wine', '2300001000121'),
+            ('Large plate', '5468123001239'),
+            ('Inox knife', '5468123002465'),
+        ]])
+        # Create a few products tracked by SN with EAN13.
+        tracked_products = self.env['product.product'].create([{
+            **product_common_vals,
+            'name': product_name,
+            'tracking': 'serial',
+            'barcode': barcode,
+        } for (product_name, barcode) in [
+            ('Handmade argyle plate', '8765432100002'),
+            ('Chief suit', '8765432300044'),
+        ]])
+        # Create serial numbers for those products.
+        p1_serial_numbers = self.env['stock.lot'].create([{
+            'name': str(i).rjust(5, '0'),
+            'product_id': tracked_products[0].id,
+        } for i in range(128, 134)])
+        p2_serial_numbers = self.env['stock.lot'].create([{
+            'name': str(i),
+            'product_id': tracked_products[1].id,
+        } for i in [12, 10, 15, 16, 9]])
+        # Add some quantity in stock.
+        self.env['stock.quant']._update_available_quantity(products[0], self.stock_location, 12)
+        self.env['stock.quant']._update_available_quantity(products[3], self.stock_location, 35)
+        self.env['stock.quant']._update_available_quantity(products[4], self.stock_location, 11)
+        for serial_number in (p1_serial_numbers | p2_serial_numbers):
+            self.env['stock.quant']._update_available_quantity(
+                serial_number.product_id,
+                self.stock_location,
+                1,
+                lot_id=serial_number)
+
+        # Mock the calls to the route to count the call amount.
+        self1 = self
+        get_specific_barcode_data_orig = StockBarcodeController.get_specific_barcode_data
+
+        @http.route('/stock_barcode/get_specific_barcode_data', type='jsonrpc', auth='user')
+        def mocked_data_batch_method(self, **kwargs):
+            if self1.call_count == 0:
+                # First call: product and serial numbers.
+                self1.assertEqual(list(kwargs['barcodes_by_model'].keys()), ['product.product', 'product.uom', 'stock.lot'])
+            elif self1.call_count == 1:
+                # First call: serial numbers only (no new product's barcode scanned).
+                self1.assertEqual(list(kwargs['barcodes_by_model'].keys()), ['stock.lot'])
+            self1.call_count += 1
+            return get_specific_barcode_data_orig(self, **kwargs)
+
+        with patch.object(
+            StockBarcodeController,
+            'get_specific_barcode_data',
+            mocked_data_batch_method
+        ):
+            self.start_tour('/odoo/barcode', 'test_rfid_inventory_scan_sgtin', login='admin', timeout=180)
+            self.assertEqual(self.call_count, 2)
 
     # === GS1 TESTS ===#
     def test_gs1_inventory_gtin_8(self):

@@ -4,7 +4,9 @@ export default class LazyBarcodeCache {
     constructor(cacheData) {
         this.dbIdCache = {}; // Cache by model + id
         this.dbBarcodeCache = {}; // Cache by model + barcode
-        this.missingBarcode = new Set(); // Used as a cache by `_getMissingRecord`
+        this.dbQuantCache = {}; // Cache by model + quant_id
+        this.missingBarcodesCache = new Set();
+        this.missingBarcodeKeyCache = new Set(); // Used as a cache by `_getMissingRecord`
         this.barcodeFieldByModel = {
             "stock.location": "barcode",
             "product.product": "barcode",
@@ -47,6 +49,20 @@ export default class LazyBarcodeCache {
             const barcodeField = this._getBarcodeField(model);
             for (const record of records) {
                 this.dbIdCache[model][record.id] = record;
+                if (model === "stock.quant") {
+                    const { product_id, location_id } = record;
+                    if (!this.dbQuantCache[product_id]) {
+                        this.dbQuantCache[product_id] = {};
+                    }
+                    if (!this.dbQuantCache[product_id][location_id]) {
+                        this.dbQuantCache[product_id][location_id] = [];
+                    }
+                    this.dbQuantCache[product_id][location_id].push(record);
+                } else if (model === "product.product" && cacheData["stock.quant"]) {
+                    if (!this.dbQuantCache[record.id]) {
+                        this.dbQuantCache[record.id] = {};
+                    }
+                }
                 if (barcodeField) {
                     const barcode = record[barcodeField];
                     if (!this.dbBarcodeCache[model][barcode]) {
@@ -93,6 +109,66 @@ export default class LazyBarcodeCache {
         }
         const record = this.dbIdCache[model][id];
         return JSON.parse(JSON.stringify(record));
+    }
+
+    async getQuants(product, location_id, params = {}) {
+        const lot_id = params.lot_id?.id || params.lot_id || false;
+        const package_id = params.package_id?.id || params.package_id || false;
+        const { lot_name, owner_id = false } = params;
+        let quantsByProduct = this.dbQuantCache[product.id];
+
+        if (!quantsByProduct) {
+            const domain = [
+                ["product_id", "=", product.id],
+                ["location_id.usage", "=", "internal"],
+            ];
+            const result = await rpc("/stock_barcode/get_quants", { domain });
+            if (result) {
+                this.setCache(result.records);
+                quantsByProduct = this.dbQuantCache[product.id];
+                if (!quantsByProduct) {
+                    // No quant found after fetch.
+                    this.dbQuantCache[product.id] = [];
+                    return [];
+                }
+            }
+        }
+        let quants = [];
+        if (location_id) {
+            const quantsByLocation = quantsByProduct[location_id];
+            if (quantsByLocation) {
+                quants.push(...quantsByLocation);
+            } else {
+                this.dbQuantCache[product.id][location_id] = quantsByLocation;
+            }
+        } else {
+            for (const quantsByLocation of Object.values(quantsByProduct)) {
+                quants.push(...quantsByLocation);
+            }
+        }
+        if (!lot_id && !lot_name && !package_id && !owner_id) {
+            // Return all product's quants in the given location.
+            return quants;
+        }
+        // Return only the quant with the right lot, package, and/or owner, or no quant at all.
+        if (lot_id) {
+            quants = quants.filter((quant) => quant.lot_id === lot_id);
+        } else if (lot_name) {
+            const filters = { "stock.lot": { product_id: product.id } };
+            const lot = await this.getRecordByBarcode(lot_name, "stock.lot", filters);
+            if (!lot) {
+                // If there is no existing lot, there is no existing quant.
+                return [];
+            }
+            quants = quants.filter((quant) => quant.lot_id === lot.id);
+        }
+        if (owner_id) {
+            quants = quants.filter((quant) => quant.owner_id === owner_id);
+        }
+        if (package_id) {
+            quants = quants.filter((quant) => quant.package_id === package_id);
+        }
+        return quants;
     }
 
     /**
@@ -205,7 +281,8 @@ export default class LazyBarcodeCache {
 
     async _getMissingRecord(barcode, model, filters = {}) {
         const keyCache = JSON.stringify([...arguments]);
-        const missCache = this.missingBarcode;
+        const missCache = this.missingBarcodeKeyCache;
+        const keyCacheWithoutModel = JSON.stringify([barcode, false, {}]);
         if (filters) {
             // If we already tried to find the same model's record for the given barcode but
             // without the filters, there is no need to try again with the filter.
@@ -214,10 +291,15 @@ export default class LazyBarcodeCache {
                 return false;
             }
         }
-        const params = { barcode, model_name: model };
         // Check if we already try to fetch this missing record.
-        if (missCache.has(keyCache)) {
+        if (missCache.has(keyCache) || missCache.has(keyCacheWithoutModel)) {
             return false;
+        }
+        const params = {};
+        if (model) {
+            params.barcodes_by_model = { [model]: [barcode] };
+        } else {
+            params.barcode = barcode;
         }
         // Creates and passes a domain if some filters are provided.
         const domainsByModel = {};
@@ -239,26 +321,64 @@ export default class LazyBarcodeCache {
         missCache.add(keyCache);
     }
 
-    async getMissingRecords() {
+    async getMissingRecords(params = {}) {
         if (!this.waitingFetch.length) {
             return; // Nothing to fetch.
         }
-        const params = { kwargs: {} };
+        params.barcodes_by_model = {};
         for (const data of this.waitingFetch) {
             const { barcode, model } = data;
             const keyCache = JSON.stringify([barcode, model, {}]);
-            if (this.missingBarcode.has(keyCache)) {
+            if (this.missingBarcodeKeyCache.has(keyCache)) {
                 continue; // Avoid already fetched records.
             }
-            this.missingBarcode.add(keyCache);
-            if (!params.kwargs[model]) {
-                params.kwargs[model] = [];
+            this.missingBarcodeKeyCache.add(keyCache);
+            if (!params.barcodes_by_model[model]) {
+                params.barcodes_by_model[model] = [];
             }
-            params.kwargs[model].push(barcode);
+            params.barcodes_by_model[model].push(barcode);
         }
-        if (Object.keys(params.kwargs)) {
-            const result = await rpc("/stock_barcode/get_specific_barcode_data_batch", params);
+        if (Object.keys(params.barcodes_by_model).length) {
+            const result = await rpc("/stock_barcode/get_specific_barcode_data", params);
             this.setCache(result);
+            if (params.forceUnrestrictedSearch) {
+                // Create a list of every found records' barcode.
+                const foundBarcodes = [];
+                const missingBarcodes = new Set();
+                for (const model of Object.keys(result)) {
+                    for (const record of result[model]) {
+                        foundBarcodes.push(record[this.barcodeFieldByModel[model]]);
+                    }
+                }
+                // Put every searched barcodes with no matching records into a set.
+                for (const model of Object.keys(params.barcodes_by_model)) {
+                    for (const barcode of params.barcodes_by_model[model]) {
+                        if (
+                            !foundBarcodes.includes(barcode) &&
+                            !this.missingBarcodesCache.has(barcode)
+                        ) {
+                            missingBarcodes.add(barcode);
+                            this.missingBarcodesCache.add(barcode);
+                        }
+                    }
+                }
+                // If there are barcodes with no match, make a second RPC but this
+                // time, search for those barcodes with no assigned model.
+                if (missingBarcodes.size) {
+                    const barcodes = [...missingBarcodes];
+                    // Keep in cache the fact those barcodes were search so they won't be in the future.
+                    for (const bc of barcodes) {
+                        this.missingBarcodeKeyCache.add(JSON.stringify([bc, false, {}]));
+                    }
+                    const updatedParams = { ...params, barcodes };
+                    delete updatedParams.barcodes_by_model;
+                    const notRestrictedByModelResult = await rpc(
+                        "/stock_barcode/get_specific_barcode_data",
+                        updatedParams
+                    );
+                    this.setCache(notRestrictedByModelResult);
+                }
+            }
         }
         this.waitingFetch = [];
     }

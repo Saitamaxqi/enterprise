@@ -5771,6 +5771,23 @@ registry.category("web_tour.tours").add("test_barcode_pack_lot_tour", {
     ],
 });
 
+registry.category("web_tour.tours").add("test_barcode_create_serials_in_batch_with_single_scan", {
+    steps: () => [
+        // Pack two units of the same not reserved lot in different packages
+        { trigger: ".o_barcode_line", run: "scan productlot1" },
+        {
+            trigger: ".o_barcode_line",
+            run:
+                "scan " +
+                Array.from(
+                    { length: 100 },
+                    (_, i) => `SN${(i + 1).toString().padStart(4, "0")}`
+                ).join(";"),
+        },
+        { trigger: ".o_barcode_scanner_qty .qty-done:contains(100)" },
+    ],
+});
+
 registry.category("web_tour.tours").add("test_scan_location_destination_for_internal_transfers", {
     steps: () => [
         {

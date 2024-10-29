@@ -68,11 +68,6 @@ class StockQuant(models.Model):
         action = self.env['ir.actions.actions']._for_xml_id('stock_barcode.stock_barcode_inventory_client_action')
         return action
 
-    @api.model
-    def get_existing_quant_and_related_data(self, domain):
-        quants = self.search(domain)
-        return quants.get_stock_barcode_data_records()
-
     def _get_stock_barcode_data(self):
         locations = self.env['stock.location']
         company_id = self.env.company.id
@@ -141,3 +136,13 @@ class StockQuant(models.Model):
 
     def _get_inventory_fields_write(self):
         return ['dummy_id'] + super()._get_inventory_fields_write()
+
+    def _get_stock_barcode_specific_data(self):
+        return {
+            'product.product': self.product_id.read(self.env['product.product']._get_fields_stock_barcode(), load=False),
+            'uom.uom': self.product_id.uom_id.read(self.env['uom.uom']._get_fields_stock_barcode(), load=False),
+            'stock.location': self.location_id.read(self.env['stock.location']._get_fields_stock_barcode(), load=False),
+            'stock.lot': self.lot_id.read(self.env['stock.lot']._get_fields_stock_barcode(), load=False),
+            'stock.quant.package': self.package_id.read(self.env['stock.quant.package']._get_fields_stock_barcode(), load=False),
+            'res.partner': self.owner_id.read(self.env['res.partner']._get_fields_stock_barcode(), load=False),
+        }

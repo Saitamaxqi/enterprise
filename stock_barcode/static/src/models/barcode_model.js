@@ -561,7 +561,7 @@ export default class BarcodeModel extends EventBus {
             }
             if (lotName === l.lot_name || (l.lot_id && lotName === l.lot_id.name)) {
                 this.notification(_t("This serial number is already used."), { type: "warning" });
-                return Promise.reject();
+                return;
             }
         }
         await this._updateLotName(line, lotName);
@@ -604,7 +604,7 @@ export default class BarcodeModel extends EventBus {
      */
     splitBarcode(barcode) {
         // If the barcode has multiple URI, separate them.
-        const matchedURI = [...barcode.matchAll(/urn:(?:[a-z0-9 -]+:){3} [0-9.]+/g)];
+        const matchedURI = [...barcode.matchAll(/urn:(?:[a-z0-9 -]+:){3} ?[0-9.]+/g)];
         if (matchedURI.length > 1) {
             return matchedURI.map((uri) => uri[0]);
         }
@@ -654,7 +654,7 @@ export default class BarcodeModel extends EventBus {
             parsedBarcodes.push(barcodeObject);
         }
         // Fetch all needed missing data and add them to the cache.
-        await this.cache.getMissingRecords();
+        await this._getMissingRecords();
 
         // Link parsed barcodes with missing information to the corresponding record(s).
         const validBarcodes = [];
@@ -693,6 +693,18 @@ export default class BarcodeModel extends EventBus {
         this.trigger("clearBarcodesCountProcessed");
         this.notificationCache.clear();
         delete this._currentBarcode;
+    }
+
+    _getMissingRecordsParams() {
+        return {
+            context: { allowed_company_ids: [this._getCompanyId()] },
+            forceUnrestrictedSearch: !this.parser.nomenclature.is_gs1_nomenclature,
+        };
+    }
+
+    async _getMissingRecords() {
+        const params = this._getMissingRecordsParams();
+        await this.cache.getMissingRecords(params);
     }
 
     async getGs1Filters(gs1RulesData) {
@@ -904,9 +916,9 @@ export default class BarcodeModel extends EventBus {
         const sortedSublines = this._sortLine(sublines);
         // Use the line with lowest ID as the reference (info shown on summary
         // line and also the move line opened for the form view.)
-        const referenceLine = sortedSublines.reduce((result, line) => {
-            return line.id && (!result.id || result.id > line.id) ? line : result;
-        });
+        const referenceLine = sortedSublines.reduce((result, line) =>
+            line.id && (!result.id || result.id > line.id) ? line : result
+        );
         return Object.assign({}, referenceLine, {
             ids,
             lines: sortedSublines,
@@ -1379,25 +1391,30 @@ export default class BarcodeModel extends EventBus {
                     false;
                 const locationId =
                     (currentLine && currentLine.location_id && currentLine.location_id.id) || false;
-                const res = await this.orm.call(
-                    "product.product",
-                    "prefilled_owner_package_stock_barcode",
-                    [product.id],
-                    {
-                        lot_id: lotId,
-                        lot_name: (!lotId && barcodeData.lotName) || false,
-                        location_id: locationId,
-                    }
-                );
-                this.cache.setCache(res.records);
-                if (prefilledPackage && res.quant && res.quant.package_id) {
-                    barcodeData.package = this.cache.getRecord(
-                        "stock.quant.package",
-                        res.quant.package_id
+                const params = {
+                    lot_id: lotId,
+                    lot_name: (!lotId && barcodeData.lotName) || false,
+                };
+                let quants = await this.cache.getQuants(product, locationId, params);
+                if (quants.length && quants.length > 1 && (prefilledPackage || prefilledOwner)) {
+                    // If we have multiple matching quants and we use package and/or consigment,
+                    // give priority to the quants with a package or an owner.
+                    const filteredQuants = quants.filter(
+                        (quant) => quant.package_id || quant.owner_id
                     );
+                    quants = filteredQuants.length ? filteredQuants : quants;
                 }
-                if (prefilledOwner && res.quant && res.quant.owner_id) {
-                    barcodeData.owner = this.cache.getRecord("res.partner", res.quant.owner_id);
+                if (quants && quants.length === 1) {
+                    const quant = quants[0];
+                    if (prefilledPackage && quant.package_id) {
+                        barcodeData.package = this.cache.getRecord(
+                            "stock.quant.package",
+                            quant.package_id
+                        );
+                    }
+                    if (prefilledOwner && quant.owner_id) {
+                        barcodeData.owner = this.cache.getRecord("res.partner", quant.owner_id);
+                    }
                 }
             }
         }
@@ -1647,9 +1664,7 @@ export default class BarcodeModel extends EventBus {
      * @returns {Array<Object>}
      */
     _sortLine(lines) {
-        return lines.sort((l1, l2) => {
-            return l1.sortIndex > l2.sortIndex ? 1 : -1;
-        });
+        return lines.sort((l1, l2) => (l1.sortIndex > l2.sortIndex ? 1 : -1));
     }
 
     _findLine(barcodeData) {

@@ -28,8 +28,7 @@ patch(BarcodeModel.prototype, {
             if (!barcodeData.error) {
                 if (this.groups.group_tracking_lot) {
                     barcodeData.error = _t(
-                        "This product doesn't exist. Either scan a package " +
-                        "available at the picking location or create a new product."
+                        "This product doesn't exist. Either scan a package available at the picking location or create a new product."
                     );
                 } else {
                     barcodeData.error = _t("This product doesn't exist.");
@@ -83,7 +82,8 @@ patch(BarcodeModel.prototype, {
     },
 
     async createNewProductLine(barcodeData) {
-        const params = { barcode: barcodeData.barcode, model_name: "product.product" };
+        const barcodes_by_model = { "product.product": [barcodeData.barcode] };
+        const params = { barcodes_by_model };
         try {
             const result = await rpc("/stock_barcode/get_specific_barcode_data", params);
             if (Object.keys(result).length === 0) {
