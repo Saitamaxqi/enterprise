@@ -3367,6 +3367,12 @@ msgid ""
 msgstr ""
 
 #. module: documents
+#. odoo-python
+#: code:addons/documents/models/documents_document.py:0
+msgid "You cannot copy in that folder"
+msgstr ""
+
+#. module: documents
 #. odoo-javascript
 #: code:addons/documents/static/src/views/cog_menu/documents_cog_menu_pin_actions.js:0
 msgid "You can not pin actions for that folder."

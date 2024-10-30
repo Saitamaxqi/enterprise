@@ -1383,8 +1383,10 @@ class DocumentsDocument(models.Model):
         # As we avoid to propagate the folder permission by setting access_ids to False (see copy_data), user has no
         # right to create the document. So after checking permission, we execute the copy in sudo.
         self.check_access("create")
-        self.folder_id.check_access('write')
         self.check_access('read')
+        if not self.env.su and self.folder_id and self.folder_id.user_permission != 'edit':
+            # do not check access to allow copying in root company folders
+            raise AccessError(_('You cannot copy in that folder'))
 
         documents_order = {doc.id: idx for idx, doc in enumerate(self)}
         new_documents = [self.browse()] * len(self)

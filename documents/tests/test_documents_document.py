@@ -6,7 +6,7 @@ from datetime import datetime, timedelta
 from unittest import skip
 
 from odoo import Command, http
-from odoo.exceptions import UserError, ValidationError
+from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tests.common import new_test_user
 from odoo.tests import users
 
@@ -226,7 +226,7 @@ class TestCaseDocuments(TransactionCaseDocuments):
         """
         Tests that potentially harmful mimetypes (XML mimetypes that can lead to XSS attacks) are converted to text
 
-        In fact this logic is implemented in the base `IrAttachment` model but was originally duplicated.  
+        In fact this logic is implemented in the base `IrAttachment` model but was originally duplicated.
         The test stays duplicated here to ensure the de-duplicated logic still catches our use cases.
         """
         self.folder_b.action_update_access_rights(partners={self.doc_user.partner_id: ('edit', False)})
@@ -382,6 +382,21 @@ class TestCaseDocuments(TransactionCaseDocuments):
             "There must be a new attachment"
         )
         self.assertEqual(copy.raw, self.document_txt.raw)
+
+        # check that we can copy in a folder inside the company folder
+        self.assertFalse(self.folder_a.folder_id)
+        self.folder_a.owner_id = self.env.ref("base.user_root")
+        self.folder_a.access_internal = 'edit'
+        self.folder_a.is_pinned_folder = True
+
+        # Special case where we can not write, but `user_permission == edit` because
+        # the folder is in the company root
+        with self.assertRaises(AccessError):
+            self.folder_a.with_user(self.internal_user).check_access('write')
+        self.assertEqual(self.folder_a.with_user(self.internal_user).user_permission, 'edit')
+
+        self.document_txt.folder_id = self.folder_a
+        self.document_txt.with_user(self.internal_user).copy()
 
     def test_document_thumbnail_status(self):
         for mimetype in ['application/pdf', 'application/pdf;base64']:
