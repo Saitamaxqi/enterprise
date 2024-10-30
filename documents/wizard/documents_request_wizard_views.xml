@@ -26,7 +26,7 @@
                             <field name="res_id" readonly="1" groups="base.group_no_one"/>
                         </group>
                         <group>
-                            <field name="folder_id" required="1"
+                            <field name="folder_id"
                                 options="{'no_create_edit': True, 'no_create': True, 'no_open': True}"
                                 widget="documents_folder_many2one"/>
                             <field name="tag_ids" widget="many2many_tags"/>

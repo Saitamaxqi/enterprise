@@ -24,7 +24,7 @@ class DocumentsRequest_Wizard(models.TransientModel):
     tag_ids = fields.Many2many('documents.tag', string="Tags")
     folder_id = fields.Many2one('documents.document',
                                 domain="[('type', '=', 'folder'), ('shortcut_document_id', '=', False)]",
-                                string="Folder", required=True)
+                                string="Folder")
 
     res_model = fields.Char('Resource Model')
     res_id = fields.Integer('Resource ID')
