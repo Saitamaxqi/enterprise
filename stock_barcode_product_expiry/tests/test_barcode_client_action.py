@@ -2,7 +2,7 @@
 
 import logging
 
-from odoo.tests import Form, tagged, loaded_demo_data
+from odoo.tests import Form, tagged
 from odoo.addons.stock_barcode.tests.test_barcode_client_action import TestBarcodeClientAction
 
 _logger = logging.getLogger(__name__)
@@ -24,9 +24,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         convert to expiration date according to the setting on the product. When
         both dates are scanned, only the expiration date will be used.
         """
-        if not loaded_demo_data(self.env):
-            _logger.warning("This test relies on demo data. To be rewritten independently of demo data for accurate and reliable results.")
-            return
+        self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
         self.clean_access_rights()
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
 
