@@ -7,22 +7,22 @@ class StockPickingType(models.Model):
 
     barcode_allow_extra_product = fields.Boolean(
         "Allow extra products", default=True,
-        help="For planned transfers, allow to add non-reserved products"
+        help="For planned transfers, allow adding non-reserved products"
     )
-    barcode_validation_after_dest_location = fields.Boolean("Force a destination on all products")
+    barcode_validation_after_dest_location = fields.Boolean("Force a destination for all products")
     barcode_validation_all_product_packed = fields.Boolean("Force all products to be packed")
     barcode_validation_full = fields.Boolean(
         "Allow full picking validation", default=True,
-        help="Allow to validate a picking even if nothing was scanned yet (and so, do an immediate transfert)")
+        help="Allow validating a picking even if nothing has been scanned yet, i.e. do an immediate transfer")
     restrict_scan_product = fields.Boolean(
-        "Force Product scan?", help="Line's product must be scanned before the line can be edited")
+        "Force Product scan?", help="A line's product must be scanned before the line can be edited")
     restrict_put_in_pack = fields.Selection(
         [
             ('mandatory', "After each product"),
-            ('optional', "After group of Products"),
+            ('optional', "After group of products"),
             ('no', "No"),
         ], "Force put in pack?",
-        help="Does the picker have to put in a package the scanned products? If yes, at which rate?",
+        help="Does the picker have to put the scanned products in a package? If yes, when?",
         default="optional", required=True)
     restrict_scan_tracking_number = fields.Selection(
         [
@@ -37,20 +37,20 @@ class StockPickingType(models.Model):
     restrict_scan_dest_location = fields.Selection(
         [
             ('mandatory', "After each product"),
-            ('optional', "After group of Products"),
+            ('optional', "After group of products"),
             ('no', "No"),
         ], "Force Destination Location scan?",
-        help="Does the picker have to scan the destination? If yes, at which rate?",
+        help="Does the picker have to scan the destination? If yes, when?",
         default='optional', required=True)
     show_barcode_validation = fields.Boolean(
         compute='_compute_show_barcode_validation',
-        help='Technical field used to compute whether the "Final Validation" group should be displayed, solving combined groups/invisible complexity.')
+        help='Technical field used to compute whether the "Final Validation" group should be displayed, to support combined groups/invisible complexity.')
     show_reserved_sns = fields.Boolean(
-        "Show reserved lots/SN", help="Allows to display reserved lots/serial numbers. "
-        "When non active, it is clear for the picker that they can pick the lots/serials they want.")
+        "Show reserved lots/SN",
+        help="Display reserved lots/serial numbers. When not active, the picker can pick lots/serials as they want.")
     is_barcode_picking_type = fields.Boolean(
         compute='_compute_is_barcode_picking_type',
-        help="Technical field indicating if should be used in barcode app and used to control visibility in the related UI.")
+        help="Technical field indicating if type should be used in barcode app and used to control visibility in the related UI.")
 
     @api.depends('restrict_scan_product', 'restrict_put_in_pack', 'restrict_scan_dest_location')
     def _compute_show_barcode_validation(self):
