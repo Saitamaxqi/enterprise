@@ -852,7 +852,7 @@ class AppointmentType(models.Model):
                     if day == today.date() and day.month == today.month:
                         today_cls = 'o_today'
                     if day.month != start.month:
-                        mute_cls = 'text-muted o_mute_day'
+                        mute_cls = 'd-none'
                     else:
                         # slots are ordered, so check all unprocessed slots from until > day
                         while slots and (slots[0][timezone][0].date() <= day):
