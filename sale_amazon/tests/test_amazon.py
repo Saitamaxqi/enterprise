@@ -588,6 +588,7 @@ class TestAmazon(common.TestAmazonCommon):
             picking.carrier_id, picking.carrier_tracking_ref = self.carrier, self.tracking_ref
             picking._action_done()
             self.assertEqual(picking.amazon_sync_status, 'pending')
+            self.account.company_id.write({"street": "street1"})  # needed in no-demo
             picking._sync_pickings(account_ids=(self.account.id,))
             self.assertEqual(
                 mock.call_count,
