@@ -507,7 +507,6 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         odoobot = self.env.ref('base.user_root')
         self.assertFalse(self.folder_a.folder_id)
         self.folder_a.owner_id = odoobot
-        self.folder_a.is_pinned_folder = True
         self.folder_a.action_update_access_rights(partners={self.internal_user.partner_id.id: ('edit', False)})
         access = self.env['documents.access'].search([
             ('document_id', '=', self.folder_a.id),
@@ -538,7 +537,6 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         odoobot = self.env.ref('base.user_root')
         folder = self.env['documents.document'].create({
             'folder_id': False,
-            'is_pinned_folder': True,
             'name': 'folder',
             'owner_id': odoobot.id,
             'type': 'folder',
@@ -548,7 +546,6 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         with self.assertRaises(AccessError):
             self.env['documents.document'].with_user(self.internal_user).create({
                 'folder_id': False,
-                'is_pinned_folder': True,
                 'name': 'folder',
                 'owner_id': odoobot.id,
                 'type': 'folder',
@@ -557,33 +554,31 @@ class TestDocumentsAccess(TransactionCaseDocuments):
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_pin_folder_folder_id(self):
         """Check that non-admins cannot (un-)pin company root folders."""
+
+        def set_company_root(document, pin=True):
+            if pin:
+                document.write({'owner_id': self.env.ref('base.user_root').id, 'folder_id': False})
+            else:
+                document.owner_id = self.env.user
+
         odoobot = self.env.ref('base.user_root')
         self.assertFalse(self.folder_a.folder_id)
         self.folder_a.owner_id = odoobot
-        self.folder_a.is_pinned_folder = True
+        set_company_root(self.folder_a)
         self.folder_a.action_update_access_rights(partners={self.internal_user.partner_id.id: ('edit', False)})
         self._assert_raises_check_access_rule(self.folder_a.with_user(self.internal_user), 'write')
         self.folder_b.owner_id = odoobot
-        self.folder_a.is_pinned_folder = True
-        self.folder_a.with_user(self.document_manager).is_pinned_folder = False
+        set_company_root(self.folder_a)
+        set_company_root(self.folder_a.with_user(self.document_manager), False)
         self.folder_a.with_user(self.document_manager).folder_id = self.folder_b
         self.folder_a.with_user(self.internal_user).check_access('write')
-        with self.assertRaises(ValidationError):
-            self.folder_a.with_user(self.internal_user).is_pinned_folder = True
         with self.assertRaises(AccessError):
-            self.folder_a.with_user(self.internal_user).toggle_is_pinned_folder()
-
-        # in SUDO, a normal user should be able to pin a folder
-        self.folder_a.with_user(self.internal_user).sudo().toggle_is_pinned_folder()
-        self.assertTrue(self.folder_a.is_pinned_folder)
-        with self.assertRaises(AccessError):
-            # without SUDO, a normal user can not unpin a folder
-            self.folder_a.with_user(self.internal_user).toggle_is_pinned_folder()
+            set_company_root(self.folder_a.with_user(self.internal_user))
 
         # with SUDO, a normal user can unpin a folder
-        self.folder_a.with_user(self.internal_user).sudo().is_pinned_folder = False
+        set_company_root(self.folder_a.with_user(self.internal_user).sudo(), False)
         # manager can do what they want with an odoobot folder
-        self.folder_a.with_user(self.document_manager).is_pinned_folder = True
+        set_company_root(self.folder_a.with_user(self.document_manager))
 
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_unlink_with_children(self):

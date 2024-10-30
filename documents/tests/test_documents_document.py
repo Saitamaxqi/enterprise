@@ -387,7 +387,6 @@ class TestCaseDocuments(TransactionCaseDocuments):
         self.assertFalse(self.folder_a.folder_id)
         self.folder_a.owner_id = self.env.ref("base.user_root")
         self.folder_a.access_internal = 'edit'
-        self.folder_a.is_pinned_folder = True
 
         # Special case where we can not write, but `user_permission == edit` because
         # the folder is in the company root

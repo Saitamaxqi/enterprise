@@ -226,23 +226,26 @@ export class DocumentsSearchModel extends SearchModel {
     _getCategoryDomain() {
         const folderCategory = this.categories.find((cat) => cat.fieldName === "folder_id");
         if (folderCategory.activeValueId === "COMPANY") {
-            return Domain.and([
-                [["folder_id", "=", false]],
-                [["access_internal", "in", ['edit', 'view']]]
-            ]).toList();
+            return [
+                ["folder_id", "=", false],
+                ["owner_id", "=", this.documentService.store.odoobot.userId],
+            ];
         }
         if (folderCategory.activeValueId === "TRASH") {
             return [["active", "=", false]];
         }
         if (folderCategory.activeValueId === "MY") {
-            return [["folder_id", "=", false], ["owner_id", "=", user.userId]];
+            return [
+                ["folder_id", "=", false],
+                ["owner_id", "=", user.userId],
+            ];
         }
         if (folderCategory.activeValueId === "SHARED") {
             return Domain.and([
                 [["owner_id", '!=', user.userId]],
                 [["shortcut_document_id", "=", false]], // no need to show them, the target will be here (or nested)
                 Domain.or([
-                    Domain.and([[['folder_id', '=', false]], [["access_internal", "=", 'none']]]),
+                    Domain.and([[['folder_id', '=', false]], [['owner_id', '!=', this.documentService.store.odoobot.userId]]]),
                     // a non-accessible parent would still be found with its id (not False), and using `not any` (not, !=, 'none')
                     // is much simpler than implementing searching for 'user permission', '=', 'none'.
                     Domain.and([[['folder_id', '!=', false]], [['folder_id', 'not any', [['user_permission', '!=', 'none']]]]]),

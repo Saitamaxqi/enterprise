@@ -121,6 +121,13 @@ export class DocumentsSearchPanel extends SearchPanel {
                         { location_folder_id : false },
                     );
                     return this.env.searchModel._reloadSearchModel(true);
+                } else if (parentFolderId === "COMPANY") {
+                    await this.orm.call(
+                        "documents.document",
+                        "write",
+                        [draggingFolderId, { folder_id: false, owner_id: this.documentService.store.odoobot.userId }],
+                    );
+                    return this.env.searchModel._reloadSearchModel(true);
                 } else if (parentFolderId) {
                     parentFolderId = parseInt(parentFolderId);
                 }
@@ -308,11 +315,22 @@ export class DocumentsSearchPanel extends SearchPanel {
         const data = JSON.parse(dataTransfer.getData("o_documents_data"));
         const currentFolder = this.env.searchModel.getSelectedFolder();
 
+        const movedRecords = this.env.model.root.records
+            .map((r) => r.data)
+            .filter((r) => data.recordIds.includes(r.id));
+
+        const isEditable = (folder) => {
+            return (
+                !folder.id ||
+                folder.user_permission === "edit" ||
+                (folder.id === "COMPANY" && this.isDocumentManager)
+            );
+        };
+
         if (this._notify_wrong_drop_destination(value.id)) {
             return;
         }
-        if ((currentFolder.id && currentFolder.user_permission !== "edit")
-            || value.user_permission !== "edit") {
+        if (!isEditable(currentFolder) || !isEditable(value)) {
             return this.notification.add(
                 _t("You don't have the rights to move documents to that folder."),
                 {
@@ -331,6 +349,24 @@ export class DocumentsSearchPanel extends SearchPanel {
                 _t("Shortcut created"),
                 { title: _t("Done!"), type: "success" }
             );
+        }
+        if (target_folder_id === "COMPANY") {
+            if (
+                movedRecords.some(
+                    (r) => r.type === "binary" && !r.checksum?.length && !r.shortcut_document_id
+                )
+            ) {
+                return this.notification.add(_t("You cannot move request in the company folder"), {
+                    title: _t("Access Error"),
+                    type: "warning",
+                });
+            }
+            await this.orm.call("documents.document", "write", [
+                data.recordIds,
+                { folder_id: false, owner_id: this.documentService.store.odoobot.userId },
+            ]);
+            await this.env.searchModel._reloadSearchModel(true);
+            return;
         }
         if (target_folder_id === "TRASH") {
             const model = this.env.model;
@@ -355,12 +391,9 @@ export class DocumentsSearchPanel extends SearchPanel {
     }
 
     _notify_wrong_drop_destination(folderId) {
-        if (["RECENT", "SHARED", "COMPANY"].includes(folderId)) {
+        if (["RECENT", "SHARED"].includes(folderId)) {
             this.notification.add(
-                _t("You can't create shortcuts in or move documents to this special folder.") +
-                    (folderId === "COMPANY" && this.isDocumentManager
-                        ? _t(" Perhaps you mean to use the pin action.")
-                        : ""),
+                _t("You can't create shortcuts in or move documents to this special folder."),
                 {
                     title: _t("Invalid operation"),
                     type: "warning",

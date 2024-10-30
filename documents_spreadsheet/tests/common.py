@@ -24,7 +24,8 @@ class SpreadsheetTestCommon(SpreadsheetTestCase):
             "type": "folder",
             "access_internal": "view",
             "access_via_link": "none",
-            "is_pinned_folder": True,
+            "owner_id": cls.env.ref('base.user_root').id,
+            "folder_id": False,
         })
         cls.spreadsheet_user = new_test_user(
             cls.env, login="spreadsheetDude", groups="documents.group_documents_user"
