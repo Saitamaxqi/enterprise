@@ -2989,6 +2989,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         This test ensures that products of the same lot can be
         packed in different packages.
         """
+        self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
         self.clean_access_rights()
         group_tracking = self.env.ref('stock.group_tracking_lot')
         self.env.user.write({'groups_id': [Command.link(group_tracking.id)]})
