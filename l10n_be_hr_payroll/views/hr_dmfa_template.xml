@@ -1181,6 +1181,9 @@
             <t t-foreach="occupation.remunerations" t-as="remuneration">
                 <t t-call="l10n_be_hr_payroll.Remun"/>
             </t>
+            <t t-foreach="occupation.occupation_deductions" t-as="occupation_deduction">
+                <t t-call="l10n_be_hr_payroll.OccupationDeduction"/>
+            </t>
         </Occupation>
     </template>
 
@@ -1688,6 +1691,98 @@
              -->
             <RemunAmount t-esc="remuneration.amount if remuneration.code != '012' else '0' + remuneration.amount[1:]"/>
         </Remun>
+    </template>
+
+    <template id="OccupationDeduction">
+        <!-- Bloc fonctionnel permettant de déclarer les déductions demandées pour une occupation. -->
+        <OccupationDeduction>
+            <!-- 00086 - CODE DÉDUCTION
+            DESCRIPTION:    Code qui indique la déduction demandée.
+            DOMAINE DE DEFINITION:  Les codes DmfA repris à l’annexe 4 - Liste des codes déductions.
+            TYPE:   Numérique
+            LONGUEUR:   4
+            PRESENCE:   Indispensable -->
+            <DeductionCode t-esc="occupation_deduction.deduction_code"/>
+
+            <!-- 00088 - BASE DE CALCUL DE LA DÉDUCTION
+            DESCRIPTION:    Montant sur lequel un taux doit être appliqué afin de connaître le montant de la déduction demandée pour cette ligne travailleur ou occupation.
+            DOMAINE DE DEFINITION:  [0;99999999999]
+            TYPE:   Numérique
+            LONGUEUR:   11
+            PRESENCE:   Obligatoire si la déduction demandée est calculée à partir d’une base de calcul sur laquelle un taux doit être appliqué. -->
+            <DeductionCalculationBasis t-if="occupation_deduction.deduction_calculation_basis != -1" t-esc="occupation_deduction.deduction_calculation_basis"/>
+
+            <!-- 00089 - MONTANT DE LA DÉDUCTION
+            DESCRIPTION:    Montant de la déduction demandée pour cette ligne travailleur ou occupation.
+            DOMAINE DE DEFINITION:  [0;99999999999].
+            TYPE:   Numérique
+            LONGUEUR:   11
+            PRESENCE:   Obligatoire si la déduction demandée correspond à un montant déductible du montant net à payer. -->
+            <DeductionAmount t-if="occupation_deduction.deduction_amount != -1" t-esc="occupation_deduction.deduction_amount"/>
+
+            <!-- 00090 - DATE DE DÉBUT DU DROIT À LA DÉDUCTION
+            DESCRIPTION:    
+            Date à laquelle la déduction prend cours pour cette ligne travailleur ou occupation.
+            Cette date ne correspond pas nécessairement à la date d’entrée en service du travailleur chez l’employeur.
+            DOMAINE DE DEFINITION:  
+            Le domaine de définition varie en fonction de la déduction demandée (voir annexe 4).
+            TYPE:   Alphanumérique
+            LONGUEUR:   10
+            PRESENCE:   Obligatoire si une date doit être déclarée pour la déduction demandée.
+            FORMAT: AAAA-MM-JJ
+            · AAAA est l'année
+            · MM est le mois
+            . JJ est le jour -->
+            <DeductionRightStartingDate t-if="occupation_deduction.deduction_right_starting_date != -1" t-esc="occupation_deduction.deduction_right_starting_date"/>
+
+            <!-- 00091 - NOMBRE DE MOIS FRAIS DE GESTION SSA
+            DESCRIPTION:    Nombre de mois faisant l'objet, au cours du trimestre traité, de la prise en charge temporaire, par l'ONSS, des frais d'administration encourus par l'employeur affilié à un Secrétariat Social Agréé.
+            DOMAINE DE DEFINITION:  [1;3]
+            TYPE:   Numérique
+            LONGUEUR:   1
+            PRESENCE:   Obligatoire si le Secrétariat Social revendique l'intervention de l'ONSS dans ses frais d'administration pour cet employeur. -->
+            <ManagementCostNbrMonths t-if="occupation_deduction.management_cost_nbr_months != -1" t-esc="occupation_deduction.management_cost_nbr_months"/>
+
+            <!-- 00092 - NUMÉRO D'IDENTIFICATION DE LA SÉCURITÉ SOCIALE - NISS DE LA PERSONNE REMPLACÉE
+            DESCRIPTION:    Numéro d'identification d'une personne physique au sein de la sécurité sociale. Il s'agit du numéro d'identification de la personne physique au registre national ou au registre bis des personnes physiques.
+            NISS de la personne qui est en interruption de carrière (partielle ou totale) ou en prépension à mi-temps, et qui est remplacée par la personne pour laquelle la déduction est demandée en raison du remplacement.
+            DOMAINE DE DEFINITION:  
+            Si le NISS n'est pas connu, la valeur à renseigner est zéro.
+            TYPE:   Numérique
+            LONGUEUR:   11
+            PRESENCE:   Obligatoire si la déduction est octroyée suite au remplacement d'une personne en interruption de carrière (partielle ou totale) ou prépension à mi-temps.
+            FORMAT: 0 ou NNNNNNNNNCC
+            · NNNNNNNNN est le numéro
+            · CC est le chiffre de contrôle. -->
+            <ReplacedINSS t-if="occupation_deduction.replaced_inss != -1" t-esc="occupation_deduction.replaced_inss"/>
+
+            <!-- 00093 - NUMÉRO D'IDENTIFICATION DE LA SÉCURITÉ SOCIALE - NISS DE LA PERSONNE QUI A OUVERT LE DROIT À LA DÉDUCTION
+            DESCRIPTION:    Numéro d'identification d'une personne physique au sein de la sécurité sociale. Il s'agit du numéro d'identification de la personne physique au registre national ou au registre bis des personnes physiques.
+            NISS de la personne qui a ouvert le droit à la déduction lorsque celle-ci est demandée pour un travailleur remplaçant cette personne (ou son remplaçant).
+            DOMAINE DE DEFINITION:  
+            Si le NISS n'est pas connu, la valeur à renseigner est zéro.
+            TYPE:   Numérique
+            LONGUEUR:   11
+            PRESENCE:   Obligatoire si la déduction est demandée pour un travailleur qui remplace la personne (ou son remplaçant) qui a ouvert le droit à la déduction.
+            FORMAT: 0 ou NNNNNNNNNCC
+            · NNNNNNNNN est le numéro
+            · CC est le chiffre de contrôle. -->
+            <ApplicantINSS t-if="occupation_deduction.applicant_inss != -1" t-esc="occupation_deduction.applicant_inss"/>
+
+            <!-- 00094 - ORIGINE DE L'ATTESTATION
+            DESCRIPTION:    Origine de l'attestation nécessaire à l'octroi de la déduction.
+            Cette donnée ne sera pas demandée pour les réductions des cotisations qui sont d'application actuellement.
+            DOMAINE DE DEFINITION:  
+            1 = ONEm
+            2 = CPAS
+            3 = Caisse d''assurance sociale pour travailleurs indépendants
+            4 = Apprenti agréé
+            5 = Ancien intérimaire
+            TYPE:   Numérique
+            LONGUEUR:   3
+            PRESENCE:   Facultative -->
+            <CertificateOrigin t-if="occupation_deduction.certificate_origin != -1" t-esc="occupation_deduction.certificate_origin"/>
+        </OccupationDeduction>
     </template>
 
     <template id="dmfa_pdf_report">

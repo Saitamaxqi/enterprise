@@ -1768,5 +1768,50 @@ covered for the company (teleworking costs, mobile phone, internet, etc., namely
             <field name="rule_parameter_id" ref="rule_parameter_cp200_public_transport_max_amount"/>
             <field name="date_from" eval="datetime(2024, 10, 1).date()"/>
         </record>
+
+        <record id="rule_parameter_cp200_occupation_deduction_3000_alpha" model="hr.rule.parameter">
+            <field name="name">CP200: Occupation deduction 3000 Alpha (reduction structurelle)</field>
+            <field name="code">cp200_occupation_deduction_3000_alpha</field>
+            <field name="country_id" ref="base.be"/>
+        </record>
+        <record id="rule_parameter_cp200_occupation_deduction_3000_alpha_2020" model="hr.rule.parameter.value">
+            <field name="parameter_value">0.14</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_occupation_deduction_3000_alpha"/>
+            <field name="date_from" eval="datetime(2020, 1, 1).date()"/>
+        </record>
+
+        <record id="rule_parameter_cp200_occupation_deduction_3000_s0" model="hr.rule.parameter">
+            <field name="name">CP200: Occupation deduction 3000 S0 (reduction structurelle)</field>
+            <field name="code">cp200_occupation_deduction_3000_s0</field>
+            <field name="country_id" ref="base.be"/>
+        </record>
+        <record id="rule_parameter_cp200_occupation_deduction_3000_s0_2020" model="hr.rule.parameter.value">
+            <field name="parameter_value">11013.62</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_occupation_deduction_3000_s0"/>
+            <field name="date_from" eval="datetime(2020, 1, 1).date()"/>
+        </record>
+
+        <record id="rule_parameter_cp200_occupation_deduction_3000_gamma" model="hr.rule.parameter">
+            <field name="name">CP200: Occupation deduction 3000 Gamma (reduction structurelle)</field>
+            <field name="code">cp200_occupation_deduction_3000_gamma</field>
+            <field name="country_id" ref="base.be"/>
+        </record>
+        <record id="rule_parameter_cp200_occupation_deduction_3000_gamma_2020" model="hr.rule.parameter.value">
+            <field name="parameter_value">0.4</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_occupation_deduction_3000_gamma"/>
+            <field name="date_from" eval="datetime(2020, 1, 1).date()"/>
+        </record>
+
+        <record id="rule_parameter_cp200_occupation_deduction_3000_s2" model="hr.rule.parameter">
+            <field name="name">CP200: Occupation deduction 3000 S2 (reduction structurelle)</field>
+            <field name="code">cp200_occupation_deduction_3000_s2</field>
+            <field name="country_id" ref="base.be"/>
+        </record>
+        <record id="rule_parameter_cp200_occupation_deduction_3000_s2_2020" model="hr.rule.parameter.value">
+            <field name="parameter_value">6943.32</field>
+            <field name="rule_parameter_id" ref="rule_parameter_cp200_occupation_deduction_3000_s2"/>
+            <field name="date_from" eval="datetime(2020, 1, 1).date()"/>
+        </record>
+
     </data>
 </odoo>

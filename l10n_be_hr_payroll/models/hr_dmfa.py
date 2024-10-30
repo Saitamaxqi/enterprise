@@ -10,9 +10,9 @@ from lxml import etree
 
 from odoo import api, fields, models, _
 from odoo.tools import date_utils
+from odoo.tools.float_utils import float_round
 from odoo.tools.misc import file_path
 from odoo.exceptions import ValidationError, UserError
-
 
 def format_amount(amount, width=11, hundredth=True):
     """
@@ -21,6 +21,10 @@ def format_amount(amount, width=11, hundredth=True):
     if hundredth:
         amount = round(amount * 100)
     return str(int(amount)).zfill(width)
+
+
+def round_eurocent(amount):
+    return float_round(amount, precision_digits=2, rounding_method="HALF-UP")
 
 # TODO:
 # - Anticipated Double Holiday Pay
@@ -226,6 +230,8 @@ class DMFAWorker(DMFANode):
         else:
             self.occupations = self._prepare_occupations(self.payslips.mapped('contract_id'), self.quarter_start, self.quarter_end)
             skip_remun = all(o.skip_remun for o in self.occupations)
+
+        self._prepare_occupation_deductions(self.occupations)
 
         self.student_contributions = []
         self.contributions = []
@@ -465,6 +471,18 @@ class DMFAWorker(DMFANode):
             return [DMFAWorkerDeduction(employement_deduction_lines, code='0001')]
         return []
 
+    def _prepare_occupation_deductions(self, occupations):
+        mu_global = 0
+        for occupation in occupations:
+            uu = 38
+            zz = sum(int(s.nbr_hours) / 100 for s in occupation.services if int(s.code) in [1, 2, 3, 4, 5, 12, 20, 72] and s.sequence != 99)
+            mu = round_eurocent(zz / (13 * uu))
+            mu_global += mu
+        for occupation in occupations:
+            if not sum(int(s.nbr_hours) / 100 for s in occupation.services if int(s.code) in [1, 3, 4, 5, 20]):
+                occupation.occupation_deductions = DMFAOccupationDeduction.init_multi([])
+            else:
+                occupation.occupation_deductions = DMFAOccupationDeduction.init_multi([(occupation.payslips, occupation.quarter_start, occupation.remunerations, occupation.services, occupation.mean_working_hours, mu_global)])
 
 class DMFAStudentContribution(DMFANode):
     """
@@ -809,7 +827,6 @@ class DMFAOccupation(DMFANode):
     def _prepare_occupation_informations(self):
         return DMFAOccupationInformation.init_multi([])
 
-
 class DMFARemuneration(DMFANode):
     """
     Represents the paid amounts on payslips
@@ -900,6 +917,47 @@ class DMFAWorkerDeduction(DMFANode):
         self.deduction_right_starting_date = -1
         self.manager_cost_nbr_months = -1
         self.replace_inss = -1
+        self.applicant_inss = -1
+        self.certificate_origin = -1
+
+
+class DMFAOccupationDeduction(DMFANode):
+    def __init__(self, payslips, quarter_start, remunerations, services, hours_per_week, mu_global, sequence=1):
+        super().__init__(payslips.env, sequence=sequence)
+        self.deduction_code = 3000
+        self.deduction_calculation_basis = -1
+        # https://www.socialsecurity.be/employer/instructions/dmfa/fr/latest/instructions/deductions/structuralreduction_targetgroupreductions/introduction.html
+        # https://www.socialsecurity.be/employer/instructions/dmfa/fr/latest/instructions/deductions/structuralreduction_targetgroupreductions/structuralreduction.html
+        # https://www.socialsecurity.be/employer/instructions/dmfa/fr/latest/instructions/socialsecuritycontributions/contributions.html#heading-4
+        # Rcatégorie 1 = 0,1400 x ( 11.013,62 - S) + 0,4000 x (6.943,32 - S); (catégorie générale)
+        ww = sum(int(r.amount) / 100 for r in remunerations if int(r.code) in [1, 2, 4, 5, 12])
+        uu = 38
+        hh = sum(int(s.nbr_hours) / 100 for s in services if int(s.code) in [1, 3, 4, 5, 20])
+        ss = round_eurocent(ww * round_eurocent(13.0 * uu / hh))
+        alpha = payslips.env['hr.rule.parameter'].sudo()._get_parameter_from_code('cp200_occupation_deduction_3000_alpha', date=quarter_start)
+        s0 = payslips.env['hr.rule.parameter'].sudo()._get_parameter_from_code('cp200_occupation_deduction_3000_s0', date=quarter_start)
+        gamma = payslips.env['hr.rule.parameter'].sudo()._get_parameter_from_code('cp200_occupation_deduction_3000_gamma', date=quarter_start)
+        s2 = payslips.env['hr.rule.parameter'].sudo()._get_parameter_from_code('cp200_occupation_deduction_3000_s2', date=quarter_start)
+        rr = round_eurocent(alpha * max(s0 - ss, 0)) + round_eurocent(gamma * max(s2 - ss, 0))
+        zz = sum(int(s.nbr_hours) / 100 for s in services if int(s.code) in [1, 2, 3, 4, 5, 12, 20, 72] and s.sequence != 99)
+        mu = round_eurocent(zz / (13 * uu))
+        if mu_global < 0.275 and uu < 38 / 2:
+            beta = 0
+        elif mu_global < 0.55:
+            beta = 1.18
+        elif mu_global < 0.8:
+            beta = 1.18 + (mu_global - 0.55) * 0.28
+        else:
+            beta = 1 / mu_global
+        p = round_eurocent(rr * mu * beta)
+
+        rate = payslips.env['hr.rule.parameter'].sudo()._get_parameter_from_code('l10n_be_global_rate', date=quarter_start, raise_if_not_found=False)
+        p_max = ww * (rate - 13.07) / 100.0
+
+        self.deduction_amount = format_amount(min(p, p_max))
+        self.deduction_right_starting_date = -1
+        self.management_cost_nbr_months = -1
+        self.replaced_inss = -1
         self.applicant_inss = -1
         self.certificate_origin = -1
 
