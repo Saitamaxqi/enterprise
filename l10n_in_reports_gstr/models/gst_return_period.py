@@ -167,28 +167,6 @@ class L10n_InGstReturnPeriod(models.Model):
         "Return period must be unique."
     )]
 
-    def _get_base_account_domain(self):
-        return [
-            ('company_id', 'in', (self.company_ids or self.company_id).ids),
-            ("date", ">=", self.start_date),
-            ("date", "<=", self.end_date),
-        ]
-
-    def _get_default_account_move_domain(self, is_purchase=False):
-        AccountMove = self.env['account.move']
-        move_type = is_purchase and AccountMove.get_purchase_types(True) or AccountMove.get_sale_types(True)
-        return self._get_base_account_domain() + [
-            ('move_type', 'in', move_type),
-            ("state", "=", "posted"),
-        ]
-
-    def _get_default_aml_domain(self, gst_tags):
-        return self._get_base_account_domain() + [
-            ('move_id.move_type', 'in', self.env['account.move'].get_invoice_types(True)),
-            ("move_id.state", "=", "posted"),
-            ("tax_tag_ids", "in", gst_tags),
-        ]
-
     @api.constrains('tax_unit_id')
     def _check_tax_unit(self):
         for record in self:
@@ -1349,7 +1327,10 @@ class L10n_InGstReturnPeriod(models.Model):
         nil_tags = [taxes_tag_ids[key] for key in ['exempt', 'nil_rated', 'non_gst_supplies']]
         export_tags = igst_tag_ids + [taxes_tag_ids['zero_rated']] + cess_tag_ids + nil_tags
         gst_with_other_tags = gst_tags + [taxes_tag_ids['zero_rated']] + nil_tags
-        domain = self._get_base_account_domain() + [
+        domain = [
+            ('company_id', 'in', (self.company_ids or self.company_id).ids),
+            ("date", ">=", self.start_date),
+            ("date", "<=", self.end_date),
             ("move_id.state", "=", "posted"),
             ("display_type", "not in", ('rounding', 'line_note', 'line_section'))
         ]
