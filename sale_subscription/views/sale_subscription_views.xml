@@ -31,7 +31,11 @@
                 <separator/>
                 <filter name="to_renew" string="To Invoice" domain="[('next_invoice_date', '&lt;=', context_today().strftime('%Y-%m-%d')), ('subscription_state', 'in', ('3_progress', '4_paused'))]"/>
                 <separator/>
-                <filter name="payment_exception" string="Failed Payments" domain="[('payment_exception','=', True)]" help="Contracts whose payment has failed"/>
+                <filter name="automatic_payment" string="Automatic Payments" domain="[('subscription_state', 'in', ('3_progress', '4_paused')), ('payment_token_id', '!=', False)]"/>
+                <filter name="manual_payment" string="Manual Payment" domain="[('subscription_state', 'in', ('3_progress', '4_paused')), ('payment_token_id', '=', False), ('require_payment', '=', True)]"/>
+                <filter name="automatic_invoicing" string="Automatic Invoicing" domain="[('subscription_state', 'in', ('3_progress', '4_paused')), ('payment_token_id', '=', False), ('require_payment', '=', False)]"/>
+                <separator/>
+                <filter name="payment_exception" string="In Error" domain="[('payment_exception','=', True)]" help="Contracts whose payment has failed"/>
                 <separator/>
                 <filter name="first_contract_date" date="first_contract_date"/>
                 <separator/>

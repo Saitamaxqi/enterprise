@@ -156,6 +156,7 @@
             <field name="user_id" ref="base.user_admin"/>
             <field name="state">draft</field>
             <field name="client_order_ref">subscription_portal_1</field>
+            <field name="require_payment" eval="False"/>
         </record>
 
         <function model="sale.order"
@@ -179,6 +180,7 @@
             <field name="user_id" ref="base.user_admin"/>
             <field name="state">draft</field>
             <field name="client_order_ref">subscription_portal_2</field>
+            <field name="require_payment" eval="False"/>
         </record>
 
         <function model="sale.order"
@@ -193,6 +195,7 @@
             <field name="user_id" ref="base.user_admin"/>
             <field name="state">draft</field>
             <field name="client_order_ref">subscription_portal_3</field>
+            <field name="require_payment" eval="False"/>
         </record>
 
         <record id="rec_line_3" model="sale.order.line">
