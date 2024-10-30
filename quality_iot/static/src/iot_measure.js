@@ -6,7 +6,7 @@ import { FloatField, floatField } from '@web/views/fields/float/float_field';
 import { useIotDevice } from '@iot/iot_device_hook';
 import { useService } from '@web/core/utils/hooks';
 import { WarningDialog } from '@web/core/errors/error_dialogs';
-import { IoTConnectionErrorDialog } from '@iot/iot_connection_error_dialog';
+import { IoTConnectionErrorDialog } from '@iot/dialogs/iot_connection_error_dialog';
 
 export class IoTMeasureRealTimeValue extends FloatField {
     setup() {

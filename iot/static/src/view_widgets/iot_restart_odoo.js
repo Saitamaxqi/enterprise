@@ -4,7 +4,7 @@ import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
-import { IoTConnectionErrorDialog } from "../iot_connection_error_dialog";
+import { IoTConnectionErrorDialog } from "@iot/dialogs/iot_connection_error_dialog";
 import { standardWidgetProps } from "@web/views/widgets/standard_widget_props";
 import { Component } from "@odoo/owl";
 

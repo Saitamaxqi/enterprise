@@ -2,7 +2,7 @@
 
 import { registry } from '@web/core/registry';
 import { ensureJQuery } from "@web/core/ensure_jquery";
-import { IoTConnectionErrorDialog } from './iot_connection_error_dialog';
+import { IoTConnectionErrorDialog } from '@iot/dialogs/iot_connection_error_dialog';
 
 export class IoTLongpolling {
     static serviceDependencies = ["dialog"];
