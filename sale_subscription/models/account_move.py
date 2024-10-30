@@ -1,13 +1,21 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from functools import partial
-from odoo import models, _
+
+from odoo import fields, models, _
 from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_PROGRESS_STATE
 from dateutil.relativedelta import relativedelta
 
 
 class AccountMove(models.Model):
     _inherit = 'account.move'
+
+    def write(self, vals):
+        res = super().write(vals)
+        if 'matched_payment_ids' in vals:
+            for move in self.filtered_domain([('payment_state', 'in', ['paid', 'in_payment'])]):
+                move._reopen_paid_churned_subscription()
+        return res
 
     def _post(self, soft=True):
         posted_moves = super()._post(soft=soft)
@@ -99,3 +107,12 @@ class AccountMove(models.Model):
                     partner_ids = salesperson.partner_id.ids
                     res = [(v[0], v[1], False) for v in res if v[0] in partner_ids and v[2] == 'mail.message_user_assigned']
         return res
+
+    def _reopen_paid_churned_subscription(self):
+        # Re-open churned subscriptions after payment.
+        sub_order = self.line_ids.subscription_id
+        for order in sub_order:
+            cutoff_date = fields.Date.today() - relativedelta(days=order.plan_id.auto_close_limit)
+            # Prevent reopening churned subscriptions if cutoff_date is after next_invoice_date
+            if order.subscription_state == '6_churn' and order.next_invoice_date >= cutoff_date:
+                order.set_open()

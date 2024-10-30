@@ -160,7 +160,7 @@ class PaymentTransaction(models.Model):
                 subscriptions.filtered(
                     lambda sub:
                         sub.subscription_state == '6_churn' and
-                        tx.last_state_change.date() <= sub.next_invoice_date
+                        (tx.last_state_change.date() - timedelta(days=sub.plan_id.auto_close_limit)) <= sub.next_invoice_date
                 ).set_open()
             elif tx.state in ('error', 'cancel'):
                 tx._handle_unsuccessful_transaction()
