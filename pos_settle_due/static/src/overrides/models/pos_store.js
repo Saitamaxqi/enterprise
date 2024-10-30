@@ -73,7 +73,7 @@ patch(PosStore.prototype, {
                     // Set the empty order as the current order.
                     this.set_order(newOrder);
                 } else {
-                    newOrder = await this.add_new_order();
+                    newOrder = this.add_new_order();
                 }
                 const payment = newOrder.add_paymentline(selectedPaymentMethod);
                 payment.set_amount(totalDue);

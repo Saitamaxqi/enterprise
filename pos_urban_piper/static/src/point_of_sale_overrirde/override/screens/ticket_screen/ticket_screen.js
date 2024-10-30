@@ -59,7 +59,7 @@ patch(TicketScreen.prototype, {
         return true;
     },
 
-    async _updateScreenState(order, filterState, upState = "") {
+    _updateScreenState(order, filterState, upState = "") {
         const stateOverride = {
             search: {
                 fieldName: "DELIVERYPROVIDER",
@@ -68,7 +68,7 @@ patch(TicketScreen.prototype, {
             filter: filterState,
         };
         this.env.services.ui.block();
-        this._setOrder(await this._getEmptyOrder(false));
+        this._setOrder(this._getEmptyOrder(false));
         this.closeTicketScreen();
         setTimeout(() => {
             this.pos.showScreen("TicketScreen", { stateOverride, upState });
@@ -91,7 +91,7 @@ patch(TicketScreen.prototype, {
         const response = await this._updateOrderStatus(syncedOrder, "Acknowledged");
         const status = await this._handleResponse(response, syncedOrder, "acknowledged");
         if (status) {
-            await this._updateScreenState(syncedOrder, "ACTIVE_ORDERS");
+            this._updateScreenState(syncedOrder, "ACTIVE_ORDERS");
         }
         try {
             await this.pos.sendOrderInPreparation(syncedOrder);
@@ -136,7 +136,7 @@ patch(TicketScreen.prototype, {
                 const response = await this._updateOrderStatus(order, "Cancelled", code);
                 const status = await this._handleResponse(response, order, "cancelled");
                 if (status) {
-                    await this._updateScreenState(order, "ACTIVE_ORDERS");
+                    this._updateScreenState(order, "ACTIVE_ORDERS");
                     if (last_order_status !== "placed") {
                         await this.pos.sendOrderInPreparation(order, true);
                     }
@@ -144,7 +144,7 @@ patch(TicketScreen.prototype, {
                     if (order.id === this.pos.get_order()?.id) {
                         const orderList = this._getOrderList();
                         if (orderList.length == 1) {
-                            await this.pos.add_new_order();
+                            this.pos.add_new_order();
                         } else {
                             this._selectNextOrder(order);
                         }
@@ -160,7 +160,7 @@ patch(TicketScreen.prototype, {
         const response = await this._updateOrderStatus(order, "Food Ready");
         const status = await this._handleResponse(response, order, "food_ready", "");
         if (status) {
-            await this._updateScreenState(order, "SYNCED", "DONE");
+            this._updateScreenState(order, "SYNCED", "DONE");
         }
         await this.pos.data.searchRead("pos.order", [["id", "=", order.id]]);
 
