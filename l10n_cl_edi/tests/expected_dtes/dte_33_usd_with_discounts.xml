@@ -67,7 +67,7 @@
                 <OtrMnda>
                     <PrcOtrMon>123.45</PrcOtrMon>
                     <Moneda>USD</Moneda>
-                    <FctConv>935.2909</FctConv>
+                    <FctConv>935.29</FctConv>
                     <DctoOtrMnda>24.69</DctoOtrMnda>
                     <MontoItemOtrMnda>222.21</MontoItemOtrMnda>
                 </OtrMnda>
@@ -85,7 +85,7 @@
                 <OtrMnda>
                     <PrcOtrMon>12.31</PrcOtrMon>
                     <Moneda>USD</Moneda>
-                    <FctConv>935.6715</FctConv>
+                    <FctConv>935.29</FctConv>
                     <DctoOtrMnda>0.62</DctoOtrMnda>
                     <MontoItemOtrMnda>11.69</MontoItemOtrMnda>
                 </OtrMnda>
