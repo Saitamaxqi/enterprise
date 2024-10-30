@@ -431,3 +431,15 @@ class TestTaskFlow(TransactionCase):
         task.state = '1_canceled'
         self.assertFalse(task.planned_date_begin, 'The begin date should be reset as this is a future task')
         self.assertFalse(task.date_deadline, 'The deadline should be reset as this is a future task')
+
+    def test_duplicate_doesnt_copy_planned_date_begin(self):
+        project = self.env['project.project'].create({
+            'name': 'Project',
+        })
+        task = self.env['project.task'].create({
+            'name': 'Task',
+            'project_id': project.id,
+            'planned_date_begin': '2021-09-23',
+        })
+        self.assertFalse(project.copy().task_ids.planned_date_begin, "The task's date fields shouldn't be copied on project duplication")
+        self.assertFalse(task.copy().planned_date_begin, "The task's date fields shouldn't be copied on task duplication")
