@@ -30,7 +30,7 @@
         <field name="binding_model_id" ref="hr.model_hr_employee"/>
         <field name="binding_view_types">list,kanban</field>
         <field name="state">code</field>
-        <field name="groups_id" eval="[(4, ref('hr_contract.group_hr_contract_manager'))]"/>
+        <field name="group_ids" eval="[(4, ref('hr_contract.group_hr_contract_manager'))]"/>
         <field name="code">
             action = model._open_sign_document_wizard()
         </field>

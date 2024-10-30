@@ -32,7 +32,7 @@ class AppointmenHrPerformanceCase(AppointmentHrCommon, AppointmentPerformanceCas
             {'company_id': cls.company_admin.id,
              'company_ids': [(4, cls.company_admin.id)],
              'email': 'brussels.%s@test.example.com' % idx,
-             'groups_id': [(4, cls.env.ref('base.group_user').id)],
+             'group_ids': [(4, cls.env.ref('base.group_user').id)],
              'name': 'Employee Brussels %s' % idx,
              'login': 'staff_users_bxl_%s' % idx,
              'notification_type': 'email',

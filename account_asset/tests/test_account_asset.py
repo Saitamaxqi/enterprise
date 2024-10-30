@@ -54,7 +54,7 @@ class TestAccountAsset(TestAccountReportsCommon):
         cls.env.company.gain_account_id = cls.company_data['default_account_revenue'].copy()
         cls.assert_counterpart_account_id = cls.company_data['default_account_expense'].copy().id
 
-        cls.env.user.groups_id += cls.env.ref('analytic.group_analytic_accounting')
+        cls.env.user.group_ids += cls.env.ref('analytic.group_analytic_accounting')
         analytic_plan = cls.env['account.analytic.plan'].create({
             'name': "Default Plan",
         })

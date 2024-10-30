@@ -21,9 +21,9 @@ class TestHelpdeskHolidays(HelpdeskCommon, TestHrHolidaysCommon):
             'requires_allocation': 'no',
         })
 
-        cls.user_hruser.groups_id |= cls.env.ref('helpdesk.group_helpdesk_user')
-        cls.user_hrmanager.groups_id |= cls.env.ref('helpdesk.group_helpdesk_manager')
-        cls.user_employee.groups_id |= cls.env.ref('helpdesk.group_helpdesk_user')
+        cls.user_hruser.group_ids |= cls.env.ref('helpdesk.group_helpdesk_user')
+        cls.user_hrmanager.group_ids |= cls.env.ref('helpdesk.group_helpdesk_manager')
+        cls.user_employee.group_ids |= cls.env.ref('helpdesk.group_helpdesk_user')
 
         cls.company_2 = cls.env['res.company'].create({
             'name': 'Company 2',

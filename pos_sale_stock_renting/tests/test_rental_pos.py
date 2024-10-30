@@ -56,7 +56,7 @@ class TestPoSRental(TestPointOfSaleHttpCommon):
         })
         self.order_line_id2.write({'is_rental': True})
         self.pos_user.write({
-            'groups_id': [
+            'group_ids': [
                 (4, self.env.ref('stock.group_stock_manager').id),
                 (4, self.env.ref('sales_team.group_sale_manager').id),
                 (4, self.env.ref('account.group_account_user').id),

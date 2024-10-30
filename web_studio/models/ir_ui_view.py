@@ -528,11 +528,11 @@ class IrUiView(models.Model):
     # Based on inherit_branding of ir_ui_view
     # This will add recursively the groups ids on the spec node.
     def _groups_branding(self, specs_tree):
-        groups_id = self.groups_id
+        group_ids = self.group_ids
         studio = self.env.context.get('studio')
         check_view_ids = self.env.context.get('check_view_ids')
-        if groups_id and (not studio or not check_view_ids):
-            attr_value = ','.join(map(str, groups_id.ids))
+        if group_ids and (not studio or not check_view_ids):
+            attr_value = ','.join(map(str, group_ids.ids))
             for node in specs_tree.iter(tag=etree.Element):
                 node.set('studio-view-group-ids', attr_value)
 

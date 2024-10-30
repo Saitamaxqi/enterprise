@@ -13,7 +13,7 @@ class TestMrpWorkorderHrValuation(TestMrpValuationCommon):
     def setUpClass(cls):
         super().setUpClass()
         grp_workorder = cls.env.ref('mrp.group_mrp_routings')
-        cls.env.user.write({'groups_id': [(4, grp_workorder.id)]})
+        cls.env.user.write({'group_ids': [(4, grp_workorder.id)]})
         cls.employee = cls.env['hr.employee'].create({
             'name': 'Jean Michel',
             'hourly_cost': 100,

@@ -58,7 +58,7 @@ class QualityPoint(models.Model):
         'res.company', string='Company', required=True, index=True,
         default=lambda self: self.env.company)
     user_id = fields.Many2one('res.users', 'Responsible',
-        domain=lambda self: [('groups_id', 'in', self.env.ref("quality.group_quality_user").id), ('share', '=', False)],
+        domain=lambda self: [('all_group_ids', 'in', self.env.ref("quality.group_quality_user").id), ('share', '=', False)],
         check_company=True)
     active = fields.Boolean(default=True)
     check_count = fields.Integer(compute="_compute_check_count")

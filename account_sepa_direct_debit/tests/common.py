@@ -10,7 +10,7 @@ class SDDTestCommon(AccountTestInvoicingCommon):
 
         cls.env.user.write({
             'email': "ruben.rybnik@sorcerersfortress.com",
-            'groups_id': [Command.link(cls.env.ref('account.group_validate_bank_account').id)]
+            'group_ids': [Command.link(cls.env.ref('account.group_validate_bank_account').id)]
         })
 
         cls.country_belgium, cls.country_china, cls.country_germany = cls.env['res.country'].search([('code', 'in', ['BE', 'CN', 'DE'])], limit=3, order='name ASC')

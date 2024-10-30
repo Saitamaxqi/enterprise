@@ -31,7 +31,7 @@ class TestUTMConsistencyHrReferral(TestUTMCommon):
             'name': 'Referral User',
             'login': 'user_referral_utm',
             'email': 'userreferralutm@test.com',
-            'groups_id': [(6, 0, [self.env.ref('base.group_user').id])],
+            'group_ids': [(6, 0, [self.env.ref('base.group_user').id])],
             'utm_source_id': self.utm_source.id
         })
 

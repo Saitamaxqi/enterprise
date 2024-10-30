@@ -90,7 +90,7 @@ class TestProject(TestProjectCommon):
             budget.action_budget_confirm()
             budgets += budget
 
-        self.env.user.groups_id += self.env.ref('account.group_account_user')
+        self.env.user.group_ids += self.env.ref('account.group_account_user')
         self.assertTrue(self.env.user.has_group('analytic.group_analytic_accounting'))
         budget_items = self.project_goats.with_context({'allowed_company_ids': [self.env.company.id]})._get_budget_items(with_action=True)
         del budget_items['data'][0]['name']  # remove the name because it is a lazy translation.

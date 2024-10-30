@@ -16,7 +16,7 @@ class TestPurchaseOrder(TestAccountBudgetCommon):
         purchase_user = self.env['res.users'].create({
             'login': 'Purchaser',
             'partner_id': purchase_partner.id,
-            'groups_id': [Command.set(self.env.ref('purchase.group_purchase_manager').ids)],
+            'group_ids': [Command.set(self.env.ref('purchase.group_purchase_manager').ids)],
         })
 
         self.assertTrue(

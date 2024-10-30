@@ -46,7 +46,7 @@
         <field name="password">roqueyepes</field>
         <field name="company_ids" eval="[(4, ref('base.demo_company_mx'))]"/>
         <field name="company_id" ref="base.demo_company_mx"/>
-        <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
+        <field name="group_ids" eval="[(6,0,[ref('base.group_user')])]"/>
         <field name="image_1920" type="base64" file="l10n_mx_hr_payroll/static/img/hr_employee_roque.jpg"/>
     </record>
 
@@ -94,7 +94,7 @@
         <field name="signature">E. Ramirez</field>
         <field name="company_ids" eval="[(4, ref('base.demo_company_mx'))]"/>
         <field name="company_id" ref="base.demo_company_mx"/>
-        <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
+        <field name="group_ids" eval="[(6,0,[ref('base.group_user')])]"/>
         <field name="image_1920" type="base64" file="l10n_mx_hr_payroll/static/img/hr_employe_elvera.jpg"/>
     </record>
 

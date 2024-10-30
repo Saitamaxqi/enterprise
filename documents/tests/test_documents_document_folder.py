@@ -172,13 +172,13 @@ class TestDocumentsDocumentFolder(TransactionCase):
         self.document_manager, self.internal_user = self.env['res.users'].create([
             {
                 'email': "dtdm@yourcompany.com",
-                'groups_id': [Command.link(self.env.ref('documents.group_documents_manager').id)],
+                'group_ids': [Command.link(self.env.ref('documents.group_documents_manager').id)],
                 'login': "dtdm",
                 'name': "Documents Manager",
             },
             {
                 'login': 'internal_user',
-                'groups_id': [Command.link(self.env.ref('base.group_user').id)],
+                'group_ids': [Command.link(self.env.ref('base.group_user').id)],
                 'name': 'Internal user'
             }
         ])

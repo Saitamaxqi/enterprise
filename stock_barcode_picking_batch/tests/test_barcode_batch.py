@@ -18,9 +18,9 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         grp_lot = self.env.ref('stock.group_production_lot')
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
 
         # Create some products
         self.product3 = self.env['product.product'].create({
@@ -277,7 +277,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
         self.picking_type_out.show_entire_packs = True
 
         # Creates two packages and adds some quantities on hand.
@@ -389,7 +389,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
         common_vals = {'product_id': self.productlot1.id, 'company_id': self.env.company.id}
         lot1 = self.env['stock.lot'].create({**common_vals, 'name': 'lot1'})
         lot2 = self.env['stock.lot'].create({**common_vals, 'name': 'lot2'})
@@ -467,7 +467,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [Command.link(grp_pack.id)]})
+        self.env.user.write({'group_ids': [Command.link(grp_pack.id)]})
         self.picking_type_out.show_reserved_sns = True
         # Create some lots and add quantity in stock for them.
         common_vals = {'product_id': self.productlot1.id, 'company_id': self.env.company.id}
@@ -639,9 +639,9 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
         self.picking_type_out.barcode_validation_all_product_packed = True
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 2)
@@ -725,7 +725,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id)]})
 
         package02 = self.package.copy({'name': 'P00002'})
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 10, package_id=self.package)
@@ -776,7 +776,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0), (4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0), (4, grp_lot.id, 0)]})
         self.picking_type_in.group_lines_by_product = True
 
         # Creates 3 receipts.
@@ -878,7 +878,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         group_lot = self.env.ref('stock.group_production_lot')
         group_user = self.env.ref('base.group_user')
         group_user.write({'implied_ids': [Command.unlink(group_lot.id)]})
-        self.env.user.write({'groups_id': [Command.unlink(group_lot.id)]})
+        self.env.user.write({'group_ids': [Command.unlink(group_lot.id)]})
 
         receipt_1 = self.env['stock.picking'].create({
             'picking_type_id': self.picking_type_in.id,

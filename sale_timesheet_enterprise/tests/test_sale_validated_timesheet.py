@@ -315,7 +315,7 @@ class TestSaleValidatedTimesheet(TestCommonSaleTimesheet):
             'name': 'Basic User',
             'login': 'basic_user',
             'password': 'password',
-            'groups_id': [(6, 0, [
+            'group_ids': [(6, 0, [
                 self.env.ref('project.group_project_user').id,
                 self.env.ref('hr_timesheet.group_hr_timesheet_approver').id,
                 self.env.ref('sales_team.group_sale_manager').id,

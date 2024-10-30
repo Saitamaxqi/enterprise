@@ -83,7 +83,7 @@ class TestPurchaseOrder(TestCommissionsSetup):
         {{subscription.code}}, from {{date_from}} to {{subscription.recurring_next_date}} ({{number of months}})
         """
         # Required for `partner_invoice_id`, `partner_shipping_id` to be visible in the view
-        self.salesman.groups_id += self.env.ref('account.group_delivery_invoice_address')
+        self.salesman.group_ids += self.env.ref('account.group_delivery_invoice_address')
         self.referrer.commission_plan_id = self.gold_plan
         self.referrer.grade_id = self.gold
 
@@ -186,7 +186,7 @@ class TestPurchaseOrder(TestCommissionsSetup):
                 'login': 'sales_rep_1',
                 'email': 'sales_rep_1@odoo.com',
                 'company_id': self.company.id,
-                'groups_id': [(6, 0, [self.ref('sales_team.group_sale_salesman')])],
+                'group_ids': [(6, 0, [self.ref('sales_team.group_sale_salesman')])],
             })
 
             so, second_po = make_orders(bar, so_sales_rep=sales_rep)
@@ -204,7 +204,7 @@ class TestPurchaseOrder(TestCommissionsSetup):
                 'login': name,
                 'email': f'{name}@example.com',
                 'company_id': self.company.id,
-                'groups_id': [(6, 0, [
+                'group_ids': [(6, 0, [
                     group,
                 ])],
             })

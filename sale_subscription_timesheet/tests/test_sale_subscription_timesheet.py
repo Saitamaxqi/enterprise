@@ -48,7 +48,7 @@ class TestSubscriptionTask(TestSubscriptionCommon, TestCommonSaleTimesheet):
             'group_project_recurring_tasks': True,
         }).execute()
 
-        self.env.user.groups_id += self.env.ref('project.group_project_recurring_tasks')
+        self.env.user.group_ids += self.env.ref('project.group_project_recurring_tasks')
         with freeze_time("2024-10-01"):
             self.subscription_timesheet.action_confirm()
             task = self.subscription_timesheet.tasks_ids

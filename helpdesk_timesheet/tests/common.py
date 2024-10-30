@@ -9,8 +9,8 @@ class TestHelpdeskTimesheetCommon(TestCommonTimesheet):
         super().setUpClass()
 
         group_helpdesk_user = cls.env.ref('helpdesk.group_helpdesk_user')
-        cls.user_manager.groups_id += group_helpdesk_user
-        cls.user_employee.groups_id += group_helpdesk_user
+        cls.user_manager.group_ids += group_helpdesk_user
+        cls.user_employee.group_ids += group_helpdesk_user
 
         cls.partner = cls.env['res.partner'].create({
             'name': 'Customer Task',

@@ -32,7 +32,7 @@ class TestSubscriptionStockCommon(TestSubscriptionCommon, ValuationReconciliatio
             'login': 'Beatrice2',
             'country_id': cls.country_belgium.id,
             'email': 'beatrice.employee2@example.com',
-            'groups_id': [(6, 0, [group_portal_id])],
+            'group_ids': [(6, 0, [group_portal_id])],
             'property_account_payable_id': cls.account_payable.id,
             'property_account_receivable_id': cls.account_receivable.id,
             'company_id': cls.company_data['company'].id,

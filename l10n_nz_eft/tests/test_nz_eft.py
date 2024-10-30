@@ -16,7 +16,7 @@ class TestNZEFT(AccountTestInvoicingCommon):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.env.user.groups_id |= cls.env.ref('account.group_validate_bank_account')
+        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
 
         # -- Setup Common -- #
 

@@ -57,7 +57,8 @@ class HelpdeskTeam(models.Model):
         ],
         string='Assignment Method', default='randomly', required=True,
         help="New tickets will automatically be assigned to the team members that are available, according to their working hours and their time off.")
-    member_ids = fields.Many2many('res.users', string='Team Members', domain=lambda self: str([('groups_id', 'in', self.env.ref('helpdesk.group_helpdesk_user').id), ('company_ids', 'in', unquote('company_id'))]),
+    member_ids = fields.Many2many('res.users', string='Team Members',
+        domain=lambda self: f"[('all_group_ids', 'in', {self.env.ref('helpdesk.group_helpdesk_user').id}), ('company_ids', 'in', [company_id])]",
         default=lambda self: self.env.user, required=True)
     privacy_visibility = fields.Selection([
         ('invited_internal', 'Invited internal users (private)'),

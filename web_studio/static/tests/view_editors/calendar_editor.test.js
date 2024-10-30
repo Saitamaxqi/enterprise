@@ -55,7 +55,7 @@ test("constrain available periods to the scale attribute", async () => {
             [1, "calendar"],
             [false, "search"],
         ],
-        groups_id: [],
+        group_ids: [],
     });
 
     await contains(".o_web_studio_navbar_item").click();
@@ -76,7 +76,7 @@ test("available periods without scale attribute", async () => {
             [2, "calendar"],
             [false, "search"],
         ],
-        groups_id: [],
+        group_ids: [],
     });
 
     await contains(".o_web_studio_navbar_item").click();

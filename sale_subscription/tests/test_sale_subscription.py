@@ -1719,7 +1719,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
     def test_subscription_lock_settings(self):
         """ The settings to automatically lock SO upon confirmation
         should never be applied to subscription orders. """
-        self.env.user.groups_id += self.env.ref('sale.group_auto_done_setting')
+        self.env.user.group_ids += self.env.ref('sale.group_auto_done_setting')
         self.subscription.write({'start_date': False, 'next_invoice_date': False})
         self.subscription.action_confirm()
         self.assertEqual(self.subscription.state, 'sale')

@@ -19,21 +19,21 @@ class TestStudioApprovals(TransactionCase):
                 "login": "demo",
                 "name": "demo",
                 "email": "demo@demo",
-                "groups_id": [Command.link(cls.env.ref("base.group_user").id)]
+                "group_ids": [Command.link(cls.env.ref("base.group_user").id)]
             })
 
         cls.other_user = cls.env["res.users"].create({
             "name": "test",
             "login": "test",
             "email": "test@test.test",
-            "groups_id": [Command.link(cls.env.ref("base.group_user").id)]
+            "group_ids": [Command.link(cls.env.ref("base.group_user").id)]
         })
 
         cls.test_user_2 = cls.env["res.users"].create({
             "name": "test_2",
             "login": "test_2",
             "email": "test_2@test_2.test_2",
-            "groups_id": [Command.link(cls.env.ref("base.group_user").id)]
+            "group_ids": [Command.link(cls.env.ref("base.group_user").id)]
         })
 
     def test_approval_method_two_models(self):

@@ -390,7 +390,7 @@ class TestFsmFlowStock(TestFsmFlowSaleCommon):
         product_tracked_by_sn_wizard_id.generate_lot()
         self.assertEqual(self.task.material_line_product_count, expected_product_count, f"{expected_product_count} product should be linked to the task")
         # the connected user must have the inventory access right to be able to add/update the quantity of a serial product
-        self.project_user.groups_id += self.env.ref('stock.group_stock_user')
+        self.project_user.group_ids += self.env.ref('stock.group_stock_user')
         product_tracked_by_sn.with_user(self.project_user).with_context({'fsm_task_id': self.task.id}).set_fsm_quantity(2)
         self.assertEqual(self.task.material_line_product_count, expected_product_count, f"{expected_product_count} product should be linked to the task, you should validate Lot Number before")
         product_tracked_by_sn_wizard_id.write({
@@ -1533,7 +1533,7 @@ class TestFsmFlowStock(TestFsmFlowSaleCommon):
         """ This test ensure that when the 'report' setting is enabled for the inventory app, it does not prevent the correct use case of 'mark as done' for
         an fsm task """
 
-        self.project_user.groups_id += self.env.ref('stock.group_reception_report')
+        self.project_user.group_ids += self.env.ref('stock.group_reception_report')
         self.warehouse.delivery_steps = 'pick_pack_ship'
         self.task.partner_id = self.partner_1.id
         self.consu_product_ordered.with_user(self.project_user).with_context({'fsm_task_id': self.task.id}).fsm_add_quantity()

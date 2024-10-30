@@ -15,7 +15,7 @@ class TestHrAppraisalFeedback(TransactionCase):
         self.user = self.env['res.users'].create({
             'name': 'Test',
             'login': 'test',
-            'groups_id': [(6, 0, [group])],
+            'group_ids': [(6, 0, [group])],
             'notification_type': 'email',
         })
 

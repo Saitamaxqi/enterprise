@@ -50,7 +50,7 @@ class TestPlanningForm(TestCommonPlanning):
     def test_planning_no_employee_no_company(self):
         """ test multi day slot without calendar (no employee nor company) """
         # Required for `company_id` to be visible in the view
-        self.env.user.groups_id += self.env.ref('base.group_multi_company')
+        self.env.user.group_ids += self.env.ref('base.group_multi_company')
         with Form(self.env['planning.slot']) as slot:
             start, end = datetime(2020, 1, 1, 8, 0), datetime(2020, 1, 11, 18, 0)
             slot.start_datetime = start

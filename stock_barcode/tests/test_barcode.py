@@ -69,7 +69,7 @@ class TestBarcodeClientAction(HttpCase):
 
     def test_filter_picking_by_package_gs1(self):
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(3, grp_pack.id)]})
+        self.env.user.write({'group_ids': [(3, grp_pack.id)]})
 
         Package = self.env['stock.quant.package']
         # Creates three packages.

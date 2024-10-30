@@ -11,7 +11,7 @@ class SpreadsheetDashboardAccess(TransactionCase):
         super().setUpClass()
         cls.group = cls.env["res.groups"].create({"name": "test group"})
         cls.user = new_test_user(cls.env, login="Raoul")
-        cls.user.groups_id |= cls.group
+        cls.user.group_ids |= cls.group
 
     def test_computed_name(self):
         group = self.env["spreadsheet.dashboard.group"].create(

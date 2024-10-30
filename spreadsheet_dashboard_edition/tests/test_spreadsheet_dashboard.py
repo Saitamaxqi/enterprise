@@ -134,6 +134,6 @@ class TestSpreadsheetDashboard(DashboardTestCommon, SpreadsheetTestCase, HttpCas
         result = self.env["spreadsheet.mixin"].with_user(self.user).get_selector_spreadsheet_models()
         self.assertFalse(any(r["model"] == "spreadsheet.dashboard" for r in result))
 
-        self.user.groups_id |= self.env.ref("spreadsheet_dashboard.group_dashboard_manager")
+        self.user.group_ids |= self.env.ref("spreadsheet_dashboard.group_dashboard_manager")
         result = self.env["spreadsheet.mixin"].with_user(self.user).get_selector_spreadsheet_models()
         self.assertTrue(any(r["model"] == "spreadsheet.dashboard" for r in result))

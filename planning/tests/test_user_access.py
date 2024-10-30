@@ -62,7 +62,7 @@ class TestUserAccess(HttpCase):
             'name': 'Portal User (Test)',
             'login': 'portal_user',
             'password': 'portal_user',
-            'groups_id': [Command.link(self.env.ref('base.group_portal').id)]
+            'group_ids': [Command.link(self.env.ref('base.group_portal').id)]
         })
 
         # create several slots for users
@@ -388,7 +388,7 @@ class TestUserAccess(HttpCase):
         """
         in_user = self.planning_mgr
         out_user = self.planning_user
-        out_user.groups_id = [(6, 0, [self.env.ref('planning.group_planning_manager').id])]
+        out_user.group_ids = [(6, 0, [self.env.ref('planning.group_planning_manager').id])]
         other_company = self.env['res.company'].create({
             'name': 'Other Co',
         })

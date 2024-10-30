@@ -3339,7 +3339,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         self.user.write({
             'company_ids': [Command.set(child_company.ids)],
             'company_id': child_company.id,
-            'groups_id': [
+            'group_ids': [
                 Command.set(self.env.ref('account.group_account_user').ids),
             ]
         })

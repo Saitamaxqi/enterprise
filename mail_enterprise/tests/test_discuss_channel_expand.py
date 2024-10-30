@@ -13,7 +13,7 @@ class TestDiscussChannelExpand(HttpCase, MailCommon):
     def test_channel_expand_tour(self):
         testuser = self.env['res.users'].create({
             'email': 'testuser@testuser.com',
-            'groups_id': [(6, 0, [self.ref('base.group_user')])],
+            'group_ids': [(6, 0, [self.ref('base.group_user')])],
             'name': 'Test User',
             'login': 'testuser',
             'password': 'testuser',

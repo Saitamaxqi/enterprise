@@ -26,25 +26,25 @@ class TransactionCaseDocuments(TransactionCase):
         cls.document_manager, cls.doc_user, cls.internal_user, cls.portal_user, cls.public_user, = cls.env['res.users'].create([
             {
                 'email': "dtdm@yourcompany.com",
-                'groups_id': [Command.link(cls.env.ref('documents.group_documents_manager').id)],
+                'group_ids': [Command.link(cls.env.ref('documents.group_documents_manager').id)],
                 'login': "dtdm",
                 'name': "Documents Manager",
             }, {
                 'email': 'documents@example.com',
-                'groups_id': [Command.link(cls.env.ref('documents.group_documents_user').id)],
+                'group_ids': [Command.link(cls.env.ref('documents.group_documents_user').id)],
                 'login': 'documents@example.com',
                 'name': 'Documents User',
             }, {
                 'login': 'internal_user',
-                'groups_id': [Command.link(cls.env.ref('base.group_user').id)],
+                'group_ids': [Command.link(cls.env.ref('base.group_user').id)],
                 'name': 'Internal user'
             }, {
                 'login': 'portal_user',
-                'groups_id': [Command.link(cls.env.ref('base.group_portal').id)],
+                'group_ids': [Command.link(cls.env.ref('base.group_portal').id)],
                 'name': 'Portal user'
             }, {
                 'login': 'public_user',
-                'groups_id': [Command.link(cls.env.ref('base.group_public').id)],
+                'group_ids': [Command.link(cls.env.ref('base.group_public').id)],
                 'name': 'Public user',
             },
         ])

@@ -56,7 +56,7 @@ test("empty graph editor", async () => {
             [1, "graph"],
             [false, "search"],
         ],
-        groups_id: [],
+        group_ids: [],
     });
 
     await contains(".o_web_studio_navbar_item").click();
@@ -110,7 +110,7 @@ test("switching chart types in graph editor", async () => {
             [1, "graph"],
             [false, "search"],
         ],
-        groups_id: [],
+        group_ids: [],
     });
 
     await contains(".o_web_studio_navbar_item").click();
@@ -181,7 +181,7 @@ test("open xml editor of graph component view and close it", async () => {
             [1, "graph"],
             [false, "search"],
         ],
-        groups_id: [],
+        group_ids: [],
     });
 
     await contains(".o_web_studio_navbar_item").click();

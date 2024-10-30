@@ -117,7 +117,7 @@ class SignRequestItem(models.Model):
             # add new activities for internal users
             new_sign_user = self.env['res.users'].search([
                 ('partner_id', '=', vals.get('partner_id')),
-                ('groups_id', 'in', [self.env.ref('sign.group_sign_user').id])
+                ('all_group_ids', 'in', [self.env.ref('sign.group_sign_user').id])
             ], limit=1)
             if new_sign_user:
                 activity_ids = set(request_items_reassigned.sign_request_id.activity_search(['mail.mail_activity_data_todo'], user_id=new_sign_user.id).mapped('res_id'))
@@ -379,7 +379,7 @@ class SignRequestItem(models.Model):
     def send_signature_accesses(self):
         self.sign_request_id._check_senders_validity()
         users = self.partner_id.user_ids
-        user_ids = set(users.sudo().search([('groups_id', 'in', self.env.ref('sign.group_sign_user').id), ('id', 'in', users.ids)]).ids)
+        user_ids = set(users.sudo().search([('all_group_ids', 'in', self.env.ref('sign.group_sign_user').id), ('id', 'in', users.ids)]).ids)
         for sign_request, sign_request_items_list in groupby(self, lambda sri: sri.sign_request_id):
             notified_users = [sri.partner_id.user_ids[:1]
                               for sri in sign_request_items_list

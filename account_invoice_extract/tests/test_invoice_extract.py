@@ -24,7 +24,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCommo
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.env.user.groups_id |= cls.env.ref('base.group_system')
+        cls.env.user.group_ids |= cls.env.ref('base.group_system')
 
         # Required for `price_total` to be visible in the view
         config = cls.env['res.config.settings'].create({})
@@ -347,7 +347,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCommo
         self.env['res.currency'].search([('name', '!=', 'USD')]).with_context(force_deactivate=True).active = False
         invoice = self.env['account.move'].create({'move_type': 'in_invoice', 'extract_state': 'waiting_extraction'})
         test_user = self.env.ref('base.user_root')
-        test_user.groups_id = [(3, self.env.ref('base.group_multi_currency').id)]
+        test_user.group_ids = [(3, self.env.ref('base.group_multi_currency').id)]
 
         usd_currency = self.env['res.currency'].search([('name', '=', 'USD')])
         eur_currency = self.env['res.currency'].with_context({'active_test': False}).search([('name', '=', 'EUR')])
@@ -406,7 +406,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCommo
         (cad_currency | usd_currency).active = True
 
         test_user = self.env.user
-        test_user.groups_id = [(3, self.env.ref('base.group_multi_currency').id)]
+        test_user.group_ids = [(3, self.env.ref('base.group_multi_currency').id)]
         self.assertEqual(test_user.currency_id, usd_currency)
 
         extract_response = self.get_result_success_response()

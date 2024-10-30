@@ -22,15 +22,15 @@ class TestEdiResults(TestMxExtendedEdiCommon, ValuationReconciliationTestCommon)
         })
 
     def test_invoice_cfdi_landing(self):
-        self.env.user.groups_id |= self.env.ref('purchase.group_purchase_manager')
-        self.env.user.groups_id |= self.env.ref('stock.group_stock_manager')
-        self.env.user.groups_id |= self.env.ref('sales_team.group_sale_manager')
+        self.env.user.group_ids |= self.env.ref('purchase.group_purchase_manager')
+        self.env.user.group_ids |= self.env.ref('stock.group_stock_manager')
+        self.env.user.group_ids |= self.env.ref('sales_team.group_sale_manager')
 
         inventory_user = self.env['res.users'].with_context({'no_reset_password': True}).create({
             'name': 'Inventory user',
             'login': 'sliwa',
             'email': 'queen@goth.mx',
-            'groups_id': [(6, 0, [self.env.ref('stock.group_stock_user').id])]
+            'group_ids': [(6, 0, [self.env.ref('stock.group_stock_user').id])]
         })
 
         with freeze_time(self.frozen_today):

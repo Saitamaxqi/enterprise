@@ -90,7 +90,7 @@ class TestFsmStockUI(HttpCase):
     def test_ui(self):
         self.user_admin.write({'property_warehouse_id': self.warehouse_A.id})
         # The group and the TZ of the user_admin are set, for in case of a db installed without demo-data, these are not correctly set.
-        self.user_admin.groups_id += self.env.ref('stock.group_production_lot')
+        self.user_admin.group_ids += self.env.ref('stock.group_production_lot')
         if not self.user_admin.tz:
             self.user_admin.tz = "Europe/Brussels"
         self.start_tour('/odoo', 'industry_fsm_stock_test_tour', login=self.user_admin.login)

@@ -39,7 +39,7 @@ class TestSubcontractingBarcodeClientAction(TestBarcodeClientAction):
     def test_receipt_classic_subcontracted_product(self):
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         receipt_picking = self.env['stock.picking'].create({
             'partner_id': self.subcontractor_partner.id,
             'location_id': self.supplier_location.id,
@@ -103,7 +103,7 @@ class TestSubcontractingBarcodeClientAction(TestBarcodeClientAction):
     def test_receipt_flexible_subcontracted_product(self):
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         self.bom.consumption = 'flexible'  # To able to record flexible component
         receipt_picking = self.env['stock.picking'].create({
             'partner_id': self.subcontractor_partner.id,

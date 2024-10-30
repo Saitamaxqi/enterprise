@@ -85,7 +85,7 @@ class HelpdeskTicket(models.Model):
     user_id = fields.Many2one(
         'res.users', string='Assigned to', compute='_compute_user_and_stage_ids', store=True,
         readonly=False, tracking=True,
-        domain=lambda self: [('groups_id', 'in', self.env.ref('helpdesk.group_helpdesk_user').id)],
+        domain=lambda self: [('all_group_ids', 'in', self.env.ref('helpdesk.group_helpdesk_user').id)],
         falsy_value_label=_lt("👤 Unassigned"))
     properties = fields.Properties(
         'Properties', definition='team_id.ticket_properties',
@@ -154,7 +154,7 @@ class HelpdeskTicket(models.Model):
 
     @api.depends('team_id')
     def _compute_domain_user_ids(self):
-        user_ids = self.env.ref('helpdesk.group_helpdesk_user').user_ids.ids
+        user_ids = self.env.ref('helpdesk.group_helpdesk_user').all_user_ids.ids
         for ticket in self:
             ticket_user_ids = []
             ticket_sudo = ticket.sudo()

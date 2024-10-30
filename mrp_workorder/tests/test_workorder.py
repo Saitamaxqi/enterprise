@@ -588,7 +588,7 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
         user_admin = self.env.ref('base.user_admin')
         user_admin.write({
             'company_ids': [(4, company1.id)],
-            'groups_id': [(4, self.env.ref('mrp.group_mrp_routings').id)],
+            'group_ids': [(4, self.env.ref('mrp.group_mrp_routings').id)],
         })
         submarine_pod = self.env['product.product'].with_company(company1).with_user(user_admin).create({
             'name': 'Submarine pod',

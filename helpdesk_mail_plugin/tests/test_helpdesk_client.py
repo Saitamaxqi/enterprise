@@ -19,7 +19,7 @@ class TestHelpdeskClient(TestMailPluginControllerCommon, MailCase):
 
         Check also that the acknowledgement email has been sent.
         """
-        self.user_test.groups_id |= self.env.ref('helpdesk.group_helpdesk_user')
+        self.user_test.group_ids |= self.env.ref('helpdesk.group_helpdesk_user')
         customer = self.env['res.partner'].create({'name': 'Customer', 'email': 'customer@example.com'})
 
         email_body = 'Test email body'

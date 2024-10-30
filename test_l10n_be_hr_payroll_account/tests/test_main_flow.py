@@ -22,12 +22,12 @@ def additional_groups(user, groups):
         group = user.env.ref(xml_id.strip(), raise_if_not_found=False)
         if group:
             group_ids |= group
-    group_ids -= user.groups_id
+    group_ids -= user.group_ids
     try:
-        user.write({'groups_id': [(4, group.id, False) for group in group_ids]})
+        user.write({'group_ids': [(4, group.id, False) for group in group_ids]})
         yield user
     finally:
-        user.write({'groups_id': [(3, group.id, False) for group in group_ids]})
+        user.write({'group_ids': [(3, group.id, False) for group in group_ids]})
 
 
 @tagged('post_install', '-at_install')
@@ -91,7 +91,7 @@ class TestHR(AccountTestInvoicingCommon):
 
     @classmethod
     def create_allocation(cls, user, employee, leave_type, number_of_days=10):
-        user.groups_id += cls.env.ref('hr_holidays.group_hr_holidays_manager')
+        user.group_ids += cls.env.ref('hr_holidays.group_hr_holidays_manager')
         allocation_form = Form(cls.env['hr.leave.allocation'].with_user(user))
         # <field name="number_of_days" invisible="1"/>
         # @api.depends(...'number_of_days_display'...)

@@ -139,7 +139,7 @@ class TestTimerButtons(TestFsmFlowSaleCommon):
             'message_partner_ids': self.env.user.partner_id,
         })
         self.env.user.write({
-            'groups_id': [(4, self.env.ref('project.group_project_manager').id)],
+            'group_ids': [(4, self.env.ref('project.group_project_manager').id)],
         })
 
         # 1 employee for 3 companies must work

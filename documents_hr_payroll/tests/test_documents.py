@@ -16,7 +16,7 @@ class TestCaseDocumentsBridgeHR(TestPayslipBase, TransactionCaseDocumentsHr):
             'name': "Hr payroll manager test",
             'login': "hr_payroll_manager_test",
             'email': "hr_payroll_manager_test@yourcompany.com",
-            'groups_id': [(6, 0, [cls.env.ref('hr_payroll.group_hr_payroll_user').id])]
+            'group_ids': [(6, 0, [cls.env.ref('hr_payroll.group_hr_payroll_user').id])]
         })
         cls.employee = cls.env['hr.employee'].create({
             'name': 'Employee (related to doc_user_2)',

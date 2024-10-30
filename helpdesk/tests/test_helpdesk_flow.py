@@ -681,7 +681,7 @@ Content-Transfer-Encoding: quoted-printable
             'name': 'User',
             'login': 'user',
             'email': 'user@user.com',
-            'groups_id': [(6, 0, [self.env.ref('helpdesk.group_helpdesk_manager').id,
+            'group_ids': [(6, 0, [self.env.ref('helpdesk.group_helpdesk_manager').id,
                         self.env.ref('base.group_partner_manager').id])],
         })
 

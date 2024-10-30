@@ -83,7 +83,7 @@ test("empty pivot editor", async () => {
             [1, "pivot"],
             [false, "search"],
         ],
-        groups_id: [],
+        group_ids: [],
     });
 
     await contains(".o_web_studio_navbar_item").click();
@@ -143,7 +143,7 @@ test("switching column and row groupby fields in pivot editor", async () => {
             [2, "pivot"],
             [false, "search"],
         ],
-        groups_id: [],
+        group_ids: [],
     });
 
     await contains(".o_web_studio_navbar_item").click();
@@ -251,7 +251,7 @@ test("pivot measure fields domain", async () => {
             [1, "pivot"],
             [false, "search"],
         ],
-        groups_id: [],
+        group_ids: [],
     });
 
     await contains(".o_web_studio_navbar_item").click();

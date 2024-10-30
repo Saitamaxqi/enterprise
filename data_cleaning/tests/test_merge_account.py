@@ -69,7 +69,7 @@ class TestMerge(TransactionCase):
         """
         Test that we cannot merge partners used in hashed entries
         """
-        self.env.user.write({'groups_id': [(4, self.env.ref('account.group_account_user').id)]})
+        self.env.user.write({'group_ids': [(4, self.env.ref('account.group_account_user').id)]})
         self._enable_merge('res.partner')
         move_1 = self.env['account.move'].create({
             'move_type': 'out_invoice',

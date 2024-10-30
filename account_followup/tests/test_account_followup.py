@@ -49,13 +49,13 @@ class TestAccountFollowupReports(TestAccountFollowupCommon):
             'name': 'A User',
             'login': 'a_user',
             'email': 'a@user.com',
-            'groups_id': [(6, 0, [self.env.ref('account.group_account_user').id])]
+            'group_ids': [(6, 0, [self.env.ref('account.group_account_user').id])]
         })
         user2 = self.env['res.users'].create({
             'name': 'Another User',
             'login': 'another_user',
             'email': 'another@user.com',
-            'groups_id': [(6, 0, [self.env.ref('account.group_account_user').id])]
+            'group_ids': [(6, 0, [self.env.ref('account.group_account_user').id])]
         })
         # 1- no info, use current user
         self.assertEqual(self.partner_a._get_followup_responsible(), self.env.user)
@@ -96,13 +96,13 @@ class TestAccountFollowupReports(TestAccountFollowupCommon):
             'name': 'A User',
             'login': 'a_user',
             'email': 'a@user.com',
-            'groups_id': [Command.set([self.env.ref('account.group_account_user').id])]
+            'group_ids': [Command.set([self.env.ref('account.group_account_user').id])]
         })
         user2 = self.env['res.users'].create({
             'name': 'Another User',
             'login': 'another_user',
             'email': 'another@user.com',
-            'groups_id': [Command.set([self.env.ref('account.group_account_user').id])]
+            'group_ids': [Command.set([self.env.ref('account.group_account_user').id])]
         })
         inv1 = self.create_invoice('2022-01-02')
         inv1.invoice_user_id = user1

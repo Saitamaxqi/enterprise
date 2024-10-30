@@ -983,7 +983,7 @@ registry.category("web_tour.tours").add("web_studio_new_report_tour", {
         },
         {
             // add a new group on the node
-            trigger: '.o_web_studio_sidebar .o_field_many2many_tags[name="groups_id"] input',
+            trigger: '.o_web_studio_sidebar .o_field_many2many_tags[name="group_ids"] input',
             run: "click",
         },
         {
@@ -993,7 +993,7 @@ registry.category("web_tour.tours").add("web_studio_new_report_tour", {
         {
             // wait for the group to appear
             trigger:
-                '.o_web_studio_sidebar .o_field_many2many_tags[name="groups_id"] .o_tag_badge_text:contains(Access Rights)',
+                '.o_web_studio_sidebar .o_field_many2many_tags[name="group_ids"] .o_tag_badge_text:contains(Access Rights)',
         },
         {
             trigger:
@@ -1060,7 +1060,7 @@ registry.category("web_tour.tours").add("web_studio_new_report_tour", {
         },
         {
             trigger:
-                '.o_web_studio_sidebar .o_field_many2many_tags[name="groups_id"] .o_tag_badge_text:contains(Access Rights)',
+                '.o_web_studio_sidebar .o_field_many2many_tags[name="group_ids"] .o_tag_badge_text:contains(Access Rights)',
         },
         {
             trigger: ".o_web_studio_leave > a.btn",
@@ -1111,7 +1111,7 @@ registry.category("web_tour.tours").add("web_studio_new_report_basic_layout_tour
         },
         {
             // add a new group on the node
-            trigger: '.o_web_studio_sidebar .o_field_many2many_tags[name="groups_id"] input',
+            trigger: '.o_web_studio_sidebar .o_field_many2many_tags[name="group_ids"] input',
             run: "click",
         },
         {
@@ -1121,7 +1121,7 @@ registry.category("web_tour.tours").add("web_studio_new_report_basic_layout_tour
         {
             // wait for the group to appear
             trigger:
-                '.o_web_studio_sidebar .o_field_many2many_tags[name="groups_id"] .o_tag_badge_text:contains(Access Rights)',
+                '.o_web_studio_sidebar .o_field_many2many_tags[name="group_ids"] .o_tag_badge_text:contains(Access Rights)',
         },
         {
             trigger: ".o_web_studio_menu .o-web-studio-save-report.btn-primary",

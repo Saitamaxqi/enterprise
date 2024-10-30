@@ -14,7 +14,7 @@ class TestSEPACreditTransferUpdateCommon(AccountTestInvoicingCommon):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.env.user.groups_id |= cls.env.ref('account.group_validate_bank_account')
+        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
 
         cls.company_data['company'].write({
             'country_id': cls.env.ref('base.be').id,

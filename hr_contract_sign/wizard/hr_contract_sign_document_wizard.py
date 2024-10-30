@@ -12,7 +12,7 @@ class HrContractSignDocumentWizard(models.TransientModel):
 
     def _group_hr_contract_domain(self):
         group = self.env.ref('hr_contract.group_hr_contract_manager', raise_if_not_found=False)
-        return [('groups_id', 'in', group.ids)] if group else []
+        return [('all_group_ids', 'in', group.ids)] if group else []
 
     def _get_sign_template_ids(self):
         list_template = self.env['sign.template']

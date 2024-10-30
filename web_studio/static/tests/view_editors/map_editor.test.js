@@ -102,7 +102,7 @@ test("marker popup fields in editor sidebar", async () => {
             [1, "map"],
             [false, "search"],
         ],
-        groups_id: [],
+        group_ids: [],
     });
 
     await contains(".o_web_studio_navbar_item").click();
@@ -153,7 +153,7 @@ test("map additional fields domain", async () => {
             [1, "map"],
             [false, "search"],
         ],
-        groups_id: [],
+        group_ids: [],
     });
 
     await contains(".o_web_studio_navbar_item").click();
@@ -174,7 +174,7 @@ test("many2many, one2many and binary fields cannot be selected in SortBy dropdow
             [1, "map"],
             [false, "search"],
         ],
-        groups_id: [],
+        group_ids: [],
     });
 
     await contains(".o_web_studio_navbar_item").click();

@@ -17,7 +17,7 @@ class TestRiba(AccountTestInvoicingCommon):
         super().setUpClass()
         cls.maxDiff = None
         company = cls.company_data['company']
-        cls.env.user.groups_id |= cls.env.ref('account.group_validate_bank_account')
+        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
         company.write({
             'name': 'Damone Srl',
             'street': 'Via Silvio Pellico 12',

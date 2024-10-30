@@ -2027,7 +2027,7 @@ class TestRoutingAndKits(TransactionCase):
         super(TestRoutingAndKits, cls).setUpClass()
 
         grp_workorder = cls.env.ref('mrp.group_mrp_routings')
-        cls.env.user.write({'groups_id': [(4, grp_workorder.id)]})
+        cls.env.user.write({'group_ids': [(4, grp_workorder.id)]})
 
         cls.uom_unit = cls.env.ref('uom.product_uom_unit')
         cls.kit1 = cls.env['product.product'].create({
@@ -2263,7 +2263,7 @@ class TestRoutingAndKits(TransactionCase):
         on a specific operation and check that the produce is consumed into the
         right workorder. """
         # Required for `product_uom` to be visible in the view
-        self.env.user.groups_id += self.env.ref('uom.group_uom')
+        self.env.user.group_ids += self.env.ref('uom.group_uom')
         self.bom_finished1.consumption = 'flexible'
         add_product = self.env['product.product'].create({
             'name': 'Additional',
@@ -2298,7 +2298,7 @@ class TestRoutingAndKits(TransactionCase):
         on a specific operation and check that the produce is consumed into the
         right workorder. """
         # Required for `product_uom` to be visible in the view
-        self.env.user.groups_id += self.env.ref('uom.group_uom')
+        self.env.user.group_ids += self.env.ref('uom.group_uom')
         self.bom_finished1.consumption = 'flexible'
         add_product = self.env['product.product'].create({
             'name': 'Additional',

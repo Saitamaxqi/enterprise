@@ -65,7 +65,7 @@ class TestSaleForecast(TestCommonSalePlanning):
             'name': 'Wout',
             'login': 'Wout',
             'email': 'wout@test.com',
-            'groups_id': [(6, 0, [user_group_employee.id, user_group_project_user.id])],
+            'group_ids': [(6, 0, [user_group_employee.id, user_group_project_user.id])],
         })
         cls.employee_wout.write({'user_id': cls.user_projectuser_wout.id})
 

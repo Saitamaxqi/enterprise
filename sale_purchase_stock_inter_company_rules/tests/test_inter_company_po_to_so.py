@@ -90,7 +90,7 @@ class TestInterCompanyPurchaseToSaleWithStock(TestInterCompanyRulesCommonStock):
         self.assertTrue(sale_order.partner_shipping_id == purchase_order.picking_type_id.warehouse_id.partner_id, "Partner shipping is incorrect.")
 
     def test_02_inter_company_sale_purchase_auto_validation(self):
-        self.env.user.groups_id += self.env.ref('base.group_multi_currency')
+        self.env.user.group_ids += self.env.ref('base.group_multi_currency')
         today = fields.Datetime.today()
         (self.company_b | self.company_a).update({
             'intercompany_generate_sales_orders': True,

@@ -189,7 +189,7 @@ class TestSubscriptionCommon(TestSaleCommon):
             'login': 'Beatrice',
             'country_id': cls.country_belgium.id,
             'email': 'beatrice.employee@example.com',
-            'groups_id': [(6, 0, [group_portal_id])],
+            'group_ids': [(6, 0, [group_portal_id])],
             'property_account_payable_id': cls.account_payable.id,
             'property_account_receivable_id': cls.account_receivable.id,
             'company_id': cls.company_data['company'].id,
@@ -200,7 +200,7 @@ class TestSubscriptionCommon(TestSaleCommon):
             'login': 'al',
             'password': 'alalalal',
             'email': 'al@capone.it',
-            'groups_id': [(6, 0, [group_portal_id])],
+            'group_ids': [(6, 0, [group_portal_id])],
             'property_account_receivable_id': cls.account_receivable.id,
             'property_account_payable_id': cls.account_receivable.id,
         })
@@ -209,7 +209,7 @@ class TestSubscriptionCommon(TestSaleCommon):
             'login': 'ness',
             'password': 'nessnessness',
             'email': 'ness@USDT.us',
-            'groups_id': [(6, 0, [group_portal_id])],
+            'group_ids': [(6, 0, [group_portal_id])],
             'property_account_receivable_id': cls.account_receivable.id,
             'property_account_payable_id': cls.account_receivable.id,
         })
@@ -218,7 +218,7 @@ class TestSubscriptionCommon(TestSaleCommon):
             'login': 'salesman',
             'password': 'salesman',
             'email': 'default_user_salesman@example.com',
-            'groups_id': [Command.set(group_sale_salesman.ids)],
+            'group_ids': [Command.set(group_sale_salesman.ids)],
         })
 
         # Test analytic account

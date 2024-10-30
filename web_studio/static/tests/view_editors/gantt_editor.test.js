@@ -63,7 +63,7 @@ test("empty gantt editor", async () => {
             [1, "gantt"],
             [1, "search"],
         ],
-        groups_id: [],
+        group_ids: [],
     });
 
     await contains(".o_web_studio_navbar_item").click();
@@ -88,7 +88,7 @@ test("only show allowed scales as default scale", async () => {
             [2, "gantt"],
             [1, "search"],
         ],
-        groups_id: [],
+        group_ids: [],
     });
 
     await contains(".o_web_studio_navbar_item").click();

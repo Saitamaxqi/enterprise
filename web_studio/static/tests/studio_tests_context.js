@@ -247,7 +247,7 @@ export function defineStudioEnvironment() {
                 [false, "form"],
                 [false, "search"],
             ],
-            groups_id: [],
+            group_ids: [],
         },
         {
             id: 11,
@@ -262,7 +262,7 @@ export function defineStudioEnvironment() {
                 [false, "search"],
                 [false, "form"],
             ],
-            groups_id: [],
+            group_ids: [],
             context: {
                 active_id: 1,
             }
@@ -279,7 +279,7 @@ export function defineStudioEnvironment() {
                 [false, "search"],
                 [false, "form"],
             ],
-            groups_id: [],
+            group_ids: [],
         },
         {
             id: 3,
@@ -293,7 +293,7 @@ export function defineStudioEnvironment() {
                 [false, "search"],
                 [false, "form"],
             ],
-            groups_id: [],
+            group_ids: [],
         },
         {
             id: 4,
@@ -305,7 +305,7 @@ export function defineStudioEnvironment() {
                 [false, "list"],
                 [false, "search"],
             ],
-            groups_id: [],
+            group_ids: [],
         },
     ]);
 

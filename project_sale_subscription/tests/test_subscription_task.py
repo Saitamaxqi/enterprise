@@ -17,7 +17,7 @@ class TestSubscriptionTask(TestSubscriptionCommon):
             'group_project_recurring_tasks': True,
         }).execute()
 
-        cls.env.user.groups_id += cls.env.ref('project.group_project_recurring_tasks')
+        cls.env.user.group_ids += cls.env.ref('project.group_project_recurring_tasks')
         cls.project = cls.env['project.project'].with_context({'mail_create_nolog': True}).create({
             'name': 'Project',
             'type_ids': [

@@ -103,7 +103,7 @@ class TestReportsCommon(TestMrpAccount):
         user_p = self.env['res.users'].create({
             'name': 'pirate',
             'login': 'pirate',
-            'groups_id': [(6, 0, [self.env.ref('base.group_user').id, self.env.ref('mrp.group_mrp_manager').id])],
+            'group_ids': [(6, 0, [self.env.ref('base.group_user').id, self.env.ref('mrp.group_mrp_manager').id])],
             'company_id': company_p.id,
             'company_ids': [(6, 0, [company_p.id, self.env.company.id])]
         })
@@ -215,18 +215,18 @@ class TestReportsCommon(TestMrpAccount):
     def test_multiple_users_operation(self):
         """ Check what happens on the report when two users log on the same operation simultaneously.
         """
-        self.env.user.groups_id += self.env.ref('mrp.group_mrp_routings')
+        self.env.user.group_ids += self.env.ref('mrp.group_mrp_routings')
         user_1 = self.env['res.users'].create({
             'name': 'Lonie',
             'login': 'lonie',
             'email': 'lonie@user.com',
-            'groups_id': [Command.set([self.env.ref('mrp.group_mrp_user').id])],
+            'group_ids': [Command.set([self.env.ref('mrp.group_mrp_user').id])],
         })
         user_2 = self.env['res.users'].create({
             'name': 'Doppleganger',
             'login': 'dopple',
             'email': 'dopple@user.com',
-            'groups_id': [Command.set([self.env.ref('mrp.group_mrp_user').id])],
+            'group_ids': [Command.set([self.env.ref('mrp.group_mrp_user').id])],
         })
 
         production_form = Form(self.env['mrp.production'])
@@ -273,7 +273,7 @@ class TestReportsCommon(TestMrpAccount):
 
         '''
         # enable by-product
-        self.env.user.groups_id += self.env.ref('mrp.group_mrp_byproducts')
+        self.env.user.group_ids += self.env.ref('mrp.group_mrp_byproducts')
         self.product_3.standard_price = 10
         self.product_4.standard_price = 10
         bom_1 = self.env['mrp.bom'].create({

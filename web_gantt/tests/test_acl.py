@@ -13,7 +13,7 @@ class TestACL(TransactionCaseWithUserDemo):
             'login': 'demo123',
             'password': 'demo',
             'partner_id': self.partner_demo.id,
-            'groups_id': [(6, 0, [self.env.ref('base.group_system').id])],
+            'group_ids': [(6, 0, [self.env.ref('base.group_system').id])],
         })
         self.env["ir.ui.view"].create({
             "name": "Add delete attribute on gantt view",

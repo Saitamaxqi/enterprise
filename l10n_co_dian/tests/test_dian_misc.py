@@ -185,7 +185,7 @@ class TestDianMisc(TestCoDianCommon):
         This test serves both purposes of checking the DIAN configuration reload
         and making sure an account manager has all access needed in this flow
         """
-        self.user.groups_id = [Command.unlink(self.env.ref('base.group_system').id)]
+        self.user.group_ids = [Command.unlink(self.env.ref('base.group_system').id)]
         journal = self.support_document_journal
         message = self._mock_button_l10n_co_dian_fetch_numbering_range(journal=journal, response_file='GetNumberingRange_journal.xml')
         self.assertEqual(message['params']['message'], 'The journal values were successfully updated.')

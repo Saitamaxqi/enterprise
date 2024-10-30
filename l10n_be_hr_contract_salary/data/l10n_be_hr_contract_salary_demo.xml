@@ -39,7 +39,7 @@
         <field name="signature">L. Poiret</field>
         <field name="company_ids" eval="[(4, ref('base.demo_company_be'))]"/>
         <field name="company_id" ref="base.demo_company_be"/>
-        <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
+        <field name="group_ids" eval="[(6,0,[ref('base.group_user')])]"/>
         <field name="image_1920" type="base64" file="hr_contract_salary/static/img/hr_employe_laurie_poiret.png"/>
     </record>
 

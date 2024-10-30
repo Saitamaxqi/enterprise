@@ -15,7 +15,7 @@ class testAttachmentAccess(TransactionCase):
             'name': "foo",
             'login': "foo",
             'email': "foo@bar.com",
-            'groups_id': [(6, 0, [cls.env.ref('sign.group_sign_user').id])]
+            'group_ids': [(6, 0, [cls.env.ref('sign.group_sign_user').id])]
         })
         with io.BytesIO() as stream:
             PdfFileWriter().write(stream)

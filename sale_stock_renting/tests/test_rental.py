@@ -362,7 +362,7 @@ class TestRentalWizard(TestRentalCommon):
 
     def test_lot_accuracy_in_schedule(self):
         """ Schedule should only display lots that are associated with rental order lines """
-        self.env.user.groups_id = [Command.link(self.env.ref('sale_stock_renting.group_rental_stock_picking').id)]
+        self.env.user.group_ids = [Command.link(self.env.ref('sale_stock_renting.group_rental_stock_picking').id)]
         self.env['res.company'].create_missing_rental_location()
         if self.env['ir.module.module'].search([('name', '=', 'purchase_stock'), ('state', '=', 'installed')], limit=1):
             self.env.user._get_default_warehouse_id().buy_to_resupply = False
@@ -430,7 +430,7 @@ class TestRentalPicking(TestRentalCommon):
         self.assertTrue(warehouse_rental_route.active)
         self.assertTrue(warehouse_rental_route.rule_ids)
         # disable setting
-        self.env.user.groups_id -= self.env.ref('sale_stock_renting.group_rental_stock_picking')
+        self.env.user.group_ids -= self.env.ref('sale_stock_renting.group_rental_stock_picking')
         settings = self.env['res.config.settings'].with_user(self.env.user).create({})
         settings.group_rental_stock_picking = False
         settings.set_values()
@@ -803,7 +803,7 @@ class TestRentalPicking(TestRentalCommon):
         picking_in.button_validate()
         self.assertRecordValues(picking_in.move_ids, [{'state': 'done', 'quantity': 3.0}])
         # disable the setting
-        self.env.user.groups_id -= self.env.ref('sale_stock_renting.group_rental_stock_picking')
+        self.env.user.group_ids -= self.env.ref('sale_stock_renting.group_rental_stock_picking')
         settings = self.env['res.config.settings'].with_user(self.env.user).create({})
         settings.group_rental_stock_picking = False
         settings.set_values()

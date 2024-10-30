@@ -218,7 +218,7 @@ class TestCommissionsSetup(AccountTestInvoicingCommon):
             'login': 'sales',
             'email': 'sales@odoo.com',
             'company_id': self.company.id,
-            'groups_id': [(6, 0, groups)],
+            'group_ids': [(6, 0, groups)],
         })
 
         self._setup_accounting()

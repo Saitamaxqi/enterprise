@@ -12,7 +12,7 @@ class HrReferralAlertMailWizard(models.TransientModel):
 
     def _get_user_domain(self):
         return [('share', '=', False), ('company_ids', 'in', self.env.company.id),
-            ('groups_id', 'in', self.env.ref('hr_referral.group_hr_recruitment_referral_user').id)]
+            ('all_group_ids', 'in', self.env.ref('hr_referral.group_hr_recruitment_referral_user').id)]
 
     def _default_user_ids(self):
         user_ids = self.env['res.users'].search(self._get_user_domain())

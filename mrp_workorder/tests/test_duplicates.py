@@ -10,7 +10,7 @@ class TestDuplicateProducts(common.TransactionCase):
         super(TestDuplicateProducts, cls).setUpClass()
 
         grp_workorder = cls.env.ref('mrp.group_mrp_routings')
-        cls.env.user.write({'groups_id': [(4, grp_workorder.id)]})
+        cls.env.user.write({'group_ids': [(4, grp_workorder.id)]})
 
         cls.workcenter_1 = cls.env['mrp.workcenter'].create({
             'name': 'Nuclear Workcenter',
@@ -146,7 +146,7 @@ class TestDuplicateProducts(common.TransactionCase):
     def test_byproduct_1(self):
         """ Use the same product as component and as byproduct"""
         # Required for `byproduct_ids` to be visible in the view
-        self.env.user.groups_id += self.env.ref('mrp.group_mrp_byproducts')
+        self.env.user.group_ids += self.env.ref('mrp.group_mrp_byproducts')
         bom_form = Form(self.bom_boat)
         with bom_form.byproduct_ids.new() as bp:
             bp.product_id = self.painting

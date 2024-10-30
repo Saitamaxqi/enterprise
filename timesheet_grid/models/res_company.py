@@ -158,7 +158,7 @@ class ResCompany(models.Model):
                 'date_start': date_start,
                 'date_stop': date_stop,
             }
-            users = self.env['res.users'].search([('groups_id', 'in', [self.env.ref('hr_timesheet.group_hr_timesheet_approver').id])])
+            users = self.env['res.users'].search([('all_group_ids', 'in', [self.env.ref('hr_timesheet.group_hr_timesheet_approver').id])])
             self._cron_timesheet_send_reminder(
                 self.env['hr.employee'].search([('company_id', '=', company.id), ('user_id', 'in', users.ids)]),
                 'timesheet_grid.mail_template_timesheet_reminder',

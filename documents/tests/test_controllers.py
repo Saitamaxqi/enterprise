@@ -998,7 +998,7 @@ class TestCaseSecurityRoutes(HttpCaseWithUserDemo):
             'login': "user",
             'password': "useruser",
             'email': "user@yourcompany.com",
-            'groups_id': [(6, 0, [self.ref('documents.group_documents_user')])]
+            'group_ids': [(6, 0, [self.ref('documents.group_documents_user')])]
         })
 
     @mute_logger('odoo.http')

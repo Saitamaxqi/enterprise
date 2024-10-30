@@ -577,10 +577,10 @@ registry.category("web_tour.tours").add("test_element_group_in_sidebar", {
             run: "click",
         },
         {
-            trigger: ".o_field_many2many_tags[name='groups_id'] .badge",
+            trigger: ".o_field_many2many_tags[name='group_ids'] .badge",
             run() {
                 const tag = document.querySelector(
-                    ".o_field_many2many_tags[name='groups_id'] .badge"
+                    ".o_field_many2many_tags[name='group_ids'] .badge"
                 );
                 if (!tag || !tag.textContent.includes("Test Group")) {
                     throw new Error("The groups should be displayed in the sidebar");

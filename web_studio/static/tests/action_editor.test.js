@@ -80,7 +80,7 @@ test("disable the view from studio", async () => {
                     [false, "search"],
                     [false, "form"],
                 ],
-                groups_id: [],
+                group_ids: [],
             }
         }
     })
@@ -105,7 +105,7 @@ test("disable the view from studio", async () => {
 test("add groups on action", async () => {
     onRpc("/web_studio/edit_action", async (request) => {
         const { params } = await request.json();
-        expect(params.args.groups_id[0]).toEqual([4, 11]);
+        expect(params.args.group_ids[0]).toEqual([4, 11]);
     });
 
     await mountWithCleanup(WebClientEnterprise);
@@ -115,7 +115,7 @@ test("add groups on action", async () => {
     await contains(".o_app[data-menu-xmlid=app_1]").click();
     await contains(".o_menu_sections a:contains(Views)").click();
 
-    await contains("input#groups_id").click();
+    await contains("input#group_ids").click();
     await contains(".o-autocomplete--dropdown-item .dropdown-item:nth-child(1)").click();
 });
 
@@ -145,7 +145,7 @@ test("concurrency: keep user's input when editing action", async () => {
                 [false, "search"],
                 [false, "form"],
             ],
-            groups_id: [],
+            group_ids: [],
         }
     });
 

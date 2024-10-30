@@ -132,7 +132,7 @@ class TestCaseDocumentsBridgeProduct(TransactionCase):
             'login': "dtdu",
             'email': "dtdu@yourcompany.com",
             # group_system is used as it is required to write on product.product and product.template
-            'groups_id': [(6, 0, [self.ref('documents.group_documents_user'), self.ref('base.group_system')])],
+            'group_ids': [(6, 0, [self.ref('documents.group_documents_user'), self.ref('base.group_system')])],
             'company_ids': [(6, 0, [company_test.id])],
             'company_id': company_test.id,
         })

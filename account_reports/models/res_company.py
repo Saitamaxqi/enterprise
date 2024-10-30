@@ -249,7 +249,7 @@ class ResCompany(models.Model):
 
         if not activity_user:
             activity_user = self.env['res.users'].search(
-                [('company_ids', 'in', self.ids), ('groups_id', 'in', self.env.ref('account.group_account_manager').ids)],
+                [('company_ids', 'in', self.ids), ('all_group_ids', 'in', self.env.ref('account.group_account_manager').ids)],
                 limit=1, order="id ASC",
             )
 

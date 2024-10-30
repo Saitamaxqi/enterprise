@@ -38,7 +38,7 @@ class TestDocumentRequest(MailCommon):
             'folder_id': cls.folder_a.id,
         })
         cls.user_employee.write({
-            'groups_id': [Command.link(cls.env.ref('documents.group_documents_user').id)]
+            'group_ids': [Command.link(cls.env.ref('documents.group_documents_user').id)]
         })
         cls.folder_a.action_update_access_rights('none', partners={
             cls.user_employee.partner_id.id: ('edit', False),

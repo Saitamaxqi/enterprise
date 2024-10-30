@@ -80,7 +80,7 @@ class TestUi(TestPointOfSaleHttpCommon):
         })
 
         self.pos_user.write({
-            'groups_id': [
+            'group_ids': [
                 (4, self.env.ref('stock.group_stock_manager').id),
             ]
         })

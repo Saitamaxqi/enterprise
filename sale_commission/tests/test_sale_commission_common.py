@@ -38,7 +38,7 @@ class TestSaleCommissionCommon(TestSaleCommon):
             'partner_id': cls.env['res.partner'].create({
                 'name': "Sales 1"
             }).id,
-            'groups_id': [Command.set(cls.env.ref('sales_team.group_sale_salesman').ids)],
+            'group_ids': [Command.set(cls.env.ref('sales_team.group_sale_salesman').ids)],
         })
 
         cls.commission_user_2 = cls.env['res.users'].create({
@@ -46,7 +46,7 @@ class TestSaleCommissionCommon(TestSaleCommon):
             'partner_id': cls.env['res.partner'].create({
                 'name': "Sales 2"
             }).id,
-            'groups_id': [Command.set(cls.env.ref('sales_team.group_sale_salesman').ids)],
+            'group_ids': [Command.set(cls.env.ref('sales_team.group_sale_salesman').ids)],
         })
 
         cls.commission_manager = cls.env['res.users'].create({
@@ -54,7 +54,7 @@ class TestSaleCommissionCommon(TestSaleCommon):
             'partner_id': cls.env['res.partner'].create({
                 'name': "Manager 1"
             }).id,
-            'groups_id': [Command.set(cls.env.ref('sales_team.group_sale_manager').ids)],
+            'group_ids': [Command.set(cls.env.ref('sales_team.group_sale_manager').ids)],
         })
 
         cls.commission_plan_user = cls.env['sale.commission.plan'].create({

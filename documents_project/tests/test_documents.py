@@ -27,7 +27,7 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
             'name': 'Project Admin',
             'login': 'proj_admin',
             'email': 'proj_admin@example.com',
-            'groups_id': [(4, cls.env.ref('project.group_project_manager').id)],
+            'group_ids': [(4, cls.env.ref('project.group_project_manager').id)],
         })
 
     def test_archive_folder_on_projects_unlinked(self):

@@ -9,7 +9,7 @@ class TestGeneratePayorderData(TestAccountPayment):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.env.user.groups_id |= cls.env.ref('account.group_validate_bank_account')
+        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
 
         cls.enet_rtgs_method_id = cls.env.ref('l10n_in_reports.account_payment_method_enet_rtgs').id
 

@@ -24,13 +24,13 @@ class TestSubscriptionPaymentFlows(TestSubscriptionCommon, PaymentHttpCommon, Mo
             'partner_id': cls.partner.id,
         })
         cls.user_with_so_access = cls.env['res.users'].create({
-            'groups_id': [(6, 0, [cls.env.ref('base.group_portal').id])],
+            'group_ids': [(6, 0, [cls.env.ref('base.group_portal').id])],
             'login': 'user_a_pouet',
             'password': 'user_a_pouet',  # may the min password length burn in hell
             'name': 'User A',
         })
         cls.user_without_so_access = cls.env['res.users'].create({
-            'groups_id': [(6, 0, [cls.env.ref('base.group_portal').id])],
+            'group_ids': [(6, 0, [cls.env.ref('base.group_portal').id])],
             'login': 'user_b_pouet',
             'password': 'user_b_pouet',
             'name': 'User B',

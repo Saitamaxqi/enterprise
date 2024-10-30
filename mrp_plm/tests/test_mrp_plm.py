@@ -12,7 +12,7 @@ class TestMrpPlm(TestPlmCommon):
     def test_create_eco_from_production_using_uom(self):
         """ Creates an ECO from a Manufacturing Order (using different UoM than its BoM) and checks
         the modifications done in the MO are in the revised BoM."""
-        self.env.user.groups_id += self.env.ref('uom.group_uom')
+        self.env.user.group_ids += self.env.ref('uom.group_uom')
         uom_unit = self.env.ref('uom.product_uom_unit')
         uom_dozen = self.env.ref('uom.product_uom_dozen')
         # Creates a BoM.

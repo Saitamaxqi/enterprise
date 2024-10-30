@@ -61,7 +61,7 @@ class TestLeadConvertToTicket(crm_common.TestCrmCommon):
     @users('user_sales_salesman')
     def test_lead_convert_to_ticket_corner_cases(self):
         # admin updates salesman to have helpdesk rights
-        self.user_sales_salesman.write({'groups_id': [(4, self.env.ref('helpdesk.group_helpdesk_user').id)]})
+        self.user_sales_salesman.write({'group_ids': [(4, self.env.ref('helpdesk.group_helpdesk_user').id)]})
         lead = self.lead_1.with_user(self.env.user)
 
         # invoke wizard and apply it
@@ -79,7 +79,7 @@ class TestLeadConvertToTicket(crm_common.TestCrmCommon):
 
         # admin remove rights on salesman
         lead.write({'active': True})
-        self.user_sales_salesman.write({'groups_id': [(3, self.env.ref('sales_team.group_sale_salesman').id)]})
+        self.user_sales_salesman.write({'group_ids': [(3, self.env.ref('sales_team.group_sale_salesman').id)]})
 
         # sneaky monkey tries to invoke the wizard
         with self.assertRaises(AccessError):

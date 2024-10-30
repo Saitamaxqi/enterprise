@@ -21,14 +21,14 @@ class TestTimer(TransactionCase):
             'name': 'Usr1',
             'login': 'Usr1',
             'email': 'usr1@test.com',
-            'groups_id': [(6, 0, [cls.env.ref('base.group_user').id])],
+            'group_ids': [(6, 0, [cls.env.ref('base.group_user').id])],
         })
 
         cls.usr2 = cls.env['res.users'].create({
             'name': 'Usr2',
             'login': 'Usr2',
             'email': 'usr2@test.com',
-            'groups_id': [(6, 0, [cls.env.ref('base.group_user').id])],
+            'group_ids': [(6, 0, [cls.env.ref('base.group_user').id])],
         })
 
 

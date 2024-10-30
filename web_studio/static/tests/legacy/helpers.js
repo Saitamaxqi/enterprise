@@ -65,8 +65,8 @@ export function fillActionFieldsDefaults(action) {
         return action;
     }
     action = { ...action };
-    if (!("groups_id" in action)) {
-        action.groups_id = [];
+    if (!("groups_ids" in action)) {
+        action.group_ids = [];
     }
     if (!("view_mode" in action)) {
         action.view_mode = action.views.map((v) => v[0]).join(",");

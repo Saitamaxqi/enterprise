@@ -41,7 +41,7 @@ class TestInterCompanyOthersWithStock(TestInterCompanyRulesCommonStock):
         self.assertEqual(receipt.state, 'done')
         self.assertEqual(purchase_order.order_line.qty_received, 10.0)
         # return the units to the inter company transit location
-        self.env.user.groups_id |= self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.group_ids |= self.env.ref('stock.group_stock_multi_locations')
         stock_return_picking_form = Form(self.env['stock.return.picking'].with_company(self.company_a).with_context(active_ids=receipt.ids, active_id=receipt.sorted().ids[0], active_model='stock.picking'))
         return_wiz = stock_return_picking_form.save()
         return_wiz.product_return_moves.write({'quantity': 10.0})

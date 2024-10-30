@@ -65,7 +65,7 @@ class TestAccountReports(TestAccountReportsCommon):
 
         cls._reconcile_on((invoice + payment_2).line_ids, cls.receivable_account_1)
 
-        cls.env.user.groups_id += cls.env.ref('analytic.group_analytic_accounting')
+        cls.env.user.group_ids += cls.env.ref('analytic.group_analytic_accounting')
         cls.analytic_plan_departments, cls.analytic_other_plan = cls.env['account.analytic.plan'].create([
             {'name': 'Departments Plan'},
             {'name': 'Other Plan'},

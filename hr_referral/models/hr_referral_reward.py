@@ -14,7 +14,7 @@ class HrReferralReward(models.Model):
 
     def _group_hr_referral_domain(self):
         group = self.env.ref('hr_referral.group_hr_recruitment_referral_user', raise_if_not_found=False)
-        return [('groups_id', 'in', group.ids)] if group else []
+        return [('all_group_ids', 'in', group.ids)] if group else []
 
     sequence = fields.Integer()
     active = fields.Boolean(default=True)

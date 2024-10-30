@@ -32,7 +32,7 @@ class websiteHelpdeskForumUi(HelpdeskCommon, TestForumCommon, HttpCase):
             'name': 'Test User',
             'login': 'testuser@example.com',
             'password': 'testpass',
-            'groups_id': [Command.link(self.env.ref('helpdesk.group_helpdesk_manager').id)],
+            'group_ids': [Command.link(self.env.ref('helpdesk.group_helpdesk_manager').id)],
         })
 
         forum = self.env.ref('website_forum.forum_help')

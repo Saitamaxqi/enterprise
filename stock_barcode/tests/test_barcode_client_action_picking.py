@@ -30,7 +30,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 2.0)
         self.env['stock.quant']._update_available_quantity(self.product2, self.shelf1, 2.0)
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         self.picking_type_internal.restrict_scan_dest_location = 'mandatory'
         self.picking_type_internal.restrict_scan_source_location = 'mandatory'
         internal_picking = self.env['stock.picking'].create({
@@ -97,7 +97,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
         package1 = self.env['stock.quant.package'].create({'name': 'package001'})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 1, package_id=package1)
@@ -132,7 +132,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0), (4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0), (4, grp_pack.id, 0)]})
         self.picking_type_internal.active = True
         # Creates a new package and add some quants.
         package2 = self.env['stock.quant.package'].create({'name': 'P00002'})
@@ -165,7 +165,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.picking_type_internal.restrict_scan_dest_location = 'mandatory'
         self.picking_type_internal.restrict_scan_source_location = 'mandatory'
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         internal_picking = self.env['stock.picking'].create({
             'location_id': self.stock_location.id,
             'location_dest_id': self.stock_location.id,
@@ -211,8 +211,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
         # Create a sibling stock location to check we can scan not only picking's
         # destination and its sublocations for immediate transfers.
         stock_2 = self.env['stock.location'].create({
@@ -237,8 +237,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
 
         self.picking_type_in.write({
             "use_existing_lots": True,
@@ -262,8 +262,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
 
         receipt_picking = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
@@ -287,8 +287,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
 
         self.picking_type_in.use_create_lots = False
         self.picking_type_in.use_existing_lots = False
@@ -311,8 +311,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
 
         self.picking_type_in.use_create_lots = True
         self.picking_type_in.use_existing_lots = True
@@ -350,7 +350,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         receipt_picking = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
             'location_dest_id': self.stock_location.id,
@@ -413,7 +413,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ For a planned receipt, check put in pack a uncompleted move line will split it. """
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
         # Create a receipt and confirm it.
         receipt_form = Form(self.env['stock.picking'])
         receipt_form.picking_type_id = self.picking_type_in
@@ -476,7 +476,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Ensures also this constraint is not applyable for immediate transfers."""
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         # Creates a new location at the same level than WH/Stock.
         sibling_loc = self.env['stock.location'].create({
             'name': "Second Stock",
@@ -534,7 +534,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         company_a = self.env['res.company'].create({'name': 'Company "Ah !" (le meme TMTC)'})
         company_b = self.env['res.company'].create({'name': 'Company Bae 😏😘'})
         self.env.user.write({
-            'groups_id': [(4, self.env.ref('stock.group_production_lot').id)],
+            'group_ids': [(4, self.env.ref('stock.group_production_lot').id)],
             'company_ids': [(4, company_a.id), (4, company_b.id)],
             'company_id': company_b.id,
         })
@@ -578,9 +578,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         grp_lot = self.env.ref('stock.group_production_lot')
         grp_owner = self.env.ref('stock.group_tracking_owner')
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_owner.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_owner.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
 
         # Creates 4 serial numbers and adds 2 qty. for the reservation.
         snObj = self.env['stock.lot']
@@ -668,9 +668,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         grp_pack = self.env.ref('stock.group_tracking_lot')
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
 
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
 
         sn = self.env['stock.lot'].create({'name': 'sn', 'product_id': self.productlot1.id, 'company_id': self.env.company.id})
         package1 = self.env['stock.quant.package'].create({'name': 'pack_sn'})
@@ -726,7 +726,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_delivery_reserved_1(self):
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         delivery_picking = self.env['stock.picking'].create({
             'location_id': self.stock_location.id,
             'location_dest_id': self.customer_location.id,
@@ -903,7 +903,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Checks reserved serial numbers aren't show until scanned when
         `show_reserved_sns` is set on False."""
         self.clean_access_rights()
-        self.env.user.write({'groups_id': [(4, self.env.ref('stock.group_production_lot').id, 0)]})
+        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_production_lot').id, 0)]})
         self.picking_type_out.show_reserved_sns = False
 
         # Creates some SN and adds more than enough quantity on hand for the delivery.
@@ -946,7 +946,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """ Uncheck setting to display reserved lots and check they are not show
         in the Barcode app until they are scanned."""
         self.clean_access_rights()
-        self.env.user.write({'groups_id': [(4, self.env.ref('stock.group_production_lot').id, 0)]})
+        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_production_lot').id, 0)]})
         self.picking_type_out.show_reserved_sns = False
 
         # Creates some lots and adds more than enough quantity on hand for the delivery.
@@ -989,7 +989,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
 
         # Adds lot1 and lot2 for productlot1
         lotObj = self.env['stock.lot']
@@ -1020,7 +1020,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id)]})
 
         self.picking_type_out.use_create_lots = False
         self.picking_type_out.use_existing_lots = True
@@ -1060,7 +1060,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         group_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, group_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, group_lot.id, 0)]})
 
         (self.product1 + self.product2).tracking = 'lot'
 
@@ -1094,7 +1094,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
         self.picking_type_out.show_reserved_sns = True
 
         delivery_picking = self.env['stock.picking'].create({
@@ -1139,7 +1139,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_delivery_different_products_with_same_lot_name(self):
         self.clean_access_rights()
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
 
         self.productlot2 = self.env['product.product'].create({
             'name': 'productlot2',
@@ -1230,7 +1230,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
 
         self.clean_access_rights()
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
 
         # Add 4 serial numbers productserial1
         snObj = self.env['stock.lot']
@@ -1353,9 +1353,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_receipt_reserved_lots_multiloc_1(self):
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
 
         receipts_picking = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
@@ -1404,7 +1404,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
 
         # set sequence packages to 1000 to find it easily in the tour
         sequence = self.env['ir.sequence'].search([(
@@ -1427,7 +1427,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
 
         # Create a pack and 2 quants in this pack
         pack1 = self.env['stock.quant.package'].create({
@@ -1471,8 +1471,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         self.picking_type_internal.active = True
         self.picking_type_internal.show_entire_packs = True
         self.picking_type_internal.restrict_scan_dest_location = 'mandatory'
@@ -1508,8 +1508,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
 
         # Creates a package with 1 quant in it.
         pack1 = self.env['stock.quant.package'].create({
@@ -1554,7 +1554,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0), (4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0), (4, grp_multi_loc.id, 0)]})
 
         # Creates a package with a quant in it.
         pack1 = self.env['stock.quant.package'].create({
@@ -1589,7 +1589,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [Command.link(grp_pack.id), Command.link(grp_multi_loc.id)]})
+        self.env.user.write({'group_ids': [Command.link(grp_pack.id), Command.link(grp_multi_loc.id)]})
         self.picking_type_internal.active = True
         self.picking_type_internal.show_entire_packs = False
         action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
@@ -1620,8 +1620,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.picking_type_internal.restrict_scan_source_location = 'mandatory'
         grp_pack = self.env.ref('stock.group_tracking_lot')
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 1)
         self.env['stock.quant']._update_available_quantity(self.product2, self.shelf1, 1)
@@ -1684,7 +1684,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_reload_flow(self):
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
 
         self.start_tour("/odoo/barcode", 'test_reload_flow', login='admin', timeout=180)
 
@@ -1713,8 +1713,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_lot = self.env.ref('stock.group_production_lot')
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
 
         self.start_tour("/odoo/barcode", 'test_receipt_duplicate_serial_number', login='admin', timeout=180)
         self.start_tour("/odoo/barcode", 'test_delivery_duplicate_serial_number', login='admin', timeout=180)
@@ -1725,9 +1725,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         grp_pack = self.env.ref('stock.group_tracking_lot')
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         # For the purpose of this test, disable the source scan (mandatory for a deliery otherwise).
         self.picking_type_out.restrict_scan_source_location = 'no'
 
@@ -1796,9 +1796,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
         self.picking_type_internal.active = True
         self.picking_type_internal.restrict_scan_source_location = 'no'
         self.picking_type_internal.restrict_scan_dest_location = 'optional'
@@ -1844,9 +1844,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_put_in_pack_before_dest(self):
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
         self.picking_type_internal.active = True
         self.picking_type_internal.restrict_scan_dest_location = 'mandatory'
         self.picking_type_internal.restrict_scan_source_location = 'mandatory'
@@ -1893,9 +1893,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 1)
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf2, 1)
@@ -1934,7 +1934,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
 
         receipt01 = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
@@ -1965,7 +1965,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_highlight_packs(self):
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
 
         pack1 = self.env['stock.quant.package'].create({
             'name': 'PACK001',
@@ -2006,8 +2006,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_picking_owner_scan_package(self):
         grp_owner = self.env.ref('stock.group_tracking_owner')
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_owner.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_owner.id, 0)]})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 7, package_id=self.package, owner_id=self.owner)
 
@@ -2026,7 +2026,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Enables packages and multi-locations.
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0), (4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0), (4, grp_lot.id, 0)]})
         # Creates a product without barcode to check it can always be processed regardless the config.
         product_without_barcode = self.env['product.product'].create({
             'name': 'Barcodeless Product',
@@ -2093,11 +2093,11 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Enables packages and multi-locations.
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
         # Creates a product without barcode to check it will count even if not
         # scanned but processed through the button.
         product_without_barcode = self.env['product.product'].create({
@@ -2146,9 +2146,9 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         # Enables multi-locations and lots.
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
 
         picking_form = Form(self.env['stock.picking'])
         picking_form.picking_type_id = self.picking_type_in
@@ -2178,7 +2178,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'groups_id': [Command.link(group_uom.id)]})
+        self.env.user.write({'group_ids': [Command.link(group_uom.id)]})
         self.picking_type_in.restrict_scan_product = True
         pack_10 = self.env['uom.uom'].create({
             'name': "product1 x10",
@@ -2245,10 +2245,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         })
 
         # Enables packages, multi-locations and multiple steps routes.
-        self.env.user.write({'groups_id': [(4, self.env.ref('stock.group_production_lot').id, 0)]})
-        self.env.user.write({'groups_id': [(4, self.env.ref('stock.group_tracking_lot').id, 0)]})
-        self.env.user.write({'groups_id': [(4, self.env.ref('stock.group_stock_multi_locations').id, 0)]})
-        self.env.user.write({'groups_id': [(4, self.env.ref('stock.group_adv_location').id, 0)]})
+        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_production_lot').id, 0)]})
+        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_tracking_lot').id, 0)]})
+        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_stock_multi_locations').id, 0)]})
+        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_adv_location').id, 0)]})
         warehouse = self.env.ref('stock.warehouse0')
         warehouse.reception_steps = 'two_steps'
         warehouse.delivery_steps = 'pick_pack_ship'
@@ -2461,7 +2461,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Then, checks it's the right type of line who is shown in the Barcode App."""
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
         self.picking_type_out.show_entire_packs = True
         package1 = self.env['stock.quant.package'].create({'name': 'package001'})
         package2 = self.env['stock.quant.package'].create({'name': 'package002'})
@@ -2517,7 +2517,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         group_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, group_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, group_pack.id, 0)]})
 
         pack01, pack02 = self.env['stock.quant.package'].create([{
             'name': name,
@@ -2550,7 +2550,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         group_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, group_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, group_lot.id, 0)]})
 
         lot01 = self.env['stock.lot'].create({
             'name': "LOT01",
@@ -2609,10 +2609,10 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
             - product2 not available
         """
         self.clean_access_rights()
-        self.env.user.write({'groups_id': [(4, self.env.ref('stock.group_production_lot').id, 0)]})
-        self.env.user.write({'groups_id': [(4, self.env.ref('stock.group_tracking_lot').id, 0)]})
-        self.env.user.write({'groups_id': [(4, self.env.ref('stock.group_stock_multi_locations').id, 0)]})
-        self.env.user.write({'groups_id': [(4, self.env.ref('stock.group_adv_location').id, 0)]})
+        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_production_lot').id, 0)]})
+        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_tracking_lot').id, 0)]})
+        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_stock_multi_locations').id, 0)]})
+        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_adv_location').id, 0)]})
         lot01 = self.env['stock.lot'].create({
             'name': "LOT01",
             'product_id': self.productlot1.id,
@@ -2681,7 +2681,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_split_line_on_destination_scan(self):
         """ Ensures a non-complete line is split when a destination is scanned. """
         self.clean_access_rights()
-        self.env.user.write({'groups_id': [(4, self.env.ref('stock.group_stock_multi_locations').id, 0)]})
+        self.env.user.write({'group_ids': [(4, self.env.ref('stock.group_stock_multi_locations').id, 0)]})
         self.picking_type_internal.restrict_scan_dest_location = 'mandatory'
         self.picking_type_internal.restrict_scan_source_location = 'mandatory'
         # Creates a receipt for 4x product1 and confirm it.
@@ -2785,7 +2785,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         # Enables package to check the split after a put in pack.
         group_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, group_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, group_pack.id, 0)]})
         # Set packages' sequence to 1000 to find it easily during the tour.
         package_sequence = self.env['ir.sequence'].search([('code', '=', 'stock.quant.package')], limit=1)
         package_sequence.write({'number_next_actual': 1000})
@@ -3035,7 +3035,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
         self.clean_access_rights()
         group_tracking = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [Command.link(group_tracking.id)]})
+        self.env.user.write({'group_ids': [Command.link(group_tracking.id)]})
         warehouse = self.picking_type_out.warehouse_id
         # Enable "Show reserved lots/SN"
         warehouse.out_type_id.write({
@@ -3111,7 +3111,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [Command.link(grp_multi_loc.id)]})
+        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id)]})
         self.picking_type_internal.active = True
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10.0)
@@ -3142,7 +3142,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [Command.link(grp_multi_loc.id)]})
+        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id)]})
         procurement_group = self.env['procurement.group'].create({
             'name': 'custom procurement',
         })
@@ -3191,7 +3191,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
         self.clean_access_rights()
         group_tracking = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [Command.link(group_tracking.id)]})
+        self.env.user.write({'group_ids': [Command.link(group_tracking.id)]})
         # Enable "Show reserved lots/SN"
         self.picking_type_out.write({
             'show_reserved_sns': True,
@@ -3247,7 +3247,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         grp_pack = self.env.ref('stock.group_tracking_lot')
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         package = self.env['stock.quant.package'].create({'name': 'package001'})
-        self.env.user.write({'groups_id': [Command.link(grp_multi_loc.id), Command.link(grp_pack.id)]})
+        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id), Command.link(grp_pack.id)]})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10, package_id=package)
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 2)
@@ -3291,7 +3291,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         grp_pack = self.env.ref('stock.group_tracking_lot')
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         package = self.env['stock.quant.package'].create({'name': 'package001'})
-        self.env.user.write({'groups_id': [Command.link(grp_multi_loc.id), Command.link(grp_pack.id)]})
+        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id), Command.link(grp_pack.id)]})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 10, package_id=package)
         self.env['stock.quant']._update_available_quantity(self.product1, self.shelf1, 5)
@@ -3333,7 +3333,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'groups_id': [Command.link(group_uom.id)]})
+        self.env.user.write({'group_ids': [Command.link(group_uom.id)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         product_a, product_b = self.env['product.product'].create([{
             'name': name,
@@ -3542,7 +3542,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         group_package = self.env.ref('stock.group_tracking_lot')
         group_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [
+        self.env.user.write({'group_ids': [
             (4, group_package.id, 0),
             (4, group_lot.id, 0),
         ]})
@@ -3568,7 +3568,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
 
         picking_form = Form(self.env['stock.picking'])
@@ -3604,7 +3604,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         grp_uom = self.env.ref('uom.group_uom')
         group_user = self.env.ref('base.group_user')
         group_user.write({'implied_ids': [(4, grp_uom.id)]})
-        self.env.user.write({'groups_id': [(4, grp_uom.id)]})
+        self.env.user.write({'group_ids': [(4, grp_uom.id)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         # Configures three products using units, kg and g.
         uom_g = self.env.ref('uom.product_uom_gram')
@@ -3652,7 +3652,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         non-GS1 barcode when GS1 nomenclature is active."""
         self.clean_access_rights()
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         self.start_tour('/odoo/barcode', 'test_gs1_receipt_scan_not_gs1_multi_barcode', login='admin')
 
@@ -3663,7 +3663,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
 
         # Set package's sequence to 123 to generate always the same package's name in the tour.
         sequence = self.env['ir.sequence'].search([('code', '=', 'stock.quant.package')], limit=1)
@@ -3717,7 +3717,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'groups_id': [Command.link(group_uom.id)]})
+        self.env.user.write({'group_ids': [Command.link(group_uom.id)]})
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
 
         product = self.env['product.product'].create({
@@ -3751,7 +3751,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.env.company.nomenclature_id = self.env.ref('barcodes_gs1_nomenclature.default_gs1_nomenclature')
         group_tracking = self.env.ref('stock.group_production_lot')
         group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'groups_id': [(4, group_tracking.id, 0), (4, group_uom.id, 0)]})
+        self.env.user.write({'group_ids': [(4, group_tracking.id, 0), (4, group_uom.id, 0)]})
 
         self.productlot1.uom_ids = self.env.ref('uom.product_uom_dozen')
         self.env['product.uom'].create({
@@ -3775,8 +3775,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         group_lot = self.env.ref('stock.group_production_lot')
         group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'groups_id': [(4, group_lot.id, 0)]})
-        self.env.user.write({'groups_id': [(4, group_uom.id)]})
+        self.env.user.write({'group_ids': [(4, group_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, group_uom.id)]})
         pack_4 = self.env['uom.uom'].create({
             'name': 'Pack of 4',
             'relative_factor': 4,
@@ -3798,7 +3798,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
 
         self.env['stock.quant']._update_available_quantity(self.product2, self.stock_location, 5)
         # Create two empty packs
@@ -3834,8 +3834,8 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
-        self.env.user.write({'groups_id': [(4, grp_multi_loc.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_pack.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_multi_loc.id, 0)]})
 
         # Create two empty packs
         pack1 = self.env['stock.quant.package'].create({
@@ -3879,7 +3879,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         group_sign_delivery = self.env.ref('stock.group_stock_sign_delivery')
-        self.env.user.write({'groups_id': [(4, group_sign_delivery.id, 0)]})
+        self.env.user.write({'group_ids': [(4, group_sign_delivery.id, 0)]})
 
         self.env['stock.quant']._update_available_quantity(self.product1, self.stock_location, 5)
 
@@ -3922,7 +3922,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_select_with_same_product_and_lot(self):
         self.clean_access_rights()
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [Command.link(grp_lot.id)]})
+        self.env.user.write({'group_ids': [Command.link(grp_lot.id)]})
         pg = self.env['procurement.group'].create({'name': 'ProcurementGroup'})
         lot_xyz = self.env['stock.lot'].create({'name': 'lot_xyz', 'product_id': self.productlot1.id, 'company_id': self.env.company.id})
         self.env['stock.quant']._update_available_quantity(self.productlot1, self.stock_location, 4, lot_id=lot_xyz)

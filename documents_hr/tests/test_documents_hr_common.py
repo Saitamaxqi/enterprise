@@ -15,12 +15,12 @@ class TransactionCaseDocumentsHr(TransactionCaseDocuments):
             'name': "documents test basic user",
             'login': "dtbu",
             'email': "dtbu@yourcompany.com",
-            'groups_id': [(6, 0, [cls.env.ref('documents.group_documents_user').id])]
+            'group_ids': [(6, 0, [cls.env.ref('documents.group_documents_user').id])]
         }, {
             'name': "Hr manager test",
             'login': "hr_manager_test",
             'email': "hr_manager_test@yourcompany.com",
-            'groups_id': [(6, 0, [cls.env.ref('hr.group_hr_manager').id])]
+            'group_ids': [(6, 0, [cls.env.ref('hr.group_hr_manager').id])]
         }])
         cls.hr_folder = cls.env['documents.document'].create({
             'name': 'hr_folder',

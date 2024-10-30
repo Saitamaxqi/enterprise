@@ -26,7 +26,7 @@ class TestFsmFlowCommon(TransactionCase):
             'name': 'Armande Project_user',
             'login': 'Armande',
             'email': 'armande.project_user@example.com',
-            'groups_id': [(6, 0, [cls.env.ref('industry_fsm.group_fsm_user').id])]
+            'group_ids': [(6, 0, [cls.env.ref('industry_fsm.group_fsm_user').id])]
         })
 
         cls.fsm_project = cls.env['project.project'].create({

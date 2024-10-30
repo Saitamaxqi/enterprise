@@ -59,7 +59,7 @@
         <field name="signature">F. Poirish</field>
         <field name="company_ids" eval="[(4, ref('base.demo_company_lu'))]"/>
         <field name="company_id" ref="base.demo_company_lu"/>
-        <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
+        <field name="group_ids" eval="[(6,0,[ref('base.group_user')])]"/>
         <field name="image_1920" type="base64" file="l10n_lu_hr_payroll/static/img/hr_employe_frida_poirish.jpg"/>
     </record>
 

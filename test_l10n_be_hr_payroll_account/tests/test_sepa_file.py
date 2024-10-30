@@ -16,7 +16,7 @@ class TestSEPAFile(AccountTestInvoicingCommon):
         super().setUpClass()
         cls.company_data['company'].iso20022_orgid_id = "123456789"
 
-        cls.env.user.groups_id |= cls.env.ref('account.group_validate_bank_account')
+        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
 
         cls.address_home = cls.env['res.partner'].create([{
             'name': "Test Employee",

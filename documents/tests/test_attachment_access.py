@@ -14,7 +14,7 @@ class testAttachmentAccess(TransactionCase):
             'name': "foo",
             'login': "foo",
             'email': "foo@bar.com",
-            'groups_id': [(6, 0, [cls.env.ref('documents.group_documents_user').id])]
+            'group_ids': [(6, 0, [cls.env.ref('documents.group_documents_user').id])]
         })
         folder = cls.env['documents.document'].create({'type': 'folder', 'name': 'foo', 'access_internal': 'edit'})
         cls.document_defaults = {

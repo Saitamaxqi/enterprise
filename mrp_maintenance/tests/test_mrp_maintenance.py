@@ -41,7 +41,7 @@ class TestMrpMaintenance(common.TransactionCase):
             'company_id': cls.main_company.id,
             'login': "employee",
             'email': "employee@yourcompany.example.com",
-            'groups_id': [(6, 0, [cls.env.ref('base.group_user').id])]
+            'group_ids': [(6, 0, [cls.env.ref('base.group_user').id])]
         })
 
         # Create user with extra rights
@@ -50,7 +50,7 @@ class TestMrpMaintenance(common.TransactionCase):
             'company_id': cls.main_company.id,
             'login': "manager",
             'email': "eqmanager@yourcompany.example.com",
-            'groups_id': [(6, 0, [cls.env.ref('maintenance.group_equipment_manager').id])]
+            'group_ids': [(6, 0, [cls.env.ref('maintenance.group_equipment_manager').id])]
         })
 
         # Create workcenter
@@ -305,7 +305,7 @@ class TestMrpMaintenance(common.TransactionCase):
 
     def test_workcenter_unavailability(self):
         # Required for `assign_date` to be visible in the view
-        self.env.user.groups_id += self.env.ref('mrp.group_mrp_routings')
+        self.env.user.group_ids += self.env.ref('mrp.group_mrp_routings')
         with self.debug_mode():
             # Create a new equipment
             equipment_form = Form(self.equipment)

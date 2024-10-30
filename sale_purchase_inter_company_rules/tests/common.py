@@ -8,8 +8,8 @@ class TestInterCompanyRulesCommonSOPO(TestInterCompanyRulesCommon):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.res_users_company_a.groups_id += cls.env.ref('sales_team.group_sale_salesman') + cls.env.ref('purchase.group_purchase_user')
-        cls.res_users_company_b.groups_id += cls.env.ref('sales_team.group_sale_salesman') + cls.env.ref('purchase.group_purchase_user')
+        cls.res_users_company_a.group_ids += cls.env.ref('sales_team.group_sale_salesman') + cls.env.ref('purchase.group_purchase_user')
+        cls.res_users_company_b.group_ids += cls.env.ref('sales_team.group_sale_salesman') + cls.env.ref('purchase.group_purchase_user')
 
         # Create an auto applied fiscal position for each company
         (cls.company_a + cls.company_b).write({'country_id': cls.env.ref('base.us').id})

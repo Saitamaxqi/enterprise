@@ -10,7 +10,7 @@ class TestPlmCommon(common.TransactionCase):
         super(TestPlmCommon, cls).setUpClass()
         cls.Bom = cls.env['mrp.bom']
         grp_workorder = cls.env.ref('mrp.group_mrp_routings')
-        cls.env.user.write({'groups_id': [(4, grp_workorder.id)]})
+        cls.env.user.write({'group_ids': [(4, grp_workorder.id)]})
         cls.table = cls.env['product.product'].create({
             'name': 'Table (MTO)',
             'is_storable': True,

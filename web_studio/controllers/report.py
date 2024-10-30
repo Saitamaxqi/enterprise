@@ -659,7 +659,7 @@ class WebStudioReportController(main.WebStudioController):
 
             to_write["paperformat_id"] = to_write["paperformat_id"][0] if to_write["paperformat_id"] else False
 
-            to_write["groups_id"] = [Command.clear()] + [Command.link(_id) for _id in to_write["groups_id"]]
+            to_write["group_ids"] = [Command.clear()] + [Command.link(_id) for _id in to_write["group_ids"]]
             report.write(to_write)
             report_data = report.read(to_write.keys())
             paperformat = report._read_paper_format_measures()

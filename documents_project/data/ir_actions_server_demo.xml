@@ -6,7 +6,7 @@
             <field name="name">Mark as draft</field>
             <field name="sequence">10</field>
             <field name="model_id" ref="documents.model_documents_document"/>
-            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
+            <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
             <field name="state">multi</field>
             <field name="child_ids">
                 <record id="ir_actions_server_mark_as_draft_code" model="ir.actions.server">
@@ -52,7 +52,7 @@ for record in records:
             <field name="name">Ask for validation</field>
             <field name="sequence">15</field>
             <field name="model_id" ref="documents.model_documents_document"/>
-            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
+            <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
             <field name="state">multi</field>
             <field name="child_ids">
                 <record id="ir_actions_server_ask_for_validation_code" model="ir.actions.server">
@@ -102,7 +102,7 @@ if tag_deprecated and tag_deprecated in records.tag_ids:
             <field name="name">Validate</field>
             <field name="sequence">20</field>
             <field name="model_id" ref="documents.model_documents_document"/>
-            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
+            <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
             <field name="state">multi</field>
             <field name="child_ids">
                 <record id="ir_actions_server_validate_code" model="ir.actions.server">
@@ -155,7 +155,7 @@ for record in records:
             <field name="name">Archive</field>
             <field name="sequence">25</field>
             <field name="model_id" ref="documents.model_documents_document"/>
-            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
+            <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
             <field name="state">multi</field>
             <field name="child_ids">
                 <record id="ir_actions_server_create_project_deprecate_tag_remove_to_validate" model="ir.actions.server">

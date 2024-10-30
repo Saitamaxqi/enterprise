@@ -17,7 +17,7 @@ class TestBACS(AccountTestInvoicingCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.env.user.groups_id |= cls.env.ref('account.group_validate_bank_account')
+        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
         cls.env.ref('base.GBP').active = True
 
         cls.bank_barclays = cls.env['res.bank'].create({

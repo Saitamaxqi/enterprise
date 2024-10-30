@@ -146,7 +146,7 @@
         <field name="binding_model_id" ref="model_hr_job"/>
         <field name="binding_view_types">form</field>
         <field name="state">code</field>
-        <field name="groups_id" eval="[(4, ref('hr_recruitment.group_hr_recruitment_manager'))]"/>
+        <field name="group_ids" eval="[(4, ref('hr_recruitment.group_hr_recruitment_manager'))]"/>
         <field name="code">
             action = records.action_referral_campaign()
         </field>

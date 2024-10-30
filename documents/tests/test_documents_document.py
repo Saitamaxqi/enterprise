@@ -311,7 +311,7 @@ class TestCaseDocuments(TransactionCaseDocuments):
         user_b = self.env['res.users'].create({
             'name': 'User of company B',
             'login': 'user_b',
-            'groups_id': [(6, 0, [self.ref('documents.group_documents_manager')])],
+            'group_ids': [(6, 0, [self.ref('documents.group_documents_manager')])],
             'company_id': company_b.id,
             'company_ids': [(6, 0, [company_b.id])]
         })

@@ -47,8 +47,8 @@ export class ReportEditorModel extends Reactive {
             name: { name: "name", type: "char" },
             model: { name: "model", type: "char" },
             report_name: { name: "report_name", type: "char" },
-            groups_id: {
-                name: "groups_id",
+            group_ids: {
+                name: "group_ids",
                 type: "many2many",
                 relation: "res.groups",
                 relatedFields: {
@@ -71,7 +71,7 @@ export class ReportEditorModel extends Reactive {
             name: makeActiveField(),
             model: makeActiveField(),
             report_name: makeActiveField(),
-            groups_id: {
+            group_ids: {
                 ...makeActiveField(),
                 related: {
                     fields: { display_name: { name: "display_name", type: "char" } },

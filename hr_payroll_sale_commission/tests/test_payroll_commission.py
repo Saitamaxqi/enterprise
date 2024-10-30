@@ -25,7 +25,7 @@ class TestPayrollCommission(TestPayslipContractBase):
         employee_user = self.env['res.users'].create({
             'login': "Salesman",
             'partner_id': self.env['res.partner'].create({'name': "Salesman"}).id,
-            'groups_id': [Command.set(self.env.ref('sales_team.group_sale_salesman').ids)],
+            'group_ids': [Command.set(self.env.ref('sales_team.group_sale_salesman').ids)],
         })
         employee = self.env['hr.employee'].create({
             'name': 'Salesman',

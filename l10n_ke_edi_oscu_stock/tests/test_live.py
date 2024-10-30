@@ -417,7 +417,7 @@ class TestKeEdiStock(TestKeEdiCommon):
             self.env.ref('l10n_ke_edi_oscu_stock.ir_cron_send_stock_moves').method_direct_trigger()
 
     def _test_send_inventory_adjustment(self):
-        self.user.write({'groups_id': [Command.link(self.env.ref('stock.group_stock_user').id)]})
+        self.user.write({'group_ids': [Command.link(self.env.ref('stock.group_stock_user').id)]})
         self.product_a.action_l10n_ke_oscu_save_item()
 
         # Step 1: Create inventory adjustment

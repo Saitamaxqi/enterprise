@@ -42,7 +42,7 @@ class SaleOrderSpreadsheet(TransactionCase):
         result = self.env["spreadsheet.mixin"].with_user(user).get_selector_spreadsheet_models()
         self.assertFalse(any(r["model"] == "sale.order.spreadsheet" for r in result))
 
-        user.groups_id |= self.env.ref("sales_team.group_sale_salesman")
+        user.group_ids |= self.env.ref("sales_team.group_sale_salesman")
         result = self.env["spreadsheet.mixin"].with_user(user).get_selector_spreadsheet_models()
         self.assertTrue(any(r["model"] == "sale.order.spreadsheet" for r in result))
 

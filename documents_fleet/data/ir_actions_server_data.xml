@@ -4,7 +4,7 @@
         <record id="ir_actions_server_link_to_vehicule" model="ir.actions.server" forcecreate="0">
             <field name="name">Link to a vehicle</field>
             <field name="model_id" ref="documents.model_documents_document"/>
-            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
+            <field name="group_ids" eval="[Command.link(ref('base.group_user'))]"/>
             <field name="state">code</field>
             <field name="code">
                 action = records.action_link_to_record('fleet.vehicle')

@@ -35,10 +35,10 @@ class TestStudioApproval(TransactionCase):
             cls.env, login='Manager',
             groups="base.group_user,base.group_partner_manager", context=creation_context)
         cls.user.write({
-            'groups_id': [(4, cls.group_user.id)]
+            'group_ids': [(4, cls.group_user.id)]
         })
         cls.manager.write({
-            'groups_id': [(4, cls.group_manager.id)]
+            'group_ids': [(4, cls.group_manager.id)]
         })
         cls.record = cls.user.partner_id
         # setup validation rules; inactive by default, they'll get
@@ -567,10 +567,10 @@ class TestStudioApprovalPost(TransactionCase):
             cls.env, login='Manager',
             groups="base.group_user,base.group_partner_manager", context=creation_context)
         cls.user.write({
-            'groups_id': [Command.link(cls.group_user.id)]
+            'group_ids': [Command.link(cls.group_user.id)]
         })
         cls.manager.write({
-            'groups_id': [Command.link(cls.group_manager.id)]
+            'group_ids': [Command.link(cls.group_manager.id)]
         })
         cls.record = cls.user.partner_id
         # setup validation rules; inactive by default, they'll get

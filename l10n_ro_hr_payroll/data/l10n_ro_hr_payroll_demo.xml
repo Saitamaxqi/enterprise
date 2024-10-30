@@ -56,7 +56,7 @@
         <field name="signature">D. Voinea</field>
         <field name="company_ids" eval="[(4, ref('base.demo_company_ro'))]"/>
         <field name="company_id" ref="base.demo_company_ro"/>
-        <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
+        <field name="group_ids" eval="[(6,0,[ref('base.group_user')])]"/>
         <field name="image_1920" type="base64" file="l10n_ro_hr_payroll/static/img/hr_employe_demetra_voinea.jpg"/>
     </record>
 

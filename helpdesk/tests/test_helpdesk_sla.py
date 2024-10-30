@@ -27,14 +27,14 @@ class HelpdeskSLA(TransactionCase):
             'name': 'Helpdesk Manager',
             'login': 'hm',
             'email': 'hm@example.com',
-            'groups_id': [(6, 0, [cls.env.ref('helpdesk.group_helpdesk_manager').id])]
+            'group_ids': [(6, 0, [cls.env.ref('helpdesk.group_helpdesk_manager').id])]
         })
         cls.helpdesk_user = Users.create({
             'company_id': cls.main_company_id,
             'name': 'Helpdesk User',
             'login': 'hu',
             'email': 'hu@example.com',
-            'groups_id': [(6, 0, [cls.env.ref('helpdesk.group_helpdesk_user').id])]
+            'group_ids': [(6, 0, [cls.env.ref('helpdesk.group_helpdesk_user').id])]
         })
         # the manager defines three teams for our tests (the .sudo() at the end is to avoid potential uid problems)
         teams = cls.env['helpdesk.team'].with_user(cls.helpdesk_manager).create([

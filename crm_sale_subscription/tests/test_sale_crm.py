@@ -75,7 +75,7 @@ class TestCrmSubscription(TestCrmCommon):
             ],
         }])
 
-        self.env.user.groups_id = [Command.set(self.env.ref("crm.group_use_recurring_revenues").ids)]
+        self.env.user.group_ids = [Command.set(self.env.ref("crm.group_use_recurring_revenues").ids)]
         self.assertEqual(self.lead_1.expected_revenue, 0)
         self.assertFalse(self.lead_1.recurring_plan)
 

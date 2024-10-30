@@ -1956,7 +1956,7 @@ class TestCFDIInvoiceWorkflow(TestMxEdiCommon):
             second_user = self.env['res.users'].create({
                 'login': 'seconduser',
                 'partner_id': second_partner.id,
-                'groups_id': [self.env.ref('account.group_account_manager').id]
+                'group_ids': [self.env.ref('account.group_account_manager').id]
             })
 
             invoice = create_invoice()

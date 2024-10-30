@@ -13,7 +13,7 @@ class TestBarcodeClientActionPicking(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
-        self.env.user.write({'groups_id': [Command.link(grp_multi_loc.id)]})
+        self.env.user.write({'group_ids': [Command.link(grp_multi_loc.id)]})
         self.env['quality.point'].create({
             'product_ids': [Command.link(self.product1.id)],
             'picking_type_ids': [Command.link(self.picking_type_in.id)],

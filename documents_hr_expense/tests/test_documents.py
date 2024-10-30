@@ -30,7 +30,7 @@ class TestCaseDocumentsBridgeExpense(TransactionCase):
             'name': "aaadocuments test basic user",
             'login': "aadtbu",
             'email': "aadtbu@yourcompany.com",
-            'groups_id': [Command.set([self.env.ref('documents.group_documents_user').id])],
+            'group_ids': [Command.set([self.env.ref('documents.group_documents_user').id])],
         })
         documents_user.action_create_employee()  # Employee is mandatory in expense
         attachment_txt = self.env['documents.document'].with_user(documents_user).create({

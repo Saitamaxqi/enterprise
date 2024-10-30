@@ -96,14 +96,14 @@ class TestBarcodeClientAction(HttpCase):
         grp_pack = self.env.ref('stock.group_tracking_lot')
         grp_uom = self.env.ref('uom.group_uom')
         grp_barcode_count_entire_location = self.env.ref('stock_barcode.group_barcode_count_entire_location')
-        self.env.user.write({'groups_id': [(3, grp_lot.id)]})
-        self.env.user.write({'groups_id': [(3, grp_multi_loc.id)]})
-        self.env.user.write({'groups_id': [(3, grp_pack.id)]})
-        self.env.user.write({'groups_id': [(3, grp_barcode_count_entire_location.id)]})
+        self.env.user.write({'group_ids': [(3, grp_lot.id)]})
+        self.env.user.write({'group_ids': [(3, grp_multi_loc.id)]})
+        self.env.user.write({'group_ids': [(3, grp_pack.id)]})
+        self.env.user.write({'group_ids': [(3, grp_barcode_count_entire_location.id)]})
         # Explicitly remove the UoM group.
         group_user = self.env.ref('base.group_user')
         group_user.write({'implied_ids': [(3, grp_uom.id)]})
-        self.env.user.write({'groups_id': [(3, grp_uom.id)]})
+        self.env.user.write({'group_ids': [(3, grp_uom.id)]})
 
     def tearDown(self):
         self.call_count = 0

@@ -12,7 +12,7 @@ class TestInvoiceExtractPurchase(AccountTestInvoicingCommon, TestExtractMixin):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.env.user.groups_id |= cls.env.ref('base.group_system')
+        cls.env.user.group_ids |= cls.env.ref('base.group_system')
         cls.env.company.write({'account_purchase_tax_id': None})
 
         # Required for `price_total` to be visible in the view

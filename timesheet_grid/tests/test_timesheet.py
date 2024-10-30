@@ -265,7 +265,7 @@ class TestTimesheetValidation(TestCommonTimesheet, MockEmail):
         user = self.env['res.users'].with_company(company).create({
             'name': 'Juste Leblanc',
             'login': 'juste_leblanc',
-            'groups_id': [
+            'group_ids': [
                 Command.link(self.env.ref('project.group_project_user').id),
                 Command.link(self.env.ref('hr_timesheet.group_hr_timesheet_user').id),
             ],

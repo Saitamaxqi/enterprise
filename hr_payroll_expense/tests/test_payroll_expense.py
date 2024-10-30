@@ -642,7 +642,7 @@ class TestPayrollExpense(TestExpenseCommon, TestHrPayrollAccountCommon):
             'name': 'Account user',
             'login': 'accountuser',
             'password': 'accountuser',
-            'groups_id': [
+            'group_ids': [
                 Command.link(self.env.ref('account.group_account_user').id),
             ],
         })

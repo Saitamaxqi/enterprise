@@ -27,7 +27,7 @@
             <field name="view_mode">form</field>
             <field name="view_id" ref="view_aec_creation_control"/>
             <field name="target">new</field>
-            <field name="groups_id" eval="[(4, ref('account.group_account_invoice'))]"/>
+            <field name="group_ids" eval="[(4, ref('account.group_account_invoice'))]"/>
             <field name="binding_model_id" ref="account.model_account_move"/>
         </record>
     </data>

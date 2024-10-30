@@ -21,9 +21,9 @@ class TestMultiCompany(TestSaleCommon):
         user_group_employee = cls.env.ref('base.group_user')
         user_project_group_employee = cls.env.ref('project.group_project_user')
 
-        cls.env.user.groups_id |= user_group_employee
-        cls.env.user.groups_id |= user_project_group_employee
-        cls.env.user.groups_id |= cls.env.ref('analytic.group_analytic_accounting')
+        cls.env.user.group_ids |= user_group_employee
+        cls.env.user.group_ids |= user_project_group_employee
+        cls.env.user.group_ids |= cls.env.ref('analytic.group_analytic_accounting')
 
         cls.companyA = cls.env['res.company'].create({'name': 'test_company_A'})
         cls.companyB = cls.env['res.company'].create({'name': 'test_company_B'})
@@ -64,7 +64,7 @@ class TestMultiCompany(TestSaleCommon):
             company_ids=cls.companyB.ids,
         )
         cls.user_employee_company_B.write({
-            'groups_id': [(6, 0, [user_group_employee.id, user_project_group_employee.id])],
+            'group_ids': [(6, 0, [user_group_employee.id, user_project_group_employee.id])],
         })
         cls.user_manager_company_B = mail_new_test_user(
             cls.env,
@@ -77,7 +77,7 @@ class TestMultiCompany(TestSaleCommon):
             company_ids=cls.companyB.ids,
         )
         cls.user_manager_company_B.sudo().write({
-            'groups_id': [(6, 0, [user_group_employee.id, user_project_group_employee.id])],
+            'group_ids': [(6, 0, [user_group_employee.id, user_project_group_employee.id])],
         })
         Project = cls.env['project.project'].sudo().with_context({'mail_create_nolog': True, 'tracking_disable': True})
         cls.fsm_company_a = Project.create({
@@ -106,7 +106,7 @@ class TestMultiCompany(TestSaleCommon):
             'name': 'default_user_employee',
             'login': 'default_user_employee.comp%s' % cls.companyA.id,
             'email': 'default_user_employee@example.com',
-            'groups_id': [(6, 0, [cls.env.ref('base.group_user').id])],
+            'group_ids': [(6, 0, [cls.env.ref('base.group_user').id])],
             'company_ids': cls.companyA.ids,
             'company_id': cls.companyA.id,
         })

@@ -29,7 +29,7 @@ class HrEmployee(models.Model):
 
     def _get_timesheet_manager_id_domain(self):
         group = self.env.ref('hr_timesheet.group_hr_timesheet_approver', raise_if_not_found=False)
-        return [('groups_id', 'in', [group.id])] if group else []
+        return [('all_group_ids', 'in', [group.id])] if group else []
 
     timesheet_manager_id = fields.Many2one(
         'res.users', string='Timesheet Approver',

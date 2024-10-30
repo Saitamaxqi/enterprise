@@ -18,7 +18,7 @@ class TestPurchaseQualityCheck(TestQualityCommon):
             'name': 'Buyer',
             'login': 'buyer',
             'email': 'superbuyer@example.com',
-            'groups_id': [
+            'group_ids': [
                 # Internal
                 (4, self.ref('base.group_user')),
                 # Purchase: User:

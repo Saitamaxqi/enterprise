@@ -49,7 +49,7 @@ class IrModel(models.Model):
             'binding_view_types': 'list',
             'state': 'code',
             'code': "action = env['data_merge.record'].action_deduplicates(records)",
-            'groups_id': [(4, self.env.ref('base.group_system').id)]    # only the system admins have the rights on data_merge models.
+            'group_ids': [(4, self.env.ref('base.group_system').id)]    # only the system admins have the rights on data_merge models.
         }
 
         for model in self:

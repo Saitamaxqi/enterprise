@@ -1895,7 +1895,7 @@ QUnit.module(
             await click(target.querySelector(".o_web_studio_list_view_editor [data-studio-xpath]"));
             await selectDropdownItem(
                 target.querySelector(".o_limit_group_visibility"),
-                "groups_id",
+                "group_ids",
                 "Admin"
             );
             assert.verifySteps(["edit_view"]);
@@ -1966,7 +1966,7 @@ QUnit.module(
                     views: [[false, "list"]],
                     context: { search_default_priority: "1" },
                     xml_id: "somexmlid",
-                    groups_id: [],
+                    group_ids: [],
                 }
             };
             serverData.views = {

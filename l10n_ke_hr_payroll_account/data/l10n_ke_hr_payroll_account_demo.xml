@@ -49,7 +49,7 @@
         <field name="signature">B. Akintola</field>
         <field name="company_ids" eval="[(4, ref('base.demo_company_ke'))]"/>
         <field name="company_id" ref="base.demo_company_ke"/>
-        <field name="groups_id" eval="[(6,0,[ref('base.group_user')])]"/>
+        <field name="group_ids" eval="[(6,0,[ref('base.group_user')])]"/>
         <field name="image_1920" type="base64" file="l10n_ke_hr_payroll/static/img/hr_employee_barack.jpg"/>
     </record>
 

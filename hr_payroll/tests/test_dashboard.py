@@ -27,7 +27,7 @@ class TestDashboardUi(HttpCase):
             groups="base.group_user,hr_payroll.group_hr_payroll_manager",
             company_id=company.id)
         if self.env.ref('sign.group_sign_manager', raise_if_not_found=False):
-            user.groups_id += self.env.ref('sign.group_sign_manager', raise_if_not_found=False)
+            user.group_ids += self.env.ref('sign.group_sign_manager', raise_if_not_found=False)
         department = self.env['hr.department'].create({
             'name': 'Payroll',
             'company_id': company.id,
@@ -41,7 +41,7 @@ class TestDashboardUi(HttpCase):
         })
         # The test will break if sign is installed
         if self.env['ir.module.module'].search([('name', '=', 'sign'), ('state', '=', 'installed')]):
-            user.groups_id += self.env.ref('sign.group_sign_manager', raise_if_not_found=False)
+            user.group_ids += self.env.ref('sign.group_sign_manager', raise_if_not_found=False)
             with file_open('sign/static/demo/employment.pdf', "rb") as f:
                 pdf_content = base64.b64encode(f.read())
 

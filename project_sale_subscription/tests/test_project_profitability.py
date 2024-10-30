@@ -290,7 +290,7 @@ class TestSaleSubscriptionProjectProfitability(TestProjectProfitabilityCommon, T
     def test_project_update(self):
         """Test that the project update panel works when the project
         is linked to a closed subscription that was invoiced."""
-        self.env.user.groups_id += self.env.ref('analytic.group_analytic_accounting')
+        self.env.user.group_ids += self.env.ref('analytic.group_analytic_accounting')
 
         sale_order = self.env['sale.order'].create({
             'is_subscription': True,

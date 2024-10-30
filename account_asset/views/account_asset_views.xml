@@ -472,7 +472,7 @@
 
     <record model="ir.actions.server" id="action_account_asset_run">
         <field name="name">Confirm</field>
-        <field name="groups_id" eval="[(4, ref('account.group_account_user'))]"/>
+        <field name="group_ids" eval="[(4, ref('account.group_account_user'))]"/>
         <field name="model_id" ref="account_asset.model_account_asset"/>
         <field name="binding_model_id" ref="account_asset.model_account_asset" />
         <field name="state">code</field>
@@ -484,7 +484,7 @@ if records:
 
     <record model="ir.actions.server" id="action_account_asset_compute_depreciations">
         <field name="name">Compute Depreciation</field>
-        <field name="groups_id" eval="[(4, ref('account.group_account_user'))]"/>
+        <field name="group_ids" eval="[(4, ref('account.group_account_user'))]"/>
         <field name="model_id" ref="account_asset.model_account_asset"/>
         <field name="binding_model_id" ref="account_asset.model_account_asset" />
         <field name="binding_view_types">list,kanban</field>

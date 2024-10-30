@@ -12,7 +12,7 @@ class TestIndustryFsmTask(TestFsmFlowSaleCommon):
         """ For fsm tasks linked to a sale order, the partner_id should be the same as
             the partner_shipping_id set on the sale sale order.
         """
-        self.env.user.groups_id += self.env.ref('account.group_delivery_invoice_address')
+        self.env.user.group_ids += self.env.ref('account.group_delivery_invoice_address')
         so = self.env['sale.order'].create([{
             'name': 'Test SO linked to fsm task',
             'partner_id': self.partner_1.id,

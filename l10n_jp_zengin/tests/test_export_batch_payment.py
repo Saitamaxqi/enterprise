@@ -31,7 +31,7 @@ class TestZenginBatchPayment(AccountTestInvoicingCommon):
         cls.journal = cls.company_data['default_journal_bank']
         cls.batch_payment = cls.journal.outbound_payment_method_line_ids.filtered(lambda line: line.code == 'zengin')
 
-        cls.env.user.groups_id |= cls.env.ref('account.group_validate_bank_account')
+        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
 
         cls.bank_a = cls.env["res.bank"].create({
             "name": "Mitsuisumitomo",

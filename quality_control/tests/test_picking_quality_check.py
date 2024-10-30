@@ -766,7 +766,7 @@ class TestQualityCheck(TestQualityCommon):
             'name': 'Inventory Manager',
             'login': 'test',
             'email': 'test@test.com',
-            'groups_id': [(6, 0, [self.env.ref('stock.group_stock_user').id, self.env.ref('quality.group_quality_user').id])]
+            'group_ids': [(6, 0, [self.env.ref('stock.group_stock_user').id, self.env.ref('quality.group_quality_user').id])]
         })
 
         self.env['quality.point'].create([{

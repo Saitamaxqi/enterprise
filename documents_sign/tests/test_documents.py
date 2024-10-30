@@ -89,7 +89,7 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
                 "name": f"test_sign_owner_{group}",
                 "login": f"test_sign_owner_{group}@ex.com",
                 "email": f"test_sign_owner_{group}@ex.com",
-                "groups_id": [Command.set([self.env.ref(group).id])]
+                "group_ids": [Command.set([self.env.ref(group).id])]
             } for group in ("base.group_portal", "base.group_user", "sign.group_sign_user", "sign.group_sign_manager")
         ])
         user_sign_manager = users[-1]

@@ -1234,7 +1234,7 @@ class L10n_InGstReturnPeriod(models.Model):
                 ('model', '=', self._name),
                 ('res_id', '=', self.id),
                 ('create_uid', '!=', SUPERUSER_ID),
-                ('create_uid.groups_id', 'in', self.env.ref('account.group_account_manager').ids),
+                ('create_uid.all_group_ids', 'in', self.env.ref('account.group_account_manager').ids),
                 ('tracking_value_ids.field_id', '=', field_id.id),
             ], limit=1)
             advisor_user = last_message and last_message.create_uid or self.env.user

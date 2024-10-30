@@ -14,7 +14,7 @@ class TestResUsers(KnowledgeCommon):
             'login': 'hector',
             'password': 'hectorhector',
             'name': 'Hector Tue',
-            'groups_id': [(4, self.env.ref('base.group_user').id)],
+            'group_ids': [(4, self.env.ref('base.group_user').id)],
         })
         onboarding_article = self.env['knowledge.article'].search(
             [('article_member_ids.partner_id', '=', internal_user.partner_id.id)]
@@ -30,7 +30,7 @@ class TestResUsers(KnowledgeCommon):
             'login': 'patrick',
             'password': 'patrickpatrick',
             'name': 'Patrick Hochet',
-            'groups_id': [(4, self.env.ref('base.group_portal').id)],
+            'group_ids': [(4, self.env.ref('base.group_portal').id)],
         })
         onboarding_article = self.env['knowledge.article'].search(
             [('article_member_ids.partner_id', '=', portal_user.partner_id.id)]
@@ -45,7 +45,7 @@ class TestResUsers(KnowledgeCommon):
             'login': 'roberta',
             'password': 'robertaroberta',
             'name': 'Roberta Rabiscotée',
-            'groups_id': [(4, self.env.ref('base.group_user').id)],
+            'group_ids': [(4, self.env.ref('base.group_user').id)],
         })
         onboarding_article = self.env['knowledge.article'].search(
             [('article_member_ids.partner_id', '=', internal_user.partner_id.id)]

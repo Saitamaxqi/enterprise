@@ -70,7 +70,7 @@ class MrpEcoApprovalTemplate(models.Model):
         ('mandatory', 'Is required to approve'),
         ('comment', 'Comments only')], 'Approval Type',
         default='mandatory', required=True, index=True)
-    user_ids = fields.Many2many('res.users', string='Users', domain=lambda self: [('groups_id', 'in', self.env.ref('mrp_plm.group_plm_user').id)], required=True)
+    user_ids = fields.Many2many('res.users', string='Users', domain=lambda self: [('all_group_ids', 'in', self.env.ref('mrp_plm.group_plm_user').id)], required=True)
     stage_id = fields.Many2one('mrp.eco.stage', 'Stage', required=True)
 
     @api.constrains('user_ids', 'stage_id')

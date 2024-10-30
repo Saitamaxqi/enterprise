@@ -69,7 +69,7 @@ class TestTicketConvertToLead(helpdesk_common.HelpdeskCommon):
     @users('user_helpdesk_user')
     def test_convert_to_lead_rights(self):
         # admin updates salesman to have helpdesk rights
-        self.helpdesk_user.write({'groups_id': [(4, self.env.ref('sales_team.group_sale_salesman_all_leads').id)]})
+        self.helpdesk_user.write({'group_ids': [(4, self.env.ref('sales_team.group_sale_salesman_all_leads').id)]})
         ticket = self.env["helpdesk.ticket"].browse(self.test_ticket.ids)
         # add helpdesk user to sales team
         self.test_team.write({'member_ids': [(4, self.helpdesk_user.id)]})
@@ -95,7 +95,7 @@ class TestTicketConvertToLead(helpdesk_common.HelpdeskCommon):
 
         # admin remove rights on helpdesk user -> wizard not invokable
         ticket.write({'active': True})
-        self.helpdesk_user.write({'groups_id': [(3, self.env.ref('helpdesk.group_helpdesk_user').id)]})
+        self.helpdesk_user.write({'group_ids': [(3, self.env.ref('helpdesk.group_helpdesk_user').id)]})
 
         # sneaky monkey tries to invoke the wizard
         with self.assertRaises(AccessError):
@@ -176,7 +176,7 @@ class TestTicketConvertToLead(helpdesk_common.HelpdeskCommon):
     def test_helpdesk_ticket_to_lead(self):
         """ Test to ensure that a helpdesk ticket is converted to a lead when the user has CRM lead access. """
         self.assertTrue(self.test_ticket.active)
-        self.helpdesk_user.groups_id |= self.env.ref('crm.group_use_lead')
+        self.helpdesk_user.group_ids |= self.env.ref('crm.group_use_lead')
         action = self.test_ticket.with_user(self.helpdesk_user).action_convert_ticket_to_lead_or_opportunity()
         self.assertEqual('Convert to Lead', action['name'])
         convert = self.env['helpdesk.ticket.to.lead'].create({'ticket_id': self.test_ticket.id})
@@ -188,7 +188,7 @@ class TestTicketConvertToLead(helpdesk_common.HelpdeskCommon):
     def test_helpdesk_ticket_to_opportunity(self):
         """ Test to ensure that a helpdesk ticket is converted to an opportunity when the user doesn't have CRM lead access. """
         self.assertTrue(self.test_ticket.active)
-        self.helpdesk_user.groups_id -= self.env.ref('crm.group_use_lead')
+        self.helpdesk_user.group_ids -= self.env.ref('crm.group_use_lead')
         action = self.test_ticket.with_user(self.helpdesk_user).action_convert_ticket_to_lead_or_opportunity()
         self.assertEqual('Convert to Opportunity', action['name'])
         convert = self.env['helpdesk.ticket.to.lead'].create({'ticket_id': self.test_ticket.id})

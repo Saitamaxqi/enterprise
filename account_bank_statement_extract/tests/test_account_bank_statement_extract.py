@@ -13,7 +13,7 @@ class TestBankStatementExtractProcess(AccountTestInvoicingCommon, TestExtractMix
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.env.user.groups_id |= cls.env.ref('base.group_system')
+        cls.env.user.group_ids |= cls.env.ref('base.group_system')
 
         cls.bank_journal = cls.env['account.journal'].create({
             'name': 'Bank 123456',

@@ -61,7 +61,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_immediate_receipt_kit_from_scratch_with_tracked_compo(self):
         self.clean_access_rights()
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
 
         receipt_picking = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
@@ -81,7 +81,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
     def test_planned_receipt_kit_from_scratch_with_tracked_compo(self):
         self.clean_access_rights()
         grp_lot = self.env.ref('stock.group_production_lot')
-        self.env.user.write({'groups_id': [(4, grp_lot.id, 0)]})
+        self.env.user.write({'group_ids': [(4, grp_lot.id, 0)]})
 
         receipt_picking = self.env['stock.picking'].create({
             'location_id': self.supplier_location.id,
@@ -104,7 +104,7 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         """
         self.clean_access_rights()
         group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'groups_id': [Command.link(group_uom.id)]})
+        self.env.user.write({'group_ids': [Command.link(group_uom.id)]})
 
         packaging = self.env['uom.uom'].create({
             'name': 'test packaging',

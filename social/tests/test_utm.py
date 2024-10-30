@@ -19,7 +19,7 @@ class TestUTMConsistencySocial(TestUTMCommon, SocialCase):
             'name': 'Social Manager',
             'login': 'user_social_manager',
             'email': 'user_social_manager@test.com',
-            'groups_id': [(6, 0, [cls.env.ref('social.group_social_manager').id])],
+            'group_ids': [(6, 0, [cls.env.ref('social.group_social_manager').id])],
         })
 
     @users('user_social_manager')

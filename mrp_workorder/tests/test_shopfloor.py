@@ -12,19 +12,19 @@ class TestShopFloor(HttpCase):
         self.uid = self.env.ref('base.user_admin').id
         # Enables Work Order setting, and disables other settings.
         group_workorder = self.env.ref('mrp.group_mrp_routings')
-        self.env.user.write({'groups_id': [(4, group_workorder.id, 0)]})
+        self.env.user.write({'group_ids': [(4, group_workorder.id, 0)]})
 
         group_lot = self.env.ref('stock.group_production_lot')
         group_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         group_pack = self.env.ref('stock.group_tracking_lot')
         group_uom = self.env.ref('uom.group_uom')
-        self.env.user.write({'groups_id': [(3, group_lot.id)]})
-        self.env.user.write({'groups_id': [(3, group_multi_loc.id)]})
-        self.env.user.write({'groups_id': [(3, group_pack.id)]})
+        self.env.user.write({'group_ids': [(3, group_lot.id)]})
+        self.env.user.write({'group_ids': [(3, group_multi_loc.id)]})
+        self.env.user.write({'group_ids': [(3, group_pack.id)]})
         # Explicitly remove the UoM group.
         group_user = self.env.ref('base.group_user')
         group_user.write({'implied_ids': [(3, group_uom.id)]})
-        self.env.user.write({'groups_id': [(3, group_uom.id)]})
+        self.env.user.write({'group_ids': [(3, group_uom.id)]})
 
         # Add some properties for commonly used in tests records.
         self.warehouse = self.env['stock.warehouse'].search([], limit=1)

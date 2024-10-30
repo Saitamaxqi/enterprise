@@ -65,7 +65,7 @@ class Data_MergeModel(models.Model):
     ### User Notifications for Manual merge
     notify_user_ids = fields.Many2many('res.users', string='Notify Users',
         help='List of users to notify when there are new records to merge',
-        domain=lambda self: [('groups_id', 'in', self.env.ref('base.group_system').id)])
+        domain=lambda self: [('all_group_ids', 'in', self.env.ref('base.group_system').id)])
     notify_frequency = fields.Integer(string='Notify', default=1)
     notify_frequency_period = fields.Selection([
         ('days', 'Days'),

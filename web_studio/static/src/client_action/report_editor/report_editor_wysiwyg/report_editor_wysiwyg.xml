@@ -35,9 +35,9 @@
           </div>
 
           <div class="o_web_studio_sidebar_tags">
-            <label for="groups_id" class="mb-1">Limit visibility to groups</label>
-            <div class="o_field_widget o_field_many2many_tags" name="groups_id">
-              <Many2ManyTagsField id="'groups_id'" name="'groups_id'" record="record"/>
+            <label for="group_ids" class="mb-1">Limit visibility to groups</label>
+            <div class="o_field_widget o_field_many2many_tags" name="group_ids">
+              <Many2ManyTagsField id="'group_ids'" name="'group_ids'" record="record"/>
             </div>
           </div>
 

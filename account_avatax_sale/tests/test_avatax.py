@@ -27,7 +27,7 @@ class TestSaleAvalara(TestAccountAvataxCommon):
             'name': 'Sales user',
             'login': 'sales',
             'email': 'sale_user@test.com',
-            'groups_id': [(6, 0, [cls.env.ref('base.group_user').id, cls.env.ref('sales_team.group_sale_salesman').id])],
+            'group_ids': [(6, 0, [cls.env.ref('base.group_user').id, cls.env.ref('sales_team.group_sale_salesman').id])],
         })
         cls.env = cls.env(user=cls.sales_user)
         cls.cr = cls.env.cr

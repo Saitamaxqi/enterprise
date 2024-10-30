@@ -23,7 +23,7 @@
         </record>
 
         <record id="base.user_demo" model="res.users">
-            <field name="groups_id" eval="[
+            <field name="group_ids" eval="[
                 (3, ref('hr.group_hr_user')),
                 (3, ref('hr_appraisal.group_hr_appraisal_user')),
                 (3, ref('hr_appraisal.group_hr_appraisal_manager')),

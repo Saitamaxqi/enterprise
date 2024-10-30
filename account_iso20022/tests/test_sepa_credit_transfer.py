@@ -14,7 +14,7 @@ class TestSEPACreditTransferCommon(AccountTestInvoicingCommon):
         super().setUpClass()
         cls.env.ref('base.EUR').active = True
 
-        cls.env.user.groups_id |= cls.env.ref('account.group_validate_bank_account')
+        cls.env.user.group_ids |= cls.env.ref('account.group_validate_bank_account')
 
         # tests doesn't go through the sanitization (_ is invalid)
         cls.partner_a.name = sanitize_communication(cls.partner_a.name)

@@ -318,7 +318,7 @@ test("error when new app's view is invalid", async () => {
         views: [[false, "list"]],
         help: "",
         name: "test action",
-        groups_id: [],
+        group_ids: [],
     }])
 
     defineMenus([{

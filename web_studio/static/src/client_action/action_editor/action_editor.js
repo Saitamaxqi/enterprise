@@ -47,7 +47,7 @@ const actionFieldsGet = {
     id: { type: "integer" },
     name: { type: "char" },
     help: { type: "text" },
-    groups_id: { type: "many2many", relation: "res.groups", string: "Groups" },
+    group_ids: { type: "many2many", relation: "res.groups", string: "Groups" },
 };
 
 function getActionActiveFields() {
@@ -59,7 +59,7 @@ function getActionActiveFields() {
     const groups_idRelated = Object.fromEntries(
         many2ManyTagsField.relatedFields({ options: {} }).map((f) => [f.name, f])
     );
-    activeFields.groups_id.related = { activeFields: groups_idRelated, fields: groups_idRelated };
+    activeFields.group_ids.related = { activeFields: groups_idRelated, fields: groups_idRelated };
 
     return activeFields;
 }

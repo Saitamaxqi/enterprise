@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo noupdate="1">
     <record id="base.user_demo" model="res.users">
-        <field name="groups_id" eval="[(3, ref('sign.group_sign_manager'))]"/>
+        <field name="group_ids" eval="[(3, ref('sign.group_sign_manager'))]"/>
     </record>
 
     <record id="attachment_sign_1" model="ir.attachment">

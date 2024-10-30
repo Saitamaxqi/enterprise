@@ -277,7 +277,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
                     )
                     self.assertEqual(folder_a.search([('id', '=', self.folder_a.id)]), self.folder_a)
 
-        self.document_manager.groups_id |= self.env.ref('documents.group_documents_system')
+        self.document_manager.group_ids |= self.env.ref('documents.group_documents_system')
 
         test_authorized_users(self.internal_user + self.document_manager)
 

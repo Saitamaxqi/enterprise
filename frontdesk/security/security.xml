@@ -12,7 +12,7 @@
     </record>
 
     <record id="base.default_user" model="res.users">
-        <field name="groups_id" eval="[(4, ref('frontdesk.frontdesk_group_administrator'))]"/>
+        <field name="group_ids" eval="[(4, ref('frontdesk.frontdesk_group_administrator'))]"/>
     </record>
 
     <record id="frontdesk_frontdesk_company_rule" model="ir.rule">
