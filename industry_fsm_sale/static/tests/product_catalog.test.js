@@ -2,12 +2,20 @@ import { describe, expect, test } from "@odoo/hoot";
 import { click, queryAll } from "@odoo/hoot-dom";
 import { advanceTime, runAllTimers } from "@odoo/hoot-mock";
 
-import { contains, defineModels, mountView, onRpc } from "@web/../tests/web_test_helpers";
+import {
+    contains,
+    defineModels,
+    getService,
+    mountView,
+    mountWithCleanup,
+    onRpc,
+} from "@web/../tests/web_test_helpers";
 import { deepCopy } from "@web/core/utils/objects";
-
-import { defineMailModels } from "@mail/../tests/mail_test_helpers";
+import { WebClient } from "@web/webclient/webclient";
 
 import { ProductProduct } from "@industry_fsm_sale/../tests/industry_fsm_sale_mock_model";
+import { defineProjectModels, projectModels } from "@project/../tests/project_models";
+import { SaleOrderLine } from "@sale/../tests/mock_server/mock_models/sale_order_line";
 
 const saleOrderLineInfo = {
     1: {
@@ -31,8 +39,8 @@ const saleOrderLineInfo = {
 };
 
 describe.current.tags("desktop");
-defineModels([ProductProduct]);
-defineMailModels();
+defineModels([ProductProduct, SaleOrderLine]);
+defineProjectModels();
 
 onRpc("/product/catalog/order_lines_info", () => deepCopy(saleOrderLineInfo));
 
@@ -309,4 +317,30 @@ test("edit manually a wrong product quantity", async () => {
             "After inputing a forbidden value, the quantity should be set to 0 and the input space should disapear",
     });
     expect.verifySteps(["update_sale_order_line_info", "update_sale_order_line_info"]);
+});
+
+
+test("Test button 'Back to task'", async () => {
+    ProductProduct._views.search = `<search/>`;
+    projectModels.ProjectTask._views.form = `<form><field name="name"/></form>`;
+    await mountWithCleanup(WebClient);
+    await getService("action").doAction({
+        res_model: "product.product",
+        type: "ir.actions.act_window",
+        views: [[false, "kanban"]],
+        context: {
+            product_catalog_order_model: "sale.order",
+            active_model: "project.task",
+            fsm_task_id: 1,
+        },
+    });
+
+    expect("button.o-kanban-button-back").toBeDisplayed({
+        message: "Button 'Back to task' should be displayed",
+    });
+    await click("button.o-kanban-button-back");
+    await runAllTimers();
+    expect(".o_form_view").toBeDisplayed({
+        message: "It should lead to the task form",
+    });
 });

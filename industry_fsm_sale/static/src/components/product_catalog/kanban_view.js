@@ -21,6 +21,7 @@ export const fsmProductCatalogKanbanView = {
     Renderer: FSMProductCatalogKanbanRenderer,
     Controller: FSMProductCatalogKanbanController,
     Model: FSMProductCatalogKanbanModel,
+    buttonTemplate: "industry_fsm_sale.FSMProductCatalogKanbanController.Buttons",
 };
 
 registry.category("views").add("fsm_product_kanban", fsmProductCatalogKanbanView);
