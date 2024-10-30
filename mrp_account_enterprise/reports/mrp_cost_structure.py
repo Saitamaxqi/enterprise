@@ -77,10 +77,10 @@ class ReportMrp_Account_EnterpriseMrp_Cost_Structure(models.AbstractModel):
             # => calculate byproduct qtys/cost in same uom + cost shares (they are MO dependent)
             byproduct_moves = mos.move_byproduct_ids.filtered(lambda m: m.state != 'cancel')
             for move in byproduct_moves:
-                qty_by_byproduct[move.product_id] += move.product_qty
+                qty_by_byproduct[move.product_id] += move.product_uom._compute_quantity(move.quantity, move.product_id.uom_id, rounding_method='HALF-UP')
                 # byproducts w/o cost share shouldn't be included in cost breakdown
                 if move.cost_share != 0:
-                    qty_by_byproduct_w_costshare[move.product_id] += move.product_qty
+                    qty_by_byproduct_w_costshare[move.product_id] += move.product_uom._compute_quantity(move.quantity, move.product_id.uom_id, rounding_method='HALF-UP')
                     cost_share = move.cost_share / 100
                     total_cost_by_product[move.product_id] += total_cost_by_mo[move.production_id.id] * cost_share
                     component_cost_by_product[move.product_id] += component_cost_by_mo[move.production_id.id] * cost_share

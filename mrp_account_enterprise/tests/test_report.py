@@ -272,6 +272,8 @@ class TestReportsCommon(TestMrpAccount):
         quantity produced and cost per unit when it differs from the planned quantity.
 
         '''
+        # enable by-product
+        self.env.user.groups_id += self.env.ref('mrp.group_mrp_byproducts')
         self.product_3.standard_price = 10
         self.product_4.standard_price = 10
         bom_1 = self.env['mrp.bom'].create({
@@ -286,7 +288,15 @@ class TestReportsCommon(TestMrpAccount):
             'bom_line_ids': [
                 (0, 0, {'product_id': self.product_3.id, 'product_qty': 1}),
                 (0, 0, {'product_id': self.product_4.id, 'product_qty': 1})
-            ]})
+            ],
+            'byproduct_ids': [
+                Command.create({
+                    'product_id': self.product_2.id,
+                    'product_uom_id': self.product_2.uom_id.id,
+                    'product_qty': 1,
+                }),
+            ],
+        })
         # Make some stock and reserve
         for product in bom_1.bom_line_ids.product_id:
             self.env['stock.quant'].with_context(inventory_mode=True).create({
@@ -303,6 +313,11 @@ class TestReportsCommon(TestMrpAccount):
         mo.action_confirm()
         mo_form = Form(mo)
         mo_form.qty_producing = 5
+        # 4 dozen of byproduct
+        with mo_form.move_byproduct_ids.edit(0) as line:
+            line.product_uom = self.env.ref('uom.product_uom_dozen')
+            line.quantity = 4
+            line.cost_share = 48
         mo_done = mo_form.save()
         mo_done.button_mark_done()
 
@@ -312,6 +327,9 @@ class TestReportsCommon(TestMrpAccount):
 
         self.assertEqual(cost_analysis[0]['mo_qty'], 5)
         self.assertEqual(cost_analysis[0]['total_cost'], 100)
+        # 4 * dozen = 48 units of by product
+        self.assertEqual(cost_analysis[0]['qty_by_byproduct'][self.product_2], 48)
+        self.assertEqual(cost_analysis[0]['total_cost_by_product'][self.product_2], 48)
 
         # first MO set qty as 5 produce 1 without a backorder
         production_form = Form(self.env['mrp.production'])
