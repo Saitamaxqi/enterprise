@@ -620,6 +620,10 @@ test("A task should always have a title (pill_label='1', scale 'week')", async (
                 <field name="allocated_hours"/>
             </gantt>
         `,
+        context: {
+            default_start_date: "2018-12-16",
+            default_stop_date: "2018-12-22",
+        },
     });
     const titleMapping = [
         { name: "Task 4", title: "12/8 - 2/18 - Task 4" },
@@ -675,6 +679,10 @@ test("A task should always have a title (pill_label='1', scale 'month')", async 
                 <field name="allocated_hours"/>
             </gantt>
         `,
+        context: {
+            default_start_date: "2018-12-01",
+            default_stop_date: "2018-12-31",
+        },
     });
     const titleMapping = [
         { name: "Task 1", title: "Task 1" },

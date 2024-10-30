@@ -12,7 +12,6 @@ import {
 import { hasTouch, isMobileOS } from "@web/core/browser/feature_detection";
 import { Domain } from "@web/core/domain";
 import {
-    getStartOfLocalWeek,
     is24HourFormat,
     serializeDate,
     serializeDateTime,
@@ -50,7 +49,7 @@ import { GanttRendererControls } from "./gantt_renderer_controls";
 import { GanttResizeBadge } from "./gantt_resize_badge";
 import { GanttRowProgressBar } from "./gantt_row_progress_bar";
 
-const { DateTime } = luxon;
+const { DateTime, Interval } = luxon;
 
 /**
  * @typedef {`__column__${number}`} ColumnId
@@ -1313,12 +1312,13 @@ export class GanttRenderer extends Component {
         const stopDate = record[dateStopField];
         const yearlessDateFormat = omit(DateTime.DATE_SHORT, "year");
 
-        const spanAccrossDays =
-            stopDate.startOf("day") > startDate.startOf("day") &&
+        const daysDelta = Interval.fromDateTimes(
+            startDate.startOf("day"), stopDate.startOf("day")
+        ).toDuration(["day", "hour"]).days;
+        const spanAccrossDays = daysDelta && (daysDelta > 2 || (
             startDate.endOf("day").diff(startDate, "hours").toObject().hours >= 3 &&
-            stopDate.diff(stopDate.startOf("day"), "hours").toObject().hours >= 3;
-        const spanAccrossWeeks = getStartOfLocalWeek(stopDate) > getStartOfLocalWeek(startDate);
-        const spanAccrossMonths = stopDate.startOf("month") > startDate.startOf("month");
+            stopDate.diff(stopDate.startOf("day"), "hours").toObject().hours >= 3
+        ));
 
         /** @type {string[]} */
         const labelElements = [];
@@ -1326,12 +1326,9 @@ export class GanttRenderer extends Component {
         // Start & End Dates
         if (scaleId === "year" && !spanAccrossDays) {
             labelElements.push(startDate.toLocaleString(yearlessDateFormat));
-        } else if (
-            (scaleId === "day" && spanAccrossDays) ||
-            (scaleId === "week" && spanAccrossWeeks) ||
-            (scaleId === "month" && spanAccrossMonths) ||
-            (scaleId === "year" && spanAccrossDays)
-        ) {
+        } else if (spanAccrossDays && (
+            startDate < this.currentStartDate || this.currentStopDate.endOf("day") < stopDate
+        )) {
             labelElements.push(startDate.toLocaleString(yearlessDateFormat));
             labelElements.push(stopDate.toLocaleString(yearlessDateFormat));
         }
