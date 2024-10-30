@@ -342,6 +342,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         completed before changing the line, even if the scanned lot is planned for another picking
         or another picking has an empty line for this product.
         """
+        self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
         self.env.user.write({'groups_id': [(4, grp_pack.id, 0)]})
@@ -419,6 +420,7 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
     def test_barcode_batch_scan_other_reserved_lost(self):
         """ Checks that scanning a lot won't erase the reserved one if the
         scanned one is reserved too."""
+        self.env.ref('base.group_user').implied_ids += self.env.ref('stock.group_production_lot')
         self.clean_access_rights()
         grp_pack = self.env.ref('stock.group_tracking_lot')
         self.env.user.write({'groups_id': [Command.link(grp_pack.id)]})
