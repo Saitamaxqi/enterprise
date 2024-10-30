@@ -1,4 +1,4 @@
-import { orderInfoPopup } from "@pos_urban_piper/point_of_sale_overrirde/app/order_info_popup/order_info_popup";
+import { orderInfoPopup } from "@pos_urban_piper/point_of_sale_overrirde/app/components/popups/order_info_popup/order_info_popup";
 import { patch } from "@web/core/utils/patch";
 
 patch(orderInfoPopup.prototype, {

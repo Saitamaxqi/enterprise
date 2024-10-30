@@ -1,5 +1,5 @@
 import { PaymentScreen } from "@point_of_sale/app/screens/payment_screen/payment_screen";
-import { TextInputPopup } from "@point_of_sale/app/utils/input_popups/text_input_popup";
+import { TextInputPopup } from "@point_of_sale/app/components/popups/text_input_popup/text_input_popup";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { makeAwaitable } from "@point_of_sale/app/store/make_awaitable_dialog";
 import { patch } from "@web/core/utils/patch";
