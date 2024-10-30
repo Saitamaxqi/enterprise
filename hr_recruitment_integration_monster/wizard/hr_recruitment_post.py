@@ -143,7 +143,7 @@ class HrRecruitmentPostJobWizard(models.TransientModel):
                     'SalaryMin': self.job_id.salary_min,
                     'SalaryMax': self.job_id.salary_max,
                     'CompensationType': {
-                        'monsterId': monster_time_unit.monster_id,
+                        'monsterId': monster_time_unit,
                     },
                 }
 
