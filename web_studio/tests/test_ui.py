@@ -19,9 +19,6 @@ _logger = logging.getLogger(__name__)
 class TestUi(odoo.tests.HttpCase):
 
     def test_new_app_and_report(self):
-        if not odoo.tests.loaded_demo_data(self.env):
-            _logger.warning("This test relies on demo data. To be rewritten independently of demo data for accurate and reliable results.")
-            return
         self.start_tour("/odoo", 'web_studio_new_app_tour', login="admin")
 
         # the new submenu tour is based on the result of the new app tour
