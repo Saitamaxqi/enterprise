@@ -51,6 +51,7 @@ Features:
         'report/helpdesk_ticket_analysis_views.xml',
         'report/helpdesk_sla_report_analysis_views.xml',
         'views/helpdesk_tag_views.xml',
+        'views/helpdesk_tag_assignment_views.xml',
         'views/helpdesk_stage_views.xml',
         'views/helpdesk_sla_views.xml',
         'views/helpdesk_team_views.xml',

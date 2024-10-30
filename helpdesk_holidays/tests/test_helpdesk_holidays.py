@@ -42,11 +42,13 @@ class TestHelpdeskHolidays(HelpdeskCommon, TestHrHolidaysCommon):
             ],
         })
 
-    def new_ticket(self):
+    def new_ticket(self, vals=None):
+        if vals is None:
+            vals = {}
         return self.env['helpdesk.ticket'].create({
             'name': 'Ticket',
             'team_id': self.test_team.id,
-        })
+        } | vals)
 
     def test_random_assignment_employee_time_off(self):
         leave = self.env['hr.leave'].create({
@@ -86,6 +88,34 @@ class TestHelpdeskHolidays(HelpdeskCommon, TestHrHolidaysCommon):
         self.assertEqual(self.new_ticket().user_id, self.user_hruser, "The created ticket should be automatically assigned to hruser")
         self.assertEqual(self.new_ticket().user_id, self.user_hruser, "The created ticket should be automatically assigned to hruser")
         self.assertEqual(self.new_ticket().user_id, self.user_hruser, "The created ticket should be automatically assigned to hruser")
+
+    def test_tags_assignment_employee_time_off(self):
+        self.test_team.assign_method = 'tags'
+
+        tag = self.env['helpdesk.tag'].create({
+            'name': "Test tag",
+        })
+        self.env['helpdesk.tag.assignment'].create({
+            'team_id': self.test_team.id,
+            'tag_id': tag.id,
+            'user_ids': [Command.link(user_id) for user_id in [self.user_hrmanager.id, self.user_hruser.id]],
+        })
+
+        leave = self.env['hr.leave'].create({
+            'employee_id': self.employee_hruser.id,
+            'holiday_status_id': self.leave_type.id,
+            'request_date_from': date.today(),
+            'request_date_to': date.today() + timedelta(days=6),
+        })
+        leave.action_approve()
+
+        vals = {
+            'tag_ids': [Command.link(tag.id)],
+        }
+
+        # We can't test for sure that new tickets will always be assigned to hrmanager since it's random, but this should be good enough.
+        self.assertEqual(self.new_ticket(vals).user_id, self.user_hrmanager, "The created ticket should be automatically assigned to hrmanager")
+        self.assertEqual(self.new_ticket(vals).user_id, self.user_hrmanager, "The created ticket should be automatically assigned to hrmanager")
 
     def test_assignment_global_leave(self):
         self.env['resource.calendar.leaves'].create({

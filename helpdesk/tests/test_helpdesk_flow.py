@@ -8,6 +8,7 @@ from markupsafe import Markup
 
 from .common import HelpdeskCommon
 from odoo.exceptions import AccessError
+from odoo.fields import Command
 from odoo.tests import Form
 from odoo.tests.common import users
 
@@ -188,6 +189,22 @@ Content-Transfer-Encoding: quoted-printable
         self.assertEqual(self.env['helpdesk.ticket'].search_count([('user_id', '=', self.helpdesk_user.id)]), 6)
         self.assertEqual(self.env['helpdesk.ticket'].search_count([('user_id', '=', self.helpdesk_manager.id)]), 6)
 
+        # tickets created in a folded stage should not be assigned
+        closed_ticket = self.env['helpdesk.ticket'].create({
+            'name': 'closed ticket',
+            'team_id': self.test_team.id,
+            'stage_id': self.stage_done.id,
+        })
+        self.assertFalse(closed_ticket.user_id, "The ticket should not have been assigned because it was created in a folded stage")
+
+        assigned_closed_ticket = self.env['helpdesk.ticket'].create({
+            'name': 'assigned closed ticket',
+            'team_id': self.test_team.id,
+            'stage_id': self.stage_done.id,
+            'user_id': self.helpdesk_user.id,
+        })
+        self.assertEqual(assigned_closed_ticket.user_id.id, self.helpdesk_user.id, "The ticket should be assigned even though it was created in a folded stage, because the assignee was explicitely given.")
+
     def test_team_assignation_balanced(self):
         # we put the helpdesk user and manager in the test_team's members
         self.test_team.member_ids = [(6, 0, [self.helpdesk_user.id, self.helpdesk_manager.id])]
@@ -214,6 +231,160 @@ Content-Transfer-Encoding: quoted-printable
         # ensure both members have the same amount of tickets assigned
         self.assertEqual(self.env['helpdesk.ticket'].search_count([('user_id', '=', self.helpdesk_user.id), ('close_date', '=', False)]), 3)
         self.assertEqual(self.env['helpdesk.ticket'].search_count([('user_id', '=', self.helpdesk_manager.id), ('close_date', '=', False)]), 3)
+
+        # tickets created in a folded stage should not be assigned
+        closed_ticket = self.env['helpdesk.ticket'].create({
+            'name': 'closed ticket',
+            'team_id': self.test_team.id,
+            'stage_id': self.stage_done.id,
+        })
+        self.assertFalse(closed_ticket.user_id, "The ticket should not have been assigned because it was created in a folded stage")
+
+    def test_team_assignation_tags(self):
+        self.test_team.update({'assign_method': 'tags', 'auto_assignment': True})
+        tags = self.env['helpdesk.tag'].create([{
+            'name': f"tag_{i}",
+        } for i in range(3)])
+
+        ticket = self.env['helpdesk.ticket'].create({
+            'name': "Test Ticket",
+            'team_id': self.test_team.id,
+            'tag_ids': [Command.link(tags[2].id)],
+        })
+        self.assertFalse(ticket.user_id, "The ticket should not be assigned since the tag/users map is empty.")
+
+        self.env['helpdesk.tag.assignment'].create([{
+            'team_id': self.test_team.id,
+            'tag_id': tags[0].id,
+            'user_ids': [Command.link(user_id) for user_id in [self.helpdesk_user.id, self.helpdesk_manager.id]],
+        }, {
+            'team_id': self.test_team.id,
+            'tag_id': tags[1].id,
+            'user_ids': [Command.link(self.helpdesk_manager.id)],
+        }])
+
+        self.env['helpdesk.ticket'].create([{
+            'name': f"Test Ticket {i}",
+            'team_id': self.test_team.id,
+            'user_id': self.helpdesk_user.id,
+        } for i in range(3)])
+
+        self.env['helpdesk.ticket'].create([{
+            'name': f"Ticket {i}",
+            'team_id': self.test_team.id,
+            'tag_ids': [Command.link(tags[0].id)],
+        } for i in range(5)])
+        # Both users should now have an equal amount of open tickets
+        self.assertEqual(self.env['helpdesk.ticket'].search_count([('user_id', '=', self.helpdesk_user.id)]), 4)
+        self.assertEqual(self.env['helpdesk.ticket'].search_count([('user_id', '=', self.helpdesk_manager.id)]), 4)
+
+        ticket = self.env['helpdesk.ticket'].create({
+            'name': "Test Ticket",
+            'team_id': self.test_team.id,
+            'tag_ids': [Command.link(tags[1].id)],
+            'user_id': self.helpdesk_user.id,
+        })
+        self.assertEqual(ticket.user_id, self.helpdesk_user, "The ticket should not get reassigned if it's already assigned.")
+
+        ticket = self.env['helpdesk.ticket'].create({
+            'name': "Test Ticket",
+            'team_id': self.test_team.id,
+            'tag_ids': [Command.link(tags[2].id)],
+        })
+        self.assertFalse(ticket.user_id, "The ticket should not get assigned if there is no match in the mapping.")
+
+        ticket = self.env['helpdesk.ticket'].create({
+            'name': "Test Ticket",
+            'team_id': self.test_team.id,
+        })
+        self.assertFalse(ticket.user_id, "Ticket should not be assigned yet, as is has no tag.")
+        ticket.write({'tag_ids': [Command.link(tags[1].id)]})
+        self.assertEqual(ticket.user_id, self.helpdesk_manager, "Adding the tag on a existing unassigned ticket should assign it.")
+        ticket.write({'tag_ids': [Command.unlink(tags[1].id)]})
+        self.assertEqual(ticket.user_id, self.helpdesk_manager, "Removing the tag should have no effect.")
+
+        ticket = self.env['helpdesk.ticket'].create({
+            'name': "Test Ticket",
+            'team_id': self.test_team.id,
+            'user_id': self.helpdesk_user.id,
+        })
+        ticket.write({'tag_ids': [Command.link(tags[1].id)]})
+        self.assertEqual(ticket.user_id, self.helpdesk_user, "Adding the tag on a existing assigned ticket should have no effect.")
+
+        ticket = self.env['helpdesk.ticket'].create({
+            'name': "Test Ticket",
+            'team_id': self.test_team.id,
+            'tag_ids': [Command.link(tags[1].id)],
+            'stage_id': self.stage_done.id,
+        })
+        self.assertFalse(ticket.user_id, "The tichet should not get assigned if it's created in a folded stage.")
+        ticket.write({'tag_ids': [Command.link(tags[0].id)]})
+        self.assertFalse(ticket.user_id, "The ticket should still not get assigned if the tag is added while it's in a folded stage.")
+
+    def test_team_assignation_tags_multiple_teams(self):
+        self.test_team.update({'assign_method': 'tags', 'auto_assignment': True})
+        other_team = self.env['helpdesk.team'].with_user(self.helpdesk_manager).create({
+            'name': "Other Team",
+            'assign_method': 'tags',
+            'auto_assignment': True,
+        }).sudo()
+        tags = self.env['helpdesk.tag'].create([{
+            'name': f"tag_{i}",
+        } for i in range(3)])
+
+        self.env['helpdesk.tag.assignment'].create([{
+            'team_id': self.test_team.id,
+            'tag_id': tags[0].id,
+            'user_ids': [Command.link(self.helpdesk_user.id)],
+        }, {
+            'team_id': self.test_team.id,
+            'tag_id': tags[1].id,
+            'user_ids': [Command.link(self.helpdesk_manager.id)],
+        }, {
+            'team_id': other_team.id,
+            'tag_id': tags[1].id,
+            'user_ids': [Command.link(self.helpdesk_user.id)],
+        }, {
+            'team_id': other_team.id,
+            'tag_id': tags[2].id,
+            'user_ids': [Command.link(self.helpdesk_manager.id)],
+        }])
+
+        tickets = self.env['helpdesk.ticket'].create([{
+            'name': "Ticket",
+            'team_id': team_id,
+            'tag_ids': tag_id and [Command.link(tag_id)],
+        } for team_id, tag_id in [
+            (self.test_team.id, tags[1].id),
+            (other_team.id, tags[1].id),
+            (other_team.id, tags[2].id),
+            (self.test_team.id, False),
+        ]])
+        self.assertEqual(tickets[0].user_id.id, self.helpdesk_manager.id, "The first ticket should be assigned to the manager.")
+        self.assertEqual(tickets[1].user_id.id, self.helpdesk_user.id, "The second ticket should be assigned to the user.")
+        self.assertEqual(tickets[2].user_id.id, self.helpdesk_manager.id, "The third ticket should be assigned to the manager.")
+        self.assertFalse(tickets[3].user_id.id, "The fourth ticket should remain unassigned.")
+
+        tickets = self.env['helpdesk.ticket'].create([{
+            'name': "Ticket",
+            'team_id': team_id,
+        } for team_id in [self.test_team.id] * 3 + [other_team.id]])
+        self.assertFalse(tickets.user_id)
+        tickets.write({
+            'tag_ids': [Command.link(tags[1].id)],
+        })
+        for ticket, exepected_user in zip(tickets, [self.helpdesk_manager] * 3 + [self.helpdesk_user]):
+            self.assertEqual(ticket.user_id.id, exepected_user.id, f"The ticket should be assigned to {exepected_user.name}.")
+
+        tickets[1:4].user_id = False
+        tickets[2].stage_id = self.stage_done
+        tickets.write({
+            'tag_ids': [Command.link(tags[0].id)],
+        })
+        self.assertEqual(tickets[0].user_id.id, self.helpdesk_manager.id, "The first ticket should remain assigned to the manager.")
+        self.assertEqual(tickets[1].user_id.id, self.helpdesk_user.id, "The second ticket should be assigned to the user.")
+        self.assertFalse(tickets[2].user_id.id, "The third ticket should remain unassigned as it is in a closed stage.")
+        self.assertFalse(tickets[3].user_id.id, "The fourth ticket should remain unassigned as there is no match in the mapping for the added tag in its team.")
 
     def test_create_from_email_multicompany(self):
         company0 = self.env.company

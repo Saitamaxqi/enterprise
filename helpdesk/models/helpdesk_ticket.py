@@ -38,10 +38,10 @@ class HelpdeskTicket(models.Model):
         result = super().default_get(fields)
         if result.get('team_id') and fields:
             team = self.env['helpdesk.team'].browse(result['team_id'])
-            if 'user_id' in fields and 'user_id' not in result:  # if no user given, deduce it from the team
-                result['user_id'] = team._determine_user_to_assign({team: 1})[team.id][0]
             if 'stage_id' in fields and 'stage_id' not in result:  # if no stage given, deduce it from the team
                 result['stage_id'] = team._determine_stage()[team.id].id
+            if 'user_id' in fields and 'user_id' not in result and ('stage_id' in fields and not self.env['helpdesk.stage'].browse(result['stage_id']).fold):  # if no user given, deduce it from the team
+                result['user_id'] = team._determine_user_to_assign({team: 1})[team.id][0]
         return result
 
     def _default_team_id(self):
@@ -432,22 +432,103 @@ class HelpdeskTicket(models.Model):
             tools.formataddr((parsed_name, parsed_email_normalized))
         )
 
+    @api.model
+    def _assign_vals_by_tags(self, vals_list):
+        """
+        This method is used to automatically assign unassigned tickets based on added tags.
+        Given a list of vals with the associated team and added tags, it updates the vals with the user_id of the user to assign the ticket to.
+        This is a side effect, and the vals are intended to then be used in a create/write method.
+
+        :param vals_list: A list of tuples with the following structure: [(helpdesk_team, tag_ids, vals_dict), ...]
+
+                          Each tuple consists of:
+                          - `helpdesk_team_id`: The id of the `helpdesk.team` of the ticket.
+                          - `tag_ids`: A list of ids corresponding to the `helpdesk.tag` being added to the ticket.
+                          - `vals_dict`: A dictionary of values that are intended to be later used to create or write on the ticket.
+                                         Note that this dictionary will be modified **in place** (side effect)
+        """
+        if not vals_list:
+            return
+        domain = expression.OR([[('team_id', '=', team_id), ('tag_id', 'in', tag_ids)] for team_id, tag_ids, _dummy in vals_list])
+        tag_assignment_res = self.env['helpdesk.tag.assignment'].sudo()._read_group(
+            domain,
+            ['team_id', 'tag_id', 'user_ids'],
+        )
+        # Dict of all the users that could be assigned from a tag in a team
+        users_per_team_and_tag = defaultdict(set)
+        all_possible_users_ids = set()
+        for team, tag, user in tag_assignment_res:
+            users_per_team_and_tag[(team.id, tag.id)].add(user.id)
+            all_possible_users_ids.add(user.id)
+        all_possible_users = self.env['res.users'].browse(all_possible_users_ids)
+        all_team_ids = {vals[0] for vals in vals_list}
+        users_per_working_days = all_possible_users._get_working_users_per_first_working_day()
+
+        # Used to keep track of how many open tickets users have in each team
+        tickets_per_user_per_team = defaultdict(dict)
+        for team, _dummy, user in tag_assignment_res:
+            tickets_per_user_per_team[team.id][user.id] = 0
+        # Add the open tickets to the previously created dict
+        ticket_count_data = self.env['helpdesk.ticket']._read_group(
+            [('stage_id.fold', '=', False), ('user_id', 'in', all_possible_users.ids), ('team_id', 'in', list(all_team_ids))],
+            ['user_id', 'team_id'],
+            ['__count'],
+        )
+        for user, team, open_tickets in ticket_count_data:
+            tickets_per_user_per_team[team.id][user.id] = open_tickets
+
+        for team_id, tag_ids, vals in vals_list:
+            # get all users matching at least one of the tags...
+            possible_user_ids = {
+                user_id
+                for tag_id in tag_ids
+                for user_id in users_per_team_and_tag.get((team_id, tag_id), [])
+            }
+            if possible_user_ids:
+                for user_ids in users_per_working_days:
+                    # ...restrict them to the earliest available users ...
+                    if available_user_ids := set(user_ids) & possible_user_ids:
+                        # ... and select the one with the fewest open tickets
+                        count_per_user = filter(lambda item: item[0] in available_user_ids, tickets_per_user_per_team[team_id].items())
+                        chosen_user_id = min(count_per_user, key=lambda count: count[1])[0]
+                        vals['user_id'] = chosen_user_id
+                        tickets_per_user_per_team[team_id][chosen_user_id] += 1
+                        break
+
     @api.model_create_multi
     def create(self, list_value):
         now = fields.Datetime.now()
+
+        # Determine user_id if not given for teams with automatic assignment. We have two cases:
+        #   - If the assignment method is 'randomly' or 'balanced', we determine the next users to assign for each team.
+        #   - If the assignment method is 'tags', it's a bit more complex as it depends on the added tags for each individual ticket.
+        #       In that case, we directly modify the vals, as it's simpler than computing the user ids then map them to the vals they originate from.
         team_ids = { vals['team_id'] for vals in list_value if vals.get('team_id') }
+        tickets_to_assign_by_tags = []
         teams = self.env['helpdesk.team'].browse(team_ids)
+
+        # determine stage_id if not given. Done in batch.
+        default_stage_per_team_id = teams._determine_stage()
+
+        # Determine assignees if auto assignement is enabled
+        # In case of assignment by tags, we add the user_ids to the values below. For the other methods, they are added later
         team_per_team_id = dict(zip(team_ids, teams))
         ticket_amount_per_team = defaultdict(int)
         for vals in list_value:
-            if team_id := vals.get('team_id'):
-                team = team_per_team_id[team_id]
-                if not vals.get('user_id') and team.auto_assignment:
-                    ticket_amount_per_team[team] += 1
-
-        # determine user_id and stage_id if not given. Done in batch.
+            if not (team_id := vals.get('team_id')):
+                continue
+            stage = self.env['helpdesk.stage'].browse(vals['stage_id']) if 'stage_id' in vals else default_stage_per_team_id[team_id]
+            team = team_per_team_id[team_id]
+            if stage.fold or vals.get('user_id') or not team.auto_assignment:
+                continue
+            if team.assign_method == 'tags':
+                if tag_ids := vals.get('tag_ids'):
+                    tickets_to_assign_by_tags.append((team.id, list(zip(*tag_ids))[1], vals))
+            else:
+                ticket_amount_per_team[team] += 1
+        
+        self._assign_vals_by_tags(tickets_to_assign_by_tags)
         assignees_per_team_id = self.env['helpdesk.team']._determine_user_to_assign(ticket_amount_per_team)
-        default_stage_per_team_id = teams._determine_stage()
 
         # Manually create a partner now since '_generate_template_recipients' doesn't keep the name. This is
         # to avoid intrusive changes in the 'mail' module
@@ -573,7 +654,7 @@ class HelpdeskTicket(models.Model):
         if 'stage_id' in vals:
             self.sudo()._sla_reach(vals['stage_id'])
 
-        if 'stage_id' in vals and self.env['helpdesk.stage'].browse(vals['stage_id']).fold:
+        if stage_fold := ('stage_id' in vals and self.env['helpdesk.stage'].browse(vals['stage_id']).fold):
             odoobot_partner_id = self.env['ir.model.data']._xmlid_to_res_id('base.partner_root')
             for ticket in self:
                 exceeded_hours = ticket.sla_status_ids.mapped('exceeded_hours')
@@ -582,6 +663,20 @@ class HelpdeskTicket(models.Model):
                     message = _("This ticket was successfully closed %s hours before its SLA deadline.", round(abs(min_hours))) if min_hours < 0 \
                         else _("This ticket was closed %s hours after its SLA deadline.", round(min_hours))
                     ticket.message_post(body=message, subtype_xmlid="mail.mt_note", author_id=odoobot_partner_id)
+        elif 'tag_ids' in vals:
+            added_tags = [tag[1] for tag in vals['tag_ids'] if tag[0] == 4]
+            unassigned_tickets_to_assign = self.filtered(
+                lambda t: not t.user_id
+                    and t.team_id.auto_assignment
+                    and t.team_id.assign_method == 'tags'
+                    and not t.stage_id.fold
+            )
+            if unassigned_tickets_to_assign:
+                vals_list = [(ticket.team_id.id, added_tags, {}) for ticket in unassigned_tickets_to_assign]
+                self._assign_vals_by_tags(vals_list)
+                for ticket, vals_dict in zip(unassigned_tickets_to_assign, list(zip(*vals_list))[2]):
+                    if vals_dict:
+                        ticket.write(vals_dict)
         return res
 
     def copy_data(self, default=None):

@@ -10,6 +10,7 @@ from . import helpdesk_sla_status
 from . import helpdesk_sla
 from . import helpdesk_ticket
 from . import helpdesk_tag
+from . import helpdesk_tag_assignment
 from . import mail_message
 from . import res_users
 from . import res_partner

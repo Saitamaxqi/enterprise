@@ -7,7 +7,6 @@ import itertools
 
 from dateutil import relativedelta
 from collections import defaultdict
-from pytz import timezone
 from odoo import api, Command, fields, models, _
 from odoo.exceptions import ValidationError
 from odoo.osv import expression
@@ -52,8 +51,10 @@ class HelpdeskTeam(models.Model):
         help="Stages the team will use. This team's tickets will only be able to be in these stages.")
     auto_assignment = fields.Boolean("Automatic Assignment")
     assign_method = fields.Selection([
-        ('randomly', 'Each user is assigned an equal number of tickets'),
-        ('balanced', 'Each user has an equal number of open tickets')],
+            ('randomly', 'Each user is assigned an equal number of tickets'),
+            ('balanced', 'Each user has an equal number of open tickets'),
+            ('tags', 'Dispatch tickets based on tags'),
+        ],
         string='Assignment Method', default='randomly', required=True,
         help="New tickets will automatically be assigned to the team members that are available, according to their working hours and their time off.")
     member_ids = fields.Many2many('res.users', string='Team Members', domain=lambda self: str([('groups_id', 'in', self.env.ref('helpdesk.group_helpdesk_user').id), ('company_ids', 'in', unquote('company_id'))]),
@@ -885,42 +886,6 @@ class HelpdeskTeam(models.Model):
         })
         return action
 
-    @api.model
-    def _get_working_user_interval(self, start_dt, end_dt, calendar, users, compute_leaves=True):
-        # This method is intended to be overridden in hr_holidays in order to take non-validated leaves into account
-        return calendar._work_intervals_batch(
-            start_dt,
-            end_dt,
-            resources=users.resource_ids,
-            compute_leaves=compute_leaves
-        )
-
-    def _get_working_users_per_first_working_day(self):
-        tz = timezone(self._context.get('tz') or 'UTC')
-        start_dt = fields.Datetime.now().astimezone(tz)
-        end_dt = start_dt + relativedelta.relativedelta(days=7, hour=23, minute=59, second=59)
-        workers_per_first_working_date = defaultdict(list)
-        members_per_calendar = defaultdict(lambda: self.env['res.users'])
-        company_calendar = self.env.company.resource_calendar_id
-        for member in self.member_ids:
-            calendar = member.resource_calendar_id or company_calendar
-            members_per_calendar[calendar] |= member
-        for calendar, users in members_per_calendar.items():
-            work_intervals_per_resource = self._get_working_user_interval(start_dt, end_dt, calendar, users)
-            for user in users:
-                for resource_id in user.resource_ids.ids:
-                    intervals = work_intervals_per_resource[resource_id]
-                    if intervals:
-                        # select the start_date of the first interval to get the first working day for this user
-                        workers_per_first_working_date[(intervals._items)[0][0].date()].append(user.id)
-                        break
-                # if the user doesn't linked to any employee then add according to company calendar
-                if user.id and not user.resource_ids:
-                    intervals = work_intervals_per_resource[False]
-                    if intervals:
-                        workers_per_first_working_date[(intervals._items)[0][0].date()].append(user.id)
-        return [value for key, value in sorted(workers_per_first_working_date.items())]
-
     def _determine_user_to_assign(self, count_per_team):
         """
         Get a dict with the next n user ids (per team) that should be assigned to the newly created tickets according to the team policy
@@ -935,7 +900,7 @@ class HelpdeskTeam(models.Model):
             if team.auto_assignment and team.assign_method in ['randomly', 'balanced']
         })
         result = {team.id: [False] * count for team, count in count_per_team.items()}
-        users_per_working_days = team_without_manually._get_working_users_per_first_working_day()
+        users_per_working_days = team_without_manually.member_ids._get_working_users_per_first_working_day()
         for team in team_without_manually:
             if not team.member_ids:
                 continue

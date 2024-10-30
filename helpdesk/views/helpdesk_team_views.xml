@@ -110,13 +110,17 @@
                             </setting>
                             <setting class="col-lg-12" help="Automate the assignment of new tickets to the right people, and make sure all tickets are being handled">
                                 <field name="auto_assignment"/>
-                                <div invisible="not auto_assignment" class="mt16">
+                                <div name="auto_assignment_settings" invisible="not auto_assignment" class="mt16">
                                     <field name="assign_method" class="o_light_label w-100" widget="radio"/>
-                                    <div class="mt16 d-flex" name="member_ids">
+                                    <div class="mt16 d-flex" name="member_ids" invisible="assign_method == 'tags'">
                                         <label for="member_ids"/>
-                                        <field name="member_ids" widget="many2many_avatar_user" required="auto_assignment"
+                                        <field name="member_ids" widget="many2many_avatar_user" required="auto_assignment and assign_method != 'tags'"
                                         class="ms-3" options="{'no_quick_create': True}"/>
                                     </div>
+                                    <button
+                                        name="%(helpdesk.action_helpdesk_tag_assignment)d" string="Configure tags handled by team members"
+                                        type="action" class="oe_link" icon="oi-arrow-right" invisible="assign_method != 'tags'"
+                                    />
                                 </div>
                             </setting>
                         </div>

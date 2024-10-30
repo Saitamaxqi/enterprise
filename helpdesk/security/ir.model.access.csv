@@ -20,3 +20,4 @@ access_mail_activity_type_helpdesk_manager,mail.activity.type.helpdesk.manager,m
 access_helpdesk_ticket_report_analysis_manager,helpdesk.ticket.report.analysis.manager,model_helpdesk_ticket_report_analysis,helpdesk.group_helpdesk_manager,1,0,0,0
 access_helpdesk_ticket_report_analysis_user,helpdesk.ticket.report.analysis.user,model_helpdesk_ticket_report_analysis,helpdesk.group_helpdesk_user,1,0,0,0
 access_helpdesk_stage_delete_wizard,helpdesk.stage.delete.wizard,model_helpdesk_stage_delete_wizard,helpdesk.group_helpdesk_manager,1,1,1,0
+helpdesk.access_helpdesk_tag_assignment,access_helpdesk_tag_assignment,helpdesk.model_helpdesk_tag_assignment,helpdesk.group_helpdesk_manager,1,1,1,1
