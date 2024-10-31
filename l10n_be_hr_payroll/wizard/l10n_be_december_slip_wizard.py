@@ -96,7 +96,8 @@ class L10nBeDecemberSlipWizard(models.TransientModel):
             payslips_n -= double_payslip
             wizard.double_holiday_n = double_payslip._origin._get_line_values(
                 ['BASIC'], compute_sum=True)['BASIC']['sum']['total']
-            wizard.simple_holiday_n = payslips_n._get_worked_days_line_amount('LEAVE120')
+            wizard.simple_holiday_n = payslips_n._get_worked_days_line_values(
+                ['LEAVE120'], ['amount'], True)['LEAVE120']['sum']['amount']
 
     def action_validate(self):
         self.ensure_one()

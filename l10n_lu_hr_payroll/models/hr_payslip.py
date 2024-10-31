@@ -248,13 +248,15 @@ class HrPayslip(models.Model):
 
     def _get_month_presence_prorata(self):
         self.ensure_one()
-        worked_hours = self._get_paid_worked_days_line_number_of_hours()
+        unpaid_codes = self.struct_id.unpaid_work_entry_type_ids.mapped('code')
+        paid_lines = self.worked_days_line_ids.filtered(lambda wd: wd.code not in unpaid_codes)
+        paid_hours = sum(paid_lines.mapped('number_of_hours'))
 
         # YTI TOFIX: Localise start_date/end_date according to employee.tz
         start_date = self.date_from + relativedelta(day=1, hour=0, minute=0, second=0)
         end_date = self.date_to + relativedelta(day=1, months=1, days=-1, hour=23, minute=59, second=59)
         total_hours = self.employee_id.resource_calendar_id.get_work_hours_count(start_date, end_date)
-        return min(1, worked_hours / total_hours)
+        return min(1, paid_hours / total_hours)
 
     def _get_yearly_simulated_gross(self, current_gross=0):
         taxable_scale_days = self._rule_parameter('l10n_lu_days_per_month')

@@ -1230,17 +1230,19 @@ class HrPayslip(models.Model):
                 result[code][payslip_id][vals] += row[vals] or 0.0
         return result
 
-    def _get_worked_days_line_values(self, code_list, vals_list=None, compute_sum=False):
+    def _get_worked_days_line_values(self, code_list, vals_list=None, compute_sum=False, exclude_codes=False):
         if vals_list is None:
             vals_list = ['amount']
         valid_values = {'number_of_hours', 'number_of_days', 'amount', 'ytd'}
         if set(vals_list) - valid_values:
             raise UserError(_('The following values are not valid:\n%s', '\n'.join(list(set(vals_list) - valid_values))))
         result = defaultdict(lambda: defaultdict(lambda: dict.fromkeys(vals_list, 0.0)))
-        if not self or not code_list:
+        if not self or (not code_list and not exclude_codes):
             return result
+
         self.env.flush_all()
         selected_fields = ','.join('SUM(%s) AS %s' % (vals, vals) for vals in vals_list)
+        operation = 'IN' if not exclude_codes else 'NOT IN'
         self.env.cr.execute("""
             SELECT
                 p.id,
@@ -1250,9 +1252,9 @@ class HrPayslip(models.Model):
             JOIN hr_work_entry_type wet ON wet.id = wd.work_entry_type_id
             JOIN hr_payslip p ON p.id IN %s
             AND wd.payslip_id = p.id
-            AND wet.code IN %s
+            AND wet.code %s %s
             GROUP BY p.id, wet.code
-        """ % (selected_fields, '%s', '%s'), (tuple(self.ids), tuple(code_list)))
+        """ % (selected_fields, '%s', operation, '%s'), (tuple(self.ids), tuple(code_list)))
         # self = hr.payslip(1, 2)
         # request_rows = [
         #     {'id': 1, 'code': 'WORK100', 'amount': 100, 'number_of_days': 1},
@@ -1290,30 +1292,6 @@ class HrPayslip(models.Model):
                 category_data['quantity'] += line.quantity
                 category_data['total'] += line.total
         return category_data
-
-    def _get_worked_days_line_amount(self, code):
-        wds = self.worked_days_line_ids.filtered(lambda wd: wd.code == code)
-        return sum([wd.amount for wd in wds])
-
-    def _get_paid_worked_days_line_amount(self):
-        wds = self.worked_days_line_ids.filtered(lambda wd: wd.work_entry_type_id.id not in self.struct_id.unpaid_work_entry_type_ids.ids)
-        return sum(wd.amount for wd in wds)
-
-    def _get_worked_days_line_number_of_hours(self, code):
-        wds = self.worked_days_line_ids.filtered(lambda wd: wd.code == code)
-        return sum([wd.number_of_hours for wd in wds])
-
-    def _get_paid_worked_days_line_number_of_hours(self):
-        wds = self.worked_days_line_ids.filtered(lambda wd: wd.work_entry_type_id.id not in self.struct_id.unpaid_work_entry_type_ids.ids)
-        return sum(wd.number_of_hours for wd in wds)
-
-    def _get_worked_days_line_number_of_days(self, code):
-        wds = self.worked_days_line_ids.filtered(lambda wd: wd.code == code)
-        return sum([wd.number_of_days for wd in wds])
-
-    def _get_paid_worked_days_line_number_of_days(self):
-        wds = self.worked_days_line_ids.filtered(lambda wd: wd.work_entry_type_id.id not in self.struct_id.unpaid_work_entry_type_ids.ids)
-        return sum(wd.number_of_days for wd in wds)
 
     def _get_input_line_amount(self, code):
         lines = self.input_line_ids.filtered(lambda line: line.code == code)

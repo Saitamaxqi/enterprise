@@ -564,7 +564,7 @@ class HrPayslip(models.Model):
             ('date_from', '>=', date(self.date_from.year - 2, 1, 1)),
             ('state', 'in', ['done', 'paid']),
         ])
-        european_time_off_amount = two_years_payslips.filtered(lambda p: p.date_from.year < self.date_from.year)._get_worked_days_line_amount('LEAVE216')
+        european_time_off_amount = two_years_payslips.filtered(lambda p: p.date_from.year < self.date_from.year)._get_worked_days_line_values(['LEAVE216'], ['amount'], True)['LEAVE216']['sum']['amount']
         already_recovered_amount = two_years_payslips._get_line_values(['EU.LEAVE.DEDUC'], compute_sum=True)['EU.LEAVE.DEDUC']['sum']['total']
         return european_time_off_amount + already_recovered_amount
 
@@ -1284,7 +1284,8 @@ class HrPayslip(models.Model):
             ('date_to', '<=', date(self.date_from.year, 12, 31)),
             ('state', 'in', ['done', 'paid']),
         ])
-        remaining_day = number_of_days - all_payslips_during_civil_year._get_worked_days_line_number_of_days('LEAVE120')
+        paid_leave_days = all_payslips_during_civil_year._get_worked_days_line_values(['LEAVE120'], ['number_of_days'], True)['LEAVE120']['sum']['number_of_days']
+        remaining_day = number_of_days - paid_leave_days
         if remaining_day <= 0:
             return 0
         if self.wage_type == 'hourly':
@@ -1297,8 +1298,8 @@ class HrPayslip(models.Model):
         remaining_day_amount = min(remaining_day, number_of_days) * employee_hourly_cost * 7.6
         days_to_recover = employee['l10n_be_holiday_pay_to_recover_' + recovery_type]
         max_amount_to_recover = min(days_to_recover, employee_hourly_cost * number_of_days * 7.6)
-        leave120_amount = self._get_worked_days_line_amount('LEAVE120')
-        holiday_amount = min(leave120_amount, employee_hourly_cost * self._get_worked_days_line_number_of_hours('LEAVE120'))
+        paid_leave_data = self._get_worked_days_line_values(['LEAVE120'], ['amount', 'number_of_hours'], True)['LEAVE120']['sum']
+        holiday_amount = min(paid_leave_data['amount'], employee_hourly_cost * paid_leave_data['number_of_hours'])
         remaining_amount = max(0, max_amount_to_recover - employee['l10n_be_holiday_pay_recovered_' + recovery_type])
         return - min(remaining_amount, remaining_day_amount, holiday_amount)
 

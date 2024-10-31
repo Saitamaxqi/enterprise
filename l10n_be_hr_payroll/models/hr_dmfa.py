@@ -497,7 +497,7 @@ class DMFAStudentContribution(DMFANode):
         self.student_remun_amount = format_amount(basis, width=9)
         self.student_contribution_amount = format_amount(round(basis * 0.0813, 2), width=9)
         self.student_nbr_days = -1
-        self.student_hours_nbr = round(payslips._get_worked_days_line_number_of_hours('WORK100'))
+        self.student_hours_nbr = round(payslips._get_worked_day_lines_values(['WORK100'], ['number_of_hours'], True)['WORK100']['sum']['number_of_hours'])
 
 class DMFAWorkerContributionSpecialWorkAccident(DMFANode):
     """

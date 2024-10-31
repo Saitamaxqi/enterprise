@@ -44,9 +44,10 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self.assertEqual(len(payslip.input_line_ids), 0)
         self.assertEqual(len(payslip.worked_days_line_ids), 1)
 
-        self.assertAlmostEqual(payslip._get_worked_days_line_amount('WORK100'), 10000000, places=2)
-        self.assertAlmostEqual(payslip._get_worked_days_line_number_of_days('WORK100'), 23)
-        self.assertAlmostEqual(payslip._get_worked_days_line_number_of_hours('WORK100'), 184)
+        attendance_data = payslip._get_worked_days_line_values(['WORK100'], ['amount', 'number_of_days', 'number_of_hours'], True)['WORK100']['sum']
+        self.assertAlmostEqual(attendance_data['amount'], 10000000, places=2)
+        self.assertAlmostEqual(attendance_data['number_of_days'], 23)
+        self.assertAlmostEqual(attendance_data['number_of_hours'], 184)
         payslip_results = {'BASE': 10000000, 'BASIC': 10000000, 'BPJS_JKK': 24000, 'BPJS_JKM': 30000, 'BPJS_Kesehatan': 400000, 'GROSS': 10454000, 'JHT': -200000, 'JP': -100000, 'BPJS_KESEHATAN_DED': -100000, 'PPH21': -261350, 'NET': 9338650}
         self._validate_payslip(payslip, payslip_results)
 

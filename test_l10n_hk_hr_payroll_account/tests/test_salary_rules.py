@@ -111,14 +111,16 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
             'HKLEAVE210': (7.0, 56.0, 7550.0),
             'HKLEAVE211': (18.0, 144.0, 15531.43),
         }, skip_lines=True)
-        maternity_leave_daily_wage = payslip._get_worked_days_line_amount('HKLEAVE211') / payslip._get_worked_days_line_number_of_days('HKLEAVE211')
+        maternity_leave_data = payslip._get_worked_days_line_values(['HKLEAVE211'], ['amount', 'number_of_days'], True)['HKLEAVE211']['sum']
+        maternity_leave_daily_wage = maternity_leave_data['amount'] / maternity_leave_data['number_of_days']
         self._validate_payslip(payslip, results[3])
         payslip.action_payslip_done()
         payslip.action_payslip_paid()
 
         payslip = self._generate_payslip(date(2023, 4, 1), date(2023, 4, 30))
         self._validate_worked_days(payslip, {'HKLEAVE211': (11.0, 88.0, 9491.43)}, skip_lines=True)
-        self.assertAlmostEqual(payslip._get_worked_days_line_amount('HKLEAVE211') / payslip._get_worked_days_line_number_of_days('HKLEAVE211'), maternity_leave_daily_wage, places=2)
+        maternity_leave_data = payslip._get_worked_days_line_values(['HKLEAVE211'], ['amount', 'number_of_days'], True)['HKLEAVE211']['sum']
+        self.assertAlmostEqual(maternity_leave_data['amount'] / maternity_leave_data['number_of_days'], maternity_leave_daily_wage, places=2)
         self._validate_payslip(payslip, results[4])
         payslip.action_payslip_done()
         payslip.action_payslip_paid()

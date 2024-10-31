@@ -341,19 +341,21 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             training_payslips = payslips.filtered(lambda p: training_code in p.worked_days_line_ids.mapped('work_entry_type_id.code'))
             male_payslips = training_payslips.filtered(lambda p: p.employee_id.gender == 'male')
             female_payslips = training_payslips - male_payslips
+            male_training_data = male_payslips._get_worked_days_line_values([training_code], ['amount', 'number_of_hours'], True)[training_code]['sum']
+            female_training_data = female_payslips._get_worked_days_line_values([training_code], ['amount', 'number_of_hours'], True)[training_code]['sum']
 
             report_data['5801'] = len(male_payslips.mapped('employee_id'))
             report_data['5811'] = len(female_payslips.mapped('employee_id'))
 
-            report_data['5802'] = male_payslips._get_worked_days_line_number_of_hours(training_code)
-            report_data['5812'] = female_payslips._get_worked_days_line_number_of_hours(training_code)
+            report_data['5802'] = male_training_data['number_of_hours']
+            report_data['5812'] = female_training_data['number_of_hours']
 
-            report_data['58031'] = male_payslips._get_worked_days_line_amount(training_code)
-            report_data['58131'] = female_payslips._get_worked_days_line_amount(training_code)
+            report_data['58031'] = male_training_data['amount']
+            report_data['58131'] = female_training_data['amount']
 
             line_values = (male_payslips + female_payslips)._get_line_values(['SALARY', 'ONSSTOTAL'])
-            report_data['58032'] = sum(p._get_worked_days_line_amount(training_code) / line_values['SALARY'][p.id]['total'] * line_values['ONSSTOTAL'][p.id]['total'] for p in male_payslips)
-            report_data['58132'] = sum(p._get_worked_days_line_amount(training_code) / line_values['SALARY'][p.id]['total'] * line_values['ONSSTOTAL'][p.id]['total'] for p in female_payslips)
+            report_data['58032'] = sum(p._get_worked_days_line_values([training_code], ['amount'], True)[training_code]['sum']['amount'] / line_values['SALARY'][p.id]['total'] * line_values['ONSSTOTAL'][p.id]['total'] for p in male_payslips)
+            report_data['58132'] = sum(p._get_worked_days_line_values([training_code], ['amount'], True)[training_code]['sum']['amount'] / line_values['SALARY'][p.id]['total'] * line_values['ONSSTOTAL'][p.id]['total'] for p in female_payslips)
 
             report_data['5803'] = report_data['58031'] + report_data['58032']
             report_data['5813'] = report_data['58131'] + report_data['58132']
