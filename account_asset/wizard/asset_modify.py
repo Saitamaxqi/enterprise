@@ -151,7 +151,7 @@ class AssetModify(models.TransientModel):
             record.gain_value = record.currency_id.compare_amounts(
                 record._get_own_book_value(),
                 record.asset_id._get_own_book_value(record.date)
-            ) > 1
+            ) > 0
 
     @api.depends('loss_account_id', 'gain_account_id', 'gain_or_loss', 'modify_action', 'date', 'value_residual', 'salvage_value')
     def _compute_informational_text(self):
