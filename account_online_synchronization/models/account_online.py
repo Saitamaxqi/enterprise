@@ -507,7 +507,7 @@ class AccountOnlineLink(models.Model):
                 journal=journal,
                 connection_state_details=connection_state_details,
             )
-        self.env.ref('account.group_account_user').users._bus_send(
+        self.env.ref('account.group_account_user').all_user_ids._bus_send(
             'online_sync',
             {
                 'id': journal.id,

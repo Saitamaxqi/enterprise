@@ -154,7 +154,7 @@ class HelpdeskTicket(models.Model):
 
     @api.depends('team_id')
     def _compute_domain_user_ids(self):
-        user_ids = self.env.ref('helpdesk.group_helpdesk_user').users.ids
+        user_ids = self.env.ref('helpdesk.group_helpdesk_user').user_ids.ids
         for ticket in self:
             ticket_user_ids = []
             ticket_sudo = ticket.sudo()

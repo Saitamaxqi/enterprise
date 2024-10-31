@@ -281,7 +281,7 @@ RELATIONS_NOT_TO_EXPORT = {
     "ir.filters": ["user_id"],
     "mail.template": ["attachment_ids", "mail_server_id"],
     "report.paperformat": ["report_ids"],
-    "res.groups": ["category_id", "users"],
+    "res.groups": ["category_id", "user_ids"],
 }
 
 

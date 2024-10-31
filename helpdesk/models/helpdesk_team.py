@@ -443,7 +443,7 @@ class HelpdeskTeam(models.Model):
                 use_sla_group = use_sla_group or self._get_helpdesk_use_sla_group()
                 helpdesk_user_group = helpdesk_user_group or self._get_helpdesk_user_group()
                 helpdesk_user_group.write({'implied_ids': [Command.unlink(use_sla_group.id)]})
-                use_sla_group.write({'users': [Command.clear()]})
+                use_sla_group.write({'user_ids': [Command.clear()]})
 
     def _check_rating_group(self):
         rating_teams = self.filtered('use_rating')
@@ -459,7 +459,7 @@ class HelpdeskTeam(models.Model):
             use_rating_group = self._get_helpdesk_use_rating_group()
             self._get_helpdesk_user_group()\
                 .write({'implied_ids': [Command.unlink(use_rating_group.id)]})
-            use_rating_group.write({'users': [Command.clear()]})
+            use_rating_group.write({'user_ids': [Command.clear()]})
             if rating_helpdesk_email_template.active:
                 rating_helpdesk_email_template.active = False
             self.env['helpdesk.stage'].search([('template_id', '=', self.env.ref('helpdesk.rating_ticket_request_email_template').id)]).template_id = False
@@ -472,7 +472,7 @@ class HelpdeskTeam(models.Model):
             self._get_helpdesk_user_group().write({'implied_ids': [Command.link(group_auto_assignment.id)]})
         elif not has_auto_assignment and has_auto_assignment_group:
             self._get_helpdesk_user_group().write({'implied_ids': [Command.unlink(group_auto_assignment.id)]})
-            group_auto_assignment.write({'users': [Command.clear()]})
+            group_auto_assignment.write({'user_ids': [Command.clear()]})
 
     def _get_field_check_method(self):
         # mapping of field names to the function that checks if their feature is enabled

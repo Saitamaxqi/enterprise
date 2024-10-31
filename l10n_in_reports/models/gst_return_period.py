@@ -373,7 +373,7 @@ class L10n_InGstReturnPeriod(models.Model):
                 'access_internal': 'none',
                 'access_via_link': 'none',
                 'access_ids': [Command.create({'partner_id': partner.id, 'role': 'edit'})
-                               for partner in self.env.ref('account.group_account_manager').users.partner_id]
+                               for partner in self.env.ref('account.group_account_manager').all_user_ids.partner_id]
             })
             self.env['ir.model.data']._update_xmlids([{
                 'xml_id': xml_id,

@@ -4,7 +4,7 @@
         <field name="name">Manage Rooms</field>
         <field name="category_id" ref="base.module_category_productivity_room"/>
         <field name="implied_ids" eval="[Command.link(ref('base.group_user'))]"/>
-        <field name="users" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
     </record>
 
     <record id="room_room_comp_rule" model="ir.rule">

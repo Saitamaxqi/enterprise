@@ -48,4 +48,4 @@ class HelpdeskTeam(models.Model):
         if non_livechat_teams and user_has_use_livechat_group and not self._check_use_website_helpdesk_livechat_feature_enabled():
             self._get_helpdesk_user_group()\
                 .write({'implied_ids': [Command.unlink(use_website_helpdesk_livechat_group.id)]})
-            use_website_helpdesk_livechat_group.write({'users': [Command.clear()]})
+            use_website_helpdesk_livechat_group.write({'user_ids': [Command.clear()]})

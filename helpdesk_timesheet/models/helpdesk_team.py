@@ -87,7 +87,7 @@ class HelpdeskTeam(models.Model):
         elif self - timesheet_teams and use_helpdesk_timesheet_group and not enabled_timesheet_team():
             (self._get_helpdesk_user_group() + self._get_timesheet_user_group())\
                 .write({'implied_ids': [Command.unlink(helpdesk_timesheet_group.id)]})
-            helpdesk_timesheet_group.write({'users': [Command.clear()]})
+            helpdesk_timesheet_group.write({'user_ids': [Command.clear()]})
 
     def action_view_timesheets(self):
         self.ensure_one()

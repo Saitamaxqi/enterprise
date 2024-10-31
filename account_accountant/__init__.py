@@ -40,7 +40,7 @@ def uninstall_hook(env):
     group_manager = env.ref('account.group_account_manager')
     if group_basic:
         group_basic.write({
-            'users': [Command.clear()],
+            'user_ids': [Command.clear()],
             'category_id': env.ref("base.module_category_hidden").id,
         })
         group_manager.write({

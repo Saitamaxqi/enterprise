@@ -551,7 +551,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
 
         hasGroup = self.env["res.groups"].create({
             "name": "studio has group",
-            "users": [Command.link(2)]
+            "user_ids": [Command.link(2)]
         })
         hasGroupXmlId = self.env["ir.model.data"].create({
             "name": "studio_test_hasgroup",
@@ -588,7 +588,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
     def test_element_group_in_sidebar(self):
         group = self.env["res.groups"].create({
             "name": "Test Group",
-            "users": [Command.link(2)]
+            "user_ids": [Command.link(2)]
         })
         groupXmlId = self.env["ir.model.data"].create({
             "name": "test_group",
@@ -712,7 +712,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
 
         hasGroup = self.env["res.groups"].create({
             "name": "studio has group",
-            "users": [Command.link(2)]
+            "user_ids": [Command.link(2)]
         })
         hasGroupXmlId = self.env["ir.model.data"].create({
             "name": "studio_test_hasgroup",
@@ -756,7 +756,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
 
         hasGroup = self.env["res.groups"].create({
             "name": "studio has group",
-            "users": [Command.link(2)]
+            "user_ids": [Command.link(2)]
         })
         hasGroupXmlId = self.env["ir.model.data"].create({
             "name": "studio_test_hasgroup",
@@ -844,7 +844,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         # The node has also a group in which the user is not
         hasGroup = self.env["res.groups"].create({
             "name": "studio has group",
-            "users": [Command.link(self.env.user.id)]
+            "user_ids": [Command.link(self.env.user.id)]
         })
         hasGroupXmlId = self.env["ir.model.data"].create({
             "name": "studio_test_hasgroup",

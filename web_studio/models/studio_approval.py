@@ -494,7 +494,7 @@ class StudioApprovalRule(models.Model):
     def _compute_can_validate(self):
         user = self.env.user
         for rule in self:
-            rule.can_validate = user in rule.approver_ids or user in rule.approval_group_id.users
+            rule.can_validate = user in rule.approver_ids or (rule.approval_group_id and user.has_group(rule.approval_group_id.id))
 
     @api.depends('can_validate')
     def _compute_kanban_color(self):

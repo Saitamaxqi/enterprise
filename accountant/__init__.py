@@ -50,8 +50,8 @@ def uninstall_hook(env):
         _logger.warning(e)
 
     # make the account_accountant features disappear (magic)
-    env.ref("account.group_account_user").write({'users': [(5, False, False)]})
-    env.ref("account.group_account_readonly").write({'users': [(5, False, False)]})
+    env.ref("account.group_account_user").write({'user_ids': [(5, False, False)]})
+    env.ref("account.group_account_readonly").write({'user_ids': [(5, False, False)]})
 
     # this menu should always be there, as the module depends on account.
     # if it's not, there is something wrong with the db that should be investigated.

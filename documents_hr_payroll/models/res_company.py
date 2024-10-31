@@ -39,7 +39,7 @@ class ResCompany(models.Model):
                 'documents_hr_payslips_tags': [(6, 0, payslip_tag.ids)] if payslip_tag else [],
                 'documents_payroll_folder_id': folder.id
             })
-            payroll_users = group_payroll_user.users.filtered(lambda user: folder.company_id in user.company_ids)
+            payroll_users = group_payroll_user.all_user_ids.filtered(lambda user: folder.company_id in user.company_ids)
             folder.action_update_access_rights(
                 access_internal='view', access_via_link='none', is_access_via_link_hidden=True,
                 partners={partner.id: ('edit', False) for partner in payroll_users.partner_id})

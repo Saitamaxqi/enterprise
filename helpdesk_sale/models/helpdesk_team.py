@@ -39,4 +39,4 @@ class HelpdeskTeam(models.Model):
         elif not sale_teams and user_has_use_sale_timesheet_group and not self._check_sale_timesheet_feature_enabled():
             self._get_helpdesk_user_group()\
                 .write({'implied_ids': [Command.unlink(use_sale_timesheet_group.id)]})
-            use_sale_timesheet_group.write({'users': [Command.clear()]})
+            use_sale_timesheet_group.write({'user_ids': [Command.clear()]})

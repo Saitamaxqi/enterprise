@@ -91,7 +91,7 @@ class HrReferralReward(models.Model):
             if vals.get('gift_manager_id', False):
                 users_to_write.append((4, vals['gift_manager_id']))
         if users_to_write:
-            reward_responsible_group.sudo().write({'users': users_to_write})
+            reward_responsible_group.sudo().write({'user_ids': users_to_write})
         return super().create(vals_list)
 
     def write(self, values):
@@ -104,7 +104,7 @@ class HrReferralReward(models.Model):
                 old_responsibles -= gift_manager
             reward_responsible_group = self.env.ref('hr_referral.group_hr_referral_reward_responsible_user', raise_if_not_found=False)
             if reward_responsible_group and gift_manager and not gift_manager.has_group('hr_referral.group_hr_referral_reward_responsible_user'):
-                reward_responsible_group.sudo().write({'users': [(4, values['gift_manager_id'])]})
+                reward_responsible_group.sudo().write({'user_ids': [(4, values['gift_manager_id'])]})
         res = super(HrReferralReward, self).write(values)
         old_responsibles._clean_responsibles()
         return res
