@@ -17,7 +17,6 @@ msgstr ""
 
 #. module: documents_project
 #: model:ir.actions.server,name:documents_project.ir_actions_server_tag_add_draft
-#: model:ir.actions.server,name:documents_project.ir_actions_server_tag_remove_draft
 msgid "Add Tag Draft"
 msgstr ""
 
@@ -164,6 +163,11 @@ msgstr ""
 #. module: documents_project
 #: model:ir.model.fields,field_description:documents_project.field_documents_document__project_ids
 msgid "Projects"
+msgstr ""
+
+#. module: documents_project
+#: model:ir.actions.server,name:documents_project.ir_actions_server_tag_remove_draft
+msgid "Remove Tag Draft"
 msgstr ""
 
 #. module: documents_project
