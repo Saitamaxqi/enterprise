@@ -9,6 +9,7 @@ import {
     startServer,
 } from "@mail/../tests/mail_test_helpers";
 import { describe, expect, test } from "@odoo/hoot";
+import { waitFor } from "@odoo/hoot-dom";
 
 describe.current.tags("desktop");
 defineMailModels();
@@ -26,10 +27,12 @@ test("message list desc order", async () => {
     patchUiSize({ size: SIZES.XXL });
     await start();
     await openFormView("res.partner", partnerId);
-    expect($(".o-mail-Message").prevAll("button:contains(Load More)")[0]).toBe(undefined, {
-        message: "load more link should NOT be before messages",
-    });
-    expect($("button:contains(Load More)").nextAll(".o-mail-Message")[0]).toBe(undefined, {
+
+    const messageEl = await waitFor(".o-mail-Message");
+    const loadMoreButton = await waitFor("button:contains(Load More)");
+    const siblings = [...messageEl.parentElement.children];
+
+    expect(siblings.indexOf(messageEl)).toBeLessThan(siblings.indexOf(loadMoreButton), {
         message: "load more link should be after messages",
     });
     await contains(".o-mail-Message", { count: 30 });

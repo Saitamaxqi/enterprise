@@ -859,7 +859,7 @@ describe.tags("desktop")("grid_view_desktop", () => {
         await contains(".o_grid_cell button.o_grid_search_btn").click();
     });
 
-    test("editing a value [REQUIRE FOCUS]", async () => {
+    test("editing a value", async () => {
         onRpc("grid_update_cell", (args) => {
             expect(args.model).toBe("analytic.line", {
                 message: "The update cell should be called in the current model.",
