@@ -489,7 +489,7 @@ if records:
         <field name="state">code</field>
         <field name="code">
 if records:
-    action = records.compute_depreciation_board()
+    action = records.filtered(lambda asset: asset.state == 'draft').compute_depreciation_board()
         </field>
     </record>
 
