@@ -68,9 +68,11 @@ class HrPayslip(models.Model):
                 }
             } for slip in payslips_to_post]
 
+        account_move_vals = []
+        slips_date_tuples = []
         for slip_mapped_data in all_slip_mapped_data:
-            for journal_id in slip_mapped_data: # For each journal_id.
-                for slip_date in slip_mapped_data[journal_id]: # For each month.
+            for journal_id in slip_mapped_data:  # For each journal_id.
+                for slip_date in slip_mapped_data[journal_id]:  # For each month.
                     line_ids = []
                     debit_sum = 0.0
                     credit_sum = 0.0
@@ -100,11 +102,13 @@ class HrPayslip(models.Model):
 
                     # Add accounting lines in the move
                     move_dict['line_ids'] = [(0, 0, line_vals) for line_vals in line_ids]
-                    move = slip._create_account_move(move_dict)
-                    for slip in slip_mapped_data[journal_id][slip_date]:
-                        slip.write({'move_id': move.id, 'date': date})
-                    if self.company_id.batch_payroll_move_lines:
-                        slip.payslip_run_id.write({'move_id': move.id})
+                    account_move_vals.append(move_dict)
+                    slips_date_tuples.append((slip_mapped_data[journal_id][slip_date], date))
+        moves = self._create_account_move(account_move_vals)
+        for move, (slips, date) in zip(moves, slips_date_tuples):
+            slips.write({'move_id': move.id, 'date': date})
+            if slips.company_id.batch_payroll_move_lines:
+                slips.payslip_run_id.write({'move_id': move.id})
         return True
 
     def _prepare_line_values(self, line, account_id, date, debit, credit):

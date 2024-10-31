@@ -217,10 +217,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
     @warmup
     def test_performance_l10n_be_payroll_whole_flow(self):
         # Work entry generation
-        with self.assertQueryCount(admin=7674):
-            # Note 4408 requests are related to the db insertions
-            # i.e. self.env['hr.work.entry'].create(vals_list) and thus
-            # are not avoidable.
+        with self.assertQueryCount(admin=550):
             self.employees.generate_work_entries(self.date_from, self.date_to)
 
         structure = self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary')
@@ -236,21 +233,21 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         } for i in range(self.EMPLOYEES_COUNT)]
 
         # Payslip Creation
-        with self.assertQueryCount(admin=1271):  # randomness
+        with self.assertQueryCount(admin=1050):  # randomness
             start_time = time.time()
             payslips = self.env['hr.payslip'].with_context(allowed_company_ids=self.company.ids).create(payslips_values)
             # --- 0.3016078472137451 seconds ---
             _logger.info("Payslips Creation: --- %s seconds ---", time.time() - start_time)
 
         # Payslip Computation
-        with self.assertQueryCount(admin=3321):
+        with self.assertQueryCount(admin=600):
             start_time = time.time()
             payslips.compute_sheet()
             # --- 9.298089027404785 seconds ---
             _logger.info("Payslips Computation: --- %s seconds ---", time.time() - start_time)
 
         # Payslip Validation
-        with self.assertQueryCount(admin=447):
+        with self.assertQueryCount(admin=400):
             start_time = time.time()
             payslips.action_payslip_done()
             # --- 6.975736618041992 seconds ---
@@ -309,7 +306,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         })
         declaration_281_45.action_generate_declarations()
         self.assertEqual(len(declaration_281_45.line_ids), self.EMPLOYEES_COUNT)
-        with self.assertQueryCount(admin=13):
+        with self.assertQueryCount(admin=5):
             start_time = time.time()
             declaration_281_45.action_generate_xml()
             # --- 0.027942657470703125 seconds ---
@@ -348,7 +345,7 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
             'date_from': self.date_from + relativedelta(day=1, month=1),
             'date_to': self.date_from + relativedelta(day=31, month=12),
         })
-        with self.assertQueryCount(admin=113):
+        with self.assertQueryCount(admin=38):
             start_time = time.time()
             social_security_certificate.print_report()
             # --- 0.1080021858215332 seconds ---

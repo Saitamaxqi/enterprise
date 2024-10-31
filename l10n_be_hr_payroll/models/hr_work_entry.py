@@ -1,7 +1,6 @@
-#-*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, _
+from odoo import api, models, _
 
 
 class HrWorkEntry(models.Model):
@@ -20,10 +19,10 @@ class HrWorkEntry(models.Model):
                 leaves |= work_entry.leave_id
         activity_type_id = self.env.ref('mail.mail_activity_data_todo').id
         res_model_id = self.env.ref('hr_holidays.model_hr_leave').id
+        activity_vals = []
         for leave in leaves.sudo():
             user_ids = leave.holiday_status_id.responsible_ids.ids or self.env.user.ids
             note = _("Sick time off to report to DRS for %s.", leave.date_from.strftime('%B %Y'))
-            activity_vals = []
             for user_id in user_ids:
                 activity_vals.append({
                     'activity_type_id': activity_type_id,
@@ -33,5 +32,5 @@ class HrWorkEntry(models.Model):
                     'res_id': leave.id,
                     'res_model_id': res_model_id,
                 })
-            self.env['mail.activity'].create(activity_vals)
+        self.env['mail.activity'].create(activity_vals)
         return res
