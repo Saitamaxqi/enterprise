@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 class DocumentsDocument(models.Model):
     _inherit = 'documents.document'
 
-    def document_sign_create_sign_template_x(self, create_model, folder_id):
+    def document_sign_create_sign_template_x(self, create_model, folder_id=False):
         if create_model not in ('sign.template.new', 'sign.template.direct'):
             raise UserError(_("Invalid model %s", create_model))
         if create_model == 'sign.template.direct' and len(self) != 1:
@@ -19,7 +19,7 @@ class DocumentsDocument(models.Model):
             create_values = {
                 'attachment_id': document.attachment_id.id,
                 'favorited_ids': [(4, self.env.user.id)],
-                'folder_id': folder_id
+                'folder_id': folder_id or document.folder_id.id,
             }
             if document.tag_ids:
                 create_values['documents_tag_ids'] = [(6, 0, document.tag_ids.ids)]
