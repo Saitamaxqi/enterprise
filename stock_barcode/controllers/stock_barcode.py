@@ -1,5 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import re
+
 from collections import defaultdict
 
 from odoo import fields, http, _
@@ -8,6 +10,7 @@ from odoo.exceptions import UserError
 from odoo.osv import expression
 from odoo.tools import pdf, split_every
 from odoo.tools.misc import file_open
+from odoo.addons.stock_barcode.models.epc_encoder import EpcScheme
 
 
 class StockBarcodeController(http.Controller):
@@ -433,3 +436,31 @@ class StockBarcodeController(http.Controller):
             'stock.quant.package',
         ]
         return {model: request.env[model]._barcode_field for model in list_model if hasattr(request.env[model], '_barcode_field')}
+
+    @http.route('/stock_barcode/get_epc', type='jsonrpc', auth='user')
+    def get_epc(self, scheme_name, element_string_list, company_prefix_length=None, filter=None):
+        scheme = EpcScheme(scheme_name)
+        return {element_string: scheme.encode(element_string, filter, company_prefix_length) for element_string in element_string_list}
+
+    @http.route('/stock_barcode/get_epc_sgtin', type='jsonrpc', auth='user')
+    def get_epc_sgtin(self, gtin, tracking_number_list, filter, company_prefix_length, alphanumeric_tracking=False):
+        """Get a batch of SGTIN EPC for a defined product with a list of tracking numbers
+        :param gtin: GTIN of the product
+        :param tracking_number_list: List of tracking numbers
+        :param alphanumeric_tracking: True if any tracking number is alphanumeric
+        :param filter: Filter value for SGTIN EPC as defined in [TDS2.1]§10.2
+        :param company_prefix_length: Length of the company prefix
+        """
+        if not re.match(r"^\d+$", gtin):
+            raise Exception(_("A GTIN can only contains digits"))
+
+        scheme_name, field_name = ('sgtin-198', 'serial_string') if alphanumeric_tracking else ('sgtin-96', 'serial_integer')
+        scheme = EpcScheme(scheme_name)
+        results = {}
+        element_string = f"(01) {gtin} (21) {tracking_number_list[0]}"
+        # First call to encode may raise an exception if technical fields (header, partition, filter...) are invalid
+        results[tracking_number_list[0]] = scheme.encode(element_string, filter, company_prefix_length)
+        # Since we operate on a single product, we can reuse the base encoding for all the tracking numbers to fasten the process
+        for tracking_number in tracking_number_list[1:]:
+            results[tracking_number] = scheme.encode_partial(field_name, tracking_number)
+        return results
