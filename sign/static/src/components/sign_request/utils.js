@@ -253,61 +253,6 @@ export function startResize(signItem, onResize) {
 }
 
 /**
- * Adds pinch listeners to zoom in/zoom out of iframe when in mobile
- * @param {HTMLElement} target
- * @param {handlers} handlers
- * @param {Function} handlers.increaseDistanceHandler Handler called when the distance pinched between the 2 pointer is decreased
- * @param {Function} handlers.decreaseDistanceHandler Handler called when the distance pinched between the 2 pointer is increased
- */
-export function pinchService(target, handlers) {
-    let prevDiff = null;
-    const { increaseDistanceHandler, decreaseDistanceHandler } = handlers;
-
-    target.addEventListener("touchstart", reset);
-    target.addEventListener("touchmove", touchMove);
-    target.addEventListener("touchend", reset);
-
-    /**
-     * This function implements a 2-pointer horizontal pinch/zoom gesture.
-     *
-     * If the distance between the two pointers has increased (zoom in),
-     * distance is decreasing (zoom out)
-     *
-     * @param e
-     * @private
-     */
-    function touchMove(e) {
-        const touches = e.touches;
-        // If two pointers are down, check for pinch gestures
-        if (touches.length === 2) {
-            // Calculate the current distance between the 2 fingers
-            const deltaX = touches[0].pageX - touches[1].pageX;
-            const deltaY = touches[0].pageY - touches[1].pageY;
-            const curDiff = Math.hypot(deltaX, deltaY);
-            if (prevDiff === null) {
-                prevDiff = curDiff;
-            }
-            const scale = prevDiff / curDiff;
-            if (scale < 1) {
-                decreaseDistanceHandler(e);
-            } else if (scale > 1) {
-                increaseDistanceHandler(e);
-            }
-        }
-    }
-
-    function reset() {
-        prevDiff = null;
-    }
-
-    return () => {
-        target.removeEventListener("touchstart", reset);
-        target.removeEventListener("touchmove", touchMove);
-        target.removeEventListener("touchend", reset);
-    };
-}
-
-/**
  * Generates the PDF.JS URL from the attachment location
  * @param { String } attachmentLocation
  * @param { Boolean } isSmall

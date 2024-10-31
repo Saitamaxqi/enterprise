@@ -2,7 +2,7 @@ import { _t } from "@web/core/l10n/translation";
 import { rpc } from "@web/core/network/rpc";
 import { renderToString } from "@web/core/utils/render";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
-import { normalizePosition, pinchService, isVisible } from "./utils";
+import { normalizePosition, isVisible } from "./utils";
 
 export class PDFIframe {
     /**
@@ -132,11 +132,16 @@ export class PDFIframe {
 
     startPinchService() {
         const pinchTarget = this.root.querySelector("#viewerContainer #viewer");
-        const pinchServiceCleanup = pinchService(pinchTarget, {
-            decreaseDistanceHandler: () => this.root.querySelector("button#zoomInButton").click(),
-            increaseDistanceHandler: () => this.root.querySelector("button#zoomOutButton").click(),
+        const handleTouchMove = (e) => {
+            if(e.touches.length == 2) {
+                // To allow zooming in pdf only.
+                e.preventDefault();
+            }
+        }
+        pinchTarget.addEventListener("touchmove", handleTouchMove);
+        this.cleanupFns.push(() => {
+            pinchTarget.removeEventListener("touchmove", handleTouchMove);
         });
-        this.cleanupFns.push(pinchServiceCleanup);
     }
 
     /**

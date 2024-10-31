@@ -105,6 +105,26 @@
 
 }
 
+@media (max-width: 767px) { /* @screen-xs-max */    
+    .o_sign_validate_banner {
+        padding: 0;
+    }
+    .o_validate_button {
+        text-transform: uppercase;
+        width: 100% !important;
+        height: 45px;
+        bottom: 0;
+        left: 0;
+        margin: auto;
+        border-radius: 0;
+        line-height: 25px;
+        font-size: var(--btn-font-size);
+    }
+    .o_sign_validate_text {
+        display: none;
+    }
+}
+
 .modal:is(.o_sign_thank_you_dialog, .o_sign_next_dialog) {
     border: none;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.6), 0 6px 20px 0 rgba(0, 0, 0, 0.1);

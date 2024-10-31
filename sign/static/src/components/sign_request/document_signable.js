@@ -81,8 +81,7 @@ export class Document extends Component {
             parentEl.querySelectorAll(".o_sign_select_options_input_info")
         );
         this.validateBanner = parentEl.querySelector(".o_sign_validate_banner");
-        this.validateButton = parentEl.querySelector(".o_sign_validate_banner button");
-        this.validateButtonText = this.validateButton?.textContent;
+        this.validateButton = parentEl.querySelector(".o_validate_button");
         this.currentRole = parseInt(parentEl.querySelector("#o_sign_input_current_role")?.value);
         this.currentName = parentEl.querySelector("#o_sign_input_current_role_name")?.value;
 
@@ -136,7 +135,6 @@ export class Document extends Component {
             signerPhone: this.signerPhone,
             validateBanner: this.validateBanner,
             validateButton: this.validateButton,
-            validateButtonText: this.validateButtonText,
             isUnknownPublicUser: this.isUnknownPublicUser,
             authMethod: this.authMethod,
             redirectURL: this.redirectURL,
