@@ -10,15 +10,6 @@ from odoo.addons.website_sale.controllers.main import WebsiteSale
 
 class L10nCLWebsiteSale(WebsiteSale):
 
-    def _get_extra_billing_info_route(self, order_sudo):
-        if (
-            order_sudo.company_id.country_id.code == 'CL'
-            and str2bool(request.env['ir.config_parameter'].sudo().get_param('sale.automatic_invoice'))
-        ):
-            return '/shop/l10n_cl_invoicing_info'
-
-        return super()._get_extra_billing_info_route(order_sudo)
-
     def _l10n_cl_is_extra_info_needed(self):
         IrConfigParameter = request.env['ir.config_parameter'].sudo()
         order = request.website.sale_get_order()

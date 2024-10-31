@@ -8,12 +8,6 @@ from odoo.addons.website_sale.controllers.main import WebsiteSale
 
 class WebsiteSaleL10nMX(WebsiteSale):
 
-    def _get_extra_billing_info_route(self, order_sudo):
-        if order_sudo.company_id.country_id.code == 'MX':
-            return '/shop/l10n_mx_invoicing_info'
-
-        return super()._get_extra_billing_info_route(order_sudo)
-
     def _l10n_mx_edi_is_extra_info_needed(self):
         order = request.website.sale_get_order()
         return order.company_id.country_code == 'MX'
