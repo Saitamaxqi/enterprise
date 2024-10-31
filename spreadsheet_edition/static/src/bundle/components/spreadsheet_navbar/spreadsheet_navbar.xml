@@ -7,12 +7,15 @@
                 t-if="!env.isSmall"
                 src="/spreadsheet/static/description/icon.svg"
                 class="o_menu_brand_icon d-inline position-absolute start-0 h-100 ps-1 ms-2"
-                t-att-alt="Spreadsheet"
+                alt="Spreadsheet"
                 t-ref="appIcon"/>
         </xpath>
 
         <xpath expr="//span[hasclass('o_menu_brand')]" position="attributes">
-            <attribute name="t-esc">"Spreadsheet"</attribute>
+            <attribute name="t-esc"/>
+        </xpath>
+        <xpath expr="//span[hasclass('o_menu_brand')]" position="inside">
+            Spreadsheet
         </xpath>
 
         <xpath expr="//div[hasclass('o_navbar_breadcrumbs')]" position="replace">
