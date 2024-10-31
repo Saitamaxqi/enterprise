@@ -140,12 +140,9 @@
         <field name="mode">primary</field>
         <field name="priority">999</field>
         <field name="arch" type="xml">
-            <xpath expr="//label[@for='project_id']" position="attributes">
+            <field name="project_id" position="attributes">
                 <attribute name="invisible" add="context.get('industry_fsm_one_project', False)" separator=" or "/>
-            </xpath>
-            <xpath expr="//div[@name='project']" position="attributes">
-                <attribute name="invisible" add="context.get('industry_fsm_one_project', False)" separator=" or "/>
-            </xpath>
+            </field>
             <xpath expr="//group/field[@name='user_ids']" position="attributes">
                 <attribute name="invisible" add="context.get('industry_fsm_hide_user_ids', False)" separator=" or "/>
             </xpath>

@@ -78,13 +78,13 @@
         <field name="model">project.task</field>
         <field name="inherit_id" ref="industry_fsm.view_task_form2_inherit"/>
         <field name="arch" type="xml">
-            <xpath expr="//div[@name='project']" position="after">
+            <field name="project_id" position="after">
                 <field name="allow_worksheets" invisible="1"/>
                 <field name="worksheet_template_id"
                     options="{'no_open': True, 'no_quick_create': True}"
                     context="{'form_view_ref': 'industry_fsm_report.worksheet_template_view_form_footer_design_button', 'default_res_model': 'project.task'}"
                     invisible="not allow_worksheets or (not partner_id and not is_fsm)"/>
-            </xpath>
+            </field>
             <xpath expr="//span[@id='button_worksheet']" position="after">
                 <field name="worksheet_count" invisible="1"/>
                 <button
@@ -385,7 +385,7 @@
         <field name="model">project.task</field>
         <field name="inherit_id" ref="industry_fsm.project_task_view_mobile_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//group/field[@name='worksheet_template_id']" position="attributes">
+            <xpath expr="//field[@name='worksheet_template_id']" position="attributes">
                 <attribute name="invisible" add="context.get('industry_fsm_has_same_worksheet_template', False)" separator=" or "/>
             </xpath>
         </field>

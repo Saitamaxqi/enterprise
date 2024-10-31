@@ -592,7 +592,7 @@ class ProjectTask(models.Model):
         start_date = self._context.get('gantt_start_date')
         scale = self._context.get('gantt_scale')
         default_project_id = self._context.get('default_project_id')
-        is_my_task = not self._context.get('all_task')
+        is_my_task = self._context.get('my_tasks')
         if not (start_date and scale) or default_project_id:
             return projects
         domain = self._expand_domain_dates(domain)
