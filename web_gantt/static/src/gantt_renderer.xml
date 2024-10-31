@@ -214,9 +214,9 @@
 
     <t t-name="web_gantt.GanttRenderer.TotalRow">
         <t t-if="hasRowHeaders">
-            <div class="o_gantt_row_total o_gantt_row_sidebar border-end position-sticky start-0 bg-view d-flex align-items-center justify-content-end">
+            <div class="o_gantt_row_total o_gantt_row_sidebar border-end position-sticky start-0 bg-view d-flex justify-content-end">
                 <h4
-                    class="o_gantt_row_title pe-3 my-0 fw-bold"
+                    class="o_gantt_row_title d-flex align-items-center pe-3 my-0 fw-bold"
                     t-att-class="{ o_sample_data_disabled: isDisabled() }"
                     t-att-title="totalRow.name"
                     t-esc="totalRow.name"
