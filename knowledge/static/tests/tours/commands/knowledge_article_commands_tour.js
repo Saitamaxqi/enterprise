@@ -516,30 +516,30 @@ const embedKanbanActWindowSteps = [{ // manually insert view from act_window obj
  * See: 'knowledgeEmbedViewsFilters' for more details
  */
 
-// const embedViewFiltersSteps = [{
-//     // Check that we have 2 elements in the embedded view
-//     trigger: 'tbody tr.o_data_row:nth-child(2)',
-// }, { // add a simple filter
-//     trigger: '.o_searchview_input_container input',
-//     run: "edit 1",
-// }, {
-//     trigger: 'li[id="1"]',
-//     run: "click",
-// }, { // Check that the filter is effective
-//     trigger: 'tbody:not(tr.o_data_row:nth-child(2))',
-// }, { // Open the filtered article
-//     trigger: 'tbody > tr > td[name="display_name"]',
-//     run: "click",
-// }, { // Wait for the article to be open
-//     trigger: '.o_hierarchy_article_name input:value("Child 1")',
-// }, { // Go back via the pager
-//     trigger: '.o_knowledge_header i.oi-chevron-left',
-//     run: "click",
-// }, { // Check that there is the filter in the searchBar
-//     trigger: '.o_searchview_input_container',
-// }, { // Check that the filter is effective
-//     trigger: 'tbody:not(tr.o_data_row:nth-child(2))',
-// }];
+const embedViewFiltersSteps = [{
+    // Check that we have 2 elements in the embedded view
+    trigger: 'tbody tr.o_data_row:nth-child(2)',
+}, { // add a simple filter
+    trigger: '.o_searchview_input_container input',
+    run: "edit 1",
+}, {
+    trigger: 'li[id="1"]',
+    run: "click",
+}, { // Check that the filter is effective
+    trigger: 'tbody:not(tr.o_data_row:nth-child(2))',
+}, { // Open the filtered article
+    trigger: 'tbody > tr > td[name="display_name"]',
+    run: "click",
+}, { // Wait for the article to be open
+    trigger: '.o_hierarchy_article_name input:value("Child 1")',
+}, { // Go back via the pager
+    trigger: '.o_knowledge_header i.oi-chevron-left',
+    run: "click",
+}, { // Check that there is the filter in the searchBar
+    trigger: '.o_searchview_input_container',
+}, { // Check that the filter is effective
+    trigger: 'tbody:not(tr.o_data_row:nth-child(2))',
+}];
 
 // MISC: Test opening an article item through the kanban view
 
@@ -688,7 +688,7 @@ registry.category("web_tour.tours").add('knowledge_article_commands_tour', {
     ...embedKanbanActWindowSteps,
     ...embedCardsKanbanSteps,
     // Misc
-    // ...embedViewFiltersSteps, //TODO Waiting for OWL fix (registry main_components App1 with App2 components)
+    ...embedViewFiltersSteps,
     ...embedKanbanEditArticleSteps,
     ...articleCommandUsageSteps,
     ...articleCommandComposerSteps,
