@@ -9,7 +9,6 @@ import * as FloorScreen from "@pos_restaurant/../tests/tours/utils/floor_screen_
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("FiskalyTour", {
-    test: true,
     steps: () =>
         [
             Chrome.startPoS(),
