@@ -1,5 +1,5 @@
 import { Component } from "@odoo/owl";
-import { usePreparationDisplay } from "@pos_preparation_display/app/preparation_display_service";
+import { usePreparationDisplay } from "@pos_preparation_display/app/services/preparation_display_service";
 
 export class Category extends Component {
     static template = "pos_preparation_display.Category";

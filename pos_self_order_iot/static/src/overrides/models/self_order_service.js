@@ -1,6 +1,6 @@
 import { IoTPrinter } from "@pos_iot/app/iot_printer";
 import { DeviceController } from "@iot/device_controller";
-import { SelfOrder, selfOrderService } from "@pos_self_order/app/self_order_service";
+import { SelfOrder, selfOrderService } from "@pos_self_order/app/services/self_order_service";
 import { patch } from "@web/core/utils/patch";
 
 patch(selfOrderService, {

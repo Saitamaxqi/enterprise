@@ -2,7 +2,7 @@ import { Category } from "@pos_preparation_display/app/components/category/categ
 import { Stages } from "@pos_preparation_display/app/components/stages/stages";
 import { Order } from "@pos_preparation_display/app/components/order/order";
 import { MainComponentsContainer } from "@web/core/main_components_container";
-import { usePreparationDisplay } from "@pos_preparation_display/app/preparation_display_service";
+import { usePreparationDisplay } from "@pos_preparation_display/app/services/preparation_display_service";
 import { Component, onPatched, useState, whenReady } from "@odoo/owl";
 import { mountComponent } from "@web/env";
 
