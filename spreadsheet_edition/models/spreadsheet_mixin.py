@@ -56,11 +56,13 @@ class SpreadsheetMixin(models.AbstractModel):
         return super().write(vals)
 
     def copy(self, default=None):
+        default = default or {}
         new_spreadsheets = super().copy(default)
-        if not default or "spreadsheet_revision_ids" not in default:
-            for old_spreadsheet, new_spreadsheet in zip(self, new_spreadsheets):
-                old_spreadsheet._copy_revisions_to(new_spreadsheet)
-        if not default or "spreadsheet_data" not in default:
+        is_data_changed = bool(default.keys() & {"spreadsheet_data", "spreadsheet_binary_data"})
+        if not is_data_changed:
+            if "spreadsheet_revision_ids" not in default:
+                for old_spreadsheet, new_spreadsheet in zip(self, new_spreadsheets):
+                    old_spreadsheet._copy_revisions_to(new_spreadsheet)
             new_spreadsheets = new_spreadsheets.with_context(preserve_spreadsheet_revisions=True)
             for old_spreadsheet, new_spreadsheet in zip(self, new_spreadsheets):
                 new_spreadsheet.spreadsheet_data = old_spreadsheet.spreadsheet_data

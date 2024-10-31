@@ -56,6 +56,12 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
         copy = spreadsheet.copy({"spreadsheet_revision_ids": []})
         self.assertFalse(copy.spreadsheet_revision_ids)
 
+    def test_dont_copy_revisions_if_data_changes(self):
+        spreadsheet = self.env["spreadsheet.test"].create({})
+        spreadsheet.dispatch_spreadsheet_message(self.new_revision_data(spreadsheet))
+        copy = spreadsheet.copy({"spreadsheet_data": "{}"})
+        self.assertFalse(copy.spreadsheet_revision_ids)
+
     def test_copy_filters_out_comments(self):
         base_data = {
             "sheets": [{
