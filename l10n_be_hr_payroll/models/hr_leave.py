@@ -60,7 +60,7 @@ class HrLeave(models.Model):
                     leave.sudo().holiday_status_id.work_entry_type_id.code in self._get_drs_work_entry_type_codes():
                 drs_link = "https://www.socialsecurity.be/site_fr/employer/applics/drs/index.htm"
                 drs_link = '<a href="%s" target="_blank">%s</a>' % (drs_link, drs_link)
-                user_ids = leave.holiday_status_id.responsible_ids.ids or self.env.user.ids
+                user_ids = leave.holiday_status_id.responsible_ids.ids
                 note = _('%(employee)s is in %(holiday_status)s. Fill in the appropriate eDRS here: %(link)s',
                    employee=leave.employee_id.name,
                    holiday_status=leave.holiday_status_id.name,
