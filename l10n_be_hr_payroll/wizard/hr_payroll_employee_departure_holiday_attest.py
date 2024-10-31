@@ -70,7 +70,7 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
                     'payslip_n1_ids': [(5, 0, 0)],
                 })
             else:
-                current_year = record.employee_id.end_notice_period.replace(month=1, day=1)
+                current_year = record.employee_id.start_notice_period.replace(month=1, day=1)
                 previous_year = current_year + relativedelta(years=-1)
                 next_year = current_year + relativedelta(years=+1)
 
@@ -166,8 +166,8 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
             'employee_id': self.employee_id.id,
             'contract_id': self.employee_id.contract_id.id,
             'struct_id': struct_n_id.id,
-            'date_from': (self.employee_id.contract_id.date_end or fields.Date.today) + relativedelta(day=1),
-            'date_to': (self.employee_id.contract_id.date_end or fields.Date.today) + relativedelta(day=31),
+            'date_from': (self.employee_id.contract_id.date_end or fields.Date.today()) + relativedelta(day=1),
+            'date_to': (self.employee_id.contract_id.date_end or fields.Date.today()) + relativedelta(day=31),
         })
         termination_payslip_n.worked_days_line_ids = [(5, 0, 0)]
 
