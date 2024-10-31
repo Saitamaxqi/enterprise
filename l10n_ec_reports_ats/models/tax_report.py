@@ -183,7 +183,7 @@ class AccountTaxReportHandler(models.AbstractModel):
             inv_values = {
                 'tpIdProv': transaction_type,
                 'idProv': id_prov,
-                'tipoComprobante': in_inv.l10n_latam_document_type_id.code,
+                'tipoComprobante': self._get_l10n_latam_ats_document_code(in_inv),
                 'parteRel': parte_rel,
                 'fechaRegistro': in_inv.date.strftime('%d/%m/%Y'),
                 'establecimiento': estab_inv,
@@ -355,6 +355,12 @@ class AccountTaxReportHandler(models.AbstractModel):
 
         _append_error_messages_partner_vat(in_inv.l10n_ec_reimbursement_ids)
 
+        def _get_ats_code_prov_reimbursement(reimbursement):
+            partner_type_id = reimbursement._get_identification_type()
+            if partner_type_id == 'ruc':
+                return PartnerIdTypeEc.IN_RUC.value
+            return PartnerIdTypeEc.IN_PASSPORT.value
+
         reimbursements_vals = []
         # Whether there are more than one reimbursement with the same document_number, it's because this invoice has multiple vat tax
         # In the ATS we must group by document number and accumulate the tax bases
@@ -376,7 +382,7 @@ class AccountTaxReportHandler(models.AbstractModel):
             estab_inv, emision_inv, secuencial_inv = self.with_context(from_reimbursement=True)._l10n_ec_get_number_vals(reimburs.document_number)
             reimbursement_val.update({
                 'tipoComprobanteReemb': reimburs.l10n_latam_document_type_id.code or '',
-                'tpIdProvReemb': reimburs._get_reimbursement_partner_identification_type(),
+                'tpIdProvReemb': _get_ats_code_prov_reimbursement(reimburs),
                 'idProvReemb': reimburs.partner_vat_number,
                 'establecimientoReemb': estab_inv,
                 'puntoEmisionReemb': emision_inv,
@@ -534,9 +540,6 @@ class AccountTaxReportHandler(models.AbstractModel):
             )
             emission_type = 'F' if is_manual else 'E'
 
-            document_code = invoice.l10n_latam_document_type_id.code
-            tipo_comprobante = invoice.is_sale_document() and ATS_SALE_DOCUMENT_TYPE.get(document_code) or document_code
-
             invoice_vals = {
                 'move': invoice,
                 'move_type': invoice.move_type,
@@ -545,7 +548,7 @@ class AccountTaxReportHandler(models.AbstractModel):
                 'entity_point': invoice.journal_id.l10n_ec_entity,
                 'l10n_latam_document_number': invoice.l10n_latam_document_number,
                 'journal_entity': invoice.journal_id.l10n_latam_use_documents and invoice.journal_id.active,
-                'tipoComprobante': tipo_comprobante,
+                'tipoComprobante': self._get_l10n_latam_ats_document_code(invoice),
                 'tipoEmision': emission_type,
                 'baseNoGraIva': base_amounts['exempt_vat'] + base_amounts['not_charged_vat'],
                 'baseImponible': base_amounts['zero_vat'],
@@ -727,3 +730,14 @@ class AccountTaxReportHandler(models.AbstractModel):
             text = text.replace(u'´', ' ')
             text = get_printable_ASCII_text(text)
         return text
+
+    @api.model
+    def _get_l10n_latam_ats_document_code(self, move):
+        # Code mapping in special cases.
+        move.ensure_one()
+        document_code = move.l10n_latam_document_type_id.code
+        if move.is_sale_document() and ATS_SALE_DOCUMENT_TYPE.get(document_code, False):
+            return ATS_SALE_DOCUMENT_TYPE[document_code]
+        elif move._l10n_ec_is_purchase_reimbursement():  # if the move is a reimbursement, the code is 41
+            return '41'
+        return document_code

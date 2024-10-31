@@ -174,6 +174,13 @@ class TestAtsReport(TestEcEdiCommon, TestAccountReportsCommon):
             xml_content_ats = self._get_ats_xml_content()
             self.assert_xml_ats_equal(xml_content_ats, 'ats_cancelled.xml')
 
+    def test_ats_reimbursement(self):
+        """ Test the ATS report with reimbursements """
+        with freeze_time(self.frozen_today):
+            self._generate_purchase_reimbursements()
+            xml_content_ats = self._get_ats_xml_content()
+            self.assert_xml_ats_equal(xml_content_ats, 'ats_purchase_reimbursements.xml')
+
     # ============== HELPERS: SALE ==============
 
     def _generate_sale_invoices(self):
@@ -473,6 +480,67 @@ class TestAtsReport(TestEcEdiCommon, TestAccountReportsCommon):
         withhold = self.env['account.move.line'].search([('l10n_ec_withhold_invoice_id', '=', invoice.id)]).move_id
         withhold.button_cancel()
         return invoice
+
+    def _get_reimbursement_line_vals(self, invoice, lines, tax_base=10.0):
+        """ Add reimbursement line on the invoice """
+        reimbursement_lines = []
+        for i, tax_xml_id in enumerate(lines):
+            reimbursement_lines.append(Command.create({
+                'authorization_number': '1234567890',
+                'partner_id': self.partner_ruc.id,
+                'l10n_latam_document_type_id': self.env.ref('l10n_ec.ec_dt_01').id,
+                'document_number': f'001-001-{i + 1:09}',
+                'date': invoice.invoice_date,
+                'tax_id': self._get_tax_by_xml_id(tax_xml_id).id,
+                'tax_base': tax_base,
+                'partner_vat_number': self.partner_ruc.vat,
+                'partner_vat_type_id': self.partner_ruc.l10n_latam_identification_type_id.id,
+                'partner_country_id': self.partner_ruc.country_id.id,
+            }))
+        invoice.write({'l10n_ec_reimbursement_ids': reimbursement_lines})
+
+    def _generate_purchase_reimbursements(self):
+        def get_tax_xml_id(sup_number=4):
+            tax_list = {
+                4: ['tax_vat_510_sup_01', 'tax_vat_510_sup_01', 'tax_vat_510_sup_01', 'tax_vat_510_sup_01'],
+                3: ['tax_vat_542_sup_02', 'tax_vat_541_sup_02', 'tax_vat_542_sup_02'],
+                1: ['tax_vat_541_sup_02'],
+            }
+            return tax_list.get(sup_number, [])
+
+        invoices_to_create = {
+            self.partner_ced: [
+                ('03', '01', 3),
+            ],
+            self.partner_ruc: [
+                ('01', '01', 4),
+                ('01', '01', 3),
+                ('01', '01', 1),
+            ],
+        }
+
+        num_invoice = 1
+        self.journal_liquidation.default_account_id = self.company_data['default_account_assets']
+        for partner, invoices_data in invoices_to_create.items():
+            for document_code, payment_code, lines_number in invoices_data:
+                journal = self.journal_liquidation if document_code == '03' else self.journal_purchase
+                invoice_vals = {
+                    'move_type': 'in_invoice',
+                    'invoice_date': self.frozen_today.replace(day=1) + timedelta(days=num_invoice),
+                    'partner_id': partner.id,
+                    'journal_id': journal.id,
+                    'l10n_latam_document_type_id': self.env.ref(f'l10n_ec.ec_dt_{document_code}').id,
+                    'l10n_ec_sri_payment_id': self.env['l10n_ec.sri.payment'].search([('code', '=', payment_code)], limit=1).id,
+                    'l10n_latam_document_number': num_invoice,
+                }
+                if journal.company_id.account_fiscal_country_id.code == 'EC' and document_code in ['01', '02', '03']:
+                    invoice_vals.update({'l10n_latam_document_number': f'001-001-{num_invoice:09}'})
+
+                in_invoice = self.env['account.move'].create(invoice_vals)
+                self._get_reimbursement_line_vals(invoice=in_invoice, lines=get_tax_xml_id(lines_number))
+                in_invoice.l10n_ec_action_compute_lines_from_reimbursements()  # Compute invoice lines from reimbursements
+                in_invoice.action_post()
+                num_invoice += 1
 
     # ============== COMMON HELPERS ==============
 
