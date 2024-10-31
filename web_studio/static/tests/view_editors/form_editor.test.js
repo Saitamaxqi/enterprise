@@ -118,39 +118,38 @@ test.tags("desktop")("Form editor view buttons can be set to invisible", async (
     expect.verifySteps(["edit_view"]);
 });
 
-test.tags("desktop")(
-    "Form editor view buttons label and class are editable from the sidebar",
-    async () => {
-        let count = 0;
+test.tags("desktop");
+test("Form editor view buttons label and class are editable from the sidebar", async () => {
+    let count = 0;
 
-        onRpc("/web_studio/edit_view", async (request) => {
-            const { params } = await request.json();
-            expect(params.operations[0].target.xpath_info).toEqual([
-                {
-                    tag: "form",
-                    indice: 1,
-                },
-                {
-                    tag: "header",
-                    indice: 1,
-                },
-                {
-                    tag: "button",
-                    indice: 1,
-                },
-            ]);
-            if (count === 0) {
-                expect(params.operations[0].new_attrs).toEqual({ string: "MyLabel" });
-            } else {
-                expect(params.operations[1].new_attrs).toEqual({ class: "btn-secondary" });
-            }
-            count++;
-            expect.step("edit_view");
-        });
-        await mountViewEditor({
-            type: "form",
-            resModel: "coucou",
-            arch: `<form>
+    onRpc("/web_studio/edit_view", async (request) => {
+        const { params } = await request.json();
+        expect(params.operations[0].target.xpath_info).toEqual([
+            {
+                tag: "form",
+                indice: 1,
+            },
+            {
+                tag: "header",
+                indice: 1,
+            },
+            {
+                tag: "button",
+                indice: 1,
+            },
+        ]);
+        if (count === 0) {
+            expect(params.operations[0].new_attrs).toEqual({ string: "MyLabel" });
+        } else {
+            expect(params.operations[1].new_attrs).toEqual({ class: "btn-secondary" });
+        }
+        count++;
+        expect.step("edit_view");
+    });
+    await mountViewEditor({
+        type: "form",
+        resModel: "coucou",
+        arch: `<form>
             <header>
                 <button string="Test" type="object" class="oe_highlight"/>
             </header>
@@ -159,18 +158,17 @@ test.tags("desktop")(
             </sheet>
         </form>
         `,
-        });
-        expect(".o_web_studio_editor_manager .o_web_studio_view_renderer").toHaveCount(1);
-        expect(".o_web_studio_editor_manager .o_web_studio_sidebar").toHaveCount(1);
-        await contains(".o_form_renderer .o_statusbar_buttons > button").click();
-        expect("input[name=string]").toHaveValue("Test");
-        await contains("input[name=string]").edit("MyLabel");
-        expect.verifySteps(["edit_view"]);
-        expect("input[name=class]").toHaveValue("oe_highlight");
-        await contains("input[name=class]").edit("btn-secondary");
-        expect.verifySteps(["edit_view"]);
-    }
-);
+    });
+    expect(".o_web_studio_editor_manager .o_web_studio_view_renderer").toHaveCount(1);
+    expect(".o_web_studio_editor_manager .o_web_studio_sidebar").toHaveCount(1);
+    await contains(".o_form_renderer .o_statusbar_buttons > button").click();
+    expect("input[name=string]").toHaveValue("Test");
+    await contains("input[name=string]").edit("MyLabel");
+    expect.verifySteps(["edit_view"]);
+    expect("input[name=class]").toHaveValue("oe_highlight");
+    await contains("input[name=class]").edit("btn-secondary");
+    expect.verifySteps(["edit_view"]);
+});
 
 test("optional field not in form editor", async () => {
     await mountViewEditor({

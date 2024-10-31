@@ -471,75 +471,73 @@ test("test backward timeline", async () => {
     expect(values[14]).toHaveText("100%", { message: "col 15 should display 100 percent" });
 });
 
-test.tags("desktop")(
-    "when clicked on cell redirects to the action list/form view passed in context",
-    async () => {
-        Subscription._views = {
-            cohort: `
+test.tags("desktop");
+test("when clicked on cell redirects to the action list/form view passed in context", async () => {
+    Subscription._views = {
+        cohort: `
                 <cohort string="Subscriptions" date_start="start" date_stop="stop" measure="__count" interval="week" />`,
-            "list,my_list_view": `
+        "list,my_list_view": `
                 <list>
                     <field name="start"/>
                     <field name="stop"/>
                 </list>`,
-            "form,my_form_view": `
+        "form,my_form_view": `
                 <form>
                     <field name="start"/>
                     <field name="stop"/>
                 </form>`,
-            list: `
+        list: `
                 <list>
                     <field name="recurring"/>
                     <field name="start"/>
                 </list>`,
-            form: `
+        form: `
                 <form>
                     <field name="recurring"/>
                     <field name="start"/>
                 </form>`,
-            search: `<search></search>`,
-        };
+        search: `<search></search>`,
+    };
 
-        await mountWithCleanup(WebClient);
+    await mountWithCleanup(WebClient);
 
-        await getService("action").doAction({
-            name: "Subscriptions",
-            res_model: "subscription",
-            type: "ir.actions.act_window",
-            views: [[false, "cohort"]],
-            context: { list_view_id: "my_list_view", form_view_id: "my_form_view" },
-        });
+    await getService("action").doAction({
+        name: "Subscriptions",
+        res_model: "subscription",
+        type: "ir.actions.act_window",
+        views: [[false, "cohort"]],
+        context: { list_view_id: "my_list_view", form_view_id: "my_form_view" },
+    });
 
-        // Going to the list view, while clicking Period / Count cell
-        await contains("td.o_cohort_value").click();
+    // Going to the list view, while clicking Period / Count cell
+    await contains("td.o_cohort_value").click();
 
-        expect(".o_list_view th:eq(1)").toHaveText("Start", {
-            message: "First field in the list view should be start",
-        });
-        expect(".o_list_view th:eq(2)").toHaveText("Stop", {
-            message: "First field in the list view should be start",
-        });
-        // Going back to cohort view
-        await contains(".o_back_button").click();
-        // Going to the list view
-        await contains("td div.o_cohort_value").click();
-        expect(".o_list_view th:eq(1)").toHaveText("Start", {
-            message: "First field in the list view should be start",
-        });
-        expect(".o_list_view th:eq(2)").toHaveText("Stop", {
-            message: "First field in the list view should be start",
-        });
-        // Going to the form view
-        await contains(".o_list_view .o_data_row .o_data_cell").click();
+    expect(".o_list_view th:eq(1)").toHaveText("Start", {
+        message: "First field in the list view should be start",
+    });
+    expect(".o_list_view th:eq(2)").toHaveText("Stop", {
+        message: "First field in the list view should be start",
+    });
+    // Going back to cohort view
+    await contains(".o_back_button").click();
+    // Going to the list view
+    await contains("td div.o_cohort_value").click();
+    expect(".o_list_view th:eq(1)").toHaveText("Start", {
+        message: "First field in the list view should be start",
+    });
+    expect(".o_list_view th:eq(2)").toHaveText("Stop", {
+        message: "First field in the list view should be start",
+    });
+    // Going to the form view
+    await contains(".o_list_view .o_data_row .o_data_cell").click();
 
-        expect(".o_form_view .o_field_widget:eq(0)").toHaveAttribute("name", "start", {
-            message: "First field in the form view should be start",
-        });
-        expect(".o_form_view .o_field_widget:eq(1)").toHaveAttribute("name", "stop", {
-            message: "Second field in the form view should be stop",
-        });
-    }
-);
+    expect(".o_form_view .o_field_widget:eq(0)").toHaveAttribute("name", "start", {
+        message: "First field in the form view should be start",
+    });
+    expect(".o_form_view .o_field_widget:eq(1)").toHaveAttribute("name", "stop", {
+        message: "Second field in the form view should be stop",
+    });
+});
 
 test("rendering of a cohort view with comparison", async () => {
     expect.assertions(31);

@@ -119,7 +119,7 @@ test("The cursor when hovering over the top bar has “pointer” style", async 
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
     await contains(".o-voip-Softphone-topbar");
-    expect(getComputedStyle($(".o-voip-Softphone-topbar")[0]).cursor).toBe("pointer");
+    expect(".o-voip-Softphone-topbar:first").toHaveStyle({ cursor: "pointer" });
 });
 
 test("Using VoIP in prod mode without configuring the server shows an error", async () => {

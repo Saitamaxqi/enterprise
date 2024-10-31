@@ -20,5 +20,5 @@ test("The cursor when hovering over the top bar is not a pointer on small device
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
     await contains(".o-voip-Softphone");
-    expect(getComputedStyle($(".o-voip-Softphone-topbar")[0]).cursor).toBe("auto");
+    expect(".o-voip-Softphone-topbar:first").toHaveStyle({ cursor: "auto" });
 });

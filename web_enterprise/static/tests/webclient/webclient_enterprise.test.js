@@ -486,46 +486,44 @@ test("supports attachments of apps deleted", async () => {
     expect(".o_home_menu").toHaveCount(1);
 });
 
-test.tags("desktop")(
-    "debug manager resets to global items when home menu is displayed",
-    async () => {
-        const debugRegistry = registry.category("debug");
-        debugRegistry.category("default").add("item_1", () => {
-            return {
-                type: "item",
-                description: "globalItem",
-                callback: () => {},
-                sequence: 10,
-            };
-        });
-        onRpc("has_access", () => {
-            return true;
-        });
-        serverState.debug = true;
-        await mountWebClientEnterprise();
-        await contains(".o_debug_manager .dropdown-toggle").click();
-        expect(".dropdown-item:contains('globalItem')").toHaveCount(1);
-        expect(".dropdown-item:contains('View: Kanban')").toHaveCount(0);
+test.tags("desktop");
+test("debug manager resets to global items when home menu is displayed", async () => {
+    const debugRegistry = registry.category("debug");
+    debugRegistry.category("default").add("item_1", () => {
+        return {
+            type: "item",
+            description: "globalItem",
+            callback: () => {},
+            sequence: 10,
+        };
+    });
+    onRpc("has_access", () => {
+        return true;
+    });
+    serverState.debug = true;
+    await mountWebClientEnterprise();
+    await contains(".o_debug_manager .dropdown-toggle").click();
+    expect(".dropdown-item:contains('globalItem')").toHaveCount(1);
+    expect(".dropdown-item:contains('View: Kanban')").toHaveCount(0);
 
-        await contains(".o_debug_manager .dropdown-toggle").click();
-        await getService("action").doAction(1);
-        await contains(".o_debug_manager .dropdown-toggle").click();
-        expect(".dropdown-item:contains('globalItem')").toHaveCount(1);
-        expect(".dropdown-item:contains('View: Kanban')").toHaveCount(1);
+    await contains(".o_debug_manager .dropdown-toggle").click();
+    await getService("action").doAction(1);
+    await contains(".o_debug_manager .dropdown-toggle").click();
+    expect(".dropdown-item:contains('globalItem')").toHaveCount(1);
+    expect(".dropdown-item:contains('View: Kanban')").toHaveCount(1);
 
-        await contains(".o_menu_toggle").click();
-        await contains(".o_debug_manager .dropdown-toggle").click();
-        expect(".dropdown-item:contains('globalItem')").toHaveCount(1);
-        expect(".dropdown-item:contains('View: Kanban')").toHaveCount(0);
+    await contains(".o_menu_toggle").click();
+    await contains(".o_debug_manager .dropdown-toggle").click();
+    expect(".dropdown-item:contains('globalItem')").toHaveCount(1);
+    expect(".dropdown-item:contains('View: Kanban')").toHaveCount(0);
 
-        await contains(".o_debug_manager .dropdown-toggle").click();
-        await getService("action").doAction(3);
-        await contains(".o_debug_manager .dropdown-toggle").click();
-        expect(".dropdown-item:contains('globalItem')").toHaveCount(1);
-        expect(".dropdown-item:contains('View: List')").toHaveCount(1);
-        expect(".dropdown-item:contains('View: Kanban')").toHaveCount(0);
-    }
-);
+    await contains(".o_debug_manager .dropdown-toggle").click();
+    await getService("action").doAction(3);
+    await contains(".o_debug_manager .dropdown-toggle").click();
+    expect(".dropdown-item:contains('globalItem')").toHaveCount(1);
+    expect(".dropdown-item:contains('View: List')").toHaveCount(1);
+    expect(".dropdown-item:contains('View: Kanban')").toHaveCount(0);
+});
 
 test("url state is well handled when going in and out of the HomeMenu", async () => {
     patchWithCleanup(browser.location, {
