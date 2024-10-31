@@ -3,7 +3,8 @@
 
 import logging
 
-from odoo.tests import HttpCase, tagged, loaded_demo_data
+from odoo import Command
+from odoo.tests import HttpCase, tagged
 from odoo.addons.website_sale_renting.tests.common import TestWebsiteSaleRentingCommon
 
 _logger = logging.getLogger(__name__)
@@ -13,9 +14,33 @@ _logger = logging.getLogger(__name__)
 class TestUi(HttpCase, TestWebsiteSaleRentingCommon):
 
     def test_website_sale_renting_comparison_ui(self):
-        if not loaded_demo_data(self.env):
-            _logger.warning("This test relies on demo data. To be rewritten independently of demo data for accurate and reliable results.")
-            return
+        attribute = self.env['product.attribute'].create({
+            'name': 'Color',
+            'sequence': 10,
+            'display_type': 'color',
+            'value_ids': [
+                Command.create({
+                    'name': 'Red',
+                }),
+                Command.create({
+                    'name': 'Pink',
+                }),
+            ]
+        })
+        self.env['product.template'].create({
+            'name': 'Color T-Shirt',
+            'list_price': 20.0,
+            'website_sequence': 9980,
+            'is_published': True,
+            'type': 'service',
+            'invoice_policy': 'delivery',
+            'attribute_line_ids': [
+                Command.create({
+                    'attribute_id': attribute.id,
+                    'value_ids': attribute.value_ids,
+                })
+            ]
+        })
         self.attribute_processor = self.env['product.attribute'].create({
             'name': 'Processor',
             'sequence': 1,
