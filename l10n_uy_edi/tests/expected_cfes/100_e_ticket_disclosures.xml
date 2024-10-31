@@ -17,9 +17,9 @@
                 <Departamento>Montevideo</Departamento>
             </Emisor>
             <Receptor>
-                <TipoDocRecep>2</TipoDocRecep>
+                <TipoDocRecep>6</TipoDocRecep>
                 <CodPaisRecep>UY</CodPaisRecep>
-                <DocRecep>218435730016</DocRecep>
+                <DocRecepExt>218435730016</DocRecepExt>
                 <RznSocRecep>IEB Internacional</RznSocRecep>
                 <DirRecep>Bach 0</DirRecep>
                 <CiudadRecep>Aeroparque</CiudadRecep>

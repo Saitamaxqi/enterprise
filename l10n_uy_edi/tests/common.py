@@ -34,6 +34,16 @@ class TestUyEdi(AccountTestInvoicingCommon):
             "website": "www.example.com",
         })
         cls.company_uy = cls.company_data["company"]
+        cls.partner_local_tk = cls.env["res.partner"].create({
+            "name": "IEB Internacional",
+            "l10n_latam_identification_type_id": cls.env.ref("l10n_uy.it_dni").id,
+            "vat": "218435730016",
+            "street": "Bach 0",
+            "city": "Aeroparque",
+            "state_id": cls.env.ref("base.state_uy_02").id,
+            "country_id": cls.env.ref("base.uy").id,
+            "email": "rut@example.com",
+        })
         cls.partner_local = cls.env["res.partner"].create({
             "name": "IEB Internacional",
             "l10n_latam_identification_type_id": cls.env.ref("l10n_uy.it_rut").id,
@@ -109,7 +119,7 @@ class TestUyEdi(AccountTestInvoicingCommon):
     def _create_move(cls, **kwargs):
         with freeze_time(cls.frozen_today, tz_offset=3):
             invoice = cls.env['account.move'].create({
-                'partner_id': cls.partner_local.id,
+                'partner_id': cls.partner_local_tk.id,
                 'move_type': 'out_invoice',
                 'journal_id': cls.company_data['default_journal_sale'].id,
                 'invoice_line_ids': [

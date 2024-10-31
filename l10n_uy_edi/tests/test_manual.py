@@ -37,7 +37,10 @@ class TestManual(common.TestUyEdi):
 
     def test_30_e_invoice_xml(self):
         """ Create e-Invoice, and check that the pre-generated xml is the same as the one expected """
-        invoice = self._create_move(l10n_latam_document_type_id=self.env.ref("l10n_uy.dc_e_inv").id)
+        invoice = self._create_move(
+            partner_id=self.partner_local.id,
+            l10n_latam_document_type_id=self.env.ref("l10n_uy.dc_e_inv").id
+        )
         self.assertEqual(invoice.l10n_latam_document_type_id.code, "111", "Not an e-invoice")
         invoice.action_post()
         self._send_and_print(invoice)
@@ -75,7 +78,6 @@ class TestManual(common.TestUyEdi):
                 }),
             ]
         )
-
         self.assertEqual(invoice.l10n_latam_document_type_id.code, "101", "Not e-ticket")
         invoice.action_post()
         self._send_and_print(invoice)
@@ -100,6 +102,7 @@ class TestManual(common.TestUyEdi):
         tax_10_included = self.tax_10.copy({"price_include_override": "tax_included", "name": "10% VAT (included)"})
         tax_0_included = self.tax_0.copy({"price_include_override": "tax_included", "name": "0% VAT (included)"})
         invoice = self._create_move(
+            partner_id=self.partner_local.id,
             l10n_latam_document_type_id=self.env.ref("l10n_uy.dc_e_inv").id,
             invoice_line_ids=[
                 Command.create({
@@ -189,3 +192,10 @@ class TestManual(common.TestUyEdi):
         invoice.action_post()
         self._send_and_print(invoice)
         self._check_cfe(invoice, "e-TK", "120_e_ticket_final_consumer")
+
+    def test_default_doc_type_by_id(self):
+        dc_e_inv = self.env.ref('l10n_uy.dc_e_inv')
+        move = self._create_move(partner_id=self.env.ref("l10n_uy.partner_cfu").id)
+        self.assertEqual(move.l10n_latam_document_type_id, self.env.ref('l10n_uy.dc_e_ticket'), "The document type is not being set correctly.")
+        move.partner_id = self.env.ref('l10n_uy.partner_dgi').id
+        self.assertEqual(move.l10n_latam_document_type_id, dc_e_inv, "The expected document should be e-invoice")

@@ -750,3 +750,18 @@ class AccountMove(models.Model):
         else:
             self._l10n_uy_edi_get_preview_xml()
         return res_files
+
+    def _compute_l10n_latam_document_type(self):
+        """
+        The following considerations apply for determining document types based on the partner's identification:
+        RUT/RUC (Uruguay): Automatically select e-factura.
+        Other documents (Example: CI, PAS, NIE, NIFE, etc.): Automatically select e-ticket
+        """
+        if uy_einvoices := self.filtered(lambda m: m.country_code == 'UY' and
+            m.move_type in ('out_invoice', 'out_refund') and
+            m.state == 'draft' and
+            not m.posted_before and
+            m.journal_id.l10n_uy_edi_type == 'electronic' and
+            m.partner_id.l10n_latam_identification_type_id == self.env.ref('l10n_uy.it_rut')):
+            uy_einvoices.l10n_latam_document_type_id = self.env.ref('l10n_uy.dc_e_inv')
+        super(AccountMove, self - uy_einvoices)._compute_l10n_latam_document_type()
