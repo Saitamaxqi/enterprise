@@ -19,7 +19,7 @@ def format_amount(amount, width=11, hundredth=True):
     Fill a constant 11 characters string with 0
     """
     if hundredth:
-        amount *= 100
+        amount = round(amount * 100)
     return str(int(amount)).zfill(width)
 
 # TODO:
