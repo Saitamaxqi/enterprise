@@ -71,7 +71,7 @@ test("receives collaborative messages when action is restored", async function (
         sheets: [{
             id: "sheet1",
             cells: {
-                A1: { content: '=PIVOT.VALUE(1, "probability:sum")' }
+                A1: '=PIVOT.VALUE(1, "probability:sum")',
             }
         }],
         pivots: {

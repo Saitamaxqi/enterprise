@@ -59,7 +59,7 @@ test("document's data is saved when opening wizard", async () => {
             if (args.method === "save_spreadsheet_snapshot") {
                 expect.step("save_spreadsheet_snapshot");
                 const snapshotData = args.args[1];
-                expect(snapshotData.sheets[0].cells.A1.content).toBe("a cell updated");
+                expect(snapshotData.sheets[0].cells.A1).toBe("a cell updated");
                 return true;
             }
         },

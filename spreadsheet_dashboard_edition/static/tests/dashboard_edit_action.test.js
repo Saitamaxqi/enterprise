@@ -24,7 +24,7 @@ test("open dashboard with existing data", async function () {
         sheets: [
             {
                 cells: {
-                    A1: { content: "Hello" },
+                    A1: "Hello",
                 },
             },
         ],
@@ -77,7 +77,7 @@ test("share dashboard from control panel", async function () {
         sheets: [
             {
                 cells: {
-                    A1: { content: "Hello" },
+                    A1: "Hello",
                 },
             },
         ],

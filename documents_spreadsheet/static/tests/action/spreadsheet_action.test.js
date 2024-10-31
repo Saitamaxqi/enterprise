@@ -247,7 +247,7 @@ test("menu > download as json", async function () {
     const spreadsheet = DocumentsDocument._records[1];
     spreadsheet.name = "My spreadsheet";
     spreadsheet.spreadsheet_data = JSON.stringify({
-        sheets: [{ cells: { A3: { content: "Hello World" } } }],
+        sheets: [{ cells: { A3: "Hello World" } }],
     });
 
     const { env, model } = await createSpreadsheet({
@@ -269,7 +269,7 @@ test("menu > copy", async function () {
     const spreadsheet = DocumentsDocument._records[1];
     spreadsheet.name = "My spreadsheet";
     spreadsheet.spreadsheet_data = JSON.stringify({
-        sheets: [{ cells: { A3: { content: "Hello World" } } }],
+        sheets: [{ cells: { A3: "Hello World" } }],
     });
 
     const { env, model } = await createSpreadsheet({

@@ -396,7 +396,7 @@ class DocumentsDocument(models.Model):
                 if cell_content:
                     col_name = get_column_name(col_index + 1)
                     cell_ref = f'{col_name}{row_index + 1}'
-                    data['sheets'][0]['cells'][cell_ref] = {'content': cell_content}
+                    data['sheets'][0]['cells'][cell_ref] = cell_content
         return data
 
     def _get_is_multipage(self):

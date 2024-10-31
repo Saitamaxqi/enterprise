@@ -128,11 +128,11 @@ test("Save as template menu", async function () {
                             message: "It should be named after the spreadsheet",
                         });
                         expect(context.default_thumbnail).not.toBe(undefined);
-                        expect(cells.A3.content).toBe(`=PIVOT.HEADER(1,"product_id",37)`);
-                        expect(cells.B3.content).toBe(
+                        expect(cells.A3).toBe(`=PIVOT.HEADER(1,"product_id",37)`);
+                        expect(cells.B3).toBe(
                             `=PIVOT.VALUE(1,"probability:avg","product_id",37,"bar",FALSE)`
                         );
-                        expect(cells.A11.content).toBe("😃");
+                        expect(cells.A11).toBe("😃");
                         return Promise.resolve(true);
                     }
                     return actionMain.doAction(actionRequest, options);

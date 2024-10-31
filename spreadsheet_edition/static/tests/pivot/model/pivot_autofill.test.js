@@ -564,8 +564,8 @@ test("Autofill pivot formula with missing pivotId", async function () {
                 colNumber: 1,
                 rowNumber: 2,
                 cells: {
-                    A1: { content: '=PIVOT.VALUE("1","bar","date","05/2023")' },
-                    B1: { content: '=PIVOT.HEADER("1","date","05/2023")' },
+                    A1: '=PIVOT.VALUE("1","bar","date","05/2023")',
+                    B1: '=PIVOT.HEADER("1","date","05/2023")',
                 },
             },
         ],

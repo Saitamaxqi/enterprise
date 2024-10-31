@@ -146,8 +146,8 @@ test("Autofill list formula with missing listId", async function () {
                 colNumber: 1,
                 rowNumber: 2,
                 cells: {
-                    A1: { content: '=ODOO.LIST("1","1","date")' },
-                    B1: { content: '=ODOO.LIST.HEADER("1","date")' },
+                    A1: '=ODOO.LIST("1","1","date")',
+                    B1: '=ODOO.LIST.HEADER("1","date")',
                 },
             },
         ],

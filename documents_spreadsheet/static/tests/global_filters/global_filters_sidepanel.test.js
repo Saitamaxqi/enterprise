@@ -463,7 +463,7 @@ test("open relational global filter panel then go to pivot on sheet 2", async fu
             { id: "sheet1" },
             {
                 id: "sheet2",
-                cells: { A1: { content: `=PIVOT.VALUE("1", "probability")` } },
+                cells: { A1: { content: '=PIVOT.VALUE("1", "probability")' } },
             },
         ],
         pivots: {
