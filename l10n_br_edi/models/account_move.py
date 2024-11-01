@@ -387,11 +387,17 @@ class AccountMove(models.Model):
         return tax_calculation_response, tax_calculation_response.pop("header")
 
     def _l10n_br_edi_validate_partner(self, partner):
-        required_fields = ("street", "street2", "zip", "vat")
-        errors = []
-
         if not partner:
             return []
+
+        errors = []
+        requires_minimal_info = (
+            self.l10n_br_is_service_transaction and
+            partner.l10n_br_tax_regime == "individual" and
+            partner.l10n_br_activity_sector == "finalConsumer" and
+            partner.l10n_latam_identification_type_id == self.env.ref("l10n_br.cpf")
+        )
+        required_fields = ("zip",) if requires_minimal_info else ("street", "street2", "zip", "vat")
 
         for field in required_fields:
             if not partner[field]:
