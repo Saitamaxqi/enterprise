@@ -1,5 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-from odoo import models, fields, _
+from odoo import api, models, fields, _
 from odoo.exceptions import ValidationError, UserError
 
 
@@ -25,6 +25,12 @@ class L10n_Br_EdiInvoiceUpdate(models.TransientModel):
         related="move_id.l10n_br_is_service_transaction",
         help='Technical field used to hide the "reason" field.',
     )
+
+    @api.constrains("mode", "reason")
+    def _constrains_reason(self):
+        for wizard in self:
+            if wizard.mode == "cancel" and not 15 <= len(wizard.reason or "") <= 255:
+                raise ValidationError(_("The reason must contain at least 15 characters and cannot exceed a maximum of 255 characters."))
 
     def _create_xml_attachment(self, response):
         return self.env["ir.attachment"].create(

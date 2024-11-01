@@ -218,7 +218,7 @@ class TestL10nBREDI(TestL10nBREDICommon):
     def test_update_cancel(self):
         self.invoice.button_draft()  # FIXME this test only works with a draft invoice, is it intended ?
         wizard = self.env["l10n_br_edi.invoice.update"].create(
-            {"move_id": self.invoice.id, "mode": "cancel", "reason": "test reason"}
+            {"move_id": self.invoice.id, "mode": "cancel", "reason": "test reason with at least 15 characters"}
         )
 
         with self.with_patched_account_move("_l10n_br_iap_cancel_invoice_goods", invoice_1_cancel_success_response):

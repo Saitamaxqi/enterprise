@@ -786,6 +786,14 @@ msgid "The reason for invalidating this range."
 msgstr ""
 
 #. module: l10n_br_edi
+#. odoo-python
+#: code:addons/l10n_br_edi/wizard/l10n_br_edi_invoice_update.py:0
+#, python-format
+msgid ""
+"The reason must contain at least 15 characters and cannot exceed a maximum of 255 characters."
+msgstr ""
+
+#. module: l10n_br_edi
 #: model:ir.model,name:l10n_br_edi.model_l10n_br_edi_cancel_range
 msgid ""
 "This allows a user to inform the government a range of sequence numbers "
