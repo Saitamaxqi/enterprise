@@ -680,7 +680,7 @@ class AccountMove(models.Model):
 
         if self.l10n_latam_document_type_id.code == '6' and (
             self.commercial_partner_id.l10n_ar_afip_responsibility_type_id == self.env.ref('l10n_ar.res_EXT') or
-                self.commercial_partner_id.country_id.code != 'AR'):
+                self.commercial_partner_id.country_id.code not in ['AR', False]):
             vat = self.get_vat_country()
 
         res = {'FeCabReq': {
@@ -720,7 +720,7 @@ class AccountMove(models.Model):
         Returns (int) number CUIT PAIS of the related partner, Is not CUIT PAIS then return 0 """
         vat_country = 0
         partner = self.commercial_partner_id
-        if partner.country_id.code != 'AR':
+        if partner.country_id.code not in ['AR', False]:
             vat_country = partner.country_id.l10n_ar_legal_entity_vat if partner.is_company \
                 else partner.country_id.l10n_ar_natural_vat
         return vat_country
