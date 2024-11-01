@@ -588,6 +588,24 @@ invoice_1_cancel_success_response = {
   }
 }
 
+invoice_1_cancel_fail_response = {
+  "eventType": "cancel",
+  "status": {
+    "code": "493",
+    "desc": "Rejei\u00e7\u00e3o: Evento n\u00e3o atende o Schema XML espec\u00edfico",
+    "protocol": None,
+    "authorizationDateTime": {}
+  },
+  "xml": {
+    "base64": None,
+    "link": None
+  },
+  "pdf": {
+    "base64": None,
+    "link": None
+  }
+}
+
 invoice_1_correct_success_response = {
   "key": "XXX",
   "subscriptionId": "XXX",
