@@ -110,6 +110,8 @@ $o-web-studio-sidebar-margin: $grid-gutter-width * 0.5;
         }
 
         .o_record_selector, .o_multi_record_selector {
+            border: none;
+            width: 100%;
             .o_dropdown_button {
                 display: none;
             }

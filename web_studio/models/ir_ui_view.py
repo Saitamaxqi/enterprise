@@ -174,12 +174,16 @@ class IrUiView(models.Model):
     def set_studio_groups(self, node):
         studio_groups = []
         for xml_id in node.attrib['groups'].split(','):
+            forbid = xml_id.startswith("!")
+            if forbid:
+                xml_id = xml_id[1:]
             group = self.env.ref(xml_id, raise_if_not_found=False)
             if group:
                 studio_groups.append({
                     "id": group.id,
                     "name": group.name,
-                    "display_name": group.display_name
+                    "display_name": group.display_name,
+                    "forbid": forbid,
                 })
         node.attrib['studio_groups'] = json.dumps(studio_groups)
 

@@ -877,6 +877,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             "id": doesNotHaveGroup.id,
             "name": doesNotHaveGroup.name,
             "display_name": doesNotHaveGroup.display_name,
+            "forbid": False,
         }])
 
         xml_temp = E.field(name="title", groups=doesNotHaveGroupXmlId.complete_name, column_invisible="True", studio_groups=studio_groups)
@@ -1901,5 +1902,42 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
           <xpath expr="//form[1]/group[1]/field[@name='name']" position="after">
             <field name="{new_field.name}"/>
           </xpath>
+        </data>
+        """)
+
+    def test_negated_groups(self):
+        doesNotHaveGroup = self.env["res.groups"].create({
+            "name": "studio does not have"
+        })
+        doesNotHaveGroupXmlId = self.env["ir.model.data"].create({
+            "name": "studio_test_doesnothavegroup",
+            "model": "res.groups",
+            "module": "web_studio",
+            "res_id": doesNotHaveGroup.id,
+        })
+
+        hasGroup = self.env["res.groups"].create({
+            "name": "studio has group",
+        })
+        hasGroupXmlId = self.env["ir.model.data"].create({
+            "name": "studio_test_hasgroup",
+            "model": "res.groups",
+            "module": "web_studio",
+            "res_id": hasGroup.id,
+        })
+
+        self.testView.arch = f"""
+            <form>
+                <field name="name" groups="!{hasGroupXmlId.complete_name},{doesNotHaveGroupXmlId.complete_name}" />
+            </form>
+        """
+
+        self.start_tour("/web?debug=tests", "web_studio_test_negated_groups", login="admin")
+        studio_view = _get_studio_view(self.testView)
+        assertViewArchEqual(self, studio_view.arch, """
+        <data>
+            <xpath expr="//form[1]/field[@name='name']" position="attributes">
+                <attribute name="groups">web_studio.studio_test_doesnothavegroup,!base.group_erp_manager</attribute>
+            </xpath>
         </data>
         """)

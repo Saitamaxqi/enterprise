@@ -1040,16 +1040,35 @@ Are you sure you want to remove the selection values of those records?""", len(r
 
         if 'groups' in new_attrs:
             eval_attr = []
+            group_ids = {}
             for many2many_value in new_attrs['groups']:
-                group_xmlid = ir_model_data.search([
-                    ('model', '=', 'res.groups'),
-                    ('res_id', '=', many2many_value)])
-                if not group_xmlid:
-                    raise UserError(_(
-                        "Only groups with an external ID can be used here. Please choose another "
-                        "group or assign manually an external ID to this group."
-                    ))
-                eval_attr.append(group_xmlid.complete_name)
+                if isinstance(many2many_value, str) and many2many_value.startswith("!"):
+                    allow = False
+                    _id = int(many2many_value[1:])
+                else:
+                    allow = True
+                    _id = int(many2many_value)
+                group_ids[_id] = allow
+
+            if group_ids:
+                xml_ids = {
+                    imd["res_id"]: imd["complete_name"] for imd in ir_model_data.search_read([
+                        ('model', '=', 'res.groups'),
+                        ('res_id', 'in', list(group_ids.keys()))], ["res_id", "complete_name"]
+                    )
+                }
+
+                for g_id, allow in group_ids.items():
+                    if g_id not in xml_ids:
+                        raise UserError(_(
+                            "Only groups with an external ID can be used here. Please choose another "
+                            "group or assign manually an external ID to this group."
+                        ))
+                    group_attr = xml_ids[g_id]
+                    if not allow:
+                        group_attr = "!" + group_attr
+
+                    eval_attr.append(group_attr)
             eval_attr = ",".join(eval_attr)
             new_attrs['groups'] = eval_attr
 

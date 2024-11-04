@@ -1811,3 +1811,52 @@ registry.category("web_tour.tours").add("web_studio_test_create_related", {
         }
     ]
 })
+
+registry.category("web_tour.tours").add("web_studio_test_negated_groups", {
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_form_view",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item button:enabled",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar .o_web_studio_view",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar input#show_invisible",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_form_view_editor .o-web-studio-editor--element-clickable",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar [name='negated_groups_id'] .o_badge:contains(studio has group)",
+        },
+        {
+            trigger: ".o_web_studio_sidebar [name='negated_groups_id'] .o_delete",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar [name='negated_groups_id']:not(:contains(studio has group))",
+        },
+        {
+            trigger: ".o_web_studio_sidebar [name='negated_groups_id'] input",
+            run: "edit Access Rights",
+        },
+        {
+            trigger: "a.dropdown-item:contains(Administration / Access Rights)",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar [name='negated_groups_id'] .o_badge:contains(Administration / Access Rights)",
+        }
+    ],
+});
