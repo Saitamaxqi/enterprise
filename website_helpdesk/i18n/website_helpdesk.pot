@@ -482,3 +482,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:website_helpdesk.search_results
 msgid "go back to help page"
 msgstr ""
+
+#. module: website_helpdesk
+#. odoo-python
+#: code:addons/website_helpdesk/controllers/main.py:0
+msgid "Other Information"
+msgstr ""

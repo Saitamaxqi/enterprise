@@ -9,8 +9,9 @@ from odoo import http, _
 from odoo.http import request
 from odoo.osv import expression
 
-from odoo.addons.base.models.ir_qweb_fields import nl2br_enclose
 from odoo.addons.website.controllers import form, main
+from odoo.addons.base.models.ir_qweb_fields import nl2br, nl2br_enclose
+from odoo.tools import html2plaintext
 
 
 class WebsiteHelpdesk(http.Controller):
@@ -181,10 +182,20 @@ class WebsiteForm(form.WebsiteForm):
         if model_sudo.model != 'helpdesk.ticket':
             return res
         ticket = request.env['helpdesk.ticket'].sudo().browse(res)
+        custom_label = nl2br_enclose(_("Other Information"), 'h4')  # Title for custom fields
         default_field = model_sudo.website_form_default_field_id
-        if default_field.name and ticket[default_field.name]:
+        default_field_data = values.get(default_field.name, '')
+        default_field_content = nl2br_enclose(default_field.name.capitalize(), 'h4') + nl2br_enclose(html2plaintext(default_field_data), 'p')
+        custom_content = (default_field_content if default_field_data else '') \
+                        + (custom_label + custom if custom else '') \
+                        + (self._meta_label + meta if meta else '')
+
+        if default_field.name:
+            if default_field.ttype == 'html':
+                custom_content = nl2br(custom_content)
+            ticket[default_field.name] = custom_content
             ticket._message_log(
-                body=nl2br_enclose(ticket[default_field.name], 'p'),
+                body=custom_content,
                 message_type='comment',
             )
         return res
