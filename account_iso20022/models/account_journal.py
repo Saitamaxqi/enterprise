@@ -271,9 +271,9 @@ class AccountJournal(models.Model):
         FinInstnId = etree.SubElement(CdtrAgt, "FinInstnId")
         bic_code = self._get_cleaned_bic_code(bank_account, payment_method_code)
         if bic_code:
-            BIC = etree.SubElement(FinInstnId, "BIC")
+            BIC = etree.SubElement(FinInstnId, self._get_bic_tag(payment_method_code))
             BIC.text = bic_code
-        if not bic_code:
+        else:
             Othr = etree.SubElement(FinInstnId, "Othr")
             Id = etree.SubElement(Othr, "Id")
             Id.text = "NOTPROVIDED"

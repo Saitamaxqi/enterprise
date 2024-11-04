@@ -32,10 +32,6 @@ class AccountJournal(models.Model):
         CdtrAgt = super()._get_CdtrAgt(bank_account, payment_method_code)
         if payment_method_code == 'sepa_ct' and self.sepa_pain_version == "pain.001.001.09":
             FinInstnId = CdtrAgt.find(".//FinInstnId")
-            bic_code = self._get_cleaned_bic_code(bank_account, payment_method_code)
-            BIC = FinInstnId.find(".//BIC")
-            BIC.text = bic_code
-            BIC.tag = "BICFI"
             partner_lei = bank_account.partner_id.iso20022_lei
             if partner_lei:
                 # LEI needs to be inserted after BIC
