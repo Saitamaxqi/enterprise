@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Box } from '@account_invoice_extract/js/box';
 import { Component } from "@odoo/owl";
 

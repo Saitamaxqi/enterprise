@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import MainComponent from "@stock_barcode/components/main";
 import BarcodeMRPModel from "../models/barcode_mrp_model";
 import HeaderComponent from "./header";

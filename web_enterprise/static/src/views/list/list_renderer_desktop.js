@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { isMobileOS } from "@web/core/browser/feature_detection";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";

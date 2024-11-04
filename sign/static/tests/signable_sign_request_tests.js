@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { getFixture, nextTick } from "@web/../tests/helpers/utils";
 import { doAction } from "@web/../tests/webclient/helpers";
 import { createDocumentWebClient, actionId } from "./action_utils";

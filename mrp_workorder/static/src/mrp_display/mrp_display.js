@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Layout } from "@web/search/layout";
 import { user } from "@web/core/user";
 import { session } from "@web/session";

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { useSubEnv } from "@odoo/owl";
 import { KanbanController } from "@web/views/kanban/kanban_controller";
 

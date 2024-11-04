@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { endKnowledgeTour } from '@knowledge/../tests/tours/knowledge_tour_utils';
 import { registry } from "@web/core/registry";
 

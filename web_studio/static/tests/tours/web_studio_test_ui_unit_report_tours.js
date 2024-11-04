@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { registry } from "@web/core/registry";
 import { download } from "@web/core/network/download";
 import { patch } from "@web/core/utils/patch";

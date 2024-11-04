@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { useSetupAction } from "@web/search/action_hook";
 import { SearchModel } from "@web/search/search_model";
 import { browser } from "@web/core/browser/browser";

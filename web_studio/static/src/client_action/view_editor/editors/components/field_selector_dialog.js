@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Dialog } from "@web/core/dialog/dialog";
 
 import { Component, useRef } from "@odoo/owl";

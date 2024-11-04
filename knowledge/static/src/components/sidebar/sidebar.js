@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { ArticleSelectionDialog } from "../../components/article_selection_dialog/article_selection_dialog";
 import { ArticleTemplatePickerDialog } from "@knowledge/components/article_template_picker_dialog/article_template_picker_dialog";

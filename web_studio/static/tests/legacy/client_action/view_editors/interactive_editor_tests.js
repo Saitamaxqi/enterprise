@@ -1,4 +1,3 @@
-/** @odoo-module */
 import {
     click,
     dragAndDrop,

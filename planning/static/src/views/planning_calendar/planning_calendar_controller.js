@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { onWillStart } from "@odoo/owl";
 import { serializeDateTime } from "@web/core/l10n/dates";
 import { user } from "@web/core/user";

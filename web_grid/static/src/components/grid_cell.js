@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 
 import { useNumpadDecimal } from "@web/views/fields/numpad_decimal_hook";

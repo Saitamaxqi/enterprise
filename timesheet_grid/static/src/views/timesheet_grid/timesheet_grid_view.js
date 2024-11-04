@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { gridView } from "@web_grid/views/grid_view";
 import { TimesheetGridController } from "./timesheet_grid_controller";
 import { TimesheetGridModel } from "./timesheet_grid_model";

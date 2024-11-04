@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { rpc } from "@web/core/network/rpc";
 import { toRaw, useState, useEnv, reactive, onMounted, onWillUnmount, markRaw } from "@odoo/owl";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { rpc } from "@web/core/network/rpc";
 import { _t } from "@web/core/l10n/translation";
 /* global html2canvas */

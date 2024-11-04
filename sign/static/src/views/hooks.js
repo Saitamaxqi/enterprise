@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { useService, useBus } from "@web/core/utils/hooks";
 import { multiFileUpload } from "@sign/backend_components/multi_file_upload";

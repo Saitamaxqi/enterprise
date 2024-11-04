@@ -1,4 +1,3 @@
-/* @odoo-module */
 import { parseEmail } from "@mail/utils/common/format";
 
 /**

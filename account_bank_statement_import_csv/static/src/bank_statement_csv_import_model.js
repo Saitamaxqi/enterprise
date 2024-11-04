@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { useState } from "@odoo/owl";
 import { BaseImportModel } from "@base_import/import_model";
 

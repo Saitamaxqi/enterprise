@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { loadJS } from "@web/core/assets";
 import { registry } from "@web/core/registry";
 import { cookie } from "@web/core/browser/cookie";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { patch } from "@web/core/utils/patch";
 import { DocumentsKanbanRecord } from "@documents/views/kanban/documents_kanban_model";
 

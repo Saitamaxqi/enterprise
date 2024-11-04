@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { createWebClient } from "@web/../tests/webclient/helpers";
 import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Component, xml } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { patch } from "@web/core/utils/patch";

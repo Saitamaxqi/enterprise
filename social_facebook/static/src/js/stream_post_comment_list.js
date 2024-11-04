@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { rpc } from "@web/core/network/rpc";
 import { StreamPostCommentList } from '@social/js/stream_post_comment_list';
 import { StreamPostCommentFacebook } from './stream_post_comment';

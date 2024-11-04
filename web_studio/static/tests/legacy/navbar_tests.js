@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registerCleanup } from "@web/../tests/helpers/cleanup";
 import { makeTestEnv } from "@web/../tests/helpers/mock_env";
 import { makeFakeDialogService, makeFakePwaService } from "@web/../tests/helpers/mock_services";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { preSuperSetup, useDocumentView } from "@documents/views/hooks";
 import { onMounted, useRef, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";

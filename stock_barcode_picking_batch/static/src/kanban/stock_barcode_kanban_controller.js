@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { StockBarcodeKanbanController } from "@stock_barcode/kanban/stock_barcode_kanban_controller";
 import { patch } from "@web/core/utils/patch";
 

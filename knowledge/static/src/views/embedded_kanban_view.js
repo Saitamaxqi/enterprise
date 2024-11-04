@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { EmbeddedControllersPatch } from "@knowledge/views/embedded_controllers_patch";
 import { KanbanController } from "@web/views/kanban/kanban_controller";
 import { kanbanView } from "@web/views/kanban/kanban_view";

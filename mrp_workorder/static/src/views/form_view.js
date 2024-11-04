@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { useViewButtons } from "@web/views/view_button/view_button_hook";
 import { useBus } from "@web/core/utils/hooks";

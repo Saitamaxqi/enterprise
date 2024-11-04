@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { KeepLast, Mutex } from "@web/core/utils/concurrency";
 import { useService } from "@web/core/utils/hooks";
 import { Domain } from "@web/core/domain";

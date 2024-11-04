@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { registry } from '@web/core/registry';
 import { TabletImageField, tabletImageField } from "@quality/tablet_image_field/tablet_image_field";

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Chatter } from "@mail/chatter/web_portal/chatter";
 
 import { Component } from "@odoo/owl";

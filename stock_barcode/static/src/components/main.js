@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { Chatter } from "@mail/chatter/web_portal/chatter";
 import { COMMANDS } from "@barcodes/barcode_handlers";

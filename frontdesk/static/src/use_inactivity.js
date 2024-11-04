@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { onMounted, onWillUnmount } from "@odoo/owl";
 
 export function useInactivity(callback, delay) {

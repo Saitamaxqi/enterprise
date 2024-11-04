@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { KanbanRecord } from '@web/views/kanban/kanban_record';
 
 export const CANCEL_GLOBAL_CLICK = ["a", ".o_social_subtle_btn", "img"].join(",");

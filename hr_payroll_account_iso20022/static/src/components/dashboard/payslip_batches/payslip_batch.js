@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { patch } from "@web/core/utils/patch";
 import { BinaryField } from "@web/views/fields/binary/binary_field";
 import { Record } from "@web/model/record";

@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { _t } from "@web/core/l10n/translation";
 import { onWillStart, useState, onWillUpdateProps, Component } from "@odoo/owl";
 

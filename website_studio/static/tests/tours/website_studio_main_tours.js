@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { assertEqual } from "@web_studio/../tests/tours/tour_helpers";
 

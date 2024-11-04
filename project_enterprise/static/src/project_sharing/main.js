@@ -1,5 +1,3 @@
-/** @odoo-module  **/
-
 import { hasTouch } from "@web/core/browser/feature_detection";
 import { startWebClient } from '@web/start';
 import { ProjectSharingWebClient } from '@project/project_sharing/project_sharing';

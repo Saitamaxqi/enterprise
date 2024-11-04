@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { makeView } from "@web/../tests/views/helpers";
 import { start } from "@mail/../tests/helpers/test_utils";

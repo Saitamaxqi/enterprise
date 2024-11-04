@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { calendarView } from "@web/views/calendar/calendar_view";
 import { registry } from "@web/core/registry";
 

@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("web_enterprise.test_studio_list_upsell", {

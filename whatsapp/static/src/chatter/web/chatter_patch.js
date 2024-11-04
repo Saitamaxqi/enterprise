@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Chatter } from "@mail/chatter/web_portal/chatter";
 import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";

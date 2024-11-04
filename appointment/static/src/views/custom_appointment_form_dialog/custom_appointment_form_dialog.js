@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { _t } from "@web/core/l10n/translation";
 import { FormController } from '@web/views/form/form_controller';
 import { formView } from '@web/views/form/form_view';

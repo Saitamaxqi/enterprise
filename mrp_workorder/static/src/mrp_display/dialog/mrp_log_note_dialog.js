@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { TextField } from "@web/views/fields/text/text_field";
 

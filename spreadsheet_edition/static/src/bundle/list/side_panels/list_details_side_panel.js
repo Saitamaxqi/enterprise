@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Domain } from "@web/core/domain";
 import { EditListSortingSection } from "./edit_list_sorting_section/edit_list_sorting_section";
 import { useService } from "@web/core/utils/hooks";

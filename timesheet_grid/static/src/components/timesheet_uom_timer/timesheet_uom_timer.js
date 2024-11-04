@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { FloatFactorField } from "@web/views/fields/float_factor/float_factor_field";
 import { FloatToggleField } from "@web/views/fields/float_toggle/float_toggle_field";

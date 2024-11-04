@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { CANCEL_GLOBAL_CLICK, StreamPostKanbanRecord } from '@social/js/stream_post_kanban_record';
 import { StreamPostCommentsYoutube } from './stream_post_comments';

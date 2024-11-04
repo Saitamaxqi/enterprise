@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { WithSearch } from "@web/search/with_search/with_search";
 import { cleanClickedElements } from "@web_studio/client_action/view_editor/editors/utils";
 import { Component, onError, onMounted, toRaw, useRef, xml, useSubEnv, useEffect } from "@odoo/owl";

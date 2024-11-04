@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { Store } from "@mail/core/common/store_service";
 
 import { _t } from "@web/core/l10n/translation";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { KanbanHeader } from '@web/views/kanban/kanban_header';
 import { KanbanRenderer } from '@web/views/kanban/kanban_renderer';

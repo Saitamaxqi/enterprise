@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Component, onWillDestroy, onWillStart, onWillUpdateProps, useState } from "@odoo/owl";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";
 

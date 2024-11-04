@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { HrPayrollReportPivotModel } from "./hr_payroll_report_pivot_model";
 import { pivotView } from "@web/views/pivot/pivot_view";
 import { registry } from "@web/core/registry";

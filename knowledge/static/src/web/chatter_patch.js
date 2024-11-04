@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { useService } from "@web/core/utils/hooks";
 import { Deferred, KeepLast } from "@web/core/utils/concurrency";
 import { patch } from "@web/core/utils/patch";

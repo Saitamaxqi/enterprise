@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { SocialPostFormatterMixin } from './social_post_formatter_mixin';
 import { StreamPostCommentsReply } from './stream_post_comments_reply';

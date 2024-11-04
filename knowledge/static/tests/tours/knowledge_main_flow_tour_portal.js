@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 /**
  * Global Knowledge flow tour - Adapter for portal user
  * Features tested:

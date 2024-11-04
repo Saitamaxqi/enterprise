@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { _t } from "@web/core/l10n/translation";
 import { exprToBoolean } from "@web/core/utils/strings";
 import { visitXML } from "@web/core/utils/xml";

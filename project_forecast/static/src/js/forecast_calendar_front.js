@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import PlanningView from '@planning/js/planning_calendar_front';
 
 PlanningView.include({

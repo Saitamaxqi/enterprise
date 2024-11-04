@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { serializeDate } from "@web/core/l10n/dates";
 import { GridDataPoint, GridModel } from "@web_grid/views/grid_model";
 import { Domain } from "@web/core/domain";

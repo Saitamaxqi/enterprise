@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { BarcodeParser } from "@barcodes/js/barcode_parser";
 import { Mutex } from "@web/core/utils/concurrency";
 import { formatFloat } from "@web/core/utils/numbers";

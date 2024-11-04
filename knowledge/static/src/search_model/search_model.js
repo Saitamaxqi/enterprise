@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { SearchModel } from "@web/search/search_model";
 
 export const KnowledgeSearchModelMixin = (T) => class extends T {

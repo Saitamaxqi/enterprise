@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { patchUserWithCleanup } from "@web/../tests/helpers/mock_services";
 import { click, getFixture, patchWithCleanup } from "@web/../tests/helpers/utils";
 import { doAction, getActionManagerServerData } from "@web/../tests/webclient/helpers";

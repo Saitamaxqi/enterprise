@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 export function viewGroupByOperation(viewType, type, newValue, oldValue = undefined) {
     const operation_type = newValue ? "add" : "remove";
     const operation = {

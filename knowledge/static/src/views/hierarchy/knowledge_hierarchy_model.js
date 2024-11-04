@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { HierarchyModel } from "@web_hierarchy/hierarchy_model";
 
 export class KnowledgeHierarchyModel extends HierarchyModel {

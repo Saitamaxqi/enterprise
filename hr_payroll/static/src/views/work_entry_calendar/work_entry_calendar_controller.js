@@ -1,7 +1,3 @@
-
-
-/** @odoo-module **/
-
 import { patch } from "@web/core/utils/patch";
 import { WorkEntryCalendarController } from '@hr_work_entry_contract/views/work_entry_calendar/work_entry_calendar_controller';
 import { useWorkEntryPayslip } from '@hr_payroll/views/work_entry_calendar/work_entry_calendar_hook';

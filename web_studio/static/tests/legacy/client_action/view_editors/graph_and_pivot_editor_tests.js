@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { browser } from "@web/core/browser/browser";
 import { click, getFixture, patchWithCleanup, makeDeferred } from "@web/../tests/helpers/utils";
 import {

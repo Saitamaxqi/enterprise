@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from '@web/core/registry';
 import { useIotDevice } from '../iot_device_hook';
 import { Component, useState } from "@odoo/owl";

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { DocumentSelectorDialog } from "./document_selector_dialog/document_selector_dialog";
 

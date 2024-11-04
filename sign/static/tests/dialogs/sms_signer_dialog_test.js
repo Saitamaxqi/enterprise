@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { click, getFixture, mount, patchWithCleanup, nextTick } from "@web/../tests/helpers/utils";
 import { browser } from "@web/core/browser/browser";
 import { makeTestEnv } from "@web/../tests/helpers/mock_env";

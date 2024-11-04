@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 /**
  * This class implements the `TransportService` interface defined
  * by o-spreadsheet. Its purpose is to communicate with other clients

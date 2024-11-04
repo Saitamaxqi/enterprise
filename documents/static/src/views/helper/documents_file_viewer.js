@@ -1,5 +1,3 @@
-/* @odoo-module **/
-
 import { FileViewer } from "@documents/attachments/document_file_viewer";
 import { Component, useEffect, useRef, useState } from "@odoo/owl";
 

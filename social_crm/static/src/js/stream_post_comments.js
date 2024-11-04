@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { StreamPostComments } from '@social/js/stream_post_comments';
 
 import { patch } from "@web/core/utils/patch";

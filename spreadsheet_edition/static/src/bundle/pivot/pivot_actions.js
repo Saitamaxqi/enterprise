@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 export const REINSERT_DYNAMIC_PIVOT_CHILDREN = (env) =>
     env.model.getters.getPivotIds().map((pivotId, index) => ({
         id: `reinsert_dynamic_pivot_${env.model.getters.getPivotFormulaId(pivotId)}`,

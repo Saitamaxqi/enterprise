@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { kanbanView } from "@web/views/kanban/kanban_view";
 import { registry } from "@web/core/registry";
 import { StockBarcodeKanbanController } from "./stock_barcode_kanban_controller";

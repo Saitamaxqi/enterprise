@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { formatFloatFactor } from "@web/views/fields/formatters";
 import { GridCell } from "./grid_cell";

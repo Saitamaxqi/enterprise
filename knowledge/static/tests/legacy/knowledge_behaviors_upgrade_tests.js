@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 // web
 import { status } from "@odoo/owl";
 import { getFixture, makeDeferred, nextTick, patchWithCleanup } from "@web/../tests/helpers/utils";

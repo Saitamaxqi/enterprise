@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { useAutofocus, useService } from "@web/core/utils/hooks";
 
 import { Component, useRef } from "@odoo/owl";

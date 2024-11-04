@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { SpreadsheetCollaborativeChannel } from "./spreadsheet_collaborative_channel";
 

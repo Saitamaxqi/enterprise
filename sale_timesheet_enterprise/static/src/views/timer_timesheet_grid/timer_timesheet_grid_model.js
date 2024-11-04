@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { browser } from "@web/core/browser/browser";
 import { patch } from "@web/core/utils/patch";
 import { reactive } from "@odoo/owl";

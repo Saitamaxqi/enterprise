@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { PdfManager } from "@documents/owl/components/pdf_manager/pdf_manager";
 import { getFixture, nextTick, click, patchWithCleanup, mount } from "@web/../tests/helpers/utils";
 import { makeTestEnv } from "@web/../tests/helpers/mock_env";

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { MessagingMenu } from "@mail/core/public_web/messaging_menu";
 import { ThreadIcon } from "@mail/core/common/thread_icon";
 import { patch } from "@web/core/utils/patch";

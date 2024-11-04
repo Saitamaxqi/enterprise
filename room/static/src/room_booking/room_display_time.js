@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { useInterval } from "@room/room_booking/useInterval";
 
 import { Component, useState, xml } from "@odoo/owl";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { formView } from "@web/views/form/form_view";
 import { _t } from "@web/core/l10n/translation";

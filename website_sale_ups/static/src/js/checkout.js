@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import WebsiteSaleCheckout from '@website_sale/js/checkout'
 
 WebsiteSaleCheckout.include({

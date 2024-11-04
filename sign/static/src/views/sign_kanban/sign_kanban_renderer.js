@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
 import { SignDocumentDropZone } from '../../mixin/document_upload';
 import { SignActionHelper } from '@sign/views/helper/sign_action_helper';

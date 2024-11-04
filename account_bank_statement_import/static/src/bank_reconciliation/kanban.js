@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import { registry } from "@web/core/registry";
 import { AccountFileUploader } from "@account/components/account_file_uploader/account_file_uploader";
 import { UploadDropZone } from "@account/components/upload_drop_zone/upload_drop_zone";

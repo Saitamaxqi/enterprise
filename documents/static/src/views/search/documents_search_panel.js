@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { browser } from "@web/core/browser/browser";
 import { SearchPanel } from "@web/search/search_panel/search_panel";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { user } from "@web/core/user";
 import { _t } from "@web/core/l10n/translation";
 import { Component, useEffect, useComponent, markup } from "@odoo/owl";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { useService } from '@web/core/utils/hooks';
 import { DeviceController } from './device_controller';
 import { useEffect } from "@odoo/owl";

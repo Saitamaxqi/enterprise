@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { DynamicPlaceholderPopover } from "@web/views/fields/dynamic_placeholder_popover";
 import { useLoadFieldInfo } from "@web/core/model_field_selector/utils";
 

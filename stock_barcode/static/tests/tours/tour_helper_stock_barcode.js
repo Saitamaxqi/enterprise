@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 /**
  * Returns the line for the given index and ensure the line is an HTMLElement (fails otherwise).
  *

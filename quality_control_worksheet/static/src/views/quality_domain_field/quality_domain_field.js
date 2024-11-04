@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { DomainField, domainField } from '@web/views/fields/domain/domain_field';
 

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { edit, pointerDown } from "@odoo/hoot-dom";
 

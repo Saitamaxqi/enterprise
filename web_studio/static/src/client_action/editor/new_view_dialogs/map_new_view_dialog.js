@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { NewViewDialog } from "@web_studio/client_action/editor/new_view_dialogs/new_view_dialog";
 import { useService } from "@web/core/utils/hooks";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Domain } from "@web/core/domain";
 import { GraphModel } from "@web/views/graph/graph_model";
 import { usePlanningModelActions } from "../planning_hooks";

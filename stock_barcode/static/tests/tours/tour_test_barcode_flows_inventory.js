@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import * as helper from "./tour_helper_stock_barcode";
 import { registry } from "@web/core/registry";
 import { stepUtils } from "./tour_step_utils";

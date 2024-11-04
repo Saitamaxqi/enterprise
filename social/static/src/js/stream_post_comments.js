@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { ImagesCarouselDialog } from "./images_carousel_dialog";
 import { StreamPostCommentList } from "./stream_post_comment_list";
 import { StreamPostCommentsReply } from "./stream_post_comments_reply";

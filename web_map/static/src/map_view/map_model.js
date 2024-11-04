@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { Model } from "@web/model/model";
 import { session } from "@web/session";

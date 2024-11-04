@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Dialog } from "@web/core/dialog/dialog";
 import { Many2OneAvatarRankField } from "@sale_timesheet_enterprise/components/many2one_avatar_rank_field/many2one_avatar_rank_field";
 

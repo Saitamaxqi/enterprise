@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { onMounted, onPatched, onWillStart, status } from "@odoo/owl";
 import { FormController } from "@web/views/form/form_controller";
 import { registry } from "@web/core/registry";

@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import { helpers, stores } from "@odoo/o-spreadsheet";
 import { Domain } from "@web/core/domain";
 import { _t } from "@web/core/l10n/translation";

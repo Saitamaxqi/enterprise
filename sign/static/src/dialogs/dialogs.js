@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { InitialsAllPagesDialog } from "./initials_all_pages_dialog";
 import { PublicSignerDialog } from "./public_signer_dialog";
 import { SignNameAndSignatureDialog } from "./sign_name_and_signature_dialog";

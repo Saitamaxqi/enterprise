@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 const PAPER_TO_CSS = {
     margin_top: "padding-top",
     margin_left: "padding-left",

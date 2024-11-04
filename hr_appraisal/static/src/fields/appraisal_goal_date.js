@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { DateTimeField, dateTimeField } from '@web/views/fields/datetime/datetime_field';
 import { formatDate } from '@web/core/l10n/dates';
 import { registry } from "@web/core/registry";

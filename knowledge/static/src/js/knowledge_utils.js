@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { loadEmoji } from "@web/core/emoji_picker/emoji_picker";
 
 // List of icons that should be avoided when adding a random icon

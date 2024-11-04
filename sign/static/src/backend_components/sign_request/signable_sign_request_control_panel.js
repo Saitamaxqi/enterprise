@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { ControlPanel } from "@web/search/control_panel/control_panel";
 import { useService } from "@web/core/utils/hooks";
 import { Component, markup } from "@odoo/owl";

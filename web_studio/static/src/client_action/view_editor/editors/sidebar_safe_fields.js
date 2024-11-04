@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 /**
  * A list of field widget keys of the wowl's field registry (`registry.category("fields")`)
  * that are safe for the user to swith to when editing a field's properties in the view editor's sidebar.

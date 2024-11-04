@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { SpreadsheetAction } from "@documents_spreadsheet/bundle/actions/spreadsheet_action";
 import * as spreadsheet from "@odoo/o-spreadsheet";
 import { _t } from "@web/core/l10n/translation";

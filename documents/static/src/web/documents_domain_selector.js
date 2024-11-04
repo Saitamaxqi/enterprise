@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { DomainSelector } from "@web/core/domain_selector/domain_selector";
 import { patch } from "@web/core/utils/patch";
 

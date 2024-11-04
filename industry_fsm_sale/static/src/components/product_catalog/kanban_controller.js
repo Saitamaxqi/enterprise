@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { ProductCatalogKanbanController } from "@product/product_catalog/kanban_controller";
 
 export class FSMProductCatalogKanbanController extends ProductCatalogKanbanController {

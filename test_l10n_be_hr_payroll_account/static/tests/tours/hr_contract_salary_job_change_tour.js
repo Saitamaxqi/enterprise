@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { inputFiles } from "@web/../tests/utils";
 import { redirect } from "@web/core/utils/urls";

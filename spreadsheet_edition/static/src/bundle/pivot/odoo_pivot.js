@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import * as spreadsheet from "@odoo/o-spreadsheet";
 import { OdooPivot } from "@spreadsheet/pivot/odoo_pivot";
 import { patch } from "@web/core/utils/patch";

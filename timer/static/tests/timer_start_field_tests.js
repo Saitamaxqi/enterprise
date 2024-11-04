@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { serializeDateTime } from "@web/core/l10n/dates";
 
 import { makeView, setupViewRegistries } from "@web/../tests/views/helpers";

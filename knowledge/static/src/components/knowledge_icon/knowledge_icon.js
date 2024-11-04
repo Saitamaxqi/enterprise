@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { useEmojiPicker } from "@web/core/emoji_picker/emoji_picker";
 import { registry } from "@web/core/registry";
 import { exprToBoolean } from "@web/core/utils/strings";

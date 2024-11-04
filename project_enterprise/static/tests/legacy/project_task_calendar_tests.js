@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { getFixture, patchDate, patchWithCleanup } from "@web/../tests/helpers/utils";
 import { clickDate, selectDateRange } from "@web/../tests/views/calendar/helpers";
 import { makeView, setupViewRegistries } from "@web/../tests/views/helpers";

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Domain } from "@web/core/domain";
 import { serializeDate } from "@web/core/l10n/dates";
 import { patch } from "@web/core/utils/patch";

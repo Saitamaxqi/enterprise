@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { setupViewRegistries, makeView } from "@web/../tests/views/helpers";
 import { registry } from "@web/core/registry";
 

@@ -1,4 +1,3 @@
-/** @odoo-module **/
 /* eslint-disable no-undef */
 
 import publicWidget from "@web/legacy/js/public/public_widget";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { WebClient } from "@web/webclient/webclient";
 import { useService } from "@web/core/utils/hooks";
 import { EnterpriseNavBar } from "./navbar/navbar";

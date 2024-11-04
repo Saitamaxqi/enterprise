@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Component, useState, onWillStart, onWillUnmount } from "@odoo/owl";
 import { registry } from "@web/core/registry";
 import { useRecordObserver } from "@web/model/relational_model/utils";

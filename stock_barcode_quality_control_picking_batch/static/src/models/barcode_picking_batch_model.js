@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import BarcodePickingBatchModel from "@stock_barcode_picking_batch/models/barcode_picking_batch_model";
 import { patch } from "@web/core/utils/patch";
 

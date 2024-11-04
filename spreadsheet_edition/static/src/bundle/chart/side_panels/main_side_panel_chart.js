@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { patch } from "@web/core/utils/patch";
 import * as spreadsheet from "@odoo/o-spreadsheet";
 import { onWillUpdateProps } from "@odoo/owl";

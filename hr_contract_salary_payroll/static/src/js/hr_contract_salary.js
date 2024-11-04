@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import SalaryPackageWidget from "@hr_contract_salary/js/hr_contract_salary";
 import { renderToElement } from "@web/core/utils/render";
 

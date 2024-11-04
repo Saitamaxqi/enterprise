@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { useService } from "@web/core/utils/hooks";
 import { GridRow, gridRow } from "../grid_row/grid_row";

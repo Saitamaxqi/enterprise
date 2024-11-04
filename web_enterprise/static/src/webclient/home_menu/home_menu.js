@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { hasTouch, isIosApp, isMacOS } from "@web/core/browser/feature_detection";
 import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
 import { user } from "@web/core/user";

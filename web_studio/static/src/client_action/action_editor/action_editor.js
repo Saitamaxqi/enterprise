@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { Component } from "@odoo/owl";
 import { useOwnedDialogs, useService } from "@web/core/utils/hooks";
 import { rpc } from "@web/core/network/rpc";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { getFixture, nextTick, patchWithCleanup, click } from "@web/../tests/helpers/utils";
 import { doAction } from "@web/../tests/webclient/helpers";
 import { createDocumentWebClient, actionId, defaultMockRPC } from "./action_utils";

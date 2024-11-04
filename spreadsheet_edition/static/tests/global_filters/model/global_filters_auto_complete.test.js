@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import { defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
 import { describe, expect, test } from "@odoo/hoot";
 import { stores } from "@odoo/o-spreadsheet";

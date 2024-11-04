@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import '@hr_payroll/../tests/tours/dashboard_tour';
 import { patch } from "@web/core/utils/patch";

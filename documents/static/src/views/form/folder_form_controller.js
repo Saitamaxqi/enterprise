@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { FormController } from '@web/views/form/form_controller';
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { useService } from "@web/core/utils/hooks";

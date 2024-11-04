@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Component } from "@odoo/owl";
 import { ProductImageDialog } from "@stock_barcode/components/product_image_dialog";
 

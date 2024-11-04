@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { openPowerbox } from '@knowledge/../tests/tours/knowledge_tour_utils';
 

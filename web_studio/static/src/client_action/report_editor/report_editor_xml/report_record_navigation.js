@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { Component, useState } from "@odoo/owl";
 
 import { Pager } from "@web/core/pager/pager";

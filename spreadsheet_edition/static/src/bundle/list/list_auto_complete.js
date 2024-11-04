@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registries, tokenColors, helpers } from "@odoo/o-spreadsheet";
 import { extractDataSourceId } from "@spreadsheet/helpers/odoo_functions_helpers";
 

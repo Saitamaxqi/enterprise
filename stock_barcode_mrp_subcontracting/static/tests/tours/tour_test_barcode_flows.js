@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { registry } from "@web/core/registry";
 import * as helper from "@stock_barcode/../tests/tours/tour_helper_stock_barcode";

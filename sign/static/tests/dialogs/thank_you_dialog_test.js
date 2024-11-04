@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { getFixture, mount, patchWithCleanup } from "@web/../tests/helpers/utils";
 import { makeTestEnv } from "@web/../tests/helpers/mock_env";
 import {

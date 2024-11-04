@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Component, onMounted, onPatched, useState, useRef } from "@odoo/owl";
 
 /**

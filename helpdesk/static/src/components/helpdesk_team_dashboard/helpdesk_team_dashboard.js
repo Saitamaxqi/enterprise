@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { user } from '@web/core/user';
 import { formatFloatTime } from '@web/views/fields/formatters';
 import { formatFloat } from "@web/core/utils/numbers";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { animationFrame } from "@odoo/hoot-mock";
 import { makeSpreadsheetMockEnv } from "@spreadsheet/../tests/helpers/model";
 import { WebClient } from "@web/webclient/webclient";

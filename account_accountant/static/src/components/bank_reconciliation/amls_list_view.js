@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { EmbeddedListView } from "./embedded_list_view";
 import { ListRenderer } from "@web/views/list/list_renderer";

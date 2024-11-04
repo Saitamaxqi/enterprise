@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 /**
  * Public user search Knowledge flow tour (for published articles).
  * Features tested:

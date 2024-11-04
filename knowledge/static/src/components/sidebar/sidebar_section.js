@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { KnowledgeSidebarRow } from "./sidebar_row";
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";

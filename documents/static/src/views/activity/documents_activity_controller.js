@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { ActivityController } from "@mail/views/web/activity/activity_controller";
 

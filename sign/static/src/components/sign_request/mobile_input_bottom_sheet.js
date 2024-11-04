@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { renderToString } from "@web/core/utils/render";
 
 export class MobileInputBottomSheet {

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 const _FACEBOOK_REACTIONS = {
     LIKE: "👍",
     LOVE: "❤️",

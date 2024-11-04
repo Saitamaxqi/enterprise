@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { listView } from "@web/views/list/list_view";
 import { useThrottleForAnimation } from "@web/core/utils/timing";
 import { reactive, useEffect, useState } from "@odoo/owl";

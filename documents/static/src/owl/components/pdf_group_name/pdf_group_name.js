@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Component, useRef } from "@odoo/owl";
 
 export class PdfGroupName extends Component {

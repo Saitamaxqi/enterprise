@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";
 import { DocumentsMemberInvite } from "@documents/components/documents_permission_panel/documents_member_invite";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { AccountMoveFormView } from '@account/components/account_move_form/account_move_form';
 import { InvoiceExtractFormRenderer } from '@account_invoice_extract/js/invoice_extract_form_renderer';

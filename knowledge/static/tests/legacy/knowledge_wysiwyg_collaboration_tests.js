@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { patch } from "@web/core/utils/patch";
 import { Wysiwyg } from '@web_editor/js/wysiwyg/wysiwyg';
 import { createPeers, removePeers } from '@web_editor/../tests/test_wysiwyg_collaboration';

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 /**
  * @typedef {import("@web/core/orm_service").ORM} ORM
  */

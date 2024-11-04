@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { App, Component, xml, whenReady, useEffect, useComponent } from "@odoo/owl";
 import { MainComponentsContainer } from "@web/core/main_components_container";
 import { useService } from "@web/core/utils/hooks";

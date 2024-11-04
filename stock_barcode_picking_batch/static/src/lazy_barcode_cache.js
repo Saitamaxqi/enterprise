@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import LazyBarcodeCache from "@stock_barcode/lazy_barcode_cache";
 
 import { patch } from "@web/core/utils/patch";

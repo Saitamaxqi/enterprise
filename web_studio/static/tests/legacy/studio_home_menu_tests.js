@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { StudioHomeMenu } from "@web_studio/client_action/studio_home_menu/studio_home_menu";
 import { MODES } from "@web_studio/studio_service";
 

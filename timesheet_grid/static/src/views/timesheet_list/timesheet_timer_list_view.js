@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { TimesheetTimerListController } from "./timesheet_timer_list_controller";
 import { TimesheetTimerListRenderer } from "./timesheet_timer_list_renderer";

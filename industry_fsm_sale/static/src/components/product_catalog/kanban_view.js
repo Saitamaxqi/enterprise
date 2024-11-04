@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import { registry } from "@web/core/registry";
 import { FSMProductCatalogKanbanRecord } from "./kanban_record";
 import { FSMProductCatalogKanbanController } from "./kanban_controller";

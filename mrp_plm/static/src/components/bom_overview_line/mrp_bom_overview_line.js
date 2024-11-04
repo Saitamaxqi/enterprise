@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";
 import { BomOverviewLine } from "@mrp/components/bom_overview_line/mrp_bom_overview_line";

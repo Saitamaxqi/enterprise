@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { CheckboxItem } from "@web/core/dropdown/checkbox_item";
 import { Component } from "@odoo/owl";
 

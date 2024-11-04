@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Component } from "@odoo/owl";
 import { user } from "@web/core/user";
 import { FileInput } from "@web/core/file_input/file_input";

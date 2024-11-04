@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { SocialPostFormatterMixin } from "./social_post_formatter_mixin";
 
 import { HtmlField, htmlField } from "@web_editor/js/backend/html_field";

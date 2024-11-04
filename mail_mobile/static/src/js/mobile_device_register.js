@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import mobile from "@web_mobile/js/services/core";
 import { rpc } from "@web/core/network/rpc";
 import { session } from "@web/session";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { addBusServicesToRegistry } from "@bus/../tests/helpers/test_utils";
 
 import { mountRoomBookingView } from "@room/../tests/room_booking_tests_utils";

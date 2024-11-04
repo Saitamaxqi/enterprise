@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { View } from "@web/views/view";
 import { Component, useSubEnv } from "@odoo/owl";
 

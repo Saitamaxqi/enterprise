@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Popover } from "@web/core/popover/popover";
 import { useBackButton } from "@web_mobile/js/core/hooks";
 import { patch } from "@web/core/utils/patch";

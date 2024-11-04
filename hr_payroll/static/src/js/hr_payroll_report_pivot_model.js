@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { PivotModel } from "@web/views/pivot/pivot_model";
 
 export class HrPayrollReportPivotModel extends PivotModel {

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 
 import { GridCell, standardGridCellProps } from "@web_grid/components/grid_cell";

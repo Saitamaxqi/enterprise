@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { user } from "@web/core/user";
 import { patch } from "@web/core/utils/patch";
 import { AvatarCardResourcePopover } from "@resource_mail/components/avatar_card_resource/avatar_card_resource_popover";

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { useState, onMounted, onPatched } from "@odoo/owl";
 import { formView } from "@web/views/form/form_view";
 import { useModelConfigFetchInvisible } from "@web_studio/client_action/view_editor/editors/utils";

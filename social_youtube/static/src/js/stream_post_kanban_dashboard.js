@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { StreamPostDashboard } from '@social/js/stream_post_kanban_dashboard';
 
 import { patch } from "@web/core/utils/patch";

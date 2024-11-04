@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { patch } from "@web/core/utils/patch";
 import { KanbanHeader } from "@web/views/kanban/kanban_header";

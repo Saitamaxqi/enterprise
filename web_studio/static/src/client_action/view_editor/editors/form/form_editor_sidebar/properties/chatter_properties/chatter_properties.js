@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Component, useState, onWillStart, onWillUpdateProps } from "@odoo/owl";
 import { rpc } from "@web/core/network/rpc";
 import { Property } from "@web_studio/client_action/view_editor/property/property";

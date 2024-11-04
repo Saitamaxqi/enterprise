@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { IrMenuSelector } from "@spreadsheet_edition/bundle/ir_menu_selector/ir_menu_selector";
 import { Domain } from "@web/core/domain";
 import { DomainSelector } from "@web/core/domain_selector/domain_selector";

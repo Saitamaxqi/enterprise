@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import * as spreadsheet from "@odoo/o-spreadsheet";
 
 import { Component } from "@odoo/owl";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { useBus } from "@web/core/utils/hooks";
 import { registry } from "@web/core/registry";
 import { Document } from "@sign/components/sign_request/document_signable";

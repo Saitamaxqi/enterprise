@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { user } from "@web/core/user";
 import mobile from "@web_mobile/js/services/core";
 import { isIosApp } from "@web/core/browser/feature_detection";

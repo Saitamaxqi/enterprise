@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 
 const planningTestTour = registry.category("web_tour.tours").get("planning_test_tour");

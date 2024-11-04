@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { browser } from "@web/core/browser/browser";
 import { patchUserContextWithCleanup } from "@web/../tests/helpers/mock_services";
 import {

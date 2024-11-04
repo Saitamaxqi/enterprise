@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registries, tokenColors, helpers } from "@odoo/o-spreadsheet";
 const { insertTokenAfterLeftParenthesis } = helpers;
 

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { createWebClient, doAction } from "@web/../tests/webclient/helpers";
 import * as BarcodeScanner from "@web/core/barcode/barcode_dialog";
 import { destroy, getFixture, patchWithCleanup } from "@web/../tests/helpers/utils";

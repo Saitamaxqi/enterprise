@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import { onMounted, onWillStart, useState, Component, useSubEnv } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 import { standardActionServiceProps } from "@web/webclient/actions/action_service";

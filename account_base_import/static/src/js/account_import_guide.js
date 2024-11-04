@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { ControlPanel } from "@web/search/control_panel/control_panel";
 import { registry } from "@web/core/registry";

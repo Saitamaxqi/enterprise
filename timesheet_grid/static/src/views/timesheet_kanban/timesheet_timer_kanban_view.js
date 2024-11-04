@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { kanbanView } from "@web/views/kanban/kanban_view";
 import { TimesheetTimerKanbanController } from "./timesheet_timer_kanban_controller";

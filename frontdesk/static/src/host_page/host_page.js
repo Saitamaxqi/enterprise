@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { Component, useRef } from "@odoo/owl";
 import { Many2One } from "./many2one/many2one";

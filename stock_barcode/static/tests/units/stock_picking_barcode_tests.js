@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { createWebClient, doAction } from "@web/../tests/webclient/helpers";
 import { getFixture } from "@web/../tests/helpers/utils";
 import { registry } from "@web/core/registry";

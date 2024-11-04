@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { deserializeDateTime } from "@web/core/l10n/dates";
 import { Reactive } from "@web/core/utils/reactive";
 

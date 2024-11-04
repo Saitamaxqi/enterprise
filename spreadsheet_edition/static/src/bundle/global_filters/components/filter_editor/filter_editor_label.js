@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Component, onMounted, useRef } from "@odoo/owl";
 
 export class FilterEditorLabel extends Component {

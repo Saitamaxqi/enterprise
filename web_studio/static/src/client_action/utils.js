@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { reactive, useComponent, useEnv, useSubEnv } from "@odoo/owl";
 
 export function getFieldsInArch(xmlDoc) {

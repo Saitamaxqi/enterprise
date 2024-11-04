@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { loadJS } from "@web/core/assets";
 import { useService } from "@web/core/utils/hooks";
 import { getColor, getCustomColor } from "@web/core/colors/colors";

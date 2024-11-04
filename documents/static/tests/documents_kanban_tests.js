@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { serverState, startServer } from "@bus/../tests/helpers/mock_python_environment";
 
 import { fileUploadService } from "@web/core/file_upload/file_upload_service";

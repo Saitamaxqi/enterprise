@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import BarcodeMRPModel from "@stock_barcode_mrp/models/barcode_mrp_model";
 import { patch } from "@web/core/utils/patch";
 

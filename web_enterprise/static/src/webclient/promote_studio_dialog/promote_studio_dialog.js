@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { browser } from "@web/core/browser/browser";
 import { Dialog } from "@web/core/dialog/dialog";
 import { useChildRef, useService } from "@web/core/utils/hooks";

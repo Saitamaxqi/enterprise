@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { useComponent, useEffect } from "@odoo/owl";
 
 export function useMagnifierGlass() {

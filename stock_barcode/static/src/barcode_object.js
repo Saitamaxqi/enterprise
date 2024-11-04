@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 export class BarcodeObject {
     constructor(rawValue) {
         this.rawValue = rawValue; // Untouched barcode.

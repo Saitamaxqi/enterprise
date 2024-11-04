@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { CohortController } from "./cohort_controller";
 import { CohortRenderer } from "./cohort_renderer";

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { _t } from "@web/core/l10n/translation";
 import { registries, stores } from "@odoo/o-spreadsheet";
 import { REINSERT_LIST_CHILDREN } from "../list/list_actions";

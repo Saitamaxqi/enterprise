@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { Component, onWillRender, useState } from "@odoo/owl";
 import { stateToUrl } from "@web/core/browser/router";
 import { useService } from "@web/core/utils/hooks";

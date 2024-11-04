@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { HookEventBus } from "@web_mobile/js/hook_event_bus";
 import { registry } from "@web/core/registry";
 import { session } from "@web/session";

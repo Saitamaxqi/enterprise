@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { omit } from "@web/core/utils/objects";
 import { useService } from "@web/core/utils/hooks";

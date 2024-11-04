@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import KnowledgeIcon from "@knowledge/components/knowledge_icon/knowledge_icon";
 import { useService } from "@web/core/utils/hooks";
 

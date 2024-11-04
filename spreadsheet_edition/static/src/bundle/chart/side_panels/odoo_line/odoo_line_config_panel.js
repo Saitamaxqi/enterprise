@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { CommonOdooChartConfigPanel } from "../common/config_panel";
 import { _t } from "@web/core/l10n/translation";
 import { components } from "@odoo/o-spreadsheet";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { ActivityRenderer } from "@mail/views/web/activity/activity_renderer";
 
 import { DocumentsFileViewer } from "../helper/documents_file_viewer";

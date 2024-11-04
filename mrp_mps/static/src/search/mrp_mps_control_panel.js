@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { ControlPanel } from "@web/search/control_panel/control_panel";
 import { SearchBar } from "@web/search/search_bar/search_bar";
 import { SearchBarMenu } from "@web/search/search_bar_menu/search_bar_menu";

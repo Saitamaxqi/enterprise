@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import {
     SkillsListRenderer,
     SkillsX2ManyField,

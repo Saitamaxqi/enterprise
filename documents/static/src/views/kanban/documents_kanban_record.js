@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { KanbanRecord } from "@web/views/kanban/kanban_record";
 import { DocumentsKanbanCompiler } from "./documents_kanban_compiler";
 import { FileUploadProgressBar } from "@web/core/file_upload/file_upload_progress_bar";

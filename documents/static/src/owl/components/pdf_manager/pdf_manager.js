@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { PdfGroupName } from "@documents/owl/components/pdf_group_name/pdf_group_name";
 import { PdfPage } from "@documents/owl/components/pdf_page/pdf_page";
 import { loadPDFJSAssets } from "@web/libs/pdfjs";

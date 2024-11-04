@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import { Component, onWillStart } from "@odoo/owl";
 import { user } from "@web/core/user";
 

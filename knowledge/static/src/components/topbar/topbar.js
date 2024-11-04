@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { formatDateTime } from '@web/core/l10n/dates';
 import { rpc } from "@web/core/network/rpc";
 import { registry } from '@web/core/registry';

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Component } from "@odoo/owl";
 import { Property } from "@web_studio/client_action/view_editor/property/property";
 import { ModifiersProperties } from "@web_studio/client_action/view_editor/interactive_editor/properties/modifiers/modifiers_properties";

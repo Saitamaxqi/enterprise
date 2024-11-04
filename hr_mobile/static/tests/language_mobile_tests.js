@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { accountMethodsForMobile } from "@web_mobile/js/core/mixins";
 import mobile from '@web_mobile/js/services/core';
 import { patchUserWithCleanup } from "@web/../tests/helpers/mock_services";

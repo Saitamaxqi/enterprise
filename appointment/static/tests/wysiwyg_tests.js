@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { makeView, setupViewRegistries } from "@web/../tests/views/helpers";
 import { patchWithCleanup, triggerEvent } from '@web/../tests/helpers/utils';

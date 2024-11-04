@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Component } from "@odoo/owl";
 import { formatDate } from "@web/core/l10n/dates";
 

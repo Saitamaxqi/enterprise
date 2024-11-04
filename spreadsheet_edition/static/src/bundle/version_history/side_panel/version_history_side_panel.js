@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Component, onMounted, useRef, useState } from "@odoo/owl";
 import { components } from "@odoo/o-spreadsheet";
 import { VersionHistoryItem } from "./version_history_item";

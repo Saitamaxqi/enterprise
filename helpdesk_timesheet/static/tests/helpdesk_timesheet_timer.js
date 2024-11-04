@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { ormService } from "@web/core/orm_service";
 import { serializeDateTime } from "@web/core/l10n/dates";

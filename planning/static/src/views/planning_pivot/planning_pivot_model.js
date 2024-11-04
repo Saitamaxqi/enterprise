@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Domain } from "@web/core/domain";
 import { PivotModel } from "@web/views/pivot/pivot_model";
 import { usePlanningModelActions } from "../planning_hooks";

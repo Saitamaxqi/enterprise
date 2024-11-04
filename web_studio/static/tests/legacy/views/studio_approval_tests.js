@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { patchUserWithCleanup } from "@web/../tests/helpers/mock_services";
 import { makeView, setupViewRegistries } from "@web/../tests/views/helpers";
 import {

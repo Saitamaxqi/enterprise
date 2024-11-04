@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from '@web/core/registry';
 import { ensureJQuery } from "@web/core/ensure_jquery";
 import { IoTConnectionErrorDialog } from '@iot/dialogs/iot_connection_error_dialog';

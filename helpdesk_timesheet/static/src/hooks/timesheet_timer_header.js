@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { useService } from "@web/core/utils/hooks";
 import { patch } from "@web/core/utils/patch";
 import { TimesheetTimerRendererHook } from "@timesheet_grid/hooks/timesheet_timer_hooks";

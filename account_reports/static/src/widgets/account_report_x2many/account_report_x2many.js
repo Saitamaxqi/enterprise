@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { onWillUpdateProps, useRef } from "@odoo/owl";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { WarningDialog } from "@web/core/errors/error_dialogs";

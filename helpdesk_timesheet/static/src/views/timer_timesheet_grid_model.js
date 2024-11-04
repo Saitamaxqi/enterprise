@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { TimerGridRow } from "@timesheet_grid/views/timer_timesheet_grid/timer_timesheet_grid_model";
 import { patch } from "@web/core/utils/patch";
 

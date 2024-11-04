@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 /**
  * Adapt the step that is specific to the work details when the `worksheet` module is not installed.
  */

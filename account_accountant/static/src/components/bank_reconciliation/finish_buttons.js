@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import { Component, useState } from "@odoo/owl";
 
 export class BankRecFinishButtons extends Component {

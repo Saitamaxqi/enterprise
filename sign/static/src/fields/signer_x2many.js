@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { _t } from "@web/core/l10n/translation";
 import { X2ManyField, x2ManyField } from "@web/views/fields/x2many/x2many_field";

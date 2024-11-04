@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import {
     unpatchM2oResourceFieldPlanning,
     unpatchKanbanM2oResourceFieldPlanning

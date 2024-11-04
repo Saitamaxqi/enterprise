@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 export * from "@stock_barcode/../tests/tours/tour_helper_stock_barcode";
 import { assert, _getLineOrFail } from "@stock_barcode/../tests/tours/tour_helper_stock_barcode";
 

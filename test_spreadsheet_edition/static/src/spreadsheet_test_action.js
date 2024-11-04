@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { AbstractSpreadsheetAction } from "@spreadsheet_edition/bundle/actions/abstract_spreadsheet_action";
 import { registry } from "@web/core/registry";
 

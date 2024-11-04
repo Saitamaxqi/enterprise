@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { useService } from "@web/core/utils/hooks";
 import { deserializeDate } from "@web/core/l10n/dates";
 

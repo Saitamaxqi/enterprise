@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { Asserts } from "../../../../account_reports/static/tests/tours/asserts";
 

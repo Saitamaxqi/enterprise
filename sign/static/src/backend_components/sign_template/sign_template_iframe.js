@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { renderToString } from "@web/core/utils/render";
 import { shallowEqual } from "@web/core/utils/arrays";

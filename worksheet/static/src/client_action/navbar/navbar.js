@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { StudioNavbar } from "@web_studio/client_action/navbar/navbar";
 import { patch } from "@web/core/utils/patch";
 import { resetViewCompilerCache } from "@web/views/view_compiler";

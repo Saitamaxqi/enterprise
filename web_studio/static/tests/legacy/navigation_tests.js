@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { contains } from "@web/../tests/utils";
 
 import { patchUserWithCleanup } from "@web/../tests/helpers/mock_services";

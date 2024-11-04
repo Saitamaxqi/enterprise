@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import { _t } from "@web/core/l10n/translation";
 
 import hrContractSalary from "@hr_contract_salary/js/hr_contract_salary";

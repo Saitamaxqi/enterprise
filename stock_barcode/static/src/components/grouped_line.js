@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import LineComponent from "@stock_barcode/components/line";
 
 export default class GroupedLineComponent extends LineComponent {

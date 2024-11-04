@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { StreamPostKanbanRecord } from '@social/js/stream_post_kanban_record';
 import { StreamPostCommentsLinkedin } from './stream_post_comments';

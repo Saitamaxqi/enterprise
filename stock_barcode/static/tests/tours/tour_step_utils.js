@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 export const stepUtils = {
     confirmAddingUnreservedProduct() {
         return [

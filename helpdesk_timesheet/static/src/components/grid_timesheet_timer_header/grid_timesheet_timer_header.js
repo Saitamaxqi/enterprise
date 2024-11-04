@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { patch } from '@web/core/utils/patch';
 import { GridTimesheetTimerHeader } from '@timesheet_grid/components/grid_timesheet_timer_header/grid_timesheet_timer_header';

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import LineComponent from "./line";
 
 export default class PackageLineComponent extends LineComponent {

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { ListRenderer } from "@web/views/list/list_renderer";
 import { AccountFileUploader } from "@account/components/account_file_uploader/account_file_uploader";

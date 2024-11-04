@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { Reactive } from "@web_studio/client_action/utils";
 import {
     EventBus,

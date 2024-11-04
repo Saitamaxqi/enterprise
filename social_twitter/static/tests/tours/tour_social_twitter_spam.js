@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { patch } from '@web/core/utils/patch';
 import { registry } from "@web/core/registry";
 import { queryOne } from "@odoo/hoot-dom";

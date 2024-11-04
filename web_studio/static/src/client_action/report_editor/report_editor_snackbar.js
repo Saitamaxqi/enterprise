@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { Component } from "@odoo/owl";
 
 export class ReportEditorSnackbar extends Component {

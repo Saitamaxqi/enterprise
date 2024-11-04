@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Field, getPropertyFieldInfo } from "@web/views/fields/field";
 import { TimesheetDisplayTimer } from "../timesheet_display_timer/timesheet_display_timer";
 import { useService, useAutofocus } from "@web/core/utils/hooks";

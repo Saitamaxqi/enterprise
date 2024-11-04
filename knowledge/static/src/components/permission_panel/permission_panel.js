@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { user } from "@web/core/user";
 import { rpc } from "@web/core/network/rpc";
 import { ConfirmationDialog, AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";

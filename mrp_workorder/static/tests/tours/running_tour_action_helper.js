@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { animationFrame } from "@odoo/hoot-dom";
 import { patch } from "@web/core/utils/patch";
 import { TourHelpers } from "@web_tour/tour_service/tour_helpers";

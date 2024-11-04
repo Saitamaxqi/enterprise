@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { CalendarCommonPopover } from "@web/views/calendar/calendar_common/calendar_common_popover";
 import { CalendarCommonRenderer } from "@web/views/calendar/calendar_common/calendar_common_renderer";

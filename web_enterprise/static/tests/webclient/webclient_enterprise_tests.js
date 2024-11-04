@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { makeTestEnv } from "@web/../tests/helpers/mock_env";
 import { mountInFixture } from "@web/../tests/helpers/mount_in_fixture";
 import { click, getFixture, nextTick, patchWithCleanup } from "@web/../tests/helpers/utils";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { mockDownload } from "@web/../tests/helpers/utils";
 
 import { createWebClient, doAction } from "@web/../tests/webclient/helpers";

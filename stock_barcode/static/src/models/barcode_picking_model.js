@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import BarcodeModel from "@stock_barcode/models/barcode_model";
 import { BackorderDialog } from "../components/backorder_dialog";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { hierarchyView } from "@web_hierarchy/hierarchy_view";
 import { KnowledgeHierarchyModel } from "@knowledge/views/hierarchy/knowledge_hierarchy_model";

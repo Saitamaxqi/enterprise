@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { TemplateDialog } from "@documents_spreadsheet/spreadsheet_template/spreadsheet_template_dialog";
 import { useService } from "@web/core/utils/hooks";
 

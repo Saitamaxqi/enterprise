@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { KanbanRenderer } from "@web/views/kanban/kanban_renderer";
 import { ManualBarcodeScanner } from "@barcodes/components/manual_barcode";
 import { user } from "@web/core/user";

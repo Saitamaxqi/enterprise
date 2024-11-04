@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Component, useEffect, useState } from "@odoo/owl";
 import { useService } from "@web/core/utils/hooks";
 

@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import { Component, EventBus, onWillDestroy, useState, useSubEnv, xml } from "@odoo/owl";
 
 import { registry } from "@web/core/registry";

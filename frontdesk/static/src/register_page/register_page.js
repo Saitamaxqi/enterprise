@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { Component, markup, onWillStart, onWillUnmount } from "@odoo/owl";
 import { useInactivity } from "../use_inactivity";

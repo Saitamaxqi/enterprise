@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import { _t } from "@web/core/l10n/translation";
 import { SearchModel } from "@web/search/search_model";
 import { useState } from "@odoo/owl";

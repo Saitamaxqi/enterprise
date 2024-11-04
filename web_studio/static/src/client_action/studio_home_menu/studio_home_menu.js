@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { HomeMenu } from "@web_enterprise/webclient/home_menu/home_menu";
 import { useService } from "@web/core/utils/hooks";

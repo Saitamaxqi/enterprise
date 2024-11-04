@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { EmployeeOvertimeIndication } from "../employee_overtime_indication/employee_overtime_indication";
 

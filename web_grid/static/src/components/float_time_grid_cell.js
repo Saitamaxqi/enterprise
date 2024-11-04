@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { parseFloatTime } from "@web/views/fields/parsers";
 import { formatFloatTime } from "@web/views/fields/formatters";

@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { useService } from "@web/core/utils/hooks";
 import { FileViewer as WebFileViewer } from "@web/core/file_viewer/file_viewer";
 import { onWillUpdateProps } from "@odoo/owl";

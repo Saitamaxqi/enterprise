@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { sortBy } from "@web/core/utils/arrays";
 import { registry } from "@web/core/registry";
 import { SIDEBAR_SAFE_FIELDS } from "@web_studio/client_action/view_editor/editors/sidebar_safe_fields";

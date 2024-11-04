@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { ActionContainer } from "@web/webclient/actions/action_container";
 import { useService } from "@web/core/utils/hooks";
 import { registry } from "@web/core/registry";

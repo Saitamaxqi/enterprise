@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { DataCleaningCommonListController } from "@data_recycle/views/data_cleaning_common_list";
 import { registry } from '@web/core/registry';

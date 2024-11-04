@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { download } from "@web/core/network/download";
 import { formView } from "@web/views/form/form_view";
 import { FormController } from "@web/views/form/form_controller";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { GraphRenderer } from "@web/views/graph/graph_renderer";
 import { graphView } from "@web/views/graph/graph_view";
 import { registry } from "@web/core/registry";

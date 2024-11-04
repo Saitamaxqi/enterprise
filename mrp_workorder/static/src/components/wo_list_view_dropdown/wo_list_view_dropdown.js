@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import { patch } from "@web/core/utils/patch";
 
 import { MOListViewDropdown } from "@mrp/components/wo_list_view_dropdown/wo_list_view_dropdown";

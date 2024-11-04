@@ -1,4 +1,3 @@
-/** @odoo-module **/
 /* global OdooDeviceUtility */
 
 import { uniqueId } from "@web/core/utils/functions";

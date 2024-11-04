@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { rpc } from "@web/core/network/rpc";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";

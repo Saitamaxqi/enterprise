@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { patch } from "@web/core/utils/patch";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 

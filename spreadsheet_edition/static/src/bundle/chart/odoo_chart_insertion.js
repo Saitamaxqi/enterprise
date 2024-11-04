@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { helpers, stores } from "@odoo/o-spreadsheet";
 import { initCallbackRegistry } from "@spreadsheet/o_spreadsheet/init_callbacks";
 import { Domain } from "@web/core/domain";

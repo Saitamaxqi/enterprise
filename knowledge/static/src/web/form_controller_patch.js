@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { FormController } from "@web/views/form/form_controller";
 import { patch } from "@web/core/utils/patch";
 import { useService } from "@web/core/utils/hooks";

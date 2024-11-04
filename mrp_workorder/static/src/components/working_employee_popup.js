@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { MrpTimer } from "@mrp/widgets/timer";
 import { useService } from "@web/core/utils/hooks";
 import { parseDate } from "@web/core/l10n/dates";

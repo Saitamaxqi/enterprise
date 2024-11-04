@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { MrpMpsControlPanel, MrpMpsSearchBar } from "../search/mrp_mps_control_panel";
 import MpsLineComponent from '@mrp_mps/components/line';

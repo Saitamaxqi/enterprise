@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { _t } from "@web/core/l10n/translation";
 import { Component, xml } from "@odoo/owl";
 import { viewTypeToString } from "@web_studio/studio_service";

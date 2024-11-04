@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { SocialPostFormatterMixinBase } from '@social/js/social_post_formatter_mixin';
 
 import { patchWithCleanup } from "@web/../tests/helpers/utils";

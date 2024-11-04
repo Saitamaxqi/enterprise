@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { useService } from "@web/core/utils/hooks";
 import { QualityCheck } from "./quality_check";
 import { MrpWorksheetDialog } from "../dialog/mrp_worksheet_dialog";

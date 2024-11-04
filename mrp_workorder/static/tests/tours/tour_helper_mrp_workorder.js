@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 function fail(errorMessage) {
     console.error(errorMessage);
 }

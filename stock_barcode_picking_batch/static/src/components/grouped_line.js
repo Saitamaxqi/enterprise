@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import GroupedLineComponent from "@stock_barcode/components/grouped_line";
 import { patch } from "@web/core/utils/patch";
 

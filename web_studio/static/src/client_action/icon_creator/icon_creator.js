@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { COLORS, BG_COLORS } from "@web_studio/utils";
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { SelectMenu } from "@web/core/select_menu/select_menu";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Component } from "@odoo/owl";
 import { rpc } from "@web/core/network/rpc";
 import { Dialog } from "@web/core/dialog/dialog";

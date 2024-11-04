@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { ListRenderer } from "@web/views/list/list_renderer";
 import { ListController } from "@web/views/list/list_controller";
 import { registry } from "@web/core/registry";

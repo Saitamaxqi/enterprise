@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { StreamPostComments } from '@social/js/stream_post_comments';
 import { StreamPostCommentListYoutube } from './stream_post_comment_list';
 import { StreamPostCommentsReplyYoutube } from './stream_post_comments_reply';

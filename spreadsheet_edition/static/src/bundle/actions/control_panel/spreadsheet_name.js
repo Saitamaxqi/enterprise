@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { UNTITLED_SPREADSHEET_NAME } from "@spreadsheet/helpers/constants";
 
 import { Component, onMounted, useState, useRef, onWillUpdateProps } from "@odoo/owl";

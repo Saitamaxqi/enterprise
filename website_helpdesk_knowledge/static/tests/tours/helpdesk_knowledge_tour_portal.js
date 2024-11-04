@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add('access_helpdesk_article_portal_tour', {

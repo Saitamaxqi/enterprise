@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { markup, useEnv, onWillUnmount, useEffect } from "@odoo/owl";
 import { serializeDateTime } from "@web/core/l10n/dates";

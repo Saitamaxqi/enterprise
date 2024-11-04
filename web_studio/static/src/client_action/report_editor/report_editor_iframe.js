@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { Component, useRef, useState } from "@odoo/owl";
 import { getCssFromPaperFormat } from "@web_studio/client_action/report_editor/utils";
 import { useThrottleForAnimation } from "@web/core/utils/timing";

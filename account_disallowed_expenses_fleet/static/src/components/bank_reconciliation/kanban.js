@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import { patch } from "@web/core/utils/patch";
 
 import { BankRecKanbanController } from "@account_accountant/components/bank_reconciliation/kanban";

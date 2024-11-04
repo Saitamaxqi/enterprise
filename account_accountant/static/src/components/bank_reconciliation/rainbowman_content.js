@@ -1,4 +1,3 @@
-/** @odoo-module **/
 import { BankRecFinishButtons } from "./finish_buttons";
 import { Component, onWillUnmount } from "@odoo/owl";
 

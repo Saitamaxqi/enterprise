@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { useOwnedDialogs, useService } from "@web/core/utils/hooks";
 import { SelectCreateDialog } from "@web/views/view_dialogs/select_create_dialog";

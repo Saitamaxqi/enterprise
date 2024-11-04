@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { CopyButton } from "@web/core/copy_button/copy_button";
 import { Dialog } from "@web/core/dialog/dialog";
 import { DocumentsAccessSettings } from "./documents_access_settings";

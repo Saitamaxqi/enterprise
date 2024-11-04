@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { getPyEnv } from "@bus/../tests/helpers/mock_python_environment";
 import {
     waitNotifications,

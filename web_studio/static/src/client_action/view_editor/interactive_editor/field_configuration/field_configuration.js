@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { Component, useState, xml } from "@odoo/owl";
 import { Dialog } from "@web/core/dialog/dialog";
 import { ModelFieldSelector } from "@web/core/model_field_selector/model_field_selector";

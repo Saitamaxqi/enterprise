@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { SelectMenu } from "@web/core/select_menu/select_menu";
 import { Component } from "@odoo/owl";
 

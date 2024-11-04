@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { patch } from "@web/core/utils/patch";
 import { FileViewer } from "@documents/attachments/document_file_viewer";
 

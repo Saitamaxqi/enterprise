@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import mobile from "@web_mobile/js/services/core";
 import { download } from "@web/core/network/download";
 

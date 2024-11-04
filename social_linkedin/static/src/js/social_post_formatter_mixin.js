@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { SocialPostFormatterMixinBase, SocialPostFormatterRegex } from '@social/js/social_post_formatter_mixin';
 
 import { patch } from "@web/core/utils/patch";

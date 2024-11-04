@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 export function assertEqual(actual, expected) {
     if (actual !== expected) {
         throw new Error(`Assert failed: expected: ${expected} ; got: ${actual}`);

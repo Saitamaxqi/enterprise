@@ -1,4 +1,3 @@
-/** @odoo-module **/
 //@ts-check
 
 import { helpers, stores } from "@odoo/o-spreadsheet";

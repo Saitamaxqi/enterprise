@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { StreamPostCommentsReply } from '@social/js/stream_post_comments_reply';
 
 import { sprintf } from '@web/core/utils/strings';

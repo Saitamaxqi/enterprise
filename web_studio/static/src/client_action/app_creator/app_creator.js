@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Component, reactive, useExternalListener, useState } from "@odoo/owl";
 import { rpc } from "@web/core/network/rpc";
 import { user } from "@web/core/user";

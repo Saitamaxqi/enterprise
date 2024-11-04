@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { components, helpers } from "@odoo/o-spreadsheet";
 import { Component, useRef, useState, useEffect } from "@odoo/owl";
 import { formatToLocaleString } from "../../helpers/misc";

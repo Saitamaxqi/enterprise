@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { MrpQualityCheckConfirmationDialog } from "./mrp_quality_check_confirmation_dialog";
 
 export class MrpRegisterProductionDialog extends MrpQualityCheckConfirmationDialog {

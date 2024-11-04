@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { pivotView } from "@web/views/pivot/pivot_view";
 import { registry } from "@web/core/registry";
 

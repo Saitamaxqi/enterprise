@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { rpc } from "@web/core/network/rpc";
 
 export default class LazyBarcodeCache {

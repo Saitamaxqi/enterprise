@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { startServer } from "@bus/../tests/helpers/mock_python_environment";
 
 import { setupTestEnv } from "@hr_timesheet/../tests/legacy/hr_timesheet_common_tests";

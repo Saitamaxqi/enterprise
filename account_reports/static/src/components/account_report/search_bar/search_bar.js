@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { Component, useRef, useState, onMounted } from "@odoo/owl";
 
 export class AccountReportSearchBar extends Component {

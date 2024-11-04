@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { UIPlugin } from "@odoo/o-spreadsheet";
 
 export class VersionHistoryPlugin extends UIPlugin {

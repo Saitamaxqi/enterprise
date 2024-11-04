@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { unique } from "@web/core/utils/arrays";
 import { exprToBoolean } from "@web/core/utils/strings";
 import { visitXML } from "@web/core/utils/xml";

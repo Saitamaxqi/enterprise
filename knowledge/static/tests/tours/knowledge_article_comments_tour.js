@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { insertText } from "@web/../tests/utils";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";

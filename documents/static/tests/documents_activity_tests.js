@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { startServer } from "@bus/../tests/helpers/mock_python_environment";
 import { getFixture, nextTick } from "@web/../tests/helpers/utils";
 import { setupViewRegistries } from "@web/../tests/views/helpers";

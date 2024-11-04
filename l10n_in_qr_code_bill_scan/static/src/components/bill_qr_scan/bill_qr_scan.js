@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import {
     AccountMoveKanbanController,
 } from "@account/views/account_move_kanban/account_move_kanban_controller";

@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { startServer } from "@bus/../tests/helpers/mock_python_environment";
 
 import { browser } from "@web/core/browser/browser";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { user as originalUser } from "@web/core/user";
 import { useBus, useService } from "@web/core/utils/hooks";

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { click, getFixture, patchWithCleanup } from "@web/../tests/helpers/utils";
 import { clickOnDataset } from "@web/../tests/views/graph_view_tests";
 import { makeView, setupViewRegistries } from "@web/../tests/views/helpers";

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { CalendarModel } from "@web/views/calendar/calendar_model";
 import { usePlanningModelActions } from "../planning_hooks";
 import { planningAskRecurrenceUpdate} from "./planning_ask_recurrence_update/planning_ask_recurrence_update_hook";

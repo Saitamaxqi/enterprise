@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { browser } from "@web/core/browser/browser";
 import { isDisplayStandalone } from "@web/core/browser/feature_detection";

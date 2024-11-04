@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { dragAndDropArticle } from '@knowledge/../tests/tours/knowledge_tour_utils';
 import { endKnowledgeTour } from './knowledge_tour_utils.js';
 import { registry } from "@web/core/registry";

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { markup } from "@odoo/owl";
 import { StockBarcodeKanbanRenderer } from "@stock_barcode/kanban/stock_barcode_kanban_renderer";
 import { useService } from "@web/core/utils/hooks";

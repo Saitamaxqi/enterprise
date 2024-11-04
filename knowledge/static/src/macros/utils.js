@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 /**
  * @param {String} string - Name of the drag event
  * @param {DataTransfer} dataTransfer - Object used to store data

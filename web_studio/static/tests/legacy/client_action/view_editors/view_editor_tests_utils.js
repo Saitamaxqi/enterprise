@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { registerCleanup } from "@web/../tests/helpers/cleanup";
 import { MainComponentsContainer } from "@web/core/main_components_container";

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { FormRenderer } from '@web/views/form/form_renderer';
 import { KnowledgeCoverDialog } from '@knowledge/components/knowledge_cover/knowledge_cover_dialog';
 import { useService } from "@web/core/utils/hooks";

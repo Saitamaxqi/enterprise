@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 /**
  * Global Knowledge flow tour.
  * Features tested:

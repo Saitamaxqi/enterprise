@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { registry } from "@web/core/registry";
 import { stepNotInStudio, assertEqual } from "@web_studio/../tests/tours/tour_helpers";
 import { queryFirst, drag, waitFor } from "@odoo/hoot-dom";

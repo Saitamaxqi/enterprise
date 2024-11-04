@@ -1,5 +1,3 @@
-/** odoo-module **/
-
 import { useService } from "@web/core/utils/hooks";
 import { FormController } from "@web/views/form/form_controller";
 import { CampaignTemplatePickerDialog } from "@marketing_automation/components/campaign_template_picker_dialog/campaign_template_picker_dialog";

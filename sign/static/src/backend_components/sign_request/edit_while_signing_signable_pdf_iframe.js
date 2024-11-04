@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { renderToString } from "@web/core/utils/render";
 import { SignablePDFIframe } from "@sign/components/sign_request/signable_PDF_iframe";

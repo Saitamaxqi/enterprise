@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { ImagesCarouselDialog } from "../images_carousel_dialog";
 import { registry } from "@web/core/registry";
 import { standardFieldProps } from "@web/views/fields/standard_field_props";

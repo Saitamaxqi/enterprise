@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { onWillStart } from "@odoo/owl";
 import { user } from "@web/core/user";
 import { CalendarCommonPopover } from "@web/views/calendar/calendar_common/calendar_common_popover";

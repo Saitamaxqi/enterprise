@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { KanbanRenderer } from '@web/views/kanban/kanban_renderer';
 import { HelpdeskTicketKanbanHeader } from './helpdesk_ticket_kanban_header';
 import { onWillStart } from "@odoo/owl";

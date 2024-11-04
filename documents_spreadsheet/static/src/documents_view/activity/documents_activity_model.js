@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { patch } from "@web/core/utils/patch";
 import { DocumentsActivityModel } from "@documents/views/activity/documents_activity_model";
 

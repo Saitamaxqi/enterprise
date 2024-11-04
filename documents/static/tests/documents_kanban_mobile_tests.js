@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { startServer } from "@bus/../tests/helpers/mock_python_environment";
 
 import { createDocumentsViewWithMessaging, loadServices } from "./documents_test_utils";

@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 
 import { timesheetGridView } from "../timesheet_grid/timesheet_grid_view";

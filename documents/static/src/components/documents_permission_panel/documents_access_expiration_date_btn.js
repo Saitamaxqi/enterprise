@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { useDateTimePicker } from "@web/core/datetime/datetime_hook";
 import { deserializeDateTime, today } from "@web/core/l10n/dates";
 import { user } from "@web/core/user";

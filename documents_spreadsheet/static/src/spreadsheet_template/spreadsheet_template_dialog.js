@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Dialog } from "@web/core/dialog/dialog";
 import { SearchBar } from "@web/search/search_bar/search_bar";
 import { Pager } from "@web/core/pager/pager";

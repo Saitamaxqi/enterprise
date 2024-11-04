@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import * as spreadsheet from "@odoo/o-spreadsheet";
 import { initCallbackRegistry } from "@spreadsheet/o_spreadsheet/init_callbacks";
 

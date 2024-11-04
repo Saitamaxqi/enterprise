@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Record } from "@web/model/relational_model/record";
 import { RelationalModel } from "@web/model/relational_model/relational_model";
 import { parseServerValue } from "@web/model/relational_model/utils";

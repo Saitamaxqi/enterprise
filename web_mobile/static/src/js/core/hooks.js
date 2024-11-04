@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import ServiceCore from "@web_mobile/js/services/core";
 
 import { onMounted, onPatched, onWillUnmount, useComponent } from "@odoo/owl";

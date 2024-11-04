@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { _t } from "@web/core/l10n/translation";
 import { KeepLast, Race } from "@web/core/utils/concurrency";
 import { Model } from "@web/model/model";

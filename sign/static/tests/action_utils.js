@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { patchWithCleanup } from "@web/../tests/helpers/utils";
 import { createWebClient } from "@web/../tests/webclient/helpers";
 import { Document } from "@sign/components/sign_request/document_signable";

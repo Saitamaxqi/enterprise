@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import BarcodePickingModel from "@stock_barcode/models/barcode_picking_model";
 import { patch } from "@web/core/utils/patch";
 import { _t } from "@web/core/l10n/translation";

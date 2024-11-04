@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { ConfirmationDialog, AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 
 export class TemplateAlertDialog extends AlertDialog {

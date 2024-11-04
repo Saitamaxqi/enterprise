@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { useSubEnv } from "@odoo/owl";
 
 import { TimesheetGridController } from "../timesheet_grid/timesheet_grid_controller";

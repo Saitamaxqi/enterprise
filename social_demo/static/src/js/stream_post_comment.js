@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { StreamPostCommentFacebook } from '@social_facebook/js/stream_post_comment';
 import { StreamPostCommentInstagram } from '@social_instagram/js/stream_post_comment';
 import { StreamPostCommentLinkedin } from '@social_linkedin/js/stream_post_comment';

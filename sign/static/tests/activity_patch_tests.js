@@ -1,5 +1,3 @@
-/* @odoo-module */
-
 import { serverState, startServer } from "@bus/../tests/helpers/mock_python_environment";
 
 import { start } from "@mail/../tests/helpers/test_utils";

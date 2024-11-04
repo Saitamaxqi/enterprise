@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { AbstractMacro } from "@knowledge/macros/abstract_macro";
 import { pasteElements } from "@knowledge/macros/utils";
 

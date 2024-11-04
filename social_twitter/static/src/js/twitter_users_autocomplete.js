@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { AutoComplete } from "@web/core/autocomplete/autocomplete";
 import { CharField, charField } from "@web/views/fields/char/char_field";
 import { registry } from "@web/core/registry";

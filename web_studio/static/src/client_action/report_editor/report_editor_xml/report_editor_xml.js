@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { Component, onWillStart, onWillUnmount, toRaw, useState } from "@odoo/owl";
 import { XmlResourceEditor } from "@web_studio/client_action/xml_resource_editor/xml_resource_editor";
 import { useEditorMenuItem } from "@web_studio/client_action/editor/edition_flow";

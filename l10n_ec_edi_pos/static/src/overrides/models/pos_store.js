@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { PosStore } from "@point_of_sale/app/store/pos_store";
 import { PartnerList } from "@point_of_sale/app/screens/partner_list/partner_list";
 import { PosOrder } from "@point_of_sale/app/models/pos_order";

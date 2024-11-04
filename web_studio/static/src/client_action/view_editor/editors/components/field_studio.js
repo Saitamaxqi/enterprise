@@ -1,4 +1,3 @@
-/** @odoo-module */
 import { Field } from "@web/views/fields/field";
 import { FieldContentOverlay } from "./field_content_overlay";
 

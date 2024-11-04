@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { PlanningAskRecurrenceUpdateDialog } from "./planning_ask_recurrence_update_dialog";
 
 export function planningAskRecurrenceUpdate(dialogService) {

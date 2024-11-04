@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { SUCCESS_SIGNAL } from "@web/webclient/clickbot/clickbot";
 import { createEnterpriseWebClient } from "@web_enterprise/../tests/helpers";

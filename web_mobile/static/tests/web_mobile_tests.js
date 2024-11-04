@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import testUtils from "@web/../tests/legacy_tests/helpers/test_utils";
 
 import { useBackButton } from "@web_mobile/js/core/hooks";

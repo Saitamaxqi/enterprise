@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import LineComponent from "@stock_barcode/components/line";
 import { patch } from "@web/core/utils/patch";
 

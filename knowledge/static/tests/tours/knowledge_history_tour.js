@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 /**
  * Knowledge history tour.
  * Features tested:

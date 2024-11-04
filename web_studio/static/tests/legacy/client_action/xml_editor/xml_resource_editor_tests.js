@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Component, reactive, xml } from "@odoo/owl";
 import { makeTestEnv } from "@web/../tests/helpers/mock_env";
 import { getFixture, nextTick } from "@web/../tests/helpers/utils";

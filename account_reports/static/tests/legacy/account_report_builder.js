@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { click, drag, editInput, getFixture } from "@web/../tests/helpers/utils";
 import { registerCleanup } from "@web/../tests/helpers/cleanup";
 import { makeView, setupViewRegistries } from "@web/../tests/views/helpers";

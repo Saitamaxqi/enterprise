@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { DocumentsAccessExpirationDateBtn } from "./documents_access_expiration_date_btn";
 import { DocumentsPermissionSelect } from "./documents_permission_select";
 import { DocumentsRemovePartnerButton } from "./documents_remove_partner_button";

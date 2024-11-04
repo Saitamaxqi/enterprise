@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { LazyComponent } from "@web/core/assets";
 import { cookie } from "@web/core/browser/cookie";

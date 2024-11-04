@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { AddSocialStreamDialog } from './add_stream_modal';
 import { NewContentRefreshBanner } from './stream_post_kanban_refresh_banner';

@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import BarcodePickingBatchModel from "@stock_barcode_picking_batch/models/barcode_picking_batch_model";
 import MainComponent from "@stock_barcode/components/main";
 import OptionLine from "@stock_barcode_picking_batch/components/option_line";

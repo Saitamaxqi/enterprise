@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { registry } from "@web/core/registry";
 import { formView } from "@web/views/form/form_view";
 import { ResourceFormController } from "@planning/views/resource_form/resource_form_controller";

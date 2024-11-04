@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { Component, onWillUnmount, onWillUpdateProps, useState } from "@odoo/owl";
 import { session } from "@web/session";
 

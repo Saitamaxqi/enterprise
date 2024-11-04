@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { StreamPostComment } from './stream_post_comment';
 import { Component } from "@odoo/owl";
 

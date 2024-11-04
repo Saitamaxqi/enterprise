@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { router, routerBus } from "@web/core/browser/router";
 import { useBus, useService } from '@web/core/utils/hooks';
 import { ActionContainer } from '@web/webclient/actions/action_container';

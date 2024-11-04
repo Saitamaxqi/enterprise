@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { useBus, useService } from '@web/core/utils/hooks';
 import { patch } from "@web/core/utils/patch";
 import { ProjectRightSidePanelSection } from '@project/components/project_right_side_panel/components/project_right_side_panel_section';

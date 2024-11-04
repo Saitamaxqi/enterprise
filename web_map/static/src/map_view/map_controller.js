@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import { _t } from "@web/core/l10n/translation";
 import { loadJS, loadCSS } from "@web/core/assets";
 import { useService } from "@web/core/utils/hooks";

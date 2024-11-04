@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { registry } from "@web/core/registry";
 import { formatFloatFactor } from "@web/views/fields/formatters";
 import { useGridCell, useMagnifierGlass } from "@web_grid/hooks/grid_cell_hook";

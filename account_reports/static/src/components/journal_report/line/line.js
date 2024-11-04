@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { AccountReport } from "@account_reports/components/account_report/account_report";
 import { AccountReportLine } from "@account_reports/components/account_report/line/line";
 

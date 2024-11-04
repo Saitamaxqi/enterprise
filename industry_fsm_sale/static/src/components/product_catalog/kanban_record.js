@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { useSubEnv } from "@odoo/owl";
 import { ProductCatalogKanbanRecord } from "@product/product_catalog/kanban_record";
 import { rpc } from "@web/core/network/rpc";

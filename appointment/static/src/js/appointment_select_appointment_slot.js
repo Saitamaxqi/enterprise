@@ -1,5 +1,3 @@
-/** @odoo-module **/
-
 import publicWidget from "@web/legacy/js/public/public_widget";
 import { renderToElement, renderToFragment } from "@web/core/utils/render";
 import { serializeDateTime, deserializeDateTime } from "@web/core/l10n/dates";

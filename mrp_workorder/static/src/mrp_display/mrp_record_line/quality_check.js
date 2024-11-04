@@ -1,5 +1,3 @@
-/** @odoo-module */
-
 import { _t } from "@web/core/l10n/translation";
 import { MrpWorkorder } from "./mrp_workorder";
 import { MrpQualityCheckConfirmationDialog } from "../dialog/mrp_quality_check_confirmation_dialog";
