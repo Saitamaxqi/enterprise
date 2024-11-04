@@ -1092,7 +1092,8 @@ class HrPayslip(models.Model):
                     end=slip.date_to,
                 ))
 
-            if (slip.contract_id.schedule_pay or slip.contract_id.structure_type_id.default_schedule_pay)\
+            if slip.struct_id.use_worked_day_lines \
+                    and (slip.contract_id.schedule_pay or slip.contract_id.structure_type_id.default_schedule_pay) \
                     and slip.date_from + slip._get_schedule_timedelta() != slip.date_to:
                 warnings.append(_("The duration of the payslip is not accurate according to the structure type."))
 
