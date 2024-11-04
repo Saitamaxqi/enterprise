@@ -410,7 +410,7 @@ export class ViewEditorModel extends Reactive {
 
     async editX2ManyView({ viewType, fieldName, record, xpath, fieldContext }) {
         const staticList = record.data[fieldName];
-        const resIds = staticList.records.map((r) => r.resId);
+        const resIds = staticList.records.map((r) => r.resId).filter(id => !!id);
         const resModel = staticList.resModel;
         const archTag = viewType;
 

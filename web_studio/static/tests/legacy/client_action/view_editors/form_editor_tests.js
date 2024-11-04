@@ -4609,4 +4609,55 @@ QUnit.module("View Editors", (hooks) => {
             );
         }
     );
+
+    QUnit.test("x2many list with virtual record", async function (assert) {
+        const action = serverData.actions["studio.coucou_action"];
+
+        action.views = [[1, "form"]];
+        action.res_model = "coucou";
+        serverData.views["coucou,1,form"] = /*xml */ `
+           <form>
+                <field name='product_ids'>
+                    <list>
+                        <field name="display_name" />
+                    </list>
+               </field>
+           </form>`;
+
+        const mockRPC = (route, args) => {
+            if (args.method === "onchange") {
+                return {
+                    value: {
+                        product_ids: [
+                            [
+                                0,
+                                0,
+                                {
+                                    display_name: "virtual",
+                                },
+                            ],
+                        ],
+                    },
+                };
+            }
+        };
+
+        const webClient = await createEnterpriseWebClient({ serverData, mockRPC });
+        await doAction(webClient, "studio.coucou_action");
+        assert.strictEqual(
+            target.querySelector(".o_form_view .o_field_one2many .o_data_row").textContent,
+            "virtual"
+        );
+        await openStudio(target);
+
+        await click(target.querySelector(".o_web_studio_form_view_editor .o_field_one2many"));
+        await click(
+            target.querySelector(
+                '.o_web_studio_form_view_editor .o_field_one2many .o_web_studio_editX2Many[data-type="list"]'
+            )
+        );
+
+        assert.containsOnce(target, ".o_view_controller.o_list_view");
+        assert.containsNone(target, ".o_data_row");
+    });
 });
