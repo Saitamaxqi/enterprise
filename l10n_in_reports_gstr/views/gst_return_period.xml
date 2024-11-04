@@ -173,7 +173,7 @@
                                 <small class="text-muted">Details submited by vendors</small>
 
                                 <div class="float-end text-white">
-                                    <field name="gstr2b_status" class="badge bg-secondary" invisible="gstr2b_status != 'not_recived'" nolabel="1"/>
+                                    <field name="gstr2b_status" class="badge bg-secondary" invisible="gstr2b_status != 'not_received'" nolabel="1"/>
                                     <field name="gstr2b_status" class="bg-warning badge" invisible="gstr2b_status not in ['waiting_reception', 'being_processed'] or gstr2b_blocking_level == 'error'" nolabel="1"/>
                                     <field name="gstr2b_status" class="bg-warning badge" invisible="gstr2b_status != 'partially_matched'" nolabel="1"/>
                                     <field name="gstr2b_status" class="badge bg-danger" invisible="gstr2b_status not in ['waiting_reception', 'being_processed'] or gstr2b_blocking_level != 'error'" nolabel="1"/>
@@ -183,26 +183,26 @@
                         </h2>
                         <div id="gstr2b-body">
                             <ol id="gstr2b-list" style="list-style-type:decimal">
-                                <li invisible="gstr2b_status != 'not_recived'">
+                                <li invisible="gstr2b_status != 'not_received'">
                                     <button name="action_get_gstr2b_data" type="object" class="btn btn-link p-0" string="Fetch GSTR-2B Summary"/>
                                 </li>
-                                <li invisible="gstr2b_status == 'not_recived'">
+                                <li invisible="gstr2b_status == 'not_received'">
                                     Fetch GSTR-2B Summary
                                 </li>
                                 <li>
                                     Match Vendor Bills
                                 </li>
-                                <li invisible="gstr2b_status == 'not_recived'">
+                                <li invisible="gstr2b_status == 'not_received'">
                                     In case of issues <button name="action_get_gstr2b_data" type="object" class="btn btn-link p-0" string="re-fetch"/> or <button name="gstr2b_match_data" type="object" class="btn btn-link p-0" string="re-match"/>
                                 </li>
-                                <li invisible="gstr2b_status != 'not_recived'">
+                                <li invisible="gstr2b_status != 'not_received'">
                                     In case of issues re-fetch or re-match
                                 </li>
 
-                                <li invisible="gstr2b_status == 'not_recived'">
+                                <li invisible="gstr2b_status == 'not_received'">
                                     <button name="action_get_gstr2b_view_reconciled_invoice" type="object" class="btn btn-link p-0" string="View Reconciled Bills"/>
                                 </li>
-                                <li invisible="gstr2b_status != 'not_recived'">
+                                <li invisible="gstr2b_status != 'not_received'">
                                     View Reconciled Bills
                                 </li>
                             </ol>
@@ -311,7 +311,7 @@
                             </div>
                             <div class="col-5">
                                 <h2> GSTR-2B </h2>
-                                <t t-if="record.gstr2b_status.raw_value == 'not_recived'">
+                                <t t-if="record.gstr2b_status.raw_value == 'not_received'">
                                     <t t-if="record.gstr2b_blocking_level.raw_value == 'error'">
                                         <span class="badge rounded-pill text-bg-danger fs-xs">Not Received</span>
                                     </t>

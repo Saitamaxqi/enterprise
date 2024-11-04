@@ -118,12 +118,12 @@ class L10n_InGstReturnPeriod(models.Model):
     # ===============================
 
     gstr2b_status = fields.Selection(selection=[
-        ('not_recived', 'Not Recived'),
+        ('not_received', 'Not Received'),
         ('waiting_reception', 'Waiting Reception'),
         ('being_processed', 'Being Processed'),
         ('partially_matched', 'Partially Matched'),
         ('fully_matched', 'Matched'),
-    ], default="not_recived", string="Status", readonly=True, tracking=True)
+    ], default="not_received", string="Status", readonly=True, tracking=True)
     # if there is big data then it's give in multi-json
     gstr2b_json_from_portal_ids = fields.Many2many('ir.attachment', string='GSTR2B JSON from portal')
     gstr2b_base_value = fields.Monetary("GSTR-2B Base Value")
@@ -176,7 +176,7 @@ class L10n_InGstReturnPeriod(models.Model):
     @api.constrains('month', 'quarter', 'year')
     def _check_gstr_status(self):
         for record in self:
-            if record.gstr1_status != 'to_send' or record.gstr2b_status != 'not_recived':
+            if record.gstr1_status != 'to_send' or record.gstr2b_status != 'not_received':
                 raise UserError(_("You cannot change GST filing period after sending/receiving GSTR data"))
 
     @api.onchange('year')
@@ -294,7 +294,7 @@ class L10n_InGstReturnPeriod(models.Model):
             )
         else:
             for record in self:
-                if record.gstr1_status != 'to_send' or record.gstr2b_status != 'not_recived':
+                if record.gstr1_status != 'to_send' or record.gstr2b_status != 'not_received':
                     raise UserError(_("You cannot delete GST Return Period after sending/receiving GSTR data"))
 
     def _cron_refresh_gst_token(self):
@@ -351,7 +351,7 @@ class L10n_InGstReturnPeriod(models.Model):
             'folder_id': self._get_gstr_document_folder().id,
             'mimetype': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
         })
-        self.gstr1_spreadsheet_id = xlsx_doc.clone_xlsx_into_spreadsheet(archive_source=True)
+        self.gstr1_spreadsheet_id = xlsx_doc._clone_xlsx_into_spreadsheet(archive_source=True)
         return self.action_open_gstr1_spreadsheet()
 
     def _get_gstr_document_folder(self):
