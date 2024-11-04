@@ -10,9 +10,8 @@ from odoo.osv import expression
 
 class AppraisalSurvey(Survey):
 
-    def _check_validity(self, survey_token, answer_token, ensure_token=True, check_partner=True):
-        survey_sudo, answer_sudo = self._fetch_from_access_token(survey_token, answer_token)
-        validity_code = super()._check_validity(survey_token, answer_token, ensure_token, check_partner)
+    def _check_validity(self, survey_sudo, answer_sudo, answer_token, ensure_token=True, check_partner=True):
+        validity_code = super()._check_validity(survey_sudo, answer_sudo, answer_token, ensure_token, check_partner)
 
         if validity_code == 'answer_wrong_user' and survey_sudo.survey_type == 'appraisal' and answer_sudo and check_partner:
             user_employees = request.env['hr.employee'].search([('user_id', '=', request.env.user.id)])
