@@ -426,7 +426,7 @@ class TestPayrollExpense(TestExpenseCommon, TestHrPayrollAccountCommon):
         ])
 
         # Edit the total_amount on the expense move by duplicating the product line
-        line_to_duplicate = expenses.account_move_id.line_ids.filtered(lambda line: 'Expense To Edit' in line.name)[:1]
+        line_to_duplicate = expenses.account_move_id.line_ids.filtered(lambda line: 'Expense To Edit' in (line.name or ""))[:1]
         line_to_duplicate.move_id.button_draft()
         line_to_duplicate.copy()
         line_to_duplicate.move_id.action_post()

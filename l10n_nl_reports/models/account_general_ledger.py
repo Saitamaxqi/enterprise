@@ -467,7 +467,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                                     account_code=row['account_code'],
                                     line_ref=row['line_ref'] and row['line_ref'][:docref_length] or '/',
                                     line_date=row['line_date'],
-                                    line_name=row['line_name'],
+                                    line_name=row['line_name'] or '',
                                     amount=row['line_credit'] or row['line_debit'],
                                     amount_type=amount_type(row['line_credit']),
                                     matching=row['line_reconcile_id'] and Markup("<recRef>{}</recRef>").format(row['line_reconcile_id']) or '',

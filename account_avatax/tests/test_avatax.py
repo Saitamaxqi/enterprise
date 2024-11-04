@@ -506,7 +506,7 @@ class TestAccountAvalaraInternal(TestAccountAvalaraInternalCommon):
             [
                 {'name': 'Accounting', 'balance': -295.00},  # Income account
                 {'name': 'Odoo User Initial Discount', 'balance': 295.00},  # Income account
-                {'name': '', 'balance': sum(t['tax'] for t in response['summary'])},  # AR
+                {'name': False, 'balance': sum(t['tax'] for t in response['summary'])},  # AR
                 {'name': 'CA STATE 6%', 'balance': -17.7},
                 {'name': 'CA COUNTY 0.25%', 'balance': -0.74},
                 {'name': 'CA SPECIAL 3%', 'balance': -8.85},
