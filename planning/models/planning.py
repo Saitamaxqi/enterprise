@@ -1044,6 +1044,33 @@ class PlanningSlot(models.Model):
         if not self.with_context(planning_slot_id=self.id).auto_plan_ids([('id', '=', self.id)])['open_shift_assigned']:
             return self._get_notification_action("danger", _("There are no resources available for this open shift."))
 
+    def _get_open_shifts_resources(self):
+        # Get all resources that have the role set on those shifts as default role or in their roles.
+        # open_shifts.role_id.ids wouldn't include False, yet we need this information
+        open_shift_role_ids = [shift.role_id.id for shift in self]
+        resources = self.env['resource.resource'].search([
+            ('calendar_id', '!=', False),
+            ('calendar_id.flexible_hours', '=', False),
+            '|',
+                ('default_role_id', 'in', open_shift_role_ids),
+                ('role_ids', 'in', open_shift_role_ids),
+        ])
+        # And make two dictionnaries out of it (default roles and roles). We will prioritize default roles.
+        resource_ids_per_role = defaultdict(list)
+        resource_ids_per_default_role = defaultdict(list)
+        for resource in resources:
+            resource_ids_per_default_role[resource.default_role_id].append(resource.id)
+            for role in resource.role_ids:
+                if role != resource.default_role_id:
+                    resource_ids_per_role[role].append(resource.id)
+        return resources, [resource_ids_per_default_role, resource_ids_per_role]
+
+    def _get_resources_dict_values(self, resource_dict):
+        self.ensure_one()
+        resource_ids = resource_dict.get(self.role_id, [])
+        shuffle(resource_ids)
+        return resource_ids
+
     @api.model
     def auto_plan_ids(self, view_domain):
         # We need to make sure we have a specified either one shift in particular or a period to look into.
@@ -1066,26 +1093,7 @@ class PlanningSlot(models.Model):
         min_start = min_start.astimezone(user_tz)
         max_end = max_end.astimezone(user_tz)
 
-        # Get all resources that have the role set on those shifts as default role or in their roles.
-        Resource = self.env['resource.resource']
-        # open_shifts.role_id.ids wouldn't include False, yet we need this information
-        open_shift_role_ids = [shift.role_id.id for shift in open_shifts]
-        resources = Resource.search([
-            ('calendar_id', '!=', False),
-            ('calendar_id.flexible_hours', '=', False),
-            '|',
-                ('default_role_id', 'in', open_shift_role_ids),
-                ('role_ids', 'in', open_shift_role_ids),
-        ])
-        # And make two dictionnaries out of it (default roles and roles). We will prioritize default roles.
-        resource_ids_per_role_id = defaultdict(list)
-        resource_ids_per_default_role_id = defaultdict(list)
-        for resource in resources:
-            resource_ids_per_default_role_id[resource.default_role_id.id].append(resource.id)
-            for role in resource.role_ids:
-                if role == resource.default_role_id:
-                    continue
-                resource_ids_per_role_id[role.id].append(resource.id)
+        resources, resources_dicts = open_shifts._get_open_shifts_resources()
         # Get the schedule of each resource in the period.
         schedule_intervals_per_resource_id, dummy = resources._get_valid_work_intervals(min_start, max_end)
 
@@ -1113,10 +1121,9 @@ class PlanningSlot(models.Model):
                 shift.end_datetime.astimezone(user_tz),
                 PlanningShift,
             )])
-            for resources_dict in [resource_ids_per_default_role_id, resource_ids_per_role_id]:
-                resource_ids = resources_dict[shift.role_id.id]
-                shuffle(resource_ids)
-                for resource in Resource.browse(resource_ids):
+            for resources_dict in resources_dicts:
+                resource_ids = shift._get_resources_dict_values(resources_dict)
+                for resource in self.env['resource.resource'].browse(resource_ids):
                     split_shift_intervals = shift_intervals & schedule_intervals_per_resource_id[resource.id]
                     # If the shift is out of resource's schedule, skip it.
                     if not split_shift_intervals:

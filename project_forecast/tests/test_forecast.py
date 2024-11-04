@@ -115,3 +115,39 @@ class TestForecastCreationAndEditing(TestCommonForecast):
         # Check that we cannot change the company of the project as it is already linked to shifts that are in another company
         with self.assertRaises(UserError):
             self.project_opera.company_id = new_company
+
+    @freeze_time('2019-06-06')
+    def test_auto_plan_closest_shift_from_same_project(self):
+        project = self.env['project.project'].create({'name': 'Planning Project'})
+        *dummy, slot_to_plan = self.env['planning.slot'].create([
+            {
+                'project_id': project.id,
+                'resource_id': self.employee_bert.resource_id.id,
+                'start_datetime': datetime(2019, 6, 3, 8, 0, 0),
+                'end_datetime': datetime(2019, 6, 3, 9, 0, 0),
+            },
+            {
+                'project_id': project.id,
+                'resource_id': self.employee_janice.resource_id.id,
+                'start_datetime': datetime(2019, 6, 4, 8, 0, 0),
+                'end_datetime': datetime(2019, 6, 4, 9, 0, 0),
+            },
+            {
+                'project_id': project.id,
+                'resource_id': self.employee_joseph.resource_id.id,
+                'start_datetime': datetime(2019, 6, 5, 8, 0, 0),
+                'end_datetime': datetime(2019, 6, 5, 9, 0, 0),
+            },
+            {
+                'project_id': project.id,
+                'start_datetime': datetime(2019, 6, 6, 8, 0, 0),
+                'end_datetime': datetime(2019, 6, 6, 9, 0, 0),
+            },
+        ])
+        slot_to_plan.auto_plan_id()
+        self.assertEqual(
+            slot_to_plan.resource_id,
+            self.employee_joseph.resource_id,
+            "The shift to plan should be linked to the resource of the closest shift (whose deadline is the closest "
+            "from the current date) of the same project."
+        )

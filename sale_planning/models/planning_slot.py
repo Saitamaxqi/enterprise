@@ -448,7 +448,7 @@ class PlanningSlot(models.Model):
 
     @api.model
     def _get_employee_to_assign_priority_list(self):
-        return ['previous_slot', 'default_role', 'roles']
+        return ['previous_slot', 'closest_so_line_slot', 'default_role', 'roles']
 
     def _get_employee_per_priority(self, priority, employee_ids_to_exclude, cache):
         """
@@ -465,6 +465,17 @@ class PlanningSlot(models.Model):
                 ('employee_id', 'not in', employee_ids_to_exclude),
             ], ['employee_id'], order='end_datetime:max desc, employee_id')
             cache[priority] = [employee.id for [employee] in search]
+        elif priority == 'closest_so_line_slot':
+            closest_slots = self.search([
+                ('sale_line_id.product_id', '=', self.sale_line_id.product_id.id),
+                ('sale_line_id.order_id.partner_id', '=', self.sale_line_id.order_id.partner_id.id),
+                ('employee_id', '!=', False),
+                ('start_datetime', '!=', False),
+                ('employee_id', 'not in', employee_ids_to_exclude),
+            ])
+            now = fields.Datetime.now()
+            closest_slots = closest_slots.sorted(key=lambda s: abs(s.end_datetime - now))
+            cache[priority] = closest_slots.employee_id.ids
         elif priority == 'default_role':
             search = self.env['hr.employee'].sudo().search([
                 ('default_planning_role_id', '=', self.role_id.id),

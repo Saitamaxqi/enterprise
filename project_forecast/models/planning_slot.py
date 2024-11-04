@@ -1,5 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from collections import defaultdict
+
 from odoo import api, fields, models
 from odoo.osv import expression
 
@@ -98,3 +100,30 @@ class PlanningSlot(models.Model):
             **super()._get_ics_description_data(),
             'project': self.project_id.sudo().display_name if self.project_id else '',
         }
+
+    def _get_open_shifts_resources(self):
+        # Get all resources of planned shifts having the same projects
+        resources, resources_dicts = super()._get_open_shifts_resources()
+        resource_ids_per_project = defaultdict(list)
+        now = fields.Datetime.now()
+        for project, slots in self._read_group(
+            domain=[
+                ('project_id', 'in', self.project_id.ids),
+                ('employee_id', '!=', False),
+                ('start_datetime', '!=', False),
+                ('employee_id.resource_id.calendar_id', '!=', False),
+                ('employee_id.resource_id.calendar_id.flexible_hours', '=', False),
+            ],
+            groupby=['project_id'],
+            aggregates=['id:recordset']
+        ):
+            # Sort them and add them to the resources recordset and dictionaries
+            slots_resources = slots.sorted(key=lambda s: abs(s.end_datetime - now)).resource_id
+            resource_ids_per_project[project] = slots_resources.ids
+            resources |= slots_resources
+        resources_dicts.insert(0, resource_ids_per_project)
+        return resources, resources_dicts
+
+    def _get_resources_dict_values(self, resource_dict):
+        self.ensure_one()
+        return resource_dict.get(self.project_id, super()._get_resources_dict_values(resource_dict))

@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from freezegun import freeze_time
 from psycopg2 import IntegrityError
 
+from odoo import Command
 from odoo.tests import Form, tagged
 from odoo.exceptions import UserError
 from odoo.tools import mute_logger, float_compare
@@ -432,3 +433,47 @@ class TestSalePlanning(TestCommonSalePlanning):
         # Check that we cannot change the company of the sales order as it is already linked to shifts that are in another company
         with self.assertRaises(UserError):
             self.plannable_so.company_id = new_company
+
+    def test_auto_plan_closest_shift_from_sol(self):
+        so1, so2, so3 = sales_orders = self.env['sale.order'].create([{
+            'partner_id': self.planning_partner.id,
+            'order_line': [Command.create({'product_id': self.plannable_product.id})],
+        }] * 3)
+        sales_orders.action_confirm()
+        so1.order_line.planning_slot_ids.with_context(
+            default_start_datetime='2019-06-03 08:00:00',
+            default_end_datetime='2019-06-03 09:00:00',
+            scale='week',
+            focus_date='2019-06-03 00:00:00',
+            planning_gantt_active_sale_order_id=so1.id,
+        ).write({
+            'start_datetime': '2019-06-03 08:00:00',
+            'end_datetime': '2019-06-03 09:00:00',
+            'resource_id': self.employee_wout.resource_id.id,
+        })
+        employee_max = self.env['hr.employee'].create({'name': 'Max'})
+        so2.order_line.planning_slot_ids.with_context(
+            default_start_datetime='2019-06-04 08:00:00',
+            default_end_datetime='2019-06-04 09:00:00',
+            scale='week',
+            focus_date='2019-06-04 00:00:00',
+            planning_gantt_active_sale_order_id=so2.id,
+        ).write({
+            'start_datetime': '2019-06-04 08:00:00',
+            'end_datetime': '2019-06-04 09:00:00',
+            'resource_id': employee_max.resource_id.id,
+        })
+        with freeze_time('2019-06-05'):
+            self.env['planning.slot'].with_context(
+                default_start_datetime='2019-06-03 00:00:00',
+                default_end_datetime='2019-06-09 23:59:59',
+                scale='week',
+                focus_date='2019-06-05 00:00:00',
+                planning_gantt_active_sale_order_id=so3.id,
+            ).auto_plan_ids(view_domain=[('start_datetime', '=', '2019-06-03 00:00:00'), ('end_datetime', '=', '2019-06-09 23:59:59')])
+        self.assertEqual(
+            so3.order_line.planning_slot_ids.resource_id,
+            employee_max.resource_id,
+            "The shift to plan of SO3 should be linked to the resource of SO2's shift because their SOL have "
+            "the same product, their customer is the same, and the shift's deadline is the closest from the current date."
+        )
