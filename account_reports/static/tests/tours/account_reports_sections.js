@@ -73,7 +73,7 @@ registry.category("web_tour.tours").add('account_reports_sections', {
         },
         {
             content: "Select another date in the future",
-            trigger: ".dropdown-menu span.dropdown-item:nth-child(3) .btn_next_date",
+            trigger: ".dropdown-menu .dropdown-item:nth-child(3) .btn_next_date",
             run: 'click'
         },
         {
@@ -97,19 +97,19 @@ registry.category("web_tour.tours").add('account_reports_sections', {
         },
         {
             content: "Select another date first time",
-            trigger: ".dropdown-menu span.dropdown-item:nth-child(3) .btn_previous_date",
+            trigger: ".dropdown-menu .dropdown-item:nth-child(3) .btn_previous_date",
             run: 'click'
         },
         {
-            trigger: `.dropdown-menu span.dropdown-item:nth-child(3) time:contains(${ DateTime.now().year})`,
+            trigger: `.dropdown-menu .dropdown-item:nth-child(3) input[data-value*='${ DateTime.now().year}']`,
         },
         {
             content: "Select another date second time",
-            trigger: ".dropdown-menu span.dropdown-item:nth-child(3) .btn_previous_date",
+            trigger: ".dropdown-menu .dropdown-item:nth-child(3) .btn_previous_date",
             run: 'click'
         },
         {
-            trigger: `.dropdown-menu span.dropdown-item:nth-child(3) time:contains(${ DateTime.now().minus({years: 1}).year })`,
+            trigger: `.dropdown-menu .dropdown-item:nth-child(3) input[data-value*='${ DateTime.now().minus({years: 1}).year }']`,
         },
         {
             content: "Apply filter by closing the dropdown",

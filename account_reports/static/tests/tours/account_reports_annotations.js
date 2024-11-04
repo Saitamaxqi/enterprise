@@ -259,7 +259,7 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
         },
         {
             content: "Open specific date button",
-            trigger: ".dropdown-menu div.dropdown-item",
+            trigger: ".dropdown-menu .dropdown-item[data-period-type='custom']",
             run: "click",
         },
         {

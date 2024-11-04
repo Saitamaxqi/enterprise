@@ -10,7 +10,7 @@ registry.category("web_tour.tours").add("account_reports_widgets", {
         },
         {
             content: "Select another date in the future",
-            trigger: ".dropdown-menu span.dropdown-item:nth-child(3) .btn_next_date",
+            trigger: ".dropdown-menu .dropdown-item:nth-child(3) .btn_next_date",
             run: 'click'
         },
         {
@@ -29,21 +29,21 @@ registry.category("web_tour.tours").add("account_reports_widgets", {
         },
         {
             content: "Select another date in the past first time",
-            trigger: ".dropdown-menu span.dropdown-item:nth-child(3) .btn_previous_date",
+            trigger: ".dropdown-menu .dropdown-item:nth-child(3) .btn_previous_date",
             run: 'click'
         },
         {
-            trigger: `.dropdown-menu span.dropdown-item:nth-child(3) time:contains(${new Date().getFullYear()})`,
+            trigger: `.dropdown-menu .dropdown-item:nth-child(3) input[data-value*='${new Date().getFullYear()}']`,
         },
         {
             content: "Select another date in the past second time",
-            trigger: ".dropdown-menu span.dropdown-item:nth-child(3) .btn_previous_date",
+            trigger: ".dropdown-menu .dropdown-item:nth-child(3) .btn_previous_date",
             run: 'click'
         },
         {
-            trigger: `.dropdown-menu span.dropdown-item:nth-child(3) time:contains(${
+            trigger: `.dropdown-menu .dropdown-item:nth-child(3) input[data-value*='${
                 new Date().getFullYear() - 1
-            })`,
+            }']`,
         },
         {
             content: "Apply filter by closing the dropdown",

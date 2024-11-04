@@ -8,7 +8,7 @@ import { DateTimeInput } from '@web/core/datetime/datetime_input';
 import { Dropdown } from "@web/core/dropdown/dropdown";
 import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { MultiRecordSelector } from "@web/core/record_selectors/multi_record_selector";
-import { formatDate} from "@web/core/l10n/dates";
+import { formatDate, parseDate } from "@web/core/l10n/dates";
 const { DateTime } = luxon;
 import { user } from "@web/core/user";
 
@@ -229,6 +229,100 @@ export class AccountReportFilters extends Component {
         };
     }
 
+    get dateNavigationOptions() {
+        /**
+         * Returns custom navigation options to fully navigate the date options with your keyboard.
+         */
+        const findNearestDropdownItem = (navigator) => {
+            for (let i = navigator.activeItemIndex; i >= 0; i--) {
+                if (navigator.items[i].target.classList.contains("o-dropdown-item")) {
+                    return navigator.items[i];
+                }
+            }
+        };
+
+        return {
+            hotkeys: {
+                arrowleft: (navigator) => {
+                    if (!navigator.activeItem) {
+                        return;
+                    }
+                    const periodType = findNearestDropdownItem(navigator)?.target.dataset.periodType;
+                    if (Object.prototype.hasOwnProperty.call(this.dateFilter, periodType)) {
+                        this.selectPreviousPeriod(periodType);
+                    }
+                },
+                arrowright: (navigator) => {
+                    if (!navigator.activeItem) {
+                        return;
+                    }
+                    const periodType = findNearestDropdownItem(navigator)?.target.dataset.periodType;
+                    if (Object.prototype.hasOwnProperty.call(this.dateFilter, periodType)) {
+                        this.selectNextPeriod(periodType);
+                    }
+                },
+                enter: {
+                    callback: (navigator) => {
+                        if (!navigator.activeItem) {
+                            return;
+                        }
+
+                        /**
+                         * Workaround for when we're editing a date field, but meanwhile hovering another dropdown item.
+                         * In that case, the active item in the navigator is the hovered one (not necessarily the one
+                         * we're editing). We check here if the current focused element on the page is an input (the one
+                         * we're editing) and in that case find the encompassing dropdown item and select it.
+                         */
+                        const focusedElement = document.activeElement;
+                        if (focusedElement.nodeName === "INPUT") {
+                            for (const navigatorItem of navigator.items) {
+                                if (navigatorItem.target.contains(focusedElement)) {
+                                    navigatorItem.setActive();
+                                    break;
+                                }
+                            }
+                        }
+
+                        const dropdownItem = findNearestDropdownItem(navigator);
+                        const isSelected = dropdownItem?.target.classList.contains("selected");
+                        const periodType = dropdownItem?.target.dataset.periodType;
+                        const mode = dropdownItem?.target.dataset.mode;
+                        const inputField =
+                            navigator.activeItem.target.nodeName === "INPUT"
+                                ? navigator.activeItem.target
+                                : dropdownItem?.target.querySelector("input.o_input");
+                        if (mode === "view" && periodType) {
+                            dropdownItem?.setActive();
+                            if (!isSelected) {
+                                // Select the period type on first enter.
+                                this.dateFilter.editing = false;
+                                this.filterClicked({
+                                    optionKey: "date.filter",
+                                    optionValue: periodType,
+                                    reload: true,
+                                });
+                            } else {
+                                // Make the input editable on second enter.
+                                this.editDateFilter(periodType, inputField);
+                            }
+                        } else if (mode === "edit" && periodType) {
+                            // Save the edited period and return focus to the dropdown item.
+                            this.saveDateFilter(periodType, inputField);
+                            dropdownItem?.setActive();
+                        } else if (periodType) {
+                            // Select the period type and potentially blur an input date field to trigger a save.
+                            inputField?.blur();
+                            this.selectDateFilter(periodType, true);
+                            dropdownItem?.setActive();
+                        }
+                    },
+                    bypassEditableProtection: true,
+                },
+            },
+            shouldFocusChildInput: false,
+        };
+    }
+
     get periodLabel() {
         return this.controller.options.comparison.number_period > 1 ? _t("Periods") : _t("Period");
     }
@@ -315,35 +409,62 @@ export class AccountReportFilters extends Component {
         switch (mode) {
             case "single":
                 return [
-                    {"name": _t("End of Month"), "period": "month"},
-                    {"name": _t("End of Quarter"), "period": "quarter"},
-                    {"name": _t("End of Year"), "period": "year"},
+                    {
+                        name: _t("End of Month"),
+                        period: "month",
+                        mode: this.dateFilter.editing === "month" ? "edit" : "view",
+                    },
+                    {
+                        name: _t("End of Quarter"),
+                        period: "quarter",
+                        mode: this.dateFilter.editing === "quarter" ? "edit" : "view",
+                    },
+                    {
+                        name: _t("End of Year"),
+                        period: "year",
+                        mode: this.dateFilter.editing === "year" ? "edit" : "view",
+                    },
                 ];
             case "range":
                 return [
-                    {"name": _t("Month"), "period": "month"},
-                    {"name": _t("Quarter"), "period": "quarter"},
-                    {"name": _t("Year"), "period": "year"},
+                    {
+                        name: _t("Month"),
+                        period: "month",
+                        mode: this.dateFilter.editing === "month" ? "edit" : "view",
+                    },
+                    {
+                        name: _t("Quarter"),
+                        period: "quarter",
+                        mode: this.dateFilter.editing === "quarter" ? "edit" : "view",
+                    },
+                    {
+                        name: _t("Year"),
+                        period: "year",
+                        mode: this.dateFilter.editing === "year" ? "edit" : "view",
+                    },
                 ];
             default:
-                throw new Error(`Invalid mode in dateFilters(): ${ mode }`);
+                throw new Error(`Invalid mode in dateFilters(): ${mode}`);
         }
     }
 
     initDateFilters() {
         const filters = {
-            "month": 0,
-            "quarter": 0,
-            "year": 0,
-            "tax_period": 0
+            month: 0,
+            quarter: 0,
+            year: 0,
+            tax_period: 0,
+            editing: false,
         };
 
         const specifier = this.controller.options.date.filter.split('_')[0];
         const periodType = this.controller.options.date.period_type;
         // In case the period is fiscalyear it will be computed exactly like a year period.
         const period = periodType === "fiscalyear" ? "year" : periodType;
-        // Set the filter value based on the specifier
-        filters[period] = this.controller.options.date.period || (specifier === 'previous' ? -1 : specifier === 'next' ? 1 : 0);
+        // Set the filter value based on the specifier.
+        if (Object.prototype.hasOwnProperty.call(filters, period)) {
+            filters[period] = this.controller.options.date.period || (specifier === 'previous' ? -1 : specifier === 'next' ? 1 : 0);
+        }
 
         return filters;
     }
@@ -353,14 +474,116 @@ export class AccountReportFilters extends Component {
             return `next_${periodType}`;
         } else if (this.dateFilter[periodType] === 0) {
             return `this_${periodType}`;
-        } else {
+        } else if (this.dateFilter[periodType] < 0) {
             return `previous_${periodType}`;
+        } else {
+            return periodType;
         }
     }
 
     selectDateFilter(periodType, reload = false) {
-        this.filterClicked({ optionKey: "date.filter", optionValue: this.getDateFilter(periodType)});
-        this.filterClicked({ optionKey: "date.period", optionValue: this.dateFilter[periodType], reload: reload});
+        if (this.isPeriodSelected(periodType)) {
+            return;
+        }
+        this.dateFilter.editing = false;
+        const offsetPeriod = Object.prototype.hasOwnProperty.call(this.dateFilter, periodType);
+        this.filterClicked({
+            optionKey: "date.filter",
+            optionValue: this.getDateFilter(periodType),
+            reload: !offsetPeriod && reload,
+        });
+        if (offsetPeriod) {
+            this.filterClicked({
+                optionKey: "date.period",
+                optionValue: this.dateFilter[periodType],
+                reload: reload,
+            });
+        }
+    }
+
+    editDateFilter(periodType, inputField) {
+        inputField?.select();
+        this.dateFilter.editing = periodType;
+    }
+
+    saveDateFilter(periodType, inputField) {
+        if (!this.dateFilter.editing) {
+            return;
+        }
+        const enteredValue = inputField?.value;
+        let dateFilterOffset = false;
+        if (periodType === "month") {
+            dateFilterOffset = this._parseMonthOffset(enteredValue);
+        } else if (periodType === "quarter") {
+            dateFilterOffset = this._parseQuarterOffset(enteredValue);
+        } else if (periodType === "year") {
+            dateFilterOffset = this._parseYearOffset(enteredValue);
+        } else if (periodType === "tax_period") {
+            dateFilterOffset = this._parseTaxPeriodOffset(enteredValue);
+        }
+        if (dateFilterOffset !== false) {
+            dateFilterOffset -= this.dateFilter[periodType];
+            this._changePeriod(periodType, dateFilterOffset);
+        }
+        inputField?.setSelectionRange(enteredValue.length, enteredValue.length);
+        this.dateFilter.editing = false;
+    }
+
+    _parseMonthOffset(input) {
+        try {
+            const monthTo = parseDate(input.trim(), { format: "MMMM yyyy" });
+            if (!monthTo.isValid) {
+                return false;
+            }
+            const compareDate = DateTime.now().startOf("month");
+            return monthTo.startOf("month").diff(compareDate, "months").months;
+        } catch {
+            return false;
+        }
+    }
+
+    _parseQuarterOffset(input) {
+        try {
+            const quarterTo = parseDate(input.split("-").pop().trim(), { format: "MMM yyyy" });
+            if (!quarterTo.isValid) {
+                return false;
+            }
+            const compareDate = DateTime.now().startOf("quarter");
+            return quarterTo.startOf("quarter").diff(compareDate, "quarters").quarters;
+        } catch {
+            return false;
+        }
+    }
+
+    _parseYearOffset(input) {
+        try {
+            const yearTo = parseDate(input, { format: "yyyy" });
+            if (!yearTo.isValid) {
+                return false;
+            }
+            const compareDate = DateTime.now().startOf("year");
+            return yearTo.startOf("year").diff(compareDate, "years").years;
+        } catch {
+            return false;
+        }
+    }
+
+    _parseTaxPeriodOffset(input) {
+        try {
+            const dateTo = parseDate(input.split("-").pop().trim());
+            if (!dateTo.isValid) {
+                return false;
+            }
+            const periodicitySettings = this.controller.options.tax_periodicity;
+            const [, compareTo] = this._computeTaxPeriodDates(periodicitySettings, DateTime.now());
+            const [, taxPeriodTo] = this._computeTaxPeriodDates(periodicitySettings, dateTo);
+            return (
+                taxPeriodTo.startOf("month").diff(compareTo.startOf("month"), "months").months /
+                periodicitySettings.months_per_period
+            );
+        } catch {
+            return false;
+        }
     }
 
     selectPreviousPeriod(periodType) {
@@ -429,15 +652,6 @@ export class AccountReportFilters extends Component {
         const periodicitySettings = this.controller.options.tax_periodicity;
         const targetDateInPeriod = dateTo.plus({months: periodicitySettings.months_per_period * this.dateFilter['tax_period']})
         const [start, end] = this._computeTaxPeriodDates(periodicitySettings, targetDateInPeriod);
-
-        if (periodicitySettings.start_month == 1 && periodicitySettings.start_day == 1) {
-            switch (periodicitySettings.months_per_period) {
-                case 1: return end.toFormat("MMMM yyyy");
-                case 3: return `Q${end.quarter} ${dateTo.year}`;
-                case 12: return end.toFormat("yyyy");
-            }
-        }
-
         return formatDate(start) + ' - ' + formatDate(end);
     }
 
@@ -449,7 +663,7 @@ export class AccountReportFilters extends Component {
         const startMonth = periodicitySettings.start_month;
         const startDay = periodicitySettings.start_day
         const monthsPerPeriod = periodicitySettings.months_per_period;
-        const aligned_date = dateInsideTargettesPeriod.minus({days: startDay - 1}) 
+        const aligned_date = dateInsideTargettesPeriod.minus({days: startDay - 1})
         let year = aligned_date.year;
         const monthOffset = aligned_date.month - startMonth;
 

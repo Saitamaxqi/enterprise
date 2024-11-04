@@ -4,19 +4,37 @@
         .date_filter:hover .btn_next_date:not(:disabled) {
             color: $o-gray-600;
         }
-        .filter_name { width: 120px }
-        .time_text { width: 120px }
+        .filter_name {
+            min-width: 10ch;
+            padding: 1px 0;
+            border: var(--border-width) solid transparent;
+            border-width: 0 0 var(--border-width) 0;
+            margin-right: 16px;
+        }
         .btn_previous_date, .btn_next_date {
             background: inherit;
-            border: none;
-            padding: 0;
-            width: 20px;
-            height: 20px;
+            border: var(--border-width) solid transparent;
+            border-width: 0 0 var(--border-width) 0;
             color: $o-gray-300;
+            padding: 1px 0;
+            text-align: center;
+            width: 20px;
         }
-        .dropdown-item.focus {
-            background: transparent;
-            &:hover { background: rgba(0, 0, 0, 0.08) }
+        .date_filter .o_input {
+            min-width: 20ch;
+            padding: 0 4px;
+            margin: 0 8px;
+            border-color: var(--o-input-border-color);
+            text-align: center;
+            &[readonly] {
+                cursor: pointer;
+            }
+            &[readonly]:not(:focus) {
+                border-color: transparent;
+            }
+            &:not([readonly]):focus {
+                @include print-variable(o-input-border-color, $o-action);
+            }
         }
     }
 
@@ -27,7 +45,7 @@
 
             .o_datetime_input {
                 display: inline;
-                width: 86px;
+                width: 10ch;
                 margin: 0 8px;
                 padding: 0 4px;
                 text-align: center;
