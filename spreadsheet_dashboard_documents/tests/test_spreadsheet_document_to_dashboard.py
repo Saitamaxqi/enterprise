@@ -41,6 +41,7 @@ class TestSpreadsheetDocumentToDashboard(TransactionCase):
                 "type": "ir.actions.client",
                 "tag": "action_spreadsheet_dashboard",
                 "name": "a dashboard",
+                "target": "main",
                 "params": {
                     "dashboard_id": dashboard_id,
                 },
@@ -81,6 +82,7 @@ class TestSpreadsheetDocumentToDashboard(TransactionCase):
                 "type": "ir.actions.client",
                 "tag": "action_spreadsheet_dashboard",
                 "name": "a document",
+                "target": "main",
                 "params": {
                     "dashboard_id": dashboard_id,
                 },

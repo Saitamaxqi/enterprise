@@ -56,6 +56,7 @@ class SpreadsheetDocumentToDashboard(models.TransientModel):
             "type": "ir.actions.client",
             "tag": "action_spreadsheet_dashboard",
             "name": self.name,
+            "target": "main",
             "params": {
                 "dashboard_id": dashboard.id,
             },
