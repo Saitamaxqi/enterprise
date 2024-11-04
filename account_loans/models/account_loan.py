@@ -79,7 +79,7 @@ class AccountLoan(models.Model):
     line_ids = fields.One2many('account.loan.line', 'loan_id', string='Loan Lines')  # Amortization schedule
 
     # Computed fields
-    display_name = fields.Char("Loan name", compute='_compute_display_name', store=True)  # stored for pivot view
+    display_name = fields.Char(string="Loan name", store=True)  # stored for pivot view
     start_date = fields.Date(compute='_compute_start_end_date')
     end_date = fields.Date(compute='_compute_start_end_date')
     is_wrong_date = fields.Boolean(compute='_compute_is_wrong_date')

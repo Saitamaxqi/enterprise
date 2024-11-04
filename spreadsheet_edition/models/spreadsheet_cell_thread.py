@@ -7,7 +7,7 @@ class SpreadsheetCellThread(models.Model):
 
     _inherit = ["mail.thread"]
 
-    display_name = fields.Char(compute="_compute_display_name", compute_sudo=True)
+    display_name = fields.Char(compute_sudo=True)
 
     def _compute_display_name(self):
         for record in self:

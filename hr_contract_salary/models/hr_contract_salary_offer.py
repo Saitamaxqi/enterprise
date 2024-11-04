@@ -26,7 +26,7 @@ class HrContractSalaryOffer(models.Model):
                     result[field] = contract[field]
         return result
 
-    display_name = fields.Char(string="Title", compute="_compute_display_name", search="_search_display_name", readonly=False)  # TODO read-only=False, but not inversed?
+    display_name = fields.Char(string="Title", readonly=False)  # TODO read-only=False, but not inversed?
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company.id, required=True)
     currency_id = fields.Many2one(related='company_id.currency_id')
     contract_template_id = fields.Many2one(

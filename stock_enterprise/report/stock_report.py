@@ -10,7 +10,6 @@ class StockReport(models.Model):
     _rec_name = 'id'
     _auto = False
 
-    id = fields.Integer("", readonly=True)
     date_done = fields.Datetime("Transfer Date", readonly=True)
     creation_date = fields.Datetime("Creation Date", readonly=True)
     scheduled_date = fields.Datetime("Expected Date", readonly=True)

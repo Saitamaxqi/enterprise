@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import fields, models, api
+from odoo import fields, models
 from odoo.tools import SQL
 
 
@@ -11,7 +10,7 @@ class MrpReport(models.Model):
     _auto = False
     _order = 'date_finished desc'
 
-    id = fields.Integer("", readonly=True)
+    id = fields.Id(string="")
     company_id = fields.Many2one('res.company', 'Company', readonly=True)
     currency_id = fields.Many2one('res.currency', 'Currency', readonly=True, required=True)
     production_id = fields.Many2one('mrp.production', "Manufacturing Order", readonly=True)
