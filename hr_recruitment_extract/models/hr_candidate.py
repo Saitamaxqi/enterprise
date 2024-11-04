@@ -42,7 +42,7 @@ class HrCandidate(models.Model):
                 splitting_characters = string.punctuation.replace('-', '') + ' ' + '\n'
                 ocr_tokens = re.sub('|'.join(re.escape(char) for char in splitting_characters), ' ', ocr_text_lower)
                 skills = set(self.env['hr.skill'].search([]).filtered(lambda skill: (
-                    re.search(rf'\s{re.escape(skill.name.lower())}\s', ocr_tokens)
+                    re.search(rf'\b{re.escape(skill.name.lower())}\b', ocr_tokens)
                     and len(skill.name) >= 3
                 )))
 
