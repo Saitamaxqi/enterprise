@@ -25,7 +25,6 @@
                                 string="Message"/>
                             <field name="instagram_image_ids"
                                 widget="many2many_binary"
-                                class="o_social_post_form_attachments"
                                 required="is_split_per_media and has_instagram_account and not instagram_message"
                                 string="Images"/>
                         </group>

@@ -120,7 +120,7 @@
                     <page string="Options" name="options">
                         <group>
                             <group string="Mailing" name="group_mailing">
-                                <field name="attachment_ids" widget="many2many_binary" string="Attach a file" class="oe_inline"/>
+                                <field name="attachment_ids" widget="many2many_binary" string="Attach a file"/>
                                 <field name="keep_archives" groups="base.group_no_one"/>
                                 <label for="reply_to"/>
                                 <div>

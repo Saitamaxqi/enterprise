@@ -35,7 +35,6 @@
                                 string=""/>
                             <field name="twitter_image_ids"
                                 widget="many2many_binary"
-                                class="o_social_post_form_attachments"
                                 required="is_split_per_media and has_twitter_account and not twitter_message"
                                 string="Images"/>
                         </group>

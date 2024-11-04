@@ -38,7 +38,6 @@
                                 placeholder="Write a message or upload an image"
                                 invisible="is_split_per_media"/>
                             <field name="image_ids" widget="many2many_binary"
-                                class="o_social_post_form_attachments"
                                 invisible="is_split_per_media"/>
                         </group>
                         <notebook name="media_customization" invisible="not is_split_per_media"/>

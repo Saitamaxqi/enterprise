@@ -27,7 +27,6 @@
                                 string="Message"/>
                             <field name="facebook_image_ids"
                                 widget="many2many_binary"
-                                class="o_social_post_form_attachments"
                                 required="is_split_per_media and has_facebook_account and not facebook_message"
                                 string="Images"/>
                         </group>

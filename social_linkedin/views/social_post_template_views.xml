@@ -26,7 +26,6 @@
                                 string="Message"/>
                             <field name="linkedin_image_ids"
                                 widget="many2many_binary"
-                                class="o_social_post_form_attachments"
                                 required="is_split_per_media and has_linkedin_account and not linkedin_message"
                                 string="Images"/>
                         </group>
