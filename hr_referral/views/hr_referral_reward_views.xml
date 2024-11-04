@@ -11,11 +11,23 @@
                 <field name="awarded_employees"/>
                 <field name="description"/>
                 <templates>
-                    <t t-name="card">
-                        <field name="name" class="fw-bolder fs-5"/>
-                        <span><field name="cost"/> Points</span>
-                        <span><field name="awarded_employees"/> Awarded Employees</span>
-                        <field name="description"/>
+                    <t t-name="card" class="flex-row">
+                        <main>
+                            <field name="name" class="fw-bolder fs-5"/>
+                            <span><field name="cost"/> Points</span>
+                            <span><field name="awarded_employees"/> Awarded Employees</span>
+                            <field name="description" class="fst-italic text-muted"/>
+                        </main>
+                        <aside>
+                            <field
+                                name="image"
+                                widget="image"
+                                alt="Reward"
+                                options="{'img_class': 'object-fit-contain'}"
+                                invisible="not image"
+                            />
+                            <field name="gift_manager_id" widget="referral_many2one_avatar_user"/>
+                        </aside>
                     </t>
                 </templates>
             </kanban>
@@ -43,7 +55,7 @@
                         <field name="description"/>
                         <field name="company_id" class="fst-italic" groups="base.group_multi_company"/>
                         <t t-if="record.points_missing.raw_value &lt; 1">
-                            <button name="buy" type="object" class="btn btn-primary w-100 " confirm="Do you want to confirm this reward? After confirmation an HR will contact you.">
+                            <button name="buy" type="object" class="btn btn-primary w-100 " confirm="Would you like to buy this reward? Once confirmed, an HR representative will reach out to you." confirm-label="Buy" cancel-label="Discard">
                                 <span title='Buy'><i class='fa fa-shopping-basket me-3' role="img" aria-label="Buy"/>Buy</span>
                             </button>
                         </t>
@@ -110,6 +122,7 @@
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
                 <field name="cost"/>
+                <field name="gift_manager_id"/>
                 <field name="activity_ids" widget="list_activity" optional="show"/>
                 <field name="awarded_employees"/>
                 <field name="company_id" groups="base.group_multi_company"/>

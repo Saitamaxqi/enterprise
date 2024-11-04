@@ -25,6 +25,7 @@ class HrReferralReward(models.Model):
     description = fields.Html(required=True)
     gift_manager_id = fields.Many2one('res.users', string='Gift Responsible',
         domain=_group_hr_referral_domain, help="User responsible of this gift.")
+    gift_manager_image = fields.Binary("Gift Responsible Image", related="gift_manager_id.image_1024")
     company_id = fields.Many2one('res.company', 'Company', default=lambda self: self.env.company, required=True)
     image = fields.Binary("Image",
         help="This field holds the image used as image for the product, limited to 1024x1024px.")
