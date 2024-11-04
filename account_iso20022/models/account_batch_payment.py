@@ -2,7 +2,6 @@
 
 from odoo import api, models, fields, _
 from odoo.exceptions import RedirectWarning, UserError
-from odoo.tools import float_repr
 
 import base64
 from datetime import datetime
@@ -91,14 +90,16 @@ class AccountBatchPayment(models.Model):
         no_bank_acc_payments = self.env['account.payment']
         too_big_payments = self.env['account.payment']
 
+        amount_upper_bounds = {
+            'sepa_ct': 999999999.99,
+            'iso20022_ch': 9999999999.99,
+        }
         for payment in self.payment_ids:
             if not payment.partner_bank_id:
                 no_bank_acc_payments += payment
 
-            max_digits = payment.currency_id.name == 'EUR' and 11 or 15
-
-            # The dot counts in this limit
-            if len(float_repr(payment.amount, 2)) >= max_digits:
+            amount_upper_bound = amount_upper_bounds.get(payment.payment_method_id.code, None)
+            if amount_upper_bound and payment.currency_id.compare_amounts(payment.amount, amount_upper_bound) > 0:
                 too_big_payments += payment
 
         if no_bank_acc_payments:
@@ -108,9 +109,6 @@ class AccountBatchPayment(models.Model):
             rslt.append({
                 'title': _("Some payments are above the maximum amount allowed."),
                 'records': too_big_payments,
-                'help': _("Maximum amount is %(maximum_euro)s for payments in Euros, "
-                          "%(maximum_other)s for other currencies.",
-                          maximum_euro=8 * '9' + ".99", maximum_other=12 * '9' + ".99")
             })
 
         return rslt
