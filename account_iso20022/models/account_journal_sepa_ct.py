@@ -127,3 +127,8 @@ class AccountJournal(models.Model):
         if payment_method_code == 'sepa_ct' and self.sepa_pain_version == 'pain.001.001.09':
             return '[A-Z0-9]{4,4}[A-Z]{2,2}[A-Z0-9]{2,2}([A-Z0-9]{3,3}){0,1}'
         return super()._get_regex_for_bic_code(payment_method_code)
+
+    def _get_SvcLvlText(self, payment_method_code):
+        if payment_method_code == 'sepa_ct':
+            return 'SEPA'
+        return super()._get_SvcLvlText(payment_method_code)

@@ -384,8 +384,7 @@ class AccountJournal(models.Model):
         return sanitize_communication(name[:name_length])
 
     def _get_SvcLvlText(self, payment_method_code):
-        # 'SEPA' covers the current cases of pain 03, 09, the Austrian and the German version.
-        return 'SEPA'
+        return None
 
     def _get_PstlAdr(self, partner_id, payment_method_code):
         partner_address = self.get_postal_address(partner_id, payment_method_code)

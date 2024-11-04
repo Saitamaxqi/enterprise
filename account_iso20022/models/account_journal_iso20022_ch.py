@@ -16,11 +16,6 @@ class AccountJournal(models.Model):
             return True
         return super()._skip_CdtrAgt(partner_bank, payment_method_code)
 
-    def _get_SvcLvlText(self, payment_method_code):
-        if payment_method_code == 'iso20022_ch':
-            return False
-        return super()._get_SvcLvlText(payment_method_code)
-
     def _get_Dbtr(self, payment_method_code):
         Dbtr = super()._get_Dbtr(payment_method_code)
         if payment_method_code == 'iso20022_ch':
