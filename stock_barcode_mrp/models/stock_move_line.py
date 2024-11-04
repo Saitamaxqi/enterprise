@@ -13,7 +13,8 @@ class StockMoveLine(models.Model):
     def _compute_hide_lot_name(self):
         super()._compute_hide_lot_name()
         for line in self:
-            if line.picking_code == 'mrp_operation':
+            production = line.production_id or line.move_id.production_id
+            if production and line.tracking in ('lot', 'serial'):
                 line.hide_lot = False
                 line.hide_lot_name = True
 

@@ -930,6 +930,17 @@ registry.category("web_tour.tours").add("test_barcode_production_add_byproduct",
                 helper.assertLinesCount(1);
             },
         },
+        // Check `lot_id` field is not displayed for untracked by-product.
+        { trigger: ".o_barcode_line .o_edit", run: "click" },
+        {
+            trigger: ".o_form_view_container",
+            run: () => {
+                const lotField = document.querySelector(".o_field_widget[name='lot_id'] input");
+                helper.assert(Boolean(lotField), false, "lot_id should not be visible");
+            },
+        },
+        { trigger: ".o_discard", run: "click" },
+        { trigger: ".o_add_byproduct" },
         // Try (unsuccesfully) to add the final product as a byproduct through scan
         {
             trigger: ".o_barcode_client_action",
@@ -955,6 +966,27 @@ registry.category("web_tour.tours").add("test_barcode_production_add_byproduct",
                 helper.assertLineQty(byProductLine, "1");
             },
         },
+        // Add tracked product (Compo Lot) as a by-product.
+        { trigger: ".o_barcode_client_action", run: "scan compo_lot" },
+        { trigger: ".o_barcode_line.o_selected div[name='lot'] .o_next_expected" },
+        { trigger: ".o_barcode_line.o_selected .o_edit", run: "click" },
+        {
+            trigger: ".o_form_view_container",
+            run: () => {
+                const lotField = document.querySelector(".o_field_widget[name='lot_id'] input");
+                helper.assert(Boolean(lotField), true, "lot_id should be visible");
+                helper.assert(lotField.value, "", "The added by-product should have no lot yet");
+            },
+        },
+        { trigger: ".o_field_widget[name=qty_done] input", run: "clear" },
+        { trigger: ".o_field_widget[name=qty_done] input", run: "edit 2" },
+        // Check we can create a new lot for by-product.
+        { trigger: ".o_field_widget[name=lot_id] input", run: "clear" },
+        { trigger: ".o_field_widget[name=lot_id] input", run: "edit byprod_lot_001" },
+        { trigger: ".dropdown-item:contains('byprod_lot_001')", run: "click" },
+        { trigger: ".o-autocomplete input:last-child" },
+        { trigger: ".o_save", run: "click" },
+        // Validate by-products and then validate the manufacturing operation.
         {
             trigger: ".o_save_byproduct",
             run: "click",

@@ -394,6 +394,11 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         self.clean_access_rights()
         grp_by_product = self.env.ref('mrp.group_mrp_byproducts')
         self.env.user.write({'groups_id': [(4, grp_by_product.id, 0)]})
+        # Disable creation of new lots for component, the purpose is to check
+        # by-products lots can still be created anyway.
+        self.env['stock.picking.type'].search(
+            [('code', '=', 'mrp_operation')], limit=1
+        ).use_create_components_lots = False
         # Creates a BoM.
         component02 = self.env['product.product'].create({
             'name': 'Compo 02',
@@ -419,8 +424,10 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         url = "/odoo/action-stock_barcode.stock_picking_type_action_kanban"
         self.start_tour(url, 'test_barcode_production_add_byproduct', login='admin', timeout=180)
         mo = self.env['mrp.production'].search([], order='id desc', limit=1)
-        self.assertEqual(len(mo.move_byproduct_ids), 1)
-        self.assertEqual(mo.move_byproduct_ids.product_id.display_name, 'By Product')
+        self.assertEqual(len(mo.move_byproduct_ids), 2)
+        self.assertEqual(mo.move_byproduct_ids[0].product_id.display_name, 'By Product')
+        self.assertEqual(mo.move_byproduct_ids[1].product_id.display_name, 'Compo Lot')
+        self.assertEqual(mo.move_byproduct_ids[1].lot_ids.name, 'byprod_lot_001')
 
     def test_split_line_on_exit_for_production(self):
         """ Ensures that exit an unfinished MO will split the uncompleted move lines to have one
