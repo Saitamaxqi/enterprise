@@ -58,7 +58,10 @@ class Pos_Preparation_DisplayDisplay(models.Model):
         self.ensure_one()
         PosPreparationDisplayOrder = self.env['pos_preparation_display.order']
         open_orders = self.env['pos_preparation_display.order.stage']._read_group(
-            domain=[('preparation_display_id', '=', self.id)],
+            domain=[
+                ('preparation_display_id', '=', self.id),
+                ('order_id.pos_order_id.session_id.state', 'not in', ['closed', 'closing_control']),
+            ],
             groupby=['order_id'],
             having=[('done:bool_or', '=', False)],
         )
