@@ -91,7 +91,7 @@ class AccountBatchPayment(models.Model):
         no_bank_acc_payments = self.env['account.payment']
         too_big_payments = self.env['account.payment']
 
-        for payment in self.payment_ids.filtered(lambda x: x.state == 'posted'):
+        for payment in self.payment_ids:
             if not payment.partner_bank_id:
                 no_bank_acc_payments += payment
 
@@ -103,6 +103,8 @@ class AccountBatchPayment(models.Model):
 
         if no_bank_acc_payments:
             rslt.append({'title': _("Some payments have no recipient bank account set."), 'records': no_bank_acc_payments})
+
+        if too_big_payments:
             rslt.append({
                 'title': _("Some payments are above the maximum amount allowed."),
                 'records': too_big_payments,
