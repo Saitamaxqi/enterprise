@@ -247,8 +247,9 @@ export class DocumentsSearchModel extends SearchModel {
                 Domain.or([
                     Domain.and([[['folder_id', '=', false]], [['owner_id', '!=', this.documentService.store.odoobot.userId]]]),
                     // a non-accessible parent would still be found with its id (not False), and using `not any` (not, !=, 'none')
-                    // is much simpler than implementing searching for 'user permission', '=', 'none'.
-                    Domain.and([[['folder_id', '!=', false]], [['folder_id', 'not any', [['user_permission', '!=', 'none']]]]]),
+                    // is much simpler than implementing searching for 'user permission', '=', 'none'
+                    // (the != 'none' will be added because of the access rules).
+                    Domain.and([[['folder_id', '!=', false]], [['folder_id', 'not any', []]]]),
                 ])
             ]).toList();
         }
