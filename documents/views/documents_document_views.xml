@@ -296,10 +296,13 @@
             <form>
                 <sheet>
                     <div class="oe_title">
-                        <label for="name"/>
                         <h1><field name="name" placeholder="e.g. Finance" options="{'line_breaks': False}" widget="text" readonly="False"/></h1>
                     </div>
                 </sheet>
+                <footer>
+                    <button special="save" data-hotkey="q" string="Rename" class="btn btn-primary"/>
+                    <button special="cancel" data-hotkey="x" string="Discard" class="btn-secondary"/>
+                </footer>
             </form>
         </field>
     </record>
