@@ -1,7 +1,7 @@
 import { patch } from "@web/core/utils/patch";
 import { TicketScreen } from "@point_of_sale/app/screens/ticket_screen/ticket_screen";
 import { AddInfoPopup } from "@l10n_pe_edi_pos/app/add_info_popup/add_info_popup";
-import { makeAwaitable } from "@point_of_sale/app/store/make_awaitable_dialog";
+import { makeAwaitable } from "@point_of_sale/app/utils/make_awaitable_dialog";
 
 patch(TicketScreen.prototype, {
     //@override

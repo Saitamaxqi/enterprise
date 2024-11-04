@@ -1,4 +1,4 @@
-import { BasePrinter } from "@point_of_sale/app/printer/base_printer";
+import { BasePrinter } from "@point_of_sale/app/utils/printer/base_printer";
 
 /**
  * Used to send print requests to the IoT box thru the provided `device` - a `DeviceController` instance.

@@ -1,4 +1,4 @@
-import { DebugWidget } from "@point_of_sale/app/debug/debug_widget";
+import { DebugWidget } from "@point_of_sale/app/utils/debug/debug_widget";
 import { patch } from "@web/core/utils/patch";
 
 patch(DebugWidget.prototype, {
