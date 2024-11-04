@@ -1,9 +1,10 @@
 import { ListController } from "@web/views/list/list_controller";
 import { _t } from "@web/core/l10n/translation";
+import { DocumentsControllerMixin } from "@documents/views/documents_controller_mixin";
 import { openDeleteConfirmationDialog, preSuperSetup, useDocumentView } from "@documents/views/hooks";
 import { useRef, useState } from "@odoo/owl";
 
-export class DocumentsListController extends ListController {
+export class DocumentsListController extends DocumentsControllerMixin(ListController) {
     static template = "documents.DocumentsListController";
     setup() {
         preSuperSetup();
@@ -15,12 +16,6 @@ export class DocumentsListController extends ListController {
         this.documentStates = useState({
             previewStore: {},
         });
-    }
-
-    get modelParams() {
-        const modelParams = super.modelParams;
-        modelParams.multiEdit = true;
-        return modelParams;
     }
 
     /**

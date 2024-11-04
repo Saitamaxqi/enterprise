@@ -5,14 +5,16 @@ import { useBus, useService } from "@web/core/utils/hooks";
 import { DocumentsDropZone } from "../helper/documents_drop_zone";
 import { FileUploadProgressContainer } from "@web/core/file_upload/file_upload_progress_container";
 import { FileUploadProgressKanbanRecord } from "@web/core/file_upload/file_upload_progress_record";
+import { DocumentsRendererMixin } from "@documents/views/documents_renderer_mixin";
 import { DocumentsKanbanRecord } from "./documents_kanban_record";
 import { DocumentsActionHelper } from "../helper/documents_action_helper";
 import { DocumentsFileViewer } from "../helper/documents_file_viewer";
+import { DocumentsDetailsPanel } from "@documents/components/documents_details_panel/documents_details_panel";
 import { useCommand } from "@web/core/commands/command_hook";
 import { useRef, useState } from "@odoo/owl";
 import { Chatter } from "@mail/chatter/web_portal/chatter";
 
-export class DocumentsKanbanRenderer extends KanbanRenderer {
+export class DocumentsKanbanRenderer extends DocumentsRendererMixin(KanbanRenderer) {
     static props = [...KanbanRenderer.props, "previewStore"];
     static template = "documents.DocumentsKanbanRenderer";
     static components = Object.assign({}, KanbanRenderer.components, {
@@ -22,6 +24,7 @@ export class DocumentsKanbanRenderer extends KanbanRenderer {
         KanbanRecord: DocumentsKanbanRecord,
         DocumentsActionHelper,
         DocumentsFileViewer,
+        DocumentsDetailsPanel,
         Chatter,
     });
 
@@ -171,15 +174,6 @@ export class DocumentsKanbanRenderer extends KanbanRenderer {
 
     get isMobile() {
         return this.env.isSmall;
-    }
-
-    /**
-     * Records on which we will execute the actions / see the chatter.
-     */
-    get targetRecords() {
-        return this.chatterState.previewedDocument
-            ? [this.chatterState.previewedDocument.record]
-            : this.props.list.selection;
     }
 
     /**
