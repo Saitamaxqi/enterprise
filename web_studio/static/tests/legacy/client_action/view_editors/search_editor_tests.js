@@ -727,4 +727,60 @@ QUnit.module("View Editors", (hooks) => {
             "Last Updated on"
         );
     });
+
+    QUnit.test('integer field can be dropped in "Group by" sections', async function (assert) {
+        const arch = `<search>
+                <field name='display_name'/>
+                <group expand='0' string='Group By'>
+                    <filter name='groupby_display_name' domain='[]' context="{'group_by':'display_name'}"/>
+                    <filter name='groupby_id' domain='[]' context="{'group_by':'id'}"/>
+                </group>
+            </search>`;
+        serverData.models.coucou = {
+            fields: {
+                id: { type: "integer", store: true },
+            },
+        };
+
+        await createViewEditor({
+            serverData,
+            type: "search",
+            resModel: "coucou",
+            arch: `<search>
+                    <field name='display_name'/>
+                    <group expand='0' string='Group By'>
+                        <filter name='groupby_display_name' domain='[]' context="{'group_by':'display_name'}"/>
+                    </group>
+                </search>`,
+            mockRPC: function (route, args) {
+                if (route === "/web_studio/edit_view") {
+                    assert.step("edit_view");
+                    assert.strictEqual(
+                        args.operations[0].node.attrs.context,
+                        "{'group_by': 'id'}"
+                    );
+                    changeArch(args.view_id, arch);
+                }
+            },
+        });
+
+        assert.containsN(
+            target,
+            ".o-web-studio-search--groupbys [data-studio-xpath]",
+            1,
+            "should have 1 group inside groupby dropdown"
+        );
+
+        await dragAndDrop(
+            target.querySelector(".o_web_studio_existing_fields > .o_web_studio_field_integer"),
+            target.querySelector(".o-web-studio-search--groupbys .o_web_studio_hook")
+        );
+        assert.verifySteps(["edit_view"]);
+        assert.containsN(
+            target,
+            ".o-web-studio-search--groupbys [data-studio-xpath]",
+            2,
+            "should have 2 group inside groupby dropdown"
+        );
+    });
 });

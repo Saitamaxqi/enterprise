@@ -436,6 +436,7 @@ const GROUPABLE_TYPES = [
     "selection",
     "date",
     "datetime",
+    "integer",
 ];
 
 function fieldCanBeFilter(field) {
