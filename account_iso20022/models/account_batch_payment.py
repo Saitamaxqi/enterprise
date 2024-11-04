@@ -136,7 +136,7 @@ class AccountBatchPayment(models.Model):
     def _get_payment_vals(self, payment):
         return {
             'id': payment.id,
-            'name': str(payment.id) + '-' + (payment.memo or 'SCT-' + self.journal_id.code + '-' + str(fields.Date.today())),
+            'name': str(payment.id) + '-' + (payment.memo or self.journal_id.code + '-' + str(fields.Date.today())),
             'payment_date': payment.date,
             'amount': payment.amount,
             'journal_id': self.journal_id.id,
