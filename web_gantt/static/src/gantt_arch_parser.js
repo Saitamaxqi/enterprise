@@ -1,4 +1,4 @@
-import { getLocalWeekNumber } from "@web/core/l10n/dates";
+import { getLocalYearAndWeek } from "@web/core/l10n/dates";
 import { _t } from "@web/core/l10n/translation";
 import { evaluateExpr } from "@web/core/py_js/py";
 import { exprToBoolean } from "@web/core/utils/strings";
@@ -42,7 +42,7 @@ const SCALES = {
         colHeaderFormatter: (date) => date.toFormat("dd"),
 
         unit: "week",
-        groupHeaderFormatter: (date) => date.toFormat(`'W${getLocalWeekNumber(date)}' yyyy`),
+        groupHeaderFormatter: formatLocalWeekYear,
 
         defaultRange: { unit: "week", count: 3 },
     },
@@ -57,7 +57,7 @@ const SCALES = {
         colHeaderFormatter: (date) => date.toFormat("dd"),
 
         unit: "week",
-        groupHeaderFormatter: (date) => date.toFormat(`'W${getLocalWeekNumber(date)}' yyyy`),
+        groupHeaderFormatter: formatLocalWeekYear,
 
         defaultRange: { unit: "week", count: 6 },
     },
@@ -107,6 +107,17 @@ const SCALES = {
         defaultRange: { unit: "year", count: 1 },
     },
 };
+
+/**
+ * Formats a date to a `'W'W kkkk` datetime string, in the user's locale settings.
+ *
+ * @param {Date|luxon.DateTime} date
+ * @returns {string}
+ */
+function formatLocalWeekYear(date) {
+    const { year, week } = getLocalYearAndWeek(date);
+    return `W${week} ${year}`;
+}
 
 function getPreferedScaleId(scaleId, scales) {
     // we assume that scales is not empty
