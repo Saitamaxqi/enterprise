@@ -300,7 +300,6 @@
                 <progressbar field="kanban_state" colors='{"done": "success", "blocked": "danger", "normal": "200"}'/>
                 <templates>
                     <t t-name="menu">
-                        <t t-if="widget.editable"><a type="open" class="dropdown-item" role="menuitem">Edit</a></t>
                         <a name="action_unarchive" type="object" class="dropdown-item" role="menuitem" t-if="! record.active.value">Restore</a>
                         <field name="color" widget="kanban_color_picker"/>
                     </t>
