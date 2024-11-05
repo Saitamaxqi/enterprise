@@ -11,6 +11,7 @@
                 multiSelect="true"
                 onSelect.bind="onSelectPartnerToInvite"
                 onInput.bind="onSearchPartners"
+                onOpen.bind="() => this.onSearchPartners('')"
                 required="true"
                 searchPlaceholder="'Search people'"
                 togglerClass="props.invitePage ? 'o_documents_permission_panel_select_invite' : ''"

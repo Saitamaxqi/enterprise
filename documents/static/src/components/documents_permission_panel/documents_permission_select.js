@@ -36,6 +36,7 @@ export class DocumentsPermissionSelectMenu extends SelectMenu {
         ...super.props,
         buttonText: { type: String, optional: true },
         hasColor: { type: Boolean, optional: true },
+        onOpen: { type: Function, optional: true },
     };
     static template = "documents.PermissionSelectMenu";
 
@@ -43,6 +44,7 @@ export class DocumentsPermissionSelectMenu extends SelectMenu {
         super.onStateChanged(open);
         if (open) {
             this.menuRef.el.querySelector("input").focus();
+            this.props.onOpen?.();
         }
     }
 

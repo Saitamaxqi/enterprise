@@ -10,7 +10,7 @@ import { isEmpty } from "@html_editor/utils/dom_info";
 import { Wysiwyg } from "@html_editor/wysiwyg";
 import { HtmlMailField } from "@mail/views/web/fields/html_mail_field/html_mail_field";
 import { _t } from "@web/core/l10n/translation";
-import { Component, onWillStart, onWillUpdateProps, useState } from "@odoo/owl";
+import { Component, onWillUpdateProps, useState } from "@odoo/owl";
 
 const cssRulesByElement = new WeakMap();
 
@@ -58,12 +58,6 @@ export class DocumentsMemberInvite extends Component {
             message: "",
         };
         useBus(rpcBus, "RPC:RESPONSE", this.responseCall);
-
-        onWillStart(async () => {
-            this.state.fetchedPartners = await this.getPartners([
-                ["id", "not in", this.props.accessPartners.map((a) => a.partner_id.id)],
-            ]);
-        });
 
         onWillUpdateProps((nextProps) => {
             if (!nextProps.invitePage) {
