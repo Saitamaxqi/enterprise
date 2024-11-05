@@ -54,28 +54,28 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCommo
                 'iban': {'selected_value': {'content': 'BE01234567890123'}, 'candidates': []},
                 'invoice_lines': [
                     {
-                        'description': {'selected_value': {'content': 'Test 1'}},
-                        'unit_price': {'selected_value': {'content': 100}},
-                        'quantity': {'selected_value': {'content': 1}},
-                        'taxes': {'selected_values': [{'content': 15, 'amount_type': 'percent'}]},
-                        'subtotal': {'selected_value': {'content': 100}},
-                        'total': {'selected_value': {'content': 115}},
+                        'description': 'Test 1',
+                        'unit_price': 100,
+                        'quantity': 1,
+                        'taxes': [15],
+                        'subtotal': 100,
+                        'total': 115,
                     },
                     {
-                        'description': {'selected_value': {'content': 'Test 2'}},
-                        'unit_price': {'selected_value': {'content': 50}},
-                        'quantity': {'selected_value': {'content': 2}},
-                        'taxes': {'selected_values': [{'content': 0, 'amount_type': 'percent'}]},
-                        'subtotal': {'selected_value': {'content': 100}},
-                        'total': {'selected_value': {'content': 100}},
+                        'description': 'Test 2',
+                        'unit_price': 50,
+                        'quantity': 2,
+                        'taxes': [0],
+                        'subtotal': 100,
+                        'total': 100,
                     },
                     {
-                        'description': {'selected_value': {'content': 'Test 3'}},
-                        'unit_price': {'selected_value': {'content': 20}},
-                        'quantity': {'selected_value': {'content': 5}},
-                        'taxes': {'selected_values': [{'content': 15, 'amount_type': 'percent'}]},
-                        'subtotal': {'selected_value': {'content': 100}},
-                        'total': {'selected_value': {'content': 115}},
+                        'description': 'Test 3',
+                        'unit_price': 20,
+                        'quantity': 5,
+                        'taxes': [15],
+                        'subtotal': 100,
+                        'total': 115,
                     },
                 ],
             }],
@@ -162,18 +162,18 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCommo
 
             self.assertEqual(len(invoice.invoice_line_ids), 3)
             for i, invoice_line in enumerate(invoice.invoice_line_ids):
-                self.assertEqual(invoice_line.name, extract_response['results'][0]['invoice_lines'][i]['description']['selected_value']['content'])
-                self.assertEqual(invoice_line.price_unit, extract_response['results'][0]['invoice_lines'][i]['unit_price']['selected_value']['content'])
-                self.assertEqual(invoice_line.quantity, extract_response['results'][0]['invoice_lines'][i]['quantity']['selected_value']['content'])
-                tax = extract_response['results'][0]['invoice_lines'][i]['taxes']['selected_values'][0]
-                if tax['content'] == 0:
+                self.assertEqual(invoice_line.name, extract_response['results'][0]['invoice_lines'][i]['description'])
+                self.assertEqual(invoice_line.price_unit, extract_response['results'][0]['invoice_lines'][i]['unit_price'])
+                self.assertEqual(invoice_line.quantity, extract_response['results'][0]['invoice_lines'][i]['quantity'])
+                tax = extract_response['results'][0]['invoice_lines'][i]['taxes'][0]
+                if tax == 0:
                     self.assertEqual(len(invoice_line.tax_ids), 0)
                 else:
                     self.assertEqual(len(invoice_line.tax_ids), 1)
-                    self.assertEqual(invoice_line.tax_ids[0].amount, tax['content'])
+                    self.assertEqual(invoice_line.tax_ids[0].amount, tax)
                     self.assertEqual(invoice_line.tax_ids[0].amount_type, 'percent')
-                self.assertEqual(invoice_line.price_subtotal, extract_response['results'][0]['invoice_lines'][i]['subtotal']['selected_value']['content'])
-                self.assertEqual(invoice_line.price_total, extract_response['results'][0]['invoice_lines'][i]['total']['selected_value']['content'])
+                self.assertEqual(invoice_line.price_subtotal, extract_response['results'][0]['invoice_lines'][i]['subtotal'])
+                self.assertEqual(invoice_line.price_total, extract_response['results'][0]['invoice_lines'][i]['total'])
 
     def test_included_default_tax(self):
         # test that a tax included coming from the account is not removed from the lines even if it's not detected
@@ -192,7 +192,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCommo
         extract_response['results'][0]['total']['selected_value']['content'] = 300
         for line in extract_response['results'][0]['invoice_lines']:
             line['total'] = line['subtotal']
-            line['taxes']['selected_values'] = []
+            line['taxes'] = []
 
         with self._mock_iap_extract(extract_response=extract_response):
             invoice._check_ocr_status()
@@ -450,12 +450,12 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCommo
         extract_response['results'][0]['subtotal']['selected_value']['content'] = 100
         extract_response['results'][0]['invoice_lines'] = [
             {
-                'description': {'selected_value': {'content': 'Test 1'}},
-                'unit_price': {'selected_value': {'content': 100}},
-                'quantity': {'selected_value': {'content': 1}},
-                'taxes': {'selected_values': [{'content': 12.34, 'amount_type': 'percent'}]},
-                'subtotal': {'selected_value': {'content': 100}},
-                'total': {'selected_value': {'content': 123.4}},
+                'description': 'Test 1',
+                'unit_price': 100,
+                'quantity': 1,
+                'taxes': [12.34],
+                'subtotal': 100,
+                'total': 123.4,
             },
         ]
 
@@ -895,12 +895,12 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCommo
         extract_response['results'][0]['subtotal']['selected_value']['content'] = 100
         extract_response['results'][0]['invoice_lines'] = [
             {
-                'description': {'selected_value': {'content': 'Test 1'}},
-                'unit_price': {'selected_value': {'content': 100}},
-                'quantity': {'selected_value': {'content': 1}},
-                'taxes': {'selected_values': [{'content': 12, 'amount_type': 'percent'}]},
-                'subtotal': {'selected_value': {'content': 100}},
-                'total': {'selected_value': {'content': 112}},
+                'description': 'Test 1',
+                'unit_price': 100,
+                'quantity': 1,
+                'taxes': [12],
+                'subtotal': 100,
+                'total': 112,
             },
         ]
 

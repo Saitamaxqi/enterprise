@@ -14,7 +14,7 @@ from odoo.tools.misc import clean_context, formatLang
 _logger = logging.getLogger(__name__)
 
 PARTNER_AUTOCOMPLETE_ENDPOINT = 'https://partner-autocomplete.odoo.com'
-OCR_VERSION = 122
+OCR_VERSION = 123
 
 
 class AccountInvoice_ExtractWords(models.Model):
@@ -614,10 +614,10 @@ class AccountMove(models.Model):
         if self.company_id.extract_single_line_per_tax:
             merged_lines = {}
             for il in invoice_lines:
-                total = self._get_ocr_selected_value(il, 'total', 0.0)
-                subtotal = self._get_ocr_selected_value(il, 'subtotal', total)
-                taxes_ocr = [value['content'] for value in il.get('taxes', {}).get('selected_values', [])]
-                taxes_type_ocr = [value.get('amount_type', 'percent') for value in il.get('taxes', {}).get('selected_values', [])]
+                total = il.get('total', 0.0)
+                subtotal = il.get('subtotal', total)
+                taxes_ocr = il.get('taxes', [])
+                taxes_type_ocr = ['percent'] * len(il.get('taxes', []))
                 taxes_records = self._get_taxes_record(taxes_ocr, taxes_type_ocr)
 
                 if not taxes_records and taxes_ocr:
@@ -653,13 +653,13 @@ class AccountMove(models.Model):
                 invoice_lines_to_create.append(vals)
         else:
             for il in invoice_lines:
-                description = self._get_ocr_selected_value(il, 'description', "/")
-                total = self._get_ocr_selected_value(il, 'total', 0.0)
-                subtotal = self._get_ocr_selected_value(il, 'subtotal', total)
-                unit_price = self._get_ocr_selected_value(il, 'unit_price', subtotal)
-                quantity = self._get_ocr_selected_value(il, 'quantity', 1.0)
-                taxes_ocr = [value['content'] for value in il.get('taxes', {}).get('selected_values', [])]
-                taxes_type_ocr = [value.get('amount_type', 'percent') for value in il.get('taxes', {}).get('selected_values', [])]
+                description = il.get('description', "/")
+                total = il.get('total', 0.0)
+                subtotal = il.get('subtotal', total)
+                unit_price = il.get('unit_price', subtotal)
+                quantity = il.get('quantity', 1.0)
+                taxes_ocr = il.get('taxes', [])
+                taxes_type_ocr = ['percent'] * len(il.get('taxes', []))
 
                 vals = {
                     'name': description,
