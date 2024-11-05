@@ -27,8 +27,9 @@ class WhatsAppApi:
 
         headers = headers or {}
         params = params or {}
+        wa_account_id = self.wa_account_id
         if not all([self.token, self.phone_uid]):
-            action = self.wa_account_id.env.ref('whatsapp.whatsapp_account_action')
+            action = wa_account_id.env.ref('whatsapp.whatsapp_account_action')
             raise RedirectWarning(_("To use WhatsApp Configure it first"), action=action.id, button_text=_("Configure Whatsapp Business Account"))
         if auth_type == 'oauth':
             headers.update({'Authorization': f'OAuth {self.token}'})
@@ -37,7 +38,23 @@ class WhatsAppApi:
         call_url = (DEFAULT_ENDPOINT + url) if not endpoint_include else url
 
         try:
+            # Log the request details for debugging purposes if debug logging is enabled
+            if wa_account_id.debug_logging:
+                message = (
+                    f"Type: {request_type}\n"
+                    f"URL: {call_url}\n"
+                    f"Data: {data}"
+                )
+                wa_account_id._add_ir_log('WA Api Call', message, '__api_requests')
             res = requests.request(request_type, call_url, params=params, headers=headers, data=data, files=files, timeout=10)
+            # Log the response details for debugging purposes if debug logging is enabled
+            if wa_account_id.debug_logging:
+                message = (
+                    f"URL: {call_url}\n"
+                    f"Status Code: {res.status_code}\n"
+                    f"Response Text: {res.text}"
+                )
+                wa_account_id._add_ir_log('WA Response', message, '__api_requests')
         except requests.exceptions.RequestException:
             raise WhatsAppError(failure_type='network')
 

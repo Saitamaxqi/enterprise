@@ -2,14 +2,16 @@
 
 import logging
 import mimetypes
+import psycopg2
 import secrets
 import string
 from markupsafe import Markup
 
-from odoo import api, fields, models, _
+from odoo import SUPERUSER_ID, api, fields, models, _
 from odoo.exceptions import UserError, ValidationError
 from odoo.addons.whatsapp.tools.whatsapp_api import WhatsAppApi
 from odoo.addons.whatsapp.tools.whatsapp_exception import WhatsAppError
+from odoo.modules.registry import Registry
 from odoo.tools import plaintext2html
 
 _logger = logging.getLogger(__name__)
@@ -31,6 +33,7 @@ class WhatsappAccount(models.Model):
     webhook_verify_token = fields.Char(string="Webhook Verify Token", compute='_compute_verify_token',
                                        groups='whatsapp.group_whatsapp_admin', store=True)
     callback_url = fields.Char(string="Callback URL", compute='_compute_callback_url', readonly=True, copy=False)
+    debug_logging = fields.Boolean(string="Debug logging", help="Log requests in order to ease debugging")
 
     allowed_company_ids = fields.Many2many(
         comodel_name='res.company', string="Allowed Company",
@@ -125,6 +128,16 @@ class WhatsappAccount(models.Model):
             }
         }
 
+    def action_debug(self):
+        """Enable debug logging."""
+        self.ensure_one()
+        self.debug_logging = True
+
+    def action_stop_debug(self):
+        """Disable debug logging."""
+        self.ensure_one()
+        self.debug_logging = False
+
     def action_open_templates(self):
         self.ensure_one()
         return {
@@ -135,6 +148,28 @@ class WhatsappAccount(models.Model):
             'type': 'ir.actions.act_window',
             'context': {'default_wa_account_id': self.id},
         }
+
+    def _add_ir_log(self, name, message, func=''):
+        self.ensure_one()
+        self.env.flush_all()
+        db_name = self._cr.dbname
+        # Use a new cursor to avoid rollback that could be caused by an upper method
+        try:
+            db_registry = Registry(db_name)
+            with db_registry.cursor() as cr:
+                env = api.Environment(cr, SUPERUSER_ID, {})
+                env['ir.logging'].create({
+                    'dbname': db_name,
+                    'func': func,
+                    'level': 'DEBUG',
+                    'line': '',
+                    'message': message,
+                    'name': name,
+                    'path': f'whatsapp.account,id={self.id},name={self.name}',
+                    'type': 'server',
+                })
+        except psycopg2.Error:
+            pass
 
     def _find_active_channel(self, sender_mobile_formatted, sender_name=False, create_if_not_found=False):
         """This method will find the active channel for the given sender mobile number."""

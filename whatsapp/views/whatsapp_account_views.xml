@@ -23,6 +23,24 @@
                         <button type="object" name="action_open_templates" class="oe_stat_button" icon="fa-whatsapp">
                             <field name="templates_count" string="Templates" widget="statinfo"/>
                         </button>
+                        <button name="action_debug"
+                                invisible="debug_logging"
+                                groups="base.group_erp_manager"
+                                class="oe_stat_button"
+                                type="object" icon="fa-code">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text text-danger">No debug</span>
+                            </div>
+                        </button>
+                        <button name="action_stop_debug"
+                                invisible="not debug_logging"
+                                groups="base.group_erp_manager"
+                                class="oe_stat_button"
+                                type="object" icon="fa-code">
+                            <div class="o_stat_info">
+                                <span class="text-success">Debug requests</span>
+                            </div>
+                        </button>
                     </div>
                     <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
                     <div class="oe_title" id='title'>
