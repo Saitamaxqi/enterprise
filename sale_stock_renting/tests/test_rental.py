@@ -826,3 +826,46 @@ class TestRentalPicking(TestRentalCommon):
             rental_order.picking_ids.move_ids.mapped('product_uom_qty'),
             [rental_order.order_line.product_uom_qty] * len(rental_order.picking_ids.move_ids)
         )
+
+    def test_rental_transfer_custom_route(self):
+        """
+        Check that custom rental routes are used if set on the orde line.
+        """
+        # Enable rental transfers -> nrachive rental route
+        self.env['res.config.settings'].write({
+            "group_rental_stock_picking": True,
+        })
+        warehouse = self.warehouse_id
+        warehouse_rental_route = self.env.ref('sale_stock_renting.route_rental')
+        custom_rental_route = warehouse_rental_route.copy()
+        custom_rental_route.sale_selectable = True
+        custom_location = self.env['stock.location'].create({
+            'name': 'Lovely location',
+            'location_id': warehouse.lot_stock_id.id,
+        })
+        self.env['stock.rule'].create({
+                'name': 'Custom rental delivery',
+                'route_id': custom_rental_route.id,
+                'location_dest_id': warehouse.company_id.rental_loc_id.id,
+                'location_src_id': custom_location.id,
+                'action': 'pull',
+                'procure_method': 'make_to_stock',
+                'picking_type_id': warehouse.out_type_id.id,
+            })
+        rental_order = self.sale_order_id.copy()
+        rental_order.order_line.product_id.rent_ok = True
+        rental_order.order_line.write({'product_uom_qty': 1, 'is_rental': True, 'route_id': custom_rental_route.id})
+        rental_order.action_confirm()
+        picking_out = rental_order.picking_ids.filtered(lambda p: p.picking_type_code == 'outgoing')
+        picking_in = rental_order.picking_ids - picking_out
+        self.assertEqual([len(picking_out), len(picking_in)], [1, 1])
+        self.assertRecordValues(picking_out.move_ids, [{
+            'location_id': custom_location.id,
+            'location_dest_id': warehouse.company_id.rental_loc_id.id,
+            'route_ids': custom_rental_route.ids,
+        }])
+        self.assertRecordValues(picking_in.move_ids, [{
+            'location_id': warehouse.company_id.rental_loc_id.id,
+            'location_dest_id': warehouse.lot_stock_id.id,
+            'route_ids': custom_rental_route.ids,
+        }])
