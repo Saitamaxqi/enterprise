@@ -87,7 +87,7 @@ class L10n_InGstReturnPeriod(models.Model):
             return details_pos_line['account_id'] == account_move_line.account_id.id \
                 and ((account_move_line.credit > 0.00 and details_pos_line['price_subtotal'] > 0.00) \
                 or (account_move_line.debit > 0.00 and details_pos_line['price_subtotal'] < 0.00)) \
-                and details_pos_line['tax_ids'] == account_move_line.tax_ids.ids
+                and sorted(details_pos_line['tax_ids']) == sorted(account_move_line.tax_ids.ids)
 
         pos_journal_items = journal_items.filtered(lambda l: l.move_id.pos_session_ids and l.move_id.move_type == "entry")
         ignore_reversal_pos_jounal_items = journal_items.filtered(lambda l: l.move_id.reversed_pos_order_id and l.move_id.move_type == "entry")
