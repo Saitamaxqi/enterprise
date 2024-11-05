@@ -1109,6 +1109,9 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
             net_value = next((col['no_format'] for col in report_line['columns'] if col['column_group_key'] == column_group_key and col['expression_label'] == 'net'), 0)
             tax_value = next((col['no_format'] for col in report_line['columns'] if col['column_group_key'] == column_group_key and col['expression_label'] == 'tax'), 0)
 
+            if net_value == '':  # noqa: PLC1901
+                continue
+
             currency = self.env.company.currency_id
             computed_tax_amount = float(net_value or 0) * tax_applied
             is_inconsistent = currency.compare_amounts(computed_tax_amount, tax_value)
