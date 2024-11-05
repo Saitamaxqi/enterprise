@@ -1026,6 +1026,11 @@ class AccountMove(models.Model):
         self.ensure_one()
         return f"{self.journal_id.code}-{self.name}-MX-Invoice-4.0.xml".replace('/', '')
 
+    def _get_invoice_report_filename(self, extension='pdf'):
+        # EXTENDS 'account'
+        return f'{self._l10n_mx_edi_get_invoice_cfdi_filename()[:-4]}.{extension}'\
+            if self.l10n_mx_edi_is_cfdi_needed else super()._get_invoice_report_filename(extension=extension)
+
     # -------------------------------------------------------------------------
     # CFDI Generation: Payments
     # -------------------------------------------------------------------------
