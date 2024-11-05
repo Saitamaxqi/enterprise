@@ -1,7 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
-import threading
-from contextlib import contextmanager
+from contextlib import contextmanager, nullcontext
 from unittest import SkipTest
 from unittest.mock import patch
 
@@ -185,10 +184,7 @@ class TestAvalaraBrInvoiceCommon(TestAvalaraBrCommon):
 
         # When the external tests run this will need to do an IAP request which isn't possible in testing mode, see:
         # 7416acc111793ac1f7fd0dc653bb05cf7af28ebe
-        if 'external_l10n' in self.test_tags:
-            with patch.object(threading.current_thread(), 'testing', False), patch.object(modules, 'current_test', False):
-                invoice.action_post()
-        else:
+        with patch.object(modules.module, 'current_test', False) if 'external_l10n' in self.test_tags else nullcontext():
             invoice.action_post()
 
         if test_exact_response:

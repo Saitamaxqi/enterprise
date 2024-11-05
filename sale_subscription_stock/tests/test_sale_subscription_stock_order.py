@@ -402,6 +402,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             )
             self.assertEqual(self.subscription_order_with_bom.order_line[0].product_id.qty_available, 100)
             first_invoice, picking = self.simulate_period(self.subscription_order_with_bom, "2024-02-02")
+            self.env.invalidate_all()
             self.assertEqual(self.subscription_order_with_bom.invoice_count, 1, 'The first period should be invoiced')
             self.assertEqual(
                 len(self.subscription_order_with_bom.picking_ids[0].move_ids), 2,
@@ -431,6 +432,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
         # create invoice for the second period
         with freeze_time("2024-03-02"):
             second_invoice, picking_1 = self.simulate_period(self.subscription_order_with_bom, "2024-03-02")
+            self.env.invalidate_all()
 
             self.assertEqual(self.subscription_order_with_bom.invoice_count, 2, 'The second period should be invoiced')
             self.assertEqual(

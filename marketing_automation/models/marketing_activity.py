@@ -3,12 +3,11 @@
 
 import json
 import logging
-import threading
 
 from datetime import timedelta, date, datetime
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models, _
+from odoo import api, fields, models, modules, _
 from odoo.fields import Datetime
 from odoo.exceptions import ValidationError, AccessError
 from odoo.tools.misc import clean_context
@@ -340,7 +339,7 @@ class MarketingActivity(models.Model):
 
     def execute(self, domain=None):
         # auto-commit except in testing mode
-        auto_commit = not getattr(threading.current_thread(), 'testing', False)
+        auto_commit = not modules.module.current_test
 
         # organize traces by activity
         trace_domain = [

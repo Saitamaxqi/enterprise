@@ -1,12 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict
-import threading
 
 from dateutil.relativedelta import relativedelta
 
-from odoo import api, fields, models, tools, _
+from odoo import api, fields, models, modules, tools, _
 from odoo.fields import Datetime
 from odoo.exceptions import ValidationError, AccessError
 from odoo.tools import convert
@@ -332,7 +330,7 @@ class MarketingCampaign(models.Model):
         participants = self.env['marketing.participant']
         now = self.env.cr.now()
         # auto-commit except in testing mode
-        auto_commit = not getattr(threading.current_thread(), 'testing', False)
+        auto_commit = not modules.module.current_test
         for campaign in self.filtered(lambda c: c.marketing_activity_ids):
             if not campaign.last_sync_date:
                 campaign.last_sync_date = now

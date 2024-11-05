@@ -2,7 +2,6 @@
 
 import logging
 import requests
-import threading
 import json
 
 from odoo import modules, _
@@ -22,7 +21,7 @@ class WhatsAppApi:
         self.is_shared_account = False
 
     def __api_requests(self, request_type, url, auth_type="", params=False, headers=None, data=False, files=False, endpoint_include=False):
-        if getattr(threading.current_thread(), 'testing', False) or modules.module.current_test:
+        if modules.module.current_test:
             raise WhatsAppError("API requests disabled in testing.")
 
         headers = headers or {}

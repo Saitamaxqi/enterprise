@@ -366,6 +366,8 @@ class TestRentalWizard(TestRentalCommon):
         self.env['res.company'].create_missing_rental_location()
         if self.env['ir.module.module'].search([('name', '=', 'purchase_stock'), ('state', '=', 'installed')], limit=1):
             self.env.user._get_default_warehouse_id().buy_to_resupply = False
+        # enable rental picking group
+        self.env['res.config.settings'].create({'group_rental_stock_picking': True}).execute()
 
         rental_schedule = self.env['sale.rental.schedule']
         so = self.lots_rental_order

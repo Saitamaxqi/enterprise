@@ -1,13 +1,11 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import json
-import threading
 
 from collections import defaultdict
 from markupsafe import Markup
 
-from odoo import _, api, fields, models
+from odoo import _, api, fields, models, modules
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.tools import format_list
 
@@ -349,7 +347,7 @@ class SocialPost(models.Model):
                     for live_post in post._prepare_live_post_values()]
             })
 
-        if not getattr(threading.current_thread(), 'testing', False):
+        if not modules.module.current_test:
             # If there's a link in the message, the Facebook / Twitter API will fetch it
             # to build a preview. But when posting, the SQL transaction will not
             # yet be committed, and so the link tracker associated to this link

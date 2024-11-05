@@ -3,7 +3,6 @@ from odoo.tests import tagged
 from .common import CODE_98_ERROR_MSG, MAX_WAIT_ITER, TestPeEdiCommon, _get_pe_current_datetime
 
 import contextlib
-import threading
 from datetime import timedelta
 from time import sleep
 from unittest.mock import patch
@@ -20,7 +19,7 @@ class TestEdiIAP(TestPeEdiCommon):
 
     @contextlib.contextmanager
     def disable_testing_mode(self):
-        with patch.object(threading.current_thread(), 'testing', False), patch.object(modules.module, 'current_test', False):
+        with patch.object(modules.module, 'current_test', False):
             yield
 
     def test_10_invoice_edi_flow(self):

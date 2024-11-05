@@ -158,6 +158,8 @@ class TestProjectLeaves(common.TransactionCase):
                             "leave is not validated , but warning for requested time off")
 
         (leave_1 + leave_2).action_validate()
+        # there is no direct link with the task, so we invalidate manually
+        self.env.invalidate_all()
 
         self.assertNotEqual(task_1.leave_warning, False,
                             "employee is on leave, should have a warning")

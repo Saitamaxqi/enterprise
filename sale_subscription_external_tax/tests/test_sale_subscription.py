@@ -97,6 +97,7 @@ class TestSaleSubscriptionExternal(TestSubscriptionCommon, TestSaleSubscriptionE
                 'code': 'none',
             }).id,
         })
+        self.env.invalidate_all()
 
         with self.patch_set_external_taxes(), self.patch_set_external_taxes_so(new_set_external_taxes):
             tx._post_process()
