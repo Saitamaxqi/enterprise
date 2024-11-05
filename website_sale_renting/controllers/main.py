@@ -85,7 +85,12 @@ class WebsiteSaleRenting(WebsiteSale):
         )
 
     @route(
-        '/rental/product/constraints', type='jsonrpc', auth="public", methods=['POST'], website=True
+        '/rental/product/constraints',
+        type='jsonrpc',
+        auth="public",
+        methods=['POST'],
+        website=True,
+        readonly=True,
     )
     def renting_product_constraints(self):
         """ Return rental product constraints.
