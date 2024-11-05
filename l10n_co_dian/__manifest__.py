@@ -22,6 +22,7 @@
         'demo/demo.xml',
     ],
     'installable': True,
+    'auto_install': ['l10n_co_edi'],
     'license': 'OEEL-1',
     'assets': {
         'web.report_assets_common': [
