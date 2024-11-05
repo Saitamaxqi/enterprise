@@ -1,6 +1,5 @@
 {
     'name': 'Electronic invoicing for Colombia with DIAN',
-    'countries': ['co'],
     'version': '0.1',
     'category': 'Accounting/Localizations/EDI',
     'summary': 'Colombian Localization for EDI documents',
