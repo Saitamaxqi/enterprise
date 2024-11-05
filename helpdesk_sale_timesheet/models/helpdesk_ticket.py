@@ -21,7 +21,7 @@ class HelpdeskTicket(models.Model):
                 ('order_partner_id', 'child_of', unquote('commercial_partner_id')),
             ],
         ])
-        return str(domain)
+        return domain
 
     use_helpdesk_sale_timesheet = fields.Boolean('Reinvoicing Timesheet activated on Team', related='team_id.use_helpdesk_sale_timesheet', readonly=True)
     sale_order_id = fields.Many2one('sale.order', compute="_compute_helpdesk_sale_order", compute_sudo=True, store=True, readonly=False)
@@ -30,7 +30,7 @@ class HelpdeskTicket(models.Model):
     sale_line_id = fields.Many2one(
         'sale.order.line', string="Sales Order Item", tracking=True,
         compute="_compute_sale_line_id", store=True, readonly=False,
-        domain=_domain_sale_line_id,
+        domain=lambda self: str(self._domain_sale_line_id()),
         help="Sales Order Item to which the time spent on this ticket will be added in order to be invoiced to your customer.\n"
              "By default the last prepaid sales order item that has time remaining will be selected.\n"
              "Remove the sales order item in order to make this ticket non-billable.\n"
