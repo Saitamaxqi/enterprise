@@ -24,6 +24,7 @@ class TestInGstrPosBase(TestInPosBase):
         cls.company_data["company"].write({
             "l10n_in_gst_efiling_feature": True,
         })
+
         cls.gstr1_report = cls.env['l10n_in.gst.return.period'].create({
             'company_id': cls.company_data["company"].id,
             'periodicity': 'monthly',

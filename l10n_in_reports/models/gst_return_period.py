@@ -683,19 +683,19 @@ class L10n_InGstReturnPeriod(models.Model):
                         continue
                     lines_json = {}
                     is_reverse_charge = False
-                    is_igst_amount = False
+                    is_lut = False
                     tax_details = tax_details_by_move.get(move_id)
-                    for line_tax_details in tax_details.values():
-                        # Ignore the lines if invoice is not SEZ and GST taxes are not selected
-                        if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not line_tax_details['gst_tax_rate']:
+                    for line, line_tax_details in tax_details.items():
+                        # Ignore the nil rated, exempt and non gst lines
+                        if line.l10n_in_gstr_section in ['sale_nil_rated', 'sale_exempt', 'sale_non_gst_supplies']:
                             continue
                         tax_rate = line_tax_details['gst_tax_rate']
                         if line_tax_details['l10n_in_reverse_charge']:
                             is_reverse_charge = True
                         lines_json.setdefault(tax_rate, {
                             "rt": tax_rate, "txval": 0.00, "iamt": 0.00, "samt": 0.00, "camt": 0.00, "csamt": 0.00})
-                        if line_tax_details['igst']:
-                            is_igst_amount = True
+                        if line.l10n_in_gstr_section == 'sale_sez_wop':
+                            is_lut = True
                         lines_json[tax_rate]['txval'] += line_tax_details['base_amount'] * -1
                         lines_json[tax_rate]['iamt'] += line_tax_details['igst'] * -1
                         lines_json[tax_rate]['camt'] += line_tax_details['cgst'] * -1
@@ -704,7 +704,7 @@ class L10n_InGstReturnPeriod(models.Model):
                     if lines_json:
                         invoice_type = {
                             'deemed_export': 'DE',
-                            'special_economic_zone': 'SEWP' if is_igst_amount else 'SEWOP',
+                            'special_economic_zone': 'SEWOP' if is_lut else 'SEWP',
                         }.get(move_id.l10n_in_gst_treatment, 'R')
                         inv_json = {
                             "inum": move_id.name,
@@ -758,8 +758,8 @@ class L10n_InGstReturnPeriod(models.Model):
                 for move_id in items.mapped('move_id'):
                     lines_json = {}
                     tax_details = tax_details_by_move.get(move_id)
-                    for line_tax_details in tax_details.values():
-                        if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not line_tax_details['gst_tax_rate']:
+                    for line, line_tax_details in tax_details.items():
+                        if line.l10n_in_gstr_section in ['sale_nil_rated', 'sale_exempt', 'sale_non_gst_supplies']:
                             continue
                         tax_rate = line_tax_details.get('gst_tax_rate')
                         lines_json.setdefault(tax_rate, {
@@ -806,8 +806,8 @@ class L10n_InGstReturnPeriod(models.Model):
                 # We sum value of invoice and credit note
                 # so we need positive value for invoice and nagative for credit note
                 tax_details = tax_details_by_move.get(move_id)
-                for line_tax_details in tax_details.values():
-                    if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not line_tax_details['gst_tax_rate']:
+                for line, line_tax_details in tax_details.items():
+                    if line.l10n_in_gstr_section in ['sale_nil_rated', 'sale_exempt', 'sale_non_gst_supplies']:
                         continue
                     tax_rate = line_tax_details.get('gst_tax_rate')
                     group_key = "%s-%s"%(tax_rate, move_id.l10n_in_state_id.l10n_in_tin)
@@ -867,17 +867,17 @@ class L10n_InGstReturnPeriod(models.Model):
                     if self.is_einvoice_skippable(move_id):
                         continue
                     lines_json = {}
-                    is_igst_amount = False
                     is_reverse_charge = False
                     tax_details = tax_details_by_move[move_id]
-                    for line_tax_details in tax_details.values():
-                        if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not line_tax_details['gst_tax_rate']:
+                    is_lut = False
+                    for line, line_tax_details in tax_details.items():
+                        if line.l10n_in_gstr_section in ['sale_nil_rated', 'sale_exempt', 'sale_non_gst_supplies']:
                             continue
                         tax_rate = line_tax_details['gst_tax_rate']
                         if line_tax_details['l10n_in_reverse_charge']:
                             is_reverse_charge = True
-                        if line_tax_details['igst']:
-                            is_igst_amount = True
+                        if line.l10n_in_gstr_section == 'sale_cdnr_sez_wop':
+                            is_lut = True
                         lines_json.setdefault(tax_rate, {
                             "rt": tax_rate, "txval": 0.00, "iamt": 0.00, "samt": 0.00, "camt": 0.00, "csamt": 0.00})
                         lines_json[tax_rate]['txval'] += line_tax_details['base_amount']
@@ -888,7 +888,7 @@ class L10n_InGstReturnPeriod(models.Model):
                     if lines_json:
                         invoice_type = {
                             'deemed_export': 'DE',
-                            'special_economic_zone': 'SEWP' if is_igst_amount else 'SEWOP',
+                            'special_economic_zone': 'SEWOP' if is_lut else 'SEWP',
                         }.get(move_id.l10n_in_gst_treatment, 'R')
                         is_out_refund = move_id.move_type == "out_refund"
                         sign = is_out_refund and 1 or -1
@@ -943,12 +943,12 @@ class L10n_InGstReturnPeriod(models.Model):
             for move_id in journal_items.mapped('move_id'):
                 tax_details = tax_details_by_move.get(move_id)
                 lines_json = {}
-                is_igst_amount = False
-                for line_tax_details in tax_details.values():
-                    if move_id.l10n_in_gst_treatment != 'special_economic_zone' and not line_tax_details['gst_tax_rate']:
+                is_lut = False
+                for line, line_tax_details in tax_details.items():
+                    if line.l10n_in_gstr_section in ['sale_nil_rated', 'sale_exempt', 'sale_non_gst_supplies']:
                         continue
-                    if line_tax_details['igst']:
-                        is_igst_amount = True
+                    if line.l10n_in_gstr_section == 'sale_cdnur_exp_wop':
+                        is_lut = True
                     tax_rate = line_tax_details['gst_tax_rate']
                     lines_json.setdefault(tax_rate, {
                         "rt": tax_rate, "txval": 0.00, "iamt": 0.00, "csamt": 0.00})
@@ -957,10 +957,10 @@ class L10n_InGstReturnPeriod(models.Model):
                     lines_json[tax_rate]['csamt'] += line_tax_details['cess']
                 if lines_json:
                     invoice_type = 'B2CL'
-                    if move_id.l10n_in_gst_treatment == "overseas" and is_igst_amount:
-                        invoice_type = 'EXPWP'
-                    elif move_id.l10n_in_gst_treatment == "overseas":
+                    if move_id.l10n_in_gst_treatment == "overseas" and is_lut:
                         invoice_type = 'EXPWOP'
+                    elif move_id.l10n_in_gst_treatment == "overseas":
+                        invoice_type = 'EXPWP'
                     is_out_refund = move_id.move_type == "out_refund"
                     sign = is_out_refund and 1 or -1
                     inv_json = {
@@ -1012,11 +1012,11 @@ class L10n_InGstReturnPeriod(models.Model):
                     continue
                 tax_details = tax_details_by_move.get(move_id)
                 lines_json = {}
-                is_igst_amount = False
-                for line_tax_details in tax_details.values():
-                    if line_tax_details['igst']:
-                        is_igst_amount = True
-                    elif line_tax_details['sgst'] or line_tax_details['cgst']:
+                is_lut = False
+                for line, line_tax_details in tax_details.items():
+                    if line.l10n_in_gstr_section == 'sale_exp_wop':
+                        is_lut = True
+                    elif line.l10n_in_gstr_section not in ['sale_exp_wp', 'sale_exp_wop']:
                         continue
                     tax_rate = line_tax_details['gst_tax_rate']
                     lines_json.setdefault(tax_rate, {"rt": tax_rate, "txval": 0.00, "iamt": 0.00, "csamt": 0.00})
@@ -1024,9 +1024,9 @@ class L10n_InGstReturnPeriod(models.Model):
                     lines_json[tax_rate]['iamt'] += line_tax_details['igst'] * -1
                     lines_json[tax_rate]['csamt'] += line_tax_details['cess'] * -1
                 if lines_json:
-                    invoice_type = 'WOPAY'
-                    if is_igst_amount:
-                        invoice_type = 'WPAY'
+                    invoice_type = 'WPAY'
+                    if is_lut:
+                        invoice_type = 'WOPAY'
                     export_json.setdefault(invoice_type, [])
                     export_inv = {
                         "inum": move_id.name,
@@ -1063,7 +1063,6 @@ class L10n_InGstReturnPeriod(models.Model):
             }
             """
             nil_json = {}
-            tags_id = self._get_l10n_in_taxes_tags_id_by_name()
             for move_id in journal_items.mapped('move_id'):
                 if self.is_einvoice_skippable(move_id):
                     continue
@@ -1088,14 +1087,16 @@ class L10n_InGstReturnPeriod(models.Model):
                     "expt_amt": 0.00,
                     "ngsup_amt": 0.00,
                 })
-                for line, line_tax_detail  in tax_details.items():
-                    base_line_tag_ids = line.tax_tag_ids.ids
-                    if tags_id['nil_rated'] in base_line_tag_ids:
-                        nil_json[supply_type]['nil_amt'] += line_tax_detail['base_amount'] * -1
-                    if tags_id['exempt'] in base_line_tag_ids:
-                        nil_json[supply_type]['expt_amt'] += line_tax_detail['base_amount'] * -1
-                    if tags_id['non_gst_supplies'] in base_line_tag_ids:
-                        nil_json[supply_type]['ngsup_amt'] += line_tax_detail['base_amount'] * -1
+                for line, line_tax_detail in tax_details.items():
+                    base_line_tax_ids = line.tax_ids
+                    for tax in base_line_tax_ids:
+                        tax_type = tax.l10n_in_tax_type
+                        if tax_type == 'nil_rated':
+                            nil_json[supply_type]['nil_amt'] += line_tax_detail['base_amount'] * -1
+                        if tax_type == 'exempt':
+                            nil_json[supply_type]['expt_amt'] += line_tax_detail['base_amount'] * -1
+                        if tax_type == 'non_gst':
+                            nil_json[supply_type]['ngsup_amt'] += line_tax_detail['base_amount'] * -1
             return nil_json and {'inv': list({
                 **d,
                 "nil_amt": AccountMove._l10n_in_round_value(d['nil_amt']),
@@ -1200,12 +1201,7 @@ class L10n_InGstReturnPeriod(models.Model):
             'cdnr': _get_cdnr_json(AccountMoveLine.search(self._get_section_domain('cdnr'))),
             'cdnur': _get_cdnur_json(AccountMoveLine.search(self._get_section_domain('cdnur'))),
             'exp': _get_exp_json(AccountMoveLine.search(self._get_section_domain('exp'))),
-            'doc_issue': self._get_doc_issue_json()
-            # Indian Government is not supporting supeco in the production
-            # 'supeco': {
-            #     'clttx': _get_supeco_clttx_json(AccountMoveLine.search(self._get_section_domain('supeco_clttx'))), # details for section 52 (TCS)
-            #     'paytx': _get_supeco_paytx_json(AccountMoveLine.search(self._get_section_domain('supeco_paytx'))) #details for section 9(5)
-            # }
+            'doc_issue': self._get_doc_issue_json(),
         }
         if nil_json:
             return_json.update({'nil': nil_json})
@@ -1471,25 +1467,7 @@ class L10n_InGstReturnPeriod(models.Model):
         for rtn in sent_rtn:
             rtn.check_gstr1_status()
 
-    def _get_l10n_in_taxes_tags_id_by_name(self, only_gst_tags=False):
-        tags_name = ['sgst', 'cgst', 'igst', 'cess']
-        if not only_gst_tags:
-            tags_name += [f'base_{tax_name}' for tax_name in tags_name] + ['zero_rated', 'exempt', 'nil_rated', 'non_gst_supplies']
-        return {
-            tag_name: self.env['ir.model.data']._xmlid_to_res_id(f"l10n_in.tax_tag_{tag_name}")
-            for tag_name in tags_name
-        }
-
     def _get_section_domain(self, section_code):
-        taxes_tag_ids = self._get_l10n_in_taxes_tags_id_by_name()
-        sgst_tag_ids = [taxes_tag_ids['base_sgst'], taxes_tag_ids['sgst']]
-        cgst_tag_ids = [taxes_tag_ids['base_cgst'], taxes_tag_ids['cgst']]
-        igst_tag_ids = [taxes_tag_ids['base_igst'], taxes_tag_ids['igst']]
-        cess_tag_ids = [taxes_tag_ids['base_cess'], taxes_tag_ids['cess']]
-        gst_tags = sgst_tag_ids + cgst_tag_ids + igst_tag_ids + cess_tag_ids
-        nil_tags = [taxes_tag_ids[key] for key in ['exempt', 'nil_rated', 'non_gst_supplies']]
-        export_tags = igst_tag_ids + [taxes_tag_ids['zero_rated']] + cess_tag_ids + nil_tags
-        gst_with_other_tags = gst_tags + [taxes_tag_ids['zero_rated']] + nil_tags
         domain = [
             ('company_id', 'in', (self.company_ids or self.company_id).ids),
             ("date", ">=", self.start_date),
@@ -1502,138 +1480,58 @@ class L10n_InGstReturnPeriod(models.Model):
                 return (
                     domain
                     + [
-                        ("move_id.move_type", "in", ["out_invoice", "out_receipt"]),
-                        ("move_id.debit_origin_id", "=", False),
-                        '|', '&',
-                        ("move_id.l10n_in_gst_treatment", "in", ("regular", "deemed_export", "uin_holders", "composition")),
-                        ("tax_tag_ids", "in", gst_tags),
-                        '&',
-                        ("move_id.l10n_in_gst_treatment", "=", "special_economic_zone"),
-                        ("tax_tag_ids", "in", gst_with_other_tags),
+                        ('l10n_in_gstr_section', 'in', ['sale_b2b_rcm', 'sale_b2b_regular', 'sale_deemed_export', 'sale_sez_wp', 'sale_sez_wop'])
                     ]
                 )
             case "b2cl":
                 return (
                     domain
                     + [
-                        ("move_id.move_type", "in", ["out_invoice", "out_receipt"]),
-                        ("move_id.debit_origin_id", "=", False),
-                        ("move_id.l10n_in_gst_treatment", "in", ("unregistered", "consumer")),
-                        ("move_id.l10n_in_state_id", "!=", self.company_id.state_id.id),
-                        "|", "&",
-                        ("date", "<", date(2024, 11, 1)),
-                        ("move_id.amount_total", ">", 250000),
-                        "&",
-                        ("date", ">=", date(2024, 11, 1)),
-                        ("move_id.amount_total", ">", 100000),
-                        ("tax_tag_ids", "in", gst_tags),
+                        ('l10n_in_gstr_section', '=', 'sale_b2cl')
                     ]
                 )
             case "b2cs":
                 return (
                     domain
                     + [
-                        ("move_id.move_type", "in", ["out_invoice", "out_refund", "out_receipt"]),
-                        ("move_id.l10n_in_gst_treatment", "in", ("unregistered", "consumer")),
-                        ("tax_tag_ids", "in", gst_tags),
-                        "|",
-                        ("move_id.l10n_in_transaction_type", "=", "intra_state"),
-                        "&",
-                        ("move_id.l10n_in_transaction_type", "=", "inter_state"),
-                        "|", "&",
-                        ("date", "<", date(2024, 11, 1)),
-                        ("move_id.amount_total", "<=", 250000),
-                        "&",
-                        ("date", ">=", date(2024, 11, 1)),
-                        ("move_id.amount_total", "<=", 100000),
+                        ('l10n_in_gstr_section', '=', 'sale_b2cs')
                     ]
                 )
             case "cdnr":
                 return (
                     domain
                     + [
-                        "|",
-                        ("move_id.move_type", "=", "out_refund"),
-                        "&",
-                        ("move_id.move_type", "=", "out_invoice"),
-                        ("move_id.debit_origin_id", "!=", False),
-                        '|', '&',
-                        ("move_id.l10n_in_gst_treatment", "in", ("regular", "deemed_export", "uin_holders", "composition")),
-                        ("tax_tag_ids", "in", gst_tags),
-                        '&',
-                        ("move_id.l10n_in_gst_treatment", "=", "special_economic_zone"),
-                        ("tax_tag_ids", "in", gst_with_other_tags),
+                        ('l10n_in_gstr_section', 'in', ['sale_cdnr_rcm', 'sale_cdnr_regular', 'sale_cdnr_deemed_export', 'sale_cdnr_sez_wp', 'sale_cdnr_sez_wop'])
                     ]
                 )
             case "cdnur":
                 return (
                     domain
                     + [
-                        "|",
-                        ("move_id.move_type", "=", "out_refund"),
-                        "&",
-                        ("move_id.move_type", "=", "out_invoice"),
-                        ("move_id.debit_origin_id", "!=", False),
-                        "|", "&",
-                        ("move_id.l10n_in_gst_treatment", "=", "overseas"),
-                        ("tax_tag_ids", "in", export_tags),
-                        "&", "&", "&",
-                        ("tax_tag_ids", "in", gst_tags),
-                        ("move_id.l10n_in_gst_treatment", "in", ["unregistered", "consumer"]),
-                        ("move_id.l10n_in_transaction_type", "=", "inter_state"),
-                        "|", "&",
-                        ("date", "<", date(2024, 11, 1)),
-                        ("move_id.amount_total", ">", 250000),
-                        "&",
-                        ("date", ">=", date(2024, 11, 1)),
-                        ("move_id.amount_total", ">", 100000),
+                        ('l10n_in_gstr_section', 'in', ['sale_cdnur_b2cl', 'sale_cdnur_exp_wp', 'sale_cdnur_exp_wop'])
                     ]
                 )
             case "exp":
                 return (
                     domain
                     + [
-                        ("move_id.move_type", "in", ["out_invoice", "out_receipt"]),
-                        ("move_id.debit_origin_id", "=", False),
-                        ("move_id.l10n_in_gst_treatment", "=", "overseas"),
-                        ("tax_tag_ids", "in", export_tags),
+                        ('l10n_in_gstr_section', 'in', ['sale_exp_wp', 'sale_exp_wop'])
                     ]
                 )
             case "nil":
                 return (
                     domain
                     + [
-                        ("move_id.move_type", "in", ["out_invoice", "out_refund", "out_receipt"]),
-                        ("move_id.l10n_in_gst_treatment", "not in", ["overseas", "special_economic_zone"]),
-                        ("tax_tag_ids", "in", nil_tags),
+                        ('l10n_in_gstr_section', 'in', ['sale_nil_rated', 'sale_exempt', 'sale_non_gst_supplies']),
                     ]
                 )
             case "hsn":
                 return (
                     domain
                     + [
-                        ("move_id.move_type", "in", ["out_invoice", "out_refund", "out_receipt"]),
-                        ("tax_tag_ids", "in", gst_with_other_tags),
-                    ]
-                )
-            case 'supeco_clttx':
-                return (
-                    domain
-                    + [
-                        ("move_id.move_type", "in", ["out_invoice", "out_refund", "out_receipt"]),
-                        ("move_id.l10n_in_reseller_partner_id.vat", "!=", False),
-                        ("move_id.l10n_in_reseller_partner_id.industry_id", "=", self.env.ref('l10n_in.eco_under_section_52').id),
-                        ("tax_tag_ids", "in", gst_tags),
-                    ]
-                )
-            case 'supeco_paytx':
-                return (
-                    domain
-                    + [
-                        ("move_id.move_type", "in", ["out_invoice", "out_refund", "out_receipt"]),
-                        ("move_id.l10n_in_reseller_partner_id.vat", "!=", False),
-                        ("move_id.l10n_in_reseller_partner_id.industry_id", "=", self.env.ref('l10n_in.eco_under_section_9_5').id),
-                        ("tax_tag_ids", "in", gst_tags),
+                        ('l10n_in_gstr_section', 'in', ['sale_b2b_rcm', 'sale_b2b_regular', 'sale_b2cl', 'sale_b2cs', 'sale_exp_wp', 'sale_exp_wop', 'sale_sez_wp', 'sale_sez_wop', 'sale_deemed_export', 'sale_cdnr_rcm',
+                                                        'sale_cdnr_regular', 'sale_cdnr_deemed_export', 'sale_cdnr_sez_wp', 'sale_cdnr_sez_wop', 'sale_cdnur_b2cl', 'sale_cdnur_exp_wp', 'sale_cdnur_exp_wop', 'sale_nil_rated',
+                                                        'sale_exempt', 'sale_non_gst_supplies']),
                     ]
                 )
 

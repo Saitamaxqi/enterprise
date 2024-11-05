@@ -23,17 +23,6 @@
                 "csamt": 0.0,
                 "rt": 18.0
               }
-            },
-            {
-              "num": 2,
-              "itm_det": {
-                "txval": 1400.0,
-                "iamt": 0.0,
-                "camt": 0.0,
-                "samt": 0.0,
-                "csamt": 0.0,
-                "rt": 0.0
-              }
             }
           ]
         },
@@ -248,7 +237,7 @@
     "inv": [
       {
         "sply_ty": "INTRB2B",
-        "nil_amt": 2400.0,
+        "nil_amt": 3800.0,
         "expt_amt": 1000.0,
         "ngsup_amt": 1000.0
       }

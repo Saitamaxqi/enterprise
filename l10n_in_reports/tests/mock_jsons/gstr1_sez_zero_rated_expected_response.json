@@ -11,7 +11,7 @@
           "val": 1000.0,
           "pos": "24",
           "rchrg": "N",
-          "inv_typ": "SEWOP",
+          "inv_typ": "SEWP",
           "itms": [
             {
               "num": 1,
@@ -42,7 +42,7 @@
           "val": 500.0,
           "pos": "24",
           "rchrg": "N",
-          "inv_typ": "SEWOP",
+          "inv_typ": "SEWP",
           "itms": [
             {
               "num": 1,

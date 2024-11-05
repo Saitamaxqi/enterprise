@@ -267,14 +267,17 @@ class AccountMove(models.Model):
         :returns: True if the update was successful
 
         """
-        def _get_tax(rate, tag_ids):
-            tax = self.env['account.tax'].search([
+        def _get_tax(rate, tag_ids, is_rcm_invoice=False):
+            domain = [
                 ('type_tax_use', '=', 'purchase'),
                 ('amount', '=', rate),
-                '|', ('repartition_line_ids.tag_ids', 'in', tag_ids),
-                     ('children_tax_ids.repartition_line_ids.tag_ids', 'in', tag_ids)
-            ], limit=1)
-            return tax
+                '|',
+                ('repartition_line_ids.tag_ids', 'in', tag_ids),
+                ('children_tax_ids.repartition_line_ids.tag_ids', 'in', tag_ids)
+            ]
+            if is_rcm_invoice:
+                domain.append(('l10n_in_reverse_charge', '=', True))
+            return self.env['account.tax'].search(domain, limit=1)
 
         bill_details = content['DocDtls']
         seller_details = content['SellerDtls']
@@ -304,8 +307,6 @@ class AccountMove(models.Model):
         move_vals['ref'] = bill_details.get('No')
         igst_tag_ids = self.env.ref('l10n_in.tax_tag_igst').ids
         gst_tag_ids = (self.env.ref('l10n_in.tax_tag_cgst') + self.env.ref('l10n_in.tax_tag_sgst')).ids
-        igst_rc_tag_ids = self.env.ref('l10n_in.tax_tag_igst_rc').ids
-        gst_rc_tag_ids = (self.env.ref('l10n_in.tax_tag_sgst_rc') + self.env.ref('l10n_in.tax_tag_cgst_rc')).ids
         uom_map = {
             irn_uom: self.env['ir.model.data']._xmlid_to_res_id(xmlid)
             for irn_uom, xmlid in UOM_REF_MAP.items()
@@ -321,12 +322,9 @@ class AccountMove(models.Model):
 
             if gst_rate:
                 is_igst = bool(item.get('IgstAmt'))
-                if is_rcm_invoice:
-                    tax_tag_ids = igst_rc_tag_ids if is_igst else gst_rc_tag_ids
-                else:
-                    tax_tag_ids = igst_tag_ids if is_igst else gst_tag_ids
+                tax_tag_ids = igst_tag_ids if is_igst else gst_tag_ids
 
-                applicable_tax = _get_tax(gst_rate, tax_tag_ids)
+                applicable_tax = _get_tax(gst_rate, tax_tag_ids, is_rcm_invoice)
                 if applicable_tax:
                     line_dict['tax_ids'] = [Command.link(applicable_tax.id)]
                 else:

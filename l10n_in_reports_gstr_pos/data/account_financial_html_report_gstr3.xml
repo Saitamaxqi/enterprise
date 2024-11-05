@@ -12,9 +12,6 @@
                 '|',
                     ('move_id.pos_session_ids', '!=', False),
                     ('move_id.reversed_pos_order_id', '!=', False),
-        '|',
-            ('move_id.l10n_in_reseller_partner_id', '=', False),
-            ('move_id.l10n_in_reseller_partner_id.industry_id', '!=', ref('l10n_in.eco_under_section_9_5')),
         ('tax_tag_ids', 'in', [ref('l10n_in.tax_tag_base_sgst'), ref('l10n_in.tax_tag_base_cgst'), ref('l10n_in.tax_tag_base_igst'), ref('l10n_in.tax_tag_base_cess')])
         ]"/>
     </record>
@@ -30,9 +27,6 @@
                 '|',
                     ('move_id.pos_session_ids', '!=', False),
                     ('move_id.reversed_pos_order_id', '!=', False),
-        '|',
-            ('move_id.l10n_in_reseller_partner_id', '=', False),
-            ('move_id.l10n_in_reseller_partner_id.industry_id', '!=', ref('l10n_in.eco_under_section_9_5')),
         ('tax_tag_ids', '=', ref('l10n_in.tax_tag_cgst'))
         ]"/>
     </record>
@@ -48,9 +42,6 @@
                 '|',
                     ('move_id.pos_session_ids', '!=', False),
                     ('move_id.reversed_pos_order_id', '!=', False),
-        '|',
-            ('move_id.l10n_in_reseller_partner_id', '=', False),
-            ('move_id.l10n_in_reseller_partner_id.industry_id', '!=', ref('l10n_in.eco_under_section_9_5')),
         ('tax_tag_ids', '=', ref('l10n_in.tax_tag_sgst'))
         ]"/>
     </record>
@@ -66,9 +57,6 @@
                 '|',
                     ('move_id.pos_session_ids', '!=', False),
                     ('move_id.reversed_pos_order_id', '!=', False),
-        '|',
-            ('move_id.l10n_in_reseller_partner_id', '=', False),
-            ('move_id.l10n_in_reseller_partner_id.industry_id', '!=', ref('l10n_in.eco_under_section_9_5')),
         ('tax_tag_ids', '=', ref('l10n_in.tax_tag_igst'))
         ]"/>
     </record>
@@ -84,9 +72,6 @@
                 '|',
                     ('move_id.pos_session_ids', '!=', False),
                     ('move_id.reversed_pos_order_id', '!=', False),
-        '|',
-            ('move_id.l10n_in_reseller_partner_id', '=', False),
-            ('move_id.l10n_in_reseller_partner_id.industry_id', '!=', ref('l10n_in.eco_under_section_9_5')),
         ('tax_tag_ids', '=', ref('l10n_in.tax_tag_cess'))
         ]"/>
     </record>
@@ -103,7 +88,7 @@
                 '|',
                     ('move_id.pos_session_ids', '!=', False),
                     ('move_id.reversed_pos_order_id', '!=', False),
-        ('tax_tag_ids', 'in', [ref('l10n_in.tax_tag_base_igst'), ref('l10n_in.tax_tag_base_cess'), ref('l10n_in.tax_tag_zero_rated')])
+        ('tax_tag_ids', 'in', [ref('l10n_in.tax_tag_base_igst'), ref('l10n_in.tax_tag_base_cess')])
         ]"/>
     </record>
 
@@ -148,8 +133,7 @@
                 ('move_id.move_type', '=', 'entry'),
                 '|',
                     ('move_id.pos_session_ids', '!=', False),
-                    ('move_id.reversed_pos_order_id', '!=', False),
-        ('tax_tag_ids', 'in', [ref('l10n_in.tax_tag_exempt'), ref('l10n_in.tax_tag_nil_rated')])
+                    ('move_id.reversed_pos_order_id', '!=', False)
         ]"/>
     </record>
 
@@ -164,8 +148,7 @@
                 ('move_id.move_type', '=', 'entry'),
                 '|',
                     ('move_id.pos_session_ids', '!=', False),
-                    ('move_id.reversed_pos_order_id', '!=', False),
-        ('tax_tag_ids', '=', ref('l10n_in.tax_tag_non_gst_supplies'))
+                    ('move_id.reversed_pos_order_id', '!=', False)
         ]"/>
     </record>
 
@@ -189,19 +172,19 @@
 
     <!-- 4(A)(3) Inward supplies liable to reverse charge (other than 1 & 2 above) -->
     <record id="l10n_in_reports.account_report_gstr3b_4_a_3_tax_cgst" model="account.report.expression">
-        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cgst_rc'))]"/>
+        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_line_id.l10n_in_reverse_charge', '=', True), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cgst'))]"/>
     </record>
 
     <record id="l10n_in_reports.account_report_gstr3b_4_a_3_tax_sgst" model="account.report.expression">
-        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_sgst_rc'))]"/>
+        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_line_id.l10n_in_reverse_charge', '=', True), ('tax_tag_ids','=', ref('l10n_in.tax_tag_sgst'))]"/>
     </record>
 
     <record id="l10n_in_reports.account_report_gstr3b_4_a_3_tax_igst" model="account.report.expression">
-        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_igst_rc'))]"/>
+        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_line_id.l10n_in_reverse_charge', '=', True), ('tax_tag_ids','=', ref('l10n_in.tax_tag_igst'))]"/>
     </record>
 
     <record id="l10n_in_reports.account_report_gstr3b_4_a_3_tax_cess" model="account.report.expression">
-        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cess_rc'))]"/>
+        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_line_id.l10n_in_reverse_charge', '=', True), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cess'))]"/>
     </record>
 
     <!-- 4(A)(4) All other ITC -->
@@ -223,35 +206,35 @@
 
     <!-- 4(B)(1) As per section 17(5) of CGST/SGST Act -->
     <record id="l10n_in_reports.account_report_gstr3b_4_b_1_tax_cgst" model="account.report.expression">
-        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc_cgst'))]"/>
+        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cgst'))]"/>
     </record>
 
     <record id="l10n_in_reports.account_report_gstr3b_4_b_1_tax_sgst" model="account.report.expression">
-        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc_sgst'))]"/>
+        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_sgst'))]"/>
     </record>
 
     <record id="l10n_in_reports.account_report_gstr3b_4_b_1_tax_igst" model="account.report.expression">
-        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc_igst'))]"/>
+        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_igst'))]"/>
     </record>
 
     <record id="l10n_in_reports.account_report_gstr3b_4_b_2_tax_cess" model="account.report.expression">
-        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc_cess'))]"/>
+        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cess'))]"/>
     </record>
 
     <!-- 4(B)(2) Others -->
     <record id="l10n_in_reports.account_report_gstr3b_4_b_2_tax_cgst" model="account.report.expression">
-        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc_cgst'))]"/>
+        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cgst'))]"/>
     </record>
 
     <record id="l10n_in_reports.account_report_gstr3b_4_b_2_tax_sgst" model="account.report.expression">
-        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc_sgst'))]"/>
+        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_sgst'))]"/>
     </record>
 
     <record id="l10n_in_reports.account_report_gstr3b_4_b_2_tax_igst" model="account.report.expression">
-        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc_igst'))]"/>
+        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_igst'))]"/>
     </record>
 
     <record id="l10n_in_reports.account_report_gstr3b_4_b_2_tax_cess" model="account.report.expression">
-        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc_cess'))]"/>
+        <field name="formula" eval="[('move_id.move_type', 'in', ('entry', 'in_invoice')), ('move_id.pos_session_ids', '=', False), ('move_id.reversed_pos_order_id', '=', False), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cess'))]"/>
     </record>
 </odoo>

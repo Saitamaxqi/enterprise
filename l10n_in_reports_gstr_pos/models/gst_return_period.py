@@ -154,32 +154,3 @@ class L10n_InGstReturnPeriod(models.Model):
                         remaining_values['camt'] -= line_tax_details.get('sgst', 0.00) * pos_ratio * -1
                         remaining_values['csamt'] -= line_tax_details.get('cess', 0.00) * pos_ratio * -1
         return hsn_json
-
-    def _get_section_domain(self, section_code):
-        domain = super()._get_section_domain(section_code)
-        if section_code == "b2cs":
-            domain.remove(("move_id.move_type", "in", ["out_invoice", "out_refund", "out_receipt"]))
-            domain.remove(("move_id.l10n_in_gst_treatment", "in", ("unregistered", "consumer")))
-            domain += ["|",
-            "&", ("move_id.move_type", "in", ["out_invoice", "out_refund", "out_receipt"]),
-                ("move_id.l10n_in_gst_treatment", "in", ("unregistered", "consumer")),
-            "&", ("move_id.move_type", "=", "entry"),
-            "|", ("move_id.pos_session_ids", "!=", False),
-                ('move_id.reversed_pos_order_id', '!=', False),
-            ]
-        if section_code == "nil":
-            domain.remove(("move_id.move_type", "in", ["out_invoice", "out_refund", "out_receipt"]))
-            domain += ["|", "&",
-                ("move_id.move_type", "=", "entry"),
-                ("move_id.pos_session_ids", "!=", False),
-                ("move_id.move_type", "in", ["out_invoice", "out_refund", "out_receipt"]),
-            ]
-        if section_code == "hsn":
-            domain.remove(("move_id.move_type", "in", ["out_invoice", "out_refund", "out_receipt"]))
-            domain += ["|", "&",
-                ("move_id.move_type", "=", "entry"),
-                "|", ("move_id.pos_session_ids", "!=", False),
-                    ('move_id.reversed_pos_order_id', '!=', False),
-                ("move_id.move_type", "in", ["out_invoice", "out_refund", "out_receipt"]),
-            ]
-        return domain

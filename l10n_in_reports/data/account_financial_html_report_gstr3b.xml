@@ -67,31 +67,31 @@
                                 <record id="account_report_gstr3b_3_1_a_tax_base" model="account.report.expression">
                                     <field name="label">tax_base</field>
                                     <field name="engine">domain</field>
-                                    <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')), '|', ('move_id.l10n_in_reseller_partner_id', '=', False), ('move_id.l10n_in_reseller_partner_id.industry_id', '!=', ref('l10n_in.eco_under_section_9_5')), ('tax_tag_ids', 'in', [ref('l10n_in.tax_tag_base_sgst'), ref('l10n_in.tax_tag_base_cgst'), ref('l10n_in.tax_tag_base_igst'), ref('l10n_in.tax_tag_base_cess')])]"/>
+                                    <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')), ('tax_tag_ids', 'in', [ref('l10n_in.tax_tag_base_sgst'), ref('l10n_in.tax_tag_base_cgst'), ref('l10n_in.tax_tag_base_igst'), ref('l10n_in.tax_tag_base_cess')])]"/>
                                     <field name="subformula">-sum</field>
                                 </record>
                                 <record id="account_report_gstr3b_3_1_a_tax_cgst" model="account.report.expression">
                                     <field name="label">tax_cgst</field>
                                     <field name="engine">domain</field>
-                                    <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')), '|', ('move_id.l10n_in_reseller_partner_id', '=', False), ('move_id.l10n_in_reseller_partner_id.industry_id', '!=', ref('l10n_in.eco_under_section_9_5')), ('tax_tag_ids', '=', ref('l10n_in.tax_tag_cgst'))]"/>
+                                    <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')),  ('tax_tag_ids', '=', ref('l10n_in.tax_tag_cgst'))]"/>
                                     <field name="subformula">-sum</field>
                                 </record>
                                 <record id="account_report_gstr3b_3_1_a_tax_sgst" model="account.report.expression">
                                     <field name="label">tax_sgst</field>
                                     <field name="engine">domain</field>
-                                    <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')), '|', ('move_id.l10n_in_reseller_partner_id', '=', False), ('move_id.l10n_in_reseller_partner_id.industry_id', '!=', ref('l10n_in.eco_under_section_9_5')), ('tax_tag_ids', '=', ref('l10n_in.tax_tag_sgst'))]"/>
+                                    <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')), ('tax_tag_ids', '=', ref('l10n_in.tax_tag_sgst'))]"/>
                                     <field name="subformula">-sum</field>
                                 </record>
                                 <record id="account_report_gstr3b_3_1_a_tax_igst" model="account.report.expression">
                                     <field name="label">tax_igst</field>
                                     <field name="engine">domain</field>
-                                    <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')), '|', ('move_id.l10n_in_reseller_partner_id', '=', False), ('move_id.l10n_in_reseller_partner_id.industry_id', '!=', ref('l10n_in.eco_under_section_9_5')), ('tax_tag_ids', '=', ref('l10n_in.tax_tag_igst'))]"/>
+                                    <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')), ('tax_tag_ids', '=', ref('l10n_in.tax_tag_igst'))]"/>
                                     <field name="subformula">-sum</field>
                                 </record>
                                 <record id="account_report_gstr3b_3_1_a_tax_cess" model="account.report.expression">
                                     <field name="label">tax_cess</field>
                                     <field name="engine">domain</field>
-                                    <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')), '|', ('move_id.l10n_in_reseller_partner_id', '=', False), ('move_id.l10n_in_reseller_partner_id.industry_id', '!=', ref('l10n_in.eco_under_section_9_5')), ('tax_tag_ids', '=', ref('l10n_in.tax_tag_cess'))]"/>
+                                    <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')), ('tax_tag_ids', '=', ref('l10n_in.tax_tag_cess'))]"/>
                                     <field name="subformula">-sum</field>
                                 </record>
                             </field>
@@ -103,7 +103,7 @@
                             <record id="account_report_gstr3b_3_1_b_tax_base" model="account.report.expression">
                                 <field name="label">tax_base</field>
                                 <field name="engine">domain</field>
-                                <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')), ('tax_tag_ids', 'in', [ref('l10n_in.tax_tag_base_igst'), ref('l10n_in.tax_tag_base_cess'), ref('l10n_in.tax_tag_zero_rated')])]"/>
+                                <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')), ('tax_tag_ids', 'in', [ref('l10n_in.tax_tag_base_igst'), ref('l10n_in.tax_tag_base_cess')])]"/>
                                 <field name="subformula">-sum</field>
                             </record>
                             <record id="account_report_gstr3b_3_1_b_tax_igst" model="account.report.expression">
@@ -127,7 +127,7 @@
                             <record id="account_report_gstr3b_3_1_c_tax_base" model="account.report.expression">
                                 <field name="label">tax_base</field>
                                 <field name="engine">domain</field>
-                                <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')), ('tax_tag_ids','in', [ref('l10n_in.tax_tag_exempt'), ref('l10n_in.tax_tag_nil_rated')])]"/>
+                                <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund'))]"/>
                                 <field name="subformula">-sum</field>
                             </record>
                         </field>
@@ -139,31 +139,31 @@
                             <record id="account_report_gstr3b_3_1_d_tax_base" model="account.report.expression">
                                 <field name="label">tax_base</field>
                                 <field name="engine">domain</field>
-                                <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','in',[ref('l10n_in.tax_tag_base_sgst_rc'), ref('l10n_in.tax_tag_base_cgst_rc'), ref('l10n_in.tax_tag_base_igst_rc'), ref('l10n_in.tax_tag_base_cess_rc')])]"/>
+                                <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_ids.l10n_in_reverse_charge', '=', True), ('tax_tag_ids','in',[ref('l10n_in.tax_tag_base_sgst'), ref('l10n_in.tax_tag_base_cgst'), ref('l10n_in.tax_tag_base_igst'), ref('l10n_in.tax_tag_base_cess')])]"/>
                                 <field name="subformula">sum</field>
                             </record>
                              <record id="account_report_gstr3b_3_1_d_tax_cgst" model="account.report.expression">
                                 <field name="label">tax_cgst</field>
                                 <field name="engine">domain</field>
-                                <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cgst_rc'))]"/>
+                                <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_line_id.l10n_in_reverse_charge', '=', True), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cgst'))]"/>
                                 <field name="subformula">-sum</field>
                             </record>
                             <record id="account_report_gstr3b_3_1_d_tax_sgst" model="account.report.expression">
                                 <field name="label">tax_sgst</field>
                                 <field name="engine">domain</field>
-                                <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_sgst_rc'))]"/>
+                                <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_line_id.l10n_in_reverse_charge', '=', True), ('tax_tag_ids','=', ref('l10n_in.tax_tag_sgst'))]"/>
                                 <field name="subformula">-sum</field>
                             </record>
                             <record id="account_report_gstr3b_3_1_d_tax_igst" model="account.report.expression">
                                 <field name="label">tax_igst</field>
                                 <field name="engine">domain</field>
-                                <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_igst_rc'))]"/>
+                                <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_line_id.l10n_in_reverse_charge', '=', True), ('tax_tag_ids','=', ref('l10n_in.tax_tag_igst'))]"/>
                                 <field name="subformula">-sum</field>
                             </record>
                             <record id="account_report_gstr3b_3_1_d_tax_cess" model="account.report.expression">
                                 <field name="label">tax_cess</field>
                                 <field name="engine">domain</field>
-                                <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cess_rc'))]"/>
+                                <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_line_id.l10n_in_reverse_charge', '=', True), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cess'))]"/>
                                 <field name="subformula">-sum</field>
                             </record>
                         </field>
@@ -175,7 +175,7 @@
                             <record id="account_report_gstr3b_3_1_e_tax_base" model="account.report.expression">
                                 <field name="label">tax_base</field>
                                 <field name="engine">domain</field>
-                                <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund')), ('tax_tag_ids', '=', ref('l10n_in.tax_tag_non_gst_supplies'))]"/>
+                                <field name="formula" eval="[('move_id.l10n_in_gst_treatment', 'not in', ['overseas', 'special_economic_zone']), ('move_id.move_type', 'in', ('out_invoice', 'out_receipt', 'out_refund'))]"/>
                                 <field name="subformula">-sum</field>
                             </record>
                         </field>
@@ -231,25 +231,25 @@
                                     <record id="account_report_gstr3b_4_a_3_tax_cgst" model="account.report.expression">
                                         <field name="label">tax_cgst</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cgst_rc'))]"/>
+                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_line_id.l10n_in_reverse_charge', '=', True), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cgst'))]"/>
                                         <field name="subformula">-sum</field>
                                     </record>
                                     <record id="account_report_gstr3b_4_a_3_tax_sgst" model="account.report.expression">
                                         <field name="label">tax_sgst</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_sgst_rc'))]"/>
+                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_line_id.l10n_in_reverse_charge', '=', True), ('tax_tag_ids','=', ref('l10n_in.tax_tag_sgst'))]"/>
                                         <field name="subformula">-sum</field>
                                     </record>
                                     <record id="account_report_gstr3b_4_a_3_tax_igst" model="account.report.expression">
                                         <field name="label">tax_igst</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_igst_rc'))]"/>
+                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_line_id.l10n_in_reverse_charge', '=', True), ('tax_tag_ids','=', ref('l10n_in.tax_tag_igst'))]"/>
                                         <field name="subformula">-sum</field>
                                     </record>
                                     <record id="account_report_gstr3b_4_a_3_tax_cess" model="account.report.expression">
                                         <field name="label">tax_cess</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cess_rc'))]"/>
+                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_line_id.l10n_in_reverse_charge', '=', True), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cess'))]"/>
                                         <field name="subformula">-sum</field>
                                     </record>
                                 </field>
@@ -294,25 +294,25 @@
                                     <record id="account_report_gstr3b_4_b_1_tax_cgst" model="account.report.expression">
                                         <field name="label">tax_cgst</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc_cgst'))]"/>
+                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cgst'))]"/>
                                         <field name="subformula">sum</field>
                                     </record>
                                     <record id="account_report_gstr3b_4_b_1_tax_sgst" model="account.report.expression">
                                         <field name="label">tax_sgst</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc_sgst'))]"/>
+                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_sgst'))]"/>
                                         <field name="subformula">sum</field>
                                     </record>
                                     <record id="account_report_gstr3b_4_b_1_tax_igst" model="account.report.expression">
                                         <field name="label">tax_igst</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc_igst'))]"/>
+                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_igst'))]"/>
                                         <field name="subformula">sum</field>
                                     </record>
                                     <record id="account_report_gstr3b_4_b_1_tax_cess" model="account.report.expression">
                                         <field name="label">tax_cess</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc_cess'))]"/>
+                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cess'))]"/>
                                         <field name="subformula">sum</field>
                                     </record>
                                 </field>
@@ -323,25 +323,25 @@
                                     <record id="account_report_gstr3b_4_b_2_tax_cgst" model="account.report.expression">
                                         <field name="label">tax_cgst</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc_cgst'))]"/>
+                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cgst'))]"/>
                                         <field name="subformula">sum</field>
                                     </record>
                                     <record id="account_report_gstr3b_4_b_2_tax_sgst" model="account.report.expression">
                                         <field name="label">tax_sgst</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc_sgst'))]"/>
+                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_sgst'))]"/>
                                         <field name="subformula">sum</field>
                                     </record>
                                     <record id="account_report_gstr3b_4_b_2_tax_igst" model="account.report.expression">
                                         <field name="label">tax_igst</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc_igst'))]"/>
+                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_igst'))]"/>
                                         <field name="subformula">sum</field>
                                     </record>
                                     <record id="account_report_gstr3b_4_b_2_tax_cess" model="account.report.expression">
                                         <field name="label">tax_cess</field>
                                         <field name="engine">domain</field>
-                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc_cess'))]"/>
+                                        <field name="formula" eval="[('move_id.move_type','in',('entry', 'in_invoice')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_other_non_itc')), ('tax_tag_ids','=', ref('l10n_in.tax_tag_cess'))]"/>
                                         <field name="subformula">sum</field>
                                     </record>
                                 </field>
@@ -361,11 +361,11 @@
                         <field name="children_ids">
                             <record id="account_report_gstr3b_5_a_1" model="account.report.line">
                                 <field name="name">Inter-State supplies</field>
-                                <field name="domain_formula">sum([('move_id.move_type','in',('entry', 'in_invoice')), ('move_id.l10n_in_gst_treatment','=','composition'), ('move_id.l10n_in_transaction_type', '=', 'inter_state'), ('tax_tag_ids','in',[ref('l10n_in.tax_tag_exempt'), ref('l10n_in.tax_tag_nil_rated')])])</field>
+                                <field name="domain_formula">sum([('move_id.move_type','in',('entry', 'in_invoice')), ('move_id.l10n_in_gst_treatment','=','composition'), ('move_id.l10n_in_transaction_type', '=', 'inter_state')])</field>
                             </record>
                             <record id="account_report_gstr3b_5_a_2" model="account.report.line">
                                 <field name="name">Intra-State Supplies</field>
-                                <field name="domain_formula">sum([('move_id.move_type','in',('entry', 'in_invoice')), ('move_id.l10n_in_gst_treatment','=','composition'), ('move_id.l10n_in_transaction_type', '=', 'intra_state'), ('tax_tag_ids','in',[ref('l10n_in.tax_tag_exempt'), ref('l10n_in.tax_tag_nil_rated')])])</field>
+                                <field name="domain_formula">sum([('move_id.move_type','in',('entry', 'in_invoice')), ('move_id.l10n_in_gst_treatment','=','composition'), ('move_id.l10n_in_transaction_type', '=', 'intra_state')])</field>
                             </record>
                         </field>
                     </record>
@@ -376,12 +376,12 @@
                             <record id="account_report_gstr3b_5_b_1" model="account.report.line">
                                 <field name="name">Inter-State Supplies </field>
                                 <field name="code">INTER_NONGST</field>
-                                <field name="domain_formula">sum([('move_id.move_type','in',('entry', 'in_invoice')), ('move_id.l10n_in_transaction_type', '=', 'inter_state'), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_gst_supplies'))])</field>
+                                <field name="domain_formula">sum([('move_id.move_type','in',('entry', 'in_invoice')), ('move_id.l10n_in_transaction_type', '=', 'inter_state')])</field>
                             </record>
                             <record id="account_report_gstr3b_5_b_2" model="account.report.line">
                                 <field name="name">Intra-State Supplies</field>
                                 <field name="code">INTRA_NONGST</field>
-                                <field name="domain_formula">sum([('move_id.move_type','in',('entry', 'in_invoice')), ('move_id.l10n_in_transaction_type', '=', 'intra_state'), ('tax_tag_ids','=', ref('l10n_in.tax_tag_non_gst_supplies'))])</field>
+                                <field name="domain_formula">sum([('move_id.move_type','in',('entry', 'in_invoice')), ('move_id.l10n_in_transaction_type', '=', 'intra_state')])</field>
                             </record>
                         </field>
                     </record>

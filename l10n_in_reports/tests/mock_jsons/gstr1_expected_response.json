@@ -23,17 +23,6 @@
                                 "csamt": 0.0,
                                 "rt": 18.0
                             }
-                        },
-                        {
-                            "num": 2,
-                            "itm_det": {
-                                "txval": 1400.0,
-                                "iamt": 0.0,
-                                "camt": 0.0,
-                                "samt": 0.0,
-                                "csamt": 0.0,
-                                "rt": 0.0
-                            }
                         }
                     ]
                 },
@@ -211,17 +200,6 @@
     ],
     "b2cs": [
         {
-        "sply_ty": "INTER",
-        "pos": "27",
-        "typ": "OE",
-        "rt": 18.0,
-        "txval": -125000.0,
-        "iamt": -22500.0,
-        "samt": 0.0,
-        "camt": 0.0,
-        "csamt": 0.0
-        },
-        {
         "sply_ty": "INTRA",
         "pos": "24",
         "typ": "OE",
@@ -388,6 +366,25 @@
                     }
                 }
             ]
+        },
+        {
+            "ntty":"C",
+            "nt_num":"RINV/23-24/0004",
+            "nt_dt":"20-05-2023",
+            "val":147500.0,
+            "typ":"B2CL",
+            "itms":[
+                {
+                    "num":1,
+                    "itm_det": {
+                        "rt":18.0,
+                        "txval":125000.0,
+                        "iamt":22500.0,
+                        "csamt":0.0
+                    }
+                }
+            ],
+            "pos": "27"
         }
     ],
     "exp": [
@@ -414,7 +411,7 @@
         "inv": [
             {
                 "sply_ty": "INTRB2B",
-                "nil_amt": 1900.0,
+                "nil_amt": 3300.0,
                 "expt_amt": 500.0,
                 "ngsup_amt": 500.0
             }

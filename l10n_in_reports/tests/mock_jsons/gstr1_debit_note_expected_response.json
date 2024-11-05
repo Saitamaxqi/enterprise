@@ -23,17 +23,6 @@
                                 "csamt": 0.0,
                                 "rt": 18.0
                             }
-                        },
-                        {
-                            "num": 2,
-                            "itm_det": {
-                                "txval": 1400.0,
-                                "iamt": 0.0,
-                                "camt": 0.0,
-                                "samt": 0.0,
-                                "csamt": 0.0,
-                                "rt": 0.0
-                            }
                         }
                     ]
                 },
@@ -220,17 +209,6 @@
             "samt": 135.0,
             "camt": 135.0,
             "csamt": 0.0
-        },
-        {
-            "sply_ty": "INTER",
-            "pos": "27",
-            "typ": "OE",
-            "rt": 18.0,
-            "txval": 125000.0,
-            "iamt": 22500.0,
-            "samt": 0.0,
-            "camt": 0.0,
-            "csamt": 0.0
         }
     ],
     "cdnr": [
@@ -383,6 +361,25 @@
                     "itm_det": {"rt": 18.0, "txval": 500.0, "iamt": 90.0, "csamt": 0.0}
                 }
             ]
+        },
+        {
+            "ntty":"D",
+            "nt_num":"DINV/23-24/0004",
+            "nt_dt":"20-05-2023",
+            "val":147500.0,
+            "typ":"B2CL",
+            "itms":[
+                {
+                    "num":1,
+                    "itm_det": {
+                        "rt":18.0,
+                        "txval":125000.0,
+                        "iamt":22500.0,
+                        "csamt":0.0
+                    }
+                }
+            ],
+            "pos":"27"
         }
     ],
     "exp": [
@@ -404,7 +401,7 @@
         "inv": [
             {
                 "sply_ty": "INTRB2B",
-                "nil_amt": 2900.0,
+                "nil_amt": 4300.0,
                 "expt_amt": 1500.0,
                 "ngsup_amt": 1500.0
             }

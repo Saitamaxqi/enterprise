@@ -1,7 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import logging
-from ast import literal_eval
 from datetime import datetime
 
 from odoo import api, models, _
@@ -133,21 +132,38 @@ class L10n_InReportHandler(models.AbstractModel):
         ).product_id.uom_id.ids
         return 'l10n_in_reports.invalid_uqc_code_warning', invalid_uqc_codes
 
+    def _get_reversed_moves_domain(self, options):
+        return [
+            ('date', '>=', options['date']['date_from']),
+            ('date', '<=', options['date']['date_to']),
+            ('move_type', '=', 'out_refund'),
+            ('state', '=', 'posted'),
+            ('line_ids.tax_tag_ids', '!=', False),
+        ]
+
     @api.model
     def _get_out_of_fiscal_year_reversed_moves(self, options):
         AccountMove = self.env['account.move']
         out_of_fiscal_year_reversed_moves = AccountMove.search(
+            self._get_reversed_moves_domain(options) +
             [
-                ('date', '>=', options['date']['date_from']),
-                ('date', '<=', options['date']['date_to']),
-                ('move_type', '=', 'out_refund'),
-                ('state', '=', 'posted'),
                 ('reversed_entry_id', '!=', False),
-                ('line_ids.tax_tag_ids', '!=', False),
                 ('reversed_entry_id.invoice_date', '<', AccountMove._l10n_in_get_fiscal_year_start_date(self.env.company, datetime.strptime(options['date']['date_to'], '%Y-%m-%d')))
             ]
         ).ids
         return 'l10n_in_reports.out_of_fiscal_year_reversed_moves_warning', out_of_fiscal_year_reversed_moves
+
+    @api.model
+    def _get_unlinked_unregistered_inter_state_reversed_moves(self, options):
+        unlinked_reversed_moves = self.env['account.move'].search(
+            self._get_reversed_moves_domain(options) +
+            [
+                ('reversed_entry_id', '=', False),
+                ('l10n_in_gst_treatment', 'in', ['unregistered', 'consumer']),
+                ('l10n_in_transaction_type', '=', 'inter_state'),
+            ]
+        ).ids
+        return 'l10n_in_reports.unlinked_reversed_moves_warning', unlinked_reversed_moves
 
     @api.model
     def _get_invalid_tds_tcs_moves(self, options, report):
@@ -160,28 +176,27 @@ class L10n_InReportHandler(models.AbstractModel):
         ]
         invalid_move_ids = []
         if report.id == self.env.ref("l10n_in.tds_report").id:
-            domain += [('invoice_line_ids.tax_ids.l10n_in_tds_tax_type', '=', 'purchase')]
+            domain += [('invoice_line_ids.tax_ids.l10n_in_tax_type', '=', 'tds_purchase')]
             invalid_move_ids = AccountMove.search(domain).l10n_in_withholding_ref_move_id.ids
         if report.id == self.env.ref("l10n_in.tcs_report").id:
-            domain += [('invoice_line_ids.tax_ids.l10n_in_section_id.tax_source_type', '=', 'tcs')]
+            domain += [('invoice_line_ids.tax_ids.l10n_in_tax_type', '=', 'tcs')]
             invalid_move_ids = AccountMove.search(domain).ids
         return 'l10n_in_reports.missing_pan_tds_tcs_warning', invalid_move_ids
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
         if warnings is not None:
-            hsn_base_line_expression = self.env.ref('l10n_in_reports.account_report_gstr1_hsn_taxable_amount_balance')
+            hsn_base_line_domain = [
+                ('l10n_in_gstr_section', '=like', 'sale%'),
+                ('l10n_in_gstr_section', '!=', 'sale_out_of_scope'),
+                ('display_type', '=', 'product'),
+            ]
+
             options_domain = report._get_options_domain(options, date_scope='strict_range')
 
-            if hsn_base_line_expression.engine != 'domain':
-                _logger.warning("HSN Base line engine is not Domain")
-                return []
-
-            hsn_base_line_expression_domain = literal_eval(hsn_base_line_expression.formula)
             aml_domain = Domain.AND([
                 options_domain,
-                hsn_base_line_expression_domain,
+                hsn_base_line_domain,
             ])
-
             all_checks = []
             if report.id == self.env.ref("l10n_in_reports.account_report_gstr1").id:
                 all_checks = [
@@ -192,6 +207,7 @@ class L10n_InReportHandler(models.AbstractModel):
                     self._get_invalid_goods_hsn_products(aml_domain),
                     self._get_invalid_uqc_codes(aml_domain),
                     self._get_out_of_fiscal_year_reversed_moves(options),
+                    self._get_unlinked_unregistered_inter_state_reversed_moves(options),
                 ]
             elif report.id in (self.env.ref("l10n_in.tds_report").id, self.env.ref("l10n_in.tcs_report").id):
                 all_checks = [
@@ -244,6 +260,10 @@ class L10n_InReportHandler(models.AbstractModel):
     @api.model
     def open_out_of_fiscal_year_reversed_moves(self, options, params):
         return self._l10n_in_open_action(_('Credit Notes'), 'account.move', [(False, 'list'), (False, 'form')], params)
+
+    @api.model
+    def open_unlinked_reversed_moves(self, options, params):
+        return self._l10n_in_open_action(_('Unlinked Credit Notes'), 'account.move', [(False, 'list'), (False, 'form')], params)
 
     @api.model
     def open_missing_pan_tds_tcs_moves(self, options, params):

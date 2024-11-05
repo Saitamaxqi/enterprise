@@ -46,7 +46,7 @@ class TestReports(L10nInTestAccountReportsCommon):
     @classmethod
     def setup_armageddon_tax(cls, tax_name, company_data):
         # TODO: default_account_tax_sale is not set when default_tax is group of tax
-        # so when this method is called it's raise error so by overwrite this and stop call supper.
+        # so when this method is called it's raise error so by overwrite this and stop call super.
         return cls.env["account.tax"]
 
     def _setup_moves(self, reverse_inv_func, invoice_date=TEST_DATE):
@@ -121,7 +121,7 @@ class TestReports(L10nInTestAccountReportsCommon):
         columns = {col.get('expression_label'): col.get('no_format') for col in b2b_line.get('columns')}
         # For B2B Invoice - 4A, AB, 4C, 6B, 6C
         expected = {
-            'name': 'B2B Invoice - 4A, 4B, 4C, 6B, 6C',
+            'name': '4. Taxable outward supplies made to Registered persons',
             'tax_base': 1000.0,
             'tax_cgst': 25.0,
             'tax_sgst': 25.0,
@@ -156,7 +156,9 @@ class TestReports(L10nInTestAccountReportsCommon):
         self.assertFalse(reversed_move_2.l10n_in_reversed_entry_warning)
 
     def test_gstr1_sez_zero_rated_tax(self):
-        igst_0 = self.env['account.chart.template'].ref('igst_sale_0')
+        igst_0 = self.env['account.chart.template'].ref('igst_sale_0_sez_exp')
+        igst_lut_0 = self.env['account.chart.template'].ref('igst_sale_0_sez_exp_lut')
+
         b2b_invoice = self._init_inv(
             partner=self.partner_a.copy({'l10n_in_gst_treatment': 'special_economic_zone'}),
             taxes=igst_0,
@@ -164,7 +166,7 @@ class TestReports(L10nInTestAccountReportsCommon):
         )
         self._init_inv(
             partner=self.partner_foreign,
-            taxes=igst_0,
+            taxes=igst_lut_0,
             line_vals={'price_unit': 500, 'quantity': 2}
         )
         self._create_credit_note(inv=b2b_invoice, line_vals={'quantity': 1})  # Creates and posts credit note for the above invoice
