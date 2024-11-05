@@ -52,7 +52,7 @@ class PosSession(models.Model):
         # Return the dictionary to prevent running the remaining code.
         if isinstance(res, dict):
             return res
-        orders = self.order_ids.filtered(lambda o: o.state in ['done', 'invoiced'])
+        orders = self.order_ids.filtered(lambda o: o.state == 'done')
         # We don't want to block the user that need to validate his session order in order to create his TSS
         if self.config_id.is_company_country_germany and self.config_id.l10n_de_fiskaly_tss_id and orders:
             orders = orders.sorted('l10n_de_fiskaly_time_end')
