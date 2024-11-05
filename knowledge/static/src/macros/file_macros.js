@@ -80,7 +80,7 @@ export class AttachToMessageMacro extends AbstractMacro {
             // the data file over it.
             trigger: function() {
                 this.validatePage();
-                return this.getFirstVisibleElement('.o-mail-Composer-attachFiles:not([disabled])');
+                return this.getFirstVisibleElement('.o-mail-Composer button[name="upload-files"]:not([disabled])');
             }.bind(this),
             action: dragAndDrop.bind(this, 'dragenter', this.data.dataTransfer),
         }, {

@@ -17,7 +17,18 @@ patch(Composer.prototype, {
         );
         onWillDestroy(() => clearTimeout(this.composerDisableCheckTimeout));
     },
-
+    get areAllActionsDisabled() {
+        if (this.thread?.channel_type === "whatsapp" && !this.state.active) {
+            return true;
+        }
+        return super.areAllActionsDisabled;
+    },
+    get isMultiUpload() {
+        if (this.thread?.channel_type === "whatsapp") {
+            return false;
+        }
+        return super.isMultiUpload;
+    },
     get placeholder() {
         if (
             this.thread &&

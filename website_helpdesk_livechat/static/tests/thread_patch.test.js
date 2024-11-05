@@ -6,10 +6,11 @@ import {
     openFormView,
     registerArchs,
     start,
-    startServer
+    startServer,
 } from "@mail/../tests/mail_test_helpers";
 import { describe, test } from "@odoo/hoot";
 import { asyncStep, onRpc, serverState, waitForSteps } from "@web/../tests/web_test_helpers";
+import { press } from "@odoo/hoot-dom";
 import { defineWebsiteHelpdeskLivechatModels } from "@website_helpdesk_livechat/../tests/website_helpdesk_livechat_test_helpers";
 
 describe.current.tags("desktop");
@@ -41,7 +42,7 @@ test("[technical] /ticket command gets a body as kwarg", async () => {
     await openDiscuss(channelId);
     await contains(".o-mail-Discuss-threadName[title='General']");
     await insertText(".o-mail-Composer-input", "/ticket something");
-    await click(".o-mail-Composer-send:enabled");
+    await press("Enter");
     await waitForSteps(["execute command helpdesk. body: /ticket something"]);
 });
 

@@ -9,7 +9,7 @@ import {
     registerArchs,
     SIZES,
     start,
-    startServer
+    startServer,
 } from "@mail/../tests/mail_test_helpers";
 import { describe, test } from "@odoo/hoot";
 import { defineTestMailModels } from "@test_mail/../tests/test_mail_test_helpers";
@@ -96,7 +96,7 @@ test("Attachment on side", async () => {
     // send a message with attached PDF file
     await click("button", { text: "Send message" });
     await waitForSteps(["/mail/thread/data", "register_as_main_attachment"]);
-    await inputFiles(".o-mail-Composer-coreMain .o_input_file", [file]);
+    await inputFiles(".o-mail-Composer .o_input_file", [file]);
     await click(".o-mail-Composer-send:enabled");
     await contains(".arrow", { count: 2 });
     await waitForSteps(["/mail/thread/data"]);

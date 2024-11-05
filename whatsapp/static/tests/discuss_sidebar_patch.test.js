@@ -7,6 +7,7 @@ import {
     startServer,
 } from "@mail/../tests/mail_test_helpers";
 import { describe, test } from "@odoo/hoot";
+import { press } from "@odoo/hoot-dom";
 import { mockDate } from "@odoo/hoot-mock";
 import { deserializeDateTime } from "@web/core/l10n/dates";
 import { getOrigin } from "@web/core/utils/urls";
@@ -130,7 +131,7 @@ test("whatsapp are sorted by last activity time in the sidebar: most recent at t
     });
     await click(".o-mail-DiscussSidebarChannel", { text: "WhatsApp 1" });
     await insertText(".o-mail-Composer-input", "Blabla");
-    await click(".o-mail-Composer-send:enabled");
+    await press("Enter");
     await contains(":nth-child(1 of .o-mail-DiscussSidebarChannel-container)", {
         text: "WhatsApp 1",
     });

@@ -576,7 +576,7 @@ const articleCommandComposerSteps = [{ // open the chatter
     trigger: '.o-mail-Chatter-sendMessage:not([disabled=""])',
     run: "click",
 }, { // open the full composer
-    trigger: "button[aria-label='Full composer']",
+    trigger: "button[title='Open Full Composer']",
     run: "click",
 }, ...appendArticleLink(`${composeBody}`, 'EditorCommandsArticle'), { // wait for the block to appear in the editor
     trigger: `${composeBody} .o_knowledge_article_link:contains("EditorCommandsArticle")`,

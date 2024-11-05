@@ -37,7 +37,7 @@ export class SendAsMessageMacro extends AbstractMacro {
             // Open the full composer Form view Dialog.
             trigger: function() {
                 this.validatePage();
-                return this.getFirstVisibleElement('.o-mail-Composer-fullComposer:not([disabled])');
+                return this.getFirstVisibleElement('.o-mail-Composer button[name="open-full-composer"]:not([disabled])');
             }.bind(this),
             action: 'click',
         }, {
