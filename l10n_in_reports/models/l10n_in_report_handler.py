@@ -3,6 +3,7 @@
 
 import logging
 from ast import literal_eval
+from datetime import datetime
 
 from odoo import api, models, osv, _
 
@@ -133,7 +134,8 @@ class L10n_InReportHandler(models.AbstractModel):
 
     @api.model
     def _get_out_of_fiscal_year_reversed_moves(self, options):
-        out_of_fiscal_year_reversed_moves = self.env['account.move'].search(
+        AccountMove = self.env['account.move']
+        out_of_fiscal_year_reversed_moves = AccountMove.search(
             [
                 ('date', '>=', options['date']['date_from']),
                 ('date', '<=', options['date']['date_to']),
@@ -141,8 +143,9 @@ class L10n_InReportHandler(models.AbstractModel):
                 ('state', '=', 'posted'),
                 ('reversed_entry_id', '!=', False),
                 ('line_ids.tax_tag_ids', '!=', False),
+                ('reversed_entry_id.invoice_date', '<', AccountMove._l10n_in_get_fiscal_year_start_date(self.env.company, datetime.strptime(options['date']['date_to'], '%Y-%m-%d')))
             ]
-        ).filtered(lambda move: move.reversed_entry_id.invoice_date < move.get_fiscal_year_start_date(move.company_id, move.invoice_date)).ids
+        ).ids
         return 'l10n_in_reports.out_of_fiscal_year_reversed_moves_warning', out_of_fiscal_year_reversed_moves
 
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):

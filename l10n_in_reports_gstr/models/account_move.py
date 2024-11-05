@@ -55,15 +55,15 @@ class AccountMove(models.Model):
     def _compute_l10n_in_reversed_entry_warning(self):
         for move in self:
             if move.country_code == 'IN' and move.move_type == 'out_refund' and move.state == 'draft' and move.invoice_date and move.reversed_entry_id and move.invoice_line_ids.tax_ids:
-                move.l10n_in_reversed_entry_warning = move.reversed_entry_id.invoice_date < move.get_fiscal_year_start_date(move.company_id, move.invoice_date)
+                move.l10n_in_reversed_entry_warning = move.reversed_entry_id.invoice_date < move._l10n_in_get_fiscal_year_start_date(move.company_id, move.invoice_date)
             else:
                 move.l10n_in_reversed_entry_warning = False
 
-    def get_fiscal_year_start_date(self, company, invoice_date):
+    def _l10n_in_get_fiscal_year_start_date(self, company, reversal_move_date):
         fiscal_year_start_month = (int(company.fiscalyear_last_month) % 12) + 1
-        fiscal_year_start_date = date(invoice_date.year, fiscal_year_start_month, 1)
-        if invoice_date.month <= 11:
-            fiscal_year_start_date = fiscal_year_start_date.replace(year=invoice_date.year - 1)
+        fiscal_year_start_date = date(reversal_move_date.year, fiscal_year_start_month, 1)
+        if reversal_move_date.month <= 11:
+            fiscal_year_start_date = fiscal_year_start_date.replace(year=reversal_move_date.year - 1)
         return fiscal_year_start_date
 
     def _post(self, soft=True):
