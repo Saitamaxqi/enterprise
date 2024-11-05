@@ -1151,7 +1151,7 @@ class HrPayslip(models.Model):
                 continue
 
             # convert slip.date_to to a datetime with max time to compare correctly in filtered_domain.
-            slip_tz = pytz.timezone(slip.contract_id.resource_calendar_id.tz)
+            slip_tz = pytz.timezone(slip.contract_id.resource_calendar_id.tz or self.employee_id.tz or self.company_id.resource_calendar_id.tz or 'UTC')
             utc = pytz.timezone('UTC')
             date_from = slip_tz.localize(datetime.combine(slip.date_from, time.min)).astimezone(utc).replace(tzinfo=None)
             date_to = slip_tz.localize(datetime.combine(slip.date_to, time.max)).astimezone(utc).replace(tzinfo=None)
