@@ -102,7 +102,8 @@ registry.category("web_tour.tours").add('knowledge_history_tour', {
         // check the comparison content is correct
         trigger: '.history-container .tab-pane',
         run: function () {
-            const comparisonHtml = document.querySelector('.history-container .tab-pane .o_readonly').innerHTML;
+            const comparisonHtml = document.querySelector('.history-container .tab-pane .o_readonly').innerHTML
+                .replace(/ data-heading-link-id="\d+"/, "");
             const correctHtml = `<h1 class="oe-hint" data-oe-version="${CURRENT_VERSION}"><added>` + testArticleName + '</added><removed>Modified Title 03</removed></h1>';
             if (comparisonHtml !== correctHtml) {
                 throw new Error('Expect comparison to be ' + correctHtml + ', got ' + comparisonHtml);
