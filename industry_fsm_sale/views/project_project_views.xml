@@ -43,7 +43,7 @@
                 </setting>
             </xpath>
             <xpath expr="//group[@name='group_sales_invoicing']/div" position="inside">
-                <setting help="Create new quotations directly from tasks" groups="industry_fsm.group_fsm_quotation_from_task">
+                <setting class="col-lg-12" help="Create new quotations directly from tasks" groups="industry_fsm.group_fsm_quotation_from_task">
                     <field name="allow_quotations"/>
                 </setting>
             </xpath>
