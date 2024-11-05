@@ -2,9 +2,9 @@
 <odoo>
     <menuitem
         id="menu_project_timesheet_forecast_report_analysis"
-        name="Timesheets / Planning Analysis"
+        name="Planning / Timesheets Analysis"
         sequence="15"
-        parent="hr_timesheet.menu_timesheets_reports"
+        parent="planning.planning_menu_reporting"
         action="project_timesheet_forecast_report_action"
     />
     <menuitem
