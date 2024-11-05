@@ -27,7 +27,7 @@ class ProjectTask(models.Model):
                         ('order_id.partner_shipping_id', '=?', unquote('partner_id')),
             ],
         ])
-        return str(domain)
+        return domain
 
     allow_material = fields.Boolean(related='project_id.allow_material', export_string_translation=False)
     allow_quotations = fields.Boolean(related='project_id.allow_quotations', export_string_translation=False)
