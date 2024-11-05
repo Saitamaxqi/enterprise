@@ -6,6 +6,7 @@ from odoo.addons.iap.tools import iap_tools
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.tools import is_html_empty
+from odoo.tools.misc import DEFAULT_SERVER_DATE_FORMAT
 
 import time
 
@@ -71,47 +72,46 @@ class HrExpense(models.Model):
 
             description_ocr = self._get_ocr_selected_value(ocr_results, 'description', "")
             total_ocr = self._get_ocr_selected_value(ocr_results, 'total', 0.0)
-            date_ocr = self._get_ocr_selected_value(ocr_results, 'date', "")
-            currency_ocr = self._get_ocr_selected_value(ocr_results, 'currency', "")
+            date_ocr = self._get_ocr_selected_value(ocr_results, 'date', fields.Date.context_today(self).strftime(DEFAULT_SERVER_DATE_FORMAT))
+            currency_ocr = self._get_ocr_selected_value(ocr_results, 'currency', self.env.company.currency_id.name)
 
             if description_ocr and not self.name or self.name == self.message_main_attachment_id.name.split('.')[0]:
                 predicted_product_id = self._predict_product(description_ocr, category=True)
                 if predicted_product_id:
                     vals['product_id'] = predicted_product_id or self.product_id
-                    vals['total_amount_currency'] = total_ocr
+
             vals['name'] = description_ocr
             # We need to set the name after the product change as changing the product may change the name
             vals['predicted_category'] = description_ocr
 
             context_create_date = fields.Date.context_today(self, self.create_date)
-            if date_ocr and not self.date or self.date == context_create_date:
+            if not self.date or self.date == context_create_date:
                 vals['date'] = date_ocr
 
-            if total_ocr and not self.total_amount_currency:
+            if not self.total_amount_currency:
                 vals['total_amount_currency'] = total_ocr
 
             self.flush_model()
 
-            if currency_ocr and (not self.currency_id or self.currency_id == self.env.company.currency_id):
+            if not self.currency_id or self.currency_id == self.env.company.currency_id:
                 for comparison in ['=ilike', 'ilike']:
-                    possible_currencies = self.env["res.currency"].with_context(active_test=False).search([
+                    matched_currency = self.env["res.currency"].with_context(active_test=False).search([
                         '|', '|',
                         ('currency_unit_label', comparison, currency_ocr),
                         ('name', comparison, currency_ocr),
                         ('symbol', comparison, currency_ocr),
                     ])
-                    if len(possible_currencies) == 1:
-                        vals['currency_id'] = possible_currencies
-                        break
+                    if len(matched_currency) == 1:
+                        vals['currency_id'] = matched_currency.id
 
-                if vals.get('currency_id', self.company_currency_id) != self.company_currency_id:
-                    currency_rate = self.env['res.currency']._get_conversion_rate(
-                        from_currency=vals['currency_id'],
-                        to_currency=self.company_currency_id,
-                        company=self.company_id,
-                        date=vals['date'],
-                    )
-                    vals['total_amount'] = vals['total_amount_currency'] * currency_rate
+                        if matched_currency != self.company_currency_id:
+                            vals['total_amount'] = matched_currency._convert(
+                                vals.get('total_amount_currency', self.total_amount_currency),
+                                self.company_currency_id,
+                                company=self.company_id,
+                                date=vals.get('date', self.date),
+                            )
+
             self.write(vals)
 
     @api.model

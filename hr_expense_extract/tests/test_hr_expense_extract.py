@@ -1,3 +1,6 @@
+from freezegun import freeze_time
+
+from odoo import fields
 from odoo.addons.hr_expense.tests.common import TestExpenseCommon
 from odoo.addons.iap_extract.tests.test_extract_mixin import TestExtractMixin
 from odoo.tests import tagged, Form
@@ -266,3 +269,52 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         self.expense._fill_document_with_results(ocr_results=ocr_results)
 
         self.assertTrue(self.expense.currency_id)
+
+    def test_extract_no_total(self):
+        ocr_results = self.get_result_success_response()['results'][0]
+        del ocr_results['total']
+        self.expense.name = ""
+        self.expense._fill_document_with_results(ocr_results=ocr_results)
+
+        self.assertAlmostEqual(self.expense.total_amount_currency, 0, 2)
+        self.assertAlmostEqual(self.expense.total_amount, 0, 2)
+        self.assertEqual(self.expense.currency_id.name, 'EUR')
+        self.assertEqual(self.expense.date, fields.Date.to_date('2022-02-22'))
+
+    def test_extract_no_currency(self):
+        self.env['res.currency.rate'].create({
+            'name': '2022-01-01',
+            'rate': 3,
+            'currency_id': self.env.ref('base.EUR').id,
+            'company_id': self.env.company.id,
+        })
+
+        ocr_results = self.get_result_success_response()['results'][0]
+        del ocr_results['currency']
+        self.expense.name = ""
+        self.expense._fill_document_with_results(ocr_results=ocr_results)
+
+        self.assertAlmostEqual(self.expense.total_amount_currency, 99.99, 2)
+        self.assertAlmostEqual(self.expense.total_amount, 99.99, 2)
+        self.assertEqual(self.expense.currency_id.name, 'USD')
+        self.assertEqual(self.expense.date, fields.Date.to_date('2022-02-22'))
+
+    @freeze_time('2024-01-01')
+    def test_extract_no_date(self):
+        self.env['res.currency.rate'].create({
+            'name': '2022-01-01',
+            'rate': 3,
+            'currency_id': self.env.ref('base.EUR').id,
+            'company_id': self.env.company.id,
+        })
+
+        ocr_results = self.get_result_success_response()['results'][0]
+        del ocr_results['date']
+        self.expense.name = ""
+        self.expense.date = None
+        self.expense._fill_document_with_results(ocr_results=ocr_results)
+
+        self.assertAlmostEqual(self.expense.total_amount_currency, 99.99, 2)
+        self.assertAlmostEqual(self.expense.total_amount, 33.33, 2)
+        self.assertEqual(self.expense.currency_id.name, 'EUR')
+        self.assertEqual(self.expense.date, fields.Date.to_date('2024-01-01'))
