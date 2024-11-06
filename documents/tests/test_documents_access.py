@@ -276,7 +276,9 @@ class TestDocumentsAccess(TransactionCaseDocuments):
                     )
                     self.assertEqual(folder_a.search([('id', '=', self.folder_a.id)]), self.folder_a)
 
-        test_authorized_users(self.internal_user + self.env.ref('base.group_erp_manager').users[0])
+        self.document_manager.groups_id |= self.env.ref('documents.group_documents_system')
+
+        test_authorized_users(self.internal_user + self.document_manager)
 
         self.folder_a.action_update_access_rights(partners={self.portal_user.partner_id: ('edit', False)})
         test_authorized_users(self.portal_user)

@@ -152,7 +152,7 @@ class ProjectProject(models.Model):
     def copy(self, default=None):
         # We have to add no_create_folder=True to the context, otherwise a folder
         # will be automatically created during the call to create.
-        # However, we cannot use with_context, as it intanciates a new recordset,
+        # However, we cannot use with_context, as it instantiates a new recordset,
         # and this copy would call itself infinitely.
         previous_context = self.env.context
         self.env.context = frozendict(self.env.context, no_create_folder=True)
@@ -162,7 +162,7 @@ class ProjectProject(models.Model):
         for old_project, new_project in zip(self, copied_projects):
             if not self.env.context.get('no_create_folder') and new_project.use_documents and old_project.documents_folder_id:
                 new_project.documents_folder_id = old_project.documents_folder_id.with_context(
-                    documents_copy_folders_only=True).copy(
+                    documents_copy_folders_only=True).sudo().copy(
                         {'name': new_project.name, 'owner_id': self.env.ref('base.user_root').id}
                     )
         return copied_projects

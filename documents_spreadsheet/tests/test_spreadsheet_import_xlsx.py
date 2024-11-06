@@ -114,7 +114,7 @@ class SpreadsheetImportXlsx(HttpCase, SpreadsheetTestCommon):
 
     def test_request_xlsx_computes_multipage(self):
         """Successfully upload xlsx on requested documents"""
-        self.authenticate('admin', 'admin')
+        self.authenticate('spreadsheetDude', 'spreadsheetDude')
         folder = self.env["documents.document"].create({"name": "Test folder", "type": "folder"})
         activity_type = self.env['mail.activity.type'].create({
             'name': 'request_document',

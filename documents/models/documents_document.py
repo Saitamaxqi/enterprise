@@ -199,7 +199,7 @@ class DocumentsDocument(models.Model):
     @api.depends('access_token')
     def _compute_access_url(self):
         for document in self:
-            document.access_url = f'{document.get_base_url()}/odoo/documents/{document.access_token}'
+            document.access_url = f'{document.sudo().get_base_url()}/odoo/documents/{document.access_token}'
 
     @api.depends("folder_id", "company_id")
     @api.depends_context("uid", "allowed_company_ids")
@@ -309,7 +309,7 @@ class DocumentsDocument(models.Model):
                  'folder_id.owner_id', 'folder_id.company_id')
     def _compute_user_permission(self):
         for document in self:
-            if self.env.user._is_admin():
+            if self.env.user.has_group('documents.group_documents_system'):
                 document.user_permission = (
                     'edit' if not (company := document.company_id)
                     or company in self.env.companies or company not in self.env.user.company_ids
@@ -376,9 +376,9 @@ class DocumentsDocument(models.Model):
             [('company_id', 'in', self.env.companies.ids)], [('company_id', 'not in', self.env.user.company_ids.ids)]
         ])
 
-        if self.env.user._is_admin():
+        if self.env.user.has_group('documents.group_documents_system'):
             if searched_roles == ['view']:
-                return expression.FALSE_DOMAIN  # Admin has "edit" on all documents, so finds none with "view" only.
+                return expression.FALSE_DOMAIN  # System Administrator has "edit" on all documents, so finds none with "view" only.
             return any_except_disabled_company
 
         # Access from membership

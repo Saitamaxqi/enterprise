@@ -16,7 +16,7 @@ class TestDocumentsMulticompany(TransactionCaseDocuments):
         ])
         cls.admin_user = cls.env['res.users'].create({
             'email': "an_admin@yourcompany.com",
-            'groups_id': [Command.link(cls.env.ref('base.group_erp_manager').id)],
+            'groups_id': [Command.link(cls.env.ref('documents.group_documents_system').id)],
             'login': "an_admin",
             'name': "An Admin",
         })

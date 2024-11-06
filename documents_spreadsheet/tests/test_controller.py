@@ -12,7 +12,7 @@ class TestSpreadsheetDocumentController(SpreadsheetTestCommon, HttpCase):
 
     def test_upload_osheet_json_file(self):
         self.authenticate('admin', 'admin')
-        folder = self.env['documents.document'].create({'name': 'Test folder', 'type': 'folder'})
+        folder = self.env['documents.document'].create({'name': 'Test folder', 'type': 'folder', 'access_internal': 'edit'})
 
         data = {'sheets': []}
 
@@ -34,7 +34,7 @@ class TestSpreadsheetDocumentController(SpreadsheetTestCommon, HttpCase):
 
     def test_upload_osheet_not_json_file(self):
         self.authenticate('admin', 'admin')
-        folder = self.env['documents.document'].create({'name': 'Test folder', 'type': 'folder'})
+        folder = self.env['documents.document'].create({'name': 'Test folder', 'type': 'folder', 'access_internal': 'edit'})
         data = 'not a json file'
         response = self.url_open(
             url='/documents/upload',
@@ -54,7 +54,7 @@ class TestSpreadsheetDocumentController(SpreadsheetTestCommon, HttpCase):
     @mute_logger('odoo.http')
     def test_upload_invalid_osheet_json_file(self):
         self.authenticate('admin', 'admin')
-        folder = self.env['documents.document'].create({'name': 'Test folder', 'type': 'folder'})
+        folder = self.env['documents.document'].create({'name': 'Test folder', 'type': 'folder', 'access_internal': 'edit'})
         data = {
             'sheets': [],
             'lists': {
