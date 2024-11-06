@@ -1466,7 +1466,7 @@ registry.category("web_tour.tours").add("web_studio_no_fetch_subview", {
             run: "click",
         },
         {
-            trigger: ".o_wrap_field label:contains('New Many2Many')",
+            trigger: ".o_inner_group label:contains('New Many2Many')",
         },
     ],
 });

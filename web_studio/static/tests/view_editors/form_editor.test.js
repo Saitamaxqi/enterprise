@@ -472,12 +472,12 @@ test("supports multiple occurences of field", async () => {
         ".o_web_studio_form_view_editor .o_inner_group .o-web-studio-editor--element-clickable"
     ).toHaveCount(2);
     await contains(
-        ".o_web_studio_form_view_editor .o_wrap_field:nth-child(2) .o-web-studio-editor--element-clickable"
+        ".o_web_studio_form_view_editor .o_inner_group .o-web-studio-editor--element-clickable:eq(0)"
     ).click();
     // Would be true if not present in node's options
     expect(".o_web_studio_sidebar input[name='enable_sms']").not.toBeChecked();
     await contains(
-        ".o_web_studio_form_view_editor .o_wrap_field:nth-child(3) .o-web-studio-editor--element-clickable"
+        ".o_web_studio_form_view_editor .o_inner_group .o-web-studio-editor--element-clickable:eq(1)"
     ).click();
     expect(".o_web_studio_sidebar input[name='invisible']").toBeChecked();
 });

@@ -631,7 +631,7 @@ QUnit.module("View Editors", (hooks) => {
         );
         assert.containsOnce(
             thirdGroup,
-            "div:nth-child(2) .o_web_studio_hook",
+            '[data-field-name="m2o"] + .o-web-studio-element-ghost + .o_web_studio_hook',
             "Third group, the hook should be placed after the field"
         );
 
@@ -657,7 +657,7 @@ QUnit.module("View Editors", (hooks) => {
         );
         assert.containsOnce(
             lastGroup,
-            "div:nth-child(3) > .o_web_studio_hook",
+            '[data-field-name="id"] + .o-web-studio-element-ghost + .o_web_studio_hook',
             "Last group, the hook is after the field"
         );
     });
@@ -2834,16 +2834,19 @@ QUnit.module("View Editors", (hooks) => {
                     }
                 },
             });
+            const dropElement = target.querySelector(".o_inner_group");
+            // Ensure that the element is present as dragAndDrop accept tp have null element as 2nd parameter
+            assert.notEqual(dropElement, null);
             await dragAndDrop(
                 target.querySelector(".o_web_studio_field_type_container .o_web_studio_field_tabs"),
-                target.querySelector(".o_inner_group .o_wrap_field")
+                dropElement
             );
             assert.strictEqual(editViewCount, 0, "the notebook cannot be dropped inside a group");
             await dragAndDrop(
                 target.querySelector(
                     ".o_web_studio_field_type_container .o_web_studio_field_columns"
                 ),
-                target.querySelector(".o_inner_group .o_wrap_field")
+                dropElement
             );
             assert.strictEqual(editViewCount, 0, "the group cannot be dropped inside a group");
         }
