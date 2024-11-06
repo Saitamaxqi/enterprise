@@ -635,6 +635,24 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
 
         self.assertEqual(len(self.subscription.order_line), 4)
 
+    def test_sale_subscription_set_date(self):
+        """ Test case to verify that updating the `start_date` on a copied upsell sale order
+            correctly sets the new date in the subscription. """
+        with freeze_time("2024-11-01"):
+            self.subscription.action_confirm()
+            self.env['sale.order']._cron_recurring_create_invoice()
+
+        with freeze_time("2024-11-11"):
+            # Prepare the upsell order from the subscription
+            action = self.subscription.prepare_upsell_order()
+            upsell_so = self.env['sale.order'].browse(action['res_id'])
+            # Copy the upsell order
+            upsell_so_new = upsell_so.copy()
+            # Set a new start date on the copied upsell order
+            new_start_date = fields.Date.from_string("2024-11-12")
+            upsell_so_new.write({'start_date': new_start_date})
+            self.assertEqual(upsell_so_new.start_date, new_start_date, "The start date of the copied upsell order should be updated.")
+
     def test_subscription_order_line_description(self):
         with freeze_time("2024-04-01"):
             self.subscription.action_confirm()

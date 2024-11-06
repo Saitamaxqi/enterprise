@@ -447,7 +447,8 @@ class SaleOrderLine(models.Model):
             return [], ""
         today = fields.Date.today()
         start_date = max(today, order.first_contract_date or today)
-        end_date = order.next_invoice_date - relativedelta(days=1)
+        next_invoice_date = order.next_invoice_date or order.subscription_id.next_invoice_date
+        end_date = next_invoice_date - relativedelta(days=1)
         if start_date >= end_date:
             line_name = _('(*) These recurring products are entirely discounted as the next period has not been invoiced yet.')
         else:
