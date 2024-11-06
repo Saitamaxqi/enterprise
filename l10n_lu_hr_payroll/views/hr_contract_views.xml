@@ -34,6 +34,11 @@
                         <field name="l10n_lu_bik_vehicle_vat_included"/>
                         <div>VAT Included</div>
                     </div>
+                    <label for="l10n_lu_bik_other_benefits"/>
+                    <div class="o_row mw-75">
+                        <field name="l10n_lu_bik_other_benefits"/> 
+                        <div>/ month</div>
+                    </div>
                 </group>
 
                 <group name="l10n_lu_alw" string="Allowances" invisible="country_code != 'LU'">

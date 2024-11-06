@@ -58,6 +58,20 @@ result = contract.l10n_lu_bik_vehicle
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
 
+    <record id="l10n_lu_employees_bik_other_benefits" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_lu_hr_payroll.hr_salary_rule_category_bonuses_bic_bik"/>
+        <field name="name">Benefit in Kind - Other Benefits</field>
+        <field name="code">BIK_OTHER_BENEFITS</field>
+        <field name="sequence">10</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = contract.l10n_lu_bik_other_benefits &gt; 0</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = contract.l10n_lu_bik_other_benefits
+        </field>
+        <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
+    </record>
+
     <record id="l10n_lu_employees_wage_supplement_70" model="hr.salary.rule">
         <field name="category_id" ref="l10n_lu_hr_payroll.hr_salary_rule_category_supplements_accessories"/>
         <field name="name">70% Wage Supplement</field>
@@ -627,6 +641,20 @@ result = contract.l10n_lu_bik_vehicle
         <field name="amount_python_compute">
 result_rate = 100 - result_rules['BIK_VEHICLE_NET_NO_VAT']['rate']
 result = contract.l10n_lu_bik_vehicle
+        </field>
+        <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
+    </record>
+
+    <record id="l10n_lu_employees_bik_other_benefits_net" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_lu_hr_payroll.hr_salary_rule_category_removed_from_net"/>
+        <field name="name">Benefit in Kind - Other Benefits</field>
+        <field name="code">BIK_OTHER_BENEFITS_NET</field>
+        <field name="sequence">175</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = contract.l10n_lu_bik_other_benefits &gt; 0</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = contract.l10n_lu_bik_other_benefits
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>

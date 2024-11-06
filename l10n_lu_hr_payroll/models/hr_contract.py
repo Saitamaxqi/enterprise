@@ -17,6 +17,7 @@ class HrContract(models.Model):
 
     l10n_lu_bik_vehicle = fields.Monetary(string='BIK Vehicle (LU)')
     l10n_lu_bik_vehicle_vat_included = fields.Boolean(string='BIK Vehicle VAT Included (LU)', default=True)
+    l10n_lu_bik_other_benefits = fields.Monetary(string='Others')
 
     l10n_lu_alw_vehicle = fields.Monetary(string='Allowance Vehicle (LU)')
 
