@@ -1,7 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import json
-
 from contextlib import contextmanager
 from unittest.mock import patch
 
@@ -10,6 +9,7 @@ import requests
 from odoo.tests import tagged
 
 from odoo.addons.website.tools import MockRequest
+from odoo.addons.website_sale.controllers.cart import Cart
 from odoo.addons.website_sale.controllers.delivery import Delivery
 from odoo.addons.website_sale.controllers.main import WebsiteSale
 from odoo.addons.website_sale.tests.common import WebsiteSaleCommon
@@ -67,6 +67,7 @@ class TestWebsiteDeliverySendcloudLocationsController(WebsiteSaleCommon):
     def setUpClass(cls):
         super().setUpClass()
         cls.WebsiteSaleController = WebsiteSale()
+        cls.WebsiteSaleCartController = Cart()
         cls.warehouse_id = cls.env['stock.warehouse'].search([('company_id', '=', cls.company.id)], limit=1)
         cls.company.write({
             'name': 'Odoo SA',
@@ -198,7 +199,11 @@ class TestWebsiteDeliverySendcloudLocationsController(WebsiteSaleCommon):
         product = self.product_to_ship1
         website = self.website.with_user(self.public_user)
         with MockRequest(website.env, website=website):
-            self.WebsiteSaleController.cart_update_json(product_id=product.id, add_qty=1)
+            self.WebsiteSaleCartController.add_to_cart(
+                product_template_id=product.product_tmpl_id,
+                product_id=product.id,
+                quantity=1,
+            )
             sale_order = website.sale_get_order()
         partner_address = {
             'name': 'Bob',

@@ -24,8 +24,3 @@ class WebsiteSaleRentingComboConfiguratorController(
     def website_sale_combo_configurator_get_price(self, *args, **kwargs):
         _convert_rental_dates(kwargs)
         return super().website_sale_combo_configurator_get_price(*args, **kwargs)
-
-    @route()
-    def website_sale_combo_configurator_update_cart(self, *args, **kwargs):
-        _convert_rental_dates(kwargs)
-        return super().website_sale_combo_configurator_update_cart(*args, **kwargs)

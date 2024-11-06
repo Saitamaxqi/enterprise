@@ -6,17 +6,17 @@ import { patch } from '@web/core/utils/patch';
 patch(ProductConfiguratorDialog, {
     props: {
         ...ProductConfiguratorDialog.props,
-        rentalStartDate: { type: String, optional: true },
-        rentalEndDate: { type: String, optional: true },
+        start_date: { type: String, optional: true },
+        end_date: { type: String, optional: true },
     },
 });
 
 patch(ProductConfiguratorDialog.prototype, {
     _getAdditionalRpcParams() {
         const params = super._getAdditionalRpcParams();
-        if (this.props.rentalStartDate && this.props.rentalEndDate) {
-            params.start_date = this.props.rentalStartDate;
-            params.end_date = this.props.rentalEndDate;
+        if (this.props.start_date && this.props.end_date) {
+            params.start_date = this.props.start_date;
+            params.end_date = this.props.end_date;
         }
         return params;
     },

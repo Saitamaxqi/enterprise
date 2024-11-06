@@ -17,8 +17,8 @@ patch(SaleOrderLineProductField.prototype, {
         const props = super._getAdditionalDialogProps();
         const saleOrder = this.props.record.model.root;
         if (saleOrder.data.is_rental_order) {
-            props.rentalStartDate = serializeDateTime(saleOrder.data.rental_start_date);
-            props.rentalEndDate = serializeDateTime(saleOrder.data.rental_return_date);
+            props.start_date = serializeDateTime(saleOrder.data.rental_start_date);
+            props.end_date = serializeDateTime(saleOrder.data.rental_return_date);
         }
         return props;
     },

@@ -1,5 +1,5 @@
-import { patch } from '@web/core/utils/patch';
 import { SaleOrderLineProductField } from '@sale/js/sale_product_field';
+import { patch } from '@web/core/utils/patch';
 
 patch(SaleOrderLineProductField.prototype, {
     _getAdditionalRpcParams() {
@@ -15,7 +15,7 @@ patch(SaleOrderLineProductField.prototype, {
         const props = super._getAdditionalDialogProps();
         const saleOrder = this.props.record.model.root;
         if (saleOrder.data.is_subscription) {
-            props.subscriptionPlanId = saleOrder.data.plan_id[0];
+            props.plan_id = saleOrder.data.plan_id[0];
         }
         return props;
     },

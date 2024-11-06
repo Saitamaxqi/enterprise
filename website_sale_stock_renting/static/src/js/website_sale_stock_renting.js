@@ -5,16 +5,21 @@ WebsiteSale.include({
         'change input[type="hidden"][name="product_id"]': "_onVariantChanged",
     }),
     /**
-     * Override to trigger a change_product_id event on the daterange pickers.
+     * Override of `_updateRootProduct` to trigger a change_product_id event on the daterange
+     * pickers.
      *
      * @override
+     * @private
+     * @param {HTMLFormElement} form - The form in which the product is.
+     *
+     * @returns {void}
      */
-    _updateRootProduct($form, productId, productTemplateId) {
+    _updateRootProduct(form) {
         this._super(...arguments);
         const $dateRangeRenting = $('.o_website_sale_daterange_picker');
         if ($dateRangeRenting.length) {
             $dateRangeRenting.trigger(
-                'change_product_id', {product_id: productId}
+                'change_product_id', {product_id: this.rootProduct.productId}
             );
         }
     },

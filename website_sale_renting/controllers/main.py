@@ -8,39 +8,6 @@ from odoo.addons.website_sale.controllers.main import WebsiteSale
 
 class WebsiteSaleRenting(WebsiteSale):
 
-    @route('/shop/cart/update_renting', type='jsonrpc', auth="public", methods=['POST'], website=True)
-    def cart_update_renting(self, start_date=None, end_date=None):
-        """Route to check the cart availability when changing the dates on the cart.
-        """
-        if not start_date or not end_date:
-            return
-        order_sudo = request.website.sale_get_order()
-        if not order_sudo:
-            return
-        start_date = fields.Datetime.to_datetime(start_date)
-        end_date = fields.Datetime.to_datetime(end_date)
-        order_sudo._cart_update_renting_period(start_date, end_date)
-
-        values = {}
-        values['cart_ready'] = order_sudo._is_cart_ready()
-        values['website_sale.cart_lines'] = request.env['ir.ui.view']._render_template(
-            'website_sale.cart_lines', {
-                'website_sale_order': order_sudo,
-                'date': fields.Date.today(),
-                'suggested_products': order_sudo._cart_accessories(),
-            }
-        )
-        values['website_sale.total'] = request.env['ir.ui.view']._render_template(
-            'website_sale.total', {
-                'website_sale_order': order_sudo,
-            }
-        )
-        return {
-            'start_date': order_sudo.rental_start_date,
-            'end_date': order_sudo.rental_return_date,
-            'values': values,
-        }
-
     def _get_search_options(self, **post):
         options = super()._get_search_options(**post)
         options.update({
@@ -65,24 +32,6 @@ class WebsiteSaleRenting(WebsiteSale):
             end_date=kwargs.get('end_date'),
         )
         return result
-
-    @route()
-    def cart_update(self, *args, start_date=None, end_date=None, **kw):
-        """ Override to parse to datetime optional pickup and return dates.
-        """
-        start_date = fields.Datetime.to_datetime(start_date)
-        end_date = fields.Datetime.to_datetime(end_date)
-        return super().cart_update(*args, start_date=start_date, end_date=end_date, **kw)
-
-    @route()
-    def cart_update_json(self, *args, start_date=None, end_date=None, **kwargs):
-        """ Override to parse to datetime optional pickup and return dates.
-        """
-        start_date = fields.Datetime.to_datetime(start_date)
-        end_date = fields.Datetime.to_datetime(end_date)
-        return super().cart_update_json(
-            *args, start_date=start_date, end_date=end_date, **kwargs
-        )
 
     @route(
         '/rental/product/constraints',

@@ -29,8 +29,3 @@ class WebsiteSaleRentingProductConfiguratorController(
     def website_sale_product_configurator_get_optional_products(self, *args, **kwargs):
         _convert_rental_dates(kwargs)
         return super().website_sale_product_configurator_get_optional_products(*args, **kwargs)
-
-    @route()
-    def website_sale_product_configurator_update_cart(self, *args, **kwargs):
-        _convert_rental_dates(kwargs)
-        return super().website_sale_product_configurator_update_cart(*args, **kwargs)

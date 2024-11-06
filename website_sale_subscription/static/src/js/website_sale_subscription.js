@@ -4,14 +4,20 @@ import { WebsiteSale } from '@website_sale/js/website_sale';
 WebsiteSale.include({
 
     /**
-     * Assign the subscription plan to the rootProduct for subscription products.
+     * Override of `_updateRootProduct` to add the subscription plan id to the rootProduct for
+     * subscription products.
      *
      * @override
+     * @private
+     * @param {HTMLFormElement} form - The form in which the product is.
+     *
+     * @returns {void}
      */
-    _updateRootProduct($form, productId, productTemplateId) {
+    _updateRootProduct(form) {
         this._super(...arguments);
-        const selected_plan = $form.find('.product_price .plan_select').val()
-            ?? $form.find('#add_to_cart').attr('data-subscription-plan-id');
+        const selected_plan =
+            form.querySelector('.product_price .plan_select')?.value
+            ?? form.querySelector('#add_to_cart')?.dataset.subscriptionPlanId;
         if (selected_plan) {
             Object.assign(this.rootProduct, {
                 plan_id: parseInt(selected_plan),
@@ -19,8 +25,13 @@ WebsiteSale.include({
         }
     },
 
-    _handleAdd($form) {
-        $form.find('.plan_select > option').each(function() {
+    /**
+     * @override
+     * @private
+     * @param {MouseEvent} ev
+     */
+    async _onClickAdd(ev) {
+        $(ev.currentTarget).closest('form').find('.plan_select > option').each(function() {
             this.disabled = !this.selected;
         })
         return this._super(...arguments);

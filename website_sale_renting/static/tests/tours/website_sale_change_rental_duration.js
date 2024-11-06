@@ -54,7 +54,7 @@ registry.category("web_tour.tours").add("rental_cart_update_duration", {
         {
             content: "click on add to cart",
             trigger:
-                '#product_detail form[action^="/shop/cart/update"] #add_to_cart',
+                '#product_detail form #add_to_cart',
             run: "click",
         },
         tourUtils.goToCart(),

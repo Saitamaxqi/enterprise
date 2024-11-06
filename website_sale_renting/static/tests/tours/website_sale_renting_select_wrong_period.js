@@ -44,7 +44,7 @@ registry
             },
             {
                 content: 'Check that css_not_available has been added to the product form',
-                trigger: 'form[action="/shop/cart/update"].css_not_available'
+                trigger: 'form.css_not_available'
             },
             {
                 content: 'Pick a valid end date first (otherwise start date after end date)',
@@ -68,7 +68,7 @@ registry
             },
             {
                 content: 'Check that css_not_available has been removed',
-                trigger: 'form[action="/shop/cart/update"]:not(.css_not_available)'
+                trigger: 'form:not(.css_not_available)'
             },
         ],
    });

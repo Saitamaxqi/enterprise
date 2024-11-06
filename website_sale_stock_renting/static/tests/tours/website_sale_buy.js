@@ -55,7 +55,7 @@ registry.category("web_tour.tours").add('shop_buy_rental_stock_product', {
         },
         {
             content: "click on add to cart",
-            trigger: '#product_detail form[action^="/shop/cart/update"] #add_to_cart',
+            trigger: '#product_detail form #add_to_cart',
             run: "click",
         },
         tourUtils.goToCart({quantity: 2}),

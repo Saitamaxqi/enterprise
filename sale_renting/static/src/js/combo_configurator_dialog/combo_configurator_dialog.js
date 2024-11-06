@@ -6,26 +6,26 @@ import { patch } from '@web/core/utils/patch';
 patch(ComboConfiguratorDialog, {
     props: {
         ...ComboConfiguratorDialog.props,
-        rentalStartDate: { type: String, optional: true },
-        rentalEndDate: { type: String, optional: true },
+        start_date: { type: String, optional: true },
+        end_date: { type: String, optional: true },
     },
 });
 
 patch(ComboConfiguratorDialog.prototype, {
     _getAdditionalRpcParams() {
         const params = super._getAdditionalRpcParams();
-        if (this.props.rentalStartDate && this.props.rentalEndDate) {
-            params.start_date = this.props.rentalStartDate;
-            params.end_date = this.props.rentalEndDate;
+        if (this.props.start_date && this.props.end_date) {
+            params.start_date = this.props.start_date;
+            params.end_date = this.props.end_date;
         }
         return params;
     },
 
     _getAdditionalDialogProps() {
         const props = super._getAdditionalDialogProps();
-        if (this.props.rentalStartDate && this.props.rentalEndDate) {
-            props.rentalStartDate = this.props.rentalStartDate;
-            props.rentalEndDate = this.props.rentalEndDate;
+        if (this.props.start_date && this.props.end_date) {
+            props.start_date = this.props.start_date;
+            props.end_date = this.props.end_date;
         }
         return props;
     },
