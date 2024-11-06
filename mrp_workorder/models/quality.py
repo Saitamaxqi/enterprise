@@ -528,7 +528,7 @@ class QualityCheck(models.Model):
                         'picked': True,
                     })
                     self.move_line_id.write(sml_vals)
-                    if float_compare(new_qty_reserved, 0, precision_rounding=rounding) >= 0:
+                    if continue_production and float_compare(new_qty_reserved, 0, precision_rounding=rounding) >= 0:
                         self.move_line_id.copy(default={'quantity': new_qty_reserved, 'picked': new_picked})
             else:
                 sml_vals = self._create_extra_move_lines()

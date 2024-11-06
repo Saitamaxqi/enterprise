@@ -478,7 +478,6 @@ registry.category("web_tour.tours").add('test_updated_quality_checks', {steps: (
     },
 ]})
 
-
 registry.category("web_tour.tours").add("test_update_tracked_consumed_materials_in_shopfloor", {
     steps: () => [
         {
@@ -596,6 +595,79 @@ registry.category("web_tour.tours").add("test_update_tracked_consumed_materials_
         {
             content: "Check that 3 registrations were made",
             trigger: ".accordion button:contains('Instructions'):contains(3/3)",
+        },
+    ],
+});
+
+registry.category("web_tour.tours").add("test_under_consume_materials_in_shopfloor", {
+    steps: () => [
+        {
+            content: "Make sure workcenter is available",
+            trigger: ".form-check:has(input[name='Lovely Workcenter'])",
+            run: "click",
+        },
+        {
+            trigger: ".form-check:has(input[name='Lovely Workcenter'])",
+        },
+        {
+            trigger: "button:contains('Confirm')",
+            run: "click",
+        },
+        {
+            content: "Check that we are in the MO view",
+            trigger: ".o_mrp_display_records button:contains('Lovely Workcenter')",
+        },
+        {
+            content: "Swap to the WO view of the Lovely Workcenter",
+            trigger: "button.btn-light:contains('Lovely Workcenter')",
+            run: "click",
+        },
+        {
+            content: "Open register production",
+            trigger: ".accordion button:contains('Instructions')",
+            run: "click",
+        },
+        {
+            trigger: ".modal-header .modal-title:contains('Register component')",
+        },
+        {
+            trigger: ".o_field_widget[name='qty_done'] input",
+            run: "click",
+        },
+        {
+            trigger: ".o_field_widget[name='qty_done'] input",
+            run: "edit 3",
+        },
+        {
+            trigger: ".modal-header",
+            run: "click",
+        },
+        {
+            trigger: "button:contains('Continue consumption')",
+            run: "click",
+        },
+        {
+            trigger: "span[name='component_remaining_qty']:contains('7.00')",
+        },
+        {
+            trigger: ".o_field_widget[name='qty_done'] input",
+            run: "click",
+        },
+        {
+            trigger: ".o_field_widget[name='qty_done'] input",
+            run: "edit 2",
+        },
+        {
+            trigger: ".modal-header",
+            run: "click",
+        },
+        {
+            trigger: "button:contains('Validate')",
+            run: "click",
+        },
+        {
+            content: "Check that the componenet registration has been completed",
+            trigger: ".btn:contains('Mark as Done')",
         },
     ],
 });

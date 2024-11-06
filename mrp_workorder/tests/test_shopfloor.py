@@ -488,3 +488,65 @@ class TestShopFloor(HttpCase):
         self.assertEqual(mo.move_raw_ids.move_line_ids.filtered(lambda m: m.lot_id == lots[2]).location_id, locations[2])
         # since the production happens in WH1, the update of SN004 should have fall back on that location
         self.assertEqual(mo.move_raw_ids.move_line_ids.filtered(lambda m: m.lot_id == lots[3]).location_id, warehouse_1.lot_stock_id)
+
+    def test_under_consume_materials_in_shopfloor(self):
+        """
+        Test that underconsuming in a "register consumed materials" step updates
+        the consumed quantity of the component accordingly and that the reservation
+        state is not altered.
+        """
+        warehouse = self.env.ref("stock.warehouse0")
+        final_product, component = self.env['product.product'].create([
+            {
+            'name': 'Lovely Product',
+            'is_storable': True,
+            'tracking': 'none',
+            },
+            {
+            'name': 'Lovely Component',
+            'is_storable': True,
+            'tracking': 'none',
+            },
+        ])
+        self.env['stock.quant']._update_available_quantity(component, warehouse.lot_stock_id, quantity=10)
+        workcenter = self.env['mrp.workcenter'].create({
+            'name': 'Lovely Workcenter',
+        })
+        bom = self.env['mrp.bom'].create({
+            'product_tmpl_id': final_product.product_tmpl_id.id,
+            'product_qty': 1.0,
+            'operation_ids': [
+                Command.create({'name': 'Lovely Operation', 'workcenter_id': workcenter.id}),
+            ],
+            'bom_line_ids': [
+                Command.create({'product_id': component.id, 'product_qty': 10}),
+            ]
+        })
+        self.env['quality.point'].create([
+            {
+                'picking_type_ids': [Command.link(warehouse.manu_type_id.id)],
+                'product_ids': [Command.link(final_product.id)],
+                'operation_id': bom.operation_ids.id,
+                'title': 'Register component',
+                'component_id': component.id,
+                'test_type_id': self.env.ref('mrp_workorder.test_type_register_consumed_materials').id,
+                'sequence': 1,
+            },
+        ])
+        mo = self.env['mrp.production'].create({
+            'product_id': final_product.id,
+            'product_qty': 1,
+            'bom_id': bom.id,
+        })
+        mo.action_confirm()
+        mo.action_assign()
+        self.assertEqual(mo.reservation_state, 'assigned')
+        mo.button_plan()
+        self.assertEqual(mo.move_raw_ids.quantity, 10.0)
+        action = mo.workorder_ids.action_open_mes()
+        url = '/web?#action=%s' % (action['id'])
+        self.start_tour(url, "test_under_consume_materials_in_shopfloor", login='admin')
+        self.assertEqual(mo.move_raw_ids.quantity, 5.0)
+        self.assertEqual(mo.move_raw_ids.move_line_ids.mapped('quantity'), [3.0, 2.0])
+        self.assertEqual(len(mo.move_raw_ids.move_line_ids.quality_check_ids), 2.0)
+        self.assertEqual(mo.reservation_state, 'assigned')
