@@ -11,7 +11,7 @@
                 <field name="partner_id" string="Contact"/>
                 <field name="index_content"/>
                 <field name="create_uid" string="Created by"/>
-                <filter string="My Documents" name="my_documents_filter" domain="[('owner_id', '=', uid)]"/>
+                <filter string="My Documents" name="my_documents_filter" domain="['|', ('owner_id', '=', uid), ('partner_id.user_ids', '=', uid)]"/>
                 <filter string="My Activities" name="my_activities_filter" domain="[('activity_user_id','=',uid)]"/>
                 <filter string="Starred" name="my_favorites_filter" domain="[('favorited_ids', 'in', uid)]"/>
                 <separator/>
@@ -260,6 +260,7 @@
                         <group>
                             <field name="name" readonly="not context.get('editable')"/>
                             <field name="owner_id" readonly="not context.get('editable')"/>
+                            <field name="partner_id" readonly="not context.get('editable')"/>
                             <field name="file_size" readonly="True" invisible="type == 'folder'"/>
                             <field name="folder_id" readonly="True" widget="documents_folder_many2one"/>
                             <field name="write_date" readonly="True"/>
