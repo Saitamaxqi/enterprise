@@ -340,30 +340,30 @@
                   multi_edit="1"
                   decoration-info="shortcut_document_id"
                   sample="1" default_order="is_folder, create_date DESC, id DESC">
-                <field name="type" width="25px" widget="documents_type_icon" string=" " optional="show"/>
-                <field name="id" optional="hide"/>
+                <field name="is_favorited" widget="boolean_favorite" nolabel="1"/>
+                <field name="type" width="25px" widget="documents_type_icon" nolabel="1" optional="show"/>
                 <field name="name" required="True" readonly="False"/>
                 <field name="display_name" column_invisible="1"/>
-                <field name="url" optional="hide"/>
-                <field name="tag_ids" widget="many2many_tags"
-                    optional="hide" options="{'color_field': 'color'}"/>
-                <field name="partner_id" optional="show"/>
                 <field name="owner_id" widget="many2one_avatar_user" optional="show"/>
-                <field name="write_date" optional="show"/>
-                <field name="file_size" optional="show"/>
+                <field name="partner_id" optional="show"/>
+                <field name="tag_ids" widget="many2many_tags" optional="hide" options="{'color_field': 'color'}"/>
+                <field name="url" optional="hide"/>
                 <field name="lock_uid" optional="hide"/>
-                <field name="create_date" optional="hide"/>
-                <field name="file_extension" optional="hide"/>
                 <field name="company_id" optional="hide"/>
+                <field name="document_count" string="" widget="document_count"/>
+                <field name="available_embedded_actions_ids" optional="hide" widget="many2many_tags" groups="base.group_user"/>
+                <field name="create_date" optional="hide"/>
+                <field name="write_date" optional="show"/>
+                <field name="file_extension" optional="hide"/>
+                <field name="file_size" optional="show"/>
+                <field name="id" column_invisible="1"/>
                 <field name="access_token" column_invisible="1"/>
                 <field name="active" column_invisible="1"/>
                 <field name="user_permission" column_invisible="1"/>
-                <field name="document_count" string="" widget="document_count"/>
                 <field name="attachment_id" column_invisible="1"/>
                 <field name="folder_id" column_invisible="1"/>
                 <field name="res_id" column_invisible="1"/>
                 <field name="res_model" column_invisible="1"/>
-                <field name="available_embedded_actions_ids" optional="hide" widget="many2many_tags" groups="base.group_user"/>
                 <field name="shortcut_document_id" column_invisible="1"/>
                 <field name="mimetype" column_invisible="1"/>
             </list>
