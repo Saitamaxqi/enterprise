@@ -199,13 +199,14 @@ class WhatsappAccount(models.Model):
                 kwargs['body'] = messages['button']['text']
             elif message_type in ('document', 'image', 'audio', 'video', 'sticker'):
                 filename = messages[message_type].get('filename')
+                is_voice = messages[message_type].get('voice')
                 mime_type = messages[message_type].get('mime_type')
                 caption = messages[message_type].get('caption')
                 datas = wa_api._get_whatsapp_document(messages[message_type]['id'])
                 if not filename:
                     extension = mimetypes.guess_extension(mime_type) or ''
                     filename = message_type + extension
-                kwargs['attachments'] = [(filename, datas)]
+                kwargs['attachments'] = [(filename, datas, {'voice': is_voice})]
                 if caption:
                     kwargs['body'] = plaintext2html(caption)
             elif message_type == 'location':

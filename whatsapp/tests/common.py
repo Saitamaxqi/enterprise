@@ -40,6 +40,9 @@ class MockOutgoingWhatsApp(common.BaseCase):
                     return tmpl
             return {}
 
+        def _get_whatsapp_document(document_id):
+            return "abcd"
+
         def _send_whatsapp(number, *, send_vals, **kwargs):
             if send_vals:
                 msg_uid = f'test_wa_{time.time():.9f}'
@@ -99,6 +102,7 @@ class MockOutgoingWhatsApp(common.BaseCase):
             with patch.object(ResPartner, 'create', autospec=True, wraps=ResPartner, side_effect=_res_partner_create), \
                  patch.object(WhatsAppApi, '_get_all_template', side_effect=_get_all_template), \
                  patch.object(WhatsAppApi, '_get_template_data', side_effect=_get_template_data), \
+                 patch.object(WhatsAppApi, '_get_whatsapp_document', side_effect=_get_whatsapp_document), \
                  patch.object(WhatsAppApi, '_upload_demo_document', side_effect=_upload_demo_document), \
                  patch.object(WhatsAppApi, '_upload_whatsapp_document', side_effect=_upload_whatsapp_document), \
                  patch.object(WhatsAppApi, '_send_whatsapp', side_effect=_send_whatsapp), \
