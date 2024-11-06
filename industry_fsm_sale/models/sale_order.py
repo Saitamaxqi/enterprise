@@ -60,14 +60,14 @@ class SaleOrderLine(models.Model):
     delivered_price_tax = fields.Float(compute='_compute_delivered_amount', string='Delivered Total Tax', export_string_translation=False)
     delivered_price_total = fields.Monetary(compute='_compute_delivered_amount', string='Delivered Total', export_string_translation=False)
 
-    @api.depends('qty_delivered', 'discount', 'price_unit', 'tax_id')
+    @api.depends('qty_delivered', 'discount', 'price_unit', 'tax_ids')
     def _compute_delivered_amount(self):
         """
         Compute the amounts of the SO line for delivered quantity.
         """
         for line in self:
             price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-            taxes = line.tax_id.compute_all(price, line.order_id.currency_id, line.qty_delivered, product=line.product_id, partner=line.order_id.partner_shipping_id)
+            taxes = line.tax_ids.compute_all(price, line.order_id.currency_id, line.qty_delivered, product=line.product_id, partner=line.order_id.partner_shipping_id)
             line.delivered_price_tax = sum(t.get('amount', 0.0) for t in taxes.get('taxes', []))
             line.delivered_price_total = taxes['total_included']
             line.delivered_price_subtotal = taxes['total_excluded']

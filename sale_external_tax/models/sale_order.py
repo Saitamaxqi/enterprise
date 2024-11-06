@@ -91,7 +91,7 @@ class SaleOrder(models.Model):
         for line in self._get_lines_eligible_for_external_taxes():
             # Clear all taxes (e.g. default customer tax). Not every line will be sent to the external tax
             # calculation service, those lines would keep their default taxes otherwise.
-            line.tax_id = False
+            line.tax_ids = False
 
             res.append({
                 "id": line.id,
@@ -110,7 +110,7 @@ class SaleOrder(models.Model):
         """ account.external.tax.mixin override. """
         to_flush = self.env['sale.order.line']
         for line, detail in mapped_taxes.items():
-            line.tax_id = detail['tax_ids']
+            line.tax_ids = detail['tax_ids']
             to_flush += line
 
         # Trigger field computation due to changing the tax id. Do

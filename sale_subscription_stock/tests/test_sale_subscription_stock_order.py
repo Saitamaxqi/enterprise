@@ -181,12 +181,12 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
                 Command.create({
                 'product_id': self.sub_product_order.id,
                 'product_uom_qty': 1,
-                'tax_id': [Command.clear()],
+                'tax_ids': [Command.clear()],
                 }),
                 Command.create({
                 'product_id': self.sub_product_order_2.id,
                 'product_uom_qty': 2,
-                'tax_id': [Command.clear()],
+                'tax_ids': [Command.clear()],
                 }),
             ]
         })
@@ -214,13 +214,13 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
                 Command.create({
                 'product_id': self.sub_product_order.id,
                 'product_uom_qty': 1,
-                'tax_id': [Command.clear()],
+                'tax_ids': [Command.clear()],
                 }),
                 Command.create({
                 'product_id': self.test_product_order.id,
                 'price_unit': 1,
                 'product_uom_qty': 1,
-                'tax_id': [Command.clear()],
+                'tax_ids': [Command.clear()],
                 }),
             ]
         })
@@ -382,10 +382,10 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             'pricelist_id': self.company_data['default_pricelist'].id,
             'order_line': [
                 Command.create(
-                    {'product_id': self.sub_product_order.id, 'product_uom_qty': 1, 'tax_id': [Command.clear()]}
+                    {'product_id': self.sub_product_order.id, 'product_uom_qty': 1, 'tax_ids': [Command.clear()]}
                 ),
                 Command.create(
-                    {'product_id': self.additional_kit_product.id, 'product_uom_qty': 1, 'tax_id': [Command.clear()]}
+                    {'product_id': self.additional_kit_product.id, 'product_uom_qty': 1, 'tax_ids': [Command.clear()]}
                 )
             ]
         })
@@ -477,7 +477,7 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
                 Command.create({
                     'product_id': self.sub_product_order.id,
                     'product_uom_qty': 1,
-                    'tax_id': [Command.clear()],
+                    'tax_ids': [Command.clear()],
                 }),
             ]
         })
@@ -571,12 +571,12 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
                     Command.create({
                         'product_id': self.product.id,
                         'product_uom_qty': 1,
-                        'tax_id': [Command.clear()],
+                        'tax_ids': [Command.clear()],
                     }),
                     Command.create({
                         'product_id': self.sub_product_order.id,
                         'product_uom_qty': 1,
-                        'tax_id': [Command.clear()],
+                        'tax_ids': [Command.clear()],
                     }),
                 ]
             })
@@ -670,12 +670,12 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
                     Command.create({
                         'product_id': self.product.id,
                         'product_uom_qty': 1,
-                        'tax_id': [Command.clear()],
+                        'tax_ids': [Command.clear()],
                     }),
                     Command.create({
                         'product_id': self.sub_product_order.id,
                         'product_uom_qty': 1,
-                        'tax_id': [Command.clear()],
+                        'tax_ids': [Command.clear()],
                     }),
                 ]
             })

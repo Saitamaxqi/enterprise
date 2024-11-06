@@ -142,7 +142,7 @@ class AccountMove(models.Model):
                 'product_uom_id': line.product_uom_id.id,
                 'price_unit': line.price_unit,
                 'invoice_lines': line.ids,
-                'tax_id': line.tax_ids.ids,
+                'tax_ids': line.tax_ids.ids,
                 'display_type': line.display_type if line.display_type in ['line_section', 'line_note'] else False,
             }))
 

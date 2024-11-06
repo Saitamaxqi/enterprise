@@ -32,7 +32,7 @@ class TestPleKardexReport(TestSaleCommon):
                     'product_id': p.id,
                     'product_uom_qty': 2,
                     'price_unit': p.list_price,
-                    'tax_id': [Command.set(self.env.ref(f"account.{self.env.company.id}_sale_tax_igv_18").ids)],
+                    'tax_ids': [Command.set(self.env.ref(f"account.{self.env.company.id}_sale_tax_igv_18").ids)],
                 }) for p in (
                     self.company_data['product_order_no'],
                     self.company_data['product_service_delivery'],

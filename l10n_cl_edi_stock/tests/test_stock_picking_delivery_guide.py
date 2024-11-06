@@ -129,14 +129,14 @@ class TestL10nClEdiStock(TestL10nClEdiStockCommon):
                     'product_uom_qty': 5.0,
                     'price_unit': self.product_without_taxes_a.list_price,
                     'discount': 10.00,
-                    'tax_id': [],
+                    'tax_ids': [],
                 }),
                 (0, 0, {
                     'name': self.product_without_taxes_b.name,
                     'product_id': self.product_without_taxes_b.id,
                     'product_uom_qty': 10.0,
                     'price_unit': self.product_without_taxes_b.list_price,
-                    'tax_id': [],
+                    'tax_ids': [],
                 })
             ],
         })

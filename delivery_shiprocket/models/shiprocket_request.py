@@ -235,7 +235,7 @@ class ShipRocket:
         Returns the GST tax amount from order lines.
         """
         gst_tax_amount = 0.0
-        tax_ids = stock_move.sale_line_id and stock_move.sale_line_id.sudo().tax_id or stock_move.product_id.sudo().taxes_id
+        tax_ids = stock_move.sale_line_id and stock_move.sale_line_id.sudo().tax_ids or stock_move.product_id.sudo().taxes_id
         for tax in tax_ids.flatten_taxes_hierarchy():
             tax_tag_ids = tax.invoice_repartition_line_ids.tag_ids
             if tax_tag_ids and any(tax.env.ref(f"l10n_in.tax_tag_{gst}gst", False) in tax_tag_ids for gst in ["c", "s", "i"]):

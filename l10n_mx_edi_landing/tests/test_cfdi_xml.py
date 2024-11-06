@@ -17,7 +17,7 @@ class TestEdiResults(TestMxExtendedEdiCommon, ValuationReconciliationTestCommon)
             'order_line': [(0, 0, ope) for ope in [{
                 'name': p.name, 'product_id': p.id, 'product_uom_qty': 2,
                 'price_unit': p.list_price,
-                'tax_id': [(4, self.tax_positive.id)],
+                'tax_ids': [(4, self.tax_positive.id)],
             } for (_, p) in self.products.items()]],
         })
 
@@ -83,7 +83,7 @@ class TestEdiResults(TestMxExtendedEdiCommon, ValuationReconciliationTestCommon)
                         'product_id': self.product.id,
                         'product_uom_qty': 2,
                         'price_unit': self.product.list_price,
-                        'tax_id': [(6, 0, self.product.taxes_id.filtered_domain(self.env['account.tax']._check_company_domain(self.env.company)).ids)],
+                        'tax_ids': [(6, 0, self.product.taxes_id.filtered_domain(self.env['account.tax']._check_company_domain(self.env.company)).ids)],
                     })
                 ],
             })

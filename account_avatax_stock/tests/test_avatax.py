@@ -56,17 +56,17 @@ class TestAccountAvalaraStock(TestAccountAvataxCommon):
                 'order_line': [
                     (0, 0, {
                         'product_id': self.product.id,
-                        'tax_id': None,
+                        'tax_ids': None,
                         'price_unit': self.product.list_price,
                     }),
                     (0, 0, {
                         'product_id': self.product_user.id,
-                        'tax_id': None,
+                        'tax_ids': None,
                         'price_unit': self.product_user.list_price,
                     }),
                     (0, 0, {
                         'product_id': self.product_accounting.id,
-                        'tax_id': None,
+                        'tax_ids': None,
                         'price_unit': self.product_accounting.list_price,
                     }),
                 ]

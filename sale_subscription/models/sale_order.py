@@ -931,7 +931,7 @@ class SaleOrder(models.Model):
         else:
             parent_message_body = _("A renewal quotation %s has been created", order._get_html_link())
         self.message_post(body=parent_message_body)
-        order.order_line._compute_tax_id()
+        order.order_line._compute_tax_ids()
         return order
 
     def _prepare_renew_upsell_order(self, subscription_state, message_body):

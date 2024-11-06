@@ -881,7 +881,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         with sub_form.order_line.new() as line:
             line.product_id = self.product
         sub = sub_form.save()
-        self.assertEqual(sub.order_line.tax_id, self.tax_10, 'Default tax for product should have been applied.')
+        self.assertEqual(sub.order_line.tax_ids, self.tax_10, 'Default tax for product should have been applied.')
         self.assertEqual(sub.amount_tax, 5.0,
                          'Default tax for product should have been applied.')
         self.assertEqual(sub.amount_total, 55.0,
@@ -891,7 +891,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         sub.write({
             'order_line': [(1, line_id[0], {'product_id': self.product4.id})]
         })
-        self.assertEqual(sub.order_line.tax_id, self.tax_20,
+        self.assertEqual(sub.order_line.tax_ids, self.tax_20,
                          'Default tax for product should have been applied.')
         self.assertEqual(sub.amount_tax, 3,
                          'Default tax for product should have been applied.')
@@ -1591,7 +1591,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'price_unit': 12,
                 })],
         })
-        self.assertEqual(simple_so.order_line.tax_id.id, sale_tax_percentage_incl_1.id, 'The so has the first tax')
+        self.assertEqual(simple_so.order_line.tax_ids.id, sale_tax_percentage_incl_1.id, 'The so has the first tax')
         subscription = self.env['sale.order'].create({
             'partner_id': self.partner_a.id,
             'company_id': self.company_data['company'].id,
@@ -1604,10 +1604,10 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                     'price_unit': 12,
                 })],
         })
-        self.assertEqual(subscription.order_line.tax_id.id, sale_tax_percentage_incl_1.id)
+        self.assertEqual(subscription.order_line.tax_ids.id, sale_tax_percentage_incl_1.id)
         (simple_so | subscription).write({'company_id': other_company_data['company'].id})
-        self.assertEqual(simple_so.order_line.tax_id.id, sale_tax_percentage_incl_2.id, "Simple SO taxes must be recomputed on company change")
-        self.assertEqual(subscription.order_line.tax_id.id, sale_tax_percentage_incl_2.id, "Subscription taxes must be recomputed on company change")
+        self.assertEqual(simple_so.order_line.tax_ids.id, sale_tax_percentage_incl_2.id, "Simple SO taxes must be recomputed on company change")
+        self.assertEqual(subscription.order_line.tax_ids.id, sale_tax_percentage_incl_2.id, "Subscription taxes must be recomputed on company change")
 
     def test_onchange_product_quantity_with_different_currencies(self):
         # onchange_product_quantity compute price unit into the currency of the sale_order pricelist
@@ -2557,7 +2557,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
                 ],
             })
 
-            (sub_0_0 | sub_0_1 | sub_1_0 | sub_negative_recurring | negative_nonrecurring_sub).order_line.tax_id = False
+            (sub_0_0 | sub_0_1 | sub_1_0 | sub_negative_recurring | negative_nonrecurring_sub).order_line.tax_ids = False
             (sub_0_0 | sub_0_1 | sub_1_0 | sub_negative_recurring | negative_nonrecurring_sub).action_confirm()
 
             invoice_0_0 = sub_0_0._create_recurring_invoice()
