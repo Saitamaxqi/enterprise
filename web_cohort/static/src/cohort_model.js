@@ -45,13 +45,9 @@ export class CohortModel extends Model {
      * @param {SearchParams} searchParams
      */
     load(searchParams) {
-        const { comparison, context, domain } = searchParams;
+        const { context, domain } = searchParams;
         this.searchParams = { context };
-        if (comparison) {
-            this.searchParams.domains = comparison.domains;
-        } else {
-            this.searchParams.domains = [{ arrayRepr: domain, description: null }];
-        }
+        this.searchParams.domains = [{ arrayRepr: domain, description: null }];
         const { cohort_interval, cohort_measure } = searchParams.context;
         this.metaData.interval = cohort_interval || this.metaData.interval;
 

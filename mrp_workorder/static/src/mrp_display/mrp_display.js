@@ -32,7 +32,6 @@ export class MrpDisplay extends Component {
     static props = {
         resModel: String,
         action: { type: Object, optional: true },
-        comparison: { validate: () => true },
         models: { type: Object },
         domain: { type: Array },
         display: { type: Object, optional: true },

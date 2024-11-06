@@ -1,6 +1,6 @@
 import { expect, getFixture, test } from "@odoo/hoot";
 import { queryAll, queryAllTexts } from "@odoo/hoot-dom";
-import { animationFrame, Deferred, mockDate } from "@odoo/hoot-mock";
+import { animationFrame, Deferred } from "@odoo/hoot-mock";
 import { markup } from "@odoo/owl";
 import { changeScale } from "@web/../tests/views/calendar/calendar_test_helpers";
 import {
@@ -17,7 +17,6 @@ import {
     removeFacet,
     toggleMenu,
     toggleMenuItem,
-    toggleMenuItemOption,
     toggleSearchBarMenu,
 } from "@web/../tests/web_test_helpers";
 import { browser } from "@web/core/browser/browser";
@@ -537,107 +536,6 @@ test("when clicked on cell redirects to the action list/form view passed in cont
     expect(".o_form_view .o_field_widget:eq(1)").toHaveAttribute("name", "stop", {
         message: "Second field in the form view should be stop",
     });
-});
-
-test("rendering of a cohort view with comparison", async () => {
-    expect.assertions(31);
-
-    mockDate("2017-08-25 01:00:00");
-
-    Subscription._views = {
-        cohort: '<cohort string="Subscriptions" date_start="start" date_stop="stop" measure="__count" interval="week" />',
-        search: `
-            <search>
-                <filter date="start" name="date_filter" string="Date"/>
-            </search>
-        `,
-    };
-    await mountWithCleanup(WebClient);
-
-    await getService("action").doAction({
-        name: "Subscriptions",
-        res_model: "subscription",
-        type: "ir.actions.act_window",
-        views: [[false, "cohort"]],
-    });
-
-    function verifyContents(results, label) {
-        const tables = queryAll("table");
-        expect(tables.length).toBe(results.length, {
-            message: `${label}: There should be ${results.length} tables`,
-        });
-        tables.forEach((table) => {
-            const result = results.shift();
-            const rowCount = queryAll(".o_cohort_row_clickable", { root: table }).length;
-
-            if (rowCount) {
-                expect(rowCount).toBe(result, {
-                    message: `the table should contain ${result} rows`,
-                });
-            } else {
-                expect(table.querySelector("th")).toHaveText(result, {
-                    message: `the table should contain the time range description ${result}`,
-                });
-            }
-        });
-    }
-
-    // with no comparison, with data (no filter)
-    verifyContents([3], "with no comparison, with data (no filter)");
-    expect(".o_cohort_no_data").toHaveCount(0);
-    expect("div.o_view_nocontent").toHaveCount(0);
-
-    // with no comparison with no data (filter on 'last_year')
-    await toggleSearchBarMenu();
-    await toggleMenuItem("Date");
-    await toggleMenuItemOption("Date", "2016");
-
-    verifyContents([], "with no comparison with no data (filter on 'last_year'");
-    expect(".o_cohort_no_data").toHaveCount(0);
-    expect("div.o_view_nocontent").toHaveCount(1);
-
-    // with comparison active, data and comparisonData (filter on 'this_month' + 'previous_period')
-    await toggleMenuItemOption("Date", "2016");
-    await toggleMenuItemOption("Date", "August");
-    await toggleMenuItem("Date: Previous period");
-
-    verifyContents(
-        ["August 2017", 2, "July 2017", 1],
-        "with comparison active, data and comparisonData (filter on 'this_month' + 'previous_period')"
-    );
-    expect(".o_cohort_no_data").toHaveCount(0);
-    expect("div.o_view_nocontent").toHaveCount(0);
-
-    // with comparison active, data, no comparisonData (filter on 'this_year' + 'previous_period')
-    await toggleMenuItemOption("Date", "August");
-
-    verifyContents(
-        ["2017", 3, "2016"],
-        "with comparison active, data, no comparisonData (filter on 'this_year' + 'previous_period')"
-    );
-    expect(".o_cohort_no_data").toHaveCount(1);
-    expect("div.o_view_nocontent").toHaveCount(0);
-
-    // with comparison active, no data, comparisonData (filter on 'Q4' + 'previous_period')
-    await toggleMenuItemOption("Date", "Q4");
-
-    verifyContents(
-        ["Q4 2017", "Q3 2017", 3],
-        "with comparison active, no data, comparisonData (filter on 'Q4' + 'previous_period')"
-    );
-    expect(".o_cohort_no_data").toHaveCount(1);
-    expect("div.o_view_nocontent").toHaveCount(0);
-
-    // with comparison active, no data, no comparisonData (filter on 'last_year' + 'previous_period')
-    await toggleMenuItemOption("Date", "2016");
-    await toggleMenuItemOption("Date", "2017");
-
-    verifyContents(
-        ["Q4 2016", "Q3 2016"],
-        "with comparison active, no data, no comparisonData (filter on 'last_year' + 'previous_period')"
-    );
-    expect(".o_cohort_no_data").toHaveCount(2);
-    expect("div.o_view_nocontent").toHaveCount(1);
 });
 
 test("verify context", async () => {
