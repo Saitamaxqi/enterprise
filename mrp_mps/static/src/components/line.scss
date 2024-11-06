@@ -15,15 +15,15 @@
         padding-top: 0;
 
         &.o_highlight{
-            background-color: lightyellow;
+            background-color: $primary-bg-subtle;
         }
         &.o_zero_qty {
-            color: lightgrey;
+            color: $gray-400;
         }
     }
 
     .o_zero_qty {
-        color: lightgrey;
+        color: $gray-400;
     }
 
     table {
@@ -56,6 +56,23 @@
             &.o_text_align {
                 text-align: center;
                 padding-right: 10px;
+            }
+            span {
+                white-space: pre;
+            }
+        }
+        .o_mps_inline {
+            display: flex;
+            align-items: center;
+            justify-content: right;
+            a {
+                text-align: right;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                min-width: 45%;
+            }
+            input {
+                min-width: 45%;
             }
         }
     }
