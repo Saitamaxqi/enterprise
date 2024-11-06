@@ -186,8 +186,6 @@
         <t t-call="web.frontend_layout">
             <t t-set="head">
                 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-                <t t-call-assets="web.assets_frontend" t-js="false"/>
-                <t t-call-assets="web.assets_frontend" t-css="false"/>
             </t>
             <div class="oe_structure oe_empty">
                 <section class="s_text_image pt104 pb104" data-snippet="s_image_text" data-name="Image - Text">
