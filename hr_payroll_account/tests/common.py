@@ -244,3 +244,18 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
             'input_type_id': other_input_id.id,
             'amount': amount,
         })
+
+    def _add_rule_parameter_value(self, rule_parameter_code, value, date):
+        rule_parameter_id = self.env['hr.rule.parameter'].search([('code', '=', rule_parameter_code)]).id
+        value_on_same_date = self.env['hr.rule.parameter.value'].search([
+            ('rule_parameter_id', '=', rule_parameter_id),
+            ('date_from', '=', date)
+        ])
+        if value_on_same_date:
+            value_on_same_date.write({'parameter_value': value})
+        else:
+            self.env['hr.rule.parameter.value'].create({
+                'rule_parameter_id': rule_parameter_id,
+                'parameter_value': value,
+                'date_from': date,
+            })

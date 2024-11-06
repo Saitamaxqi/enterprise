@@ -82,7 +82,7 @@ class TestL10nMXTrialBalanceReportCommon(TestMxEdiCommon, TestAccountReportsComm
             {
                 "name": "Dotted name C.V.",
                 "account_type": "liability_current",
-                "code": "205.06.02",
+                "code": "205.06.03",
                 "reconcile": True,
             }
         )
@@ -174,6 +174,8 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="108" NumCta="108" Desc="Allowance for doubtful accounts" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="108.01" NumCta="108.01" Desc="Allowance for doubtful accounts national" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="108.02" NumCta="108.02" Desc="Allowance for doubtful accounts foreign" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="110" NumCta="110" Desc="Employment subsidy to be applied" Nivel="1" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="110.01" NumCta="110.01" Desc="Employment subsidy to be applied" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="115" NumCta="115" Desc="Inventory" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="115.01" NumCta="115.01" Desc="Inventory" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="115.02" NumCta="115.02" Desc="Raw materials and materials" Nivel="2" Natur="D"/>
@@ -208,6 +210,13 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="209.02" NumCta="209.02" Desc="IEPS carried forward not collected" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="210" NumCta="210" Desc="Provision for wages and salaries payable" Nivel="1" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="210.01" NumCta="210.01" Desc="Provision for wages and salaries payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="210.02" NumCta="210.02" Desc="Provision for holidays payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="210.03" NumCta="210.03" Desc="Provision for Christmas bonus payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="210.04" NumCta="210.04" Desc="Savings fund provision payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="211" NumCta="211" Desc="Provision for social security contributions payable" Nivel="1" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="211.01" NumCta="211.01" Desc="Employer's IMSS provision payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="211.02" NumCta="211.02" Desc="Provision for SAR payable" Nivel="2" Natur="A"/>
+            <catalogocuentas:Ctas CodAgrup="211.03" NumCta="211.03" Desc="Infonavit provision payable" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="216" NumCta="216" Desc="Taxes withheld" Nivel="1" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="216.01" NumCta="216.01" Desc="Taxes withheld from income tax on wages and salaries" Nivel="2" Natur="A"/>
             <catalogocuentas:Ctas CodAgrup="216.03" NumCta="216.03" Desc="Withholding of income tax for leasing" Nivel="2" Natur="A"/>
@@ -228,6 +237,16 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             <catalogocuentas:Ctas CodAgrup="501.01" NumCta="501.01" Desc="Cost of sales" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601" NumCta="601" Desc="Overheads" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.01" NumCta="601.01" Desc="Wages and salaries" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="601.06" NumCta="601.06" Desc="Holidays" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="601.07" NumCta="601.07" Desc="Holiday bonus" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="601.12" NumCta="601.12" Desc="Aguinaldo" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="601.15" NumCta="601.15" Desc="Pantry" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="601.16" NumCta="601.16" Desc="Transport" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="601.19" NumCta="601.19" Desc="Savings fund" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="601.26" NumCta="601.26" Desc="IMSS contributions" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="601.27" NumCta="601.27" Desc="Infonavit contributions" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="601.28" NumCta="601.28" Desc="SAR contributions" Nivel="2" Natur="D"/>
+            <catalogocuentas:Ctas CodAgrup="601.74" NumCta="601.74" Desc="Commissions on sales" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="601.84" NumCta="601.84" Desc="Other overheads" Nivel="2" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="701" NumCta="701" Desc="Financial expenses" Nivel="1" Natur="D"/>
             <catalogocuentas:Ctas CodAgrup="701.01" NumCta="701.01" Desc="Foreign exchange loss" Nivel="2" Natur="D"/>
@@ -319,7 +338,7 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
             [
                 ('201.01.01 National suppliers',                              1000.0,      75.0,     0.0,    1075.0),
                 ('205.06.01.001 Extra deep code',                                0.0,      50.0,   400.0,    -350.0),
-                ('205.06.02 Dotted name C.V.',                                   0.0,     400.0,    50.0,     350.0),
+                ('205.06.03 Dotted name C.V.',                                   0.0,     400.0,    50.0,     350.0),
                 ('401.01.01 Sales and/or services taxed at the general rate',    0.0,       0.0,   325.0,    -325.0),
                 ('601.84.01 Other overheads',                                    0.0,     250.0,     0.0,     250.0),
                 ('999999 Undistributed Profits/Losses',                      -1000.0,       0.0,     0.0,   -1000.0),
@@ -342,7 +361,7 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
                 ('205 Short-term sundry creditors',                              0.0,     450.0,   450.0,       0.0),
                 ('205.06 Other short-term sundry creditors',                     0.0,     450.0,   450.0,       0.0),
                 ('205.06.01.001 Extra deep code',                                0.0,      50.0,   400.0,    -350.0),
-                ('205.06.02 Dotted name C.V.',                                   0.0,     400.0,    50.0,     350.0),
+                ('205.06.03 Dotted name C.V.',                                   0.0,     400.0,    50.0,     350.0),
                 ('4 Income',                                                     0.0,       0.0,   325.0,    -325.0),
                 ('401 Income',                                                   0.0,       0.0,   325.0,    -325.0),
                 ('401.01 Sales and/or services taxed at the general rate',       0.0,       0.0,   325.0,    -325.0),
