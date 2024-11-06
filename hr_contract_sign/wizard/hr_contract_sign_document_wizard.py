@@ -23,7 +23,7 @@ class HrContractSignDocumentWizard(models.TransientModel):
         return list_template
 
     def _default_get_template_warning(self):
-        return not bool(self._get_sign_template_ids()) and _('No appropriate template could be found, please make sure you configured them properly.')
+        return not bool(self._get_sign_template_ids()) and _('No templates are configured yet. Do you want to set up your first one ?')
 
     @api.model
     def default_get(self, fields_list):
@@ -57,8 +57,8 @@ class HrContractSignDocumentWizard(models.TransientModel):
     possible_template_ids = fields.Many2many('sign.template', compute='_compute_possible_template_ids')
     sign_template_ids = fields.Many2many(
         'sign.template', string='Documents to sign',
-        domain="[('id', 'in', possible_template_ids)]", help="""Documents to sign. Only documents with 1 or 2 different responsible are selectable.
-        Documents with 1 responsible will only have to be signed by the employee while documents with 2 different responsible will have to be signed by both the employee and the responsible.
+        domain="[('id', 'in', possible_template_ids)]", help="""Select only documents with either 1 or 2 different signatories.
+        Documents with 1 signatory require only the employee's signature, while those with 2 signatories require signatures from both the employee and the HR responsible.
         """, required=True)
     has_both_template = fields.Boolean(compute='_compute_has_both_template')
     template_warning = fields.Char(default=_default_get_template_warning, store=False)

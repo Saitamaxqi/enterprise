@@ -23,6 +23,11 @@
     'demo': [
         'data/hr_contract_sign_demo.xml',
     ],
+    'assets': {
+    'web.assets_backend': [
+        'hr_contract_sign/static/src/**/*',
+        ],
+    },
     'installable': True,
     'auto_install': True,
     'license': 'OEEL-1',
