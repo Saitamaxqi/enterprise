@@ -10,7 +10,7 @@ class SaleOrderLine(models.Model):
 
     def _is_postpaid_line(self):
         self.ensure_one()
-        return self.qty_delivered_method == 'timesheet' or super()._is_postpaid_line()
+        return (self.product_id.service_policy == 'delivered_timesheet' and self.qty_delivered_method == 'timesheet') or super()._is_postpaid_line()
 
     def _get_timesheet_subscription_lines(self):
         return self.filtered(lambda sol: sol.recurring_invoice and sol.qty_delivered_method == 'timesheet')
