@@ -9,7 +9,6 @@ from freezegun import freeze_time
 from logging import getLogger
 
 from odoo.addons.appointment.tests.common import AppointmentCommon
-from odoo.addons.website.tests.test_performance import UtilPerf
 from odoo.tests import tagged
 from odoo.tests.common import warmup
 
@@ -24,7 +23,7 @@ class AppointmentPerformanceCase(AppointmentCommon):
         self.patch(self.env.registry, 'ready', True)
 
 
-class AppointmentUIPerformanceCase(AppointmentPerformanceCase, UtilPerf):
+class AppointmentUIPerformanceCase(AppointmentPerformanceCase):
 
     @classmethod
     def setUpClass(cls):
