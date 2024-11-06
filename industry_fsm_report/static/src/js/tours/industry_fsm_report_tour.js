@@ -90,14 +90,12 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             {
                 isActive: ["auto"],
                 trigger: "div[name=worksheet_map] h5#task_worksheet",
-            content: ('"Worksheet" section is rendered'),
-                run: "click",
+                content: '"Worksheet" section is rendered',
             },
             {
                 isActive: ["auto"],
                 trigger: "div[name=worksheet_map] div[class*=row] div:not(:empty)",
-            content: ('At least a field is rendered'),
-                run: "click",
+                content: "At least a field is rendered",
             },
             {
                 trigger: ".modal .o_web_sign_auto_button:contains(auto)",
