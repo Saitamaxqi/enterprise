@@ -36,6 +36,7 @@ class TestInterCompanyPurchaseToSale(TestInterCompanyRulesCommonSOPO):
 
         # Find related sale order based on client order reference.
         sale_order = self.env['sale.order'].with_company(partner).search([('client_order_ref', '=', purchase_order.name)], limit=1)
+        fp = self.env['account.fiscal.position'].with_company(partner)._get_fiscal_position(company.partner_id)
 
         self.assertEqual(sale_order.state, "draft", "sale order should be in draft state.")
         self.assertEqual(sale_order.partner_id, company.partner_id, "Vendor does not correspond to Company %s." % company)
@@ -45,6 +46,7 @@ class TestInterCompanyPurchaseToSale(TestInterCompanyRulesCommonSOPO):
         self.assertEqual(sale_order.order_line[0].name, 'Service', "Product name is incorrect.")
         self.assertEqual(sale_order.order_line[0].product_uom_qty, 1, "Product qty is incorrect.")
         self.assertEqual(sale_order.order_line[0].price_unit, 450, "Unit Price in line is incorrect.")
+        self.assertEqual(sale_order.fiscal_position_id, fp)
 
 
     def test_00_inter_company_sale_purchase(self):

@@ -97,7 +97,7 @@ class PurchaseOrder(models.Model):
             'pricelist_id': partner.property_product_pricelist.id,
             'partner_invoice_id': partner_addr['invoice'],
             'date_order': self.date_order,
-            'fiscal_position_id': partner.property_account_position_id.id,
+            'fiscal_position_id': self.env['account.fiscal.position']._get_fiscal_position(partner).id,
             'payment_term_id': partner.property_payment_term_id.id,
             'user_id': False,
             'auto_generated': True,

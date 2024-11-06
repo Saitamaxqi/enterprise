@@ -33,6 +33,7 @@ class TestInterCompanySaleToPurchase(TestInterCompanyRulesCommonSOPO):
 
         # I check that Quotation of purchase order and order line is same as sale order
         purchase_order = self.env['purchase.order'].search([('company_id', '=', partner.id)], limit=1)
+        fp = self.env['account.fiscal.position'].with_company(partner)._get_fiscal_position(company.partner_id)
 
         self.assertEqual(purchase_order.state, "draft", "Invoice should be in draft state.")
         self.assertEqual(purchase_order.partner_id, company.partner_id, "Vendor does not correspond to Company %s." % company.name)
@@ -43,6 +44,7 @@ class TestInterCompanySaleToPurchase(TestInterCompanyRulesCommonSOPO):
         self.assertEqual(purchase_order.order_line[0].price_unit, 450, "Price unit is incorrect.")
         self.assertEqual(purchase_order.order_line[0].product_qty, 1, "Product qty is incorrect.")
         self.assertEqual(purchase_order.order_line[0].price_subtotal, 450, "line total is incorrect.")
+        self.assertEqual(purchase_order.fiscal_position_id, fp)
         return purchase_order
 
     def test_00_inter_company_sale_purchase(self):
