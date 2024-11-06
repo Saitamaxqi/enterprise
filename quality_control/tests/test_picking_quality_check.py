@@ -904,3 +904,63 @@ class TestQualityCheck(TestQualityCommon):
         })
         picking.action_confirm()
         self.assertEqual(len(picking.check_ids), 3)
+
+    def test_qc_with_partial_reception(self):
+        """
+        Test that the quality check is required only for move lines with quantity set.
+        """
+        self.env['quality.point'].create({
+            'picking_type_ids': [self.picking_type_id],
+            'test_type_id': self.env.ref('quality_control.test_type_measure').id,
+            'measure_on': 'move_line',
+        })
+        (self.product_2 | self.product_3).is_storable = True
+        self.product_2.tracking = 'serial'
+        # Create incoming shipment.
+        picking_in = self.env['stock.picking'].create({
+            'picking_type_id': self.picking_type_id,
+            'partner_id': self.partner_id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id,
+        })
+        move_tracked_product = self.env['stock.move'].create({
+            'name': self.product_2.name,
+            'product_id': self.product_2.id,
+            'product_uom_qty': 1,
+            'product_uom': self.product_2.uom_id.id,
+            'picking_id': picking_in.id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id})
+        move_untracked = self.env['stock.move'].create({
+            'name': self.product_3.name,
+            'product_id': self.product_3.id,
+            'product_uom_qty': 1,
+            'product_uom': self.product_3.uom_id.id,
+            'picking_id': picking_in.id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id})
+        # Confirm incoming shipment.
+        picking_in.action_confirm()
+        # Check Quality Check for incoming shipment is created
+        self.assertEqual(len(picking_in.check_ids), 2)
+        self.assertTrue(picking_in.quality_check_todo)
+        # Set the quantity for the untracked product and complete its quality check.
+        move_untracked.quantity = 1
+        move_untracked.picked = True
+        untracked_check_ids = picking_in.check_ids.filtered(lambda qc: qc.product_id == self.product_3)
+        untracked_check_ids.do_pass()
+        self.assertEqual(untracked_check_ids.quality_state, 'pass')
+        # Update the move line of the tracked product to 0 and
+        # ensure that its quality check is not as todo
+        move_tracked_product.move_line_ids.quantity = 0
+        self.env.invalidate_all()
+        self.assertFalse(picking_in.quality_check_todo)
+        # Validate incoming shipment.
+        res_dict = picking_in.button_validate()
+        wizard = Form(self.env[res_dict['res_model']].with_context(res_dict['context'])).save()
+        wizard.process()
+        backorder = picking_in.backorder_ids
+        self.assertEqual(picking_in.state, 'done')
+        self.assertEqual(len(backorder.check_ids), 1)
+        backorder.check_ids.do_pass()
+        self.assertTrue(backorder.check_ids.quality_state, 'pass')

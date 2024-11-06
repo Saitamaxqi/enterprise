@@ -4,6 +4,7 @@
 from odoo import api, fields, models, _
 from odoo.osv import expression
 from odoo.exceptions import UserError
+from odoo.tools.float_utils import float_is_zero
 
 
 class StockPicking(models.Model):
@@ -19,7 +20,7 @@ class StockPicking(models.Model):
         for picking in self:
             todo = False
             fail = False
-            checkable_products = picking.mapped('move_line_ids').mapped('product_id')
+            checkable_products = picking.move_line_ids.filtered(lambda ml: not float_is_zero(ml.quantity, precision_rounding=ml.product_uom_id.rounding)).mapped('product_id')
             for check in picking.check_ids:
                 if check.quality_state == 'none' and (check.product_id in checkable_products or check.measure_on == 'operation'):
                     todo = True
@@ -65,7 +66,8 @@ class StockPicking(models.Model):
         if self.env.context.get('skip_check'):
             return res
         for backorder in res:
-            backorder.move_line_ids.check_ids.picking_id = backorder
+            # Do not link the QC of move lines with quantity of 0 in backorder.
+            backorder.move_line_ids.filtered(lambda ml: not float_is_zero(ml.quantity, precision_rounding=ml.product_uom_id.rounding)).check_ids.picking_id = backorder
             backorder.backorder_id.check_ids.filtered(lambda qc: qc.quality_state == 'none').sudo().unlink()
             backorder.move_ids._create_quality_checks()
         return res
