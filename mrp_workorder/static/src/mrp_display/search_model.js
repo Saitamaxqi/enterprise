@@ -102,19 +102,6 @@ export class MrpDisplaySearchModel extends SearchModel {
         return super.toggleSearchItem(searchItemId);
     }
 
-    async deleteFavorite(favoriteId) {
-        // Reset WO filters when deleting a currently enabled favorite
-        if (
-            this.workorders &&
-            this.query.some((queryElem) => queryElem.searchItemId === favoriteId)
-        ) {
-            for (const filter of this.state.workorderFilters) {
-                filter.isActive = false;
-            }
-        }
-        return super.deleteFavorite(favoriteId);
-    }
-
     setWorkcenterFilter(workcenters) {
         const filter = Object.values(this.searchItems).find(
             (si) => si.name === "shop_floor_this_station"
