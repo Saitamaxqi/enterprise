@@ -30,16 +30,8 @@
         "web.assets_web_dark": [
             "voip/static/src/**/*.dark.scss",
         ],
-        "web.tests_assets": [
-            "voip/static/tests/legacy/helpers/**/*.js",
-        ],
-        "web.qunit_suite_tests": [
-            "voip/static/tests/legacy/**/*.js",
-            ("remove", "voip/static/tests/legacy/helpers/**/*.js"),
-        ],
         "web.assets_unit_tests": [
             "voip/static/tests/**/*",
-            ("remove", "voip/static/tests/legacy/**/*"),
         ],
     },
 }
