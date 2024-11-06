@@ -816,3 +816,36 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
 
         forecast_data = self.env['stock.forecasted_product_product']._get_report_data(product_ids=[product.id])
         self.assertEqual(forecast_data['subscription_qty'], 1, 'Renewed subscription should no longer require stock')
+
+    def test_cron_product_multiple_delivery_creation(self):
+        """This check ensures that the cron creates the deliveries for all subscriptions """
+        self.storable_product = self.env['product.product'].create({
+            'name': 'Storable Product',
+            'type': 'consu',
+            'is_storable': True,
+            'uom_id': self.uom_unit.id,
+            'recurring_invoice': True,
+        })
+
+        def create_subscription(name):
+            sub = self.env['sale.order'].create({
+                'name': name,
+                'is_subscription': True,
+                'partner_id': self.user_portal.partner_id.id,
+                'plan_id': self.plan_month.id,
+                'start_date': fields.Date.today(),
+                'next_invoice_date': False,
+                'order_line': [Command.create({'product_id': self.storable_product.id, 'product_uom_qty': 1})]
+            })
+            sub.action_confirm()
+            return sub
+
+        subscription_order_1 = create_subscription("Order 1")
+        subscription_order_2 = create_subscription("Order 2")
+
+        self.env["sale.order"]._create_recurring_invoice()
+
+        move_1 = subscription_order_1.order_line.move_ids
+        move_2 = subscription_order_2.order_line.move_ids
+        self.assertTrue(bool(move_1))
+        self.assertTrue(bool(move_2))
