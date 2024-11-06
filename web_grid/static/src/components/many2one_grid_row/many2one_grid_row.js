@@ -23,6 +23,13 @@ export class Many2OneGridRow extends GridRow {
         return this.props.relation || this.props.model.fieldsInfo[this.props.name].relation;
     }
 
+    get urlRelation() {
+        if (!this.relation.includes(".")) {
+            return "m-" + this.relation;
+        }
+        return this.relation;
+    }
+
     get displayName() {
         return this.value && this.value[1].split("\n", 1)[0];
     }
