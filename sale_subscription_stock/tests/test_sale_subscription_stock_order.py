@@ -543,17 +543,17 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
                          'We should only deliver the recurring product')
 
     def test_prepaid_qty_computation(self):
-        """"
+        """
         Several cases:
-        1) Today is in the middle of the invoiced period
+        1) Today is in the middle of the 1st INVOICED period
             a) The product is already delivered
-            b) The product will e delivered later inside the period
-        2) Today is after the invoiced period
-            a) The product has already been delivered (after the invoicing period but before today)
-            b) The product will be delivered in the future (after the invoicing period but before today)
-        3) We missed a whole invoicing period
-            a) The product has been delivered after the invoicing period but the second invoice has not been generated
-                We still need to invoice the product
+            b) The product is still not delivered
+        2) Today is in the 2nd period that is NOT YET invoiced
+            a) The 1st period product was delivered after the invoicing period but before today
+            b) The 1st period product is still not delivered
+        3) Today is in the 2nd INVOICED period
+            a) The 1st and 2nd period products have been delivered (both in the 2nd period)
+            b) The 1st and 2nd period products are still not delivered
         """
 
         with freeze_time("2023-01-01"):
@@ -579,11 +579,14 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
                     }),
                 ]
             })
+
+            # --------- Start Case 1 --------- #
             sub = sub_temp.copy()
             sub.action_confirm()
             self.env['sale.order']._create_recurring_invoice()
-            # case 1.b
+
         with freeze_time("2023-01-05"):
+            # case 1.b
             res = self._get_quantities(sub.order_line)
             self.assertEqual(res['ordered'], [1, 1])
             self.assertEqual(res['delivered'], [0, 0])
@@ -600,6 +603,8 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
             self.assertEqual(res['invoiced'], [1, 1])
             self.assertEqual(res['to_invoice'], [0, 0])
 
+        # --------- Start Case 2 --------- #
+
         with freeze_time("2023-01-1"):
             sub = sub_temp.copy()
             sub.action_confirm()
@@ -608,42 +613,50 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
 
         with freeze_time("2023-02-15"):
             # case 2.b
+            res = self._get_quantities(sub.order_line)  # February was NOT invoiced, `res` represents January's data
             self.assertEqual(res['ordered'], [1, 1])
-            self.assertEqual(res['delivered'], [1, 1])
+            self.assertEqual(res['delivered'], [0, 0])
             # self.assertEqual(res['invoiced'], [0, 0]) # --> Impossible
             # self.assertEqual(res['to_invoice'], [1, 1]) # --> Impossible
-            self.validate_picking_moves(sub.picking_ids)
-            sub.order_line[0].qty_delivered = 1
 
         with freeze_time("2023-02-25"):
             # case 2.a
-            res = self._get_quantities(sub.order_line)
+            self.validate_picking_moves(sub.picking_ids)
+            sub.order_line[0].qty_delivered = 1
+
+            res = self._get_quantities(sub.order_line)  # February was NOT invoiced, `res` represents January's data
             self.assertEqual(res['ordered'], [1, 1])
-            self.assertEqual(res['delivered'], [1, 0])
+            self.assertEqual(res['delivered'], [1, 1])
             self.assertEqual(res['invoiced'], [1, 1])
             self.assertEqual(res['to_invoice'], [0, 0])
 
-        with freeze_time("2023-01-1"):
+        # --------- Start Case 3 --------- #
+
+        with freeze_time("2023-01-01"):
             sub = sub_temp.copy()
             sub.action_confirm()
             self.env['sale.order']._create_recurring_invoice()
             self.assertTrue(sub.next_invoice_date, datetime.date(2023, 2, 1))
 
-        with freeze_time("2023-02-15"):
-            # case 3.b invoice is not yet created and we are missing the creation
-            self.assertEqual(res['ordered'], [1, 1])
-            self.assertEqual(res['delivered'], [1, 0], "product 1 is qty_delivered manually and product 2 is not yet delivered")
-            # self.assertEqual(res['invoiced'], [0, 0]) # --> Impossible
-            # self.assertEqual(res['to_invoice'], [1, 1]) # --> Impossible
-            self.validate_picking_moves(sub.picking_ids)
+        with freeze_time("2023-02-01"):
+            self.env['sale.order']._create_recurring_invoice()
 
-            sub.order_line[0].qty_delivered = 1
+        with freeze_time("2023-02-15"):
+            # case 3.b
+            res = self._get_quantities(sub.order_line)  # February has been invoiced, `res` represents February's data
+            self.assertEqual(res['ordered'], [1, 1])
+            self.assertEqual(res['delivered'], [0, 0], "products are not yet delivered")
+            self.assertEqual(res['invoiced'], [1, 1])
+            self.assertEqual(res['to_invoice'], [0, 0])
 
         with freeze_time("2023-02-25"):
             # case 3.a
-            res = self._get_quantities(sub.order_line)
+            self.validate_picking_moves(sub.picking_ids)  # Deliver January's and February's products
+            sub.order_line[0].qty_delivered = 1
+
+            res = self._get_quantities(sub.order_line)  # February has been invoiced, `res` represents February's data
             self.assertEqual(res['ordered'], [1, 1])
-            self.assertEqual(res['delivered'], [1, 0], "product 2 cannot be counted as delivered if the period has not been invoiced")
+            self.assertEqual(res['delivered'], [1, 1])
             self.assertEqual(res['invoiced'], [1, 1])
             self.assertEqual(res['to_invoice'], [0, 0])
 
@@ -848,3 +861,56 @@ class TestSubscriptionStockOnOrder(TestSubscriptionStockCommon):
         move_2 = subscription_order_2.order_line.move_ids
         self.assertTrue(bool(move_1))
         self.assertTrue(bool(move_2))
+
+    def test_picking_done_in_another_period(self):
+        """ In this test, we trigger 2 periods the same day.
+            The goal is to ensure that the picking of the first period does not interfere with the second period.
+            It happened when the first period picking was validated in the second period.
+            Then, when you triggered the second period, it would find one picking already done,
+            and skip the picking creation.
+        """
+
+        self.storable_product = self.env['product.product'].create({
+            'name': 'Storable Product',
+            'type': 'consu',
+            'is_storable': True,
+            'uom_id': self.uom_unit.id,
+            'recurring_invoice': True,
+        })
+        self.inventory_wizard = self.env['stock.change.product.qty'].create({
+            'product_id': self.storable_product.id,
+            'product_tmpl_id': self.storable_product.product_tmpl_id.id,
+            'new_quantity': 100.0,
+        })
+        self.inventory_wizard.change_product_qty()
+
+        sub = self.env['sale.order'].create({
+            'name': "Order",
+            'is_subscription': True,
+            'partner_id': self.user_portal.partner_id.id,
+            'plan_id': self.plan_month.id,
+            'start_date': "2024-10-01",
+            'next_invoice_date': False,
+            'order_line': [Command.create({'product_id': self.storable_product.id, 'product_uom_qty': 1})]
+        })
+
+        with freeze_time("2024-11-15"):
+            sub.action_confirm()
+
+            # Period = "2024-10-01" -> "2024-10-31"
+            first_picking = sub.picking_ids
+            self.assertTrue(bool(first_picking))
+            first_picking.move_ids.write({'quantity': 1, 'picked': True})
+            first_picking.button_validate()
+            quantity_delivered = sum(sub.order_line.move_ids.mapped("quantity"))
+            self.assertEqual(quantity_delivered, 1)
+
+            self.env["sale.order"]._create_recurring_invoice()
+
+            # Period = "2024-11-01" -> "2024-11-30"
+            second_picking = sub.picking_ids - first_picking
+            self.assertTrue(bool(second_picking))
+            second_picking.move_ids.write({'quantity': 1, 'picked': True})
+            second_picking.button_validate()
+            quantity_delivered = sum(sub.order_line.move_ids.mapped("quantity"))
+            self.assertEqual(quantity_delivered, 2)

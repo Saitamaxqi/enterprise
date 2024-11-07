@@ -33,10 +33,15 @@ class SaleOrderLine(models.Model):
             period_start = line.order_id.last_invoice_date or line.order_id.start_date
             period_end = line.order_id.next_invoice_date
             sub_outgoing_moves, sub_incoming_moves = super(SaleOrderLine, line)._get_outgoing_incoming_moves(strict)
-            is_period = lambda m: m.date and \
-                                  (not period_start or period_start <= m.date.date()) and \
-                                  (not period_end or m.date.date() <= period_end)
-            sub_outgoing_moves, sub_incoming_moves = sub_outgoing_moves.filtered(is_period), sub_incoming_moves.filtered(is_period)
+
+            def date_filter(m):
+                return (
+                    m.date_deadline
+                    and (not period_start or period_start <= m.date_deadline.date())
+                    and (not period_end or m.date_deadline.date() <= period_end)
+                )
+
+            sub_outgoing_moves, sub_incoming_moves = sub_outgoing_moves.filtered(date_filter), sub_incoming_moves.filtered(date_filter)
             outgoing_moves += sub_outgoing_moves
             incoming_moves += sub_incoming_moves
 
@@ -104,7 +109,7 @@ class SaleOrderLine(models.Model):
             start, end = self.order_id.last_invoice_date, self.order_id.next_invoice_date
 
             def date_filter(m):
-                return start <= m.date.date() < end
+                return m.date_deadline and start <= m.date_deadline.date() < end
             return {
                 'incoming_moves': lambda m: base_filter['incoming_moves'](m) and date_filter(m),
                 'outgoing_moves': lambda m: base_filter['outgoing_moves'](m) and date_filter(m)
