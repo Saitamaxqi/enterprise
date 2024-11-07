@@ -120,7 +120,7 @@
                 <field name="project_id" filters="1"/>
                 <field name="user_ids" widget="many2many_avatar_user" invisible="not user_ids"/>
                 <field name="partner_id" widget="res_partner_many2one" context="{'show_address': 1}"/>
-                <field name="partner_zip" filters="1"/>
+                <field name="partner_zip" filters="1" invisible="not partner_zip"/>
                 <field name="partner_phone" widget="phone" invisible="not partner_phone"/>
                 <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color'}" invisible="not tag_ids"/>
             </calendar>
