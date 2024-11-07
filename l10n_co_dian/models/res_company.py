@@ -1,4 +1,4 @@
-from odoo import models, fields
+from odoo import api, models, fields
 
 
 class ResCompany(models.Model):
@@ -10,8 +10,16 @@ class ResCompany(models.Model):
         inverse_name="company_id",
     )
     l10n_co_dian_certificate_ids = fields.One2many(comodel_name='certificate.certificate', inverse_name='company_id')
-    l10n_co_dian_test_environment = fields.Boolean(string="Test environment", default=True)
-    l10n_co_dian_certification_process = fields.Boolean()
+    l10n_co_dian_test_environment = fields.Boolean(
+        string="Test environment",
+        default=True,
+    )
+    l10n_co_dian_certification_process = fields.Boolean(
+        compute='_compute_l10n_co_dian_certification_process',
+        inverse='_inverse_l10n_co_dian_certification_process',
+        store=True,
+        readonly=False,
+    )
     l10n_co_dian_provider = fields.Selection(
         selection=[
             ('dian', "DIAN: Free service"),
@@ -20,11 +28,16 @@ class ResCompany(models.Model):
         default=lambda self: self._default_l10n_co_dian_provider(),
     )
 
-    def write(self, vals):
-        if vals.get('l10n_co_dian_test_environment') is False:
-            # The test environment should be used during the certification process
-            vals['l10n_co_dian_certification_process'] = False
-        return super().write(vals)
+    @api.depends('l10n_co_dian_test_environment')
+    def _compute_l10n_co_dian_certification_process(self):
+        for company in self:
+            if not company.l10n_co_dian_test_environment:
+                company.l10n_co_dian_certification_process = False
+
+    def _inverse_l10n_co_dian_certification_process(self):
+        for company in self:
+            if company.l10n_co_dian_certification_process and not company.l10n_co_dian_test_environment:
+                company.l10n_co_dian_certification_process = False
 
     def _default_l10n_co_dian_provider(self):
         carvajal_id = self.env.ref('l10n_co_edi.edi_carvajal').id
