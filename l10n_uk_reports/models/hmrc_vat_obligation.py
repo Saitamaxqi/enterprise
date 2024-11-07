@@ -124,7 +124,7 @@ class L10n_UkVatObligation(models.Model):
             (today + relativedelta(months=6,leapdays=-1)).strftime('%Y-%m-%d'))
 
         for new_obligation in obligations:
-            obligation = self.env['l10n_uk.vat.obligation'].search([('currency_table_period_key', '=', new_obligation.get('periodKey')),
+            obligation = self.env['l10n_uk.vat.obligation'].search([('period_key', '=', new_obligation.get('periodKey')),
                                                                  ('company_id', '=', self.env.company.id)])
             status = 'open' if new_obligation['status'] == 'O' else 'fulfilled'
             if not obligation:
@@ -133,7 +133,7 @@ class L10n_UkVatObligation(models.Model):
                                     'date_received': new_obligation.get('received'),
                                     'date_due': new_obligation['due'],
                                     'status': status,
-                                    'currency_table_period_key': new_obligation['periodKey'],
+                                    'period_key': new_obligation['periodKey'],
                                     'company_id': self.env.company.id,
                                     })
             elif obligation.status != status or obligation.date_received != new_obligation.get('received'):
