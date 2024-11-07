@@ -15,6 +15,7 @@ class AccountPayment(models.Model):
     l10n_mx_edi_force_pue_payment_needed = fields.Boolean(related='move_id.l10n_mx_edi_force_pue_payment_needed', readonly=False)
     l10n_mx_edi_is_cfdi_needed = fields.Boolean(related='move_id.l10n_mx_edi_is_cfdi_needed', readonly=False)
     l10n_mx_edi_update_sat_needed = fields.Boolean(related='move_id.l10n_mx_edi_update_sat_needed', readonly=False)
+    l10n_mx_edi_cfdi_attachment_id = fields.Many2one(related='move_id.l10n_mx_edi_cfdi_attachment_id', readonly=False)
 
     def _get_payment_receipt_report_values(self):
         # EXTENDS 'account'
