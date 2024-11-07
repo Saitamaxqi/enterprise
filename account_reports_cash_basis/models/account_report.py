@@ -65,11 +65,16 @@ class AccountReport(models.Model):
             WITH payment_table AS (
                 SELECT
                     aml.move_id,
+                    aml.account_id,
                     GREATEST(aml.date, aml2.date) AS date,
                     CASE WHEN (aml.balance = 0 OR sub_aml.total_per_account = 0)
                         THEN 0
                         ELSE part.amount / ABS(sub_aml.total_per_account)
-                    END as matched_percentage
+                    END as matched_percentage,
+                    CASE WHEN (aml.balance = 0 OR sub_aml_2.total_per_move = 0)
+                        THEN 0
+                        ELSE ABS(sub_aml.total_per_account) / ABS(sub_aml_2.total_per_move)
+                    END as move_percentage
                 FROM account_partial_reconcile part
                 JOIN ONLY account_move_line aml ON aml.id = part.debit_move_id OR aml.id = part.credit_move_id
                 JOIN ONLY account_move_line aml2 ON
@@ -80,19 +85,42 @@ class AccountReport(models.Model):
                     FROM ONLY account_move_line account_move_line
                     GROUP BY move_id, account_id
                 ) sub_aml ON (aml.account_id = sub_aml.account_id AND aml.move_id=sub_aml.move_id)
+                JOIN (
+                    SELECT move_id, SUM(ABS(balance)) AS total_per_move
+                    FROM ONLY account_move_line aml_total
+                    JOIN account_account account_total ON aml_total.account_id = account_total.id
+                    WHERE account_total.account_type IN ('asset_receivable', 'liability_payable')
+                    GROUP BY move_id
+                ) sub_aml_2 ON (aml.move_id = sub_aml_2.move_id)
                 JOIN account_account account ON aml.account_id = account.id
                 WHERE account.account_type IN ('asset_receivable', 'liability_payable')
             )
             INSERT INTO cash_basis_temp_account_move_line ({all_fields}) SELECT
                 {unchanged_fields},
                 ref.date,
-                ref.matched_percentage * "account_move_line".amount_currency,
-                ref.matched_percentage * "account_move_line".amount_residual,
-                ref.matched_percentage * "account_move_line".balance,
-                ref.matched_percentage * "account_move_line".debit,
-                ref.matched_percentage * "account_move_line".credit
+                CASE WHEN "account".id = ref.account_id
+                    THEN ref.matched_percentage * "account_move_line".amount_currency
+                    ELSE ref.matched_percentage * "account_move_line".amount_currency * ref.move_percentage
+                END,
+                CASE WHEN "account".id = ref.account_id
+                    THEN ref.matched_percentage * "account_move_line".amount_residual
+                    ELSE ref.matched_percentage * "account_move_line".amount_residual * ref.move_percentage
+                END,
+                CASE WHEN "account".id = ref.account_id
+                    THEN ref.matched_percentage * "account_move_line".balance
+                    ELSE ref.matched_percentage * "account_move_line".balance * ref.move_percentage
+                END,
+                CASE WHEN "account".id = ref.account_id
+                    THEN ref.matched_percentage * "account_move_line".debit
+                    ELSE ref.matched_percentage * "account_move_line".debit * ref.move_percentage
+                END,
+                CASE WHEN "account".id = ref.account_id
+                    THEN ref.matched_percentage * "account_move_line".credit
+                    ELSE ref.matched_percentage * "account_move_line".credit * ref.move_percentage
+                END
             FROM payment_table ref
             JOIN ONLY account_move_line account_move_line ON "account_move_line".move_id = ref.move_id
+            JOIN account_account account ON "account".id = "account_move_line".account_id
             WHERE NOT (
                 "account_move_line".journal_id IN (SELECT id FROM account_journal WHERE type in ('cash', 'bank'))
                 OR "account_move_line".move_id NOT IN (
@@ -102,6 +130,7 @@ class AccountReport(models.Model):
                     WHERE account.account_type IN ('asset_receivable', 'liability_payable')
                 )
             )
+            AND ("account".id = ref.account_id OR "account".account_type NOT IN ('asset_receivable', 'liability_payable'))
             {where_journals};
 
             -- Create an composite index to avoid seq.scan

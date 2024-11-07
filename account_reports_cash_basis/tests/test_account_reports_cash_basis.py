@@ -1011,3 +1011,105 @@ class TestAccountReports(TestAccountReportsCommon):
 
         # All 5 invoices, first 3 and last partially paid (2 payments on invoice_2)
         self.assert_line_values(report, '2016-03-10', [0, 620, 120, 1360.0], cash_basis=True, analytic=True)
+
+    def test_cash_basis_move_multi_account(self):
+        receivable_account_2 = self.copy_account(self.receivable_account_1)
+        receivable_account_3 = self.copy_account(self.receivable_account_1)
+        # Invoice with 2 receivable lines on 2 different accounts
+        invoice = self.env['account.move'].create({
+            'move_type': 'entry',
+            'date': '2017-01-01',
+            'journal_id': self.company_data['default_journal_misc'].id,
+            'line_ids': [
+                (0, 0, {'debit': 50.0, 'credit': 0.0, 'account_id': receivable_account_2.id}),
+                (0, 0, {'debit': 50.0, 'credit': 0.0, 'account_id': receivable_account_2.id}),
+                (0, 0, {'debit': 200.0, 'credit': 0.0, 'account_id': receivable_account_3.id}),
+                (0, 0, {'debit': 0.0, 'credit': 300.0, 'account_id': self.revenue_account_1.id}),
+            ],
+        })
+        invoice.action_post()
+
+        # Payment of 70% for the first receivable account line
+        payment_1 = self.env['account.move'].create({
+            'move_type': 'entry',
+            'date': '2017-02-01',
+            'journal_id': self.liquidity_journal_1.id,
+            'line_ids': [
+                (0, 0, {'debit': 0.0, 'credit': 70.0, 'account_id': receivable_account_2.id}),
+                (0, 0, {'debit': 70.0, 'credit': 0.0, 'account_id': self.liquidity_account.id}),
+            ],
+        })
+        payment_1.action_post()
+        self._reconcile_on((invoice + payment_1).line_ids, receivable_account_2)
+
+        # Check the cash basis option.
+        self.env['res.currency'].search([('name', '!=', 'USD')]).with_context(force_deactivate=True).active = False
+        report = self.env.ref('account_reports.general_ledger_report')
+        options = self._generate_options(
+            report,
+            fields.Date.from_string('2017-01-01'),
+            fields.Date.from_string('2017-12-31'),
+            default_options={'report_cash_basis': True}
+        )
+        self.assertLinesValues(
+            report._get_lines(options),
+            #   Name                                    Debit       Credit        Balance
+            [   0,                                      4,          5,            6],
+            [
+                # Accounts.
+                ('101401 Bank',                         530.0,      0.0,      530.0),
+                ('121000 Account Receivable',           460.0,      460.0,      0.0),
+                (receivable_account_2.display_name,     70.0,       70.0,       0.0),
+                ('400000 Product Sales',                0.0,        70.0,     -70.0),
+                ('999999 Undistributed Profits/Losses', 0.0,        460.0,   -460.0),
+                # Report Total.
+                ('Total',                               1060.0,     1060.0,     0.0),
+            ],
+            options
+        )
+
+        # First payment of 20% for the second receivable account line
+        payment_2 = self.env['account.move'].create({
+            'move_type': 'entry',
+            'date': '2017-03-01',
+            'journal_id': self.liquidity_journal_1.id,
+            'line_ids': [
+                (0, 0, {'debit': 0.0, 'credit': 40.0, 'account_id': receivable_account_3.id}),
+                (0, 0, {'debit': 40.0, 'credit': 0.0, 'account_id': self.liquidity_account.id}),
+            ],
+        })
+        payment_2.action_post()
+        self._reconcile_on((invoice + payment_2).line_ids, receivable_account_3)
+        # Second payment of 20% for the second receivable account line
+        payment_3 = self.env['account.move'].create({
+            'move_type': 'entry',
+            'date': '2017-04-01',
+            'journal_id': self.liquidity_journal_1.id,
+            'line_ids': [
+                (0, 0, {'debit': 0.0, 'credit': 40.0, 'account_id': receivable_account_3.id}),
+                (0, 0, {'debit': 40.0, 'credit': 0.0, 'account_id': self.liquidity_account.id}),
+            ],
+        })
+        payment_3.action_post()
+        self._reconcile_on((invoice + payment_3).line_ids, receivable_account_3)
+
+        # Delete the temporary cash basis table manually in order to run another _get_lines in the same transaction
+        self.env.cr.execute("DROP TABLE cash_basis_temp_account_move_line")
+
+        self.assertLinesValues(
+            report._get_lines(options),
+            #   Name                                    Debit       Credit        Balance
+            [   0,                                      4,          5,            6],
+            [
+                # Accounts.
+                ('101401 Bank',                         610.0,      0.0,      610.0),
+                ('121000 Account Receivable',           460.0,      460.0,      0.0),
+                (receivable_account_2.display_name,     70.0,       70.0,       0.0),
+                (receivable_account_3.display_name,     80.0,       80.0,       0.0),
+                ('400000 Product Sales',                0.0,        150.0,   -150.0),
+                ('999999 Undistributed Profits/Losses', 0.0,        460.0,   -460.0),
+                # Report Total.
+                ('Total',                               1220.0,     1220.0,     0.0),
+            ],
+            options
+        )
