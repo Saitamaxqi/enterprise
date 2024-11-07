@@ -45,5 +45,6 @@ class DocumentsTag(models.Model):
     @api.ondelete(at_uninstall=False)
     def _unlink_except_used_in_server_action(self):
         external_ids = self._get_external_ids()
-        if external_ids and self.env['ir.actions.server'].search_count([('resource_ref', 'in', external_ids)], limit=1):
+        resource_refs = [f'documents.tag,{k}' for k in external_ids.keys()]
+        if external_ids and self.env['ir.actions.server'].search_count([('resource_ref', 'in', resource_refs)], limit=1):
             raise UserError(_("You cannot delete tags used in server actions."))
