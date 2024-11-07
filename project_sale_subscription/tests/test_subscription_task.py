@@ -166,7 +166,7 @@ class TestSubscriptionTask(TestSubscriptionCommon):
         action = order.prepare_upsell_order()
         upsell = self.env['sale.order'].browse(action['res_id'])
 
-        upsell.order_line.product_uom_qty = 1
+        upsell.order_line.filtered(lambda sol: not sol.display_type).product_uom_qty = 1
         upsell.order_line += self.env['sale.order.line'].create({
             'order_id': upsell.id,
             'product_id': product_plan_2.product_variant_id.id,
@@ -258,7 +258,7 @@ class TestSubscriptionTask(TestSubscriptionCommon):
         action = subscription.prepare_upsell_order()
         upsell = self.env['sale.order'].browse(action['res_id'])
 
-        upsell.order_line.product_uom_qty = 1
+        upsell.order_line.filtered(lambda sol: not sol.display_type).product_uom_qty = 1
         self.env['sale.order.line'].create([{
             'order_id': upsell.id,
             'product_id': self.product_no_recurrence.product_variant_id.id,

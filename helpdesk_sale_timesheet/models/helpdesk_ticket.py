@@ -111,6 +111,26 @@ class HelpdeskTicket(models.Model):
             domain = expression.AND([domain, [('order_id', '=?', order_id.id)]])
         return SaleOrderLine.search(domain, limit=1)
 
+    @api.model_create_multi
+    def create(self, vals_list):
+        tickets = super().create(vals_list)
+        sol_ids = {
+            vals['sale_line_id']
+            for vals in vals_list
+            if vals.get('sale_line_id')
+        }
+        if sol_ids:
+            tickets._ensure_sale_order_linked(list(sol_ids))
+        return tickets
+
+    def _ensure_sale_order_linked(self, sol_ids):
+        quotations = self.env['sale.order.line'].sudo()._read_group(
+            domain=[('state', '=', 'draft'), ('id', 'in', sol_ids)],
+            aggregates=['order_id:recordset'],
+        )[0][0]
+        if quotations:
+            quotations.action_confirm()
+
     def write(self, values):
         recompute_so_lines = None
         other_timesheets = None
@@ -123,6 +143,8 @@ class HelpdeskTicket(models.Model):
                 other_timesheets = self.env['account.analytic.line'].sudo().search([('id', 'not in', timesheet_ids), ('helpdesk_ticket_id', '=', self.id)])
 
         res = super().write(values)
+        if sol_id := values.get('sale_line_id'):
+            self._ensure_sale_order_linked([sol_id])
         if other_timesheets:
             # Then we update the so_line if needed
             compute_timesheets = defaultdict(list, [(timesheet, timesheet.so_line) for timesheet in other_timesheets])  # key = timesheet and value = so_line of the timesheet before the _compute_so_line
