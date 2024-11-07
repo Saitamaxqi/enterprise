@@ -167,17 +167,20 @@
 
             <!-- All entries -->
             <t t-if="report.filter_show_draft and options['all_entries']" groups="account.group_account_readonly">
-                <t t-set="extra_options" t-value="extra_options + ['With Draft Entries']"/>
+                <t t-set="label_draft_entries">With Draft Entries</t>
+                <t t-set="extra_options" t-value="extra_options + [label_draft_entries]"/>
             </t>
 
             <!-- Unreconciled -->
             <t t-if="report.filter_unreconciled and options['unreconciled']">
-                <t t-set="extra_options" t-value="extra_options + ['Unreconciled Entries']"/>
+                <t t-set="label_unreconciled_entries">Unreconciled Entries</t>
+                <t t-set="extra_options" t-value="extra_options + [label_unreconciled_entries]"/>
             </t>
 
             <!-- Analytic -->
             <t t-if="options.get('include_analytic_without_aml')" name="include_analytic">
-                <t t-set="extra_options" t-value="extra_options + ['Including Analytic Simulations']"/>
+                <t t-set="label_analytic_simulations">Including Analytic Simulations</t>
+                <t t-set="extra_options" t-value="extra_options + [label_analytic_simulations]"/>
             </t>
 
             <!-- Currency Unit Amount Text -->
