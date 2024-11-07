@@ -20,7 +20,8 @@ export class EmbeddedClipboardPlugin extends Plugin {
             {
                 categoryId: "media",
                 commandId: "insertClipboard",
-                isAvailable: (node) => !!closestElement(node, "[data-embedded='clipboard']"),
+                isAvailable: (selection) =>
+                    !closestElement(selection.anchorNode, "[data-embedded='clipboard']"),
             },
         ],
         mount_component_handlers: this.setupNewClipboard.bind(this),

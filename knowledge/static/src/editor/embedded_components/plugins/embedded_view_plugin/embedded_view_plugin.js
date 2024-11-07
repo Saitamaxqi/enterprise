@@ -5,12 +5,8 @@ import { PromptEmbeddedViewNameDialog } from "@knowledge/components/prompt_embed
 import { _t } from "@web/core/l10n/translation";
 import { renderToElement } from "@web/core/utils/render";
 
-function isAvailable(node) {
-    return (
-        !!closestElement(node, ".o_editor_banner") ||
-        !!closestElement(node, "table") ||
-        !!closestElement(node, "[data-embedded]")
-    );
+function isAvailable(selection) {
+    return !closestElement(selection.anchorNode, ".o_editor_banner, table, [data-embedded]");
 }
 
 export class EmbeddedViewPlugin extends Plugin {
