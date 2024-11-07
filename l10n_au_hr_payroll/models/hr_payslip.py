@@ -52,6 +52,14 @@ class HrPayslip(models.Model):
     l10n_au_salary_sacrifice_superannuation = fields.Float(compute="_compute_l10n_au_salary_sacrifice_superannuation", store=True, readonly=True)
     l10n_au_salary_sacrifice_other = fields.Float(compute="_compute_l10n_au_salary_sacrifice_other", store=True, readonly=True)
 
+    def _get_data_files_to_update(self):
+        # Note: file order should be maintained
+        return super()._get_data_files_to_update() + [(
+            'l10n_au_hr_payroll', [
+                'data/hr_payslip_input_type_data.xml',
+                'data/salary_rules/hr_salary_rule_regular_data.xml',
+            ])]
+
     def _get_base_local_dict(self):
         res = super()._get_base_local_dict()
         slips = self._l10n_au_get_year_to_date_slips()
@@ -169,7 +177,7 @@ class HrPayslip(models.Model):
                     self.employee_id.l10n_au_income_stream_type,
                 ))
 
-            if payslip.input_line_ids.filtered(lambda x: x.code == "BBC") and employee.l10n_au_income_stream_type == "OSP":
+            if payslip.input_line_ids.filtered(lambda x: x.code == "BACKPAY") and employee.l10n_au_income_stream_type == "OSP":
                 raise ValidationError(_("Bonuses and Commissions are not allowed for income stream type 'OSP'."))
 
             overtime_lines = payslip.worked_days_line_ids.filtered(lambda l: l.work_entry_type_id.l10n_au_work_stp_code == "T")

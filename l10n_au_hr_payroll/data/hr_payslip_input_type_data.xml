@@ -2,7 +2,7 @@
 <odoo>
     <record id="input_leave_loading_lump" model="hr.payslip.input.type">
         <field name="name">Leave Loading Lump Sum</field>
-        <field name="code">BBC</field>
+        <field name="code">BACKPAY</field>
         <field name="country_id" ref="base.au"/>
         <field name="l10n_au_payment_type">leave</field>
         <field name="l10n_au_superannuation_treatment">ote</field>
@@ -11,7 +11,7 @@
 
     <record id="l10n_au_lumpsum_e" model="hr.payslip.input.type">
         <field name="name">Lump Sum E</field>
-        <field name="code">BBC</field>
+        <field name="code">BACKPAY</field>
         <field name="country_id" ref="base.au"/>
         <field name="l10n_au_payment_type">lump_sum</field>
         <field name="l10n_au_superannuation_treatment">ote</field>
@@ -22,7 +22,7 @@
     <!-- Bonus/Commissions -->
     <record id="input_bonus_commissions_prior" model="hr.payslip.input.type">
         <field name="name">Bonus/Commissions (Prior Period)</field>
-        <field name="code">BBC</field>
+        <field name="code">BACKPAY</field>
         <field name="country_id" ref="base.au"/>
         <field name="l10n_au_superannuation_treatment">ote</field>
         <field name="l10n_au_paygw_treatment">no_paygw</field>
@@ -31,7 +31,7 @@
     </record>
     <record id="input_bonus_commissions_overtime_prior" model="hr.payslip.input.type">
         <field name="name">Bonus/Commissions in relation to Overtime (Prior Period)</field>
-        <field name="code">BBC</field>
+        <field name="code">BACKPAY</field>
         <field name="country_id" ref="base.au"/>
         <field name="l10n_au_superannuation_treatment">salary</field>
         <field name="l10n_au_paygw_treatment">no_paygw</field>

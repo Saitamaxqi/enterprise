@@ -170,7 +170,7 @@ class ResCompany(models.Model):
                             "res_id": input_type.id,
                             "res_model": "hr.payslip.input.type",
                         })
-                        for input_type in self.env["hr.payslip.input.type"].search([("code", "=", "BBC")])
+                        for input_type in self.env["hr.payslip.input.type"].search([("code", "=", "BACKPAY")])
                     ],
                 }, {
                     "employee_id": employee_transfer.employee_id.id,

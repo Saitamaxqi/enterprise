@@ -141,11 +141,11 @@ result = sum(payslip.input_line_ids.filtered(lambda l: l.input_type_id == b2work
         <field name="code">BACKPAY</field>
         <field name="sequence">70</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = 'BBC' in inputs</field>
+        <field name="condition_python">result = 'BACKPAY' in inputs</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
-result = inputs['BBC'].amount
-result_name = inputs['BBC'].name
+result = inputs['BACKPAY'].amount
+result_name = inputs['BACKPAY'].name
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
     </record>
@@ -322,7 +322,7 @@ result = -employee.l10n_au_additional_withholding_amount
         <field name="code">BACKPAY.WITHHOLD</field>
         <field name="sequence">109</field>
         <field name="condition_select">python</field>
-        <field name="condition_python">result = 'BBC' in inputs</field>
+        <field name="condition_python">result = 'BACKPAY' in inputs</field>
         <field name="amount_select">code</field>
         <field name="amount_python_compute">
 net_salary = categories['BASIC'] + categories['ALW'] + categories['DED'] + categories['RTW'] + categories['EXTRA'] - result_rules['BACKPAY']['total']
@@ -412,7 +412,7 @@ if employee.l10n_au_tax_treatment_category in ['R', 'S', 'F'] and employee.l10n_
     coefficients = payslip._rule_parameter("l10n_au_stsl")["tax-free" if employee.l10n_au_tax_free_threshold or employee.is_non_resident else "no-tax-free"]
     gross = categories['GROSS'] - result_rules['BACKPAY']['total']
     result = -payslip._l10n_au_compute_loan_withhold(gross, contract.schedule_pay, coefficients)
-if "BBC" in inputs:
+if "BACKPAY" in inputs:
     result += backpay_stsl
         </field>
         <field name="struct_id" ref="l10n_au_hr_payroll.hr_payroll_structure_au_regular"/>
