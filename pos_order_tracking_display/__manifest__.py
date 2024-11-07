@@ -17,7 +17,7 @@
         'pos_order_tracking_display.assets': [
             ("include", "point_of_sale.base_app"),
             'point_of_sale/static/src/utils.js',
-            "point_of_sale/static/src/app/generic_components/odoo_logo/*",
+            "point_of_sale/static/src/app/components/odoo_logo/*",
             'pos_order_tracking_display/static/src/**/*',
         ],
     },

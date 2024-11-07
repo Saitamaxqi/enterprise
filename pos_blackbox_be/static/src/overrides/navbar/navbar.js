@@ -1,7 +1,7 @@
 import { _t } from "@web/core/l10n/translation";
 import { patch } from "@web/core/utils/patch";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
-import { Navbar } from "@point_of_sale/app/navbar/navbar";
+import { Navbar } from "@point_of_sale/app/components/navbar/navbar";
 
 patch(Navbar.prototype, {
     async showLoginScreen() {
