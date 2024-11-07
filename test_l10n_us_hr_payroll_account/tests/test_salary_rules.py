@@ -736,7 +736,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'l10n_us_filing_status': 'single',
         })
 
-        payslip = self._generate_payslip(datetime.date(2023, 4, 1), datetime.date(2023, 4, 1))
+        payslip = self._generate_payslip(datetime.date(2023, 4, 3), datetime.date(2023, 4, 3))
         payslip.compute_sheet()
 
         payslip_results = {'BASIC': 750.0, 'GROSS': 750.0, 'TAXABLE': 750.0, 'FIT': -141.83, 'MEDICARE': -10.88, 'MEDICAREADD': 0, 'SST': -46.5, 'NYINCOMETAX': -44.83, 'NYSDITAX': -0.09, 'NYPFLTAX': -3.41, 'COMPANYFUTA': 45.0, 'COMPANYMEDICARE': 10.88, 'COMPANYSOCIAL': 46.5, 'COMPANYSUI': 23.48, 'COMPANYNYREEMPLOYMENT': 0.56, 'NET': 502.47}
@@ -812,7 +812,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'l10n_us_filing_status': 'jointly',
         })
 
-        payslip = self._generate_payslip(datetime.date(2023, 4, 1), datetime.date(2023, 4, 1))
+        payslip = self._generate_payslip(datetime.date(2023, 4, 3), datetime.date(2023, 4, 3))
         payslip.compute_sheet()
 
         payslip_results = {'BASIC': 750.0, 'GROSS': 750.0, 'TAXABLE': 750.0, 'FIT': -105.47, 'MEDICARE': -10.88, 'MEDICAREADD': 0, 'SST': -46.5, 'NYINCOMETAX': -45.29, 'NYSDITAX': -0.09, 'NYPFLTAX': -3.41, 'COMPANYFUTA': 45.0, 'COMPANYMEDICARE': 10.88, 'COMPANYSOCIAL': 46.5, 'COMPANYSUI': 23.48, 'COMPANYNYREEMPLOYMENT': 0.56, 'NET': 538.37}

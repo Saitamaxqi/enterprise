@@ -1349,7 +1349,7 @@ class HrPayslip(models.Model):
         self.ensure_one()
         if self.env.context.get('no_paid_amount'):
             return 0.0
-        if not self.worked_days_line_ids:
+        if self.env.context.get('salary_simulation') or not self.struct_id.use_worked_day_lines:
             return self._get_contract_wage()
         total_amount = 0
         for line in self.worked_days_line_ids:
