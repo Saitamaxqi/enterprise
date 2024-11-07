@@ -399,7 +399,7 @@ function useDocumentsViewFilePreviewer({
     });
     useBus(bus, "documents-close-preview", () => {
         documentService.setPreviewedDocument(null);
-        setPreviewStore({});
+        documentService.documentList?.onDeleteCallback();
     });
 
     return {
