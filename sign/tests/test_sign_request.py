@@ -2,10 +2,9 @@
 
 from odoo.tests import Form
 from .sign_request_common import SignRequestCommon
-from odoo import Command
+from odoo import Command, fields
 from odoo.exceptions import UserError, ValidationError
 
-from datetime import datetime, timedelta
 
 class TestSignRequest(SignRequestCommon):
     def test_sign_request_create(self):
@@ -458,11 +457,23 @@ class TestSignRequest(SignRequestCommon):
         self.assertEqual([record['mail_sent_order'] for record in wizard.signer_ids._records], [1, 2, 3])
 
     def test_archived_requests_dont_send_reminders(self):
-        """ Create a request with old validity and archived, trigger cron reminder and ensure no reminder was created. """
-        archived_request = self.create_sign_request_no_item(signer=self.partner_1, cc_partners=self.partner_4)
-        archived_request.write({'active': False, 'validity': datetime.now() - timedelta(days=2)})
-        self.env['sign.request']._cron_reminder()
-        self.assertTrue(archived_request.state != 'expired')
+        """ Create a request with a validity period and archive it, jump to the future
+        where it's not valid anymore, trigger cron reminder and ensure no reminder was created. """
+
+        with self.mock_datetime_and_now("2024-05-01"):
+            validity_date = fields.Date.from_string('2024-05-05')
+            archived_request = self.create_sign_request_no_item(
+                signer=self.partner_1,
+                cc_partners=self.partner_4,
+                validity=validity_date
+            )
+            # This action should set the state to canceled.
+            archived_request.action_archive()
+
+            # Jump to the future and run the cron
+            with self.mock_datetime_and_now("2024-05-6"):
+                self.env['sign.request']._cron_reminder()
+                self.assertTrue(archived_request.state == 'canceled')
 
     def test_send_request_with_default_sign_template(self):
         sign_request_record = self.create_sign_request_no_item(signer=self.partner_1, cc_partners=self.partner_4)

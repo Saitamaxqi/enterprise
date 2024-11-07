@@ -5,6 +5,9 @@ from odoo import Command
 from odoo.tools import file_open
 from odoo.tests.common import TransactionCase, new_test_user
 from odoo.addons.mail.tests.common import mail_new_test_user
+from unittest.mock import patch
+from freezegun import freeze_time
+from contextlib import contextmanager
 
 class SignRequestCommon(TransactionCase):
     @classmethod
@@ -160,7 +163,13 @@ class SignRequestCommon(TransactionCase):
             'email': 'char.aznable.a@example.com',
         })
 
-    def create_sign_request_no_item(self, signer, cc_partners, no_sign_mail=False):
+    @contextmanager
+    def mock_datetime_and_now(self, mock_dt):
+        with freeze_time(mock_dt), \
+                patch.object(self.env.cr, 'now', lambda: mock_dt):
+            yield
+
+    def create_sign_request_no_item(self, signer, cc_partners, no_sign_mail=False, validity=False):
         sign_request = self.env['sign.request'].with_context(no_sign_mail=no_sign_mail).create({
             'template_id': self.template_no_item.id,
             'reference': self.template_no_item.display_name,
@@ -168,6 +177,7 @@ class SignRequestCommon(TransactionCase):
                 'partner_id': signer.id,
                 'role_id': self.env.ref('sign.sign_item_role_default').id,
             })],
+            'validity': validity,
         })
         sign_request.message_subscribe(partner_ids=cc_partners.ids)
         return sign_request
