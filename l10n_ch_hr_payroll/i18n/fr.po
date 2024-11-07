@@ -3080,6 +3080,24 @@ msgid "PDF Filename"
 msgstr "Nom du fichier PDF"
 
 #. module: l10n_ch_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
+msgid "Partnership Dissolved By Death"
+msgstr "Partenariat dissous par décès"
+
+#. module: l10n_ch_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
+msgid "Partnership Dissolved By Declaration of Lost"
+msgstr "Partenariat dissous ensuite de déclaration d’absence"
+
+#. module: l10n_ch_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
+msgid "Partnership Dissolved By Law"
+msgstr "Partenariat dissous judiciairement"
+
+#. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_hr_payslip
 msgid "Pay Slip"
 msgstr "Fiche de salaire"
@@ -3218,6 +3236,12 @@ msgstr "Période de référence"
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_employee__l10n_ch_religious_denomination__reformedevangelical
 msgid "Reformed Evangelical"
 msgstr "Évangélique réformé"
+
+#. module: l10n_ch_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
+msgid "Registered Partnership"
+msgstr "Partenariat enregistré"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_religious_denomination
@@ -3539,6 +3563,12 @@ msgstr "Assurance Accident Complémentaire Secondaire (LAAC)"
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_employees_jubilee_gift
 msgid "Seniority Gift"
 msgstr "Cadeau d'ancienneté"
+
+#. module: l10n_ch_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
+msgid "Separated"
+msgstr "Séparé(e)"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_is_report__month__9

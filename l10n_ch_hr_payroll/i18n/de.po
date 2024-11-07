@@ -2959,6 +2959,24 @@ msgid "PDF Filename"
 msgstr ""
 
 #. module: l10n_ch_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
+msgid "Partnership Dissolved By Death"
+msgstr "Durch Tod aufgelöste Partnerschaft"
+
+#. module: l10n_ch_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
+msgid "Partnership Dissolved By Declaration of Lost"
+msgstr "Durch Verschollenerklärung aufgelöste Partnerschaft"
+
+#. module: l10n_ch_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
+msgid "Partnership Dissolved By Law"
+msgstr "Gerichtlich aufgelöste Partnerschaft"
+
+#. module: l10n_ch_hr_payroll
 #: model:ir.model,name:l10n_ch_hr_payroll.model_hr_payslip
 msgid "Pay Slip"
 msgstr ""
@@ -3089,6 +3107,12 @@ msgstr ""
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__hr_employee__l10n_ch_religious_denomination__reformedevangelical
 msgid "Reformed Evangelical"
 msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
+msgid "Registered Partnership"
+msgstr "Eingetragene Partnerschaft"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields,field_description:l10n_ch_hr_payroll.field_hr_employee__l10n_ch_religious_denomination
@@ -3383,6 +3407,12 @@ msgstr ""
 #: model:hr.salary.rule,name:l10n_ch_hr_payroll.l10n_ch_employees_jubilee_gift
 msgid "Seniority Gift"
 msgstr ""
+
+#. module: l10n_ch_hr_payroll
+#. odoo-python
+#: code:addons/l10n_ch_hr_payroll/models/hr_employee.py:0
+msgid "Separated"
+msgstr "Getrennt"
 
 #. module: l10n_ch_hr_payroll
 #: model:ir.model.fields.selection,name:l10n_ch_hr_payroll.selection__l10n_ch_is_report__month__9

@@ -157,9 +157,9 @@ class HrEmployee(models.Model):
         if self.env.company.country_id.code != "CH":
             return super()._get_marital_status_selection()
         return super()._get_marital_status_selection() + [
-            ("separated", "Separated"),
-            ("registered_partnership", "Registered Partnership"),
-            ("partnership_dissolved_by_law", "Partnership Dissolved By Law"),
-            ("partnership_dissolved_by_death", "Partnership Dissolved By Law"),
-            ("partnership_dissolved_by_declaration_of_lost", "Partnership Dissolved By Declaration of Lost"),
+            ("separated", _("Separated")),
+            ("registered_partnership", _("Registered Partnership")),
+            ("partnership_dissolved_by_law", _("Partnership Dissolved By Law")),
+            ("partnership_dissolved_by_death", _("Partnership Dissolved By Death")),
+            ("partnership_dissolved_by_declaration_of_lost", _("Partnership Dissolved By Declaration of Lost")),
         ]
