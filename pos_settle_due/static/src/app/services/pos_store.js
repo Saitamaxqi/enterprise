@@ -4,6 +4,10 @@ import { _t } from "@web/core/l10n/translation";
 import { SelectionPopup } from "@point_of_sale/app/components/popups/selection_popup/selection_popup";
 
 patch(PosStore.prototype, {
+    async setup() {
+        await super.setup(...arguments);
+        this.setAllTotalDueOfPartners(this.models["res.partner"].getAll());
+    },
     getPartnerCredit(partner) {
         const order = this.getOrder();
         const partnerInfos = {
@@ -40,6 +44,18 @@ patch(PosStore.prototype, {
     async refreshTotalDueOfPartner(partner) {
         await this.data.callRelated("res.partner", "get_total_due", [partner.id, this.config.id]);
         return [partner];
+    },
+    async setAllTotalDueOfPartners(partners) {
+        const partners_total_due = await this.data.call("res.partner", "get_all_total_due", [
+            partners.map((p) => p.id),
+            this.config.id,
+        ]);
+        for (const partner of partners) {
+            partner.total_due = partners_total_due.find(
+                (p) => p["res.partner"][0].id == [partner.id]
+            )["res.partner"][0].total_due;
+        }
+        return [partners];
     },
     async settleCustomerDue(partner) {
         const updatedDue = await this.refreshTotalDueOfPartner(partner);

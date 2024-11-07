@@ -19,5 +19,8 @@
         'web.assets_tests': [
             'pos_settle_due/static/tests/tours/**/*'
         ],
+        'point_of_sale.assets_qunit_tests': [
+            'pos_settle_due/static/tests/unit/**/*',
+        ],
     }
 }
