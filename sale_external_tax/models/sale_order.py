@@ -72,7 +72,7 @@ class SaleOrder(models.Model):
 
     def action_quotation_send(self):
         """ Calculate taxes before presenting order to the customer. """
-        self._get_and_set_external_taxes_on_eligible_records()
+        self.filtered(lambda order: not order.locked)._get_and_set_external_taxes_on_eligible_records()
         return super().action_quotation_send()
 
     def _get_and_set_external_taxes_on_eligible_records(self):
