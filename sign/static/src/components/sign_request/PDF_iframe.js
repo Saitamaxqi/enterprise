@@ -91,9 +91,9 @@ export class PDFIframe {
         const viewer = this.root.querySelector("#viewer");
         const layer = document.createElement("canvas");
         layer.id = "canvas_layer_0";
-        layer.style.position = 'absolute';
-        layer.style.top = '0';
-        layer.style.left = '0';
+        layer.style.position = "absolute";
+        layer.style.top = "0";
+        layer.style.left = "0";
         layer.style.zIndex = 1;
         layer.style.width = viewer.offsetWidth + "px";
         layer.style.height = viewer.offsetHeight + "px";
@@ -123,7 +123,7 @@ export class PDFIframe {
      * Renders connecting lines between radio items.
      */
 
-    renderAllConnectingLines(){}
+    renderAllConnectingLines() {}
 
     /**
      * register sign item events. in template edition, should be overwritten to add drag/drop events
@@ -183,16 +183,23 @@ export class PDFIframe {
             (responsible > 0 && responsible !== this.currentRole) ||
             !!signItem.value;
         const isCurrentRole = this.currentRole === parseInt(responsible);
+        const placeholder =
+            signItem.placeholder ||
+            (isCurrentRole && signItem.name) ||
+            (this.readonly && `${signItem.name}\n${signItem.responsible_name}`) ||
+            "";
         return Object.assign(signItem, {
             readonly: signItem.readonly ?? readonly,
             editMode: signItem.editMode ?? false,
             required: Boolean(signItem.required),
             responsible,
             type,
-            placeholder: signItem.placeholder || signItem.name || "",
-            classes: `${signItem.required && isCurrentRole ? "o_sign_sign_item_required" : ""} ${
-                readonly && isCurrentRole ? "o_readonly_mode" : ""
-            } ${this.readonly ? "o_sign_sign_item_pdfview" : ""}`,
+            placeholder: placeholder,
+            classes: `
+                ${isCurrentRole ? "o_sign_sign_item_default" : ""}
+                ${signItem.required && isCurrentRole ? "o_sign_sign_item_required" : ""}
+                ${readonly && isCurrentRole ? "o_readonly_mode" : ""}
+                ${this.readonly ? "o_sign_sign_item_pdfview" : ""}`,
             style: `top: ${normalizedPosY * 100}%; left: ${normalizedPosX * 100}%;
                     width: ${signItem.width * 100}%; height: ${signItem.height * 100}%;
                     text-align: ${signItem.alignment}`,
