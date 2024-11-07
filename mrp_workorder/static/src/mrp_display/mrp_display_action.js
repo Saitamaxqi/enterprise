@@ -86,6 +86,7 @@ export class MrpDisplayAction extends Component {
                 "should_consume_qty",
                 "workorder_id",
                 "check_id",
+                "product_barcode",
             ],
             "quality.check": [
                 "id",
@@ -115,6 +116,7 @@ export class MrpDisplayAction extends Component {
                 "norm_unit",
                 "previous_check_id",
                 "next_check_id",
+                "component_barcode",
             ],
         };
     }

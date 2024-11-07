@@ -46,6 +46,7 @@ export class MrpDisplay extends Component {
         this.actionService = useService("action");
         this.dialogService = useService("dialog");
         this.pwaService = useService("pwa");
+        this.overlayService = useService("overlay");
 
         this.display = {
             ...this.props.display,
@@ -195,6 +196,67 @@ export class MrpDisplay extends Component {
                 this.useEmployee.popup.SelectionPopup.close();
             }
             return this.useEmployee.setSessionOwner(employee, undefined);
+        }
+        if (
+            !Object.values(this.overlayService.overlays).filter(
+                (o) => o.component.name === "DialogWrapper"
+            ).length
+        ) {
+            this._onProductBarcodeScanned(barcode);
+        }
+    }
+
+    _onProductBarcodeScanned(barcode) {
+        for (const record of this.relevantRecords) {
+            if (this.state.activeResModel === "mrp.workorder") {
+                // 1. Check if there is a quality check with this product (WO only)
+                for (const check of record.data.check_ids.records) {
+                    if (check.data.component_barcode === barcode) {
+                        return record.component.displayInstruction(check);
+                    }
+                }
+            }
+            // 2. Check if there is a manual consumption move with this product (WO/MO)
+            for (const move of record.data.move_raw_ids.records) {
+                if (
+                    move.data.product_barcode === barcode &&
+                    move.data.manual_consumption &&
+                    !move.data.scrapped
+                ) {
+                    return record.component.displayRegisterConsumedComponent(move);
+                }
+            }
+            if (this.state.activeResModel === "mrp.workorder") {
+                // 3. Check if there is a manual consumption move on the MO but not on the WO with this product
+                for (const move of record._parentRecord.data.move_raw_ids.records) {
+                    if (
+                        move.data.product_barcode === barcode &&
+                        move.data.manual_consumption &&
+                        !move.data.scrapped &&
+                        !move.data.operation_id &&
+                        move.data.workorder_id[0] !== record.data.id
+                    ) {
+                        return record.component.displayRegisterConsumedComponent(move);
+                    }
+                }
+                // 4. Check if there is a byproduct move on this WO or on the MO but not any WO with this product
+                for (const move of record._parentRecord.data.move_byproduct_ids.records) {
+                    if (
+                        move.data.product_barcode === barcode &&
+                        (move.data.operation_id[0] === undefined ||
+                            move.data.operation_id[0] === record.data.operation_id[0])
+                    ) {
+                        return record.component.displayRegisterConsumedComponent(move);
+                    }
+                }
+            } else {
+                // 5. Check if there is a byproduct move with this product (MO only)
+                for (const move of record.data.move_byproduct_ids.records) {
+                    if (move.data.product_barcode === barcode) {
+                        return record.component.displayRegisterConsumedComponent(move);
+                    }
+                }
+            }
         }
     }
 

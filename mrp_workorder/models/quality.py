@@ -202,6 +202,7 @@ class QualityCheck(models.Model):
         'stock.move', 'Stock Move', check_company=True)
     component_id = fields.Many2one(
         'product.product', 'Component', check_company=True)
+    component_barcode = fields.Char(related='component_id.barcode')
     component_uom_id = fields.Many2one('uom.uom', related='move_id.product_uom', readonly=True)
 
     finished_lot_id = fields.Many2one('stock.lot', 'Finished Lot/Serial', related='production_id.lot_producing_id')

@@ -12,6 +12,7 @@ class StockMove(models.Model):
     note = fields.Html('Note', related='check_id.note')
     worksheet_document = fields.Binary('Worksheet Image/PDF', compute='_compute_worksheet_document')
     worksheet_note = fields.Html('Worksheet description', related='check_id.workorder_id.operation_id.note')
+    product_barcode = fields.Char(related='product_id.barcode')
 
     @api.depends('check_id.worksheet_document', 'check_id.source_document', 'check_id.workorder_id.operation_id.worksheet')
     def _compute_worksheet_document(self):
