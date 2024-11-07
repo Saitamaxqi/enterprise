@@ -65,7 +65,7 @@ class AccountBatchPayment(models.Model):
         res.extend(['l10n_nz_eft_in', 'l10n_nz_eft_out'])
         return res
 
-    @api.constrains('batch_type', 'journal_id', 'payment_ids')
+    @api.constrains('batch_type', 'journal_id', 'payment_ids', 'payment_method_id')
     def _check_payments_constrains(self):
         # EXTENDS account_batch_payment
         super()._check_payments_constrains()

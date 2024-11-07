@@ -116,7 +116,7 @@ class AccountBatchPayment(models.Model):
                     date=format_date(self.env, minimum_date),
                 ))
 
-    @api.constrains('batch_type', 'journal_id', 'payment_ids')
+    @api.constrains('batch_type', 'journal_id', 'payment_ids', 'payment_method_id')
     def _check_payments_constrains(self):
         super(AccountBatchPayment, self)._check_payments_constrains()
         for record in self.filtered(lambda r: r.payment_method_code in r.payment_method_id._get_sdd_payment_method_code()):
