@@ -72,6 +72,44 @@ result = contract.l10n_lu_bik_other_benefits
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
 
+    <record id="l10n_lu_employees_bik_meal_vouchers" model="hr.salary.rule">
+        <field name="category_id" ref="hr_salary_rule_category_bonuses_bic_bik"/>
+        <field name="name">Benefit in Kind - Meal Vouchers</field>
+        <field name="code">BIK_MEAL_VOUCHERS</field>
+        <field name="sequence">10</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = contract.l10n_lu_meal_voucher_amount and contract.l10n_lu_meal_voucher_employee_computation == 'consider_as_bik'</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+if 'WORK100' not in worked_days:
+    result_qty = 0
+else:
+    max_number_of_days = payslip._rule_parameter('l10n_lu_meal_voucher_max_days')
+    result_qty = min(worked_days['WORK100'].number_of_days, max_number_of_days)
+result = 2.8 
+        </field>
+        <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
+    </record>
+
+    <record id="l10n_lu_employees_bik_meal_vouchers_exceeding_amount" model="hr.salary.rule">
+        <field name="category_id" ref="hr_salary_rule_category_bonuses_bic_bik"/>
+        <field name="name">Benefit in Kind - Meal Vouchers Exceeding Amount</field>
+        <field name="code">BIK_MEAL_VOUCHERS_EXCEEDING_AMOUNT</field>
+        <field name="sequence">10</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = contract.l10n_lu_bik_meal_voucher_exceeding_amount &gt; 0</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+if 'WORK100' not in worked_days:
+    result_qty = 0
+else:
+    max_number_of_days = payslip._rule_parameter('l10n_lu_meal_voucher_max_days')
+    result_qty = min(worked_days['WORK100'].number_of_days, max_number_of_days)
+result = contract.l10n_lu_bik_meal_voucher_exceeding_amount
+        </field>
+        <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
+    </record>
+
     <record id="l10n_lu_employees_wage_supplement_70" model="hr.salary.rule">
         <field name="category_id" ref="l10n_lu_hr_payroll.hr_salary_rule_category_supplements_accessories"/>
         <field name="name">70% Wage Supplement</field>
@@ -660,7 +698,7 @@ result = contract.l10n_lu_bik_other_benefits
     </record>
 
     <record id="l10n_lu_employees_gross_meal_vouchers" model="hr.salary.rule">
-        <field name="category_id" ref="hr_salary_rule_category_meal_vouchers"/>
+        <field name="category_id" ref="l10n_lu_hr_payroll.hr_salary_rule_category_removed_from_net"/>
         <field name="name">Meal Vouchers</field>
         <field name="code">MEAL_VOUCHERS</field>
         <field name="sequence">175</field>
@@ -673,7 +711,26 @@ if 'WORK100' not in worked_days:
 else:
     max_number_of_days = payslip._rule_parameter('l10n_lu_meal_voucher_max_days')
     result_qty = min(worked_days['WORK100'].number_of_days, max_number_of_days)
-result = contract.l10n_lu_meal_voucher_amount
+result = 2.8 
+        </field>
+        <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
+    </record>
+    
+    <record id="l10n_lu_employees_bik_meal_vouchers_exceeding_amount_net" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_lu_hr_payroll.hr_salary_rule_category_removed_from_net"/>
+        <field name="name">Benefit in Kind - Meal Vouchers Exceeding Amount</field>
+        <field name="code">BIK_MEAL_VOUCHERS_EXCEEDING_AMOUNT_NET</field>
+        <field name="sequence">175</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = contract.l10n_lu_bik_meal_voucher_exceeding_amount &gt; 0</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+if 'WORK100' not in worked_days:
+    result_qty = 0
+else:
+    max_number_of_days = payslip._rule_parameter('l10n_lu_meal_voucher_max_days')
+    result_qty = min(worked_days['WORK100'].number_of_days, max_number_of_days)
+result = contract.l10n_lu_bik_meal_voucher_exceeding_amount
         </field>
         <field name="struct_id" ref="l10n_lu_hr_payroll.hr_payroll_structure_lux_employee_salary"/>
     </record>
