@@ -10,6 +10,7 @@ from dateutil.relativedelta import relativedelta
 from odoo import Command, http
 from odoo.tests.common import new_test_user, tagged
 from odoo.tools import mute_logger
+from odoo.tools.misc import get_lang
 
 from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
@@ -69,6 +70,23 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
         self.subscription.end_date = False  # reset the end_date
         self.subscription_tmpl.flush_recordset()
         self.subscription.flush_recordset()
+
+    def _pause_subscription(self, until_date):
+        """ method to pause a subscription from protal."""
+        data = {
+            "access_token": self.subscription.access_token,
+            "csrf_token": http.Request.csrf_token(self),
+            "until": until_date,
+        }
+        return self.url_open(f"/my/subscriptions/{self.subscription.id}/pause", allow_redirects=False, data=data)
+
+    def _resume_subscription(self):
+        """ method to resume a subscription from protal."""
+        data = {
+            "access_token": self.subscription.access_token,
+            "csrf_token": http.Request.csrf_token(self),
+        }
+        return self.url_open(f"/my/subscriptions/{self.subscription.id}/resume", allow_redirects=False, data=data)
 
     def test_close_contract(self):
         """ Test subscription close """
@@ -877,3 +895,58 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
         content = response.content.decode("utf-8")
         self.assertIn(self.subscription.name, content, "Portal user should see subscriptions from their company")
         self.assertNotIn(external_subscription.name, content, "Portal user should NOT see subscriptions from other companies")
+
+    def test_subscription_pause(self):
+        """ Test pausing a subscription from the portal and verifying its effects. """
+        with freeze_time("2021-11-17"):
+            self.authenticate(None, None)
+            self.subscription.plan_id.pausable_by_user = True
+            self.subscription.action_confirm()
+            self.subscription._create_invoices()._post()
+
+        with freeze_time("2021-11-18"):
+            pause_until = self.subscription.next_invoice_date + relativedelta(days=2)
+            user_lang = get_lang(self.env)
+            date_format = user_lang.date_format
+            pause_until_str = pause_until.strftime(date_format)
+            response = self._pause_subscription(pause_until_str)
+
+            self.assertEqual(response.status_code, 303, "Expected redirection status code 303.")
+            self.env.invalidate_all()
+            self.assertEqual(self.subscription.subscription_state, "3_progress", "Subscription should remain in progress.")
+            self.assertEqual(self.subscription.next_invoice_date, pause_until, "Next invoice date should be extended by 2 days.")
+
+        with freeze_time("2021-12-19"):
+            self.env['sale.order']._cron_recurring_create_invoice()
+            self.assertEqual(self.subscription.invoice_count, 2, "Invoice count should be 2.")
+            self.assertEqual(self.subscription.next_invoice_date, datetime.date(2022, 1, 19), "Next invoice date should be updated correctly.")
+
+    def test_subscription_pause_and_resume(self):
+        """ Test pausing and then resuming a subscription from the portal. """
+        with freeze_time("2021-11-17"):
+            self.authenticate(None, None)
+            self.subscription.plan_id.pausable_by_user = True
+            self.subscription.action_confirm()
+            self.subscription._create_invoices()._post()
+
+        with freeze_time("2021-11-18"):
+            pause_until = self.subscription.next_invoice_date + relativedelta(days=3)
+            user_lang = get_lang(self.env)
+            date_format = user_lang.date_format
+            pause_until_str = pause_until.strftime(date_format)
+            response = self._pause_subscription(pause_until_str)
+
+            self.assertEqual(response.status_code, 303, "Expected redirection status code 303.")
+            self.env.invalidate_all()
+            self.assertEqual(self.subscription.subscription_state, "3_progress", "Subscription should remain in progress.")
+            self.assertEqual(self.subscription.next_invoice_date, pause_until, "Next invoice date should be extended by 3 days.")
+
+        with freeze_time("2021-12-18"):
+            response = self._resume_subscription()
+
+            self.assertEqual(response.status_code, 303, "Expected redirection status code 303.")
+            self.env.invalidate_all()
+            self.assertEqual(self.subscription.next_invoice_date, datetime.date(2021, 12, 18), "Next invoice date should reset correctly.")
+
+            self.env['sale.order']._cron_recurring_create_invoice()
+            self.assertEqual(self.subscription.next_invoice_date, datetime.date(2022, 1, 18), "Next invoice date should update after invoicing.")

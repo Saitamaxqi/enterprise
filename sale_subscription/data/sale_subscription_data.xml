@@ -58,6 +58,14 @@
             <field name="description">Subscription state has changed</field>
         </record>
 
+        <record id="subtype_resume_and_pause_subscription" model="mail.message.subtype">
+            <field name="name">Resume and Pause Subscription</field>
+            <field name="res_model">sale.order</field>
+            <field name="default" eval="True"/>
+            <field name="internal" eval="True"/>
+            <field name="hidden" eval="True"/>
+        </record>
+
         <!-- Cron jobs -->
         <record model="ir.cron" id="account_analytic_cron">
             <field name="name">Sale Subscription: subscriptions expiration</field>

@@ -46,6 +46,61 @@
                     </div>
                 </div>
             </div>
+            <!-- ====== MODAL: Pause Subscription ====== -->
+            <div role="dialog" t-attf-class="modal fade" id="wc-modal-pause" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <header class="modal-header">
+                            <h4 class="modal-title">
+                                Pause <span t-field="sale_order.display_name" class="text-primary"/>
+                            </h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+                        </header>
+                        <form method="post" t-attf-action="/my/subscriptions/#{sale_order.id}/pause?access_token=#{sale_order.access_token}">
+                            <input class="d-none" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <t t-set="modal_start_time" t-value="sale_order.user_pause_start or sale_order.next_invoice_date or sale_order.start_date"/>
+                            <main t-if="modal_start_time" class="modal-body d-flex">
+                                <t t-set="modal_max_pause_time" t-value="modal_start_time + sale_order.plan_id.billing_period"/>
+                                Pause the subscription from<span class="mx-1" t-field="sale_order.next_invoice_date"/> to
+                                <input type="text" id="start" name="until"
+                                    class="form-control datetimepicker-input bg-transparent rounded p-0 d-inline w-auto ms-1"
+                                    t-att-value="modal_start_time + relativedelta(days=1)"
+                                    t-att-data-min-date="modal_start_time + relativedelta(days=1)"
+                                    data-widget="datetime-picker" data-widget-type="date"
+                                    t-att-data-max-date="modal_max_pause_time" />
+                            </main>
+                            <footer class="modal-footer">
+                                <button class="btn btn-primary">Submit</button>
+                                <span class="btn btn-secondary" data-bs-dismiss="modal">Close</span>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- ====== MODAL: Resume Subscription ====== -->
+            <div role="dialog" t-attf-class="modal fade" id="wc-modal-resume" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <header class="modal-header">
+                            <h4 class="modal-title">
+                                Resume <span t-field="sale_order.display_name" class="text-primary"/>
+                            </h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"/>
+                        </header>
+                        <form method="post" t-attf-action="/my/subscriptions/#{sale_order.id}/resume?access_token=#{sale_order.access_token}">
+                            <input class="d-none" name="csrf_token" t-att-value="request.csrf_token()"/>
+                            <main class="modal-body">
+                                Do you want to resume the subscription today?<br/>
+                                Next invoice date: <t t-if="sale_order.is_subscription and sale_order.state == 'sale'" t-out="format_date(next_invoice_date_at_resume)"/>
+                            </main>
+                            <footer class="modal-footer">
+                                <button class="btn btn-primary">Resume</button>
+                                <span class="btn btn-secondary" data-bs-dismiss="modal">Close</span>
+                            </footer>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </template>
 
@@ -165,6 +220,14 @@
                 <t t-elif="upsell_url">There is a <a t-att-href="upsell_url" class="alert-link">quotation</a> existing for this subscription, please confirm it or reject it.</t>
                 <t t-elif="renewal_url">There is a <a t-att-href="renewal_url" class="alert-link">renewal</a> quotation existing for this subscription, please confirm it or reject it.</t>
             </div>
+            <t t-if="sale_order.user_pause_start and sale_order.next_invoice_date &gt; datetime.date.today()">    
+                <div t-if="sale_order.user_pause_start &lt;= datetime.date.today()" class="alert alert-warning text-center">
+                    Your subscription is paused until <span t-field="sale_order.next_invoice_date"/>
+                </div>
+                <div t-if="sale_order.user_pause_start &gt; datetime.date.today()" class="alert alert-warning text-center">
+                    Your subscription will be paused from <span t-field="sale_order.user_pause_start"/> until <span t-field="sale_order.next_invoice_date"/>
+                </div>
+            </t>
         </div>
     </template>
 
@@ -194,8 +257,12 @@
                     </t>
                 </h2>
                 <span t-if="sale_order.subscription_state in ['3_progress', '4_paused'] and sale_order.next_invoice_date &lt; datetime.date.today()" class="badge rounded-pill text-bg-danger align-middle smaller"><i class="fa fa-fw fa-repeat"/> To Renew</span>
-                <span t-elif="sale_order.subscription_state == '3_progress'" class="badge rounded-pill text-bg-success align-middle smaller"><i class="fa fa-fw fa-check"/> In Progress</span>
-                <span t-elif="sale_order.subscription_state == '4_paused'" class="badge rounded-pill text-bg-success align-middle smaller"><i class="fa fa-fw fa-check"/> Paused</span>
+                <span
+                    t-elif="sale_order.subscription_state == '3_progress' and not (sale_order.user_pause_start and sale_order.user_pause_start &lt;= datetime.date.today() and sale_order.next_invoice_date &gt; datetime.date.today())"
+                    class="badge rounded-pill text-bg-success align-middle smaller">
+                    <i class="fa fa-fw fa-check"/> In Progress
+                </span>
+                <span t-elif="(sale_order.subscription_state == '4_paused') or (sale_order.user_pause_start and sale_order.user_pause_start &lt;= datetime.date.today() and sale_order.next_invoice_date &gt; datetime.date.today())" class="badge rounded-pill text-bg-success align-middle smaller"><i class="fa fa-fw fa-check"/> Paused</span>
                 <span t-elif="sale_order.subscription_state == '5_renewed'" class="badge rounded-pill text-bg-secondary align-middle smaller"><i class="fa fa-fw fa-check"/> Renewed</span>
                 <span t-elif="sale_order.subscription_state == '6_churn'" class="badge rounded-pill text-bg-dark align-middle smaller"><i class="fa fa-fw fa-remove"/> Closed</span>
                 <span
@@ -299,7 +366,9 @@
                         <div>
                             <span class="text-muted">Next Billing</span>
                             <h2 t-out="next_billing_details.get('next_invoice_amount')" t-options='{"widget": "monetary","display_currency": sale_order.currency_id}'/>
-                            <h6>on <span t-field="sale_order.next_invoice_date"/><span t-if="sale_order.next_invoice_date and sale_order.next_invoice_date &lt; datetime.date.today()" class="badge ms-2 rounded-pill text-bg-danger">Overdue</span></h6>
+                            <h6>on <span t-field="sale_order.next_invoice_date"/>
+                                <span t-if="sale_order.next_invoice_date and sale_order.next_invoice_date &lt; datetime.date.today()" class="badge ms-2 rounded-pill text-bg-danger">Overdue</span>
+                            </h6>
                         </div>
                         <t t-if="sale_order.subscription_state in ['3_progress', '4_paused']">
                             <!-- User is logged in under the partner set on the subscription -->
@@ -339,6 +408,16 @@
                                 Automate Payment
                             </a>
                         </t>
+                        <a role="button" t-attf-class="btn btn-light d-block {{ 'disabled' if sale_order.next_invoice_date &lt;= datetime.date.today() else '' }}"
+                           data-bs-toggle="modal" data-bs-target="#wc-modal-pause" href="#"
+                           t-if="(sale_order.plan_id.pausable_by_user and (not sale_order.user_pause_start or sale_order.next_invoice_date == datetime.date.today())) and not is_subscription_postpaid">
+                            Pause subscription
+                        </a>
+                        <a role="button" t-attf-class="btn btn-light d-block {{ 'disabled' if sale_order.next_invoice_date &lt; datetime.date.today() else '' }}"
+                           data-bs-toggle="modal" data-bs-target="#wc-modal-resume" href="#"
+                           t-if="(sale_order.plan_id.pausable_by_user and (sale_order.user_pause_start and sale_order.next_invoice_date != datetime.date.today())) and not is_subscription_postpaid">
+                            Resume subscription
+                        </a>
                         <a role="button" class="btn btn-primary" t-att-href="renewal_url"
                            t-if="sale_order.user_extend and renewal_url">
                             Renew

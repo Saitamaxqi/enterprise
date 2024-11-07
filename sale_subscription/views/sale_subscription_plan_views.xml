@@ -51,6 +51,7 @@
                                 <field name="user_closable"/>
                                 <field name="user_closable_options" invisible="user_closable == False"/>
                             </div>
+                            <field name="pausable_by_user"/>
                             <field name="user_quantity"/>
                             <field name="user_extend"/>
                             <field name="related_plan_id" domain="[('id', '!=', id)]" widget="many2many_tags"/>

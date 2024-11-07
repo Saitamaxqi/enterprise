@@ -7,10 +7,11 @@ from dateutil.relativedelta import relativedelta
 from math import ceil
 from werkzeug.urls import url_encode
 
-from odoo import Command, fields, http, _
+from odoo import Command, fields, http, _, SUPERUSER_ID
 from odoo.exceptions import AccessError, MissingError, UserError, ValidationError
 from odoo.http import request
 from odoo.tools import format_date, str2bool
+from odoo.tools.misc import get_lang
 
 from odoo.addons.sale.controllers import portal as payment_portal
 from odoo.addons.payment import utils as payment_utils
@@ -201,6 +202,8 @@ class CustomerPortal(payment_portal.PaymentPortal):
             'product_documents': order_sudo._get_product_documents(),
             'next_billing_details': order_sudo._next_billing_details(),
             'format_date': lambda date: format_date(request.env, date),
+            'next_invoice_date_at_resume': max(order_sudo.user_pause_start, fields.Date.today()) if order_sudo.user_pause_start else False,
+            'is_subscription_postpaid': order_sudo._is_subscription_postpaid(),
             **self._prepare_partner_addresses(order_sudo)
         }
 
@@ -264,6 +267,68 @@ class CustomerPortal(payment_portal.PaymentPortal):
         if order_sudo.plan_id.related_plan_id and order_sudo._can_be_edited_on_portal():
             if new_plan := request.env['sale.subscription.plan'].browse(int(kw.get('plan_id'))):
                 order_sudo.plan_id = new_plan
+        return request.redirect(order_sudo.get_portal_url())
+
+    @http.route(['/my/subscriptions/<int:order_id>/pause'], type='http', methods=["POST"], auth="public", website=True)
+    def subscription_pause(self, order_id, access_token=None, **kw):
+        order_sudo, redirection = self._get_subscription(access_token, order_id)
+
+        if redirection:
+            return redirection
+        if order_sudo.next_invoice_date <= fields.Date.today():
+            raise UserError(self.env._('You cannot pause a subscription that is not yet due.'))
+        if order_sudo._is_subscription_postpaid():
+            raise UserError(self.env._('You cannot pause a subscription with postpaid lines.'))
+
+        until = kw.get('until')
+        if not until:
+            raise ValidationError(self.env._('Please select a date to pause the subscription until.'))
+
+        if order_sudo.plan_id.pausable_by_user and until and not order_sudo.user_pause_start:
+            user_lang = get_lang(request.env).date_format
+            until = fields.Date.to_date(datetime.datetime.strptime(until, user_lang).date())
+
+            user_pause_start = order_sudo.next_invoice_date
+
+            if until == order_sudo.next_invoice_date:
+                raise UserError(self.env._('You cannot pause the subscription for 0 days.'))
+            if until < order_sudo.next_invoice_date:
+                raise UserError(self.env._('A pause can\'t take place before the next invoice date.'))
+            if until > user_pause_start + order_sudo.plan_id.billing_period:
+                raise UserError(self.env._('Pause duration cannot exceed 1 period.'))
+
+            message_body = self.env._(
+                "Subscription will be paused from %(date_from)s to %(date_to)s.",
+                date_from=format_date(request.env, user_pause_start),
+                date_to=format_date(request.env, until),
+            )
+
+            user = request.env['res.users'].sudo().search([('partner_id', '=', order_sudo.partner_id.id)], limit=1) or SUPERUSER_ID
+            order_sudo.with_user(user).sudo().with_context(subscription_pause=True).write({
+                'next_invoice_date': until,
+                'user_pause_start': user_pause_start,
+            })
+            order_sudo.with_user(user).sudo().message_post(body=message_body)
+
+        return request.redirect(order_sudo.get_portal_url())
+
+    @http.route(['/my/subscriptions/<int:order_id>/resume'], type='http', methods=["POST"], auth="public", website=True)
+    def subscription_resume(self, order_id, access_token=None, **kw):
+        order_sudo, redirection = self._get_subscription(access_token, order_id)
+        if redirection:
+            return redirection
+        if order_sudo.next_invoice_date <= fields.Date.today():
+            raise UserError(self.env._('You cannot resume a subscription that is not yet due.'))
+
+        if order_sudo.plan_id.pausable_by_user and order_sudo.user_pause_start:
+            user = request.env['res.users'].sudo().search([('partner_id', '=', order_sudo.partner_id.id)], limit=1) or SUPERUSER_ID
+            invoice_date = max(order_sudo.user_pause_start, fields.Date.today())
+            message_body = self.env._("Subscription was resumed on the %s.", format_date(request.env, invoice_date))
+            order_sudo.with_user(user).sudo().with_context(subscription_pause=True).write({
+                'next_invoice_date': invoice_date,
+                'user_pause_start': False
+            })
+            order_sudo.with_user(user).sudo().message_post(body=message_body)
         return request.redirect(order_sudo.get_portal_url())
 
     @http.route(['/my/subscriptions/<int:order_id>/upsell'], type='http', auth="public")

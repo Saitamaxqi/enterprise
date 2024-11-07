@@ -7,6 +7,14 @@
         <field name="inherit_id" ref="sale_management.sale_order_form_quote"/>
         <field name="priority" eval="10"/>
         <field name="arch" type="xml">
+            <sheet position="before">
+                <div class="alert alert-warning p-3 text-center" role="alert"
+                     invisible="not user_pause_start or next_invoice_date &lt;= current_date">
+                    <span>
+                        This subscription has been paused by the customer until <field name="next_invoice_date" readonly="1"/>
+                    </span>
+                </div>
+            </sheet>
             <button id="create_invoice" position="before">
                 <button string="Resume" name="resume_subscription" type="object" data-hotkey="r"
                         class="btn-primary"

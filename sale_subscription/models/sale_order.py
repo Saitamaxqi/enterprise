@@ -94,6 +94,7 @@ class SaleOrder(models.Model):
     payment_term_id = fields.Many2one(tracking=True)
     currency_id = fields.Many2one(tracking=True)
     last_reminder_date = fields.Date(help="Last time when we sent a payment reminder")
+    user_pause_start = fields.Date()
 
     ###################
     # KPI / reporting #
@@ -500,6 +501,8 @@ class SaleOrder(models.Model):
         self.ensure_one()
         if 'subscription_state' in init_values:
             return self.env.ref('sale_subscription.subtype_state_change')
+        if self.is_subscription and 'next_invoice_date' in init_values and self.env.context.get('subscription_pause'):
+            return self.env.ref('sale_subscription.subtype_resume_and_pause_subscription')
         return super()._track_subtype(init_values)
 
     @api.depends('sale_order_template_id')
@@ -1629,6 +1632,7 @@ class SaleOrder(models.Model):
             subscriptions_to_reset.write({
                 'is_invoice_cron': False,
                 'is_batch': False,
+                'user_pause_start': False
             })
             self._subscription_commit_cursor(auto_commit)
         return account_moves
@@ -2114,6 +2118,11 @@ class SaleOrder(models.Model):
                     if reminder_mail_template:
                         reminder_mail_template.with_context(email_context).send_mail(subscription.id)
                         subscription.last_reminder_date = today
+            # For non-tokenized subscriptions, If the subscription is still marked as paused (`user_pause_start` is set)
+            # even after the next_invoice_date has passed, we reset the user_pause_start. This ensures that the subscription
+            # does not remain indefinitely paused once the invoice date is due, allowing the normal flow of subscription.
+            if subscription.user_pause_start and subscription.next_invoice_date <= today:
+                subscription.user_pause_start = False
 
     def _get_ratio_value(self, new_upsell=False):
         """ Compute ratio for a given order
@@ -2170,3 +2179,7 @@ class SaleOrder(models.Model):
                     partner_ids=follower.partner_id.ids,
                     subtype_ids=follower.subtype_ids.ids
                 )
+
+    def _is_subscription_postpaid(self):
+        self.ensure_one()
+        return any(sol._is_postpaid_line() for sol in self.order_line)

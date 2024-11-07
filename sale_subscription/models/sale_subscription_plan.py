@@ -39,6 +39,11 @@ class SaleSubscriptionPlan(models.Model):
         ("at_date", "At date"),
         ("end_of_period", "End of period")
     ], string="Closeable Plan Options", required=True, default='at_date')
+    pausable_by_user = fields.Boolean(
+        string="Pausable",
+        default=False,
+        help="Allow customers to temporarily pause their subscription for a specific period. Not available for postpaid subscriptions."
+    )
 
     # Invoicing
     auto_close_limit = fields.Integer(string="Automatic Closing", default=15,
