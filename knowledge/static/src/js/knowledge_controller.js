@@ -1,4 +1,5 @@
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { getActiveHotkey } from "@web/core/hotkeys/hotkey_service";
 import { _t } from "@web/core/l10n/translation";
 import { FormController } from '@web/views/form/form_controller';
 import { KnowledgeSidebar } from '@knowledge/components/sidebar/sidebar';
@@ -92,6 +93,16 @@ export class KnowledgeArticleFormController extends FormController {
             },
             () => [this.model.root.resId]
         );
+
+        useExternalListener(window, "keydown", async event => {
+            const hotkey = getActiveHotkey(event);
+            if (hotkey === "control+s") {
+                event.preventDefault();
+                if (this.model.root.dirty) {
+                    await this.save({ reload: false });
+                }
+            }
+        });
     }
 
     /**
