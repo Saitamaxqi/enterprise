@@ -80,7 +80,6 @@
     resize: none;
     background-color: rgba(var(--bs-white-rgb), 0.9);
     font-family: Helvetica;
-    line-height: 1.25;
     z-index: 100;
     cursor: pointer;
 }
@@ -105,7 +104,7 @@
 }
 
 .o_sign_sign_item .o_placeholder {
-    vertical-align: middle;
+    vertical-align: unset;
     padding-left: 30px;
     overflow: hidden;
 }
@@ -138,6 +137,7 @@
 
 .o_custom_checkbox {
     display: inline-block;
+    margin-left: 1rem;
     width: 1em;
     height: 0.8em;
     position: relative;

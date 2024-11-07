@@ -162,6 +162,8 @@ export const EditablePDFIframeMixin = (pdfClass) =>
                 )
             );
             this.ghostSignItem = firstPage.lastChild;
+            const itemData = this.signItemTypesById[signTypeElement.dataset.itemTypeId];
+            this.updateSignItemFontSize({el: this.ghostSignItem, data: {type: itemData.item_type}});
             e.dataTransfer.setData("typeId", signTypeElement.dataset.itemTypeId);
             e.dataTransfer.setDragImage(this.ghostSignItem, 0, 0);
             this.scrollCleanup = startSmoothScroll(

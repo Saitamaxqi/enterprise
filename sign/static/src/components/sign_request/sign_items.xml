@@ -120,7 +120,7 @@
             <t t-if="value == 'on'">&#9673;</t>
             <t t-if="value == 'off'">&#9711;</t>
             <t t-if="!value">
-                <span t-att-style="(editMode ? 'padding-left: 25px;' : '')">
+                <span class="o_placeholder ps-0 o_sign_field_alignment" t-att-style="(editMode ? 'padding-left: 25px;' : '')">
                     <t t-esc="placeholder"/>
                 </span>
             </t>
