@@ -12,6 +12,7 @@ This module integrates with UrbanPiper to receive and manage orders from various
         'data/pos_account_fiscal_position_data.xml',
         'security/ir.model.access.csv',
         'views/res_config_settings_views.xml',
+        'views/pos_category_views.xml',
         'views/product_views.xml',
         'views/pos_payment_method_views.xml',
     ],

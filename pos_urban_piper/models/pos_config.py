@@ -339,15 +339,15 @@ class PosConfig(models.Model):
         if response_json.get('errors'):
             title = list(response_json.get('errors').keys())[0]
             message = list(response_json.get('errors').values())[0]
-        elif response_json.get('message'):
-            message = response_json.get('message')
+        elif response_json.get('message') or response_json.get('error_message'):
+            message = response_json.get('message') or response_json.get('error_message')
+        if message:
             if response_json.get('status') == 'success':
                 msg_type = 'success'
                 message = message.split('.')[0]
             elif response_json.get('status') == 'error':
                 if raise_exception:
-                    raise ValidationError(response_json['message'])
-        if message:
+                    raise ValidationError(message)
             return {
                 'type': 'ir.actions.client',
                 'tag': 'display_notification',

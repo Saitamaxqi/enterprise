@@ -5,7 +5,7 @@ import json
 from datetime import datetime
 
 from odoo import Command
-from odoo.tools import html2plaintext
+from odoo.tools import html2plaintext, format_duration
 
 from urllib.parse import quote
 from werkzeug.urls import url_join
@@ -322,6 +322,37 @@ class UrbanPiperClient:
             for product in [product_packaging, product_delivery]
             if product
         ]
+
+    def request_category_timing(self):
+        """
+        Sync category timings from Odoo to UrbanPiper.
+        """
+        endpoint = 'external/api/v1/inventory/categories/timing-groups/'
+        pos_categories = self.config.env['pos.category'].search([]).filtered(lambda categ: (categ.hour_until - categ.hour_after) != 0)
+        timing_groups = []
+        week_days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        for category in pos_categories:
+            day_slots = []
+            for day in week_days:
+                day_slots.append({
+                    'day': day,
+                    'slots': [
+                        {
+                            'start_time': "23:59" if category.hour_after == 24.0 else format_duration(category.hour_after),
+                            'end_time': "23:59" if category.hour_until == 24.0 else format_duration(category.hour_until)
+                        }
+                    ]
+                })
+            timing_groups.append({
+                'title': f'{category.name} timings',
+                'category_ref_ids': [str(category.id)],
+                'day_slots': day_slots
+            })
+        payload = {
+            'timing_groups': timing_groups
+        }
+        response_json = self._make_api_request(endpoint, method='POST', data=payload)
+        return response_json
 
     def register_item_toggle(self, products, status):
         """
