@@ -396,7 +396,7 @@ def _get_relations(record, field):
                 dep_model = record.env[record.model]
                 for dep_name in dep_names.strip().split('.'):
                     dep_field = dep_model._fields[dep_name]
-                    if dep_field not in models.MAGIC_COLUMNS:
+                    if dep_name not in models.MAGIC_COLUMNS:
                         dep_fields.add(dep_field)
                     if dep_field.relational:
                         dep_model = record.env[dep_field.comodel_name]
