@@ -91,7 +91,7 @@ class AccountBatchPayment(models.Model):
                           SELECT DISTINCT mandate.id
                             FROM sdd_mandate mandate
                             JOIN account_payment payment ON payment.sdd_mandate_id = mandate.id
-                           WHERE payment.is_matched AND mandate.id IN %(mandate_ids)s
+                           WHERE payment.is_matched IS TRUE AND mandate.id IN %(mandate_ids)s
                          )
                     SELECT DISTINCT payment.batch_payment_id
                       FROM account_payment payment

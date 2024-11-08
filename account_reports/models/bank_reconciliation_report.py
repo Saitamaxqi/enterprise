@@ -219,7 +219,7 @@ class AccountBankReconciliationReportHandler(models.AbstractModel):
             table_references=query.from_clause,
             search_condition=query.where_clause,
             is_receipt=SQL("st_line.amount > 0") if internal_type == "receipts" else SQL("st_line.amount < 0"),
-            is_unreconciled=SQL("AND NOT st_line.is_reconciled") if unreconciled else SQL(""),
+            is_unreconciled=SQL("AND st_line.is_reconciled IS NOT TRUE") if unreconciled else SQL(""),
             st_line_amount_condition=st_line_amount_condition,
             last_statement_id_condition=last_statement_id_condition,
             group_by=SQL.identifier('account_move_line', current_groupby) if current_groupby else SQL('st_line.id'),  # Same key in the groupby because we can't put a null key in a group by
