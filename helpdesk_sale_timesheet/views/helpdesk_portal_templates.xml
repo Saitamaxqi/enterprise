@@ -109,7 +109,7 @@
         </xpath>        
     </template>
     <template id="portal_my_timesheets_inherit" inherit_id="sale_timesheet.portal_my_timesheets_inherit">
-        <xpath expr="//th[contains(text(), 'Task')]" position="replace">
+        <xpath expr='//th[@t-if="not groupby == &apos;task_id&apos;"]' position="replace">
             <th t-if="groupby not in ['task_id', 'helpdesk_ticket_id']">Task/Ticket</th>
         </xpath>
         <xpath expr="//span[@t-field='timesheet.task_id']" position="after">
