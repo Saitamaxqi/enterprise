@@ -17,7 +17,7 @@ class PosSelfOrderPreparationDisplayController(PosSelfOrderController):
         pos_config.env['pos_preparation_display.display']._paper_status_change(pos_config)
 
     def _send_to_preparation_display(self, order, access_token, table_identifier, order_id):
-        pos_config, _ = self._verify_authorization(access_token, table_identifier, order.get('takeaway'))
+        pos_config, _ = self._verify_authorization(access_token, table_identifier, order)
         order_id = pos_config.env['pos.order'].browse(order_id)
 
         if pos_config.self_ordering_pay_after == 'each' and order_id.state == 'paid':

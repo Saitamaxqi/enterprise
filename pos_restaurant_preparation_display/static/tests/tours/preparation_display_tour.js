@@ -79,7 +79,7 @@ registry.category("web_tour.tours").add("PreparationDisplayTourInternalNotes", {
             ProductScreen.clickOrderButton(),
             ProductScreen.orderlinesHaveNoChange(),
             ProductScreen.clickDisplayedProduct("Coca-Cola"),
-            ProductScreen.addInternalNote("Test Internal Notes", "Kitchen Note"),
+            ProductScreen.addInternalNote("Test Internal Notes", "Note"),
             ProductScreen.clickOrderButton(),
             ProductScreen.orderlinesHaveNoChange(),
             Order.hasLine({

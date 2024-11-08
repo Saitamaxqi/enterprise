@@ -10,7 +10,6 @@ class Pos_Preparation_DisplayOrder(models.Model):
         order_for_ui = super()._export_for_ui(preparation_display)
 
         if order_for_ui:
-            order_for_ui['takeaway'] = self.pos_order_id.takeaway
             order_for_ui['table_stand_number'] = self.pos_order_id.table_stand_number
 
         return order_for_ui
