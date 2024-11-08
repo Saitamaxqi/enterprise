@@ -4,7 +4,7 @@ import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { ask } from "@point_of_sale/app/utils/make_awaitable_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { uuidv4 } from "@point_of_sale/utils";
-import { TaxError } from "@l10n_de_pos_cert/app/errors";
+import { TaxError } from "@l10n_de_pos_cert/app/utils/errors";
 import { roundCurrency } from "@point_of_sale/app/models/utils/currency";
 
 const RATE_ID_MAPPING = {

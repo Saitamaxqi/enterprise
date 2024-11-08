@@ -2,7 +2,7 @@
 
 import { IoTLongpolling, iotLongpollingService } from "@iot/iot_longpolling";
 import { patch } from "@web/core/utils/patch";
-import { iotBoxDisconnectedDialog } from "@pos_iot/app/iot_box_disconnected_dialog";
+import { iotBoxDisconnectedDialog } from "@pos_iot/app/components/popups/iot_box_disconnected_dialog/iot_box_disconnected_dialog";
 
 patch(iotLongpollingService, {
     dependencies: ["dialog", "hardware_proxy", ...iotLongpollingService.dependencies],

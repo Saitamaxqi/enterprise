@@ -1,4 +1,4 @@
-import { PaymentWorldline } from "@pos_iot/app/payment";
+import { PaymentWorldline } from "@pos_iot/app/utils/payment/payment";
 
 export class PaymentSix extends PaymentWorldline {
     getPaymentData(uuid) {

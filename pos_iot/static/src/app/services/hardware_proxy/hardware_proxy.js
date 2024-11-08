@@ -4,7 +4,7 @@ import {
 } from "@point_of_sale/app/services/hardware_proxy_service";
 import { browser } from "@web/core/browser/browser";
 import { patch } from "@web/core/utils/patch";
-import { IoTPrinter } from "@pos_iot/app/iot_printer";
+import { IoTPrinter } from "@pos_iot/app/utils/printer/iot_printer";
 
 patch(hardwareProxyService, {
     dependencies: [...hardwareProxyService.dependencies, "orm"],

@@ -17,7 +17,7 @@
             'iot/static/src/iot_longpolling.js',
             'iot/static/src/dialogs/iot_connection_error_dialog.js',
             'iot/static/src/device_controller.js',
-            'pos_iot/static/src/app/iot_printer.js',
+            'pos_iot/static/src/app/utils/printer/iot_printer.js',
             'pos_self_order_iot/static/src/overrides/models/*',
         ],
         'web.assets_backend': [
