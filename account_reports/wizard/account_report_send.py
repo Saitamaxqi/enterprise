@@ -262,7 +262,6 @@ class AccountReportSend(models.TransientModel):
                     subject=subject,
                     partner_ids=recipient_partner_ids,
                     attachment_ids=attachments_ids + report_attachment.ids,
-                    subtype_id=self.env.ref('mail.mt_comment').id,
                 )
 
             if to_download:
