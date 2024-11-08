@@ -636,6 +636,16 @@ registry.category("web_tour.tours").add("web_studio_main_and_rename", {
             run: "click",
         },
         {
+            content: "check that export feature is blazing fast",
+            trigger: ".modal .modal-footer button:contains(export)",
+            run: "click",
+        },
+        {
+            content: "close modal",
+            trigger: ".modal .modal-footer button:contains(cancel)",
+            run: "click",
+        },
+        {
             // click on the created app
             trigger: '.o_app[data-menu-xmlid*="studio"]:last',
             run: "click",
