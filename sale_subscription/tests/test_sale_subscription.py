@@ -17,6 +17,11 @@ from odoo.exceptions import AccessError, ValidationError, UserError
 class TestSubscription(TestSubscriptionCommon, MockEmail):
 
     @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.product_a.recurring_invoice = False
+
+    @classmethod
     def default_env_context(cls):
         return {}
 

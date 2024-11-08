@@ -1,9 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.tests import TransactionCase
+from odoo.addons.sale_renting.tests.common import SaleRentingCommon
 
 
-class TestWebsiteSaleRentingCommon(TransactionCase):
+class TestWebsiteSaleRentingCommon(SaleRentingCommon):
 
     @classmethod
     def setUpClass(cls):
@@ -28,11 +28,10 @@ class TestWebsiteSaleRentingCommon(TransactionCase):
             'list_price': 2000,
             'rent_ok': True,
         })
-        recurrence_hour = cls.env['sale.temporal.recurrence'].sudo().create({'duration': 1, 'unit': 'hour'})
         recurrence_5_hour = cls.env['sale.temporal.recurrence'].sudo().create({'duration': 5, 'unit': 'hour'})
         cls.env['product.pricing'].create([
             {
-                'recurrence_id': recurrence_hour.id,
+                'recurrence_id': cls.recurrence_hour.id,
                 'price': 3.5,
                 'product_template_id': cls.computer.product_tmpl_id.id,
             }, {

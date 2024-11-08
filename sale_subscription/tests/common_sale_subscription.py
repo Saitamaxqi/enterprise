@@ -2,8 +2,9 @@
 
 import datetime
 
-from odoo.addons.sale.tests.common import TestSaleCommon
 from odoo import Command
+
+from odoo.addons.sale.tests.common import TestSaleCommon
 
 
 class TestSubscriptionCommon(TestSaleCommon):
@@ -181,6 +182,7 @@ class TestSubscriptionCommon(TestSaleCommon):
         # Test user
         TestUsersEnv = cls.env['res.users'].with_context({'no_reset_password': True})
         group_portal_id = cls.env.ref('base.group_portal').id
+        group_sale_salesman = cls.env.ref('sales_team.group_sale_salesman')
         cls.country_belgium = cls.env.ref('base.be')
         cls.user_portal = TestUsersEnv.create({
             'name': 'Beatrice Portal',
@@ -210,6 +212,13 @@ class TestSubscriptionCommon(TestSaleCommon):
             'groups_id': [(6, 0, [group_portal_id])],
             'property_account_receivable_id': cls.account_receivable.id,
             'property_account_payable_id': cls.account_receivable.id,
+        })
+        cls.sale_user = TestUsersEnv.create({
+            'name': 'Test Salesman',
+            'login': 'salesman',
+            'password': 'salesman',
+            'email': 'default_user_salesman@example.com',
+            'groups_id': [Command.set(group_sale_salesman.ids)],
         })
 
         # Test analytic account
@@ -356,3 +365,9 @@ class TestSubscriptionCommon(TestSaleCommon):
             'qty_delivered_method': order_line.mapped('qty_delivered_method'),
         }
         return values
+
+    @classmethod
+    def _create_product(cls, **kwargs):
+        if 'recurring_invoice' not in kwargs:
+            kwargs['recurring_invoice'] = True
+        return super()._create_product(**kwargs)

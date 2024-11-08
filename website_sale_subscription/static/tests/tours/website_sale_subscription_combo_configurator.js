@@ -1,18 +1,17 @@
 import { registry } from '@web/core/registry';
-import configuratorTourUtils from '@sale/js/tours/product_configurator_tour_utils';
+import configuratorTourUtils from '@sale/js/tours/combo_configurator_tour_utils';
 import * as wsTourUtils from '@website_sale/js/tours/tour_utils';
 
 registry
     .category('web_tour.tours')
-    .add('website_sale_subscription_product_configurator', {
-        url: '/shop?search=Main product',
+    .add('website_sale_subscription_combo_configurator', {
+        url: '/shop?search=Combo product',
         steps: () => [
-            ...wsTourUtils.addToCart({ productName: "Main product", search: false }),
-            // Assert that the subscription prices and plans are correct.
-            configuratorTourUtils.assertProductPrice("Main product", '5.00'),
-            configuratorTourUtils.assertProductPriceInfo("Main product", "per week"),
-            configuratorTourUtils.assertOptionalProductPrice("Optional product", '6.00'),
-            configuratorTourUtils.assertOptionalProductPriceInfo("Optional product", "per week"),
+            ...wsTourUtils.addToCart({ productName: "Combo product", search: false }),
+            // Assert that the subscription price and plan is correct.
+            configuratorTourUtils.assertPrice('5.00'),
+            configuratorTourUtils.assertPriceInfo("per week"),
+            configuratorTourUtils.selectComboItem("Test Product"),
             {
                 content: "Proceed to checkout",
                 trigger: 'button:contains(Proceed to Checkout)',
