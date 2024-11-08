@@ -391,7 +391,7 @@ class AccountJournal(models.Model):
         if partner_address:
             PstlAdr = etree.Element("PstlAdr")
             Ctry = etree.SubElement(PstlAdr, "Ctry")
-            Ctry.text = partner_id.country_id.code
+            Ctry.text = partner_address['country']
             # Some banks seem allergic to having the zip in a separate tag, so we do as before
             if partner_address.get('street'):
                 AdrLine = etree.SubElement(PstlAdr, "AdrLine")
