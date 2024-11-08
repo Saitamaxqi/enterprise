@@ -576,6 +576,14 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
 
         return parent_config
 
+    def _custom_options_initializer(self, report, options, previous_options=None):
+        super()._custom_options_initializer(report, options, previous_options=previous_options)
+
+        # We are on the generic tax report (no country) and the user can not change the fiscal position so we show them all.
+        if not report.country_id and len(options['available_vat_fiscal_positions']) <= (0 if options['allow_domestic'] else 1) and len(options['companies']) <= 1:
+            options['allow_domestic'] = False
+            options['fiscal_position'] = 'all'
+
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
         return self._get_dynamic_lines(report, options, 'default', warnings)
 
