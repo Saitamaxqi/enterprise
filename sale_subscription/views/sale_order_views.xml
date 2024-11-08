@@ -42,7 +42,7 @@
             </button>
             <button name="action_cancel" position="after">
                 <button string="Upsell" name="prepare_upsell_order" type="object"
-                        invisible="not is_subscription or subscription_state not in ['3_progress', '4_paused'] or state != 'sale'" data-hotkey="z"/>
+                        invisible="not is_subscription or subscription_state not in ['3_progress', '4_paused'] or state != 'sale'" data-hotkey="e"/>
                 <button string="Renew" name="prepare_renewal_order" type="object" data-hotkey="w"
                         invisible="not is_subscription or subscription_state not in ['3_progress', '4_paused', '6_churn'] or state != 'sale'"/>
                 <button string="Reopen" name="reopen_order" type="object" data-hotkey="o"
@@ -50,7 +50,7 @@
                 <!--  Change the label of cancel button for subscription -->
                 <button name="%(sale_subscription.sale_subscription_close_reason_wizard_action)d" type="action"
                         string="Close" invisible="subscription_state not in ['3_progress', '4_paused'] or not id"
-                        data-hotkey="x"/>
+                        data-hotkey="z"/>
             </button>
             <button name="action_unlock" position="attributes">
                 <attribute name="invisible" add="subscription_state == '5_renewed'" separator="or"></attribute>
