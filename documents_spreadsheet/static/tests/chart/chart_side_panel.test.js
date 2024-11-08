@@ -272,14 +272,35 @@ describe("trend line", () => {
             display: true,
         });
 
-        for (const trendType of ["exponential", "logarithmic", "polynomial"]) {
-            await contains(".trend-type-selector").select(trendType);
-            definition = model.getters.getChartDefinition(chartId);
-            expect(definition.trend?.type).toEqual(trendType);
-        }
+        await contains(".trend-type-selector").select("logarithmic");
+        definition = model.getters.getChartDefinition(chartId);
+        expect(definition.trend?.type).toEqual("logarithmic");
     });
 
     test("Can change polynomial degree", async function () {
+        onRpc("web_read_group", () => {
+            // return at least 3 groups to have a valid trend line
+            return {
+                groups: [
+                    {
+                        bar: true,
+                        __count: 1,
+                        __domain: [],
+                    },
+                    {
+                        bar: false,
+                        __count: 2,
+                        __domain: [],
+                    },
+                    {
+                        bar: null,
+                        __count: 3,
+                        __domain: [],
+                    },
+                ],
+                length: 3,
+            };
+        });
         const { model, env } = await createSpreadsheetFromGraphView();
         const sheetId = model.getters.getActiveSheetId();
         const chartId = model.getters.getChartIds(sheetId)[0];
@@ -295,9 +316,9 @@ describe("trend line", () => {
         });
 
         await contains(".trend-type-selector").select("polynomial");
-        await contains(".trend-order-input").edit("2");
+        await contains(".trend-order-input").edit("3");
         definition = model.getters.getChartDefinition(chartId);
-        expect(definition.trend?.order).toEqual(2);
+        expect(definition.trend?.order).toEqual(3);
     });
 });
 test("Show values", async () => {
