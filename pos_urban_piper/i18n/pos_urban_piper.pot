@@ -282,6 +282,11 @@ msgid "Fiscal position for Urban Piper sync menu."
 msgstr ""
 
 #. module: pos_urban_piper
+#: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
+msgid "Food Delivery Platforms"
+msgstr ""
+
+#. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_pos_order__prep_time
 msgid "Food Preparation Time"
 msgstr ""
@@ -877,11 +882,6 @@ msgstr ""
 #. module: pos_urban_piper
 #: model:ir.model.fields,field_description:pos_urban_piper.field_res_config_settings__pos_urbanpiper_webhook_url
 msgid "Urban Piper Webhook URL"
-msgstr ""
-
-#. module: pos_urban_piper
-#: model_terms:ir.ui.view,arch_db:pos_urban_piper.res_config_settings_view_form_pos_urban_piper
-msgid "Urban piper Delivery providers"
 msgstr ""
 
 #. module: pos_urban_piper

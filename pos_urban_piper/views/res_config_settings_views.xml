@@ -36,7 +36,7 @@
                         <field name="pos_urbanpiper_fiscal_position_id" readonly="pos_has_active_session"/>
                     </div>
                     <div class="row">
-                        <label string="Urban piper Delivery providers" for="pos_urbanpiper_delivery_provider_ids" class="col-lg-5 o_light_label"/>
+                        <label string="Food Delivery Platforms" for="pos_urbanpiper_delivery_provider_ids" class="col-lg-5 o_light_label"/>
                         <field name="pos_urbanpiper_delivery_provider_ids" readonly="pos_has_active_session" options="{'no_create': True}" widget="many2many_tags"/>
                     </div>
                     <button name="urbanpiper_create_store" string="Create Store" type="object" class="btn btn-primary my-2 mx-1" icon="fa-plus"/>

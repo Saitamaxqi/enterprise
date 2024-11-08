@@ -33,9 +33,6 @@ class PosConfig(models.Model):
             ('company_id', '=', self.env.company.id)
         ], limit=1)
 
-    def _default_urbanpiper_delivery_providers(self):
-        return self.env['pos.delivery.provider'].search([('available_country_ids', 'in', self.env.company.ids)])
-
     def _default_urbanpiper_fiscal_position(self):
         fiscal_position = self.env.ref('pos_urban_piper.pos_account_fiscal_position_urbanpiper', False)
         if fiscal_position and fiscal_position.sudo().company_id.id == self.env.company.id:
@@ -75,7 +72,6 @@ class PosConfig(models.Model):
         'pos.delivery.provider',
         string='Delivery Providers',
         help='The delivery providers used for online delivery through UrbanPiper.',
-        default=_default_urbanpiper_delivery_providers,
     )
 
     _urbanpiper_store_identifier_uniq = models.Constraint(
