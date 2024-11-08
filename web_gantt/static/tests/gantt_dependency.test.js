@@ -890,7 +890,7 @@ test("Connect two very distant pills", async () => {
         },
     ];
     onRpc("write", ({ args }) => {
-        expect.step(JSON.stringify(args));
+        expect.step(args);
     });
     await mountGanttView({
         ...ganttViewParams,
@@ -916,6 +916,6 @@ test("Connect two very distant pills", async () => {
     await moveTo(SELECTORS.pill, { relative: true, position: { x: 1500 } });
     await advanceFrame(200);
     await drop(selector);
-    expect.verifySteps([`[[2],{"depend_on_ids":[[4,1,false]]}]`]);
+    expect.verifySteps([[[2], { depend_on_ids: [[4, 1, false]] }]]);
     expect(SELECTORS.connector).toHaveCount(1);
 });

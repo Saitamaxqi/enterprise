@@ -1,9 +1,9 @@
-import { patchWithCleanup, getMockEnv, onRpc } from "@web/../tests/web_test_helpers";
-import { animationFrame } from "@odoo/hoot-mock";
-import { expect, test, getFixture, describe } from "@odoo/hoot";
+import { describe, expect, getFixture, test } from "@odoo/hoot";
 import { click } from "@odoo/hoot-dom";
+import { animationFrame } from "@odoo/hoot-mock";
 import { createSpreadsheetDashboard } from "@spreadsheet_dashboard/../tests/helpers/dashboard_action";
 import { defineSpreadsheetDashboardModels } from "@spreadsheet_dashboard/../tests/helpers/data";
+import { mockService, onRpc, patchWithCleanup } from "@web/../tests/web_test_helpers";
 
 describe.current.tags("desktop");
 defineSpreadsheetDashboardModels();
@@ -25,8 +25,7 @@ test("Clicking 'Edit' icon navigates to dashboard edit view", async function () 
             }
         },
     });
-    const env = getMockEnv();
-    patchWithCleanup(env.services.action, {
+    mockService("action", {
         doAction(action) {
             expect.step("doAction");
             expect(action.params.spreadsheet_id).toBe(1);
@@ -84,8 +83,7 @@ test("Can edit a non-active dashboard", async function () {
             }
         },
     });
-    const env = getMockEnv();
-    patchWithCleanup(env.services.action, {
+    mockService("action", {
         doAction(action) {
             expect.step("doAction");
             expect(action.params.spreadsheet_id).toBe(2);

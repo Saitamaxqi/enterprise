@@ -1,7 +1,5 @@
-import { beforeEach, test } from "@odoo/hoot";
 import { defineAccountModels } from "@account/../tests/account_test_helpers";
 import {
-    assertSteps,
     click,
     contains,
     onRpcBefore,
@@ -9,10 +7,10 @@ import {
     patchUiSize,
     SIZES,
     start,
-    startServer,
-    step,
+    startServer
 } from "@mail/../tests/mail_test_helpers";
-import { onRpc, serverState } from "@web/../tests/web_test_helpers";
+import { beforeEach, test } from "@odoo/hoot";
+import { asyncStep, onRpc, serverState, waitForSteps } from "@web/../tests/web_test_helpers";
 import { getOrigin } from "@web/core/utils/urls";
 
 const ROUTES_TO_IGNORE = [
@@ -32,17 +30,17 @@ const openPreparedView = async (size) => {
         if (route.includes("/web/static/lib/pdfjs/web/viewer.html")) {
             return Promise.resolve();
         }
-        step(`${route} - ${JSON.stringify(args)}`);
+        asyncStep(`${route} - ${JSON.stringify(args)}`);
     });
     onRpc(({ method, model, args, kwargs }) => {
         const route = `/web/dataset/call_kw/${model}/${method}`;
         if (ROUTES_TO_IGNORE.includes(route)) {
             return;
         }
-        step(`${route} - {"kwargs":${JSON.stringify(kwargs)}}`);
+        asyncStep(`${route} - {"kwargs":${JSON.stringify(kwargs)}}`);
     });
     await start();
-    await assertSteps([
+    await waitForSteps([
         `/mail/data - ${JSON.stringify({
             init_messaging: {},
             failures: true,
@@ -106,7 +104,7 @@ beforeEach(async () => {
 test("No preview on small devices", async () => {
     await openPreparedView(SIZES.XL);
     await contains(".o_move_line_list_view");
-    await assertSteps([
+    await waitForSteps([
         `/web/dataset/call_kw/account.move.line/web_read_group - ${JSON.stringify({
             kwargs: {
                 orderby: "",
@@ -130,7 +128,7 @@ test("No preview on small devices", async () => {
     await contains(".o_attachment_preview", { count: 0 }); // The preview component shouldn't be mounted for small screens
     await click(":nth-child(1 of .o_group_header)");
     await contains(".o_data_row", { count: 2 });
-    await assertSteps([
+    await waitForSteps([
         `/web/dataset/call_kw/account.move.line/web_search_read - ${JSON.stringify({
             kwargs: {
                 specification: {
@@ -162,7 +160,7 @@ test("No preview on small devices", async () => {
     await contains(".o_attachment_preview", { count: 0 }); // The preview component shouldn't be mounted for small screens even when clicking on a line without attachment
     await click(":nth-child(2 of .o_group_header)");
     await contains(".o_data_row", { count: 4 });
-    await assertSteps([
+    await waitForSteps([
         `/web/dataset/call_kw/account.move.line/web_search_read - ${JSON.stringify({
             kwargs: {
                 specification: {
@@ -192,13 +190,13 @@ test("No preview on small devices", async () => {
     await contains(":nth-child(4 of .o_data_row) :nth-child(2 of .o_data_cell) input");
     // weak test, no guarantee to wait long enough for the potential attachment preview to show
     await contains(".o_attachment_preview", { count: 0 }); // The preview component shouldn't be mounted for small screens even when clicking on a line with attachment
-    await assertSteps([], "no extra rpc should be done");
+    await waitForSteps([], "no extra rpc should be done");
 });
 
 test("Fetch and preview of attachments on big devices", async () => {
     await openPreparedView(SIZES.XXL);
     await contains(".o_move_line_list_view");
-    await assertSteps([
+    await waitForSteps([
         `/web/dataset/call_kw/account.move.line/web_read_group - ${JSON.stringify({
             kwargs: {
                 orderby: "",
@@ -225,7 +223,7 @@ test("Fetch and preview of attachments on big devices", async () => {
     await contains(".o_attachment_preview iframe", { count: 0 });
     await click(":nth-child(1 of .o_group_header)");
     await contains(".o_data_row", { count: 2 });
-    await assertSteps([
+    await waitForSteps([
         `/web/dataset/call_kw/account.move.line/web_search_read - ${JSON.stringify({
             kwargs: {
                 specification: {
@@ -257,7 +255,7 @@ test("Fetch and preview of attachments on big devices", async () => {
     await click(":nth-child(2 of .o_group_header)");
     await contains(".o_data_row", { count: 4 });
     await contains(".o_attachment_preview p", { text: "No attachments linked." });
-    await assertSteps([
+    await waitForSteps([
         `/web/dataset/call_kw/account.move.line/web_search_read - ${JSON.stringify({
             kwargs: {
                 specification: {
@@ -290,7 +288,7 @@ test("Fetch and preview of attachments on big devices", async () => {
             getOrigin() + "/web/content/1"
         )}#pagemode=none']`
     );
-    await assertSteps([], "no extra rpc should be done");
+    await waitForSteps([], "no extra rpc should be done");
     await click(":nth-child(3 of .o_group_header)");
     await contains(".o_data_row", { count: 6 });
     // weak test, no guarantee to wait long enough for the potential attachment to change
@@ -299,7 +297,7 @@ test("Fetch and preview of attachments on big devices", async () => {
             getOrigin() + "/web/content/1"
         )}#pagemode=none']`
     ); // The previewer content shouldn't change without clicking on another line from another account.move
-    await assertSteps([
+    await waitForSteps([
         `/web/dataset/call_kw/account.move.line/web_search_read - ${JSON.stringify({
             kwargs: {
                 specification: {
@@ -332,9 +330,9 @@ test("Fetch and preview of attachments on big devices", async () => {
             getOrigin() + "/web/content/2"
         )}#pagemode=none']`
     );
-    await assertSteps([]);
+    await waitForSteps([]);
     await click(":nth-child(1 of .o_data_row) :nth-child(2 of .o_data_cell)");
     await contains(".o_attachment_preview iframe", { count: 0 });
     await contains(".o_attachment_preview p");
-    await assertSteps([]);
+    await waitForSteps([]);
 });

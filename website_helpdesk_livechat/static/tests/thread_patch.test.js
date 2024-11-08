@@ -1,5 +1,4 @@
 import {
-    assertSteps,
     click,
     contains,
     insertText,
@@ -7,11 +6,10 @@ import {
     openFormView,
     registerArchs,
     start,
-    startServer,
-    step,
+    startServer
 } from "@mail/../tests/mail_test_helpers";
 import { describe, test } from "@odoo/hoot";
-import { onRpc, serverState } from "@web/../tests/web_test_helpers";
+import { asyncStep, onRpc, serverState, waitForSteps } from "@web/../tests/web_test_helpers";
 import { defineWebsiteHelpdeskLivechatModels } from "@website_helpdesk_livechat/../tests/website_helpdesk_livechat_test_helpers";
 
 describe.current.tags("desktop");
@@ -35,7 +33,7 @@ test("[technical] /ticket command gets a body as kwarg", async () => {
         seen_message_id: messageId,
     });
     onRpc("discuss.channel", "execute_command_helpdesk", ({ kwargs }) => {
-        step(`execute command helpdesk. body: ${kwargs.body}`);
+        asyncStep(`execute command helpdesk. body: ${kwargs.body}`);
         // random value returned in order for the mock server to know that this route is implemented.
         return true;
     });
@@ -44,7 +42,7 @@ test("[technical] /ticket command gets a body as kwarg", async () => {
     await contains(".o-mail-Discuss-threadName[title='General']");
     await insertText(".o-mail-Composer-input", "/ticket something");
     await click(".o-mail-Composer-send:enabled");
-    await assertSteps(["execute command helpdesk. body: /ticket something"]);
+    await waitForSteps(["execute command helpdesk. body: /ticket something"]);
 });
 
 test("canned response should work in helpdesk ticket", async () => {

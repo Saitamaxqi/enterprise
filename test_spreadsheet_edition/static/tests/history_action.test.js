@@ -3,7 +3,7 @@ import { animationFrame, mockTimeZone } from "@odoo/hoot-mock";
 import { helpers, registries } from "@odoo/o-spreadsheet";
 import { defineTestSpreadsheetEditionModels } from "@test_spreadsheet_edition/../tests/helpers/data";
 import { createSpreadsheetTestAction } from "@test_spreadsheet_edition/../tests/helpers/helpers";
-import { contains, patchWithCleanup } from "@web/../tests/web_test_helpers";
+import { contains, mockService } from "@web/../tests/web_test_helpers";
 
 defineTestSpreadsheetEditionModels();
 
@@ -40,23 +40,23 @@ function createRevision(revisions, type, payload) {
 
 test("Open history version from the menu", async function () {
     const { env } = await createSpreadsheetTestAction("spreadsheet_test_action");
-    patchWithCleanup(env.services.action, {
+    mockService("action", {
         doAction(action) {
-            expect.step(JSON.stringify(action));
+            expect.step(action);
         },
     });
     const file = topbarMenuRegistry.getAll().find((item) => item.id === "file");
     const showHistory = file.children.find((item) => item.id === "version_history");
     await showHistory.execute(env);
     expect.verifySteps([
-        JSON.stringify({
+        {
             type: "ir.actions.client",
             tag: "action_open_spreadsheet_history",
             params: {
                 spreadsheet_id: 1,
                 res_model: "spreadsheet.test",
             },
-        }),
+        },
     ]);
 });
 

@@ -1,5 +1,4 @@
 import {
-    assertSteps,
     click,
     contains,
     dragenterFiles,
@@ -10,13 +9,12 @@ import {
     registerArchs,
     SIZES,
     start,
-    startServer,
-    step,
+    startServer
 } from "@mail/../tests/mail_test_helpers";
 import { describe, test } from "@odoo/hoot";
 import { defineTestMailModels } from "@test_mail/../tests/test_mail_test_helpers";
+import { asyncStep, onRpc, waitForSteps } from "@web/../tests/web_test_helpers";
 import { browser } from "@web/core/browser/browser";
-import { onRpc } from "@web/../tests/web_test_helpers";
 
 describe.current.tags("desktop");
 defineTestMailModels();
@@ -83,9 +81,9 @@ test("Attachment on side", async () => {
             </form>`,
     });
     patchUiSize({ size: SIZES.XXL });
-    onRpc("/mail/thread/data", () => step("/mail/thread/data"));
+    onRpc("/mail/thread/data", () => asyncStep("/mail/thread/data"));
     onRpc("ir.attachment", "register_as_main_attachment", () =>
-        step("register_as_main_attachment")
+        asyncStep("register_as_main_attachment")
     );
     await start();
     await openFormView("mail.test.simple.main.attachment", recordId);
@@ -97,18 +95,18 @@ test("Attachment on side", async () => {
     await contains(".arrow", { count: 0 });
     // send a message with attached PDF file
     await click("button", { text: "Send message" });
-    await assertSteps(["/mail/thread/data", "register_as_main_attachment"]);
+    await waitForSteps(["/mail/thread/data", "register_as_main_attachment"]);
     await inputFiles(".o-mail-Composer-coreMain .o_input_file", [file]);
     await click(".o-mail-Composer-send:enabled");
     await contains(".arrow", { count: 2 });
-    await assertSteps(["/mail/thread/data"]);
+    await waitForSteps(["/mail/thread/data"]);
     await click(".o_move_next");
     await contains(".o-mail-Attachment-imgContainer > img", { count: 0 });
     await contains(".o-mail-Attachment > iframe");
-    await assertSteps(["register_as_main_attachment"]);
+    await waitForSteps(["register_as_main_attachment"]);
     await click(".o_move_previous");
     await contains(".o-mail-Attachment-imgContainer > img");
-    await assertSteps(["register_as_main_attachment"]);
+    await waitForSteps(["register_as_main_attachment"]);
 });
 
 test("After switching record with the form pager, when using the attachment preview navigation, the attachment should be switched", async () => {

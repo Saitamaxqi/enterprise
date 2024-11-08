@@ -168,14 +168,14 @@ test("Change the search bar content trigger a new search with updated domain", a
     await mountSpreadsheetSelectorDialog({
         mockRPC: async function (route, args) {
             if (args.method === "get_spreadsheets" && args.model === "documents.document") {
-                expect.step(JSON.stringify(args.args[0]));
+                expect.step(args.args[0]);
             }
         },
     });
     await contains(".o-sp-searchview-input").edit("a");
-    expect.verifySteps(["[]"]);
+    expect.verifySteps([[]]);
     await advanceTime(500);
-    expect.verifySteps([JSON.stringify([["name", "ilike", "a"]])]);
+    expect.verifySteps([[["name", "ilike", "a"]]]);
 });
 
 test("Pager is limited to 9 elements", async () => {

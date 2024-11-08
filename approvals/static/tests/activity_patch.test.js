@@ -1,17 +1,15 @@
 import { describe, expect, test } from "@odoo/hoot";
 import { Deferred } from "@odoo/hoot-mock";
 
+import { defineApprovalsModels } from "@approvals/../tests/approvals_test_helpers";
 import {
-    assertSteps,
     click,
     contains,
+    openFormView,
     start,
     startServer,
-    step,
-    openFormView,
 } from "@mail/../tests/mail_test_helpers";
-import { serverState, onRpc } from "@web/../tests/web_test_helpers";
-import { defineApprovalsModels } from "@approvals/../tests/approvals_test_helpers";
+import { asyncStep, onRpc, serverState, waitForSteps } from "@web/../tests/web_test_helpers";
 
 describe.current.tags("desktop");
 defineApprovalsModels();
@@ -98,14 +96,14 @@ test("approve approval", async () => {
     onRpc("approval.approver", "action_approve", (args) => {
         expect(args.args.length).toBe(1);
         expect(args.args[0]).toBe(requestId);
-        step("action_approve");
+        asyncStep("action_approve");
         def.resolve();
     });
     await start();
     await openFormView("approval.request", requestId);
     await click(".o-mail-Activity button", { text: "Approve" });
     await def;
-    assertSteps(["action_approve"]);
+    await waitForSteps(["action_approve"]);
 });
 
 test("refuse approval", async () => {
@@ -126,12 +124,12 @@ test("refuse approval", async () => {
     onRpc("approval.approver", "action_refuse", (args) => {
         expect(args.args.length).toBe(1);
         expect(args.args[0]).toBe(requestId);
-        step("action_refuse");
+        asyncStep("action_refuse");
         def.resolve();
     });
     await start();
     await openFormView("approval.request", requestId);
     await click(".o-mail-Activity button", { text: "Refuse" });
     await def;
-    assertSteps(["action_refuse"]);
+    await waitForSteps(["action_refuse"]);
 });

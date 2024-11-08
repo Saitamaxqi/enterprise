@@ -394,7 +394,7 @@ test("Can rebuild the Odoo domain of records based on the according merged pivot
             action: {
                 doAction: (params) => {
                     expect.step(params.res_model);
-                    expect.step(JSON.stringify(params.domain));
+                    expect.step(params.domain);
                 },
             },
         },
@@ -413,7 +413,13 @@ test("Can rebuild the Odoo domain of records based on the according merged pivot
     await animationFrame();
     const root = cellMenuRegistry.getAll().find((item) => item.id === "pivot_see_records");
     await root.execute(env);
-    expect.verifySteps(["partner", `[["foo","=",2],["bar","=",false]]`]);
+    expect.verifySteps([
+        "partner",
+        [
+            ["foo", "=", 2],
+            ["bar", "=", false],
+        ],
+    ]);
 });
 
 test("See records is visible even if the formula is lowercase", async function () {
@@ -456,7 +462,7 @@ test("'See records' loads a specific action if set in the pivot definition", asy
                     expect(params.id).not.toBe(undefined);
                     expect(params.xml_id).not.toBe(undefined);
                     expect.step(params.res_model);
-                    expect.step(JSON.stringify(params.domain));
+                    expect.step(params.domain);
                 },
             },
         },
@@ -465,7 +471,13 @@ test("'See records' loads a specific action if set in the pivot definition", asy
     await animationFrame();
     const root = cellMenuRegistry.getAll().find((item) => item.id === "pivot_see_records");
     await root.execute(env);
-    expect.verifySteps(["partner", `[["foo","=",2],["bar","=",false]]`]);
+    expect.verifySteps([
+        "partner",
+        [
+            ["foo", "=", 2],
+            ["bar", "=", false],
+        ],
+    ]);
 });
 
 test("Context is passed correctly to the action service", async function () {

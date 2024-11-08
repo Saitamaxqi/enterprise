@@ -93,7 +93,7 @@ test("Expiration Panel one app installed, try several times to register subscrip
 
     mockService("notification", {
         add: (message, options) => {
-            expect.step(JSON.stringify({ message, options }));
+            expect.step({ message, options });
         },
     });
     onRpc("get_param", ({ args }) => {
@@ -225,7 +225,11 @@ test("Expiration Panel one app installed, try several times to register subscrip
         "get_param",
         "get_param",
         "get_param",
-        `{"message":"Thank you, your registration was successful! Your database is valid until November 15, 2019.","options":{"type":"success"}}`,
+        {
+            message:
+                "Thank you, your registration was successful! Your database is valid until November 15, 2019.",
+            options: { type: "success" },
+        },
     ]);
 });
 

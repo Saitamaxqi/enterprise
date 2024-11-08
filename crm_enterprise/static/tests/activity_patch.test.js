@@ -1,14 +1,12 @@
+import { defineCRMEnterpriseModels } from "@crm_enterprise/../tests/crm_enterprise_test_helpers";
 import {
-    assertSteps,
     click,
-    start,
-    startServer,
-    step,
     registerArchs,
+    start,
+    startServer
 } from "@mail/../tests/mail_test_helpers";
 import { describe, test } from "@odoo/hoot";
-import { defineCRMEnterpriseModels } from "@crm_enterprise/../tests/crm_enterprise_test_helpers";
-import { mockService } from "@web/../tests/web_test_helpers";
+import { asyncStep, mockService, waitForSteps } from "@web/../tests/web_test_helpers";
 
 describe.current.tags("desktop");
 defineCRMEnterpriseModels();
@@ -27,7 +25,7 @@ test("click on activity Lead/Opportunity clock should open crm.lead view", async
     });
     mockService("action", {
         doAction(action) {
-            step(action);
+            asyncStep(action);
         },
         loadState(state, options) {
             return Promise.resolve(true);
@@ -36,5 +34,5 @@ test("click on activity Lead/Opportunity clock should open crm.lead view", async
     await start();
     await click(".o_menu_systray i[aria-label='Activities']");
     await click(".o-mail-ActivityGroup");
-    await assertSteps(["crm.crm_lead_action_my_activities"]);
+    await waitForSteps(["crm.crm_lead_action_my_activities"]);
 });

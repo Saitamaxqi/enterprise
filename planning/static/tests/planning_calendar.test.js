@@ -12,9 +12,9 @@ import {
 import {
     defineActions,
     getService,
+    mockService,
     mountWithCleanup,
-    onRpc,
-    patchWithCleanup,
+    onRpc
 } from "@web/../tests/web_test_helpers";
 import { WebClient } from "@web/webclient/webclient";
 
@@ -108,7 +108,7 @@ test("planning calendar view: copy previous week", async () => {
     });
     await mountWithCleanup(WebClient);
     await getService("action").doAction(1);
-    patchWithCleanup(getService("action"), {
+    mockService("action", {
         async doAction(action) {
             expect(action).toBe("planning.planning_send_action", {
                 message: "should open 'Send Planning By Email' form view",

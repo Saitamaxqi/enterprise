@@ -3,6 +3,7 @@ import { click, drag, keyDown, pointerDown, queryFirst } from "@odoo/hoot-dom";
 import { advanceTime, animationFrame, mockDate, mockTouch } from "@odoo/hoot-mock";
 import {
     getService,
+    mockService,
     mountWithCleanup,
     onRpc,
     patchWithCleanup,
@@ -62,7 +63,7 @@ test("ESC Support", async () => {
     await mountWithCleanup(HomeMenu, {
         props: getDefaultHomeMenuProps(),
     });
-    patchWithCleanup(getService("home_menu"), {
+    mockService("home_menu", {
         async toggle(show) {
             expect.step(`toggle ${show}`);
         },
@@ -75,7 +76,7 @@ test("Click on an app", async () => {
     await mountWithCleanup(HomeMenu, {
         props: getDefaultHomeMenuProps(),
     });
-    patchWithCleanup(getService("menu"), {
+    mockService("menu", {
         async selectMenu(menu) {
             expect.step(`selectMenu ${menu.id}`);
         },
@@ -198,7 +199,7 @@ test("Navigation and open an app in the home menu", async () => {
     await mountWithCleanup(HomeMenu, {
         props: getDefaultHomeMenuProps(),
     });
-    patchWithCleanup(getService("menu"), {
+    mockService("menu", {
         async selectMenu(menu) {
             expect.step(`selectMenu ${menu.id}`);
         },

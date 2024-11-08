@@ -1,8 +1,14 @@
-import { assertSteps, defineMailModels, startServer, step } from "@mail/../tests/mail_test_helpers";
+import { defineMailModels, startServer } from "@mail/../tests/mail_test_helpers";
 import { beforeEach, describe, expect, test } from "@odoo/hoot";
 import { SignTemplate, SignTemplateTag } from "@sign/../tests/mock_server/mock_models/sign_model";
 import { dragoverFiles, dropFiles } from "@web/../tests/utils";
-import { defineModels, mountView, onRpc } from "@web/../tests/web_test_helpers";
+import {
+    asyncStep,
+    defineModels,
+    mountView,
+    onRpc,
+    waitForSteps,
+} from "@web/../tests/web_test_helpers";
 
 defineMailModels();
 defineModels([SignTemplate, SignTemplateTag]);
@@ -45,7 +51,7 @@ test("Drop to upload file in kanban", async () => {
     await dragoverFiles(".o_content", dataTransfer.files);
     await dropFiles(".o_dropzone", dataTransfer.files);
     onRpc("/web/dataset/call_kw/sign.template/create_with_attachment_data", async (request) => {
-        step("attachment create");
+        asyncStep("attachment create");
         const values = await request.json();
         if (values.params.method === "create_with_attachment_data") {
             expect(values.params.model).toBe("sign.template");
@@ -63,5 +69,5 @@ test("Drop to upload file in kanban", async () => {
         }
     });
     expect(".o_dropzone").toHaveCount(1);
-    await assertSteps(["attachment create"]);
+    await waitForSteps(["attachment create"]);
 });
