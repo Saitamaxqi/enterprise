@@ -113,6 +113,9 @@ class L10n_Eu_OssTaxReportHandler(models.AbstractModel):
     def _custom_options_initializer(self, report, options, previous_options):
         # Add OSS XML export if there is one available for the domestic country
         super()._custom_options_initializer(report, options, previous_options=previous_options)
+
+        options['buttons'] = [button for button in options['buttons'] if button['action'] != 'action_periodic_vat_entries']
+
         if self._get_oss_xml_template(options):
             options.setdefault('buttons', []).append({
                 'name': _('XML'),
