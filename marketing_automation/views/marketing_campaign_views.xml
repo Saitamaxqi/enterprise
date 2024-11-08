@@ -110,7 +110,7 @@
                             <field name="active" invisible="1"/>
                             <field name="model_name" invisible="1"/>
                             <field name="utm_campaign_id" required="0" invisible="1"/>
-                            <field name="unique_field_id" string="Unicity based on " options="{'no_create_edit': True, 'no_open': True}"/>
+                            <field name="unique_field_id" string="Unicity based on " options="{'no_create': True, 'no_open': True}"/>
                         </group>
                     </group>
                     <group>

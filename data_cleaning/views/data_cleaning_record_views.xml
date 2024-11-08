@@ -11,7 +11,7 @@
                     <field name="res_id" />
                     <field name="cleaning_model_id" string="Cleaning Rule" optional="hide" />
                     <field name="name" />
-                    <field name="field_id" />
+                    <field name="field_id" options="{'no_create': True}"/>
                     <field name="action" string="Action" optional="hide" />
                     <field name="current_value" />
                     <field name="suggested_value_display" />
