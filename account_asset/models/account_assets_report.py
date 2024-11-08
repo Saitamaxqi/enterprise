@@ -75,6 +75,8 @@ class AccountAssetReportHandler(models.AbstractModel):
 
         # construct the lines, 1 at a time
         lines = []
+        company_currency = self.env.company.currency_id
+        column_expression = self.env['account.report.expression']
         for (account_id, asset_id, asset_group_id), col_group_totals in all_lines_data.items():
             all_columns = []
             for column_data in options['columns']:
@@ -87,7 +89,7 @@ class AccountAssetReportHandler(models.AbstractModel):
                 col_value = col_group_totals[col_group_key][expr_label]
                 col_data = None if col_value is None else column_data
 
-                all_columns.append(report._build_column_dict(col_value, col_data, options=options))
+                all_columns.append(report._build_column_dict(col_value, col_data, options=options, column_expression=column_expression, currency=company_currency))
 
                 # add to the total line
                 if column_data['figure_type'] == 'monetary':
