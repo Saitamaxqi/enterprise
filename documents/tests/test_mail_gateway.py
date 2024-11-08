@@ -88,7 +88,7 @@ class TestMailGateway(MailCommon):
         documents_count = self.env['documents.document'].with_context(active_test=False).search_count([])
 
         for document in self.send_test_mail_with_attachment(self.pre_existing_partner.email):
-            self.assertEqual(document.partner_id, self.pre_existing_partner)
+            self.assertFalse(document.partner_id)
             self.assertEqual(document.owner_id, self.folder.owner_id)
             self.assertEqual(document.attachment_id.res_model, 'documents.document')
             self.assertEqual(document.attachment_id.res_id, document.id)
@@ -194,7 +194,7 @@ class TestMailGateway(MailCommon):
         self.folder.alias_defaults = repr(defaults)
 
         for document in self.send_test_mail_with_attachment(self.pre_existing_partner.email):
-            self.assertEqual(document.partner_id, self.pre_existing_partner)
+            self.assertFalse(document.partner_id)
             self.assertEqual(document.attachment_id.res_model, 'documents.document')
             self.assertEqual(document.attachment_id.res_id, document.id)
             self.assertEqual(document.folder_id, self.folder)

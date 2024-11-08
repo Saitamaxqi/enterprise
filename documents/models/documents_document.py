@@ -18,7 +18,7 @@ import odoo
 from odoo import _, api, Command, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.osv import expression
-from odoo.tools import email_normalize, groupby, image_process, SQL, create_index
+from odoo.tools import groupby, image_process, SQL, create_index
 from odoo.tools.mimetypes import get_extension
 from odoo.tools.misc import clean_context
 from odoo.tools.pdf import PdfFileReader
@@ -1260,12 +1260,6 @@ class DocumentsDocument(models.Model):
         custom_values = custom_values or {}
 
         folder = self.env['documents.document'].browse(custom_values.get('folder_id'))
-
-        if msg_dict.get('email_from'):
-            # find the partner based on the email from
-            custom_values['partner_id'] = self.env['res.partner'].search(
-                [('email_normalized', '=', email_normalize(msg_dict['email_from']))],
-                limit=1).id
 
         custom_values['name'] = _('Mail: %s', msg_dict.get('subject'))
         if 'tag_ids' not in custom_values:
