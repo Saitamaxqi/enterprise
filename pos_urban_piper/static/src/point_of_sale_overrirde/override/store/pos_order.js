@@ -5,6 +5,12 @@ patch(PosOrder.prototype, {
     setup(vals) {
         super.setup(vals);
         this.isDeliveryRefundOrder = false;
+        if (!this.uiState) {
+            this.uiState = {
+                ...this.uiState,
+                orderAcceptTime: 0,
+            };
+        }
     },
 
     getDeliveryProviderName() {

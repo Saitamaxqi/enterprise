@@ -93,5 +93,9 @@
         <xpath expr="//ActionpadWidget" position="attributes">
             <attribute name="t-if">order?.deliveryOrderType != 'self' or order.delivery_status == 'completed'</attribute>
         </xpath>
+        <xpath expr="//OrderDisplay" position="attributes">
+            <attribute name="orderAcceptTime">order?.uiState?.orderAcceptTime</attribute>
+            <attribute name="orderPrepTime">order?.prep_time</attribute>
+        </xpath>
     </t>
 </templates>

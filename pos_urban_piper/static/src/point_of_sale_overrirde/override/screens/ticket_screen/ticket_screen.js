@@ -92,6 +92,7 @@ patch(TicketScreen.prototype, {
         const status = await this._handleResponse(response, syncedOrder, "acknowledged");
         if (status) {
             this._updateScreenState(syncedOrder, "ACTIVE_ORDERS");
+            syncedOrder.uiState.orderAcceptTime = luxon.DateTime.now().ts;
         }
         if (!syncedOrder.isFutureOrder()) {
             try {
