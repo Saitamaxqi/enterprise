@@ -3,7 +3,7 @@
 import { formView } from "@web/views/form/form_view";
 import { FormController } from "@web/views/form/form_controller";
 import { registry } from "@web/core/registry";
-import { useService } from "@web/core/utils/hooks";
+import { useBus, useService } from "@web/core/utils/hooks";
 
 export class ShopFloorFormController extends FormController {
     static props = {
@@ -15,7 +15,21 @@ export class ShopFloorFormController extends FormController {
 
     setup() {
         super.setup();
+        this.barcode = useService("barcode");
+        useBus(this.barcode.bus, "barcode_scanned", this._onBarcodeScanned);
         this.actionService = useService("action");
+    }
+
+    async _onBarcodeScanned(event) {
+        if (event.detail.barcode.startsWith("OBT") || event.detail.barcode.startsWith("OCD")) {
+            return;
+        }
+        await this.model.root.save();
+        await this.orm.call("stock.move", "add_lot_from_barcode", [
+            [this.props.resId],
+            event.detail.barcode,
+        ]);
+        await this.model.root.load();
     }
 
     async backPressed() {

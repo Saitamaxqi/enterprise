@@ -460,14 +460,16 @@ export class MrpDisplayRecord extends Component {
             const workorder = production.data.workorder_ids.records.find(
                 (wo) => wo.resId === this.props.record.resId
             );
-            const WOChecks = workorder.data.check_ids.records;
-            const lastOpenedQualityCheck = WOChecks.find(
-                (r) => r.resId === this.lastOpenedQualityCheck.resId
-            );
-            const nextCheck = WOChecks.find(
-                (r) => r.resId === lastOpenedQualityCheck.data.next_check_id[0]
-            );
-            return this.displayInstruction(nextCheck);
+            if (workorder) {
+                const WOChecks = workorder.data.check_ids.records;
+                const lastOpenedQualityCheck = WOChecks.find(
+                    (r) => r.resId === this.lastOpenedQualityCheck.resId
+                );
+                const nextCheck = WOChecks.find(
+                    (r) => r.resId === lastOpenedQualityCheck.data.next_check_id[0]
+                );
+                return this.displayInstruction(nextCheck);
+            }
         }
     }
 
