@@ -92,6 +92,9 @@ class MailActivity(models.Model):
             model = self.env[model_name]
             records = model.browse(activities.mapped("res_id"))
             partners_by_records = records._mail_get_partners(introspect_fields=True)
+            # Store all the partner at once to avoid O(n) queries in the loop
+            partner_ids = [p[0].id for p in partners_by_records.values() if p]
+            store.add(self.env["res.partner"].browse(partner_ids))
             for activity in activities:
                 activity_data = {
                     **activity.read(["id", "res_name", "phone", "mobile", "res_id", "res_model", "state", "date_deadline", "mail_template_ids"])[0],
@@ -101,7 +104,7 @@ class MailActivity(models.Model):
                 }
                 partner = partners_by_records.get(activity.res_id)[:1]
                 if partner:
-                    activity_data["partner"] = Store.one(partner)
+                    activity_data["partner"] = Store.one(partner, only_id=True)
                 store.add(activity, activity_data)
 
     def _get_phone_numbers_by_activity(self):
