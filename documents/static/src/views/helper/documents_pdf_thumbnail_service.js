@@ -1,7 +1,7 @@
 import { registry } from "@web/core/registry";
 import { useBus } from "@web/core/utils/hooks";
 import { Mutex } from "@web/core/utils/concurrency";
-import { loadPDFJSAssets } from "@web/libs/pdfjs";
+import { loadPDFJSAssets } from "@web/core/utils/pdfjs";
 import { useComponent } from "@odoo/owl";
 import { rpc } from "@web/core/network/rpc";
 
