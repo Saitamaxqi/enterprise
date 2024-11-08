@@ -167,6 +167,8 @@ class SaleOrderAlert(models.Model):
             domain += [('percentage_satisfaction', self.rating_operator, self.rating_percentage)]
         if self.subscription_state:
             domain += [('subscription_state', '=', self.subscription_state)]
+        elif self.subscription_state_from:
+            domain += [('subscription_state', '!=', self.subscription_state_from)]
         if self.order_state:
             domain += [('state', '=', self.order_state)]
         return domain
@@ -223,8 +225,13 @@ class SaleOrderAlert(models.Model):
             alert_values = {}
             if not vals.get('filter_domain'):
                 alert_values['filter_domain'] = alert._get_alert_domain()
-            if alert.subscription_state_from and not vals.get('filter_pre_domain'):
-                alert_values['filter_pre_domain'] = [('subscription_state', '=', alert.subscription_state_from)]
+            if not vals.get('filter_pre_domain'):
+                if alert.subscription_state_from:
+                    alert_values['filter_pre_domain'] = [('subscription_state', '=', alert.subscription_state_from)]
+                elif alert.subscription_state:
+                    alert_values['filter_pre_domain'] = [('subscription_state', '!=', alert.subscription_state)]
+                else:
+                    alert_values['filter_pre_domain'] = []
             if alert_values:
                 alert.with_context(skip_configure_alerts=True).write(alert_values)
 
