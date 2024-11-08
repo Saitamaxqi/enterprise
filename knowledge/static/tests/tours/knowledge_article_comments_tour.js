@@ -2,7 +2,7 @@ import { registry } from "@web/core/registry";
 import { insertText } from "@web/../tests/utils";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
 
-import { makeVisible, endKnowledgeTour } from './knowledge_tour_utils.js';
+import { endKnowledgeTour } from "./knowledge_tour_utils.js";
 import { setSelection, boundariesIn } from "@web_editor/js/editor/odoo-editor/src/utils/utils";
 
 const addAnswerComment = (commentText) => [{
@@ -35,20 +35,25 @@ registry.category('web_tour.tours').add('knowledge_article_comments', {
         },
         ...addAnswerComment("Sure thing boss, all done!"),
         {
-            trigger: '.o-mail-Message-actions',
-            run: () => {
-                makeVisible('.o-mail-Message-actions');
-            }
-        }, { // Resolve Thread
-            trigger: 'button[name="closeThread"]',
+            content: "Hover on first message to make actions visible and click on it",
+            trigger: ".o-mail-Message-core:first",
+            run: "hover && click .o-mail-Message-actions:first",
+        },
+        {
+            content: "Resolve Thread",
+            trigger: ".o-mail-Message-actions:first button[name=closeThread]",
             run: "click",
-        }, { // Wait for the composer to be fully closed
-            trigger: 'body:not(:has(.o-mail-Thread))',
-        }, { // Select some text in the first paragraph
-            trigger: '.note-editable p.o_knowledge_tour_first_paragraph',
+        },
+        {
+            content: "Wait for the composer to be fully closed",
+            trigger: "body:not(:has(.o-mail-Thread))",
+        },
+        {
+            content: "Select some text in the first paragraph",
+            trigger: ".note-editable p.o_knowledge_tour_first_paragraph",
             run: function () {
                 setSelection(...boundariesIn(this.anchor));
-            }
+            },
         }, { // Trigger comment creation with the editor toolbar
             trigger: '.o-we-toolbar button[name="comments"]',
             run: "click",

@@ -78,6 +78,10 @@ registry.category("web_tour.tours").add('rental_product_configurator_tour', {
             content: "verify that the rental has been confirmed",
             trigger: '.o_statusbar_status button.o_arrow_button_current:contains("Sales Order")',
         },
-        ...stepUtils.discardForm(),
+        {
+            //Nothing to discard (button is not visible)
+            content: "check the form is saved",
+            trigger: ".o_form_view .o_form_saved",
+        },
     ],
 });

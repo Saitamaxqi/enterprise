@@ -110,7 +110,7 @@ registry.category("web_tour.tours").add("hr_contract_salary_tour_job_change", {
          */
         {
             content: "Take IP",
-            trigger: 'input[name="ip_value_radio"]:eq(1)',
+            trigger: "input[name=ip_value_radio]:eq(1):not(:visible)",
             run: "click",
         },
         // set personal info

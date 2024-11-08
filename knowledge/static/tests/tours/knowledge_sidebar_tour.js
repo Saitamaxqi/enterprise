@@ -5,7 +5,6 @@ import {
 } from "@knowledge/../tests/tours/knowledge_tour_utils";
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
-import { queryOne } from "@odoo/hoot-dom";
 
 /**
  * Sidebar tour.
@@ -124,62 +123,50 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
             trigger: "body:not(:has(.modal:contains(invite))",
         },
         {
-    // Check that the article has been added to a new "Shared" section
-    trigger: 'section[data-section="shared"]:contains("Shared Article")',
-},
-// Create a child of a workspace article
-{
-    // Force the create button to be visible (it's only visible on hover)
-    trigger: '.o_article:contains("Workspace Article")',
-    run: () => {
-        queryOne('.o_article:contains("Workspace Article") a.o_article_create').style.display = 'block';
-    },
-}, {
-    // Create a child
-    trigger: '.o_article:contains("Workspace Article") a.o_article_create',
-    run: "click",
-}, {
-    // Check that the child has been added
-    trigger: '.o_article:contains("Workspace Article") .o_article:contains("Untitled")',
-}, {
-    // Rename the article
-    trigger: '.o_hierarchy_article_name > input',
-    run: "edit Workspace Child && click body",
-},
-// Create a child of a private article
-{
-    // Force the create button to be visible (it's only visible on hover)
-    trigger: '.o_article:contains("Private Article")',
-    run: () => {
-        queryOne('.o_article:contains("Private Article") a.o_article_create').style.display = 'block';
-    },
-}, {
-    // Create a child
-    trigger: '.o_article:contains("Private Article") a.o_article_create',
-    run: "click",
-}, {
-    // Check that the child has been added
-    trigger: '.o_article:contains("Private Article") .o_article:contains("Untitled")',
-}, {
+            content: `Check that the article has been added to a new "Shared" section`,
+            trigger: "section[data-section=shared]:contains(Shared Article)",
+        },
+        // Create a child of a workspace article
+        {
+            content: "Hover on Workspace Article to make create article visible",
+            trigger: ".o_article:contains(Workspace Article)",
+            run: "hover && click .o_article:contains(Workspace Article) a.o_article_create",
+        },
+        {
+            content: "Check that the child has been added",
+            trigger: '.o_article:contains("Workspace Article") .o_article:contains("Untitled")',
+        },
+        {
+            content: "Rename the article",
+            trigger: ".o_hierarchy_article_name > input",
+            run: "edit Workspace Child && click body",
+        },
+        // Create a child of a private article
+        {
+            content: "Hover on Private Article to make create article visible",
+            trigger: ".o_article:contains(Private Article)",
+            run: "hover && click .o_article:contains(Private Article) a.o_article_create",
+        },
+        {
+            content: "Check that the child has been added",
+            trigger: ".o_article:contains(Private Article) .o_article:contains(Untitled)",
+        },
+        {
     // Rename the article
     trigger: '.o_hierarchy_article_name > input',
     run: "edit Private Child 1 && click body",
 },
 // Create a child of a shared article
-{
-    // Force the create button to be visible (it's only visible on hover)
-    trigger: '.o_article:contains("Shared Article")',
-    run: () => {
-        queryOne('.o_article:contains("Shared Article") a.o_article_create').style.display = 'block';
-    },
-}, {
-    // Create a child
-    trigger: '.o_article:contains("Shared Article") a.o_article_create',
-    run: "click",
-}, {
-    // Check that the child has been added
-    trigger: '.o_article:contains("Shared Article") .o_article:contains("Untitled")',
-}, {
+        {
+            content: "Hover on Shared Article to make create article visible",
+            trigger: ".o_article:contains(Shared Article)",
+            run: "hover && click .o_article:contains(Shared Article) a.o_article_create",
+        },
+        {
+            content: "Check that the child has been added",
+            trigger: ".o_article:contains(Shared Article) .o_article:contains(Untitled)",
+        },
+        {
     // Rename the article
     trigger: '.o_hierarchy_article_name > input',
     run: "edit Shared Child && click body",
@@ -289,22 +276,16 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
             trigger: 'section[data-section="favorites"] .o_article_caret .fa-caret-right',
         },
         {
-            // Create a child from the favorite tree
-            content: "Force the create button to be visible (it's only visible on hover)",
-            trigger: 'section[data-section="favorites"] .o_article:contains("Private Article")',
-            run() {
-                makeVisible(
-                    'section[data-section="favorites"] .o_article:contains("Private Article") a.o_article_create'
-                );
-            },
-}, {
-    // Create a child
-    trigger: 'section[data-section="favorites"] .o_article:contains("Private Article") a.o_article_create',
-    run: "click",
-}, {
-    // Check that article has been unfolded
-    trigger: 'section[data-section="favorites"] .o_article:contains("Private Article") .fa-caret-down',
-}, {
+            content: "Hover on Favorites Private Article to make create article visible",
+            trigger: "section[data-section=favorites] .o_article:contains(Private Article)",
+            run: "hover && click section[data-section=favorites] .o_article:contains(Private Article) a.o_article_create",
+        },
+        {
+            content: "Check that article has been unfolded",
+            trigger:
+                'section[data-section="favorites"] .o_article:contains("Private Article") .fa-caret-down',
+        },
+        {
     // Check that previously existing child is displayed
     trigger: 'section[data-section="favorites"] .o_article:contains("Private Article") .o_article_name:contains("Private Child 1")',
 }, {
@@ -377,25 +358,23 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     // Fold article again
     trigger: 'section[data-section="private"] .o_article_caret',
     run: "click",
-}, {
-    trigger: 'section[data-section="private"] .o_article_caret .fa-caret-right',
-    run: () => {
-                makeVisible(
-                    'section[data-section="private"] .o_article:contains("Private Article") .o_article_create'
-                );
-    }
-}, {
-            // Click on the create button
-            trigger:
-                'section[data-section="private"] .o_article:contains("Private Article") .o_article_create',
-            run: "click",
+}, 
+        {
+            trigger: "section[data-section=private] .o_article_caret .fa-caret-right",
+        },
+        {
+            content: "Hover on Private Section => Private Article to make create article visible",
+            trigger: "section[data-section=private] .o_article:contains(Private Article)",
+            run: "hover && click section[data-section=private] .o_article:contains(Private Article) a.o_article_create",
         },
         {
             trigger: 'section[data-section="private"] .o_article_caret .fa-caret-down',
         },
         {
-    // Check that article has been unfolded and that previously existing children are shown
-    trigger: 'section[data-section="private"] .o_article .o_article:contains("Private Child 1")',
+            content:
+                "Check that article has been unfolded and that previously existing children are shown",
+            trigger:
+                'section[data-section="private"] .o_article .o_article:contains("Private Child 1")',
         },
         {
             trigger: 'section[data-section="favorites"] .o_article .o_article:contains("Untitled")',

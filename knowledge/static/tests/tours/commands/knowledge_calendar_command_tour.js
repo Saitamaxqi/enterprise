@@ -437,8 +437,8 @@ registry.category("web_tour.tours").add('knowledge_calendar_command_tour', {
     //---------------------------------------------------------------------
 
     // Click on edit property button
-    trigger: '.o_knowledge_properties_field .o_property_field:contains("Start Property") .o_field_property_open_popover',
-    run: 'click',
+    trigger: ".o_knowledge_properties_field .o_property_field:contains(Start Property)",
+    run: "hover && click .o_knowledge_properties_field .o_property_field:contains(Start Property) .o_field_property_open_popover",
 }, { // Delete start date property
     trigger: '.o_field_property_definition .o_field_property_definition_delete',
     run: 'click',

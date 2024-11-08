@@ -48,11 +48,11 @@ registry.category("web_tour.tours").add('applicant_sign_request_tour', {
         },
         {
             content: "Validate the creation",
-            trigger: '.btn.o_form_button_save',
+            trigger: ".btn.o_form_button_save:not(:visible)",
             run: 'click',
         },
         {
-            trigger: ".o_form_status_indicator_buttons.invisible",
+            trigger: ".o_form_status_indicator_buttons:not(:visible)",
         },
         {
             content: "Validate the creation",

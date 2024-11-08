@@ -73,13 +73,10 @@ registry.category("web_tour.tours").add("knowledge_cover_selector_tour", {
             run: "click",
         },
         {
-            content: "Check cover has been added to the article and is initially centered",
+            content:
+                "Check cover has been added to the article and is initially centered, make the reposition cover button visible",
             trigger: '.o_knowledge_cover img[style="object-position: 50% 50%;"]',
-        },
-        {
-            content: "Click on the reposition cover button",
-            trigger: ".o_knowledge_reposition_cover",
-            run: "click",
+            run: "hover && click .o_knowledge_reposition_cover",
         },
         {
             content: "Move the cover down and click on the 'Cancel' button",
@@ -103,11 +100,8 @@ registry.category("web_tour.tours").add("knowledge_cover_selector_tour", {
         {
             content: "Check that the undo button works as expected (cover should be centered)",
             trigger: '.o_knowledge_cover img[style="object-position: 50% 50%;"]',
-        },
-        {
-            content: "Move cover again but use the 'save' button this time",
-            trigger: ".o_knowledge_reposition_cover",
-            run: "click",
+            // Move cover again but use the 'save' button this time
+            run: "hover && click .o_knowledge_reposition_cover",
         },
         {
             trigger: ".o_reposition_hint",
@@ -157,13 +151,10 @@ registry.category("web_tour.tours").add("knowledge_cover_selector_tour", {
             trigger: '.o_article_active:contains("Birds")',
         },
         {
-            content: "Check that the cover is still positioned at the top",
+            content:
+                "Check that the cover is still positioned at the top and make the replace cover visible",
             trigger: '.o_knowledge_cover img[style="object-position: 50% 0.01%;"]',
-        },
-        {
-            content: "Click on replace cover button",
-            trigger: ".o_knowledge_replace_cover",
-            run: "click",
+            run: "hover && click .o_knowledge_replace_cover",
         },
         {
             trigger: ".modal-body .o_nocontent_help",
@@ -176,8 +167,8 @@ registry.category("web_tour.tours").add("knowledge_cover_selector_tour", {
             run: "click",
         },
         {
-            content: "Make the cover buttons visible",
-            trigger: ".o_knowledge_edit_cover_buttons",
+            content: "Make the remove cover button visible and click on it",
+            trigger: ".o_knowledge_cover",
             run: "hover && click .o_knowledge_remove_cover",
         },
         {
@@ -240,14 +231,9 @@ registry.category("web_tour.tours").add("knowledge_cover_selector_tour", {
         },
         {
             content:
-                "Check that odoo logo is now shown in the cover selector, and make the trash button visible",
+                "Check that Odoo logo is now shown in the cover selector, make the trash button visible and click on delete cover button",
             trigger: '.modal-body .o_existing_attachment_cell img[title="odoo_logo.png"]',
-        },
-        {
-            content: "Click on delete cover button",
-            trigger:
-                '.modal-body .o_existing_attachment_cell:has(img[title="odoo_logo.png"]) .o_existing_attachment_remove',
-            run: "click",
+            run: `hover && click .modal-body .o_existing_attachment_cell:has(img[title="odoo_logo.png"]) .o_existing_attachment_remove`,
         },
         {
             content: "Confirm deletion of cover (should ask for confirmation)",

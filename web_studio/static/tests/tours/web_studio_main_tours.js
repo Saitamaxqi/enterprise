@@ -6,7 +6,6 @@ import {
     stepNextTick,
     stepNotInStudio,
 } from "@web_studio/../tests/tours/tour_helpers";
-import { queryOne } from "@odoo/hoot-dom";
 
 const localStorage = browser.localStorage;
 let createdAppString = null;
@@ -1028,18 +1027,8 @@ registry.category("web_tour.tours").add("web_studio_new_report_tour", {
             run: "click",
         },
         {
-            // a invisible element cannot be used as a trigger so this small hack is
-            // mandatory for the next step
-            trigger: ".o_kanban_view",
-            run: function () {
-                queryOne(
-                    ".o_kanban_record:contains(My Awesome Report) .dropdown-toggle"
-                ).style.visibility = "visible";
-            },
-        },
-        {
-            // open the dropdown
-            trigger: ".o_kanban_record:contains(My Awesome Report) .dropdown-toggle",
+            content: "open the dropdown",
+            trigger: ".o_kanban_record:contains(My Awesome Report) .dropdown-toggle:not(:visible)",
             run: "click",
         },
         {
@@ -1144,19 +1133,9 @@ registry.category("web_tour.tours").add("web_studio_new_report_basic_layout_tour
             run: "click",
         },
         {
-            // a invisible element cannot be used as a trigger so this small hack is
-            // mandatory for the next step
-            run: function () {
-                queryOne(
-                    ".o_kanban_record:contains(My Awesome basic layout Report) .dropdown-toggle"
-                ).style.visibility = "visible";
-            },
-            trigger: ".o_kanban_view",
-        },
-        {
-            // open the dropdown
-            trigger: ".o_kanban_record:contains(My Awesome basic layout Report) .dropdown-toggle",
-            run: "click",
+            content: "open the dropdown",
+            trigger: ".o_kanban_record:contains(My Awesome basic layout Report)",
+            run: "hover && click .o_kanban_record:contains(My Awesome basic layout Report) .dropdown-toggle",
         },
         {
             // duplicate the report
@@ -1215,8 +1194,9 @@ registry.category("web_tour.tours").add("web_studio_approval_tour", {
             run: "click",
         },
         {
-            // click on first button it finds that has a node id
-            trigger: ".o_web_studio_form_view_editor button[name='button_immediate_upgrade'].o-web-studio-editor--element-clickable",
+            content: "click on first button it finds that has a node id",
+            trigger:
+                ".o_web_studio_form_view_editor button[name='button_immediate_upgrade'].o-web-studio-editor--element-clickable",
             run: "click",
         },
         {
@@ -1302,8 +1282,10 @@ registry.category("web_tour.tours").add("web_studio_approval_tour", {
             run: "click",
         },
         {
-            // open first record (should be the one that was used, so the button should be there)
-            trigger: ".o_kanban_view .o_kanban_record:not(:has(button[name='button_immediate_install'])) .o_dropdown_kanban .dropdown-toggle",
+            content:
+                "open first record (should be the one that was used, so the button should be there)",
+            trigger:
+                ".o_kanban_view .o_kanban_record:not(:has(button[name='button_immediate_install'])) .o_dropdown_kanban .dropdown-toggle",
             run: "click",
         },
         {

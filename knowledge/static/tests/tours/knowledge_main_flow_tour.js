@@ -11,7 +11,6 @@
 import { dragAndDropArticle, endKnowledgeTour, makeVisible } from '@knowledge/../tests/tours/knowledge_tour_utils';
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
-import { queryOne } from "@odoo/hoot-dom";
 
 registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
     url: '/odoo',
@@ -74,14 +73,7 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
     run: "editor Content of My Workspace Article",  // modify the article content
 }, {
     trigger: '.o_article:contains("My Workspace Article")',
-    run: () => {
-        // force the create button to be visible (it's only visible on hover)
-        queryOne('.o_article:contains("My Workspace Article") a.o_article_create').style.display = 'block';
-    },
-}, {
-    // create child article
-    trigger: '.o_article:contains("My Workspace Article") a.o_article_create',
-    run: "click",
+    run: "hover && click .o_article:contains(My Workspace Article) a.o_article_create",
 }, {
     // check that the article is correctly created (workspace section)
     trigger: 'section[data-section="workspace"] .o_article .o_article_name:contains("Untitled")',
@@ -99,11 +91,7 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
     run: "edit Child Article 1 && click body",  // modify the article name
 }, {
     trigger: '.o_article:contains("My Workspace Article")',
-    run: "click",
-}, {
-    // create child article (2)
-    trigger: '.o_article:contains("My Workspace Article") a.o_article_create',
-    run: "click",
+    run: "hover && click .o_article:contains(My Workspace Article) a.o_article_create",
 }, {
     trigger: 'section[data-section="workspace"] .o_article .o_article_name:contains("Untitled")',
 }, {

@@ -11,7 +11,6 @@
 import { dragAndDropArticle } from '@knowledge/../tests/tours/knowledge_tour_utils';
 import { browser } from "@web/core/browser/browser";
 import { registry } from "@web/core/registry";
-import { queryOne } from "@odoo/hoot-dom";
 
 let workspaceArticleResId;
 let privateArticleResId;
@@ -80,26 +79,22 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour_portal', {
     trigger: '.note-editable.odoo-editor-editable',
     run: "editor Edited Content of Workspace Article",  // modify the article content
 }, {
-    trigger: '.o_article:contains("Workspace Article")',
-    run: () => {
-        // force the create button to be visible (it's only visible on hover)
-        queryOne('.o_article:contains("Workspace Article") a.o_article_create').style.display = 'block';
-    },
-}, {
-    // create child article
-    trigger: '.o_article:contains("Workspace Article") a.o_article_create',
-    run: "click",
+    content: "Hover on Workspace Article to make create article visible",
+    trigger: ".o_article:contains(Workspace Article)",
+    run: "hover && click .o_article:contains(Workspace Article) a.o_article_create",
 }, {
     trigger: 'section[data-section="workspace"] .o_article .o_article_name:contains("Untitled")',
   // check that the article is correctly created (workspace section)
 }, {
     trigger: '.o_hierarchy_article_name > input',
     run: "edit Child Article 1 && click body",  // modify the article name
-}, {
-    // create child article (2)
-    trigger: '.o_article:contains("Workspace Article") a.o_article_create',
-    run: "click",
-}, {
+}, 
+{
+    content: "create child article (2)",
+    trigger: ".o_article:contains(Workspace Article)",
+    run: "hover && click .o_article:contains(Workspace Article) a.o_article_create",
+},
+{
     trigger: 'section[data-section="workspace"] .o_article .o_article_name:contains("Untitled")',
   // check that the article is correctly created (workspace section)
 }, {
