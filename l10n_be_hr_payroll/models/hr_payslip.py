@@ -459,11 +459,10 @@ class HrPayslip(models.Model):
         basic = self.contract_id._get_contract_wage()
 
         force_months = self.input_line_ids.filtered(lambda l: l.code == 'MONTHS')
-        work_time_rates = contracts.resource_calendar_id.mapped('work_time_rate')[::-1]
-        non_zero_rates = [rate for rate in work_time_rates if rate != 0]
-        if not non_zero_rates:
+        work_time_rates = [c.resource_calendar_id.work_time_rate for c in contracts if c.resource_calendar_id.work_time_rate]
+        if not work_time_rates:
             return 0.0
-        current_work_rate = non_zero_rates[0] / 100
+        current_work_rate = work_time_rates[-1] / 100.0
 
         if force_months:
             n_months = force_months[0].amount
