@@ -22,6 +22,10 @@ VariantMixin._onChangeCombinationSubscription = function (ev, $parent, combinati
         parent.querySelector(".js_main_product h5:has(.o_subscription_price)") ||
         parent.querySelector(".js_main_product select.plan_select");
     const pricingTable = document.querySelector("#oe_wsale_subscription_pricing_table");
+    const addToCartButton = document.querySelector('#add_to_cart');
+    if (addToCartButton) {
+        addToCartButton.dataset.subscriptionPlanId = combination.pricings.length > 0 ? combination.subscription_default_pricing_plan_id : '';
+    }
     if (unit) {
         unit.textContent = combination.temporal_unit_display;
     }
