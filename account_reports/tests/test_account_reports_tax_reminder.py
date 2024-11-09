@@ -19,19 +19,16 @@ class TestAccountReportsTaxReminder(TestAccountReportsCommon):
         action = cls.env['account.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(cls.options)
         cls.tax_return_move = cls.env['account.move'].browse(action['res_id'])
 
-    def test_posting_adds_a_pay_activity(self):
-        ''' Test that posting the tax report move adds a payment activity
-        '''
+    def test_posting_adds_an_activity(self):
+        """Posting the tax report move should be adding the proper tax to be sent activity"""
+        act_type_tax_to_pay = self.env.ref('account_reports.mail_activity_type_tax_report_to_pay')
+        act_type_report_to_send = self.env.ref('account_reports.mail_activity_type_tax_report_to_be_sent')
+        all_report_activity_type = act_type_report_to_send + act_type_tax_to_pay
 
-        pay_mat_domain = [
-            ('res_model', '=', self.tax_return_move._name),
-            ('res_id', '=', self.tax_return_move.id),
-            ('activity_type_id', '=', self.pay_activity_id),
-        ]
-
-        self.assertRecordValues(self.tax_return_move, [{'state': 'draft'}])
-        act_id = self.env['mail.activity'].search(pay_mat_domain)
-        self.assertEqual(len(act_id), 0)
+        self.tax_return_move.refresh_tax_entry()
+        self.assertEqual(self.tax_return_move.state, 'draft')
+        self.assertFalse(all_report_activity_type & self.tax_return_move.activity_ids.activity_type_id,
+                         "There shouldn't be any of the closing activity on the closing move yet")
 
         self.init_invoice(
             'out_invoice',
@@ -46,26 +43,54 @@ class TestAccountReportsTaxReminder(TestAccountReportsCommon):
         with patch.object(self.env.registry[self.report._name], 'export_to_pdf', autospec=True, side_effect=lambda *args, **kwargs: {'file_name': 'dummy', 'file_content': b'', 'file_type': 'pdf'}):
             self.tax_return_move.action_post()
 
-        self.assertRecordValues(self.tax_return_move, [{'state': 'posted'}])
+        self.assertEqual(self.tax_return_move.state, 'posted')
         self.assertEqual(self.tax_return_move._get_tax_to_pay_on_closing(), 30.0)
-
-        act_id = self.env['mail.activity'].search(pay_mat_domain)
-        self.assertEqual(len(act_id), 1)
-
-        self.assertRecordValues(act_id, [{
-            'summary': f'Pay tax: {self.tax_return_move.date.strftime("%B %Y")}',
+        self.assertRecordValues(self.tax_return_move.activity_ids, [{
+            'activity_type_id': act_type_report_to_send.id,
+            'summary': f'Send tax report: {self.tax_return_move.date.strftime("%B %Y")}',
             'date_deadline': fields.Date.context_today(self.env.user),
-            'chaining_type': 'suggest',
         }])
 
         # Posting tax return again should not create another activity
+        before = len(self.tax_return_move.activity_ids)
         self.tax_return_move.button_draft()
         self.tax_return_move.refresh_tax_entry()
         with patch.object(self.env.registry[self.report._name], 'export_to_pdf', autospec=True, side_effect=lambda *args, **kwargs: {'file_name': 'dummy', 'file_content': b'', 'file_type': 'pdf'}):
             self.tax_return_move.action_post()
+        after = len(self.tax_return_move.activity_ids)
+        self.assertEqual(before, after, "resetting to draft and posting again shouldn't create a new activity")
+        self.assertRecordValues(self.tax_return_move.activity_ids, [{
+            'activity_type_id': act_type_report_to_send.id,
+            'summary': f'Send tax report: {self.tax_return_move.date.strftime("%B %Y")}',
+            'date_deadline': fields.Date.context_today(self.env.user),
+        }])
 
-        act_id = self.env['mail.activity'].search(pay_mat_domain)
-        self.assertEqual(len(act_id), 1)
+        # Setting the activity to done should trigger the payment activity
+        self.tax_return_move.activity_ids.action_done()
+        self.assertRecordValues(self.tax_return_move.activity_ids, [{
+            'activity_type_id': act_type_tax_to_pay.id,
+            'summary': f'Pay tax: {self.tax_return_move.date.strftime("%B %Y")}',
+            'date_deadline': fields.Date.context_today(self.env.user),
+        }])
+
+        # 0.0 tax returns create a send tax report activity but shouldn't trigger the payment activity
+        options = self._generate_options(self.report, '2024-09-01', '2024-09-30')
+        action = self.env['account.tax.report.handler'].with_context({'override_tax_closing_warning': True}).action_periodic_vat_entries(options)
+        next_tax_return_move = self.env['account.move'].browse(action['res_id'])
+        next_tax_return_move.refresh_tax_entry()
+        with patch.object(self.env.registry[self.report._name], 'export_to_pdf', autospec=True, side_effect=lambda *args, **kwargs: {'file_name': 'dummy', 'file_content': b'', 'file_type': 'pdf'}):
+            next_tax_return_move.action_post()
+        self.assertEqual(next_tax_return_move._get_tax_to_pay_on_closing(), 0.0)
+
+        self.assertRecordValues(next_tax_return_move.activity_ids, [{
+            'activity_type_id': act_type_report_to_send.id,
+            'summary': f'Send tax report: {next_tax_return_move.date.strftime("%B %Y")}',
+            'date_deadline': fields.Date.context_today(self.env.user),
+        }])
+
+        next_tax_return_move.activity_ids.action_done()
+        self.assertFalse(all_report_activity_type & next_tax_return_move.activity_ids.activity_type_id,
+                         "marking the sending as done shouldn't trigger any other similar activity")
 
     def test_posting_without_amount_and_no_pay_activity(self):
         """
