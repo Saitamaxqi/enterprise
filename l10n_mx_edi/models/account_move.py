@@ -2509,11 +2509,15 @@ class AccountMove(models.Model):
     def _l10n_mx_edi_import_cfdi_get_tax_from_node(self, tax_node, line, is_withholding=False):
         tax_type = CFDI_CODE_TO_TAX_TYPE.get(tax_node.attrib.get('Impuesto'))
         tasa_o_cuota = tax_node.attrib.get('TasaOCuota')
-        if not tasa_o_cuota:
+        tipo_factor = tax_node.attrib.get('TipoFactor')
+        if not tasa_o_cuota and tipo_factor != "Exento":
             self.message_post(body=_("Tax ID %s can not be imported", tax_type))
             return False
         else:
-            amount = float(tasa_o_cuota) * (-100 if is_withholding else 100)
+            if tipo_factor == 'Exento':
+                amount = 0
+            else:
+                amount = float(tasa_o_cuota) * (-100 if is_withholding else 100)
             domain = [
                 *self.env['account.journal']._check_company_domain(line.company_id),
                 ('amount', '=', amount),
@@ -2521,6 +2525,9 @@ class AccountMove(models.Model):
                 ('amount_type', '=', 'percent'),
             ]
 
+            tax_group = self.env.ref(f'account.{line.company_id.id}_tax_group_exe_0', raise_if_not_found=False)
+            if tax_group and tipo_factor == 'Exento':
+                domain.append(('tax_group_id', '=', tax_group.id))
             if tax_type:
                 domain.append(('l10n_mx_tax_type', '=', tax_type))
             taxes = self.env['account.tax'].search(domain, limit=2)
@@ -2554,35 +2561,6 @@ class AccountMove(models.Model):
             tax = self._l10n_mx_edi_import_cfdi_get_tax_from_node(tax_node, line)
             if tax:
                 tax_ids.append(tax.id)
-            tax_type = CFDI_CODE_TO_TAX_TYPE.get(tax_node.attrib.get('Impuesto'))
-            tasa_o_cuota = tax_node.attrib.get('TasaOCuota')
-            tipo_factor = tax_node.attrib.get('TipoFactor')
-            if not tasa_o_cuota and tipo_factor != "Exento":
-                self.message_post(body=_("Tax ID %s can not be imported", tax_type))
-            else:
-                amount = float(tasa_o_cuota) * 100 if tipo_factor != "Exento" else 0
-                domain = [
-                    *self.env['account.journal']._check_company_domain(line.company_id),
-                    ('amount', '=', amount),
-                    ('type_tax_use', '=', 'sale' if self.journal_id.type == 'sale' else 'purchase'),
-                    ('amount_type', '=', 'percent'),
-                ]
-                tax_group = self.env.ref(f'account.{line.company_id.id}_tax_group_exe_0', raise_if_not_found=False)
-                if tax_group and tipo_factor == 'Exento':
-                    domain.append(('tax_group_id', '=', tax_group.id))
-                if tax_type:
-                    domain.append(('repartition_line_ids.tag_ids.name', '=', tax_type))
-                tax = self.env['account.tax'].search(domain, limit=1)
-                if not tax:
-                    # try without again without using the tags: some are IVA but only have 'DIOT' tags
-                    domain.pop()
-                    tax = self.env['account.tax'].search(domain, limit=1)
-                if tax:
-                    tax_ids.append(tax.id)
-                elif tax_type:
-                    line.move_id.message_post(body=_("Could not retrieve the %(tax_type)s tax with rate %(rate)s%%.", tax_type=tax_type, rate=amount))
-                else:
-                    line.move_id.message_post(body=_("Could not retrieve the tax with rate %s%%.", amount))
 
         # Withholding Taxes
         for wh_tax_node in tree.findall("{*}Impuestos/{*}Retenciones/{*}Retencion"):
