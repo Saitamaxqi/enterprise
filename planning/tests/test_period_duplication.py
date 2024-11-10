@@ -170,13 +170,32 @@ class TestPeriodDuplication(TestCommonPlanning):
 
             Test Case:
             =========
-            1) create an open shift planned
-            2) apply `copy_previous_week` for the next week
-            3) make sure the allocated hours for the new shift is the same than the one copied
+            1) create a calendar with overlapping shifts
+            2) create an open shift planned
+            3) apply `copy_previous_week` for the next week
+            4) make sure the allocated hours for the new shift is the same than the one copied
         """
+        rescource_calendar_with_overlapping = self.env['resource.calendar'].create({
+            'name': 'Classic 40h/week with overlapping',
+            'tz': 'UTC',
+            'hours_per_day': 8.0,
+            'attendance_ids': [
+                (0, 0, {'name': 'Monday Morning', 'dayofweek': '0', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Monday Afternoon', 'dayofweek': '0', 'hour_from': 12, 'hour_to': 16, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Tuesday Morning', 'dayofweek': '1', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Tuesday Afternoon', 'dayofweek': '1', 'hour_from': 12, 'hour_to': 16, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Wednesday Morning', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Wednesday Afternoon', 'dayofweek': '2', 'hour_from': 12, 'hour_to': 16, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Thursday Morning', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Thursday Afternoon', 'dayofweek': '3', 'hour_from': 12, 'hour_to': 16, 'day_period': 'afternoon'}),
+                (0, 0, {'name': 'Friday Morning', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
+                (0, 0, {'name': 'Friday Afternoon', 'dayofweek': '4', 'hour_from': 12, 'hour_to': 16, 'day_period': 'afternoon'})
+            ]
+        })
+        self.env.user.company_id.resource_calendar_id = rescource_calendar_with_overlapping
         slot = self.env['planning.slot'].create({
             'start_datetime': datetime(2020, 10, 12, 8, 0),
-            'end_datetime': datetime(2020, 10, 13, 12, 0),
+            'end_datetime': datetime(2020, 10, 13, 16, 0),
             'state': 'published',
         })
         # copy the slot to the next week

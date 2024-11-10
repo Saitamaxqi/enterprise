@@ -1761,11 +1761,14 @@ class PlanningSlot(models.Model):
             if not calendar:
                 continue
             # For each calendar, retrieves the work intervals of every resource
-            attendances = calendar._attendance_intervals_batch(
-                start_dt_delta_utc,
-                end_dt_delta_utc,
-                resources=resources
-            )
+            attendances = {
+                resource_id: Intervals(work_interval._items)
+                for resource_id, work_interval in calendar._attendance_intervals_batch(
+                    start_dt_delta_utc,
+                    end_dt_delta_utc,
+                    resources=resources
+                ).items()
+            }
             leaves = calendar._leave_intervals_batch(
                 start_dt_delta_utc,
                 end_dt_delta_utc,
