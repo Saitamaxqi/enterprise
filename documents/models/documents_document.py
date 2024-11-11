@@ -670,11 +670,11 @@ class DocumentsDocument(models.Model):
 
         if len(self.folder_id.ids) > 1 and location_folder_id is None:
             raise UserError(_("A destination is required when creating multiple shortcuts at once."))
+        location = self.browse(location_folder_id) if location_folder_id is not None else self.folder_id
         if self.shortcut_document_id:
             targets = self.filtered(lambda d: not d.shortcut_document_id) | self.shortcut_document_id
-            return targets.action_create_shortcut(location_folder_id or self.folder_id.id)
+            return targets.action_create_shortcut(location.id)
 
-        location = self.browse(location_folder_id) if location_folder_id is not None else self.folder_id
         if location_folder_id and location.shortcut_document_id:
             return self.action_create_shortcut(location.shortcut_document_id.id)
 

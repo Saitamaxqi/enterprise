@@ -553,3 +553,8 @@ class TestCaseDocuments(TransactionCaseDocuments):
                     'folder_id': folder.id,
                     'url': url,
                 })
+
+    def test_document_shortcut_to_my_drive(self):
+        shortcut_1 = self.document_txt.action_create_shortcut(location_folder_id=self.folder_b.id)
+        shortcut_2 = shortcut_1.action_create_shortcut(location_folder_id=False)
+        self.assertEqual(shortcut_2.folder_id.id, False)
