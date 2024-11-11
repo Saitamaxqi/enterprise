@@ -49,7 +49,7 @@
         <field name="model">approval.request</field>
         <field name="priority">10</field>
         <field name="arch" type="xml">
-            <list create="false" sample="1" decoration-info="request_status == 'new'">
+            <list sample="1" decoration-info="request_status == 'new'">
                 <field name="name"/>
                 <field name="request_owner_id" widget="many2one_avatar_user"/>
                 <field name="category_id"/>
@@ -95,7 +95,7 @@
         <field name="model">approval.request</field>
         <field name="priority">10</field>
         <field name="arch" type="xml">
-            <form string="Request" create="false">
+            <form string="Request">
                 <header>
                     <field name="user_status" invisible="1"/>
                     <field name="has_access_to_request" invisible="1"/>

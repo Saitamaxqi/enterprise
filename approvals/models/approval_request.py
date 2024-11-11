@@ -99,6 +99,10 @@ class ApprovalRequest(models.Model):
             if request.date_start and request.date_end and request.date_start > request.date_end:
                 raise ValidationError(_("Start date should precede the end date."))
 
+    def copy_data(self, default=None):
+        vals_list = super().copy_data(default=default)
+        return [dict(vals, name=self.env._("%s (copy)", request.name)) for request, vals in zip(self, vals_list)]
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
