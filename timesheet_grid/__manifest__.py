@@ -69,7 +69,6 @@
         ],
         'web.qunit_suite_tests': [
             "timesheet_grid/static/tests/legacy/**/*.js",
-            ('remove', "timesheet_grid/static/tests/legacy/setup_manager_patch.js"),
         ]
     }
 }
