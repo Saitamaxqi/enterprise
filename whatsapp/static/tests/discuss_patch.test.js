@@ -42,7 +42,7 @@ test("Invite users into whatsapp channel", async () => {
     await openDiscuss(channelId);
     await click(".o-mail-Discuss-header button[title='Invite People']");
     await click(".o-discuss-ChannelInvitation-selectable");
-    await click("button[title='Invite']:enabled");
+    await click(".o-discuss-ChannelInvitation [title='Invite']:enabled");
     await contains(".o_mail_notification", { text: "invited WhatsApp User to the channel" });
 });
 

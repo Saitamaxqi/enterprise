@@ -22,13 +22,9 @@ patch(Thread.prototype, {
     get canLeave() {
         return this.channel_type !== "whatsapp" && super.canLeave;
     },
-    get canUnpin() {
-        if (this.channel_type === "whatsapp") {
-            return this.importantCounter === 0;
-        }
-        return super.canUnpin;
+    get allowedToUnpinChannelTypes() {
+        return [...super.allowedToUnpinChannelTypes, "whatsapp"];
     },
-
     get avatarUrl() {
         if (this.channel_type === "whatsapp" && this.correspondent) {
             return this.correspondent.persona.avatarUrl;
