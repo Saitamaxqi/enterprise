@@ -240,3 +240,29 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
         self.expense._fill_document_with_results(ocr_results=ocr_results)
 
         self.assertEqual(self.expense.total_amount, 33.33)
+
+    def test_extract_multi_currencies_with_several_possible_currencies(self):
+        """Test that the extraction does not crash"""
+        ocr_results = {
+                'description': {'selected_value': {'content': 'food', 'candidates': []}},
+                'total': {'selected_value': {'content': 99.99, 'candidates': []}},
+                'date': {'selected_value': {'content': '2022-02-22', 'candidates': []}},
+                'currency': {'selected_value': {'content': '$', 'candidates': []}},
+            }
+        self.expense.name = ""
+        self.expense._fill_document_with_results(ocr_results=ocr_results)
+
+        self.assertTrue(self.expense.currency_id)
+
+    def test_extract_without_possible_currencies(self):
+        """Test that the extraction does not crash"""
+        ocr_results = {
+                'description': {'selected_value': {'content': 'food', 'candidates': []}},
+                'total': {'selected_value': {'content': 99.99, 'candidates': []}},
+                'date': {'selected_value': {'content': '2022-02-22', 'candidates': []}},
+                'currency': {'selected_value': {'content': 'undefined', 'candidates': []}},
+            }
+        self.expense.name = ""
+        self.expense._fill_document_with_results(ocr_results=ocr_results)
+
+        self.assertTrue(self.expense.currency_id)

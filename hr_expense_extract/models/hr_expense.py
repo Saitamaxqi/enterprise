@@ -103,7 +103,7 @@ class HrExpense(models.Model):
                     if len(possible_currencies) == 1:
                         vals['currency_id'] = possible_currencies
                         break
-            if vals['currency_id'] != self.company_currency_id:
+            if vals.get('currency_id') and vals['currency_id'] != self.company_currency_id:
                 currency_rate = self.env['res.currency']._get_conversion_rate(
                     from_currency=vals['currency_id'],
                     to_currency=self.company_currency_id,
