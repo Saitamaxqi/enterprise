@@ -66,6 +66,8 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 text: _t("Comment"),
             },
         ],
+
+        /** Handlers */
         layout_geometry_change_handlers: () => {
             // TODO ABD: why is this called
             this.commentBeaconManager?.drawThreadOverlays();
@@ -90,10 +92,6 @@ export class KnowledgeCommentsPlugin extends Plugin {
             }
             this.commentBeaconManager.activateRelatedThread(target);
         },
-        // TODO ABD: arbitrary sequence, investigate what makes sense
-        delete_forward_overrides: withSequence(1, this.handleDeleteForward.bind(this)),
-        delete_backward_overrides: withSequence(1, this.handleDeleteBackward.bind(this)),
-        intangible_char_for_keyboard_navigation_predicates: this.arrowShouldSkip.bind(this),
         restore_savepoint_handlers: this.updateBeacons.bind(this),
         history_reset_handlers: () => this.updateBeacons(),
         history_reset_from_steps_handlers: this.updateBeacons.bind(this),
@@ -101,6 +99,13 @@ export class KnowledgeCommentsPlugin extends Plugin {
         external_step_added_handlers: this.updateBeacons.bind(this),
         clean_for_save_handlers: this.cleanForSave.bind(this),
         normalize_handlers: this.normalize.bind(this),
+
+        /** Overrides */
+        // TODO ABD: arbitrary sequence, investigate what makes sense
+        delete_forward_overrides: withSequence(1, this.handleDeleteForward.bind(this)),
+        delete_backward_overrides: withSequence(1, this.handleDeleteBackward.bind(this)),
+
+        intangible_char_for_keyboard_navigation_predicates: this.arrowShouldSkip.bind(this),
     };
 
     setup() {
