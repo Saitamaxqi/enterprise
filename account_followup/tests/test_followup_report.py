@@ -173,6 +173,7 @@ class TestAccountFollowupReports(TestAccountReportsCommon):
             'invoice_date': '2016-01-01',
             'partner_id': self.partner_a.id,
             'company_id': branch.id,
+            'invoice_payment_term_id': self.pay_terms_a.id,
             'invoice_line_ids': [Command.create({
                 'quantity': 1,
                 'price_unit': 500,
