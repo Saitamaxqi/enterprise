@@ -415,7 +415,7 @@ export class AccountReportController {
     }
 
     isNextLineChild(index, lineId) {
-        return index < this.lines.length && this.lines[index].id.startsWith(lineId);
+        return index < this.lines.length && this.lines[index].id.startsWith(`${lineId}|`);
     }
 
     isNextLineDirectChild(index, lineId) {
