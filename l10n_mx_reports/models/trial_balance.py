@@ -139,6 +139,8 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         multi_tag_accounts = self.env['account.account']
         parent_nature = ''
         for parent, accounts_by_group in accounts_groups_by_parent.items():
+            if not parent:
+                continue
             parent_nature = set()
             group_lines = []
             for group, accounts in accounts_by_group.items():
