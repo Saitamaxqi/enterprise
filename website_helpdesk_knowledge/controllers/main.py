@@ -23,7 +23,7 @@ class WebsiteHelpdeskKnowledge(WebsiteHelpdesk):
     def _get_knowledge_base_values(self, team):
         return {
             **super()._get_knowledge_base_values(team),
-            'target': '_self' if (config['test_enable'] or config['test_file']) else '_blank',
+            'target': '_self' if config['test_enable'] else '_blank',  # TODO use odoo.modules.module.current_test? (after it is not disabled for mails)
         }
 
 class WebsiteKnowledgeHelpdesk(KnowledgeWebsiteController):

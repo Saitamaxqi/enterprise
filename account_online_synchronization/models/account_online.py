@@ -518,7 +518,7 @@ class AccountOnlineLink(models.Model):
                 },
             },
         )
-        if connection_state_details_status == 'error' and not tools.config['test_enable'] and not modules.module.current_test:
+        if connection_state_details_status == 'error' and not modules.module.current_test:
             # In case the status is in error, and we aren't in test mode, we commit to save the last connection state and to send the websocket message
             self.env.cr.commit()
 

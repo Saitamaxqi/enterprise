@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-import threading
 import time
 
-from odoo import api, fields, models, SUPERUSER_ID, tools, _
+from odoo import api, fields, models, modules, SUPERUSER_ID, tools, _
 from odoo.tools import date_utils
 from odoo.exceptions import UserError, ValidationError
 
@@ -63,7 +61,7 @@ class AccountBankStatementLine(models.Model):
 
                 filtered_transactions = online_account._get_filtered_transactions(sorted_transactions)
 
-                do_commit = not (hasattr(threading.current_thread(), 'testing') and threading.current_thread().testing)
+                do_commit = not modules.module.current_test
                 if filtered_transactions:
                     # split transactions import in batch and commit after each batch except in testing mode
                     for index in range(0, len(filtered_transactions), STATEMENT_LINE_CREATION_BATCH_SIZE):

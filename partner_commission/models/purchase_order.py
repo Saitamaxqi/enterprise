@@ -1,9 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
-import threading
 
-from odoo import api, fields, models
+from odoo import api, fields, models, modules
 
 
 _logger = logging.getLogger(__name__)
@@ -78,7 +76,7 @@ class PurchaseOrder(models.Model):
                 if po.state in ['purchase', 'done']:
                     template.send_mail(po.id)
 
-                auto_commit = not getattr(threading.current_thread(), 'testing', False)
+                auto_commit = not modules.module.current_test
                 if auto_commit:
                     self.env['ir.cron']._notify_progress(done=i, remaining=len(purchases) - i)
                     self.env.cr.commit()

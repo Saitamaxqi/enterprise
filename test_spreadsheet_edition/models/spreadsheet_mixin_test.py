@@ -1,4 +1,4 @@
-from odoo import models, tools
+from odoo import models, modules
 
 
 class SpreadsheetTest(models.Model):
@@ -18,7 +18,7 @@ class SpreadsheetTest(models.Model):
         return "test spreadsheet created"
 
     def _get_spreadsheet_selector(self):
-        if not tools.config['test_enable']:
+        if not modules.module.current_test:
             return None
         return {
             "model": self._name,

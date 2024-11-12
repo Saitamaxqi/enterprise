@@ -566,7 +566,7 @@ class AccountMove(models.Model):
         for move in moves:
             move._extend_with_attachments(move.l10n_ke_oscu_attachment_id, new=True)
             # Avoid losing all our progress if the cron times-out
-            if not tools.config['test_enable'] and not modules.module.current_test:
+            if not modules.module.current_test:
                 self.env.cr.commit()
 
         return moves

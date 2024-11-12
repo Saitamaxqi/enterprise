@@ -1447,7 +1447,8 @@ class SaleOrder(models.Model):
 
     def _create_recurring_invoice(self, batch_size=30):
         today = fields.Date.today()
-        auto_commit = not bool(config['test_enable'] or config['test_file'])
+        # TODO remove all config['test_enable'] when current_thread().testing will be removed
+        auto_commit = not (config['test_enable'] or modules.module.current_test)
         grouped_invoice = self.env['ir.config_parameter'].get_param('sale_subscription.invoice_consolidation', False)
         all_subscriptions, need_cron_trigger = self._recurring_invoice_get_subscriptions(grouped=grouped_invoice, batch_size=batch_size)
         if not all_subscriptions:
@@ -1792,7 +1793,7 @@ class SaleOrder(models.Model):
         expired_result = self._get_expired_subscriptions()
         expired_ids = [r['so_id'] for r in expired_result]
         subscriptions_close |= self.env['sale.order'].browse(unpaid_ids) | self.env['sale.order'].browse(expired_ids)
-        auto_commit = not bool(config['test_enable'] or config['test_file'])
+        auto_commit = not (config['test_enable'] or modules.module.current_test)
         expired_close_reason = self.env.ref('sale_subscription.close_reason_auto_close_limit_reached')
         unpaid_close_reason = self.env.ref('sale_subscription.close_reason_unpaid_subscription')
         for batched_to_close in split_every(30, subscriptions_close.ids, self.env['sale.order'].browse):
@@ -1881,7 +1882,7 @@ class SaleOrder(models.Model):
             'code': ', '.join(subscription.client_order_ref or subscription.name for subscription in self),
             'currency': invoice.currency_id.name,
             'no_new_invoice': True}}
-        auto_commit = not bool(config['test_enable'] or config['test_file'])
+        auto_commit = not (config['test_enable'] or modules.module.current_test)
         self._subscription_commit_cursor(auto_commit)
         if self.plan_id.invoice_mail_template_id:
             _logger.debug("Sending Invoice Mail to %s for subscription %s", self.partner_id.mapped('email'), self.ids)

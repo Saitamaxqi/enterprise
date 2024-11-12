@@ -5,7 +5,7 @@ import requests
 import threading
 import json
 
-from odoo import _
+from odoo import modules, _
 from odoo.exceptions import RedirectWarning
 from odoo.addons.whatsapp.tools.whatsapp_exception import WhatsAppError
 
@@ -22,7 +22,7 @@ class WhatsAppApi:
         self.is_shared_account = False
 
     def __api_requests(self, request_type, url, auth_type="", params=False, headers=None, data=False, files=False, endpoint_include=False):
-        if getattr(threading.current_thread(), 'testing', False):
+        if getattr(threading.current_thread(), 'testing', False) or modules.module.current_test:
             raise WhatsAppError("API requests disabled in testing.")
 
         headers = headers or {}

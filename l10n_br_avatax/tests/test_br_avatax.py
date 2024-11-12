@@ -1,10 +1,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import logging
 import threading
-from contextlib import contextmanager, nullcontext
+from contextlib import contextmanager
 from unittest import SkipTest
 from unittest.mock import patch
 
+from odoo import modules
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
 from odoo.addons.l10n_br_avatax.models.account_external_tax_mixin import AccountExternalTaxMixin
 from odoo.exceptions import UserError
@@ -184,7 +185,10 @@ class TestAvalaraBrInvoiceCommon(TestAvalaraBrCommon):
 
         # When the external tests run this will need to do an IAP request which isn't possible in testing mode, see:
         # 7416acc111793ac1f7fd0dc653bb05cf7af28ebe
-        with patch.object(threading.current_thread(), 'testing', False) if 'external_l10n' in self.test_tags else nullcontext():
+        if 'external_l10n' in self.test_tags:
+            with patch.object(threading.current_thread(), 'testing', False), patch.object(modules, 'current_test', False):
+                invoice.action_post()
+        else:
             invoice.action_post()
 
         if test_exact_response:

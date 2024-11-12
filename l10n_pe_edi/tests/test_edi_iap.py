@@ -1,11 +1,13 @@
-# -*- coding: utf-8 -*-
+from odoo import modules
 from odoo.tests import tagged
-from .common import TestPeEdiCommon, CODE_98_ERROR_MSG, MAX_WAIT_ITER, _get_pe_current_datetime
+from .common import CODE_98_ERROR_MSG, MAX_WAIT_ITER, TestPeEdiCommon, _get_pe_current_datetime
 
+import contextlib
 import threading
-from unittest.mock import patch
 from datetime import timedelta
 from time import sleep
+from unittest.mock import patch
+
 
 @tagged('external_l10n', 'post_install', '-at_install', '-standard', 'external')
 class TestEdiIAP(TestPeEdiCommon):
@@ -16,6 +18,11 @@ class TestEdiIAP(TestPeEdiCommon):
 
         cls.company_data['company'].l10n_pe_edi_provider = 'iap'
 
+    @contextlib.contextmanager
+    def disable_testing_mode(self):
+        with patch.object(threading.current_thread(), 'testing', False), patch.object(modules.module, 'current_test', False):
+            yield
+
     def test_10_invoice_edi_flow(self):
         yesterday = _get_pe_current_datetime().date() - timedelta(1)
         move = self._create_invoice(invoice_date=yesterday, date=yesterday)
@@ -24,7 +31,7 @@ class TestEdiIAP(TestPeEdiCommon):
         # Send
         doc = move.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
         # Calls to IAP are disabled during testing, we need to remove the testing flag to let it perform the calls
-        with patch.object(threading.current_thread(), 'testing', False):
+        with self.disable_testing_mode():
             move.action_process_edi_web_services(with_commit=False)
         self.assertRecordValues(doc, [{'error': False}])
         self.assertRecordValues(move, [{'edi_state': 'sent'}])
@@ -34,21 +41,21 @@ class TestEdiIAP(TestPeEdiCommon):
         move.button_cancel_posted_moves()
         self.assertFalse(move.l10n_pe_edi_cancel_cdr_number)
         doc = move.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
-        with patch.object(threading.current_thread(), 'testing', False):
+        with self.disable_testing_mode():
             move.action_process_edi_web_services(with_commit=False)
         self.assertTrue(move.l10n_pe_edi_cancel_cdr_number)
         self.assertRecordValues(move, [{'edi_state': 'to_cancel'}])
 
         # Cancel step 2
         doc = move.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
-        with patch.object(threading.current_thread(), 'testing', False):
+        with self.disable_testing_mode():
             move.action_process_edi_web_services(with_commit=False)
 
         # We need to wait a bit before requesting the cancellation's status
         # to avoid getting a status code 98 (cancellation still being processed).
         for _ in range(MAX_WAIT_ITER):
             sleep(10)
-            with patch.object(threading.current_thread(), 'testing', False):
+            with self.disable_testing_mode():
                 move.action_process_edi_web_services(with_commit=False)
             if not doc.error or doc.error != CODE_98_ERROR_MSG:
                 break
@@ -64,7 +71,7 @@ class TestEdiIAP(TestPeEdiCommon):
         # Send
         doc = move.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
         doc_reversed_entry = move.reversed_entry_id.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
-        with patch.object(threading.current_thread(), 'testing', False):
+        with self.disable_testing_mode():
             (move.reversed_entry_id + move).action_process_edi_web_services(with_commit=False)
         self.assertRecordValues(doc, [{'error': False}])
         self.assertTrue(doc_reversed_entry)
@@ -76,21 +83,21 @@ class TestEdiIAP(TestPeEdiCommon):
         move.button_cancel_posted_moves()
         self.assertFalse(move.l10n_pe_edi_cancel_cdr_number)
         doc = move.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
-        with patch.object(threading.current_thread(), 'testing', False):
+        with self.disable_testing_mode():
             move.action_process_edi_web_services(with_commit=False)
         self.assertTrue(move.l10n_pe_edi_cancel_cdr_number)
         self.assertRecordValues(move, [{'edi_state': 'to_cancel'}])
 
         # Cancel step 2
         doc = move.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
-        with patch.object(threading.current_thread(), 'testing', False):
+        with self.disable_testing_mode():
             move.action_process_edi_web_services(with_commit=False)
 
         # We need to wait a bit before requesting the cancellation's status
         # to avoid getting a status code 98 (cancellation still being processed).
         for _ in range(MAX_WAIT_ITER):
             sleep(10)
-            with patch.object(threading.current_thread(), 'testing', False):
+            with self.disable_testing_mode():
                 move.action_process_edi_web_services(with_commit=False)
             if not doc.error or doc.error != CODE_98_ERROR_MSG:
                 break
@@ -106,7 +113,7 @@ class TestEdiIAP(TestPeEdiCommon):
         # Send
         doc = move.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
         doc_debit_origin = move.debit_origin_id.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
-        with patch.object(threading.current_thread(), 'testing', False):
+        with self.disable_testing_mode():
             (move.debit_origin_id + move).action_process_edi_web_services(with_commit=False)
         self.assertRecordValues(doc, [{'error': False}])
         self.assertRecordValues(doc_debit_origin, [{'error': False}])
@@ -117,21 +124,21 @@ class TestEdiIAP(TestPeEdiCommon):
         move.button_cancel_posted_moves()
         self.assertFalse(move.l10n_pe_edi_cancel_cdr_number)
         doc = move.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
-        with patch.object(threading.current_thread(), 'testing', False):
+        with self.disable_testing_mode():
             move.action_process_edi_web_services(with_commit=False)
         self.assertTrue(move.l10n_pe_edi_cancel_cdr_number)
         self.assertRecordValues(move, [{'edi_state': 'to_cancel'}])
 
         # Cancel step 2
         doc = move.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
-        with patch.object(threading.current_thread(), 'testing', False):
+        with self.disable_testing_mode():
             move.action_process_edi_web_services(with_commit=False)
 
         # We need to wait a bit before requesting the cancellation's status
         # to avoid getting a status code 98 (cancellation still being processed).
         for _ in range(MAX_WAIT_ITER):
             sleep(10)
-            with patch.object(threading.current_thread(), 'testing', False):
+            with self.disable_testing_mode():
                 move.action_process_edi_web_services(with_commit=False)
             if not doc.error or doc.error != CODE_98_ERROR_MSG:
                 break
@@ -150,7 +157,7 @@ class TestEdiIAP(TestPeEdiCommon):
         move.action_post()
 
         doc = move.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
-        with patch.object(threading.current_thread(), 'testing', False):
+        with self.disable_testing_mode():
             move.action_process_edi_web_services(with_commit=False)
         self.assertRecordValues(doc, [{'error': False}])
         self.assertRecordValues(move, [{'edi_state': 'sent'}])
@@ -166,21 +173,21 @@ class TestEdiIAP(TestPeEdiCommon):
         move.button_cancel_posted_moves()
         self.assertFalse(move.l10n_pe_edi_cancel_cdr_number)
         doc = move.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
-        with patch.object(threading.current_thread(), 'testing', False):
+        with self.disable_testing_mode():
             move.action_process_edi_web_services(with_commit=False)
         self.assertTrue(move.l10n_pe_edi_cancel_cdr_number)
         self.assertRecordValues(move, [{'edi_state': 'to_cancel'}])
 
         # Cancel step 2
         doc = move.edi_document_ids.filtered(lambda d: d.state in ('to_send', 'to_cancel'))
-        with patch.object(threading.current_thread(), 'testing', False):
+        with self.disable_testing_mode():
             move.action_process_edi_web_services(with_commit=False)
 
         # We need to wait a bit before requesting the cancellation's status
         # to avoid getting a status code 98 (cancellation still being processed).
         for _ in range(MAX_WAIT_ITER):
             sleep(10)
-            with patch.object(threading.current_thread(), 'testing', False):
+            with self.disable_testing_mode():
                 move.action_process_edi_web_services(with_commit=False)
             if doc.error and doc.error != CODE_98_ERROR_MSG:
                 break

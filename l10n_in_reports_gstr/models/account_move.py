@@ -7,7 +7,7 @@ import re
 from datetime import datetime, date
 from markupsafe import Markup
 
-from odoo import api, Command, fields, models, tools, _
+from odoo import api, Command, fields, models, modules, _
 from odoo.tools import split_every
 from .irn_exception import IrnException
 
@@ -136,7 +136,7 @@ class AccountMove(models.Model):
                 for move_batch in split_every(job_count, moves):
                     for move in move_batch:
                         move.l10n_in_update_move_using_irn()
-                    if not (tools.config['test_enable'] or tools.config['test_file']):
+                    if not modules.module.current_test:
                         self._cr.commit()
 
     # ========================================

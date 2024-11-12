@@ -10,7 +10,7 @@ from datetime import date, datetime, timedelta
 from dateutil import relativedelta
 from markupsafe import Markup
 
-from odoo import _, api, Command, fields, models, tools, SUPERUSER_ID
+from odoo import _, api, Command, fields, models, modules, SUPERUSER_ID
 from odoo.exceptions import UserError, AccessError, ValidationError, RedirectWarning
 from odoo.tools import date_utils, get_lang, html_escape, SQL
 from odoo.tools.misc import format_date
@@ -2181,7 +2181,7 @@ class L10n_InGstReturnPeriod(models.Model):
                             created_move.message_post(body=_("This bill has been marked as canceled based on the e-invoice status."))
                             created_move.button_cancel()
 
-                if not (tools.config['test_enable'] or tools.config['test_file']):
+                if not modules.module.current_test:
                     self.env.cr.commit()
             else:
                 # Cancel the existing bill if the IRN status indicates cancellation
