@@ -1111,7 +1111,7 @@ class AccountMove(models.Model):
                 converted_payment_amount = invoice.currency_id.round(payment_amount * rate)
                 if (
                     self.currency_id.is_zero(converted_invoice_amount - payment_amount)
-                    or invoice.currency_id.is_zero(invoice_amount - converted_payment_amount)
+                    and invoice.currency_id.is_zero(invoice_amount - converted_payment_amount)
                 ):
                     return rate
                 return abs(invoice_amount / payment_amount)
