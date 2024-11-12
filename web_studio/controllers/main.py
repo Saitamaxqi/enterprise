@@ -168,6 +168,25 @@ class WebStudioController(http.Controller):
             """),
         }
 
+    def _get_studio_action_actions_server(self, model, **kwargs):
+        return {
+            'name': _('Actions Server'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'ir.actions.server',
+            'views': [[False, 'list'], [False, "form"]],
+            'target': 'current',
+            'context': {
+                'web_studio.auto_add_to_context': True,
+                'default_model_id': model.id,
+                'search_default_model_id': model.id,
+                'search_default_action_type': True,  # auto groupby action.state
+            },
+            'help': _("""<p>
+                Create a new Server Action to enhance the power of the model.
+            </p>
+            """),
+        }
+
     @http.route('/web_studio/create_new_app', type='jsonrpc', auth='user')
     def create_new_app(self, app_name=False, menu_name=False, model_choice=False, model_id=False, model_options=False, icon=None, context=None):
         """Create a new app @app_name, linked to a new action associated to the model_id or the newlyy created model.
