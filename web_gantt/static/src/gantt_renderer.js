@@ -49,7 +49,6 @@ import { GanttPopover } from "./gantt_popover";
 import { GanttRendererControls } from "./gantt_renderer_controls";
 import { GanttResizeBadge } from "./gantt_resize_badge";
 import { GanttRowProgressBar } from "./gantt_row_progress_bar";
-import { clamp } from "@web/core/utils/numbers";
 
 const { DateTime } = luxon;
 
@@ -238,31 +237,7 @@ export class GanttRenderer extends Component {
             x: 0,
             y: 0,
         };
-        const position = "bottom";
-        this.popover = usePopover(this.constructor.components.Popover, {
-            position,
-            onPositioned: (el, { direction }) => {
-                if (direction !== position) {
-                    return;
-                }
-                const { left, right } = el.getBoundingClientRect();
-                if ((0 <= left && right <= window.innerWidth) || window.innerWidth < right - left) {
-                    return;
-                }
-                const { left: pillLeft, right: pillRight } =
-                    this.popover.target.getBoundingClientRect();
-                const middle =
-                    (clamp(pillLeft, 0, window.innerWidth) +
-                        clamp(pillRight, 0, window.innerWidth)) /
-                    2;
-                el.style.left = `0px`;
-                const { width } = el.getBoundingClientRect();
-                el.style.left = `${middle - width / 2}px`;
-            },
-            onClose: () => {
-                delete this.popover.target;
-            },
-        });
+        this.popover = usePopover(this.constructor.components.Popover);
 
         this.throttledComputeHoverParams = throttleForAnimation((ev) =>
             this.computeHoverParams(ev)
@@ -2431,8 +2406,8 @@ export class GanttRenderer extends Component {
         if (this.popover.isOpen) {
             return;
         }
-        this.popover.target = ev.target.closest(".o_gantt_pill_wrapper");
-        this.popover.open(this.popover.target, this.getPopoverProps(pill));
+        const target = ev.target.closest(".o_gantt_pill_wrapper");
+        this.popover.open(target, this.getPopoverProps(pill));
     }
 
     onPlan(rowId, startCol, stopCol) {
