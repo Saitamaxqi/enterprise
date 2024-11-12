@@ -17,18 +17,18 @@ class L10nBeHrPayrollExportUcm(models.Model):
     def _country_restriction(self):
         return 'BE'
 
-    def _generate_line(self, employee, date, we_dotdict):
+    def _generate_line(self, employee, date, work_entry_collection):
         """
         Generate a line for the export file.
         """
-        ucm_code = we_dotdict.work_entries[0].work_entry_type_id.ucm_code
+        ucm_code = work_entry_collection.work_entries[0].work_entry_type_id.ucm_code
         if not ucm_code:
             raise UserError(_(
                 'The work entry type %(we)s does not have a UCM code',
-                we=we_dotdict.work_entries[0].work_entry_type_id
+                we=work_entry_collection.work_entries[0].work_entry_type_id
             ))
-        hours = f'{int(we_dotdict.duration // 3600):02d}'
-        hundredth_of_hours = f'{int((we_dotdict.duration % 3600) // 36):02d}'
+        hours = f'{int(work_entry_collection.duration // 3600):02d}'
+        hundredth_of_hours = f'{int((work_entry_collection.duration % 3600) // 36):02d}'
         return self.company_id.ucm_company_code + f'{employee.ucm_code:0>5}' \
             + date.strftime('%m%Y%d') + ucm_code + hours + hundredth_of_hours \
             + '0000000             ' + '\n'
@@ -46,8 +46,8 @@ class L10nBeHrPayrollExportUcm(models.Model):
         for employee_line in self.eligible_employee_line_ids:
             we_by_day_and_code = employee_line._get_work_entries_by_day_and_code()
             for date, we_by_code in we_by_day_and_code.items():
-                for we_dotdict in we_by_code.values():
-                    file += self._generate_line(employee_line.employee_id, date, we_dotdict)
+                for work_entry_collection in we_by_code.values():
+                    file += self._generate_line(employee_line.employee_id, date, work_entry_collection)
         return file
 
     def _generate_export_filename(self):

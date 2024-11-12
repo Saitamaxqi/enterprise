@@ -30,16 +30,16 @@ class L10nBeHrPayrollExportPartena(models.Model):
             'FILLER4;FILLER5;FILLER6;FILLER7;MEMO\n'
         )
 
-    def _generate_line(self, employee, date, we_dotdict=None):
+    def _generate_line(self, employee, date, work_entry_collection=None):
         """
         Generate a line for the export file.
         """
-        if we_dotdict is None:
+        if work_entry_collection is None:
             partena_code = '---  '
             duration = MINIUTES_PER_DAY
         else:
-            partena_code = we_dotdict.work_entries[0].work_entry_type_id.partena_code
-            duration = ceil(we_dotdict.duration / 60)  # in minutes
+            partena_code = work_entry_collection.work_entries[0].work_entry_type_id.partena_code
+            duration = ceil(work_entry_collection.duration / 60)  # in minutes
         return '%(pc_company)s;%(pc_employee)s;%(date)s;D;%(pc_we)s;%(duration)s' % {
             'pc_company': self.env.company.partena_code,
             'pc_employee': employee.partena_code,
@@ -63,8 +63,8 @@ class L10nBeHrPayrollExportPartena(models.Model):
             we_by_day_and_code = employee_line._get_work_entries_by_day_and_code()
             for date in (self.period_start + timedelta(days=offset) for offset in range(days_in_period)):
                 if we_by_code := we_by_day_and_code.get(date):
-                    for we_dotdict in we_by_code.values():
-                        file += self._generate_line(employee_line.employee_id, date, we_dotdict)
+                    for work_entry_collection in we_by_code.values():
+                        file += self._generate_line(employee_line.employee_id, date, work_entry_collection)
                 else:
                     file += self._generate_line(employee_line.employee_id, date)
         return file
