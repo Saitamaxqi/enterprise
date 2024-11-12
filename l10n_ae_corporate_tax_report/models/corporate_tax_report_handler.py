@@ -9,7 +9,6 @@ class L10n_AeCorporateTaxReportHandler(models.AbstractModel):
     def _custom_options_initializer(self, report, options, previous_options=None):
         # Overrides account.report
         options['buttons'].append({'name': _("Create Entry"), 'action': 'action_create_accounting_entry', 'sequence': 110, 'always_show': True})
-        options['export_mode'] = 'file'
 
     def _custom_line_postprocessor(self, report, options, lines, warnings=None):
         # Overrides account.report
@@ -40,6 +39,9 @@ class L10n_AeCorporateTaxReportHandler(models.AbstractModel):
 
         if not (company.l10n_ae_tax_report_counterpart_account and company.l10n_ae_tax_report_liabilities_account):
             raise ValidationError(message=_("The liability accounts for corporate taxes have not been set in the settings."))
+
+        options['export_mode'] = 'file'
+        options = report.get_options(options)
 
         amount = self._get_report_payable_amount(options)
         misc_journal = self.env['account.journal'].search([('code', '=', 'MISC')], limit=1)
