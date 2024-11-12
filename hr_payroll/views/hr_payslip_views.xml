@@ -36,7 +36,12 @@
                     <t t-name="card" class="row g-0">
                         <field name="employee_id" widget="many2one_avatar_user" options="{'display_avatar_name': True}" readonly="state not in ['draft', 'verify']" class="col-6 fw-bold mb-1"/>
                         <div class="col-6">
-                            <field name="state" class="float-end badge text-bg-secondary"/>
+                            <field name="state" class="float-end" widget="badge"
+                                decoration-info="state == 'draft'"
+                                decoration-warning="state == 'verify'"
+                                decoration-success="state == 'done'"
+                                decoration-primary="state == 'paid'"
+                            />
                         </div>
                         <div>
                             <field name="date_from" readonly="state in ['cancel', 'done', 'paid']"/> - <field name="date_to" readonly="state in ['cancel', 'done', 'paid']"/>

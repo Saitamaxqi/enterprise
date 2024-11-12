@@ -24,7 +24,12 @@
                 <field name="name" readonly="state != 'draft'"/>
                 <field name="date_start" readonly="state != 'draft'"/>
                 <field name="date_end" readonly="state != 'draft'"/>
-                <field name="state"/>
+                <field name="state" widget="badge"
+                    decoration-info="state == 'draft'"
+                    decoration-warning="state == 'verify'"
+                    decoration-success="state == 'close'"
+                    decoration-primary="state == 'paid'"
+                />
                 <field name="payslip_count" string="Payslips Count"/>
                 <field name="company_id" groups="base.group_multi_company"/>
             </list>
@@ -40,7 +45,11 @@
                     <t t-name="card" class="row g-0">
                         <field name="name" readonly="state != 'draft'" class="col-6 fw-bolder"/>
                         <div class="col-6">
-                            <field name="state" class="float-end badge text-bg-secondary"/>
+                            <field name="state" class="float-end" widget="badge"
+                                decoration-info="state == 'draft'"
+                                decoration-warning="state == 'verify'"
+                                decoration-success="state == 'close'"
+                                decoration-primary="state == 'paid'"/>
                         </div>
                         <div class="mt-auto">
                             <field name="date_start" readonly="state != 'draft'"/> - <field name="date_end" readonly="state != 'draft'"/>
