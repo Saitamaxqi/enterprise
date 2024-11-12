@@ -38,6 +38,9 @@ class PosConfig(models.Model):
         if fiscal_position and fiscal_position.sudo().company_id.id == self.env.company.id:
             return fiscal_position
 
+    name = fields.Char(
+        translate=True,
+    )
     urbanpiper_store_identifier = fields.Char(
         string='Urban Piper POS ID',
         help='Pos ID from Urban Piper (Atlas)',

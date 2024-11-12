@@ -89,12 +89,14 @@ class UrbanPiperClient:
         data = {
             'stores': [
                 {
-                    'name': self.config.name,
+                    'name': self.config.with_context(lang="en_US").name,
                     'city': self.config.company_id.city,
                     'ref_id': self.config.urbanpiper_store_identifier
                 }
             ]
         }
+        name_translations = self.config.get_field_translations('name')
+        data['stores'][0]['translations'] = self._get_translations(name_translations, 'name')
         response_json = self._make_api_request(endpoint, data=data)
         return response_json
 
@@ -165,7 +167,7 @@ class UrbanPiperClient:
         for translation in field_translations[0]:
             lang = translation['lang'].split('_')[0]
             translations.append({
-                'lang': lang,
+                'language': lang,
                 field: translation['value']
             }) if lang in UP_LANGUAGES else None
         return translations
@@ -181,7 +183,7 @@ class UrbanPiperClient:
         for category in pos_categories:
             categ_dict = {
                 'ref_id': str(category.id),
-                'name': category.name,
+                'name': category.with_context(lang="en_US").name,
                 'sort_order': category.sequence,
                 'active': True,
                 'img_url': self._get_public_image_url(category),
@@ -203,8 +205,8 @@ class UrbanPiperClient:
             )
             item = {
                 'ref_id': self.get_item_ref_id(product),
-                'title': product.name,
-                'description': html2plaintext(product.public_description) if product.public_description else '',
+                'title': product.with_context(lang="en_US").name,
+                'description': html2plaintext(product.with_context(lang="en_US").public_description) if product.public_description else '',
                 'price': product.taxes_id.compute_all(
                     product_price, product.currency_id, 1)[self.config._get_total_tax_tag()],
                 'weight': product.weight,
@@ -245,7 +247,7 @@ class UrbanPiperClient:
             for attr_line in product.attribute_line_ids:
                 group = {
                     'ref_id': f'{product.id}-{attr_line.attribute_id.id}',
-                    'title': attr_line.attribute_id.name,
+                    'title': attr_line.attribute_id.with_context(lang="en_US").name,
                     'active': True,
                     'multi_options_enabled': bool(attr_line.attribute_id.display_type == 'multi'),
                     'item_ref_ids': [self.get_item_ref_id(product)]
@@ -273,7 +275,7 @@ class UrbanPiperClient:
                     ])
                     value_dict = {
                         'ref_id': f'{product.id}-{option.id}',
-                        'title': option.name,
+                        'title': option.with_context(lang="en_US").name,
                         'available': True,
                         'opt_grp_ref_ids': [f'{product.id}-{i}' for i in option.attribute_id.ids],
                         'price': product_option.price_extra or option.default_extra_price
@@ -293,7 +295,7 @@ class UrbanPiperClient:
         def get_charge_data(product):
             return {
                 'code': 'PC_F' if product == product_packaging else 'DC_F',
-                'title': product.name,
+                'title': product.with_context(lang="en_US").name,
                 'active': True,
                'structure': {
                     'applicable_on': 'order.order_subtotal',
