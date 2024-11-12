@@ -18,6 +18,7 @@
                         <i class="fa fa-lg fa-dropbox"/>
                     </button>
                 </div>
+                <t t-set="lowerButtons" t-value="false"/>
                 <t t-call="stock_barcode.LineQuantity"/>
                 <t t-call="stock_barcode.LineOwner"/>
                 <t t-call="stock_barcode.LineDestinationLocation"/>

@@ -3844,20 +3844,20 @@ registry.category("web_tour.tours").add("test_pack_multiple_location_03", {
     ],
 });
 
-registry.category("web_tour.tours").add('test_pack_source_location', {
+registry.category("web_tour.tours").add("test_pack_source_location", {
     steps: () => [
         {
-            trigger: '.o_stock_barcode_main_menu',
-            run: 'scan WHINT',
+            trigger: ".o_stock_barcode_main_menu",
+            run: "scan WHINT",
         },
         {
-            trigger: '.o_scan_message.o_scan_product',
-            run: 'scan PACK123666',
+            trigger: ".o_scan_message.o_scan_product",
+            run: "scan PACK123666",
         },
         {
-            trigger: '.o_barcode_line',
-            run: function() {
-                const line = helper.getLine({ barcode: 'product1' });
+            trigger: ".o_barcode_line",
+            run: function () {
+                const line = helper.getLine({ barcode: "product1" });
                 helper.assertLineSourceLocation(line, "WH/Stock/Section 4");
             },
         },
@@ -4669,6 +4669,7 @@ registry.category("web_tour.tours").add("test_show_entire_package", {
                 const line = helper.getLine();
                 helper.assertLineIsHighlighted(line, false);
                 helper.assertButtonIsVisible(line, "package_content");
+                helper.assertButtonIsVisible(line, "add_remaining_quantity", false);
                 helper.assert(
                     line.querySelector('[name="package"]').innerText,
                     "package001package001"
