@@ -10,7 +10,7 @@
         <ol>
             <t t-foreach="articles" t-as="article" t-key="article_index">
                 <li>
-                    <a class="d-block p-1"
+                    <a class="d-block p-1 text-reset"
                        t-attf-href="/knowledge/article/#{article.id}"
                        t-out="article.name"
                        t-on-click="(ev) => this.onArticleLinkClick(ev, article.id)"/>
