@@ -156,3 +156,40 @@ test("Access for helpdesk manager to reordering ticket stages", async () => {
     });
     expect(".o_group_draggable").toHaveCount(2);
 });
+
+test("Test group label of unassigned tickets in kanban view", async () => {
+    await mountView({
+        resModel: "helpdesk.ticket",
+        type: "kanban",
+        groupBy: ["user_id"],
+        arch: kanbanViewArch,
+    });
+    expect(".o_column_title").toHaveText("👤 Unassigned\n(3)");
+});
+
+test("Test group label of unassigned tickets in list view", async () => {
+    await mountView({
+        resModel: "helpdesk.ticket",
+        type: "list",
+        groupBy: ["user_id"],
+        arch: `
+            <list js_class="helpdesk_ticket_list">
+                <field name="user_id"/>
+            </list>
+        `,
+    });
+    expect(".o_group_name").toHaveText("👤 Unassigned (3)");
+});
+
+test("Test group label of unassigned tickets in pivot view", async () => {
+    await mountView({
+        resModel: "helpdesk.ticket",
+        type: "pivot",
+        arch: `
+            <pivot js_class="helpdesk_ticket_pivot">
+                <field name="user_id" type="row"/>
+            </pivot>
+        `,
+    });
+    expect("tr:nth-of-type(2) .o_pivot_header_cell_closed").toHaveText("Unassigned");
+});

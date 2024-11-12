@@ -14,6 +14,8 @@ export class HelpdeskTicketKanbanHeader extends KanbanHeader {
     _getEmptyGroupLabel(fieldName) {
         if (fieldName === "sla_deadline") {
             return _t("Deadline reached");
+        } else if (fieldName === "user_id") {
+            return _t("👤 Unassigned");
         } else {
             return super._getEmptyGroupLabel(fieldName);
         }

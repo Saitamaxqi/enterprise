@@ -13,6 +13,7 @@ export class HelpdeskTicket extends models.Model {
     });
     team_id = fields.Many2one({ relation: "helpdesk.team" });
     stage_id = fields.Many2one({ relation: "helpdesk.stage" });
+    user_id = fields.Many2one({ relation: "res.users" });
 
     _records = [
         {
