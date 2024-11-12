@@ -509,6 +509,7 @@ class DocumentsDocument(models.Model):
             }
         }
 
+    @api.readonly
     @api.model
     def get_spreadsheets(self, domain=(), offset=0, limit=None):
         domain = expression.AND([domain, [("handler", "in", ("spreadsheet", "frozen_spreadsheet"))]])

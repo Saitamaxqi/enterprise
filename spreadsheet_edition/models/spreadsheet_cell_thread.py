@@ -37,6 +37,7 @@ class SpreadsheetCellThread(models.Model):
         self.ensure_one()
         return _("New Mention in %s") % self.display_name
 
+    @api.readonly
     def get_spreadsheet_access_action(self):
         related_record = self._get_spreadsheet_record()
         if related_record and related_record.has_access("read"):

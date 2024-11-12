@@ -122,6 +122,7 @@ class SaleOrderSpreadsheet(models.Model):
         }
         self._dispatch_commands([command, table_command])
 
+    @api.readonly
     @api.model
     def get_spreadsheets(self, domain=(), offset=0, limit=None):
         domain = expression.AND([domain, [("order_id", "=", False)]])

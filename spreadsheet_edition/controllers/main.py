@@ -25,7 +25,7 @@ class SpreadsheetController(Controller):
         ]
         return request.make_response(body, headers)
 
-    @http.route('/spreadsheet/xlsx', type='http', auth="user", methods=["POST"])
+    @http.route('/spreadsheet/xlsx', type='http', auth="user", methods=["POST"], readonly=True)
     def get_xlsx_file(self, zip_name, files, **kw):
         files = json.loads(files)
 

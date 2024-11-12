@@ -358,6 +358,7 @@ class SpreadsheetMixin(models.AbstractModel):
         spreadsheet = self.create(vals or {})
         return spreadsheet.action_open_spreadsheet()
 
+    @api.readonly
     @api.model
     def get_selector_spreadsheet_models(self):
         selectable_models = []
@@ -377,6 +378,7 @@ class SpreadsheetMixin(models.AbstractModel):
     def _creation_msg(self):
         raise NotImplementedError("This method is not implemented for model %s." % self._name)
 
+    @api.readonly
     @api.model
     def get_spreadsheets(self, domain=(), offset=0, limit=None):
         return {
@@ -384,6 +386,7 @@ class SpreadsheetMixin(models.AbstractModel):
             "records": self.search_read(domain, ["display_name", "thumbnail"], offset=offset, limit=limit)
         }
 
+    @api.readonly
     def get_spreadsheet_history(self, from_snapshot=False):
         """Fetch the spreadsheet history.
          - if from_snapshot is provided, then provides the last snapshot and the revisions since then
