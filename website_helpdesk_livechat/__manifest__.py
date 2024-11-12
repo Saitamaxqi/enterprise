@@ -27,6 +27,7 @@ Features:
         'views/chatbot_script_views.xml',
         'views/chatbot_script_step_views.xml',
         'views/helpdesk_view.xml',
+        'views/helpdesk_ticket_attachment_template.xml',
     ],
     'auto_install': True,
     'license': 'OEEL-1',

@@ -1,11 +1,13 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+import json
 import re
 from markupsafe import Markup
 
 from odoo import Command, fields, models, _
-from odoo.tools import is_html_empty, plaintext2html
+from odoo.tools import html2plaintext, is_html_empty, plaintext2html
+from odoo.tools.mimetypes import get_extension
 from odoo.osv.expression import OR
 
 
@@ -81,10 +83,22 @@ class DiscussChannel(models.Model):
                 description = ''
                 odoobot = self.env.ref('base.partner_root')
                 for message in self.message_ids.sorted(key=lambda r: r.id):
-                    if is_html_empty(message.body) or message.author_id == odoobot:
+                    if (not message.attachment_ids and is_html_empty(message.body)) or message.author_id == odoobot:
                         continue
                     name = message.author_id.name or 'Anonymous'
-                    description += '%s: ' % name + '%s\n' % re.sub('<[^>]*>', '', message.body)
+                    if message.body:
+                        description += '%s: ' % name + '%s\n' % re.sub('<[^>]*>', '', message.body)
+                    attachment_author_shown = False
+                    for attachment in message.attachment_ids:
+                        if not message.body and not attachment_author_shown:
+                            description += '%s:\n' % name
+                            attachment_author_shown = True
+                        if attachment.mimetype.startswith('image/'):
+                            description += Markup('<img src="/web/content/%s" alt="%s" style="max-width: 75%%; height: auto; padding: 5px;"><br>') % (
+                               attachment.id, attachment.name)
+                        else:
+                            # Add non-image attachment names
+                            description += self._get_attachment_data(attachment)
                 team = self.env['helpdesk.team'].search([('use_website_helpdesk_livechat', '=', True)], order='sequence', limit=1)
                 team_id = team.id if team else False
                 helpdesk_ticket = self.env['helpdesk.ticket'].with_context(with_partner=True).create({
@@ -92,6 +106,13 @@ class DiscussChannel(models.Model):
                     'description': plaintext2html(description),
                     'partner_id': customer.id if customer else False,
                     'team_id': team_id,
+                })
+                # We copy the non-image attachments and update their id/model to attach them to the ticket.
+                self.message_ids.attachment_ids.filtered(
+                    lambda attachment: 'image/' not in attachment.mimetype
+                ).copy({
+                    'res_id': helpdesk_ticket.id,
+                    'res_model': 'helpdesk.ticket',
                 })
                 msg = _("Created a new ticket: %s", helpdesk_ticket._get_html_link())
         self.env.user._bus_send_transient_message(self, msg)
@@ -173,3 +194,16 @@ class DiscussChannel(models.Model):
                         i_end=Markup("</i>"),
                     )
         partner._bus_send_transient_message(self, msg)
+
+    def _get_attachment_data(self, attachment):
+        file_extension = get_extension(attachment.display_name)
+        attachment_data = {
+            'id': attachment.id,
+            'extension': file_extension.lstrip("."),
+            'mimetype': attachment.mimetype,
+            'filename': attachment.display_name,
+            'url': attachment.url,
+        }
+        return self.env['ir.qweb']._render('website_helpdesk_livechat.helpdesk_ticket_attachment_template', {
+            'props': json.dumps({"fileData": attachment_data}),
+        })
