@@ -2,7 +2,7 @@
 <templates xml:space="preserve">
 
     <t t-name="web_gantt.GanttPopover">
-        <div t-ref="root" style="max-width: 320px;"> <!-- the chosen value is rather arbitrary: the idea was to have enough space (but not too much) for some particular known cases-->
+        <div t-ref="root" style="max-width: 320px; inline-size: max-content;"> <!-- the chosen value is rather arbitrary: the idea was to have enough space (but not too much) for some particular known cases-->
             <div class="popover-header d-flex justify-content-between py-2 pe-2">
                 <h4 class="p-0 pt-1">
                     <t t-esc="props.title" />
