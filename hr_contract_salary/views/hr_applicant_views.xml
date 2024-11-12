@@ -31,8 +31,8 @@
 
     <menuitem
         id="hr_recruitment_menu_contract_templates"
-        name="Contract Templates"
-        action="action_hr_contract_templates"
+        name="Templates"
+        action="hr_contract.action_hr_contract_templates"
         parent="menu_hr_recruitment_config_contract_templates"
         sequence="10"
         groups="hr.group_hr_manager"/>

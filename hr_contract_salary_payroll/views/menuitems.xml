@@ -9,7 +9,7 @@
     <menuitem
         id="hr_payroll_menu_contract_templates"
         name="Templates"
-        action="hr_contract_salary.action_hr_contract_templates"
+        action="hr_contract.action_hr_contract_templates"
         parent="menu_hr_payroll_configuration_contract"
         sequence="10"
         groups="hr.group_hr_manager"/>
