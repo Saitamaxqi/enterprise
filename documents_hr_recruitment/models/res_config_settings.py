@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     documents_recruitment_settings = fields.Boolean(related='company_id.documents_recruitment_settings', readonly=False, string="Recruitment")
     recruitment_folder_id = fields.Many2one('documents.document',

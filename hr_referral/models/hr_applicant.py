@@ -10,7 +10,7 @@ from odoo.tools.misc import str2bool
 
 
 class HrApplicant(models.Model):
-    _inherit = ["hr.applicant"]
+    _inherit = "hr.applicant"
 
     ref_user_id = fields.Many2one('res.users', string='Referred By User', tracking=True,
         compute='_compute_ref_user_id', inverse='_inverse_ref_user_id', store=True, copy=False)
@@ -354,7 +354,7 @@ class HrApplicant(models.Model):
 
 
 class HrRecruitmentStage(models.Model):
-    _inherit = ["hr.recruitment.stage"]
+    _inherit = "hr.recruitment.stage"
 
     points = fields.Integer('Points', help="Amount of points that the referent will receive when the applicant will reach this stage")
     use_in_referral = fields.Boolean('Show in Referrals', help="This option is used in app 'Referrals'. If checked, the stage is displayed in 'Referrals Dashboard' and points are given to the employee.")

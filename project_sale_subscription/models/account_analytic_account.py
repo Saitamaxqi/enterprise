@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class AccountAnalyticAccount(models.Model):
-    _inherit = ['account.analytic.account']
+    _inherit = 'account.analytic.account'
 
     subscription_ids = fields.One2many('sale.order', 'project_account_id', string='Subscriptions')
     subscription_count = fields.Integer(compute='_compute_subscription_count', string='Subscription Count')

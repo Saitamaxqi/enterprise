@@ -6,6 +6,7 @@ import base64
 
 
 class L10n_Be_ReportsPeriodicVatXmlExport(models.TransientModel):
+    _name = 'l10n_be_reports.periodic.vat.xml.export'
     _description = "Belgian Periodic VAT Report Export Wizard"
 
     ask_restitution = fields.Boolean()

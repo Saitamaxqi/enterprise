@@ -10,6 +10,7 @@ from dateutil.relativedelta import relativedelta
 
 
 class L10n_LuReportHandler(models.AbstractModel):
+    _name = 'l10n_lu.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Luxembourgish Financial Report Custom Handler'
 

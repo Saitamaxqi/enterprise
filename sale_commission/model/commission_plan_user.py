@@ -6,6 +6,7 @@ from odoo import models, fields, exceptions, _, api
 
 
 class SaleCommissionPlanUser(models.Model):
+    _name = 'sale.commission.plan.user'
     _description = 'Commission Plan User'
     _order = 'id'
 

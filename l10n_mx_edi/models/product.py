@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 
 
 class ProductTemplate(models.Model):
-    _inherit = ['product.template']
+    _inherit = 'product.template'
 
     l10n_mx_edi_predial_account = fields.Char(string="Cuenta predial", size=150)
 

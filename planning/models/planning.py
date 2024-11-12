@@ -30,6 +30,7 @@ def days_span(start_datetime, end_datetime):
 
 
 class PlanningSlot(models.Model):
+    _name = 'planning.slot'
     _description = 'Planning Shift'
     _order = 'start_datetime desc, id desc'
     _rec_name = 'name'
@@ -2349,6 +2350,7 @@ class PlanningSlot(models.Model):
 
 
 class PlanningRole(models.Model):
+    _name = 'planning.role'
     _description = "Planning Role"
     _order = 'sequence'
     _rec_name = 'name'
@@ -2370,6 +2372,7 @@ class PlanningRole(models.Model):
 
 
 class PlanningPlanning(models.Model):
+    _name = 'planning.planning'
     _description = 'Schedule'
 
     @api.model

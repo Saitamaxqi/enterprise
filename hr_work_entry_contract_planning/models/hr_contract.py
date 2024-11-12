@@ -9,7 +9,7 @@ from odoo.addons.hr_work_entry_contract.models.hr_work_intervals import WorkInte
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     work_entry_source = fields.Selection(
         selection_add=[('planning', 'Planning')],

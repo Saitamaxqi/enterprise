@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HrRecruitmentReport(models.Model):
-    _inherit = ["hr.recruitment.report"]
+    _inherit = "hr.recruitment.report"
 
     has_referrer = fields.Integer(aggregator="sum", readonly=True)
     referral_hired = fields.Integer('# Hired by Referral', aggregator="sum", readonly=True)

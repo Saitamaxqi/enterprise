@@ -5,6 +5,6 @@ from odoo import fields, models
 
 
 class MailActivityType(models.Model):
-    _inherit = ["mail.activity.type"]
+    _inherit = "mail.activity.type"
 
     category = fields.Selection(selection_add=[('tax_report', 'Tax report')])

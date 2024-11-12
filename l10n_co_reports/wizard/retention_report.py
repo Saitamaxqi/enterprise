@@ -5,6 +5,7 @@ from odoo import api, fields, models
 
 
 class L10n_Co_ReportsRetention_ReportWizard(models.TransientModel):
+    _name = 'l10n_co_reports.retention_report.wizard'
     _description = "Colombian Retention Report Wizard"
 
     expedition_date = fields.Date(string=u'Fecha de Expedición', default=fields.Date.context_today, required=True)

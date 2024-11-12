@@ -7,7 +7,7 @@ from odoo.tools import format_list
 
 
 class SaleOrder(models.Model):
-    _inherit = ["sale.order"]
+    _inherit = "sale.order"
 
     calendar_event_count = fields.Integer('Meetings', compute='_compute_meeting_count')
 

@@ -5,7 +5,7 @@ from odoo import fields, models, _
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     leave_allocation_id = fields.Many2one('hr.leave.allocation', 'Allocation', readonly=True)
 

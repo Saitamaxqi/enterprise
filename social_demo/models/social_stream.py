@@ -8,7 +8,7 @@ from odoo import api, models
 
 
 class SocialStream(models.Model):
-    _inherit = ['social.stream']
+    _inherit = 'social.stream'
 
     @api.model_create_multi
     def create(self, vals_list):

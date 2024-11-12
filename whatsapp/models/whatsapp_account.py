@@ -16,6 +16,7 @@ _logger = logging.getLogger(__name__)
 
 
 class WhatsappAccount(models.Model):
+    _name = 'whatsapp.account'
     _inherit = ['mail.thread']
     _description = 'WhatsApp Business Account'
 

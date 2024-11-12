@@ -11,7 +11,7 @@ DEFAULT_ENDPOINT = 'https://l10n-de-pos.api.odoo.com/api/l10n_de_pos'
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     l10n_de_fiskaly_api_key = fields.Char(string="Fiskaly API Key", groups="base.group_erp_manager")
     l10n_de_fiskaly_api_secret = fields.Char(string="Fiskaly API Secret", groups="base.group_erp_manager")

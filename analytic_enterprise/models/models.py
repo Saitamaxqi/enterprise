@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class AccountAnalyticLine(models.Model):
-    _inherit = ['account.analytic.line']
+    _inherit = 'account.analytic.line'
 
     @api.model
     def grid_compute_year_range(self, anchor):

@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class MrpReport(models.Model):
-    _inherit = ['mrp.report']
+    _inherit = 'mrp.report'
 
     total_cost = fields.Monetary(help="Total cost of manufacturing order (component + operation costs + subcontracting cost)")
     subcontracting_cost = fields.Monetary(

@@ -10,6 +10,7 @@ from odoo.tools import is_html_empty
 
 
 class ProposeChange(models.TransientModel):
+    _name = 'propose.change'
     _description = 'Propose a change in the production'
 
     IMG_REGEX = re.compile(r'(<img .*?">)')

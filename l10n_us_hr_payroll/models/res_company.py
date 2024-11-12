@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     l10n_us_ca_ett_tax = fields.Boolean(
         string="California: ETT Tax",

@@ -5,6 +5,7 @@ L10N_MA_CUSTOMS_VAT_ICE = '20727020'
 
 
 class L10n_MaTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_ma.tax.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'Moroccan Tax Report Custom Handler'
 

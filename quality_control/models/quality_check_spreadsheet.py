@@ -5,6 +5,7 @@ from odoo import api, fields, models
 
 
 class QualityCheckSpreadsheet(models.Model):
+    _name = 'quality.check.spreadsheet'
     _description = "Quality check spreadsheet"
     _inherit = ['spreadsheet.mixin']
 

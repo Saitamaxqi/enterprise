@@ -4,6 +4,7 @@ from odoo.exceptions import ValidationError
 
 
 class L10n_Br_EdiCancelRange(models.Model):
+    _name = 'l10n_br_edi.cancel.range'
     _description = "This allows a user to inform the government a range of sequence numbers won't be used."
 
     journal_id = fields.Many2one(

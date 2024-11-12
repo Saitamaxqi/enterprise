@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class ResPartner(models.Model):
-    _inherit = ["res.partner"]
+    _inherit = "res.partner"
 
     @api.ondelete(at_uninstall=False)
     def _unlink_except_clearing_house(self):

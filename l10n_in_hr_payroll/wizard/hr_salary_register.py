@@ -6,6 +6,7 @@ from odoo.exceptions import UserError
 
 
 class SalaryRegisterWizard(models.TransientModel):
+    _name = 'salary.register.wizard'
     _description = 'Salary Register'
 
     @api.model

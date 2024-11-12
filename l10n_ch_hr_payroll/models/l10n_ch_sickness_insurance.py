@@ -6,6 +6,7 @@ from odoo.exceptions import UserError
 
 
 class L10nChSicknessInsurance(models.Model):
+    _name = 'l10n.ch.sickness.insurance'
     _description = 'Swiss: Sickness Insurances (IJM)'
 
     name = fields.Char(required=True)
@@ -24,6 +25,7 @@ class L10nChSicknessInsurance(models.Model):
 
 
 class L10nChSicknessInsuranceLine(models.Model):
+    _name = 'l10n.ch.sickness.insurance.line'
     _description = 'Swiss: Sickness Insurances Line (IJM)'
     _rec_name = 'solution_name'
 
@@ -64,6 +66,7 @@ class L10nChSicknessInsuranceLine(models.Model):
 
 
 class L10nChSicknessInsuranceLineRate(models.Model):
+    _name = 'l10n.ch.sickness.insurance.line.rate'
     _description = 'Swiss: Sickness Insurances Line Rate (IJM)'
 
     line_id = fields.Many2one('l10n.ch.sickness.insurance.line')

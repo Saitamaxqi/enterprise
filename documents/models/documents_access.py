@@ -3,6 +3,7 @@ from odoo.exceptions import AccessError
 
 
 class DocumentsAccess(models.Model):
+    _name = 'documents.access'
     _description = 'Document / Partner'
     _log_access = False
 

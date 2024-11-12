@@ -6,7 +6,7 @@ from collections import defaultdict
 
 
 class HrContractHistory(models.Model):
-    _inherit = ['hr.contract.history']
+    _inherit = 'hr.contract.history'
 
     default_contract_id = fields.Many2one('hr.contract', string='Contract Template', readonly=True,
         help='Default contract used when making an offer to an applicant.')

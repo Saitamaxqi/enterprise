@@ -5,7 +5,7 @@ from odoo import models, api
 
 
 class StockLot(models.Model):
-    _inherit = ['stock.lot']
+    _inherit = 'stock.lot'
     _barcode_field = 'name'
 
     @api.model

@@ -11,7 +11,7 @@ from odoo.tools.safe_eval import const_eval
 
 
 class DeliveryCarrier(models.Model):
-    _inherit = ['delivery.carrier']
+    _inherit = 'delivery.carrier'
 
     delivery_type = fields.Selection(selection_add=[
         ('dhl', "DHL")

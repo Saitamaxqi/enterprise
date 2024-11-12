@@ -6,7 +6,7 @@ from odoo import fields, models
 
 
 class ResCountry(models.Model):
-    _inherit = ['res.country']
+    _inherit = 'res.country'
 
     # Columns
     l10n_ec_code_ats = fields.Char(

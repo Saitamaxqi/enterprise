@@ -4,7 +4,7 @@ from odoo import models, fields, api
 
 
 class AccountSetupBankManualConfig(models.TransientModel):
-    _inherit = ['account.setup.bank.manual.config']
+    _inherit = 'account.setup.bank.manual.config'
 
     def validate(self):
         """ Default the bank statement source of new bank journals as 'file_import'

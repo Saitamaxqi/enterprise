@@ -20,7 +20,7 @@ RENTAL_STATUS = [
 
 
 class SaleOrder(models.Model):
-    _inherit = ['sale.order']
+    _inherit = 'sale.order'
 
     _rental_period_coherence = models.Constraint(
         'CHECK(rental_start_date < rental_return_date)',

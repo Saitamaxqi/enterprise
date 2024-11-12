@@ -9,6 +9,7 @@ from ..models.l10n_lu_tax_report_data import MULTI_COLUMN_FIELDS
 
 
 class L10n_LuAnnualTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_lu.annual.tax.report.handler'
     _inherit = ['l10n_lu.tax.report.handler']
     _description = 'Luxembourgish Annual Tax Report Custom Handler'
 
@@ -187,6 +188,7 @@ class L10n_LuAnnualTaxReportHandler(models.AbstractModel):
 
 
 class L10n_LuAppendixATaxReportHandler(models.AbstractModel):
+    _name = 'l10n_lu.appendix.a.tax.report.handler'
     _inherit = ['l10n_lu.annual.tax.report.handler']
     _description = 'Custom Handler for the Appendix A of the LU Annual Tax Report'
 
@@ -250,6 +252,7 @@ class L10n_LuAppendixATaxReportHandler(models.AbstractModel):
 
 
 class L10n_LuAppendixOpexTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_lu.appendix.opex.tax.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'Custom Handler for the Appendix to Operational Expenditures of the LU Annual Tax Report'
 

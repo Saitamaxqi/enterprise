@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class Website(models.Model):
-    _inherit = ['website']
+    _inherit = 'website'
 
     @api.model
     def import_website(self, **kwargs):

@@ -8,7 +8,7 @@ from odoo.tools import format_amount
 
 
 class ProductTemplate(models.Model):
-    _inherit = ['product.template']
+    _inherit = 'product.template'
 
     rent_ok = fields.Boolean(
         string="Rental",

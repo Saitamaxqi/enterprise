@@ -7,7 +7,7 @@ from odoo import models
 
 
 class UtmCampaign(models.Model):
-    _inherit = ['utm.campaign']
+    _inherit = 'utm.campaign'
 
     def _compute_clicks_count(self):
         """ Bypass the computation for our demo campaign. """

@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class StockMoveLine(models.Model):
-    _inherit = ['stock.move.line']
+    _inherit = 'stock.move.line'
 
     quality_check_ids = fields.One2many('quality.check', 'move_line_id', string='Check')
 

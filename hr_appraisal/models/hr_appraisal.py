@@ -15,6 +15,7 @@ _logger = logging.getLogger(__name__)
 
 
 class HrAppraisal(models.Model):
+    _name = 'hr.appraisal'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = "Employee Appraisal"
     _order = 'state desc, date_close, id desc'

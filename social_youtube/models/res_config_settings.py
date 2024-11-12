@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     youtube_use_own_account = fields.Boolean("Use your own YouTube Account", config_parameter='social.youtube_use_own_account')
     youtube_oauth_client_id = fields.Char("YouTube OAuth Client ID",

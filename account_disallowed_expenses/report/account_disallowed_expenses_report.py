@@ -6,6 +6,7 @@ from odoo.tools import SQL, Query
 
 
 class AccountDisallowedExpensesReportHandler(models.AbstractModel):
+    _name = 'account.disallowed.expenses.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Disallowed Expenses Custom Handler'
 

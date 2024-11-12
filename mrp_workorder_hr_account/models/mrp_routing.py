@@ -5,7 +5,7 @@ from odoo import models
 
 
 class MrpRoutingWorkcenter(models.Model):
-    _inherit = ['mrp.routing.workcenter']
+    _inherit = 'mrp.routing.workcenter'
 
     def _total_cost_per_hour(self):
         return super()._total_cost_per_hour() + self.workcenter_id.employee_costs_hour * self.employee_ratio

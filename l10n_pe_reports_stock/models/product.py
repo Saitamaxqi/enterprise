@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class ProductTemplate(models.Model):
-    _inherit = ['product.template']
+    _inherit = 'product.template'
 
     l10n_pe_type_of_existence = fields.Selection(
         [

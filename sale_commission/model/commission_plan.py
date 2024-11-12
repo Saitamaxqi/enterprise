@@ -10,6 +10,7 @@ from odoo.exceptions import ValidationError
 
 
 class SaleCommissionPlan(models.Model):
+    _name = 'sale.commission.plan'
     _description = 'Commission Plan'
     _order = 'id'
     _inherit = ['mail.thread']

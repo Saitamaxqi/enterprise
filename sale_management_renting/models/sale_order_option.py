@@ -5,7 +5,7 @@ from odoo.osv import expression
 
 
 class SaleOrderOption(models.Model):
-    _inherit = ['sale.order.option']
+    _inherit = 'sale.order.option'
 
     def add_option_to_order(self):
         """ Override to add the rental context so that new SOL can be flagged as rental """

@@ -4,7 +4,7 @@ from odoo import models, _
 
 
 class AccountReport(models.Model):
-    _inherit = ['account.report']
+    _inherit = 'account.report'
 
     def _init_options_buttons(self, options, previous_options):
         # OVERRIDE

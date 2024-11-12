@@ -8,6 +8,7 @@ from odoo import models, fields, api, _, SUPERUSER_ID
 
 
 class FrontdeskVisitor(models.Model):
+    _name = 'frontdesk.visitor'
     _description = 'Frontdesk Visitors'
     _order = 'check_in'
 

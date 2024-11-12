@@ -5,7 +5,7 @@ from odoo import models, api, fields, _
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     l10n_es_reports_iae_group = fields.Char("IAE Group or Heading", size=7, default='A010000', help="""\
         This field corresponds to the activity to which the entry refers in 7 alphanumeric characters.\n

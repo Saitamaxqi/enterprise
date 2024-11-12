@@ -8,6 +8,7 @@ from odoo.tools import format_list
 
 
 class SignSendRequest(models.TransientModel):
+    _name = 'sign.send.request'
     _description = 'Sign send request'
 
     @api.model

@@ -12,7 +12,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountExternalTaxMixin(models.AbstractModel):
-    _inherit = ['account.external.tax.mixin']
+    _inherit = 'account.external.tax.mixin'
 
     # Technical field used for the visibility of fields and buttons
     is_avatax = fields.Boolean(compute='_compute_is_avatax')

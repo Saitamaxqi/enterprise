@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class ProjectTask(models.Model):
-    _inherit = ["project.task"]
+    _inherit = "project.task"
 
     allow_worksheets = fields.Boolean(related='project_id.allow_worksheets')
     worksheet_template_id = fields.Many2one(

@@ -12,7 +12,7 @@ MONSTER_WSDL_URI = 'https://schemas.monster.com/Current/WSDL/MonsterBusinessGate
 
 
 class HrRecruitmentPlatform(models.Model):
-    _inherit = ['hr.recruitment.platform']
+    _inherit = 'hr.recruitment.platform'
 
     def _post_api_call(self, data):
         # To be overridden by the specific platform

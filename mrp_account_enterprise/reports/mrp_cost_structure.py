@@ -8,6 +8,7 @@ from odoo.tools import float_round, SQL
 
 
 class ReportMrp_Account_EnterpriseMrp_Cost_Structure(models.AbstractModel):
+    _name = 'report.mrp_account_enterprise.mrp_cost_structure'
     _description = 'MRP Cost Structure Report'
 
     def get_lines(self, productions):
@@ -158,6 +159,7 @@ class ReportMrp_Account_EnterpriseMrp_Cost_Structure(models.AbstractModel):
 
 
 class ReportMrp_Account_EnterpriseProduct_Template_Cost_Structure(models.AbstractModel):
+    _name = 'report.mrp_account_enterprise.product_template_cost_structure'
     _description = 'Product Template Cost Structure Report'
 
     @api.model

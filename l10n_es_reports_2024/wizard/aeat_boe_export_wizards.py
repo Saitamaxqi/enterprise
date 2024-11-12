@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class L10n_Es_ReportsAeatBoeMod303ExportWizard(models.TransientModel):
-    _inherit = ['l10n_es_reports.aeat.boe.mod303.export.wizard']
+    _inherit = 'l10n_es_reports.aeat.boe.mod303.export.wizard'
 
     # Rename according to the changes in Orden HAC/819/2024 (https://www.boe.es/eli/es/o/2024/07/30/hac819)
     complementary_declaration = fields.Boolean(

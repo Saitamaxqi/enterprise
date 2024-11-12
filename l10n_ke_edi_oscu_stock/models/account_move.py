@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move']
+    _inherit = 'account.move'
 
     l10n_ke_oscu_show_create_purchase_order_button = fields.Boolean(
         compute='_compute_l10n_ke_oscu_show_create_purchase_order_button'
@@ -161,7 +161,7 @@ class AccountMove(models.Model):
 
 
 class AccountMoveLine(models.Model):
-    _inherit = ['account.move.line']
+    _inherit = 'account.move.line'
 
     product_id = fields.Many2one(compute='_compute_product_id', store=True, readonly=False, precompute=True)
 

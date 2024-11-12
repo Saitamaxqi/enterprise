@@ -3,6 +3,7 @@ from odoo.exceptions import UserError
 
 
 class L10n_AuPayslipYtd(models.Model):
+    _name = 'l10n_au.payslip.ytd'
     _description = "YTD Opening Balances"
 
     name = fields.Char(string="Description", compute="_compute_name", required=True)
@@ -85,6 +86,7 @@ class L10n_AuPayslipYtd(models.Model):
 
 
 class L10n_AuPayslipYtdInput(models.Model):
+    _name = 'l10n_au.payslip.ytd.input'
     _description = "YTD Opening Balances Inputs"
 
     l10n_au_payslip_ytd_id = fields.Many2one("l10n_au.payslip.ytd", required=True, ondelete="cascade")

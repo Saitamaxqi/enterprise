@@ -2,6 +2,7 @@ from odoo import models
 
 
 class AccountBalanceSheetReportHandler(models.AbstractModel):
+    _name = 'account.balance.sheet.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = "Balance Sheet Custom Handler"
 

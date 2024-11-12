@@ -27,7 +27,7 @@ DEFAULT_IAP_TEST_ENDPOINT = 'https://l10n-pe-edi.test.odoo.com'
 
 
 class AccountEdiFormat(models.Model):
-    _inherit = ['account.edi.format']
+    _inherit = 'account.edi.format'
 
     # -------------------------------------------------------------------------
     # EDI: HELPERS

@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class L10n_AuPayrollFinalisationWizard(models.TransientModel):
+    _name = 'l10n_au.payroll.finalisation.wizard'
     _description = "STP Finalisation"
 
     def _default_fiscal_year(self):
@@ -118,6 +119,7 @@ class L10n_AuPayrollFinalisationWizard(models.TransientModel):
 
 
 class L10n_AuPayrollFinalisationWizardEmp(models.TransientModel):
+    _name = 'l10n_au.payroll.finalisation.wizard.emp'
     _description = "STP Finalisation Employees"
 
     l10n_au_payroll_finalisation_id = fields.Many2one("l10n_au.payroll.finalisation.wizard", string="Finalisation Wizard", required=True, ondelete="cascade")

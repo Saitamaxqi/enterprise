@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class HrEmployee(models.Model):
-    _inherit = ['hr.employee']
+    _inherit = 'hr.employee'
 
     def _get_first_contracts(self):
         self.ensure_one()

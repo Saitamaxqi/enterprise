@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class PosPrinter(models.Model):
-    _inherit = ['pos.printer']
+    _inherit = 'pos.printer'
 
     device_id = fields.Many2one('iot.device', 'IoT Device', domain="['&', ('type', '=', 'printer'), ('subtype', '=', 'receipt_printer'), '|', ('company_id', '=', False), ('company_id', '=', company_id)]")
     device_identifier = fields.Char(related="device_id.identifier")

@@ -8,6 +8,7 @@ from odoo.addons.sale_renting.models.sale_order import RENTAL_STATUS
 
 
 class SaleRentalSchedule(models.Model):
+    _name = 'sale.rental.schedule'
     _description = "Rental Schedule"
     _auto = False
     _order = 'order_date desc'

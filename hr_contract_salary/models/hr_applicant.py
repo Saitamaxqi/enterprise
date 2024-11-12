@@ -10,7 +10,7 @@ from odoo.exceptions import UserError
 
 
 class HrApplicant(models.Model):
-    _inherit = ['hr.applicant']
+    _inherit = 'hr.applicant'
 
     salary_offer_ids = fields.One2many('hr.contract.salary.offer', 'applicant_id')
     salary_offers_count = fields.Integer(compute='_compute_salary_offers_count', compute_sudo=True)

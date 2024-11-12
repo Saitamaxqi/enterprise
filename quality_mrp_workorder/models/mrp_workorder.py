@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class MrpWorkorder(models.Model):
-    _inherit = ["mrp.workorder"]
+    _inherit = "mrp.workorder"
 
 
     def button_quality_alert(self):

@@ -8,6 +8,7 @@ from datetime import datetime
 
 
 class AccountFiscalYear(models.Model):
+    _name = 'account.fiscal.year'
     _description = 'Fiscal Year'
 
     name = fields.Char(string='Name', required=True)

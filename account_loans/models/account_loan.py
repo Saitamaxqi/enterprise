@@ -7,6 +7,7 @@ from odoo.exceptions import UserError, ValidationError
 
 
 class AccountLoan(models.Model):
+    _name = 'account.loan'
     _description = 'Loan'
     _inherit = ['mail.thread']
     _order = 'date'

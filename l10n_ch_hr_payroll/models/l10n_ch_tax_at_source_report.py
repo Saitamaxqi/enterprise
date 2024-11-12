@@ -11,6 +11,7 @@ from odoo.exceptions import UserError
 
 
 class L10nChIsReport(models.Model):
+    _name = 'l10n.ch.is.report'
     _description = 'Tax at Source Monthly Report'
 
     @api.model
@@ -111,6 +112,7 @@ class L10nChIsReport(models.Model):
 
 
 class L10nChIsReportLine(models.Model):
+    _name = 'l10n.ch.is.report.line'
     _description = 'Tax at Source Monthly Report Line'
 
     report_id = fields.Many2one('l10n.ch.is.report')

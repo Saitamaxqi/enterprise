@@ -6,7 +6,7 @@ from odoo import api, models
 
 
 class AccountBankStatementLine(models.Model):
-    _inherit = ['account.bank.statement.line']
+    _inherit = 'account.bank.statement.line'
 
     @api.model_create_multi
     def create(self, vals_list):

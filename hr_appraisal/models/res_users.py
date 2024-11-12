@@ -5,7 +5,7 @@ from odoo import models, fields, api
 
 
 class ResUsers(models.Model):
-    _inherit = ['res.users']
+    _inherit = 'res.users'
 
     next_appraisal_date = fields.Date(related='employee_id.next_appraisal_date')
     ongoing_appraisal_count = fields.Integer(related='employee_id.ongoing_appraisal_count')

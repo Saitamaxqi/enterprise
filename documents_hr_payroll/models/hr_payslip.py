@@ -5,6 +5,7 @@ from odoo import api, models
 
 
 class HrPayslip(models.Model):
+    _name = 'hr.payslip'
     _inherit = ['hr.payslip', 'documents.mixin']
 
     def _get_document_access_ids(self):

@@ -5,7 +5,7 @@ from odoo import models
 
 
 class StockPickingType(models.Model):
-    _inherit = ['stock.picking.type']
+    _inherit = 'stock.picking.type'
 
     def action_mrp_overview(self):
         routing_count = self.env['stock.picking.type'].search_count([('code', '=', 'mrp_operation')])

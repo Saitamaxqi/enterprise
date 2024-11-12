@@ -6,6 +6,7 @@ from odoo.tools import float_round
 
 
 class TimesheetGridMixin(models.AbstractModel):
+    _name = 'timesheet.grid.mixin'
     _description = 'Timesheet Grid mixin'
 
     @api.model

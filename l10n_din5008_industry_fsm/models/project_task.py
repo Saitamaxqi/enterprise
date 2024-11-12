@@ -4,6 +4,6 @@ from odoo import models, fields
 
 
 class ProjectTask(models.Model):
-    _inherit = ['project.task']
+    _inherit = 'project.task'
 
     l10n_din5008_date = fields.Date(default=fields.Date.today, store=False)

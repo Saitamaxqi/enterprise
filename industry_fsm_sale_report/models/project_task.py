@@ -4,7 +4,7 @@ from odoo import models, api
 
 
 class ProjectTask(models.Model):
-    _inherit = ["project.task"]
+    _inherit = "project.task"
 
     @api.depends(
         'allow_worksheets', 'allow_material', 'timer_start', 'worksheet_signature',

@@ -7,6 +7,7 @@ from odoo.osv import expression
 
 
 class HrEmployee(models.Model):
+    _name = 'hr.employee'
     _inherit = ['hr.employee', 'documents.mixin']
 
     document_count = fields.Integer(compute='_compute_document_count', groups="hr.group_hr_user")

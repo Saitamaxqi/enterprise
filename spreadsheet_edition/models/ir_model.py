@@ -4,7 +4,7 @@ from odoo import models, api
 
 
 class IrModel(models.Model):
-    _inherit = ["ir.model"]
+    _inherit = "ir.model"
 
     @api.model
     def has_searchable_parent_relation(self, model_name):

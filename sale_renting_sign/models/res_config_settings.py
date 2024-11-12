@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ["res.config.settings"]
+    _inherit = "res.config.settings"
 
     rental_sign_tmpl_id = fields.Many2one(
         "sign.template",

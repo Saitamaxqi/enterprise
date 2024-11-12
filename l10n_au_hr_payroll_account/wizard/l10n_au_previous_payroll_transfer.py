@@ -5,6 +5,7 @@ from odoo.exceptions import UserError
 
 
 class L10n_AuPreviousPayrollTransfer(models.TransientModel):
+    _name = 'l10n_au.previous.payroll.transfer'
     _description = "Transfer From Previous Payroll System"
 
     def _default_fiscal_year_start_date(self):
@@ -37,6 +38,7 @@ class L10n_AuPreviousPayrollTransfer(models.TransientModel):
 
 
 class L10n_AuPreviousPayrollTransferEmployee(models.TransientModel):
+    _name = 'l10n_au.previous.payroll.transfer.employee'
     _description = "Employee Transfer From Previous Payroll System"
 
     l10n_au_previous_payroll_transfer_id = fields.Many2one("l10n_au.previous.payroll.transfer", required=True, ondelete="cascade")

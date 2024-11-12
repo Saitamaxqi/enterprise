@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class ProductTemplate(models.Model):
-    _inherit = ['product.template']
+    _inherit = 'product.template'
 
     planning_enabled = fields.Boolean(
         'Plan Services',

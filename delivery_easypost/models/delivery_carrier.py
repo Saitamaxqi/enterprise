@@ -14,7 +14,7 @@ from .easypost_request import EasypostRequest
 
 
 class DeliveryCarrier(models.Model):
-    _inherit = ['delivery.carrier']
+    _inherit = 'delivery.carrier'
 
     delivery_type = fields.Selection(selection_add=[
         ('easypost', 'Easypost')

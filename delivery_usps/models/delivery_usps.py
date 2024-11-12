@@ -10,7 +10,7 @@ from .usps_request import USPSRequest
 
 
 class DeliveryCarrier(models.Model):
-    _inherit = ['delivery.carrier']
+    _inherit = 'delivery.carrier'
 
     delivery_type = fields.Selection(selection_add=[
         ('usps', "USPS")

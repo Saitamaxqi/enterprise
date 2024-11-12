@@ -4,7 +4,7 @@ from odoo import models
 
 
 class StockReturnPicking(models.TransientModel):
-    _inherit = ["stock.return.picking"]
+    _inherit = "stock.return.picking"
 
     def _compute_moves_locations(self):
         super()._compute_moves_locations()

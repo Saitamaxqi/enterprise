@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class UomUom(models.Model):
-    _inherit = ['uom.uom']
+    _inherit = 'uom.uom'
 
     l10n_mx_edi_code_aduana = fields.Char(
         string="Customs code",

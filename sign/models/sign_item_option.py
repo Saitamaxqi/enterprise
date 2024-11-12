@@ -4,6 +4,7 @@ from odoo import api, fields, models
 
 
 class SignItemOption(models.Model):
+    _name = 'sign.item.option'
     _description = "Option of a selection Field"
     _rec_name = "value"
 

@@ -6,14 +6,14 @@ from odoo.osv import expression
 
 
 class ProductTemplate(models.Model):
-    _inherit = ['product.template']
+    _inherit = 'product.template'
 
     unspsc_code_id = fields.Many2one('product.unspsc.code', 'UNSPSC Category', domain=[('applies_to', '=', 'product')],
         help='The UNSPSC code related to this product.  Used for edi in Colombia, Peru, Mexico and Denmark')
 
 
 class UomUom(models.Model):
-    _inherit = ['uom.uom']
+    _inherit = 'uom.uom'
 
     unspsc_code_id = fields.Many2one('product.unspsc.code', 'UNSPSC Category',
                                                 domain=[('applies_to', '=', 'uom')],

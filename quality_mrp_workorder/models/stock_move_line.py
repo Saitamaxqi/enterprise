@@ -5,7 +5,7 @@ from odoo import models
 
 
 class StockMoveLine(models.Model):
-    _inherit = ['stock.move.line']
+    _inherit = 'stock.move.line'
 
     def _without_quality_checks(self):
         self.ensure_one()

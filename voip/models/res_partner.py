@@ -3,6 +3,7 @@ from odoo.osv import expression
 
 
 class ResPartner(models.Model):
+    _name = 'res.partner'
     _inherit = ["res.partner", "voip.queue.mixin"]
 
     @api.model

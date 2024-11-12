@@ -10,7 +10,7 @@ from .ups_request import UPSRequest
 
 
 class DeliveryCarrier(models.Model):
-    _inherit = ['delivery.carrier']
+    _inherit = 'delivery.carrier'
 
     def _get_ups_service_types(self):
         return [

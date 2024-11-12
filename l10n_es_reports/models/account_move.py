@@ -7,7 +7,7 @@ from odoo.tools.sql import column_exists, create_column
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move']
+    _inherit = 'account.move'
 
     def _auto_init(self):
         if not column_exists(self.env.cr, "account_move", "l10n_es_reports_mod349_available"):

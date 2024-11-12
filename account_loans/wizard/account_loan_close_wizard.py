@@ -3,6 +3,7 @@ from odoo.tools import format_date
 
 
 class AccountLoanCloseWizard(models.TransientModel):
+    _name = 'account.loan.close.wizard'
     _description = 'Close Loan Wizard'
 
     loan_id = fields.Many2one(

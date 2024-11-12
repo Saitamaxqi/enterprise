@@ -8,7 +8,7 @@ from odoo.osv import expression
 
 
 class MrpBom(models.Model):
-    _inherit = ['mrp.bom']
+    _inherit = 'mrp.bom'
 
     version = fields.Integer('Version', default=1)
     previous_bom_id = fields.Many2one('mrp.bom', 'Previous BoM')
@@ -101,7 +101,7 @@ class MrpBom(models.Model):
 
 
 class MrpBomLine(models.Model):
-    _inherit = ['mrp.bom.line']
+    _inherit = 'mrp.bom.line'
 
     def _prepare_rebase_line(self, eco, change_type, product_id, uom_id, operation_id=None, new_qty=0):
         self.ensure_one()
@@ -186,7 +186,7 @@ class MrpBomLine(models.Model):
 
 
 class MrpBomByproduct(models.Model):
-    _inherit = ['mrp.bom.byproduct']
+    _inherit = 'mrp.bom.byproduct'
 
     def _get_sync_values(self):
         if not self:

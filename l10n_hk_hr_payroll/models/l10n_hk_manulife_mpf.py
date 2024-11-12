@@ -16,6 +16,7 @@ from odoo.addons.l10n_hk_hr_payroll.models.l10n_hk_ird import MONTH_SELECTION
 
 
 class L10n_HkManulifeMpf(models.Model):
+    _name = 'l10n_hk.manulife.mpf'
     _description = 'Manulife MPF'
     _order = 'period'
 
@@ -268,6 +269,7 @@ class L10n_HkManulifeMpf(models.Model):
 
 
 class L10n_HkManulifeMpfLine(models.Model):
+    _name = 'l10n_hk.manulife.mpf.line'
     _description = 'Manulife MPF Line'
 
     _unique_employee = models.Constraint(

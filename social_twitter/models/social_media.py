@@ -19,7 +19,7 @@ from werkzeug.urls import url_join, url_quote
 
 
 class SocialMedia(models.Model):
-    _inherit = ['social.media']
+    _inherit = 'social.media'
 
     _TWITTER_ENDPOINT = 'https://api.twitter.com'
 

@@ -4,7 +4,7 @@ from odoo import models, fields
 
 
 class StockMoveLine(models.Model):
-    _inherit = ['stock.move.line']
+    _inherit = 'stock.move.line'
 
     l10n_mx_edi_weight = fields.Float(compute='_cal_move_line_weight', digits='Stock Weight', compute_sudo=True)
 

@@ -8,7 +8,7 @@ from odoo.tools.float_utils import float_round
 
 
 class AccountReport(models.Model):
-    _inherit = ['account.report']
+    _inherit = 'account.report'
 
     def assets_init_custom_options(self, options, previous_options):
         super().assets_init_custom_options(options, previous_options)

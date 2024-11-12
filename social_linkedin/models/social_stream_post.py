@@ -16,7 +16,7 @@ _logger = logging.getLogger(__name__)
 
 
 class SocialStreamPost(models.Model):
-    _inherit = ['social.stream.post']
+    _inherit = 'social.stream.post'
 
     linkedin_post_urn = fields.Char('LinkedIn post URN')
     linkedin_author_urn = fields.Char('LinkedIn author URN')

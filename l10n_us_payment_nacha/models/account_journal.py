@@ -3,7 +3,7 @@ from odoo import fields, models
 
 
 class AccountJournal(models.Model):
-    _inherit = ["account.journal"]
+    _inherit = "account.journal"
 
     def _default_outbound_payment_methods(self):
         res = super()._default_outbound_payment_methods()

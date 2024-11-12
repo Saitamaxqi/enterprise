@@ -14,6 +14,7 @@ OCR_VERSION = 132
 
 
 class HrExpense(models.Model):
+    _name = 'hr.expense'
     _inherit = ['extract.mixin', 'hr.expense']
     # We want to see the records that are just processed by OCR at the top of the list
     _order = "extract_state_processed desc, date desc, id desc"
@@ -167,7 +168,7 @@ class HrExpense(models.Model):
 
 
 class HrExpenseSheet(models.Model):
-    _inherit = ['hr.expense.sheet']
+    _inherit = 'hr.expense.sheet'
 
     def _is_expense_sample(self):
         samples = set(self.mapped('expense_line_ids.sample'))

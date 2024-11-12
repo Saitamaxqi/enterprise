@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class AccountReport(models.Model):
-    _inherit = ['account.report']
+    _inherit = 'account.report'
 
     def _report_custom_engine_executive_summary_ndays(self, expressions, options, date_scope, current_groupby, next_groupby, offset=0, limit=None, warnings=None):
         if current_groupby or next_groupby:

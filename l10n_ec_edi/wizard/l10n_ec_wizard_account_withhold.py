@@ -18,6 +18,7 @@ from odoo.addons.l10n_ec_edi.models.account_move import L10N_EC_WITHHOLD_FOREIGN
 
 
 class L10n_EcWizardAccountWithhold(models.TransientModel):
+    _name = 'l10n_ec.wizard.account.withhold'
     _description = 'Withhold Wizard'
     _check_company_auto = True
 
@@ -391,6 +392,7 @@ class L10n_EcWizardAccountWithhold(models.TransientModel):
 
 
 class L10n_EcWizardAccountWithholdLine(models.TransientModel):
+    _name = 'l10n_ec.wizard.account.withhold.line'
     _description = "Withhold Wizard Lines"
 
     invoice_id = fields.Many2one(

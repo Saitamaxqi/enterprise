@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 
 
 class IrActionsReport(models.Model):
-    _inherit = ['ir.actions.report']
+    _inherit = 'ir.actions.report'
 
     device_ids = fields.Many2many('iot.device', string='IoT Devices', domain="[('type', '=', 'printer')]",
                                 help='When setting a device here, the report will be printed through this device on the IoT Box')

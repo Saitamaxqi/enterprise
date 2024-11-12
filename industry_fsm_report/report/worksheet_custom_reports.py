@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class ReportIndustry_FsmWorksheet_Custom(models.AbstractModel):
-    _inherit = ['report.industry_fsm.worksheet_custom']
+    _inherit = 'report.industry_fsm.worksheet_custom'
 
     @api.model
     def _get_report_values(self, docids, data=None):

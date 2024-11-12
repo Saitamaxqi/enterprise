@@ -8,6 +8,7 @@ from odoo.tools.translate import html_translate
 
 
 class RoomRoom(models.Model):
+    _name = 'room.room'
     _inherit = ["mail.thread"]
     _description = "Room"
     _order = "name, id"

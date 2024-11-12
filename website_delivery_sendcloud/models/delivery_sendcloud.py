@@ -14,7 +14,7 @@ SERVICE_POINT_H = 'Service point'
 
 
 class DeliveryCarrier(models.Model):
-    _inherit = ['delivery.carrier']
+    _inherit = 'delivery.carrier'
 
     sendcloud_can_customize_use_locations = fields.Boolean(default=False, compute='_compute_sendcloud_can_customize_use_locations')
     sendcloud_use_locations = fields.Boolean(string='Use Sendcloud Locations',

@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     extract_in_invoice_digitalization_mode = fields.Selection([
         ('no_send', "Do not digitize"),

@@ -10,7 +10,7 @@ from odoo.exceptions import UserError
 
 
 class HrWorkEntry(models.Model):
-    _inherit = ['hr.work.entry']
+    _inherit = 'hr.work.entry'
 
     is_credit_time = fields.Boolean(
         string='Credit time', readonly=True,

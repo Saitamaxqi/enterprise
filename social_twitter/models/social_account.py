@@ -13,7 +13,7 @@ TWITTER_IMAGES_UPLOAD_ENDPOINT = "https://upload.twitter.com/1.1/media/upload.js
 
 
 class SocialAccount(models.Model):
-    _inherit = ['social.account']
+    _inherit = 'social.account'
 
     twitter_user_id = fields.Char('X User ID')
     twitter_oauth_token = fields.Char('X OAuth Token')

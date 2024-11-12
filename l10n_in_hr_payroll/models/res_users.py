@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResUsers(models.Model):
-    _inherit = ['res.users']
+    _inherit = 'res.users'
 
     l10n_in_relationship = fields.Char(related='employee_id.l10n_in_relationship', readonly=False, related_sudo=False)
 

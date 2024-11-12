@@ -8,7 +8,7 @@ from odoo import api, fields, models, release, _
 
 
 class AccountGeneralLedgerReportHandler(models.AbstractModel):
-    _inherit = ['account.general.ledger.report.handler']
+    _inherit = 'account.general.ledger.report.handler'
 
     def _customize_warnings(self, report, options, all_column_groups_expression_totals, warnings):
         company = self.env.company

@@ -7,7 +7,7 @@ from odoo.osv import expression
 
 
 class WebsiteVisitor(models.Model):
-    _inherit = ['website.visitor']
+    _inherit = 'website.visitor'
 
     push_subscription_ids = fields.One2many('website.visitor.push.subscription', 'website_visitor_id',
         string="Push Subscriptions")

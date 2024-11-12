@@ -3,7 +3,7 @@ from odoo import models, fields
 
 
 class ResPartner(models.Model):
-    _inherit = ["res.partner"]
+    _inherit = "res.partner"
 
     l10n_br_activity_sector = fields.Selection(
         string="Main Activity Sector",

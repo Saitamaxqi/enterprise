@@ -12,7 +12,7 @@ from odoo.osv.expression import OR
 
 
 class QualityPoint(models.Model):
-    _inherit = ["quality.point"]
+    _inherit = "quality.point"
 
     failure_message = fields.Html('Failure Message')
     failure_location_ids = fields.Many2many('stock.location', string="Failure Locations", domain="[('usage', '=', 'internal')]",
@@ -209,7 +209,7 @@ class QualityPoint(models.Model):
 
 
 class QualityCheck(models.Model):
-    _inherit = ["quality.check"]
+    _inherit = "quality.check"
 
     failure_message = fields.Html(related='point_id.failure_message', readonly=True)
     measure = fields.Float('Measure', default=0.0, digits='Quality Tests', tracking=True)
@@ -485,7 +485,7 @@ class QualityCheck(models.Model):
 
 
 class QualityAlert(models.Model):
-    _inherit = ["quality.alert"]
+    _inherit = "quality.alert"
 
     title = fields.Char('Title')
 
@@ -528,7 +528,7 @@ class QualityAlert(models.Model):
 
 
 class ProductTemplate(models.Model):
-    _inherit = ["product.template"]
+    _inherit = "product.template"
 
     quality_control_point_qty = fields.Integer(compute='_compute_quality_check_qty', groups='quality.group_quality_user')
     quality_pass_qty = fields.Integer(compute='_compute_quality_check_qty', groups='quality.group_quality_user')
@@ -565,7 +565,7 @@ class ProductTemplate(models.Model):
 
 
 class ProductProduct(models.Model):
-    _inherit = ["product.product"]
+    _inherit = "product.product"
 
     quality_control_point_qty = fields.Integer(compute='_compute_quality_check_qty', groups='quality.group_quality_user')
     quality_pass_qty = fields.Integer(compute='_compute_quality_check_qty', groups='quality.group_quality_user')

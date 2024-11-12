@@ -2,6 +2,7 @@ from odoo import fields, models
 
 
 class L10n_Mx_EdiCustomsRegime(models.Model):
+    _name = 'l10n_mx_edi.customs.regime'
     _description = 'Mexican Customs Regime'
 
     code = fields.Char(string='Code', required=True)

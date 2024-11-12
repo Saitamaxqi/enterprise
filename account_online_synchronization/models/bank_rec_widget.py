@@ -2,7 +2,7 @@ from odoo import models
 
 
 class BankRecWidget(models.Model):
-    _inherit = ['bank.rec.widget']
+    _inherit = 'bank.rec.widget'
 
     def _action_validate(self):
         # EXTENDS account_accountant

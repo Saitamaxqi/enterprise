@@ -15,7 +15,7 @@ from odoo.tools.float_utils import float_compare
 
 
 class HrPayslip(models.Model):
-    _inherit = ['hr.payslip']
+    _inherit = 'hr.payslip'
 
     l10n_hk_worked_days_leaves_count = fields.Integer(
         'Worked Days Leaves Count',

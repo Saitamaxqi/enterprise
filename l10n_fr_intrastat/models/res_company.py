@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     l10n_fr_intrastat_envelope_id = fields.Char(
         string="DEBWEB2 Identifier",

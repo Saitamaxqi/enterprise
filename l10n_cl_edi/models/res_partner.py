@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     l10n_cl_dte_email = fields.Char(string='DTE Email', help="Chile: Email used to send and receive electronic documents.")
 

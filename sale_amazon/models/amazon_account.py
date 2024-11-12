@@ -22,6 +22,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AmazonAccount(models.Model):
+    _name = 'amazon.account'
     _description = "Amazon Account"
     _check_company_auto = True
 

@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class MarketingCampaign(models.Model):
-    _inherit = ['marketing.campaign']
+    _inherit = 'marketing.campaign'
 
     mailing_sms_count = fields.Integer('# SMS Mailings', compute='_compute_mailing_sms_count')
 

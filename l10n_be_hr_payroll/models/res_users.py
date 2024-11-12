@@ -26,7 +26,7 @@ L10N_BE_PAYROLL_WRITABLE_FIELDS = [
 
 
 class ResUsers(models.Model):
-    _inherit = ['res.users']
+    _inherit = 'res.users'
 
     spouse_fiscal_status = fields.Selection(related='employee_ids.spouse_fiscal_status', readonly=False)
     spouse_fiscal_status_explanation = fields.Char(related='employee_ids.spouse_fiscal_status_explanation')

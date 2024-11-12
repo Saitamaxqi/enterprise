@@ -39,6 +39,7 @@ def merge_common_lists(lsts):
 
 
 class Data_MergeModel(models.Model):
+    _name = 'data_merge.model'
     _description = 'Deduplication Model'
     _order = 'name'
 

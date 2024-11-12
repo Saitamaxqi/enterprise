@@ -2,6 +2,7 @@ from odoo import models
 
 
 class L10n_In_ReportsBalanceSheetReportHandler(models.AbstractModel):
+    _name = 'l10n_in_reports.balance.sheet.report.handler'
     _inherit = ['account.balance.sheet.report.handler']
     _description = 'Indian Custom Handler for Generic Balance Sheet'
 

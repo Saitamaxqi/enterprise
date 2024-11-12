@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     property_stock_account_production_cost_id = fields.Many2one(
         'account.account', "Production Account",

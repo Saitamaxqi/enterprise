@@ -14,6 +14,7 @@ from odoo.tools.misc import format_date, file_path
 
 
 class L10n_PhSlspReportHandler(models.AbstractModel):
+    _name = 'l10n_ph.slsp.report.handler'
     _inherit = ['l10n_ph.generic.report.handler']
     _description = 'Summary Lists of Sales and Purchases Custom Handler'
 

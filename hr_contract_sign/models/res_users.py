@@ -5,7 +5,7 @@ from odoo import api, models, fields
 
 
 class ResUsers(models.Model):
-    _inherit = ['res.users']
+    _inherit = 'res.users'
 
     sign_request_count = fields.Integer(
         compute='_compute_sign_request_count',

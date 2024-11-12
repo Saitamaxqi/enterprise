@@ -7,7 +7,7 @@ import io
 
 
 class HrPayrollPaymentReportWizard(models.TransientModel):
-    _inherit = ['hr.payroll.payment.report.wizard']
+    _inherit = 'hr.payroll.payment.report.wizard'
 
     export_format = fields.Selection(selection_add=[('l10n_sa_wps', 'Saudi WPS')], default='l10n_sa_wps', ondelete={'l10n_sa_wps': 'set csv'})
     l10n_sa_wps_value_date = fields.Date(default=fields.Date.today(), string="WPS Value Date", required=True)

@@ -5,7 +5,7 @@ from odoo import models, _
 
 
 class AccountPaymentRegister(models.TransientModel):
-    _inherit = ['account.payment.register']
+    _inherit = 'account.payment.register'
 
     def _reconcile_payments(self, to_process, edit_mode=False):
         res = super()._reconcile_payments(to_process, edit_mode=edit_mode)

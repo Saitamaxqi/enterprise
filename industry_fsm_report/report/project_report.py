@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ReportProjectTaskUser(models.Model):
-    _inherit = ['report.project.task.user']
+    _inherit = 'report.project.task.user'
 
     worksheet_template_id = fields.Many2one('worksheet.template', string="Worksheet Template", readonly=True)
 

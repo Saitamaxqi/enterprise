@@ -20,6 +20,7 @@ from odoo.addons.base.models.res_partner import _tz_get
 
 
 class AppointmentType(models.Model):
+    _name = 'appointment.type'
     _description = "Appointment Type"
     _inherit = ['image.mixin', 'mail.thread', 'mail.activity.mixin']
     _order = "sequence, id"

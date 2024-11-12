@@ -12,7 +12,7 @@ def batch(iterable, batch_size):
 
 
 class PlanningSlot(models.Model):
-    _inherit = ['planning.slot']
+    _inherit = 'planning.slot'
 
     def _create_work_entries(self):
         # Similar to `_create_work_entries` for attendances but this function assumes big batches

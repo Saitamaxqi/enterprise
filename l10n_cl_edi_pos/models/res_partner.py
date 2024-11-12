@@ -5,7 +5,7 @@ from odoo.tools.translate import _
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     @api.model
     def get_sii_taxpayer_types(self):

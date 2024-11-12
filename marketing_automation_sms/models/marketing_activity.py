@@ -11,7 +11,7 @@ _logger = logging.getLogger(__name__)
 
 
 class MarketingActivity(models.Model):
-    _inherit = ['marketing.activity']
+    _inherit = 'marketing.activity'
 
     activity_type = fields.Selection(selection_add=[
         ('sms', 'SMS')

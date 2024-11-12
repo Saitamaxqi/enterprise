@@ -11,6 +11,7 @@ from odoo.osv.expression import OR
 
 
 class QualityPointTest_Type(models.Model):
+    _name = 'quality.point.test_type'
     _description = "Quality Control Test Type"
 
     # Used instead of selection field in order to hide a choice depending on the view.
@@ -20,6 +21,7 @@ class QualityPointTest_Type(models.Model):
 
 
 class QualityPoint(models.Model):
+    _name = 'quality.point'
     _description = "Quality Control Point"
     _inherit = ['mail.thread']
     _order = "sequence, id"
@@ -90,6 +92,7 @@ class QualityPoint(models.Model):
 
 
 class QualityAlertTeam(models.Model):
+    _name = 'quality.alert.team'
     _description = "Quality Alert Team"
     _inherit = ['mail.alias.mixin', 'mail.thread']
     _order = "sequence, id"
@@ -134,12 +137,14 @@ class QualityAlertTeam(models.Model):
 
 
 class QualityReason(models.Model):
+    _name = 'quality.reason'
     _description = "Root Cause for Quality Failure"
 
     name = fields.Char('Name', required=True, translate=True)
 
 
 class QualityTag(models.Model):
+    _name = 'quality.tag'
     _description = "Quality Tag"
 
     name = fields.Char('Tag Name', required=True)
@@ -147,6 +152,7 @@ class QualityTag(models.Model):
 
 
 class QualityAlertStage(models.Model):
+    _name = 'quality.alert.stage'
     _description = "Quality Alert Stage"
     _order = "sequence, id"
     _fold_name = 'folded'
@@ -159,6 +165,7 @@ class QualityAlertStage(models.Model):
 
 
 class QualityCheck(models.Model):
+    _name = 'quality.check'
     _description = "Quality Check"
     _order = "point_id, id"
     _inherit = ['mail.thread', 'mail.activity.mixin']
@@ -254,6 +261,7 @@ class QualityCheck(models.Model):
 
 
 class QualityAlert(models.Model):
+    _name = 'quality.alert'
     _description = "Quality Alert"
     _inherit = ['mail.thread.cc', 'mail.activity.mixin']
     _check_company_auto = True

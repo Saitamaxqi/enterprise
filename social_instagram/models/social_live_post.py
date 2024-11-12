@@ -9,7 +9,7 @@ from werkzeug.urls import url_join
 
 
 class SocialLivePost(models.Model):
-    _inherit = ['social.live.post']
+    _inherit = 'social.live.post'
 
     instagram_post_id = fields.Char('Instagram Post ID', readonly=True)
 

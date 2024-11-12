@@ -6,7 +6,7 @@ from odoo.tools import get_timedelta
 
 
 class SaleOrderTemplate(models.Model):
-    _inherit = ['sale.order.template']
+    _inherit = 'sale.order.template'
 
     is_subscription = fields.Boolean(compute='_compute_is_subscription', search='_search_is_subscription')
     plan_id = fields.Many2one('sale.subscription.plan', string='Recurring Plan')
@@ -44,12 +44,12 @@ class SaleOrderTemplate(models.Model):
 
 
 class SaleOrderTemplateLine(models.Model):
-    _inherit = ['sale.order.template.line']
+    _inherit = 'sale.order.template.line'
 
     recurring_invoice = fields.Boolean(related='product_id.recurring_invoice')
 
 
 class SaleOrderTemplateOption(models.Model):
-    _inherit = ['sale.order.template.option']
+    _inherit = 'sale.order.template.option'
 
     recurring_invoice = fields.Boolean(related='product_id.recurring_invoice')

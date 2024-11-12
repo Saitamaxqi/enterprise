@@ -43,7 +43,7 @@ REFUND_REASON = [
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move']
+    _inherit = 'account.move'
 
     l10n_pe_edi_is_required = fields.Boolean(
         string="Is the Peruvian EDI needed",

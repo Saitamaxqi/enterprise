@@ -4,7 +4,7 @@ from odoo import _, api, fields, models
 
 
 class ProductProduct(models.Model):
-    _inherit = ['product.product']
+    _inherit = 'product.product'
 
     qty_in_rent = fields.Float("Quantity currently in rent", compute='_get_qty_in_rent')
 

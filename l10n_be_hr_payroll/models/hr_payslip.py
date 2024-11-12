@@ -12,7 +12,7 @@ from odoo.exceptions import UserError
 
 
 class HrPayslip(models.Model):
-    _inherit = ['hr.payslip']
+    _inherit = 'hr.payslip'
 
     meal_voucher_count = fields.Integer(
         compute='_compute_work_entry_dependent_benefits')  # Overrides compute method

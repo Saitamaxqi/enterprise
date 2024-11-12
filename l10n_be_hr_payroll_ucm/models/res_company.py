@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     ucm_code = fields.Char("UCM Affiliation Number", groups="hr.group_hr_user")
     ucm_company_code = fields.Char("UCM folder Number", groups="hr.group_hr_user")

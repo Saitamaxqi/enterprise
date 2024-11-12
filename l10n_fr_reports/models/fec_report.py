@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class AccountGeneralLedgerReportHandler(models.AbstractModel):
-    _inherit = ['account.general.ledger.report.handler']
+    _inherit = 'account.general.ledger.report.handler'
     _description = 'FEC Report Custom Handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
@@ -38,7 +38,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
 
 
 class L10n_FrFecExportWizard(models.TransientModel):
-    _inherit = ['l10n_fr.fec.export.wizard']
+    _inherit = 'l10n_fr.fec.export.wizard'
 
     def create_fec_report_action(self):
         # OVERRIDE

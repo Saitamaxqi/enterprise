@@ -7,7 +7,7 @@ from odoo.osv import expression
 
 
 class PlanningSlot(models.Model):
-    _inherit = ['planning.slot']
+    _inherit = 'planning.slot'
 
     employee_skill_ids = fields.One2many(related='employee_id.employee_skill_ids', string='Skills')
 

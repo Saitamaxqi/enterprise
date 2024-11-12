@@ -11,7 +11,7 @@ from odoo.fields import Datetime, Date
 
 
 class FleetVehicle(models.Model):
-    _inherit = ['fleet.vehicle']
+    _inherit = 'fleet.vehicle'
 
     co2_fee = fields.Float(compute='_compute_co2_fee', string="CO2 Fee")
     total_depreciated_cost = fields.Float(compute='_compute_total_depreciated_cost',
@@ -177,7 +177,7 @@ class FleetVehicle(models.Model):
 
 
 class FleetVehicleLogContract(models.Model):
-    _inherit = ['fleet.vehicle.log.contract']
+    _inherit = 'fleet.vehicle.log.contract'
 
     cost_generated = fields.Monetary(compute='_compute_cost', store=True, readonly=False)
     recurring_cost_amount_depreciated = fields.Float(
@@ -200,7 +200,7 @@ class FleetVehicleLogContract(models.Model):
 
 
 class FleetVehicleModel(models.Model):
-    _inherit = ['fleet.vehicle.model']
+    _inherit = 'fleet.vehicle.model'
 
     default_recurring_cost_amount_depreciated = fields.Float(string="Cost (Depreciated)",
         help="Default recurring cost amount that should be applied to a new vehicle from this model")

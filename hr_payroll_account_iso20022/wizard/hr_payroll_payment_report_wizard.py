@@ -6,7 +6,7 @@ from odoo.tools import format_list
 
 
 class HrPayrollPaymentReportWizard(models.TransientModel):
-    _inherit = ['hr.payroll.payment.report.wizard']
+    _inherit = 'hr.payroll.payment.report.wizard'
 
     export_format = fields.Selection(selection_add=[('sepa', 'SEPA')], default='sepa', ondelete={'sepa': 'set csv'})
     journal_id = fields.Many2one(

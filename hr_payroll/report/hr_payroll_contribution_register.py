@@ -5,6 +5,7 @@ from odoo import models
 
 
 class ReportHr_PayrollContribution_Register(models.AbstractModel):
+    _name = 'report.hr_payroll.contribution_register'
     _description = 'Model for Printing hr.payslip.line grouped by register'
 
     def _get_report_values(self, docids, data):

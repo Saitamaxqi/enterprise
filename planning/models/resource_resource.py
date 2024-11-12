@@ -7,7 +7,7 @@ from odoo import _, api, fields, models
 
 
 class ResourceResource(models.Model):
-    _inherit = ['resource.resource']
+    _inherit = 'resource.resource'
 
     def _default_color(self):
         return randint(1, 11)

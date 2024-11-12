@@ -5,7 +5,7 @@ from odoo import models, fields
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     firebase_enable_push_notifications = fields.Boolean('Enable Web Push Notifications', readonly=False, related='website_id.firebase_enable_push_notifications')
     firebase_use_own_account = fields.Boolean('Use your own Firebase account', readonly=False, related='website_id.firebase_use_own_account')

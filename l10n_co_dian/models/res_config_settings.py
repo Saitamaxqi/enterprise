@@ -2,7 +2,7 @@ from odoo import models, fields
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     l10n_co_dian_operation_mode_ids = fields.One2many(
         string="DIAN Operation Modes",

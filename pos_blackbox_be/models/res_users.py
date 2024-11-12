@@ -4,7 +4,7 @@ from odoo.tools.translate import _
 
 
 class ResUsers(models.Model):
-    _inherit = ["res.users"]
+    _inherit = "res.users"
 
     # bis number is for foreigners in Belgium
     insz_or_bis_number = fields.Char(

@@ -5,7 +5,7 @@ from odoo.osv import expression
 
 
 class SaleOrderTemplateLine(models.Model):
-    _inherit = ['sale.order.template.line']
+    _inherit = 'sale.order.template.line'
 
     @api.model
     def _product_id_domain(self):

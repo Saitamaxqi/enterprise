@@ -12,6 +12,7 @@ from odoo.exceptions import UserError
 
 
 class L10n_PeStockPleWizard(models.TransientModel):
+    _name = 'l10n_pe.stock.ple.wizard'
     _description = 'Wizard to generate Stock Move PLE reports for PE'
 
     @api.model

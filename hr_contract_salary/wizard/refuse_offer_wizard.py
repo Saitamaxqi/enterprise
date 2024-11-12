@@ -6,6 +6,7 @@ from odoo.exceptions import UserError
 
 
 class RefuseOfferWizard(models.TransientModel):
+    _name = 'refuse.offer.wizard'
     _description = 'Refuse an Offer'
 
     refusal_reason = fields.Many2one('hr.contract.salary.offer.refusal.reason', string="Refusal Reason", required=True)

@@ -6,6 +6,7 @@ from datetime import timedelta
 
 
 class Account_FollowupFollowupLine(models.Model):
+    _name = 'account_followup.followup.line'
     _description = 'Follow-up Criteria'
     _order = 'delay asc'
     _check_company_auto = True

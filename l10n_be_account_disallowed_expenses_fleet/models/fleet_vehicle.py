@@ -5,7 +5,7 @@ from odoo import models, fields, api
 
 
 class FleetVehicle(models.Model):
-    _inherit = ['fleet.vehicle']
+    _inherit = 'fleet.vehicle'
 
     @api.model_create_multi
     def create(self, vals_list):
@@ -57,6 +57,7 @@ class FleetVehicle(models.Model):
 
 
 class FleetDisallowedExpensesRate(models.Model):
+    _name = 'fleet.disallowed.expenses.rate'
     _description = 'Vehicle Disallowed Expenses Rate'
     _order = 'date_from desc'
     _inherit = ['fleet.disallowed.expenses.rate']

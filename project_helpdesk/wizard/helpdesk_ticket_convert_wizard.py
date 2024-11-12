@@ -5,6 +5,7 @@ from odoo import api, fields, models, _
 
 
 class HelpdeskTicketConvertWizard(models.TransientModel):
+    _name = 'helpdesk.ticket.convert.wizard'
     _description = 'Convert Helpdesk Tickets to Tasks'
 
     @api.model

@@ -7,7 +7,7 @@ from datetime import timedelta
 
 
 class PlanningSlot(models.Model):
-    _inherit = ['planning.slot']
+    _inherit = 'planning.slot'
 
     def _init_remaining_hours_to_plan(self, remaining_hours_to_plan):
         res = super()._init_remaining_hours_to_plan(remaining_hours_to_plan)

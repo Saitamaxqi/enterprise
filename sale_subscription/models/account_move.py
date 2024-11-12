@@ -6,7 +6,7 @@ from dateutil.relativedelta import relativedelta
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move']
+    _inherit = 'account.move'
 
     def _post(self, soft=True):
         posted_moves = super()._post(soft=soft)

@@ -5,6 +5,7 @@ from odoo.osv import expression
 
 
 class L10n_ClCompanyActivities(models.Model):
+    _name = 'l10n_cl.company.activities'
     _description = 'SII Company Economical Activities'
     _rec_names_search = ['name', 'code']
 

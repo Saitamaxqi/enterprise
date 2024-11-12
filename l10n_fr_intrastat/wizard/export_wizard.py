@@ -3,6 +3,7 @@ from odoo import models, fields, api
 
 
 class L10n_Fr_IntrastatExportWizard(models.TransientModel):
+    _name = 'l10n_fr_intrastat.export.wizard'
     _description = "Options for the export of Intrastat in France"
 
     export_type = fields.Selection(

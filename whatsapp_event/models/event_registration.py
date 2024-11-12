@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class EventRegistration(models.Model):
-    _inherit = ['event.registration']
+    _inherit = 'event.registration'
 
     date_tz = fields.Selection(related='event_id.date_tz')
 

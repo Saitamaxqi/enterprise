@@ -33,6 +33,7 @@ def _sanitize_file_extension(extension):
 
 
 class DocumentsDocument(models.Model):
+    _name = 'documents.document'
     _description = 'Document'
     _inherit = ['mail.thread.cc', 'mail.activity.mixin', 'mail.alias.mixin']
     _order = 'id desc'

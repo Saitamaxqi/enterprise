@@ -2,7 +2,7 @@ from odoo import models
 
 
 class StockValuationLayer(models.Model):
-    _inherit = ['stock.valuation.layer']
+    _inherit = 'stock.valuation.layer'
 
     def action_get_pe_ple_reports(self):
 

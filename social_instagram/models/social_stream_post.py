@@ -10,7 +10,7 @@ from odoo import fields, models, _
 
 
 class SocialStreamPost(models.Model):
-    _inherit = ['social.stream.post']
+    _inherit = 'social.stream.post'
 
     instagram_facebook_author_id = fields.Char('Instagram Facebook Author ID',
         help="The Facebook ID of this Instagram post author, used to fetch the profile picture.")

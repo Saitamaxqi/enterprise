@@ -4,6 +4,7 @@ from odoo import models, fields, _
 
 
 class IrAttachmentReport(models.Model):
+    _name = 'ir.attachment.report'
     _description = "Storage"
     _order = 'size desc'
     _auto = False

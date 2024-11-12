@@ -12,7 +12,7 @@ from odoo.tools.misc import format_date
 
 
 class ResCompany(models.Model):
-    _inherit = ["res.company"]
+    _inherit = "res.company"
 
     totals_below_sections = fields.Boolean(
         string='Add totals below sections',

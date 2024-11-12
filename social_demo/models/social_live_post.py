@@ -6,7 +6,7 @@ from odoo import models, fields
 
 
 class SocialLivePost(models.Model):
-    _inherit = ['social.live.post']
+    _inherit = 'social.live.post'
 
     def _refresh_statistics(self):
         """ Overridden to bypass third-party API calls. """

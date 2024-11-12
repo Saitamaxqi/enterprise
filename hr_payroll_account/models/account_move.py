@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move']
+    _inherit = 'account.move'
 
     payslip_ids = fields.One2many(
         comodel_name='hr.payslip',

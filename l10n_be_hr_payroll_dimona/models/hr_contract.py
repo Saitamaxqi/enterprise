@@ -151,7 +151,7 @@ ONSS_VALID_ZIPS = [
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     l10n_be_dimona_in_declaration_number = fields.Char(groups="hr_payroll.group_hr_payroll_user")
     l10n_be_dimona_last_declaration_number = fields.Char(groups="hr_payroll.group_hr_payroll_user")

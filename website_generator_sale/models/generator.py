@@ -7,7 +7,7 @@ logger = logging.getLogger(__name__)
 
 
 class Website_GeneratorRequest(models.Model):
-    _inherit = ['website_generator.request']
+    _inherit = 'website_generator.request'
 
     import_products = fields.Boolean("Import Products", default=True)
 

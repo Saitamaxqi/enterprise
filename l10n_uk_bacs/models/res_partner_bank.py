@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class ResPartnerBank(models.Model):
-    _inherit = ["res.partner.bank"]
+    _inherit = "res.partner.bank"
 
     @api.ondelete(at_uninstall=False)
     def _unlink_except_linked_to_ddi(self):

@@ -9,7 +9,7 @@ from odoo import fields, models, api
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     l10n_lu_is_representative = fields.Boolean(compute='_compute_l10n_lu_is_representative')
     l10n_lu_agent_matr_number = fields.Char(

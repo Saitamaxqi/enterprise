@@ -10,6 +10,7 @@ from odoo.exceptions import UserError
 
 
 class ReportL10n_In_Hr_PayrollReport_Hryearlysalary(models.AbstractModel):
+    _name = 'report.l10n_in_hr_payroll.report_hryearlysalary'
     _description = "Indian Yearly Salary Report"
 
     # YTI: This mess deserves a good cleaning

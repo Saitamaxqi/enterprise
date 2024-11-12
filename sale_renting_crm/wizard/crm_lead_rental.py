@@ -6,6 +6,7 @@ from odoo.exceptions import UserError
 
 
 class CrmLeadRental(models.TransientModel):
+    _name = 'crm.lead.rental'
     _description = 'Convert Lead to Rental Order'
 
     @api.model

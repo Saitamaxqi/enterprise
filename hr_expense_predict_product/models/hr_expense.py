@@ -8,7 +8,7 @@ from odoo import api, fields, models, _
 
 
 class HrExpense(models.Model):
-    _inherit = ['hr.expense']
+    _inherit = 'hr.expense'
 
     # Description is the field from which we would find the product
     # Limit_parameter should be the limit of expenses to analyse ( 10000 seems to be the best )

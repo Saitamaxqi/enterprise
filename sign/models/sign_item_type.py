@@ -5,6 +5,7 @@ from odoo.exceptions import ValidationError
 
 
 class SignItemType(models.Model):
+    _name = 'sign.item.type'
     _description = "Signature Item Type"
 
     name = fields.Char(string="Field Name", required=True, translate=True)

@@ -4,6 +4,6 @@ from odoo import fields, models
 
 
 class AccountTaxGroup(models.Model):
-    _inherit = ['account.tax.group']
+    _inherit = 'account.tax.group'
 
     l10n_pe_edi_code = fields.Char('EDI Code', help="Peruvian EDI code to complement catalog 05")

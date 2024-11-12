@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     account_represented_company_ids = fields.One2many('res.company', 'account_representative_id')
 

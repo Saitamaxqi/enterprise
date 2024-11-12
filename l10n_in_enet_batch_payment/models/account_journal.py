@@ -2,7 +2,7 @@ from odoo import api, Command, fields, models
 
 
 class AccountJournal(models.Model):
-    _inherit = ["account.journal"]
+    _inherit = "account.journal"
 
     bank_template_id = fields.Many2one('enet.bank.template', string='Bank Template')
     enet_template_field_ids = fields.One2many('enet.template', 'journal_id', compute='_compute_enet_template_field_ids', store=True)

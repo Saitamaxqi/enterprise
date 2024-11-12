@@ -4,6 +4,7 @@ from odoo import fields, models
 
 
 class ReportL10n_My_ReportsReport_Statement_Account(models.AbstractModel):
+    _name = 'report.l10n_my_reports.report_statement_account'
     _description = "Statement of Account Report"
 
     def _get_report_values(self, docids, data=None):

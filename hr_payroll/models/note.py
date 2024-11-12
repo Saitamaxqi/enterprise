@@ -5,6 +5,7 @@ from odoo import fields, models
 
 
 class HrPayrollNote(models.Model):
+    _name = 'hr.payroll.note'
     _description = "Payroll Note"
 
     name = fields.Char(required=True)

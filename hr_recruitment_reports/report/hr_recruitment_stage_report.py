@@ -6,6 +6,7 @@ from odoo.tools.sql import drop_view_if_exists, SQL
 
 
 class HrRecruitmentStageReport(models.Model):
+    _name = 'hr.recruitment.stage.report'
     _description = 'Recruitment Stage Analysis'
     _auto = False
 

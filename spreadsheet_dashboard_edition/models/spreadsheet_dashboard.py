@@ -4,6 +4,7 @@ from odoo import api, models, _
 
 
 class SpreadsheetDashboard(models.Model):
+    _name = 'spreadsheet.dashboard'
     _inherit = ['spreadsheet.dashboard', 'spreadsheet.mixin']
 
     def _get_spreadsheet_metadata(self, *args, **kwargs):

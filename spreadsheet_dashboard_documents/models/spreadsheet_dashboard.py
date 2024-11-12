@@ -2,7 +2,7 @@ from odoo import _, api, models
 
 
 class SpreadsheetDashboard(models.Model):
-    _inherit = ['spreadsheet.dashboard']
+    _inherit = 'spreadsheet.dashboard'
 
     def action_add_document_spreadsheet_to_dashboard(self):
         return {

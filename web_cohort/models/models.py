@@ -21,7 +21,7 @@ DISPLAY_FORMATS = {
 
 
 class Base(models.AbstractModel):
-    _inherit = ['base']
+    _inherit = 'base'
 
     @api.model
     def get_cohort_data(self, date_start, date_stop, measure, interval, domain, mode, timeline):

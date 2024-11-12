@@ -396,6 +396,7 @@ class StudioExportWizardData(models.TransientModel):
 
 
 class StudioExportWizard(models.TransientModel):
+    _name = 'studio.export.wizard'
     _description = "Studio Export Wizard"
 
     def _default_studio_export_data(self):

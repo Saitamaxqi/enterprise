@@ -2,7 +2,7 @@ from odoo import models, tools
 
 
 class SpreadsheetTest(models.Model):
-    _inherit = ['spreadsheet.test']
+    _inherit = 'spreadsheet.test'
 
     def action_open_spreadsheet(self):
         self.ensure_one()

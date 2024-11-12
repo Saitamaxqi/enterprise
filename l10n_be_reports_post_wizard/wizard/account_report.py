@@ -2,7 +2,7 @@ from odoo import models
 
 
 class L10n_BeTaxReportHandler(models.AbstractModel):
-    _inherit = ['l10n_be.tax.report.handler']
+    _inherit = 'l10n_be.tax.report.handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)

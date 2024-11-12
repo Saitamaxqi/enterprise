@@ -12,7 +12,7 @@ from odoo.exceptions import UserError
 
 
 class MaintenanceStage(models.Model):
-    _inherit = ['maintenance.stage']
+    _inherit = 'maintenance.stage'
 
     create_leaves = fields.Boolean('Request Confirmed', default=True,
         help="When this box is unticked, and the maintenance is of the type 'Work Center', no leave is created on the respective work center when a maintenance request is created.\n"
@@ -27,6 +27,7 @@ class MaintenanceStage(models.Model):
 
 
 class MrpWorkcenter(models.Model):
+    _name = 'mrp.workcenter'
     _inherit = ["mrp.workcenter", 'maintenance.mixin', 'mail.thread', 'mail.activity.mixin']
 
     equipment_ids = fields.One2many(
@@ -62,7 +63,7 @@ class MrpWorkcenter(models.Model):
 
 
 class MaintenanceEquipment(models.Model):
-    _inherit = ["maintenance.equipment"]
+    _inherit = "maintenance.equipment"
     _check_company_auto = True
 
     workcenter_id = fields.Many2one(
@@ -84,7 +85,7 @@ class MaintenanceEquipment(models.Model):
 
 
 class MaintenanceRequest(models.Model):
-    _inherit = ["maintenance.request"]
+    _inherit = "maintenance.request"
     _check_company_auto = True
 
     production_id = fields.Many2one(
@@ -227,7 +228,7 @@ class MaintenanceRequest(models.Model):
 
 
 class MrpProduction(models.Model):
-    _inherit = ["mrp.production"]
+    _inherit = "mrp.production"
 
     maintenance_count = fields.Integer(compute='_compute_maintenance_count', string="Number of maintenance requests")
     request_ids = fields.One2many('maintenance.request', 'production_id')
@@ -272,7 +273,7 @@ class MrpProduction(models.Model):
 
 
 class MrpWorkorder(models.Model):
-    _inherit = ["mrp.workorder"]
+    _inherit = "mrp.workorder"
 
     def button_maintenance_req(self):
         self.ensure_one()

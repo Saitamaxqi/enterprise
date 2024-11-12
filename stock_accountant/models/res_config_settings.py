@@ -7,7 +7,7 @@ ACCOUNT_DOMAIN = [('deprecated', '=', False), ('account_type', 'not in', ('asset
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     property_stock_journal = fields.Many2one(
         'account.journal', "Stock Journal",

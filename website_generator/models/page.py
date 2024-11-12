@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 class WebsitePage(models.Model):
-    _inherit = ['website.page']
+    _inherit = 'website.page'
 
     def _construct_homepage(self, homepage_data):
         self._construct_page(homepage_data)

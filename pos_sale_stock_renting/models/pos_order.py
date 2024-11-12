@@ -5,7 +5,7 @@ from odoo import models
 
 
 class PosOrder(models.Model):
-    _inherit = ["pos.order"]
+    _inherit = "pos.order"
 
     def _process_order(self, order, existing_order):
         order_id = super()._process_order(order, existing_order)

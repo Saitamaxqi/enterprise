@@ -2,7 +2,7 @@ from odoo import models
 
 
 class SaleOrder(models.Model):
-    _inherit = ['sale.order']
+    _inherit = 'sale.order'
 
     def _get_line_data_for_external_taxes(self):
         """ Override to set the originating warehouse per line. """

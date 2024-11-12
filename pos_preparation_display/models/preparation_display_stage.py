@@ -2,6 +2,7 @@ from odoo import fields, models
 
 
 class Pos_Preparation_DisplayStage(models.Model):
+    _name = 'pos_preparation_display.stage'
     _description = "Point of Sale preparation stage"
     _order = 'sequence, id'
 

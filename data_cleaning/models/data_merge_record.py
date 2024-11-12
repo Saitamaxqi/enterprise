@@ -22,6 +22,7 @@ ALLOWED_COMPANY_OPERATORS = ['not in', 'in', '=', '!=', 'ilike', 'not ilike', 'l
 
 
 class Data_MergeRecord(models.Model):
+    _name = 'data_merge.record'
     _description = 'Deduplication Record'
     _order = 'res_id desc'
 

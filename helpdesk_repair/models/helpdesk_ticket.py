@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class HelpdeskTicket(models.Model):
-    _inherit = ['helpdesk.ticket']
+    _inherit = 'helpdesk.ticket'
 
     repairs_count = fields.Integer('Repairs Count', compute='_compute_repairs_count', compute_sudo=True)
     repair_ids = fields.One2many('repair.order', 'ticket_id', copy=False, export_string_translation=False)

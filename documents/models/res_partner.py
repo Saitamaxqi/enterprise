@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class ResPartner(models.Model):
-    _inherit = ["res.partner"]
+    _inherit = "res.partner"
 
     document_count = fields.Integer('Document Count', compute='_compute_document_count')
 

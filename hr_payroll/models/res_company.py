@@ -10,7 +10,7 @@ from odoo.exceptions import ValidationError
 
 
 class ResCompany(models.Model):
-    _inherit = ["res.company"]
+    _inherit = "res.company"
 
     ytd_reset_day = fields.Integer(
         default=1,

@@ -9,7 +9,7 @@ from odoo.tools import format_list
 
 
 class SaleOrder(models.Model):
-    _inherit = ['sale.order']
+    _inherit = 'sale.order'
 
     planning_hours_planned = fields.Float(compute='_compute_planning_hours', export_string_translation=False)
     planning_hours_to_plan = fields.Float(compute='_compute_planning_hours', export_string_translation=False)

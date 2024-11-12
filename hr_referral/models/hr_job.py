@@ -4,7 +4,7 @@ from odoo import fields, models, _
 
 
 class HrJob(models.Model):
-    _inherit = ["hr.job"]
+    _inherit = "hr.job"
 
     job_open_date = fields.Date('Job Start Recruitment Date', default=fields.Date.today())
     utm_campaign_id = fields.Many2one('utm.campaign', 'Campaign', ondelete='restrict')

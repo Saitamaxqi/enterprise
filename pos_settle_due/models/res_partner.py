@@ -4,7 +4,7 @@ from odoo import fields, models, api
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     def get_total_due(self, pos_currency):
         pos_payments = self.env['pos.order'].search([

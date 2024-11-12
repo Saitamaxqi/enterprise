@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     l10n_ma_kilometric_exemption = fields.Monetary(
         string='Kilometric Exemption',

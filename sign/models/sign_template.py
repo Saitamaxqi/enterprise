@@ -13,6 +13,7 @@ from odoo.tools.pdf import PdfFileReader
 
 
 class SignTemplate(models.Model):
+    _name = 'sign.template'
     _description = "Signature Template"
 
     def _default_favorited_ids(self):

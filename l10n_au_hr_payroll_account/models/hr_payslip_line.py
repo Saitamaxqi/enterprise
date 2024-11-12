@@ -4,7 +4,7 @@ from odoo import api, models
 
 
 class HrPayslipLine(models.Model):
-    _inherit = ["hr.payslip.line"]
+    _inherit = "hr.payslip.line"
 
     def _adapt_records_to_w3(self, debit_credit='debit'):
         ''' A special case in some contracts needs to be reported in another section of the tax report.

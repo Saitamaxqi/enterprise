@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ["res.company"]
+    _inherit = "res.company"
 
     l10n_au_branch_code = fields.Char(
         string="Branch Code",

@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class HrPayrollStructure(models.Model):
-    _inherit = ['hr.payroll.structure']
+    _inherit = 'hr.payroll.structure'
 
     def _get_default_journal_id(self):
         default_structure = self.env.ref('hr_payroll.default_structure', False)

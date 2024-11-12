@@ -4,12 +4,13 @@ from odoo import fields, models
 
 
 class MrpWorkcenter(models.Model):
-    _inherit = ['mrp.workcenter']
+    _inherit = 'mrp.workcenter'
 
     trigger_ids = fields.One2many('iot.trigger', 'workcenter_id', string="Triggers")
 
 
 class IotTrigger(models.Model):
+    _name = 'iot.trigger'
     _description = 'IOT Trigger'
     _order = 'sequence'
 
@@ -36,6 +37,6 @@ class IotTrigger(models.Model):
 
 
 class IotDevice(models.Model):
-    _inherit = ["iot.device"]
+    _inherit = "iot.device"
 
     trigger_ids = fields.One2many('iot.trigger', 'device_id')

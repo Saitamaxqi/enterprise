@@ -6,6 +6,7 @@ from odoo.exceptions import UserError
 
 
 class L10nChCompensationFund(models.Model):
+    _name = 'l10n.ch.compensation.fund'
     _description = 'Swiss: Family Allowance (CAF)'
 
     name = fields.Char(required=True)
@@ -26,6 +27,7 @@ class L10nChCompensationFund(models.Model):
 
 
 class L10nChCompensationFundLine(models.Model):
+    _name = 'l10n.ch.compensation.fund.line'
     _description = 'Swiss: Family Allowance Rate (CAF)'
 
     date_from = fields.Date(string="From", required=True)

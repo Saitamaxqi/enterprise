@@ -6,7 +6,7 @@ from odoo.addons.account.models.chart_template import template
 
 
 class AccountChartTemplate(models.AbstractModel):
-    _inherit = ['account.chart.template']
+    _inherit = 'account.chart.template'
 
     @template('ec', 'account.journal')
     def _get_ec_edi_account_journal(self):

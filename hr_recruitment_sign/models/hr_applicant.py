@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class HrApplicant(models.Model):
-    _inherit = ['hr.applicant']
+    _inherit = 'hr.applicant'
 
     sign_request_count = fields.Integer(related="partner_id.signature_count")
 

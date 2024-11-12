@@ -5,6 +5,7 @@ from odoo.exceptions import UserError
 
 
 class L10n_BdCorporateTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_bd.corporate.tax.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = "Custom Handler for Corporate TAX Reports in Bangladesh"
 

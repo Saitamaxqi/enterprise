@@ -4,7 +4,7 @@ from odoo import models
 
 
 class MrpProduction(models.Model):
-    _inherit = ['mrp.production']
+    _inherit = 'mrp.production'
 
     def _create_revision_bom(self, will_update_version=True):
         revision_bom = super()._create_revision_bom(will_update_version)

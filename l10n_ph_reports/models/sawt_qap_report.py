@@ -8,6 +8,7 @@ from odoo.addons.l10n_ph import utils
 
 
 class L10n_PhSawt_QapReportHandler(models.AbstractModel):
+    _name = 'l10n_ph.sawt_qap.report.handler'
     _inherit = ['l10n_ph.generic.report.handler', 'account.tax.report.handler']
     _description = 'Withholding Taxes Custom Handler'
 
@@ -424,6 +425,7 @@ class L10n_PhSawt_QapReportHandler(models.AbstractModel):
 
 
 class L10n_PhSawtReportHandler(models.AbstractModel):
+    _name = 'l10n_ph.sawt.report.handler'
     _inherit = ['l10n_ph.sawt_qap.report.handler']
     _description = 'Sales Withholding Taxes Custom Handler'
 
@@ -440,6 +442,7 @@ class L10n_PhSawtReportHandler(models.AbstractModel):
 
 
 class L10n_PhQapReportHandler(models.AbstractModel):
+    _name = 'l10n_ph.qap.report.handler'
     _inherit = ['l10n_ph.sawt_qap.report.handler']
     _description = 'Purchase Withholding Taxes Custom Handler'
 

@@ -7,6 +7,7 @@ from datetime import date, datetime
 
 
 class L10n_DeTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_de.tax.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'German Tax Report Custom Handler'
 

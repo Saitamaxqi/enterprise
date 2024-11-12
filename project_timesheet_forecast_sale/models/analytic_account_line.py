@@ -5,7 +5,7 @@ from odoo import models
 
 
 class AccountAnalyticLine(models.Model):
-    _inherit = ['account.analytic.line']
+    _inherit = 'account.analytic.line'
 
     def write(self, vals):
         res = super().write(vals)

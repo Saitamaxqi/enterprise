@@ -4,6 +4,7 @@ from odoo import api, fields, models
 
 
 class WhatsappPreview(models.TransientModel):
+    _name = 'whatsapp.preview'
     _description = 'Preview template'
 
     wa_template_id = fields.Many2one(comodel_name="whatsapp.template", string="Templates")

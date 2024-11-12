@@ -3,7 +3,7 @@ from odoo import api, fields, models
 
 
 class PurchaseOrderLine(models.Model):
-    _inherit = ["purchase.order.line"]
+    _inherit = "purchase.order.line"
 
     analytic_json = fields.Json('Analytic JSON', compute='_compute_analytic_json', store=True)
     is_above_budget = fields.Boolean('Is Above Budget', compute='_compute_above_budget')

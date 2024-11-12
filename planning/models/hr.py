@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 
 class HrEmployee(models.Model):
-    _inherit = ["hr.employee"]
+    _inherit = "hr.employee"
 
     def _default_employee_token(self):
         return str(uuid.uuid4())
@@ -95,7 +95,7 @@ class HrEmployee(models.Model):
 
 
 class HrEmployeeBase(models.AbstractModel):
-    _inherit = ["hr.employee.base"]
+    _inherit = "hr.employee.base"
 
     has_slots = fields.Boolean(compute='_compute_has_slots')
 

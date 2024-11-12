@@ -3,6 +3,7 @@ from odoo import models
 
 
 class SaleOrder(models.Model):
+    _name = 'sale.order'
     _inherit = ['account.avatax.unique.code', 'sale.order']
 
     def _get_avatax_dates(self):

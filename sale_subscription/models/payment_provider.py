@@ -7,8 +7,7 @@ from odoo.addons.payment.const import REPORT_REASONS_MAPPING
 
 
 class PaymentProvider(models.Model):
-
-    _inherit = ['payment.provider']
+    _inherit = 'payment.provider'
 
     @api.model
     def _is_tokenization_required(self, sale_order_id=None, **kwargs):

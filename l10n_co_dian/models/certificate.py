@@ -6,7 +6,7 @@ from odoo import models
 
 
 class CertificateCertificate(models.Model):
-    _inherit = ['certificate.certificate']
+    _inherit = 'certificate.certificate'
 
     def _get_issuer_string(self):
         self.ensure_one()

@@ -11,6 +11,7 @@ import io
 
 
 class L10n_ArTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_ar.tax.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'Argentinian Report Custom Handler'
 

@@ -11,6 +11,7 @@ from odoo.exceptions import UserError
 
 
 class L10n_PeTaxPleReportHandler(models.AbstractModel):
+    _name = 'l10n_pe.tax.ple.report.handler'
     _inherit = ["account.tax.report.handler"]
     _description = "PLE Generic Report"
 

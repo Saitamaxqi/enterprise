@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class HrDepartureWizard(models.TransientModel):
-    _inherit = ['hr.departure.wizard']
+    _inherit = 'hr.departure.wizard'
 
     def _get_default_send_hr_documents_access_link(self):
         employee = self.env['hr.employee'].browse(self.env.context.get('active_id'))

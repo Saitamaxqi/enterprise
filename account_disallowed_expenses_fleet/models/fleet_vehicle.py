@@ -5,12 +5,13 @@ from odoo import models, fields
 
 
 class FleetVehicle(models.Model):
-    _inherit = ['fleet.vehicle']
+    _inherit = 'fleet.vehicle'
 
     rate_ids = fields.One2many('fleet.disallowed.expenses.rate', 'vehicle_id', string='Disallowed Expenses Rate')
 
 
 class FleetDisallowedExpensesRate(models.Model):
+    _name = 'fleet.disallowed.expenses.rate'
     _description = 'Vehicle Disallowed Expenses Rate'
     _order = 'date_from desc'
 

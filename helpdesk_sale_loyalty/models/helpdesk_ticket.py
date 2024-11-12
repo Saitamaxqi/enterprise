@@ -5,7 +5,7 @@ from odoo import _, api, fields, models
 
 
 class HelpdeskTicket(models.Model):
-    _inherit = ['helpdesk.ticket']
+    _inherit = 'helpdesk.ticket'
 
     coupons_count = fields.Integer(compute='_compute_coupons_count', export_string_translation=False)
     coupon_ids = fields.Many2many('loyalty.card', string='Generated Coupons', copy=False)

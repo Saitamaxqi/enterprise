@@ -15,7 +15,7 @@ from lxml import etree
 
 
 class AccountPayment(models.Model):
-    _inherit = ['account.payment']
+    _inherit = 'account.payment'
 
     # used to inform the end user there is a SDD mandate that could be used to register that payment
     sdd_mandate_usable = fields.Boolean(string="Could a SDD mandate be used?",

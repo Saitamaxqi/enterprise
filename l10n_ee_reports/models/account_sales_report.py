@@ -9,6 +9,7 @@ from odoo.tools import float_round
 
 
 class L10n_EeEcSalesReportHandler(models.AbstractModel):
+    _name = 'l10n_ee.ec.sales.report.handler'
     _inherit = ['account.ec.sales.report.handler']
     _description = 'Estonian EC Sales Report Custom Handler'
 

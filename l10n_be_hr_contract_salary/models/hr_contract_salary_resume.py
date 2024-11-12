@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HrContractSalaryResume(models.Model):
-    _inherit = ['hr.contract.salary.resume']
+    _inherit = 'hr.contract.salary.resume'
 
     def _get_available_fields(self):
         result = super()._get_available_fields()

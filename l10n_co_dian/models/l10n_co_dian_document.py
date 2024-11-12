@@ -14,6 +14,7 @@ from odoo.exceptions import UserError
 
 
 class L10n_Co_DianDocument(models.Model):
+    _name = 'l10n_co_dian.document'
     _description = "Colombian documents used for each interaction with the DIAN"
     _order = 'datetime DESC, id DESC'
 

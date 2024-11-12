@@ -4,6 +4,7 @@ from odoo import api, fields, models
 
 
 class SignItemRadioSet(models.Model):
+    _name = 'sign.item.radio.set'
     _description = "Radio button set for keeping radio button items together"
 
     radio_items = fields.One2many('sign.item', 'radio_set_id')

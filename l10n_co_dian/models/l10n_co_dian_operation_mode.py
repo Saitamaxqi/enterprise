@@ -2,6 +2,7 @@ from odoo import models, fields, _
 
 
 class L10n_Co_DianOperation_Mode(models.Model):
+    _name = 'l10n_co_dian.operation_mode'
     _description = "Colombian operation modes of DIAN used for different documents"
 
     dian_software_id = fields.Char(

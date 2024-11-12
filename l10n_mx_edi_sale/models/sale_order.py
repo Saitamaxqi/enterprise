@@ -5,7 +5,7 @@ from odoo.addons.l10n_mx_edi.models.l10n_mx_edi_document import USAGE_SELECTION
 
 
 class SaleOrder(models.Model):
-    _inherit = ['sale.order']
+    _inherit = 'sale.order'
 
     l10n_mx_edi_cfdi_to_public = fields.Boolean(
         string="CFDI to public",

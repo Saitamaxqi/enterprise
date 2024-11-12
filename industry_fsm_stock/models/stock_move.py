@@ -7,7 +7,7 @@ from collections import defaultdict
 
 
 class StockMove(models.Model):
-    _inherit = ['stock.move']
+    _inherit = 'stock.move'
 
     def _update_reserved_quantity(self, need, location_id, lot_id=None, package_id=None, owner_id=None, strict=True):
         if self.product_id.tracking == 'none':

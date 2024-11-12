@@ -4,6 +4,7 @@ from odoo import models, fields
 
 
 class SaleCommissionPlanTarget(models.Model):
+    _name = 'sale.commission.plan.target'
     _description = 'Commission Plan Target'
     _order = 'id'
 

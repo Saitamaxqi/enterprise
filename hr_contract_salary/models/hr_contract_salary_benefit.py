@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class HrContractSalaryBenefit(models.Model):
+    _name = 'hr.contract.salary.benefit'
     _description = 'Salary Package Benefit'
     _order = 'sequence'
 
@@ -217,6 +218,7 @@ class HrContractSalaryBenefit(models.Model):
 
 
 class HrContractSalaryBenefitType(models.Model):
+    _name = 'hr.contract.salary.benefit.type'
     _description = 'Contract Benefit Type'
     _order = 'sequence'
 
@@ -229,6 +231,7 @@ class HrContractSalaryBenefitType(models.Model):
 
 
 class HrContractSalaryBenefitValue(models.Model):
+    _name = 'hr.contract.salary.benefit.value'
     _description = 'Contract Benefit Value'
     _order = 'sequence'
 

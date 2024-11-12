@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HrEmployee(models.Model):
-    _inherit = ['hr.employee']
+    _inherit = 'hr.employee'
 
     l10n_lt_working_capacity = fields.Selection([
         ('0_25', 'Between 0-25%'),

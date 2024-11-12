@@ -6,7 +6,7 @@ from odoo.tools import _
 
 
 class ProjectProject(models.Model):
-    _inherit = ['project.project']
+    _inherit = 'project.project'
 
     ticket_ids = fields.One2many('helpdesk.ticket', 'project_id', string='Tickets')
     ticket_count = fields.Integer('# Tickets', compute='_compute_ticket_count')

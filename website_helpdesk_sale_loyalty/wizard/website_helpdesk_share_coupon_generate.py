@@ -3,7 +3,7 @@ from odoo import models
 
 
 class HelpdeskSaleCouponGenerate(models.TransientModel):
-    _inherit = ["helpdesk.sale.coupon.generate"]
+    _inherit = "helpdesk.sale.coupon.generate"
 
     def action_coupon_generate_share(self):
         self.ensure_one()

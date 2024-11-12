@@ -2,7 +2,7 @@ from odoo import models, api
 
 
 class ProductPricelist(models.Model):
-    _inherit = ['product.pricelist']
+    _inherit = 'product.pricelist'
 
     @api.model
     def write(self, vals):

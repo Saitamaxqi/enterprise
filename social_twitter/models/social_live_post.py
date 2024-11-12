@@ -14,7 +14,7 @@ _logger = logging.getLogger(__name__)
 
 
 class SocialLivePost(models.Model):
-    _inherit = ['social.live.post']
+    _inherit = 'social.live.post'
 
     twitter_tweet_id = fields.Char('X post id')
 

@@ -33,6 +33,7 @@ ACTIONS_SQL = {
 
 
 class Data_CleaningRule(models.Model):
+    _name = 'data_cleaning.rule'
     _description = 'Cleaning Rule'
     _order = 'sequence'
 

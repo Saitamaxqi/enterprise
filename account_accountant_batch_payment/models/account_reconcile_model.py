@@ -5,7 +5,7 @@ from odoo.tools import SQL
 
 
 class AccountReconcileModel(models.Model):
-    _inherit = ['account.reconcile.model']
+    _inherit = 'account.reconcile.model'
 
     def _get_invoice_matching_batch_payments_candidates(self, st_line, partner):
         assert self.rule_type == 'invoice_matching'

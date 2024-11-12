@@ -14,6 +14,7 @@ DM_CRON_BATCH_SIZE = 100
 
 
 class Data_MergeGroup(models.Model):
+    _name = 'data_merge.group'
     _description = 'Deduplication Group'
     _order = 'similarity desc'
 

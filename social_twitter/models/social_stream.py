@@ -14,7 +14,7 @@ _logger = logging.getLogger(__name__)
 
 
 class SocialStream(models.Model):
-    _inherit = ['social.stream']
+    _inherit = 'social.stream'
 
     twitter_searched_keyword = fields.Char('Search Keyword')
     twitter_followed_account_search = fields.Char('Search User')

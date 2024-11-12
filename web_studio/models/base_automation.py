@@ -5,4 +5,5 @@ from odoo import models
 
 
 class BaseAutomation(models.Model):
+    _name = 'base.automation'
     _inherit = ['studio.mixin', 'base.automation']

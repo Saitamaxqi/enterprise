@@ -10,7 +10,7 @@ from odoo.exceptions import UserError
 
 
 class SocialAccount(models.Model):
-    _inherit = ['social.account']
+    _inherit = 'social.account'
 
     youtube_channel_id = fields.Char('YouTube Channel ID', readonly=True,
         help="YouTube Channel ID provided by the YouTube API, this should never be set manually.")

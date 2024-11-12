@@ -7,6 +7,7 @@ from odoo import api, fields, models, _
 
 
 class HelpdeskStageDeleteWizard(models.TransientModel):
+    _name = 'helpdesk.stage.delete.wizard'
     _description = 'Helpdesk Stage Delete Wizard'
 
     team_ids = fields.Many2many('helpdesk.team', domain="['|', ('active', '=', False), ('active', '=', True)]", string='Helpdesk Teams')

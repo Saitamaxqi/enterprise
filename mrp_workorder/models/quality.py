@@ -11,7 +11,7 @@ from odoo.tools import float_compare, float_round, is_html_empty
 
 
 class QualityPointTest_Type(models.Model):
-    _inherit = ["quality.point.test_type"]
+    _inherit = "quality.point.test_type"
 
     allow_registration = fields.Boolean(
         search='_get_domain_from_allow_registration',
@@ -25,7 +25,7 @@ class QualityPointTest_Type(models.Model):
 
 
 class MrpRoutingWorkcenter(models.Model):
-    _inherit = ["mrp.routing.workcenter"]
+    _inherit = "mrp.routing.workcenter"
 
     quality_point_ids = fields.One2many('quality.point', 'operation_id', copy=True)
     quality_point_count = fields.Integer('Instructions', compute='_compute_quality_point_count')
@@ -89,7 +89,7 @@ class MrpRoutingWorkcenter(models.Model):
 
 
 class QualityPoint(models.Model):
-    _inherit = ["quality.point"]
+    _inherit = "quality.point"
 
     def _default_product_ids(self):
         # Determines a default product from the default operation's BOM.
@@ -176,7 +176,7 @@ class QualityPoint(models.Model):
 
 
 class QualityAlert(models.Model):
-    _inherit = ["quality.alert"]
+    _inherit = "quality.alert"
 
     workorder_id = fields.Many2one('mrp.workorder', 'Operation', check_company=True)
     workcenter_id = fields.Many2one('mrp.workcenter', 'Work Center', check_company=True)
@@ -184,7 +184,7 @@ class QualityAlert(models.Model):
 
 
 class QualityCheck(models.Model):
-    _inherit = ["quality.check"]
+    _inherit = "quality.check"
 
     workorder_id = fields.Many2one(
         'mrp.workorder', 'Operation', check_company=True, index='btree_not_null')

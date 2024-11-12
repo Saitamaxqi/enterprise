@@ -19,7 +19,7 @@ class DMFACompanyVehicle(DMFANode):
 
 
 class L10n_BeDmfa(models.Model):
-    _inherit = ['l10n_be.dmfa']
+    _inherit = 'l10n_be.dmfa'
 
     vehicle_ids = fields.One2many('fleet.vehicle', compute='_compute_vehicle_ids')
 

@@ -6,7 +6,7 @@ from odoo.fields import Datetime
 
 
 class MailingTrace(models.Model):
-    _inherit = ['mailing.trace']
+    _inherit = 'mailing.trace'
 
     def set_failed(self, domain=None, failure_type=None):
         traces = super(MailingTrace, self).set_failed(domain=domain, failure_type=failure_type)

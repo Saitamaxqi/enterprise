@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     plafond_secu = fields.Float(related='company_id.plafond_secu', string="Plafond de la Securite Sociale", readonly=False)
     nombre_employes = fields.Integer(related='company_id.nombre_employes', string="Nombre d'employes", readonly=False)

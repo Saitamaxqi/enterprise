@@ -22,6 +22,7 @@ CollaborationMessage = Dict[str, Any]
 
 
 class SpreadsheetMixin(models.AbstractModel):
+    _name = 'spreadsheet.mixin'
     _inherit = ["spreadsheet.mixin", "bus.listener.mixin"]
 
     spreadsheet_snapshot = fields.Binary()

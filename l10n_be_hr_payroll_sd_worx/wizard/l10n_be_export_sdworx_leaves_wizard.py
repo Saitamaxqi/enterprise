@@ -14,6 +14,7 @@ from odoo.tools.misc import format_date
 
 
 class L10n_BeExportSdworxLeavesWizard(models.TransientModel):
+    _name = 'l10n_be.export.sdworx.leaves.wizard'
     _description = 'Export Leaves to SDWorx'
 
     @api.model

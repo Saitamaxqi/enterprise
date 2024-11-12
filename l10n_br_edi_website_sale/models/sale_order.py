@@ -3,7 +3,7 @@ from odoo import models
 
 
 class SaleOrder(models.Model):
-    _inherit = ['sale.order']
+    _inherit = 'sale.order'
 
     def set_delivery_line(self, carrier, amount):
         """Override. Copy over the default transporter and freight model from the delivery carrier configuration."""

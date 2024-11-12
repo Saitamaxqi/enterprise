@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class CalendarEvent(models.Model):
-    _inherit = ["calendar.event"]
+    _inherit = "calendar.event"
 
     sale_order_line_ids = fields.One2many('sale.order.line', 'calendar_event_id', 'Sale Order Line')
     sale_order_count = fields.Integer('Sales Order Count', compute='_compute_sale_order_count')

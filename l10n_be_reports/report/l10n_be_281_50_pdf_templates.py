@@ -5,6 +5,7 @@ from odoo import api, models
 
 
 class ReportL10n_Be_ReportsReport_281_50_Pdf(models.AbstractModel):
+    _name = 'report.l10n_be_reports.report_281_50_pdf'
     _description = 'Get 281.50 report as PDF.'
 
     @api.model

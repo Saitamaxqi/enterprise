@@ -7,7 +7,7 @@ from odoo import _, api, fields, models
 
 
 class AccountFinancialYearOp(models.TransientModel):
-    _inherit = ['account.financial.year.op']
+    _inherit = 'account.financial.year.op'
     _description = 'Opening Balance of Financial Year'
 
     account_tax_periodicity = fields.Selection(related='company_id.account_tax_periodicity', string='Periodicity in month', readonly=False, required=True)

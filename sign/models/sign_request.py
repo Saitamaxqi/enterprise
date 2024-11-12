@@ -46,6 +46,7 @@ def _fix_image_transparency(image):
 
 
 class SignRequest(models.Model):
+    _name = 'sign.request'
     _description = "Signature Request"
     _rec_name = 'reference'
     _inherit = ['mail.thread', 'mail.activity.mixin']

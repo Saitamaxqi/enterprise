@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     has_amazon_account = fields.Boolean(compute='_compute_has_amazon_account')
 

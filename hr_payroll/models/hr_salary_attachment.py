@@ -11,6 +11,7 @@ from math import ceil
 
 
 class HrSalaryAttachment(models.Model):
+    _name = 'hr.salary.attachment'
     _description = 'Salary Attachment'
     _inherit = ['mail.thread']
     _rec_name = 'description'

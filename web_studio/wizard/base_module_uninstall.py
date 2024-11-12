@@ -5,7 +5,7 @@ from odoo import models, fields, api
 
 
 class BaseModuleUninstall(models.TransientModel):
-    _inherit = ["base.module.uninstall"]
+    _inherit = "base.module.uninstall"
 
     is_studio = fields.Boolean(compute='_compute_is_studio')
     custom_views = fields.Integer(compute='_compute_custom_views')

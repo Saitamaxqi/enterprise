@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class HrContractSignDocumentWizard(models.TransientModel):
-    _inherit = ['hr.contract.sign.document.wizard']
+    _inherit = 'hr.contract.sign.document.wizard'
 
     sign_template_ids = fields.Many2many(compute='_compute_sign_template_ids', store=True, readonly=False)
 

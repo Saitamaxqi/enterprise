@@ -6,7 +6,7 @@ from odoo.addons.resource.models.utils import Intervals, timezone_datetime
 
 
 class CalendarEvent(models.Model):
-    _inherit = ["calendar.event"]
+    _inherit = "calendar.event"
 
     @api.depends('start', 'stop', 'partner_ids')
     def _compute_on_leave_partner_ids(self):

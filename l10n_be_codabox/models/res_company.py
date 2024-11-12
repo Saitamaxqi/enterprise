@@ -9,7 +9,7 @@ from odoo.addons.l10n_be_codabox.const import get_error_msg, get_iap_endpoint
 
 
 class ResCompany(models.Model):
-    _inherit = ["res.company"]
+    _inherit = "res.company"
 
     l10n_be_codabox_fiduciary_vat = fields.Char(string="Accounting Firm VAT", related="account_representative_id.vat")
     l10n_be_codabox_iap_token = fields.Char(string="IAP Access Token", readonly=True, groups="base.group_system")

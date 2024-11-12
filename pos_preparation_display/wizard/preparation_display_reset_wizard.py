@@ -5,6 +5,7 @@ from odoo import models
 
 
 class Pos_Preparation_DisplayResetWizard(models.TransientModel):
+    _name = 'pos_preparation_display.reset.wizard'
     _description = 'Reset all current order in a preparation display'
 
     def reset_all_orders(self):

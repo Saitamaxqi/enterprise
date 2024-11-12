@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     renting_minimal_time_duration = fields.Integer(
         related='company_id.renting_minimal_time_duration', readonly=False)

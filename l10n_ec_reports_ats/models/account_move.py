@@ -5,7 +5,7 @@ from odoo import models
 
 
 class AccountMove(models.Model):
-    _inherit = ["account.move"]
+    _inherit = "account.move"
 
     def _l10n_ec_get_ats_latam_document_type_code(self):
         self.ensure_one()

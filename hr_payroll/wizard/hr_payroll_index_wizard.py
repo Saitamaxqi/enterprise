@@ -7,6 +7,7 @@ from odoo.tools import format_date
 
 
 class HrPayrollIndex(models.TransientModel):
+    _name = 'hr.payroll.index'
     _description = 'Index contracts'
 
     def _get_default_contract_ids(self):

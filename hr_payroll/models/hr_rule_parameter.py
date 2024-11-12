@@ -10,6 +10,7 @@ from odoo.exceptions import UserError
 
 
 class HrRuleParameterValue(models.Model):
+    _name = 'hr.rule.parameter.value'
     _description = 'Salary Rule Parameter Value'
     _order = 'date_from desc'
 
@@ -49,6 +50,7 @@ class HrRuleParameterValue(models.Model):
 
 
 class HrRuleParameter(models.Model):
+    _name = 'hr.rule.parameter'
     _description = 'Salary Rule Parameter'
 
     name = fields.Char(required=True)

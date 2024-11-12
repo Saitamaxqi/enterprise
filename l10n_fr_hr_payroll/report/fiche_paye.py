@@ -5,6 +5,7 @@ from odoo import api, models
 
 
 class ReportL10n_Fr_Hr_PayrollReport_L10n_Fr_Fiche_Paye(models.AbstractModel):
+    _name = 'report.l10n_fr_hr_payroll.report_l10n_fr_fiche_paye'
     _description = "French Pay Slip"
 
     def get_total_by_rule_category(self, obj, code):

@@ -48,7 +48,7 @@ More info on https://www.fedex.com/en-us/developer/web-services/process.html#doc
 
 
 class DeliveryCarrier(models.Model):
-    _inherit = ['delivery.carrier']
+    _inherit = 'delivery.carrier'
 
     delivery_type = fields.Selection(selection_add=[
         ('fedex', "FedEx")

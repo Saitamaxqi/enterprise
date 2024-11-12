@@ -6,7 +6,7 @@ from collections import defaultdict
 
 
 class HrContractHistory(models.Model):
-    _inherit = ['hr.contract.history']
+    _inherit = 'hr.contract.history'
 
     time_credit = fields.Boolean('Credit time', readonly=True, help='This is a credit time contract.')
     work_time_rate = fields.Float(string='Work time rate', help='Work time rate versus full time working schedule.')

@@ -4,6 +4,7 @@ from odoo import fields, models, _
 
 
 class ApprovalRequest(models.Model):
+    _name = 'approval.request'
     _inherit = ['approval.request', 'documents.mixin']
 
     documents_count = fields.Integer(compute='_compute_documents_count')

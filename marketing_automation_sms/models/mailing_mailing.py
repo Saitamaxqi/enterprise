@@ -5,7 +5,7 @@ from odoo import models
 
 
 class MailingMailing(models.Model):
-    _inherit = ['mailing.mailing']
+    _inherit = 'mailing.mailing'
 
     def _send_sms_get_composer_values(self, res_ids):
         composer_values = super()._send_sms_get_composer_values(res_ids)

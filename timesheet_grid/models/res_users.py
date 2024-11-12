@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class ResUsers(models.Model):
-    _inherit = ['res.users']
+    _inherit = 'res.users'
 
     timesheet_manager_id = fields.Many2one(related='employee_id.timesheet_manager_id')
 

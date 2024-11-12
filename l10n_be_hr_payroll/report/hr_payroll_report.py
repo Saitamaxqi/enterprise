@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HrPayrollReport(models.Model):
-    _inherit = ["hr.payroll.report"]
+    _inherit = "hr.payroll.report"
 
     struct_id = fields.Many2one('hr.payroll.structure', 'Structure', readonly=True)
     l10n_be_atn_deduction = fields.Float('Benefit in Kind Deductions (All)', readonly=True)

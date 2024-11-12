@@ -8,6 +8,7 @@ from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_STATES,
 
 
 class SaleOrderLog(models.Model):
+    _name = 'sale.order.log'
     _description = 'Sale Order Log'
     _order = 'id desc'
 

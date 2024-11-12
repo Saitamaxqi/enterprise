@@ -5,7 +5,7 @@ from odoo import models, api
 
 
 class AccountMoveLine(models.Model):
-    _inherit = ['account.move.line']
+    _inherit = 'account.move.line'
 
     @api.depends('account_id.disallowed_expenses_category_id')
     def _compute_need_vehicle(self):

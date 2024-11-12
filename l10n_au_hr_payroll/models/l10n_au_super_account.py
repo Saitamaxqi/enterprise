@@ -4,6 +4,7 @@ from odoo import api, fields, models, _
 
 
 class L10n_AuSuperAccount(models.Model):
+    _name = 'l10n_au.super.account'
     _description = "Super Account"
     _rec_names_search = ["employee_id", "fund_id"]
 

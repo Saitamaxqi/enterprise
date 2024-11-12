@@ -6,7 +6,7 @@ from odoo.addons.base_import.models.base_import import FIELDS_RECURSION_LIMIT
 
 
 class Base_ImportImport(models.TransientModel):
-    _inherit = ["base_import.import"]
+    _inherit = "base_import.import"
 
     @api.model
     def get_fields_tree(self, model, depth=FIELDS_RECURSION_LIMIT):

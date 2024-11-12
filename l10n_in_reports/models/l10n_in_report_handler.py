@@ -11,6 +11,7 @@ _logger = logging.getLogger(__name__)
 
 
 class L10n_InReportHandler(models.AbstractModel):
+    _name = 'l10n_in.report.handler'
     _inherit = ['account.generic.tax.report.handler']
     _description = 'Indian Tax Report Custom Handler'
 

@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HelpdeskSlaReportAnalysis(models.Model):
-    _inherit = ['helpdesk.sla.report.analysis']
+    _inherit = 'helpdesk.sla.report.analysis'
 
     product_id = fields.Many2one('product.product', string='Product', readonly=True)
 

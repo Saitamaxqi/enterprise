@@ -9,7 +9,7 @@ import re
 
 
 class AccountJournal(models.Model):
-    _inherit = ["account.journal"]
+    _inherit = "account.journal"
 
     aba_fic = fields.Char(string='Financial Institution Code', help='3 Character Financial Institution Code (e.g WBC for Westpac')
     aba_user_spec = fields.Char(string='Supplying User Name', help="Name of User supplying file - Your Financial Institution may specify the required User PreferredSpecification.")

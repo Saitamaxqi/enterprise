@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class MailingMailing(models.Model):
-    _inherit = ['mailing.mailing']
+    _inherit = 'mailing.mailing'
 
     @api.model
     def default_get(self, fields):

@@ -4,7 +4,7 @@ from odoo import models
 
 
 class PaymentToken(models.Model):
-    _inherit = ['payment.token']
+    _inherit = 'payment.token'
 
     def _handle_archiving(self):
         """ Override of payment to void the token on linked subscriptions.

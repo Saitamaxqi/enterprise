@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError, UserError
 
 
 class ResCompany(models.Model):
-    _inherit = ["res.company"]
+    _inherit = "res.company"
 
     l10n_au_hr_super_responsible_id = fields.Many2one(
         "hr.employee",

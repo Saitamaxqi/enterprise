@@ -5,6 +5,7 @@ from odoo.tools.misc import get_lang
 
 
 class L10n_PhGenericReportHandler(models.AbstractModel):
+    _name = 'l10n_ph.generic.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Philippines Generic Report Custom Handler'
 

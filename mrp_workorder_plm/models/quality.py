@@ -4,7 +4,7 @@ from odoo import models
 
 
 class QualityPoint(models.Model):
-    _inherit = ["quality.point"]
+    _inherit = "quality.point"
 
     def _get_sync_values(self):
         if not self:

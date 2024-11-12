@@ -32,7 +32,7 @@ FISCAL_REGIMES_SELECTION = [
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     # == PAC web-services ==
     l10n_mx_edi_pac = fields.Selection(

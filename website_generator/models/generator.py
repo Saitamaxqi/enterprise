@@ -45,6 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class Website_GeneratorRequest(models.Model):
+    _name = 'website_generator.request'
     _description = "Website Generator Request"
 
     target_url = fields.Char(string="URL to scrape", required=True)

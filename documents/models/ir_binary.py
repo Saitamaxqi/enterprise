@@ -3,7 +3,7 @@ from odoo import models
 
 
 class IrBinary(models.AbstractModel):
-    _inherit = ['ir.binary']
+    _inherit = 'ir.binary'
 
     def _record_to_stream(self, record, field_name):
         if record._name == 'documents.document' and field_name in ('raw', 'datas', 'db_datas'):

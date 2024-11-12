@@ -4,6 +4,7 @@ from odoo import fields, models
 
 
 class HrEmployeeIsLine(models.Model):
+    _name = 'hr.employee.is.line'
     _description = 'IS Entry / Withdrawals / Mutations'
 
     employee_id = fields.Many2one('hr.employee', required=True)

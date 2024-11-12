@@ -10,7 +10,7 @@ STATEMENT_LINE_CREATION_BATCH_SIZE = 500  # When importing transactions, batch t
 
 
 class AccountBankStatementLine(models.Model):
-    _inherit = ['account.bank.statement.line']
+    _inherit = 'account.bank.statement.line'
 
     online_transaction_identifier = fields.Char("Online Transaction Identifier", readonly=True)
     online_partner_information = fields.Char(readonly=True)

@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     instagram_use_own_account = fields.Boolean("Use your own Instagram Account", config_parameter='social.instagram_use_own_account',
         help="""Check this if you want to use your personal Instagram Developer Account instead of the provided one.""")

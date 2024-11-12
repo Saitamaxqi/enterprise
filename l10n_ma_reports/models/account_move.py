@@ -2,7 +2,7 @@ from odoo import api, fields, models
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move']
+    _inherit = 'account.move'
 
     l10n_ma_reports_payment_method = fields.Selection(
         [

@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class HrEmployee(models.Model):
-    _inherit = ["hr.employee"]
+    _inherit = "hr.employee"
 
     l10n_id_kode_ptkp = fields.Selection(
         selection=[

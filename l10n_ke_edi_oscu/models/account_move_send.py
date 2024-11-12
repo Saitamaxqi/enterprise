@@ -3,7 +3,7 @@ from odoo import _, api, models
 
 
 class AccountMoveSend(models.AbstractModel):
-    _inherit = ['account.move.send']
+    _inherit = 'account.move.send'
 
     @api.model
     def _is_oscu_applicable(self, move):

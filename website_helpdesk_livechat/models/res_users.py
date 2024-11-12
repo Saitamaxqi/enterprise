@@ -4,7 +4,7 @@ from odoo import models
 
 
 class ResUsers(models.Model):
-    _inherit = ["res.users"]
+    _inherit = "res.users"
 
     def _init_store_data(self, store):
         super()._init_store_data(store)

@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     l10n_ro_work_type = fields.Selection([
         ('1', 'Normal Conditions'),

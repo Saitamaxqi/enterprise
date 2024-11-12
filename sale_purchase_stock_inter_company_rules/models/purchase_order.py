@@ -4,7 +4,7 @@ from odoo.exceptions import UserError
 
 
 class PurchaseOrder(models.Model):
-    _inherit = ["purchase.order"]
+    _inherit = "purchase.order"
 
     def _prepare_sale_order_data(self, name, partner, company, direct_delivery_address):
         res = super()._prepare_sale_order_data(name, partner, company, direct_delivery_address)

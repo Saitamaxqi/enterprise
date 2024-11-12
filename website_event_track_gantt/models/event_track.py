@@ -5,7 +5,7 @@ from odoo import models
 
 
 class EventTrack(models.Model):
-    _inherit = ['event.track']
+    _inherit = 'event.track'
 
     def action_unschedule(self):
         self.ensure_one()

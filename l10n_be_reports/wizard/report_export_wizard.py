@@ -5,7 +5,7 @@ from odoo import api, models, fields
 
 
 class Account_ReportsExportWizard(models.TransientModel):
-    _inherit = ['account_reports.export.wizard']
+    _inherit = 'account_reports.export.wizard'
 
     l10n_be_reports_periodic_vat_wizard_id = fields.Many2one(string="Periodic VAT Export Wizard", comodel_name="l10n_be_reports.periodic.vat.xml.export")
 
@@ -22,7 +22,7 @@ class Account_ReportsExportWizard(models.TransientModel):
 
 
 class Account_ReportsExportWizardFormat(models.TransientModel):
-    _inherit = ['account_reports.export.wizard.format']
+    _inherit = 'account_reports.export.wizard.format'
 
     def apply_export(self, report_action):
         self.ensure_one()

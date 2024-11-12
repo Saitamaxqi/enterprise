@@ -4,7 +4,7 @@ from odoo import models
 
 
 class IrUiMenu(models.Model):
-    _inherit = ['ir.ui.menu']
+    _inherit = 'ir.ui.menu'
 
     def _visible_menu_ids(self, debug=False):
         visible_ids = super()._visible_menu_ids(debug)

@@ -8,6 +8,7 @@ from odoo.osv import expression
 
 
 class ProjectTask(models.Model):
+    _name = 'project.task'
     _inherit = ['project.task', 'documents.mixin']
 
     project_use_documents = fields.Boolean("Use Documents", related='project_id.use_documents', export_string_translation=False)

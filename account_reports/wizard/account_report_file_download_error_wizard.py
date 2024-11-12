@@ -4,6 +4,7 @@ from odoo import fields, models
 
 
 class AccountReportFileDownloadErrorWizard(models.TransientModel):
+    _name = 'account.report.file.download.error.wizard'
     _description = "Manage the file generation errors from report exports."
 
     actionable_errors = fields.Json()

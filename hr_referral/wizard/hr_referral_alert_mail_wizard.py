@@ -6,6 +6,7 @@ from odoo import _, fields, models
 
 
 class HrReferralAlertMailWizard(models.TransientModel):
+    _name = 'hr.referral.alert.mail.wizard'
     _description = 'Referral Alert Mail Wizard'
     _rec_name = 'subject'
 

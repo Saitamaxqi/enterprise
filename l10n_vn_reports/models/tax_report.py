@@ -5,6 +5,7 @@ from odoo.tools.misc import format_date, get_lang
 
 
 class L10n_VnTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_vn.tax.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'Taxes Custom Handler'
 
@@ -500,6 +501,7 @@ class L10n_VnTaxReportHandler(models.AbstractModel):
 
 
 class L10n_VnSalesTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_vn.sales.tax.report.handler'
     _inherit = ['l10n_vn.tax.report.handler']
     _description = 'Taxes Custom Handler'
 
@@ -548,6 +550,7 @@ class L10n_VnSalesTaxReportHandler(models.AbstractModel):
 
 
 class L10n_VnPurchaseTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_vn.purchase.tax.report.handler'
     _inherit = ['l10n_vn.tax.report.handler']
     _description = 'Taxes Custom Handler'
 

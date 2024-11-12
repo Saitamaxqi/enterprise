@@ -5,7 +5,7 @@ from odoo.addons.account.models.chart_template import template
 
 
 class AccountChartTemplate(models.AbstractModel):
-    _inherit = ['account.chart.template']
+    _inherit = 'account.chart.template'
 
     @template('ke', 'account.tax')
     def _get_ke_account_tax_etims_type(self):

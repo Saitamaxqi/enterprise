@@ -9,7 +9,7 @@ from odoo.tools import is_html_empty
 
 
 class ProposeChange(models.TransientModel):
-    _inherit = ['propose.change']
+    _inherit = 'propose.change'
 
     def default_get(self, fields_list):
         res = super().default_get(fields_list=fields_list)

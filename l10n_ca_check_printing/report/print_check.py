@@ -5,7 +5,7 @@ from odoo.tools.misc import format_date
 
 
 class AccountPayment(models.Model):
-    _inherit = ['account.payment']
+    _inherit = 'account.payment'
 
     def _check_build_page_info(self, i, p):
         page = super()._check_build_page_info(i, p)

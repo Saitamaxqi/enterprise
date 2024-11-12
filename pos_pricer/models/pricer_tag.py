@@ -10,6 +10,7 @@ PRICER_TAG_ID_LENGTH = 17
 
 
 class PricerTag(models.Model):
+    _name = 'pricer.tag'
     _description = 'Pricer electronic tag'
 
     name = fields.Char(

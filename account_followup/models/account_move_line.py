@@ -6,7 +6,7 @@ from odoo.tools import Query, SQL
 
 
 class AccountMoveLine(models.Model):
-    _inherit = ['account.move.line']
+    _inherit = 'account.move.line'
 
     followup_line_id = fields.Many2one('account_followup.followup.line', 'Follow-up Level', copy=False)
     invoice_origin = fields.Char(related='move_id.invoice_origin')

@@ -9,6 +9,7 @@ MAX_NAME_LENGTH = 50
 
 
 class AccountAssetReportHandler(models.AbstractModel):
+    _name = 'account.asset.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Assets Report Custom Handler'
 
@@ -454,7 +455,7 @@ class AccountAssetReportHandler(models.AbstractModel):
 
 
 class AccountReport(models.Model):
-    _inherit = ['account.report']
+    _inherit = 'account.report'
 
     def _get_caret_option_view_map(self):
         view_map = super()._get_caret_option_view_map()

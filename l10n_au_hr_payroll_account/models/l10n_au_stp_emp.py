@@ -2,6 +2,7 @@ from odoo import api, fields, models
 
 
 class L10n_AuStpEmp(models.Model):
+    _name = 'l10n_au.stp.emp'
     _description = "STP Employee"
 
     employee_id = fields.Many2one(

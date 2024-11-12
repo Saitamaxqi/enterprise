@@ -5,7 +5,7 @@ from odoo import models
 
 
 class AccountAnalyticLine(models.Model):
-    _inherit = ['account.analytic.line']
+    _inherit = 'account.analytic.line'
 
     def _timesheet_determine_sale_line(self):
         if self.project_id.is_fsm:

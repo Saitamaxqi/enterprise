@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class AppointmentQuestion(models.Model):
+    _name = 'appointment.question'
     _description = "Appointment Questions"
     _order = "sequence"
 

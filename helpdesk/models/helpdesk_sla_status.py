@@ -8,6 +8,7 @@ from odoo.osv import expression
 
 
 class HelpdeskSlaStatus(models.Model):
+    _name = 'helpdesk.sla.status'
     _description = "Ticket SLA Status"
     _table = 'helpdesk_sla_status'
     _order = 'deadline ASC, sla_stage_id'

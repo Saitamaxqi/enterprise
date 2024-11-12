@@ -20,8 +20,7 @@ WS_DATE_FORMAT = {'wsfe': '%Y%m%d', 'wsfex': '%Y%m%d', 'wsbfe': '%Y%m%d'}
 
 
 class AccountMove(models.Model):
-
-    _inherit = ["account.move"]
+    _inherit = "account.move"
 
     def _auto_init(self):
         if not column_exists(self.env.cr, "account_move", "l10n_ar_fce_transmission_type"):

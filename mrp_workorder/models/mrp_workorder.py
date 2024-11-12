@@ -18,6 +18,7 @@ from odoo.http import request
 
 
 class MrpWorkorder(models.Model):
+    _name = 'mrp.workorder'
     _inherit = ['mrp.workorder', 'barcodes.barcode_events_mixin']
 
     quality_point_ids = fields.Many2many('quality.point', compute='_compute_quality_point_ids', store=True)

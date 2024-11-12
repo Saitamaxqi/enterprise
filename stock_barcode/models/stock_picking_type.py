@@ -3,7 +3,7 @@ from odoo.exceptions import UserError
 
 
 class StockPickingType(models.Model):
-    _inherit = ['stock.picking.type']
+    _inherit = 'stock.picking.type'
 
     barcode_allow_extra_product = fields.Boolean(
         "Allow extra products", default=True,

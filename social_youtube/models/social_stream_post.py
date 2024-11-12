@@ -10,7 +10,7 @@ from werkzeug.urls import url_join
 
 
 class SocialStreamPost(models.Model):
-    _inherit = ['social.stream.post']
+    _inherit = 'social.stream.post'
 
     youtube_video_id = fields.Char('YouTube Video ID', index=True)
     youtube_likes_count = fields.Integer('YouTube Likes')

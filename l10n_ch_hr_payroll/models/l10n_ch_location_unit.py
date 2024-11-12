@@ -8,6 +8,7 @@ from odoo.exceptions import ValidationError
 
 
 class L10nChLocationUnit(models.Model):
+    _name = 'l10n.ch.location.unit'
     _description = 'Work Place - Swiss Payroll'
     _rec_name = 'partner_id'
 

@@ -12,7 +12,7 @@ CUSTOM_NUMBERS_PATTERN = re.compile(r'[0-9]{2}  [0-9]{2}  [0-9]{4}  [0-9]{7}')
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move']
+    _inherit = 'account.move'
 
     l10n_mx_edi_external_trade = fields.Boolean(
         string="Need external trade?",
@@ -220,7 +220,7 @@ class AccountMove(models.Model):
 
 
 class AccountMoveLine(models.Model):
-    _inherit = ["account.move.line"]
+    _inherit = "account.move.line"
 
     l10n_mx_edi_customs_number = fields.Char(
         help='Optional field for entering the customs information in the case '

@@ -40,7 +40,7 @@ COUNTRY_CODE_MAP = {
 
 
 class PosSession(models.Model):
-    _inherit = ['pos.session']
+    _inherit = 'pos.session'
     l10n_de_fiskaly_cash_point_closing_uuid = fields.Char(string="Fiskaly Cash Point Closing Uuid", readonly=True,
         help="The uuid of the 'cash point closing' created at Fiskaly when closing the session.")
 

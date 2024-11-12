@@ -12,6 +12,7 @@ from odoo.tools import format_date
 
 
 class L10n_HkIr56b(models.Model):
+    _name = 'l10n_hk.ir56b'
     _inherit = ['l10n_hk.ird']
     _description = 'IR56B Sheet'
     _order = 'start_period'

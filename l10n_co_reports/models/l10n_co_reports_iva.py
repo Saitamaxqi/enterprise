@@ -6,6 +6,7 @@ from odoo.tools import SQL
 
 
 class L10n_CoIvaReportHandler(models.AbstractModel):
+    _name = 'l10n_co.iva.report.handler'
     _inherit = ['l10n_co.report.handler']
     _description = 'IVA Report Custom Handler'
 

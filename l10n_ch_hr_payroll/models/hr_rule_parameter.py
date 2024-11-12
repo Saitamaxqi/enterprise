@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 
 
 class HrRuleParameter(models.Model):
-    _inherit = ['hr.rule.parameter']
+    _inherit = 'hr.rule.parameter'
 
     @api.model
     @ormcache('code', 'date', 'tuple(self.env.context.get("allowed_company_ids", []))')

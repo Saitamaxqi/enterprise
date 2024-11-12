@@ -7,6 +7,7 @@ from datetime import timedelta
 
 
 class L10n_ClReportHandler(models.AbstractModel):
+    _name = 'l10n_cl.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Chilean Report Custom Handler'
 

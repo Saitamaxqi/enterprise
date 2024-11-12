@@ -7,7 +7,7 @@ from odoo.addons.sale_timesheet_enterprise.models.sale import DEFAULT_INVOICED_T
 
 
 class AccountAnalyticLine(models.Model):
-    _inherit = ['account.analytic.line']
+    _inherit = 'account.analytic.line'
 
     def _compute_display_timer(self):
         invoiced_timesheets = self.filtered('timesheet_invoice_id')

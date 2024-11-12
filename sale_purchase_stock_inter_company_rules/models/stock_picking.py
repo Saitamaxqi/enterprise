@@ -3,7 +3,7 @@ from odoo import api, Command, models
 
 
 class StockPicking(models.Model):
-    _inherit = ["stock.picking"]
+    _inherit = "stock.picking"
 
     def button_validate(self):
         res = super().button_validate()

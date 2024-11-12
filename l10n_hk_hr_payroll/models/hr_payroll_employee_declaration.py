@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class HrPayrollEmployeeDeclaration(models.Model):
-    _inherit = ['hr.payroll.employee.declaration']
+    _inherit = 'hr.payroll.employee.declaration'
 
     def action_open_ir56g_details(self):
         self.ensure_one()

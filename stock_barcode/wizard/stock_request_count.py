@@ -4,7 +4,7 @@ from odoo import models
 
 
 class StockRequestCount(models.TransientModel):
-    _inherit = ['stock.request.count']
+    _inherit = 'stock.request.count'
 
     def _get_quants_to_count(self):
         quants_to_count = super()._get_quants_to_count()

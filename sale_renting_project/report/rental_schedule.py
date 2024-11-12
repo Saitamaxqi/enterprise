@@ -5,7 +5,7 @@ from odoo.tools import SQL
 
 
 class SaleRentalSchedule(models.Model):
-    _inherit = ['sale.rental.schedule']
+    _inherit = 'sale.rental.schedule'
 
     project_id = fields.Many2one('project.project', readonly=True)
 

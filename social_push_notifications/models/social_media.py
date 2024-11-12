@@ -5,7 +5,7 @@ from odoo import models, fields
 
 
 class SocialMedia(models.Model):
-    _inherit = ['social.media']
+    _inherit = 'social.media'
 
     media_type = fields.Selection(selection_add=[('push_notifications', 'Push Notifications')])
 

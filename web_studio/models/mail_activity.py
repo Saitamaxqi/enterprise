@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class MailActivity(models.Model):
-    _inherit = ["mail.activity"]
+    _inherit = "mail.activity"
 
     def _action_done(self, feedback=False, attachment_ids=False):
         approval_activities = self.filtered(lambda a: a.activity_category == 'grant_approval')

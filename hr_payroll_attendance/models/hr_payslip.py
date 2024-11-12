@@ -11,7 +11,7 @@ from odoo.osv import expression
 
 
 class HrPayslip(models.Model):
-    _inherit = ['hr.payslip']
+    _inherit = 'hr.payslip'
 
     attendance_count = fields.Integer(compute='_compute_attendance_count')
 

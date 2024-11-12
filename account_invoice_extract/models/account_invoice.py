@@ -18,6 +18,7 @@ OCR_VERSION = 123
 
 
 class AccountInvoice_ExtractWords(models.Model):
+    _name = 'account.invoice_extract.words'
     _description = "Extracted words from invoice scan"
 
     invoice_id = fields.Many2one("account.move", required=True, ondelete='cascade', index=True, string="Invoice")
@@ -35,6 +36,7 @@ class AccountInvoice_ExtractWords(models.Model):
 
 
 class AccountMove(models.Model):
+    _name = 'account.move'
     _inherit = ['extract.mixin', 'account.move']
 
     @api.depends('state')

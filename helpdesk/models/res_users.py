@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResUsers(models.Model):
-    _inherit = ['res.users']
+    _inherit = 'res.users'
 
     helpdesk_target_closed = fields.Integer(export_string_translation=False, default=1)
     helpdesk_target_rating = fields.Float(export_string_translation=False, default=4.5)

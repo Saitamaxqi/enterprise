@@ -12,6 +12,7 @@ from odoo.exceptions import UserError
 
 
 class HrPayslipEmployeeDepatureNotice(models.TransientModel):
+    _name = 'hr.payslip.employee.depature.notice'
     _description = 'Manage the Employee Departure - Notice Duration'
 
     @api.model

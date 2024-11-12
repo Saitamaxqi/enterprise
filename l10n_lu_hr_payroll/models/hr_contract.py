@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     l10n_lu_index_on_contract_signature = fields.Float(
         string='Index on Contract Signature (LU)', readonly=True, compute='_compute_indexed_wage')

@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 
 class WhatsappTemplate(models.Model):
-    _inherit = ['whatsapp.template']
+    _inherit = 'whatsapp.template'
 
     def _get_additional_button_values(self, button):
         """

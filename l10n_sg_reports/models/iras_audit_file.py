@@ -16,6 +16,7 @@ IRAS_XSD = 'l10n_sg_reports/data/iras_audit_file.xsd'
 
 
 class L10nSgReportsIafWizard(models.TransientModel):
+    _name = 'l10n.sg.reports.iaf.wizard'
     _description = "Singaporean IAF Report Wizard"
 
     date_from = fields.Date(string='Start Date', required=True)
@@ -38,7 +39,7 @@ class L10nSgReportsIafWizard(models.TransientModel):
 
 
 class AccountReport(models.Model):
-    _inherit = ['account.report']
+    _inherit = 'account.report'
 
     def _l10n_sg_get_company_infos(self, date_from, date_to):
         """

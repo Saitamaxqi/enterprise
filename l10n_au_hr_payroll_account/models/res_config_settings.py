@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ["res.config.settings"]
+    _inherit = "res.config.settings"
 
     l10n_au_hr_super_responsible_id = fields.Many2one(
         related="company_id.l10n_au_hr_super_responsible_id", readonly=False

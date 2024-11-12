@@ -6,6 +6,7 @@ from odoo import api, fields, models
 
 
 class BudgetLine(models.Model):
+    _name = 'budget.line'
     _inherit = ['analytic.plan.fields.mixin']
     _description = "Budget Line"
     _order = 'sequence, id'

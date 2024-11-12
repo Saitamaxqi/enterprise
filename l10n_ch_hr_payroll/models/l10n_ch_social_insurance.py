@@ -6,6 +6,7 @@ from odoo.exceptions import UserError
 
 
 class L10nChSocialInsurance(models.Model):
+    _name = 'l10n.ch.social.insurance'
     _description = 'Swiss: Social Insurances (AVS, AC)'
 
     name = fields.Char(required=True)
@@ -82,6 +83,7 @@ class L10nChSocialInsurance(models.Model):
 
 
 class L10nChSocialInsuranceAvsLine(models.Model):
+    _name = 'l10n.ch.social.insurance.avs.line'
     _description = 'Swiss: Social Insurances - AVS Line'
 
     date_from = fields.Date(string="From", required=True)
@@ -92,6 +94,7 @@ class L10nChSocialInsuranceAvsLine(models.Model):
 
 
 class L10nChSocialInsuranceAcLine(models.Model):
+    _name = 'l10n.ch.social.insurance.ac.line'
     _description = 'Swiss: Social Insurances - AC Line'
 
     date_from = fields.Date(string="From", required=True)
@@ -104,6 +107,7 @@ class L10nChSocialInsuranceAcLine(models.Model):
 
 
 class L10nChSocialInsuranceAvsRetirementRente(models.Model):
+    _name = 'l10n.ch.social.insurance.avs.retirement.rente'
     _description = 'Swiss: Retired Employees Exoneration'
 
     date_from = fields.Date(string="From", required=True)
@@ -113,6 +117,7 @@ class L10nChSocialInsuranceAvsRetirementRente(models.Model):
 
 
 class L10nChSocialInsuranceAvsAcThreshold(models.Model):
+    _name = 'l10n.ch.social.insurance.avs.ac.threshold'
     _description = 'Swiss: AC: Rate Threshold'
 
     date_from = fields.Date(string="From", required=True)
@@ -122,6 +127,7 @@ class L10nChSocialInsuranceAvsAcThreshold(models.Model):
 
 
 class L10nChSocialInsuranceAvsAccThreshold(models.Model):
+    _name = 'l10n.ch.social.insurance.avs.acc.threshold'
     _description = 'Swiss: ACC: Rate Threshold'
 
     date_from = fields.Date(string="From", required=True)

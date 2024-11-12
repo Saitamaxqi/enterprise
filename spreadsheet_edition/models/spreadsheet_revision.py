@@ -8,6 +8,7 @@ from odoo import api, fields, models
 
 
 class SpreadsheetRevision(models.Model):
+    _name = 'spreadsheet.revision'
     _description = "Collaborative spreadsheet revision"
     _rec_name = 'revision_uuid'
     _rec_names_search = ['name', 'revision_uuid']

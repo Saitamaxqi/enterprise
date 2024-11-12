@@ -4,6 +4,7 @@ from odoo import models, fields, api, _
 
 
 class HelpdeskCreateFsmTask(models.TransientModel):
+    _name = 'helpdesk.create.fsm.task'
     _description = 'Create a Field Service task'
 
     helpdesk_ticket_id = fields.Many2one('helpdesk.ticket', string='Related ticket', required=True)

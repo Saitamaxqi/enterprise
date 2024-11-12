@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class ResCompany(models.Model):
-    _inherit = ["res.company"]
+    _inherit = "res.company"
 
     gain_account_id = fields.Many2one(
         'account.account',

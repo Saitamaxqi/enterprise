@@ -19,6 +19,7 @@ class WebCohortSimpleModel(models.Model):
 
 
 class WebCohortType(models.Model):
+    _name = 'web.cohort.type'
     _description = 'Type for Cohort Model'
 
     name = fields.Char()

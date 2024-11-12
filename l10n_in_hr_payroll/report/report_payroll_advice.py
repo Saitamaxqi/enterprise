@@ -6,6 +6,7 @@ from odoo import api, models
 
 
 class ReportL10n_In_Hr_PayrollReport_Payrolladvice(models.AbstractModel):
+    _name = 'report.l10n_in_hr_payroll.report_payrolladvice'
     _description = "Indian Payroll Advice Report"
 
     def get_month(self, input_date):

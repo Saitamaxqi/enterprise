@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     exemption_doctor_master_account_id = fields.Many2one('account.account', check_company=True)
     exemption_bachelor_account_id = fields.Many2one('account.account', check_company=True)

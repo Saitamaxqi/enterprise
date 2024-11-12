@@ -2,6 +2,7 @@ from odoo import fields, models
 
 
 class IotBox(models.Model):
+    _name = 'iot.box'
     _description = 'IoT Box'
 
     name = fields.Char('Name', readonly=True)

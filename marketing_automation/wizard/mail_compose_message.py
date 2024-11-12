@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class MailComposeMessage(models.TransientModel):
-    _inherit = ['mail.compose.message']
+    _inherit = 'mail.compose.message'
 
     marketing_activity_id = fields.Many2one('marketing.activity', string='Marketing Activity')
 

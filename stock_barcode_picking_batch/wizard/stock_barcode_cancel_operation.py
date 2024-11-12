@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class Stock_BarcodeCancelOperation(models.TransientModel):
-    _inherit = ['stock_barcode.cancel.operation']
+    _inherit = 'stock_barcode.cancel.operation'
 
     batch_id = fields.Many2one('stock.picking.batch', 'Batch Transfer', readonly=True)
     batch_name = fields.Char('Batch Transfer Name', readonly=True, related='batch_id.name')

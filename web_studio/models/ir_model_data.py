@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class IrModelData(models.Model):
-    _inherit = ['ir.model.data']
+    _inherit = 'ir.model.data'
 
     studio = fields.Boolean(help='Checked if it has been edited with Studio.')
 

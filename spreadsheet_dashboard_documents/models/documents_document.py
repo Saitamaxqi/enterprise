@@ -2,7 +2,7 @@ from odoo import models
 
 
 class DocumentsDocument(models.Model):
-    _inherit = ["documents.document"]
+    _inherit = "documents.document"
 
     def _get_spreadsheet_metadata(self, access_token=None):
         data = super()._get_spreadsheet_metadata(access_token)

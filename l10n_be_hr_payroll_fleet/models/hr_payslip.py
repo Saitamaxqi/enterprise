@@ -6,7 +6,7 @@ from odoo.exceptions import AccessError
 
 
 class HrPayslip(models.Model):
-    _inherit = ['hr.payslip']
+    _inherit = 'hr.payslip'
 
     vehicle_id = fields.Many2one(
         'fleet.vehicle', string='Company Car',

@@ -5,7 +5,7 @@ from odoo.http import request
 
 
 class IrHttp(models.AbstractModel):
-    _inherit = ['ir.http']
+    _inherit = 'ir.http'
 
     @api.model
     def get_frontend_session_info_sign(self):

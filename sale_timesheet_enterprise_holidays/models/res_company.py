@@ -4,7 +4,7 @@ from odoo import models
 
 
 class ResCompany(models.Model):
-    _inherit = ["res.company"]
+    _inherit = "res.company"
 
     def _get_leaderboard_query(self):
         return """

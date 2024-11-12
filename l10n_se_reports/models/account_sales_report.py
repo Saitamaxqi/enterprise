@@ -9,6 +9,7 @@ from odoo.tools import date_utils
 
 
 class L10n_SeEcSalesReportHandler(models.AbstractModel):
+    _name = 'l10n_se.ec.sales.report.handler'
     _inherit = ['account.ec.sales.report.handler']
     _description = 'Swedish EC Sales Report Custom Handler'
 

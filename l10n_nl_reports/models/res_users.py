@@ -2,7 +2,7 @@ from odoo import api, models, fields
 
 
 class ResUsers(models.Model):
-    _inherit = ['res.users']
+    _inherit = 'res.users'
 
     l10n_nl_report_xaf_userid = fields.Char(compute='_get_l10n_nl_report_xaf_userid', store=False, compute_sudo=True)
 

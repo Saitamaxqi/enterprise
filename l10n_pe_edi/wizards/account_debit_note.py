@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class AccountDebitNote(models.TransientModel):
-    _inherit = ['account.debit.note']
+    _inherit = 'account.debit.note'
 
     l10n_pe_edi_charge_reason = fields.Selection(
         selection=[

@@ -7,6 +7,7 @@ from odoo import models
 
 
 class L10n_AtEcSalesReportHandler(models.AbstractModel):
+    _name = 'l10n_at.ec.sales.report.handler'
     _inherit = ['account.ec.sales.report.handler']
     _description = 'Austrian EC Sales Report Custom Handler'
 

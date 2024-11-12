@@ -6,7 +6,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     l10n_ke_oscu_last_fetch_customs_import_date = fields.Datetime(default=datetime(2018, 1, 1))
 

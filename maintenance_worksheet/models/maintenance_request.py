@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 
 
 class MaintenanceRequest(models.Model):
-    _inherit = ['maintenance.request']
+    _inherit = 'maintenance.request'
 
     worksheet_template_id = fields.Many2one(
         'worksheet.template', string="Worksheet Template",

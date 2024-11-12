@@ -16,7 +16,7 @@ KODE_PTKP_MAPPING = {
 
 
 class HrPayslip(models.Model):
-    _inherit = ["hr.payslip"]
+    _inherit = "hr.payslip"
 
     l10n_id_include_jkk_jkm = fields.Boolean(default=True)  # jkk jkm jht jp
     l10n_id_include_bpjs_kesehatan = fields.Boolean(default=True)  # bpjs kesehatan + its deduction

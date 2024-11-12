@@ -7,7 +7,7 @@ from odoo.osv import expression
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     subscription_count = fields.Integer(string='Subscriptions', compute='_subscription_count')
 

@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class AppointmentType(models.Model):
-    _inherit = ["appointment.type"]
+    _inherit = "appointment.type"
 
     @api.model
     def _product_id_domain(self):

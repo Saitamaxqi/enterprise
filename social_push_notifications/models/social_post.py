@@ -6,7 +6,7 @@ from odoo import fields, models, api
 
 
 class SocialPost(models.Model):
-    _inherit = ['social.post']
+    _inherit = 'social.post'
 
     use_visitor_timezone = fields.Boolean(compute='_compute_use_visitor_timezone', readonly=False, store=True)
 

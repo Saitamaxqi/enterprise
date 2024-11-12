@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class MrpProduction(models.Model):
-    _inherit = ['mrp.production']
+    _inherit = 'mrp.production'
 
     eco_ids = fields.One2many('mrp.eco', 'production_id', string="ECOs", readonly=True)
     eco_count = fields.Integer(compute="_compute_eco_count")

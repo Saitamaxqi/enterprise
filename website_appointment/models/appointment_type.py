@@ -6,6 +6,7 @@ from odoo.addons.website_appointment.controllers.appointment import WebsiteAppoi
 
 
 class AppointmentType(models.Model):
+    _name = 'appointment.type'
     _inherit = [
         'appointment.type',
         'website.seo.metadata',

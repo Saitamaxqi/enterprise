@@ -2,7 +2,7 @@ from odoo import models, Command
 
 
 class AccountChartTemplate(models.AbstractModel):
-    _inherit = ['account.chart.template']
+    _inherit = 'account.chart.template'
 
     def _load(self, template_code, company, install_demo):
         # Override

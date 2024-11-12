@@ -14,6 +14,7 @@ CATEGORY_SELECTION = [
 
 
 class ApprovalCategory(models.Model):
+    _name = 'approval.category'
     _description = 'Approval Category'
     _order = 'sequence, id'
 

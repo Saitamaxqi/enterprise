@@ -7,7 +7,7 @@ from odoo.exceptions import UserError
 
 
 class WorksheetTemplate(models.Model):
-    _inherit = ['worksheet.template']
+    _inherit = 'worksheet.template'
 
     def action_analysis_report(self):
         res = super().action_analysis_report()

@@ -4,7 +4,7 @@ from odoo import api, models
 
 
 class WorksheetTemplate(models.Model):
-    _inherit = ['worksheet.template']
+    _inherit = 'worksheet.template'
 
     @api.model
     def _default_quality_check_template_fields(self):

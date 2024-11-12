@@ -4,6 +4,7 @@ from odoo import api, fields, models, _
 
 
 class ProductAvataxCategory(models.Model):
+    _name = 'product.avatax.category'
     _description = "Avatax Product Category"
     _rec_name = 'code'
     _rec_names_search = ['description', 'code']
@@ -18,7 +19,7 @@ class ProductAvataxCategory(models.Model):
 
 
 class ProductCategory(models.Model):
-    _inherit = ['product.category']
+    _inherit = 'product.category'
 
     avatax_category_id = fields.Many2one(
         'product.avatax.category',
@@ -33,7 +34,7 @@ class ProductCategory(models.Model):
 
 
 class ProductTemplate(models.Model):
-    _inherit = ['product.template']
+    _inherit = 'product.template'
 
     avatax_category_id = fields.Many2one(
         'product.avatax.category',
@@ -45,7 +46,7 @@ class ProductTemplate(models.Model):
 
 
 class ProductProduct(models.Model):
-    _inherit = ['product.product']
+    _inherit = 'product.product'
 
     avatax_category_id = fields.Many2one(
         'product.avatax.category',

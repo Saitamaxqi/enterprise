@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class AccountJournal(models.Model):
-    _inherit = ['account.journal']
+    _inherit = 'account.journal'
 
     l10n_ec_withhold_type = fields.Selection(
         selection=[

@@ -7,7 +7,7 @@ from odoo.tools.translate import _
 
 
 class PosMakePayment(models.TransientModel):
-    _inherit = ["pos.make.payment"]
+    _inherit = "pos.make.payment"
 
     def check(self):
         order = self.env["pos.order"].browse(self.env.context.get("active_id"))

@@ -3,7 +3,7 @@ from odoo.fields import Command
 
 
 class Account_Edi_Proxy_ClientUser(models.Model):
-    _inherit = ['account_edi_proxy_client.user']
+    _inherit = 'account_edi_proxy_client.user'
 
     def _peppol_import_invoice(self, attachment, partner_endpoint, peppol_state, uuid):
         # EXTENDS account_peppol

@@ -7,7 +7,7 @@ import re
 
 
 class Account_ReportsExportWizard(models.TransientModel):
-    _inherit = ['account_reports.export.wizard']
+    _inherit = 'account_reports.export.wizard'
 
     # id of the related BOE generation wizard when exporting a Spanish report
     l10n_es_reports_boe_wizard_id = fields.Integer()
@@ -38,7 +38,7 @@ class Account_ReportsExportWizard(models.TransientModel):
 
 
 class Account_ReportsExportWizardFormat(models.TransientModel):
-    _inherit = ['account_reports.export.wizard.format']
+    _inherit = 'account_reports.export.wizard.format'
 
     def apply_export(self, report_action):
         self.ensure_one()

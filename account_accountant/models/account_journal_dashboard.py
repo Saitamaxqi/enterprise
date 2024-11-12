@@ -2,7 +2,7 @@ from odoo import models
 
 
 class AccountJournal(models.Model):
-    _inherit = ["account.journal"]
+    _inherit = "account.journal"
 
     def action_open_reconcile(self):
         self.ensure_one()

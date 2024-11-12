@@ -9,7 +9,7 @@ from odoo.exceptions import UserError
 
 
 class CertificateCertificate(models.Model):
-    _inherit = ['certificate.certificate']
+    _inherit = 'certificate.certificate'
 
     @api.model
     def _l10n_ar_create_certificate_request(self, company_id):

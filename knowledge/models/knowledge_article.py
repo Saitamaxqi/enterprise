@@ -24,6 +24,7 @@ ARTICLE_PERMISSION_LEVEL = {'none': 0, 'read': 1, 'write': 2}
 
 
 class KnowledgeArticle(models.Model):
+    _name = 'knowledge.article'
     _description = "Knowledge Article"
     _inherit = ['mail.thread', 'mail.activity.mixin', 'html.field.history.mixin']
     _order = "favorite_count desc, write_date desc, id desc"

@@ -17,6 +17,7 @@ XLSX_FONT_SIZE_HEADING = 11
 
 
 class AccountJournalReportHandler(models.AbstractModel):
+    _name = 'account.journal.report.handler'
     _inherit = ["account.report.custom.handler"]
     _description = "Journal Report Custom Handler"
 

@@ -5,6 +5,7 @@ from odoo.exceptions import UserError
 
 
 class QualityCheckOnDemand(models.TransientModel):
+    _name = 'quality.check.on.demand'
     _description = "Wizard to select on-demand quality check points"
 
     picking_id = fields.Many2one('stock.picking', string='Picking')

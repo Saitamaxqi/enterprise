@@ -6,7 +6,7 @@ from odoo import models
 
 
 class SocialAccount(models.Model):
-    _inherit = ['social.account']
+    _inherit = 'social.account'
 
     def _compute_statistics(self):
         """ Overridden to bypass third-party API calls. """

@@ -7,6 +7,7 @@ from odoo.tools.safe_eval import safe_eval
 
 
 class HrSalaryRule(models.Model):
+    _name = 'hr.salary.rule'
     _order = 'sequence, id'
     _description = 'Salary Rule'
 

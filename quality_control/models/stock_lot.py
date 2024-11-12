@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class StockLot(models.Model):
-    _inherit = ['stock.lot']
+    _inherit = 'stock.lot'
 
     quality_check_qty = fields.Integer(compute='_compute_quality_check_qty', groups='quality.group_quality_user')
     quality_alert_qty = fields.Integer(compute='_compute_quality_alert_qty', groups='quality.group_quality_user')

@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class DocumentsTag(models.Model):
-    _inherit = ['documents.tag']
+    _inherit = 'documents.tag'
 
     @api.ondelete(at_uninstall=False)
     def _unlink_except_contract_signature_tag(self):

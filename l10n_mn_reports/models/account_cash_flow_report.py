@@ -3,6 +3,7 @@ from odoo import models, _
 
 
 class L10n_MnCashFlowReportHandler(models.AbstractModel):
+    _name = 'l10n_mn.cash.flow.report.handler'
     _inherit = ['account.cash.flow.report.handler']
     _description = 'Mongolian Cash Flow Report Custom Handler'
 

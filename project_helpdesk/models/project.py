@@ -5,7 +5,7 @@ from odoo import models, _
 
 
 class ProjectTask(models.Model):
-    _inherit = ['project.task']
+    _inherit = 'project.task'
 
     def action_convert_to_ticket(self):
         if any(task.recurring_task for task in self):

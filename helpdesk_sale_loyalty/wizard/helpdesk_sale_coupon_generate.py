@@ -5,6 +5,7 @@ from odoo import models, fields, _
 
 
 class HelpdeskSaleCouponGenerate(models.TransientModel):
+    _name = 'helpdesk.sale.coupon.generate'
     _description = 'Generate Sales Coupon from Helpdesk'
 
 

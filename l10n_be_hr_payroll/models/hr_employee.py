@@ -9,7 +9,7 @@ from odoo.exceptions import ValidationError, AccessError
 
 
 class HrEmployee(models.Model):
-    _inherit = ['hr.employee']
+    _inherit = 'hr.employee'
 
     niss = fields.Char(
         'NISS Number', compute="_compute_niss", store=True, readonly=False,

@@ -6,7 +6,7 @@ from lxml import etree
 
 
 class L10n_NlEcSalesReportHandler(models.AbstractModel):
-    _inherit = ['l10n_nl.ec.sales.report.handler']
+    _inherit = 'l10n_nl.ec.sales.report.handler'
     _description = 'Dutch EC Sales Report Custom Handler for SBR'
 
     def _custom_options_initializer(self, report, options, previous_options):

@@ -4,7 +4,7 @@ from odoo import models
 
 
 class AccountChartTemplate(models.AbstractModel):
-    _inherit = ['account.chart.template']
+    _inherit = 'account.chart.template'
 
     def _get_account_accountant_res_company(self, chart_template):
         # Called when installing the Accountant module

@@ -10,7 +10,7 @@ from odoo.tools.misc import unquote
 
 
 class HelpdeskTicket(models.Model):
-    _inherit = ['helpdesk.ticket']
+    _inherit = 'helpdesk.ticket'
 
     def _domain_sale_line_id(self):
         domain = expression.AND([

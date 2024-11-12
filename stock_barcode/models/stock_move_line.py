@@ -5,7 +5,7 @@ from odoo.tools import frozendict
 
 
 class StockMoveLine(models.Model):
-    _inherit = ['stock.move.line']
+    _inherit = 'stock.move.line'
 
     product_barcode = fields.Char(related='product_id.barcode')
     formatted_product_barcode = fields.Char(compute="_compute_product_barcode")

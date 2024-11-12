@@ -4,6 +4,7 @@ from odoo import fields, models
 
 
 class SignItem(models.Model):
+    _name = 'sign.item'
     _description = "Fields to be sign on Document"
     _order = "page asc, posY asc, posX asc"
     _rec_name = 'template_id'

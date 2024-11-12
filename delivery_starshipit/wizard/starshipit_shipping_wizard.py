@@ -4,6 +4,7 @@ from odoo import fields, models
 
 
 class StarshipitShippingWizard(models.TransientModel):
+    _name = 'starshipit.shipping.wizard'
     _description = "Choose from the available starshipit shipping methods"
 
     carrier_id = fields.Many2one(

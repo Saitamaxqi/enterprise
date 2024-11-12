@@ -3,7 +3,7 @@ from odoo import models
 
 
 class AccountChartTemplate(models.AbstractModel):
-    _inherit = ['account.chart.template']
+    _inherit = 'account.chart.template'
 
     @template('gr', 'res.company')
     def _get_gr_reports_res_company(self):

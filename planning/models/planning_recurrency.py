@@ -12,6 +12,7 @@ from odoo.exceptions import ValidationError
 
 
 class PlanningRecurrency(models.Model):
+    _name = 'planning.recurrency'
     _description = "Planning Recurrence"
 
     slot_ids = fields.One2many('planning.slot', 'recurrency_id', string="Related Planning Entries")

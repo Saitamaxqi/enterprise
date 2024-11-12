@@ -7,7 +7,7 @@ from odoo.addons.fleet.models.fleet_vehicle_model import FUEL_TYPES
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     @api.model
     def _get_available_vehicles_domain(self, driver_ids=None, vehicle_type='car'):

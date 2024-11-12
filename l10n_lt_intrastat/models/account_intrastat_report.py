@@ -9,7 +9,7 @@ from odoo.tools import SQL
 
 
 class AccountIntrastatReportHandler(models.AbstractModel):
-    _inherit = ['account.intrastat.report.handler']
+    _inherit = 'account.intrastat.report.handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)

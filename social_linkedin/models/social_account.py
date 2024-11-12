@@ -17,7 +17,7 @@ _logger = logging.getLogger(__name__)
 
 
 class SocialAccount(models.Model):
-    _inherit = ['social.account']
+    _inherit = 'social.account'
 
     linkedin_account_urn = fields.Char('LinkedIn Account URN', readonly=True, help='LinkedIn Account URN')
     linkedin_account_id = fields.Char('LinkedIn Account ID', compute='_compute_linkedin_account_id')

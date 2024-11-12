@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 
 
 class AccountBatchPayment(models.Model):
-    _inherit = ["account.batch.payment"]
+    _inherit = "account.batch.payment"
 
     def _validate_bank_for_nacha(self, payment):
         bank = payment.partner_bank_id

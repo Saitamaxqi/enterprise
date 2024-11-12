@@ -7,7 +7,7 @@ from odoo import fields, models
 
 
 class HrContract(models.Model):
-    _inherit = ["hr.contract"]
+    _inherit = "hr.contract"
 
     l10n_hk_internet = fields.Monetary(
         string="HK: Internet Subscription",

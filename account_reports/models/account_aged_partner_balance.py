@@ -12,6 +12,7 @@ from itertools import chain
 
 
 class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
+    _name = 'account.aged.partner.balance.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Aged Partner Balance Custom Handler'
 
@@ -395,6 +396,7 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
 
 
 class AccountAgedPayableReportHandler(models.AbstractModel):
+    _name = 'account.aged.payable.report.handler'
     _inherit = ['account.aged.partner.balance.report.handler']
     _description = 'Aged Payable Custom Handler'
 
@@ -419,6 +421,7 @@ class AccountAgedPayableReportHandler(models.AbstractModel):
 
 
 class AccountAgedReceivableReportHandler(models.AbstractModel):
+    _name = 'account.aged.receivable.report.handler'
     _inherit = ['account.aged.partner.balance.report.handler']
     _description = 'Aged Receivable Custom Handler'
 

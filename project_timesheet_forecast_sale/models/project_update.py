@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ProjectUpdate(models.Model):
-    _inherit = ['project.update']
+    _inherit = 'project.update'
 
     @api.model
     def _get_services_values(self, project):

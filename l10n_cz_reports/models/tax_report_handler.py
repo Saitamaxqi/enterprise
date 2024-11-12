@@ -6,6 +6,7 @@ from odoo.tools import float_round
 
 
 class L10n_CzTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_cz.tax.report.handler'
     _inherit = ["account.tax.report.handler"]
     _description = "Czech Tax Report Custom Handler"
 

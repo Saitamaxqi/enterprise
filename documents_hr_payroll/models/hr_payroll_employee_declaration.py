@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class HrPayrollEmployeeDeclaration(models.Model):
-    _inherit = ['hr.payroll.employee.declaration']
+    _inherit = 'hr.payroll.employee.declaration'
 
     pdf_to_post = fields.Boolean()
     state = fields.Selection(

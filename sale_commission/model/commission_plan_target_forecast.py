@@ -5,6 +5,7 @@ from odoo.exceptions import ValidationError
 
 
 class SaleCommissionPlanTargetForecast(models.Model):
+    _name = 'sale.commission.plan.target.forecast'
     _description = 'Commission Plan Target Forecast'
     _order = 'id'
 

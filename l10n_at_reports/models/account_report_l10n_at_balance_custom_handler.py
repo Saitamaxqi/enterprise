@@ -8,6 +8,7 @@ from odoo.tools import float_compare
 
 
 class AccountReportL10n_AtBalanceCustomHandler(models.AbstractModel):
+    _name = 'account.report.l10n_at.balance.custom.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Austrian Balance Sheet Report Custom Handler'
 

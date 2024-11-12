@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     plafond_secu = fields.Float(string='Plafond de la Securite Sociale', digits='Payroll')
     nombre_employes = fields.Integer(string='Nombre d\'employes')
@@ -15,7 +15,7 @@ class ResCompany(models.Model):
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     qualif = fields.Char(string='Qualification')
     niveau = fields.Char()
@@ -23,7 +23,7 @@ class HrContract(models.Model):
 
 
 class HrPayslip(models.Model):
-    _inherit = ['hr.payslip']
+    _inherit = 'hr.payslip'
 
     payment_mode = fields.Char(string='Mode de paiement')
 

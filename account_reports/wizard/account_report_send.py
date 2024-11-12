@@ -4,6 +4,7 @@ from odoo.tools.misc import get_lang
 
 
 class AccountReportSend(models.TransientModel):
+    _name = 'account.report.send'
     _description = "Account Report Send"
 
     partner_ids = fields.Many2many(

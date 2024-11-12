@@ -5,6 +5,7 @@ from odoo import api, fields, models
 
 
 class SpreadsheetDocumentToDashboard(models.TransientModel):
+    _name = 'spreadsheet.document.to.dashboard'
     _description = "Create a dashboard from a spreadsheet document"
 
     name = fields.Char(

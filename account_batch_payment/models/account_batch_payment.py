@@ -7,6 +7,7 @@ from odoo.exceptions import ValidationError, UserError
 
 
 class AccountBatchPayment(models.Model):
+    _name = 'account.batch.payment'
     _description = "Batch Payment"
     _order = "date desc, id desc"
     _inherit = ["mail.thread", "mail.activity.mixin"]

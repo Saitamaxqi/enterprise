@@ -8,7 +8,7 @@ from odoo.addons.google_calendar.utils.google_event import GoogleEvent
 
 
 class CalendarEvent(models.Model):
-    _inherit = ["calendar.event"]
+    _inherit = "calendar.event"
 
     def _compute_videocall_redirection(self):
         """ Creating a videocall redirection link even if there is no videocall location (google meet url) to ensure

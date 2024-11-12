@@ -4,7 +4,7 @@ from odoo import fields, models, _
 
 
 class HrPayslipRun(models.Model):
-    _inherit = ['hr.payslip.run']
+    _inherit = 'hr.payslip.run'
 
     def action_payment_report(self, export_format='advice'):
         self.ensure_one()

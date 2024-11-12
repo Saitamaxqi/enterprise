@@ -4,6 +4,7 @@ from odoo import models, fields, api
 
 
 class SaleCommissionPlanTargetCommission(models.Model):
+    _name = 'sale.commission.plan.target.commission'
     _description = 'Commission Plan Target Commission'
     _order = 'amount, id'
 

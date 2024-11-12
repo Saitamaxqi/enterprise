@@ -10,6 +10,7 @@ TRIAL_BALANCE_END_COLUMN_GROUP_KEY = '_trial_balance_end_column_group'
 
 
 class AccountTrialBalanceReportHandler(models.AbstractModel):
+    _name = 'account.trial.balance.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Trial Balance Custom Handler'
 

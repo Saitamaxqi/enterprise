@@ -6,6 +6,7 @@ from odoo.addons.phone_validation.tools.phone_validation import phone_format
 
 
 class Data_CleaningRecord(models.Model):
+    _name = 'data_cleaning.record'
     _description = 'Cleaning Record'
 
     active = fields.Boolean('Active', default=True)

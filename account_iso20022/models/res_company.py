@@ -4,7 +4,7 @@ from odoo.addons.account_batch_payment.models.sepa_mapping import sanitize_commu
 
 
 class ResCompany(models.Model):
-    _inherit = ["res.company"]
+    _inherit = "res.company"
 
     iso20022_orgid_id = fields.Char('Identification', size=35, copy=False, compute='_compute_iso20022_orgid', readonly=False, store=True,
         help="Identification assigned by an institution (eg. VAT number).")

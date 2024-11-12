@@ -40,6 +40,7 @@ XLSX_MIME_TYPES = [
 
 
 class DocumentsDocument(models.Model):
+    _name = 'documents.document'
     _inherit = ["documents.document", "spreadsheet.mixin"]
 
     spreadsheet_binary_data = fields.Binary(compute='_compute_spreadsheet_binary_data', inverse='_inverse_spreadsheet_binary_data', default=None)

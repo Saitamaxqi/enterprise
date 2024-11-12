@@ -9,6 +9,7 @@ from odoo import fields
 
 
 class L10n_ThTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_th.tax.report.handler'
     _inherit = ["account.generic.tax.report.handler"]
     _description = "Thai Tax Report Custom Handler"
 

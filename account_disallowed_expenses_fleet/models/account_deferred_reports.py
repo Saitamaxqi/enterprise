@@ -6,7 +6,7 @@ from odoo.tools import SQL
 
 
 class AccountDeferredReportHandler(models.AbstractModel):
-    _inherit = ['account.deferred.report.handler']
+    _inherit = 'account.deferred.report.handler'
 
     @api.model
     def _get_select(self):

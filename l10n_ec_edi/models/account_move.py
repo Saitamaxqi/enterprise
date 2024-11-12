@@ -70,7 +70,7 @@ L10N_EC_WITHHOLD_FOREIGN_REGIME = [('01', '(01) General Regime'), ('02', '(02) F
 
 
 class AccountMove(models.Model):
-    _inherit = ["account.move"]
+    _inherit = "account.move"
 
     # ===== Authorization number show/edit fields =====
     l10n_show_ec_authorization = fields.Boolean(
@@ -904,7 +904,7 @@ class AccountMove(models.Model):
 
 
 class AccountMoveLine(models.Model):
-    _inherit = ['account.move.line']
+    _inherit = 'account.move.line'
 
     l10n_ec_withhold_invoice_id = fields.Many2one(
         comodel_name='account.move',

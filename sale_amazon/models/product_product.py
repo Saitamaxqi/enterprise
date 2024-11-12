@@ -4,7 +4,7 @@ from odoo import _, api, fields, models
 
 
 class ProductProduct(models.Model):
-    _inherit = ['product.product']
+    _inherit = 'product.product'
 
     offer_count = fields.Integer(
         compute='_compute_offer_count', groups='sales_team.group_sale_manager'

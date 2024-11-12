@@ -2,7 +2,7 @@ from odoo import api, fields, models
 
 
 class AccountAsset(models.Model):
-    _inherit = ['account.asset']
+    _inherit = 'account.asset'
 
     l10n_ro_saft_account_asset_category_id = fields.Many2one('l10n_ro_saft.account.asset.category', string="Asset Category")
     l10n_ro_saft_account_asset_category_warning = fields.Boolean(

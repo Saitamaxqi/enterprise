@@ -46,7 +46,7 @@ PAYMENT_METHOD_SELECTION = [
 
 
 class AccountMove(models.Model):
-    _inherit = ["account.move"]
+    _inherit = "account.move"
 
     l10n_br_edi_avatax_data = fields.Text(
         help="Brazil: technical field that remembers the last tax summary returned by Avatax.", copy=False

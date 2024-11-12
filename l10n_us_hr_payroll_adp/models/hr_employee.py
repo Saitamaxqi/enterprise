@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class HrEmployee(models.Model):
-    _inherit = ['hr.employee']
+    _inherit = 'hr.employee'
 
     l10n_us_adp_code = fields.Char("ADP Code",
                            groups="hr.group_hr_user",

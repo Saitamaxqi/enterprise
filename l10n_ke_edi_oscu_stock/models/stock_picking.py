@@ -4,7 +4,7 @@ from odoo import _, api, fields, models
 
 
 class StockPicking(models.Model):
-    _inherit = ['stock.picking']
+    _inherit = 'stock.picking'
 
     l10n_ke_validation_msg = fields.Json(
         string="Validation Message",

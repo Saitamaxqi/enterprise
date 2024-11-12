@@ -7,6 +7,7 @@ DEFAULT_INVOICED_TIMESHEET = 'all'
 
 
 class SaleOrderLine(models.Model):
+    _name = 'sale.order.line'
     _inherit = ['sale.order.line', 'timesheet.grid.mixin']
 
     @api.depends('analytic_line_ids.validated')

@@ -5,7 +5,7 @@ from odoo import models
 
 
 class DigestDigest(models.Model):
-    _inherit = ['digest.digest']
+    _inherit = 'digest.digest'
 
     def _compute_kpis_actions(self, company, user):
         res = super()._compute_kpis_actions(company, user)

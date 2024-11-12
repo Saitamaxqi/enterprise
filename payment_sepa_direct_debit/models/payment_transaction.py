@@ -7,7 +7,7 @@ from odoo.addons.payment import utils as payment_utils
 
 
 class PaymentTransaction(models.Model):
-    _inherit = ['payment.transaction']
+    _inherit = 'payment.transaction'
 
     mandate_id = fields.Many2one(comodel_name='sdd.mandate')
 

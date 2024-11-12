@@ -8,7 +8,7 @@ from odoo.tools import SQL
 
 
 class AccountMoveLine(models.Model):
-    _inherit = ["account.move.line"]
+    _inherit = "account.move.line"
 
     exclude_bank_lines = fields.Boolean(compute='_compute_exclude_bank_lines', store=True)
 

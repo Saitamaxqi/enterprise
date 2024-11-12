@@ -3,7 +3,7 @@ from odoo import models, fields, api
 
 
 class PosPaymentMethod(models.Model):
-    _inherit = ['pos.payment.method']
+    _inherit = 'pos.payment.method'
 
     l10n_mx_edi_payment_method_id = fields.Many2one(
         comodel_name='l10n_mx_edi.payment.method',

@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class QualityCheckOnDemand(models.TransientModel):
-    _inherit = ['quality.check.on.demand']
+    _inherit = 'quality.check.on.demand'
 
     production_id = fields.Many2one('mrp.production', string='Manufacturing Order')
 

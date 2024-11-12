@@ -8,7 +8,7 @@ from odoo.tools.misc import format_date
 
 
 class ResCompany(models.Model):
-    _inherit = ["res.company"]
+    _inherit = "res.company"
 
     manufacturing_period = fields.Selection([
         ('year', 'Yearly'),

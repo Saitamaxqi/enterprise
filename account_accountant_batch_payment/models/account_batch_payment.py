@@ -4,7 +4,7 @@ from odoo import models, _
 
 
 class AccountBatchPayment(models.Model):
-    _inherit = ['account.batch.payment']
+    _inherit = 'account.batch.payment'
 
     def action_open_batch_payment(self):
         self.ensure_one()

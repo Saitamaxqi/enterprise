@@ -7,6 +7,7 @@ from odoo.tools import format_amount
 
 
 class SaleSubscriptionPricing(models.Model):
+    _name = 'sale.subscription.pricing'
     _description = 'Pricing rule of subscription products'
     _order = 'product_template_id, price, pricelist_id, plan_id'
 

@@ -5,6 +5,7 @@ from odoo import api, models
 
 
 class ReportL10n_Be_Hr_PayrollReport_Social_Security_Certificate(models.AbstractModel):
+    _name = 'report.l10n_be_hr_payroll.report_social_security_certificate'
     _description = 'Get Social Security Certificate as PDF'
 
     @api.model

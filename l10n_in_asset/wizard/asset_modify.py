@@ -2,7 +2,7 @@ from odoo import fields, models, api
 
 
 class AssetModify(models.TransientModel):
-    _inherit = ['asset.modify']
+    _inherit = 'asset.modify'
 
     l10n_in_value_residual = fields.Monetary(
         string='Depreciable Value',

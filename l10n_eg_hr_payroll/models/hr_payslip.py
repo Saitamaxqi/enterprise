@@ -4,7 +4,7 @@ from odoo import models
 
 
 class HrPayslip(models.Model):
-    _inherit = ['hr.payslip']
+    _inherit = 'hr.payslip'
 
     def _get_eg_tax(self, taxable_amount):
         # See: https://www.pwc.com/m1/en/services/tax/me-tax-legal-news/2023/egypt-law-no-30-of-2023-issued-by-the-egyptian-government.html

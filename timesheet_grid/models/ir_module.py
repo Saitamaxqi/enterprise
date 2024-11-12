@@ -3,7 +3,7 @@ from odoo import models
 
 
 class IrModuleModule(models.Model):
-    _inherit = ['ir.module.module']
+    _inherit = 'ir.module.module'
 
     def button_uninstall(self):
         extra = self.browse()

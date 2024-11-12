@@ -7,7 +7,7 @@ from odoo import api, fields, models, _
 
 
 class StockPickingBatch(models.Model):
-    _inherit = ['stock.picking.batch']
+    _inherit = 'stock.picking.batch'
 
     picking_type_code = fields.Selection(related='picking_type_id.code')
 

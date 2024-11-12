@@ -27,7 +27,7 @@ CATALOG07 = [
 
 
 class AccountTax(models.Model):
-    _inherit = ['account.tax']
+    _inherit = 'account.tax'
 
     l10n_pe_edi_affectation_reason = fields.Selection(
         selection=CATALOG07,

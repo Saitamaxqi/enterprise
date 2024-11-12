@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     sign_terms = fields.Html(related='company_id.sign_terms', string="Sign Terms & Conditions", readonly=False)
     sign_terms_html = fields.Html(related='company_id.sign_terms_html', string="Sign Terms & Conditions as a Web page",

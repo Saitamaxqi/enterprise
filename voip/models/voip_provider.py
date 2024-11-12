@@ -2,6 +2,7 @@ from odoo import fields, models
 
 
 class VoipProvider(models.Model):
+    _name = 'voip.provider'
     _description = "VoIP Provider"
 
     name = fields.Char(required=True)

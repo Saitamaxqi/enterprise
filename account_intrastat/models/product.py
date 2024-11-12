@@ -6,7 +6,7 @@ from odoo.addons.account_intrastat.models.account_intrastat_code import SUPPLEME
 
 
 class ProductTemplate(models.Model):
-    _inherit = ['product.template']
+    _inherit = 'product.template'
 
     intrastat_code_id = fields.Many2one(
         'account.intrastat.code',
@@ -58,7 +58,7 @@ class ProductTemplate(models.Model):
 
 
 class ProductProduct(models.Model):
-    _inherit = ['product.product']
+    _inherit = 'product.product'
 
     intrastat_code_id = fields.Many2one(comodel_name='account.intrastat.code', string='Commodity code', domain="[('type', '=', 'commodity')]")
     # The supplementary unit of the current commodity code

@@ -14,6 +14,7 @@ SHORT_CODE_PATTERN = re.compile(r"^[\w-]+$")
 
 
 class AppointmentInvite(models.Model):
+    _name = 'appointment.invite'
     _description = 'Appointment Invite'
     _order = 'create_date DESC, id DESC'
     _rec_name = 'short_code'

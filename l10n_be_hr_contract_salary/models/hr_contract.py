@@ -9,7 +9,7 @@ from odoo import api, fields, models, _
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     image_1920_filename = fields.Char()
     id_card_filename = fields.Char()

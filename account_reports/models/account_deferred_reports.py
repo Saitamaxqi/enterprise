@@ -10,6 +10,7 @@ from odoo.addons.account_accountant.models.account_move import DEFERRED_DATE_MIN
 
 
 class AccountDeferredReportHandler(models.AbstractModel):
+    _name = 'account.deferred.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Deferred Expense Report Custom Handler'
 
@@ -563,6 +564,7 @@ class AccountDeferredReportHandler(models.AbstractModel):
 
 
 class AccountDeferredExpenseReportHandler(models.AbstractModel):
+    _name = 'account.deferred.expense.report.handler'
     _inherit = ['account.deferred.report.handler']
     _description = 'Deferred Expense Custom Handler'
 
@@ -571,6 +573,7 @@ class AccountDeferredExpenseReportHandler(models.AbstractModel):
 
 
 class AccountDeferredRevenueReportHandler(models.AbstractModel):
+    _name = 'account.deferred.revenue.report.handler'
     _inherit = ['account.deferred.report.handler']
     _description = 'Deferred Revenue Custom Handler'
 

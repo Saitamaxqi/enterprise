@@ -9,7 +9,7 @@ _logger = logging.getLogger(__name__)
 
 
 class EventMail(models.Model):
-    _inherit = ['event.mail']
+    _inherit = 'event.mail'
 
     notification_type = fields.Selection(selection_add=[('social_post', 'Social Post')])
     template_ref = fields.Reference(ondelete={'social.post.template': 'cascade'}, selection_add=[('social.post.template', 'Social Post')])

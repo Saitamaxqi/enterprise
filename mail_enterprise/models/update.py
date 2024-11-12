@@ -6,7 +6,7 @@ from odoo.tools import cloc
 
 
 class Publisher_WarrantyContract(AbstractModel):
-    _inherit = ["publisher_warranty.contract"]
+    _inherit = "publisher_warranty.contract"
 
     @api.model
     def _get_message(self):

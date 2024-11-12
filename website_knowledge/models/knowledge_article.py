@@ -12,6 +12,7 @@ from odoo.tools import is_html_empty
 
 
 class KnowledgeArticle(models.Model):
+    _name = 'knowledge.article'
     _inherit = ['knowledge.article', 'website.published.mixin', 'website.searchable.mixin']
 
     summary = fields.Text('Summary', compute='_compute_summary')

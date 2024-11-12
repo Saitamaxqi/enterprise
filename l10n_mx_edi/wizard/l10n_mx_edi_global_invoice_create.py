@@ -3,6 +3,7 @@ from odoo.addons.l10n_mx_edi.models.l10n_mx_edi_document import GLOBAL_INVOICE_P
 
 
 class L10n_Mx_EdiGlobal_InvoiceCreate(models.Model):
+    _name = 'l10n_mx_edi.global_invoice.create'
     _description = "Create a global invoice"
 
     move_ids = fields.Many2many(comodel_name='account.move')

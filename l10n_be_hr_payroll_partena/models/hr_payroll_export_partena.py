@@ -10,6 +10,7 @@ MINIUTES_PER_DAY = 8 * 60
 
 
 class L10nBeHrPayrollExportPartena(models.Model):
+    _name = 'l10n.be.hr.payroll.export.partena'
     _inherit = ['hr.work.entry.export.mixin']
     _description = 'Export Payroll to Partena'
 
@@ -80,6 +81,7 @@ class L10nBeHrPayrollExportPartena(models.Model):
 
 
 class L10nBeHrPayrollExportPartenaEmployee(models.Model):
+    _name = 'l10n.be.hr.payroll.export.partena.employee'
     _description = 'Partena Export Employee'
     _inherit = ['hr.work.entry.export.employee.mixin']
 

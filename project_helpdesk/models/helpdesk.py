@@ -5,7 +5,7 @@ from odoo import models, _
 
 
 class HelpdeskTicket(models.Model):
-    _inherit = ['helpdesk.ticket']
+    _inherit = 'helpdesk.ticket'
 
     def action_convert_to_task(self):
         return {

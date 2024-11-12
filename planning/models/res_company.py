@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     planning_generation_interval = fields.Integer("Rate Of Shift Generation", required=True, readonly=False, default=6)
 

@@ -25,6 +25,7 @@ TOLERANCE_AMOUNT = 1.0  # Default fallback tolerance amount for GSTR-2B matching
 
 
 class L10n_InGstReturnPeriod(models.Model):
+    _name = 'l10n_in.gst.return.period'
     _inherit = ["mail.thread", "mail.activity.mixin"]
     _description = "GST Return Period"
 

@@ -3,6 +3,7 @@ from odoo.exceptions import ValidationError
 
 
 class L10n_AeCorporateTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_ae.corporate.tax.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = "Custom Handler for Corporate TAX Reports in UAE"
 

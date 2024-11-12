@@ -10,6 +10,7 @@ OCR_VERSION = 102
 
 
 class HrCandidate(models.Model):
+    _name = 'hr.candidate'
     _inherit = ['extract.mixin', 'hr.candidate']
 
     @api.depends('partner_name')

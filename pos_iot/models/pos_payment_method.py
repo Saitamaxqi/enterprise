@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class PosPaymentMethod(models.Model):
-    _inherit = ['pos.payment.method']
+    _inherit = 'pos.payment.method'
 
     payment_terminal_ids = fields.Many2many('iot.device', compute="_compute_payment_terminal_ids")
     iot_device_id = fields.Many2one('iot.device', string='Payment Terminal Device')

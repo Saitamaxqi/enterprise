@@ -15,7 +15,7 @@ _logger = logging.getLogger(__name__)
 
 
 class StockPicking(models.Model):
-    _inherit = ['stock.picking']
+    _inherit = 'stock.picking'
 
     amazon_sync_status = fields.Selection(
         string="Amazon Synchronization Status",

@@ -5,7 +5,7 @@ from odoo.osv import expression
 
 
 class WhatsappTemplate(models.Model):
-    _inherit = ['whatsapp.template']
+    _inherit = 'whatsapp.template'
 
     @api.model
     def _search_display_name(self, operator, value):

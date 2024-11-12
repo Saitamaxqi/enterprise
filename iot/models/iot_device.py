@@ -2,6 +2,7 @@ from odoo import api, fields, models
 
 
 class IotDevice(models.Model):
+    _name = 'iot.device'
     _description = 'IOT Device'
 
     iot_id = fields.Many2one('iot.box', string='IoT Box', required=True, ondelete='cascade')
@@ -95,6 +96,7 @@ class IotDevice(models.Model):
 
 
 class IotKeyboardLayout(models.Model):
+    _name = 'iot.keyboard.layout'
     _description = 'Keyboard Layout'
 
     name = fields.Char('Name')

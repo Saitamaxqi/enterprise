@@ -5,7 +5,7 @@ from odoo import fields, models, api
 
 
 class ChooseDeliveryPackage(models.TransientModel):
-    _inherit = ['choose.delivery.package']
+    _inherit = 'choose.delivery.package'
 
     @api.model
     def default_get(self, fields):

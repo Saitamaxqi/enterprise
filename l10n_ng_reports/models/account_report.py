@@ -4,6 +4,7 @@ from odoo import _, models
 
 
 class L10n_NgTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_ng.tax.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'Nigerian Tax Report Custom Handler'
 
@@ -16,6 +17,7 @@ class L10n_NgTaxReportHandler(models.AbstractModel):
 
 
 class L10n_NgWithholdingReportHandler(models.AbstractModel):
+    _name = 'l10n_ng.withholding.report.handler'
     _inherit = ['l10n_ng.tax.report.handler']
     _description = 'Nigerian Withholding Tax Report Custom Handler'
 

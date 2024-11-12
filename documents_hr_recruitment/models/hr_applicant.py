@@ -5,6 +5,7 @@ from odoo import _, models
 
 
 class HrApplicant(models.Model):
+    _name = 'hr.applicant'
     _inherit = ['hr.applicant', 'documents.mixin']
 
     def _get_document_tags(self):

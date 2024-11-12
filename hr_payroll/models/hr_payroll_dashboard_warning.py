@@ -5,6 +5,7 @@ from odoo import fields, models
 
 
 class HrPayrollDashboardWarning(models.Model):
+    _name = 'hr.payroll.dashboard.warning'
     _description = 'Payroll Dashboard Warning'
     _order = 'sequence, name'
 

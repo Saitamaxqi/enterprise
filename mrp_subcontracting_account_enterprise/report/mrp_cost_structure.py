@@ -6,7 +6,7 @@ from odoo import models
 
 
 class ReportMrp_Account_EnterpriseMrp_Cost_Structure(models.AbstractModel):
-    _inherit = ['report.mrp_account_enterprise.mrp_cost_structure']
+    _inherit = 'report.mrp_account_enterprise.mrp_cost_structure'
 
     def get_lines(self, productions):
         res = super().get_lines(productions)

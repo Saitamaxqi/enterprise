@@ -15,7 +15,7 @@ _logger = logging.getLogger(__name__)
 
 
 class SocialStreamPost(models.Model):
-    _inherit = ['social.stream.post']
+    _inherit = 'social.stream.post'
 
     twitter_tweet_id = fields.Char('X Post ID', index=True)
     twitter_conversation_id = fields.Char('X Conversation ID')

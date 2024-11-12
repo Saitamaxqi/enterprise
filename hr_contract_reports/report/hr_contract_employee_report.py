@@ -6,6 +6,7 @@ from odoo import api, fields, models
 
 
 class HrContractEmployeeReport(models.Model):
+    _name = 'hr.contract.employee.report'
     _description = "Contract and Employee Analysis Report"
     _auto = False
     _rec_name = 'date'

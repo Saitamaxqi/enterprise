@@ -2,7 +2,7 @@ from odoo import fields, models, api
 
 
 class PurchaseOrder(models.Model):
-    _inherit = ["purchase.order"]
+    _inherit = "purchase.order"
 
     is_above_budget = fields.Boolean('Is Above Budget', compute='_compute_above_budget')
     is_analytic = fields.Boolean('Is Analytic', compute='_compute_is_analytic')

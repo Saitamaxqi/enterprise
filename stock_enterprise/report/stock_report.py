@@ -6,6 +6,7 @@ from odoo import api, fields, models
 
 
 class StockReport(models.Model):
+    _name = 'stock.report'
     _description = "Stock Report"
     _rec_name = 'id'
     _auto = False

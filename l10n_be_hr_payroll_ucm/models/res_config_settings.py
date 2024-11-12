@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     ucm_code = fields.Char(
         related='company_id.ucm_code', string="UCM Affiliation Number", readonly=False)

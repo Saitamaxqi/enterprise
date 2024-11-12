@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class StockPickingType(models.Model):
-    _inherit = ['stock.picking.type']
+    _inherit = 'stock.picking.type'
 
     count_mo_confirmed = fields.Integer(compute='_compute_count_mo_confirmed')
 

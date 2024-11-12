@@ -12,7 +12,7 @@ from odoo.addons.account_edi_ubl_cii.models.account_edi_common import UOM_TO_UNE
 
 
 class AccountGeneralLedgerReportHandler(models.AbstractModel):
-    _inherit = ['account.general.ledger.report.handler']
+    _inherit = 'account.general.ledger.report.handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)

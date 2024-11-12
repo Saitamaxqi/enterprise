@@ -4,7 +4,7 @@ from odoo import api, models, _
 
 
 class MarketingCampaign(models.Model):
-    _inherit = ['marketing.campaign']
+    _inherit = 'marketing.campaign'
 
     @api.model
     def get_campaign_templates_info(self):

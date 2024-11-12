@@ -7,7 +7,7 @@ from random import choice
 
 
 class PosConfig(models.Model):
-    _inherit = ['pos.config']
+    _inherit = 'pos.config'
     # Due to the new broken changes of the Fiskaly API, only the v2 of the api is compliant. This version introduced two new fields that cannot be
     # added in stable. Therefore the `l10n_de_fiskaly_tss_id` will be composed of `tss_id|tss_puk|tss_pin`
     l10n_de_fiskaly_tss_id = fields.Char(string="TSS ID", readonly=True, copy=False, help="The TSS ID at Fiskaly side linked to the pos.config. "

@@ -8,7 +8,7 @@ from odoo.exceptions import UserError
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ["res.config.settings"]
+    _inherit = "res.config.settings"
 
     l10n_in_gstr_gst_username = fields.Char(
         "GST username", related="company_id.l10n_in_gstr_gst_username", readonly=False

@@ -6,6 +6,7 @@ from datetime import timedelta
 
 
 class CalendarEvent(models.Model):
+    _name = 'calendar.event'
     _inherit = ["calendar.event", "pos.load.mixin"]
 
     @api.model

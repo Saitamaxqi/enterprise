@@ -11,6 +11,7 @@ from odoo.tools import float_compare
 
 
 class L10n_LuEcSalesReportHandler(models.AbstractModel):
+    _name = 'l10n_lu.ec.sales.report.handler'
     _inherit = ['account.ec.sales.report.handler']
     _description = 'Luxembourgish EC Sales Report Custom Handler'
 
@@ -478,6 +479,7 @@ class L10n_LuEcSalesReportHandler(models.AbstractModel):
 
 
 class L10n_LuStoredIntraReport(models.Model):
+    _name = 'l10n_lu.stored.intra.report'
     _description = "Wrapper for an attachment, adds the financial report data"
     _rec_name = "display_name"
 

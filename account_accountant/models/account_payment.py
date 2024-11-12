@@ -4,7 +4,7 @@ from odoo import models, _
 
 
 class AccountPayment(models.Model):
-    _inherit = ["account.payment"]
+    _inherit = "account.payment"
 
     def action_open_manual_reconciliation_widget(self):
         ''' Open the manual reconciliation widget for the current payment.

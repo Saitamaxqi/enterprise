@@ -6,6 +6,7 @@ from markupsafe import Markup
 
 
 class L10n_AuStpSubmit(models.TransientModel):
+    _name = 'l10n_au.stp.submit'
     _description = "Submit STP Report"
 
     l10n_au_stp_id = fields.Many2one(

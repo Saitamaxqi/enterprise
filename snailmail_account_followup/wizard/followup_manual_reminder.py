@@ -5,7 +5,7 @@ from odoo import fields, models, api
 
 
 class Account_FollowupManual_Reminder(models.TransientModel):
-    _inherit = ['account_followup.manual_reminder']
+    _inherit = 'account_followup.manual_reminder'
 
     snailmail = fields.Boolean()
     snailmail_cost = fields.Float(string='Stamps', default=1, readonly=True, compute='_compute_snailmail_cost')

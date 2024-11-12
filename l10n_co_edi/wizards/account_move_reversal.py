@@ -6,7 +6,7 @@ from ..models.account_invoice import DESCRIPTION_CREDIT_CODE
 
 
 class AccountMoveReversal(models.TransientModel):
-    _inherit = ['account.move.reversal']
+    _inherit = 'account.move.reversal'
 
     l10n_co_edi_description_code_credit = fields.Selection(DESCRIPTION_CREDIT_CODE,
                                                            string="Concepto", help="Colombian code for Credit Notes")

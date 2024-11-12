@@ -7,7 +7,7 @@ from odoo import api, fields, models
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     contact_address_complete = fields.Char(compute='_compute_complete_address', store=True)
 

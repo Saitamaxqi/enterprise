@@ -12,7 +12,7 @@ SDD_CREDITOR_IDENTIFIER_REGEX_PATTERN = r"(?P<country_code>[A-Z]{2})(?P<check_di
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     sdd_creditor_identifier = fields.Char(string='SDD creditor identifier', help="SEPA Direct Debit creditor identifier of the company, given by the bank.")
 

@@ -6,7 +6,7 @@ from odoo import models
 
 
 class QualityCheck(models.Model):
-    _inherit = ["quality.check"]
+    _inherit = "quality.check"
 
     def action_worksheet_check(self):
         self.ensure_one()

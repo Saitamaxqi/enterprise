@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class AccountReport(models.Model):
-    _inherit = ['account.report']
+    _inherit = 'account.report'
 
     @api.model
     def _get_options_all_entries_domain(self, options):

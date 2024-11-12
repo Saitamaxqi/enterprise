@@ -16,7 +16,7 @@ CHART_OF_ACCOUNTS = [
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     l10n_pe_chart_of_accounts = fields.Selection(
         selection=CHART_OF_ACCOUNTS,

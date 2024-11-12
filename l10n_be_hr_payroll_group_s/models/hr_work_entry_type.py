@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 
 
 class HrWorkEntryType(models.Model):
-    _inherit = ['hr.work.entry.type']
+    _inherit = 'hr.work.entry.type'
 
     group_s_code = fields.Char(
         "Group S code", groups="hr.group_hr_user", compute='_compute_group_s_code',

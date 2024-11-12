@@ -9,6 +9,7 @@ import uuid
 
 
 class BankRecWidgetLine(models.Model):
+    _name = 'bank.rec.widget.line'
     _inherit = ["analytic.mixin"]
     _description = "Line of the bank reconciliation widget"
 

@@ -3,7 +3,7 @@ from odoo.exceptions import ValidationError
 
 
 class IrAttachment(models.Model):
-    _inherit = ['ir.attachment']
+    _inherit = 'ir.attachment'
 
     can_be_deleted = fields.Boolean(string="Can Be Deleted?", default=True)
 

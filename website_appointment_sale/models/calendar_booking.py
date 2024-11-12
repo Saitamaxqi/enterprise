@@ -7,7 +7,7 @@ from odoo import _, fields, models
 
 
 class CalendarBooking(models.Model):
-    _inherit = ["calendar.booking"]
+    _inherit = "calendar.booking"
 
     order_line_id = fields.Many2one("sale.order.line", 'Sale Order Line', ondelete="cascade")
 

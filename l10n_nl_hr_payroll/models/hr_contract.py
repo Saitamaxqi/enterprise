@@ -5,7 +5,7 @@ from odoo import models, fields
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     l10n_nl_30_percent = fields.Boolean(
         string="30% Exemption",

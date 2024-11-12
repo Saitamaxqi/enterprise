@@ -4,7 +4,7 @@ from odoo import models
 
 
 class ProjectProject(models.Model):
-    _inherit = ['project.project']
+    _inherit = 'project.project'
 
     def action_view_tasks(self):
         action = super().action_view_tasks()

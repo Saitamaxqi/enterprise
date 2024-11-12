@@ -7,7 +7,7 @@ from odoo.addons.website.models import ir_http
 
 
 class ProductProduct(models.Model):
-    _inherit = ['product.product']
+    _inherit = 'product.product'
 
     def _get_rented_quantities(self, from_date, to_date, domain=None):
         """ Get the rented quantities for all the rental sale order line with product self.

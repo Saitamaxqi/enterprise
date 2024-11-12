@@ -4,6 +4,7 @@ from odoo import models
 
 
 class AccountEdiXmlUbl_Pe(models.AbstractModel):
+    _name = 'account.edi.xml.ubl_pe'
     _inherit = ['account.edi.xml.ubl_21']
     _description = 'PE UBL 2.1'
 

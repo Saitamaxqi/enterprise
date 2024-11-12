@@ -5,6 +5,7 @@ from odoo import api, models, fields
 
 
 class L10nChHrEmployeeChildren(models.Model):
+    _name = 'l10n.ch.hr.employee.children'
     _description = 'Employee Children'
 
     employee_id = fields.Many2one('hr.employee')

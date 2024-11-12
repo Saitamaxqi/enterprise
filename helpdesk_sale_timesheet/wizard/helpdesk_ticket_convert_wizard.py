@@ -5,7 +5,7 @@ from odoo import models
 
 
 class HelpdeskTicketConvertWizard(models.TransientModel):
-    _inherit = ['helpdesk.ticket.convert.wizard']
+    _inherit = 'helpdesk.ticket.convert.wizard'
 
     def _get_task_values(self, ticket):
         return {

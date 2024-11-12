@@ -5,7 +5,7 @@ from odoo import api, models, fields, _
 
 
 class ResUsers(models.Model):
-    _inherit = ['res.users']
+    _inherit = 'res.users'
 
     document_ids = fields.One2many('documents.document', compute='_compute_documents')
     document_count = fields.Integer('Documents', compute='_compute_documents')

@@ -33,6 +33,7 @@ SUBSCRIPTION_STATES = [
 
 
 class SaleOrder(models.Model):
+    _name = 'sale.order'
     _inherit = ["rating.mixin", "sale.order"]
 
     def _get_default_starred_user_ids(self):

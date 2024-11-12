@@ -9,7 +9,7 @@ from odoo.tools.image import base64_to_image
 
 
 class SocialPostTemplate(models.Model):
-    _inherit = ['social.post.template']
+    _inherit = 'social.post.template'
 
     def _get_default_access_token(self):
         return str(uuid.uuid4())

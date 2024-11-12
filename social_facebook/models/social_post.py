@@ -11,7 +11,7 @@ from werkzeug.urls import url_join
 
 
 class SocialPost(models.Model):
-    _inherit = ['social.post']
+    _inherit = 'social.post'
 
     facebook_image_ids = fields.Many2many(relation='facebook_image_ids_rel')
 

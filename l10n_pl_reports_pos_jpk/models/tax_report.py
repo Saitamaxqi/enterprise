@@ -4,7 +4,7 @@ from odoo.tools import SQL
 
 
 class L10n_PlTaxReportHandler(models.AbstractModel):
-    _inherit = ['l10n_pl.tax.report.handler']
+    _inherit = 'l10n_pl.tax.report.handler'
 
     def _l10n_pl_get_query(
             self,

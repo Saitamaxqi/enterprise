@@ -5,6 +5,7 @@ from odoo.exceptions import AccessError
 
 
 class SignItemRole(models.Model):
+    _name = 'sign.item.role'
     _description = "Signature Item Role"
     _rec_name = "name"
     _order = "sequence, id"

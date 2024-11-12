@@ -12,7 +12,7 @@ SWISS_LANGUAGES = ["it_IT", "de_DE", "de_CH", "fr_FR", "fr_CH", "en_EN", "en_US"
 
 
 class HrPayslip(models.Model):
-    _inherit = ['hr.payslip']
+    _inherit = 'hr.payslip'
 
     l10n_ch_social_insurance_id = fields.Many2one(
         'l10n.ch.social.insurance', string="AVS/AC Insurance",

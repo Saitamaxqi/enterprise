@@ -2,6 +2,7 @@ from odoo import models, _
 
 
 class Account_FollowupMissingInformationWizard(models.TransientModel):
+    _name = 'account_followup.missing.information.wizard'
     _description = "Followup missing information wizard"
 
     def view_partners_action(self):

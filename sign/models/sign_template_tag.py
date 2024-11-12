@@ -5,6 +5,7 @@ from odoo import fields, models
 
 
 class SignTemplateTag(models.Model):
+    _name = 'sign.template.tag'
     _description = "Sign Template Tag"
     _order = "name"
 

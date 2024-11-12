@@ -27,6 +27,7 @@ MONTH_SELECTION = [
 
 
 class L10n_HkIrd(models.AbstractModel):
+    _name = 'l10n_hk.ird'
     _inherit = ['hr.payroll.declaration.mixin']
     _description = 'IRD Sheet'
     _order = 'start_period'

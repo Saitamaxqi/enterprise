@@ -8,7 +8,7 @@ from odoo.tools import format_list
 
 
 class ProjectTask(models.Model):
-    _inherit = ['project.task']
+    _inherit = 'project.task'
 
     leave_warning = fields.Char(compute='_compute_leave_warning', compute_sudo=True, export_string_translation=False)
     is_absent = fields.Boolean(

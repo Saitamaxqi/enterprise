@@ -12,6 +12,7 @@ from odoo.exceptions import UserError
 
 
 class L10nBeSocialSecurityCertificate(models.TransientModel):
+    _name = 'l10n.be.social.security.certificate'
     _description = 'Belgium: Social Security Certificate'
 
     @api.model

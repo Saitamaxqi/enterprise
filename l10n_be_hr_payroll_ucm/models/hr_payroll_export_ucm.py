@@ -7,6 +7,7 @@ from odoo.exceptions import UserError
 
 
 class L10nBeHrPayrollExportUcm(models.Model):
+    _name = 'l10n.be.hr.payroll.export.ucm'
     _inherit = ['hr.work.entry.export.mixin']
     _description = 'Export Payroll to UCM'
 
@@ -61,6 +62,7 @@ class L10nBeHrPayrollExportUcm(models.Model):
 
 
 class L10nBeHrPayrollExportUcmEmployee(models.Model):
+    _name = 'l10n.be.hr.payroll.export.ucm.employee'
     _description = 'UCM Export Employee'
     _inherit = ['hr.work.entry.export.employee.mixin']
 

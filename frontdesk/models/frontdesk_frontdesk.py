@@ -18,6 +18,7 @@ PLANNED_VISITOR_TIME = 45
 
 
 class FrontdeskFrontdesk(models.Model):
+    _name = 'frontdesk.frontdesk'
     _description = 'Frontdesk'
 
     name = fields.Char('Frontdesk Name', required=True)

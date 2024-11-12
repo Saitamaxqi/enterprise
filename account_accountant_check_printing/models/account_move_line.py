@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class AccountMoveLine(models.Model):
-    _inherit = ["account.move.line"]
+    _inherit = "account.move.line"
 
     check_number = fields.Char(
         string="Check Number",

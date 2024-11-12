@@ -6,6 +6,7 @@ from odoo.tools.sql import drop_view_if_exists, SQL
 
 
 class ProjectTimesheetForecastReportAnalysis(models.Model):
+    _name = 'project.timesheet.forecast.report.analysis'
 
     _description = "Timesheet & Planning Statistics"
     _auto = False

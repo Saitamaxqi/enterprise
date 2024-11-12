@@ -7,6 +7,7 @@ from odoo.exceptions import UserError, ValidationError
 
 
 class BudgetAnalytic(models.Model):
+    _name = 'budget.analytic'
     _description = "Budget"
     _inherit = ['mail.thread', 'mail.activity.mixin']
 

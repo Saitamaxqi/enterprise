@@ -51,6 +51,7 @@ CURRENCIES_USING_LAKH = {'AFN', 'BDT', 'INR', 'MMK', 'NPR', 'PKR', 'LKR'}
 
 
 class AccountReportAnnotation(models.Model):
+    _name = 'account.report.annotation'
     _description = 'Account Report Annotation'
 
     report_id = fields.Many2one('account.report', help="The id of the annotated report.")
@@ -88,7 +89,7 @@ class AccountReportAnnotation(models.Model):
 
 
 class AccountReport(models.Model):
-    _inherit = ['account.report']
+    _inherit = 'account.report'
 
     horizontal_group_ids = fields.Many2many(string="Horizontal Groups", comodel_name='account.report.horizontal.group')
     annotations_ids = fields.One2many(string="Annotations", comodel_name='account.report.annotation', inverse_name='report_id')
@@ -6702,7 +6703,7 @@ class AccountReport(models.Model):
 
 
 class AccountReportLine(models.Model):
-    _inherit = ['account.report.line']
+    _inherit = 'account.report.line'
 
     display_custom_groupby_warning = fields.Boolean(compute='_compute_display_custom_groupby_warning')
 
@@ -6974,7 +6975,7 @@ class AccountReportLine(models.Model):
 
 
 class AccountReportExpression(models.Model):
-    _inherit = ['account.report.expression']
+    _inherit = 'account.report.expression'
 
     def action_view_carryover_lines(self, options, column_group_key=None):
         if column_group_key:
@@ -6996,6 +6997,7 @@ class AccountReportExpression(models.Model):
 
 
 class AccountReportHorizontalGroup(models.Model):
+    _name = 'account.report.horizontal.group'
     _description = "Horizontal group for reports"
 
     name = fields.Char(string="Name", required=True, translate=True)
@@ -7015,6 +7017,7 @@ class AccountReportHorizontalGroup(models.Model):
 
 
 class AccountReportHorizontalGroupRule(models.Model):
+    _name = 'account.report.horizontal.group.rule'
     _description = "Horizontal group rule for reports"
 
     def _field_name_selection_values(self):
@@ -7045,6 +7048,7 @@ class AccountReportHorizontalGroupRule(models.Model):
 
 
 class AccountReportCustomHandler(models.AbstractModel):
+    _name = 'account.report.custom.handler'
     _description = 'Account Report Custom Handler'
 
     # This abstract model allows case-by-case localized changes of behaviors of reports.

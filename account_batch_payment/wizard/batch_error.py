@@ -5,6 +5,7 @@ from odoo import api, models, fields, _
 
 
 class AccountBatchErrorWizard(models.TransientModel):
+    _name = 'account.batch.error.wizard'
     _description = "Batch payments error reporting wizard"
 
     batch_payment_id = fields.Many2one(comodel_name='account.batch.payment', required=True, help="The batch payment generating the errors and warnings displayed in this wizard.")
@@ -36,6 +37,7 @@ class AccountBatchErrorWizard(models.TransientModel):
 
 
 class AccountBatchErrorWizardLine(models.TransientModel):
+    _name = 'account.batch.error.wizard.line'
     _description = "Batch payments error reporting wizard line"
 
     description = fields.Char(string="Description", required=True)

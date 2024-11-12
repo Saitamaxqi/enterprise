@@ -7,7 +7,7 @@ from odoo.tools.translate import _
 
 
 class ProductProduct(models.Model):
-    _inherit = ["product.product"]
+    _inherit = "product.product"
 
     @api.model
     def set_tax_on_work_in_out(self):
@@ -36,7 +36,7 @@ class ProductProduct(models.Model):
 
 
 class ProductTemplate(models.Model):
-    _inherit = ["product.template"]
+    _inherit = "product.template"
 
     @api.model_create_multi
     def create(self, values):

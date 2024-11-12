@@ -11,7 +11,7 @@ from odoo.tools.misc import unquote
 
 
 class ProjectTask(models.Model):
-    _inherit = ["project.task"]
+    _inherit = "project.task"
 
     def _domain_sale_line_id(self):
         domain = expression.AND([
@@ -664,7 +664,7 @@ class ProjectTask(models.Model):
 
 
 class ProjectTaskRecurrence(models.Model):
-    _inherit = ['project.task.recurrence']
+    _inherit = 'project.task.recurrence'
 
     def _get_sale_line_id(self, task):
         if not task.is_fsm:

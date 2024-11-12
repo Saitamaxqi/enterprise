@@ -6,6 +6,7 @@ from odoo.tools import SQL
 
 
 class L10n_CoIcaReportHandler(models.AbstractModel):
+    _name = 'l10n_co.ica.report.handler'
     _inherit = ['l10n_co.report.handler']
     _description = 'ICA Report Custom Handler'
 

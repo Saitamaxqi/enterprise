@@ -4,6 +4,7 @@ from odoo import api, fields, models
 
 
 class SendcloudShippingProduct(models.Model):
+    _name = 'sendcloud.shipping.product'
 
     _description = "Choose from the available sendcloud shipping products"
 

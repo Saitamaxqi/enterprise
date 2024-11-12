@@ -4,6 +4,7 @@ from odoo import models, fields, Command
 
 
 class Mrp_ProductionAdditionalWorkorder(models.TransientModel):
+    _name = 'mrp_production.additional.workorder'
     _description = "Additional Workorder"
 
     production_id = fields.Many2one(

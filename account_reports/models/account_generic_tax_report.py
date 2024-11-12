@@ -11,6 +11,7 @@ from odoo.tools import SQL
 
 
 class AccountTaxReportHandler(models.AbstractModel):
+    _name = 'account.tax.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Account Report Handler for Tax Reports'
 
@@ -564,6 +565,7 @@ class AccountTaxReportHandler(models.AbstractModel):
 
 
 class AccountGenericTaxReportHandler(models.AbstractModel):
+    _name = 'account.generic.tax.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'Generic Tax Report Custom Handler'
 
@@ -1180,6 +1182,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
 
 
 class AccountGenericTaxReportHandlerAccountTax(models.AbstractModel):
+    _name = 'account.generic.tax.report.handler.account.tax'
     _inherit = ['account.generic.tax.report.handler']
     _description = 'Generic Tax Report Custom Handler (Account -> Tax)'
 
@@ -1188,6 +1191,7 @@ class AccountGenericTaxReportHandlerAccountTax(models.AbstractModel):
 
 
 class AccountGenericTaxReportHandlerTaxAccount(models.AbstractModel):
+    _name = 'account.generic.tax.report.handler.tax.account'
     _inherit = ['account.generic.tax.report.handler']
     _description = 'Generic Tax Report Custom Handler (Tax -> Account)'
 

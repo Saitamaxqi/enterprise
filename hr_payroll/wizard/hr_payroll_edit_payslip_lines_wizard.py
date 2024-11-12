@@ -5,6 +5,7 @@ from odoo import api, fields, models, _
 
 
 class HrPayrollEditPayslipLinesWizard(models.TransientModel):
+    _name = 'hr.payroll.edit.payslip.lines.wizard'
     _description = 'Edit payslip lines wizard'
 
     payslip_id = fields.Many2one('hr.payslip', required=True, readonly=True)
@@ -79,6 +80,7 @@ class HrPayrollEditPayslipLinesWizard(models.TransientModel):
 
 
 class HrPayrollEditPayslipLine(models.TransientModel):
+    _name = 'hr.payroll.edit.payslip.line'
     _description = 'Edit payslip lines wizard line'
 
     name = fields.Char(translate=True)
@@ -123,6 +125,7 @@ class HrPayrollEditPayslipLine(models.TransientModel):
 
 
 class HrPayrollEditPayslipWorkedDaysLine(models.TransientModel):
+    _name = 'hr.payroll.edit.payslip.worked.days.line'
     _description = 'Edit payslip line wizard worked days'
 
     name = fields.Char(related='work_entry_type_id.name')

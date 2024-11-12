@@ -9,6 +9,7 @@ import base64
 
 
 class L10n_Nl_Reports_SbrStatusService(models.Model):
+    _name = 'l10n_nl_reports_sbr.status.service'
     _description = 'Status checking service for Digipoort submission'
 
     kenmerk = fields.Char('Message Exchange ID')

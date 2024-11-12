@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class HrExpenseSheet(models.Model):
-    _inherit = ["hr.expense.sheet"]
+    _inherit = "hr.expense.sheet"
 
     refund_in_payslip = fields.Boolean(
         string="Reimburse In Next Payslip",

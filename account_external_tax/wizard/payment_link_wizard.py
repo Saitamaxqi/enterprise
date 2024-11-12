@@ -3,7 +3,7 @@ from odoo import api, models
 
 
 class PaymentLinkWizard(models.TransientModel):
-    _inherit = ["payment.link.wizard"]
+    _inherit = "payment.link.wizard"
 
     @api.model
     def default_get(self, fields):

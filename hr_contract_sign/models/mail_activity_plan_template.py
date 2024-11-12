@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class MailActivityPlanTemplate(models.Model):
-    _inherit = ['mail.activity.plan.template']
+    _inherit = 'mail.activity.plan.template'
 
     sign_template_id = fields.Many2one('sign.template', string='Document to sign')
     employee_role_id = fields.Many2one(

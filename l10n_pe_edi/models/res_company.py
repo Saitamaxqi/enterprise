@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     l10n_pe_edi_certificate_id = fields.Many2one(
         string="Certificate (PE)", store=True, readonly=False,

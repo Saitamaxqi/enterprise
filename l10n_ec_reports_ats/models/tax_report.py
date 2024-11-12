@@ -20,7 +20,7 @@ ATS_SALE_DOCUMENT_TYPE = {
 
 
 class AccountTaxReportHandler(models.AbstractModel):
-    _inherit = ['account.tax.report.handler']
+    _inherit = 'account.tax.report.handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options=previous_options)

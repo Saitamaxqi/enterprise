@@ -14,6 +14,7 @@ from odoo.tools import format_date
 
 
 class AccountAnalyticLine(models.Model):
+    _name = 'account.analytic.line'
     _inherit = ['account.analytic.line', 'timer.mixin']
     # As this model has his own data merge, avoid to enable the generic data_merge on that model.
     _disable_data_merge = True

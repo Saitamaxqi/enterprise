@@ -4,7 +4,7 @@ from odoo import api, models
 
 
 class StockMove(models.Model):
-    _inherit = ['stock.move']
+    _inherit = 'stock.move'
 
     def _search_picking_for_assignation_domain(self):
         """ This modifies the picking search domain for rental moves.

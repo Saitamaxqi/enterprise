@@ -5,6 +5,7 @@ from odoo import models, fields, _
 
 
 class SaveSpreadsheetTemplate(models.TransientModel):
+    _name = 'save.spreadsheet.template'
     _inherit = ["spreadsheet.mixin"]
     _description= "Spreadsheet Template Save Wizard"
 

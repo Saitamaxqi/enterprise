@@ -20,7 +20,7 @@ L10N_CH_PAYROLL_WRITABLE_FIELDS = [
 
 
 class ResUsers(models.Model):
-    _inherit = ['res.users']
+    _inherit = 'res.users'
 
     l10n_ch_canton = fields.Selection(related="employee_ids.l10n_ch_canton", readonly=False)
     l10n_ch_tax_scale = fields.Selection(related="employee_ids.l10n_ch_tax_scale", readonly=False)

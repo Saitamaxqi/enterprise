@@ -4,7 +4,7 @@ from odoo import models
 
 
 class BudgetLine(models.Model):
-    _inherit = ["budget.line"]
+    _inherit = "budget.line"
 
     def default_get(self, fields_list):
         defaults = super().default_get(fields_list)

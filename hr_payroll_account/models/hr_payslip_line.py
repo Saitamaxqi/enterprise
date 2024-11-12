@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class HrPayslipLine(models.Model):
-    _inherit = ["hr.payslip.line"]
+    _inherit = "hr.payslip.line"
 
     debit_tag_ids = fields.Many2many(
         string="Debit Tax Grids",

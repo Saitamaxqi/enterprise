@@ -20,7 +20,7 @@ AVATAX_PRECISION_DIGITS = 2  # defined by API
 
 
 class AccountExternalTaxMixin(models.AbstractModel):
-    _inherit = ['account.external.tax.mixin']
+    _inherit = 'account.external.tax.mixin'
 
     l10n_br_is_service_transaction = fields.Boolean(
         "Is Service Transaction",

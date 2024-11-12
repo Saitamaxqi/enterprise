@@ -8,7 +8,7 @@ from odoo.osv import expression
 
 
 class HrPayslipEmployees(models.TransientModel):
-    _inherit = ['hr.payslip.employees']
+    _inherit = 'hr.payslip.employees'
 
     def _get_domain(self):
         domain = super()._get_domain()

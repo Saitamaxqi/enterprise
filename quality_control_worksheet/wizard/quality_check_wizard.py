@@ -5,8 +5,7 @@ from odoo import fields, models
 
 
 class QualityCheckWizard(models.TransientModel):
-
-    _inherit = ['quality.check.wizard']
+    _inherit = 'quality.check.wizard'
 
     worksheet_template_id = fields.Many2one(related='current_check_id.worksheet_template_id')
 

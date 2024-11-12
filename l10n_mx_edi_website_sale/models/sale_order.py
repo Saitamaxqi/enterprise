@@ -4,7 +4,7 @@ from odoo import models, api
 
 
 class SaleOrder(models.Model):
-    _inherit = ['sale.order']
+    _inherit = 'sale.order'
 
     @api.depends('website_id')
     def _compute_l10n_mx_edi_cfdi_to_public(self):

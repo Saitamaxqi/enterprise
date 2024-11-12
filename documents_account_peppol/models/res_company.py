@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     documents_account_peppol_folder_id = fields.Many2one(
         comodel_name='documents.document',

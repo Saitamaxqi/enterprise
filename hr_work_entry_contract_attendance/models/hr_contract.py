@@ -12,7 +12,7 @@ from odoo.addons.resource.models.utils import Intervals
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     work_entry_source = fields.Selection(
         selection_add=[('attendance', 'Attendances')],

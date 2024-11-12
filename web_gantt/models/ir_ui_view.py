@@ -52,7 +52,7 @@ GANTT_VALID_ATTRIBUTES = set([
 
 
 class IrUiView(models.Model):
-    _inherit = ['ir.ui.view']
+    _inherit = 'ir.ui.view'
 
     type = fields.Selection(selection_add=[('gantt', 'Gantt')])
 

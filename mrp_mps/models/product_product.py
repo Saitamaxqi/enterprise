@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ProductProduct(models.Model):
-    _inherit = ['product.product']
+    _inherit = 'product.product'
 
     schedule_count = fields.Integer('Schedules', compute='_compute_schedule_count')
 

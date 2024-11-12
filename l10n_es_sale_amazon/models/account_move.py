@@ -4,7 +4,7 @@ from odoo import models
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move']
+    _inherit = 'account.move'
 
     # Amazon invoices are made simplified by default, as currently it is not possible
     # to get the vat number from the amazon api.

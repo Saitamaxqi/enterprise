@@ -11,6 +11,7 @@ import re
 
 
 class L10n_Es_ReportsAeatBoeExportWizard(models.TransientModel):
+    _name = 'l10n_es_reports.aeat.boe.export.wizard'
     _description = "BOE Export Wizard"
 
     report_id = fields.Many2one(string="Report", comodel_name='account.report', required=True)
@@ -31,6 +32,7 @@ class L10n_Es_ReportsAeatBoeExportWizard(models.TransientModel):
 
 
 class L10n_Es_ReportsAeatBoeMod111and115and303ExportWizard(models.TransientModel):
+    _name = 'l10n_es_reports.aeat.boe.mod111and115and303.export.wizard'
     _inherit = ['l10n_es_reports.aeat.boe.export.wizard']
     _description = "BOE Export Wizard for (mod111, mod115 & 303)"
 
@@ -52,6 +54,7 @@ class L10n_Es_ReportsAeatBoeMod111and115and303ExportWizard(models.TransientModel
 
 
 class L10n_Es_ReportsAeatBoeMod347and349ExportWizard(models.TransientModel):
+    _name = 'l10n_es_reports.aeat.boe.mod347and349.export.wizard'
     _inherit = ['l10n_es_reports.aeat.boe.export.wizard']
     _description = "BOE Export Wizard for (mod347 & mod349)"
 
@@ -72,6 +75,7 @@ class L10n_Es_ReportsAeatBoeMod347and349ExportWizard(models.TransientModel):
 
 
 class L10n_Es_ReportsAeatBoeMod111ExportWizard(models.TransientModel):
+    _name = 'l10n_es_reports.aeat.boe.mod111.export.wizard'
     _inherit = ['l10n_es_reports.aeat.boe.mod111and115and303.export.wizard']
     _description = "BOE Export Wizard for (mod111)"
 
@@ -81,6 +85,7 @@ class L10n_Es_ReportsAeatBoeMod111ExportWizard(models.TransientModel):
 
 
 class L10n_Es_ReportsAeatBoeMod115ExportWizard(models.TransientModel):
+    _name = 'l10n_es_reports.aeat.boe.mod115.export.wizard'
     _inherit = ['l10n_es_reports.aeat.boe.mod111and115and303.export.wizard']
     _description = "BOE Export Wizard for (mod115)"
 
@@ -90,6 +95,7 @@ class L10n_Es_ReportsAeatBoeMod115ExportWizard(models.TransientModel):
 
 
 class L10n_Es_ReportsAeatBoeMod303ExportWizard(models.TransientModel):
+    _name = 'l10n_es_reports.aeat.boe.mod303.export.wizard'
     _inherit = ['l10n_es_reports.aeat.boe.mod111and115and303.export.wizard']
     _description = "BOE Export Wizard for (mod303)"
 
@@ -140,6 +146,7 @@ class L10n_Es_ReportsAeatBoeMod303ExportWizard(models.TransientModel):
 
 
 class L10n_Es_ReportsAeatBoeMod347ExportWizard(models.TransientModel):
+    _name = 'l10n_es_reports.aeat.boe.mod347.export.wizard'
     _inherit = ['l10n_es_reports.aeat.boe.mod347and349.export.wizard']
     _description = "BOE Export Wizard for (mod347)"
 
@@ -163,6 +170,7 @@ class L10n_Es_ReportsAeatBoeMod347ExportWizard(models.TransientModel):
 
 
 class L10n_Es_ReportsAeatMod347ManualPartnerData(models.TransientModel):
+    _name = 'l10n_es_reports.aeat.mod347.manual.partner.data'
     _description = "Manually Entered Data for Mod 347 Report"
 
     parent_wizard_id = fields.Many2one(comodel_name='l10n_es_reports.aeat.boe.mod347.export.wizard')
@@ -174,6 +182,7 @@ class L10n_Es_ReportsAeatMod347ManualPartnerData(models.TransientModel):
 
 
 class L10n_Es_ReportsAeatBoeMod349ExportWizard(models.TransientModel):
+    _name = 'l10n_es_reports.aeat.boe.mod349.export.wizard'
     _inherit = ['l10n_es_reports.aeat.boe.mod347and349.export.wizard']
     _description = "BOE Export Wizard for (mod349)"
 
@@ -183,6 +192,7 @@ class L10n_Es_ReportsAeatBoeMod349ExportWizard(models.TransientModel):
 
 
 class L10n_Es_ReportsAeatBoeMod390ExportWizard(models.TransientModel):
+    _name = 'l10n_es_reports.aeat.boe.mod390.export.wizard'
     _inherit = ['l10n_es_reports.aeat.boe.export.wizard']
     _description = "BOE Export Wizard for (mod390)"
 

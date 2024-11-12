@@ -3,6 +3,7 @@ from odoo.exceptions import ValidationError
 
 
 class PosOrder(models.Model):
+    _name = 'pos.order'
     _inherit = ['pos.order', 'account.external.tax.mixin', 'account.avatax.unique.code']
 
     # Main mixin overrides

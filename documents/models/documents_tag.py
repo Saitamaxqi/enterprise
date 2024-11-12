@@ -8,6 +8,7 @@ from odoo.exceptions import UserError
 
 
 class DocumentsTag(models.Model):
+    _name = 'documents.tag'
     _description = "Tag"
     _order = "sequence, name"
 

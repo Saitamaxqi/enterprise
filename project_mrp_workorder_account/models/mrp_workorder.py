@@ -4,7 +4,7 @@ from odoo import models
 
 
 class MrpWorkorder(models.Model):
-    _inherit = ["mrp.workorder"]
+    _inherit = "mrp.workorder"
 
     def _update_productivity_analytic(self, old_dist):
         for time in self.time_ids:

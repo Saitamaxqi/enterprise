@@ -4,6 +4,7 @@ from odoo import api, fields, models
 
 
 class AccountBankSelection(models.TransientModel):
+    _name = 'account.bank.selection'
     _description = "Link a bank account to the selected journal"
 
     account_online_link_id = fields.Many2one('account.online.link')

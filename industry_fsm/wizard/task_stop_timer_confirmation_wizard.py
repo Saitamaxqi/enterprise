@@ -5,6 +5,7 @@ from odoo import fields, models
 
 
 class ProjectTaskStopTimersWizard(models.TransientModel):
+    _name = 'project.task.stop.timers.wizard'
     _description = 'Task stop running timers confirmation wizard'
 
     line_ids = fields.One2many('project.task.stop.timers.wizard.line', 'wizard_id', required=True)
@@ -14,6 +15,7 @@ class ProjectTaskStopTimersWizard(models.TransientModel):
 
 
 class ProjectTaskStopTimersWizardLine(models.TransientModel):
+    _name = 'project.task.stop.timers.wizard.line'
     _description = 'Task stop running timers confirmation wizard line'
 
     wizard_id = fields.Many2one('project.task.stop.timers.wizard')

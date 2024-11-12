@@ -2,6 +2,7 @@ from odoo import _, api, fields, models
 
 
 class SddMandateSend(models.TransientModel):
+    _name = 'sdd.mandate.send'
     _inherit = ['mail.composer.mixin']
     _description = "SDD Mandate Send"
 

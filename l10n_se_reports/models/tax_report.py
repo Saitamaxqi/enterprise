@@ -8,6 +8,7 @@ DOCTYPE = '<!DOCTYPE eSKDUpload PUBLIC "-//Skatteverket, Sweden//DTD Skatteverke
 
 
 class L10n_SeTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_se.tax.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'Swedish Tax Report Custom Handler'
 

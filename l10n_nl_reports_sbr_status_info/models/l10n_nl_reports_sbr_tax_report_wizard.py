@@ -2,7 +2,7 @@ from odoo import models, fields
 
 
 class L10n_Nl_Reports_SbrTaxReportWizard(models.TransientModel):
-    _inherit = ['l10n_nl_reports_sbr.tax.report.wizard']
+    _inherit = 'l10n_nl_reports_sbr.tax.report.wizard'
 
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)
 

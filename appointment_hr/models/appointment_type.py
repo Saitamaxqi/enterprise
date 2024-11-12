@@ -9,7 +9,7 @@ from odoo.tools import groupby
 
 
 class AppointmentType(models.Model):
-    _inherit = ["appointment.type"]
+    _inherit = "appointment.type"
 
     work_hours_activated = fields.Boolean('Limit to Work Hours')
 

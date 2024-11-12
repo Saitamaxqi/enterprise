@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HelpdeskSlaReportAnalysis(models.Model):
-    _inherit = ['helpdesk.sla.report.analysis']
+    _inherit = 'helpdesk.sla.report.analysis'
 
     department_id = fields.Many2one('hr.department', string='Department', readonly=True)
     manager_id = fields.Many2one('hr.employee', string='Manager', readonly=True)

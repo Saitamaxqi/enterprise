@@ -4,7 +4,7 @@ from odoo import models, fields
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     voes = fields.Char(string="VOES Number", help="Used for companies outside EU that want to make use of OSS")
     ioss = fields.Char(string="IOSS Number", help="Identification number for companies that import goods and services into the EU. For use in OSS reports.")

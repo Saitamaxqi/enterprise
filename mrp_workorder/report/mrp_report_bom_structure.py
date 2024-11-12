@@ -5,7 +5,7 @@ from odoo import models
 
 
 class ReportMrpReport_Bom_Structure(models.AbstractModel):
-    _inherit = ['report.mrp.report_bom_structure']
+    _inherit = 'report.mrp.report_bom_structure'
 
     def _get_operation_cost(self, operation, workcenter, duration):
         employee_cost = (duration / 60.0) * operation.employee_ratio * workcenter.employee_costs_hour

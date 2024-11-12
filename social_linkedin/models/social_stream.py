@@ -10,7 +10,7 @@ from odoo.exceptions import UserError
 
 
 class SocialStream(models.Model):
-    _inherit = ['social.stream']
+    _inherit = 'social.stream'
 
     def _apply_default_name(self):
         linkedin_streams = self.filtered(lambda s: s.media_id.media_type == 'linkedin')

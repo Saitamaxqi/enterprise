@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class Hr_TimesheetMergeWizard(models.TransientModel):
+    _name = 'hr_timesheet.merge.wizard'
     _description = 'Merge Timesheets'
 
     name = fields.Char('Description', compute='_compute_name', readonly=False, store=True)

@@ -11,7 +11,7 @@ from odoo.exceptions import UserError
 
 
 class DocumentsDocument(models.Model):
-    _inherit = ['documents.document']
+    _inherit = 'documents.document'
 
     # once we parsed the XML to know if a PDF is embedded inside,
     # we store that information so we don't need to parse it again

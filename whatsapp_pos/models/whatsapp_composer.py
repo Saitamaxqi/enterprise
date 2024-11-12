@@ -2,7 +2,7 @@ from odoo import models, _
 
 
 class WhatsappComposer(models.TransientModel):
-    _inherit = ['whatsapp.composer']
+    _inherit = 'whatsapp.composer'
     _description = 'Send WhatsApp Wizard'
 
     def _send_whatsapp_template(self, force_send_by_cron=False):

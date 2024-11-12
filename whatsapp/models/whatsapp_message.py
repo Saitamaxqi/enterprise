@@ -21,6 +21,7 @@ _logger = logging.getLogger(__name__)
 
 
 class WhatsappMessage(models.Model):
+    _name = 'whatsapp.message'
     _description = 'WhatsApp Messages'
     _order = 'id desc'
     _rec_name = 'mobile_number'

@@ -34,7 +34,7 @@ L10N_CO_EDI_TYPE = {
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move']
+    _inherit = 'account.move'
 
     l10n_co_edi_type = fields.Selection(
         selection=[(code, label) for label, code in L10N_CO_EDI_TYPE.items()],
@@ -146,7 +146,7 @@ class AccountMove(models.Model):
 
 
 class AccountMoveLine(models.Model):
-    _inherit = ['account.move.line']
+    _inherit = 'account.move.line'
 
     def _l10n_co_edi_get_product_code(self):
         """

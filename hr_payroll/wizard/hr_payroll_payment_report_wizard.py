@@ -10,6 +10,7 @@ from odoo.tools.misc import format_date
 
 
 class HrPayrollPaymentReportWizard(models.TransientModel):
+    _name = 'hr.payroll.payment.report.wizard'
 
     _description = 'HR Payroll Payment Report Wizard'
 

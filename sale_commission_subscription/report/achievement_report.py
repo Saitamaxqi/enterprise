@@ -5,7 +5,7 @@ from odoo import models, api
 
 
 class SaleCommissionAchievementReport(models.Model):
-    _inherit = ["sale.commission.achievement.report"]
+    _inherit = "sale.commission.achievement.report"
 
     @api.model
     def _get_sale_order_log_rates(self):

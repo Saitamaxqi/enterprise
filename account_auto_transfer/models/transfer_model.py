@@ -12,6 +12,7 @@ from odoo.tools.float_utils import float_compare, float_is_zero
 
 
 class AccountTransferModel(models.Model):
+    _name = 'account.transfer.model'
     _description = "Account Transfer Model"
 
     # DEFAULTS
@@ -347,6 +348,7 @@ class AccountTransferModel(models.Model):
 
 
 class AccountTransferModelLine(models.Model):
+    _name = 'account.transfer.model.line'
     _description = "Account Transfer Model Line"
     _order = "sequence, id"
 

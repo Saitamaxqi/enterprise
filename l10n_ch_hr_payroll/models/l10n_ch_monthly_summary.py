@@ -15,6 +15,7 @@ from odoo.tools.misc import xlsxwriter
 
 
 class L10nChMonthlySummary(models.Model):
+    _name = 'l10n.ch.monthly.summary'
     _description = 'Swiss Payroll: Monthly Summary'
     _order = 'date_start'
 

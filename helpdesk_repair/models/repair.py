@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class RepairOrder(models.Model):
-    _inherit = ['repair.order']
+    _inherit = 'repair.order'
 
     ticket_id = fields.Many2one('helpdesk.ticket', export_string_translation=False)
 

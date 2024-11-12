@@ -5,7 +5,7 @@ from odoo import models, _
 
 
 class MailActivitySchedule(models.TransientModel):
-    _inherit = ['mail.activity.schedule']
+    _inherit = 'mail.activity.schedule'
 
     def _plan_filter_activity_templates_to_schedule(self):
         if self.res_model != 'hr.employee':

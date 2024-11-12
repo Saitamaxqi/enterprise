@@ -4,6 +4,7 @@ from odoo import fields, models
 
 
 class EasypostService(models.Model):
+    _name = 'easypost.service'
     _description = 'Easypost Service'
 
     name = fields.Char('Service Level Name', index=True)

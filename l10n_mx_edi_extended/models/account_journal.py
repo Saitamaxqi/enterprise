@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class AccountJournal(models.Model):
-    _inherit = ['account.journal']
+    _inherit = 'account.journal'
 
     l10n_mx_address_issued_id = fields.Many2one(
         comodel_name='res.partner',

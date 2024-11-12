@@ -7,7 +7,7 @@ from odoo.addons.l10n_ec.models.res_partner import verify_final_consumer
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     l10n_ec_taxpayer_type_id = fields.Many2one(
         comodel_name='l10n_ec.taxpayer.type',

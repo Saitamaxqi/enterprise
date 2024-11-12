@@ -4,7 +4,7 @@ from odoo import models
 
 
 class HrRecruitmentPostJobWizard(models.TransientModel):
-    _inherit = ['hr.recruitment.post.job.wizard']
+    _inherit = 'hr.recruitment.post.job.wizard'
 
     def _prepare_monster_data(self):
         self.ensure_one()

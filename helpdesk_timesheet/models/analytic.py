@@ -8,7 +8,7 @@ from odoo.exceptions import ValidationError
 
 
 class AccountAnalyticLine(models.Model):
-    _inherit = ['account.analytic.line']
+    _inherit = 'account.analytic.line'
 
     helpdesk_ticket_id = fields.Many2one(
         'helpdesk.ticket', 'Helpdesk Ticket', index='btree_not_null',

@@ -10,7 +10,7 @@ from odoo import fields, models
 
 
 class SocialStream(models.Model):
-    _inherit = ['social.stream']
+    _inherit = 'social.stream'
 
     def _apply_default_name(self):
         for stream in self:

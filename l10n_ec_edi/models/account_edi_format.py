@@ -39,8 +39,7 @@ DEFAULT_TIMEOUT_WS = 20
 
 
 class AccountEdiFormat(models.Model):
-
-    _inherit = ['account.edi.format']
+    _inherit = 'account.edi.format'
 
     def _is_compatible_with_journal(self, journal):
         # EXTENDS account.edi.format

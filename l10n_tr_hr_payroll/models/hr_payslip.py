@@ -4,7 +4,7 @@ from odoo import models
 
 
 class HrPayslip(models.Model):
-    _inherit = ['hr.payslip']
+    _inherit = 'hr.payslip'
 
     def _l10n_tr_get_tax(self, taxable_amount):
         self.ensure_one()

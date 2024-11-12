@@ -8,7 +8,7 @@ from werkzeug.urls import url_join
 
 
 class SocialLivePost(models.Model):
-    _inherit = ['social.live.post']
+    _inherit = 'social.live.post'
 
     youtube_video_id = fields.Char(related='post_id.youtube_video_id')
 

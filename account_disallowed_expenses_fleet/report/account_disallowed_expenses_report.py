@@ -6,6 +6,7 @@ from odoo.tools import SQL
 
 
 class AccountDisallowedExpensesFleetReportHandler(models.AbstractModel):
+    _name = 'account.disallowed.expenses.fleet.report.handler'
     _inherit = ['account.disallowed.expenses.report.handler']
     _description = 'Disallowed Expenses Fleet Custom Handler'
 

@@ -9,6 +9,7 @@ from odoo.exceptions import UserError
 
 
 class L10nBeGroupInsuranceWizard(models.TransientModel):
+    _name = 'l10n.be.group.insurance.wizard'
     _description = 'Group Insurance Wizard'
 
     @api.model
@@ -57,6 +58,7 @@ class L10nBeGroupInsuranceWizard(models.TransientModel):
 
 
 class L10nBeGroupInsuranceLineWizard(models.TransientModel):
+    _name = 'l10n.be.group.insurance.line.wizard'
     _description = 'Group Insurance Wizard Line'
 
     wizard_id = fields.Many2one('l10n.be.group.insurance.wizard')

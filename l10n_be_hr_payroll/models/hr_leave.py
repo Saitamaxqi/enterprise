@@ -4,7 +4,7 @@ from dateutil.relativedelta import relativedelta
 
 
 class HrLeave(models.Model):
-    _inherit = ['hr.leave']
+    _inherit = 'hr.leave'
 
     l10n_be_sickness_relapse = fields.Boolean(default=True, string="Sickness Relapse")
     l10n_be_sickness_can_relapse = fields.Boolean(compute="_compute_can_relapse")

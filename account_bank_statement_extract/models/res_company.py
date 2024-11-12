@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     extract_bank_statement_digitalization_mode = fields.Selection(
         selection=[

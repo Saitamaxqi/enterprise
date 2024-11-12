@@ -12,7 +12,7 @@ from odoo.addons.resource.models.utils import Intervals, timezone_datetime
 
 
 class HrAttendance(models.Model):
-    _inherit = ["hr.attendance"]
+    _inherit = "hr.attendance"
 
     color = fields.Integer("Color", compute='_compute_color')
     overtime_progress = fields.Float(compute="_compute_overtime_progress")

@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class HrEmployee(models.Model):
-    _inherit = ['hr.employee']
+    _inherit = 'hr.employee'
     _description = 'Employee'
 
     currency_id = fields.Many2one(

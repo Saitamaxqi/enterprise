@@ -6,6 +6,7 @@ from odoo.addons.helpdesk.models.helpdesk_ticket import TICKET_PRIORITY
 
 
 class HelpdeskSla(models.Model):
+    _name = 'helpdesk.sla'
     _order = "name"
     _description = "Helpdesk SLA Policies"
 

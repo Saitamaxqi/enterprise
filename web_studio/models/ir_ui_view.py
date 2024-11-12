@@ -26,7 +26,7 @@ DIFF_KEY = "o-diff-key"
 
 
 class Base(models.AbstractModel):
-    _inherit = ['base']
+    _inherit = 'base'
 
     @api.model
     def _get_view_cache_key(self, *args, **kwargs):
@@ -58,6 +58,7 @@ class Base(models.AbstractModel):
 
 
 class IrUiView(models.Model):
+    _name = 'ir.ui.view'
     _description = 'View'
     _inherit = ['studio.mixin', 'ir.ui.view']
 

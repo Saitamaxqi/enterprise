@@ -2,7 +2,7 @@ from odoo import models, fields
 
 
 class WhatsappTemplateButton(models.Model):
-    _inherit = ['whatsapp.template.button']
+    _inherit = 'whatsapp.template.button'
 
     url_type = fields.Selection(selection_add=[
         ('tracked', 'Tracked'),

@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class UomUom(models.Model):
-    _inherit = ['uom.uom']
+    _inherit = 'uom.uom'
 
     l10n_pe_edi_measure_unit_code = fields.Char(
         'Measure unit code',

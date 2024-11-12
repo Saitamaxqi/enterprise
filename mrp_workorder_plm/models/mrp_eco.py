@@ -5,7 +5,7 @@ from odoo import api, fields, models, Command
 
 
 class MrpEco(models.Model):
-    _inherit = ['mrp.eco']
+    _inherit = 'mrp.eco'
 
     routing_change_ids_on_operation = fields.One2many(
         'mrp.eco.routing.change', 'eco_id', string="ECO Routing Changes - Operation",
@@ -60,7 +60,7 @@ class MrpEco(models.Model):
 
 
 class MrpEcoRoutingChange(models.Model):
-    _inherit = ['mrp.eco.routing.change']
+    _inherit = 'mrp.eco.routing.change'
 
     quality_point_id = fields.Many2one('quality.point')
     step = fields.Char(related='quality_point_id.name', string='Step')

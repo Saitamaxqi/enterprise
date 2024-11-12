@@ -4,7 +4,7 @@ from odoo import api, models, fields
 
 
 class HrPayslip(models.Model):
-    _inherit = ['hr.payslip']
+    _inherit = 'hr.payslip'
 
     l10n_sa_wps_file_reference = fields.Char(string="WPS File Reference", copy=False)
 

@@ -13,6 +13,7 @@ from stdnum.exceptions import ValidationError
 
 
 class L10n_BePartnerVatHandler(models.AbstractModel):
+    _name = 'l10n_be.partner.vat.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Partner VAT Listing Custom Handler'
 

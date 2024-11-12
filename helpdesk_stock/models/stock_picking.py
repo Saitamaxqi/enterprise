@@ -6,7 +6,7 @@ from odoo import models
 
 
 class StockPicking(models.Model):
-    _inherit = ['stock.picking']
+    _inherit = 'stock.picking'
 
     def _compute_state(self):
         # Since `state` is a computed field, it does not go through the `write` function we usually use to track

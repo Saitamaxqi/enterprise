@@ -7,6 +7,7 @@ from odoo.exceptions import ValidationError
 
 
 class PlanningSlotTemplate(models.Model):
+    _name = 'planning.slot.template'
     _description = "Shift Template"
     _order = "sequence"
 

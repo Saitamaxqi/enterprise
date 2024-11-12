@@ -4,7 +4,7 @@ from odoo import models, fields
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     l10n_sa_housing_allowance = fields.Monetary(string='Saudi Housing Allowance')
     l10n_sa_transportation_allowance = fields.Monetary(string='Saudi Transportation Allowance')

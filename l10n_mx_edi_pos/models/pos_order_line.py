@@ -2,7 +2,7 @@ from odoo import api, models
 
 
 class PosOrderLine(models.Model):
-    _inherit = ['pos.order.line']
+    _inherit = 'pos.order.line'
 
     @api.constrains('refunded_orderline_id', 'price_subtotal')
     def _l10n_mx_edi_constrains_refunded_orderline_id(self):

@@ -167,7 +167,7 @@ CURRENCY_PROVIDER_SELECTION = [
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     currency_interval_unit = fields.Selection(
         selection=[
@@ -1260,7 +1260,7 @@ class ResCompany(models.Model):
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     currency_interval_unit = fields.Selection(related="company_id.currency_interval_unit", readonly=False)
     currency_provider = fields.Selection(related="company_id.currency_provider", readonly=False)

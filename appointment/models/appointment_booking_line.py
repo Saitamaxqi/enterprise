@@ -6,6 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class AppointmentBookingLine(models.Model):
+    _name = 'appointment.booking.line'
     _rec_name = "calendar_event_id"
     _description = "Appointment Booking Line"
     _order = "event_start desc, id desc"

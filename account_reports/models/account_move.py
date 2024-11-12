@@ -13,7 +13,7 @@ from markupsafe import Markup
 
 
 class AccountMove(models.Model):
-    _inherit = ["account.move"]
+    _inherit = "account.move"
 
     # used for VAT closing, containing the end date of the period this entry closes
     tax_closing_report_id = fields.Many2one(comodel_name='account.report')

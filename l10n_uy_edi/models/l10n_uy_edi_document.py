@@ -38,6 +38,7 @@ _logger = logging.getLogger(__name__)
 
 
 class L10n_Uy_EdiDocument(models.Model):
+    _name = 'l10n_uy_edi.document'
     _description = "Electronic Fiscal Document (CFE - UY)"
     _rec_name = "l10n_latam_document_number"
 

@@ -3,7 +3,7 @@ from odoo import api, fields, models
 
 
 class ForumPost(models.Model):
-    _inherit = ['forum.post']
+    _inherit = 'forum.post'
 
     ticket_id = fields.Many2one('helpdesk.ticket', export_string_translation=False)
     show_ticket = fields.Boolean(compute='_compute_show_ticket', export_string_translation=False)

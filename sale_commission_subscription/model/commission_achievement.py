@@ -4,6 +4,6 @@ from odoo import models, fields
 
 
 class SaleCommissionAchievement(models.Model):
-    _inherit = ['sale.commission.achievement']
+    _inherit = 'sale.commission.achievement'
 
     type = fields.Selection(selection_add=[('mrr', "MRR")], ondelete={'mrr': 'cascade'})

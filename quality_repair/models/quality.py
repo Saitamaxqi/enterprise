@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class QualityPoint(models.Model):
-    _inherit = ["quality.point"]
+    _inherit = "quality.point"
 
     @api.constrains('measure_on', 'picking_type_ids')
     def _check_picking_type_code(self):
@@ -15,12 +15,12 @@ class QualityPoint(models.Model):
 
 
 class QualityCheck(models.Model):
-    _inherit = ["quality.check"]
+    _inherit = "quality.check"
 
     repair_id = fields.Many2one('repair.order', 'Repair Order', check_company=True)
 
 
 class QualityAlert(models.Model):
-    _inherit = ["quality.alert"]
+    _inherit = "quality.alert"
 
     repair_id = fields.Many2one('repair.order', "Repair Order", check_company=True)

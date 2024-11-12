@@ -14,7 +14,7 @@ from odoo.addons.account_batch_payment.models.sepa_mapping import sanitize_commu
 
 
 class AccountJournal(models.Model):
-    _inherit = ["account.journal"]
+    _inherit = "account.journal"
 
     sepa_pain_version = fields.Selection(
         [

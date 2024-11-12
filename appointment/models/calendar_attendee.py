@@ -5,7 +5,7 @@ from odoo import models, tools
 
 
 class CalendarAttendee(models.Model):
-    _inherit = ['calendar.attendee']
+    _inherit = 'calendar.attendee'
 
     def _compute_mail_tz(self):
         toupdate = self.filtered(lambda r: r.event_id.appointment_type_id.appointment_tz)

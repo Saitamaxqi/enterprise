@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class MrpReport(models.Model):
-    _inherit = ['mrp.report']
+    _inherit = 'mrp.report'
 
     employee_cost = fields.Monetary(
         "Total Employee Cost", readonly=True, groups="mrp.group_mrp_routings",

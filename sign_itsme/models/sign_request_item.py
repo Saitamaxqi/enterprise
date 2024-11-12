@@ -7,7 +7,7 @@ from datetime import datetime
 
 
 class SignRequestItem(models.Model):
-    _inherit = ["sign.request.item"]
+    _inherit = "sign.request.item"
 
     itsme_validation_hash = fields.Char('itsme® Validation Token', readonly=True, copy=False)
     itsme_signer_name = fields.Char("itsme® Signer's Name", readonly=True, copy=False)

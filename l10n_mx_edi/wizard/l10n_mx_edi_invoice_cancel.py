@@ -8,6 +8,7 @@ from odoo.exceptions import UserError
 
 
 class L10n_Mx_EdiInvoiceCancel(models.TransientModel):
+    _name = 'l10n_mx_edi.invoice.cancel'
     _description = "Request CFDI Cancellation"
 
     document_id = fields.Many2one(comodel_name='l10n_mx_edi.document')

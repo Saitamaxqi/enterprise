@@ -6,7 +6,7 @@ from odoo.tools import format_amount
 
 
 class ProductTemplate(models.Model):
-    _inherit = ["product.template"]
+    _inherit = "product.template"
 
     recurring_invoice = fields.Boolean(
         'Subscription Product',

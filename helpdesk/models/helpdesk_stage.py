@@ -6,6 +6,7 @@ from odoo.tools.misc import unique
 
 
 class HelpdeskStage(models.Model):
+    _name = 'helpdesk.stage'
     _description = 'Helpdesk Stage'
     _order = 'sequence, id'
 

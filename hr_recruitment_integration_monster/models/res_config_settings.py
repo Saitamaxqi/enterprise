@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     hr_recruitment_monster_username = fields.Char(
         related="company_id.hr_recruitment_monster_username",

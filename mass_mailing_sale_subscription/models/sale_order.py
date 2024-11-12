@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class SaleOrder(models.Model):
-    _inherit = ["sale.order"]
+    _inherit = "sale.order"
     _mailing_enabled = True
 
     def _mailing_get_default_domain(self, mailing):

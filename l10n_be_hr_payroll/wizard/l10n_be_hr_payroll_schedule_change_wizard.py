@@ -10,6 +10,7 @@ from markupsafe import Markup
 
 
 class L10n_BeHrPayrollScheduleChangeWizard(models.TransientModel):
+    _name = 'l10n_be.hr.payroll.schedule.change.wizard'
     _description = 'Change contract working schedule'
 
     contract_id = fields.Many2one(

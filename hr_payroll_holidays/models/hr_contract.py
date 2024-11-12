@@ -2,7 +2,7 @@ from odoo import models
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     def _get_resource_calendar_leaves(self, start_dt, end_dt):
         # prevent leaves that are associated with a blocked payslip to be taken

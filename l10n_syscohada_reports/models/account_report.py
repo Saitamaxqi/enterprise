@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class AccountReport(models.Model):
-    _inherit = ['account.report']
+    _inherit = 'account.report'
 
     availability_condition = fields.Selection(selection_add=[('coa_children', "Children of the Chart of Accounts")])
 

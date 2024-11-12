@@ -23,7 +23,7 @@ PROJECT_TASK_WRITABLE_FIELDS = {
 
 
 class ProjectTask(models.Model):
-    _inherit = ["project.task"]
+    _inherit = "project.task"
 
     planned_date_begin = fields.Datetime("Start date", tracking=True)
     # planned_date_start is added to be able to display tasks in calendar view because both start and end date are mandatory

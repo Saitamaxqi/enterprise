@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class SocialPostTemplate(models.Model):
-    _inherit = ['social.post.template']
+    _inherit = 'social.post.template'
 
     def _get_default_accounts_domain(self):
         """ As YouTube requires 'extra work' (video upload, ...), we don't want it selected by default.

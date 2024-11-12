@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class SaleOrder(models.Model):
-    _inherit = ['sale.order']
+    _inherit = 'sale.order'
 
     def _cart_update_order_line(self, product_id, quantity, order_line, **kwargs):
         """ Update the SO's recurrence when adding or removing

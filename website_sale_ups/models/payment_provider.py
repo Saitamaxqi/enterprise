@@ -8,7 +8,7 @@ from odoo.addons.payment import utils as payment_utils
 
 
 class PaymentProvider(models.Model):
-    _inherit = ['payment.provider']
+    _inherit = 'payment.provider'
 
     custom_mode = fields.Selection(
         selection_add=[('cash_on_delivery', 'Cash On Delivery')]

@@ -5,7 +5,7 @@ from odoo import models, _
 
 
 class Website(models.Model):
-    _inherit = ["website"]
+    _inherit = "website"
 
     def get_suggested_controllers(self):
         suggested_controllers = super().get_suggested_controllers()
@@ -19,7 +19,7 @@ class Website(models.Model):
 
 
 class WebsiteMenu(models.Model):
-    _inherit = ["website.menu"]
+    _inherit = "website.menu"
 
     def _compute_visible(self):
         """ Display helpdesk team menus even if they are unpublished """

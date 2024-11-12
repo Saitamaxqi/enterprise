@@ -10,7 +10,7 @@ from odoo.tools.misc import groupby as tools_groupby
 
 
 class SaleOrderLine(models.Model):
-    _inherit = ['sale.order.line']
+    _inherit = 'sale.order.line'
 
     tracking = fields.Selection(related='product_id.tracking', depends=['product_id'])
 

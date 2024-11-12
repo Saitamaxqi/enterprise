@@ -8,6 +8,7 @@ from odoo.exceptions import UserError
 
 
 class L10n_UkHmrcSendWizard(models.TransientModel):
+    _name = 'l10n_uk.hmrc.send.wizard'
     _description = "HMRC Send Wizard"
 
     @api.model

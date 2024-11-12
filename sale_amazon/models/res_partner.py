@@ -4,7 +4,7 @@ from odoo import _, models
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     def _amazon_create_activity_set_state(self, user_id, state_code):
         """ Create an activity on the Amazon partner for the salesperson to set the state.

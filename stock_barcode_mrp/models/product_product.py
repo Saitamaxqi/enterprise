@@ -5,7 +5,7 @@ from odoo import models, api
 
 
 class ProductProduct(models.Model):
-    _inherit = ['product.product']
+    _inherit = 'product.product'
 
     @api.model
     def _get_fields_stock_barcode(self):

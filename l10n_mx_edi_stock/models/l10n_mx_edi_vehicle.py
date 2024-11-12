@@ -5,6 +5,7 @@ from odoo.exceptions import ValidationError
 
 
 class L10n_Mx_EdiVehicle(models.Model):
+    _name = 'l10n_mx_edi.vehicle'
     _description = 'MX EDI Vehicle'
     _rec_names_search = ['name', 'vehicle_licence']
 
@@ -135,6 +136,7 @@ class L10n_Mx_EdiVehicle(models.Model):
 
 
 class L10n_Mx_EdiFigure(models.Model):
+    _name = 'l10n_mx_edi.figure'
     _description = 'MX EDI Vehicle Intermediary Figure'
 
     vehicle_id = fields.Many2one('l10n_mx_edi.vehicle')
@@ -154,6 +156,7 @@ class L10n_Mx_EdiFigure(models.Model):
 
 
 class L10n_Mx_EdiPart(models.Model):
+    _name = 'l10n_mx_edi.part'
     _description = 'MX EDI Intermediary Part'
 
     code = fields.Char(required=True)
@@ -161,6 +164,7 @@ class L10n_Mx_EdiPart(models.Model):
 
 
 class L10n_Mx_EdiTrailer(models.Model):
+    _name = 'l10n_mx_edi.trailer'
     _description = 'MX EDI Vehicle Trailer'
 
     vehicle_id = fields.Many2one('l10n_mx_edi.vehicle')

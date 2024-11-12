@@ -6,7 +6,7 @@ from odoo.tools import SQL
 
 
 class AccountGeneralLedgerReportHandler(models.AbstractModel):
-    _inherit = ['account.general.ledger.report.handler']
+    _inherit = 'account.general.ledger.report.handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)

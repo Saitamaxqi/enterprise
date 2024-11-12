@@ -2,7 +2,7 @@ from odoo import models
 
 
 class Pos_Preparation_DisplayOrder(models.Model):
-    _inherit = ['pos_preparation_display.order']
+    _inherit = 'pos_preparation_display.order'
 
     def change_order_stage(self, stage_id, preparation_display_id):
         res = super().change_order_stage(stage_id, preparation_display_id)

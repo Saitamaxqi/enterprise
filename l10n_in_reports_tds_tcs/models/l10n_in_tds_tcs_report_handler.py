@@ -2,6 +2,7 @@ from odoo import models, _
 
 
 class L10n_In_WithholdingTdsTcsReportHandler(models.AbstractModel):
+    _name = 'l10n_in_withholding.tds.tcs.report.handler'
     _inherit = ['account.generic.tax.report.handler']
     _description = 'Indian Tax Report Custom Handler'
 

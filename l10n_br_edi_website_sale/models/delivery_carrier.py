@@ -4,7 +4,7 @@ from odoo.addons.l10n_br_edi.models.account_move import FREIGHT_MODEL_SELECTION
 
 
 class DeliveryCarrier(models.Model):
-    _inherit = ["delivery.carrier"]
+    _inherit = "delivery.carrier"
 
     l10n_br_edi_transporter_id = fields.Many2one(
         "res.partner",

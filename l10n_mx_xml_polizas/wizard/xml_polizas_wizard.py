@@ -42,6 +42,7 @@ class MoveExportData(defaultdict):
 
 
 class L10n_Mx_Xml_PolizasXml_Polizas_Wizard(models.TransientModel):
+    _name = 'l10n_mx_xml_polizas.xml_polizas_wizard'
     _description = "Wizard for the XML Polizas export of Journal Entries"
 
     # Report fields

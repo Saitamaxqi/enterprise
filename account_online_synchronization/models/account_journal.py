@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountJournal(models.Model):
-    _inherit = ["account.journal"]
+    _inherit = "account.journal"
 
     def __get_bank_statements_available_sources(self):
         rslt = super(AccountJournal, self).__get_bank_statements_available_sources()

@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class HrLeaveType(models.Model):
-    _inherit = ["hr.leave.type"]
+    _inherit = "hr.leave.type"
 
     l10n_au_leave_type = fields.Selection(
         selection=[

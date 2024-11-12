@@ -6,6 +6,7 @@ from odoo.tools import SQL
 
 
 class AccountEcSalesReportHandler(models.AbstractModel):
+    _name = 'account.ec.sales.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'EC Sales Report Custom Handler'
 

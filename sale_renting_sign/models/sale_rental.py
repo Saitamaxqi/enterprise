@@ -5,7 +5,7 @@ from odoo import Command, fields, models
 
 
 class SaleOrder(models.Model):
-    _inherit = ["sale.order"]
+    _inherit = "sale.order"
 
     sign_request_ids = fields.One2many("sign.request", string="Signature Requests", compute="_compute_sign_request")
     sign_request_count = fields.Integer(

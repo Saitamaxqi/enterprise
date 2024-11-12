@@ -2,7 +2,7 @@ from odoo import api, models, Command
 
 
 class ProductTemplate(models.Model):
-    _inherit = ['product.template']
+    _inherit = 'product.template'
 
     @api.model
     def _update_product_by_barcodelookup(self, product, barcode_lookup_data):

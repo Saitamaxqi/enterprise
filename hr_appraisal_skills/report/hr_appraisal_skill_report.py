@@ -4,6 +4,7 @@ from odoo import fields, models, tools
 
 
 class HrAppraisalSkillReport(models.BaseModel):
+    _name = 'hr.appraisal.skill.report'
     _auto = False
     _description = 'Appraisal Skills Report'
     _order = 'employee_id, evolution_sequence asc, current_level_progress desc, skill_type_id asc'

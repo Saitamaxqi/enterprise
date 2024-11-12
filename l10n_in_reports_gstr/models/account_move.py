@@ -32,7 +32,7 @@ IRN_PATTERN = r'^[a-z0-9]{64}$'
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move']
+    _inherit = 'account.move'
 
     l10n_in_exception = fields.Html("Exception")
     l10n_in_gst_return_period_id = fields.Many2one("l10n_in.gst.return.period", "GST Return Period")

@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class AccountPaymentTerm(models.Model):
-    _inherit = ['account.payment.term']
+    _inherit = 'account.payment.term'
 
     l10n_cl_sii_code = fields.Selection([
         ('1', '1: Cash payment'),

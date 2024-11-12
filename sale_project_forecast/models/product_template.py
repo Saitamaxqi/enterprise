@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ProductTemplate(models.Model):
-    _inherit = ['product.template']
+    _inherit = 'product.template'
 
     planning_enabled = fields.Boolean(compute="_compute_planning_enabled", readonly=False, store=True)
 

@@ -26,7 +26,7 @@ DESCRIPTION_DEBIT_CODE = [
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move']
+    _inherit = 'account.move'
 
     l10n_co_dian_show_support_doc_button = fields.Boolean(compute='_compute_l10n_co_dian_show_support_doc_button')
     l10n_co_dian_post_time = fields.Datetime(readonly=True, copy=False)
@@ -296,7 +296,7 @@ class AccountMove(models.Model):
 
 
 class AccountMoveLine(models.Model):
-    _inherit = ['account.move.line']
+    _inherit = 'account.move.line'
 
     def _l10n_co_dian_net_price_subtotal(self):
         """ Returns the price subtotal after discount in company currency. """

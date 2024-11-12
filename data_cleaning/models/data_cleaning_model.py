@@ -14,6 +14,7 @@ DR_CREATE_STEP_MANUAL = 50000
 
 
 class Data_CleaningModel(models.Model):
+    _name = 'data_cleaning.model'
     _description = 'Cleaning Model'
     _order = 'name'
 

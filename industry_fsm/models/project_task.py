@@ -11,7 +11,7 @@ from odoo.addons.resource.models.utils import Intervals, sum_intervals
 
 
 class ProjectTask(models.Model):
-    _inherit = ["project.task"]
+    _inherit = "project.task"
 
     @api.model
     def default_get(self, fields_list):

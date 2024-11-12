@@ -5,6 +5,7 @@ from odoo import fields, models
 
 
 class HrContractSalaryResumeCategory(models.Model):
+    _name = 'hr.contract.salary.resume.category'
     _description = 'Salary Package Resume Category'
     _order = 'sequence'
 
@@ -16,6 +17,7 @@ class HrContractSalaryResumeCategory(models.Model):
 
 
 class HrContractSalaryResume(models.Model):
+    _name = 'hr.contract.salary.resume'
     _description = 'Salary Package Resume'
     _order = 'sequence'
 

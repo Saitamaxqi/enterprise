@@ -2,7 +2,7 @@ from odoo import models, fields, api
 
 
 class Pos_Preparation_DisplayOrder(models.Model):
-    _inherit = ['pos_preparation_display.order']
+    _inherit = 'pos_preparation_display.order'
 
     pos_table_id = fields.Many2one('restaurant.table')
 

@@ -9,7 +9,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountGeneralLedgerReportHandler(models.AbstractModel):
-    _inherit = ['account.general.ledger.report.handler']
+    _inherit = 'account.general.ledger.report.handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
         # Overridden to add export button on GL for Mexican companies

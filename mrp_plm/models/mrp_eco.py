@@ -12,6 +12,7 @@ from odoo.exceptions import UserError
 
 
 class MrpEcoType(models.Model):
+    _name = 'mrp.eco.type'
     _description = 'ECO Type'
     _inherit = ['mail.alias.mixin', 'mail.thread']
 
@@ -58,6 +59,7 @@ class MrpEcoType(models.Model):
 
 
 class MrpEcoApprovalTemplate(models.Model):
+    _name = 'mrp.eco.approval.template'
     _order = "sequence"
     _description = 'ECO Approval Template'
 
@@ -73,6 +75,7 @@ class MrpEcoApprovalTemplate(models.Model):
 
 
 class MrpEcoApproval(models.Model):
+    _name = 'mrp.eco.approval'
     _description = 'ECO Approval'
     _order = 'approval_date desc'
 
@@ -142,6 +145,7 @@ class MrpEcoApproval(models.Model):
 
 
 class MrpEcoStage(models.Model):
+    _name = 'mrp.eco.stage'
     _description = 'ECO Stage'
     _order = "sequence, id"
     _fold_name = 'folded'
@@ -185,6 +189,7 @@ class MrpEcoStage(models.Model):
 
 
 class MrpEco(models.Model):
+    _name = 'mrp.eco'
     _description = 'Engineering Change Order (ECO)'
     _inherit = ['mail.thread.cc', 'mail.activity.mixin']
 
@@ -854,6 +859,7 @@ class MrpEco(models.Model):
 
 
 class MrpEcoBomChange(models.Model):
+    _name = 'mrp.eco.bom.change'
     _description = 'ECO BoM changes'
 
     eco_id = fields.Many2one('mrp.eco', 'Engineering Change', ondelete='cascade')
@@ -912,6 +918,7 @@ class MrpEcoBomChange(models.Model):
 
 
 class MrpEcoRoutingChange(models.Model):
+    _name = 'mrp.eco.routing.change'
     _description = 'Eco Routing changes'
 
     eco_id = fields.Many2one('mrp.eco', 'Engineering Change', ondelete='cascade', required=True)
@@ -935,6 +942,7 @@ class MrpEcoRoutingChange(models.Model):
 
 
 class MrpEcoTag(models.Model):
+    _name = 'mrp.eco.tag'
     _description = "ECO Tags"
 
     def _get_default_color(self):

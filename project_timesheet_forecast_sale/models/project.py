@@ -7,7 +7,7 @@ from odoo import api, fields, models
 
 
 class ProjectProject(models.Model):
-    _inherit = ['project.project']
+    _inherit = 'project.project'
 
     display_planning_timesheet_analysis = fields.Boolean(compute='_compute_display_planning_timesheet_analysis', export_string_translation=False)
 

@@ -5,7 +5,7 @@ from odoo import models
 
 
 class HrPayslipWorked_Days(models.Model):
-    _inherit = ['hr.payslip.worked_days']
+    _inherit = 'hr.payslip.worked_days'
 
     def _compute_amount(self):
         # Try to deduce the amount from the salary rules bound to the payslip

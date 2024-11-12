@@ -10,7 +10,7 @@ from werkzeug.urls import url_join
 
 
 class SocialStream(models.Model):
-    _inherit = ['social.stream']
+    _inherit = 'social.stream'
 
     FACEBOOK_REACTIONS = {'LIKE', 'LOVE', 'HAHA', 'WOW', 'SAD', 'ANGRY', 'CARE'}
     FACEBOOK_REACTIONS_FIELDS = ','.join({

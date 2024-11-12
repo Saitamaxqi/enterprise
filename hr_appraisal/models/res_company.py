@@ -8,7 +8,7 @@ from odoo import api, fields, models, _
 
 
 class ResCompany(models.Model):
-    _inherit = ["res.company"]
+    _inherit = "res.company"
 
     def _get_default_appraisal_template(self):
         return self.env.ref('hr_appraisal.hr_appraisal_default_template', raise_if_not_found=False)

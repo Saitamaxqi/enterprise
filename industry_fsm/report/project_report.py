@@ -5,6 +5,7 @@ from odoo import fields, models
 
 
 class ReportProjectTaskUserFsm(models.Model):
+    _name = 'report.project.task.user.fsm'
     _inherit = ['report.project.task.user']
     _description = "FSM Tasks Analysis"
     _auto = False

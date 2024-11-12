@@ -3,7 +3,7 @@ from odoo.exceptions import UserError
 
 
 class AccountJournal(models.Model):
-    _inherit = ['account.journal']
+    _inherit = 'account.journal'
 
     def _is_attachment_ocrizable(self, attachment):
         """ Checks if the attachment is in OCRizable formats such as PDF and images."""

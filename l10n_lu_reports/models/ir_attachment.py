@@ -19,7 +19,7 @@ XSD_INFO = {
 
 
 class IrAttachment(models.Model):
-    _inherit = ['ir.attachment']
+    _inherit = 'ir.attachment'
 
     @api.model
     def _l10n_lu_reports_load_xsd_files(self, force_reload=False):

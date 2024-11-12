@@ -9,7 +9,7 @@ from odoo.tools import format_amount
 
 
 class ProductTemplate(models.Model):
-    _inherit = ['product.template']
+    _inherit = 'product.template'
 
     @api.constrains('optional_product_ids')
     def _constraints_optional_product_ids(self):

@@ -6,7 +6,7 @@ from odoo import api, models
 
 
 class DiscussChannelMember(models.Model):
-    _inherit = ['discuss.channel.member']
+    _inherit = 'discuss.channel.member'
 
     @api.autovacuum
     def _gc_unpin_whatsapp_channels(self):

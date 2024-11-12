@@ -6,7 +6,7 @@ from .account_tax import CATALOG07
 
 
 class AccountMoveLine(models.Model):
-    _inherit = ['account.move.line']
+    _inherit = 'account.move.line'
 
     l10n_pe_edi_allowance_charge_reason_code = fields.Selection(
         selection=[

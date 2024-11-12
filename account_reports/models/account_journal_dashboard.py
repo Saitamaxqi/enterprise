@@ -4,7 +4,7 @@ import ast
 
 
 class AccountJournal(models.Model):
-    _inherit = ['account.journal']
+    _inherit = 'account.journal'
 
     def _fill_general_dashboard_data(self, dashboard_data):
         super()._fill_general_dashboard_data(dashboard_data)

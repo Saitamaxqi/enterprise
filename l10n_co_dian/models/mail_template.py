@@ -2,7 +2,7 @@ from odoo import models, api
 
 
 class MailTemplate(models.Model):
-    _inherit = ['mail.template']
+    _inherit = 'mail.template'
 
     @api.model
     def _create_dian_mail_templates(self):

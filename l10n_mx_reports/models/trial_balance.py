@@ -14,7 +14,7 @@ CFDICATALOGO_XSLT_CADENA = 'l10n_mx_reports/data/xslt/1.3/CatalogoCuentas_1_2.xs
 
 
 class AccountTrialBalanceReportHandler(models.AbstractModel):
-    _inherit = ['account.trial.balance.report.handler']
+    _inherit = 'account.trial.balance.report.handler'
 
     def _custom_options_initializer(self, report, options, previous_options):
         super()._custom_options_initializer(report, options, previous_options)

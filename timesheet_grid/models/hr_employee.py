@@ -11,7 +11,7 @@ from odoo.exceptions import UserError
 
 
 class HrEmployee(models.Model):
-    _inherit = ['hr.employee']
+    _inherit = 'hr.employee'
 
     def _get_employees_working_hours(self, employees, start_datetime, end_datetime):
 
@@ -188,7 +188,7 @@ class HrEmployee(models.Model):
 
 
 class HrEmployeePublic(models.Model):
-    _inherit = ['hr.employee.public']
+    _inherit = 'hr.employee.public'
 
     timesheet_manager_id = fields.Many2one('res.users', string='Timesheet',
         help="User responsible of timesheet validation. Should be Timesheet Manager.")

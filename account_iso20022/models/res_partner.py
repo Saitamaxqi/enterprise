@@ -9,7 +9,7 @@ LEI_REGEX = '[A-Z0-9]{18,18}[0-9]{2,2}'
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     # at the moment it's not mandatory but will be in the future
     iso20022_lei = fields.Char(

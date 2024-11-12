@@ -8,6 +8,7 @@ from odoo import fields, models
 
 
 class L10nBeDoublePayRecoveryLine(models.Model):
+    _name = 'l10n.be.double.pay.recovery.line'
     _description = 'CP200: Double Pay Recovery Line Wizard'
 
     employee_id = fields.Many2one('hr.employee', ondelete='cascade')

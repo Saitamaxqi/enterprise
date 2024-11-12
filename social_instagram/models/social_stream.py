@@ -9,7 +9,7 @@ from werkzeug.urls import url_join
 
 
 class SocialStream(models.Model):
-    _inherit = ['social.stream']
+    _inherit = 'social.stream'
 
     def _apply_default_name(self):
         instagram_streams = self.filtered(lambda s: s.media_id.media_type == 'instagram')

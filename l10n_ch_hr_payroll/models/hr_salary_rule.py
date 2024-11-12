@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HrSalaryRule(models.Model):
-    _inherit = ['hr.salary.rule']
+    _inherit = 'hr.salary.rule'
 
     l10n_ch_code = fields.Char(string="External Code")
 

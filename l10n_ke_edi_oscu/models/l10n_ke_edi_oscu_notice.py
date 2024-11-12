@@ -8,6 +8,7 @@ _logger = logging.getLogger(__name__)
 
 
 class L10n_Ke_Edi_OscuNotice(models.Model):
+    _name = 'l10n_ke_edi_oscu.notice'
     _description = "eTIMS Notices"
 
     number = fields.Integer()

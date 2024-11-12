@@ -2,7 +2,7 @@ from odoo import models, fields, api
 
 
 class StockMove(models.Model):
-    _inherit = ["stock.move"]
+    _inherit = "stock.move"
 
     l10n_mx_edi_is_hazardous_material = fields.Boolean(
         string="Is Hazardous Material",

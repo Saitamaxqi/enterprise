@@ -25,6 +25,7 @@ TAX19_SII_CODE = 14
 
 
 class StockPicking(models.Model):
+    _name = 'stock.picking'
     _inherit = ['l10n_cl.edi.util', 'stock.picking']
 
     l10n_cl_delivery_guide_reason = fields.Selection([

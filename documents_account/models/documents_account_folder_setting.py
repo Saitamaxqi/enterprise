@@ -4,6 +4,7 @@ from odoo import fields, models
 
 
 class DocumentsAccountFolderSetting(models.Model):
+    _name = 'documents.account.folder.setting'
     _description = 'Journal and Folder settings'
 
     company_id = fields.Many2one('res.company', required=True, default=lambda self: self.env.company,

@@ -6,7 +6,7 @@ from odoo import api, fields, models
 
 
 class EventEvent(models.Model):
-    _inherit = ['event.event']
+    _inherit = 'event.event'
 
     # Initial date and scale of the track gantt view
     track_gantt_initial_date = fields.Date(compute='_compute_track_gantt_information')

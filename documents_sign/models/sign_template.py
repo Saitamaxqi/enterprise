@@ -3,6 +3,7 @@ from odoo import api, fields, models
 
 
 class SignTemplate(models.Model):
+    _name = 'sign.template'
     _inherit = ['sign.template', 'documents.unlink.mixin']
 
     folder_id = fields.Many2one('documents.document', 'Signed Document Folder',

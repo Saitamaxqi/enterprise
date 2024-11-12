@@ -12,6 +12,7 @@ from odoo.tools.misc import formatLang
 
 
 class BankRecWidget(models.Model):
+    _name = 'bank.rec.widget'
     _description = "Bank reconciliation widget for a single statement line"
 
     # This model is never saved inside the database.

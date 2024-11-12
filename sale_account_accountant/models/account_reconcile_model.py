@@ -4,7 +4,7 @@ from odoo.tools import SQL
 
 
 class AccountReconcileModel(models.Model):
-    _inherit = ['account.reconcile.model']
+    _inherit = 'account.reconcile.model'
 
     def _get_invoice_matching_so_candidates(self, st_line, partner):
         """ Find a match between the bank transaction and some sale orders. If none of them are invoiced, there are

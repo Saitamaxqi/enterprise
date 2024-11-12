@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class SaleOrderLogReport(models.Model):
-    _inherit = ['sale.order.log.report']
+    _inherit = 'sale.order.log.report'
 
     referrer_id = fields.Many2one('res.partner', 'Referrer', readonly=True)
     commission_plan_id = fields.Many2one('commission.plan', readonly=True)

@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HelpdeskSla(models.Model):
-    _inherit = ['helpdesk.sla']
+    _inherit = 'helpdesk.sla'
 
     product_ids = fields.Many2many('product.template',
         string="Services",

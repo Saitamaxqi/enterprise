@@ -16,6 +16,7 @@ from odoo.tools.misc import hmac
 
 
 class SignRequestItem(models.Model):
+    _name = 'sign.request.item'
     _description = "Signature Request Item"
     _inherit = ['portal.mixin']
     _rec_name = 'partner_id'

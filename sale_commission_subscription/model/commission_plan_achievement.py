@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class SaleCommissionPlanAchievement(models.Model):
-    _inherit = ['sale.commission.plan.achievement']
+    _inherit = 'sale.commission.plan.achievement'
 
     type = fields.Selection(selection_add=[('mrr', "MRR")], ondelete={'mrr': 'cascade'})
     recurring_plan_id = fields.Many2one('sale.subscription.plan', string="Recurring Plan")

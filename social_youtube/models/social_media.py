@@ -10,7 +10,7 @@ from werkzeug.urls import url_encode, url_join
 
 
 class SocialMedia(models.Model):
-    _inherit = ['social.media']
+    _inherit = 'social.media'
 
     _YOUTUBE_ENDPOINT = 'https://www.googleapis.com'
 

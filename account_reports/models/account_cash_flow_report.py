@@ -3,6 +3,7 @@ from odoo.tools import SQL, Query
 
 
 class AccountCashFlowReportHandler(models.AbstractModel):
+    _name = 'account.cash.flow.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Cash Flow Report Custom Handler'
 

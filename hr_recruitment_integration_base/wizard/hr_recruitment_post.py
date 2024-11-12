@@ -7,6 +7,7 @@ from odoo.exceptions import UserError
 
 
 class HrRecruitmentPostJobWizard(models.TransientModel):
+    _name = 'hr.recruitment.post.job.wizard'
     _description = 'Post Job'
     _transient_max_count = 0
     _transient_max_hours = 24

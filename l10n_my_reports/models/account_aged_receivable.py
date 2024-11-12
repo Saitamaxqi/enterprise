@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class AccountAgedReceivableReportHandler(models.AbstractModel):
-    _inherit = ["account.aged.receivable.report.handler"]
+    _inherit = "account.aged.receivable.report.handler"
 
     @api.model
     def action_print_report_statement_account(self, options, params):

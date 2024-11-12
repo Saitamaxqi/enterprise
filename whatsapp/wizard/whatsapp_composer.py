@@ -13,6 +13,7 @@ _logger = logging.getLogger(__name__)
 
 
 class WhatsappComposer(models.TransientModel):
+    _name = 'whatsapp.composer'
     _description = 'Send WhatsApp Wizard'
 
     @api.model

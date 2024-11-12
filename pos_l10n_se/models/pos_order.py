@@ -7,7 +7,7 @@ from odoo.tools.translate import _
 
 
 class PosOrder(models.Model):
-    _inherit = ["pos.order"]
+    _inherit = "pos.order"
 
     sweden_blackbox_signature = fields.Char(
         "Sweden Electronic signature",

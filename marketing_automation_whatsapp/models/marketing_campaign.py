@@ -2,7 +2,7 @@ from odoo import api, fields, models
 
 
 class MarketingCampaign(models.Model):
-    _inherit = ['marketing.campaign']
+    _inherit = 'marketing.campaign'
 
     whatsapp_template_count = fields.Integer('# Whatsapp', compute='_compute_whatsapp_template_count')
 

@@ -2,7 +2,7 @@ from odoo import models, fields, _
 
 
 class AccountMove(models.Model):
-    _inherit = ["account.move"]
+    _inherit = "account.move"
 
     generating_loan_line_id = fields.Many2one(
         comodel_name='account.loan.line',

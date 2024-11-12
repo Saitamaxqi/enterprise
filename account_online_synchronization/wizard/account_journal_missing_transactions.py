@@ -8,6 +8,7 @@ from odoo.tools import format_date
 
 
 class AccountMissingTransactionWizard(models.TransientModel):
+    _name = 'account.missing.transaction.wizard'
     _description = 'Wizard for missing transactions'
 
     date = fields.Date(

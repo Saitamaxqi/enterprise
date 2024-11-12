@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     sign_terms = fields.Html(string='Sign Default Terms and Conditions', translate=True,
         default="""<h1 style="text-align: center; ">Terms &amp; Conditions</h1>

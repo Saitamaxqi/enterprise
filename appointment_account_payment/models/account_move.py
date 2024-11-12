@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class AccountMove(models.Model):
-    _inherit = ["account.move"]
+    _inherit = "account.move"
 
     calendar_booking_ids = fields.One2many("calendar.booking", "account_move_id", string="Meeting Booking")
 

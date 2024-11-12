@@ -4,6 +4,7 @@ from odoo import models
 
 
 class L10n_PhSlpReportHandler(models.AbstractModel):
+    _name = 'l10n_ph.slp.report.handler'
     _inherit = ['l10n_ph.slsp.report.handler']
     _description = 'Summary Lists of Purchases Custom Handler'
 

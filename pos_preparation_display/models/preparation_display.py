@@ -5,6 +5,7 @@ from odoo.addons.pos_preparation_display.models.preparation_display_orderline im
 
 
 class Pos_Preparation_DisplayDisplay(models.Model):
+    _name = 'pos_preparation_display.display'
     _inherit = ["pos.bus.mixin", "pos.load.mixin"]
     _description = "Preparation display"
 

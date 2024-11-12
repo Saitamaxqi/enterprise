@@ -8,6 +8,7 @@ MODELS_MAPPED = {'employee': 'hr.employee', 'bank_account': 'res.partner.bank'}
 
 
 class HrContractSalaryPersonalInfo(models.Model):
+    _name = 'hr.contract.salary.personal.info'
     _description = 'Salary Package Personal Info'
     _order = 'sequence'
 
@@ -89,6 +90,7 @@ class HrContractSalaryPersonalInfo(models.Model):
 
 
 class HrContractSalaryPersonalInfoType(models.Model):
+    _name = 'hr.contract.salary.personal.info.type'
     _description = 'Salary Package Personal Info Type'
     _order = 'sequence'
 
@@ -97,6 +99,7 @@ class HrContractSalaryPersonalInfoType(models.Model):
 
 
 class HrContractSalaryPersonalInfoValue(models.Model):
+    _name = 'hr.contract.salary.personal.info.value'
     _description = 'Salary Package Personal Info Value'
     _order = 'sequence'
 

@@ -4,7 +4,7 @@ from odoo import models, _
 
 
 class HrJobPost(models.Model):
-    _inherit = ['hr.job.post']
+    _inherit = 'hr.job.post'
 
     def _delete_post(self):
         self.ensure_one()

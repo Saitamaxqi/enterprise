@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     l10n_ke_branch_code = fields.Char('eTIMS Branch Code', default='00')
 

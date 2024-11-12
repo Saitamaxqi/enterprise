@@ -235,6 +235,7 @@ class WsaSBR(wsa.WsAddressingPlugin):
 
 
 class L10n_Nl_Reports_SbrTaxReportWizard(models.TransientModel):
+    _name = 'l10n_nl_reports_sbr.tax.report.wizard'
     _description = 'L10n NL Tax Report for SBR Wizard'
 
     def _get_default_initials(self):

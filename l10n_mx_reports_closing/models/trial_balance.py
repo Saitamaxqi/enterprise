@@ -5,7 +5,7 @@ from odoo import models, fields, _
 
 
 class AccountTrialBalanceReportHandler(models.AbstractModel):
-    _inherit = ['account.trial.balance.report.handler']
+    _inherit = 'account.trial.balance.report.handler'
 
     def _get_custom_display_config(self):
         return {

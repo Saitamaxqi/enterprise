@@ -9,6 +9,7 @@ from odoo.exceptions import UserError
 
 
 class L10n_AuTerminationPayment(models.TransientModel):
+    _name = 'l10n_au.termination.payment'
     _description = "Termination Payment"
 
     employee_id = fields.Many2one("hr.employee")

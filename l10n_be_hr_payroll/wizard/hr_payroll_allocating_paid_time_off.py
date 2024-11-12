@@ -12,6 +12,7 @@ from odoo.exceptions import UserError
 
 
 class HrPayrollAllocPaidLeave(models.TransientModel):
+    _name = 'hr.payroll.alloc.paid.leave'
     _description = 'Manage the Allocation of Paid Time Off'
 
     @api.model
@@ -218,6 +219,7 @@ class HrPayrollAllocPaidLeave(models.TransientModel):
 
 
 class HrPayrollAllocEmployee(models.TransientModel):
+    _name = 'hr.payroll.alloc.employee'
     _description = 'Manage the Allocation of Paid Time Off Employee'
 
     employee_id = fields.Many2one('hr.employee', string="Employee", required=True)

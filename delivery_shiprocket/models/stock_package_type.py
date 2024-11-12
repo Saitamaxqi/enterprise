@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 
 
 class StockPackageType(models.Model):
-    _inherit = ['stock.package.type']
+    _inherit = 'stock.package.type'
 
     package_carrier_type = fields.Selection(selection_add=[('shiprocket', 'Shiprocket')])
 

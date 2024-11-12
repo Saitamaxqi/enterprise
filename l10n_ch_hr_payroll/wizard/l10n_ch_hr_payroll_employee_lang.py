@@ -8,6 +8,7 @@ SWISS_LANGUAGES = ["it_IT", "de_DE", "de_CH", "fr_FR", "fr_CH", "en_EN", "en_US"
 
 
 class L10n_ChHrPayrollEmployeeLangWizard(models.TransientModel):
+    _name = 'l10n_ch.hr.payroll.employee.lang.wizard'
     _description = 'Change Employee Language'
 
     def _default_line_ids(self):
@@ -30,6 +31,7 @@ class L10n_ChHrPayrollEmployeeLangWizard(models.TransientModel):
 
 
 class L10n_ChHrPayrollEmployeeLangWizardLine(models.TransientModel):
+    _name = 'l10n_ch.hr.payroll.employee.lang.wizard.line'
     _description = 'Change Employee Language Line'
 
     @api.model

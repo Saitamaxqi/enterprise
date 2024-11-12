@@ -10,7 +10,7 @@ from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_PROGRES
 
 
 class SaleOrderLine(models.Model):
-    _inherit = ["sale.order.line"]
+    _inherit = "sale.order.line"
 
     # =============================
     #           Compute

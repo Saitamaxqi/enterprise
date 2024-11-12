@@ -4,7 +4,7 @@ from odoo import models
 
 
 class L10n_InReportHandler(models.AbstractModel):
-    _inherit = ['l10n_in.report.handler']
+    _inherit = 'l10n_in.report.handler'
 
     def _get_invalid_no_hsn_line_domain(self):
         domain = super()._get_invalid_no_hsn_line_domain()

@@ -7,6 +7,7 @@ from odoo import models
 
 
 class L10n_CoReportHandler(models.AbstractModel):
+    _name = 'l10n_co.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Columbian Report Custom Handler'
 

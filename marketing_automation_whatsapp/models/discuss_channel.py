@@ -2,7 +2,7 @@ from odoo import models
 
 
 class DiscussChannel(models.Model):
-    _inherit = ['discuss.channel']
+    _inherit = 'discuss.channel'
 
     def message_post(self, *, message_type='notification', **kwargs):
         """

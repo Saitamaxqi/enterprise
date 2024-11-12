@@ -7,6 +7,7 @@ from odoo.tools.misc import format_duration
 
 
 class AppointmentSlot(models.Model):
+    _name = 'appointment.slot'
     _description = "Appointment: Time Slot"
     _rec_name = "weekday"
     _order = "weekday, start_hour, start_datetime, end_datetime"

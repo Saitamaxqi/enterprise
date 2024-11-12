@@ -31,6 +31,7 @@ except ImportError:
 
 
 class AccountMove(models.Model):
+    _name = 'account.move'
     _inherit = ['l10n_cl.edi.util', 'account.move']
 
     l10n_cl_sii_barcode = fields.Char(

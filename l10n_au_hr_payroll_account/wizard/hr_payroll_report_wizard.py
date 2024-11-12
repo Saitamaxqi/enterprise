@@ -5,7 +5,7 @@ from odoo.exceptions import RedirectWarning
 
 
 class HrPayrollPaymentReportWizard(models.TransientModel):
-    _inherit = ['hr.payroll.payment.report.wizard']
+    _inherit = 'hr.payroll.payment.report.wizard'
 
     export_format = fields.Selection(selection_add=[('aba', 'ABA')], default='aba', ondelete={'aba': 'set csv'})
     journal_id = fields.Many2one(

@@ -3,7 +3,7 @@ from odoo.exceptions import UserError
 
 
 class DocumentsDocument(models.Model):
-    _inherit = ['documents.document']
+    _inherit = 'documents.document'
 
     def document_hr_recruitment_create_hr_candidate(self):
         if self.filtered(lambda doc: doc.type != 'binary' or doc.shortcut_document_id):

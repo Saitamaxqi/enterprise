@@ -5,7 +5,7 @@ from odoo import api, models, fields, _
 
 
 class HelpdeskTeam(models.Model):
-    _inherit = ["helpdesk.team"]
+    _inherit = "helpdesk.team"
 
     show_knowledge_base_slide_channel = fields.Boolean(compute="_compute_show_knowledge_base_slide_channel", export_string_translation=False)
     website_slide_channel_ids = fields.Many2many('slide.channel', string='Courses',

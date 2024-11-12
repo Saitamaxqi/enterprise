@@ -5,6 +5,7 @@ from odoo import fields, models
 
 
 class ProjectTaskCreateTimesheet(models.TransientModel):
+    _name = 'project.task.create.timesheet'
     _description = "Create Timesheet from task"
 
     _time_positive = models.Constraint(

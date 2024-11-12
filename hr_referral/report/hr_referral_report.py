@@ -6,6 +6,7 @@ from odoo import api, fields, models, _
 
 
 class HrReferralReport(models.Model):
+    _name = 'hr.referral.report'
     _description = "Employee Referral Report"
     _auto = False
     _rec_name = 'ref_user_id'

@@ -6,7 +6,7 @@ from odoo.tools import OrderedSet
 
 
 class MrpBom(models.Model):
-    _inherit = ['mrp.bom']
+    _inherit = 'mrp.bom'
 
     def action_open_mps_view(self):
         self.ensure_one()

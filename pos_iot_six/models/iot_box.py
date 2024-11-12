@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class IotBox(models.Model):
-    _inherit = ["iot.box"]
+    _inherit = "iot.box"
 
     six_terminal_id = fields.Char(
         string="Six Terminal ID (TID)",

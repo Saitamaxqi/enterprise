@@ -5,7 +5,7 @@ from odoo.tools import formatLang
 
 
 class AccountPayment(models.Model):
-    _inherit = ["account.payment"]
+    _inherit = "account.payment"
 
     @api.depends('payment_method_line_id', 'currency_id', 'amount')
     def _compute_check_amount_in_words(self):

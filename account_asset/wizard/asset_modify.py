@@ -10,6 +10,7 @@ from dateutil.relativedelta import relativedelta
 
 
 class AssetModify(models.TransientModel):
+    _name = 'asset.modify'
     _description = 'Modify Asset'
 
     name = fields.Text(string='Note')

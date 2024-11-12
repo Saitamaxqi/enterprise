@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ProjectTimesheetForecastReportAnalysis(models.Model):
-    _inherit = ["project.timesheet.forecast.report.analysis"]
+    _inherit = "project.timesheet.forecast.report.analysis"
 
     planned_revenues = fields.Float('Planned Revenues', readonly=True)
     effective_revenues = fields.Float('Effective Revenues', readonly=True)

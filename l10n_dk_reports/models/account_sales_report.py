@@ -8,6 +8,7 @@ from odoo.exceptions import RedirectWarning
 
 
 class L10n_DkEcSalesReportHandler(models.AbstractModel):
+    _name = 'l10n_dk.ec.sales.report.handler'
     _inherit = ['account.ec.sales.report.handler']
     _description = 'Denmark EC Sales Report Custom Handler'
 

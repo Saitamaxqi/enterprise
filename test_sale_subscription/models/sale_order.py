@@ -13,7 +13,7 @@ _logger = logging.getLogger(__name__)
 
 
 class SaleOrder(models.Model):
-    _inherit = ["sale.order"]
+    _inherit = "sale.order"
 
     @api.model
     def _test_demo_flush_tracking(self):

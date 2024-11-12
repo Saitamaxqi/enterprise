@@ -2,6 +2,7 @@ from odoo import fields, models
 
 
 class L10n_Be_CodaboxValidationWizard(models.TransientModel):
+    _name = 'l10n_be_codabox.validation.wizard'
     _description = 'CodaBox Validation Wizard'
     _check_company_auto = True
 

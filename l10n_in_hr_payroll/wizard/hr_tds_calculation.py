@@ -5,6 +5,7 @@ from odoo.exceptions import UserError
 
 
 class L10nInTdsComputationWizard(models.TransientModel):
+    _name = 'l10n.in.tds.computation.wizard'
     _description = 'Indian Payroll: TDS computation'
 
     def default_get(self, fields):

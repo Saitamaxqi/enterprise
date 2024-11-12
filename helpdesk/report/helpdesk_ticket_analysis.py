@@ -7,6 +7,7 @@ from odoo.addons.rating.models.rating_data import RATING_LIMIT_MIN
 
 
 class HelpdeskTicketReportAnalysis(models.Model):
+    _name = 'helpdesk.ticket.report.analysis'
     _description = "Ticket Analysis"
     _auto = False
     _order = 'create_date DESC'

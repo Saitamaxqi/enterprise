@@ -5,7 +5,7 @@ from odoo.exceptions import RedirectWarning, UserError
 
 
 class HrPayslipRun(models.Model):
-    _inherit = ["hr.payslip.run"]
+    _inherit = "hr.payslip.run"
 
     l10n_au_payment_batch_id = fields.Many2one(
         'account.batch.payment', string='Payment Batch', readonly=True, copy=False

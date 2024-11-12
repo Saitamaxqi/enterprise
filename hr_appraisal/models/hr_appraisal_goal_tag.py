@@ -7,6 +7,7 @@ from odoo import api, fields, models
 
 
 class HrAppraisalGoalTag(models.Model):
+    _name = 'hr.appraisal.goal.tag'
     _description = 'Appraisal Goal Tags'
     _order = 'name'
 

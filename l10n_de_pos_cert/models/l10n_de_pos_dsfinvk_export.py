@@ -7,6 +7,7 @@ import uuid
 
 
 class L10n_De_PosDsfinvk_Export(models.Model):
+    _name = 'l10n_de_pos.dsfinvk_export'
     _description = 'This is the model that can download the data export from the DSFinV-K service in case of an audit.'
 
     config_id = fields.Many2one('pos.config', string="Point of Sale",

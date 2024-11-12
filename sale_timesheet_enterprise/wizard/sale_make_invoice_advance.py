@@ -5,7 +5,7 @@ from odoo.addons.sale_timesheet_enterprise.models.sale import DEFAULT_INVOICED_T
 
 
 class SaleAdvancePaymentInv(models.TransientModel):
-    _inherit = ['sale.advance.payment.inv']
+    _inherit = 'sale.advance.payment.inv'
 
     has_timer_running = fields.Boolean(compute='_compute_has_timer_running', export_string_translation=False)
 

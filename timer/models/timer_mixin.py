@@ -6,6 +6,7 @@ from math import ceil
 
 
 class TimerMixin(models.AbstractModel):
+    _name = 'timer.mixin'
     _description = 'Timer Mixin'
 
     timer_start = fields.Datetime(related='user_timer_id.timer_start', export_string_translation=False)

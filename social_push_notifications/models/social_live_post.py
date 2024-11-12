@@ -9,7 +9,7 @@ from odoo.osv import expression
 
 
 class SocialLivePost(models.Model):
-    _inherit = ['social.live.post']
+    _inherit = 'social.live.post'
 
     reached_visitor_ids = fields.Many2many('website.visitor', string="Reached Visitors")
 

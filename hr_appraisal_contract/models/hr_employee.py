@@ -5,7 +5,7 @@ from odoo import models
 
 
 class HrEmployee(models.Model):
-    _inherit = ["hr.employee"]
+    _inherit = "hr.employee"
 
     def _get_appraisal_plan_starting_date(self):
         self.ensure_one()

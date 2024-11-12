@@ -8,7 +8,7 @@ from odoo.addons.resource.models.utils import filter_domain_leaf
 
 
 class PlanningSlot(models.Model):
-    _inherit = ['planning.slot']
+    _inherit = 'planning.slot'
 
     sale_line_id = fields.Many2one(compute='_compute_sale_line_id', store=True, readonly=False)
 

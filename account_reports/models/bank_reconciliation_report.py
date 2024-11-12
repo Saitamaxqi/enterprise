@@ -8,6 +8,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountBankReconciliationReportHandler(models.AbstractModel):
+    _name = 'account.bank.reconciliation.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Bank Reconciliation Report Custom Handler'
 

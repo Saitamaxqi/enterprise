@@ -3,7 +3,7 @@ from odoo import models
 
 
 class AccountJournal(models.Model):
-    _inherit = ["account.journal"]
+    _inherit = "account.journal"
 
     def _get_SvcLvlText(self, payment_method_code):
         if payment_method_code == 'iso20022_se':

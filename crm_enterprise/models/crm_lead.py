@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class CrmLead(models.Model):
-    _inherit = ['crm.lead']
+    _inherit = 'crm.lead'
 
     won_status = fields.Selection([
         ('won', 'Won'),

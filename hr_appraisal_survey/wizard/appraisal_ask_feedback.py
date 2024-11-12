@@ -11,6 +11,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AppraisalAskFeedback(models.TransientModel):
+    _name = 'appraisal.ask.feedback'
     _inherit = ['mail.composer.mixin']
     _description = "Ask Feedback for Appraisal"
 

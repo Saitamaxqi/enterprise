@@ -10,7 +10,7 @@ from odoo.tools import date_utils
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     totals_below_sections = fields.Boolean(related='company_id.totals_below_sections', string='Add totals below sections', readonly=False,
                                            help='When ticked, totals and subtotals appear below the sections of the report.')

@@ -5,7 +5,7 @@ from odoo import models
 
 
 class ResUsers(models.Model):
-    _inherit = ['res.users']
+    _inherit = 'res.users'
 
     # -----------------------------------------
     # Business Methods

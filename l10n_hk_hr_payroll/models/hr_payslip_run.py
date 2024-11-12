@@ -5,7 +5,7 @@ from odoo import _, fields, models
 
 
 class HrPayslipRun(models.Model):
-    _inherit = ['hr.payslip.run']
+    _inherit = 'hr.payslip.run'
 
     l10n_hk_autopay = fields.Boolean(related='company_id.l10n_hk_autopay')
     l10n_hk_autopay_export_first_batch = fields.Binary(string="HSBC Autopay File", help="Exported HSBC Autopay .apc file")

@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     def _get_contract_type_domain(self):
         if self.env.company.country_id.code == "CH":

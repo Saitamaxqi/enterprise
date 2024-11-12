@@ -4,7 +4,7 @@ from odoo.exceptions import ValidationError
 
 
 class ProductTemplate(models.Model):
-    _inherit = ['product.template']
+    _inherit = 'product.template'
 
     def _l10n_br_property_service_code_origin_id_domain(self):
         return [("city_id", "=", self.env.company.partner_id.city_id.id)]

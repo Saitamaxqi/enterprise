@@ -4,6 +4,7 @@ from odoo import fields, models, api
 
 
 class SpreadsheetContributor(models.Model):
+    _name = 'spreadsheet.contributor'
     _description = "Spreadsheet Contributor"
     _rec_name = 'user_id'
 

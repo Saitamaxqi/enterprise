@@ -6,7 +6,7 @@ SIGN_USER_FIELDS = ['sign_signature', 'sign_initials']
 
 
 class ResUsers(models.Model):
-    _inherit = ['res.users']
+    _inherit = 'res.users'
 
     @property
     def SELF_READABLE_FIELDS(self):

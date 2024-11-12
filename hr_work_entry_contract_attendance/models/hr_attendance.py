@@ -10,7 +10,7 @@ from odoo.fields import Datetime
 
 
 class HrAttendance(models.Model):
-    _inherit = ['hr.attendance']
+    _inherit = 'hr.attendance'
 
     def _get_employee_calendar(self):
         self.ensure_one()

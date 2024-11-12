@@ -5,6 +5,7 @@ from odoo import fields, models
 
 
 class AppointmentAnswer(models.Model):
+    _name = 'appointment.answer'
     _description = "Appointment Question Answers"
     _order = "sequence,id"
 
@@ -14,6 +15,7 @@ class AppointmentAnswer(models.Model):
 
 
 class AppointmentAnswerInput(models.Model):
+    _name = 'appointment.answer.input'
     _rec_name = "question_id"
     _description = "Appointment Answer Inputs"
     _order = "id desc"

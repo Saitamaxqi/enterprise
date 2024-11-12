@@ -8,7 +8,7 @@ import pytz
 
 
 class HrPayrollPaymentReportWizard(models.TransientModel):
-    _inherit = ['hr.payroll.payment.report.wizard']
+    _inherit = 'hr.payroll.payment.report.wizard'
 
     export_format = fields.Selection(selection_add=[('l10n_ae_wps', 'UAE WPS')], default='l10n_ae_wps', ondelete={'l10n_ae_wps': 'set csv'})
     l10n_ae_employer_narrative = fields.Char(string="Employer Reference for WPS (Optional)")

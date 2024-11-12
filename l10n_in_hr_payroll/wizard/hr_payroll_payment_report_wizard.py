@@ -10,7 +10,7 @@ from odoo.exceptions import UserError
 
 
 class HrPayrollPaymentReportWizard(models.TransientModel):
-    _inherit = ['hr.payroll.payment.report.wizard']
+    _inherit = 'hr.payroll.payment.report.wizard'
 
     export_format = fields.Selection(selection_add=[('advice', 'Payment Advice')], default='advice', ondelete={'advice': 'set default'})
     l10n_in_payment_advice_pdf = fields.Binary('Payment Advice PDF', readonly=True, attachment=False)

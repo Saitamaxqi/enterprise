@@ -5,6 +5,7 @@ from odoo import models, fields, api, _
 
 
 class ProjectTask(models.Model):
+    _name = 'project.task'
     _inherit = ["project.task", "timer.mixin", "timesheet.grid.mixin"]
 
     display_timesheet_timer = fields.Boolean("Display Timesheet Time", compute='_compute_display_timesheet_timer', export_string_translation=False)

@@ -5,7 +5,7 @@ from odoo import models, fields
 
 
 class L10n_EsMod347TaxReportHandler(models.AbstractModel):
-    _inherit = ['l10n_es.mod347.tax.report.handler']
+    _inherit = 'l10n_es.mod347.tax.report.handler'
 
     def _get_real_estates_data(self, boe_report_options, currency_id):
         # Overrides the placeholder defined in l10n_reports

@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 
 class DiscussChannel(models.Model):
-    _inherit = ["discuss.channel"]
+    _inherit = "discuss.channel"
 
     @property
     def _populate_dependencies(self):

@@ -4,7 +4,7 @@ from odoo import _, fields, models
 
 
 class SaleOrder(models.Model):
-    _inherit = ['sale.order']
+    _inherit = 'sale.order'
 
     amazon_order_ref = fields.Char(
         string="Amazon Reference", help="The Amazon-defined order reference.", readonly=True

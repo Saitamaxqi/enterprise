@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class IrModuleModule(models.Model):
-    _inherit = ['ir.module.module']
+    _inherit = 'ir.module.module'
 
     @api.model
     def get_studio_module(self):

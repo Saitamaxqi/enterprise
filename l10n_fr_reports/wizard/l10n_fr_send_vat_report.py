@@ -117,6 +117,7 @@ LINES_CODE_NOT_FILLED_IF_0 = {
 
 
 class L10n_Fr_ReportsSendVatReportBankAccountLine(models.TransientModel):
+    _name = 'l10n_fr_reports.send.vat.report.bank.account.line'
     _description = "Bank Account Line for French Vat Report"
 
     company_partner_id = fields.Many2one(
@@ -153,6 +154,7 @@ class L10n_Fr_ReportsSendVatReportBankAccountLine(models.TransientModel):
 
 
 class L10n_Fr_ReportsSendVatReport(models.TransientModel):
+    _name = 'l10n_fr_reports.send.vat.report'
     _description = "Send VAT Report Wizard"
 
     recipient = fields.Selection([

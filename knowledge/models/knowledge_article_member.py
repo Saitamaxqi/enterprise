@@ -6,6 +6,7 @@ from odoo.exceptions import AccessError, ValidationError
 
 
 class KnowledgeArticleMember(models.Model):
+    _name = 'knowledge.article.member'
     _description = 'Article Member'
     _rec_name = 'partner_id'
 

@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HrEmployeePublic(models.Model):
-    _inherit = ['hr.employee.public']
+    _inherit = 'hr.employee.public'
 
     ongoing_appraisal_count = fields.Integer()
     last_appraisal_id = fields.Many2one(readonly=True)

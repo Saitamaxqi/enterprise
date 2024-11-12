@@ -15,7 +15,7 @@ def _is_iban_valid(iban):
 
 
 class HrPayrollPaymentReportWizard(models.TransientModel):
-    _inherit = ['hr.payroll.payment.report.wizard']
+    _inherit = 'hr.payroll.payment.report.wizard'
 
     def _perform_checks(self):
         super()._perform_checks()

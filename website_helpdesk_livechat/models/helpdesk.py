@@ -10,7 +10,7 @@ from odoo.osv.expression import OR
 
 
 class HelpdeskTeam(models.Model):
-    _inherit = ['helpdesk.team']
+    _inherit = 'helpdesk.team'
 
     use_website_helpdesk_livechat = fields.Boolean(inverse='_inverse_use_website_helpdesk_livechat')
 
@@ -53,7 +53,7 @@ class HelpdeskTeam(models.Model):
 
 
 class DiscussChannel(models.Model):
-    _inherit = ['discuss.channel']
+    _inherit = 'discuss.channel'
 
     # ------------------------------------------------------
     #  Commands

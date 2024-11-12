@@ -16,7 +16,7 @@ _logger = logging.getLogger(__name__)
 
 
 class SocialStreamPost(models.Model):
-    _inherit = ['social.stream.post']
+    _inherit = 'social.stream.post'
 
     FACEBOOK_COMMENT_FIELDS = f'id,from.fields(id,name,picture),message,message_tags,created_time,attachment,comments.fields(id,from.fields(id,name,picture),message,created_time,attachment,user_likes,like_count,{SocialStream.FACEBOOK_REACTIONS_FIELDS}),user_likes,like_count,{SocialStream.FACEBOOK_REACTIONS_FIELDS}'
 

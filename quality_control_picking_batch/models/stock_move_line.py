@@ -5,7 +5,7 @@ from odoo import models
 
 
 class StockMoveLine(models.Model):
-    _inherit = ['stock.move.line']
+    _inherit = 'stock.move.line'
 
     def _get_check_values(self, quality_point):
         vals = super()._get_check_values(quality_point)

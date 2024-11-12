@@ -4,6 +4,7 @@ from odoo.tools import SQL
 
 
 class BudgetReport(models.Model):
+    _name = 'budget.report'
     _inherit = ['analytic.plan.fields.mixin']
     _description = "Budget Report"
     _auto = False

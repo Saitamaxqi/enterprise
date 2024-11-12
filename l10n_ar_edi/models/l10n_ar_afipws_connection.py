@@ -65,6 +65,7 @@ class SimpleTransport:
 
 
 class L10n_ArAfipwsConnection(models.Model):
+    _name = 'l10n_ar.afipws.connection'
 
     _description = "AFIP Webservice Connection"
     _rec_name = "l10n_ar_afip_ws"

@@ -9,6 +9,7 @@ from odoo.tools.constants import PREFETCH_MAX
 
 
 class ProjectProject(models.Model):
+    _name = 'project.project'
     _inherit = ['project.project', 'documents.mixin']
 
     use_documents = fields.Boolean("Documents", default=True)

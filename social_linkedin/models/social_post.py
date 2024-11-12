@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class SocialPost(models.Model):
-    _inherit = ['social.post']
+    _inherit = 'social.post'
 
     linkedin_image_ids = fields.Many2many(relation='linkedin_image_ids_rel')
 

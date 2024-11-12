@@ -7,6 +7,7 @@ from odoo import api, models, _
 
 
 class L10n_NlEcSalesReportHandler(models.AbstractModel):
+    _name = 'l10n_nl.ec.sales.report.handler'
     _inherit = ['account.ec.sales.report.handler']
     _description = 'Dutch EC Sales Report Custom Handler'
 

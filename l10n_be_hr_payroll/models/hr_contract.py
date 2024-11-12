@@ -17,7 +17,7 @@ EMPLOYER_ONSS = 0.2714
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     transport_mode_car = fields.Boolean('Uses company car')
     transport_mode_private_car = fields.Boolean('Uses private car')

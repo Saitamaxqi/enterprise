@@ -10,6 +10,7 @@ from odoo.exceptions import UserError
 
 
 class AccountMulticurrencyRevaluationWizard(models.TransientModel):
+    _name = 'account.multicurrency.revaluation.wizard'
     _description = 'Multicurrency Revaluation Wizard'
 
     company_id = fields.Many2one('res.company', default=lambda self: self.env.company)

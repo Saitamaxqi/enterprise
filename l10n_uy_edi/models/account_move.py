@@ -16,7 +16,7 @@ def format_float(amount, digits=2):
 
 
 class AccountMove(models.Model):
-    _inherit = ["account.move"]
+    _inherit = "account.move"
 
     l10n_uy_edi_document_id = fields.Many2one("l10n_uy_edi.document", string="Uruguay E-Invoice CFE", copy=False)
     l10n_uy_edi_addenda_ids = fields.Many2many(

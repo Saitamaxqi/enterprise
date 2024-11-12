@@ -5,7 +5,7 @@ from odoo.exceptions import UserError
 
 
 class ProductPricelist(models.Model):
-    _inherit = ["product.pricelist"]
+    _inherit = "product.pricelist"
 
     product_pricing_ids = fields.One2many(
         comodel_name='product.pricing',

@@ -12,7 +12,7 @@ auto_mobn_re = re.compile(r"""^[+]\d{1,3}-\d{1,29}$""", re.VERBOSE)
 
 
 class HrEmployee(models.Model):
-    _inherit = ["hr.employee"]
+    _inherit = "hr.employee"
 
     l10n_hk_surname = fields.Char(
         "Surname",

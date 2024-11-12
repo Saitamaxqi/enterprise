@@ -2,7 +2,7 @@ from odoo import fields, models
 
 
 class ResUsersSettings(models.Model):
-    _inherit = ["res.users.settings"]
+    _inherit = "res.users.settings"
 
     def _get_default_voip_provider(self):
         return self.env['voip.provider'].search([

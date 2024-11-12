@@ -7,7 +7,7 @@ from odoo.osv import expression
 
 
 class ResourceCalendarLeaves(models.Model):
-    _inherit = ["resource.calendar.leaves"]
+    _inherit = "resource.calendar.leaves"
 
     def _process_shifts_domain(self):
         """ Compute the domain to get all slots in the period of leaves

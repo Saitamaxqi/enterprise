@@ -5,6 +5,7 @@ from odoo import api, fields, models
 
 
 class MarketingTest(models.Model):
+    _name = 'marketing.test'
     _description = 'MarketAuto: simple thread-enabled model'
     _inherit = ['mail.thread']
 
@@ -15,6 +16,7 @@ class MarketingTest(models.Model):
 
 
 class MarketingTestUtm(models.Model):
+    _name = 'marketing.test.utm'
     _description = 'MarketAuto: simple thread-enabled model with UTMs'
     _inherit = ['mail.thread', 'utm.mixin']
 
@@ -23,6 +25,7 @@ class MarketingTestUtm(models.Model):
 
 
 class MarketingTestSms(models.Model):
+    _name = 'marketing.test.sms'
     _description = 'MarketAuto: blacklist + phone-enabled model'
     _inherit = ['mail.thread.blacklist', 'mail.thread.phone']
     _primary_email = 'email_from'

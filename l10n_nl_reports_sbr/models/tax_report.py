@@ -7,6 +7,7 @@ from lxml import etree
 
 
 class L10n_NlTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_nl.tax.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'Dutch Report Custom Handler'
 

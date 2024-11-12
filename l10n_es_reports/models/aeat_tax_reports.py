@@ -96,7 +96,7 @@ MOD_349_KEYS = ('A', 'E', 'T', 'S', 'I', 'M', 'H', 'R', 'D', 'C')
 
 
 class AccountReport(models.Model):
-    _inherit = ['account.report']
+    _inherit = 'account.report'
 
     def _get_expression_audit_aml_domain(self, expression, options):
         # Overridden to allow auditing mod347's threshold lines (for consistency: this way all the lines of the report are audited in the same way)
@@ -107,6 +107,7 @@ class AccountReport(models.Model):
 
 
 class L10n_EsTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_es.tax.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'Spanish Tax Report Custom Handler'
 
@@ -409,6 +410,7 @@ class L10n_EsTaxReportHandler(models.AbstractModel):
 
 
 class L10n_EsMod111TaxReportHandler(models.AbstractModel):
+    _name = 'l10n_es.mod111.tax.report.handler'
     _inherit = ['l10n_es.tax.report.handler']
     _description = 'Spanish Tax Report Custom Handler (Mod111)'
 
@@ -479,6 +481,7 @@ class L10n_EsMod111TaxReportHandler(models.AbstractModel):
 
 
 class L10n_EsMod115TaxReportHandler(models.AbstractModel):
+    _name = 'l10n_es.mod115.tax.report.handler'
     _inherit = ['l10n_es.tax.report.handler']
     _description = 'Spanish Tax Report Custom Handler (Mod115)'
 
@@ -523,6 +526,7 @@ class L10n_EsMod115TaxReportHandler(models.AbstractModel):
 
 
 class L10n_EsMod303TaxReportHandler(models.AbstractModel):
+    _name = 'l10n_es.mod303.tax.report.handler'
     _inherit = ['l10n_es.tax.report.handler']
     _description = 'Spanish Tax Report Custom Handler (Mod303)'
 
@@ -848,6 +852,7 @@ class L10n_EsMod303TaxReportHandler(models.AbstractModel):
 
 
 class L10n_EsMod347TaxReportHandler(models.AbstractModel):
+    _name = 'l10n_es.mod347.tax.report.handler'
     _inherit = ['l10n_es.tax.report.handler']
     _description = 'Spanish Tax Report Custom Handler (Mod347)'
 
@@ -1182,6 +1187,7 @@ class L10n_EsMod347TaxReportHandler(models.AbstractModel):
 
 
 class L10n_EsMod349TaxReportHandler(models.AbstractModel):
+    _name = 'l10n_es.mod349.tax.report.handler'
     _inherit = ['l10n_es.tax.report.handler']
     _description = 'Spanish Tax Report Custom Handler (Mod349)'
 
@@ -1498,6 +1504,7 @@ class L10n_EsMod349TaxReportHandler(models.AbstractModel):
 
 
 class L10n_EsMod390TaxReportHandler(models.AbstractModel):
+    _name = 'l10n_es.mod390.tax.report.handler'
     _inherit = ['l10n_es.tax.report.handler']
     _description = 'Spanish Tax Report Custom Handler (Mod390)'
 

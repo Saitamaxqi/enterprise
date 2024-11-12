@@ -2,7 +2,7 @@ from odoo import models
 
 
 class SaleOrderLine(models.Model):
-    _inherit = ['sale.order.line']
+    _inherit = 'sale.order.line'
 
     def _get_invoice_lines(self):
         # EXTENDS 'sale'

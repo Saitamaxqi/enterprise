@@ -4,7 +4,7 @@ from odoo import api, fields, models
 
 
 class ProjectProject(models.Model):
-    _inherit = ["project.project"]
+    _inherit = "project.project"
 
     allow_worksheets = fields.Boolean(
         "Worksheets", compute="_compute_allow_worksheets", store=True, readonly=False)

@@ -8,6 +8,7 @@ from odoo.exceptions import UserError, ValidationError
 
 
 class WhatsappTemplateButton(models.Model):
+    _name = 'whatsapp.template.button'
     _description = 'WhatsApp Template Button'
     _order = 'sequence,id'
 

@@ -5,7 +5,7 @@ from odoo import models, fields, api, _
 
 
 class HelpdeskCreateFsmTask(models.TransientModel):
-    _inherit = ['helpdesk.create.fsm.task']
+    _inherit = 'helpdesk.create.fsm.task'
 
     allow_worksheets = fields.Boolean(related='project_id.allow_worksheets')
     worksheet_template_id = fields.Many2one(

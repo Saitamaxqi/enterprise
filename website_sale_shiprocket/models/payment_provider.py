@@ -3,7 +3,7 @@ from odoo.addons.website_sale_shiprocket import const
 
 
 class PaymentProvider(models.Model):
-    _inherit = ['payment.provider']
+    _inherit = 'payment.provider'
 
     custom_mode = fields.Selection(
         selection_add=[('shiprocket_cash_on_delivery', 'Shiprocket Cash On Delivery')]

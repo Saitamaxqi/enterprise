@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResCurrency(models.Model):
-    _inherit = ['res.currency']
+    _inherit = 'res.currency'
 
     l10n_mx_edi_decimal_places = fields.Integer(
         'Number of decimals', readonly=True,

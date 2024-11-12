@@ -16,7 +16,7 @@ PROJECT_TASK_READABLE_FIELDS_TO_MAP = {
 
 
 class ProjectTask(models.Model):
-    _inherit = ['project.task']
+    _inherit = 'project.task'
 
     # Project Sharing fields
     portal_remaining_hours = fields.Float(compute='_compute_project_sharing_timesheets', help="Total remaining time, can be re-estimated periodically by the assignee of the task.", export_string_translation=False)

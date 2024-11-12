@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     l10n_fr_intrastat_envelope_id = fields.Char(
         string="DEBWEB2 Identifier",

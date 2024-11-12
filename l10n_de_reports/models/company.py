@@ -4,7 +4,7 @@ from odoo.exceptions import ValidationError
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     # Adding the fields as company_dependent does not break stable policy
     l10n_de_datev_consultant_number = fields.Char(company_dependent=True)

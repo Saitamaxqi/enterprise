@@ -10,6 +10,7 @@ from odoo.exceptions import UserError
 
 
 class HrPayrollGenerateWarrantPayslips(models.TransientModel):
+    _name = 'hr.payroll.generate.warrant.payslips'
     _description = "Generate Warrant Payslips"
 
     name = fields.Char()
@@ -97,6 +98,7 @@ class HrPayrollGenerateWarrantPayslips(models.TransientModel):
 
 
 class HrPayrollGenerateWarrantPayslipsLine(models.TransientModel):
+    _name = 'hr.payroll.generate.warrant.payslips.line'
     _description = "Generate Warrant Payslips Lines"
 
     wizard_id = fields.Many2one('hr.payroll.generate.warrant.payslips')

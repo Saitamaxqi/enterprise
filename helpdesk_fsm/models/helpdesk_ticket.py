@@ -5,7 +5,7 @@ from odoo import models, api, fields, _
 
 
 class HelpdeskTicket(models.Model):
-    _inherit = ['helpdesk.ticket']
+    _inherit = 'helpdesk.ticket'
 
     use_fsm = fields.Boolean(related='team_id.use_fsm', export_string_translation=False)
     fsm_task_ids = fields.One2many('project.task', 'helpdesk_ticket_id', string='Tasks', help='Tasks generated from this ticket', domain=[('is_fsm', '=', True)], copy=False)

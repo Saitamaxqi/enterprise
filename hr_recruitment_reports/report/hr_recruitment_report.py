@@ -10,6 +10,7 @@ def nlargest(amount, data_list, method):
 
 
 class HrRecruitmentReport(models.Model):
+    _name = 'hr.recruitment.report'
     _description = "Recruitment Analysis Report"
     _auto = False
     _rec_name = 'create_date'

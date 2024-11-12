@@ -5,7 +5,7 @@ from odoo.tools import SQL
 
 
 class SaleRentalSchedule(models.Model):
-    _inherit = ["sale.rental.schedule"]
+    _inherit = "sale.rental.schedule"
 
     is_available = fields.Boolean(compute='_compute_is_available', readonly=True, compute_sudo=True)
 

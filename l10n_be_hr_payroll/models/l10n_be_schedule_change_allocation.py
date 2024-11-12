@@ -6,6 +6,7 @@ from odoo import api, models, fields, _
 
 
 class L10n_BeScheduleChangeAllocation(models.Model):
+    _name = 'l10n_be.schedule.change.allocation'
     _description = 'Update allocation on schedule change'
 
     effective_date = fields.Date(required=True)

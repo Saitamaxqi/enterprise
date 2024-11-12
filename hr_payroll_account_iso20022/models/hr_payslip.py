@@ -6,7 +6,7 @@ from odoo import fields, models
 
 
 class HrPayslip(models.Model):
-    _inherit = ['hr.payslip']
+    _inherit = 'hr.payslip'
 
     iso20022_uetr = fields.Char(
         string='UETR',

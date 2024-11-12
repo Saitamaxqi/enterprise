@@ -2,7 +2,7 @@ from odoo import api, fields, models
 
 
 class StockBackorderConfirmation(models.TransientModel):
-    _inherit = ['stock.backorder.confirmation']
+    _inherit = 'stock.backorder.confirmation'
 
     empty_move_count = fields.Integer(compute="_compute_not_fully_processed_move_count")
     partial_move_count = fields.Integer(compute="_compute_not_fully_processed_move_count")

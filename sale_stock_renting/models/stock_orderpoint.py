@@ -2,7 +2,7 @@ from odoo import models
 
 
 class StockWarehouseOrderpoint(models.Model):
-    _inherit = ["stock.warehouse.orderpoint"]
+    _inherit = "stock.warehouse.orderpoint"
 
     def _get_orderpoint_action(self):
         return super(StockWarehouseOrderpoint, self.with_context(ignore_rental_returns=True))._get_orderpoint_action()

@@ -9,7 +9,7 @@ from werkzeug.urls import url_join
 
 
 class EventTrack(models.Model):
-    _inherit = ['event.track']
+    _inherit = 'event.track'
 
     firebase_enable_push_notifications = fields.Boolean('Enable Web Push Notifications',
         compute='_compute_firebase_enable_push_notifications')

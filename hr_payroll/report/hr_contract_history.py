@@ -5,7 +5,7 @@ from odoo import _, api, fields, models
 
 
 class HrContractHistory(models.Model):
-    _inherit = ['hr.contract.history']
+    _inherit = 'hr.contract.history'
 
     wage_type = fields.Selection(related='contract_id.wage_type', readonly=True)
     payslips_count = fields.Integer("# Payslips", compute='_compute_payslips_count', groups="hr_payroll.group_hr_payroll_user")

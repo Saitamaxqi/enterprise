@@ -9,7 +9,7 @@ from odoo.exceptions import UserError
 
 
 class CertificateCertificate(models.Model):
-    _inherit = ['certificate.certificate']
+    _inherit = 'certificate.certificate'
 
     def _decode_certificate_for_be_dmfa_xml(self, message):
         if not isinstance(message, bytes):

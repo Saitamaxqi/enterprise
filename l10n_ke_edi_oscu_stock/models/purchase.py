@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class PurchaseOrder(models.Model):
-    _inherit = ['purchase.order']
+    _inherit = 'purchase.order'
 
     l10n_ke_customs_import_ids = fields.One2many('l10n_ke_edi.customs.import', 'purchase_id')
 
@@ -64,7 +64,7 @@ class PurchaseOrder(models.Model):
 
 
 class PurchaseOrderLine(models.Model):
-    _inherit = ['purchase.order.line']
+    _inherit = 'purchase.order.line'
 
     # Calculate the Purchase Order Line
     @api.depends('order_id', 'name')

@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class HrPayrollStructureType(models.Model):
-    _inherit = ["hr.payroll.structure.type"]
+    _inherit = "hr.payroll.structure.type"
 
     l10n_au_default_input_type_ids = fields.Many2many(
         "hr.payslip.input.type",

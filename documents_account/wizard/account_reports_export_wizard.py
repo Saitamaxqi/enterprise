@@ -47,7 +47,7 @@ class Account_ReportsExportWizard(models.TransientModel):
 
 
 class Account_ReportsExportWizardFormat(models.TransientModel):
-    _inherit = ['account_reports.export.wizard.format']
+    _inherit = 'account_reports.export.wizard.format'
 
     def get_attachment_vals(self, file_name, file_content, mimetype, log_options_dict):
         rslt = super().get_attachment_vals(file_name, file_content, mimetype, log_options_dict)

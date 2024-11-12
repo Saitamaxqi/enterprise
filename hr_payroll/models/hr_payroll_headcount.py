@@ -7,6 +7,7 @@ from odoo import fields, models, api, _
 
 
 class HrPayrollHeadcount(models.Model):
+    _name = 'hr.payroll.headcount'
     _description = 'Payroll Headcount'
 
     name = fields.Char(string='Name', compute='_compute_name', store=True)
@@ -112,6 +113,7 @@ class HrPayrollHeadcount(models.Model):
 
 
 class HrPayrollHeadcountLine(models.Model):
+    _name = 'hr.payroll.headcount.line'
     _description = 'Headcount Line'
 
     headcount_id = fields.Many2one('hr.payroll.headcount', string='headcount_id', required=True, ondelete='cascade')
@@ -132,6 +134,7 @@ class HrPayrollHeadcountLine(models.Model):
 
 
 class HrPayrollHeadcountWorkingRate(models.Model):
+    _name = 'hr.payroll.headcount.working.rate'
     _description = 'Working Rate'
 
     rate = fields.Float(string='Rate')

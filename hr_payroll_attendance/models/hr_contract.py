@@ -5,7 +5,7 @@ from odoo import models
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
 
     def _preprocess_work_hours_data(self, work_data, date_from, date_to):
         """

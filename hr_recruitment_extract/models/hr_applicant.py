@@ -5,7 +5,7 @@ from odoo import models
 
 
 class HrApplicant(models.Model):
-    _inherit = ["hr.applicant"]
+    _inherit = "hr.applicant"
 
     def write(self, vals):
         res = super().write(vals)

@@ -6,6 +6,7 @@ from odoo.tools import date_utils, float_is_zero, float_round
 
 
 class AccountReportBudget(models.Model):
+    _name = 'account.report.budget'
     _description = "Accounting Report Budget"
     _order = 'sequence, id'
 
@@ -101,6 +102,7 @@ class AccountReportBudget(models.Model):
 
 
 class AccountReportBudgetItem(models.Model):
+    _name = 'account.report.budget.item'
     _description = "Accounting Report Budget Item"
 
     budget_id = fields.Many2one(string="Budget", comodel_name='account.report.budget', required=True, ondelete='cascade')

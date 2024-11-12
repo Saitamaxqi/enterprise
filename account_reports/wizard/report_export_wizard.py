@@ -74,6 +74,7 @@ class Account_ReportsExportWizard(models.TransientModel):
 
 
 class Account_ReportsExportWizardFormat(models.TransientModel):
+    _name = 'account_reports.export.wizard.format'
     _description = "Export format for accounting's reports"
 
     name = fields.Char(string="Name", required=True)

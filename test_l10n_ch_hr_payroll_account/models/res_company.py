@@ -14,7 +14,7 @@ _logger = logging.getLogger(__name__)
 
 
 class ResCompany(models.Model):
-    _inherit = ["res.company"]
+    _inherit = "res.company"
 
     def _l10n_ch_generate_swissdec_demo_data(self):
         self.ensure_one()

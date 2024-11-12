@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class PurchaseOrder(models.Model):
-    _inherit = ['purchase.order']
+    _inherit = 'purchase.order'
 
     date_planned_mps = fields.Datetime(string='Scheduled Date', compute='_compute_date_planned_mps', store=True, index=True)
 

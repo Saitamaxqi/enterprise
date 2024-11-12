@@ -6,8 +6,7 @@ from odoo.tools import format_date
 
 
 class ResCurrency(models.Model):
-
-    _inherit = ["res.currency"]
+    _inherit = "res.currency"
 
     def l10n_ar_action_get_afip_ws_currency_rate(self):
         date, rate = self._l10n_ar_get_afip_ws_currency_rate()

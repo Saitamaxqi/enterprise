@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class SaleOrderOption(models.Model):
-    _inherit = ['sale.order.option']
+    _inherit = 'sale.order.option'
 
     @api.depends('order_id.plan_id')
     def _compute_price_unit(self):

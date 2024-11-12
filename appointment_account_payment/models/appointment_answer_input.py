@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class AppointmentAnswerInput(models.Model):
-    _inherit = ["appointment.answer.input"]
+    _inherit = "appointment.answer.input"
 
     # Answers not linked to a calendar event are unlinked in calendar.booking unlink method.
     calendar_booking_id = fields.Many2one("calendar.booking", "Meeting Booking")

@@ -9,7 +9,7 @@ from werkzeug.urls import url_encode, url_join
 
 
 class SocialMedia(models.Model):
-    _inherit = ['social.media']
+    _inherit = 'social.media'
 
     _FACEBOOK_ENDPOINT = 'https://graph.facebook.com'
     _FACEBOOK_ENDPOINT_VERSIONED = '%s/v17.0/' % _FACEBOOK_ENDPOINT

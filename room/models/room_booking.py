@@ -8,6 +8,7 @@ from odoo.exceptions import ValidationError
 
 
 class RoomBooking(models.Model):
+    _name = 'room.booking'
     _inherit = ["mail.thread"]
     _description = "Room Booking"
     _order = "start_datetime desc, id"

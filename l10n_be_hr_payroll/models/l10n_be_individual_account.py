@@ -12,6 +12,7 @@ _logger = logging.getLogger(__name__)
 
 
 class L10n_BeIndividualAccount(models.Model):
+    _name = 'l10n_be.individual.account'
     _inherit = ['hr.payroll.declaration.mixin']
     _description = 'HR Individual Account Report By Employee'
 

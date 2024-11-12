@@ -12,7 +12,7 @@ MOVE_TYPE_MAPPING = {
 
 
 class AccountMove(models.Model):
-    _inherit = ["account.move"]
+    _inherit = "account.move"
 
     @api.model
     def l10n_in_get_bill_from_qr_raw(self, qr_raw):

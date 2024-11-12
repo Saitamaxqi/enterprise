@@ -5,6 +5,7 @@ from odoo import fields, models
 
 
 class KnowledgeArticleStage(models.Model):
+    _name = 'knowledge.article.stage'
     _description = "Knowledge Stage"
     _order = 'parent_id, sequence, id'
 

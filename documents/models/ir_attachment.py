@@ -8,7 +8,7 @@ from odoo.tools.pdf import PdfFileWriter, PdfFileReader
 
 
 class IrAttachment(models.Model):
-    _inherit = ['ir.attachment']
+    _inherit = 'ir.attachment'
 
     document_ids = fields.One2many('documents.document', 'attachment_id', export_string_translation=False)
 

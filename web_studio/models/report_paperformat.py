@@ -5,4 +5,5 @@ from odoo import models
 
 
 class ReportPaperformat(models.Model):
+    _name = 'report.paperformat'
     _inherit = ['studio.mixin', 'report.paperformat']

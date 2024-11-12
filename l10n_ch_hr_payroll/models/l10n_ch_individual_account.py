@@ -9,6 +9,7 @@ from odoo.fields import Datetime
 
 
 class L10nChIndividualAccount(models.Model):
+    _name = 'l10n.ch.individual.account'
     _inherit = ['hr.payroll.declaration.mixin']
     _description = 'Swiss Payroll: Individual Account'
 

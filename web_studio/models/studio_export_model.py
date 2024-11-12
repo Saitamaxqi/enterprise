@@ -213,6 +213,7 @@ RELATED_MODELS_TO_EXCLUDE = [
 
 
 class StudioExportModel(models.Model):
+    _name = 'studio.export.model'
     _description = "Studio Export Models"
     _order = "sequence,id"
     _unique_model = models.Constraint(

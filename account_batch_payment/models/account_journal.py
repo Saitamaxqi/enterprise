@@ -5,7 +5,7 @@ from odoo import models, api, _
 
 
 class AccountJournal(models.Model):
-    _inherit = ["account.journal"]
+    _inherit = "account.journal"
 
     def _default_inbound_payment_methods(self):
         res = super()._default_inbound_payment_methods()

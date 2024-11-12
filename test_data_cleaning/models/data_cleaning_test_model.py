@@ -5,6 +5,7 @@ from odoo import models, api, fields, _
 
 
 class Data_CleaningTestModel(models.Model):
+    _name = 'data_cleaning.test.model'
     _description = 'Tests: Data Cleaning Test Model'
 
     active = fields.Boolean(default=True)

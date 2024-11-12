@@ -9,7 +9,7 @@ _logger = logging.getLogger(__name__)
 
 
 class AccountBankStatementLine(models.Model):
-    _inherit = ["account.bank.statement.line"]
+    _inherit = "account.bank.statement.line"
 
     # Ensure transactions can be imported only once (if the import format provides unique transaction ids)
     unique_import_id = fields.Char(string='Import ID', readonly=True, copy=False)

@@ -3,6 +3,7 @@ from odoo.tools.sql import drop_view_if_exists, SQL
 
 
 class HrWorkEntryReport(models.Model):
+    _name = 'hr.work.entry.report'
     _description = 'Work Entries Analysis Report'
     _auto = False
     _order = 'date_start desc'

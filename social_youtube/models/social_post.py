@@ -7,7 +7,7 @@ from odoo.osv import expression
 
 
 class SocialPost(models.Model):
-    _inherit = ['social.post']
+    _inherit = 'social.post'
 
     youtube_video = fields.Char('YouTube Video',
         help="Simply holds the filename of the video as the video itself is uploaded directly to YouTube")

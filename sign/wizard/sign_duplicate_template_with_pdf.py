@@ -8,6 +8,7 @@ from odoo.tools.pdf import PdfFileReader, PdfReadError
 
 
 class SignDuplicateTemplatePdf(models.TransientModel):
+    _name = 'sign.duplicate.template.pdf'
     _description = 'Sign Duplicate Template with new PDF'
 
     new_pdf = fields.Binary(string="File name", required=True)

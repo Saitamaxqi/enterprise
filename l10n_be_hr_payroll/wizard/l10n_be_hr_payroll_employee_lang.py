@@ -8,6 +8,7 @@ ACCEPTED_CODES = ('fr_BE', 'fr_FR', 'nl_BE', 'nl_NL', 'de_BE', 'de_DE')
 
 
 class L10n_BeHrPayrollEmployeeLangWizard(models.TransientModel):
+    _name = 'l10n_be.hr.payroll.employee.lang.wizard'
     _description = 'Change Employee Language'
 
     def _default_line_ids(self):
@@ -30,6 +31,7 @@ class L10n_BeHrPayrollEmployeeLangWizard(models.TransientModel):
 
 
 class L10n_BeHrPayrollEmployeeLangWizardLine(models.TransientModel):
+    _name = 'l10n_be.hr.payroll.employee.lang.wizard.line'
     _description = 'Change Employee Language Line'
 
     @api.model

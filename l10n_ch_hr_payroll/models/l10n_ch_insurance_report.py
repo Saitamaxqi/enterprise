@@ -12,6 +12,7 @@ from odoo.tools.misc import format_date
 
 
 class ChYearlyReport(models.Model):
+    _name = 'ch.yearly.report'
     _description = 'AVS / LAA / LAAC / IJM Yearly Report'
 
     @api.model
@@ -424,6 +425,7 @@ class ChYearlyReport(models.Model):
 
 
 class ChYearlyReportLine(models.Model):
+    _name = 'ch.yearly.report.line'
     _description = 'Insurance Reports'
 
     report_id = fields.Many2one('ch.yearly.report')

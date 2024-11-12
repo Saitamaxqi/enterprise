@@ -6,7 +6,7 @@ from odoo.exceptions import AccessError
 
 
 class EventEvent(models.Model):
-    _inherit = ["event.event"]
+    _inherit = "event.event"
 
     firebase_enable_push_notifications = fields.Boolean('Enable Web Push Notifications',
         compute='_compute_firebase_enable_push_notifications')

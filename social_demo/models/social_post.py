@@ -7,7 +7,7 @@ from odoo import models
 
 
 class SocialPost(models.Model):
-    _inherit = ['social.post']
+    _inherit = 'social.post'
 
     def _compute_click_count(self):
         """ Let's add some random click statistics on our posts to make them look better. """

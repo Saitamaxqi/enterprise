@@ -12,7 +12,7 @@ STATUSES = [
 
 
 class AccountBatchPayment(models.Model):
-    _inherit = ['account.batch.payment']
+    _inherit = 'account.batch.payment'
 
     payment_identifier = fields.Char(string='Batch ID', readonly=True)
     payment_online_status = fields.Selection(selection=STATUSES, string='PIS Status', default='uninitiated', readonly=True)

@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HelpdeskTicketReportAnalysis(models.Model):
-    _inherit = ['helpdesk.ticket.report.analysis']
+    _inherit = 'helpdesk.ticket.report.analysis'
 
     remaining_hours_so = fields.Float(
         'Remaining Hours on SO',

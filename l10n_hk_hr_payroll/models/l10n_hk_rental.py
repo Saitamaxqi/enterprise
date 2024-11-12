@@ -9,6 +9,7 @@ from odoo.osv import expression
 
 
 class L10n_HkRental(models.Model):
+    _name = 'l10n_hk.rental'
     _description = "Hong Kong: Rental"
 
     name = fields.Char("Rental Reference", required=True)

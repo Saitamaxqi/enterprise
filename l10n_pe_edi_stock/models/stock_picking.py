@@ -70,7 +70,7 @@ ERROR_MESSAGES = {
 
 
 class StockPicking(models.Model):
-    _inherit = ['stock.picking']
+    _inherit = 'stock.picking'
 
     l10n_pe_edi_transport_type = fields.Selection(
         string='Transport type',

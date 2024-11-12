@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ProjectSaleLineEmployeeMap(models.Model):
-    _inherit = ['project.sale.line.employee.map']
+    _inherit = 'project.sale.line.employee.map'
 
     timesheet_product_id = fields.Many2one(
         'product.product', string='Service',

@@ -3,7 +3,7 @@ from odoo import models, fields
 
 
 class AccountPayment(models.Model):
-    _inherit = ['account.payment']
+    _inherit = 'account.payment'
 
     l10n_mx_edi_payment_method_id = fields.Many2one(related='move_id.l10n_mx_edi_payment_method_id', readonly=False)
     l10n_mx_edi_cfdi_origin = fields.Char(related='move_id.l10n_mx_edi_cfdi_origin', readonly=False)

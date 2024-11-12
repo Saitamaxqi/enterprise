@@ -5,6 +5,7 @@ from odoo import models, fields
 
 
 class TestWebGanttPill(models.Model):
+    _name = 'test.web.gantt.pill'
     _description = 'Test Web Gantt Pill'
 
     active = fields.Boolean(default=True)

@@ -2,7 +2,7 @@ from odoo import api, fields, models
 
 
 class AccountAsset(models.Model):
-    _inherit = ['account.asset']
+    _inherit = 'account.asset'
 
     l10n_in_value_residual = fields.Monetary(
         compute='_compute_l10n_in_value_residual',

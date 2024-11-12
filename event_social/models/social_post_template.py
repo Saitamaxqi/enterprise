@@ -2,7 +2,7 @@ from odoo import models
 
 
 class SocialPostTemplate(models.Model):
-    _inherit = ['social.post.template']
+    _inherit = 'social.post.template'
 
     def unlink(self):
         res = super().unlink()

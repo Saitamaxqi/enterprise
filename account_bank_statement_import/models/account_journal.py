@@ -5,7 +5,7 @@ from odoo.exceptions import UserError, RedirectWarning
 
 
 class AccountJournal(models.Model):
-    _inherit = ["account.journal"]
+    _inherit = "account.journal"
 
     def _get_bank_statements_available_import_formats(self):
         """ Returns a list of strings representing the supported import formats.

@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ["res.company"]
+    _inherit = "res.company"
 
     documents_fleet_settings = fields.Boolean(default=True)
     documents_fleet_folder = fields.Many2one(

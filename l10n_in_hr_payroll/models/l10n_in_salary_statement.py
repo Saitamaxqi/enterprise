@@ -7,6 +7,7 @@ from datetime import datetime
 
 
 class L10n_In_Hr_PayrollSalaryStatement(models.Model):
+    _name = 'l10n_in_hr_payroll.salary.statement'
     _inherit = ['hr.payroll.declaration.mixin']
     _description = 'Salary Statement Report'
 

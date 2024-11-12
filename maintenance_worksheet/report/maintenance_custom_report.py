@@ -5,6 +5,7 @@ from odoo import api, models
 
 
 class ReportMaintenance_WorksheetMaintenance_Worksheet(models.AbstractModel):
+    _name = 'report.maintenance_worksheet.maintenance_worksheet'
     _description = 'Maintenance Request Worksheet Custom Report'
 
     @api.model

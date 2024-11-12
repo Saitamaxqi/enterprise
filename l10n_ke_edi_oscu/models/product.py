@@ -13,7 +13,7 @@ PRODUCT_TYPE_CODE_SELECTION = [('1', "Raw Material"), ('2', "Finished Product"),
 
 
 class ProductTemplate(models.Model):
-    _inherit = ['product.template']
+    _inherit = 'product.template'
     l10n_ke_packaging_unit_id = fields.Many2one(
         comodel_name='l10n_ke_edi_oscu.code',
         string="Packaging Unit",
@@ -127,7 +127,7 @@ class ProductTemplate(models.Model):
 
 
 class ProductProduct(models.Model):
-    _inherit = ['product.product']
+    _inherit = 'product.product'
 
     l10n_ke_packaging_unit_id = fields.Many2one(
         comodel_name='l10n_ke_edi_oscu.code',
@@ -400,7 +400,7 @@ class ProductProduct(models.Model):
 
 
 class ProductUnspscCode(models.Model):
-    _inherit = ['product.unspsc.code']
+    _inherit = 'product.unspsc.code'
 
     l10n_ke_tax_type_id = fields.Many2one('l10n_ke_edi_oscu.code')
 

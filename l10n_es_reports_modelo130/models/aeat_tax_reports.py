@@ -4,6 +4,7 @@ from odoo import models
 
 
 class L10n_Es_Modelo130Mod130TaxReportHandler(models.AbstractModel):
+    _name = 'l10n_es_modelo130.mod130.tax.report.handler'
     _inherit = ['l10n_es.tax.report.handler']
     _description = 'Spanish Tax Report Custom Handler (Mod130)'
 

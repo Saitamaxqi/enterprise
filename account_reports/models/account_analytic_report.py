@@ -6,7 +6,7 @@ from odoo.tools import SQL, Query
 
 
 class AccountReport(models.AbstractModel):
-    _inherit = ['account.report']
+    _inherit = 'account.report'
 
     filter_analytic_groupby = fields.Boolean(
         string="Analytic Group By",
@@ -242,7 +242,7 @@ class AccountReport(models.AbstractModel):
 
 
 class AccountMoveLine(models.Model):
-    _inherit = ["account.move.line"]
+    _inherit = "account.move.line"
 
     def _where_calc(self, domain, active_test=True):
         """ In case we need an analytic column in an account_report, we shadow the account_move_line table

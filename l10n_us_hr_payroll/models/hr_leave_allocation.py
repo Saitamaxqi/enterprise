@@ -6,7 +6,7 @@ from odoo import models
 
 
 class HrLeaveAllocation(models.Model):
-    _inherit = ["hr.leave.allocation"]
+    _inherit = "hr.leave.allocation"
 
     def _l10n_us_get_total_allocated(self, date):
         total_allocated_hours = 0

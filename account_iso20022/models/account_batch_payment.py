@@ -8,7 +8,7 @@ from datetime import datetime
 
 
 class AccountBatchPayment(models.Model):
-    _inherit = ['account.batch.payment']
+    _inherit = 'account.batch.payment'
 
     iso20022_batch_booking = fields.Boolean(
         string="SCT Batch Booking",

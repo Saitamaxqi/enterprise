@@ -4,7 +4,7 @@ from odoo.osv import expression
 
 
 class WhatsappMessage(models.Model):
-    _inherit = ['whatsapp.message']
+    _inherit = 'whatsapp.message'
 
     links_click_datetime = fields.Datetime(
         'Clicked On', help='Stores last click datetime in case of multi clicks.'

@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class AccountFiscalPosition(models.Model):
-    _inherit = ['account.fiscal.position']
+    _inherit = 'account.fiscal.position'
 
     def _default_avatax_invoice_account_id(self):
         return self.env.company.account_sale_tax_id.invoice_repartition_line_ids.account_id

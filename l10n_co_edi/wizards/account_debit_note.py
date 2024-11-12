@@ -6,7 +6,7 @@ from ..models.account_invoice import DESCRIPTION_DEBIT_CODE
 
 
 class AccountDebitNote(models.TransientModel):
-    _inherit = ['account.debit.note']
+    _inherit = 'account.debit.note'
 
     l10n_co_edi_description_code_debit = fields.Selection(DESCRIPTION_DEBIT_CODE,
                                                           string="Concepto Nota de Débito", help="Colombian code for Debit Notes")

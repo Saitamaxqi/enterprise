@@ -5,6 +5,7 @@ from odoo import fields, models
 
 
 class SendcloudShippingWizard(models.TransientModel):
+    _name = 'sendcloud.shipping.wizard'
 
     _description = "Choose from the available sendcloud shipping methods"
 

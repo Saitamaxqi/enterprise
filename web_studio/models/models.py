@@ -2,7 +2,7 @@ from odoo import api, models
 
 
 class Base(models.AbstractModel):
-    _inherit = ['base']
+    _inherit = 'base'
 
     @api.model
     @api.readonly

@@ -30,6 +30,7 @@ def strip_phonenumber(phone: str):
 
 
 class L10n_AuStp(models.Model):
+    _name = 'l10n_au.stp'
     _description = "Single Touch Payroll"
     _order = "create_date desc"
     _inherit = ["mail.thread", "mail.activity.mixin"]

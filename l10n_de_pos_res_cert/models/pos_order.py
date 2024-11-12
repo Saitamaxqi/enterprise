@@ -6,7 +6,7 @@ from operator import itemgetter
 
 
 class PosOrder(models.Model):
-    _inherit = ['pos.order']
+    _inherit = 'pos.order'
 
     @api.model
     def _check_config_germany_floor(self, session_id=None, order_id=None):

@@ -5,7 +5,7 @@ from odoo import models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     def set_values(self):
         fsm_projects = self.env['project.project'].sudo().search([('is_fsm', '=', True)])

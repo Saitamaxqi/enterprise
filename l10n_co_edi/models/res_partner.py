@@ -6,7 +6,7 @@ FINAL_CONSUMER_VAT = '222222222222'  # 'Consumidor Final' is the generic partner
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     l10n_co_edi_large_taxpayer = fields.Boolean(string='Gran Contribuyente')
     l10n_co_edi_fiscal_regimen = fields.Selection([

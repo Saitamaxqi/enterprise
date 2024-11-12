@@ -2,6 +2,7 @@ from odoo import fields, models, api
 
 
 class AccountAssetGroup(models.Model):
+    _name = 'account.asset.group'
     _description = 'Asset Group'
     _order = 'name'
 

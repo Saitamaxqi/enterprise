@@ -8,6 +8,7 @@ from odoo.exceptions import UserError, ValidationError
 
 
 class HrPayslipRun(models.Model):
+    _name = 'hr.payslip.run'
     _inherit = ['mail.thread', 'mail.activity.mixin']
     _description = 'Payslip Batches'
     _order = 'date_end desc'

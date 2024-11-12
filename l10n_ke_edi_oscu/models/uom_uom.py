@@ -4,7 +4,7 @@ from odoo import fields, models, _
 
 
 class UomUom(models.Model):
-    _inherit = ['uom.uom']
+    _inherit = 'uom.uom'
 
     l10n_ke_quantity_unit_id = fields.Many2one(
         'l10n_ke_edi_oscu.code',

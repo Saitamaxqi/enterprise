@@ -2,7 +2,7 @@ from odoo import api, fields, models, _
 
 
 class MrpProduction(models.Model):
-    _inherit = ['mrp.production']
+    _inherit = 'mrp.production'
 
     move_raw_line_ids = fields.One2many('stock.move.line', compute='_compute_move_raw_line_ids')
     move_byproduct_line_ids = fields.One2many('stock.move.line', compute='_compute_move_byproduct_line_ids')

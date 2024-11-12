@@ -10,7 +10,7 @@ from werkzeug.urls import url_join
 
 
 class SocialLivePost(models.Model):
-    _inherit = ['social.live.post']
+    _inherit = 'social.live.post'
 
     facebook_post_id = fields.Char('Actual Facebook ID of the post')
 

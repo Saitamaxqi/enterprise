@@ -23,7 +23,7 @@ def format_date(env, date):
 
 
 class HrLeave(models.Model):
-    _inherit = ["hr.leave"]
+    _inherit = "hr.leave"
 
     @api.model
     def _get_leave_interval(self, date_from, date_to, employee_ids):

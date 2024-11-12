@@ -6,7 +6,7 @@ from odoo.tools import float_compare, float_is_zero, float_repr
 
 
 class L10n_Be_ReportsPeriodicVatXmlExport(models.TransientModel):
-    _inherit = ["l10n_be_reports.periodic.vat.xml.export"]
+    _inherit = "l10n_be_reports.periodic.vat.xml.export"
 
     show_prorata = fields.Boolean(compute="_compute_show_prorata")
     is_prorata_necessary = fields.Boolean(string="Prorata")

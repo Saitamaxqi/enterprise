@@ -10,6 +10,7 @@ def _csv_row(*data, delimiter=","):
 
 
 class L10n_ThPndReportHandler(models.AbstractModel):
+    _name = 'l10n_th.pnd.report.handler'
     _inherit = ["account.generic.tax.report.handler"]
     _description = "Abstract Tax Report PND Handler"
 
@@ -71,6 +72,7 @@ class L10n_ThPndReportHandler(models.AbstractModel):
 
 
 class L10n_ThPnd53ReportHandler(models.AbstractModel):
+    _name = 'l10n_th.pnd53.report.handler'
     _inherit = ["l10n_th.pnd.report.handler"]
     _description = "Thai Tax Report (PND53) Custom Handler"
 
@@ -107,6 +109,7 @@ class L10n_ThPnd53ReportHandler(models.AbstractModel):
 
 
 class L10n_ThPnd3ReportHandler(models.AbstractModel):
+    _name = 'l10n_th.pnd3.report.handler'
     _inherit = ["l10n_th.pnd.report.handler"]
     _description = "Thai Tax Report (PND3) Custom Handler"
 

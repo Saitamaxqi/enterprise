@@ -15,7 +15,7 @@ _logger = logging.getLogger(__name__)
 
 
 class SocialLivePost(models.Model):
-    _inherit = ['social.live.post']
+    _inherit = 'social.live.post'
 
     linkedin_post_id = fields.Char('Actual LinkedIn ID of the post')
 

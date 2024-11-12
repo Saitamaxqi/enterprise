@@ -4,7 +4,7 @@ from odoo import fields, models, _
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     signature_count = fields.Integer(compute='_compute_signature_count', string="# Signatures")
 

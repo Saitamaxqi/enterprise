@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class CrmActivityReport(models.Model):
-    _inherit = ['crm.activity.report']
+    _inherit = 'crm.activity.report'
 
     won_status = fields.Selection([
         ('won', 'Won'),

@@ -2,7 +2,7 @@ from odoo import api, models, _
 
 
 class AppointmentType(models.Model):
-    _inherit = ['appointment.type']
+    _inherit = 'appointment.type'
 
     @api.model
     def get_appointment_type_templates_data(self):

@@ -7,7 +7,7 @@ from odoo.exceptions import ValidationError
 
 
 class RentalOrderWizard(models.TransientModel):
-    _inherit = ['rental.order.wizard']
+    _inherit = 'rental.order.wizard'
 
     has_tracked_lines = fields.Boolean(
         string="Has lines with tracked products", compute='_compute_has_tracked_lines')
@@ -27,7 +27,7 @@ class RentalOrderWizard(models.TransientModel):
 
 
 class RentalOrderWizardLine(models.TransientModel):
-    _inherit = ['rental.order.wizard.line']
+    _inherit = 'rental.order.wizard.line'
 
     def _default_wizard_line_vals(self, line, status):
         default_line_vals = super()._default_wizard_line_vals(line, status)

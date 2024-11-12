@@ -3,7 +3,7 @@ from odoo import models, api, fields
 
 
 class AccountMove(models.Model):
-    _inherit = ["account.move"]
+    _inherit = "account.move"
 
     @api.depends("l10n_br_is_avatax", "move_type", "debit_origin_id")
     def _compute_l10n_br_goods_operation_type_id(self):

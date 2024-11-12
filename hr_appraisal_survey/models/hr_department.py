@@ -5,7 +5,7 @@ from odoo import models, fields
 
 
 class HrDepartment(models.Model):
-    _inherit = ['hr.department']
+    _inherit = 'hr.department'
 
     def _get_default_appraisal_survey_template_id(self):
         return self.env.company.appraisal_survey_template_id

@@ -5,7 +5,7 @@ from odoo import models, _
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move']
+    _inherit = 'account.move'
 
     def _get_user_infos(self):
         def transform_numbers_to_regex(string):

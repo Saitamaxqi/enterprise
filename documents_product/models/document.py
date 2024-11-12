@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class DocumentsDocument(models.Model):
-    _inherit = ['documents.document']
+    _inherit = 'documents.document'
 
     product_template_id = fields.Many2one('product.template', string="Product", compute='_compute_product', search='_search_product_template_id')
     product_id = fields.Many2one('product.product', string="Product Variant", compute='_compute_product', search='_search_product_id')

@@ -4,6 +4,7 @@ from odoo import api, fields, models
 
 
 class RentalSignWizard(models.TransientModel):
+    _name = 'rental.sign.wizard'
     _description = "Sign Documents from a SO"
 
     @api.model

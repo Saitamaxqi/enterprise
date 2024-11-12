@@ -6,7 +6,7 @@ from odoo.tools import convert
 
 
 class HrAppraisal(models.Model):
-    _inherit = ['hr.appraisal']
+    _inherit = 'hr.appraisal'
 
     def _load_demo_data(self):
         super()._load_demo_data()

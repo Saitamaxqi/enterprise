@@ -10,6 +10,7 @@ from markupsafe import Markup
 
 
 class AccountBankStatement(models.Model):
+    _name = 'account.bank.statement'
     _inherit = ['mail.thread.main.attachment', 'account.bank.statement']
 
     def action_open_bank_reconcile_widget(self):
@@ -41,7 +42,7 @@ class AccountBankStatement(models.Model):
 
 
 class AccountBankStatementLine(models.Model):
-    _inherit = ['account.bank.statement.line']
+    _inherit = 'account.bank.statement.line'
 
     # Technical field holding the date of the last time the cron tried to auto-reconcile the statement line. Used to
     # optimize the bank matching process"

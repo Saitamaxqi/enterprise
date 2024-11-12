@@ -23,6 +23,7 @@ MONTH_SELECTION = [
 
 
 class L10nInHrPayrollEpfReport(models.Model):
+    _name = 'l10n.in.hr.payroll.epf.report'
     _description = 'Indian Payroll: Employee Provident Fund Report'
 
     month = fields.Selection(MONTH_SELECTION, default='1', required=True)

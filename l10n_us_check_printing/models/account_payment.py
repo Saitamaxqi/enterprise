@@ -4,7 +4,7 @@ from odoo import models
 
 
 class AccountPayment(models.Model):
-    _inherit = ['account.payment']
+    _inherit = 'account.payment'
 
     def _l10n_us_check_printing_generate_micr_line(self):
         """ Generate MICR line to be printed on US blank checks.

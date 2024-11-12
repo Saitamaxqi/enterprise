@@ -10,6 +10,7 @@ from collections import defaultdict
 
 
 class AccountPartnerLedgerReportHandler(models.AbstractModel):
+    _name = 'account.partner.ledger.report.handler'
     _inherit = ['account.report.custom.handler']
     _description = 'Partner Ledger Custom Handler'
 

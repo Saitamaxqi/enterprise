@@ -5,7 +5,7 @@ from odoo import models
 
 
 class L10nBeSocialSecurityCertificate(models.TransientModel):
-    _inherit = ['l10n.be.social.security.certificate']
+    _inherit = 'l10n.be.social.security.certificate'
 
     def _post_process_generated_file(self, data, filename):
         if self.company_id.documents_payroll_folder_id and self.company_id.documents_hr_settings:

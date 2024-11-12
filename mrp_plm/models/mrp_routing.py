@@ -4,7 +4,7 @@ from odoo import models
 
 
 class MrpRoutingWorkcenter(models.Model):
-    _inherit = ['mrp.routing.workcenter']
+    _inherit = 'mrp.routing.workcenter'
 
     def _get_sync_values(self):
         if not self:

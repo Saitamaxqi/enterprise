@@ -2,7 +2,7 @@ from odoo import api, models
 
 
 class PosPayment(models.Model):
-    _inherit = ['pos.payment']
+    _inherit = 'pos.payment'
 
     @api.constrains('payment_method_id')
     def _check_payment_method_id(self):

@@ -6,7 +6,7 @@ from odoo.addons.hr_payroll_account.wizard.hr_payroll_payment_report_wizard impo
 
 
 class HrEmployee(models.Model):
-    _inherit = ['hr.employee']
+    _inherit = 'hr.employee'
 
     is_trusted_bank_account = fields.Boolean(related="bank_account_id.allow_out_payment", groups="hr.group_hr_user")
 

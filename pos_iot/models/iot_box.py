@@ -4,6 +4,7 @@ from odoo import models, api
 
 
 class IotBox(models.Model):
+    _name = 'iot.box'
     _inherit = ['iot.box', 'pos.load.mixin']
 
     @api.model

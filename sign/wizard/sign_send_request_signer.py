@@ -5,6 +5,7 @@ from odoo.exceptions import UserError
 
 
 class SignSendRequestSigner(models.TransientModel):
+    _name = 'sign.send.request.signer'
     _description = 'Sign send request signer'
 
     role_id = fields.Many2one('sign.item.role', readonly=True, required=True)

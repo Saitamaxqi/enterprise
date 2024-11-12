@@ -11,6 +11,7 @@ _logger = logging.getLogger(__name__)
 
 
 class RequestAppraisal(models.TransientModel):
+    _name = 'request.appraisal'
     _inherit = ['mail.composer.mixin']
     _description = "Request an Appraisal"
     _unrestricted_rendering = True

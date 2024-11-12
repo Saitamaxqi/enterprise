@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ProjectProject(models.Model):
-    _inherit = ['project.project']
+    _inherit = 'project.project'
 
     @api.model
     def default_get(self, fields_list):

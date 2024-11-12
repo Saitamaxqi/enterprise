@@ -4,6 +4,7 @@ from odoo import fields, models
 
 
 class SignRequestItemValue(models.Model):
+    _name = 'sign.request.item.value'
     _description = "Signature Item Value"
     _rec_name = 'sign_request_id'
 

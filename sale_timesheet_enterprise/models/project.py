@@ -4,7 +4,7 @@ from odoo import models
 
 
 class ProjectProject(models.Model):
-    _inherit = ['project.project']
+    _inherit = 'project.project'
 
     def action_profitability_items(self, section_name, domain=None, res_id=False):
         action = super().action_profitability_items(section_name, domain, res_id)

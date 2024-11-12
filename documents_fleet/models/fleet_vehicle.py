@@ -4,6 +4,7 @@ from odoo import fields, models
 
 
 class FleetVehicle(models.Model):
+    _name = 'fleet.vehicle'
     _inherit = ['fleet.vehicle', 'documents.mixin']
 
     documents_fleet_settings = fields.Boolean(related="company_id.documents_fleet_settings", string="Centralize Fleet Documents")

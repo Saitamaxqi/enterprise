@@ -124,6 +124,7 @@ class UnexpectedXMLResponse(Exception):
 
 
 class L10n_ClEdiUtil(models.AbstractModel):
+    _name = 'l10n_cl.edi.util'
     _description = 'Utility Methods for Chilean Electronic Invoicing'
 
     def _get_seed_rest(self, mode):

@@ -4,7 +4,7 @@ from odoo.tools import SQL, Query
 
 
 class AccountReport(models.Model):
-    _inherit = ['account.report']
+    _inherit = 'account.report'
 
     filter_cash_basis = fields.Boolean(
         string="Cash Basis",

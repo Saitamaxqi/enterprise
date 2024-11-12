@@ -2,7 +2,7 @@ from odoo import models
 
 
 class StockPickingBatch(models.Model):
-    _inherit = ['stock.picking.batch']
+    _inherit = 'stock.picking.batch'
 
     def action_picking_map_view(self):
         self.ensure_one()

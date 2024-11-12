@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HrPayrollReport(models.Model):
-    _inherit = ['hr.payroll.report']
+    _inherit = 'hr.payroll.report'
 
     l10n_hk_713_gross = fields.Float('713 Gross', readonly=True)
     l10n_hk_mpf_gross = fields.Float('MPF Gross', readonly=True)

@@ -5,6 +5,7 @@ from typing import Optional
 
 
 class VoipCall(models.Model):
+    _name = 'voip.call'
     _description = """A phone call handled using the VoIP application"""
 
     phone_number = fields.Char(required=True, readonly=True)

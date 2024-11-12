@@ -6,6 +6,7 @@ from odoo.tools import float_round
 
 
 class HrPayslipWorked_Days(models.Model):
+    _name = 'hr.payslip.worked_days'
     _description = 'Payslip Worked Days'
     _order = 'payslip_id, sequence'
 

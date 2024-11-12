@@ -6,7 +6,7 @@ from odoo.exceptions import ValidationError
 
 
 class HrWorkEntryType(models.Model):
-    _inherit = ['hr.work.entry.type']
+    _inherit = 'hr.work.entry.type'
 
     meal_voucher = fields.Boolean(
         string="Meal Voucher", default=False,

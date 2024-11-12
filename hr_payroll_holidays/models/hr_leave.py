@@ -10,7 +10,7 @@ from odoo.tools.float_utils import float_compare
 
 
 class HrLeave(models.Model):
-    _inherit = ['hr.leave']
+    _inherit = 'hr.leave'
 
     payslip_state = fields.Selection([
         ('normal', 'To compute in next payslip'),

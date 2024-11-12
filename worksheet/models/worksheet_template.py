@@ -13,6 +13,7 @@ from odoo.tools import format_list
 
 
 class WorksheetTemplate(models.Model):
+    _name = 'worksheet.template'
     _description = 'Worksheet Template'
     _order = 'sequence, name'
 

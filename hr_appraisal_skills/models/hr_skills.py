@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class HrAppraisal(models.Model):
-    _inherit = ['hr.appraisal']
+    _inherit = 'hr.appraisal'
 
     skill_ids = fields.One2many('hr.appraisal.skill', 'appraisal_id', string="Skills", domain=['|', ('skill_type_id.active', '=', True), ('appraisal_id.state', '=', 'done')])
 
@@ -71,6 +71,7 @@ class HrAppraisal(models.Model):
 
 
 class HrAppraisalSkill(models.Model):
+    _name = 'hr.appraisal.skill'
     _description = "Employee Skills"
     _order = "skill_type_id, skill_level_id"
 

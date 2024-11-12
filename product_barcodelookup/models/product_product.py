@@ -2,7 +2,7 @@ from odoo import api, models
 
 
 class ProductProduct(models.Model):
-    _inherit = ['product.product']
+    _inherit = 'product.product'
 
     @api.onchange('barcode')
     def _onchange_barcode(self):

@@ -5,7 +5,7 @@ from odoo import fields, models, api
 
 
 class PlanningAnalysisReport(models.Model):
-    _inherit = ["planning.analysis.report"]
+    _inherit = "planning.analysis.report"
 
     sale_order_id = fields.Many2one("sale.order", string="Sales Order", readonly=True)
     sale_line_id = fields.Many2one("sale.order.line", string="Sales Order Item", readonly=True)

@@ -9,6 +9,7 @@ from odoo.tools.translate import _
 
 
 class ReportL10n_Co_ReportsReport_Certification(models.AbstractModel):
+    _name = 'report.l10n_co_reports.report_certification'
     _description = "Colombian Certification Report"
 
     def _get_report_values(self, docids, data=None):

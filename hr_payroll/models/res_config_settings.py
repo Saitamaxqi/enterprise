@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     module_l10n_fr_hr_payroll = fields.Boolean(string='French Payroll')
     module_l10n_be_hr_payroll = fields.Boolean(string='Belgium Payroll')

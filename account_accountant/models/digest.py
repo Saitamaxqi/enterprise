@@ -6,7 +6,7 @@ from odoo.exceptions import AccessError
 
 
 class DigestDigest(models.Model):
-    _inherit = ['digest.digest']
+    _inherit = 'digest.digest'
 
     kpi_account_bank_cash = fields.Boolean('Bank & Cash Moves')
     kpi_account_bank_cash_value = fields.Monetary(compute='_compute_kpi_account_total_bank_cash_value')

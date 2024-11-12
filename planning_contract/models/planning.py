@@ -11,7 +11,7 @@ import pytz
 
 
 class PlanningSlot(models.Model):
-    _inherit = ['planning.slot']
+    _inherit = 'planning.slot'
 
     @api.model
     def gantt_resource_employees_working_periods(self, rows):

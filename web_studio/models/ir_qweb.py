@@ -4,7 +4,7 @@ from odoo import models
 
 
 class IrQweb(models.AbstractModel):
-    _inherit = ['ir.qweb']
+    _inherit = 'ir.qweb'
 
     def _get_template_cache_keys(self):
         return super()._get_template_cache_keys() + ["studio"]

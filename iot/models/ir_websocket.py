@@ -4,7 +4,7 @@ from odoo import models
 
 
 class IrWebsocket(models.AbstractModel):
-    _inherit = ['ir.websocket']
+    _inherit = 'ir.websocket'
 
     def _subscribe(self, data):
         mac_address = data.get("mac_address")
@@ -16,6 +16,7 @@ class IrWebsocket(models.AbstractModel):
 
 
 class IotChannel(models.AbstractModel):
+    _name = 'iot.channel'
     _description = "The Websocket Iot Channel"
 
     SYSTEM_PARAMETER_KEY = 'iot.ws_channel'

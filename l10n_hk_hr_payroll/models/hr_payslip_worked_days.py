@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class HrPayslipWorked_Days(models.Model):
-    _inherit = ['hr.payslip.worked_days']
+    _inherit = 'hr.payslip.worked_days'
 
     l10n_hk_leave_id = fields.Many2one('hr.leave', string='Leave', readonly=True)
 

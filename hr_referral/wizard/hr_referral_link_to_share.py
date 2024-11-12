@@ -6,6 +6,7 @@ from odoo import api, fields, models, _
 
 
 class HrReferralLinkToShare(models.TransientModel):
+    _name = 'hr.referral.link.to.share'
     _description = 'Referral Link To Share'
 
     job_id = fields.Many2one(

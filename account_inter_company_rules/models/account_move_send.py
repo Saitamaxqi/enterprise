@@ -2,7 +2,7 @@ from odoo import models
 
 
 class AccountMoveSend(models.AbstractModel):
-    _inherit = ['account.move.send']
+    _inherit = 'account.move.send'
 
     def _generate_and_send_invoices(self, moves, from_cron=False, allow_raising=True, allow_fallback_pdf=False, **custom_settings):
         # EXTENDS 'account' - to create the pdf attachment

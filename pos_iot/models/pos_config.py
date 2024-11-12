@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class PosConfig(models.Model):
-    _inherit = ['pos.config']
+    _inherit = 'pos.config'
 
     iface_print_via_proxy = fields.Boolean(compute="_compute_print_via_proxy")
     iface_printer_id = fields.Many2one('iot.device', domain=lambda self: ['&', ('type', '=', 'printer'), ('subtype', '=', 'receipt_printer'), '|', ('company_id', '=', False), ('company_id', '=', self.env.company.id)])

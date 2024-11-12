@@ -5,6 +5,7 @@ from odoo import models, fields
 
 
 class L10nChLppInsurance(models.Model):
+    _name = 'l10n.ch.lpp.insurance'
     _description = 'Swiss: LPP Insurances'
 
     name = fields.Char(required=True)

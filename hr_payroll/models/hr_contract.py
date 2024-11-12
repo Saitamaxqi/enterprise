@@ -10,7 +10,7 @@ import pytz
 
 
 class HrContract(models.Model):
-    _inherit = ['hr.contract']
+    _inherit = 'hr.contract'
     _description = 'Employee Contract'
 
     schedule_pay = fields.Selection([

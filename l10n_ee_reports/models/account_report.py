@@ -8,6 +8,7 @@ from odoo.tools import SQL
 
 
 class L10n_EeTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_ee.tax.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'Estonian Tax Report Custom Handler'
 
@@ -113,6 +114,7 @@ class L10n_EeTaxReportHandler(models.AbstractModel):
 
 
 class L10n_EeKmdInfReportHandler(models.AbstractModel):
+    _name = 'l10n_ee.kmd.inf.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'Estonian KMD INF Report Custom Handler'
 

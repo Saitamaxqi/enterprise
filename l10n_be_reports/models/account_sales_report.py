@@ -10,6 +10,7 @@ from .account_report import _raw_phonenumber, _get_xml_export_representative_nod
 
 
 class L10n_BeEcSalesReportHandler(models.AbstractModel):
+    _name = 'l10n_be.ec.sales.report.handler'
     _inherit = ['account.ec.sales.report.handler']
     _description = 'Belgian EC Sales Report Custom Handler'
 

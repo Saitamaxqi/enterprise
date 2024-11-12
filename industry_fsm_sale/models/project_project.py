@@ -7,7 +7,7 @@ from odoo.tools import SQL
 
 
 class ProjectProject(models.Model):
-    _inherit = ["project.project"]
+    _inherit = "project.project"
 
     allow_material = fields.Boolean("Products on Tasks", compute="_compute_allow_material", store=True, readonly=False)
     allow_quotations = fields.Boolean(

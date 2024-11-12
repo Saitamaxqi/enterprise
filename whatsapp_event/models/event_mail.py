@@ -9,7 +9,7 @@ _logger = logging.getLogger(__name__)
 
 
 class EventMail(models.Model):
-    _inherit = ['event.mail']
+    _inherit = 'event.mail'
 
     notification_type = fields.Selection(selection_add=[('whatsapp', 'WhatsApp')])
     template_ref = fields.Reference(ondelete={'whatsapp.template': 'cascade'}, selection_add=[('whatsapp.template', 'WhatsApp')])

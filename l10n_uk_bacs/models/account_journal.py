@@ -35,7 +35,7 @@ def format_communication(communication):
 
 
 class AccountJournal(models.Model):
-    _inherit = ["account.journal"]
+    _inherit = "account.journal"
 
 
     def _default_outbound_payment_methods(self):

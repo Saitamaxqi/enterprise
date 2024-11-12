@@ -9,7 +9,7 @@ from odoo.exceptions import UserError, AccessError
 
 
 class ProductProduct(models.Model):
-    _inherit = ['product.product']
+    _inherit = 'product.product'
 
     serial_missing = fields.Boolean(compute='_compute_serial_missing', export_string_translation=False)
     quantity_decreasable = fields.Boolean(compute='_compute_quantity_decreasable', export_string_translation=False)

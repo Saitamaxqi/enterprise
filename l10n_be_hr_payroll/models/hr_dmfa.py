@@ -905,6 +905,7 @@ class DMFAWorkerDeduction(DMFANode):
 
 
 class L10n_BeDmfa(models.Model):
+    _name = 'l10n_be.dmfa'
     _description = 'DMFA xml report'
     _order = "year desc, quarter desc"
 
@@ -1265,6 +1266,7 @@ class L10n_BeDmfa(models.Model):
 
 
 class L10n_BeDmfaLocationUnit(models.Model):
+    _name = 'l10n_be.dmfa.location.unit'
     _description = 'Work Place defined by ONSS'
     _rec_name = 'code'
 

@@ -4,7 +4,7 @@ from odoo import models, fields
 
 
 class AccountMoveReversal(models.TransientModel):
-    _inherit = ["account.move.reversal"]
+    _inherit = "account.move.reversal"
 
     l10n_ar_afip_fce_is_cancellation = fields.Boolean(string='FCE: Is Cancellation?',
         help='Argentina: When informing a MiPyMEs (FCE) debit/credit notes in AFIP it is required to send information about whether the'

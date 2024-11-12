@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     twitter_use_own_account = fields.Boolean("Use your own X Account", config_parameter='social.twitter_use_own_account',
         help="""Check this if you want to use your personal X Developer Account instead of the provided one.""")

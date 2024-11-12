@@ -5,7 +5,7 @@ from odoo import api, models
 
 
 class L10n_InGstReturnPeriod(models.Model):
-    _inherit = ["l10n_in.gst.return.period"]
+    _inherit = "l10n_in.gst.return.period"
 
     # ===============================
     # GSTR-1

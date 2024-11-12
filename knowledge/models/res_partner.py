@@ -5,7 +5,7 @@ from odoo import models
 
 
 class ResPartner(models.Model):
-    _inherit = ['res.partner']
+    _inherit = 'res.partner'
 
     def unlink(self):
         """ This override will delete all the private articles linked to the deleted partners. """

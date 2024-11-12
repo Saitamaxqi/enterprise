@@ -9,7 +9,7 @@ from odoo.tools.safe_eval import json
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     l10n_br_avatax_portal_email = fields.Char(
         related='company_id.l10n_br_avatax_portal_email',

@@ -6,7 +6,7 @@ from odoo.osv import expression
 
 
 class ProductProduct(models.Model):
-    _inherit = ['product.product']
+    _inherit = 'product.product'
     _barcode_field = 'barcode'
 
     has_image = fields.Boolean(compute='_compute_has_image')

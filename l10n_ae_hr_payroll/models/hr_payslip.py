@@ -4,7 +4,7 @@ from odoo import api, models
 
 
 class HrPayslip(models.Model):
-    _inherit = ["hr.payslip"]
+    _inherit = "hr.payslip"
 
     @api.model
     def _l10n_ae_get_wps_formatted_amount(self, val):

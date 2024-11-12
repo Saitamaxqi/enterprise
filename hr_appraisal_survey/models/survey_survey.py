@@ -6,7 +6,7 @@ from werkzeug.urls import url_encode
 
 
 class SurveySurvey(models.Model):
-    _inherit = ['survey.survey']
+    _inherit = 'survey.survey'
 
     survey_type = fields.Selection(selection_add=[('appraisal', 'Appraisal')], ondelete={'appraisal': 'set default'})
     appraisal_manager_user_ids = fields.Many2many(
@@ -73,7 +73,7 @@ class SurveySurvey(models.Model):
 
 
 class SurveyUser_Input(models.Model):
-    _inherit = ['survey.user_input']
+    _inherit = 'survey.user_input'
 
     appraisal_id = fields.Many2one('hr.appraisal', index='btree_not_null')
     requested_by = fields.Many2one(related="create_uid.partner_id", string='Requested by')
@@ -129,6 +129,6 @@ class SurveyUser_Input(models.Model):
 
 
 class SurveyQuestionAnswer(models.Model):
-    _inherit = ['survey.question.answer']
+    _inherit = 'survey.question.answer'
 
     survey_id = fields.Many2one('survey.survey', related='question_id.survey_id')

@@ -8,6 +8,7 @@ from odoo import _, api, fields, models
 
 
 class L10n_HkIr56g(models.Model):
+    _name = 'l10n_hk.ir56g'
     _inherit = ['l10n_hk.ird']
     _description = 'IR56G Sheet'
     _order = 'start_period'
@@ -190,6 +191,7 @@ class L10n_HkIr56g(models.Model):
 
 
 class L10n_HkIr56gLine(models.Model):
+    _name = 'l10n_hk.ir56g.line'
     _description = 'IR56G Line'
 
     employee_id = fields.Many2one('hr.employee', string='Employee', required=True)

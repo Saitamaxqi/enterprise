@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     documents_hr_settings = fields.Boolean(
         related='company_id.documents_hr_settings', readonly=False, string="Human Resources")

@@ -3,7 +3,7 @@ from odoo import api, fields, models
 
 
 class RestaurantTable(models.Model):
-    _inherit = ['restaurant.table']
+    _inherit = 'restaurant.table'
 
     appointment_resource_id = fields.Many2one('appointment.resource', string='Appointment resource')
 

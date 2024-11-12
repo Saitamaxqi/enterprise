@@ -4,7 +4,7 @@ from odoo import models, api
 
 
 class ProductProduct(models.Model):
-    _inherit = ["product.product"]
+    _inherit = "product.product"
 
     @api.onchange('project_id')
     def _onchange_project(self):

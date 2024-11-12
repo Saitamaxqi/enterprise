@@ -8,6 +8,7 @@ from odoo.tools.misc import file_open
 
 
 class ExpenseSampleReceipt(models.Model):
+    _name = 'expense.sample.receipt'
     _description = 'Try Sample Receipts'
 
     def _action_create_expense(self, values, sample_number):

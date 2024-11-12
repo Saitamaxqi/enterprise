@@ -5,7 +5,7 @@ from odoo import fields, models, api
 
 
 class PlanningAnalysisReport(models.Model):
-    _inherit = ["planning.analysis.report"]
+    _inherit = "planning.analysis.report"
 
     percentage_hours = fields.Float("Progress (%)", readonly=True, aggregator="avg", groups="hr_timesheet.group_hr_timesheet_approver")
     effective_hours = fields.Float("Effective Time", readonly=True, groups="hr_timesheet.group_hr_timesheet_approver",

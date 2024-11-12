@@ -5,7 +5,7 @@ from odoo import api, fields, models
 
 
 class L10n_Es_ReportsAeatBoeMod347ExportWizard(models.TransientModel):
-    _inherit = ['l10n_es_reports.aeat.boe.mod347.export.wizard']
+    _inherit = 'l10n_es_reports.aeat.boe.mod347.export.wizard'
 
     real_estates_vat_mod347_data = fields.One2many(
         comodel_name='l10n_es_reports.aeat.mod347.real.estates.vat',
@@ -30,6 +30,7 @@ class L10n_Es_ReportsAeatBoeMod347ExportWizard(models.TransientModel):
 
 
 class L10n_Es_ReportsAeatMod347RealEstatesVat(models.TransientModel):
+    _name = 'l10n_es_reports.aeat.mod347.real.estates.vat'
     _description = 'BOE Real Estates VAT Data for (mod347)'
     _inherit = ['l10n_es_reports.aeat.mod347.manual.partner.data']
 

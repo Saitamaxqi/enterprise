@@ -2,7 +2,7 @@ from odoo import models, fields
 
 
 class PosPaymentMethod(models.Model):
-    _inherit = ['pos.payment.method']
+    _inherit = 'pos.payment.method'
 
     is_delivery_payment = fields.Boolean(
         string='Delivery Payment',

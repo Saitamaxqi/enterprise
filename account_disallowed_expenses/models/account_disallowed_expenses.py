@@ -6,6 +6,7 @@ from odoo.osv import expression
 
 
 class AccountDisallowedExpensesCategory(models.Model):
+    _name = 'account.disallowed.expenses.category'
     _description = "Disallowed Expenses Category"
 
     name = fields.Char(string='Name', required=True, translate=True)
@@ -71,6 +72,7 @@ class AccountDisallowedExpensesCategory(models.Model):
 
 
 class AccountDisallowedExpensesRate(models.Model):
+    _name = 'account.disallowed.expenses.rate'
     _description = "Disallowed Expenses Rate"
     _order = 'date_from desc'
 

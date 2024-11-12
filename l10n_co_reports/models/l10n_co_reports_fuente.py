@@ -5,6 +5,7 @@ from odoo.tools import SQL
 
 
 class L10n_CoFuenteReportHandler(models.AbstractModel):
+    _name = 'l10n_co.fuente.report.handler'
     _inherit = ['l10n_co.report.handler']
     _description = 'Fuente Report Custom Handler'
 

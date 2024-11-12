@@ -5,7 +5,7 @@ from odoo.exceptions import ValidationError
 
 
 class ResConfigSettings(models.TransientModel):
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     pos_whatsapp_enabled = fields.Boolean(related="pos_config_id.whatsapp_enabled", readonly=False)
     pos_receipt_template_id = fields.Many2one('whatsapp.template', related="pos_config_id.receipt_template_id", readonly=False)

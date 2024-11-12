@@ -5,7 +5,7 @@ from odoo import models, fields
 
 
 class HrEmployee(models.Model):
-    _inherit = ['hr.employee']
+    _inherit = 'hr.employee'
 
     l10n_ma_cin_number = fields.Char(string="CIN Number", help="National Identity Card Number", groups="hr.group_hr_user")
     l10n_ma_cnss_number = fields.Char(string="CNSS Number", help="Social Security National Fund Number", groups="hr.group_hr_user")

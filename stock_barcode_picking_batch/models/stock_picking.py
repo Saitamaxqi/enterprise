@@ -5,7 +5,7 @@ from odoo import api, fields, models, _
 
 
 class StockPicking(models.Model):
-    _inherit = ["stock.picking"]
+    _inherit = "stock.picking"
     display_batch_button = fields.Boolean(compute='_compute_display_batch_button')
 
     @api.depends('batch_id')
@@ -34,7 +34,7 @@ class StockPicking(models.Model):
 
 
 class StockPickingType(models.Model):
-    _inherit = ["stock.picking.type"]
+    _inherit = "stock.picking.type"
 
     group_lines_by_product = fields.Boolean("Group batch lines", help="Lines of same product at same location appear grouped. Not to use for cluster picking")
 

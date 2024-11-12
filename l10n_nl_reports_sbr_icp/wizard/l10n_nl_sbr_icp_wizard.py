@@ -14,6 +14,7 @@ from odoo.tools.zeep.exceptions import Fault
 
 
 class L10n_Nl_Reports_Sbr_IcpIcpWizard(models.TransientModel):
+    _name = 'l10n_nl_reports_sbr_icp.icp.wizard'
     _inherit = ['l10n_nl_reports_sbr.tax.report.wizard']
     _description = 'L10n NL Intra-Communautaire Prestaties for SBR Wizard'
 

@@ -6,7 +6,7 @@ from odoo.exceptions import UserError
 
 
 class AccountMoveLine(models.Model):
-    _inherit = ['account.move.line']
+    _inherit = 'account.move.line'
 
     @api.constrains('tax_ids')
     def _check_auto_transfer_line_ids_tax(self):

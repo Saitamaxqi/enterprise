@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class SaleRentalReport(models.Model):
-    _inherit = ["sale.rental.report"]
+    _inherit = "sale.rental.report"
 
     lot_id = fields.Many2one('stock.lot', 'Serial Number', readonly=True)
 

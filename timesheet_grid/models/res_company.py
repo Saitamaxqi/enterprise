@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     # reminder for employees
     timesheet_mail_employee_allow = fields.Boolean("Employee Reminder", default=True, export_string_translation=False)

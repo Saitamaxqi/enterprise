@@ -5,8 +5,7 @@ import re
 
 
 class ResConfigSettings(models.TransientModel):
-
-    _inherit = ['res.config.settings']
+    _inherit = 'res.config.settings'
 
     l10n_ar_afip_verification_type = fields.Selection(related='company_id.l10n_ar_afip_verification_type', readonly=False)
 

@@ -20,6 +20,7 @@ class L10nChAccidentInsurance(models.Model):
 
 
 class L10nChAccidentInsuranceLine(models.Model):
+    _name = 'l10n.ch.accident.insurance.line'
     _description = 'Swiss: Accident Insurances Line (AAP/AANP)'
     _rec_name = 'solution_name'
 
@@ -79,6 +80,7 @@ class L10nChAccidentInsuranceLine(models.Model):
 
 
 class L10nChAccidentInsuranceLineRate(models.Model):
+    _name = 'l10n.ch.accident.insurance.line.rate'
     _description = 'Swiss: Accident Insurances Line Rate (AAP/AANP)'
 
     line_id = fields.Many2one('l10n.ch.accident.insurance.line')

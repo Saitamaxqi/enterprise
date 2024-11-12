@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class HelpdeskTicketReportAnalysis(models.Model):
-    _inherit = ['helpdesk.ticket.report.analysis']
+    _inherit = 'helpdesk.ticket.report.analysis'
 
     total_hours_spent = fields.Float(
         "Hours Spent (Timesheets)",

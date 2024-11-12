@@ -86,6 +86,7 @@ def _get_xml_export_representative_node(report):
 
 
 class L10n_BeTaxReportHandler(models.AbstractModel):
+    _name = 'l10n_be.tax.report.handler'
     _inherit = ['account.tax.report.handler']
     _description = 'Belgian Tax Report Custom Handler'
 

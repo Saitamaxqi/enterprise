@@ -5,7 +5,7 @@ from odoo import fields, models
 
 
 class BankRecWidgetLine(models.Model):
-    _inherit = ['bank.rec.widget.line']
+    _inherit = 'bank.rec.widget.line'
 
     source_batch_payment_id = fields.Many2one(comodel_name='account.batch.payment')
     flag = fields.Selection(selection_add=[('new_batch', 'new_batch')])

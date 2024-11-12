@@ -5,7 +5,7 @@ from odoo import api, models, fields
 
 
 class AccountMove(models.Model):
-    _inherit = ['account.move']
+    _inherit = 'account.move'
 
     l10n_es_real_estate_id = fields.Many2one(string="Real Estate", comodel_name='l10n_es_reports.real.estate', help="Real estate related to this invoice, in case we are leasing it.")
     l10n_es_reports_mod347_invoice_type = fields.Selection(selection_add=[('real_estates', "Real estates operation")])
@@ -20,7 +20,7 @@ class AccountMove(models.Model):
 
 
 class AccountMoveLine(models.Model):
-    _inherit = ['account.move.line']
+    _inherit = 'account.move.line'
 
     # Stored to allow being used in the financial reports as a groupby value (we need it since it's called via SQL)
     l10n_es_real_estate_id = fields.Many2one(string="Real Estate", related='move_id.l10n_es_real_estate_id', store=True, help="Real estate related to the invoice that created this move line, in case we are leasing it.", readonly=False)

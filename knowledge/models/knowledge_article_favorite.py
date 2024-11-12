@@ -5,6 +5,7 @@ from odoo import api, exceptions, fields, models, _
 
 
 class KnowledgeArticleFavorite(models.Model):
+    _name = 'knowledge.article.favorite'
     _description = 'Favorite Article'
     _order = 'sequence ASC, id DESC'
     _rec_name = 'article_id'

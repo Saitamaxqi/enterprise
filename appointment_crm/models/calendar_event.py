@@ -7,7 +7,7 @@ from odoo import api, fields, models, Command, _
 
 
 class CalendarEvent(models.Model):
-    _inherit = ['calendar.event']
+    _inherit = 'calendar.event'
 
     opportunity_id = fields.Many2one(compute="_compute_opportunity_id", readonly=False, store=True, tracking=True)
 

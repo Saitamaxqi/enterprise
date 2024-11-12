@@ -7,6 +7,7 @@ from odoo.addons.rating.models.rating_data import RATING_LIMIT_MIN
 
 
 class HelpdeskSlaReportAnalysis(models.Model):
+    _name = 'helpdesk.sla.report.analysis'
     _description = "SLA Status Analysis"
     _auto = False
     _order = 'create_date DESC'

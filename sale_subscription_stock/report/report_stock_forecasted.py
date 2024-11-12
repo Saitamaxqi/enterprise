@@ -6,7 +6,7 @@ from odoo.addons.sale_subscription.models.sale_order import SUBSCRIPTION_CLOSED_
 
 
 class StockForecasted_Product_Product(models.AbstractModel):
-    _inherit = ['stock.forecasted_product_product']
+    _inherit = 'stock.forecasted_product_product'
 
     def _get_report_header(self, product_template_ids, product_variant_ids, wh_location_ids):
         res = super()._get_report_header(product_template_ids, product_variant_ids, wh_location_ids)

@@ -10,7 +10,7 @@ _logger = logging.getLogger(__name__)
 
 
 class WhatsappMessage(models.Model):
-    _inherit = ["whatsapp.message"]
+    _inherit = "whatsapp.message"
 
     _populate_dependencies = ["whatsapp.template", "mail.message"]
     _populate_sizes = {'small': 100, 'medium': 1_500, 'large': 25_000}

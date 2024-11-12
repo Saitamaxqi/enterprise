@@ -3,7 +3,7 @@ from odoo.exceptions import UserError
 
 
 class IrAttachment(models.Model):
-    _inherit = ['ir.attachment']
+    _inherit = 'ir.attachment'
 
     def _unwrap_edi_attachments(self, *args, **kwargs):
         file_data_list = super()._unwrap_edi_attachments(*args, **kwargs)

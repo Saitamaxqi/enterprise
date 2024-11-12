@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class HrCandidate(models.Model):
-    _inherit = ['hr.candidate']
+    _inherit = 'hr.candidate'
 
     salary_offers_count = fields.Integer(compute='_compute_salary_offers_count', compute_sudo=True)
 

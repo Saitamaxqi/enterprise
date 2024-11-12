@@ -9,7 +9,7 @@ from odoo.exceptions import UserError
 
 
 class SocialMedia(models.Model):
-    _inherit = ['social.media']
+    _inherit = 'social.media'
 
     _LINKEDIN_ENDPOINT = 'https://api.linkedin.com/rest/'
     _LINKEDIN_SCOPE = 'r_basicprofile r_organization_followers w_member_social w_member_social_feed rw_organization_admin w_organization_social w_organization_social_feed r_organization_social r_organization_social_feed'

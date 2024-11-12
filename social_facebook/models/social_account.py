@@ -11,7 +11,7 @@ from odoo import api, fields, models
 
 
 class SocialAccount(models.Model):
-    _inherit = ['social.account']
+    _inherit = 'social.account'
 
     facebook_account_id = fields.Char('Facebook Account ID', readonly=True,
         help="Facebook Page ID provided by the Facebook API, this should never be set manually.")

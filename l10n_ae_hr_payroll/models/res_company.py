@@ -4,7 +4,7 @@ from odoo import fields, models
 
 
 class ResCompany(models.Model):
-    _inherit = ['res.company']
+    _inherit = 'res.company'
 
     l10n_ae_employer_code = fields.Char(string="Employer Unique ID")
     l10n_ae_bank_account_id = fields.Many2one("res.partner.bank", domain="[('bank_id.country.code', '=', 'AE')]", string="Salaries Bank Account")
