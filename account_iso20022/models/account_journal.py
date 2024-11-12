@@ -177,6 +177,10 @@ class AccountJournal(models.Model):
                 Id = etree.SubElement(Othr, "Id")
                 Id.text = "NOTPROVIDED"
 
+            if bank_account.clearing_number:
+                ClrSysMmbId = etree.SubElement(FinInstnId, "ClrSysMmbId")
+                ClrSysMmbId.text = bank_account.clearing_number
+
             unique_chrgbr_values = {payment.get('iso20022_charge_bearer') for payment in payments_list}
             unique_chrgbr = unique_chrgbr_values.pop() if len(unique_chrgbr_values) == 1 else None
             if unique_chrgbr:

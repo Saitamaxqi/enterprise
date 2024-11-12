@@ -13,7 +13,7 @@ class AccountPayment(models.Model):
         C - ⑈ (on - us: used to delimit a customer account number),
         D - ⑉ (dash: used to delimit parts of numbers—e.g., routing numbers or account numbers). """
         micr_check_number = self.check_number or '000000'
-        micr_bank_routing = self.journal_id.bank_account_id.aba_routing or '000000000'
+        micr_bank_routing = self.journal_id.bank_account_id.clearing_number or '000000000'
         micr_bank_acc_number = self.journal_id.bank_acc_number or '000000000'
         return f"C{micr_check_number}C   A{micr_bank_routing}A   {micr_bank_acc_number}C"
 
@@ -30,7 +30,7 @@ class AccountPayment(models.Model):
             'bank_name': bank.name,
             'bank_street': ' '.join(bank_street for bank_street in (bank.street, bank.street2) if bank_street),
             'bank_city_state': ' '.join(bank_data for bank_data in (bank.city, bank.state.code, bank.zip) if bank_data),
-            'bank_routing': self.journal_id.bank_account_id.aba_routing,
+            'bank_routing': self.journal_id.bank_account_id.clearing_number,
             'partner_street': ' '.join(street for street in (self.partner_id.street, self.partner_id.street2) if street),
             'partner_city_state': ' '.join(c for c in (self.partner_id.city, self.partner_id.state_id.code, self.partner_id.country_code, self.partner_id.zip) if c),
             'ckus_amount_in_word': self.check_amount_in_words + '*****',

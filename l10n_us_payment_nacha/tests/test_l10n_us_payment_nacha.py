@@ -24,19 +24,19 @@ class TestNacha(AccountTestInvoicingCommon):
         cls.company_data["default_journal_bank"].bank_account_id = cls.env["res.partner.bank"].create({
             "partner_id": cls.company_data["company"].partner_id.id,
             "acc_number": "223344556",
-            "aba_routing": "123456780",
+            "clearing_number": "123456780",
         })
 
         cls.bank_partner_a = cls.env["res.partner.bank"].create({
             "partner_id": cls.partner_a.id,
             "acc_number": "987654321",
-            "aba_routing": "123456780",
+            "clearing_number": "123456780",
         })
 
         cls.bank_partner_b = cls.env["res.partner.bank"].create({
             "partner_id": cls.partner_b.id,
             "acc_number": "987654321",
-            "aba_routing": "123456780",
+            "clearing_number": "123456780",
         })
 
         # Test that we always put times/dates as seen in the user's timezone.

@@ -27,7 +27,7 @@ class TestNacha(TransactionCase):
         cls.default_journal_bank.bank_account_id = cls.env["res.partner.bank"].create({
             "partner_id": cls.env.company.partner_id.id,
             "acc_number": "223344556",
-            "aba_routing": "123456780",
+            "clearing_number": "123456780",
         })
 
         # Test that we always put times/dates as seen in the user's timezone.
@@ -42,7 +42,7 @@ class TestNacha(TransactionCase):
             bank_account = cls.env["res.partner.bank"].create({
                 "partner_id": employee_id.work_contact_id.id,
                 "acc_number": "GB94BARC10201530093459",
-                "aba_routing": "123456780",
+                "clearing_number": "123456780",
                 'allow_out_payment': True,
             })
             employee_id.bank_account_id = bank_account.id
