@@ -261,7 +261,7 @@
                         <field name="name" class="fw-bolder fs-5"/>
                         <field name="category_id" class="text-muted"/>
                         <div class="d-flex text-muted">
-                            <field name="date_start" widget="date" class="me-1"/>-<field name="date_end" widget="date" class="ms-1"/>
+                            <field name="date_start" options="{'show_time': false}" class="me-1"/>-<field name="date_end" options="{'show_time': false}" class="ms-1"/>
                         </div>
                         <footer class="pt-0">
                             <field name="activity_ids" widget="kanban_activity"/>
