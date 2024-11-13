@@ -8,6 +8,11 @@ from odoo import api, fields, models, _
 from odoo.exceptions import AccessError, UserError
 from odoo.tools.misc import str2bool
 
+REFERRAL_FIELDS = {
+    'partner_name', 'job_id', 'referral_points_ids', 'earned_points', 'max_points', 'active', 'response_id',
+    'shared_item_infos', 'referral_state', 'user_id', 'friend_id', 'write_date', 'ref_user_id', 'id',
+}
+
 
 class HrApplicant(models.Model):
     _inherit = "hr.applicant"
@@ -66,8 +71,7 @@ class HrApplicant(models.Model):
             applicant.source_id = applicant.ref_user_id.utm_source_id
 
     def check_field_access_rights(self, operation, field_names):
-        referral_fields = {'partner_name', 'job_id', 'referral_points_ids', 'earned_points', 'max_points', 'active', 'response_id',
-                           'shared_item_infos', 'referral_state', 'user_id', 'friend_id', 'write_date', 'ref_user_id', 'id'}
+        referral_fields = REFERRAL_FIELDS
 
         result = super().check_field_access_rights(operation, field_names)
         if field_names:
@@ -78,6 +82,22 @@ class HrApplicant(models.Model):
                 raise AccessError(_('You are not allowed to access applicant records.'))
             return result
         return [field_name for field_name in result if field_name not in referral_fields]
+
+    def _has_field_access(self, field, operation):
+        return super()._has_field_access(field, operation) and (
+            self.env.is_admin()
+            or self.env.user.has_group('hr_referral.group_hr_recruitment_referral_user')
+            or operation != 'read'
+            or field.name in REFERRAL_FIELDS
+        )
+
+    def _check_field_access(self, field, operation):
+        try:
+            return super()._check_field_access(field, operation)
+        except AccessError as e:
+            if field.name in REFERRAL_FIELDS:
+                raise AccessError(_('You are not allowed to access applicant records.')) from e
+            raise
 
     @api.depends('referral_points_ids')
     def _compute_shared_item_infos(self):
