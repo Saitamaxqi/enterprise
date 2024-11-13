@@ -202,7 +202,7 @@
 
                     <!-- Other columns -->
                     <t t-foreach="column_header * column_headers_render_data['level_repetitions'][column_header_index]" t-as="header">
-                        <th t-att-colspan="column_headers_render_data['level_colspan'][column_header_index] + (1 if options.get('show_horizontal_group_total') and column_header_first else 0)">
+                        <th t-att-colspan="column_headers_render_data['level_colspan'][column_header_index] + (1 if options.get('show_horizontal_group_total') and column_header_first else 0)" class="o_overflow_name">
                             <t t-out="header.get('name')"/>
                         </th>
                         <th t-if="header.get('forced_options', {}).get('compute_budget')">%</th>
