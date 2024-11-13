@@ -6,7 +6,6 @@
                   eval="[[ref('base.model_res_country'),
                           ref('base.model_res_country_state'),
                           ref('base.model_res_partner_category'),
-                          ref('base.model_res_partner_industry'),
-                          ref('base.model_res_partner_title')]]"/>
+                          ref('base.model_res_partner_industry')]]"/>
     </data>
 </odoo>

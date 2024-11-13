@@ -68,9 +68,8 @@ class TestViewNormalization(TransactionCase):
                             <field name="mobile" widget="phone"/>
                             <field name="user_ids" invisible="1"/>
                             <field name="email" widget="email" required="user_ids"/>
-                            <field name="title" options="{&quot;no_open&quot;: True}" invisible="is_company"/>
-                            <field name="lang"/>
                             <field name="category_id" widget="many2many_tags" placeholder="Tags..."/>
+                            <field name="lang"/>
                         </group>
                         <group>
                             <field name="display_name"/>
@@ -82,7 +81,6 @@ class TestViewNormalization(TransactionCase):
                             <field name="child_ids" mode="kanban" context="{'default_parent_id': id, 'default_street': street, 'default_street2': street2, 'default_city': city, 'default_state_id': state_id, 'default_zip': zip, 'default_country_id': country_id}">
                                 <kanban>
                                     <field name="color"/>
-                                    <field name="title"/>
                                     <field name="email"/>
                                     <field name="function"/>
                                     <field name="phone"/>
@@ -1041,7 +1039,6 @@ class TestViewNormalization(TransactionCase):
         self._test_view_normalization("""
             <data>
               <xpath expr="//field[@name='display_name']" position="before">
-                <field name="title" position="move"/>
                 <field name="lang" position="move"/>
                 <field name="category_id" position="move"/>
               </xpath>
@@ -1049,7 +1046,6 @@ class TestViewNormalization(TransactionCase):
         """, """
             <data>
               <xpath expr="//field[@name='display_name']" position="before">
-                <xpath expr="//form[1]/sheet[1]/group[1]/group[2]/field[@name='title']" position="move"/>
                 <xpath expr="//field[@name='lang']" position="move"/>
                 <xpath expr="//field[@name='category_id']" position="move"/>
               </xpath>
@@ -1431,7 +1427,6 @@ class TestViewNormalization(TransactionCase):
                             <field name="create_date"/>
                             <field name="display_name"/>
                             <field name="name"/>
-                            <field name="title"/>
                         </group>
                     </group>
                 </form>

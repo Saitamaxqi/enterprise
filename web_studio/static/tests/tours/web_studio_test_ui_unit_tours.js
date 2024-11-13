@@ -391,7 +391,7 @@ registry.category("web_tour.tours").add("web_studio_set_tree_node_conditional_in
             run: "click",
         },
         {
-            trigger: ".o_web_studio_list_view_editor th[data-name='title']",
+            trigger: ".o_web_studio_list_view_editor th[data-name='color']",
             run: "click",
         },
         {
@@ -415,7 +415,7 @@ registry.category("web_tour.tours").add("web_studio_set_tree_node_conditional_in
             run: "click",
         },
         {
-            trigger: ".o_web_studio_list_view_editor th[data-name='title']",
+            trigger: ".o_web_studio_list_view_editor th[data-name='color']",
         },
     ],
 });

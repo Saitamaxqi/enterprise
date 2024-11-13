@@ -205,7 +205,7 @@ class TestPayrollSuperStream(AccountTestInvoicingCommon):
             fund = self.super_fund_smsf if value.get('smsf_fund', False) else self.super_fund
             lines.append([idx, "83914571673", "abn", "", "", "", "My Superstream Australian Company", "Gibson", "Mel", "", "mel@test.com", "123456789", "83914571673", "My Superstream Australian Company", "123-456", "12344321",
             "My Superstream Australian Company", fund.abn, "", fund.display_name, "", "DirectDebit", "2023-09-01", "", "", total, fund.bank_account_id.aba_bsb or "", fund.bank_account_id.acc_number or "",
-            fund.bank_account_id.partner_id.name or "", "83914571673", "", "My Superstream Australian Company", "", "123456789", "", "",
+            fund.bank_account_id.partner_id.name or "", "83914571673", "", "My Superstream Australian Company", "", "123456789", "",
             "Federer", "Roger", "", "1", "1970-03-21", "RES", "Australian Street", "", "", "", "Sydney", "2000", "NSW", "AU", "roger@gmail.com", "123456789", "123456789", "", "odoo_f47ac10b_001",
             "", "", value.get('start_date'), value.get('end_date'), value.get('super_guarantee'), "", "", value.get('super_concessional'), "", "", "", "", "1975-01-01", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",
             "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "",

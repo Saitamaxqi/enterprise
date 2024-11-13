@@ -430,7 +430,6 @@ class L10n_AuSuperStreamLine(models.Model):
 
             # super fund member common [AH:BE] (24) (33 - 56)
             self.employee_id.l10n_au_tfn,
-            self.employee_id.work_contact_id.title.shortcut or "",
             "",
             ' '.join(self.employee_id.name.split(' ')[1:]),
             self.employee_id.name.split(' ')[0],

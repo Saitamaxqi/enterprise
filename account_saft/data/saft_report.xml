@@ -24,7 +24,6 @@
         </Address>
         <Contact t-foreach="partner_info['contacts']" t-as="partner_contact">
             <ContactPerson>
-                <Title t-if="partner_contact.title" t-out="partner_contact.title.name"/>
                 <FirstName t-out="'NotUsed'"/>
                 <LastName t-out="partner_contact.name[:35]"/>
             </ContactPerson>

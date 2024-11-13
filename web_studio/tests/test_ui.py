@@ -863,7 +863,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             "res_id": doesNotHaveGroup.id,
         })
 
-        self.patch(type(self.env["res.partner"]).title, "groups", hasGroupXmlId.complete_name)
+        self.patch(self.env.registry['res.partner'].color, "groups", hasGroupXmlId.complete_name)
 
         view = self.env["ir.ui.view"].create({
             "name": "simple view",
@@ -872,7 +872,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             "arch": '''
                 <list>
                     <field name="display_name"/>
-                    <field name="title" groups="{doesnothavegroup}" />
+                    <field name="color" groups="{doesnothavegroup}" />
                 </list>
             '''.format(doesnothavegroup=doesNotHaveGroupXmlId.complete_name)
         })
@@ -885,7 +885,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             "forbid": False,
         }])
 
-        xml_temp = E.field(name="title", groups=doesNotHaveGroupXmlId.complete_name, column_invisible="True", studio_groups=studio_groups)
+        xml_temp = E.field(name="color", groups=doesNotHaveGroupXmlId.complete_name, column_invisible="True", studio_groups=studio_groups)
 
         expected = '''
             <list>
@@ -904,7 +904,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             "arch": '''
                 <list>
                     <field name="display_name" />
-                    <field name="title" />
+                    <field name="color" />
                 </list>
             '''
         })
@@ -919,9 +919,9 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         expected = '''
             <list>
                 <field name="display_name"/>
-                <field name="title" invisible="{title_modifiers}"/>
+                <field name="color" invisible="{color_modifiers}"/>
              </list>
-        '''.format(title_modifiers="display_name == &quot;Robert&quot;")
+        '''.format(color_modifiers="display_name == &quot;Robert&quot;")
 
         assertViewArchEqual(self, arch, expected)
 
@@ -933,7 +933,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             "arch": '''
                 <list>
                     <field name="display_name" />
-                    <field name="title" />
+                    <field name="color" />
                 </list>
             '''
         })
@@ -948,7 +948,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         expected = '''
             <list default_group_by="active,city">
                 <field name="display_name"/>
-                <field name="title"/>
+                <field name="color"/>
              </list>
         '''
 
@@ -973,7 +973,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             "arch": '''
                 <data>
                 <xpath expr="//field[@name='name']" position="after">
-                    <field name="title" />
+                    <field name="color" />
                 </xpath>
                 </data>
             '''
@@ -986,7 +986,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         self.maxDiff = None
         assertViewArchEqual(self, studioView["arch"], '''
             <data>
-                <xpath expr="//field[@name='title']" position="after">
+                <xpath expr="//field[@name='color']" position="after">
                   <field name="website"/>
                 </xpath>
             </data>
@@ -2071,4 +2071,3 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
                 </xpath>
             </data>
         '''.format(html_field=html_field))
-

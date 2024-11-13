@@ -49,15 +49,11 @@ class AccountWinbooksImportWizard(models.TransientModel):
         _logger.info("Import Partner Infos")
         civility_data = {}
         category_data = {}
-        ResPartnerTitle = self.env['res.partner.title']
         ResPartnerCategory = self.env['res.partner.category']
         for rec in dbf_records:
             if rec.get('TTYPE') == 'CIVILITY':
                 shortcut = rec.get('TID')
-                title = ResPartnerTitle.search([('shortcut', '=', shortcut)], limit=1)
-                if not title:
-                    title = ResPartnerTitle.create({'shortcut': shortcut, 'name': rec.get('TDESC')})
-                civility_data[shortcut] = title.id
+                civility_data[shortcut] = shortcut
             elif rec.get('TTYPE').startswith('CAT'):
                 category = ResPartnerCategory.search([('name', '=', rec.get('TDESC'))], limit=1)
                 if not category:

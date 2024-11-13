@@ -229,7 +229,6 @@ DEFAULT_FIELDS_TO_EXCLUDE = {
     },
     "crm.lead": {
         "recurring_plan",
-        "title",
         "lost_reason_id",
         "duplicate_lead_ids",
         "lang_id",

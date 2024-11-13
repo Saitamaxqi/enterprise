@@ -593,3 +593,8 @@ class ResPartner(models.Model):
         invoice_online_payment = bool(self.env['ir.config_parameter'].sudo().get_param('account_payment.enable_portal_payment'))
         payment_method_available = bool(self.env['payment.method'].sudo().search_count([('active', '=', 'True')]))
         return invoice_online_payment and payment_method_available
+
+    def _avatar_get_placeholder_path(self):
+        if self.type == 'followup':
+            return "account_followup/static/img/cycle.png"
+        return super()._avatar_get_placeholder_path()

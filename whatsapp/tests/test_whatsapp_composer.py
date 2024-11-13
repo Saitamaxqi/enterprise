@@ -296,22 +296,18 @@ class WhatsAppComposerInternals(WhatsAppComposerCase, CronMixinCase):
             'country_id': self.env.ref('base.be').id,
             'mobile': '+32455001122',
             'name': 'Test Partner',
-            'title': False,
         })
 
         for (field_path, expected_value) in zip(
             [
                 # many2one with value
                 'country_id', 'country_id.name',
-                # many2one without value
-                'title', 'title.name',
                 # many2many
                 'category_id', 'category_id.color', 'category_id.partner_ids',
                 # integer without value
                 'color',
             ], [
                 'Belgium', 'Belgium',
-                '', '',
                 'Tag0 Tag1 Tag2', '0 1 2', 'Test Partner',
                 '0',
             ]
