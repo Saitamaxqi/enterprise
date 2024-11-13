@@ -22,12 +22,6 @@ This module provides the core of the Odoo Mobile App.
         'web.assets_unit_tests': [
             "web_mobile/static/tests/**/*.test.js",
         ],
-        'web.tests_assets': [
-            'web_mobile/static/tests/helpers/**/*',
-        ],
-        'web.qunit_mobile_suite_tests': [
-            'web_mobile/static/tests/*_mobile_tests.js',
-        ],
     },
     'installable': True,
     'auto_install': True,
