@@ -364,7 +364,8 @@ class TestRentalWizard(TestRentalCommon):
         """ Schedule should only display lots that are associated with
         rental order lines
         """
-        if self.env['ir.module.module'].search([('name', '=', 'purchase_stock')], limit=1):
+        self.env['res.company'].create_missing_rental_location()
+        if self.env['ir.module.module'].search([('name', '=', 'purchase_stock'), ('state', '=', 'installed')], limit=1):
             self.env.user._get_default_warehouse_id().buy_to_resupply = False
 
         rental_schedule = self.env['sale.rental.schedule']
