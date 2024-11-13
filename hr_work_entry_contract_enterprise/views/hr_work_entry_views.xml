@@ -25,9 +25,9 @@
                    default_group_by='employee_id'
                    decoration-secondary="state == 'validated'"
                    decoration-warning="state == 'conflict'"
-                   scales="day,week,month"
+                   scales="day,week,month,year"
                    default_range="month"
-                   precision="{'day': 'hour:quarter', 'week': 'day:half', 'month': 'day:half'}"
+                   precision="{'day': 'hour:quarter', 'week': 'day:half', 'month': 'day:half', 'year': 'day:full'}"
                    plan="0"
                    sample="1">
                 <templates>
