@@ -40,11 +40,6 @@ class AccountReconcileModel(models.Model):
         if not sale_orders and text_tokens:
             query = self.env['sale.order']._where_calc(domain)
 
-            additional_conditions = SQL(" OR ").join(
-                SQL("%s ~ sub.name", token.lower())
-                for token in text_tokens
-            )
-
             sale_order_ids = [r[0] for r in self.env.execute_query(SQL(
                 r'''
                     WITH sale_order_name AS (
@@ -56,11 +51,11 @@ class AccountReconcileModel(models.Model):
                     )
                     SELECT sub.id
                     FROM sale_order_name sub
-                    WHERE %s
+                    WHERE sub.name LIKE ANY(ARRAY[%s])
                 ''',
                 query.from_clause,
                 query.where_clause or SQL("TRUE"),
-                additional_conditions or SQL("TRUE"),
+                [[t.lower() for t in set(text_tokens)]],
             ))]
             if sale_order_ids:
                 sale_orders = sale_orders.browse(sale_order_ids)
