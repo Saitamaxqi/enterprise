@@ -1,9 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import time
-
 from datetime import datetime, timedelta
 from freezegun import freeze_time
-
+from markupsafe import Markup
 from odoo.addons.whatsapp.tests.common import WhatsAppCommon, MockIncomingWhatsApp
 from odoo.tests import tagged, users
 
@@ -114,11 +113,12 @@ class DiscussChannel(WhatsAppCommon, MockIncomingWhatsApp):
         with self.mockWhatsappGateway():
             new_msg = test_channel_wa.message_post(
                 author_id=test_channel_wa.whatsapp_partner_id.id,
-                body='TestBody',
+                body=Markup('<p>Line 1<br>Line 2</p>'),
                 message_type='whatsapp_message',
                 subtype_xmlid='mail.mt_comment',
             )
         wa_message = new_msg.wa_message_ids
+        self.assertEqual(self._wa_msg_sent_vals[0]['body'], "Line 1\nLine 2", "Mismatch body in `send_vals`")
         self.assertEqual(len(wa_message), 1)
         self.assertEqual(wa_message.message_type, 'outbound')
         self.assertEqual(wa_message.mobile_number, f'+{test_channel_wa.whatsapp_number}')

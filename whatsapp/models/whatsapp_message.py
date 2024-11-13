@@ -252,10 +252,7 @@ class WhatsappMessage(models.Model):
             msg_uid = False
             try:
                 parent_message_id = False
-                body = whatsapp_message.body
-                if isinstance(body, markupsafe.Markup):
-                    # If Body is in html format so we need to remove html tags before sending message.
-                    body = body.striptags()
+                body = html2plaintext(whatsapp_message.body)
                 number = whatsapp_message.mobile_number_formatted
                 if not number:
                     raise WhatsAppError(failure_type='phone_invalid')

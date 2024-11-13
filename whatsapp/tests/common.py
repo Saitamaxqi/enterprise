@@ -122,6 +122,7 @@ class MockOutgoingWhatsApp(common.BaseCase):
         self._wa_msg_sent_vals = []
         self._wa_document_store = {}
         self._wa_uploaded_document_count = 0
+        self._wa_msg_sent_vals = []
 
 
 class MockIncomingWhatsApp(common.HttpCase):
