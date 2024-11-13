@@ -1,13 +1,17 @@
 import { expect, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
-import { queryAll } from "@odoo/hoot-dom";
+import { queryAll, queryAllTexts, waitFor, waitForNone } from "@odoo/hoot-dom";
 import { Component, onMounted, xml } from "@odoo/owl";
 
 import {
     contains,
     defineModels,
     fields,
+    getService,
+    makeMockServer,
+    defineActions,
     models,
+    mountWithCleanup,
     onRpc,
     patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
@@ -15,17 +19,27 @@ import { registry } from "@web/core/registry";
 import { ImageField } from "@web/views/fields/image/image_field";
 import { charField } from "@web/views/fields/char/char_field";
 import { COMPUTED_DISPLAY_OPTIONS } from "@web_studio/client_action/view_editor/interactive_editor/properties/type_widget_properties/type_specific_and_computed_properties";
+import { mailModels } from "@mail/../tests/mail_test_helpers";
+import { WebClient } from "@web/webclient/webclient";
+import { WebClientEnterprise } from "@web_enterprise/webclient/webclient";
 
 import {
     mountViewEditor,
     createMockViewResult,
+    disableHookAnimation,
+    openStudio,
+    handleDefaultStudioRoutes,
 } from "@web_studio/../tests/view_editor_tests_utils";
 import { formEditor } from "@web_studio/client_action/view_editor/editors/form/form_editor";
+
+const R_DATASET_ROUTE = /\/web\/dataset\/call_(button|kw)\/[\w.-]+\/(?<step>\w+)/;
+const R_WEBCLIENT_ROUTE = /(?<step>\/web\/webclient\/\w+)/;
 
 class Coucou extends models.Model {
     display_name = fields.Char();
     m2o = fields.Many2one({ string: "Product", relation: "product" });
     char_field = fields.Char();
+    product_ids = fields.One2many({ string: "Products", relation: "product" });
 
     _records = [];
 }
@@ -45,11 +59,22 @@ class Partner extends models.Model {
 
 class Product extends models.Model {
     display_name = fields.Char();
+    m2m_employees = fields.Many2many({ string: "Partners", relation: "partner" });
+    m2o_partner = fields.Many2one({ string: "M2OPartner", relation: "partner" });
+    coucou_id = fields.Many2one({ string: "Coucou", relation: "coucou" });
+    partner_ids = fields.One2many({ string: "Partners", relation: "partner" });
+    toughness = fields.Selection({
+        string: "toughness",
+        selection: [
+            ["0", "Hard"],
+            ["1", "Harder"],
+        ],
+    });
 
     _records = [{ id: 1, display_name: "A very good product" }];
 }
 
-defineModels([Coucou, Product, Partner]);
+defineModels({ ...mailModels, Coucou, Product, Partner });
 
 test("Form editor should contains the view and the editor sidebar", async () => {
     await mountViewEditor({
@@ -830,4 +855,439 @@ test("CharField can edit its placeholder_field option", async () => {
                 "this options is not documented, because it does not make sense to edit this from studio",
         }
     );
+});
+
+test("form editor - chatter edition", async () => {
+    onRpc("/web_studio/get_email_alias", () => Promise.resolve({ email_alias: "coucou" }));
+    await mountViewEditor({
+        type: "form",
+        resModel: "coucou",
+        arch: /*xml*/ `
+            <form>
+                <sheet>
+                    <field name='display_name'/>
+                </sheet>
+                <chatter/>
+            </form>
+        `,
+        filterRegistry: false,
+    });
+    // click on the chatter
+    await contains(".o-mail-Form-chatter .o_web_studio_overlay").click();
+    expect(".o_web_studio_sidebar .nav-link.active").toHaveText("Properties", {
+        message: "the Properties tab should now be active",
+    });
+    await waitFor(".o_web_studio_sidebar input[name='email_alias']");
+    expect(".o_web_studio_sidebar input[name='email_alias']").toHaveValue("coucou", {
+        message: "the email alias in sidebar should be fetched",
+    });
+    await waitFor(".o-mail-Form-chatter.o-web-studio-editor--element-clicked");
+});
+
+test("disable creation(no_create options) in many2many_avatar_user and many2many_avatar_employee widget", async () => {
+    onRpc("/web_studio/edit_view", async (request) => {
+        const { params: args } = await request.json();
+        expect.step("edit_view");
+        expect(args.operations[0].new_attrs.options).toBe('{"no_create":true}');
+    });
+    await mountViewEditor({
+        type: "form",
+        resModel: "product",
+        arch: /*xml*/ `
+            <form>
+                <sheet>
+                    <group>
+                        <field name="m2m_employees" widget="many2many_avatar_user"/>
+                    </group>
+                </sheet>
+            </form>
+        `,
+    });
+    await contains(".o_field_many2many_avatar_user[name='m2m_employees']").click();
+    expect(".o_web_studio_sidebar #no_create").toHaveCount(1);
+    expect(".o_web_studio_sidebar #no_create:checked").toHaveCount(0);
+
+    await contains(".o_web_studio_sidebar #no_create").click();
+    expect.verifySteps(["edit_view"]);
+});
+
+test.tags("desktop")("edit one2many form view (2 level) and check chatter allowed", async () => {
+    Product._views = { "list,2": /*xml*/ `<list><field name='display_name'/></list>` };
+    Partner._views = { "list,false": /*xml*/ `<list><field name='display_name'/></list>` };
+    Coucou._views = {
+        "form,1": /*xml*/ `
+            <form>
+                <sheet>
+                    <field name='display_name'/>
+                    <field name='product_ids'>
+                        <form>
+                            <sheet>
+                                <group>
+                                    <field name='partner_ids'>
+                                        <form><sheet><group><field name='display_name'/></group></sheet></form>
+                                    </field>
+                                </group>
+                            </sheet>
+                        </form>
+                    </field>
+                </sheet>
+            </form>
+        `,
+        "list,false": /*xml*/ `<list></list>`,
+        "search,false": /*xml*/ `<search></search>`,
+    };
+    const { env: pyEnv } = await makeMockServer();
+    const partnerId = pyEnv["partner"].create({ display_name: "jean" });
+    const productId = pyEnv["product"].create({
+        display_name: "xpad",
+        partner_ids: [partnerId],
+    });
+    const coucouId1 = pyEnv["coucou"].create({
+        display_name: "Coucou 11",
+        product_ids: [productId],
+    });
+    defineActions([
+        {
+            xml_id: "studio.coucou_action",
+            name: "coucouAction",
+            res_model: "coucou",
+            res_id: coucouId1,
+            type: "ir.actions.act_window",
+            views: [[1, "form"]],
+        },
+    ]);
+    handleDefaultStudioRoutes();
+    onRpc("/web_studio/chatter_allowed", () => true);
+    onRpc("name_search", async ({ kwargs }) => {
+        expect(kwargs.args).toEqual(
+            [
+                ["relation", "=", "partner"],
+                ["ttype", "in", ["many2one", "many2many"]],
+                ["store", "=", true],
+            ],
+            {
+                message:
+                    "the domain should be correctly set when searching for a related field for new button",
+            }
+        );
+        return [[1, "Partner"]];
+    });
+    onRpc("/*", (request) => {
+        const route = new URL(request.url).pathname;
+        const match = route.match(R_DATASET_ROUTE) || route.match(R_WEBCLIENT_ROUTE);
+        const step = match?.groups?.step || route;
+        if (!["/mail/action", "/mail/data", "/hr_attendance/attendance_user_data"].includes(step)) {
+            expect.step(step);
+        }
+    });
+
+    await mountWithCleanup(WebClient);
+    await animationFrame();
+    expect.verifySteps(["/web/webclient/translations", "/web/webclient/load_menus"]);
+    await getService("action").doAction("studio.coucou_action");
+    expect.verifySteps(["/web/action/load", "get_views", "web_read"]);
+    await openStudio();
+    expect.verifySteps([
+        "get_views",
+        "/web_studio/chatter_allowed",
+        "/web_studio/get_studio_view_arch",
+        "web_read",
+    ]);
+    expect(".o_web_studio_add_chatter").toHaveCount(1);
+
+    await contains(".o_field_one2many").click();
+    expect.verifySteps(["/web_studio/get_default_value"]);
+
+    await contains('.o_web_studio_editX2Many[data-type="form"]').click();
+    await waitForNone(".o_web_studio_add_chatter");
+    expect.verifySteps(["fields_get", "get_views", "web_read"]);
+
+    await contains(".o_field_one2many").click();
+    expect.verifySteps(["/web_studio/get_default_value"]);
+
+    await contains('.o_web_studio_editX2Many[data-type="form"]').click();
+    expect.verifySteps(["fields_get", "web_read"]);
+    expect(".o_field_char").toHaveText("jean", {
+        message: "the partner view form should be displayed.",
+    });
+
+    disableHookAnimation();
+    await contains(".o_web_studio_field_char").dragAndDrop(".o_inner_group .o_web_studio_hook");
+    expect.verifySteps(["/web_studio/edit_view"]);
+
+    // add a new button
+    await contains(".o_web_studio_button_hook").click();
+    expect.verifySteps([]);
+
+    await contains(".o_input_dropdown input").click();
+    expect.verifySteps(["name_search"]);
+
+    await contains(".o_web_studio_new_button_dialog li a").click();
+    expect(".o_web_studio_new_button_dialog .o-autocomplete--input").toHaveValue("Partner");
+});
+
+test.tags("desktop")("edit one2many list view that uses parent key [REQUIRE FOCUS]", async () => {
+    Product._views = { "list,2": /*xml*/ `<list><field name='display_name'/></list>` };
+    Coucou._views = {
+        "form,1": /*xml*/ `
+            <form>
+                <sheet>
+                    <field name='display_name'/>
+                    <field name='product_ids'>
+                        <form>
+                            <sheet>
+                                <field name="m2o_partner"
+                                    invisible="parent.display_name == 'coucou'"
+                                    domain="[('display_name', '=', parent.display_name)]" />
+                            </sheet>
+                        </form>
+                    </field>
+                </sheet>
+            </form>
+        `,
+        "search,false": /*xml*/ `<search></search>`,
+    };
+    const { env: pyEnv } = await makeMockServer();
+    const partnerId = pyEnv["partner"].create({ display_name: "jacques" });
+    const productId = pyEnv["product"].create({
+        display_name: "xpad",
+        m2o_partner: partnerId,
+    });
+    const coucouId1 = pyEnv["coucou"].create({
+        display_name: "Coucou 11",
+        product_ids: [productId],
+    });
+    defineActions([
+        {
+            xml_id: "studio.coucou_action",
+            name: "coucouAction",
+            res_model: "coucou",
+            res_id: coucouId1,
+            type: "ir.actions.act_window",
+            views: [[1, "form"]],
+        },
+    ]);
+    handleDefaultStudioRoutes();
+    onRpc("/web_studio/edit_view", async (request) => {
+        const { params } = await request.json();
+        expect(params.operations[0].new_attrs).toEqual({ invisible: "False" });
+        expect.step("edit_view");
+    });
+
+    await mountWithCleanup(WebClientEnterprise);
+    await animationFrame();
+    await getService("action").doAction("studio.coucou_action");
+    await openStudio();
+    // edit the x2m form view
+    await contains(".o_field_one2many").click();
+    await contains('.o_web_studio_editX2Many[data-type="form"]').click();
+    expect(".o_field_widget[name='m2o_partner']").toHaveText("jacques", {
+        message: "the x2m form view should be correctly rendered",
+    });
+
+    await contains('.o_field_widget[name="m2o_partner"]').click();
+    // open the domain editor
+    await waitForNone(".modal");
+    expect(".o_web_studio_sidebar input#domain").toHaveValue(
+        "[('display_name', '=', parent.display_name)]"
+    );
+
+    await contains(".o_web_studio_sidebar input#domain").click();
+    expect(".modal .modal-body").toHaveText(
+        "Match\nall\nof the following rules:\nDisplay name\n=\n!=\ncontains\ndoes not contain\nis in\nis not in\nis set\nis not set\nstarts with\nends with\nparent.display_name\nNew Rule"
+    );
+
+    // Close the modal and remove the domain on invisible attr
+    await contains(".btn-close").click();
+    await contains("#invisible").click();
+    expect.verifySteps(["edit_view"]);
+});
+
+test.tags("desktop")("move a field in one2many list", async () => {
+    Coucou._views = {
+        "form,1": /*xml*/ `
+            <form>
+                <sheet>
+                    <field name='display_name'/>
+                    <field name='product_ids'>
+                        <list>
+                            <field name='m2o_partner'/>
+                            <field name='coucou_id'/>
+                        </list>
+                    </field>
+                </sheet>
+            </form>
+        `,
+        "search,false": /*xml*/ `<search></search>`,
+    };
+    const { env: pyEnv } = await makeMockServer();
+    const coucouId1 = pyEnv["coucou"].create({
+        display_name: "Coucou 11",
+        product_ids: pyEnv["product"].search([["display_name", "=", "xpad"]]),
+    });
+    defineActions([
+        {
+            xml_id: "studio.coucou_action",
+            name: "coucouAction",
+            res_model: "coucou",
+            res_id: coucouId1,
+            type: "ir.actions.act_window",
+            views: [[1, "form"]],
+        },
+    ]);
+    handleDefaultStudioRoutes();
+    onRpc("/web_studio/edit_view", async (request) => {
+        const { params } = await request.json();
+        expect.step("edit_view");
+        expect(params.operations[0]).toEqual({
+            node: {
+                tag: "field",
+                attrs: { name: "coucou_id" },
+                subview_xpath: "/form[1]/sheet[1]/field[2]/list[1]",
+                xpath_info: [
+                    {
+                        indice: 1,
+                        tag: "list",
+                    },
+                    {
+                        indice: 2,
+                        tag: "field",
+                    },
+                ],
+            },
+            position: "before",
+            target: {
+                tag: "field",
+                attrs: { name: "m2o_partner" },
+                subview_xpath: "/form[1]/sheet[1]/field[2]/list[1]",
+                xpath_info: [
+                    {
+                        indice: 1,
+                        tag: "list",
+                    },
+                    {
+                        indice: 1,
+                        tag: "field",
+                    },
+                ],
+            },
+            type: "move",
+        });
+    });
+
+    await mountWithCleanup(WebClientEnterprise);
+    await animationFrame();
+    await getService("action").doAction("studio.coucou_action");
+    await openStudio();
+    // edit the x2m form view
+    await contains(".o_field_one2many").click();
+    await contains('.o_web_studio_editX2Many[data-type="list"]').click();
+    expect(queryAllTexts(".o_web_studio_list_view_editor th.o_column_sortable")).toEqual([
+        "M2OPartner",
+        "Coucou",
+    ]);
+
+    // move coucou at index 0
+    await contains(".o_web_studio_list_view_editor th:contains('coucou')").dragAndDrop(
+        "th.o_web_studio_hook"
+    );
+    expect.verifySteps(["edit_view"]);
+});
+
+test.tags("desktop")("One2Many list editor column_invisible in attrs ", async () => {
+    Coucou._views = {
+        "form,1": /*xml*/ `
+            <form>
+                <field name='product_ids'>
+                    <list>
+                        <field name="display_name" column_invisible="not parent.id" />
+                    </list>
+                </field>
+            </form>
+        `,
+        "search,false": /*xml*/ `<search></search>`,
+    };
+    const { env: pyEnv } = await makeMockServer();
+    pyEnv["coucou"].create({
+        display_name: "Coucou 11",
+        product_ids: pyEnv["product"].search([["display_name", "=", "xpad"]]),
+    });
+    defineActions([
+        {
+            xml_id: "studio.coucou_action",
+            name: "coucouAction",
+            res_model: "coucou",
+            type: "ir.actions.act_window",
+            views: [[1, "form"]],
+        },
+    ]);
+    handleDefaultStudioRoutes();
+    onRpc("/web_studio/edit_view", async (request) => {
+        const { params } = await request.json();
+        expect.step("edit_view");
+        expect(params.operations[0].new_attrs).toEqual({ readonly: "True" });
+    });
+
+    await mountWithCleanup(WebClientEnterprise);
+    await animationFrame();
+    await getService("action").doAction("studio.coucou_action");
+    await openStudio();
+    // Enter edit mode of the O2M
+    await contains(".o_field_one2many[name=product_ids]").click();
+    await contains('.o_web_studio_editX2Many[data-type="list"]').click();
+    await contains(".o_web_studio_sidebar .nav-link:contains('View')").click();
+    await contains(".o_web_studio_sidebar input#show_invisible").click();
+    // select the first column
+    await contains("thead th[data-studio-xpath]").click();
+    // enable readonly
+    await contains(".o_web_studio_sidebar input#readonly").click();
+    expect.verifySteps(["edit_view"]);
+});
+
+test.tags("desktop")("One2Many form datapoint doesn't contain the parent datapoint", async () => {
+    /*
+     * OPW-2125214
+     * When editing a child o2m form with studio, the fields_get method tries to load
+     * the parent fields too. This is not allowed anymore by the ORM.
+     * It happened because, before, the child datapoint contained the parent datapoint's data
+     */
+    Coucou._views = {
+        "form,1": /*xml*/ `
+            <form>
+                <field name='product_ids'>
+                    <form>
+                        <field name="display_name" />
+                        <field name="toughness" />
+                    </form>
+                </field>
+            </form>
+        `,
+        "search,false": /*xml*/ `<search></search>`,
+    };
+    Product._views = {
+        "list,2": /*xml*/ `<list><field name="display_name" /></list>`,
+    };
+    const { env: pyEnv } = await makeMockServer();
+    const coucouId1 = pyEnv["coucou"].create({ display_name: "Coucou 11" });
+    defineActions([
+        {
+            xml_id: "studio.coucou_action",
+            name: "coucouAction",
+            res_model: "coucou",
+            res_id: coucouId1,
+            type: "ir.actions.act_window",
+            views: [[1, "form"]],
+        },
+    ]);
+    handleDefaultStudioRoutes();
+    onRpc("product", "onchange", ({ args }) => {
+        expect(Object.keys(args[3])).toEqual(["display_name", "toughness"]);
+    });
+
+    await mountWithCleanup(WebClientEnterprise);
+    await animationFrame();
+    await getService("action").doAction("studio.coucou_action");
+    await openStudio();
+    await contains(".o_field_one2many").click();
+    await contains('.o_web_studio_editX2Many[data-type="form"]').click();
 });

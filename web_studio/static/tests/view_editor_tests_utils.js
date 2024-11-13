@@ -1,10 +1,17 @@
 import { Component, useSubEnv, xml } from "@odoo/owl";
 import { getFixture } from "@odoo/hoot";
+import { waitFor } from "@odoo/hoot-dom";
 
 import { MainComponentsContainer } from "@web/core/main_components_container";
 import { registry } from "@web/core/registry";
 import { getMockEnv } from "@web/../tests/_framework/env_test_helpers";
-import { MockServer, mountWithCleanup, makeMockEnv, onRpc } from "@web/../tests/web_test_helpers";
+import {
+    contains,
+    MockServer,
+    mountWithCleanup,
+    makeMockEnv,
+    onRpc,
+} from "@web/../tests/web_test_helpers";
 import { getDefaultConfig } from "@web/views/view";
 import { parseViewProps } from "@web/../tests/_framework/view_test_helpers";
 import { useService } from "@web/core/utils/hooks";
@@ -80,7 +87,7 @@ export function disableHookAnimation() {
     });
 }
 
-function makeMockRPC() {
+export function handleDefaultStudioRoutes() {
     onRpc("/web_studio/activity_allowed", () => false);
     onRpc("/web_studio/chatter_allowed", () => false);
     onRpc("/web_studio/edit_view", () => {});
@@ -104,7 +111,7 @@ export async function mountViewEditor(params) {
     const config = { ...getDefaultConfig(), ...params.config };
     params.viewId = params.viewId || 99999999;
 
-    prepareRegistry();
+    prepareRegistry(params.filterRegistry ?? true);
     const env = params.env || getMockEnv() || (await makeMockEnv({ config }));
 
     if (params.type && params.arch) {
@@ -112,7 +119,7 @@ export async function mountViewEditor(params) {
         actionToEdit.views = [[params.viewId, params.type]];
     }
 
-    makeMockRPC();
+    handleDefaultStudioRoutes();
 
     env.services.studio.setParams({
         viewType: params.type,
@@ -128,9 +135,13 @@ export async function mountViewEditor(params) {
     });
 }
 
-function prepareRegistry() {
+function prepareRegistry(filterRegistry) {
     registry.category("main_components").remove("mail.ChatHub");
     registry.category("main_components").remove("discuss.CallInvitations");
+    serviceRegistry.add("messaging", makeFakeMessagingService());
+    if (!filterRegistry) {
+        return;
+    }
     const REQUIRED_SERVICES = [
         "mail.popout",
         "title",
@@ -158,7 +169,6 @@ function prepareRegistry() {
             serviceRegistry.remove(e);
         }
     });
-    serviceRegistry.add("messaging", makeFakeMessagingService());
 }
 
 function makeFakeMessagingService() {
@@ -194,4 +204,17 @@ function makeFakeMessagingService() {
             return service;
         },
     };
+}
+
+export async function openStudio(params = {}) {
+    await contains(".o_main_navbar .o_web_studio_navbar_item button").click();
+    if (params.noEdit) {
+        await contains(".o_menu_sections a").click();
+        await waitFor(".o_web_studio_views");
+    }
+    if (params.report) {
+        await contains(".o_menu_sections a:eq(1)").click();
+        await contains(`.o_kanban_record [data-id="${params.report}"`).click();
+        await waitFor(".o_web_studio_report_editor_manager");
+    }
 }

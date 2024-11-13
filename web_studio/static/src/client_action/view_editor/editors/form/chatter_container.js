@@ -1,4 +1,5 @@
 import { Chatter } from "@mail/chatter/web_portal/chatter";
+import "@mail/chatter/web/chatter_patch";
 
 import { Component } from "@odoo/owl";
 
