@@ -838,6 +838,197 @@ result = payroll_deduction * payslip.sum_worked_hours * xp_factor
         <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
     </record>
 
+    <record id="l10n_us_employee_co_famli" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_taxes"/>
+        <field name="name">CO FAMLI - Family and Medical Leave Insurance Program</field>
+        <field name="code">COFAMLI</field>
+        <field name="sequence">166</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = employee.address_id.state_id.code == 'CO'</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+taxable = categories['GROSS']
+year_payslips = contract.env['hr.payslip'].search([
+    ('employee_id', '=', employee.id),
+    ('state', 'in', ['done', 'paid']),
+    ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
+    ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
+    ('company_id', '=', contract.company_id.id),
+])
+line_values = year_payslips._get_line_values(['GROSS'], vals_list=['amount'], compute_sum=True)
+previous_amounts = line_values['GROSS']['sum']['amount']
+cap = payslip._rule_parameter('l10n_us_OASDI_cap')
+if previous_amounts &gt; cap:
+    result = 0
+else:
+    result = min(cap - previous_amounts, taxable)
+result_rate = payslip._rule_parameter('l10n_us_co_famli_rate')
+        </field>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+        <field name="partner_id" ref="res_partner_revenue_co"/>
+    </record>
+
+    <record id="l10n_us_employee_co_opt_aurora" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_taxes"/>
+        <field name="name">CO OPT Aurora</field>
+        <field name="code">COOPTAURORA</field>
+        <field name="sequence">166</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result = employee.address_id.state_id.code == 'CO' and employee.address_id.city == 'Aurora'
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = -payslip._rule_parameter('l10n_us_co_opt_aurora') * 12 / contract._get_salary_costs_factor()
+        </field>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+        <field name="partner_id" ref="res_partner_finance_department_aurora"/>
+    </record>
+
+    <record id="l10n_us_employee_co_opt_denver" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_taxes"/>
+        <field name="name">CO OPT Denver</field>
+        <field name="code">COOPTDENVER</field>
+        <field name="sequence">166</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result = employee.address_id.state_id.code == 'CO' and employee.address_id.city == 'Denver'
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = -payslip._rule_parameter('l10n_us_co_opt_denver') * 12 / contract._get_salary_costs_factor()
+        </field>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+        <field name="partner_id" ref="res_partner_treasury_division_denver"/>
+    </record>
+
+    <record id="l10n_us_employee_co_opt_glendale" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_taxes"/>
+        <field name="name">CO OPT Glendale</field>
+        <field name="code">COOPTGLENDALE</field>
+        <field name="sequence">166</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result = employee.address_id.state_id.code == 'CO' and employee.address_id.city == 'Glendale'
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = -payslip._rule_parameter('l10n_us_co_opt_glendale') * 12 / contract._get_salary_costs_factor()
+        </field>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+        <field name="partner_id" ref="res_partner_finance_department_glendale"/>
+    </record>
+
+    <record id="l10n_us_employee_co_opt_greenwood_village" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_taxes"/>
+        <field name="name">CO OPT Greenwood Village</field>
+        <field name="code">COOPTGREENWOODVILLAGE</field>
+        <field name="sequence">166</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result = employee.address_id.state_id.code == 'CO' and employee.address_id.city == 'Greenwood Village'
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = -payslip._rule_parameter('l10n_us_co_opt_greenwood_village') * 12 / contract._get_salary_costs_factor()
+        </field>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+        <field name="partner_id" ref="res_partner_greenwood_village"/>
+    </record>
+
+    <record id="l10n_us_employee_co_opt_sheridan" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_taxes"/>
+        <field name="name">CO OPT Sheridan</field>
+        <field name="code">COOPTSHERIDAN</field>
+        <field name="sequence">166</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">
+result = employee.address_id.state_id.code == 'CO' and employee.address_id.city == 'Sheridan'
+        </field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = -payslip._rule_parameter('l10n_us_co_opt_sheridan') * 12 / contract._get_salary_costs_factor()
+        </field>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+        <field name="partner_id" ref="res_partner_finance_department_sheridan"/>
+    </record>
+
+    <record id="l10n_us_employee_wa_pfml_family_share" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_taxes"/>
+        <field name="name">WA PFML - Employee Family Share</field>
+        <field name="code">WAPFMLFAMILY</field>
+        <field name="sequence">166</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = employee.address_id.state_id.code == 'WA'</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+taxable = categories['GROSS']
+year_payslips = contract.env['hr.payslip'].search([
+    ('employee_id', '=', employee.id),
+    ('state', 'in', ['done', 'paid']),
+    ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
+    ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
+    ('company_id', '=', contract.company_id.id),
+])
+line_values = year_payslips._get_line_values(['GROSS'], vals_list=['amount'], compute_sum=True)
+previous_amounts = line_values['GROSS']['sum']['amount']
+cap = payslip._rule_parameter('l10n_us_OASDI_cap')
+if previous_amounts &gt; cap:
+    result = 0
+else:
+    result = min(cap - previous_amounts, taxable)
+result_rate = payslip._rule_parameter('l10n_us_wa_pfml_family_rate')
+        </field>
+        <field name="partner_id" ref="res_partner_esd_wa"/>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+    </record>
+
+    <record id="l10n_us_employee_wa_pfml_medical_share" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_taxes"/>
+        <field name="name">WA PFML - Employee Medical Share</field>
+        <field name="code">WAPFMLMEDICAL</field>
+        <field name="sequence">166</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = employee.address_id.state_id.code == 'WA'</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+taxable = categories['GROSS']
+year_payslips = contract.env['hr.payslip'].search([
+    ('employee_id', '=', employee.id),
+    ('state', 'in', ['done', 'paid']),
+    ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
+    ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
+    ('company_id', '=', contract.company_id.id),
+])
+line_values = year_payslips._get_line_values(['GROSS'], vals_list=['amount'], compute_sum=True)
+previous_amounts = line_values['GROSS']['sum']['amount']
+cap = payslip._rule_parameter('l10n_us_OASDI_cap')
+if previous_amounts &gt; cap:
+    result = 0
+else:
+    result = min(cap - previous_amounts, taxable)
+result_rate = payslip._rule_parameter('l10n_us_wa_pfml_medical_rate')
+        </field>
+        <field name="partner_id" ref="res_partner_esd_wa"/>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+    </record>
+
+    <record id="l10n_us_employee_wa_cares_fund" model="hr.salary.rule">
+        <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_taxes"/>
+        <field name="name">WA Cares Fund</field>
+        <field name="code">WACARESFUND</field>
+        <field name="sequence">166</field>
+        <field name="condition_select">python</field>
+        <field name="condition_python">result = employee.address_id.state_id.code == 'WA'</field>
+        <field name="amount_select">code</field>
+        <field name="amount_python_compute">
+result = categories['GROSS']
+result_rate = - payslip._rule_parameter('l10n_us_wa_cares_fund_rate')
+        </field>
+        <field name="partner_id" ref="res_partner_social_health_department_wa"/>
+        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
+    </record>
+
     <record id="l10n_us_employee_salary_roth_401k" model="hr.salary.rule">
         <field name="category_id" ref="l10n_us_hr_payroll.hr_payroll_post_tax_deductions"/>
         <field name="name">Roth 401(k)</field>
@@ -868,197 +1059,6 @@ else:
     result = min(cap - already_done, amount_ROTH401K)
 result = -result
         </field>
-        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
-    </record>
-
-    <record id="l10n_us_employee_co_famli" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">CO FAMLI - Family and Medical Leave Insurance Program</field>
-        <field name="code">COFAMLI</field>
-        <field name="sequence">172</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">result = employee.address_id.state_id.code == 'CO'</field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-taxable = categories['GROSS']
-year_payslips = contract.env['hr.payslip'].search([
-    ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
-    ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
-    ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
-    ('company_id', '=', contract.company_id.id),
-])
-line_values = year_payslips._get_line_values(['GROSS'], vals_list=['amount'], compute_sum=True)
-previous_amounts = line_values['GROSS']['sum']['amount']
-cap = payslip._rule_parameter('l10n_us_OASDI_cap')
-if previous_amounts &gt; cap:
-    result = 0
-else:
-    result = min(cap - previous_amounts, taxable)
-result_rate = payslip._rule_parameter('l10n_us_co_famli_rate')
-        </field>
-        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
-        <field name="partner_id" ref="res_partner_revenue_co"/>
-    </record>
-
-    <record id="l10n_us_employee_co_opt_aurora" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">CO OPT Aurora</field>
-        <field name="code">COOPTAURORA</field>
-        <field name="sequence">172</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">
-result = employee.address_id.state_id.code == 'CO' and employee.address_id.city == 'Aurora'
-        </field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-result = -payslip._rule_parameter('l10n_us_co_opt_aurora') * 12 / contract._get_salary_costs_factor()
-        </field>
-        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
-        <field name="partner_id" ref="res_partner_finance_department_aurora"/>
-    </record>
-
-    <record id="l10n_us_employee_co_opt_denver" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">CO OPT Denver</field>
-        <field name="code">COOPTDENVER</field>
-        <field name="sequence">172</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">
-result = employee.address_id.state_id.code == 'CO' and employee.address_id.city == 'Denver'
-        </field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-result = -payslip._rule_parameter('l10n_us_co_opt_denver') * 12 / contract._get_salary_costs_factor()
-        </field>
-        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
-        <field name="partner_id" ref="res_partner_treasury_division_denver"/>
-    </record>
-
-    <record id="l10n_us_employee_co_opt_glendale" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">CO OPT Glendale</field>
-        <field name="code">COOPTGLENDALE</field>
-        <field name="sequence">172</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">
-result = employee.address_id.state_id.code == 'CO' and employee.address_id.city == 'Glendale'
-        </field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-result = -payslip._rule_parameter('l10n_us_co_opt_glendale') * 12 / contract._get_salary_costs_factor()
-        </field>
-        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
-        <field name="partner_id" ref="res_partner_finance_department_glendale"/>
-    </record>
-
-    <record id="l10n_us_employee_co_opt_greenwood_village" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">CO OPT Greenwood Village</field>
-        <field name="code">COOPTGREENWOODVILLAGE</field>
-        <field name="sequence">172</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">
-result = employee.address_id.state_id.code == 'CO' and employee.address_id.city == 'Greenwood Village'
-        </field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-result = -payslip._rule_parameter('l10n_us_co_opt_greenwood_village') * 12 / contract._get_salary_costs_factor()
-        </field>
-        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
-        <field name="partner_id" ref="res_partner_greenwood_village"/>
-    </record>
-
-    <record id="l10n_us_employee_co_opt_sheridan" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">CO OPT Sheridan</field>
-        <field name="code">COOPTSHERIDAN</field>
-        <field name="sequence">172</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">
-result = employee.address_id.state_id.code == 'CO' and employee.address_id.city == 'Sheridan'
-        </field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-result = -payslip._rule_parameter('l10n_us_co_opt_sheridan') * 12 / contract._get_salary_costs_factor()
-        </field>
-        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
-        <field name="partner_id" ref="res_partner_finance_department_sheridan"/>
-    </record>
-
-    <record id="l10n_us_employee_wa_pfml_family_share" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">WA PFML - Employee Family Share</field>
-        <field name="code">WAPFMLFAMILY</field>
-        <field name="sequence">172</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">result = employee.address_id.state_id.code == 'WA'</field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-taxable = categories['GROSS']
-year_payslips = contract.env['hr.payslip'].search([
-    ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
-    ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
-    ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
-    ('company_id', '=', contract.company_id.id),
-])
-line_values = year_payslips._get_line_values(['GROSS'], vals_list=['amount'], compute_sum=True)
-previous_amounts = line_values['GROSS']['sum']['amount']
-cap = payslip._rule_parameter('l10n_us_OASDI_cap')
-if previous_amounts &gt; cap:
-    result = 0
-else:
-    result = min(cap - previous_amounts, taxable)
-result_rate = payslip._rule_parameter('l10n_us_wa_pfml_family_rate')
-        </field>
-        <field name="partner_id" ref="res_partner_esd_wa"/>
-        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
-    </record>
-
-    <record id="l10n_us_employee_wa_pfml_medical_share" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">WA PFML - Employee Medical Share</field>
-        <field name="code">WAPFMLMEDICAL</field>
-        <field name="sequence">172</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">result = employee.address_id.state_id.code == 'WA'</field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-taxable = categories['GROSS']
-year_payslips = contract.env['hr.payslip'].search([
-    ('employee_id', '=', employee.id),
-    ('state', 'in', ['done', 'paid']),
-    ('date_from', '&gt;=', payslip.date_from + relativedelta(day=1, month=1)),
-    ('date_to', '&lt;=', payslip.date_from + relativedelta(days=-1)),
-    ('company_id', '=', contract.company_id.id),
-])
-line_values = year_payslips._get_line_values(['GROSS'], vals_list=['amount'], compute_sum=True)
-previous_amounts = line_values['GROSS']['sum']['amount']
-cap = payslip._rule_parameter('l10n_us_OASDI_cap')
-if previous_amounts &gt; cap:
-    result = 0
-else:
-    result = min(cap - previous_amounts, taxable)
-result_rate = payslip._rule_parameter('l10n_us_wa_pfml_medical_rate')
-        </field>
-        <field name="partner_id" ref="res_partner_esd_wa"/>
-        <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
-    </record>
-
-    <record id="l10n_us_employee_wa_cares_fund" model="hr.salary.rule">
-        <field name="category_id" ref="hr_payroll.DED"/>
-        <field name="name">WA Cares Fund</field>
-        <field name="code">WACARESFUND</field>
-        <field name="sequence">172</field>
-        <field name="condition_select">python</field>
-        <field name="condition_python">result = employee.address_id.state_id.code == 'WA'</field>
-        <field name="amount_select">code</field>
-        <field name="amount_python_compute">
-result = categories['GROSS']
-result_rate = - payslip._rule_parameter('l10n_us_wa_cares_fund_rate')
-        </field>
-        <field name="partner_id" ref="res_partner_social_health_department_wa"/>
         <field name="struct_id" ref="l10n_us_hr_payroll.hr_payroll_structure_us_employee_salary"/>
     </record>
 
