@@ -1808,10 +1808,17 @@ class DocumentsDocument(models.Model):
     def _pdf_split(self, new_files=None, open_files=None, vals=None):
         vals = vals or {}
         new_attachments = self.env['ir.attachment']._pdf_split(new_files=new_files, open_files=open_files)
-
-        return self.create([
+        new_documents = self.create([
             dict(vals, attachment_id=attachment.id) for attachment in new_attachments
         ])
+        # Prevent concurrent update error on accessing these documents for the first time on exiting the split tool
+        env_partner = self.env.user.partner_id
+        documents_not_member = new_documents.filtered(lambda d: env_partner not in d.access_ids.partner_id)
+        self.env['documents.access'].sudo().create([
+            {'document_id': doc.id, 'partner_id': env_partner.id, 'last_access_date': fields.Datetime.now()}
+            for doc in documents_not_member
+        ])
+        return new_documents
 
     @api.model
     def search_panel_select_range(self, field_name, **kwargs):
