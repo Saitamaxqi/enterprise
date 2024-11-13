@@ -131,7 +131,7 @@ class ProjectProject(models.Model):
                 budget_data['action'] = {
                     'name': 'action_view_budget_lines',
                     'type': 'object',
-                    'domain': json.dumps([('id', 'in', budget_data.pop('ids'))]),
+                    'args': json.dumps([[('id', 'in', budget_data.pop('ids'))]]),
                 }
 
         can_add_budget = with_action and self.env.user.has_group('account.group_account_user')
