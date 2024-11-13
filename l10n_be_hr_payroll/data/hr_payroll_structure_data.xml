@@ -110,7 +110,6 @@
         <field name="type_id" ref="hr_contract.structure_type_employee_cp200"/>
         <field name="unpaid_work_entry_type_ids" eval="[
             (4, ref('hr_work_entry_contract.work_entry_type_unpaid_leave')),
-            (4, ref('l10n_be_hr_payroll.work_entry_type_unpredictable')),
             (4, ref('l10n_be_hr_payroll.work_entry_type_long_sick')),
             (4, ref('l10n_be_hr_payroll.work_entry_type_part_sick')),
             (4, ref('l10n_be_hr_payroll.work_entry_type_notice')),
