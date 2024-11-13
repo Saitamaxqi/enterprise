@@ -10,6 +10,7 @@ from odoo import api, Command, fields, models, _
 from odoo.exceptions import ValidationError
 from odoo.osv import expression
 from odoo.tools import float_round
+from odoo.tools.misc import unquote
 from odoo.addons.rating.models.rating_data import RATING_LIMIT_MIN
 from odoo.addons.web.controllers.utils import clean_action
 
@@ -53,7 +54,7 @@ class HelpdeskTeam(models.Model):
         ('balanced', 'Each user has an equal number of open tickets')],
         string='Assignment Method', default='randomly', required=True,
         help="New tickets will automatically be assigned to the team members that are available, according to their working hours and their time off.")
-    member_ids = fields.Many2many('res.users', string='Team Members', domain=lambda self: [('groups_id', 'in', self.env.ref('helpdesk.group_helpdesk_user').id)],
+    member_ids = fields.Many2many('res.users', string='Team Members', domain=lambda self: str([('groups_id', 'in', self.env.ref('helpdesk.group_helpdesk_user').id), ('company_ids', 'in', unquote('company_id'))]),
         default=lambda self: self.env.user, required=True)
     privacy_visibility = fields.Selection([
         ('invited_internal', 'Invited internal users (private)'),
