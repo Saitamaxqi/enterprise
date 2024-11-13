@@ -105,8 +105,8 @@ class AccountReport(models.AbstractModel):
             return
 
         project_plan, other_plans = self.env['account.analytic.plan']._get_all_plans()
-        analytic_cols = ", ".join(n._column_name() for n in (project_plan + other_plans))
-        analytic_distribution_equivalent = SQL(f'to_jsonb(UNNEST(ARRAY[account_analytic_line.{analytic_cols}]))')
+        analytic_cols = SQL(", ").join(SQL('"account_analytic_line".%s', SQL.identifier(n._column_name())) for n in (project_plan + other_plans))
+        analytic_distribution_equivalent = SQL('to_jsonb(UNNEST(ARRAY[%s]))', analytic_cols)
 
         change_equivalence_dict = {
             'id': SQL("account_analytic_line.id"),
@@ -127,7 +127,7 @@ class AccountReport(models.AbstractModel):
 
         for aml_field in all_stored_aml_fields:
             if aml_field not in change_equivalence_dict:
-                change_equivalence_dict[aml_field] = SQL(f"account_move_line.{aml_field}")
+                change_equivalence_dict[aml_field] = SQL('"account_move_line".%s', SQL.identifier(aml_field))
 
         stored_aml_fields, fields_to_insert = self.env['account.move.line']._prepare_aml_shadowing_for_report(change_equivalence_dict)
 
