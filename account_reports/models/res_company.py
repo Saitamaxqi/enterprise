@@ -272,8 +272,9 @@ class ResCompany(models.Model):
         self.ensure_one()
         tax_closing_activity_type = self.env.ref('account_reports.tax_closing_activity_type')
         return self._get_tax_closing_journal().activity_ids.filtered(
-            lambda act: act.activity_type_id == tax_closing_activity_type and act.account_tax_closing_params['report_id'] == report_id
-                and fields.Date.from_string(act.account_tax_closing_params['tax_closing_end_date']) == period_end and act.account_tax_closing_params['fpos_id'] == fpos_id
+            lambda act: act.account_tax_closing_params and (act.activity_type_id == tax_closing_activity_type and act.account_tax_closing_params['report_id'] == report_id
+                                                            and fields.Date.from_string(act.account_tax_closing_params['tax_closing_end_date']) == period_end
+                                                            and act.account_tax_closing_params['fpos_id'] == fpos_id)
         )
 
     def _get_tax_closing_move_description(self, periodicity, period_start, period_end, fiscal_position, report):
