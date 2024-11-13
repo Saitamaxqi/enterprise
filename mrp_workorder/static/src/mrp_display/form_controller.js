@@ -9,8 +9,8 @@ export class ShopFloorFormController extends FormController {
     static props = {
         ...FormController.props,
         qualityCheckDone: { type: Function | Boolean, optional: true },
-        openPreviousCheck: { type: Function, optional: true },
-        openNextCheck: { type: Function, optional: true },
+        openPreviousCheck: { type: Function | Boolean, optional: true },
+        openNextCheck: { type: Function | Boolean, optional: true },
     };
 
     setup() {

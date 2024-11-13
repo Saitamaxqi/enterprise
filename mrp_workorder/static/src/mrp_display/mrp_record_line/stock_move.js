@@ -76,20 +76,7 @@ export class StockMove extends Component {
     }
 
     async clicked() {
-        if (this.props.displayInstruction) {
-            return this.props.displayInstruction();
-        }
-        const action = await this.props.record.model.orm.call(
-            this.resModel,
-            "action_show_details",
-            [this.resId]
-        );
-        const options = {
-            onClose: async () => {
-                this.props.record.load();
-            },
-        };
-        this.props.record.model.action.doAction(action, options);
+        this.props.displayInstruction();
     }
 
     async toggleQuantityDone() {

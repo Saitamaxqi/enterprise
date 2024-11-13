@@ -268,6 +268,8 @@ export class MrpDisplayRecord extends Component {
                     ? this.props.production.data.move_raw_ids
                     : this.props.production.data.move_byproduct_ids;
             subRecord = moves.records.find((m) => m.data.check_id.resIds.includes(subRecord.resId));
+        } else if (subRecord.resModel === "stock.move") {
+            props.displayInstruction = this.displayRegisterConsumedComponent.bind(this, subRecord);
         }
         props.record = subRecord;
 
@@ -358,16 +360,12 @@ export class MrpDisplayRecord extends Component {
     }
 
     async displayRegisterConsumedComponent(
-        record,
+        move,
         previousQC = false,
         nextQC = false,
         fromCheck = false
     ) {
         //Display a modal to process the given Quality Check having test_type 'register_consumed_materials'.
-
-        const move = this.props.production.data.move_raw_ids.records.find((m) =>
-            m.data.check_id.resIds.includes(record.resId)
-        );
         const action = await this.model.orm.call(
             "stock.move",
             "action_show_details_quality_check",

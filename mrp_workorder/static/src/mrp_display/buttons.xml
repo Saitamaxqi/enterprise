@@ -3,7 +3,7 @@
     <t t-name="mrp_workorder.ShopFloorDialogButtons">
         <div class="o_form_buttons_edit d-flex gap-1">
             <button type="button" class="btn btn-primary o_form_button_save" data-hotkey="s" barcode_trigger="NEXT" t-on-click.stop="nextPressed">
-                Next
+                <t t-if="props.openNextCheck">Next</t><t t-else="">Save</t>
             </button>
         </div>
         <div class="o_form_buttons_view justify-content-end">
