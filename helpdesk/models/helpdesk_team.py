@@ -2,6 +2,8 @@
 
 import ast
 import datetime
+import heapq
+import itertools
 
 from dateutil import relativedelta
 from collections import defaultdict
@@ -919,36 +921,57 @@ class HelpdeskTeam(models.Model):
                         workers_per_first_working_date[(intervals._items)[0][0].date()].append(user.id)
         return [value for key, value in sorted(workers_per_first_working_date.items())]
 
-    def _determine_user_to_assign(self):
-        """ Get a dict with the user (per team) that should be assign to the nearly created ticket according to the team policy
-            :returns a mapping of team identifier with the "to assign" user (maybe an empty record).
-            :rtype : dict (key=team_id, value=record of res.users)
+    def _determine_user_to_assign(self, count_per_team):
         """
-        team_without_manually = self.filtered(lambda x: x.assign_method in ['randomly', 'balanced'] and x.auto_assignment)
+        Get a dict with the next n user ids (per team) that should be assigned to the newly created tickets according to the team policy
+
+        :param count_per_team: a dict (key=helpdesk.team, value=count) of teams, with the count of users to get to assign to new tickets
+        :returns a mapping of team identifier with the "to assign" users ids.
+        :rtype: dict(int, List[int]) 
+        """
+        team_without_manually = self.env['helpdesk.team'].browse({
+            team.id
+            for team in count_per_team
+            if team.auto_assignment and team.assign_method in ['randomly', 'balanced']
+        })
+        result = {team.id: [False] * count for team, count in count_per_team.items()}
         users_per_working_days = team_without_manually._get_working_users_per_first_working_day()
-        result = dict.fromkeys(self.ids, self.env['res.users'])
         for team in team_without_manually:
             if not team.member_ids:
                 continue
+            count = count_per_team[team]
             member_ids = team.member_ids.ids  # By default, all members of the team
             for user_ids in users_per_working_days:
-                if any(user_id in team.member_ids.ids for user_id in user_ids):
+                if any(user_id in member_ids for user_id in user_ids):
                     # filter members in team to get the ones working in the nearest date of today.
-                    member_ids = [user_id for user_id in user_ids if user_id in self.member_ids.ids]
+                    member_ids = [user_id for user_id in user_ids if user_id in member_ids]
                     break
 
             if team.assign_method == 'randomly':  # randomly means new tickets get uniformly distributed
                 last_assigned_user = self.env['helpdesk.ticket'].search([('team_id', '=', team.id), ('user_id', '!=', False)], order='create_date desc, id desc', limit=1).user_id
-                index = 0
-                if last_assigned_user and last_assigned_user.id in member_ids:
-                    previous_index = member_ids.index(last_assigned_user.id)
-                    index = (previous_index + 1) % len(member_ids)
-                result[team.id] = self.env['res.users'].browse(member_ids[index])
-            elif team.assign_method == 'balanced':  # find the member with the least open ticket
+                offset = 0
+                if last_assigned_user:
+                    for member in team.member_ids:
+                        if member.id in member_ids:
+                            offset = (offset + 1) % len(member_ids)
+                        if member == last_assigned_user:
+                            break
+                # Return the list of the next <count> ids in order, looping around the list of members if necessary
+                result[team.id] = list(itertools.islice(itertools.cycle(member_ids), offset, offset + count))
+            elif team.assign_method == 'balanced':  # find the member with the fewest open tickets
                 ticket_count_data = self.env['helpdesk.ticket']._read_group([('stage_id.fold', '=', False), ('user_id', 'in', member_ids), ('team_id', '=', team.id)], ['user_id'], ['__count'])
                 open_ticket_per_user_map = dict.fromkeys(member_ids, 0)  # dict: user_id -> open ticket count
                 open_ticket_per_user_map.update((user.id, count) for user, count in ticket_count_data)
-                result[team.id] = self.env['res.users'].browse(min(open_ticket_per_user_map, key=open_ticket_per_user_map.get))
+                selected_user_ids = []
+                # Put all members in a priority queue so that we can always get the one with the lowest amount of open
+                # tickets (= the lowest priority)
+                heap = [(open_tickets, user_id) for user_id, open_tickets in open_ticket_per_user_map.items()]
+                heapq.heapify(heap)
+                for _dummy in range(count):
+                    open_tickets, user_id = heapq.heappop(heap)
+                    selected_user_ids.append(user_id)
+                    heapq.heappush(heap, (open_tickets + 1, user_id))
+                result[team.id] = selected_user_ids
         return result
 
     def _determine_stage(self):

@@ -169,25 +169,24 @@ Content-Transfer-Encoding: quoted-printable
         # we set the assignation method to randomly (=uniformly distributed)
         self.test_team.update({'assign_method': 'randomly', 'auto_assignment': True})
         # we create a bunch of tickets
-        for i in range(5):
-            self.env['helpdesk.ticket'].create({
-                'name': 'test ticket ' + str(i),
-                'team_id': self.test_team.id,
-            })
+        self.env['helpdesk.ticket'].create([{
+            'name': 'test ticket ' + str(i),
+            'team_id': self.test_team.id,
+        } for i in range(5)])
         # add unassigned ticket to test if the distribution is kept equal.
         self.env['helpdesk.ticket'].create({
             'name': 'ticket unassigned',
             'team_id': self.test_team.id,
             'user_id': False,
         })
-        for i in range(5, 10):
-            self.env['helpdesk.ticket'].create({
-                'name': 'test ticket ' + str(i),
-                'team_id': self.test_team.id,
-            })
+
+        self.env['helpdesk.ticket'].create([{
+            'name': 'test ticket ' + str(i),
+            'team_id': self.test_team.id,
+        } for i in range(5, 12)])
         # ensure both members have the same amount of tickets assigned
-        self.assertEqual(self.env['helpdesk.ticket'].search_count([('user_id', '=', self.helpdesk_user.id)]), 5)
-        self.assertEqual(self.env['helpdesk.ticket'].search_count([('user_id', '=', self.helpdesk_manager.id)]), 5)
+        self.assertEqual(self.env['helpdesk.ticket'].search_count([('user_id', '=', self.helpdesk_user.id)]), 6)
+        self.assertEqual(self.env['helpdesk.ticket'].search_count([('user_id', '=', self.helpdesk_manager.id)]), 6)
 
     def test_team_assignation_balanced(self):
         # we put the helpdesk user and manager in the test_team's members
@@ -195,11 +194,10 @@ Content-Transfer-Encoding: quoted-printable
         # we set the assignation method to randomly (=uniformly distributed)
         self.test_team.update({'assign_method': 'balanced', 'auto_assignment': True})
         # we create a bunch of tickets
-        for i in range(4):
-            self.env['helpdesk.ticket'].create({
-                'name': 'test ticket ' + str(i),
-                'team_id': self.test_team.id,
-            })
+        self.env['helpdesk.ticket'].create([{
+            'name': 'test ticket ' + str(i),
+            'team_id': self.test_team.id,
+        } for i in range(4)])
         # ensure both members have the same amount of tickets assigned
         self.assertEqual(self.env['helpdesk.ticket'].search_count([('user_id', '=', self.helpdesk_user.id)]), 2)
         self.assertEqual(self.env['helpdesk.ticket'].search_count([('user_id', '=', self.helpdesk_manager.id)]), 2)
@@ -208,11 +206,10 @@ Content-Transfer-Encoding: quoted-printable
         self.env['helpdesk.ticket'].search([('user_id', '=', self.helpdesk_user.id)]).write({'stage_id': self.stage_done.id})
 
         # we create 4 new tickets
-        for i in range(4):
-            self.env['helpdesk.ticket'].create({
-                'name': 'test ticket ' + str(i),
-                'team_id': self.test_team.id,
-            })
+        self.env['helpdesk.ticket'].create([{
+            'name': 'test ticket ' + str(i),
+            'team_id': self.test_team.id,
+        } for i in range(4)])
 
         # ensure both members have the same amount of tickets assigned
         self.assertEqual(self.env['helpdesk.ticket'].search_count([('user_id', '=', self.helpdesk_user.id), ('close_date', '=', False)]), 3)

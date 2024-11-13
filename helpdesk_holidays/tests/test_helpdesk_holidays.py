@@ -64,17 +64,16 @@ class TestHelpdeskHolidays(HelpdeskCommon, TestHrHolidaysCommon):
     def test_balanced_assignment_employee_time_off(self):
         self.test_team.assign_method = 'balanced'
 
-        for i, (stage_id, user_id) in enumerate((
+        self.env['helpdesk.ticket'].create([{
+            'name': f"Ticket {i}",
+            'team_id': self.test_team.id,
+            'stage_id': stage_id.id,
+            'user_id': user_id.id,
+        } for i, (stage_id, user_id) in enumerate((
             (self.stage_new, self.user_hrmanager),
             (self.stage_new, self.user_employee),
             (self.stage_progress, self.user_employee),
-        )):
-            self.env['helpdesk.ticket'].create({
-                'name': f"Ticket {i}",
-                'team_id': self.test_team.id,
-                'stage_id': stage_id.id,
-                'user_id': user_id.id,
-            })
+        ))])
 
         leave = self.env['hr.leave'].create({
             'employee_id': self.employee_hrmanager.id,

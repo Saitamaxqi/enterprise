@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import ast
+from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, Command, fields, models, tools, _
@@ -38,7 +39,7 @@ class HelpdeskTicket(models.Model):
         if result.get('team_id') and fields:
             team = self.env['helpdesk.team'].browse(result['team_id'])
             if 'user_id' in fields and 'user_id' not in result:  # if no user given, deduce it from the team
-                result['user_id'] = team._determine_user_to_assign()[team.id].id
+                result['user_id'] = team._determine_user_to_assign({team: 1})[team.id][0]
             if 'stage_id' in fields and 'stage_id' not in result:  # if no stage given, deduce it from the team
                 result['stage_id'] = team._determine_stage()[team.id].id
         return result
@@ -256,7 +257,7 @@ class HelpdeskTicket(models.Model):
     def _compute_user_and_stage_ids(self):
         for ticket in self.filtered(lambda ticket: ticket.team_id):
             if not ticket.user_id:
-                ticket.user_id = ticket.team_id._determine_user_to_assign()[ticket.team_id.id]
+                ticket.user_id = ticket.team_id._determine_user_to_assign({ticket.team_id: 1})[ticket.team_id.id][0]
             if not ticket.stage_id or ticket.stage_id not in ticket.team_id.stage_ids:
                 ticket.stage_id = ticket.team_id._determine_stage()[ticket.team_id.id]
 
@@ -434,14 +435,19 @@ class HelpdeskTicket(models.Model):
     @api.model_create_multi
     def create(self, list_value):
         now = fields.Datetime.now()
+        team_ids = { vals['team_id'] for vals in list_value if vals.get('team_id') }
+        teams = self.env['helpdesk.team'].browse(team_ids)
+        team_per_team_id = dict(zip(team_ids, teams))
+        ticket_amount_per_team = defaultdict(int)
+        for vals in list_value:
+            if team_id := vals.get('team_id'):
+                team = team_per_team_id[team_id]
+                if not vals.get('user_id') and team.auto_assignment:
+                    ticket_amount_per_team[team] += 1
+
         # determine user_id and stage_id if not given. Done in batch.
-        teams = self.env['helpdesk.team'].browse([vals['team_id'] for vals in list_value if vals.get('team_id')])
-        team_default_map = dict.fromkeys(teams.ids, dict())
-        for team in teams:
-            team_default_map[team.id] = {
-                'stage_id': team._determine_stage()[team.id].id,
-                'user_id': team._determine_user_to_assign()[team.id].id
-            }
+        assignees_per_team_id = self.env['helpdesk.team']._determine_user_to_assign(ticket_amount_per_team)
+        default_stage_per_team_id = teams._determine_stage()
 
         # Manually create a partner now since '_generate_template_recipients' doesn't keep the name. This is
         # to avoid intrusive changes in the 'mail' module
@@ -465,15 +471,11 @@ class HelpdeskTicket(models.Model):
         for vals in list_value:
             company = company_per_team_id.get(vals.get('team_id', False))
             vals['ticket_ref'] = self.env['ir.sequence'].with_company(company).sudo().next_by_code('helpdesk.ticket')
-            if vals.get('team_id'):
-                team_default = team_default_map[vals['team_id']]
+            if team_id := vals.get('team_id'):
                 if 'stage_id' not in vals:
-                    vals['stage_id'] = team_default['stage_id']
-                # Note: this will break the randomly distributed user assignment. Indeed, it will be too difficult to
-                # equally assigned user when creating ticket in batch, as it requires to search after the last assigned
-                # after every ticket creation, which is not very performant. We decided to not cover this user case.
-                if 'user_id' not in vals:
-                    vals['user_id'] = team_default['user_id']
+                    vals['stage_id'] = default_stage_per_team_id[team_id].id
+                if 'user_id' not in vals and team_id in assignees_per_team_id:
+                    vals['user_id'] = assignees_per_team_id[team_id].pop()
                 if vals.get('user_id'):  # if a user is finally assigned, force ticket assign_date and reset assign_hours
                     vals['assign_date'] = fields.Datetime.now()
                     vals['assign_hours'] = 0
