@@ -64,6 +64,25 @@ class TestRepair(HelpdeskCommon):
         self.test_team.use_product_returns = True
         self.test_team.use_product_repairs = True
 
+        self.env['account.account'].create({
+            'code': 'X1012',
+            'name': 'Debtors - (test)',
+            'reconcile': True,
+            'account_type': 'asset_receivable',
+        })
+        a_sale = self.env['account.account'].create({
+            'code': 'X2020',
+            'name': 'Product Sales - (test)',
+            'account_type': 'income',
+        })
+        self.sales_journal = self.env['account.journal'].create({
+            'name': 'Customer Invoices - Test',
+            'code': 'TINV',
+            'type': 'sale',
+            'default_account_id': a_sale.id,
+            'refund_sequence': True,
+        })
+
         product, part = self.env['product.product'].create([
             {
                 'name': 'final product',
