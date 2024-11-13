@@ -550,6 +550,7 @@ test("Can save a pivot in existing spreadsheet", async () => {
     await contains(".o_pivot_add_spreadsheet").click();
     await contains(".o-spreadsheet-grid div[data-id='2']").click();
     await contains(".modal-content > .modal-footer > .btn-primary").click();
+    await animationFrame(); // Wait for the mounted to be executed
     expect(".o_spreadsheet_pivot_side_panel").toHaveCount(1);
     await getService("action").doAction(1); // leave the spreadsheet action
     expect.verifySteps(["/spreadsheet/data/", "write"]);
@@ -586,6 +587,7 @@ test("Add pivot sheet at the end of existing sheets", async () => {
     await contains(".o_pivot_add_spreadsheet").click();
     await contains(".o-spreadsheet-grid div[data-id='456']").click();
     await contains(".modal-content > .modal-footer > .btn-primary").click();
+    await animationFrame(); // Wait for the mounted to be executed
     expect(".o-sheet").toHaveCount(3, { message: "it should have a third sheet" });
     const sheets = fixture.querySelectorAll(".o-sheet");
     const activeSheet = fixture.querySelector(".o-sheet.active");

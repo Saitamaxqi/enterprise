@@ -121,6 +121,7 @@ export async function createSpreadsheetFromListView(params = {}) {
     await def;
     const model = getSpreadsheetActionModel(spreadsheetAction);
     await waitForDataLoaded(model);
+    await animationFrame();
     return {
         fixture,
         webClient,

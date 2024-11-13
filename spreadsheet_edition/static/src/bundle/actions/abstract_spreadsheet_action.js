@@ -113,10 +113,10 @@ export class AbstractSpreadsheetAction extends Component {
                 await this.fetchData();
                 this.createModel();
                 this.stores.inject(ModelStore, this.model);
-                await this.execInitCallbacks();
             }
         });
         onMounted(() => {
+            this.execInitCallbacks();
             const commentsStore = this.stores.get(CommentsStore);
             this.props.updateActionState({
                 resId: this.resId,
@@ -200,11 +200,18 @@ export class AbstractSpreadsheetAction extends Component {
     }
 
     async execInitCallbacks() {
-        if (this.asyncInitCallback) {
-            await this.asyncInitCallback(this.model, this.stores);
-        }
-        if (this.initCallback) {
-            this.initCallback(this.model, this.stores);
+        if (!this.props.state?.model || !this.props.state?.data) {
+            if (this.asyncInitCallback) {
+                try {
+                    this.ui.block();
+                    await this.asyncInitCallback(this.model, this.stores);
+                } finally {
+                    this.ui.unblock();
+                }
+            }
+            if (this.initCallback) {
+                this.initCallback(this.model, this.stores);
+            }
         }
     }
 
