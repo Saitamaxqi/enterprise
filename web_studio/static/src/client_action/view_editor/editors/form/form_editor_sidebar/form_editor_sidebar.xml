@@ -32,6 +32,15 @@
                 >
                     Can Delete
                 </Property>
+                <Property
+                    t-if="getActiveAction('create')"
+                    name="'duplicate'"
+                    value="getActiveAction('duplicate')"
+                    type="'boolean'"
+                    onChange.bind="onCanDuplicateChanged"
+                >
+                    Can Duplicate
+                </Property>
                 <t t-call="web_studio.ViewEditor.ShowInvisibleToggler" />
                 <SidebarViewToolbox onMore="props.openViewInForm" canEditXml="!env.viewEditorModel.isEditingSubview" openDefaultValues="props.openDefaultValues" />
             </t>

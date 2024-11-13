@@ -31,6 +31,15 @@
                 >
                     Can Delete
                 </Property>
+                <Property
+                    t-if="archInfo.activeActions.create === true"
+                    name="'duplicate'"
+                    value="archInfo.activeActions.duplicate === true"
+                    type="'boolean'"
+                    onChange.bind="onCanDuplicateChanged"
+                >
+                    Can Duplicate
+                </Property>
 
                 <t t-call="web_studio.ViewEditor.ShowInvisibleToggler" />
 

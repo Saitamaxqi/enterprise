@@ -97,4 +97,8 @@ export class FormEditorSidebar extends Component {
     onAttributeChanged(value, name) {
         return this.editArchAttributes({ [name]: value });
     }
+
+    onCanDuplicateChanged(value) {
+        return this.editArchAttributes({ duplicate: value ? "" : false });
+    }
 }

@@ -130,6 +130,10 @@ export class ListEditorSidebar extends Component {
         return this.editArchAttributes({ [name]: value });
     }
 
+    onCanDuplicateChanged(value) {
+        return this.editArchAttributes({ duplicate: value ? "" : false });
+    }
+
     editDefaultGroupBy(value) {
         this.onAttributeChanged(value.join(","), "default_group_by");
     }

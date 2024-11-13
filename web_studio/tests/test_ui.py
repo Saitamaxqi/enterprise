@@ -1970,3 +1970,52 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
             </xpath>
         </data>
         """)
+
+    def test_edit_duplicate_attribute_form(self):
+        self.testView.arch = '''
+            <form>
+                <group>
+                    <field name="name" />
+                </group>
+            </form>
+        '''
+
+        self.start_tour("/odoo?debug=tests", 'web_studio_test_edit_duplicate_attribute_form', login="admin")
+        studio_view = _get_studio_view(self.testView)
+        self.assertXMLEqual(studio_view.arch, """
+            <data>
+                <xpath expr="//form[1]" position="attributes">
+                    <attribute name="create">true</attribute>
+                    <attribute name="duplicate">false</attribute>
+                </xpath>
+            </data>
+        """)
+
+    def test_edit_duplicate_attribute_list(self):
+        self.testViewList = self.env["ir.ui.view"].create({
+            "name": "simple partner",
+            "model": "res.partner",
+            "type": "list",
+            "arch": '''
+                <list>
+                    <field name="display_name" />
+                </list>
+            '''
+        })
+        self.testAction.write({
+            "view_ids": [
+                Command.clear(),
+                Command.create({"view_id": self.testViewList.id, "view_mode": "list"}),
+            ]
+        })
+
+        self.start_tour("/odoo?debug=tests", 'web_studio_test_edit_duplicate_attribute_list', login="admin")
+        studio_view = _get_studio_view(self.testViewList)
+        self.assertXMLEqual(studio_view.arch, """
+            <data>
+                <xpath expr="//list[1]" position="attributes">
+                    <attribute name="create">true</attribute>
+                    <attribute name="duplicate">false</attribute>
+                </xpath>
+            </data>
+        """)

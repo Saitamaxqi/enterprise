@@ -2570,8 +2570,8 @@ QUnit.module(
             assert.containsN(
                 target,
                 ".o_web_studio_sidebar_checkbox",
-                5,
-                "five boolean properties can be edited in the sidebar"
+                6,
+                "6 boolean properties can be edited in the sidebar"
             );
 
             await editAnySelect(
@@ -2582,16 +2582,16 @@ QUnit.module(
             assert.containsN(
                 target,
                 ".o_web_studio_sidebar_checkbox",
-                6,
-                "six boolean properties can be edited in the sidebar"
+                7,
+                "7 boolean properties can be edited in the sidebar"
             );
             assert.strictEqual(
-                target.querySelectorAll(".o_web_studio_sidebar_checkbox")[4].textContent.trim(),
+                target.querySelectorAll(".o_web_studio_sidebar_checkbox")[5].textContent.trim(),
                 "Enable Mass Editing",
                 "'multi_edit' attribute is visible when 'editing' attribute is set on the view"
             );
             assert.strictEqual(
-                target.querySelectorAll(".o_web_studio_sidebar_checkbox")[5].textContent.trim(),
+                target.querySelectorAll(".o_web_studio_sidebar_checkbox")[6].textContent.trim(),
                 "Show link to record",
                 "'open_form_view' attribute is visible when 'editing' attribute is set on the view"
             );
@@ -2601,7 +2601,7 @@ QUnit.module(
                 "'View' button are not present in the list view"
             );
 
-            await click(target.querySelectorAll(".o_web_studio_sidebar_checkbox input")[5]);
+            await click(target.querySelectorAll(".o_web_studio_sidebar_checkbox input")[6]);
             assert.containsN(
                 target,
                 ".o_list_renderer .o_list_record_open_form_view",

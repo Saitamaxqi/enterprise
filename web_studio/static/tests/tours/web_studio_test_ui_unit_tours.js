@@ -1944,3 +1944,87 @@ registry.category("web_tour.tours").add("web_studio_test_negated_groups", {
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio_test_edit_duplicate_attribute_form", {
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_form_view",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item button:enabled",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar .o_web_studio_view",
+            run: "click",
+        },
+        {
+            content: "Uncheck 'create' property to hide 'duplicate'",
+            trigger: ".o_web_studio_property [for='create']",
+            run: "click",
+        },
+        {
+            content: "'duplicate' property should be hidden, 4th item is show_visible",
+            trigger: ".o_web_studio_property:nth-child(4) [for='show_invisible']",
+        },
+        {
+            content: "Check 'create' property to show 'duplicate'",
+            trigger: ".o_web_studio_property [for='create']",
+            run: "click",
+        },
+        {
+            content: "'duplicate' property should be visible and the 4th item",
+            trigger: ".o_web_studio_property:nth-child(4) [for='duplicate']",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_snackbar:not(:has(.fa-spin))",
+        },
+    ],
+});
+
+registry.category("web_tour.tours").add("web_studio_test_edit_duplicate_attribute_list", {
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_list_view",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item button:enabled",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar .o_web_studio_view",
+            run: "click",
+        },
+        {
+            content: "Uncheck 'create' property to hide 'duplicate'",
+            trigger: ".o_web_studio_property [for='create']",
+            run: "click",
+        },
+        {
+            content: "'duplicate' property should be hidden, 4th item is show_visible",
+            trigger: ".o_web_studio_property:nth-child(4) [for='show_invisible']",
+        },
+        {
+            content: "Check 'create' property to show 'duplicate'",
+            trigger: ".o_web_studio_property [for='create']",
+            run: "click",
+        },
+        {
+            content: "'duplicate' property should be visible and the 4th item",
+            trigger: ".o_web_studio_property:nth-child(4) [for='duplicate']",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_snackbar:not(:has(.fa-spin))",
+        },
+    ],
+});
