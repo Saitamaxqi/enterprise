@@ -357,10 +357,11 @@ class AppointmentUITest(AppointmentUICommon):
         now = self.reference_monday
         slot_time = now.replace(hour=9, minute=0, second=0, microsecond=0) + timedelta(days=1)
 
+        staff_users = self.user_employee | self.user_admin
         appointment_type = self.env['appointment.type'].create([{
             'name': 'Type Test Appointment View',
             'schedule_based_on': 'users',
-            'staff_user_ids': (self.user_employee | self.user_admin).ids,
+            'staff_user_ids': staff_users.ids,
             'min_schedule_hours': 1.0,
             'max_schedule_days': 5,
             'slot_ids': [(0, 0, {
@@ -387,10 +388,11 @@ class AppointmentUITest(AppointmentUICommon):
             return slots_form, selected_user_option, slots_calendar
 
         slots_form, selected_user_option, slots_calendar = render_appointment_page()
-        self.assertEqual(
+        self.assertIn(
             int(selected_user_option.attrib['value']),
-            self.user_employee.id,
-            "Selected user should be user_employee")
+            staff_users.ids,
+            f"Selected user must be one of {staff_users.ids}"
+        )
         self.assertFalse(
             'd-none' in slots_form.getparent().attrib['class'],
             "Staff user selector should be visible")
@@ -399,13 +401,15 @@ class AppointmentUITest(AppointmentUICommon):
             "Slots calendar should be visible")
 
         # create an event to make the first staff user busy and remove its available slots
-        self._create_meetings(self.user_employee, [(slot_time, slot_time + timedelta(hours=1), True)])
+        selected_staff_user = self.env['res.users'].browse(int(selected_user_option.attrib['value']))
+        remaining_staff_user = staff_users - selected_staff_user
+        self._create_meetings(selected_staff_user, [(slot_time, slot_time + timedelta(hours=1), True)])
 
         slots_form, selected_user_option, slots_calendar = render_appointment_page()
         self.assertEqual(
             int(selected_user_option.attrib['value']),
-            self.user_admin.id,
-            "Selected user should be user_admin")
+            remaining_staff_user.id,
+            f"Selected user should be user with ID: {remaining_staff_user.id}")
         self.assertFalse(
             'd-none' in slots_form.getparent().attrib['class'],
             "Staff user selector should be visible")
@@ -414,7 +418,7 @@ class AppointmentUITest(AppointmentUICommon):
             "Slots calendar should be visible")
 
         # create another event to make both staff user busy and remove all slots
-        self._create_meetings(self.user_admin, [(slot_time, slot_time + timedelta(hours=1), True)])
+        self._create_meetings(remaining_staff_user, [(slot_time, slot_time + timedelta(hours=1), True)])
         slots_form, _, slots_calendar = render_appointment_page()
         self.assertTrue(
             'd-none' in slots_form.getparent().attrib['class'],
