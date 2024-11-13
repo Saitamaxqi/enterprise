@@ -3099,23 +3099,51 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         Check that the uncompleted moves are splitted in the backend when you exit
         the barcode, so that the demand of the picking is correctly displayed the
         next time you open the record.
+
+        The flow slightly change with mto moves: both mts and mto procure methods are tested here
         """
         self.clean_access_rights()
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
         self.env.user.write({'groups_id': [Command.link(grp_multi_loc.id)]})
-        # Create a receipt and confirm it.
-        receipt_form = Form(self.env['stock.picking'])
-        receipt_form.picking_type_id = self.picking_type_in
-        with receipt_form.move_ids_without_package.new() as move:
-            move.product_id = self.product2
-            move.product_uom_qty = 5
-        receipt_picking = receipt_form.save()
-        receipt_picking.action_confirm()
-        receipt_picking.action_assign()
-
-        url = self._get_client_action_url(receipt_picking.id)
+        procurement_group = self.env['procurement.group'].create({
+            'name': 'custom procurement',
+        })
+        warehouse = self.picking_type_out.warehouse_id
+        mto_product = self.product1
+        self.env['stock.quant']._update_available_quantity(mto_product, warehouse.lot_stock_id, 4)
+        warehouse.delivery_steps = 'pick_ship'
+        final_destination = self.env.ref('stock.stock_location_customers')
+        origin = 'custom origin'
+        self.env['procurement.group'].run([
+            self.env['procurement.group'].Procurement(mto_product, 4.0, mto_product.uom_id, final_destination, mto_product.name, origin,
+                self.picking_type_out.company_id, {'warehouse_id': warehouse, 'group_id': procurement_group})
+        ])
+        pick = self.env['stock.picking'].search([('group_id', '=', procurement_group.id)], limit=1)
+        pick.button_validate()
+        ship = self.env['stock.picking'].search([('group_id', '=', procurement_group.id)], limit=2) - pick
+        mts_product = self.product2
+        self.env['stock.quant']._update_available_quantity(mts_product, ship.location_id, 5)
+        self.env['stock.move'].create({
+            'name': mts_product.name,
+            'product_id': mts_product.id,
+            'product_uom_qty': 5,
+            'product_uom': mts_product.uom_id.id,
+            'picking_id': ship.id,
+            'location_id': ship.location_id.id,
+            'location_dest_id': ship.location_dest_id.id,
+        })
+        ship.action_assign()
+        self.assertRecordValues(ship.move_ids.sorted('quantity'), [
+            {'quantity': 4.0, 'picked': False, 'procure_method': 'make_to_order'},
+            {'quantity': 5.0, 'picked': False, 'procure_method': 'make_to_stock'},
+            ])
+        url = self._get_client_action_url(ship.id)
         self.start_tour(url, 'test_split_uncomplete_moves_on_exit', login='admin', timeout=180)
-        self.assertRecordValues(receipt_picking.move_ids, [
+        self.assertRecordValues(ship.move_ids.filtered(lambda m: m.product_id == mto_product).sorted('quantity'), [
+            {"quantity": 1.0, "picked": True},
+            {"quantity": 3.0, "picked": False},
+        ])
+        self.assertRecordValues(ship.move_ids.filtered(lambda m: m.product_id == mts_product).sorted('quantity'), [
             {"quantity": 1.0, "picked": True},
             {"quantity": 4.0, "picked": False},
         ])

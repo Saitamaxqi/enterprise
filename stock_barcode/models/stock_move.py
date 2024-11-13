@@ -23,6 +23,8 @@ class StockMove(models.Model):
             move.quantity = move.product_uom_qty
             move.picked = False
         new_moves = moves_to_backorder._create_backorder()
+        # mto moves should be assigned manually as they are not by the `_action_confirm`
+        new_moves.with_context(bypass_entire_pack=True).filtered(lambda m: m.procure_method == 'make_to_order')._action_assign()
         if new_moves:
             # In some case, we already split the move lines in the front end.
             # Those move lines are linked to the original move. If their quantity

@@ -5448,6 +5448,45 @@ registry.category("web_tour.tours").add("test_split_uncomplete_moves_on_exit", {
     steps: () => [
         {
             trigger: ".o_barcode_line",
+            run: "scan product1",
+        },
+        {
+            trigger: ".o_barcode_line[data-barcode='product1'] .qty-done:contains('1')",
+        },
+        {
+            trigger: ".o_edit .fa-pencil",
+            run: "click",
+        },
+        {
+            trigger: ".o_field_widget[name='qty_done'] input",
+        },
+        {
+            content: "Exit the barcode app to look at look at back end data.",
+            trigger: ".o_field_widget[name=product_id] > a",
+            run: "click",
+        },
+        {
+            trigger: ".breadcrumb-item.o_back_button",
+        },
+        {
+            content: "Come back to the record in the barcode App.",
+            trigger: ".breadcrumb-item.o_back_button",
+            run: "click",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+        },
+        {
+            trigger: ".o_barcode_client_action",
+            run: () => {
+                helper.assertLinesCount(3);
+                helper.assertLineQty(0, "0/3");
+                helper.assertLineQty(1, "0/5");
+                helper.assertLineQty(2, "1/1");
+            },
+        },
+        {
+            trigger: ".o_barcode_line",
             run: "scan product2",
         },
         {
@@ -5475,10 +5514,15 @@ registry.category("web_tour.tours").add("test_split_uncomplete_moves_on_exit", {
         },
         {
             trigger: ".o_barcode_client_action",
+        },
+        {
+            trigger: ".o_barcode_client_action",
             run: () => {
-                helper.assertLinesCount(2);
-                helper.assertLineQty(0, "0/4");
-                helper.assertLineQty(1, "1/1");
+                helper.assertLinesCount(4);
+                helper.assertLineQty(0, "0/3");
+                helper.assertLineQty(1, "0/4");
+                helper.assertLineQty(2, "1/1");
+                helper.assertLineQty(3, "1/1");
             },
         },
     ],
