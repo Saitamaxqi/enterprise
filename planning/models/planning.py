@@ -14,6 +14,7 @@ from odoo.addons.resource.models.utils import Intervals, sum_intervals
 from odoo.exceptions import UserError, AccessError
 from odoo.osv import expression
 from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT, float_utils, format_datetime, SQL
+from odoo.tools.date_utils import get_timedelta
 
 _logger = logging.getLogger(__name__)
 
@@ -1298,6 +1299,10 @@ class PlanningSlot(models.Model):
     # ----------------------------------------------------
 
     @api.model
+    def get_gantt_data(self, domain, groupby, read_specification, limit=None, offset=0, unavailability_fields=[], progress_bar_fields=None, start_date=None, stop_date=None, scale=None):
+        return super(PlanningSlot, self.with_context(scale=scale)).get_gantt_data(domain, groupby, read_specification, limit=limit, offset=offset, unavailability_fields=unavailability_fields, progress_bar_fields=progress_bar_fields, start_date=start_date, stop_date=stop_date, scale=scale)
+
+    @api.model
     def gantt_resource_work_interval(self, slot_ids):
         """ Returns the work intervals of the resources corresponding to the provided slots
 
@@ -1937,16 +1942,17 @@ class PlanningSlot(models.Model):
 
     def _expand_domain_dates(self, domain):
         filters = []
+        delta = get_timedelta(1, self._context.get("scale", "week"))
         for dom in domain:
             if len(dom) == 3 and dom[0] == 'start_datetime' and dom[1] == '<':
                 max_date = dom[2] if dom[2] else datetime.now()
                 max_date = max_date if isinstance(max_date, date) else datetime.strptime(max_date, '%Y-%m-%d %H:%M:%S')
-                max_date = max_date + timedelta(days=7)
+                max_date = max_date + delta
                 filters.append((dom[0], dom[1], max_date))
             elif len(dom) == 3 and dom[0] == 'end_datetime' and dom[1] == '>':
                 min_date = dom[2] if dom[2] else datetime.now()
                 min_date = min_date if isinstance(min_date, date) else datetime.strptime(min_date, '%Y-%m-%d %H:%M:%S')
-                min_date = min_date - timedelta(days=7)
+                min_date = min_date - delta
                 filters.append((dom[0], dom[1], min_date))
             else:
                 filters.append(dom)
