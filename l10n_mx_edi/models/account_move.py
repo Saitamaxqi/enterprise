@@ -2568,7 +2568,7 @@ class AccountMove(models.Model):
 
     def _l10n_mx_edi_import_cfdi_fill_invoice(self, tree):
         # Partner
-        cfdi_vals = self.env['l10n_mx_edi.document']._decode_cfdi_attachment(etree.tostring(tree))
+        cfdi_vals = self.env['l10n_mx_edi.document']._decode_cfdi_attachment(etree.tostring(tree, encoding='utf-8'))
         partner = self._l10n_mx_edi_import_cfdi_fill_partner(tree)
         if not partner:
             return
