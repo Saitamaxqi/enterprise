@@ -32,7 +32,6 @@ patch(PosStore.prototype, {
         if (this.config.module_pos_urban_piper && this.config.urbanpiper_store_identifier) {
             return await this.loadServerOrders([
                 ["company_id", "=", this.config.company_id.id],
-                ["state", "=", "draft"],
                 [
                     "delivery_provider_id",
                     "in",
@@ -63,13 +62,13 @@ patch(PosStore.prototype, {
         this.delivery_providers = response.delivery_providers;
         this.total_new_order = response.total_new_order || 0;
         this.delivery_providers_active = response.delivery_providers_active;
-        let deliveryOrder = false;
-        if (order_id) {
-            deliveryOrder = this.models["pos.order"].get(order_id);
+        const deliveryOrder = order_id ? this.models["pos.order"].get(order_id) : false;
+        if (!deliveryOrder) {
+            return;
         }
-        if (order_id && deliveryOrder?.delivery_status === "acknowledged") {
+        if (deliveryOrder.delivery_status === "acknowledged") {
             this.sendOrderInPreparationUpdateLastChange(deliveryOrder);
-        } else if (order_id && deliveryOrder?.delivery_status === "placed") {
+        } else if (deliveryOrder.delivery_status === "placed") {
             this.sound.play("notification");
             this.notification.add(_t("New online order received."), {
                 type: "success",
@@ -104,6 +103,8 @@ patch(PosStore.prototype, {
                     },
                 ],
             });
+        } else if (deliveryOrder.delivery_status === "food_ready") {
+            deliveryOrder.uiState.locked = true;
         }
     },
 

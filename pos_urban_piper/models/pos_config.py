@@ -229,7 +229,7 @@ class PosConfig(models.Model):
             order.write({
                 'delivery_status': const.ORDER_STATUS_MAPPING[new_status][1],
             })
-        self._send_delivery_order_count()
+        self._send_delivery_order_count(order_id)
         return {'is_success': is_success, 'message': message}
 
     def _make_order_payment(self, order):
