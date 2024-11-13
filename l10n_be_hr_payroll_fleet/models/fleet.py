@@ -203,14 +203,16 @@ class FleetVehicleModel(models.Model):
     _inherit = 'fleet.vehicle.model'
 
     default_recurring_cost_amount_depreciated = fields.Float(string="Cost (Depreciated)",
+        tracking=True,
         help="Default recurring cost amount that should be applied to a new vehicle from this model")
-    default_car_value = fields.Float(string="Catalog Value (VAT Incl.)")
+    default_car_value = fields.Float(string="Catalog Value (VAT Incl.)", tracking=True)
     can_be_requested = fields.Boolean(
         string="Can be requested", company_dependent=True,
+        tracking=True,
         help="Can be requested on a contract as a new vehicle")
     default_atn = fields.Float(compute='_compute_atn', string="BIK")
     default_total_depreciated_cost = fields.Float(compute='_compute_default_total_depreciated_cost', compute_sudo=True, string="Total Cost (Depreciated)")
-    default_co2 = fields.Float(compute='_compute_default_co2', readonly=False, store=True)
+    default_co2 = fields.Float(compute='_compute_default_co2', readonly=False, store=True, tracking=True)
     co2_fee = fields.Float(compute='_compute_co2_fee', string="CO2 fee")
     tax_deduction = fields.Float(compute='_compute_tax_deduction')
 
