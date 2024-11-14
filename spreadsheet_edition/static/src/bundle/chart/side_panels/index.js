@@ -32,6 +32,10 @@ chartSidePanelComponentRegistry
     .add("odoo_waterfall", {
         configuration: CommonOdooChartConfigPanel,
         design: WaterfallChartDesignPanel,
+    })
+    .add("odoo_pyramid", {
+        configuration: CommonOdooChartConfigPanel,
+        design: ChartWithAxisDesignPanel,
     });
 
 chartSubtypeRegistry.add("odoo_line", {
@@ -105,6 +109,13 @@ chartSubtypeRegistry.add("odoo_waterfall", {
     chartType: "odoo_waterfall",
     category: "misc",
     preview: "o-spreadsheet-ChartPreview.WATERFALL_CHART",
+});
+chartSubtypeRegistry.add("odoo_pyramid", {
+    displayName: _t("Population Pyramid"),
+    chartSubtype: "odoo_pyramid",
+    chartType: "odoo_pyramid",
+    category: "misc",
+    preview: "o-spreadsheet-ChartPreview.POPULATION_PYRAMID_CHART",
 });
 chartSubtypeRegistry.add("odoo_radar", {
     matcher: (definition) => definition.type === "odoo_radar" && !definition.fillArea,

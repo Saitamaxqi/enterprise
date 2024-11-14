@@ -277,6 +277,26 @@ test("waterfall chart", async () => {
     });
 });
 
+test("population pyramid chart", async () => {
+    const { model, env } = await createSpreadsheetFromGraphView({
+        additionalContext: {
+            graph_groupbys: ["bar", "product_id"],
+            graph_measure: ["probability"],
+        },
+    });
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    await openChartSidePanel(model, env);
+    await changeChartType("odoo_pyramid");
+
+    expect(model.getters.getChartDefinition(chartId).type).toBe("odoo_pyramid");
+    const runtime = model.getters.getChartRuntime(chartId);
+    expect(runtime.chartJsConfig.type).toBe("bar");
+    expect(runtime.chartJsConfig.data.datasets[0].data).toEqual([15, 106]);
+    // negative values for the other side of the pyramid
+    expect(runtime.chartJsConfig.data.datasets[1].data).toEqual([0, -10]);
+});
+
 describe("trend line", () => {
     test("activate trend line with the checkbox", async function () {
         const { model, env } = await createSpreadsheetFromGraphView();
