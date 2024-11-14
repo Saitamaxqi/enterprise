@@ -36,6 +36,10 @@ chartSidePanelComponentRegistry
     .add("odoo_pyramid", {
         configuration: CommonOdooChartConfigPanel,
         design: ChartWithAxisDesignPanel,
+    })
+    .add("odoo_scatter", {
+        configuration: CommonOdooChartConfigPanel,
+        design: ChartWithAxisDesignPanel,
     });
 
 chartSubtypeRegistry.add("odoo_line", {
@@ -102,6 +106,13 @@ chartSubtypeRegistry.add("odoo_pie", {
     chartType: "odoo_pie",
     category: "pie",
     preview: "o-spreadsheet-ChartPreview.PIE_CHART",
+});
+chartSubtypeRegistry.add("odoo_scatter", {
+    displayName: _t("Scatter"),
+    chartType: "odoo_scatter",
+    chartSubtype: "odoo_scatter",
+    category: "misc",
+    preview: "o-spreadsheet-ChartPreview.SCATTER_CHART",
 });
 chartSubtypeRegistry.add("odoo_waterfall", {
     displayName: _t("Waterfall"),

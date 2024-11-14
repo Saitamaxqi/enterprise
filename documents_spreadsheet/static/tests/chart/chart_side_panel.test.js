@@ -297,6 +297,19 @@ test("population pyramid chart", async () => {
     expect(runtime.chartJsConfig.data.datasets[1].data).toEqual([0, -10]);
 });
 
+test("scatter chart", async () => {
+    const { model, env } = await createSpreadsheetFromGraphView();
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    await openChartSidePanel(model, env);
+    await changeChartType("odoo_scatter");
+
+    expect(model.getters.getChartDefinition(chartId).type).toBe("odoo_scatter");
+    const runtime = model.getters.getChartRuntime(chartId);
+    expect(runtime.chartJsConfig.type).toBe("line");
+    expect(runtime.chartJsConfig.data.datasets[0].showLine).toBe(false);
+});
+
 describe("trend line", () => {
     test("activate trend line with the checkbox", async function () {
         const { model, env } = await createSpreadsheetFromGraphView();
