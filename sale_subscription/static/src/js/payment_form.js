@@ -57,7 +57,8 @@ paymentForm.include({
             `input[name="o_payment_automate_payments_saved_token"]`
         );
 
-        if (autoPaymentCheckboxNewToken?.checked || autoPaymentCheckboxSavedToken?.checked) {
+        if ((autoPaymentCheckboxNewToken?.checked || autoPaymentCheckboxSavedToken?.checked) &&
+            this.paymentContext.txRouteSubscription) {
             // TODO Should be replaced with an override of the account_payment controller to extend
             // it with subscription logic.
             this.paymentContext.transactionRoute = this.paymentContext.txRouteSubscription;
