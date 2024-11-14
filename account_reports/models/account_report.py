@@ -6017,9 +6017,8 @@ class AccountReport(models.Model):
             if width > col_width:
                 sheet.set_column(col, col, min(width + 4, 75))  # We need to add a little extra padding to ensure our columns are not clipping the text
 
-    def _inject_report_into_xlsx_sheet(self, options, workbook, sheet):
-
-        # We start by gathering the bold, italic and regular fonts to use later.
+    def _get_xlsx_export_fonts(self):
+        """ Get the bold, italic and regular LATO font information so that we can use them for format purposes. """
         fonts = {}
         for font_type in ('Reg', 'Bol', 'RegIta', 'BolIta'):
             try:
@@ -6028,6 +6027,10 @@ class AccountReport(models.Model):
             except (OSError, FileNotFoundError):
                 # This won't give great result, but it will work.
                 fonts[font_type] = ImageFont.load_default()
+        return fonts
+
+    def _inject_report_into_xlsx_sheet(self, options, workbook, sheet):
+        fonts = self._get_xlsx_export_fonts()
 
         def write_cell(sheet, x, y, value, style, colspan=1, rowspan=1, datetime=False):
             self._set_xlsx_cell_sizes(sheet, fonts, x, y, value, style, colspan > 1)

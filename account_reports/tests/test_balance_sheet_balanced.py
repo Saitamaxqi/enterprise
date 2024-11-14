@@ -189,6 +189,10 @@ REPORT_CONFIG = {
         'asset_line_ref': 'l10n_ke_reports.account_financial_report_ke_bs_A',
         'liability_line_ref': 'l10n_ke_reports.account_financial_report_ke_bs_B',
     },
+    'l10n_kh_reports.l10n_kh_balance_sheet': {
+        'asset_line_ref': 'l10n_kh_reports.l10n_kh_balance_sheet_kh_bs_a',
+        'liability_line_ref': 'l10n_kh_reports.l10n_kh_balance_sheet_kh_bs_el',
+    },
     'l10n_kz_reports.l10n_kz_bl_report': {
         'asset_line_ref': 'l10n_kz_reports.l10n_kz_bl_assets',
         'liability_line_ref': 'l10n_kz_reports.l10n_kz_bl_equity_liabilities',
