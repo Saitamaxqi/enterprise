@@ -55,16 +55,20 @@ export class CohortController extends Component {
             return [context[`${viewType}_view_id`] || views[viewType] || false, viewType];
         }
         const actionViews = [getView("list"), getView("form")];
+        this.openView(domain, actionViews, context, newWindow);
+    }
+
+    openView(domain, views, context, newWindow) {
         this.actionService.doAction(
             {
                 type: "ir.actions.act_window",
                 name: this.model.metaData.title,
                 res_model: this.model.metaData.resModel,
-                views: actionViews,
+                views,
                 view_mode: "list",
                 target: "current",
-                context: context,
-                domain: domain,
+                context,
+                domain,
             },
             { newWindow }
         );

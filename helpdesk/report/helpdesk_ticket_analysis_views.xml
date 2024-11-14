@@ -4,7 +4,7 @@
         <field name="name">helpdesk.ticket.report.analysis.pivot</field>
         <field name="model">helpdesk.ticket.report.analysis</field>
         <field name="arch" type="xml">
-            <pivot string="Ticket Analysis" display_quantity="1" disable_linking="1" sample="1">
+            <pivot string="Ticket Analysis" display_quantity="1" sample="1" js_class="helpdesk_ticket_analysis_pivot">
                 <field name="team_id" type="row"/>
                 <field name="ticket_open_hours" widget="float_time"/>
                 <field name="ticket_assignation_hours" widget="float_time" type="measure"/>
@@ -106,7 +106,7 @@
         <field name="name">helpdesk.ticket.report.analysis.graph</field>
         <field name="model">helpdesk.ticket.report.analysis</field>
         <field name="arch" type="xml">
-            <graph string="Tickets Analysis" sample="1" disable_linking="1">
+            <graph string="Tickets Analysis" sample="1" js_class="helpdesk_ticket_analysis_graph">
                 <field name="team_id"/>
                 <field name="stage_id"/>
                 <field name="ticket_close_hours" widget="float_time"/>
@@ -153,7 +153,7 @@
         <field name="name">helpdesk.ticket.report.analysis.cohort</field>
         <field name="model">helpdesk.ticket.report.analysis</field>
         <field name="arch" type="xml">
-            <cohort string="Tickets Analysis" date_start="create_date" date_stop="close_date" disable_linking="True" interval="day" sample="1"/>
+            <cohort string="Tickets Analysis" date_start="create_date" date_stop="close_date" interval="day" sample="1" js_class="helpdesk_ticket_analysis_cohort"/>
         </field>
     </record>
 

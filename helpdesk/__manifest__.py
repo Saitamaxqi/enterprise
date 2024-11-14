@@ -75,6 +75,16 @@ Features:
             'helpdesk/static/src/components/**/*',
             'helpdesk/static/src/views/**/*',
             'helpdesk/static/src/js/tours/helpdesk.js',
+            ('remove', 'helpdesk/static/src/views/helpdesk_ticket_analysis_renderer_mixin.js'),
+            ('remove', 'helpdesk/static/src/views/helpdesk_ticket_analysis_cohort/**'),
+            ('remove', 'helpdesk/static/src/views/helpdesk_ticket_analysis_graph/**'),
+            ('remove', 'helpdesk/static/src/views/helpdesk_ticket_analysis_pivot/**'),
+        ],
+        'web.assets_backend_lazy': [
+            'helpdesk/static/src/views/helpdesk_ticket_analysis_renderer_mixin.js',
+            'helpdesk/static/src/views/helpdesk_ticket_analysis_cohort/**',
+            'helpdesk/static/src/views/helpdesk_ticket_analysis_graph/**',
+            'helpdesk/static/src/views/helpdesk_ticket_analysis_pivot/**',
         ],
         'web.assets_unit_tests': [
             'helpdesk/static/tests/**/*',

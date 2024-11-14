@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="helpdesk.helpdesk_ticket_view_graph_analysis"/>
         <field name="arch" type="xml">
             <xpath expr="//graph" position="attributes">
-                <attribute name="js_class">hr_timesheet_graphview</attribute>
+                <attribute name="js_class">hr_timesheet_helpdesk_ticket_analysis_graph</attribute>
             </xpath>
         </field>
     </record>

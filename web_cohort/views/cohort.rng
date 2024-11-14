@@ -18,6 +18,7 @@
             <optional><attribute name="interval"/></optional>
             <optional><attribute name="measure"/></optional>
             <optional><attribute name="sample"/></optional>
+            <optional><attribute name="js_class"/></optional>
             <zeroOrMore>
                 <ref name="field"/>
             </zeroOrMore>
