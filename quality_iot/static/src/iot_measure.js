@@ -32,7 +32,7 @@ export class IoTMeasureRealTimeValue extends FloatField {
     }
     async onTakeMeasure() {
         if (this.getIotDevice()) {
-            this.notification.add(_t('Take measure...'));
+            this.notification.add(_t('Getting measurement...'));
             try {
                 const data = await this.getIotDevice().action({ action: 'read_once' });
                 if (data.result !== true) {

@@ -496,7 +496,7 @@ export class MrpDisplayRecord extends Component {
         };
         this.dialog.add(MrpMenuDialog, {
             groups: this.props.groups,
-            title: "What do you want to do?",
+            title: _t("What do you want to do?"),
             record: this.props.record,
             params,
             reload: this.env.reload.bind(this),

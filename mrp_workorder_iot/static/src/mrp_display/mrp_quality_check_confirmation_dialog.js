@@ -86,7 +86,7 @@ patch(MrpQualityCheckConfirmationDialog.prototype, {
          await controller.action({})
             .catch(() => {
                this.notification.add(_t("Check IoT Box connection. Try restarting if needed."), {
-                  title: _t("Connection failed "),
+                  title: _t("Connection failed"),
                   type: "danger",
                });
                this.state.pedalConnected = false;
