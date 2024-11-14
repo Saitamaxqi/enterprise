@@ -407,4 +407,4 @@ class ExtractMixin(models.AbstractModel):
                 self._check_ocr_status()
             self.env.cr.commit()
         except Exception as e:
-            _logger.error("Couldn't check OCR status of %s with id %d: %s", self._name, self.id, str(e))
+            _logger.warning("Couldn't check OCR status of %s with id %d: %s", self._name, self.id, str(e))
