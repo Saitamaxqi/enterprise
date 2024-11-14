@@ -412,7 +412,8 @@
                     'company_id': parent.company_id,
                     'default_lst_price': price_unit,
                     'default_description_sale': name,
-                    'default_recurring_invoice': True
+                    'default_recurring_invoice': True,
+                    'default_uom_id': product_uom_id,
                     }
                 </attribute>
             </xpath>
@@ -426,7 +427,8 @@
                     'company_id': parent.company_id,
                     'default_lst_price': price_unit,
                     'default_description_sale': name,
-                    'default_recurring_invoice': True
+                    'default_recurring_invoice': True,
+                    'default_uom_id': product_uom_id,
                     }
                 </attribute>
             </xpath>
