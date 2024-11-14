@@ -6,6 +6,7 @@ import { _t } from "@web/core/l10n/translation";
 
 const { chartSidePanelComponentRegistry, chartSubtypeRegistry } = spreadsheet.registries;
 const {
+    ComboChartDesignPanel,
     PieChartDesignPanel,
     ChartWithAxisDesignPanel,
     RadarChartDesignPanel,
@@ -40,6 +41,10 @@ chartSidePanelComponentRegistry
     .add("odoo_scatter", {
         configuration: CommonOdooChartConfigPanel,
         design: ChartWithAxisDesignPanel,
+    })
+    .add("odoo_combo", {
+        configuration: CommonOdooChartConfigPanel,
+        design: ComboChartDesignPanel,
     });
 
 chartSubtypeRegistry.add("odoo_line", {
@@ -99,6 +104,13 @@ chartSubtypeRegistry.add("odoo_stacked_bar", {
     chartType: "odoo_bar",
     category: "column",
     preview: "o-spreadsheet-ChartPreview.STACKED_COLUMN_CHART",
+});
+chartSubtypeRegistry.add("odoo_combo", {
+    displayName: _t("Combo"),
+    chartSubtype: "odoo_combo",
+    chartType: "odoo_combo",
+    category: "line",
+    preview: "o-spreadsheet-ChartPreview.COMBO_CHART",
 });
 chartSubtypeRegistry.add("odoo_pie", {
     displayName: _t("Pie"),

@@ -310,6 +310,25 @@ test("scatter chart", async () => {
     expect(runtime.chartJsConfig.data.datasets[0].showLine).toBe(false);
 });
 
+test("combo chart", async () => {
+    const { model, env } = await createSpreadsheetFromGraphView({
+        additionalContext: {
+            graph_groupbys: ["bar", "product_id"],
+            graph_measure: ["probability"],
+        },
+    });
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    await openChartSidePanel(model, env);
+    await changeChartType("odoo_combo");
+
+    expect(model.getters.getChartDefinition(chartId).type).toBe("odoo_combo");
+    const runtime = model.getters.getChartRuntime(chartId);
+    expect(runtime.chartJsConfig.type).toBe("bar");
+    expect(runtime.chartJsConfig.data.datasets[0].type).toBe("bar");
+    expect(runtime.chartJsConfig.data.datasets[1].type).toBe("line");
+});
+
 describe("trend line", () => {
     test("activate trend line with the checkbox", async function () {
         const { model, env } = await createSpreadsheetFromGraphView();
