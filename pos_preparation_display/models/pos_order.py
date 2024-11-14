@@ -49,6 +49,7 @@ class PosOrder(models.Model):
                     'product_id': pdis_line.product_id.id,
                     'display': line_qty,
                     'order': 0,
+                    'uuid': pdis_line.pos_order_line_uuid,
                 }
             else:
                 quantity_data[key]['display'] += line_qty
@@ -64,6 +65,7 @@ class PosOrder(models.Model):
                     'product_id': line.product_id.id,
                     'display': 0,
                     'order': line.qty,
+                    'uuid': line.uuid,
                 }
             else:
                 quantity_data[key]['order'] += line.qty
@@ -93,6 +95,7 @@ class PosOrder(models.Model):
                                 'product_id': line.product_id.id,
                                 'display': 0,
                                 'order': 0,
+                                'uuid': line.pos_order_line_uuid,
                             }
 
                         # Merge the two lines, so that if the quantity was changed it's also applied
@@ -118,7 +121,7 @@ class PosOrder(models.Model):
             product = product_ids.filtered(lambda p: p.id == product_id)
             if data['order'] > data['display']:
                 missing_qty = data['order'] - data['display']
-                filtered_lines = self.lines.filtered(lambda li: li.product_id.id == product_id and (li.note or "") == data['note'] and li.attribute_value_ids.ids == data['attribute_value_ids'])
+                filtered_lines = self.lines.filtered(lambda li: li.uuid == data['uuid'])
                 line_qty = 0
 
                 for line in filtered_lines:

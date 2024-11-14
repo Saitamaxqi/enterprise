@@ -6,7 +6,8 @@ import * as FloorScreen from "@pos_restaurant/../tests/tours/utils/floor_screen_
 import * as ProductScreenPos from "@point_of_sale/../tests/pos/tours/utils/product_screen_util";
 import * as Dialog from "@point_of_sale/../tests/generic_helpers/dialog_util";
 import * as ProductScreenResto from "@pos_restaurant/../tests/tours/utils/product_screen_util";
-const ProductScreen = { ...ProductScreenPos, ...ProductScreenResto };
+import * as PreparationDisplay from "@pos_restaurant_preparation_display/../tests/tours/utils/preparation_display_util";
+const ProductScreen = { ...ProductScreenPos, ...ProductScreenResto, ...PreparationDisplay };
 import { registry } from "@web/core/registry";
 
 registry.category("web_tour.tours").add("PreparationDisplayTourResto", {
@@ -107,6 +108,27 @@ registry.category("web_tour.tours").add("PreparationDisplayTourResto2", {
             ProductScreen.orderlinesHaveNoChange(),
             ProductScreen.clickDisplayedProduct("Coca-Cola"),
             ProductScreen.orderlineIsToOrder("Coca-Cola"),
+            ProductScreen.clickOrderButton(),
+            ProductScreen.orderlinesHaveNoChange(),
+        ].flat(),
+});
+
+registry.category("web_tour.tours").add("PreparationDisplayTourSkipChange", {
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+
+            // Create first order
+            FloorScreen.clickTable("5"),
+            ProductScreen.orderBtnIsPresent(),
+            ProductScreen.clickDisplayedProduct("Coca-Cola"),
+            ProductScreen.doubleClickLine("Coca-Cola"),
+            ProductScreen.clickDisplayedProduct("Coca-Cola"),
+            ProductScreen.clickDisplayedProduct("Water"),
+            ProductScreen.clickOrderButton(),
+            ProductScreen.orderlinesHaveNoChange(),
+            ProductScreen.clickDisplayedProduct("Minute Maid"),
             ProductScreen.clickOrderButton(),
             ProductScreen.orderlinesHaveNoChange(),
         ].flat(),
