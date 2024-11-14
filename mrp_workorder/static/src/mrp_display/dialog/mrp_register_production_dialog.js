@@ -5,6 +5,7 @@ export class MrpRegisterProductionDialog extends MrpQualityCheckConfirmationDial
     static props = {
         ...MrpQualityCheckConfirmationDialog.props,
         qtyToProduce: { optional: true, type: Number },
+        checkId: { optional: true, type: Number },
     };
 
     setup() {
@@ -21,13 +22,17 @@ export class MrpRegisterProductionDialog extends MrpQualityCheckConfirmationDial
         if (saveModel) {
             await this.props.record.save();
             // Calls `set_qty_producing` because the onchange won't be triggered.
-            await this.props.record.model.orm.call(
-                "mrp.production",
-                "set_qty_producing",
-                this.props.record.resIds
-            );
+            const args = [this.props.record.resIds];
+            if (this.props.checkId) {
+                args.push(this.props.checkId);
+            }
+            await this.props.record.model.orm.call("mrp.production", "set_qty_producing", args);
         }
-        await this.props.reload(this.props.record);
+        if (this.props.qualityCheckDone) {
+            await this.props.qualityCheckDone();
+        } else {
+            await this.props.reload(this.props.record);
+        }
         this.props.close();
     }
 

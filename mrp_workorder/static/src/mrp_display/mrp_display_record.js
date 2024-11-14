@@ -78,7 +78,7 @@ export class MrpDisplayRecord extends Component {
      * Opens a confirmation dialog to register the produced quantity and set the
      * tracking number if it applies.
      */
-    registerProduction() {
+    async registerProduction(check = false) {
         if (!this.props.production.data.qty_producing) {
             this.props.production.update({ qty_producing: this.props.production.data.product_qty });
         }
@@ -90,6 +90,19 @@ export class MrpDisplayRecord extends Component {
             title,
             qtyToProduce: this.record.qty_remaining,
         };
+        if (check) {
+            params.worksheetData = await this.getWorksheetData(check);
+            params.body = check.data.note;
+            params.checkId = check.resId;
+            const previousId = check.data.previous_check_id[0];
+            const nextId = check.data.next_check_id[0];
+            const previousQC = this.record.check_ids.records.find((c) => c.data.id === previousId);
+            const nextQC = this.record.check_ids.records.find((c) => c.data.id === nextId);
+            params.openPreviousCheck = previousQC && this.displayInstruction.bind(this, previousQC);
+            params.openNextCheck = nextQC && this.displayInstruction.bind(this, nextQC);
+            params.qualityCheckDone = this.qualityCheckDone.bind(this);
+            this.lastOpenedQualityCheck = check;
+        }
         this.dialog.add(MrpRegisterProductionDialog, params);
     }
 
@@ -108,15 +121,22 @@ export class MrpDisplayRecord extends Component {
         const qtyToSet = this.productionComplete ? 0 : production.data.product_qty;
         await production.update({ qty_producing: qtyToSet }, { save: true });
         // Calls `set_qty_producing` because the onchange won't be triggered.
-        await production.model.orm.call("mrp.production", "set_qty_producing", production.resIds);
+        const args = [production.resIds];
+        if (check) {
+            args.push(check.resId);
+        }
+        await production.model.orm.call("mrp.production", "set_qty_producing", args);
         await this.env.reload(this.props.production);
     }
 
-    async generateSerialNumber() {
+    async generateSerialNumber(check = false) {
         if (this.trackingMode === "lot" && this.props.production.data.qty_producing === 0) {
-            await this.quickRegisterProduction();
+            await this.quickRegisterProduction(check);
         }
         const args = [this.props.production.resId];
+        if (check) {
+            args.push(check.resId);
+        }
         const action = await this.model.orm.call("mrp.production", "action_generate_serial", args);
         if (action && typeof action === "object") {
             return this._doAction(action);
@@ -405,6 +425,9 @@ export class MrpDisplayRecord extends Component {
             if (!record) {
                 return;
             }
+        }
+        if (record.data.test_type === "register_production") {
+            return this.registerProduction(record);
         }
         this.lastOpenedQualityCheck = record;
         const previousId = record.data.previous_check_id[0];
