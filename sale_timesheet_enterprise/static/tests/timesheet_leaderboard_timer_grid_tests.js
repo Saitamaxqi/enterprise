@@ -6,8 +6,10 @@ import { setupTestEnv } from "@hr_timesheet/../tests/legacy/hr_timesheet_common_
 import { TimesheetGridSetupHelper } from "@timesheet_grid/../tests/legacy/helpers";
 
 import { browser } from "@web/core/browser/browser";
+import { addModelNamesToFetch } from "@bus/../tests/helpers/model_definitions_helpers";
 
 let target, timesheetGridSetup, rankingData, leaderboard;
+addModelNamesToFetch(["project.project", "project.task", "project.task.type"]);
 
 async function initAndOpenView(showIndicators = true, showLeaderboard = true) {
     const { openView } = await start({

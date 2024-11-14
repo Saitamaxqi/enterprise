@@ -3,6 +3,7 @@ import { ormService } from "@web/core/orm_service";
 import { serializeDateTime } from "@web/core/l10n/dates";
 import { patchUserWithCleanup } from "@web/../tests/helpers/mock_services";
 import { click, editInput, getFixture, nextTick } from "@web/../tests/helpers/utils";
+import { addModelNamesToFetch } from "@bus/../tests/helpers/model_definitions_helpers";
 
 import { getPyEnv } from "@bus/../tests/helpers/mock_python_environment";
 
@@ -16,6 +17,8 @@ import { TimesheetGridSetupHelper } from "@timesheet_grid/../tests/legacy/helper
 const { DateTime } = luxon;
 
 let serverData, target, timesheetGridSetup;
+
+addModelNamesToFetch(["project.project", "project.task", "project.task.type"]);
 
 QUnit.module("Views", (hooks) => {
     hooks.beforeEach(async () => {
