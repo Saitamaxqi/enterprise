@@ -61,6 +61,3 @@ class AccountDuplicateTransactionWizard(models.TransientModel):
                 wizard.date = bsl[0]['date']
             else:
                 wizard.date = fields.Datetime.today()
-
-    def action_display_duplicate_transaction(self):
-        return self.journal_id.action_display_duplicate_transaction_from_date(self.date)
