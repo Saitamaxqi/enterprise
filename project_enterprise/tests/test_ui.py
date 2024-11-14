@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from dateutil.relativedelta import relativedelta
+
 import logging
 
-from odoo.tests import HttpCase, tagged, loaded_demo_data
+from odoo import fields
+from odoo.tests import HttpCase, tagged
 from odoo.addons.mail.tests.common import mail_new_test_user
 
 _logger = logging.getLogger(__name__)
@@ -27,9 +30,22 @@ class ProjectEnterpriseTestUi(HttpCase):
             name='Gilbert ProjectManager',
             tz='Europe/Brussels',
         )
+        # The test checks that the 'danger' state appears when an employee is
+        # overworked. This ensures that creating a task in the gantt view
+        # during the tour, triggers that warning.
+        project = cls.env['project.project'].create({
+            'name': 'Test Project',
+        })
+        # Allocated hours is only computed without _origin
+        task = cls.env['project.task'].new({
+            'project_id': project.id,
+            'name': 'Test Task',
+            'planned_date_begin': fields.Datetime.now() - relativedelta(days=30),
+            'date_deadline': fields.Datetime.now() + relativedelta(days=30),
+            'user_ids': cls.env.ref('base.user_admin'),
+        })
+        task._compute_allocated_hours()
+        task.create(task._convert_to_write(task._cache))
 
     def test_01_ui(self):
-        if not loaded_demo_data(self.env):
-            _logger.warning("This test relies on demo data. To be rewritten independently of demo data for accurate and reliable results.")
-            return
         self.start_tour("/", 'project_test_tour', login='admin')
