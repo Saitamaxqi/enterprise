@@ -329,6 +329,27 @@ test("combo chart", async () => {
     expect(runtime.chartJsConfig.data.datasets[1].type).toBe("line");
 });
 
+test("horizontal & stacked horizontal bar charts", async () => {
+    const { model, env } = await createSpreadsheetFromGraphView();
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    await openChartSidePanel(model, env);
+    await changeChartType("odoo_horizontal_bar");
+
+    expect(model.getters.getChartDefinition(chartId).type).toBe("odoo_bar");
+    let runtime = model.getters.getChartRuntime(chartId);
+    expect(runtime.chartJsConfig.type).toBe("bar");
+    expect(runtime.chartJsConfig.options.indexAxis).toBe("y");
+    expect(runtime.chartJsConfig.options.scales.x.stacked).toBe(false);
+
+    await changeChartType("odoo_horizontal_stacked_bar");
+    expect(model.getters.getChartDefinition(chartId).type).toBe("odoo_bar");
+    runtime = model.getters.getChartRuntime(chartId);
+    expect(runtime.chartJsConfig.type).toBe("bar");
+    expect(runtime.chartJsConfig.options.indexAxis).toBe("y");
+    expect(runtime.chartJsConfig.options.scales.x.stacked).toBe(true);
+});
+
 describe("trend line", () => {
     test("activate trend line with the checkbox", async function () {
         const { model, env } = await createSpreadsheetFromGraphView();

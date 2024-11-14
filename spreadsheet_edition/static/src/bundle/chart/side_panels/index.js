@@ -88,8 +88,9 @@ chartSubtypeRegistry.add("odoo_stacked_area", {
     preview: "o-spreadsheet-ChartPreview.STACKED_AREA_CHART",
 });
 chartSubtypeRegistry.add("odoo_bar", {
-    matcher: (definition) => definition.type === "odoo_bar" && !definition.stacked,
-    subtypeDefinition: { stacked: false },
+    matcher: (definition) =>
+        definition.type === "odoo_bar" && !definition.stacked && !definition.horizontal,
+    subtypeDefinition: { stacked: false, horizontal: false },
     displayName: _t("Column"),
     chartSubtype: "odoo_bar",
     chartType: "odoo_bar",
@@ -97,13 +98,34 @@ chartSubtypeRegistry.add("odoo_bar", {
     preview: "o-spreadsheet-ChartPreview.COLUMN_CHART",
 });
 chartSubtypeRegistry.add("odoo_stacked_bar", {
-    matcher: (definition) => definition.type === "odoo_bar" && definition.stacked,
-    subtypeDefinition: { stacked: true },
+    matcher: (definition) =>
+        definition.type === "odoo_bar" && definition.stacked && !definition.horizontal,
+    subtypeDefinition: { stacked: true, horizontal: false },
     displayName: _t("Stacked Column"),
     chartSubtype: "odoo_stacked_bar",
     chartType: "odoo_bar",
     category: "column",
     preview: "o-spreadsheet-ChartPreview.STACKED_COLUMN_CHART",
+});
+chartSubtypeRegistry.add("odoo_horizontal_bar", {
+    matcher: (definition) =>
+        definition.type === "odoo_bar" && !definition.stacked && definition.horizontal,
+    subtypeDefinition: { stacked: false, horizontal: true },
+    displayName: _t("Bar"),
+    chartSubtype: "odoo_horizontal_bar",
+    chartType: "odoo_bar",
+    category: "bar",
+    preview: "o-spreadsheet-ChartPreview.BAR_CHART",
+});
+chartSubtypeRegistry.add("odoo_horizontal_stacked_bar", {
+    matcher: (definition) =>
+        definition.type === "odoo_bar" && definition.stacked && definition.horizontal,
+    subtypeDefinition: { stacked: true, horizontal: true },
+    displayName: _t("Stacked Bar"),
+    chartSubtype: "odoo_horizontal_stacked_bar",
+    chartType: "odoo_bar",
+    category: "bar",
+    preview: "o-spreadsheet-ChartPreview.STACKED_BAR_CHART",
 });
 chartSubtypeRegistry.add("odoo_combo", {
     displayName: _t("Combo"),
