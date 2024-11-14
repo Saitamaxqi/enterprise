@@ -343,7 +343,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         partners = {self.portal_user.partner_id.id: (False, None)}
 
         self.env.invalidate_all()
-        with self.assertQueryCount(8):
+        with self.assertQueryCount(7):
             self.folder_a.action_update_access_rights(partners=partners)
             self.assertFalse(self.folder_a.access_ids.filtered(lambda a: a.partner_id == self.portal_user.partner_id))
         self._assert_raises_check_access_rule(folder_a_as_portal, 'read')
@@ -377,7 +377,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         # Remove portal 2 access
         portal_2_partner_id = portal_user_2.partner_id.id
         self.env.invalidate_all()
-        with self.assertQueryCount(5):
+        with self.assertQueryCount(4):
             self.folder_a.action_update_access_rights(partners={portal_2_partner_id: (False, False)})
         self._assert_raises_check_access_rule(folder_a_as_portal_2)
 
@@ -839,7 +839,9 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         self.assertEqual(shortcut.owner_id, self.internal_user)
         self.document_txt.action_update_access_rights(access_internal='none')
         self.assertEqual(self.document_txt.with_user(self.internal_user).user_permission, 'none')
-        self.assertFalse(shortcut.exists())
+        self.assertFalse(
+            self.env['documents.document'].with_user(self.internal_user).search([('id', '=', shortcut.id)]))
+        self.assertEqual(shortcut.with_user(self.internal_user).user_permission, 'none')
 
         # Access via membership
         self.document_txt.action_update_access_rights(
@@ -849,7 +851,9 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         )
         self.assertEqual(shortcut.owner_id, self.internal_user)
         self.document_txt.action_update_access_rights(partners={self.internal_user.partner_id: (False, False)})
-        self.assertFalse(shortcut.exists())
+        self.assertFalse(
+            self.env['documents.document'].with_user(self.internal_user).search([('id', '=', shortcut.id)]))
+        self.assertEqual(shortcut.with_user(self.internal_user).user_permission, 'none')
 
         # Access via ownership
         self.document_txt.owner_id = self.internal_user
@@ -858,7 +862,9 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         )
         self.assertEqual(shortcut.owner_id, self.internal_user)
         self.document_txt.owner_id = self.document_manager
-        self.assertFalse(shortcut.exists())
+        self.assertFalse(
+            self.env['documents.document'].with_user(self.internal_user).search([('id', '=', shortcut.id)]))
+        self.assertEqual(shortcut.with_user(self.internal_user).user_permission, 'none')
 
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_access_rights_shortcuts_propagation(self):
