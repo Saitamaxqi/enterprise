@@ -5,8 +5,12 @@ import { OdooLineChartConfigPanel } from "./odoo_line/odoo_line_config_panel";
 import { _t } from "@web/core/l10n/translation";
 
 const { chartSidePanelComponentRegistry, chartSubtypeRegistry } = spreadsheet.registries;
-const { PieChartDesignPanel, ChartWithAxisDesignPanel, RadarChartDesignPanel } =
-    spreadsheet.components;
+const {
+    PieChartDesignPanel,
+    ChartWithAxisDesignPanel,
+    RadarChartDesignPanel,
+    WaterfallChartDesignPanel,
+} = spreadsheet.components;
 
 chartSidePanelComponentRegistry
     .add("odoo_line", {
@@ -24,6 +28,10 @@ chartSidePanelComponentRegistry
     .add("odoo_radar", {
         configuration: CommonOdooChartConfigPanel,
         design: RadarChartDesignPanel,
+    })
+    .add("odoo_waterfall", {
+        configuration: CommonOdooChartConfigPanel,
+        design: WaterfallChartDesignPanel,
     });
 
 chartSubtypeRegistry.add("odoo_line", {
@@ -90,6 +98,13 @@ chartSubtypeRegistry.add("odoo_pie", {
     chartType: "odoo_pie",
     category: "pie",
     preview: "o-spreadsheet-ChartPreview.PIE_CHART",
+});
+chartSubtypeRegistry.add("odoo_waterfall", {
+    displayName: _t("Waterfall"),
+    chartSubtype: "odoo_waterfall",
+    chartType: "odoo_waterfall",
+    category: "misc",
+    preview: "o-spreadsheet-ChartPreview.WATERFALL_CHART",
 });
 chartSubtypeRegistry.add("odoo_radar", {
     matcher: (definition) => definition.type === "odoo_radar" && !definition.fillArea,
