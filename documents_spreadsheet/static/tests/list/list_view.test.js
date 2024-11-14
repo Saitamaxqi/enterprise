@@ -113,10 +113,16 @@ test("property fields are not exported", async () => {
             id: 1,
             bar: true,
             product_id: product.id,
-            partner_properties: [{ ...propertyDefinition, value: "CHAR" }],
+            partner_properties: {
+                [propertyDefinition.name]: "CHAR",
+            },
         },
     ];
-    const propertyField = fields.Properties({ string: "Property char" });
+    const propertyField = fields.Properties({
+        string: "Property char",
+        definition_record: "product_id",
+        definition_record_field: "properties_definitions",
+    });
     Partner._fields.partner_properties = propertyField;
     const { model } = await createSpreadsheetFromListView({
         actions: async (fixture) => {

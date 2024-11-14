@@ -1941,14 +1941,9 @@ describe.tags("desktop")("map_view_desktop", () => {
                 name: "FooProject",
                 sequence: 1,
                 partner_id: 1,
-                task_properties: [
-                    {
-                        name: "bd6404492c244cff",
-                        type: "char",
-                        string: "Reference Number",
-                        value: "1234",
-                    },
-                ],
+                task_properties: {
+                    bd6404492c244cff: "1234",
+                },
             },
         ];
 

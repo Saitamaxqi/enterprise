@@ -10,7 +10,7 @@ import {
     onRpc,
     patchWithCleanup,
 } from "@web/../tests/web_test_helpers";
-import { Tasks, defineGanttModels } from "./gantt_mock_models";
+import { Tasks, Project, defineGanttModels } from "./gantt_mock_models";
 import {
     SELECTORS,
     focusToday,
@@ -911,8 +911,14 @@ test("Day scale with 24-hours format", async () => {
 });
 
 test("group tasks by task_properties", async () => {
+    Project._fields.properties_definitions = fields.PropertiesDefinition();
+    Project._records[0].properties_definitions = [
+        {
+            name: "bd6404492c244cff",
+            type: "char",
+        },
+    ];
     Tasks._fields.task_properties = fields.Properties({
-        string: "Task properties",
         definition_record: "project_id",
         definition_record_field: "properties_definitions",
     });
@@ -924,13 +930,9 @@ test("group tasks by task_properties", async () => {
             stop: "2018-12-24 08:00:00",
             user_id: 1,
             project_id: 1,
-            task_properties: [
-                {
-                    name: "bd6404492c244cff",
-                    type: "char",
-                    value: "test value 1",
-                },
-            ],
+            task_properties: {
+                bd6404492c244cff: "test value 1",
+            },
         },
         {
             id: 2,
@@ -939,13 +941,9 @@ test("group tasks by task_properties", async () => {
             stop: "2018-12-12 08:00:00",
             user_id: 2,
             project_id: 1,
-            task_properties: [
-                {
-                    name: "bd6404492c244cff",
-                    type: "char",
-                    value: "test value 1",
-                },
-            ],
+            task_properties: {
+                bd6404492c244cff: "test value 1",
+            },
         },
     ];
     await mountGanttView({
