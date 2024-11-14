@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
@@ -15,8 +14,8 @@
         'web.assets_backend': [
             'hr_mobile/static/src/**/*',
         ],
-        'web.qunit_mobile_suite_tests': [
-            'hr_mobile/static/tests/**/*',
+        'web.assets_unit_tests': [
+            'hr_mobile/static/tests/**/*.test.js',
         ],
     }
 }
