@@ -354,6 +354,11 @@ class TestStock(common.TestAmazonCommon, TestStockCommon):
         self.assertEqual(self.picking.amazon_sync_status, 'done', msg=msg)
 
     def test_action_retry_amazon_sync_set_waiting_state_after_resync(self):
+        # Make sure we have those fields set on the company.
+        self.env.company.partner_id.write({
+            'street': 'Company Street Office 2',
+            'country_id': self.env.ref('base.be').id,
+        })
         self.picking.amazon_sync_status = 'error'
         with patch(
             'odoo.addons.sale_amazon.models.amazon_account.AmazonAccount._sync_order_by_reference',
