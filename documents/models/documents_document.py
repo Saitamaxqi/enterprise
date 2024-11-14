@@ -232,11 +232,12 @@ class DocumentsDocument(models.Model):
         for record in self:
             record.file_extension = _sanitize_file_extension(record.file_extension) if record.file_extension else False
 
-    @api.constrains('shortcut_document_id', 'shortcut_ids', 'type', 'folder_id', 'children_ids')
+    @api.constrains('shortcut_document_id', 'shortcut_ids', 'type', 'folder_id', 'children_ids', 'company_id')
     def _check_shortcut_fields(self):
         errors = []
-        wrong_types = self.browse()
-        wrong_parents = self.folder_id.filtered('shortcut_document_id')
+        wrong_types, wrong_companies = self.browse(), self.browse()
+        # Access rights can allow for a document to be edited without having access to its parent folder
+        wrong_parents_sudo = self.folder_id.sudo().filtered('shortcut_document_id')
         for target in self.filtered('shortcut_ids'):
             for shortcut in target.shortcut_ids:
                 if shortcut.type != target.type:
@@ -245,14 +246,21 @@ class DocumentsDocument(models.Model):
             if shortcut.type != shortcut.shortcut_document_id.type:
                 wrong_types |= shortcut
             if shortcut.children_ids:
-                wrong_parents |= shortcut
+                wrong_parents_sudo |= shortcut
+            if (shortcut.shortcut_document_id.company_id
+                    and shortcut.shortcut_document_id.company_id != shortcut.company_id):
+                wrong_companies |= shortcut
         if wrong_types:
             message = _("The following documents/shortcuts have a type mismatch: \n")
             documents_list = "\n- ".join(wrong_types.mapped('name'))
             errors.append(f'{message}\n- {documents_list}')
-        if wrong_parents:
+        if wrong_parents_sudo:
             message = _("The following shortcuts cannot be set as documents parents: \n")
-            shortcuts_list = "\n- ".join(wrong_parents.mapped('name'))
+            shortcuts_list = "\n- ".join(wrong_parents_sudo.mapped('name'))
+            errors.append(f'{message}\n- {shortcuts_list}')
+        if wrong_companies:
+            message = _("The following documents/shortcuts have a company mismatch: \n")
+            shortcuts_list = "\n- ".join(wrong_companies.mapped('name'))
             errors.append(f'{message}\n- {shortcuts_list}')
         if errors:
             raise ValidationError('\n\n'.join(errors))
@@ -1787,6 +1795,9 @@ class DocumentsDocument(models.Model):
                              name=self.name, user=self.env.user.name)
                 document.with_context(no_document=True).request_activity_id.action_feedback(
                     feedback=feedback, attachment_ids=[document.attachment_id.id])
+
+        if (company_id := vals.get('company_id')) and self.shortcut_ids:  # no need if resetting company_id to False
+            self.shortcut_ids.sudo().write({'company_id': company_id})
 
         if shortcuts_to_check_owner_target_access:
             shortcuts_to_check_owner_target_access._unlink_shortcut_if_target_inaccessible()

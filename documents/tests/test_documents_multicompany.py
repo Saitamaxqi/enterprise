@@ -1,6 +1,7 @@
 from odoo.addons.documents.tests.test_documents_common import TransactionCaseDocuments
 
 from odoo import Command
+from odoo.exceptions import ValidationError
 from odoo.tools import mute_logger
 
 MEMBER_VIEW, INTERNAL_VIEW, MEMBER_INTERNAL_VIEW, OWNER, MEMBER_VIEW_LINK_EDIT, INTERNAL_VIEW_LINK_EDIT = range(6)
@@ -153,5 +154,30 @@ class TestDocumentsMulticompany(TransactionCaseDocuments):
             (self.company_disabled, [], []),
         ]
         self._test_company_with_user(cases, self.portal_user)
+
+    @mute_logger('odoo.addons.base.models.ir_rule')
+    def test_company_shortcut_mismatch(self):
+        docs = self._make_test_documents(self.company_allowed.id, self.internal_user)
+        member_view_link_edit = docs[4]
+        Documents_with_ctx = self.env['documents.document'].with_user(self.internal_user).with_context(
+            allowed_company_ids=self.company_allowed.ids
+        )
+        self.assertEqual(member_view_link_edit.user_permission, 'edit')
+        shortcut = member_view_link_edit.action_create_shortcut(False)
+        self.assertEqual(shortcut.company_id, self.company_allowed)
+        member_view_link_edit.company_id = self.company_disabled
+        self.assertFalse(Documents_with_ctx.search([('id', '=', shortcut.id)]))
+        self.assertEqual(shortcut.user_permission, 'none')
+
+        member_view_link_edit.company_id = self.company_allowed
+        self.assertEqual(shortcut.company_id, self.company_allowed)
+
+        with self.assertRaises(ValidationError):
+            shortcut.sudo().company_id = self.company_disabled
+
+        member_view_link_edit.company_id = False
+        self.assertEqual(shortcut.company_id, self.company_allowed)
+        self.assertEqual(Documents_with_ctx.search([('id', '=', shortcut.id)]), shortcut)
+        self.assertEqual(shortcut.user_permission, 'edit')
 
     # todo: access via parent
