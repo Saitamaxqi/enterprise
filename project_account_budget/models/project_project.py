@@ -35,16 +35,17 @@ class ProjectProject(models.Model):
 
     def action_view_budget_lines(self, domain=None):
         self.ensure_one()
+        budget_lines = self.env['budget.line'].search(expression.AND([
+            [('account_id', '=', self.account_id.id), ('budget_analytic_id.state', 'in', ['confirmed', 'done'])],
+            domain or [],
+        ]))
         return {
             "type": "ir.actions.act_window",
-            "res_model": "budget.line",
-            "domain": expression.AND([
-                [('account_id', '=', self.account_id.id), ('budget_analytic_id.state', 'in', ['confirmed', 'done'])],
-                domain or [],
-            ]),
+            "res_model": "budget.analytic",
+            "res_id": budget_lines.budget_analytic_id.id,
             'context': {'create': False, 'edit': False},
             "name": _("Budget Items"),
-            'view_mode': 'list',
+            'view_mode': 'form',
         }
 
     # ----------------------------
