@@ -48,7 +48,7 @@ class TestPayrollCommission(TestPayslipContractBase):
             'user_type': 'person',
             'commission_payroll_input': input.id,
         })
-        commission_plan.achievement_ids = self.env['sale.commission.plan.achievement'].create([{
+        plan_sold, _ = commission_plan.achievement_ids = self.env['sale.commission.plan.achievement'].create([{
             'type': 'amount_sold',
             'rate': 0.04,
             'plan_id': commission_plan.id,
@@ -76,7 +76,7 @@ class TestPayrollCommission(TestPayslipContractBase):
 
         # Sale order
         partner = self.env["res.partner"].create({"name": 'Buyer', "company_id": self.env.company.id})
-        SO = self.env['sale.order'].create({
+        so = self.env['sale.order'].create({
             'partner_id': partner.id,
             'user_id': employee_user.id,
             'order_line': [Command.create({
@@ -85,12 +85,13 @@ class TestPayrollCommission(TestPayslipContractBase):
                 'price_unit': 200,
             })],
         })
-        SO.action_confirm()
+        so.action_confirm()
 
         self.env.invalidate_all()
         achievements = self.env['sale.commission.achievement.report'].sudo().search([('plan_id', '=', commission_plan.id)])
         self.assertEqual(len(achievements), 1, 'The one line should count as an achievement')
-        self.assertEqual(achievements.achieved, 80, '0.04 * 2000 = 80')
+        commission_amount = so.amount_untaxed * plan_sold.rate
+        self.assertEqual(achievements.achieved, commission_amount)
 
         payslip = self.env['hr.payslip'].create({'name': 'Payslip', 'employee_id': employee.id})
-        self.assertEqual(payslip.input_line_ids.filtered(lambda l: l.input_type_id.id == input.id).amount, 80)
+        self.assertEqual(payslip.input_line_ids.filtered(lambda l: l.input_type_id.id == input.id).amount, commission_amount)
