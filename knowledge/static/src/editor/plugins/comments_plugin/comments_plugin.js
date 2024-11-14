@@ -28,6 +28,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
         "dom",
         "protectedNode",
         "selection",
+        "position",
         "localOverlay",
         "linkSelection",
         "format",
@@ -109,7 +110,8 @@ export class KnowledgeCommentsPlugin extends Plugin {
     };
 
     setup() {
-        this.peerId = this.config.collaboration.peerId;
+        // ensure that this plugin is not dependent on the collaboration plugin
+        this.peerId = this.config.collaboration?.peerId ?? "";
         this.commentsService = this.services["knowledge.comments"];
         this.commentsState = this.commentsService.getCommentsState();
         // reset pending beacons
@@ -140,9 +142,8 @@ export class KnowledgeCommentsPlugin extends Plugin {
             }),
             [this.commentsState]
         );
-        this.localOverlay = this.dependencies.localOverlay.makeLocalOverlay(
-          "KnowledgeThreadBeacons"
-        );
+        this.localOverlay =
+            this.dependencies.localOverlay.makeLocalOverlay("KnowledgeThreadBeacons");
         this.commentBeaconManager = new CommentBeaconManager({
             document: this.document,
             source: this.editable,
