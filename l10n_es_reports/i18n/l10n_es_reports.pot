@@ -689,12 +689,12 @@ msgstr ""
 
 #. module: l10n_es_reports
 #: model:account.report.line,name:l10n_es_reports.mod_349_substitutions_refunds
-msgid "C. Rectificaciones por sustitución de bienes"
+msgid "C. Rectifications for replacement of goods"
 msgstr ""
 
 #. module: l10n_es_reports
 #: model:account.report.line,name:l10n_es_reports.mod_349_substitutions
-msgid "C. Sustitución de bienes"
+msgid "C. Replacements of goods"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -846,15 +846,13 @@ msgid "D) PROFIT/LOSS FOR THE PERIOD (C + 18)"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_returns_goods_consignment
-msgid "D. Devoluciones de mercancías previamente enviadas desde el TAI"
+#: model:account.report.line,name:l10n_es_reports.mod_349_returns_goods_consignment_refunds
+msgid "D. Rectifications of returned goods previously sent from the TAI"
 msgstr ""
 
 #. module: l10n_es_reports
-#: model:account.report.line,name:l10n_es_reports.mod_349_returns_goods_consignment_refunds
-msgid ""
-"D. Rectificaciones de devoluciones de mercancías previamente enviadas desde "
-"el TAI"
+#: model:account.report.line,name:l10n_es_reports.mod_349_returns_goods_consignment
+msgid "D. Returns of goods previously sent from the TAI"
 msgstr ""
 
 #. module: l10n_es_reports
@@ -1608,15 +1606,13 @@ msgstr ""
 #. module: l10n_es_reports
 #: model:account.report.line,name:l10n_es_reports.mod_349_consignment_sales_agreements_refunds
 msgid ""
-"R. Rectificaciones de las transferencias de bienes realizadas en virtud de "
-"contratos de venta en consignación"
+"R. Rectifications of transfers of goods made under consignment sale "
+"contracts."
 msgstr ""
 
 #. module: l10n_es_reports
 #: model:account.report.line,name:l10n_es_reports.mod_349_consignment_sales_agreements
-msgid ""
-"R. Transferencias de bienes realizadas en virtud de contratos de venta en "
-"consignación"
+msgid "R. Transfers of goods made under consignment sales contracts."
 msgstr ""
 
 #. module: l10n_es_reports

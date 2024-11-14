@@ -711,7 +711,7 @@ msgstr "C. Rectificaciones por sustitución de bienes"
 
 #. module: l10n_es_reports
 #: model:account.report.line,name:l10n_es_reports.mod_349_substitutions
-msgid "C. Substitution of goods"
+msgid "C. Replacements of goods"
 msgstr "C. Sustitución de bienes"
 
 #. module: l10n_es_reports
