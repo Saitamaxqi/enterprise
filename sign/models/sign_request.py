@@ -808,7 +808,11 @@ class SignRequest(models.Model):
         # to actually create the record
         # See @tde-banana-odoo for details
         msg = sign_request.env['mail.message'].sudo().new(dict(body=body, **message_values))
-        body_html = self.env['ir.qweb']._render(email_layout_xmlid, dict(message=msg, **notif_values), minimal_qcontext=True)
+        body_html = sign_request.env['ir.qweb']._render(
+            email_layout_xmlid,
+            dict(message=msg, **notif_values),
+            minimal_qcontext=True
+        )
         body_html = sign_request.env['mail.render.mixin']._replace_local_links(body_html)
 
         mail_values['reply_to'] = mail_values.get('email_from')
