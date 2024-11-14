@@ -1074,3 +1074,56 @@ class TestResPartner(AccountTestInvoicingCommon):
                 'paid_amount': 900.0,
             }
         ])
+
+    def test_281_50_write_off_and_exchange_difference_prevent_zero_division_error(self):
+        partner_id = self.partner_b
+        product_id = self.product_b
+        foreign_currency = self.other_currency
+        payable_account = partner_id.commercial_partner_id.property_account_payable_id
+        # simulate 0ed writeoff and 0ed exchange difference
+        zeroed_entry = self.env['account.move'].create({
+            'move_type': 'entry',
+            'partner_id': partner_id.id,
+            'date': fields.Date.from_string('2000-05-12'),
+            'line_ids': [
+                Command.create({
+                    'account_id': product_id.property_account_expense_id.id,
+                    'partner_id': partner_id.id,
+                    'currency_id': foreign_currency.id,
+                    'balance': 0,
+                    'amount_currency': 1000.0,
+                }),
+                Command.create({
+                    'account_id': payable_account.id,
+                    'partner_id': partner_id.id,
+                    'currency_id': foreign_currency.id,
+                    'balance': 0,
+                    'amount_currency': -1000.0,
+                }),
+            ]
+        })
+        zeroed_entry.action_post()
+        bank_move = self.env['account.move'].create({
+            'move_type': 'entry',
+            'partner_id': partner_id.id,
+            'date': fields.Date.from_string('2000-05-12'),
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'line_ids': [
+                Command.create({
+                    'account_id': payable_account.id,
+                    'currency_id': foreign_currency.id,
+                    'balance': 0,
+                    'amount_currency': 1000.0,
+                }),
+                Command.create({
+                    'account_id': self.company_data['default_journal_bank'].default_account_id.id,
+                    'currency_id': foreign_currency.id,
+                    'balance': 0,
+                    'amount_currency': -1000.0,
+                }),
+            ],
+        })
+        bank_move.action_post()
+        moves = bank_move + zeroed_entry
+        moves.line_ids.filtered(lambda l: l.account_id == payable_account).reconcile()
+        form_325 = self.create_325_form(ref_year=2000)

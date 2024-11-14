@@ -386,6 +386,7 @@ class L10n_BeForm325(models.Model):
                AND line.date BETWEEN %(move_date_from)s AND %(move_date_to)s
                AND line.parent_state = 'posted'
                AND line.company_id = %(company)s
+               AND line.balance != 0
           GROUP BY COALESCE(move.commercial_partner_id, line.partner_id)
         """, {
             'partners': partners.ids,
@@ -439,6 +440,7 @@ class L10n_BeForm325(models.Model):
                AND aml_payable.date BETWEEN %(invoice_date_from)s AND %(invoice_date_to)s
                AND aml_expense.date BETWEEN %(invoice_date_from)s AND %(invoice_date_to)s
                AND COALESCE(move_payable.commercial_partner_id, aml_payable.partner_id) = ANY(%(partner_ids)s)
+               AND aml_payable.balance != 0
         ),
         amount_paid_per_partner_based_on_bill_reconciled AS (
             SELECT paid_expense_line.partner_id AS partner_id,
@@ -464,6 +466,7 @@ class L10n_BeForm325(models.Model):
                AND account_tag_rel.account_account_tag_id = ANY(%(tag_ids)s)
                AND line.date BETWEEN %(payment_date_from)s AND %(payment_date_to)s
                AND line.partner_id = ANY(%(partner_ids)s)
+               AND line.balance != 0
         ),
         amount_paid AS (
             SELECT * FROM amount_paid_per_partner_based_on_bill_reconciled
