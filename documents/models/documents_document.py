@@ -1968,7 +1968,7 @@ class DocumentsDocument(models.Model):
         """
         to_delete = self.sudo().with_context(active_test=False).search([('id', 'child_of', self.ids)]).sudo(False)
         removable_parent_folders = self.with_context(active_test=False).folder_id.filtered(
-            lambda folder: len(folder.children_ids - self) == 0 and not folder.active)
+            lambda folder: len(folder.children_ids - self) == 0 and not folder.active and folder.id not in self.ids)
         removable_attachments = self.filtered(lambda d: d.res_model != d._name).attachment_id
 
         res = super(DocumentsDocument, to_delete).unlink()

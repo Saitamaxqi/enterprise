@@ -88,6 +88,16 @@ class TestDocumentsDocumentFolder(TransactionCase):
             self.folders.exists(), self.parent_folder, "Folder and Child Folder should have been deleted"
         )
 
+    def test_folder_and_document_archive_unlink(self):
+        """
+        Test user should archive and unlink both document and folder once.
+        """
+        documents_to_remove = self.child_folder + self.document
+        documents_to_remove.action_archive()
+        documents_to_remove.unlink()
+
+        self.assertFalse(documents_to_remove.exists())
+
     def test_folder_create_subfolder(self):
         self.folder.action_update_access_rights('view', 'edit', False, {
             self.user_portal.partner_id: ('view', None),
