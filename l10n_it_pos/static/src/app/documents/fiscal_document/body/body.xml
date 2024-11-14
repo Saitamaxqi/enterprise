@@ -6,7 +6,7 @@
                 <PrintRecRefund operator="1" description="line.description" quantity="line.quantity" unitPrice="line.unitPrice" department="line.department" />
             </t>
             <t t-elif="line.isReward">
-                <PrintRecItemAdjustment operator="1" adjustmentType="'0'" description="line.discount.description" amount="line.discount.amount" department="line.department" justification="1" />
+                <PrintRecItemAdjustment operator="1" adjustmentType="0" description="line.discount.description" amount="line.discount.amount" department="line.department" justification="1" />
             </t>
             <t t-else="">
                 <PrintRecItem operator="1" description="line.description" quantity="line.quantity" unitPrice="line.unitPrice" department="line.department" />

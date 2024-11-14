@@ -5,7 +5,7 @@ export class PrintRecItemAdjustment extends Component {
     static template = "l10n_it_pos.PrintRecItemAdjustment";
     static props = {
         operator: { type: Number, optional: true },
-        adjustmentType: { type: String },
+        adjustmentType: { type: Number },
         description: { type: String },
         department: { type: String },
         amount: { type: String },
