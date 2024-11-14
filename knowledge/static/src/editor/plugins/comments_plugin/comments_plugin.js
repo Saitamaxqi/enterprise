@@ -13,13 +13,18 @@ import {
     phrasingContent,
     isContentEditable,
     isZwnbsp,
+    listItem,
 } from "@html_editor/utils/dom_info";
 import { uniqueId } from "@web/core/utils/functions";
 import { effect } from "@web/core/utils/reactive";
 import { batched } from "@web/core/utils/timing";
 import { withSequence } from "@html_editor/utils/resource";
 
-const ALLOWED_BEACON_POSITION = new Set([...paragraphRelatedElements, ...phrasingContent]);
+const ALLOWED_BEACON_POSITION = new Set([
+    ...paragraphRelatedElements,
+    ...phrasingContent,
+    ...listItem,
+]);
 
 export class KnowledgeCommentsPlugin extends Plugin {
     static id = "knowledgeComments";
