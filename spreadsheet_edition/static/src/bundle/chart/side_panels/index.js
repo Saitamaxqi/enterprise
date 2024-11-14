@@ -136,10 +136,21 @@ chartSubtypeRegistry.add("odoo_combo", {
 });
 chartSubtypeRegistry.add("odoo_pie", {
     displayName: _t("Pie"),
+    matcher: (definition) => definition.type === "odoo_pie" && !definition.isDoughnut,
+    subtypeDefinition: { isDoughnut: false },
     chartSubtype: "odoo_pie",
     chartType: "odoo_pie",
     category: "pie",
     preview: "o-spreadsheet-ChartPreview.PIE_CHART",
+});
+chartSubtypeRegistry.add("odoo_doughnut", {
+    matcher: (definition) => definition.type === "odoo_pie" && definition.isDoughnut,
+    subtypeDefinition: { isDoughnut: true },
+    displayName: _t("Doughnut"),
+    chartSubtype: "odoo_doughnut",
+    chartType: "odoo_pie",
+    category: "pie",
+    preview: "o-spreadsheet-ChartPreview.DOUGHNUT_CHART",
 });
 chartSubtypeRegistry.add("odoo_scatter", {
     displayName: _t("Scatter"),

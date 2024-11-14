@@ -350,6 +350,19 @@ test("horizontal & stacked horizontal bar charts", async () => {
     expect(runtime.chartJsConfig.options.scales.x.stacked).toBe(true);
 });
 
+test("doughnut charts", async () => {
+    const { model, env } = await createSpreadsheetFromGraphView();
+    const sheetId = model.getters.getActiveSheetId();
+    const chartId = model.getters.getChartIds(sheetId)[0];
+    await openChartSidePanel(model, env);
+    await changeChartType("odoo_doughnut");
+
+    expect(model.getters.getChartDefinition(chartId).type).toBe("odoo_pie");
+    expect(model.getters.getChartDefinition(chartId).isDoughnut).toBe(true);
+    const runtime = model.getters.getChartRuntime(chartId);
+    expect(runtime.chartJsConfig.type).toBe("doughnut");
+});
+
 describe("trend line", () => {
     test("activate trend line with the checkbox", async function () {
         const { model, env } = await createSpreadsheetFromGraphView();
