@@ -242,10 +242,12 @@ export class DocumentsSearchModel extends SearchModel {
         }
         if (folderCategory.activeValueId === "SHARED") {
             return Domain.and([
-                [["owner_id", '!=', user.userId]],
                 [["shortcut_document_id", "=", false]], // no need to show them, the target will be here (or nested)
                 Domain.or([
-                    Domain.and([[['folder_id', '=', false]], [['owner_id', '!=', this.documentService.store.odoobot.userId]]]),
+                    Domain.and([
+                        [["folder_id", "=", false]],
+                        [["owner_id", "not in", [user.userId, this.documentService.store.odoobot.userId]]],
+                    ]),
                     // a non-accessible parent would still be found with its id (not False), and using `not any` (not, !=, 'none')
                     // is much simpler than implementing searching for 'user permission', '=', 'none'
                     // (the != 'none' will be added because of the access rules).
