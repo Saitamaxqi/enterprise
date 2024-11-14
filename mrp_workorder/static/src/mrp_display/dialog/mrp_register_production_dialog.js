@@ -1,4 +1,5 @@
 import { MrpQualityCheckConfirmationDialog } from "./mrp_quality_check_confirmation_dialog";
+import { formatFloat } from "@web/views/fields/formatters";
 
 export class MrpRegisterProductionDialog extends MrpQualityCheckConfirmationDialog {
     static template = "mrp_workorder.MrpRegisterProductionDialog";
@@ -16,6 +17,7 @@ export class MrpRegisterProductionDialog extends MrpQualityCheckConfirmationDial
         } else {
             this.quantityToProduce = product_tracking === "serial" ? 1 : product_qty;
         }
+        this.formatFloat = formatFloat;
     }
 
     async doActionAndClose(action, saveModel = true, reloadChecks = false) {
@@ -60,6 +62,13 @@ export class MrpRegisterProductionDialog extends MrpQualityCheckConfirmationDial
                 ["company_id", "=", false],
                 ["company_id", "=", this.recordData.company_id[0]],
             ],
+        };
+    }
+
+    get qtyDoneInfo() {
+        return {
+            name: "qty_producing",
+            record: this.props.record,
         };
     }
 }

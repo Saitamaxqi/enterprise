@@ -9,17 +9,7 @@
             <span t-if="props.record.data.duration" t-att-class="active ? '' : 'text-muted'">
                 <MrpTimer value="props.record.data.duration" ongoing="active"/>
             </span>
-            <t t-if="props.quantityToProduce">
-                <t t-if="props.record.data.product_tracking !== 'none'">
-                    <button t-if="!props.record.data.lot_id" class="btn btn-info fa fa-plus" t-on-click.stop="pass"/>
-                    <span t-else="" class="o_qc_lot" t-out="props.record.data.lot_id[1]" t-on-click.stop="pass"/>
-                </t>
-                <button t-else="" t-on-click.stop="pass" class="btn btn-sm text-nowrap" t-att-class="isComplete ? 'btn-outline-secondary disabled' : 'btn-secondary'">
-                    <t t-esc="props.quantityToProduce"/>
-                    <span class="ms-1" t-esc="uom"/>
-                </button>
-            </t>
-            <button t-else="" class="btn btn-lg px-0" t-on-click.stop="pass"
+            <button class="btn btn-lg px-0" t-on-click.stop="pass"
                     t-attf-class="#{props.record.data.quality_state === 'none' and icon}"
                     t-att-class="{
                     'pass fa fa-check text-success' : shouldDisplayCheckmark,

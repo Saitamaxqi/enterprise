@@ -206,11 +206,9 @@ class QualityCheck(models.Model):
     component_uom_id = fields.Many2one('uom.uom', related='move_id.product_uom', readonly=True)
 
     finished_lot_id = fields.Many2one('stock.lot', 'Finished Lot/Serial', related='production_id.lot_producing_id')
-    additional = fields.Boolean('Register additional product', compute='_compute_additional')
     component_tracking = fields.Selection(related='component_id.tracking', string="Is Component Tracked")
 
     # Workorder specific fields
-    component_qty_to_do = fields.Float(compute='_compute_component_qty_to_do', digits='Product Unit of Measure')
     is_user_working = fields.Boolean(related="workorder_id.is_user_working")
     consumption = fields.Selection(related="workorder_id.consumption")
     working_state = fields.Selection(related="workorder_id.working_state")
@@ -316,10 +314,6 @@ class QualityCheck(models.Model):
         self.ensure_one()
         return self._next()
 
-    def action_continue(self):
-        self.ensure_one()
-        self._next(continue_production=True)
-
     def add_check_in_chain(self, notify_bom=True):
         self.ensure_one()
         if self.workorder_id.current_quality_check_id:
@@ -340,20 +334,6 @@ class QualityCheck(models.Model):
                 body += Markup("<br/><a href='%s'>%s</a>") % (self.worksheet_url, _("Google Doc"))
             self.workorder_id.production_id.bom_id.message_post(body=body, attachments=attachments)
 
-    @api.model
-    def _prepare_component_quantity(self, move, qty_producing):
-        """ helper that computes quantity to consume (or to create in case of byproduct)
-        depending on the quantity producing and the move's unit factor"""
-        if move.product_id.tracking == 'serial':
-            uom = move.product_id.uom_id
-        else:
-            uom = move.product_uom
-        return move.product_uom._compute_quantity(
-            qty_producing * move.unit_factor,
-            uom,
-            round=False
-        )
-
     def action_generate_serial(self):
         self.ensure_one()
         self.production_id.action_generate_serial()
@@ -372,11 +352,6 @@ class QualityCheck(models.Model):
         """
         self.ensure_one()
         self.workorder_id.current_quality_check_id = self.id
-        if self.test_type == 'register_production':
-            if self.product_tracking != 'none':
-                if not self.lot_id:
-                    raise UserError(_('Please enter a Lot/SN.'))
-                self.production_id.lot_producing_id = self.lot_id
 
         if self.test_type == 'picture' and not self.picture:
             raise UserError(_('Please upload a picture.'))

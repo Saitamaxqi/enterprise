@@ -113,9 +113,9 @@ export class MrpDisplayRecord extends Component {
         this.dialog.add(MrpLogNoteDialog, params);
     }
 
-    async quickRegisterProduction() {
+    async quickRegisterProduction(check = false) {
         if (this.productionComplete) {
-            return this.registerProduction();
+            return this.registerProduction(check);
         }
         const { production } = this.props;
         const qtyToSet = this.productionComplete ? 0 : production.data.product_qty;
@@ -525,17 +525,6 @@ export class MrpDisplayRecord extends Component {
             return "mass_produce";
         }
         return this.props.production.data.product_tracking;
-    }
-
-    getComponent(record) {
-        if (record.resModel === "stock.move") {
-            return StockMove;
-        } else if (record.resModel === "mrp.workorder") {
-            return MrpWorkorder;
-        } else if (record.resModel === "quality.check") {
-            return QualityCheck;
-        }
-        throw Error(`No Component found for the model "${record.resModel}"`);
     }
 
     async onClickHeader() {

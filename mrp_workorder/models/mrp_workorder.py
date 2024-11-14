@@ -50,7 +50,6 @@ class MrpWorkorder(models.Model):
     user_id = fields.Many2one(related='current_quality_check_id.user_id', readonly=False)
     worksheet_page = fields.Integer('Worksheet page')
     picture = fields.Binary(related='current_quality_check_id.picture', readonly=False)
-    additional = fields.Boolean(related='current_quality_check_id.additional')
     product_description_variants = fields.Char(related='production_id.product_description_variants')
     has_operation_note = fields.Boolean("Has Description", compute='_compute_has_operation_note')
 
@@ -158,45 +157,6 @@ class MrpWorkorder(models.Model):
         self.finished_lot_id = self.env['stock.lot'].create(
             self.production_id._prepare_stock_lot_values()
         )
-
-    def _create_subsequent_checks(self):
-        """ When processing a step with regiter a consumed material
-        that's a lot we will some times need to create a new
-        intermediate check.
-        e.g.: Register 2 product A tracked by SN. We will register one
-        with the current checks but we need to generate a second step
-        for the second SN. Same for lot if the user wants to use more
-        than one lot.
-        """
-        # Create another quality check if necessary
-        next_check = self.current_quality_check_id.next_check_id
-        if next_check.component_id != self.current_quality_check_id.product_id or\
-                next_check.point_id != self.current_quality_check_id.point_id:
-            # TODO: manage reservation here
-
-            # Creating quality checks
-            quality_check_data = {
-                'workorder_id': self.id,
-                'production_id': self.production_id.id,
-                'product_id': self.product_id.id,
-                'company_id': self.company_id.id,
-                'finished_product_sequence': self.qty_produced,
-            }
-            if self.current_quality_check_id.point_id:
-                quality_check_data.update({
-                    'point_id': self.current_quality_check_id.point_id.id,
-                    'team_id': self.current_quality_check_id.point_id.team_id.id,
-                })
-            else:
-                quality_check_data.update({
-                    'component_id': self.current_quality_check_id.component_id.id,
-                    'test_type_id': self.current_quality_check_id.test_type_id.id,
-                    'team_id': self.current_quality_check_id.team_id.id,
-                })
-            move = self.current_quality_check_id.move_id
-            quality_check_data.update(self._defaults_from_move(move))
-            new_check = self.env['quality.check'].create(quality_check_data)
-            new_check._insert_in_chain('after', self.current_quality_check_id)
 
     def _change_quality_check(self, position):
         """Change the quality check currently set on the workorder `self`.

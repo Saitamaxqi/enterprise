@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <templates xml:space="preserve">
     <t t-name="mrp_workorder.MrpRegisterProductionDialog">
-    <div class="o_tablet_popups">
+    <div class="o_tablet_popups" t-att-class="props.worksheetData ? 'o_worksheet_modal' : ''">
         <Dialog size="'fs'" title="props.title" modalRef="modalRef">
             <t t-set-slot="header">
                 <div class="d-flex flex w-100">

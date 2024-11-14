@@ -9,9 +9,7 @@ OBTCLWO
 OBTCLMO
 OBTPASS
 OBTFAIL
-OBTFINI
 OBTRECO
-OBTCONT
 OBTPRPL
 BARCODES
 
@@ -25,10 +23,8 @@ cat > barcodesHeaders_TMP_FILE.ps << HEADER
 (MARK AS DONE AND CLOSE MO) 336 565 showTitle
 (PASS) 79 456 showTitle
 (FAIL) 336 456 showTitle
-(FINISH STEPS) 79 347 showTitle
-(RECORD PRODUCTION) 336 347 showTitle
-(CONTINUE CONSUMPTION) 79 238 showTitle
-(PRINT LABEL) 336 238 showTitle
+(RECORD PRODUCTION) 79 347 showTitle
+(PRINT LABEL) 336 347 showTitle
 HEADER
 
 cat barcodesHeaders_TMP_FILE.ps barcodes_TMP_FILE.ps | ps2pdf - - > barcodes_actions_Manufacturing.pdf

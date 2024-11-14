@@ -9,9 +9,6 @@
     'description': """
     Adds Quality Control to workorders with IoT.
 """,
-    "data": [
-        'views/mrp_workorder_views.xml',
-    ],
     'auto_install': True,
     'license': 'OEEL-1',
 }

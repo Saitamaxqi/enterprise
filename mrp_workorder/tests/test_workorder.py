@@ -384,8 +384,6 @@ class TestWorkOrder(TestMrpWorkorderCommon):
                     if wo.current_quality_check_id:
                         wo.current_quality_check_id._next()
                     wo.do_finish()
-                elif wo.current_quality_check_id:
-                    wo.current_quality_check_id.action_continue()
 
         # Creates a MO with 2 WO.
         mo_form = Form(self.env['mrp.production'])

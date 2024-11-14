@@ -150,7 +150,7 @@
                         t-on-click.stop="() => {this.generateSerialNumber(check)}"/>
                 <span t-else="" t-out="props.production.data.lot_producing_id[1]"/>
             </t>
-            <button t-else="" t-on-click.stop="quickRegisterProduction" class="btn btn-secondary btn-sm text-nowrap"
+            <button t-else="" t-on-click.stop="() => { this.quickRegisterProduction(check) }" class="btn btn-secondary btn-sm text-nowrap"
                     t-att-class="productionComplete ? 'opacity-50 bg-transparent text-black' : ''">
                     <span t-if="quantityProducing &amp;&amp; quantityProducing !== quantityToProduce">
                         <t t-out="quantityProducing"/> /

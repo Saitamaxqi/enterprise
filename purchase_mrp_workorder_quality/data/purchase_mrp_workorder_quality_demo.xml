@@ -76,11 +76,18 @@
             }"/>
         </function>
 
+        <record id="stock_production_lot" model="stock.lot">
+            <field name="name">T0002</field>
+            <field name="product_id" ref="mrp.product_product_computer_desk"/>
+            <field name="product_qty">1</field>
+        </record>
+
         <record id="mrp_production" model="mrp.production">
             <field name="product_id" ref="mrp.product_product_computer_desk"/>
             <field name="product_uom_id" ref="uom.product_uom_unit"/>
             <field name="product_qty">1</field>
             <field name="bom_id" ref="mrp.mrp_bom_desk"/>
+            <field name="lot_producing_id" ref="purchase_mrp_workorder_quality.stock_production_lot"/>
         </record>
 
         <function model="mrp.production" name="action_confirm" eval="[ref('purchase_mrp_workorder_quality.mrp_production')]"/>
@@ -92,12 +99,6 @@
             <value eval="True"/>
             <value eval="True"/>
         </function>
-
-        <record id="stock_production_lot" model="stock.lot">
-            <field name="name">T0002</field>
-            <field name="product_id" ref="mrp.product_product_computer_desk"/>
-            <field name="product_qty">1</field>
-        </record>
 
         <function model="quality.check" name="write">
             <value model="mrp.production" eval="obj().env.ref('purchase_mrp_workorder_quality.mrp_production').workorder_ids.current_quality_check_id.id"/>

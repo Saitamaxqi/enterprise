@@ -10,9 +10,6 @@
     'description': """
 Create customizable quality worksheet for workorder.
 """,
-    "data": [
-        'views/quality_views.xml',
-    ],
     "demo": [
         'data/mrp_workorder_demo.xml',
     ],

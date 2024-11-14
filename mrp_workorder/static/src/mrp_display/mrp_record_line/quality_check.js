@@ -9,10 +9,6 @@ export class QualityCheck extends MrpWorkorder {
         ...MrpWorkorder.components,
         MrpQualityCheckConfirmationDialog,
     };
-    static props = {
-        ...MrpWorkorder.props,
-        quantityToProduce: { optional: true, type: Number },
-    };
 
     setup() {
         super.setup();
@@ -28,32 +24,9 @@ export class QualityCheck extends MrpWorkorder {
     }
 
     async pass() {
-        const { parent, record } = this.props;
+        const { record } = this.props;
         if (["instructions", "passfail"].includes(record.data.test_type)) {
             return this._pass();
-        } else if (record.data.test_type === "register_production") {
-            if (record.data.quality_state !== "none" || record.data.lot_id) {
-                return this.clicked();
-            } else if (record.data.product_tracking === "serial") {
-                await record.model.orm.call(
-                    record.resModel,
-                    "action_generate_serial_number_and_pass",
-                    [record.resId]
-                );
-            } else {
-                if (record.data.product_tracking === "lot") {
-                    await record.model.orm.call(
-                        record.resModel,
-                        "action_generate_serial_number_and_pass",
-                        [record.resId]
-                    );
-                }
-                parent.update({ qty_producing: this.props.quantityToProduce });
-                await Promise.all(this.env.model.root.records.map(async (record) => record.save()));
-                await record.model.orm.call(record.resModel, "action_next", [record.resId]);
-            }
-            this.env.reload(this.props.record);
-            return;
         } else if (record.data.test_type === "print_label") {
             const res = await record.model.orm.call(record.resModel, "action_print", [
                 record.resId,
@@ -83,8 +56,6 @@ export class QualityCheck extends MrpWorkorder {
         switch (this.props.record.data.test_type) {
             case "picture":
                 return "fa fa-camera";
-            case "register_byproduct":
-                return "fa fa-barcode";
             case "instructions":
                 return "fa fa-square-o";
             case "passfail":

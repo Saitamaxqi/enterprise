@@ -90,30 +90,6 @@
         </field>
     </record>
 
-    <!-- MRP.WORKORDER TABLET VIEW -->
-    <record id="quality_check_view_form_tablet_inherit_quality" model="ir.ui.view">
-        <field name="name">mrp.workorder.view.form.inherit.quality.tablet</field>
-        <field name="model">quality.check</field>
-        <field name="inherit_id" ref="mrp_workorder.quality_check_view_form_tablet"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='production_id']" position="after">
-                <field name="measure_success" invisible="1"/>
-            </xpath>
-            <xpath expr="//button[@name='action_next']" position="before">
-                <button name="action_fail_and_next" type="object" class="btn-danger" invisible="test_type != 'passfail'" barcode_trigger="FAIL" string="Fail"/>
-                <button name="action_pass_and_next" type="object" class="btn-success" invisible="test_type != 'passfail'" barcode_trigger="PASS" string="Pass"/>
-                <button name="do_measure" type="object" class="btn-primary" string="Validate" invisible="test_type != 'measure'" barcode_trigger="NEXT"/>
-            </xpath>
-            <xpath expr="//field[@name='note']" position="before">
-                <div invisible="test_type != 'measure'" class="o_workorder_bar_left o_workorder_bar_content">
-                    <label for="measure" string="Measure:" />
-                    <field name="measure" class="oe_inline"/>
-                    <field name="norm_unit" class="text-lowercase" readonly="1" />
-                </div>
-           </xpath>
-        </field>
-    </record>
-
     <record id="quality_point_view_search_inherit_mrp_workorder" model="ir.ui.view">
         <field name="name">quality.point.view.search.inherit.mrp.workorder</field>
         <field name="model">quality.point</field>
