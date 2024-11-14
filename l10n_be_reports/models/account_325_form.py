@@ -356,6 +356,13 @@ class L10n_BeForm325(models.Model):
                 'paid_amount': paid_amount_per_partner.get(partner_id.id, 0.0),
             }
             for partner_id in partner_ids.sorted(lambda p: (p.zip, p.name))
+            if any((
+                paid_amount_per_partner.get(partner_id.id) is not None,
+                commissions_per_partner.get(partner_id.id) is not None,
+                fees_per_partner.get(partner_id.id) is not None,
+                atn_per_partner.get(partner_id.id) is not None,
+                exposed_expenses_per_partner.get(partner_id.id) is not None,
+            ))
         ]
 
         return amount_per_partner

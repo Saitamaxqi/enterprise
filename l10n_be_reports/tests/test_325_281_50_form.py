@@ -1026,6 +1026,12 @@ class TestResPartner(AccountTestInvoicingCommon):
             }
         ])
 
+    def test_281_50_form_shouldnt_be_created_if_no_amount_to_report(self):
+        """ Ensure partner having only amls with 0 as balance don't get reported """
+        bill = self.create_and_post_bill(partner_id=self.partner_b, product_id=self.product_b, amount=0, date='2000-05-12')
+        form_325 = self.create_325_form(ref_year=2000)
+        self.assertFalse(form_325.form_281_50_ids.filtered(lambda x: x.partner_id.id == self.partner_b.id))
+
     def test_281_50_positive_and_negative_line_should_compensate(self):
         """Ensure form 281.50 handles negative lines put on the same account"""
         partner_id = self.partner_b
