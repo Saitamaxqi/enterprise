@@ -120,7 +120,7 @@ export class MapModel extends Model {
         // we need to notify after the synchronous record change
         this.notify();
         const resequencedRecords = await resequenceProm;
-        if (resequencedRecords) {
+        if (resequencedRecords.length) {
             for (const resequencedRecord of resequencedRecords) {
                 const record = this.data.records.find((r) => r.id === resequencedRecord.id);
                 record[fieldName] = resequencedRecord[fieldName];

@@ -164,7 +164,7 @@ const TEST_RECORDS = {
                 partner_longitude: 10.5,
                 contact_address_complete: "Chaussée de Namur 40, 1367, Ramillies",
                 sequence: 1,
-                user_id: 1
+                user_id: 1,
             },
             {
                 id: 2,
@@ -173,7 +173,7 @@ const TEST_RECORDS = {
                 partner_longitude: 11.5,
                 contact_address_complete: "Chaussée de Wavre 50, 1367, Ramillies",
                 sequence: 2,
-                user_id: 2
+                user_id: 2,
             },
             {
                 id: 3,
@@ -182,8 +182,8 @@ const TEST_RECORDS = {
                 partner_longitude: 12.5,
                 contact_address_complete: "Chaussée de Louvain 94, 5310 Éghezée",
                 sequence: 3,
-                user_id: false
-            }
+                user_id: false,
+            },
         ],
         unlocatedRecords: [{ id: 1, name: "Foo" }],
         noCoordinatesWrongAddress: [
@@ -234,7 +234,7 @@ class Users extends models.Model {
     name = fields.Char();
     _records = [
         { id: 1, name: "Mitchell Admin" },
-        { id: 2, name: "Marc Demo" }
+        { id: 2, name: "Marc Demo" },
     ];
 }
 
@@ -264,7 +264,7 @@ class Partner extends models.Model {
             partner_longitude: 10.5,
             contact_address_complete: "Chaussée de Namur 40, 1367, Ramillies",
             sequence: 1,
-            user_id: 1
+            user_id: 1,
         },
         {
             id: 2,
@@ -273,7 +273,7 @@ class Partner extends models.Model {
             partner_longitude: 10.5,
             contact_address_complete: "Chaussée de Namur 40, 1367, Ramillies",
             sequence: 3,
-            user_id: 2
+            user_id: 2,
         },
         {
             id: 3,
@@ -821,34 +821,33 @@ describe("map_view_desktop", () => {
      */
     test("Create a view with many2one groupBy and res.partner model", async () => {
         patchWithCleanup(session, { map_box_token: MAP_BOX_TOKEN });
-        
+
         Partner._records = TEST_RECORDS.partner.threeRecords;
 
         await mountView({
             type: "map",
             resModel: "res.partner",
             arch: `<map res_partner="id" />`,
-            groupBy: ["user_id"]
+            groupBy: ["user_id"],
         });
 
         expect(".o-map-renderer--pin-list-group-header").toHaveCount(3, {
-            message: "Should have 3 groups"
-        });
-        
-        expect(queryAllTexts(".o-map-renderer--pin-list-group-header")).toEqual([
-            "Mitchell Admin",
-            "Marc Demo", 
-            "None"
-        ], {
-            message: "Should have correct group headers"
+            message: "Should have 3 groups",
         });
 
+        expect(queryAllTexts(".o-map-renderer--pin-list-group-header")).toEqual(
+            ["Mitchell Admin", "Marc Demo", "None"],
+            {
+                message: "Should have correct group headers",
+            }
+        );
+
         expect(".o-map-renderer--pin-list-details").toHaveCount(3, {
-            message: "Should have 3 group detail sections"
+            message: "Should have 3 group detail sections",
         });
 
         expect(".o-map-renderer--pin-list-details li").toHaveCount(3, {
-            message: "Should have 3 total records across all groups"
+            message: "Should have 3 total records across all groups",
         });
     });
 
@@ -1222,9 +1221,10 @@ describe("map_view_desktop", () => {
             },
         });
 
-        onRpc("/web/dataset/resequence", async (request) => {
-            const { params: args } = await request.json();
-            expect.step(`resequence ${args.model} ${args.field} ${args.offset} ${args.ids}`);
+        onRpc("web_resequence", async ({ model, args, kwargs }) => {
+            const [ids] = args;
+            const { field_name: fieldName, offset } = kwargs;
+            expect.step(`resequence ${model} ${fieldName} ${offset} ${ids}`);
             resequenceCalled = true;
         });
         const view = await mountView({
@@ -1287,10 +1287,11 @@ describe("map_view_desktop", () => {
         ];
         Task._records = taskRecords;
         const defer = new Deferred();
-        onRpc("/web/dataset/resequence", async (request) => {
-            const { params: args } = await request.json();
+        onRpc("web_resequence", async ({ model, args, kwargs }) => {
+            const [ids] = args;
+            const { field_name: fieldName, offset } = kwargs;
             await defer;
-            expect.step(`resequence ${args.model} ${args.field} ${args.offset} ${args.ids}`);
+            expect.step(`resequence ${model} ${fieldName} ${offset} ${ids}`);
         });
         await mountView({
             type: "map",
@@ -1341,10 +1342,11 @@ describe("map_view_desktop", () => {
         ];
         Task._records = taskRecords;
         const defer = new Deferred();
-        onRpc("/web/dataset/resequence", async (request) => {
-            const { params: args } = await request.json();
+        onRpc("web_resequence", async ({ model, args, kwargs }) => {
+            const [ids] = args;
+            const { field_name: fieldName, offset } = kwargs;
             await defer;
-            expect.step(`resequence ${args.model} ${args.field} ${args.offset} ${args.ids}`);
+            expect.step(`resequence ${model} ${fieldName} ${offset} ${ids}`);
         });
         await mountView({
             type: "map",
