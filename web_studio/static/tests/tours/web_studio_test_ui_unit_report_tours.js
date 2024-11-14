@@ -371,8 +371,8 @@ registry.category("web_tour.tours").add("web_studio.test_basic_report_edition_er
                 const editor = editorsWeakMap.get(this.anchor.ownerDocument);
                 const telse = editor.document.createElement("t");
                 telse.setAttribute("t-else", "");
-                editor.shared.domInsert(telse);
-                editor.dispatch("ADD_STEP");
+                editor.shared.dom.insert(telse);
+                editor.shared.history.addStep();
             },
         },
         {
@@ -1313,7 +1313,7 @@ registry.category("web_tour.tours").add("web_studio.test_remove_branding_on_copy
                 const originNode = this.anchor.querySelector(`[ws-view-id]`);
                 const copy = originNode.cloneNode(true);
                 originNode.insertAdjacentElement("afterend", copy);
-                editor.dispatch("ADD_STEP");
+                editor.shared.history.addStep();
                 // Wait for a full macrotask tick and a frame to let the mutation observer
                 // of the ReportEditorWysiwyg to catch up on the change and finish its operations
                 await nextTick();
@@ -1364,7 +1364,7 @@ registry.category("web_tour.tours").add("web_studio.test_edit_main_arch", {
                 const newNode = doc.createElement("div");
                 newNode.classList.add("added");
                 this.anchor.insertAdjacentElement("beforebegin", newNode);
-                editor.dispatch("ADD_STEP");
+                editor.shared.history.addStep();
                 await nextTick();
             },
         },
@@ -1388,7 +1388,7 @@ registry.category("web_tour.tours").add("web_studio.test_edit_in_t_call", {
                 const newNode = doc.createElement("div");
                 newNode.classList.add("added");
                 this.anchor.insertAdjacentElement("beforebegin", newNode);
-                editor.dispatch("ADD_STEP");
+                editor.shared.history.addStep();
                 await nextTick();
             },
         },
@@ -1413,13 +1413,13 @@ registry.category("web_tour.tours").add("web_studio.test_edit_main_and_in_t_call
                 newNode0.classList.add("added0");
                 const target0 = this.anchor.querySelector(".outside-t-call");
                 target0.insertAdjacentElement("beforebegin", newNode0);
-                editor.dispatch("ADD_STEP");
+                editor.shared.history.addStep();
                 await nextTick();
                 const newNode1 = doc.createElement("div");
                 newNode1.classList.add("added1");
                 const target1 = this.anchor.querySelector(".in-t-call");
                 target1.insertAdjacentElement("beforebegin", newNode1);
-                editor.dispatch("ADD_STEP");
+                editor.shared.history.addStep();
                 await nextTick();
             },
         },
@@ -1460,7 +1460,7 @@ registry.category("web_tour.tours").add("web_studio.test_translations_are_copied
                 const newNode = doc.createElement("div");
                 (newNode.textContent = "term3 from edition"),
                     this.anchor.insertAdjacentElement("beforebegin", newNode);
-                editor.dispatch("ADD_STEP");
+                editor.shared.history.addStep();
                 return nextTick();
             },
         },

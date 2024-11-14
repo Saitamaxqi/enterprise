@@ -37,8 +37,8 @@ export class WysiwygArticleHelper extends Component {
                 this.props.editor.editable.replaceChildren(
                     parseHTML(this.props.editor.document, body)
                 );
-                this.props.editor.shared.setCursorEnd(this.props.editor.editable);
-                this.props.editor.dispatch("ADD_STEP");
+                this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);
+                this.props.editor.shared.history.addStep();
                 // TODO: apply_template could return all modified values on the current
                 // article and record.update would reload related components
                 await this.actionService.doAction(
@@ -81,8 +81,8 @@ export class WysiwygArticleHelper extends Component {
                     title,
                 });
                 this.props.editor.editable.replaceChildren(...fragment.children);
-                this.props.editor.shared.setCursorEnd(this.props.editor.editable);
-                this.props.editor.dispatch("ADD_STEP");
+                this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);
+                this.props.editor.shared.history.addStep();
                 this.props.record.update({ name: title });
             },
         });
@@ -119,8 +119,8 @@ export class WysiwygArticleHelper extends Component {
                     title,
                 });
                 this.props.editor.editable.replaceChildren(...fragment.children);
-                this.props.editor.shared.setCursorEnd(this.props.editor.editable);
-                this.props.editor.dispatch("ADD_STEP");
+                this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);
+                this.props.editor.shared.history.addStep();
                 this.props.record.update({ name: title });
             },
         });
@@ -153,8 +153,8 @@ export class WysiwygArticleHelper extends Component {
                     title,
                 });
                 this.props.editor.editable.replaceChildren(...fragment.children);
-                this.props.editor.shared.setCursorEnd(this.props.editor.editable);
-                this.props.editor.dispatch("ADD_STEP");
+                this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);
+                this.props.editor.shared.history.addStep();
                 this.props.record.update({ name: title });
             },
         });
@@ -175,8 +175,8 @@ export class WysiwygArticleHelper extends Component {
                     fragment.prepend(articleTitle);
                 }
                 this.props.editor.editable.replaceChildren(...fragment.children);
-                this.props.editor.shared.setCursorEnd(this.props.editor.editable);
-                this.props.editor.dispatch("ADD_STEP");
+                this.props.editor.shared.selection.setCursorEnd(this.props.editor.editable);
+                this.props.editor.shared.history.addStep();
             },
             sanitize: (fragment) => {
                 return DOMPurify.sanitize(fragment, {

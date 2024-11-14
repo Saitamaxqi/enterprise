@@ -4,43 +4,41 @@ import { _t } from "@web/core/l10n/translation";
 import { renderToElement } from "@web/core/utils/render";
 
 export class EmbeddedClipboardPlugin extends Plugin {
-    static name = "embeddedClipboard";
-    static dependencies = ["embedded_components", "dom", "selection"];
+    static id = "embeddedClipboard";
+    static dependencies = ["history", "dom", "selection"];
      resources = {
-        powerboxItems: [
+        user_commands: [
             {
-                category: "media",
-                name: _t("Clipboard"),
+                id: "insertClipboard",
+                title: _t("Clipboard"),
                 description: _t("Add a clipboard section"),
-                fontawesome: "fa-pencil-square",
-                isAvailable: (node) => !!closestElement(node, "[data-embedded='clipboard']"),
-                action: () => {
-                    this.insertClipboard();
-                },
+                icon: "fa-pencil-square",
+                run: this.insertClipboard.bind(this),
+            }
+        ],
+        powerbox_items: [
+            {
+                categoryId: "media",
+                commandId: "insertClipboard",
+                isAvailable: (selection) =>
+                    !closestElement(selection.anchorNode, "[data-embedded='clipboard']"),
             },
         ],
+        mount_component_handlers: this.setupNewClipboard.bind(this),
     };
-
-    handleCommand(command, payload) {
-        switch (command) {
-            case "SETUP_NEW_COMPONENT":
-                this.setupNewClipboard(payload);
-                break;
-        }
-    }
 
     insertClipboard() {
         const clipboardBlock = renderToElement("knowledge.EmbeddedClipboardBlueprint");
-        this.shared.domInsert(clipboardBlock);
-        this.shared.setCursorStart(clipboardBlock.querySelector("p"));
-        this.dispatch("ADD_STEP");
+        this.dependencies.dom.insert(clipboardBlock);
+        this.dependencies.selection.setCursorStart(clipboardBlock.querySelector("p"));
+        this.dependencies.history.addStep();
     }
 
     setupNewClipboard({ name, env }) {
         if (name === "clipboard") {
             Object.assign(env, {
                 editorShared: {
-                    preserveSelection: this.shared.preserveSelection,
+                    preserveSelection: this.dependencies.selection.preserveSelection,
                 },
             });
         }

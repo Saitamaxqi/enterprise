@@ -22,19 +22,26 @@ import { withSequence } from "@html_editor/utils/resource";
 const ALLOWED_BEACON_POSITION = new Set([...paragraphRelatedElements, ...phrasingContent]);
 
 export class KnowledgeCommentsPlugin extends Plugin {
-    static name = "knowledgeComments";
+    static id = "knowledgeComments";
     static dependencies = [
+        "history",
         "dom",
-        "protected_node",
+        "protectedNode",
         "selection",
-        "local-overlay",
-        "position",
-        "link_selection",
-        "collaboration",
+        "localOverlay",
+        "linkSelection",
         "format",
+        "delete",
     ];
     resources = {
-        toolbarCategory: [
+        user_commands: [
+            {
+                id: "addComments",
+                icon: "fa-commenting",
+                run: this.addCommentToSelection.bind(this),
+            },
+        ],
+        toolbar_groups: [
             withSequence(60, {
                 id: "knowledge",
             }),
@@ -43,34 +50,30 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 namespace: "image",
             }),
         ],
-        toolbarItems: [
+        toolbar_items: [
             {
                 id: "comments",
-                category: "knowledge",
-                action(dispatch) {
-                    dispatch("ADD_COMMENTS");
-                },
-                icon: "fa-commenting",
+                groupId: "knowledge",
+                commandId: "addComments",
                 title: _t("Add a comment to selection"),
                 text: _t("Comment"),
             },
             {
                 id: "comments_image",
-                category: "knowledge_image",
-                action(dispatch) {
-                    dispatch("ADD_COMMENTS");
-                },
-                icon: "fa-commenting",
+                groupId: "knowledge_image",
+                commandId: "addComments",
                 title: _t("Add a comment to an image"),
                 text: _t("Comment"),
             },
         ],
-        layoutGeometryChange: () => {
+
+        /** Handlers */
+        layout_geometry_change_handlers: () => {
             // TODO ABD: why is this called
             this.commentBeaconManager?.drawThreadOverlays();
             this.config.onLayoutGeometryChange();
         },
-        onSelectionChange: (selectionData) => {
+        selectionchange_handlers: (selectionData) => {
             if (
                 !selectionData.documentSelectionIsInEditable ||
                 !selectionData.editableSelection ||
@@ -89,11 +92,20 @@ export class KnowledgeCommentsPlugin extends Plugin {
             }
             this.commentBeaconManager.activateRelatedThread(target);
         },
+        restore_savepoint_handlers: this.updateBeacons.bind(this),
+        history_reset_handlers: () => this.updateBeacons(),
+        history_reset_from_steps_handlers: this.updateBeacons.bind(this),
+        step_added_handlers: () => this.commentBeaconManager.drawThreadOverlays(),
+        external_step_added_handlers: this.updateBeacons.bind(this),
+        clean_for_save_handlers: this.cleanForSave.bind(this),
+        normalize_handlers: this.normalize.bind(this),
+
+        /** Overrides */
         // TODO ABD: arbitrary sequence, investigate what makes sense
-        handle_delete_forward: withSequence(1, this.handleDeleteForward.bind(this)),
-        handle_delete_backward: withSequence(1, this.handleDeleteBackward.bind(this)),
-        arrows_should_skip: this.arrowShouldSkip.bind(this),
-        onExternalHistorySteps: this.updateBeacons.bind(this),
+        delete_forward_overrides: withSequence(1, this.handleDeleteForward.bind(this)),
+        delete_backward_overrides: withSequence(1, this.handleDeleteBackward.bind(this)),
+
+        intangible_char_for_keyboard_navigation_predicates: this.arrowShouldSkip.bind(this),
     };
 
     setup() {
@@ -120,7 +132,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
                     this.commentBeaconManager.sortThreads();
                     if (this.commentBeaconManager.bogusBeacons.size) {
                         this.commentBeaconManager.removeBogusBeacons();
-                        this.dispatch("ADD_STEP");
+                        this.dependencies.history.addStep();
                     }
                     this.commentBeaconManager.drawThreadOverlays();
                 }
@@ -128,7 +140,9 @@ export class KnowledgeCommentsPlugin extends Plugin {
             }),
             [this.commentsState]
         );
-        this.localOverlay = this.shared.makeLocalOverlay("KnowledgeThreadBeacons");
+        this.localOverlay = this.dependencies.localOverlay.makeLocalOverlay(
+          "KnowledgeThreadBeacons"
+        );
         this.commentBeaconManager = new CommentBeaconManager({
             document: this.document,
             source: this.editable,
@@ -136,9 +150,9 @@ export class KnowledgeCommentsPlugin extends Plugin {
             commentsState: this.commentsState,
             peerId: this.peerId,
             removeBeacon: this.removeBeacon.bind(this),
-            setSelection: this.shared.setSelection,
+            setSelection: this.dependencies.selection.setSelection,
             onStep: () => {
-                this.dispatch("ADD_STEP");
+                this.dependencies.history.addStep();
             },
         });
         this.addDomListener(window, "click", this.onWindowClick.bind(this));
@@ -156,28 +170,6 @@ export class KnowledgeCommentsPlugin extends Plugin {
             },
             { force: true }
         );
-    }
-
-    handleCommand(command, payload) {
-        switch (command) {
-            case "ADD_COMMENTS":
-                this.addCommentToSelection();
-                break;
-            case "NORMALIZE":
-                this.normalize(payload.node);
-                break;
-            case "RESTORE_SAVEPOINT":
-            case "HISTORY_RESET_FROM_STEPS":
-            case "HISTORY_RESET":
-                this.updateBeacons();
-                break;
-            case "STEP_ADDED":
-                this.commentBeaconManager.drawThreadOverlays();
-                break;
-            case "CLEAN_FOR_SAVE":
-                this.cleanForSave(payload.root);
-                break;
-        }
     }
 
     arrowShouldSkip(ev, char, lastSkipped) {
@@ -288,11 +280,11 @@ export class KnowledgeCommentsPlugin extends Plugin {
         const target = this.identifyNextBeacon(range);
         if (target) {
             const [anchorNode, anchorOffset] = rightPos(target);
-            this.shared.setSelection({
+            this.dependencies.selection.setSelection({
                 anchorNode,
                 anchorOffset,
             });
-            this.dispatch("DELETE_FORWARD");
+            this.dependencies.delete.delete("forward", "character");
             return true;
         }
     }
@@ -302,11 +294,11 @@ export class KnowledgeCommentsPlugin extends Plugin {
         const target = this.identifyPreviousBeacon(range);
         if (target) {
             const [anchorNode, anchorOffset] = leftPos(target);
-            this.shared.setSelection({
+            this.dependencies.selection.setSelection({
                 anchorNode,
                 anchorOffset,
             });
-            this.dispatch("DELETE_BACKWARD");
+            this.dependencies.delete.delete("backward", "character");
             return true;
         }
     }
@@ -315,7 +307,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
         // TODO ABD: can this method ever be called if either the start or the
         // end of the selection are in a non-editable positon ?
         const { startContainer, startOffset, endContainer, endOffset } =
-            this.shared.getEditableSelection({ deep: true });
+            this.dependencies.selection.getEditableSelection({ deep: true });
         const isCollapsed = startContainer === endContainer && startOffset === endOffset;
         if (
             isCollapsed ||
@@ -337,12 +329,12 @@ export class KnowledgeCommentsPlugin extends Plugin {
             recordModel: "knowledge.article",
             peerId: this.peerId,
         });
-        this.shared.setSelection({
+        this.dependencies.selection.setSelection({
             anchorNode: endContainer,
             anchorOffset: endOffset,
         });
         this.commentBeaconManager.pendingBeacons.add(endBeacon);
-        this.shared.domInsert(endBeacon);
+        this.dependencies.dom.insert(endBeacon);
         const startBeacon = renderToElement("knowledge.threadBeacon", {
             threadId: "undefined",
             type: "threadBeaconStart",
@@ -350,25 +342,25 @@ export class KnowledgeCommentsPlugin extends Plugin {
             recordModel: "knowledge.article",
             peerId: this.peerId,
         });
-        this.shared.setSelection({
+        this.dependencies.selection.setSelection({
             anchorNode: startContainer,
             anchorOffset: startOffset,
         });
         this.commentBeaconManager.pendingBeacons.add(startBeacon);
-        this.shared.domInsert(startBeacon);
+        this.dependencies.dom.insert(startBeacon);
         this.commentBeaconManager.cleanupThread("undefined");
         for (const beacon of previousUndefinedBeacons) {
             this.removeBeacon(beacon);
         }
         const [anchorNode, anchorOffset] = rightPos(startBeacon);
-        this.shared.setSelection({
+        this.dependencies.selection.setSelection({
             anchorNode,
             anchorOffset,
         });
         this.commentsState.displayMode = "handler";
         this.commentsService.createVirtualThread();
         this.commentsState.activeThreadId = "undefined";
-        this.dispatch("ADD_STEP");
+        this.dependencies.history.addStep();
     }
 
     onWindowClick(ev) {
@@ -391,8 +383,8 @@ export class KnowledgeCommentsPlugin extends Plugin {
                 this.removeBeacon(beacon);
                 continue;
             }
-            this.shared.padLinkWithZwnbsp(beacon);
-            this.shared.setProtectingNode(beacon, true);
+            this.dependencies.linkSelection.padLinkWithZwnbsp(beacon);
+            this.dependencies.protectedNode.setProtectingNode(beacon, true);
         }
     }
 
@@ -400,7 +392,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
         if (!beacon.isConnected) {
             return;
         }
-        const cursors = this.shared.preserveSelection();
+        const cursors = this.dependencies.selection.preserveSelection();
         if (
             isZwnbsp(beacon.previousSibling) &&
             beacon.previousSibling.previousSibling?.nodeName !== "A"
@@ -420,13 +412,13 @@ export class KnowledgeCommentsPlugin extends Plugin {
             return;
         }
         this.cleanZwnbsp(beacon);
-        const cursors = this.shared.preserveSelection();
+        const cursors = this.dependencies.selection.preserveSelection();
         const parent = beacon.parentElement;
         cursors.update(callbacksForCursorUpdate.remove(beacon));
         beacon.remove();
         cursors.restore();
         fillEmpty(parent);
-        this.shared.mergeAdjacentInlines(parent);
+        this.dependencies.format.mergeAdjacentInlines(parent);
     }
 
     updateBeacons() {
@@ -442,7 +434,7 @@ export class KnowledgeCommentsPlugin extends Plugin {
         this.localOverlay.remove();
     }
 
-    cleanForSave(root) {
+    cleanForSave({ root }) {
         const bogusIds = new Set(["undefined"]);
         for (const beacon of this.commentBeaconManager.bogusBeacons) {
             bogusIds.add(beacon.dataset.id);

@@ -4,31 +4,35 @@ import { _t } from "@web/core/l10n/translation";
 import { renderToElement } from "@web/core/utils/render";
 
 export class ArticleIndexPlugin extends Plugin {
-    static name = "articleIndex";
-    static dependencies = ["embedded_components", "dom", "selection"];
+    static id = "articleIndex";
+    static dependencies = ["history", "dom"];
      resources = {
-        powerboxCategory: [
+        user_commands: [
+            {
+                id: "insertArticleIndex",
+                title: _t("Index"),
+                description: _t("Show nested articles"),
+                icon: "fa-list",
+                run: this.insertArticleIndex.bind(this),
+            },
+        ],
+        powerbox_categories: [
             withSequence(20, {
                 id: "knowledge",
                 name: _t("Knowledge"),
             }),
         ],
-        powerboxItems: [
+        powerbox_items: [
             {
-                category: "knowledge",
-                name: _t("Index"),
-                description: _t("Show nested articles"),
-                fontawesome: "fa-list",
-                action: () => {
-                    this.insertArticleIndex();
-                },
-            },
+                categoryId: "knowledge",
+                commandId: "insertArticleIndex",
+            }
         ],
     };
 
     insertArticleIndex() {
         const articleIndexBlueprint = renderToElement("knowledge.ArticleIndexBlueprint");
-        this.shared.domInsert(articleIndexBlueprint);
-        this.dispatch("ADD_STEP");
+        this.dependencies.dom.insert(articleIndexBlueprint);
+        this.dependencies.history.addStep();
     }
 }

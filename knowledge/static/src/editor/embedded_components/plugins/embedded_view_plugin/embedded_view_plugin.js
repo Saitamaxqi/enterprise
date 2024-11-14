@@ -5,58 +5,72 @@ import { PromptEmbeddedViewNameDialog } from "@knowledge/components/prompt_embed
 import { _t } from "@web/core/l10n/translation";
 import { renderToElement } from "@web/core/utils/render";
 
-function isAvailable(node) {
-    return (
-        !!closestElement(node, ".o_editor_banner") ||
-        !!closestElement(node, "table") ||
-        !!closestElement(node, "[data-embedded]")
-    );
+function isAvailable(selection) {
+    return !closestElement(selection.anchorNode, ".o_editor_banner, table, [data-embedded]");
 }
 
 export class EmbeddedViewPlugin extends Plugin {
-    static name = "embeddedView";
-    static dependencies = ["dom", "selection", "embedded_components"];
+    static id = "embeddedView";
+    static dependencies = ["history", "dom", "selection"];
     resources = {
-        powerboxItems: [
+        user_commands: [
             {
-                category: "knowledge",
-                name: _t("Item Kanban"),
+                id: "insertEmbeddedViewKanban",
+                title: _t("Item Kanban"),
                 description: _t("Insert a Kanban view of article items"),
-                fontawesome: "fa-th-large",
-                isAvailable,
-                action: () => {
+                icon: "fa-th-large",
+                run: () => {
                     this.promptInsertEmbeddedView("kanban", true);
                 },
             },
             {
-                category: "knowledge",
-                name: _t("Item Cards"),
+                id: "insertEmbeddedViewCards",
+                title: _t("Item Cards"),
                 description: _t("Insert a Card view of article items"),
-                fontawesome: "fa-address-card",
-                isAvailable,
-                action: () => {
+                icon: "fa-address-card",
+                run: () => {
                     this.promptInsertEmbeddedView("kanban");
                 },
             },
             {
-                category: "knowledge",
-                name: _t("Item List"),
+                id: "insertEmbeddedViewList",
+                title: _t("Item List"),
                 description: _t("Insert a List view of article items"),
-                fontawesome: "fa-th-list",
-                isAvailable,
-                action: () => {
+                icon: "fa-th-list",
+                run: () => {
                     this.promptInsertEmbeddedView("list");
                 },
             },
             {
-                category: "knowledge",
-                name: _t("Item Calendar"),
+                id: "insertEmbeddedViewCalendar",
+                title: _t("Item Calendar"),
                 description: _t("Insert a Calendar view of article items"),
-                fontawesome: "fa-calendar-plus-o",
-                isAvailable,
-                action: () => {
+                icon: "fa-calendar-plus-o",
+                run: () => {
                     this.promptInsertEmbeddedCalendarView();
                 },
+            }
+        ],
+        powerbox_items: [
+            {
+                categoryId: "knowledge",
+                commandId: "insertEmbeddedViewKanban",
+                isAvailable,
+            },
+            {
+                categoryId: "knowledge",
+                commandId: "insertEmbeddedViewCards",
+                isAvailable,
+            },
+            {
+                categoryId: "knowledge",
+                commandId: "insertEmbeddedViewList",
+                isAvailable,
+            },
+            {
+                categoryId: "knowledge",
+                commandId: "insertEmbeddedViewCalendar",
+                isAvailable,
             },
         ],
     };
@@ -78,12 +92,12 @@ export class EmbeddedViewPlugin extends Plugin {
                 },
             }),
         });
-        this.shared.domInsert(embeddedViewBlueprint);
-        this.dispatch("ADD_STEP");
+        this.dependencies.dom.insert(embeddedViewBlueprint);
+        this.dependencies.history.addStep();
     }
 
     promptInsertEmbeddedCalendarView() {
-        let cursor = this.shared.preserveSelection();
+        let cursor = this.dependencies.selection.preserveSelection();
         const resId = this.config.getRecordInfo().resId;
         this.services.dialog.add(
             ItemCalendarPropsDialog,
@@ -109,7 +123,7 @@ export class EmbeddedViewPlugin extends Plugin {
     }
 
     promptInsertEmbeddedView(viewType, withStages) {
-        let cursor = this.shared.preserveSelection();
+        let cursor = this.dependencies.selection.preserveSelection();
         const resId = this.config.getRecordInfo().resId;
         this.services.dialog.add(
             PromptEmbeddedViewNameDialog,
