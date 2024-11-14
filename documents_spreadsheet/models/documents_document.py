@@ -81,20 +81,21 @@ class DocumentsDocument(models.Model):
         if not self.env.su and self.folder_id and self.folder_id.user_permission != 'edit':
             raise AccessError(_('You are not allowed to freeze spreadsheets in Company'))
 
-        folder = self.env['documents.document'].sudo().search([
+        folder_sudo = self.env['documents.document'].sudo().search([
             ('folder_id', '=', self.folder_id.id),
             ('type', '=', 'folder'),
             ('handler', '=', 'frozen_folder'),
         ], limit=1)
 
-        if not folder:
-            folder = self.env['documents.document'].create({
+        if not folder_sudo:
+            folder_sudo = self.env['documents.document'].sudo().create({
                 'name': _('Frozen spreadsheets'),
                 'type': 'folder',
                 'handler': 'frozen_folder',
                 'folder_id': self.folder_id.id,
                 'access_via_link': 'none',
-                'access_internal': 'view',
+                'access_internal': 'none',
+                'access_ids': False,
                 'owner_id': self.env.ref('base.user_root').id,
             })
 
@@ -107,7 +108,7 @@ class DocumentsDocument(models.Model):
             'access_internal': 'none' if self.access_internal == 'none' else 'view',
             'access_via_link': 'view',
             'spreadsheet_data': spreadsheet_data,
-            'folder_id': folder.id,
+            'folder_id': folder_sudo.id,
             'excel_export': base64.b64encode(self.env['spreadsheet.mixin']._zip_xslx_files(excel_files)),
             'handler': 'frozen_spreadsheet',
             'is_access_via_link_hidden': True,
