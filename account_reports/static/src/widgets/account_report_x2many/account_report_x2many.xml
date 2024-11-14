@@ -25,7 +25,7 @@
 
                 <!-- Lines -->
                 <t t-call="account_reports.AccountReportListTree">
-                    <t t-set="lines" t-value="this.lines"/>
+                    <t t-set="lines" t-value="this.formatData()"/>
                 </t>
 
                 <!-- Add new line -->
