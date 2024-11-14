@@ -130,6 +130,8 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
 
         if self.env.user.has_group('base.group_multi_currency'):
             options['multi_currency'] = True
+        else:
+            options['columns'] = [col for col in options['columns'] if col['expression_label'] != 'amount_currency']
 
     def _custom_unfold_all_batch_data_generator(self, report, options, lines_to_expand_by_function):
         partner_ids_to_expand = []

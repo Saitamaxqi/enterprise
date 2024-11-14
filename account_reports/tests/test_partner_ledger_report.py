@@ -77,9 +77,6 @@ class TestPartnerLedgerReport(TestAccountReportsCommon):
         })
         cls.move_2017_2.action_post()
 
-        # Deactive all currencies to ensure group_multi_currency is disabled.
-        cls.env['res.currency'].search([('name', '!=', 'USD')]).with_context(force_deactivate=True).active = False
-
         cls.report = cls.env.ref('account_reports.partner_ledger_report')
 
     def test_partner_ledger_unfold(self):
@@ -576,3 +573,15 @@ class TestPartnerLedgerReport(TestAccountReportsCommon):
             })
         lines = self.report._get_lines(options)
         self.assertFalse(partner.name in [line['name'] for line in lines])
+
+    def test_no_amount_currency_col_in_single_currency(self):
+        # In multi-currency, we get the amount_currency column
+        self.assertGreater(len(self.env['res.currency'].search([])), 1)
+        options = self._generate_options(self.report, fields.Date.from_string('2023-01-01'), fields.Date.from_string('2023-12-31'))
+        self.assertTrue(any(col['expression_label'] == 'amount_currency' for col in options['columns']))
+
+        # Not in single-currency
+        self.env['res.currency'].search([('name', '!=', 'USD')]).with_context(force_deactivate=True).active = False
+        self.assertEqual(len(self.env['res.currency'].search([])), 1)
+        options = self._generate_options(self.report, fields.Date.from_string('2023-01-01'), fields.Date.from_string('2023-12-31'))
+        self.assertFalse(any(col['expression_label'] == 'amount_currency' for col in options['columns']))
