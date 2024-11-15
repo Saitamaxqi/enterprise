@@ -4,18 +4,23 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server saas~17.4+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-10-01 14:44+0000\n"
-"PO-Revision-Date: 2024-09-25 08:19-0600\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2024-11-28 09:54+0000\n"
+"PO-Revision-Date: 2024-11-28 09:54+0000\n"
+"Last-Translator: Fernanda Alvarez, 2024\n"
 "Language-Team: \n"
-"Language: es\n"
+"Language: es_419\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
+"Content-Transfer-Encoding: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.5\n"
+
+#. module: l10n_ar_reports
+#. odoo-python
+#: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
+msgid "+%s non-previewed lines"
+msgstr "+%s líneas sin previsualización"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__afip_responsibility_type_id
@@ -30,7 +35,7 @@ msgstr "Responsabilidad AFIP"
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__afip_responsibility_type_name
 msgid "Afip Responsibility Type Name"
-msgstr "Nombre del tipo de responsabilidad AFIP"
+msgstr "Nombre de la responsabilidad AFIP"
 
 #. module: l10n_ar_reports
 #. odoo-javascript
@@ -45,7 +50,7 @@ msgid ""
 "to documents that have VAT"
 msgstr ""
 "Todos los impuestos que no son IVA a percepción IIBB y que están "
-"relacionados  a comprobantes que tienen IVA"
+"relacionados a comprobantes que tienen IVA"
 
 #. module: l10n_ar_reports
 #: model:account.report,name:l10n_ar_reports.l10n_ar_vat_book_report
@@ -55,7 +60,7 @@ msgstr "Libro de IVA argentino"
 #. module: l10n_ar_reports
 #: model:ir.model,name:l10n_ar_reports.model_l10n_ar_tax_report_handler
 msgid "Argentinian Report Custom Handler"
-msgstr "Gestor Personalizado de reporte argentino"
+msgstr "Gestor personalizado de reportes argentinos"
 
 #. module: l10n_ar_reports
 #. odoo-python
@@ -64,8 +69,8 @@ msgid ""
 "Can only generate TXT files using posted entries. Please remove Include "
 "unposted entries filter and try again"
 msgstr ""
-"Solo puede generar archivos TXT usando asientos publicados. Por favor "
-"remueva el filtro Incluir asientos no publicados e intente de nuevo"
+"Solo puede generar archivos TXT con asientos registrados, elimine el filtro "
+"Incluir asientos no registrados e intente de nuevo"
 
 #. module: l10n_ar_reports
 #: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_city_tax
@@ -88,12 +93,12 @@ msgstr "Empresa"
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_res_company__l10n_ar_computable_tax_credit
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_res_config_settings__l10n_ar_computable_tax_credit
 msgid "Computable Tax Credit: Prorate Options"
-msgstr "Crédito Fiscal Computado: Opción Prorrateo"
+msgstr "Crédito fiscal computado: Opciones de prorateo"
 
 #. module: l10n_ar_reports
 #: model:ir.model,name:l10n_ar_reports.model_res_config_settings
 msgid "Config Settings"
-msgstr "Opciones de configuración"
+msgstr "Ajustes de configuración"
 
 #. module: l10n_ar_reports
 #. odoo-python
@@ -114,7 +119,7 @@ msgstr "Moneda"
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__move_type__out_refund
 msgid "Customer Credit Note"
-msgstr "Nota de Crédito de Cliente"
+msgstr "Nota de crédito del cliente"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__move_type__out_invoice
@@ -131,7 +136,7 @@ msgstr "Fecha"
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
 msgid "Date: Last month"
-msgstr "Fecha: último mes"
+msgstr "Fecha: Último mes"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__display_name
@@ -142,7 +147,7 @@ msgstr "Nombre a mostrar"
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__document_type_id
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
 msgid "Document Type"
-msgstr "Tipo de comprobante"
+msgstr "Tipo de documento"
 
 #. module: l10n_ar_reports
 #. odoo-python
@@ -226,12 +231,12 @@ msgstr "CUIT de persona jurídica"
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__move_name
 msgid "Move Name"
-msgstr "Nombre de asiento"
+msgstr "Nombre del movimiento"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__move_type
 msgid "Move Type"
-msgstr "Tipo de asiento"
+msgstr "Tipo de movimiento"
 
 #. module: l10n_ar_reports
 #: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_partner_name
@@ -255,7 +260,7 @@ msgid ""
 "Not Taxed / Exempt.\\All lines that have VAT 0, Exempt, Not Taxed or Not "
 "Applicable"
 msgstr ""
-"No gravado / Exento.\\Todas las líneas que tienen IVA 0, Exento, No gravado "
+"No gravado / Exento.\\Todas las lineas que tienen VAT 0, Exento, No gravado "
 "o No corresponde"
 
 #. module: l10n_ar_reports
@@ -267,7 +272,7 @@ msgstr "No grav/ex"
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
 msgid "Only one tax type should be selected."
-msgstr "Debe seleccionar solo un tipo de impuesto"
+msgstr "Solo debe seleccionar un tipo de impuesto."
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_tree
@@ -283,7 +288,7 @@ msgstr "Abrir asiento"
 #: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_other_taxes
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__other_taxes
 msgid "Other Taxes"
-msgstr "Otros Impuestos"
+msgstr "Otros impuestos"
 
 #. module: l10n_ar_reports
 #. odoo-python
@@ -314,12 +319,12 @@ msgstr "Perc. IIBB"
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__state__posted
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
 msgid "Posted"
-msgstr "Publicado"
+msgstr "Registrado"
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
 msgid "Posted Journal Items"
-msgstr "Apuntes contables publicados"
+msgstr "Apuntes contables registrados"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__move_type__in_receipt
@@ -329,7 +334,7 @@ msgstr "Recibo de compra"
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
 msgid "Purchase VAT"
-msgstr "IVA de compras"
+msgstr "IVA Compras"
 
 #. module: l10n_ar_reports
 #. odoo-python
@@ -351,7 +356,7 @@ msgstr "Recibo de venta"
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
 msgid "Sales VAT"
-msgstr "IVA de ventas"
+msgstr "IVA Ventas"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__state
@@ -382,6 +387,16 @@ msgid "The partner '%s' does not have a country configured."
 msgstr "El contacto '%s' no tiene país configurado."
 
 #. module: l10n_ar_reports
+#. odoo-javascript
+#: code:addons/l10n_ar_reports/static/src/components/argentinian_report/warnings.xml:0
+msgid ""
+"This report contains more lines than the limit set on it.\n"
+"        To save performance, the exceeding lines are hidden from this preview, but they will be appear in exported files as usual."
+msgstr ""
+"Este reporte incluye más líneas que el límite establecido en él.\n"
+"        Las líneas restantes están ocultas en esta vista previa para mejorar el funcionamiento, pero aparecerán en los archivos exportados."
+
+#. module: l10n_ar_reports
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
 #: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_total
@@ -398,12 +413,12 @@ msgstr "Tipo"
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__state__draft
 msgid "Unposted"
-msgstr "Sin asentar"
+msgstr "Sin registrar"
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.res_config_settings_view_form
 msgid "Used when generating the VAT Book Voucher TXT files."
-msgstr "Usado al generar los  archivos TXT de Comprobantes del Libro de IVA"
+msgstr "Se utiliza para generar los archivos TXT del libro de IVA."
 
 #. module: l10n_ar_reports
 #: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_cuit
@@ -420,7 +435,7 @@ msgstr "IVA 10,5%"
 #: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_vat_25
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__vat_25
 msgid "VAT 2,5%"
-msgstr "IVA 2.5%"
+msgstr "IVA 2,5%"
 
 #. module: l10n_ar_reports
 #: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_vat_21
@@ -449,7 +464,7 @@ msgstr "Libro de IVA (ZIP)"
 #. module: l10n_ar_reports
 #: model:account.report.column,name:l10n_ar_reports.l10n_ar_vat_book_report_column_vat_per
 msgid "VAT Perc"
-msgstr "Perc. IVA."
+msgstr "Perc. IVA"
 
 #. module: l10n_ar_reports
 #: model:ir.model.fields,field_description:l10n_ar_reports.field_account_ar_vat_line__vat_per
@@ -486,7 +501,7 @@ msgstr "Factura de proveedor"
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__account_ar_vat_line__move_type__in_refund
 msgid "Vendor Credit Note"
-msgstr "Nota de crédito de proveedor"
+msgstr "Nota de crédito del proveedor"
 
 #. module: l10n_ar_reports
 #: model_terms:ir.ui.view,arch_db:l10n_ar_reports.view_account_ar_vat_line_search
@@ -496,10 +511,10 @@ msgstr "Con tipo de documento"
 #. module: l10n_ar_reports
 #: model:ir.model.fields.selection,name:l10n_ar_reports.selection__res_company__l10n_ar_computable_tax_credit__wo_prorate
 msgid "Without Prorate"
-msgstr "Sin prorrateo"
+msgstr "Sin prorateo"
 
 #. module: l10n_ar_reports
 #. odoo-python
 #: code:addons/l10n_ar_reports/models/l10n_ar_vat_book.py:0
 msgid "ZIP"
-msgstr "ZIP"
+msgstr "Código postal"
