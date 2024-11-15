@@ -21,7 +21,7 @@ registry.category("web_tour.tours").add("shop_buy_rental_product_comparison", {
         },
         {
             content: "add first product 'Color T-Shirt' in a comparison list",
-            trigger: '.oe_product_cart:contains("Color T-Shirt") .o_add_compare',
+            trigger: '.oe_product_cart:contains("Color T-Shirt")',
             run: "hover && click .o_add_compare",
         },
         {

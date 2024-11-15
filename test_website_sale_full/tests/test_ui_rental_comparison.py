@@ -14,6 +14,15 @@ _logger = logging.getLogger(__name__)
 class TestUi(HttpCase, TestWebsiteSaleRentingCommon):
 
     def test_website_sale_renting_comparison_ui(self):
+        # Checkout process in the tour assumes partner information is set.
+        self.env.ref('base.user_admin').partner_id.write({
+            'country_id': self.env.ref('base.be').id,
+            'street': 'StreetName 3',
+            'email': 'mitchell.admin@openerp.com',
+            'city': 'Louvain-La-Neuve',
+            'zip': '1348',
+            'phone': '+32 2 290 34 90',
+        })
         attribute = self.env['product.attribute'].create({
             'name': 'Color',
             'sequence': 10,
