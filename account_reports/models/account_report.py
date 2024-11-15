@@ -7070,8 +7070,7 @@ class AccountReportCustomHandler(models.AbstractModel):
 
     def _custom_options_initializer(self, report, options, previous_options):
         """ To be overridden to add report-specific _init_options... code to the report. """
-        if report.root_report_id:
-            report.root_report_id._init_options_custom(options, previous_options)
+        pass
 
     def _custom_line_postprocessor(self, report, options, lines):
         """ Postprocesses the result of the report's _get_lines() before returning it. """
