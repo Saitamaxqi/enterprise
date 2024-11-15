@@ -298,8 +298,8 @@ class StockPicking(models.Model):
                     tax_group_ila and tax_group_ila.id,
                     tax_group_retenciones and tax_group_retenciones.id
                 ]:
-                    retentions.setdefault((tax.l10n_cl_sii_code, tax.amount), 0.0)
-                    retentions[(tax.l10n_cl_sii_code, tax.amount)] += tax_val['amount']
+                    retentions.setdefault((tax.l10n_cl_sii_code, tax.amount, tax.tax_group_id.name), 0.0)
+                    retentions[(tax.l10n_cl_sii_code, tax.amount, tax.tax_group_id.name)] += tax_val['amount']
                     move_retentions |= tax
             if no_vat_taxes:
                 totals['subtotal_amount_exempt'] += tax_res['total_excluded']
@@ -333,7 +333,8 @@ class StockPicking(models.Model):
         for key in retentions:
             retention_res.append({'tax_code': key[0],
                                   'tax_percent': key[1],
-                                  'tax_amount': retentions[key]})
+                                  'tax_name': key[2],
+                                  'tax_amount': self.company_id.currency_id.round(retentions[key])})
         return totals, retention_res, line_amounts
 
     def _prepare_pdf_values(self):

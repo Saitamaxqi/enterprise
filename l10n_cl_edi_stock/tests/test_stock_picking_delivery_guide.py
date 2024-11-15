@@ -275,3 +275,45 @@ class TestL10nClEdiStock(TestL10nClEdiStockCommon):
         self.assertEqual(line_amounts[move_b]['price_unit'], 30.0)
         self.assertEqual(line_amounts[move_c]['total_amount'], 150.0)
         self.assertEqual(line_amounts[move_c]['price_unit'], 50.0)
+
+    @freeze_time('2019-10-24T20:00:00', tz_offset=3)
+    def test_l10n_cl_edi_delivery_guide_report_pdf_withholding_taxes(self):
+        """ Test withholding taxes are correctly collected in pdf values
+        """
+        tax_19 = self.env['account.tax'].search([
+            ('name', '=', 'IVA 19% Venta'),
+            ('company_id', '=', self.env.company.id)])
+        tax_wh = self.env['account.tax'].search([
+            ('name', '=', 'Beb. Analc. 10% (Ventas)'),
+            ('company_id', '=', self.env.company.id)])
+
+        uom_unit = self.env.ref('uom.product_uom_unit')
+        product_a = self.env['product.product'].create({
+            'name': 'Product A',
+            'uom_id': uom_unit.id,
+            'is_storable': True,
+            'list_price': 100.0,
+            'taxes_id': [Command.set((tax_19 | tax_wh).ids)],
+        })
+
+        picking = self.env['stock.picking'].create({
+            'name': 'Test Delivery Guide',
+            'partner_id': self.chilean_partner_a.id,
+            'location_id': self.stock_location,
+            'location_dest_id': self.customer_location,
+            'picking_type_id': self.warehouse.out_type_id.id,
+        })
+        self.env['stock.move'].create({
+            'name': product_a.name,
+            'product_id': product_a.id,
+            'product_uom_qty': 10.00,
+            'quantity': 10.00,
+            'procure_method': 'make_to_stock',
+            'picking_id': picking.id,
+            'location_id': self.stock_location,
+            'location_dest_id': self.customer_location,
+        })
+
+        pdf_values = picking._prepare_pdf_values()
+        expected_values = [{'tax_code': 27, 'tax_percent': 10.0, 'tax_name': 'ILA', 'tax_amount': 100.0}]
+        self.assertEqual(pdf_values['withholdings'], expected_values)

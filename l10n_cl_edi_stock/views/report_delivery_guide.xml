@@ -248,6 +248,7 @@
                             <div class="clearfix">
                                 <div id="total" class="row mt-n3">
                                     <t t-set="amounts" t-value="prepared_amounts.get('amounts', {})"/>
+                                    <t t-set="withholdings" t-value="prepared_amounts.get('withholdings', {})"/>
                                     <div t-attf-class="#{'col-6' if report_type != 'html' else 'col-sm-7 col-md-6'} ms-auto">
                                         <table class="o_total_table table table-borderless" style="page-break-inside: avoid;">
                                             <tr t-if="amounts.get('subtotal_amount_taxable', False)"
@@ -288,7 +289,8 @@
                                                         <span>%</span>
                                                     </td>
                                                     <td class="text-end o_price_total">
-                                                        <span class="text-nowrap" t-out="tax['tax_amount']"/>
+                                                        <span class="text-nowrap" t-out="tax['tax_amount']"
+                                                              t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}"/>
                                                     </td>
                                                 </tr>
                                             </t>

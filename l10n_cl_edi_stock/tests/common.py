@@ -76,6 +76,8 @@ class TestL10nClEdiStockCommon(ValuationReconciliationTestCommon):
             'amount': 10.0,
             'company_id': cls.env.company.id,
             'l10n_cl_sii_code': 27,
+            'tax_group_id': cls.env['account.chart.template'].ref('tax_group_ila').id,
+            'country_id': cls.env.ref('base.cl').id,
         })
         cls.env.ref('uom.product_uom_unit').name = 'U'
         cls.product_with_taxes_a = cls.env['product.product'].create({
