@@ -363,10 +363,20 @@ class StudioExportWizardData(models.TransientModel):
     @api.model_create_multi
     def create(self, vals_list):
         """Compute the needed names and xmlids for the records."""
-        # From vals_list,map {model: [res_ids]}
         models = defaultdict(list)
         for vals in vals_list:
             models[vals["model"]].append(vals["res_id"])
+
+        if "ir.actions.actions" in models:
+            # We should replace "ir.actions.actions" records by their proper
+            # models, as we never want to export an abstract ir.actions.actions
+            # but instead the concrete actions models.
+            actions_by_type = self.env["ir.actions.actions"].sudo().browse(models["ir.actions.actions"])._get_actions_by_type()
+            types_by_action_id = defaultdict(str)
+            for action_type, actions in actions_by_type.items():
+                models[action_type].extend(actions.ids)
+                types_by_action_id.update(dict.fromkeys(actions.ids, action_type))
+            models.pop("ir.actions.actions")
 
         names = defaultdict(dict)
         xmlids = defaultdict(dict)
@@ -380,6 +390,8 @@ class StudioExportWizardData(models.TransientModel):
 
         vals_list = [vals for vals in vals_list if not vals["res_id"] in deleted[vals["model"]]]
         for vals in vals_list:
+            if vals["model"] == "ir.actions.actions":
+                vals["model"] = types_by_action_id[vals["res_id"]]
             model = vals["model"]
             res_id = vals["res_id"]
             vals["name"] = names[model][res_id]
@@ -400,12 +412,7 @@ class StudioExportWizard(models.TransientModel):
     _description = "Studio Export Wizard"
 
     def _default_studio_export_data(self):
-        data = self.env["ir.model.data"].search(
-            [
-                ("studio", "=", True),
-                ("model", "in", DEFAULT_MODELS_TO_EXPORT),
-            ]
-        )
+        data = self.env["ir.model.data"].search([("studio", "=", True)])
         return self.env["studio.export.wizard.data"].create(
             [{"model": d.model, "res_id": d.res_id, "studio": d.studio} for d in data]
         )

@@ -9,7 +9,7 @@
     'description': """This module contains tests related to web studio. Those are
 present in a separate module as it contains models used only to perform
 tests independently to functional aspects of other models. """,
-    'depends': ['web_studio'],
+    'depends': ['web_studio', 'website'],
     'data': [
         'security/ir.model.access.csv',
     ],

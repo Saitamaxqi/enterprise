@@ -116,7 +116,12 @@ class StudioExportAssertor:
         self.content_iter = iter(content)
 
     def get_exported(self, name=None):
-        """If name not found (or None) will iterate on all generated files"""
+        """If name not found (or None) will iterate on all generated files
+
+        Returns:
+            If name is provided, returns the exported file content associated with that name.
+            If name is not provided or not found, returns a dictionary of all exported files.
+        """
         with MockRequest(self.export_case.env):
             while name not in self.exported_cache:
                 try:
@@ -144,15 +149,15 @@ class StudioExportAssertor:
 
     def assertManifest(self, **expected):
         exported = self.get_exported("__manifest__.py")
-        for key in expected:
+        for key, value in expected.items():
             if key == "depends":
                 with MockRequest(self.export_case.env):
                     self.export_case.assertEqual(
-                        _clean_dependencies(set(exported["depends"] + expected["depends"])),
+                        _clean_dependencies(set(exported["depends"] + value)),
                         exported["depends"],
                     )
             else:
-                self.export_case.assertEqual(exported[key], expected[key])
+                self.export_case.assertEqual(exported[key], value)
 
     def assertXML(self, path, expected):
         root = self.get_exported(path)
@@ -760,4 +765,52 @@ class TestStudioExports(StudioExportCase):
             f"""Found 1 circular dependencies (you may have to change data loading order to avoid issues when importing):
 (data) {self.TestModel._name} -> {self.TestModel2._name} -> {self.TestModel3._name} -> {self.TestModel._name}
 """,
+        )
+
+    def test_export_abstract_actions_with_proper_types(self):
+        WindowActions = self.env["ir.actions.act_window"].with_user(2)
+        window_action = WindowActions.create({
+            "name": "Test action",
+            "type": "ir.actions.act_window",
+            "res_model": self.TestModel._name,
+            "view_mode": "form",
+            "target": "new",
+        })
+
+        URLActions = self.env["ir.actions.act_url"].with_user(2)
+        url_action = URLActions.create({
+            "name": "Test action",
+            "type": "ir.actions.act_url",
+            "url": "http://odoo.com",
+        })
+
+        self.create_export_model("ir.actions.actions", domain=[("id", "in", [window_action.id, url_action.id])])
+        export = self.studio_export()
+
+        export.assertFileList(
+            "data/ir_actions_act_window.xml",
+            "data/ir_actions_act_url.xml",
+        )
+
+        export.assertXML(
+            "data/ir_actions_act_window.xml",
+            f"""<odoo>
+            <record id="{self.get_xmlid(window_action)}" model="ir.actions.act_window">
+                <field name="name">Test action</field>
+                <field name="res_model">{self.TestModel._name}</field>
+                <field name="view_mode">form</field>
+                <field name="target">new</field>
+            </record>
+            </odoo>""",
+        )
+
+        export.assertXML(
+            "data/ir_actions_act_url.xml",
+            f"""<odoo>
+            <record id="{self.get_xmlid(url_action)}" model="ir.actions.act_url">
+                <field name="name">Test action</field>
+                <field name="display_name">Test action</field>
+                <field name="url"><![CDATA[http://odoo.com]]></field>
+            </record>
+            </odoo>""",
         )

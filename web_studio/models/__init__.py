@@ -7,6 +7,7 @@ from . import mail_thread
 from . import ir_actions_act_window
 from . import ir_actions_report
 from . import ir_actions_server
+from . import ir_actions
 from . import ir_filters
 from . import ir_model
 from . import ir_model_data
