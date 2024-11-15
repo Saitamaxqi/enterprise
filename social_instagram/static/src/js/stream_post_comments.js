@@ -46,4 +46,7 @@ export class StreamPostCommentsInstagram extends StreamPostComments {
         return StreamPostCommentsReplyInstagram;
     }
 
+    get commentsDisabled() {
+        return this.props.commentsDisabled;
+    }
 }

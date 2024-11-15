@@ -36,8 +36,8 @@ patch(StreamPostKanbanRecord.prototype, {
                 postId: postId,
                 comments: result.comments,
                 nextRecordsToken: result.nextRecordsToken,
+                commentsDisabled: this.record.instagram_comments_disabled.raw_value,
             });
         });
     },
-
 });

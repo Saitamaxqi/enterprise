@@ -7,25 +7,30 @@
         <t t-set="bubble_design" t-value="false"/>
         <Dialog t-if="state.displayModal" title="props.title" footer="false" size="'md'" bodyClass="bodyClass">
             <t t-call="social.StreamPostCommentsOriginalPost"/>
-            <t t-component="commentReplyComponent"
-               originalPost="props.originalPost"
-               mediaSpecificProps="mediaSpecificProps"
-               classes="'bg-white p-3 border-top'"
-               bubble_design="bubble_design"
-               onAddComment.bind="onAddComment"
-               preventAddComment.bind="preventAddComment"/>
-            <div class="o_social_comments_messages px-3 pt-4" t-att-class="{ 'bg-100': !bubble_design }">
-                <t t-component="commentListComponent"
-                   comments="comments"
-                   mediaSpecificProps="mediaSpecificProps"
-                   originalPost="originalPost"
-                   preventAddComment.bind="preventAddComment"
-                   error="props.error"/>
+            <t t-if="!commentsDisabled">
+                <t t-component="commentReplyComponent"
+                    originalPost="props.originalPost"
+                    mediaSpecificProps="mediaSpecificProps"
+                    classes="'bg-white p-3 border-top'"
+                    bubble_design="bubble_design"
+                    onAddComment.bind="onAddComment"
+                    preventAddComment.bind="preventAddComment"/>
+                <div class="o_social_comments_messages px-3 pt-4" t-att-class="{ 'bg-100': !bubble_design }">
+                    <t t-component="commentListComponent"
+                        comments="comments"
+                        mediaSpecificProps="mediaSpecificProps"
+                        originalPost="originalPost"
+                        preventAddComment.bind="preventAddComment"
+                        error="props.error"/>
+                </div>
+                <a t-if="state.showLoadMoreComments" href="#" t-on-click="loadMoreComments"
+                   class="o_social_load_more_comments text-center p3-bg-white">
+                    <i class="fa fa-comments"/><span>Load more comments...</span>
+                </a>
+            </t>
+            <div t-else="" class="text-black-50 text-center border-top pt-3">
+                <span>New comments are disabled</span>
             </div>
-            <a t-if="state.showLoadMoreComments" class="o_social_load_more_comments text-center p3-bg-white"
-               href="#" t-on-click="loadMoreComments">
-                <i class="fa fa-comments"/><span>Load more comments...</span>
-            </a>
         </Dialog>
     </t>
 

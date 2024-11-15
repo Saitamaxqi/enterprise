@@ -27,7 +27,7 @@ class SocialStream(models.Model):
         response = requests.get(posts_endpoint,
             params={
                 'access_token': self.account_id.instagram_access_token,
-                'fields': 'id,comments_count,like_count,username,permalink,timestamp,caption,media_type,media_url,children.fields(media_url)'
+                'fields': 'id,comments_count,is_comment_enabled,like_count,username,permalink,timestamp,caption,media_type,media_url,children.fields(media_url)'
             },
             timeout=5
         ).json()
@@ -46,6 +46,7 @@ class SocialStream(models.Model):
         for post in response['data']:
             values = {
                 'author_name': post.get('username'),
+                'instagram_comments_disabled': not post.get('is_comment_enabled', True),
                 'instagram_comments_count': post.get('comments_count', 0),
                 'instagram_facebook_author_id': self.account_id.instagram_facebook_account_id,
                 'instagram_likes_count': post.get('like_count', 0),

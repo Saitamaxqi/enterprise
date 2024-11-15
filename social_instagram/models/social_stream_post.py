@@ -18,6 +18,7 @@ class SocialStreamPost(models.Model):
     instagram_comments_count = fields.Integer('Instagram Comments')
     instagram_likes_count = fields.Integer('Instagram Likes')
     instagram_post_link = fields.Char('Instagram Post URL')
+    instagram_comments_disabled = fields.Boolean('Instagram Comments Disabled', default=False)
 
     def _compute_post_link(self):
         """ The posts links for instagram cannot be inferred from the ID.

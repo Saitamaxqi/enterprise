@@ -35,6 +35,7 @@ patch(StreamPostKanbanRecord.prototype, {
                 postId: postId,
                 comments: result.comments,
                 nextPageToken: result.nextPageToken,
+                commentsDisabled: result.commentsDisabled,
             });
         });
     },
@@ -47,5 +48,4 @@ patch(StreamPostKanbanRecord.prototype, {
         }
         this.rootRef.el.querySelector('.o_social_comments').click();
     }
-
 });

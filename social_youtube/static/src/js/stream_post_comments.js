@@ -47,4 +47,7 @@ export class StreamPostCommentsYoutube extends StreamPostComments {
         return StreamPostCommentsReplyYoutube;
     }
 
+    get commentsDisabled() {
+        return this.props.commentsDisabled;
+    }
 }

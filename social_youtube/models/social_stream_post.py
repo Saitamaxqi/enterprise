@@ -135,16 +135,20 @@ class SocialStreamPost(models.Model):
         result = requests.get(comments_endpoint_url, params=params, timeout=5)
         result_json = result.json()
 
-        if not result.ok:
-            error_message = _('An error occurred.')
+        error_code = error_reason = False
+        if result_json.get('error'):
+            error_code = result_json['error'].get('code')
+            error_reason = result_json['error'].get('errors', [{}])[0].get('reason')
 
-            if result_json.get('error'):
-                error_code = result_json['error'].get('code')
-                error_reason = result_json['error'].get('errors', [{}])[0].get('reason')
-                if error_code == 404 and error_reason == 'videoNotFound':
-                    error_message = _("Video not found. It could have been removed from Youtube.")
-                elif error_code == 403 and error_reason == 'commentsDisabled':
-                    error_message = _("Comments are marked as 'disabled' for this video. It could have been set as 'private'.")
+        # At the moment, the YouTube API does not provide us with a field to know if comments are
+        # disabled for the video (while fetching videos), and so we have to do it when fetching comments.
+        # TODO: keep checking the API if we can find any relevant field while fetching videos.
+        comments_disabled = not result.ok and error_code == 403 and error_reason == 'commentsDisabled'
+
+        if not result.ok and not comments_disabled:
+            error_message = _('An error occurred.')
+            if error_code == 404 and error_reason == 'videoNotFound':
+                error_message = _("Video not found. It could have been removed from Youtube.")
 
             raise UserError(error_message)
 
@@ -165,6 +169,7 @@ class SocialStreamPost(models.Model):
 
         return {
             'comments': comments,
+            'commentsDisabled': comments_disabled,
             'nextPageToken': result_json.get('nextPageToken')
         }
 

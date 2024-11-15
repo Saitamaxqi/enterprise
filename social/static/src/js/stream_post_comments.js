@@ -144,4 +144,8 @@ export class StreamPostComments extends SocialPostFormatterMixin(Component) {
     get isEditable() {
         return false;
     }
+
+    get commentsDisabled() {
+        return false;
+    }
 }

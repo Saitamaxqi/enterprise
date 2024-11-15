@@ -7,6 +7,7 @@
             <xpath expr="//field[@name='stream_post_image_urls']" position="after">
                 <field name="instagram_facebook_author_id"/>
                 <field name="instagram_likes_count"/>
+                <field name="instagram_comments_disabled" invisible="1"/>
                 <field name="account_id"/>
             </xpath>
             <xpath expr="//span[hasclass('o_social_stream_post_author_image')]" position="inside">
@@ -19,9 +20,10 @@
                         <i class="fa fa-heart me-1" title="Likes"/>
                         <field name="instagram_likes_count" class="fw-bold"/>
                     </div>
-                    <div t-attf-class="o_social_instagram_comments o_social_comments o_social_subtle_btn px-3">
+                    <div class="o_social_instagram_comments o_social_comments o_social_subtle_btn px-3">
                         <i class="fa fa-comments me-1" title="Comments"/>
-                        <field t-if="record.instagram_comments_count.value" name="instagram_comments_count" class="fw-bold"/>
+                        <field t-if="!record.instagram_comments_disabled.raw_value and record.instagram_comments_count.value"
+                                name="instagram_comments_count" class="fw-bold"/>
                     </div>
                     <div class="flex-grow-1" />
                 </div>
