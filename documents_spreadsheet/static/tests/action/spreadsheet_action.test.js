@@ -294,7 +294,6 @@ test("Spreadsheet is created with locale in data", async function () {
     const serverData = getBasicServerData();
     serverData.models["documents.document"] = {
         records: [
-            DocumentsDocument._records[0], // res_company.document_spreadsheet_folder_id
             {
                 id: 3000,
                 name: "My template spreadsheet",

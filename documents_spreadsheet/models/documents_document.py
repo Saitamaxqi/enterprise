@@ -11,7 +11,7 @@ from lxml import etree
 from odoo import _, Command, fields, models, api
 from odoo.exceptions import UserError, AccessError, ValidationError
 from odoo.osv import expression
-from odoo.tools import format_list, image_process, consteq
+from odoo.tools import image_process, consteq
 from odoo.tools.misc import DEFAULT_SERVER_DATE_FORMAT
 
 
@@ -127,25 +127,8 @@ class DocumentsDocument(models.Model):
             ]),
         ])
 
-    @api.constrains('company_id')
-    def _check_company_id(self):
-        domain = expression.OR([
-            [('document_spreadsheet_folder_id', '=', folder.id), ('id', '!=', folder.company_id.id)]
-            for folder in self
-            if folder.company_id and folder.type == 'folder'
-        ])
-        companies = self.env['res.company'].search(domain)
-        if companies:
-            errors = format_list(self.env, [
-                self.env._("%(folder)s is used by %(company)s", folder=comp.document_spreadsheet_folder_id.display_name, company=comp.display_name)
-                for comp in companies
-            ])
-            raise ValidationError(_("The company for a folder cannot be changed if it is already used as the "
-                                    "spreadsheet workspace for at least one other company: %s", errors))
-
     @api.model_create_multi
     def create(self, vals_list):
-        vals_list = self._assign_spreadsheet_default_values(vals_list)
         vals_list = self._resize_spreadsheet_thumbnails(vals_list)
         documents = super().create(vals_list)
         documents._update_spreadsheet_contributors()
@@ -277,24 +260,6 @@ class DocumentsDocument(models.Model):
                 if vals.get('handler') in ('spreadsheet', 'frozen_spreadsheet')
                 else vals
             )
-            for vals in vals_list
-        ]
-
-    def _assign_spreadsheet_default_values(self, vals_list):
-        """Make sure spreadsheet values have a `folder_id`. Assign the
-        default spreadsheet folder if there is none.
-        """
-        # Use the current company's spreadsheet workspace, since `company_id` on `documents.document` is a related field
-        # on `folder_id` we do not need to check vals_list for different companies.
-        default_folder = self.env.company.document_spreadsheet_folder_id
-        if not default_folder:
-            default_folder = self.env['documents.document'].search([], limit=1)
-        return [
-            {
-                'folder_id': default_folder.id,
-                **vals,
-            }
-            if vals.get('handler') == 'spreadsheet' else vals
             for vals in vals_list
         ]
 

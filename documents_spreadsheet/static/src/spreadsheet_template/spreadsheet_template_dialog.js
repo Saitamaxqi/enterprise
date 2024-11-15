@@ -9,7 +9,6 @@ import { useBus, useService } from "@web/core/utils/hooks";
 import { useHotkey } from "@web/core/hotkeys/hotkey_hook";
 import { getDefaultConfig } from "@web/views/view";
 import { _t } from "@web/core/l10n/translation";
-import { user } from "@web/core/user";
 
 import { Component, useState, useSubEnv, useChildSubEnv, onWillStart, useEffect } from "@odoo/owl";
 
@@ -58,14 +57,16 @@ export class TemplateDialog extends Component {
         });
         useBus(this.model, "update", () => this._fetchTemplates());
         this.keepLast = new KeepLast();
-
+        this.folderOptions = [
+            // id false cannot be used by the template select option so we use 0 instead.
+            { id: 0, display_name: _t("My Drive") },
+            ...this.props.folders.map((folder) => ({
+                id: folder.id,
+                display_name: folder.display_name,
+            })),
+        ];
         onWillStart(async () => {
-            const defaultFolder = await this.orm.searchRead(
-                "res.company",
-                [["id", "=", user.activeCompany.id]],
-                ["document_spreadsheet_folder_id"]
-            );
-            this.documentsSpreadsheetFolderId = defaultFolder[0].document_spreadsheet_folder_id[0];
+            this.folderId = this.folderOptions[0].id;
             const views = await this.viewService.loadViews({
                 resModel: "spreadsheet.template",
                 context: this.props.context,
@@ -140,7 +141,7 @@ export class TemplateDialog extends Component {
             ? typeof this.props.folderId === "number"
                 ? this.props.folderId
                 : false
-            : this.documentsSpreadsheetFolderId;
+            : this.folderId || false; // convert 0 into false
         if (templateId) {
             return this.orm.call(
                 "spreadsheet.template",

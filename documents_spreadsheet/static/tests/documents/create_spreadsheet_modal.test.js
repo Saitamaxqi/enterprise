@@ -241,7 +241,7 @@ test("Can create a blank spreadsheet from template dialog", async function () {
                 args.model === "documents.document" &&
                 args.method === "action_open_new_spreadsheet"
             ) {
-                expect(args.args[0].folder_id).toBe(1);
+                expect(args.args[0].folder_id).toBe(false);
                 expect.step("action_open_new_spreadsheet");
             }
         },
@@ -328,7 +328,7 @@ test("Can create a spreadsheet from a template", async function () {
                 args.method === "action_create_spreadsheet"
             ) {
                 expect.step("action_create_spreadsheet");
-                expect(args.args[1].folder_id).toBe(1);
+                expect(args.args[1].folder_id).toBe(false);
                 const action = {
                     type: "ir.actions.client",
                     tag: "an_action",
@@ -447,7 +447,7 @@ test("Can create a blank spreadsheet from template dialog in a specific folder",
 
     await openTemplateDialog();
 
-    await select("2", { target: ".o-spreadsheet-templates-dialog select" });
+    await select("1", { target: ".o-spreadsheet-templates-dialog select" });
 
     await contains(`${dialogSelector} .o-spreadsheet-grid-image`).click();
     await contains(`${dialogSelector} .o-spreadsheet-create`).click();

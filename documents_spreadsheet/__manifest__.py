@@ -9,7 +9,6 @@
     'depends': ['documents', 'spreadsheet_edition', 'base_import'],
     'data': [
         'data/documents_folder_data.xml',
-        'data/res_company_data.xml',
         'security/ir.model.access.csv',
         'security/security.xml',
         'views/documents_document_views.xml',
