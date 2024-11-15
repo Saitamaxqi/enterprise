@@ -3,6 +3,7 @@
 
 import logging
 import time
+import math
 
 from datetime import date, datetime
 from dateutil.relativedelta import relativedelta
@@ -81,8 +82,28 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
             ]],
         }])
 
+        # When exiting a query count assertion context, the registry is flushed,
+        # to optimize that process, the ORM tries batches writes as necessary.
+        # However, since we include the employee id/name in some of those templates,
+        # this causes some instability during flushing every time we add a new digit.
+        # (file size of pdf documents changes)
+        # The following view ensures the same file size regardless of employee id (up to 12 digits)
+        # and thus the same query count.
+        template_id = cls.env.ref('l10n_be_hr_payroll.report_281_10').id
+        cls.env['ir.ui.view'].create({
+            'name': 'patch_report_281_10',
+            'type': 'qweb',
+            'inherit_id': template_id,
+            'arch': """
+                <xpath expr="//div[hasclass('page')]/div[hasclass('row')][2]/div[1]" position="replace">
+                    <div class="col-4 border-end">
+                        <strong>1. Nr.</strong> <span t-esc="str(employee.id).zfill(12)"/>
+                    </div>
+                </xpath>
+            """
+        })
         cls.employees = cls.env['hr.employee'].create([{
-            'name': "Test Employee %i" % i,
+            'name': "Test Employee %.03d" % i,
             'private_street': 'Brussels Street',
             'private_city': 'Brussels',
             'private_zip': '2928',
