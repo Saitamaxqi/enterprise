@@ -2,7 +2,7 @@
 
 import logging
 
-from odoo.tests.common import loaded_demo_data, tagged
+from odoo.tests.common import tagged
 
 from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.addons.product_matrix.tests.common import TestMatrixCommon
@@ -76,9 +76,6 @@ class TestRentalProductConfigUi(TestMatrixCommon, TestProductConfiguratorCommon)
         })
 
     def test_rental_product_configurator(self):
-        if not loaded_demo_data(self.env):
-            _logger.warning("This test relies on demo data. To be rewritten independently of demo data for accurate and reliable results.")
-            return
         self.start_tour("/odoo", 'rental_product_configurator_tour', login='salesman')
 
         rental_order = self.env['sale.order'].search([('create_uid', "=", self.salesman.id)])
@@ -90,4 +87,5 @@ class TestRentalProductConfigUi(TestMatrixCommon, TestProductConfiguratorCommon)
             # 1 Chair  => sale
             # 1 Floor protection => sale
         self.assertEqual(len(rental_order.order_line), 4)
-        self.assertEqual(rental_order.amount_total, 474.38)
+        # We use the untaxed amount as we do not setup specific taxation during this test.
+        self.assertEqual(rental_order.amount_untaxed, 412.5)
