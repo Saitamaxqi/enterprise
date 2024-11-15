@@ -26,9 +26,8 @@ class HrExpenseSheet(models.Model):
                 "You cannot remove an expense from a payslip that has already been validated.\n"
                 "Expenses can only be removed from draft or canceled payslips."
             ))
-        self.action_remove_from_payslip()
+        self.sudo().action_remove_from_payslip()
         res = super().action_reset_expense_sheets()
-        self.refund_in_payslip = False
         return res
 
     def action_report_in_next_payslip(self):
