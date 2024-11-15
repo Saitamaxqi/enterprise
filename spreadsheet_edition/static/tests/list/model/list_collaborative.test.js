@@ -8,7 +8,7 @@ import {
     getCellValue,
 } from "@spreadsheet/../tests/helpers/getters";
 import { waitForDataLoaded } from "@spreadsheet/helpers/model";
-import { ListUIPlugin } from "@spreadsheet/list";
+import { ListCoreViewPlugin } from "@spreadsheet/list";
 import {
     setupCollaborativeEnv,
     spExpect,
@@ -102,7 +102,7 @@ test("Add two lists concurrently", async () => {
     );
     spExpect([alice, bob, charlie]).toHaveSynchronizedValue((user) => {
         const UIPlugin = user["handlers"].find(
-            (handler) => handler instanceof ListUIPlugin,
+            (handler) => handler instanceof ListCoreViewPlugin,
             undefined
         );
         return Object.keys(UIPlugin.lists).length;
