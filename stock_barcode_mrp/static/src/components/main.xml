@@ -24,7 +24,8 @@
         </xpath>
         <!-- By products page buttons -->
         <xpath expr="//footer[hasclass('o_action_buttons')]" position="after">
-            <footer t-if="state.displayByProduct" class="o_barcode_control o_action_buttons d-flex justify-content-between p-2 gap-2">
+            <footer t-if="state.displayByProduct and state.view == 'barcodeLines'"
+                    class="o_barcode_control o_action_buttons d-flex justify-content-between p-2 gap-2">
                 <button class="o_add_byproduct btn btn-secondary" t-on-click="onOpenProductPage">
                     <i class="fa fa-plus me-1"/> Add By Product
                 </button>
