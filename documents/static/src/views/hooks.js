@@ -174,6 +174,7 @@ export function useDocumentView(helpers) {
             return typeof folder.id !== "number" && !selectedRecords;
         },
         userIsInternal: documentService.userIsInternal,
+        userIsDocumentManager: documentService.userIsDocumentManager,
         // Listeners
         onClickDocumentsRequest: () => {
             action.doAction("documents.action_request_form", {
@@ -194,6 +195,7 @@ export function useDocumentView(helpers) {
             });
         },
         onClickDocumentsAddUrl: () => {
+            const folderId = env.searchModel.getSelectedFolderId();
             action.doAction("documents.action_url_form", {
                 additionalContext: {
                     default_type: "url",
@@ -201,6 +203,9 @@ export function useDocumentView(helpers) {
                     default_folder_id: env.searchModel.getSelectedFolderId(),
                     default_res_id: props.context.default_res_id || false,
                     default_res_model: props.context.default_res_model || false,
+                    ...(folderId === "COMPANY"
+                        ? { default_owner_id: documentService.store.odoobot.userId }
+                        : {}),
                 },
                 fullscreen: env.isSmall,
                 onClose: async () => {
@@ -216,7 +221,12 @@ export function useDocumentView(helpers) {
                 additionalContext: {
                     default_type: "folder",
                     default_folder_id: currentFolder || false,
-                    ...(currentFolder === "COMPANY" ? { default_access_internal: "edit" } : {}),
+                    ...(currentFolder === "COMPANY"
+                        ? {
+                              default_access_internal: "edit",
+                              default_owner_id: documentService.store.odoobot.userId,
+                          }
+                        : {}),
                 },
                 fullscreen: env.isSmall,
                 onClose: async () => {
@@ -482,6 +492,11 @@ function useDocumentsViewFileUpload() {
      * the document's attachment by the given single file (binary accessToken).
      */
     const uploadFiles = async ({ files, accessToken, context }) => {
+        if (env.searchModel.getSelectedFolderId() === "COMPANY") {
+            // to upload in the COMPANY folder, we need to set Odoobot as owner
+            context.default_owner_id = documentService.store.odoobot.userId;
+        }
+
         const validFiles = [...files].filter((file) => file.size <= component.maxUploadSize);
         if (validFiles.length !== 0) {
             await fileUpload.upload(`/documents/upload/${accessToken || ""}`, validFiles, {

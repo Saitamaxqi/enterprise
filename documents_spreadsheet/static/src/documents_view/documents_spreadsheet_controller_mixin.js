@@ -79,9 +79,14 @@ export const DocumentsSpreadsheetControllerMixin = () => ({
     },
 
     async onClickCreateSpreadsheet(ev) {
+        const folderId = this.env.searchModel.getSelectedFolderId() || undefined;
+        const context = this.props.context;
+        if (folderId === "COMPANY") {
+            context.default_owner_id = this.documentService.store.odoobot.userId;
+        }
         this.dialogService.add(TemplateDialog, {
-            folderId: this.env.searchModel.getSelectedFolderId() || undefined,
-            context: this.props.context,
+            folderId,
+            context,
             folders: this.env.searchModel
                 .getFolders()
                 .filter((folder) => folder.id && typeof folder.id === "number"),

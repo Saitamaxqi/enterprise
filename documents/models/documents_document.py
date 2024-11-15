@@ -133,8 +133,9 @@ class DocumentsDocument(models.Model):
     deletion_delay = fields.Integer("Deletion delay", compute="_compute_deletion_delay",
                                     help="Delay after permanent deletion of the document in the trash (days)")
     company_id = fields.Many2one('res.company', string='Company', store=True, readonly=False, index=True)
-    is_pinned_folder = fields.Boolean("Pinned to Company roots", compute='_compute_is_pinned_folder', store=True,
-                                      readonly=False)
+
+    # TODO: remove in master
+    is_pinned_folder = fields.Boolean("Pinned to Company roots", compute='_compute_is_pinned_folder', store=True)
 
     # Stat buttons
     document_count = fields.Integer('Document Count', compute='_compute_document_count')
@@ -271,17 +272,16 @@ class DocumentsDocument(models.Model):
                 "The following documents can't have alias: \n- %(records)s",
                 records="\n-".join(wrong_records.mapped('name'))))
 
-    @api.constrains('is_pinned_folder')
-    def _check_is_pinned_folder(self):
-        odoobot = self.env.ref('base.user_root')
-        if any(doc.is_pinned_folder and (doc.type != 'folder' or doc.folder_id or doc.owner_id != odoobot)
-               for doc in self):
-            raise ValidationError(_("Only OdooBot-owned root folders can be pinned."))
-
-    @api.depends('folder_id', 'owner_id')
+    @api.depends('folder_id', 'owner_id', 'type')
     def _compute_is_pinned_folder(self):
-        odoobot = self.env.ref('base.user_root')
-        self.filtered(lambda d: d.folder_id or d.owner_id != odoobot).is_pinned_folder = False
+        # TODO: remove in master, for stable force the field to reflect owner / folder value
+        # because it's used in access rule `documents_document_write_base_rule`
+        for document in self:
+            document.is_pinned_folder = (
+                document.type == 'folder'
+                and not document.folder_id
+                and document.owner_id == self.env.ref('base.user_root')
+            )
 
     @api.depends('attachment_id', 'url', 'shortcut_document_id')
     def _compute_name_and_preview(self):
@@ -959,31 +959,8 @@ class DocumentsDocument(models.Model):
         }
 
     def toggle_is_pinned_folder(self):
+        # TODO: remove in master
         self.ensure_one()
-        if self.is_pinned_folder:
-            self.is_pinned_folder = False
-            return
-
-        # the owner needs to keep their access
-        if self.owner_id != self.env.ref('base.user_root'):
-            existing_access = self.env['documents.access'].sudo().search([
-                ('document_id', '=', self.id),
-                ('partner_id', '=', self.owner_id.partner_id.id),
-            ])
-            if existing_access:
-                existing_access.role = 'edit'
-            else:
-                self.env['documents.access'].create({
-                    'document_id': self.id,
-                    'partner_id': self.owner_id.partner_id.id,
-                    'role': 'edit',
-                })
-
-        self.write({
-            'folder_id': False,
-            'is_pinned_folder': True,
-            'owner_id': self.env.ref('base.user_root').id,
-        })
 
     @api.model
     def get_documents_actions(self, folder_id):
@@ -1383,8 +1360,10 @@ class DocumentsDocument(models.Model):
         # As we avoid to propagate the folder permission by setting access_ids to False (see copy_data), user has no
         # right to create the document. So after checking permission, we execute the copy in sudo.
         self.check_access("create")
-        self.folder_id.check_access('write')
         self.check_access('read')
+        if not self.env.su and self.folder_id and self.folder_id.user_permission != 'edit':
+            # do not check access to allow copying in root company folders
+            raise AccessError(_('You cannot copy in that folder'))
 
         documents_order = {doc.id: idx for idx, doc in enumerate(self)}
         new_documents = [self.browse()] * len(self)
@@ -1595,7 +1574,7 @@ class DocumentsDocument(models.Model):
             if any(d.alias_name for d in documents):
                 raise AccessError(_('Only Documents Managers can set aliases.'))
             if any(d.is_pinned_folder for d in documents):
-                raise AccessError(_('Only Documents Managers can pin folders.'))
+                raise AccessError(_('Only Documents Managers can create in company folder.'))
 
         for document, attachment in zip(documents, attachments):
             if attachment and not attachment.res_id and (
@@ -1780,7 +1759,7 @@ class DocumentsDocument(models.Model):
                 raise UserError(_('Operation not supported. Please use "Restore" / `action_unarchive` instead.'))
 
         if not is_manager and self.filtered('is_pinned_folder') != pinned_folders_start:
-            raise AccessError(_("You are not allowed to (un)pin folders"))
+            raise AccessError(_("Only Documents Managers can create in company folder."))
 
         for document, attachment_was_present in zip(self, attachments_was_present):
             if document.request_activity_id and document.attachment_id and not attachment_was_present:

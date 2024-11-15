@@ -174,8 +174,6 @@
                     <button type="object" name="access_content" string="Download" class="oe_highlight" invisible="type != 'binary'"/>
                     <button type="object" name="toggle_lock" string="Lock" invisible="lock_uid"/>
                     <button type="object" name="toggle_lock" string="Unlock" invisible="not lock_uid"/>
-                    <button type="object" name="toggle_is_pinned_folder" string="Pin" invisible="is_pinned_folder"/>
-                    <button type="object" name="toggle_is_pinned_folder" string="Unpin" invisible="not is_pinned_folder"/>
                     <button type="object" name="action_unarchive" string="Restore" invisible="active"/>
                 </header>
                 <sheet>

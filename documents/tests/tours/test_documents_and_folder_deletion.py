@@ -13,7 +13,7 @@ class TestDocumentDeletion(HttpCase):
         folder = self.env['documents.document'].create({
             "type": "folder",
             "name": "Folder1",
-            "is_pinned_folder": True,
+            "owner_id": self.env.ref('base.user_root').id,
         })
         document = self.env['documents.document'].create({
             'datas': GIF,

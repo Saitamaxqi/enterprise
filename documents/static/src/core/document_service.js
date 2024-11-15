@@ -102,7 +102,8 @@ export class DocumentService {
         return (
             folder &&
             ((typeof folder.id === "number" && folder.user_permission === "edit") ||
-                (this.userIsInternal && (folder.id === "MY" || !folder.id)))
+                (this.userIsInternal && (folder.id === "MY" || !folder.id)) ||
+                (this.userIsDocumentManager && folder.id === "COMPANY"))
         );
     }
 

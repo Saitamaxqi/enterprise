@@ -16,7 +16,7 @@ class TestSpreadsheetImportXLSXUi(HttpCase):
         folder = self.env["documents.document"].create({
             'name': 'Test folder',
             'type': 'folder',
-            "is_pinned_folder": True,
+            "owner_id": self.env.ref('base.user_root').id,
             "access_internal": "view",
             "access_via_link": "none",
         })

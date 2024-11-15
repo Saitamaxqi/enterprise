@@ -78,7 +78,8 @@ class DocumentsDocument(models.Model):
         # (see @_check_spreadsheet_share)
         self.env['documents.document'].check_access('create')
         self.check_access('read')
-        self.folder_id.check_access('write')
+        if not self.env.su and self.folder_id and self.folder_id.user_permission != 'edit':
+            raise AccessError(_('You are not allowed to freeze spreadsheets in Company'))
 
         folder = self.env['documents.document'].sudo().search([
             ('folder_id', '=', self.folder_id.id),

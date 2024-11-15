@@ -102,8 +102,8 @@ QUnit.module("documents", {}, function () {
                     { display_name: "De Bruyne", partner_id: resPartnerIds[2] },
                 ]);
                 const documentsFolderIds = pyEnv["documents.document"].create([
-                    { name: "Workspace1", type: "folder", access_internal: "edit", user_permission: "edit", is_pinned_folder: true, folder_id: false },
-                    { name: "Workspace2", type: "folder", access_internal: "edit", user_permission: "edit", is_pinned_folder: true, folder_id: false },
+                    { name: "Workspace1", type: "folder", access_internal: "edit", user_permission: "edit", is_pinned_folder: true, folder_id: false, owner_id: 1 },
+                    { name: "Workspace2", type: "folder", access_internal: "edit", user_permission: "edit", is_pinned_folder: true, folder_id: false, owner_id: 1 },
                 ]);
                 documentsFolderIds.push(
                     pyEnv["documents.document"].create([
