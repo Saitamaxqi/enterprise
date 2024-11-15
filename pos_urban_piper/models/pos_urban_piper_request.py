@@ -13,7 +13,7 @@ from werkzeug.urls import url_join
 _logger = logging.getLogger(__name__)
 
 EVENT_TYPES = [
-    'store_creation', 'store_action', 'item_state_toggle', 'order_placed', 'order_status_update', 'rider_status_update'
+    'store_creation', 'store_action', 'inventory_update', 'item_state_toggle', 'order_placed', 'order_status_update', 'rider_status_update'
 ]
 UP_LANGUAGES = ['hi', 'ar', 'ja', 'pt', 'fr', 'es']
 
@@ -103,6 +103,7 @@ class UrbanPiperClient:
         }
         name_translations = self.config.get_field_translations('name')
         data['stores'][0]['translations'] = self._get_translations(name_translations, 'name')
+        data = self.config.prepare_store_data(data)
         response_json = self._make_api_request(endpoint, data=data)
         return response_json
 
@@ -117,12 +118,16 @@ class UrbanPiperClient:
             ('urbanpiper_pos_config_ids', 'in', self.config.ids),
             ('type', '!=', 'combo')
         ]
+        # For the US & UK regions, there is an issue on the UrbanPiper side. They require the entire product catalog, but currently, we are only sending the updated products.
+        full_sync_required_providers = ['justeat', 'grubhub', 'doordash', 'ubereats']
         products = self.config.env['product.template'].search(product_domain)
-        pos_products = products.filtered(lambda product: (
-            not product.urban_piper_status_ids or
-            self.config.id not in product.urban_piper_status_ids.config_id.ids or
-            any(ups.config_id.id in self.config.ids and not ups.is_product_linked for ups in product.urban_piper_status_ids)
-        ))
+        pos_products = products
+        if any(provider.technical_name not in full_sync_required_providers for provider in self.config.urbanpiper_delivery_provider_ids):
+            pos_products = products.filtered(lambda product: (
+                not product.urban_piper_status_ids or
+                self.config.id not in product.urban_piper_status_ids.config_id.ids or
+                any(ups.config_id.id in self.config.ids and not ups.is_product_linked for ups in product.urban_piper_status_ids)
+            ))
         pos_products_without_pos_categ_ids = pos_products.filtered(lambda p: not p.pos_categ_ids)
         pos_other_categ_id = self.config.env['pos.category'].search([('name', 'ilike', 'other')], limit=1)
         if not pos_other_categ_id:
@@ -256,7 +261,9 @@ class UrbanPiperClient:
                     'title': attr_line.attribute_id.with_context(lang="en_US").name,
                     'active': True,
                     'multi_options_enabled': bool(attr_line.attribute_id.display_type == 'multi'),
-                    'item_ref_ids': [self.get_item_ref_id(product)]
+                    'item_ref_ids': [self.get_item_ref_id(product)],
+                    'min_selectable': 0,
+                    'max_selectable': -1
                 }
                 if attr_line.attribute_id.display_type != 'multi':
                     group['min_selectable'] = 1
@@ -331,14 +338,29 @@ class UrbanPiperClient:
         response_json = self._make_api_request(endpoint, method='POST', data=payload)
         return response_json
 
-    def request_status_update(self, order_id, new_status, message=None):
+    def urbanpiper_attribute_value_toggle(self, values, status):
+        """
+        Enable/Disable the attribute's value on the urbanpiper store. (If menu is synced with urban piper)
+        """
+        value_lst_str = [f'{value.product_tmpl_id.id}-{value.product_attribute_value_id.id}' for value in values]
+        endpoint = 'hub/api/v1/items/'
+        payload = {
+            'location_ref_id': self.config.urbanpiper_store_identifier,
+            'item_ref_ids': [],
+            'option_ref_ids': value_lst_str,
+            'action': 'enable' if status else 'disable'
+        }
+        response_json = self._make_api_request(endpoint, method='POST', data=payload)
+        return response_json
+
+    def request_status_update(self, order_id, new_status, code=None):
         """
         Update status in Urban Piper
         """
         endpoint = f'external/api/v1/orders/{order_id}/status/'
         payload = {
             'new_status': new_status,
-            'reason_code': message
+            'reason_code': code
         }
         response_json = self._make_api_request(endpoint, method='PUT', data=payload)
         if response_json:
@@ -348,6 +370,16 @@ class UrbanPiperClient:
                 return False, response_json.get('message')
         else:
             return False, 'Failed to update status in Urban Piper'
+
+    def urbanpiper_order_reference_update(self, order):
+        """
+        Update order reference in Urban Piper
+        """
+        endpoint = f'external/api/v1/orders/{order.delivery_identifier}/'
+        payload = {
+            "reference_id": order.name
+        }
+        self._make_api_request(endpoint, method='PUT', data=payload)
 
     def urbanpiper_store_status_update(self, status):
         """
@@ -392,6 +424,8 @@ class UrbanPiperClient:
         When the user switches the database, they can press the refresh webhook button to
         update the webhook parameters according to the new database.
         """
+        self.config.urbanpiper_webhook_url = ''
+        self._register_webhook()
         wehbook_json = self._make_api_request('external/api/v1/webhooks?limit=50', method='GET')
         webhooks = wehbook_json.get('webhooks')
         response_json = {}

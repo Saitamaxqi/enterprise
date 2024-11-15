@@ -92,7 +92,9 @@ patch(PosStore.prototype, {
             return;
         }
         if (deliveryOrder.delivery_status === "acknowledged") {
-            this.sendOrderInPreparationUpdateLastChange(deliveryOrder);
+            if (!deliveryOrder.isFutureOrder()) {
+                this.sendOrderInPreparationUpdateLastChange(deliveryOrder);
+            }
         } else if (deliveryOrder.delivery_status === "placed") {
             this.sound.play("notification");
             this.deliveryOrderNotification = deliveryOrder;

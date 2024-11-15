@@ -18,4 +18,13 @@ patch(PosOrder.prototype, {
     get isDirectSale() {
         return Boolean(super.isDirectSale && !this.delivery_identifier);
     },
+
+    get deliveryOrderType() {
+        const deliveryJson = JSON.parse(this?.delivery_json || "{}");
+        return deliveryJson?.order?.details?.ext_platforms?.[0]?.delivery_type;
+    },
+
+    isFutureOrder() {
+        return false;
+    },
 });

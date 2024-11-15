@@ -236,7 +236,11 @@ class PosUrbanPiperController(http.Controller):
             'uuid': str(uuid.uuid4()),
         })
         delivery_order._compute_prices()
+        self.after_delivery_order_create(delivery_order, details, pos_config_sudo)
         pos_config_sudo._send_delivery_order_count(delivery_order.id)
+
+    def after_delivery_order_create(self, delivery_order, details, pos_config_sudo):
+        pass
 
     def _get_tax_value(self, taxes_data, pos_config):
         """
@@ -255,10 +259,12 @@ class PosUrbanPiperController(http.Controller):
 
     def _create_order_line(self, line_data, pos_config_sudo):
         value_ids_lst = []
+        note = ''
         if line_data.get('options_to_add'):
+            note = '\n'.join([f"{option.get('title')} X {option.get('quantity')}" for option in line_data['options_to_add']])
             merchant_value_lst = [option.get('merchant_id') for option in line_data['options_to_add']]
             value_ids_lst = [int(vid.split('-')[1]) for vid in merchant_value_lst]
-        price_extra = sum(option.get('price', 0) for option in line_data.get('options_to_add', []))
+        price_extra = sum(option.get('total_price', 0) for option in line_data.get('options_to_add', []))
         attribute_value_ids = []
         values_to_remove = []
         if value_ids_lst:
@@ -288,7 +294,9 @@ class PosUrbanPiperController(http.Controller):
             'price_subtotal': taxes['total_excluded'],
             'price_subtotal_incl': taxes['total_included'],
             'tax_ids': [Command.set(line_taxes.ids)] if line_taxes else None,
-            'note': line_data.get('instructions'),
+            'note': "\n".join(
+                x for x in [line_data.get('instructions'), note] if x and x.strip()
+            ),
             'uuid': str(uuid.uuid4()),
         })
         return lines

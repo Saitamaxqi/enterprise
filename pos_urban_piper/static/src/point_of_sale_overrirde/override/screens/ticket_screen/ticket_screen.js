@@ -93,13 +93,18 @@ patch(TicketScreen.prototype, {
         if (status) {
             this._updateScreenState(syncedOrder, "ACTIVE_ORDERS");
         }
-        try {
-            await this.pos.sendOrderInPreparation(syncedOrder);
-        } catch {
-            this.pos.notification.add(_t("Error to send in preparation display."), {
-                type: "warning",
-                sticky: false,
-            });
+        if (!syncedOrder.isFutureOrder()) {
+            try {
+                await this.pos.sendOrderInPreparation(syncedOrder);
+            } catch {
+                this.pos.notification.add(
+                    _t("Error to send delivery order in preparation display."),
+                    {
+                        type: "warning",
+                        sticky: false,
+                    }
+                );
+            }
         }
     },
 
@@ -158,7 +163,7 @@ patch(TicketScreen.prototype, {
 
     async _doneOrder(order) {
         const response = await this._updateOrderStatus(order, "Food Ready");
-        const status = await this._handleResponse(response, order, "food_ready", "");
+        const status = await this._handleResponse(response, order, "food_ready");
         if (status) {
             this._updateScreenState(order, "SYNCED", "DONE");
         }
@@ -168,6 +173,16 @@ patch(TicketScreen.prototype, {
         order = this.pos.models["pos.order"].get(order.id);
         order.setScreenData({ name: "" });
         order.uiState.locked = true;
+    },
+
+    async _dispatchOrder(order) {
+        const response = await this._updateOrderStatus(order, "Dispatched");
+        await this._handleResponse(response, order, "dispatched");
+    },
+
+    async _completeOrder(order) {
+        const response = await this._updateOrderStatus(order, "Completed");
+        await this._handleResponse(response, order, "completed");
     },
 
     async _onInfoOrder(order) {

@@ -19,6 +19,7 @@ This module integrates with UrbanPiper to receive and manage orders from various
     'assets': {
         'point_of_sale._assets_pos': [
             'pos_urban_piper/static/src/point_of_sale_overrirde/**/*',
+            'pos_urban_piper/static/src/utils.js',
         ],
         'pos_preparation_display.assets': [
             'pos_urban_piper/static/src/pos_preparation_display_override/**/*',

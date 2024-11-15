@@ -101,5 +101,16 @@
                 </div>
             </div>
         </xpath>
+        <xpath expr="//ActionpadWidget" position="after">
+            <button t-if="order?.deliveryOrderType == 'self' and order.delivery_status == 'food_ready'" class="btn-switchpane w-100 btn btn-primary rounded secondary fw-bold review-button mt-2" t-on-click="() => this._dispatchOrder(order)">
+                <span class="fs-3">Dispatch Order</span>
+            </button>
+            <button t-if="order?.deliveryOrderType == 'self' and order.delivery_status == 'dispatched'" class="btn-switchpane w-100 btn btn-primary rounded secondary fw-bold review-button mt-2" t-on-click="() => this._completeOrder(order)">
+                <span class="fs-3">Complete Order</span>
+            </button>
+        </xpath>
+        <xpath expr="//ActionpadWidget" position="attributes">
+            <attribute name="t-if">order?.deliveryOrderType != 'self' or order.delivery_status == 'completed'</attribute>
+        </xpath>
     </t>
 </templates>
