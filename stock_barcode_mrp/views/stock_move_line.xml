@@ -4,6 +4,7 @@
         <field name="model">stock.move.line</field>
         <field name="inherit_id" ref="stock_barcode.stock_move_line_product_selector"/>
         <field name="mode">primary</field>
+        <field name="priority">2000</field>
         <field name="arch" type="xml">
             <field name="picked" position="after">
                 <field name="manual_consumption" force_save="1" invisible="1"/>
