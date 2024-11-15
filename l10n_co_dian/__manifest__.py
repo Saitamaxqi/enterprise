@@ -1,6 +1,5 @@
 {
     'name': 'Electronic invoicing for Colombia with DIAN',
-    'countries': ['co'],
     'version': '0.1',
     'category': 'Accounting/Localizations/EDI',
     'summary': 'Colombian Localization for EDI documents',
@@ -23,6 +22,7 @@
         'demo/demo.xml',
     ],
     'installable': True,
+    'auto_install': ['l10n_co_edi'],
     'license': 'OEEL-1',
     'assets': {
         'web.report_assets_common': [
