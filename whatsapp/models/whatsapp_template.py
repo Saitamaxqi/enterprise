@@ -5,6 +5,7 @@ import re
 import mimetypes
 
 from markupsafe import Markup
+from urllib.parse import urljoin
 
 from odoo import api, models, fields, _, Command
 from odoo.addons.whatsapp.tools.lang_list import Languages
@@ -131,7 +132,7 @@ class WhatsappTemplate(models.Model):
     button_ids = fields.One2many(
         'whatsapp.template.button', 'wa_template_id', string="Buttons",
         copy=True)  # will copy their variables
-    has_invalid_button_number = fields.Boolean(compute="_compute_has_invalid_button_number")
+    warning_message = fields.Text(compute="_compute_warning_message")
 
     messages_count = fields.Integer(string="Messages Count", compute='_compute_messages_count')
     has_action = fields.Boolean(string="Has Action", compute='_compute_has_action')
@@ -326,10 +327,14 @@ class WhatsappTemplate(models.Model):
             #     to_delete.unlink()
             tmpl.variable_ids = [(3, to_remove.id) for to_remove in to_delete] + [(0, 0, vals) for vals in to_create_values]
 
-    @api.depends('button_ids')
-    def _compute_has_invalid_button_number(self):
+    @api.depends('button_ids.website_url', 'button_ids.has_invalid_number')
+    def _compute_warning_message(self):
         for template in self:
-            template.has_invalid_button_number = any(template.button_ids.mapped('has_invalid_number'))
+            template.warning_message = ''
+            if template.button_ids.filtered(lambda button: button.button_type == 'url' and button.website_url.startswith('/')):
+                template.warning_message += _('- Button URL will be modified to include the domain. (e.g., "/my_path" will be "https://mydomain.odoo.com/my_path")\n')
+            if any(template.button_ids.mapped('has_invalid_number')):
+                template.warning_message += _('- The phone number set in "Buttons" does not look correct.')
 
     @api.depends('model_id')
     def _compute_has_action(self):
@@ -485,6 +490,8 @@ class WhatsappTemplate(models.Model):
         return {'type': 'BUTTONS', 'buttons': buttons}
 
     def _get_url_button_data(self, button):
+        if button.website_url.startswith('/'):
+            button.website_url = urljoin(button.get_base_url(), button.website_url)
         button_data = {'url': button.website_url}
         if button.url_type == 'dynamic':
             button_data['url'] += '{{1}}'

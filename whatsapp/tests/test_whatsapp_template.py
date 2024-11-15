@@ -369,8 +369,8 @@ class WhatsAppTemplateForm(WhatsAppTemplateCommon):
 
     @users('user_wa_admin')
     def test_button_format(self):
-        """ Test detection of invalid phone number on button and update of
-        url of button, updating scheme to https when not in ('http', 'https')
+        """ Test detection of invalid phone number or invalid url on button and update of
+        url of button, updating scheme to https when it is not set
         """
         template_form = Form(self.env['whatsapp.template'])
         template_form.name = 'Test Buttons'
@@ -387,20 +387,35 @@ class WhatsAppTemplateForm(WhatsAppTemplateCommon):
             button.call_number = '0456 12 34 56'
 
         template = template_form.save()
-        self.assertEqual(template.button_ids[0].website_url, 'https://odoo.com')
 
-        for country, number, is_invalid in (
+        base_url = self.env.company.get_base_url()
+        for url, expected_url, has_warning in (
+            ('/my/home', f'{base_url}/my/home', True),
+            ('odoo.com/my/home', 'https://odoo.com/my/home', False),
+            ('https://odoo.com/my/home', 'https://odoo.com/my/home', False),
+            ('ftp://user@host/foo/bar.txt', 'ftp://user@host/foo/bar.txt', False),
+        ):
+            with template_form.button_ids.edit(0) as url_button:
+                url_button.website_url = url
+            template = template_form.save()
+            self.assertEqual(template.button_ids[0].website_url, expected_url)
+            # with the form view, the domain is always added through the onchange
+            # so to test the warning message, the url has to be changed without the form view
+            template.button_ids[0].website_url = url
+            self.assertEqual(bool(template.warning_message and 'URL' in template.warning_message), has_warning)
+
+        for country, number, has_warning in (
             (self.env.ref('base.in'), '0456 12 34 56', True),
             (self.env.ref('base.be'), '0456 12 34 56', False),
             (self.env.ref('base.be'), '98 765 4321 4321', True)
         ):
-            with self.subTest(country=country, number=number, is_invalid=is_invalid):
+            with self.subTest(country=country, number=number, has_warning=has_warning):
                 self.env.user.country_id = country
                 template.button_ids[1].call_number = number
                 template.button_ids.invalidate_recordset(['has_invalid_number'])
-                template.invalidate_recordset(['has_invalid_button_number'])
-                self.assertEqual(template.button_ids[1].has_invalid_number, is_invalid)
-                self.assertEqual(template.has_invalid_button_number, is_invalid)
+                template.invalidate_recordset(['warning_message'])
+                self.assertEqual(template.button_ids[1].has_invalid_number, has_warning)
+                self.assertEqual(bool(template.warning_message and 'phone' in template.warning_message), has_warning)
 
     @users('user_wa_admin')
     def test_header_onchange(self):
