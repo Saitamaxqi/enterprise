@@ -5,7 +5,6 @@
             <field name="access_internal">view</field>
             <field name="name">HR</field>
             <field name="type">folder</field>
-            <field name="is_pinned_folder">True</field>
         </record>
     </data>
 </odoo>

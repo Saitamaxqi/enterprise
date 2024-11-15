@@ -551,7 +551,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         # Managers can unpin by moving to another root folder
         self.folder_b.owner_id = False
         self.folder_a.with_user(self.document_manager).folder_id = self.folder_b
-        self.assertFalse(self.folder_a.is_pinned_folder)
+        self.assertFalse(self.folder_a.is_company_root_folder)
         # Or moving to their own drive
         self.folder_a.with_user(self.document_manager).folder_id = False
         self.folder_a.with_user(self.document_manager).owner_id = self.document_manager
@@ -565,7 +565,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             'owner_id': False,
             'type': 'folder',
         })
-        self.assertTrue(folder.is_pinned_folder)
+        self.assertTrue(folder.is_company_root_folder)
 
         with self.assertRaises(AccessError):
             self.env['documents.document'].with_user(self.internal_user).create({

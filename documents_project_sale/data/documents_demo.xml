@@ -5,7 +5,6 @@
             <field name="name">Renovation Projects</field>
             <field name="type">folder</field>
             <field name="access_internal">view</field>
-            <field name="is_pinned_folder">True</field>
         </record>
 
         <record id="documents_folder_template_child_1" model="documents.document">

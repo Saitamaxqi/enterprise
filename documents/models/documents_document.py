@@ -83,7 +83,7 @@ class DocumentsDocument(models.Model):
         'URL Preview Image', store=True, compute='_compute_name_and_preview', readonly=False)
     res_model_name = fields.Char(compute='_compute_res_model_name', index=True)
     type = fields.Selection([('url', 'URL'), ('binary', 'File'), ('folder', 'Folder')],
-                            default='binary', string='Type', required=True, readonly=True)
+                            default='binary', string='Type', required=True, readonly=True, index=True)
     shortcut_document_id = fields.Many2one('documents.document', 'Source Document', ondelete='cascade',
                                            index='btree_not_null')
     shortcut_document_owner_id = fields.Many2one(
@@ -138,8 +138,7 @@ class DocumentsDocument(models.Model):
                                     help="Delay after permanent deletion of the document in the trash (days)")
     company_id = fields.Many2one('res.company', string='Company', store=True, readonly=False, index=True)
 
-    # TODO: remove in master
-    is_pinned_folder = fields.Boolean("Pinned to Company roots", compute='_compute_is_pinned_folder', store=True)
+    is_company_root_folder = fields.Boolean("Pinned to Company roots", compute='_compute_is_company_root_folder', search='_search_is_company_root_folder')
 
     # Stat buttons
     document_count = fields.Integer('Document Count', compute='_compute_document_count')
@@ -295,15 +294,23 @@ class DocumentsDocument(models.Model):
                 records="\n-".join(wrong_records.mapped('name'))))
 
     @api.depends('folder_id', 'owner_id', 'type')
-    def _compute_is_pinned_folder(self):
-        # TODO: remove in master, for stable force the field to reflect owner / folder value
-        # because it's used in access rule `documents_document_write_base_rule`
+    def _compute_is_company_root_folder(self):
         for document in self:
-            document.is_pinned_folder = (
+            document.is_company_root_folder = (
                 document.type == 'folder'
                 and not document.folder_id
                 and not document.owner_id
             )
+
+    def _search_is_company_root_folder(self, operator, value):
+        if operator not in ('=', '!=') or not isinstance(value, (bool, int)):
+            raise NotImplementedError("Unsupported search operator or value")
+
+        return (
+            [('type', '=', 'folder'), ('folder_id', '=', False), ('owner_id', '=', False)]
+            if (operator == '=' and value) or (operator == '!=' and not value) else
+            ['|', '|', ('type', '!=', 'folder'), ('folder_id', '!=', False), ('owner_id', '!=', False)]
+        )
 
     @api.depends('attachment_id', 'url', 'shortcut_document_id')
     def _compute_name_and_preview(self):
@@ -979,10 +986,6 @@ class DocumentsDocument(models.Model):
             'context': {'searchpanel_default_folder_id': self.id}
         }
 
-    def toggle_is_pinned_folder(self):
-        # TODO: remove in master
-        self.ensure_one()
-
     @api.model
     def get_documents_actions(self, folder_id):
         """Return the available actions and a key to know if the action is embedded on the folder."""
@@ -1602,7 +1605,7 @@ class DocumentsDocument(models.Model):
         if not is_manager:
             if any(d.alias_name for d in documents):
                 raise AccessError(_('Only Documents Managers can set aliases.'))
-            if any(d.is_pinned_folder for d in documents):
+            if any(d.is_company_root_folder for d in documents):
                 raise AccessError(_('Only Documents Managers can create in company folder.'))
 
         for document, attachment in zip(documents, attachments):
@@ -1705,7 +1708,7 @@ class DocumentsDocument(models.Model):
             raise UserError(_("Shortcuts cannot change target document."))
 
         is_manager = self.env.is_admin() or self.env.user.has_group('documents.group_documents_manager')
-        pinned_folders_start = self.filtered('is_pinned_folder')
+        pinned_folders_start = self.filtered('is_company_root_folder')
 
         if (
             'owner_id' in vals
@@ -1817,7 +1820,7 @@ class DocumentsDocument(models.Model):
             if new_active and self.sudo().search([('id', 'parent_of', self.ids), ('active', '=', False)]):
                 raise UserError(_('Operation not supported. Please use "Restore" / `action_unarchive` instead.'))
 
-        if not is_manager and self.filtered('is_pinned_folder') != pinned_folders_start:
+        if not is_manager and self.filtered('is_company_root_folder') != pinned_folders_start:
             raise AccessError(_("Only Documents Managers can create in company folder."))
 
         for document, attachment_was_present in zip(self, attachments_was_present):
@@ -1863,7 +1866,7 @@ class DocumentsDocument(models.Model):
         if field_name == 'folder_id':
             enable_counters = kwargs.get('enable_counters', False)
             search_panel_fields = ['access_token', 'company_id', 'description', 'display_name', 'folder_id',
-                                   'is_favorited', 'is_pinned_folder', 'owner_id', 'shortcut_document_id',
+                                   'is_favorited', 'is_company_root_folder', 'owner_id', 'shortcut_document_id',
                                    'user_permission']
             if not self.env.user.share:
                 search_panel_fields += ['alias_name', 'alias_domain_id', 'alias_tag_ids']

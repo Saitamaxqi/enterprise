@@ -4,7 +4,6 @@
         <record id="document_fleet_folder" model="documents.document" forcecreate="0">
             <field name="access_internal">view</field>
             <field name="access_via_link">none</field>
-            <field name="is_pinned_folder">True</field>
             <field name="name">Fleet</field>
             <field name="type">folder</field>
         </record>
