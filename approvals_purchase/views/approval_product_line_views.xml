@@ -13,7 +13,13 @@
             </xpath>
             <xpath expr="//field[@name='product_uom_id']" position="after">
                 <field name="seller_id" column_invisible="parent.approval_type != 'purchase'"
-                    domain="[('product_tmpl_id', '=', product_template_id)]"/>
+                    domain="[('product_tmpl_id', '=', product_template_id)]"
+                    options="{'no_quick_create': True}"
+                    context="{
+                        'default_product_tmpl_id': product_template_id,
+                        'default_product_id': product_id,
+                        'unset_res_partner_category_id': True,
+                    }"/>
             </xpath>
         </field>
     </record>
