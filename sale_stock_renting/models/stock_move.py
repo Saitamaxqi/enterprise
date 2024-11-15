@@ -67,3 +67,22 @@ class StockMove(models.Model):
                         move.sale_line_id._generate_delay_line(current_qty_returned)
                     move.sale_line_id.qty_returned += current_qty_returned
         return res
+
+    def _compute_location_dest_id(self):
+        moves_to_super = self.env['stock.move']
+        for move in self:
+            if (
+                move.location_dest_id
+                and move.location_final_id
+                and move.sale_line_id
+                and not move.sale_line_id.is_rental
+                and move.sale_line_id.order_id.is_rental_order
+                and move.picking_type_id.code == 'outgoing'
+                and move.location_final_id._child_of(move.location_dest_id)
+            ):
+                move.location_dest_id = move.location_final_id
+            else:
+                moves_to_super |= move
+
+        if moves_to_super:
+            super(StockMove, moves_to_super)._compute_location_dest_id()

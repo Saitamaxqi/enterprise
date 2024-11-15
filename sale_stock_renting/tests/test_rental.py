@@ -870,3 +870,79 @@ class TestRentalPicking(TestRentalCommon):
             'location_dest_id': warehouse.lot_stock_id.id,
             'route_ids': custom_rental_route.ids,
         }])
+
+    def _test_rental_order_with_mixed_lines(self, rental_first=True):
+        """
+        Helper function to test delivery behavior for rental orders with mixed lines.
+
+        :param rental_first: Whether the rental product should appear first in the order lines.
+        """
+        rental_order = self.sale_order_id.copy()
+        rental_line = rental_order.order_line[0]
+        rental_line.write({'product_uom_qty': 2, 'is_rental': True})
+
+        sales_product = self.env['product.product'].create({
+            'name': 'Sales Product',
+            'rent_ok': False,
+        })
+        sales_line = self.env['sale.order.line'].create({
+            'order_id': rental_order.id,
+            'product_id': sales_product.id,
+            'product_uom_qty': 5,
+            'is_rental': False
+        })
+
+        # Reorder lines if sales product is first
+        if not rental_first:
+            rental_product = rental_line.product_id
+            rental_line.unlink()
+            rental_line = self.env['sale.order.line'].create({
+                'order_id': rental_order.id,
+                'product_id': rental_product.id,
+                'product_uom_qty': 2,
+                'is_rental': True
+            })
+
+        rental_order.action_confirm()
+
+        outgoing_picking = rental_order.picking_ids.filtered(
+            lambda p: p.picking_type_code == 'outgoing'
+        )
+        self.assertEqual(len(outgoing_picking), 1)
+        self.assertEqual(len(outgoing_picking.move_ids), 2)
+        outgoing_picking.button_validate()
+
+        self.assertEqual(
+            sales_line.qty_delivered, 5,
+            "Delivered quantity for sales product is incorrect."
+        )
+        self.assertEqual(
+            rental_line.qty_delivered, 2,
+            "Delivered quantity for rental product is incorrect."
+        )
+        self.assertEqual(
+            outgoing_picking.move_ids.filtered(
+                lambda m: m.product_id == sales_line.product_id
+            ).location_dest_id,
+            self.env.ref('stock.stock_location_customers')
+        )
+        self.assertEqual(
+            outgoing_picking.move_ids.filtered(
+                lambda m: m.product_id == rental_line.product_id
+            ).location_dest_id,
+            self.env.company.rental_loc_id
+        )
+
+    def test_rental_order_containing_mixed_lines_1(self):
+        """
+            Test delivery behavior for rental order where the first line contains a rental product
+            and the second line contains a sales product.
+        """
+        self._test_rental_order_with_mixed_lines(rental_first=True)
+
+    def test_rental_order_containing_mixed_lines_2(self):
+        """
+            Test delivery behavior for rental order where the first line contains a sales product
+            and the second line contains a rental product.
+        """
+        self._test_rental_order_with_mixed_lines(rental_first=False)
