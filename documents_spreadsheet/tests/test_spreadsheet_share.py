@@ -39,7 +39,7 @@ class SpreadsheetSharing(SpreadsheetTestCommon):
         shared_spreadsheet = document.browse(shared_spreadsheet_action['id'])
 
         self.assertNotEqual(document.access_token, shared_spreadsheet.access_token)
-        self.assertEqual(shared_spreadsheet.folder_id.owner_id, self.env.ref('base.user_root'))
+        self.assertFalse(shared_spreadsheet.folder_id.owner_id)
         self.assertEqual(shared_spreadsheet.access_internal, 'none')
 
         with self.assertRaises(AccessError):

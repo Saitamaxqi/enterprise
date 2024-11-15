@@ -28,11 +28,13 @@ class DocumentsMixin(models.AbstractModel):
             access_rights_vals = self._get_document_vals_access_rights()
             if set(access_rights_vals) - {'access_via_link', 'access_internal', 'is_access_via_link_hidden'}:
                 raise ValueError("Invalid access right values")
+
+            owner = self._get_document_owner()
             document_vals = {
                 'attachment_id': attachment.id,
                 'name': attachment.name or self.display_name,
                 'folder_id': self._get_document_folder().id,
-                'owner_id': self._get_document_owner().id,
+                'owner_id': owner.id if owner.active else False,
                 'partner_id': self._get_document_partner().id,
                 'tag_ids': [(6, 0, self._get_document_tags().ids)],
             } | access_rights_vals
@@ -57,11 +59,11 @@ class DocumentsMixin(models.AbstractModel):
     def _get_document_owner(self):
         """ Return the owner value to create a `documents.document`
 
-        In the default implementation, we return OdooBot as owner to avoid giving full access to a user and to rely
+        In the default implementation, we return False as owner to avoid giving full access to a user and to rely
         instead on explicit access managed via `document.access` or via parent folder access inheritance but this
         method can be overridden to for example give the ownership to the current user.
         """
-        return self.env.ref('base.user_root')
+        return self.env['res.users']
 
     def _get_document_tags(self):
         return self.env['documents.tag']

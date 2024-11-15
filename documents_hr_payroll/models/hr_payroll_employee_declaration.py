@@ -35,7 +35,6 @@ class HrPayrollEmployeeDeclaration(models.Model):
     def _post_pdf(self):
         create_vals = []
         posted_documents = self._get_posted_documents()
-        odoobot = self.env.ref('base.user_root')
         lines_to_post = self.env['hr.payroll.employee.declaration']
         for line in self:
             template = self.env[line.res_model]._get_posted_mail_template()
@@ -43,7 +42,7 @@ class HrPayrollEmployeeDeclaration(models.Model):
                 lines_to_post += line
                 partner_id = self.env[line.res_model]._get_posted_document_owner(line.employee_id).partner_id.id
                 create_vals.append({
-                    'owner_id': odoobot.id,
+                    'owner_id': False,
                     'access_ids': [] if not partner_id else [
                         Command.create({'partner_id': partner_id, 'role': 'view'})
                     ],

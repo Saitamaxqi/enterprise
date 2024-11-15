@@ -402,7 +402,7 @@ class TestCaseDocuments(TransactionCaseDocuments):
 
         # check that we can copy in a folder inside the company folder
         self.assertFalse(self.folder_a.folder_id)
-        self.folder_a.owner_id = self.env.ref("base.user_root")
+        self.folder_a.owner_id = False
         self.folder_a.access_internal = 'edit'
 
         # Special case where we can not write, but `user_permission == edit` because

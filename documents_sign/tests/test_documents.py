@@ -80,7 +80,6 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
         Document = self.env["documents.document"]
         Partner = self.env["res.partner"]
         User = self.env["res.users"]
-        user_root = self.env.ref("base.user_root")
 
         users = User.create([
             {
@@ -106,14 +105,14 @@ class TestCaseDocumentsBridgeSign(SignRequestCommon):
                     [('res_model', '=', 'sign.request'), ('res_id', '=', sign_request.id)])
                 all_documents_signed |= documents_signed
                 self.assertEqual(len(documents_signed), 2)
-                self.assertEqual(documents_signed.owner_id, self.env.ref('base.user_root'),
-                                 "Owner of the signed/certificate documents must be odooBot.")
+                self.assertFalse(documents_signed.owner_id,
+                                 "Owner of the signed/certificate documents must be false.")
                 # The signed documents inherits from the folder access rights -> cannot access the signed documents
                 for doc in documents_signed:
                     self.assertEqual(doc.access_via_link, "none")
                     self.assertEqual(doc.access_internal, "none")
                     self.assertTrue(doc.is_access_via_link_hidden)
-                    self.assertEqual(doc.owner_id, user_root)
+                    self.assertFalse(doc.owner_id)
                     self.assertEqual(doc.partner_id, user.partner_id)
                     access_by_partner = {access.partner_id: access for access in doc.access_ids}
                     self.assertEqual(len(doc.access_ids), 1 if user == user_sign_manager else 2)

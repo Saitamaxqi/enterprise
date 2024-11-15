@@ -37,7 +37,7 @@ class TestCaseDocumentsBridgeRecruitment(TransactionCaseDocumentsHr):
 
         self.assertTrue(doc, "It should have created a document")
         self.assertEqual(doc.folder_id, self.folder, "It should be in the correct folder")
-        self.assertEqual(doc.owner_id, self.env.ref('base.user_root'), "The owner_id should be odooBot")
+        self.assertFalse(doc.owner_id)
         self.assertEqual(doc.access_via_link, "none")
         self.assertEqual(doc.access_internal, "none")
         self.assertTrue(doc.is_access_via_link_hidden)
@@ -68,7 +68,7 @@ class TestCaseDocumentsBridgeRecruitment(TransactionCaseDocumentsHr):
         self.assertTrue(doc, "It should have created a document")
         self.assertEqual(doc.folder_id, self.folder, "It should be in the correct folder")
         self.assertEqual(doc.partner_id, partner, "The partner_id should be the applicant's partner_id")
-        self.assertEqual(doc.owner_id, self.env.ref('base.user_root'), "The owner_id should be odooBot")
+        self.assertFalse(doc.owner_id)
         self.assertEqual(doc.access_via_link, "none")
         self.assertEqual(doc.access_internal, "none")
         self.assertTrue(doc.is_access_via_link_hidden)

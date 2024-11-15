@@ -48,7 +48,6 @@
             <field name="folder_id" ref="documents_renovations_projects"/>
             <field name="res_model">project.task</field>
             <field name="res_id" ref="project_task_visit_customer"/>
-            <field name="owner_id" ref="base.public_user"/>
             <field name="partner_id" ref="base.res_partner_2"/>
             <field name="tag_ids" eval="[Command.link(ref('documents_folder_tag_unsorted'))]"/>
         </record>

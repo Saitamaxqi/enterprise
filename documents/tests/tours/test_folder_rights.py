@@ -13,7 +13,7 @@ class TestDocumentFolderRights(HttpCase):
         self.env['documents.document'].create({
             "access_internal": "view",
             "company_id": self.env.company.id,
-            "owner_id": self.env.ref('base.user_root').id,
+            "owner_id": False,
             "name": "Folder1",
             "type": "folder",
         })

@@ -33,7 +33,7 @@ class TestCaseDocumentsBridgeHR(TransactionCaseDocumentsHr):
 
         document = self.env['documents.document'].search([('attachment_id', '=', attachment.id)])
         self.assertTrue(document.exists(), "There should be a new document created from the attachment")
-        self.assertEqual(document.owner_id, self.env.ref('base.user_root'), "The owner_id should be odooBot")
+        self.assertFalse(document.owner_id)
         self.assertEqual(document.partner_id, self.employee.work_contact_id, "The partner_id should be the employee's work contact")
         self.assertEqual(document.access_via_link, "none")
         self.assertEqual(document.access_internal, "none")

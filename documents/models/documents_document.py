@@ -15,7 +15,7 @@ from markupsafe import Markup
 from werkzeug.urls import url_encode
 
 import odoo
-from odoo import _, api, Command, fields, models
+from odoo import _, api, Command, fields, models, SUPERUSER_ID
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.osv import expression
 from odoo.tools import groupby, image_process, SQL
@@ -94,8 +94,9 @@ class DocumentsDocument(models.Model):
     is_favorited = fields.Boolean(compute='_compute_is_favorited', inverse='_inverse_is_favorited')
     tag_ids = fields.Many2many('documents.tag', 'document_tag_rel', string="Tags")
     partner_id = fields.Many2one('res.partner', string="Contact", tracking=True)
-    owner_id = fields.Many2one('res.users', default=lambda self: self.env.user.id, string="Owner",
-                               required=True, tracking=True, index=True)
+    owner_id = fields.Many2one(
+        'res.users', tracking=True, index=True, string="Owner",
+        default=lambda self: self.env.user.id if self.env.user.active else False)
     lock_uid = fields.Many2one('res.users', string="Locked by")
     is_locked = fields.Boolean(compute="_compute_is_locked", string="Locked")
     request_activity_id = fields.Many2one('mail.activity')
@@ -301,7 +302,7 @@ class DocumentsDocument(models.Model):
             document.is_pinned_folder = (
                 document.type == 'folder'
                 and not document.folder_id
-                and document.owner_id == self.env.ref('base.user_root')
+                and not document.owner_id
             )
 
     @api.depends('attachment_id', 'url', 'shortcut_document_id')
@@ -660,9 +661,8 @@ class DocumentsDocument(models.Model):
         self.owner_id = new_user_id
 
     def action_set_as_company_root(self):
-        """Set documents as company_root, give editor role to current owner without propagation to children"""
-        odoobot = self.env.ref('base.user_root')
-        docs_per_owner = self.filtered(lambda d: d.owner_id != odoobot).grouped('owner_id')
+        """Set documents as company_root, give editor role to current owner without propagation to children."""
+        docs_per_owner = self.filtered('owner_id').grouped('owner_id')
         existing_access = self.env['documents.access'].sudo().search(expression.OR([
             [('partner_id', '=', owner.partner_id.id), ('document_id', 'in', documents.ids)]
             for owner, documents in docs_per_owner.items()
@@ -675,7 +675,7 @@ class DocumentsDocument(models.Model):
             for document in documents
             if (owner.partner_id, document) not in existing_access_values
         ])
-        self.write({'owner_id': odoobot.id, 'folder_id': False})
+        self.write({'owner_id': False, 'folder_id': False})
 
     def action_create_shortcut(self, location_folder_id=None):
         """Create a shortcut to self in a specific folder or as sibling
@@ -1299,7 +1299,7 @@ class DocumentsDocument(models.Model):
                 'name': attachment.name,
                 'attachment_id': attachment.id,
                 'folder_id': self.folder_id.id,
-                'owner_id': self.folder_id.owner_id.id or self.env.ref('base.user_root').id,
+                'owner_id': self.folder_id.owner_id.id,
                 'partner_id': self.partner_id.id,
                 'tag_ids': self.tag_ids.ids,
             } for attachment in attachments])
@@ -1309,12 +1309,19 @@ class DocumentsDocument(models.Model):
                     'res_model': 'documents.document',
                     'res_id': document.id,
                 })
-                document.message_post(
-                    message_type='email',
-                    body=msg_vals.get('body', ''),
-                    email_from=msg_vals.get('email_from'),
-                    subject=msg_vals.get('subject') or self.name
-                )
+                sub_message_values = {
+                    'author_id': msg_vals.get('author_id'),
+                    'body': msg_vals.get('body', ''),
+                    'email_from': msg_vals.get('email_from'),
+                    'message_type': 'email',
+                    'subject': msg_vals.get('subject') or self.name,
+                    'subtype_id': msg_vals.get('subtype_id'),
+                    'subtype_xmlid': msg_vals.get('subtype_xmlid'),
+                }
+                sub_message_values.pop('model', None)
+                sub_message_values.pop('res_id', None)
+                sub_message_values.pop('attachment_ids', None)
+                document.message_post(**sub_message_values)
                 # Activity settings set through alias_defaults values has precedence over the activity folder settings
                 if self.create_activity_option:
                     document.documents_set_activity(settings_record=self)
@@ -1613,14 +1620,22 @@ class DocumentsDocument(models.Model):
         users = self.env['res.users'].browse(v['owner_id'] for v in vals_list if v.get('owner_id'))
         folders.fetch(('access_internal', 'access_via_link', 'access_ids', 'active', 'owner_id'))
         (users | folders.owner_id).fetch(['partner_id'])
-        odoobot = self.env.ref('base.user_root')
         vals_list_to_update_linked_record = []
         for vals, old_vals in zip(vals_list, old_vals_list):
             owner = self.env['res.users'].browse(vals.get('owner_id', self.env.user.id))
+            if owner and not owner.active:
+                _logger.warning(
+                    "Documents: Creating document(s) as %s" % (
+                        "superuser" if owner.id == SUPERUSER_ID
+                        else f"archived user (id={owner.id})"),
+                )
+                owner = self.env['res.users']
+                vals['owner_id'] = False
+
             owner_values = {'partner_id': owner.partner_id.id, 'role': False, 'last_access_date': fields.Datetime.now()}
             vals_values = {
                 'owner_id': owner.id,
-                'access_ids': [Command.create(owner_values)] if owner != odoobot else []
+                'access_ids': [Command.create(owner_values)] if owner else []
             }
             if vals.get('folder_id'):
                 folder = self.env['documents.document'].browse(vals['folder_id'])
@@ -1644,7 +1659,7 @@ class DocumentsDocument(models.Model):
                         + folder_access + (
                              [Command.create({'partner_id': folder.owner_id.partner_id.id, 'role': 'edit'})]
                              if (
-                                folder.owner_id != odoobot
+                                folder.owner_id
                                 and folder.owner_id != owner
                                 and folder.owner_id.partner_id.id not in (vals_partners_ids + [a[2]['partner_id'] for a in folder_access])
                             ) else []
@@ -1907,9 +1922,9 @@ class DocumentsDocument(models.Model):
                         if record['shortcut_document_id']:
                             continue
                         folder_id = shared_root_id
-                elif record['owner_id'][0] == self.env.user.id:
+                elif record['owner_id'] and record['owner_id'][0] == self.env.user.id:
                     folder_id = "MY"
-                elif record['owner_id'][0] != self.env.ref('base.user_root').id or self.env.user.share:
+                elif record['owner_id'] or self.env.user.share:
                     if record['shortcut_document_id']:
                         continue
                     folder_id = shared_root_id
@@ -2060,8 +2075,6 @@ class DocumentsDocument(models.Model):
         selections = {'access_via_link': self._fields.get('access_via_link').selection}
         if self.env.user.has_group('base.group_user'):
             record['access_ids'] = [a for a in record['access_ids'] if a['role']]
-            if record['owner_id']['id'] == self.env.ref('base.user_root').id:
-                record['owner_id'] = False  # Only a real user should be shown in the panel
             selections.update({
                 'access_internal': self._fields.get('access_internal').selection,
                 'doc_access_roles': self.env['documents.access']._fields.get('role').selection,

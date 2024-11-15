@@ -95,7 +95,7 @@ class DocumentsDocument(models.Model):
                 'access_via_link': 'none',
                 'access_internal': 'none',
                 'access_ids': False,
-                'owner_id': self.env.ref('base.user_root').id,
+                'owner_id': False,
             })
 
         if isinstance(spreadsheet_data, dict):

@@ -385,7 +385,7 @@ class ShareRoute(http.Controller):
                 documents_init['folder_id'] = (
                     "MY" if document.owner_id == user
                     else "COMPANY" if not user.share and (
-                        document.owner_id == document.env.ref('base.user_root') or document.access_internal != 'none')
+                        not document.owner_id or document.access_internal != 'none')
                     else shared_root
                 )
             documents_init['document_id'] = document.id
@@ -678,7 +678,7 @@ class ShareRoute(http.Controller):
             'access_internal': 'none',
             'access_via_link': 'view',
             'folder_id': folder_sudo.id,
-            'owner_id': request.env.ref('base.user_root').id,
+            'owner_id': False,
         })
 
         return request.make_json_response([traceback_sudo.access_url])

@@ -31,7 +31,6 @@ class TransactionCaseDocumentsHr(TransactionCaseDocuments):
         company = cls.env.user.company_id
         company.documents_hr_settings = True
         company.documents_hr_folder = cls.hr_folder.id
-        cls.user_root = cls.env.ref('base.user_root')
 
     def create_hr_related_document(self, related_record, folder, n=2):
         return self.env['documents.document'].create([{

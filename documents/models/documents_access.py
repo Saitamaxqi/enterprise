@@ -1,5 +1,5 @@
 from odoo import _, api, fields, models
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, ValidationError
 
 
 class DocumentsAccess(models.Model):
@@ -23,6 +23,14 @@ class DocumentsAccess(models.Model):
         'check (role IS NOT NULL or last_access_date IS NOT NULL)',
         "NULL roles must have a set last_access_date",
     )
+
+    @api.constrains("partner_id")
+    def _check_partner_id(self):
+        """Avoid to have bad data when the access is created from a public user or in a CRON."""
+        forbidden_users = (self.env.ref('base.user_root'), self.env.ref('base.public_user'))
+        for access in self:
+            if access.partner_id.user_ids in forbidden_users:
+                raise ValidationError(_('This user can not be member.'))
 
     def _prepare_create_values(self, vals_list):
         vals_list = super()._prepare_create_values(vals_list)
