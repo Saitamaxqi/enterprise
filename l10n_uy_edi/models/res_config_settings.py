@@ -53,6 +53,15 @@ class ResConfigSettings(models.TransientModel):
                 })
             if res.get("success") is not True:
                 error = _("Error connection to Odoo IAP to create Uruware account")
+                error_code = res.get('error')
+                if error_code == 'error_invalid_dbuuid':
+                    error = _('Make sure you have a valid enterprise contract in this database. '
+                              'If it is new, it might take some time for the system to recognize your contract. ')
+                elif error_code == 'error_sending_mail':
+                    error = _('Your database is valid, but an error happened on our side. ')
+                elif error_code:
+                    error += ":" + error_code
+
         except (UserError, InsufficientCreditError, AccessError) as exp:
             error = str(exp)
 
@@ -65,8 +74,9 @@ class ResConfigSettings(models.TransientModel):
             "params": {
                 "type": "danger" if error else "warning",
                 "message":
-                    _("Error creating the Uruware account. Please contact support") if error else
-                    _("The account creating request has been successfully sent. Please check your email for more instructions"),
+                    _("Error creating the Uruware account. Please contact support: ") + error if error else
+                    _("The account creating request has been successfully sent. "
+                      "Please check your email for more instructions"),
                 "next": {"type": "ir.actions.act_window_close"},
                 "sticky": True,
             }
