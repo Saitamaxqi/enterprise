@@ -52,8 +52,8 @@ patch(PosStore.prototype, {
             this.session._l10n_cl_sii_regional_office_selection[
                 order.company_id.l10n_cl_sii_regional_office
             ];
-        result.l10n_latam_document_type = order.account_move.l10n_latam_document_type_id.name;
-        result.l10n_latam_document_number = order.account_move.l10n_latam_document_number;
+        result.l10n_latam_document_type = order.account_move?.l10n_latam_document_type_id.name;
+        result.l10n_latam_document_number = order.account_move?.l10n_latam_document_number;
         result.date = formatDateTime(parseUTCString(order.date_order));
         result.partner = order.isFactura()
             ? pick(

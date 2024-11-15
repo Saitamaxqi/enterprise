@@ -44,7 +44,7 @@ patch(PosOrder.prototype, {
         return {
             ...result,
             voucher_number: this.voucher_number,
-            l10n_cl_sii_barcode_image: this.account_move.l10n_cl_sii_barcode_image,
+            l10n_cl_sii_barcode_image: this.account_move?.l10n_cl_sii_barcode_image,
             l10n_cl_dte_resolution_number: this.company_id.l10n_cl_dte_resolution_number,
             l10n_cl_dte_resolution_date: this.company_id.l10n_cl_dte_resolution_date,
         };
