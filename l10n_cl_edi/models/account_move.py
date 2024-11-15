@@ -193,6 +193,23 @@ services reception has been received as well.
                 }, ], ]
         return reverse_moves
 
+    def _compute_l10n_latam_document_type(self):
+        """
+        Extension to ensure the document type is computed based on the partner's taxpayer type and allows
+        the SII, the fiscal authority of Chile, to properly validate the record.
+        """
+        taxpayer_moves = self.filtered(lambda m: m.partner_id.l10n_cl_sii_taxpayer_type in ['1', '3', '4'])
+        grouped_doc_types = {doc_type.code: doc_type for doc_type in self.l10n_latam_available_document_type_ids._origin}
+        for move in taxpayer_moves:
+            taxpayer_type = move.partner_id.l10n_cl_sii_taxpayer_type
+            if taxpayer_type == '1':
+                move.l10n_latam_document_type_id = grouped_doc_types.get('33', False)
+            elif taxpayer_type == '3':
+                move.l10n_latam_document_type_id = grouped_doc_types.get('39', False)
+            else:
+                move.l10n_latam_document_type_id = grouped_doc_types.get('110', False)
+        super(AccountMove, self - taxpayer_moves)._compute_l10n_latam_document_type()
+
     # SII Customer Invoice Buttons
 
     def l10n_cl_send_dte_to_sii(self, retry_send=True):
