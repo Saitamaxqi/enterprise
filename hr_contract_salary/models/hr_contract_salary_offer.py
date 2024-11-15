@@ -256,3 +256,11 @@ class HrContractSalaryOffer(models.Model):
             'res_id': self.employee_contract_id.id,
             'target': 'current',
         }
+
+    def _message_get_suggested_recipients(self):
+        recipients = super()._message_get_suggested_recipients()
+        if self.applicant_id:
+            self._message_add_suggested_recipient(recipients, email=self.applicant_id.email_from, reason=_('Contact Email'))
+        elif self.employee_id:
+            self._message_add_suggested_recipient(recipients, partner=self.employee_id.work_contact_id.sudo(), reason=_('Contact'))
+        return recipients
