@@ -12,8 +12,9 @@ class HrPayslip(models.Model):
     def compute_sheet(self):
         if self.env.context.get('salary_simulation'):
             return super().compute_sheet()
-        if self.filtered(lambda p: p.is_regular):
-            employees = self.mapped('employee_id')
+        regular_payslips = self.filtered(lambda p: p.is_regular)
+        if regular_payslips:
+            employees = regular_payslips.mapped('employee_id')
             leaves = self.env['hr.leave'].search([
                 ('employee_id', 'in', employees.ids),
                 ('state', '!=', 'refuse'),
@@ -23,7 +24,7 @@ class HrPayslip(models.Model):
                 raise ValidationError(_(
                     'There is some remaining time off to defer for these employees: \n\n %s',
                     ', '.join(e.display_name for e in leaves_to_defer.mapped('employee_id'))))
-            dates = self.mapped('date_to')
+            dates = regular_payslips.mapped('date_to')
             max_date = datetime.combine(max(dates), datetime.max.time())
             leaves_to_green = leaves.filtered(lambda l: l.payslip_state != 'blocked' and l.date_to <= max_date)
             leaves_to_green.write({'payslip_state': 'done'})
