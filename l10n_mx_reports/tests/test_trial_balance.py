@@ -262,6 +262,7 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
         """
 
         options = self._generate_options(self.report, '2021-01-01', '2021-12-31')
+        options['l10n_mx_sat_ignore_errors'] = True
         with freeze_time(self.frozen_today):
             coa_report = self.env[self.report.custom_handler_model_name].action_l10n_mx_generate_coa_sat_xml(options)['file_content']
         self.assertXmlTreeEqual(
@@ -294,6 +295,7 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
         """
 
         options = self._generate_options(self.report, '2021-01-01', '2021-12-31')
+        options['l10n_mx_sat_ignore_errors'] = True
         with freeze_time(self.frozen_today):
             sat_report = self.env[self.report.custom_handler_model_name].action_l10n_mx_generate_sat_xml(options)['file_content']
         self.assertXmlTreeEqual(
@@ -305,6 +307,7 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
         """This test verifies that all accounts present in the trial balance have a Debit or a Credit balance account tag"""
         self.company_data['default_account_payable'].tag_ids = [Command.clear()]
         options = self._generate_options(self.report, '2021-01-01', '2021-12-31')
+        options['l10n_mx_sat_ignore_errors'] = True
         with self.assertRaises(RedirectWarning):
             self.env[self.report.custom_handler_model_name].action_l10n_mx_generate_coa_sat_xml(options)
 
@@ -312,6 +315,7 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
         """This test verifies that all accounts present in the trial balance have exactly one Debit or Credit balance account tag"""
         self.company_data['default_account_payable'].tag_ids = self.env.ref('l10n_mx.tag_debit_balance_account') + self.env.ref('l10n_mx.tag_credit_balance_account')
         options = self._generate_options(self.report, '2021-01-01', '2021-12-31')
+        options['l10n_mx_sat_ignore_errors'] = True
         with self.assertRaises(RedirectWarning):
             self.env[self.report.custom_handler_model_name].action_l10n_mx_generate_coa_sat_xml(options)
 
@@ -319,6 +323,7 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
         """This test verifies that all accounts present in the same group have exactly one Debit or Credit balance account tag"""
         self.company_data['default_account_receivable'].tag_ids = self.env.ref('l10n_mx.tag_credit_balance_account')
         options = self._generate_options(self.report, '2021-01-01', '2021-12-31')
+        options['l10n_mx_sat_ignore_errors'] = True
         with self.assertRaises(RedirectWarning):
             self.env[self.report.custom_handler_model_name].action_l10n_mx_generate_coa_sat_xml(options)
 
@@ -326,6 +331,7 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
         """This test verifies that all account groups in the same parent have the same account tag"""
         self.company_data['default_account_tax_purchase'].tag_ids = self.env.ref('l10n_mx.tag_credit_balance_account')
         options = self._generate_options(self.report, '2021-01-01', '2021-12-31')
+        options['l10n_mx_sat_ignore_errors'] = True
         with self.assertRaises(RedirectWarning):
             self.env[self.report.custom_handler_model_name].action_l10n_mx_generate_coa_sat_xml(options)
 
@@ -333,6 +339,7 @@ class TestL10nMXTrialBalanceReport(TestL10nMXTrialBalanceReportCommon):
         """ This test will test the Mexican Trial Balance (with and without the hierarchy) """
         # Testing the report without hierarchy
         options = self._generate_options(self.report, '2021-01-01', '2021-12-31', {'hierarchy': False, 'unfold_all': True})
+        options['l10n_mx_sat_ignore_errors'] = True
         self.assertLinesValues(
             self.report._get_lines(options),
             #   Name                                                 Initial Balance     Debit    Credit     End Balance
@@ -385,9 +392,11 @@ class TestL10nMXTrialBalanceReportXmlValidity(TestL10nMXTrialBalanceReportCommon
     @test_xsd(url='https://www.sat.gob.mx/esquemas/ContabilidadE/1_3/CatalogoCuentas/CatalogoCuentas_1_3.xsd')
     def test_coa_xml_validity(self):
         options = self._generate_options(self.report, '2021-01-01', '2021-12-31')
+        options['l10n_mx_sat_ignore_errors'] = True
         return self.env[self.report.custom_handler_model_name].action_l10n_mx_generate_coa_sat_xml(options)['file_content']
 
     @test_xsd(url='https://www.sat.gob.mx/esquemas/ContabilidadE/1_3/BalanzaComprobacion/BalanzaComprobacion_1_3.xsd')
     def test_sat_xml_validity(self):
         options = self._generate_options(self.report, '2021-01-01', '2021-12-31')
+        options['l10n_mx_sat_ignore_errors'] = True
         return self.env[self.report.custom_handler_model_name].action_l10n_mx_generate_sat_xml(options)['file_content']

@@ -25,6 +25,7 @@ DIOT Report
         "data/country_data.xml",
         "data/templates/cfdicoa.xml",
         "data/templates/cfdibalance.xml",
+        "views/account_views.xml",
         "views/res_country_view.xml",
         "views/res_partner_view.xml",
     ],

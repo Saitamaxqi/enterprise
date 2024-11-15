@@ -24,6 +24,17 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
                 {'name': _("COA SAT (XML)"), 'action': 'export_file', 'action_param': 'action_l10n_mx_generate_coa_sat_xml', 'file_export_type': _("COA SAT (XML)"), 'sequence': 16},
             ]
 
+    def _check_accounts_code_sat_validity(self, accounts, options, report_action):
+        if options.get('l10n_mx_sat_ignore_errors'):
+            return
+        report = self.env['account.report'].browse(options['report_id'])
+        incorrect_code_accounts = accounts.filtered('l10n_mx_is_sat_invalid')
+        if incorrect_code_accounts:
+            account_names = '\n'.join(_('\t- %(name)s', name=account.name) for account in incorrect_code_accounts)
+            error_msg = _("Some of your accounts do not respect Odoo's code guidelines.\n\n%(account_names)s", account_names=account_names),
+            action_vals = report.export_file({**options, 'l10n_mx_sat_ignore_errors': True}, report_action)
+            raise RedirectWarning(error_msg, action_vals, _("Generate report"))
+
     def action_l10n_mx_generate_sat_xml(self, options):
         if self.env.company.account_fiscal_country_id.code != 'MX':
             raise UserError(_("Only Mexican company can generate SAT report."))
@@ -66,14 +77,17 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         # with anything else it should not be included in the SAT report.
         sat_code = re.compile(r'((\d{3})\.\d{2})')
 
+        report_lines = [line for line in report_lines if line.get('level') >= 4]
+        account_ids = [report._get_res_id_from_line_id(line['id'], 'account.account') for line in report_lines]
+        accounts = self.env['account.account'].browse(account_ids)
+        self._check_accounts_code_sat_validity(accounts, options, 'action_l10n_mx_generate_sat_xml')
+
         account_lines = []
         parents = defaultdict(lambda: defaultdict(int))
-        for line in report_lines:
-            account_id = report._get_res_id_from_line_id(line['id'], 'account.account')
-            account = self.env['account.account'].browse(account_id)
-            if not account_id or account.account_type == 'equity_unaffected':
+        for account, line in zip(accounts, report_lines):
+            if not account.id or account.account_type == 'equity_unaffected':
                 continue
-
+            
             is_credit_account = any([account.account_type.startswith(acc_type) for acc_type in ['liability', 'equity', 'income']])
             balance_sign = -1 if is_credit_account else 1
             cols = line.get('columns', [])
@@ -132,8 +146,8 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         coa_options = self._l10n_mx_get_sat_options(options)
         accounts = self.env['account.account'].search([
             *self.env['account.account']._check_company_domain(self.env.company),
-            ('account_type', '!=', 'equity_unaffected'),
         ])
+        self._check_accounts_code_sat_validity(accounts, options, 'action_l10n_mx_generate_coa_sat_xml')
         accounts_groups_by_parent = defaultdict(lambda: defaultdict(lambda: self.env['account.account']))
         accounts_template_data = []
         for account in accounts:
