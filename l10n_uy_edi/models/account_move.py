@@ -9,8 +9,8 @@ from odoo.exceptions import ValidationError
 from odoo.tools import float_repr, float_round, cleanup_xml_node, format_amount, html2plaintext
 
 
-def format_float(amount, digits=2):
-    if not amount:
+def format_float(amount, digits=2, valid_zero=None):
+    if not amount and not valid_zero:
         return None
     return float_repr(float_round(amount, digits), digits)
 
@@ -265,6 +265,7 @@ class AccountMove(models.Model):
         for k, base_line in enumerate(tax_details['base_lines'], start=1):
             line = base_line['record']
             values = next(iter(tax_details['tax_details_per_record'][line]['tax_details'].values()))
+            tax_included = values['_tax_price_include']
 
             # B4 IndFact
             if self._l10n_uy_edi_is_expo_cfe():
@@ -277,11 +278,13 @@ class AccountMove(models.Model):
                 }
                 # IMPORTANT: By the moment, this is working for one VAT tax per move lines
                 invoice_ind = ind_code.get(line.tax_ids.amount)
+            if line.discount == 100 and (line.price_total if tax_included else line.price_subtotal) == 0:
+                # Entrega Gratuita - We made this in separate if because expo invoices can also have entrega gratuita
+                invoice_ind = 5
 
             item_description = self._l10n_uy_edi_get_line_desc(line)
-            tax_included = values['_tax_price_include']
             nom_item = (line.product_id.display_name or "-")[:80]
-            res.append({
+            temp = {
                 "NroLinDet": k,  # B1
                 "IndFact": invoice_ind,  # B4
                 "NomItem": nom_item,  # B7
@@ -294,7 +297,12 @@ class AccountMove(models.Model):
                     (line.quantity * line.price_unit - (line.price_total if tax_included else line.price_subtotal))
                     if line.discount else None,
                 "MontoItem": line.price_total if tax_included else line.price_subtotal,  # B24
-            })
+            }
+
+            if invoice_ind == 5:
+                temp.update({}.fromkeys(['PrecioUnitario', 'DescuentoMonto', 'DescuentoPct'], 0.0))
+
+            res.append(temp)
         return res
 
     def _l10n_uy_edi_cfe_C_totals(self, tax_details):
@@ -389,12 +397,13 @@ class AccountMove(models.Model):
                 errors.append(_("The currency does not exist on DGI currencies table %s", currency_name))
 
         # Rates Configuration
-        used_rate = self._l10n_uy_edi_get_used_rate()
-        if self.currency_id and self.currency_id.name != "UYU" and used_rate <= 0.0:
-            errors.append(_(
-                "Not valid Currency Rate, need to be greater than 0 to be accepted by DGI"
-                " (%(used_rate)s)", used_rate=used_rate)
-            )
+        if self.currency_id and self.currency_id.name != "UYU":
+            used_rate = self._l10n_uy_edi_get_used_rate()
+            if used_rate <= 0.0:
+                errors.append(_(
+                    "Not valid Currency Rate, need to be greater than 0 to be accepted by DGI"
+                    " (%(used_rate)s)", used_rate=used_rate)
+                )
 
         # If debit or credit, we need to ensure that the original related document exists and is accepted by DGI
         if self.l10n_latam_document_type_id.internal_type in ["credit_note", "debit_note"]:
@@ -617,6 +626,9 @@ class AccountMove(models.Model):
 
     def _l10n_uy_edi_get_used_rate(self):
         self.ensure_one()
+        if self.amount_total == 0.0:
+            return self.currency_id._convert(
+                1.0, self.company_id.currency_id, self.company_id, self.date or fields.Date.today(), round=False)
         # We need to use abs to avoid error on Credit Notes (amount_total_signed is negative)
         return abs(self.amount_total_signed) / self.amount_total
 

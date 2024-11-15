@@ -50,9 +50,9 @@
                 <MntIVATasaMin t-out="format_float(totals_detail['MntIVATasaMin'], 2)"/>
                 <MntIVATasaBasica t-out="format_float(totals_detail['MntIVATasaBasica'], 2)"/>
 
-                <MntTotal t-out="format_float(totals_detail['MntTotal'], 2)"/>
+                <MntTotal t-out="format_float(totals_detail['MntTotal'], 2, valid_zero=1)"/>
                 <CantLinDet t-out="totals_detail['CantLinDet']"/>
-                <MntPagar t-out="format_float(totals_detail['MntPagar'], 2)"/>
+                <MntPagar t-out="format_float(totals_detail['MntPagar'], 2, valid_zero=1)"/>
             </Totales>
         </Encabezado>
         <Detalle>
@@ -63,10 +63,10 @@
                 <DscItem t-out="item_line['DscItem']"/>
                 <Cantidad t-out="format_float(item_line['Cantidad'], 3)"/>
                 <UniMed t-out="item_line['UniMed']"/>
-                <PrecioUnitario t-out="format_float(item_line['PrecioUnitario'], 6)"/>
+                <PrecioUnitario t-out="format_float(item_line['PrecioUnitario'], 6, valid_zero=1)"/>
                 <DescuentoPct t-out="format_float(item_line['DescuentoPct'], 3)"/>
                 <DescuentoMonto t-out="format_float(item_line['DescuentoMonto'], 2) "/>
-                <MontoItem t-out="format_float(item_line['MontoItem'], 2)"/>
+                <MontoItem t-out="format_float(item_line['MontoItem'], 2, valid_zero=1)"/>
             </Item>
         </Detalle>
         <Referencia t-if="referencia_lines">
