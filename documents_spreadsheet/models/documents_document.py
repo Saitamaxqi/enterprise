@@ -293,8 +293,6 @@ class DocumentsDocument(models.Model):
         return [
             {
                 'folder_id': default_folder.id,
-                'access_internal': 'none',
-                'access_via_link': 'none',
                 **vals,
             }
             if vals.get('handler') == 'spreadsheet' else vals

@@ -19,7 +19,7 @@ EXCEL_FILES = [
 class SpreadsheetSharing(SpreadsheetTestCommon):
 
     @mute_logger('odoo.addons.base.models.ir_rule')
-    def test_cannot_read_others(self):
+    def test_can_read_others(self):
         document = self.create_spreadsheet()
         alice = new_test_user(self.env, login="alice")
         bob = new_test_user(self.env, login="bob")
@@ -40,10 +40,8 @@ class SpreadsheetSharing(SpreadsheetTestCommon):
 
         self.assertNotEqual(document.access_token, shared_spreadsheet.access_token)
         self.assertFalse(shared_spreadsheet.folder_id.owner_id)
-        self.assertEqual(shared_spreadsheet.access_internal, 'none')
-
-        with self.assertRaises(AccessError):
-            shared_spreadsheet.with_user(self.spreadsheet_user).name
+        self.assertEqual(shared_spreadsheet.access_internal, 'view')
+        self.assertTrue(shared_spreadsheet.with_user(self.spreadsheet_user).name, 'user can access the name.')
 
         # check that the access have been copied, and switched to "view" if needed
         access = shared_spreadsheet.access_ids

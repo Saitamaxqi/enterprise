@@ -64,19 +64,14 @@ class TestDashboardDocumentsAccesss(TransactionCase):
         comments_thread = self.env["spreadsheet.cell.thread"].create({
             "document_id": document.id,
         })
-        with self.assertRaises(AccessError):
-            comments_thread.with_user(internal_user).read(["message_ids"])
+        self.assertTrue(comments_thread.with_user(internal_user).read(["message_ids"]), "The internal user can access messages.")
 
-        with self.assertRaises(AccessError):
-            comments_thread.with_user(internal_user).message_post(body="Hello there!")
+        self.assertTrue(comments_thread.with_user(internal_user).message_post(body="Hello there!"), "The internal user can post messages.")
 
         with self.assertRaises(AccessError):
             comments_thread.with_user(internal_user).unlink()
 
-        with self.assertRaises(AccessError):
-            self.env["spreadsheet.cell.thread"].with_user(internal_user).create({
-            "document_id": document.id,
-        })
+        self.assertTrue(self.env["spreadsheet.cell.thread"].with_user(internal_user).create({"document_id": document.id,}), "The internal user can create the thread.")
 
     def test_spreadsheet_template_comments_access(self):
         internal_user = new_test_user(self.env, "Bob", groups="base.group_user")

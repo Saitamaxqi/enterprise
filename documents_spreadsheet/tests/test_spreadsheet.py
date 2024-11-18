@@ -144,13 +144,13 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             self.env.company.document_spreadsheet_folder_id,
             "It should have been assigned the default Spreadsheet Folder"
         )
-        self.assertEqual(document.access_internal, 'none')
+        self.assertEqual(document.access_internal, 'edit')
         self.assertEqual(document.access_via_link, 'none')
 
-        # Bob can not read the documents of Alice
+        # Bob can read the documents of Alice
         result = self.env['documents.document'].with_user(user2).search(
             [('folder_id', '=', document.folder_id.id)])
-        self.assertNotIn(document, result)
+        self.assertIn(document, result)
 
         self.env.company.document_spreadsheet_folder_id = self.env['documents.document'].create({
             'name': 'Spreadsheet - Test Folder',
@@ -177,6 +177,51 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             "mimetype": "application/o-spreadsheet",
         })
         self.assertEqual(document.folder_id, self.folder, "It should be in the specified folder")
+
+    def test_access_rights_inherited_on_create_spreadsheet(self):
+        user = new_test_user(
+            self.env, login='Jean', groups='documents.group_documents_user',
+        )
+        document_1 = self.env['documents.document'].create({
+            'spreadsheet_data': '{}',
+            'handler': 'spreadsheet',
+            'mimetype': 'application/o-spreadsheet',
+        })
+        document_2 = self.env['documents.document'].create({
+            'spreadsheet_data': '{}',
+            'handler': 'spreadsheet',
+            'folder_id': False,
+            'mimetype': 'application/o-spreadsheet',
+        })
+        self.folder.write({
+            'access_via_link': 'none',
+            'access_internal': 'view',
+        })
+        self.folder.action_update_access_rights(partners={user.partner_id.id: ('view', False)})
+        document_3 = self.env['documents.document'].create({
+            'spreadsheet_data': '{}',
+            'handler': 'spreadsheet',
+            'folder_id': self.folder.id,
+            'mimetype': 'application/o-spreadsheet',
+        })
+
+        # inherit access from default parent folder (Spreadsheet)
+        self.assertEqual(
+            document_1.folder_id,
+            self.env.company.document_spreadsheet_folder_id,
+            'It should have been assigned the default Spreadsheet Folder'
+        )
+        self.assertEqual(document_1.access_internal, 'edit')
+        self.assertEqual(document_1.access_via_link, 'none')
+
+        # inherit access from parent folder (My Drive)
+        self.assertEqual(document_2.access_internal, 'none')
+        self.assertEqual(document_2.access_via_link, 'none')
+
+        # inherit access from parent folder (Test folder)
+        self.assertEqual(document_3.access_internal, 'view')
+        self.assertEqual(document_3.access_via_link, 'none')
+        self.assertEqual(document_3.access_ids.partner_id, user.partner_id)
 
     def test_spreadsheet_to_display_with_domain(self):
         self.archive_existing_spreadsheet()
@@ -971,6 +1016,7 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
 
         # a frozen spreadsheet
         frozen_spreadsheet = self.create_spreadsheet()
+        frozen_spreadsheet.access_internal = "view"
         frozen_spreadsheet.handler = "frozen_spreadsheet"
 
         result = self.env["documents.document"].get_spreadsheets()
