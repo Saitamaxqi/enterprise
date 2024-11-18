@@ -27,7 +27,7 @@ class TestSMSPerformance(BaseMailPerformance, sms_common.SMSCase):
             self.partners |= Partners.create({
                 'name': 'Test %s' % x,
                 'email': 'test%s@example.com' % x,
-                'mobile': '0456%s%s0000' % (x, x),
+                'phone': '0456%s%s0000' % (x, x),
                 'country_id': self.env.ref('base.be').id,
             })
 

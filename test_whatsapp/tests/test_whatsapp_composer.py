@@ -57,7 +57,7 @@ Welcome to {{4}} office''',
                 'variable_ids': [
                     (5, 0, 0),
                     (0, 0, {'name': "{{1}}", 'line_type': "body", 'field_type': "user_name", 'demo_value': "Jigar"}),
-                    (0, 0, {'name': "{{2}}", 'line_type': "body", 'field_type': "user_mobile", 'demo_value': "+91 12345 12345"}),
+                    (0, 0, {'name': "{{2}}", 'line_type': "body", 'field_type': "user_phone", 'demo_value': "+91 12345 12345"}),
                     (0, 0, {'name': "{{3}}", 'line_type': "body", 'field_type': "field", 'demo_value': "sample country", 'field_name': 'country_id'}),
                     (0, 0, {'name': "{{4}}", 'line_type': "body", 'field_type': "free_text", 'demo_value': "Odoo In"}),
                 ],
@@ -103,7 +103,7 @@ class WhatsAppComposerRendering(WhatsAppComposerCase, WhatsAppFullCase, CronMixi
         self.assertWAMessageFromRecord(
             test_record,
             fields_values={
-                'body': f'<p>Hello I am {self.env.user.name},<br>Here my mobile number: {self.env.user.mobile},'
+                'body': f'<p>Hello I am {self.env.user.name},<br>Here my mobile number: {self.env.user.phone},'
                         f'<br>You are coming from {test_record.country_id.name}.<br>Welcome to {free_text} office</p>',
             },
         )
@@ -331,7 +331,7 @@ class WhatsAppComposerRendering(WhatsAppComposerCase, WhatsAppFullCase, CronMixi
                 {'header_text': 'Header {{1}}',
                  'variable_ids': [
                     (5, 0),
-                    (0, 0, {'name': '{{1}}', 'line_type': 'header', 'field_type': 'user_mobile', 'demo_value': sample_text})
+                    (0, 0, {'name': '{{1}}', 'line_type': 'header', 'field_type': 'user_phone', 'demo_value': sample_text})
                  ] + base_variable_ids,
                  },
                 # image
@@ -379,7 +379,7 @@ class WhatsAppComposerRendering(WhatsAppComposerCase, WhatsAppFullCase, CronMixi
                 {'body': f'<p><b>Header World</b></p><p>Hello {self.test_base_records[0].name}</p>'},
                 {'body': f'<p><b>Header {sample_text}</b></p><p>Hello {self.test_base_records[0].name}</p>'},
                 {'body': f'<p><b>Header {self.env.user.name}</b></p><p>Hello {self.test_base_records[0].name}</p>'},
-                {'body': f'<p><b>Header {self.env.user.mobile}</b></p><p>Hello {self.test_base_records[0].name}</p>'},
+                {'body': f'<p><b>Header {self.env.user.phone}</b></p><p>Hello {self.test_base_records[0].name}</p>'},
                 # image
                 {},
                 # video

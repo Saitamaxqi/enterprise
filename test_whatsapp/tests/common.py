@@ -14,7 +14,6 @@ class WhatsAppFullCase(WhatsAppCommon):
         cls.test_partner = cls.env['res.partner'].create({
             'country_id': country_be_id,
             'email': 'whatsapp.customer@test.example.com',
-            'mobile': '0485001122',
             'name': 'WhatsApp Customer',
             'phone': '0485221100',
         })

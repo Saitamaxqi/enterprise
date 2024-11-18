@@ -13,7 +13,6 @@
                     <t t-if="call?.isInProgress" t-esc="call.phoneNumber"/>
                     <t t-else="">
                         <div t-if="landlineNumber"><a class="btn btn-link" t-attf-href="tel:{{ landlineNumber }}" t-on-click="(e) => this.onClickPhoneNumber(e, landlineNumber)"><i class="fa fa-phone" role="img"/> <t t-esc="landlineNumber"/></a></div>
-                        <div t-if="mobileNumber"><a class="btn btn-link" t-attf-href="tel:{{ mobileNumber }}" t-on-click="(e) => this.onClickPhoneNumber(e, mobileNumber)"><i class="fa fa-mobile" role="img"/> <t t-esc="mobileNumber"/></a></div>
                     </t>
                     <div t-if="call and !call.isInProgress" class="small" t-esc="call?.callDate"/>
                 </div>

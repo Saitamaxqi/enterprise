@@ -31,11 +31,6 @@
             <field name="field_id" ref="base.field_res_partner__phone"/>
             <field name="action">phone</field>
         </record>
-        <record id="data_cleaning_rule_res_partner_mobile" model="data_cleaning.rule">
-            <field name="cleaning_model_id" ref="data_cleaning_model_res_partner"/>
-            <field name="field_id" ref="base.field_res_partner__mobile"/>
-            <field name="action">phone</field>
-        </record>
     </data>
     <data noupdate="1">
         <!-- res.partner -->

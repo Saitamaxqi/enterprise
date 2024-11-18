@@ -723,7 +723,6 @@ class AccountMove(models.Model):
             'email': get_first_value_without('email', (self.company_id.email,)),
             'website': get_first_value_without('website', (self.company_id.website,)),
             'phone': get_first_value_without('phone', (self.company_id.phone,)),
-            'mobile': get_first_value_without('mobile', (self.company_id.mobile,)),
             'vat': next((
                     candidate['content']
                     for candidate in ocr_results.get('VAT_Number', {}).get('candidates', [])

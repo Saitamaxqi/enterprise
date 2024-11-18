@@ -15,7 +15,7 @@
         <field name="header_attachment_ids" eval="[(4, ref('whatsapp_pos.whatsapp_template_pos_attach'), 0)]"/>
         <field name="header_type">image</field>
         <field name="footer_text">Write 'stop' to stop receiving messages</field>
-        <field name="phone_field">partner_id.mobile</field>
+        <field name="phone_field">partner_id.phone</field>
         <field name="model_id" ref="point_of_sale.model_pos_order"/>
         <field name="body">Dear {{1}},
 
@@ -87,7 +87,7 @@ Thank you for choosing us.
                 'demo_value': '+91 1234567890',
                 'line_type': 'body',
                 'field_type': 'field',
-                'field_name': 'company_id.mobile'
+                'field_name': 'company_id.phone'
             }),
         ]" />
     </record>

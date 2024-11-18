@@ -36,7 +36,7 @@
         </t>
         <input id="o_sign_input_auth_method" type="hidden" t-att-value="current_request_item.role_id.auth_method if current_request_item else False"/>
         <input id="o_sign_signer_name_input_info" type="hidden" t-att-value="current_request_item.partner_id.name if current_request_item and current_request_item.partner_id else None"/>
-        <input id="o_sign_signer_phone_input_info" type="hidden" t-att-value="current_request_item.partner_id.mobile if current_request_item and current_request_item.partner_id else None"/>
+        <input id="o_sign_signer_phone_input_info" type="hidden" t-att-value="current_request_item.partner_id.phone if current_request_item and current_request_item.partner_id else None"/>
         <input id="o_sign_input_optional_redirect_url" type="hidden" t-att-value="sign_request.template_id.redirect_url"/>
         <input id="o_sign_input_optional_redirect_url_text" type="hidden" t-att-value="sign_request.template_id.redirect_url_text"/>
         <input t-if="current_request_item and current_request_item.state == 'sent'" id="o_sign_ask_location_input" type="hidden"/>

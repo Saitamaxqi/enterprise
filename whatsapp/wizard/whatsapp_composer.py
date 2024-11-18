@@ -228,9 +228,9 @@ class WhatsappComposer(models.TransientModel):
 
         if self.wa_template_id and self.wa_template_id.variable_ids:
             field_types = self.wa_template_id.variable_ids.mapped('field_type')
-            if 'user_mobile' in field_types and not self.env.user.mobile:
+            if 'user_phone' in field_types and not self.env.user.phone:
                 raise ValidationError(
-                    _("User mobile number required in template but no value set on user profile.")
+                    _("User phone number required in template but no value set on user profile.")
                 )
         free_text_json = self._get_text_free_json()
         message_vals = []

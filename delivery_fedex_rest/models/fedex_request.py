@@ -176,10 +176,10 @@ class FedexRequest:
         return res
 
     def _get_contact_from_partner(self, partner, company_partner=False):
-        res = {'phoneNumber': partner.phone or partner.mobile}
+        res = {'phoneNumber': partner.phone}
         if company_partner and not res['phoneNumber']:
             # Fallback to phone on the company if none on the WH
-            res['phoneNumber'] = company_partner.phone or company_partner.mobile
+            res['phoneNumber'] = company_partner.phone
         if company_partner:
             # Always put the name of the company, if the partner is a WH
             res['companyName'] = partner.name

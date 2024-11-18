@@ -15,8 +15,8 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         args = []
         if not company.company_registry:
             args.append(_('the Company ID'))
-        if not (company.phone or company.mobile):
-            args.append(_('the phone or mobile number'))
+        if not (company.phone):
+            args.append(_('the phone number'))
         if not (company.zip or company.city):
             args.append(_('the city or zip code'))
 

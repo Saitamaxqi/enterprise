@@ -5,8 +5,8 @@ class ResPartner(models.Model):
     _inherit = 'res.partner'
 
     def _get_followup_whatsapp_number(self):
-        followup_contacts = (self._get_all_followup_contacts() | self).filtered(lambda partner: partner.mobile)
-        return followup_contacts[0].mobile if followup_contacts else ''
+        followup_contacts = (self._get_all_followup_contacts() | self).filtered(lambda partner: partner.phone)
+        return followup_contacts[0].phone if followup_contacts else ''
 
     def _send_followup(self, options):
         super()._send_followup(options)

@@ -23,7 +23,7 @@ class WhatsappTemplateVariable(models.Model):
         ('body', 'Body')], string="Variable location", required=True)
     field_type = fields.Selection([
         ('user_name', 'User Name'),
-        ('user_mobile', 'User Mobile'),
+        ('user_phone', 'User Phone'),
         ('free_text', 'Free Text'),
         ('portal_url', 'Portal Link'),
         ('field', 'Field of Model')], string="Type", default='free_text', required=True)
@@ -121,8 +121,8 @@ class WhatsappTemplateVariable(models.Model):
         for variable in self:
             if variable.field_type == 'user_name':
                 value = user.name
-            elif variable.field_type == 'user_mobile':
-                value = user.mobile
+            elif variable.field_type == 'user_phone':
+                value = user.phone
             elif variable.field_type == 'field':
                 value = variable._find_value_from_field_chain(record)
             elif variable.field_type == 'portal_url':

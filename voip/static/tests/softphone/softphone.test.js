@@ -110,7 +110,7 @@ test.tags("focus required");
 test("When a call is created, a partner with a corresponding phone number is displayed", async () => {
     const pyEnv = await startServer();
     const phoneNumber = "0456 703 6196";
-    pyEnv["res.partner"].create({ name: "Maxime Randonnées", mobile: phoneNumber });
+    pyEnv["res.partner"].create({ name: "Maxime Randonnées", phone: phoneNumber });
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
     // dropdown requires an extra delay before click (because handler is registered in useEffect)

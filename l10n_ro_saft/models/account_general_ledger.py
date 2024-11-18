@@ -153,9 +153,9 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                 'action': values['company'].partner_id._get_records_action(name=_("Invalid Company/ies")),
             }
 
-        # The company must have a telephone number defined.
-        if not values['company'].partner_id.phone and not values['company'].partner_id.mobile:
-            errors['company_phone_missing'] = get_company_action(_('Please define a `Telephone Number` for your company.'))
+        # The company must have a phone number defined.
+        if not values['company'].partner_id.phone:
+            errors['company_phone_missing'] = get_company_action(_('Please define a `Phone Number` for your company.'))
 
         # The company must either have a VAT number defined (if it is registered for VAT in Romania),
         # or have its CUI number in the company_registry field (if not registered for VAT).
@@ -329,7 +329,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             partner_vals['registration_number'] = get_registration_number(partner_vals['partner'])
             partner_vals['l10n_ro_saft_contacts'] = partner_vals['contacts'].filtered(
                 # Only provide partners which have a first name, last name and phone number.
-                lambda contact: ' ' in contact.name[1:-1] and (contact.phone or contact.mobile)
+                lambda contact: ' ' in contact.name[1:-1] and contact.phone
             )
 
     @api.model

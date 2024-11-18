@@ -126,10 +126,7 @@ class ProjectTask(models.Model):
     @api.depends('partner_phone', 'partner_id.phone')
     def _compute_is_task_phone_update(self):
         for task in self:
-            if task.partner_id.mobile or not task.partner_id.phone:
-                task.is_task_phone_update = task.partner_phone != task.partner_id.mobile
-            else:
-                task.is_task_phone_update = task.partner_phone != task.partner_id.phone
+            task.is_task_phone_update = task.partner_phone != task.partner_id.phone
 
     @api.depends('project_id.allow_timesheets', 'total_hours_spent')
     def _compute_display_conditions_count(self):

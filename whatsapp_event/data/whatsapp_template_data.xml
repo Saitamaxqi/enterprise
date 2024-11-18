@@ -62,7 +62,7 @@ Thank you
                 'demo_value': '+1(650)555-0111',
                 'line_type': 'body',
                 'field_type': 'field',
-                'field_name': 'event_id.user_id.mobile'
+                'field_name': 'event_id.user_id.phone'
             })
         ]" />
     </record>

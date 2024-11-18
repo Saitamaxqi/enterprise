@@ -41,7 +41,7 @@ class TestActivity(SMSCommon, TestSMSRecipients):
 
     def test_activity_data(self):
         """ Ensure initial data for tests """
-        self.assertEqual(self.partner_1.mobile, '0456001122')
+        self.assertEqual(self.partner_1.phone, '0456001122')
         self.assertTrue(self.phonecall_activity)
         self.assertEqual(self.phonecall_activity.category, 'phonecall')
 
@@ -52,8 +52,7 @@ class TestActivity(SMSCommon, TestSMSRecipients):
 
         activity = record.create_call_activity()
         self.assertEqual(activity.activity_type_id, self.phonecall_activity)
-        self.assertFalse(activity.phone)
-        self.assertEqual(activity.mobile, self.partner_1.mobile)
+        self.assertEqual(activity.phone, self.partner_1.phone)
         self.assertFalse(activity.note)
         self.assertFalse(activity.summary)
 

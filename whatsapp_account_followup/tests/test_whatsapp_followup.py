@@ -10,7 +10,7 @@ class TestWhatsAppFollowup(WhatsAppCommon, TestAccountFollowupReports):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
-        cls.partner_a.mobile = '+32499123456'
+        cls.partner_a.phone = '+32499123456'
         cls.wa_template = cls.env['whatsapp.template'].with_user(cls.user_admin).create({
             'body': 'WhatsApp Followup {{1}}',
             'name': 'WhatsApp Followup test template',

@@ -51,7 +51,6 @@ class KnowledgeCommon(MailCommon):
             groups='base.group_portal',
             login='portal_customer',
             email='corentine@test.example.com',
-            mobile='+32455001122',
             name='Corentine Customer',
             phone='+32455334455',
         )

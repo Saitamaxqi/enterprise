@@ -245,12 +245,12 @@ class USPSRequest():
                 'picking_warehouse_partner': picking.picking_type_id.warehouse_id.partner_id,
                 'picking_warehouse_partner_phone': self._convert_phone_number(picking.picking_type_id.warehouse_id.partner_id.phone),
                 'picking_partner': picking.partner_id,
-                'picking_partner_phone': self._convert_phone_number(picking.partner_id.phone or picking.partner_id.mobile or ''),
+                'picking_partner_phone': self._convert_phone_number(picking.partner_id.phone or ''),
             })
         else:
             shipping_detail.update({
                 'picking_warehouse_partner': picking.partner_id,
-                'picking_warehouse_partner_phone': self._convert_phone_number(picking.partner_id.phone or picking.partner_id.mobile or ''),
+                'picking_warehouse_partner_phone': self._convert_phone_number(picking.partner_id.phone or ''),
                 'picking_partner': picking.picking_type_id.warehouse_id.partner_id,
                 'picking_partner_phone': self._convert_phone_number(picking.picking_type_id.warehouse_id.partner_id.phone),
             })

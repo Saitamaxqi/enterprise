@@ -131,7 +131,7 @@ class DeliveryCarrier(models.Model):
             'total_qty': sum(sml.quantity for sml in picking.move_line_ids),
             'ilt_monetary_value': '%d' % sum(sml.sale_price for sml in picking.move_line_ids),
             'itl_currency_code': self.env.company.currency_id.name,
-            'phone': picking.partner_id.mobile or picking.partner_id.phone or picking.sale_id.partner_id.mobile or picking.sale_id.partner_id.phone,
+            'phone': picking.partner_id.phone or picking.sale_id.partner_id.phone,
             'terms_of_shipment': terms_of_shipment.code if terms_of_shipment else None,
             'purchase_order_number': picking.sale_id.name if picking.sale_id else None,
             'reference_number': [

@@ -7,11 +7,10 @@ from odoo.addons.mail.tools.discuss import Store
 class MailActivity(models.Model):
     _inherit = "mail.activity"
 
-    phone = fields.Char("Phone", compute="_compute_phone_numbers", readonly=False, store=True)
-    mobile = fields.Char("Mobile", compute="_compute_phone_numbers", readonly=False, store=True)
+    phone = fields.Char("Phone", compute="_compute_phone", readonly=False, store=True)
 
     @api.depends("res_model", "res_id", "activity_type_id")
-    def _compute_phone_numbers(self):
+    def _compute_phone(self):
         call_activities = self.filtered(
             lambda activity: activity.id
             and activity.res_model
@@ -19,17 +18,15 @@ class MailActivity(models.Model):
             and activity.activity_category == "phonecall"
         )
         (self - call_activities).phone = False
-        (self - call_activities).mobile = False
         phone_numbers_by_activity = call_activities._get_phone_numbers_by_activity()
         for activity in call_activities:
-            activity.mobile = phone_numbers_by_activity[activity]["mobile"]
-            activity.phone = phone_numbers_by_activity[activity]["phone"]
+            activity.phone = phone_numbers_by_activity[activity]
 
     @api.model_create_multi
     def create(self, vals_list):
         activities = super().create(vals_list)
         call_activities = activities.filtered(
-            lambda activity: (activity.phone or activity.mobile) and activity.activity_category == "phonecall"
+            lambda activity: activity.phone and activity.activity_category == "phonecall"
         )
         call_activities.user_id._bus_send("refresh_call_activities", {})
         return activities
@@ -56,8 +53,6 @@ class MailActivity(models.Model):
                 ("activity_type_id.category", "=", "phonecall"),
                 ("user_id", "=", self.env.uid),
                 ("date_deadline", "<=", fields.Date.today()),
-                "|",
-                ("mobile", "!=", False),
                 ("phone", "!=", False),
             ]
         )
@@ -97,7 +92,7 @@ class MailActivity(models.Model):
             store.add(self.env["res.partner"].browse(partner_ids))
             for activity in activities:
                 activity_data = {
-                    **activity.read(["id", "res_name", "phone", "mobile", "res_id", "res_model", "state", "date_deadline", "mail_template_ids"])[0],
+                    **activity.read(["id", "res_name", "phone", "res_id", "res_model", "state", "date_deadline", "mail_template_ids"])[0],
                     "activity_category": activity.activity_type_id.category,
                     "modelName": activity.sudo().res_model_id.display_name,
                     "user_id": activity._read_format(["user_id"])[0]["user_id"],
@@ -110,23 +105,19 @@ class MailActivity(models.Model):
     def _get_phone_numbers_by_activity(self):
         """Batch compute the phone numbers associated with the activities.
 
-        :return dict: for each activity, a sub-dict containing:
-          * phone: phone number (obtained from the activity itself or from the related partner);
-          * mobile: mobile number (obtained from the activity itself or from the related partner).
+        :return: phone number for each activity (obtained from the activity itself or from the related partner);
         """
         phone_numbers_by_activity = {}
         data_by_model = self._classify_by_model()
         for model, data in data_by_model.items():
             records = self.env[model].browse(data["record_ids"])
             for record, activity in zip(records, data["activities"]):
-                mobile = record.mobile if "mobile" in record else False
                 phone = record.phone if "phone" in record else False
-                if not mobile and not phone:
+                if not phone:
                     recipient = next(
                         iter(record._mail_get_partners(introspect_fields=True)[record.id]),
                         self.env["res.partner"],
                     )
-                    mobile = recipient.mobile
                     phone = recipient.phone
-                phone_numbers_by_activity[activity] = {"mobile": mobile, "phone": phone}
+                phone_numbers_by_activity[activity] = phone
         return phone_numbers_by_activity

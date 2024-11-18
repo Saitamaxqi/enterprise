@@ -30,7 +30,7 @@ class TestMACommon(MarketingAutomationSMSCommon):
                     partner = cls.env['res.partner'].create({
                         'country_id': cls.env.ref('base.be').id,
                         'email': f'"{customer_name}" <{email}>',
-                        'mobile': f'045600{current_idx:04d}',
+                        'phone': f'045600{current_idx:04d}',
                         'name': customer_name,
                     })
                 else:
@@ -43,7 +43,7 @@ class TestMACommon(MarketingAutomationSMSCommon):
                 }
                 if inner_idx == 3:
                     vals['email_from'] = f'"{customer_name}" <nopartner.email_{current_idx:02d}@customer.example.com>'
-                    vals['mobile'] = f'+3245600{current_idx:04d}'
+                    vals['phone'] = f'+3245600{current_idx:04d}'
 
                 record_vals.append(vals)
 

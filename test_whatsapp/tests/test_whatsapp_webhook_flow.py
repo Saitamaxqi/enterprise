@@ -315,9 +315,8 @@ class WhatsAppWebhookCase(WhatsAppFullCase, MockIncomingWhatsApp):
         new_partner = self.env['res.partner'].search([('id', 'not in', existing_partners.ids)])
         self.assertEqual(len(new_partner), 1)
         self.assertEqual(discuss_channel.channel_partner_ids, self.user_wa_admin.partner_id + new_partner)
-        self.assertEqual(new_partner.mobile, "+32499123456")
         self.assertEqual(new_partner.name, "+32499123456")
-        self.assertFalse(new_partner.phone)
+        self.assertEqual(new_partner.phone, "+32499123456")
 
     def test_responsible_with_template(self):
         """ Test various use cases of receiving a message that is linked to a

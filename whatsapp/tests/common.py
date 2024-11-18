@@ -646,7 +646,7 @@ class WhatsAppCommon(MailCommon, WhatsAppCase):
 
         # phone-specific test data
         cls.user_employee_mobile = '+91(132)-553-7272'
-        cls.user_employee.mobile = cls.user_employee_mobile
+        cls.user_employee.phone = cls.user_employee_mobile
 
         # Notified user for WhatsApp Business Account
         cls.user_wa_admin = mail_new_test_user(
@@ -656,7 +656,6 @@ class WhatsAppCommon(MailCommon, WhatsAppCase):
             email='wa_admin@test.example.com',
             groups='base.group_user,base.group_partner_manager,whatsapp.group_whatsapp_admin',
             login='user_wa_admin',
-            mobile='+91(132)-553-7242',
             name='WhatsApp Wasin',
             notification_type='email',
             phone='+1 650-555-0111',
@@ -722,7 +721,6 @@ class WhatsAppCommon(MailCommon, WhatsAppCase):
         cls.test_portal_user = mail_new_test_user(
             cls.env,
             login='test_portal_user',
-            mobile='+32 494 12 34 56',
             phone='+32 494 12 34 89',
             name='Portal User',
             email='portal@test.example.com',
@@ -731,7 +729,6 @@ class WhatsAppCommon(MailCommon, WhatsAppCase):
         cls.test_public_user = mail_new_test_user(
             cls.env,
             login='test_public_user',
-            mobile='+32 494 65 43 21',
             phone='+32 494 98 43 21',
             name='Public User',
             email='public@test.example.com',

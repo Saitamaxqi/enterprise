@@ -130,7 +130,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             }
         else:
             company_contact = company_contacts[0]
-            if not company_contact.phone and not company_contact.mobile:
+            if not company_contact.phone:
                 template_vals['errors']['missing_partner_phone_number'] = {
                     'message': _('Please define a phone or mobile phone number for your company contact.'),
                     'action_text': _('Check Company'),

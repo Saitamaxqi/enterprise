@@ -21,12 +21,10 @@ COMMON_WHATSAPP_PHONE_SAFE_FIELDS = {
     'mobile',
     'phone',
     'phone_sanitized',
-    'partner_id.mobile',
     'partner_id.phone',
     'phone_sanitized.phone',
     'x_studio_mobile',
     'x_studio_phone',
-    'x_studio_partner_id.mobile',
     'x_studio_partner_id.phone',
     'x_studio_partner_id.phone_sanitized',
 }
@@ -255,9 +253,7 @@ class WhatsappTemplate(models.Model):
         for template in self.filtered('model'):
             if template.phone_field and template.phone_field in self.env[template.model]._fields:
                 continue
-            if 'mobile' in self.env[template.model]._fields:
-                template.phone_field = 'mobile'
-            elif 'phone' in self.env[template.model]._fields:
+            if 'phone' in self.env[template.model]._fields:
                 template.phone_field = 'phone'
 
     @api.depends('name', 'status', 'wa_template_uid')

@@ -87,7 +87,7 @@ export class CorrespondenceDetails extends Component {
     /** @returns {string} */
     get landlineNumber() {
         if (this.call) {
-            if (!this.partner || this.partner.mobileNumber !== this.call.phoneNumber) {
+            if (!this.partner) {
                 return this.call.phoneNumber;
             }
             return "";
@@ -101,15 +101,15 @@ export class CorrespondenceDetails extends Component {
     /** @returns {string} */
     get mobileNumber() {
         if (this.activity) {
-            return this.activity.mobile;
+            return this.activity.phone;
         }
         if (!this.partner && !this.call) {
             return "";
         }
-        if (this.call && this.call.phoneNumber === this.partner?.mobileNumber) {
+        if (this.call && this.call.phoneNumber) {
             return this.call.phoneNumber;
         }
-        return this.partner?.mobileNumber || "";
+        return this.partner?.phoneNumber || "";
     }
 
     /** @returns {string} */

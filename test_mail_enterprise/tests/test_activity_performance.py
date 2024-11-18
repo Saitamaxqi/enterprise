@@ -20,7 +20,7 @@ class TestActivityPerformance(BaseMailPerformance):
         cls.customer = cls.env['res.partner'].with_context(cls._test_context).create({
             'country_id': cls.env.ref('base.be').id,
             'email': '"Super Customer" <customer.test@example.com>',
-            'mobile': '0456123456',
+            'phone': '0456123456',
             'name': 'Super Customer',
         })
         cls.test_record = cls.env['mail.test.sms.bl.activity'].with_context(cls._test_context).create({

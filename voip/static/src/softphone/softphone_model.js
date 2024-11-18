@@ -55,7 +55,6 @@ export class Softphone {
                     [
                         contact.name,
                         contact.displayName,
-                        contact.mobileNumber,
                         contact.landlineNumber,
                     ].some((x) => isSubstring(x, this.searchBarInputValue)))
         );

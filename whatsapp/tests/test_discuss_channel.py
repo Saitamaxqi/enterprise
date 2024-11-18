@@ -133,7 +133,7 @@ class DiscussChannel(WhatsAppCommon, MockIncomingWhatsApp):
         })
         test_partner = self.env['res.partner'].create({
             'country_id': self.env.ref('base.be').id,
-            'mobile': '+32455001122',
+            'phone': '+32455001122',
             'name': 'Test Partner',
         })
         composer = self._instanciate_wa_composer_from_records(template, from_records=test_partner)
@@ -144,7 +144,7 @@ class DiscussChannel(WhatsAppCommon, MockIncomingWhatsApp):
             self._receive_whatsapp_message(
                 self.whatsapp_account,
                 "Hello, it's reply",
-                test_partner.mobile,
+                test_partner.phone,
                 additional_message_values={
                     'context': {'id': msg.msg_uid},
                 },

@@ -39,10 +39,10 @@ export class Correspondence {
             return this.call.phoneNumber;
         }
         if (this.activity) {
-            return this.activity.mobile || this.activity.phone;
+            return this.activity.phone;
         }
         if (this.partner) {
-            return this.partner.mobileNumber || this.partner.landlineNumber;
+            return this.partner.landlineNumber;
         }
         return "";
     }

@@ -25,7 +25,6 @@ export class ResPartner extends mailModels.ResPartner {
             displayName: contact.display_name,
             email: contact.email,
             landlineNumber: contact.phone,
-            mobileNumber: contact.mobile,
             name: contact.display_name,
         }));
     }

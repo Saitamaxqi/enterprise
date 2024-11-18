@@ -353,7 +353,7 @@ Best Regards,
         followup_contacts = partner._get_all_followup_contacts() or partner
         sent_at_least_once = False
         for to_send_partner in followup_contacts:
-            sms_number = to_send_partner.mobile or to_send_partner.phone
+            sms_number = to_send_partner.phone
             if sms_number:
                 sms_body = self.with_context(lang=partner.lang or self.env.user.lang)._get_sms_body(options)
                 partner._message_sms(

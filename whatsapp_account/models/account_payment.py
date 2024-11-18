@@ -7,4 +7,4 @@ class AccountPayment(models.Model):
     _inherit = "account.payment"
 
     def _get_whatsapp_safe_fields(self):
-        return {'partner_id.mobile', 'currency_id.symbol'}
+        return {'partner_id.phone', 'currency_id.symbol'}

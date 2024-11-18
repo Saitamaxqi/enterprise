@@ -40,7 +40,7 @@ class SignRequestItem(models.Model):
     access_token = fields.Char(required=True, default=_default_access_token, readonly=True, copy=False, groups="base.group_system")
     access_via_link = fields.Boolean('Accessed Through Token', copy=False)
     role_id = fields.Many2one('sign.item.role', string="Role", required=True, readonly=True)
-    sms_number = fields.Char(related='partner_id.mobile', readonly=False, depends=(['partner_id']), store=True, copy=False)
+    sms_number = fields.Char(related='partner_id.phone', readonly=False, depends=(['partner_id']), store=True, copy=False)
     sms_token = fields.Char('SMS Token', readonly=True, copy=False)
     signed_without_extra_auth = fields.Boolean('Signed Without Extra Authentication', default=False, readonly=True, copy=False)
 

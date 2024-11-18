@@ -8,12 +8,11 @@ class ResPartner(models.Model):
 
     @api.model
     def get_contacts(self, offset, limit, search_terms):
-        domain = ["|", ("phone", "!=", False), ("mobile", "!=", False)]
+        domain = [("phone", "!=", False)]
         if search_terms:
             search_domain = [
                 "|", "|", "|",
                 ("phone", "like", search_terms),
-                ("mobile", "like", search_terms),
                 ("complete_name", "ilike", search_terms),
                 ("email", "ilike", search_terms),
             ]
@@ -27,7 +26,6 @@ class ResPartner(models.Model):
                 "displayName": contact.display_name,
                 "email": contact.email,
                 "landlineNumber": contact.phone,
-                "mobileNumber": contact.mobile,
                 "name": contact.name,
             }
             for contact in self

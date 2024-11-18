@@ -46,8 +46,6 @@ class MarketingTestSms(models.Model):
                 record.email_from = record.customer_id.email
             if not record.phone and record.customer_id.phone:
                 record.phone = record.customer_id.phone
-            if not record.mobile and record.customer_id.mobile:
-                record.mobile = record.customer_id.mobile
 
     def _mail_get_partner_fields(self, introspect_fields=False):
         """ Override to return the recipient linked to SMS sending. """

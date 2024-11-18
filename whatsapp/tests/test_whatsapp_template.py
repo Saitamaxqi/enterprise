@@ -113,14 +113,14 @@ Welcome to {{3}} office''',
             'wa_account_id': self.whatsapp_account.id,
             'variable_ids': [
                 Command.create({'name': "{{1}}", 'line_type': "body", 'field_type': "user_name", 'demo_value': "Nishant"}),
-                Command.create({'name': "{{2}}", 'line_type': "body", 'field_type': "user_mobile", 'demo_value': "+91 12345 12345"}),
+                Command.create({'name': "{{2}}", 'line_type': "body", 'field_type': "user_phone", 'demo_value': "+91 12345 12345"}),
                 Command.create({'name': "{{3}}", 'line_type': "body", 'field_type': "free_text", 'demo_value': "Odoo In"}),
             ],
         })
         self.assertWATemplateVariables(
             template,
             [('{{1}}', 'body', 'user_name', {'demo_value': 'Nishant'}),
-             ('{{2}}', 'body', 'user_mobile', {'demo_value': '+91 12345 12345'}),
+             ('{{2}}', 'body', 'user_phone', {'demo_value': '+91 12345 12345'}),
              ('{{3}}', 'body', 'free_text', {'demo_value': 'Odoo In'})]
         )
 
@@ -858,7 +858,7 @@ class WhatsAppTemplateSync(WhatsAppTemplateCommon):
             'variable_ids': [
                 Command.clear(),  # Remove existing variables
                 Command.create({'name': "{{1}}", 'line_type': "body", 'field_type': "user_name", 'demo_value': "Jigar"}),
-                Command.create({'name': "{{2}}", 'line_type': "body", 'field_type': "user_mobile", 'demo_value': "+91 12345 12345"}),
+                Command.create({'name': "{{2}}", 'line_type': "body", 'field_type': "user_phone", 'demo_value': "+91 12345 12345"}),
             ]})
         templates["test_dynamic_header_body_button"].write(
             {
@@ -915,7 +915,7 @@ class WhatsAppTemplateSync(WhatsAppTemplateCommon):
             template_variables=[
                 ('{{1}}', 'header', 'free_text', {'demo_value': 'Nishant'}),
                 ('{{1}}', 'body', 'user_name', {'demo_value': 'Jigar'}),
-                ('{{2}}', 'body', 'user_mobile', {'demo_value': '+91 12345 12345'}),
+                ('{{2}}', 'body', 'user_phone', {'demo_value': '+91 12345 12345'}),
             ]
         )
         # Test Whatsapp phone number on sync

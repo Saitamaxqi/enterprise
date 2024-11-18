@@ -144,7 +144,7 @@ class Starshipit:
         details = {
             'name': partner.name,
             'email': partner.email,
-            'phone': partner.phone or partner.mobile,
+            'phone': partner.phone,
             'company': partner.commercial_company_name or partner.name,
             'street': partner.street,
             'city': partner.city,

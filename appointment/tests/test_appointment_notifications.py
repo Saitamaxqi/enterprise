@@ -19,7 +19,6 @@ class AppointmentTestTracking(AppointmentCommon, MailCase):
             'name': 'Apt Type Follower',
             'country_id': cls.env.ref('base.be').id,
             'email': 'follower@test.lan',
-            'mobile': '+32 499 90 23 09',
             'phone': '+32 81 212 220'
         }])
         cls.apt_type_bxls_2days.message_partner_ids = cls.apt_type_follower

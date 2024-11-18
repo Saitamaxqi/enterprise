@@ -224,7 +224,7 @@ export class Softphone extends Component {
             switch (this.activeTabId) {
                 case "contacts":
                     partner = this.firstItem;
-                    phoneNumber = this.firstItem.mobileNumber || this.firstItem.landlineNumber;
+                    phoneNumber = this.firstItem.landlineNumber;
                     break;
                 case "recent":
                     partner = this.firstItem.partner;

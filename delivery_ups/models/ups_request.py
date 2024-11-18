@@ -201,9 +201,9 @@ class UPSRequest():
             return _("UPS address lines can only contain a maximum of 35 characters. You can split the contacts addresses on multiple lines to try to avoid this limitation.")
         if picking and not order:
             order = picking.sale_id
-        phone = ship_to.mobile or ship_to.phone
+        phone = ship_to.phone
         if order and not phone:
-            phone = order.partner_id.mobile or order.partner_id.phone
+            phone = order.partner_id.phone
         if order:
             if not order.order_line:
                 return _("Please provide at least one item to ship.")

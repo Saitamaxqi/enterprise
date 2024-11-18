@@ -17,17 +17,6 @@ test("The partner's phone number is displayed in correspondence details.", async
     await contains(`[href$="${phoneNumber}"] .fa-phone`);
 });
 
-test("The partner's mobile number is displayed in correspondence details.", async () => {
-    const pyEnv = await startServer();
-    const phoneNumber = "0456 703 6196";
-    pyEnv["res.partner"].create({ name: "Maxime Randonnées", mobile: phoneNumber });
-    await start();
-    await click(".o_menu_systray button[title='Open Softphone']");
-    await click(".nav-link", { text: "Contacts" });
-    await click(".list-group-item-action", { text: "Maxime Randonnées" });
-    await contains(`[href$="${phoneNumber}"] .fa-mobile`);
-});
-
 test("Calls are properly displayed even if their state is broken.", async () => {
     const pyEnv = await startServer();
     // If for some reason (e.g. a power outage in the middle of a call) the call

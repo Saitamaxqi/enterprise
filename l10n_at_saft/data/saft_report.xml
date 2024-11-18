@@ -25,7 +25,7 @@
     <template id="contact_information">
         <ContactInformation>
             <Contact t-out="contact.name"/>
-            <Telephone t-if="contact.phone or contact.mobile" t-out="contact.phone or contact.mobile"/>
+            <Telephone t-if="contact.phone " t-out="contact.phone"/>
             <Email t-if="contact.email" t-out="contact.email"/>
             <Website t-if="contact.website" t-out="contact.website"/>
         </ContactInformation>

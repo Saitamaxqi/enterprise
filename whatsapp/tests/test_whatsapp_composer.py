@@ -20,11 +20,11 @@ class WhatsAppComposerCase(WhatsAppCommon):
             {
                 'country_id': cls.env.ref('base.in').id,
                 'name': 'Customer-IN',
-                'mobile': "+91 12345 67891",
+                'phone': "+91 12345 67891",
             }, {
                 'country_id': cls.env.ref('base.be').id,
                 'name': 'Customer-BE',
-                'mobile': "0456001122",
+                'phone': "0456001122",
             }
         ])
 
@@ -45,7 +45,7 @@ Welcome to {{4}} office''',
                 'variable_ids': [
                     (5, 0, 0),
                     (0, 0, {'name': "{{1}}", 'line_type': "body", 'field_type': "user_name", 'demo_value': "Jigar"}),
-                    (0, 0, {'name': "{{2}}", 'line_type': "body", 'field_type': "user_mobile", 'demo_value': "+91 12345 12345"}),
+                    (0, 0, {'name': "{{2}}", 'line_type': "body", 'field_type': "user_phone", 'demo_value': "+91 12345 12345"}),
                     (0, 0, {'name': "{{3}}", 'line_type': "body", 'field_type': "field", 'demo_value': "sample country", 'field_name': 'country_id.name'}),
                     (0, 0, {'name': "{{4}}", 'line_type': "body", 'field_type': "free_text", 'demo_value': "Odoo In"}),
                 ],
@@ -64,7 +64,7 @@ class WhatsAppComposerInternals(WhatsAppComposerCase, CronMixinCase):
 
     @users('employee')
     def test_composer_check_user_number(self):
-        """ When using 'user_mobile' in template variables, number should be
+        """ When using 'user_phone' in template variables, number should be
         set on sender. """
         template = self.template_dynamic_cplx.with_user(self.env.user)
 
@@ -74,7 +74,7 @@ class WhatsAppComposerInternals(WhatsAppComposerCase, CronMixinCase):
             ('zboing', False)
         ]:
             with self.subTest(mobile=mobile):
-                self.env.user.mobile = mobile
+                self.env.user.phone = mobile
 
                 composer_form = self._wa_composer_form(template, self.customers[0])
                 composer = composer_form.save()
@@ -156,7 +156,7 @@ class WhatsAppComposerInternals(WhatsAppComposerCase, CronMixinCase):
             'body': 'Hello world',
             'model_id': self.env['ir.model']._get_id('res.partner'),
             'name': 'Template 1',
-            'phone_field' : 'mobile',
+            'phone_field': 'phone',
             'wa_account_id': self.whatsapp_account.id,
         })
 
@@ -176,13 +176,13 @@ class WhatsAppComposerInternals(WhatsAppComposerCase, CronMixinCase):
             template_1, from_records=self.customers[0],
             with_user=self.env.user,
         )
-        self.assertTrue(not(composer_2.phone) and not(self.customers[0].phone),  # '' != False
+        self.assertTrue(composer_2.phone and self.customers[0].phone,
                          "Phone should be taken from record, phone_field of template 1")
         composer_2.wa_template_id = template_2
-        self.assertEqual(composer_2.phone, self.customers[0].mobile,
+        self.assertEqual(composer_2.phone, self.customers[0].phone,
                          "Phone should be taken from record, phone_field of template 2")
         composer_2.wa_template_id = self.env['whatsapp.template']
-        self.assertEqual(composer_2.phone, self.customers[0].mobile,
+        self.assertEqual(composer_2.phone, self.customers[0].phone,
                          "Phone should not be reset when there is one")
 
     @users('employee')
@@ -193,7 +193,7 @@ class WhatsAppComposerInternals(WhatsAppComposerCase, CronMixinCase):
         date_reference = Datetime.from_string('2023-11-22 09:00:00')
         invalid_customer = self.env['res.partner'].sudo().create({
             'country_id': self.env.ref('base.in').id,
-            'mobile': "12321",
+            'phone': "12321",
             'name': 'Customer-IN',
         })
         default_phone_number = "+32455112233"
@@ -300,7 +300,7 @@ class WhatsAppComposerInternals(WhatsAppComposerCase, CronMixinCase):
             'category_id': test_tags.ids,
             'color': False,
             'country_id': self.env.ref('base.be').id,
-            'mobile': '+32455001122',
+            'phone': '+32455001122',
             'name': 'Test Partner',
         })
 
@@ -410,7 +410,7 @@ class WhatsAppComposerUsage(WhatsAppComposerCase):
                         "sent",
                         fields_values={
                             "create_uid": test_user,
-                            "body": f"<p>Hello I am { test_user.name },<br>Here my mobile number: { test_user.mobile },"
+                            "body": f"<p>Hello I am { test_user.name },<br>Here my mobile number: { test_user.phone },"
                                     f"<br>You are coming from { self.customers[0].country_id.name }.<br>Welcome to Odoo In office</p>",
                         },
                     )

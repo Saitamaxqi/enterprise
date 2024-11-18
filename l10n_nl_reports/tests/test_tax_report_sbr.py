@@ -39,7 +39,7 @@ class TestNlTaxReportSBR(TestAccountReportsCommon):
             'zip': '1019',
             'country_id': self.env.ref('base.nl').id,
             'vat': 'NL123456782B90',
-            'mobile': '+31470123456',
+            'phone': '+31470123456',
             'email': 'info@fidu.nl',
         })
         self.env.company.account_representative_id = representative.id

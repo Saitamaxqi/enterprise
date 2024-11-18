@@ -9,7 +9,6 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='phone']" position="after">
                 <field name="phone" invisible="1"/>
-                <field name="mobile" invisible="1"/>
             </xpath>
         </field>
     </record>

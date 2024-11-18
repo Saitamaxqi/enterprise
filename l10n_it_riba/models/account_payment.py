@@ -64,7 +64,7 @@ class AccountPayment(models.Model):
                     'segment_1': company_partner.display_name,
                     'segment_2': spaced_join(company_partner.street, company_partner.street2),
                     'segment_3': company_partner.city,
-                    'segment_4': spaced_join(company_partner.ref, company_partner.phone or company_partner.mobile or company_partner.email),
+                    'segment_4': spaced_join(company_partner.ref, company_partner.phone or company_partner.email),
                 }, {
                     'record_type': '30',  # Debitor description
                     'section_number': section_number,

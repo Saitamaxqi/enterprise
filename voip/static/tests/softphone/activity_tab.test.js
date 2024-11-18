@@ -13,7 +13,7 @@ test("Today call activities are displayed in the “Next Activities” tab.", as
     const [partnerId1, partnerId2] = pyEnv["res.partner"].create([
         {
             name: "Françoise Délire",
-            mobile: "+1 246 203 6982",
+            phone: "+1 246 203 6982",
             company_name: "Boulangerie Vortex",
         },
         {
@@ -53,7 +53,7 @@ test("The name of the partner linked to an activity is displayed in the activity
     const pyEnv = await startServer();
     const partnerId = pyEnv["res.partner"].create({
         name: "Gwendoline Zumba",
-        mobile: "515-555-0104",
+        phone: "515-555-0104",
     });
     pyEnv["mail.activity"].create([
         {

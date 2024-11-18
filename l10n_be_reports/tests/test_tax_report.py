@@ -121,7 +121,7 @@ class BelgiumTaxReportTest(AccountSalesReportCommon):
             'zip': '1000',
             'country_id': self.env.ref('base.be').id,
             'vat': 'BE0477472701',
-            'mobile': '+32470123456',
+            'phone': '+32470123456',
             'email': 'info@fidu.be',
         })
         company.account_representative_id = representative.id

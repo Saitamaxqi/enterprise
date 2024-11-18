@@ -33,7 +33,7 @@ class TestEmployeeJobChange(common.TestPayrollAccountCommon):
         })
         work_contact = cls.env['res.partner'].sudo().create({
             'email': 'jeanjasse@doublehelice.be',
-            'mobile': '+32 2 290 34 90',
+            'phone': '+32 2 290 34 90',
             'name': 'Jean Jasse',
             'company_id': cls.company_id.id,
         })

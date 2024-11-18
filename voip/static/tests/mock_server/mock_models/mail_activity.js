@@ -62,7 +62,6 @@ export class MailActivity extends mailModels.MailActivity {
                     ResPartner.browse(relatedPartner.id)
                 );
             }
-            activityData.mobile = record.mobile || relatedPartner?.mobile;
             activityData.phone = record.phone || relatedPartner?.phone;
             store.add(this.browse(activity.id), activityData);
         }

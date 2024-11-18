@@ -442,13 +442,12 @@ class WhatsAppTemplateSecurity(WhatsAppSecurityCase):
         })
         test_partner = self.env['res.partner'].create({
             'country_id': self.env.ref('base.be').id,
-            'mobile': '0455001122',
             'name': 'Test Partner',
             'phone': '0455334455',
             })
 
-        field_paths_allowed = ['mobile', 'phone', 'phone_sanitized']
-        field_paths_allowed_ko = ['x_studio_phone']  # allowed but does not exist
+        field_paths_allowed = ['phone', 'phone_sanitized']
+        field_paths_allowed_ko = ['mobile', 'x_studio_phone']  # allowed but does not exist
         field_paths_disallowed = ['name']  # not allowed
         field_paths_disallowed_ko = ['my_custom_phone_field']  # not allowed and does not exist
         for field_paths, invalid, admin_only in [
@@ -459,7 +458,7 @@ class WhatsAppTemplateSecurity(WhatsAppSecurityCase):
         ]:
             for field_path, test_user in product(field_paths, (self.user_employee, self.user_wa_admin, self.user_admin)):
                 with self.subTest(field_path=field_path, test_user_name=test_user.name):
-                    template.sudo().write({'phone_field': 'mobile'})
+                    template.sudo().write({'phone_field': 'phone'})
                     template = template.with_user(test_user)
                     # employee can never updates templates; wa_admin allowed fields only
                     if test_user == self.user_employee or (admin_only and test_user == self.user_wa_admin):

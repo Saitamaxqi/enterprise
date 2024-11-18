@@ -15,7 +15,7 @@ class TestWAPerformance(BaseMailPerformance, MockOutgoingWhatsApp, MockIncomingW
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.user_employee.mobile = '+32 456 99 88 77'
+        cls.user_employee.phone = '+32 456 99 88 77'
         cls.customers[0].phone = '+32 456 00 11 22'
         cls.customers[1].phone = '+32 456 22 11 00'
         cls.user_wa_admin = mail_new_test_user(
@@ -25,7 +25,6 @@ class TestWAPerformance(BaseMailPerformance, MockOutgoingWhatsApp, MockIncomingW
             email='wa_admin@test.example.com',
             groups='base.group_user,base.group_partner_manager,whatsapp.group_whatsapp_admin',
             login='user_wa_admin',
-            mobile='+91(132)-553-7242',
             name='WhatsApp Wasin',
             notification_type='email',
             phone='+1 650-555-0111',
@@ -66,7 +65,7 @@ class TestWAPerformance(BaseMailPerformance, MockOutgoingWhatsApp, MockIncomingW
                 (5, 0, 0),
                 # body
                 (0, 0, {'name': "{{1}}", 'line_type': "body", 'field_type': "user_name", 'demo_value': "Admin"}),
-                (0, 0, {'name': "{{2}}", 'line_type': "body", 'field_type': "user_mobile", 'demo_value': "+32 456 00 11 22"}),
+                (0, 0, {'name': "{{2}}", 'line_type': "body", 'field_type': "user_phone", 'demo_value': "+32 456 00 11 22"}),
                 (0, 0, {'name': "{{3}}", 'line_type': "body", 'field_type': "field", 'field_name': "country_id.name",
                         'demo_value': "CountryDemo"}),
                 (0, 0, {'name': "{{4}}", 'line_type': "body", 'field_type': "free_text", 'demo_value': "BodyText"}),

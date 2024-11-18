@@ -22,9 +22,7 @@ class VoipQueueMixin(models.AbstractModel):
                     ("user_id", "=", self.env.uid),
                     ("activity_type_id.category", "=", "phonecall"),
                     ("date_deadline", "<=", fields.Date.today()),
-                    "|",
                     ("phone", "!=", False),
-                    ("mobile", "!=", False),
                 ],
                 ["res_id"],
                 ["__count"],
@@ -85,7 +83,7 @@ class VoipQueueMixin(models.AbstractModel):
                 for record in self
             ]
         )
-        failed_activities = activities.filtered(lambda activity: not activity.mobile and not activity.phone)
+        failed_activities = activities.filtered(lambda activity: not activity.phone)
         if failed_activities:
             failed_records = self.browse(failed_activities.mapped("res_id"))
             raise UserError(
@@ -105,9 +103,7 @@ class VoipQueueMixin(models.AbstractModel):
                 ("user_id", "=", self.env.uid),
                 ("activity_type_id.category", "=", "phonecall"),
                 ("date_deadline", "<=", fields.Date.today()),
-                "|",
                 ("phone", "!=", False),
-                ("mobile", "!=", False),
             ]
         )
         for activity in related_activities:

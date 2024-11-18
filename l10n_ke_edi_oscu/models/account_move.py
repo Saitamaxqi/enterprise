@@ -147,10 +147,6 @@ class AccountMove(models.Model):
             'rcptPbctDt': confirmation_datetime,  # Receipt published date
             'prchrAcptcYn': 'N',  # Purchase accepted Yes/No
         }
-        if partner.mobile:
-            receipt_part.update({
-                'custMblNo': (partner.mobile or '')[:20]  # Mobile number, not required
-            })
         if partner.contact_address_inline:
             receipt_part.update({
                 'adrs': (partner.contact_address_inline or '')[:200],  # Address, not required

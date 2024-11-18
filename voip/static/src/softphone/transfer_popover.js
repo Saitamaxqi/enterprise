@@ -30,7 +30,7 @@ export class TransferPopover extends Component {
         const contacts = Object.values(this.store.Persona.records).filter((x) => x.hasPhoneNumber);
         const regex = new RegExp(`(^.*)(${escapeRegExp(searchTerms)})(.*$)`, "i");
         for (const contact of contacts) {
-            for (const key of ["displayName", "mobileNumber", "landlineNumber"]) {
+            for (const key of ["displayName", "landlineNumber"]) {
                 const value = contact[key];
                 if (!value) {
                     continue;
@@ -41,7 +41,7 @@ export class TransferPopover extends Component {
                 }
                 const suggestion = {
                     match: markup(`${before}<span class="fw-bold">${match}</span>${after}`),
-                    phoneNumber: contact.mobileNumber || contact.landlineNumber,
+                    phoneNumber: contact.landlineNumber,
                 };
                 if (key.endsWith("Number")) {
                     suggestion.match = markup(

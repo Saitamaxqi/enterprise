@@ -109,7 +109,6 @@ class TestAtSaftReport(TestAtSaftReportCommon):
         })
         self.partner_ceo.write({
             'phone': False,
-            'mobile': False,
         })
 
         options = self._generate_options()

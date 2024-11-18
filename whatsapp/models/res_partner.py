@@ -64,7 +64,7 @@ class ResPartner(models.Model):
 
             partners = self.env['res.partner'].create({
                 'country_id': country.id if country and len(country) == 1 else False,
-                'mobile': formatted_number,
+                'phone': formatted_number,
                 'name': name or formatted_number,
             })
             partners._message_log(

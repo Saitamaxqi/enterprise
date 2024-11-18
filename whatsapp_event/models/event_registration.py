@@ -24,6 +24,6 @@ class EventRegistration(models.Model):
 
     def _get_whatsapp_safe_fields(self):
         return {'name', 'event_id.name', 'event_id.organizer_id.name', 'event_date_range', 'event_id.user_id.name',
-                'event_id.user_id.mobile', 'event_id.address_id.city', 'event_id.address_id.name',
+                'event_id.user_id.phone', 'event_id.address_id.city', 'event_id.address_id.name',
                 'event_id.address_id.contact_address_complete', 'event_id.address_id.partner_latitude',
                 'event_id.address_id.partner_longitude'}

@@ -39,11 +39,11 @@ class MarketingCampaign(WhatsAppCommon, MockIncomingWhatsApp):
 
         cls.whatsapp_test_customer = cls.env['res.partner'].create({
             'name': 'Wa Test Marketing Automation',
-            'mobile': cls.phone
+            'phone': cls.phone
         })
 
         cls.campaign = cls.env['marketing.campaign'].create({
-            'domain': [('mobile', '=', cls.phone), ('name', '=', 'Wa Test Marketing Automation')],
+            'domain': [('phone', '=', cls.phone), ('name', '=', 'Wa Test Marketing Automation')],
             'model_id': cls.env['ir.model']._get_id('res.partner'),
             'name': 'Test Campaign',
         })

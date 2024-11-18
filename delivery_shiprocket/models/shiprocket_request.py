@@ -252,7 +252,7 @@ class ShipRocket:
         """
         Return the mobile/phone for shiprocket requests.
         """
-        matches = re.findall(r"\d+", partner.mobile or partner.phone or '')
+        matches = re.findall(r"\d+", partner.phone or '')
         return "".join(matches)
 
     def _get_shipping_lines(self, package, picking):
