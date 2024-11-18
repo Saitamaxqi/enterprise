@@ -995,6 +995,8 @@ QUnit.module("View Editors", () => {
                         bus: new EventBus(),
                         block: () => assert.step("block"),
                         unblock: () => assert.step("unblock"),
+                        activateElement: () => {},
+                        deactivateElement: () => {},
                     };
                 },
             };
@@ -1077,6 +1079,8 @@ QUnit.module("View Editors", () => {
                         bus: new EventBus(),
                         block: () => assert.step("block"),
                         unblock: () => assert.step("unblock"),
+                        activateElement: () => {},
+                        deactivateElement: () => {},
                     };
                 },
             };

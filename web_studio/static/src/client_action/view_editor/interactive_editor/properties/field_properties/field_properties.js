@@ -1,4 +1,12 @@
-import { Component, onWillStart, onWillUpdateProps, useState, toRaw } from "@odoo/owl";
+import {
+    Component,
+    onWillStart,
+    onWillUpdateProps,
+    useState,
+    toRaw,
+    useRef,
+    useEffect,
+} from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { rpc } from "@web/core/network/rpc";
@@ -62,6 +70,22 @@ export class FieldProperties extends Component {
         this.dialog = useService("dialog");
         this.state = useState({});
         this.editNodeAttributes = useEditNodeAttributes();
+        const rootRef = useRef("root");
+        const autofocusRef = {
+            get el() {
+                return rootRef.el?.querySelector("input[name='string']");
+            },
+        };
+        const rawModel = toRaw(this.env.viewEditorModel);
+        useEffect(
+            (autofocusEl) => {
+                if (autofocusEl) {
+                    autofocusEl.focus();
+                }
+            },
+            () => [autofocusRef.el, rawModel.activeNodeXpath]
+        );
+
         onWillStart(async () => {
             if (this.canShowDefaultValue) {
                 this.state.defaultValue = await this.getDefaultValue(this.props.node);

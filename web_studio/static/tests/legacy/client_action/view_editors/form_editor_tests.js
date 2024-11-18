@@ -415,7 +415,7 @@ QUnit.module("View Editors", (hooks) => {
 
         assert.containsNone(target, ".o-web-studio-editor--element-clicked");
         assert.hasClass(
-            target.querySelectorAll(".o_web_studio_sidebar.o_notebook .nav-item a")[0],
+            target.querySelectorAll(".o_web_studio_sidebar .o_notebook .nav-item a")[0],
             "active"
         );
 

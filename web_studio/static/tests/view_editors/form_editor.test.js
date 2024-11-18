@@ -578,7 +578,7 @@ test("options with computed display to have a dynamic sidebar list of options", 
     expect(".o_web_studio_property input[id='suboption_d']").not.toBeEnabled();
     expect(".o_web_studio_property input[id='suboption_d']").toBeChecked();
     const computedOptions = queryAll(
-        ".o_web_studio_property:nth-child(n+10):nth-last-child(n+5) label"
+        ".o_web_studio_property:nth-child(n+9):nth-last-child(n+5) label"
     );
     expect([...computedOptions].map((label) => label.textContent).join(", ")).toBe(
         "Suboption A, Suboption B, Suboption D, Suboption C",

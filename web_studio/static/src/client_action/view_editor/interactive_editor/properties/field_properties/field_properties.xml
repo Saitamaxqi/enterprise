@@ -1,6 +1,7 @@
 <templates>
 
 <t t-name="web_studio.ViewEditor.InteractiveEditorProperties.Field">
+    <div class="d-flex flex-column" t-ref="root">
     <ViewStructureProperties>
         <ClassAttribute
             value="props.node.attrs.class"
@@ -72,6 +73,7 @@
             </button>
         </t>
     </ViewStructureProperties>
+    </div>
 </t>
 
 <t t-name="web_studio.ViewEditor.InteractiveEditorProperties.Field.TechnicalName" >

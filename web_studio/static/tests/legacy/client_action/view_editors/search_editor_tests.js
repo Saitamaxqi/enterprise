@@ -175,7 +175,7 @@ QUnit.module("View Editors", (hooks) => {
         );
 
         assert.strictEqual(
-            target.querySelector(".o_web_studio_sidebar.o_notebook .nav-link.active").textContent,
+            target.querySelector(".o_web_studio_sidebar .o_notebook .nav-link.active").textContent,
             "Properties"
         );
         assert.strictEqual(

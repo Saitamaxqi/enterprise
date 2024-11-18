@@ -1044,7 +1044,7 @@ registry.category("web_tour.tours").add("web_studio_test_edit_form_subview_attri
             trigger: ".o_view_controller.o_form_view.test-subview-form",
         },
         {
-            trigger: ".o_web_studio_sidebar.o_notebook .nav-link:contains(View)",
+            trigger: ".o_web_studio_sidebar .o_notebook .nav-link:contains(View)",
             run: "click",
         },
         {

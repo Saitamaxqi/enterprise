@@ -12,6 +12,7 @@ import {
 
 import {
     createViewEditor,
+    makeArchChanger,
     valueOfSelect,
     registerViewEditorDependencies,
     editAnySelect,
@@ -811,6 +812,58 @@ QUnit.module(
                 target,
                 ".o_web_studio_code_editor.ace_editor",
                 "the XML editor should be opened"
+            );
+        });
+
+        QUnit.test("autofocus field label in the sidebar", async (assert) => {
+            const changeArch = makeArchChanger();
+            await createViewEditor({
+                serverData,
+                type: "form",
+                resModel: "coucou",
+                arch: `<form><field name="display_name"/><field name="char_field" /></form>`,
+                mockRPC: function (route, args) {
+                    if (route === "/web_studio/edit_view") {
+                        assert.step("edit_view");
+                        changeArch(
+                            args.view_id,
+                            `<form><field name="display_name" class="custom-class"/><field name="char_field" /></form>`
+                        );
+                    }
+                },
+            });
+            // focus is somewhere on the page
+            assert.strictEqual(
+                document.activeElement,
+                target.querySelector(".o_web_studio_sidebar .nav-link.o_web_studio_new")
+            );
+            await click(target, ".o_field_widget[name='display_name']");
+            // Focus has been placed to the sidebar (this is the feature), in the "label" input for the field
+            assert.strictEqual(
+                document.activeElement,
+                target.querySelector(".o_web_studio_sidebar input[name='string']")
+            );
+
+            // Manually change the focus and edit the field "class" for the field
+            target.querySelector(".o_web_studio_sidebar input[name='class']").focus();
+            assert.strictEqual(
+                document.activeElement,
+                target.querySelector(".o_web_studio_sidebar input[name='class']")
+            );
+
+            await editInput(target, ".o_web_studio_sidebar input[name='class']", "custom-class");
+            assert.verifySteps(["edit_view"]);
+            // The focus is still in the "class" field input in the sidebar
+            assert.strictEqual(
+                document.activeElement,
+                target.querySelector(".o_web_studio_sidebar input[name='class']")
+            );
+
+            // Click on another field in the view: the focus is reattributed to the "label" field
+            await click(target, ".o_field_widget[name='char_field']");
+            assert.strictEqual(
+                document.activeElement,
+                target.querySelector(".o_web_studio_sidebar input[name='string']")
             );
         });
     }
