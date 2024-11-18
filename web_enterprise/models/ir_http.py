@@ -14,12 +14,6 @@ class IrHttp(models.AbstractModel):
     def _post_logout(cls):
         request.future_response.set_cookie('color_scheme', max_age=0)
 
-    def webclient_rendering_context(self):
-        """ Overrides community to prevent unnecessary load_menus request """
-        return {
-            'session_info': self.session_info(),
-        }
-
     def session_info(self):
         ICP = self.env['ir.config_parameter'].sudo()
 
