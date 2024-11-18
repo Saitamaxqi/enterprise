@@ -16,6 +16,7 @@ class EditorArchParser extends formView.ArchParser {
     parse() {
         const archInfo = super.parse(...arguments);
         this.omitStudioNoFetchFields(archInfo);
+        archInfo.disableAutofocus = true;
         return archInfo;
     }
 
@@ -39,7 +40,7 @@ Model.Record = class RecordNoEdit extends formView.Model.Record {
         return false;
     }
     _save() {
-        return true
+        return true;
     }
 };
 
