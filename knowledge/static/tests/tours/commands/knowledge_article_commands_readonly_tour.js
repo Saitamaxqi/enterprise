@@ -14,10 +14,6 @@ import { VideoSelector } from "@html_editor/main/media/media_dialog/video_select
 
 const embeddedViewPatchUtil = embeddedViewPatchFunctions();
 
-const embedViewSelector = (embedViewName) => {
-    return `[data-embedded="view"]:has( .o_last_breadcrumb_item:contains("${embedViewName}"))`;
-};
-
 // This tour follows the 'knowledge_article_commands_tour'.
 // As it contains a video, we re-use the Mock to avoid relying on actual YouTube content
 let unpatchVideoEmbed;
@@ -56,63 +52,47 @@ const videoUnpatchSteps = [{ // unpatch the components
 // TOUR STEPS - KNOWLEDGE COMMANDS
 //------------------------------------------------------------------------------
 
-/*
- * EMBED VIEW: /list
- * Checks that a user that has readonly access on an article cannot create items from the item list.
- * Note: this tour follows the 'knowledge_article_commands_tour', so we re-use the list name.
- */
-const embedListName = "New Title";
-const embedListSteps = [{ // scroll to the embedded view to load it
-    trigger: embedViewSelector(embedListName),
-    run: function () {
-        this.anchor.scrollIntoView();
-    },
-}, { // wait for the list view to be mounted
-    trigger: `${embedViewSelector(embedListName)} .o_list_renderer`,
-}, { // check that the "new" button is not shown
-    trigger: `${embedViewSelector(embedListName)} .o_control_panel_main:not(:has(.o_list_button_add))`,
-}];
-
-/*
- * EMBED VIEW: /kanban
- * Checks that a user that has readonly access on an article cannot create items from the item kanban.
- * Note: this tour follows the 'knowledge_article_commands_tour', so we re-use the kanban name.
- */
-const embedKanbanName = "My Tasks Kanban";
-const embedKanbanSteps = [{ // scroll to the embedded view to load it
-    trigger: embedViewSelector(embedKanbanName),
-    run: function () {
-        this.anchor.scrollIntoView();
-    },
-}, { // wait for the kanban view to be mounted
-    trigger: `${embedViewSelector(embedKanbanName)} .o_kanban_renderer`,
-}, { // check that the "new" button and quick create buttons are not shown
-    trigger: `${embedViewSelector(embedKanbanName)}:not(:has(.o-kanban-button-new)):not(:has(.o_kanban_quick_add))`,
-}];
-
-registry.category("web_tour.tours").add('knowledge_article_commands_readonly_tour', {
-    url: '/odoo',
-    checkDelay: 50,
-    steps: () => [stepUtils.showAppsMenuItem(), {
-    // open the Knowledge App
-    trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
-    run: "click",
-},
-    ...videoPatchSteps,
-{
-    trigger: "body",
-    run: () => {
-        embeddedViewPatchUtil.before();
-    },
-},
-    ...embedListSteps,
-    ...embedKanbanSteps,
-    ...videoUnpatchSteps,
-{
-    trigger: "body",
-    run: () => {
-        embeddedViewPatchUtil.after();
-    },
-},
-    ...endKnowledgeTour()
-]});
+registry.category("web_tour.tours").add("knowledge_article_commands_readonly_tour", {
+    url: "/odoo",
+    steps: () => [
+        stepUtils.showAppsMenuItem(),
+        {
+            // open the Knowledge App
+            trigger: '.o_app[data-menu-xmlid="knowledge.knowledge_menu_root"]',
+            run: "click",
+        },
+        ...videoPatchSteps,
+        {
+            trigger: "body",
+            run() {
+                embeddedViewPatchUtil.before();
+            },
+        },
+        /*
+         * EMBED VIEW: /list
+         * Checks that a user that has readonly access on an article cannot create items from the item list.
+         * Note: this tour follows the 'knowledge_article_commands_tour', so we re-use the list name.
+         */
+        {
+            content: "Check view list has no add button",
+            trigger: `[data-embedded="view"]:has(.o_list_view):not(:has(.o_list_button_add))`,
+        },
+        /*
+         * EMBED VIEW: /kanban
+         * Checks that a user that has readonly access on an article cannot create items from the item kanban.
+         * Note: this tour follows the 'knowledge_article_commands_tour', so we re-use the kanban name.
+         */
+        {
+            content: "Check kaban has no add button",
+            trigger: `[data-embedded="view"]:has(.o_kanban_view):not(:has(.o_kanban_quick_add))`,
+        },
+        ...videoUnpatchSteps,
+        {
+            trigger: "body",
+            run() {
+                embeddedViewPatchUtil.after();
+            },
+        },
+        ...endKnowledgeTour(),
+    ],
+});
