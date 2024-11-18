@@ -23,7 +23,7 @@ const clickPayNowButton = {
 };
 
 const selectNewPaymentMethod =
-    selectDemoPaymentProvider("#o_payment_methods:contains(Choose a payment method)");
+    selectDemoPaymentProvider("#o_payment_methods:contains(Payment method)");
 
 const selectSavedPaymentMethod =
     selectDemoPaymentProvider("#o_payment_tokens_heading:contains(Your payment methods)");
@@ -36,7 +36,7 @@ const confirmPayment = [
     },
     {
         content: "wait for payment processing confirmation",
-        trigger: "#o_payment_status_message:contains(payment has been successfully processed)",
+        trigger: "#o_payment_status_message:contains(payment has been processed)",
     },
 ];
 
