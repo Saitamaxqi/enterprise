@@ -23,7 +23,9 @@
         'point_of_sale._assets_pos': [
             'web_gantt/static/src/**/*',
             'pos_restaurant_appointment/static/src/**/*',
-            'appointment/static/src/views/gantt/**/*'
+            'appointment/static/src/views/gantt/**/*',
+            'calendar/static/src/views/widgets/**/*',
+            'calendar/static/src/views/calendar_form/**/*',
         ],
     'web.assets_tests': [
             'pos_restaurant_appointment/static/tests/tours/**/*',
