@@ -144,7 +144,7 @@ class TimerMixin(models.AbstractModel):
         Each model can interrupt the running timer in a specific way
         By setting it in pause or stop by example
         """
-        timer = self._get_user_timers().filtered(lambda t: t.is_timer_running)
-        if timer:
+        timers = self._get_user_timers().filtered(lambda t: t.is_timer_running)
+        for timer in timers:
             model = self.env[timer.res_model].browse(timer.res_id)
             model._action_interrupt_user_timers()
