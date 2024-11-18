@@ -114,7 +114,7 @@ class ProductTemplate(models.Model):
         :rtype: float
         :return: The specified product's price.
         """
-        price = super()._get_configurator_price(
+        price, pricelist_rule_id = super()._get_configurator_price(
             product_or_template, quantity, date, currency, pricelist, plan_id=plan_id, **kwargs
         )
 
@@ -127,8 +127,8 @@ class ProductTemplate(models.Model):
                 to_currency=currency,
                 company=self.env.company,
                 date=date,
-            )
-        return price
+            ), False
+        return price, pricelist_rule_id
 
     @api.model
     def _get_additional_configurator_data(
