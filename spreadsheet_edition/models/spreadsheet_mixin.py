@@ -363,7 +363,11 @@ class SpreadsheetMixin(models.AbstractModel):
     def get_selector_spreadsheet_models(self):
         selectable_models = []
         for model in self.env:
-            if issubclass(self.pool[model], self.pool['spreadsheet.mixin']):
+            if (
+                issubclass(self.pool[model], self.pool['spreadsheet.mixin']) and
+                self.env[model].has_access('write') and
+                self.env[model].has_access('create')
+            ):
                 selector = self.env[model]._get_spreadsheet_selector()
                 if selector:
                     selectable_models.append(selector)

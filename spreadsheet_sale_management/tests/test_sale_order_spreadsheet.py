@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 
-from odoo.tests.common import TransactionCase
+from odoo.tests.common import TransactionCase, new_test_user
 
 
 class SaleOrderSpreadsheet(TransactionCase):
@@ -36,3 +36,12 @@ class SaleOrderSpreadsheet(TransactionCase):
         spreadsheet = sale_order.spreadsheet_ids
         sale_order.action_open_sale_order_spreadsheet()
         self.assertEqual(sale_order.spreadsheet_ids, spreadsheet, "it should be the same spreadsheet")
+
+    def test_get_selector_spreadsheet_models(self):
+        user = new_test_user(self.env, login="Raoul")
+        result = self.env["spreadsheet.mixin"].with_user(user).get_selector_spreadsheet_models()
+        self.assertFalse(any(r["model"] == "sale.order.spreadsheet" for r in result))
+
+        user.groups_id |= self.env.ref("sales_team.group_sale_salesman")
+        result = self.env["spreadsheet.mixin"].with_user(user).get_selector_spreadsheet_models()
+        self.assertTrue(any(r["model"] == "sale.order.spreadsheet" for r in result))
