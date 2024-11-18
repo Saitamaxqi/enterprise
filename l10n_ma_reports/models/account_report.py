@@ -46,7 +46,7 @@ class L10n_MaTaxReportHandler(models.AbstractModel):
                 'message': _('There are partners located in Morocco without any ICE and/or Tax ID specified.'
                              ' The resulting XML will not contain the associated vendor bills.'),
                 'action_text': _('View Partner(s)'),
-                'action_params': {'partner_ids': errored_vendors.ids},
+                'action': errored_vendors._get_records_action(name=_('Invalid Partner(s)')),
             }
 
         if period_type not in {'monthly', 'trimester'}:

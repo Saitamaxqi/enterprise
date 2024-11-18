@@ -67,7 +67,7 @@ class TestAccountMaExport(TestAccountReportsCommon):
 
     def test_export_tax_report_with_data(self):
         """ This will test a simple export with moves data. """
-        self.partner_ma.company_registry = '20727021'
+        self.partner_ma.company_registry = '123456789123456'
 
         self.env['account.move'].create({
             'move_type': 'in_invoice',
@@ -100,7 +100,7 @@ class TestAccountMaExport(TestAccountReportsCommon):
                         <refF>
                             <if>002136093000040</if>
                             <nom>Ma customer</nom>
-                            <ice>20727021</ice>
+                            <ice>123456789123456</ice>
                         </refF>
                         <tx>20.0</tx>
                         <mp>
@@ -122,7 +122,7 @@ class TestAccountMaExport(TestAccountReportsCommon):
             'name': 'Ma customer with ice',
             'vat': '001561191000066',
             'country_id': self.env.ref('base.ma').id,
-            'company_registry': '20727021',
+            'company_registry': '123456789123456',
         })
 
         self.env['account.move'].create([
@@ -179,7 +179,7 @@ class TestAccountMaExport(TestAccountReportsCommon):
                             <refF>
                                 <if>001561191000066</if>
                                 <nom>Ma customer with ice</nom>
-                                <ice>20727021</ice>
+                                <ice>123456789123456</ice>
                             </refF>
                             <tx>20.0</tx>
                             <mp>
@@ -200,7 +200,7 @@ class TestAccountMaExport(TestAccountReportsCommon):
             - When the period selected of the report is not monthly or quarterly
         """
         self.env.company.vat = False
-        self.partner_ma.company_registry = '20727021'
+        self.partner_ma.company_registry = '123456789123456'
 
         self.env['account.move'].create({
             'move_type': 'in_invoice',
