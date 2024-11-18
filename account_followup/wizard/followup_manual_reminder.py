@@ -50,6 +50,20 @@ class Account_FollowupManual_Reminder(models.TransientModel):
     # attachments fields
     attachment_ids = fields.Many2many(comodel_name='ir.attachment')
 
+    # Wizard buttons visibility controllers
+    show_send_button = fields.Boolean(compute="_compute_show_send_button")
+    show_print_button = fields.Boolean(compute="_compute_show_print_button")
+
+    @api.depends('email', 'sms')
+    def _compute_show_send_button(self):
+        for wizard in self:
+            wizard.show_send_button = wizard.email or wizard.sms
+
+    @api.depends('print')
+    def _compute_show_print_button(self):
+        for wizard in self:
+            wizard.show_print_button = wizard.print
+
     def _compute_render_model(self):
         # OVERRIDES mail.renderer.mixin
         self.render_model = 'res.partner'

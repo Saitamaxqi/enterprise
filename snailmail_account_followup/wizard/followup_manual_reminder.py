@@ -10,6 +10,12 @@ class Account_FollowupManual_Reminder(models.TransientModel):
     snailmail = fields.Boolean()
     snailmail_cost = fields.Float(string='Stamps', default=1, readonly=True, compute='_compute_snailmail_cost')
 
+    @api.depends('snailmail')
+    def _compute_show_send_button(self):
+        super()._compute_show_send_button()
+        for wizard in self:
+            wizard.show_send_button = wizard.show_send_button or wizard.snailmail
+
     @api.depends('partner_id')
     def _compute_snailmail_cost(self):
         for record in self:

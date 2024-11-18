@@ -390,7 +390,7 @@ class TestAccountFollowupReports(AccountTestInvoicingCommon):
 
         reminder = self.env['account_followup.manual_reminder'].with_context(
             active_model='res.partner',
-            active_ids=mail_partner.id,
+            active_ids=mail_partner.ids,
         ).create({'template_id': mail_template.id})
 
         self.assertTrue(mail_partner in reminder.email_recipient_ids, "Mai Lang should be in the Email Recipients List")

@@ -74,13 +74,13 @@
 
                 <footer>
                     <button string="Send &amp; Print"
-                            invisible="not print or not email and not sms"
+                            invisible="not show_print_button or not show_send_button"
                             name="process_followup" type="object" class="btn-primary" data-hotkey="q"/>
                     <button string="Send"
-                            invisible="print or not email and not sms"
+                            invisible="show_print_button or not show_send_button"
                             name="process_followup" type="object" class="btn-primary" data-hotkey="q"/>
                     <button string="Print"
-                            invisible="not print or email or sms"
+                            invisible="not show_print_button or show_send_button"
                             name="process_followup"
                             type="object" class="btn-primary" data-hotkey="q"/>
                     <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>

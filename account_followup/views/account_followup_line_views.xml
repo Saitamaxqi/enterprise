@@ -38,7 +38,7 @@
                                         <field name="send_sms"/>
                                     </group>
                                     <group colspan="2">
-                                        <field name="mail_template_id" string="Content Template" invisible="not send_email"/>
+                                        <field name="mail_template_id" string="Email Template" invisible="not send_email"/>
                                         <field name="sms_template_id" invisible="not send_sms"/>
                                     </group>
                                 </group>

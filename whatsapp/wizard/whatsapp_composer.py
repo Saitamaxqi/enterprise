@@ -16,6 +16,17 @@ class WhatsappComposer(models.TransientModel):
     _name = 'whatsapp.composer'
     _description = 'Send WhatsApp Wizard'
 
+    def _raise_no_template_error(self, res_model):
+        if self.env.user.has_group('whatsapp.group_whatsapp_admin'):
+            raise RedirectWarning(
+                _("No approved WhatsApp Templates are available for this model."),
+                self.env.ref('whatsapp.whatsapp_template_action').id,
+                _("Configure Templates"),
+                {'search_default_model': res_model}
+            )
+        else:
+            raise ValidationError(_("No approved WhatsApp Templates are available for this model."))
+
     @api.model
     def default_get(self, fields):
         result = super().default_get(fields)
@@ -26,15 +37,8 @@ class WhatsappComposer(models.TransientModel):
             if wa_template_id and not result.get('wa_template_id'):
                 result['wa_template_id'] = wa_template_id.id
             elif not wa_template_id and not result.get('wa_template_id'):
-                if self.env.user.has_group('whatsapp.group_whatsapp_admin'):
-                    raise RedirectWarning(
-                        _("No approved WhatsApp Templates are available for this model."),
-                        self.env.ref('whatsapp.whatsapp_template_action').id,
-                        _("Configure Templates"),
-                        {'search_default_model': result['res_model']}
-                    )
-                else:
-                    raise ValidationError(_("No approved WhatsApp Templates are available for this model."))
+                self._raise_no_template_error(result['res_model'])
+
         if context.get('active_ids') or context.get('active_id'):
             result['res_ids'] = context.get('active_ids') or [context.get('active_id')]
         if context.get('active_ids') and len(context['active_ids']) > 1:

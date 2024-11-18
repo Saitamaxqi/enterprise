@@ -21,15 +21,6 @@
                 <group name="attachments" position="attributes">
                     <attribute name="invisible">not print and not email and not snailmail</attribute>
                 </group>
-                <xpath expr="//footer/button[1]" position="attributes">
-                    <attribute name="invisible">not print or not email and not sms and not snailmail</attribute>
-                </xpath>
-                <xpath expr="//footer/button[2]" position="attributes">
-                    <attribute name="invisible">print or not email and not sms and not snailmail</attribute>
-                </xpath>
-                <xpath expr="//footer/button[3]" position="attributes">
-                    <attribute name="invisible">not print or email or sms or snailmail</attribute>
-                </xpath>
             </field>
         </record>
     </data>

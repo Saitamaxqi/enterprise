@@ -17,7 +17,7 @@
             <field name="model">account_followup.followup.line</field>
             <field name="inherit_id" ref="account_followup.view_account_followup_followup_line_form"/>
             <field name="arch" type="xml">
-                <field name="send_email" position="after">
+                <field name="send_sms" position="after">
                     <field name="send_letter"/>
                 </field>
                 <field name="mail_template_id" position="attributes">
