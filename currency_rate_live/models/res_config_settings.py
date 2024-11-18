@@ -151,6 +151,7 @@ CURRENCY_PROVIDER_SELECTION = [
     (['CZ'], 'cnb', '[CZ] Czech National Bank'),
     (['EG'], 'cbegy', '[EG] Central Bank of Egypt'),
     (['GT'], 'banguat', '[GT] Bank of Guatemala'),
+    (['HU'], 'mnb', '[HU] Magyar Nemzeti Bank'),
     (['IT'], 'boi', '[IT] Bank of Italy'),
     (['MX'], 'banxico', '[MX] Bank of Mexico'),
     (['PE'], 'bcrp', '[PE] SUNAT (replaces Bank of Peru)'),
@@ -1232,6 +1233,37 @@ class ResCompany(models.Model):
         if 'IDR' not in result:
             result['IDR'] = (1.0, request_date)
 
+        return result
+
+    @api.model
+    def _parse_mnb_data(self, available_currencies):
+        """
+        This method is used to update the currencies by using MNB (Magyar Nemzeti Bank) service API.
+        The bank's latest rates are accessible using the SOAP service: http://www.mnb.hu/arfolyamok.asmx?wsdl
+
+        Source: https://www.mnb.hu/en/arfolyamok
+
+        If a currency has no rate, it will be skipped.
+        """
+        request_url = "http://www.mnb.hu/arfolyamok.asmx?wsdl"
+        client = Client(request_url)
+        rates_el = etree.fromstring(client.service.GetCurrentExchangeRates())
+
+        result = {}
+        try:
+            date = datetime.datetime.strptime(rates_el.find('./Day').attrib['date'], '%Y-%m-%d')
+            rates = {
+                rate_el.attrib['curr']: int(rate_el.attrib['unit']) / float(rate_el.text.replace(',', '.'))
+                for rate_el in rates_el.findall('.//Rate')
+            }
+        except (AttributeError, ValueError):
+            return result
+        
+        for curr in available_currencies.mapped('name') & rates.keys():
+            result[curr] = (rates[curr], date)
+
+        if 'HUF' not in result:
+            result['HUF'] = (1.0, date)
         return result
 
     @api.model
