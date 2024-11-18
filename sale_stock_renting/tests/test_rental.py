@@ -871,7 +871,7 @@ class TestRentalPicking(TestRentalCommon):
             })
         rental_order = self.sale_order_id.copy()
         rental_order.order_line.product_id.rent_ok = True
-        rental_order.order_line.write({'product_uom_qty': 1, 'is_rental': True, 'route_id': custom_rental_route.id})
+        rental_order.order_line.write({'product_uom_qty': 1, 'is_rental': True, 'route_ids': [Command.link(custom_rental_route.id)]})
         rental_order.action_confirm()
         picking_out = rental_order.picking_ids.filtered(lambda p: p.picking_type_code == 'outgoing')
         picking_in = rental_order.picking_ids - picking_out
