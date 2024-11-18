@@ -59,6 +59,7 @@
                                     aeat_mod_349_returns_goods_consignment.balance +
                                     aeat_mod_349_substitutions.balance
                                 </field>
+                                <field name="subformula" eval="False"/>
                             </record>
                         </field>
                     </record>
@@ -96,6 +97,7 @@
                                     aeat_mod_349_returns_goods_consignment_refunds.balance +
                                     aeat_mod_349_substitutions_refunds.balance
                                 </field>
+                                <field name="subformula" eval="False"/>
                             </record>
                         </field>
                     </record>
