@@ -292,32 +292,6 @@ class ResPartner(models.Model):
             if eligible_levels:
                 aml.followup_line_id = max(eligible_levels, key=lambda level: level.delay)
 
-    def _get_partner_account_report_attachment(self, report, options=None):
-        self.ensure_one()
-        if self.lang:
-            # Print the followup in the customer's language
-            report = report.with_context(lang=self.lang)
-
-        if not options:
-            options = report.get_options({
-                'partner_ids': self.ids,
-                'unfold_all': True,
-                'unreconciled': True,
-                'hide_account': True,
-                'all_entries': False,
-            })
-        attachment_file = report.export_to_pdf(options)
-        return self.env['ir.attachment'].create([
-            {
-                'name': f"{self.name} - {attachment_file['file_name']}",
-                'res_model': self._name,
-                'res_id': self.id,
-                'type': 'binary',
-                'raw': attachment_file['file_content'],
-                'mimetype': 'application/pdf',
-            },
-        ])
-
     def send_followup_email(self, options):
         """
         Send a follow-up report by email to customers in self
