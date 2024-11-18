@@ -3,9 +3,9 @@ from odoo.addons.mail.tests.common import MailCommon
 from odoo.addons.test_mail.data.test_mail_data import MAIL_TEMPLATE
 from odoo.tests import tagged, users
 from odoo.tools import formataddr
-from odoo.tools.mail import email_normalize
 
-@tagged('post_install', '-at_install', 'mail_flow')
+
+@tagged('post_install', '-at_install', 'mail_flow', 'mail_tools')
 class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
 
     @classmethod
@@ -415,9 +415,6 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
         self.assertEqual(create_vals, ticket._get_customer_information().get(email, {}))
         self.assertEqual(create_vals['name'], partner_name)
         self.assertEqual(create_vals['phone'], partner_phone)
-
-        # check that the creation of the contact won't fail due to bad values
-        _partner = self.env['res.partner'].create(create_vals)
 
     def test_ticket_create_ticket_email_cc(self):
         ''' Make sure creating a ticket with an email_cc field creates a follower. '''

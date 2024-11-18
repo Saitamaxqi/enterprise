@@ -847,19 +847,18 @@ class HelpdeskTicket(models.Model):
         return recipients
 
     def _get_customer_information(self):
-        email_normalized_to_values = super()._get_customer_information()
-        Partner = self.env['res.partner']
+        email_keys_to_values = super()._get_customer_information()
 
-        for record in self.filtered('partner_email'):
-            email_normalized = tools.email_normalize(record.partner_email)
-            if not email_normalized:
+        for ticket in self:
+            email_key = tools.email_normalize(ticket.partner_email) or ticket.partner_email
+            # do not fill Falsy with random data, unless monorecord (= always correct)
+            if not email_key and len(self) > 1:
                 continue
-            values = email_normalized_to_values.setdefault(email_normalized, {})
-            values.update({
-                'name': record.partner_name or tools.parse_contact_from_email(record.partner_email)[0] or record.partner_email,
-                'phone': record.partner_phone,
+            email_keys_to_values.setdefault(email_key, {}).update({
+                'name': ticket.partner_name or tools.parse_contact_from_email(ticket.partner_email)[0] or ticket.partner_email,
+                'phone': ticket.partner_phone,
             })
-        return email_normalized_to_values
+        return email_keys_to_values
 
     def _ticket_email_split(self, msg):
         email_list = tools.email_split((msg.get('to') or '') + ',' + (msg.get('cc') or ''))
