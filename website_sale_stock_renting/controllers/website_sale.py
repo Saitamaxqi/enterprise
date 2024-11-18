@@ -16,7 +16,7 @@ class WebsiteSaleStockRenting(WebsiteSale):
                 search_result = search_result.sudo()._filter_on_available_rental_products(
                     fields.Datetime.to_datetime(options.get('from_date')),
                     fields.Datetime.to_datetime(options.get('to_date')),
-                    request.website._get_warehouse_available(),
+                    request.website.warehouse_id.id,
                 )
                 product_count = len(search_result)
             except ValueError:

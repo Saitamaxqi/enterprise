@@ -64,9 +64,10 @@ class ProductProduct(models.Model):
             warehouse_id=warehouse_id
         ).qty_available
         qty_available += self.with_context(warehouse_id=warehouse_id).qty_in_rent
-        rented_quantities, key_dates = self._get_rented_quantities(from_date, to_date, domain=[
-            ('order_id.warehouse_id', '=', warehouse_id)
-        ])
+        wh_domain = [('order_id.warehouse_id', '=', warehouse_id)] if warehouse_id else []
+        rented_quantities, key_dates = self._get_rented_quantities(
+            from_date, to_date, domain=wh_domain
+        )
         website = with_cart and ir_http.get_request_website()
         cart = website and website.sale_get_order()
         if cart:

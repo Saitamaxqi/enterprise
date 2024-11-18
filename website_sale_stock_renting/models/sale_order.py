@@ -24,9 +24,11 @@ class SaleOrder(models.Model):
         to_date = self.rental_return_date
         common_lines = self._get_common_product_lines(line=line, product=product)
         qty_available = product.with_context(
-            from_date=from_date, to_date=to_date, warehouse_id=self.warehouse_id.id
+            from_date=from_date, to_date=to_date, warehouse_id=self.website_id.warehouse_id.id
         ).qty_available
-        qty_available += product.with_context(warehouse_id=self.warehouse_id.id).qty_in_rent
+        qty_available += product.with_context(
+            warehouse_id=self.website_id.warehouse_id.id
+        ).qty_in_rent
         product_rented_qties, product_key_dates = product._get_rented_quantities(
             from_date, to_date, domain=[('order_id', '!=', self.id)]
         )

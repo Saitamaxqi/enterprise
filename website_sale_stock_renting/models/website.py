@@ -15,6 +15,7 @@ class Website(models.Model):
                 return min(
                     avail['quantity_available']
                     for avail in product.sudo()._get_availabilities(
-                        start_date, end_date, self._get_warehouse_available())
+                        start_date, end_date, self.warehouse_id.id
+                    )
                 )
         return stock_quantity

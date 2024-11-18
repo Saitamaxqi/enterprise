@@ -23,7 +23,9 @@ class WebsiteSaleStockRenting(WebsiteSaleRenting):
         result = {'preparation_time': product_sudo.preparation_time}
         if not product_sudo.allow_out_of_stock_order:
             result['renting_availabilities'] = product_sudo._get_availabilities(
-                fields.Datetime.to_datetime(min_date), fields.Datetime.to_datetime(max_date),
-                request.website._get_warehouse_available(), with_cart=True
+                fields.Datetime.to_datetime(min_date),
+                fields.Datetime.to_datetime(max_date),
+                request.website.warehouse_id.id,
+                with_cart=True,
             )
         return result

@@ -47,21 +47,20 @@ class ProductTemplate(models.Model):
         ).product_variant_ids.filtered(lambda p: bool(p.qty_available > 0 or p.qty_in_rent > 0))
         templates_with_available_qty = self.env['product.template']
         if variants_to_check:
-            sols = self.env['sale.order.line'].search(
-                [
-                    ('is_rental', '=', True),
-                    ('product_id', 'in', variants_to_check.ids),
-                    ('state', 'in', ('sent', 'sale')),
-                    ('return_date', '>', from_date),
-                    '|', ('reservation_begin', '<', to_date),
-                         ('qty_delivered', '>', 0),
-                    # We're in sudo, need to restrict the search to the SOL of the website company
-                    ('company_id', '=', self.env.company.id),
-                    # Only load SOLs targeting the same warehouse whose stock we're considering
-                    ('order_id.warehouse_id', '=', warehouse_id),
-                ],
-                order='reservation_begin asc'
-            )
+            search_domain = [
+                ('is_rental', '=', True),
+                ('product_id', 'in', variants_to_check.ids),
+                ('state', 'in', ('sent', 'sale')),
+                ('return_date', '>', from_date),
+                '|', ('reservation_begin', '<', to_date),
+                     ('qty_delivered', '>', 0),
+                # We're in sudo, need to restrict the search to the SOL of the website company
+                ('company_id', '=', self.env.company.id),
+            ]
+            if warehouse_id:
+                # Only load SOLs targeting the same warehouse whose stock we're considering
+                search_domain.append(('order_id.warehouse_id', '=', warehouse_id))
+            sols = self.env['sale.order.line'].search(search_domain, order='reservation_begin asc')
             # Group SOL by product_id
             sol_by_variant = defaultdict(lambda: self.env['sale.order.line'])
             for sol in sols:
