@@ -6,7 +6,6 @@ import json
 from datetime import datetime, timedelta
 from lxml import html
 from unittest.mock import patch
-from urllib import parse
 
 from odoo import exceptions
 from odoo.addons.knowledge.tests.common import KnowledgeCommon, KnowledgeCommonWData
@@ -976,41 +975,47 @@ class TestKnowledgeArticleCopy(KnowledgeCommonBusinessCase):
         def render_embedded_view(embedded_props):
             return '''
                 <div data-embedded='view'
-                    data-oe-protected="true"
-                    data-embedded-props="%s"/>
-            ''' % (parse.quote(json.dumps(embedded_props)))
+                    data-oe-protected='true'
+                    data-embedded-props='%s'/>
+            ''' % (json.dumps(embedded_props))
 
         article.write({
             'body': (
                 '<p>Hello world</p>' +
                 render_embedded_view({
-                    'action_xml_id': 'knowledge.knowledge_article_item_action',
-                    'display_name': 'Kanban',
-                    'view_type': 'kanban',
-                    'context': {
-                        'active_id': article.id,
-                        'default_parent_id': article.id,
-                        'default_icon': '📄',
-                        'default_is_article_item': True,
+                    'viewProps': {
+                        'action_xml_id': 'knowledge.knowledge_article_item_action',
+                        'display_name': 'Kanban',
+                        'view_type': 'kanban',
+                        'context': {
+                            'active_id': article.id,
+                            'default_parent_id': article.id,
+                            'default_icon': '📄',
+                            'default_is_article_item': True,
+                        }
                     }
                 }) +
                 render_embedded_view({
-                    'action_xml_id': 'knowledge.knowledge_article_item_action',
-                    'display_name': 'List',
-                    'view_type': 'list',
-                    'context': {
-                        'active_id': article.id,
-                        'default_parent_id': article.id,
-                        'default_icon': '📄',
-                        'default_is_article_item': True,
+                    'viewProps': {
+                        'action_xml_id': 'knowledge.knowledge_article_item_action',
+                        'display_name': 'List',
+                        'view_type': 'list',
+                        'context': {
+                            'active_id': article.id,
+                            'default_parent_id': article.id,
+                            'default_icon': '📄',
+                            'default_is_article_item': True,
+                        }
                     }
                 }) +
                 render_embedded_view({
-                    'action_xml_id': 'knowledge.knowledge_article_action',
-                    'display_name': 'Articles',
-                    'view_type': 'list',
-                    'context': {
-                        'search_default_filter_trashed': 1,
+                    'viewProps': {
+                        'action_xml_id': 'knowledge.knowledge_article_action',
+                        'display_name': 'Articles',
+                        'view_type': 'list',
+                        'context': {
+                            'search_default_filter_trashed': 1,
+                        }
                     }
                 })
             )
@@ -1041,9 +1046,10 @@ class TestKnowledgeArticleCopy(KnowledgeCommonBusinessCase):
         # Check that the original article contains the embedded views we want
         self.assertEqual(len(embedded_views), 3)
         for (embedded_view, expected_view_type, expected_context) in zip(embedded_views, expected_view_types, expected_contexts):
-            embedded_props = json.loads(parse.unquote(embedded_view.get('data-embedded-props', {})))
-            self.assertEqual(embedded_props['view_type'], expected_view_type)
-            self.assertEqual(embedded_props['context'], expected_context)
+            embedded_props = json.loads(embedded_view.get('data-embedded-props', {}))
+            view_props = embedded_props.get('viewProps', {})
+            self.assertEqual(view_props['view_type'], expected_view_type)
+            self.assertEqual(view_props['context'], expected_context)
 
         # Copy the article
         new_article = article.action_make_private_copy()
@@ -1072,9 +1078,10 @@ class TestKnowledgeArticleCopy(KnowledgeCommonBusinessCase):
 
         self.assertEqual(len(embedded_views), 3)
         for (embedded_view, expected_view_type, expected_context) in zip(embedded_views, expected_view_types, expected_contexts):
-            embedded_props = json.loads(parse.unquote(embedded_view.get('data-embedded-props', {})))
-            self.assertEqual(embedded_props['view_type'], expected_view_type)
-            self.assertEqual(embedded_props['context'], expected_context)
+            embedded_props = json.loads(embedded_view.get('data-embedded-props', {}))
+            view_props = embedded_props.get('viewProps', {})
+            self.assertEqual(view_props['view_type'], expected_view_type)
+            self.assertEqual(view_props['context'], expected_context)
 
     @mute_logger('odoo.addons.base.models.ir_model', 'odoo.addons.base.models.ir_rule')
     @users('employee')

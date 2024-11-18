@@ -9,7 +9,6 @@ from collections import defaultdict
 from datetime import datetime, timedelta
 from lxml import html
 from markupsafe import Markup
-from urllib import parse
 from werkzeug.urls import url_join
 
 from odoo import api, Command, fields, models, _
@@ -1196,14 +1195,15 @@ class KnowledgeArticle(models.Model):
             needs_embed_view_update = False
             fragment = html.fragment_fromstring(article.body, create_parent=True)
             for element in fragment.findall(".//*[@data-embedded='view']"):
-                embedded_props = json.loads(parse.unquote(element.get("data-embedded-props")))
-                context = embedded_props.get("context", {})
+                embedded_props = json.loads(element.get("data-embedded-props"))
+                view_props = embedded_props.get("viewProps", {})
+                context = view_props.get("context", {})
                 if context.get("default_is_article_item") and context.get("active_id") == original_article.id:
                     context.update({
                         "active_id": article.id,
                         "default_parent_id": article.id
                     })
-                    element.set("data-embedded-props", parse.quote(json.dumps(embedded_props), safe="()*!'"))
+                    element.set("data-embedded-props", json.dumps(embedded_props))
                     needs_embed_view_update = True
 
             if needs_embed_view_update:

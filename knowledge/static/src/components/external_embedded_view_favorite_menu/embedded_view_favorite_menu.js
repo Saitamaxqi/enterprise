@@ -41,6 +41,10 @@ class InsertEmbeddedViewMenu extends Component {
      *                        to store this view as an embedded view.
      */
     extractCurrentViewEmbedTemplateProps() {
+        /**
+         * Note: If you change the embedded view props (i.e: context key, etc.),
+         * do not forget to update the related python tests.
+         */
         const viewProps = {
             context: this.getViewContext(),
             displayName: this.env.config.getDisplayName(),
