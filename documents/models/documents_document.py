@@ -84,7 +84,8 @@ class DocumentsDocument(models.Model):
     res_model_name = fields.Char(compute='_compute_res_model_name', index=True)
     type = fields.Selection([('url', 'URL'), ('binary', 'File'), ('folder', 'Folder')],
                             default='binary', string='Type', required=True, readonly=True)
-    shortcut_document_id = fields.Many2one('documents.document', 'Source Document', ondelete='cascade')
+    shortcut_document_id = fields.Many2one('documents.document', 'Source Document', ondelete='cascade',
+                                           index='btree_not_null')
     shortcut_ids = fields.One2many('documents.document', 'shortcut_document_id')
 
     favorited_ids = fields.Many2many('res.users', string="Favorite of")
@@ -231,11 +232,12 @@ class DocumentsDocument(models.Model):
         for record in self:
             record.file_extension = _sanitize_file_extension(record.file_extension) if record.file_extension else False
 
-    @api.constrains('shortcut_document_id', 'shortcut_ids', 'type', 'folder_id', 'children_ids')
+    @api.constrains('shortcut_document_id', 'shortcut_ids', 'type', 'folder_id', 'children_ids', 'company_id')
     def _check_shortcut_fields(self):
         errors = []
-        wrong_types = self.browse()
-        wrong_parents = self.folder_id.filtered('shortcut_document_id')
+        wrong_types, wrong_companies = self.browse(), self.browse()
+        # Access rights can allow for a document to be edited without having access to its parent folder
+        wrong_parents_sudo = self.folder_id.sudo().filtered('shortcut_document_id')
         for target in self.filtered('shortcut_ids'):
             for shortcut in target.shortcut_ids:
                 if shortcut.type != target.type:
@@ -244,14 +246,21 @@ class DocumentsDocument(models.Model):
             if shortcut.type != shortcut.shortcut_document_id.type:
                 wrong_types |= shortcut
             if shortcut.children_ids:
-                wrong_parents |= shortcut
+                wrong_parents_sudo |= shortcut
+            if (shortcut.shortcut_document_id.company_id
+                    and shortcut.shortcut_document_id.company_id != shortcut.company_id):
+                wrong_companies |= shortcut
         if wrong_types:
             message = _("The following documents/shortcuts have a type mismatch: \n")
             documents_list = "\n- ".join(wrong_types.mapped('name'))
             errors.append(f'{message}\n- {documents_list}')
-        if wrong_parents:
+        if wrong_parents_sudo:
             message = _("The following shortcuts cannot be set as documents parents: \n")
-            shortcuts_list = "\n- ".join(wrong_parents.mapped('name'))
+            shortcuts_list = "\n- ".join(wrong_parents_sudo.mapped('name'))
+            errors.append(f'{message}\n- {shortcuts_list}')
+        if wrong_companies:
+            message = _("The following documents/shortcuts have a company mismatch: \n")
+            shortcuts_list = "\n- ".join(wrong_companies.mapped('name'))
             errors.append(f'{message}\n- {shortcuts_list}')
         if errors:
             raise ValidationError('\n\n'.join(errors))
@@ -790,7 +799,7 @@ class DocumentsDocument(models.Model):
         :param bool | None is_access_via_link_hidden: change the `is_access_via_link_hidden` if not None
         """
         self.flush_model()
-
+        shortcuts_to_check_owner_target_access = self.browse()
         for field, value in (
             ('access_internal', access_internal),
             ('access_via_link', access_via_link),
@@ -800,14 +809,17 @@ class DocumentsDocument(models.Model):
                 continue
 
             # records that we might need to update
-            candidates = self.env['documents.document']._search([
+            candidates_domain = [
                 (field, '!=', value),
                 *([] if self.env.su else [('user_permission', '=', 'edit')]),
                 # the update is done only "target -> shortcut",
                 # but not "shortcut -> target"
                 ('shortcut_document_id', '=', False),
                 ('id', 'child_of', self.ids),
-            ]).select('id', 'folder_id', 'shortcut_document_id', field)
+            ]
+            candidates = self.env['documents.document']._search(
+                candidates_domain).select('id', 'folder_id', 'shortcut_document_id', field)
+            shortcuts_to_check_owner_target_access |= self.search([('shortcut_document_id', 'any', candidates_domain)])
 
             self.env.cr.execute(SQL("""
                 WITH RECURSIVE candidates AS (%(candidates)s),
@@ -846,6 +858,8 @@ class DocumentsDocument(models.Model):
             'user_permission',
         ])
 
+        shortcuts_to_check_owner_target_access._unlink_shortcut_if_target_inaccessible()
+
     def _action_update_members(self, partners):
         """Update the members access on all files bellow the current folder.
 
@@ -865,11 +879,12 @@ class DocumentsDocument(models.Model):
                 values_to_update[role, expiration_date] |= partner
 
         # use `_search` to respect access rules and to use `_search_user_permission`
-        documents = self.env['documents.document']._search([
+        to_update_domain = [
             *([] if self.env.su else [('user_permission', '=', 'edit')]),
             ('shortcut_document_id', '=', False),  # update "target -> shortcuts" but not "shortcut -> target"
             ('id', 'child_of', self.ids),
-        ]).select('id')
+        ]
+        documents = self.env['documents.document']._search(to_update_domain).select('id')
 
         for (role, expiration_date), partners in values_to_update.items():
             update_fields = []
@@ -919,8 +934,13 @@ class DocumentsDocument(models.Model):
                 role=role,
                 update_fields=update_fields,
             ))
-
+        shortcuts_to_check_owner_target_access = self.browse()
         if partners_to_remove:
+            shortcuts_to_check_owner_target_access = self.search(expression.AND([
+                [('shortcut_document_id', 'any', to_update_domain)],
+                [('owner_id.partner_id', 'in', partners_to_remove.ids)],
+            ]))
+
             self.env.cr.execute(SQL("""
                 WITH documents AS (%(documents)s),
                      docs_and_shortcuts AS (
@@ -942,6 +962,8 @@ class DocumentsDocument(models.Model):
             'access_ids',
             'user_permission',
         ])
+
+        shortcuts_to_check_owner_target_access._unlink_shortcut_if_target_inaccessible()
 
     def action_see_documents(self):
         if self.type != "folder":
@@ -1660,12 +1682,17 @@ class DocumentsDocument(models.Model):
         is_manager = self.env.is_admin() or self.env.user.has_group('documents.group_documents_manager')
         pinned_folders_start = self.filtered('is_pinned_folder')
 
-        if (
-            'owner_id' in vals
-            and not is_manager
-            and any(previous_owner != self.env.user for previous_owner in self.mapped('owner_id'))
-        ):
-            raise AccessError(_("You cannot change the owner of documents you do not own."))
+        shortcuts_to_check_owner_target_access = self.browse()
+
+        if (owner_id := vals.get('owner_id')) is not None:
+            if not isinstance(owner_id, int):  # recordset
+                owner_id = owner_id.id
+            if not is_manager and any(d.owner_id != self.env.user for d in self):
+                raise AccessError(_("You cannot change the owner of documents you do not own."))
+
+            targets_changing_owner = self.filtered(lambda d: d.owner_id.id != owner_id)
+            shortcuts_to_check_owner_target_access |= targets_changing_owner.shortcut_ids.filtered(
+                lambda d: d.owner_id == d.shortcut_document_id.owner_id)
 
         if folder_id := vals.get('folder_id'):
             folder = self.env['documents.document'].browse(folder_id)
@@ -1768,6 +1795,12 @@ class DocumentsDocument(models.Model):
                              name=self.name, user=self.env.user.name)
                 document.with_context(no_document=True).request_activity_id.action_feedback(
                     feedback=feedback, attachment_ids=[document.attachment_id.id])
+
+        if (company_id := vals.get('company_id')) and self.shortcut_ids:  # no need if resetting company_id to False
+            self.shortcut_ids.sudo().write({'company_id': company_id})
+
+        if shortcuts_to_check_owner_target_access:
+            shortcuts_to_check_owner_target_access._unlink_shortcut_if_target_inaccessible()
 
         return write_result
 
@@ -1946,6 +1979,12 @@ class DocumentsDocument(models.Model):
                 [(field_name, 'in', folder_ids)] for field_name in company_field_names
             ]), limit=1):
                 raise ValidationError(_("Impossible to delete folders used by other applications."))
+
+    def _unlink_shortcut_if_target_inaccessible(self):
+        """As a fix in stable version, delete shortcuts when target is no longer accessible to the owner."""
+        for owner, shortcuts in self.filtered('shortcut_document_id').grouped("owner_id").items():
+            shortcuts_as_owner_sudo = shortcuts.with_user(owner).sudo()
+            shortcuts_as_owner_sudo.filtered(lambda d: d.shortcut_document_id.user_permission == 'none').unlink()
 
     @api.autovacuum
     def _gc_clear_bin(self):
