@@ -1,5 +1,3 @@
 -- disable voip
-INSERT INTO ir_config_parameter (key, value)
-VALUES ('voip.mode', 'demo')
-    ON CONFLICT (key) DO
-       UPDATE SET value = 'demo';
+UPDATE voip_provider
+   SET mode = 'demo';
