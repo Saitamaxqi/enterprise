@@ -36,18 +36,20 @@
             </field>
 
             <field name="invoice_incoterm_id" position="after">
-                <field name="l10n_uy_edi_cfe_sale_mode" readonly="state != 'draft'"/>
-                <field name="l10n_uy_edi_cfe_transport_route" readonly="state != 'draft'"/>
+                <field name="l10n_uy_edi_cfe_sale_mode" readonly="state != 'draft'" invisible="country_code != 'UY'"/>
+                <field name="l10n_uy_edi_cfe_transport_route" readonly="state != 'draft'" invisible="country_code != 'UY'"/>
             </field>
 
             <field name="invoice_incoterm_id" position="before">
-                <field name="l10n_uy_edi_addenda_ids" widget="many2many_tags"/>
+                <field name="l10n_uy_edi_addenda_ids" widget="many2many_tags" invisible="country_code != 'UY'"/>
             </field>
 
             <xpath expr="//field[@name='invoice_line_ids']/list//field[@name='name']" position="after">
-                <field name="l10n_uy_edi_addenda_ids" widget="many2many_tags" optional="hide" context="{
-                    'default_type': 'item',
-                    'form_view_ref': 'l10n_uy_edi.l10n_uy_edi_addenda_view_form_only_item'}"/>
+                <field name="l10n_uy_edi_addenda_ids" widget="many2many_tags" optional="hide"
+                       column_invisible="parent.country_code != 'UY'"
+                       context="{
+                        'default_type': 'item',
+                        'form_view_ref': 'l10n_uy_edi.l10n_uy_edi_addenda_view_form_only_item'}"/>
             </xpath>
 
         </field>
