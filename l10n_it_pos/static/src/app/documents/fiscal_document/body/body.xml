@@ -18,6 +18,9 @@
                 </t>
             </t>
         </t>
+        <t t-if="this.adjustment">
+            <PrintRecSubtotalAdjustment operator="1" adjustmentType="this.adjustment.adjustmentType" description="this.adjustment.description" amount="this.adjustment.amount" justification="2" />
+        </t>
         <t t-if="this.order.isRefunded">
             <printRecTotal operator="1" />
         </t>  

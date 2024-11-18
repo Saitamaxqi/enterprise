@@ -1,3 +1,4 @@
+export { PrintRecSubtotalAdjustment } from "./print_rec_subtotal_adjustment/print_rec_subtotal_adjustment";
 export { PrintRecItemAdjustment } from "./print_rec_item_adjustment/print_rec_item_adjustment";
 export { PrintDuplicateReceipt } from "./print_duplicate_receipt/print_duplicate_receipt";
 export { PrintRecMessage } from "./print_rec_message/print_rec_message";
