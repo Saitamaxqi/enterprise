@@ -13,12 +13,7 @@ class WebsiteVisitor(models.Model):
         string="Push Subscriptions")
     has_push_notifications = fields.Boolean('Push Notifications Enabled')
 
-    def init(self):
-        self._cr.execute("""
-            CREATE INDEX IF NOT EXISTS website_visitor_has_push_notifications_index
-                                    ON website_visitor (id)
-                                 WHERE has_push_notifications = TRUE;
-        """)
+    _has_push_notifications_index = models.UniqueIndex("(id) WHERE has_push_notifications IS TRUE")
 
     def action_send_push_notification(self):
         """ Opens social media post form prefilled with selected website.visitor

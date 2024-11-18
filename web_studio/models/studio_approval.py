@@ -1191,11 +1191,7 @@ class StudioApprovalEntry(models.Model):
         'unique(rule_id,model,res_id)',
         "A rule can only be approved/rejected once per record.",
     )
-
-    def init(self):
-        self._cr.execute("""SELECT indexname FROM pg_indexes WHERE indexname = 'studio_approval_entry_model_res_id_idx'""")
-        if not self._cr.fetchone():
-            self._cr.execute("""CREATE INDEX studio_approval_entry_model_res_id_idx ON studio_approval_entry (model, res_id)""")
+    _model_res_id_idx = models.Index("(model, res_id)")
 
     @api.depends('user_id', 'model', 'res_id')
     def _compute_name(self):

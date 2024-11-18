@@ -18,7 +18,7 @@ import odoo
 from odoo import _, api, Command, fields, models
 from odoo.exceptions import AccessError, UserError, ValidationError
 from odoo.osv import expression
-from odoo.tools import groupby, image_process, SQL, create_index
+from odoo.tools import groupby, image_process, SQL
 from odoo.tools.mimetypes import get_extension
 from odoo.tools.misc import clean_context
 from odoo.tools.pdf import PdfFileReader
@@ -186,13 +186,7 @@ class DocumentsDocument(models.Model):
         'check(shortcut_document_id <> id)',
         "A shortcut cannot point to itself",
     )
-
-    def init(self):
-        super().init()
-        create_index(self.env.cr,
-                     indexname='documents_document_res_model_res_id_idx',
-                     tablename=self._table,
-                     expressions=['res_model', 'res_id'])
+    _res_model_res_id_idx = models.Index("(res_model, res_id)")
 
     @api.depends('document_token')
     def _compute_access_token(self):

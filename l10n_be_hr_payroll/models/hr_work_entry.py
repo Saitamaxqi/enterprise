@@ -7,14 +7,8 @@ from odoo import api, fields, models, _
 class HrWorkEntry(models.Model):
     _inherit = 'hr.work.entry'
 
-    def init(self):
-        # speeds up `l10n_be.work.entry.daily.benefit.report`
-        self.env.cr.execute("""
-            CREATE INDEX IF NOT EXISTS hr_work_entry_daily_benefit_idx
-                ON hr_work_entry (active, employee_id)
-                WHERE state IN ('draft', 'validated');
-        """)
-        super().init()
+    # speeds up `l10n_be.work.entry.daily.benefit.report`
+    _daily_benefit_idx = models.Index("(active, employee_id) WHERE state IN ('draft', 'validated')")
 
     @api.model_create_multi
     def create(self, vals_list):
