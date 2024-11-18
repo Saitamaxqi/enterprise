@@ -92,7 +92,6 @@ class PurchaseOrder(models.Model):
         return {
             'name': self.env['ir.sequence'].sudo().next_by_code('sale.order') or '/',
             'company_id': company.id,
-            'team_id': self.env['crm.team'].with_context(allowed_company_ids=company.ids)._get_default_team_id(domain=[('company_id', '=', company.id)]).id,
             'client_order_ref': name,
             'partner_id': partner.id,
             'pricelist_id': partner.property_product_pricelist.id,
