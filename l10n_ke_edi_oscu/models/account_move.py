@@ -686,3 +686,8 @@ class AccountMove(models.Model):
         domain = 'etims-sbx' if self.company_id.l10n_ke_server_mode == 'test' else 'etims'
         data = f'{self.company_id.vat}{self.company_id.l10n_ke_branch_code}{self.l10n_ke_oscu_signature}'
         return f'https://{domain}.kra.go.ke/common/link/etims/receipt/indexEtimsReceiptData?Data={data}'
+
+    def _refunds_origin_required(self):
+        if self.country_code == 'KE':
+            return True
+        return super()._refunds_origin_required()
