@@ -15,9 +15,6 @@ class WhatsAppComposerCase(WhatsAppCommon):
     def setUpClass(cls):
         super().setUpClass()
 
-        # WRITE access on partner is required to be able to post a message on it
-        cls.user_employee.write({'groups_id': [(4, cls.env.ref('base.group_partner_manager').id)]})
-
         # test records for sending messages
         cls.customers = cls.env['res.partner'].create([
             {
