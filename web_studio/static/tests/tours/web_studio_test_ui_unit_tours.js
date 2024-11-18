@@ -2029,3 +2029,33 @@ registry.category("web_tour.tours").add("web_studio_test_edit_duplicate_attribut
         },
     ],
 });
+
+registry.category("web_tour.tours").add("web_studio_test_use_action_domain", {
+    steps: () => [
+        {
+            trigger: "a[data-menu-xmlid='web_studio.studio_test_partner_menu']",
+            run: "click",
+        },
+        {
+            trigger: ".o_list_view",
+        },
+        {
+            trigger: ".o_web_studio_navbar_item button",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_sidebar",
+        },
+        {
+            trigger: ".o_list_table",
+            run() {
+                const names = Array.from(
+                    document.querySelectorAll(".o_list_table td[name=display_name]")
+                ).map((e) => e.textContent);
+                if (names.length !== 1 || names[0] !== "Michel") {
+                    throw new Error("record with employee=false should not be matched");
+                }
+            },
+        },
+    ],
+});

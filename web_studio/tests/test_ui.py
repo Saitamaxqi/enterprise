@@ -2016,3 +2016,27 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
                 </xpath>
             </data>
         """)
+
+    def test_use_action_domain(self):
+        self.env["res.partner"].search([['employee', '=', True]]).action_archive()
+        self.env["res.partner"].create({
+            "name": "Michel",
+            "employee": True,
+        })
+        self.env["res.partner"].create({
+            "name": "Paul",
+            "employee": False,
+        })
+        self.testAction.domain = "[['employee', '=', True]]"
+        self.testView.write({
+            "type": "list",
+            "arch": '''
+                <list>
+                    <field name="display_name" />
+                </list>
+            '''
+        })
+        self.testAction.write({
+            "view_ids": [Command.clear(), Command.create({"view_id": self.testView.id, "view_mode": "list"})]
+        })
+        self.start_tour("/web?debug=tests", "web_studio_test_use_action_domain", login="admin")

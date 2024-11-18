@@ -218,6 +218,7 @@ export class ViewEditorModel extends Reactive {
             }
             return {
                 context: { ...context, studio: 1 },
+                domain: editedAction.domain,
                 resModel: this.resModel,
                 SearchModel: searchModel,
                 setOverlay:
