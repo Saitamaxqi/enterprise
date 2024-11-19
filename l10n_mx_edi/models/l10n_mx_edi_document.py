@@ -807,7 +807,7 @@ class L10n_Mx_EdiDocument(models.Model):
             discount = base_line['discount']
             price_unit = base_line['price_unit']
             quantity = base_line['quantity']
-            price_subtotal = base_line['price_subtotal'] = base_line['tax_details']['total_excluded_currency']
+            price_subtotal = base_line['price_subtotal'] = base_line['tax_details']['raw_total_excluded_currency']
 
             if discount == 100.0:
                 gross_price_subtotal_before_discount = price_unit * quantity

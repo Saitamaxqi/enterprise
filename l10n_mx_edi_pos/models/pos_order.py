@@ -727,7 +727,7 @@ class PosOrder(models.Model):
                 cfdi_lines += base_lines + all_refund_base_lines
 
             # Nothing left. Everything is refunded or empty.
-            cfdi_lines = [x for x in cfdi_lines if not x['currency_id'].is_zero(x['tax_details']['total_excluded_currency'])]
+            cfdi_lines = [x for x in cfdi_lines if not x['currency_id'].is_zero(x['tax_details']['raw_total_excluded_currency'])]
             if not cfdi_lines:
                 cfdi_values['errors'] = ['empty_cfdi']
                 return
