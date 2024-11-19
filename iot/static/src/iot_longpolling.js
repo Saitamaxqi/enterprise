@@ -1,5 +1,4 @@
 import { registry } from '@web/core/registry';
-import { ensureJQuery } from "@web/core/ensure_jquery";
 import { IoTConnectionErrorDialog } from '@iot/dialogs/iot_connection_error_dialog';
 
 export class IoTLongpolling {
@@ -8,13 +7,7 @@ export class IoTLongpolling {
         this.setup(...arguments);
     }
     // setup to allow patching
-    async setup({ dialog }) {
-        try {
-            await ensureJQuery();
-        } catch {
-            console.info("IoTLongpolling: jQuery is not available, IoTLongpolling will not work.");
-        }
-
+    setup({ dialog }) {
         // CONSTANTS
         this.POLL_TIMEOUT = 60000;
         this.POLL_ROUTE = '/hw_drivers/event';
@@ -90,10 +83,9 @@ export class IoTLongpolling {
      */
     action(iot_ip, device_identifier, data) {
         this.protocol = window.location.protocol;
-        var self = this;
         var data = {
             params: {
-                session_id: self._session_id,
+                session_id: this._session_id,
                 device_identifier: device_identifier,
                 data: JSON.stringify(data),
             }
@@ -101,12 +93,7 @@ export class IoTLongpolling {
         var options = {
             timeout: this.ACTION_TIMEOUT,
         };
-        var prom = new Promise(function (resolve, reject) {
-            self._rpcIoT(iot_ip, self.ACTION_ROUTE, data, options)
-                .then(resolve)
-                .fail(reject);
-        });
-        return prom;
+        return this._rpcIoT(iot_ip, this.ACTION_ROUTE, data, options);
     }
 
     /**
@@ -173,23 +160,27 @@ export class IoTLongpolling {
      * @param {Object} data information needed to perform an action or the listener for the polling
      * @param {Object} options.timeout
      */
-    _rpcIoT(iot_ip, route, data, options) {
+    async _rpcIoT(iot_ip, route, data, options) {
         this.protocol = window.location.protocol;
         var port = this.protocol === 'http:' ? ':8069' : '';
         var url = this.protocol + '//' + iot_ip + port;
-        var queryOptions = Object.assign({
-            url: url + route,
-            dataType: 'json',
-            contentType: "application/json;charset=utf-8",
-            data: JSON.stringify(data),
-            method: 'POST',
-        }, options);
-        var request = $.ajax(queryOptions);
+        const requestParams = {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json;charset=utf-8",
+            },
+        };
+        if (options.timeout) {
+            requestParams.signal = AbortSignal.timeout(options.timeout);
+        }
+        const response = await fetch(url + route, requestParams);
+        const result = await response.json();
         if (this._listeners[iot_ip] && route === '/hw_drivers/event') {
-            this._listeners[iot_ip].rpc = request;
+            this._listeners[iot_ip].rpc = result;
             return this._listeners[iot_ip].rpc;
         } else {
-            return request;
+            return result;
         }
     }
 
@@ -200,7 +191,6 @@ export class IoTLongpolling {
      * @param {Boolean} fallback if true, no `IoTConnectionErrorDialog` popup will be displayed on fail
      */
     _poll(iot_ip, fallback = false) {
-        var self = this;
         var listener = this._listeners[iot_ip];
         var data = {
             params: {
@@ -212,27 +202,27 @@ export class IoTLongpolling {
         };
 
         // The backend has a maximum cycle time of 50 seconds so give +10 seconds
-        this._rpcIoT(iot_ip, this.POLL_ROUTE, data, options)
-            .then(function (result) {
-                self._retries = 0;
-                self._listeners[iot_ip].rpc = false;
-                const remainingDevices = Object.keys(self._listeners[iot_ip].devices || {});
+        this._rpcIoT(iot_ip, this.POLL_ROUTE, data, options).then(
+            (result) => {
+                this._retries = 0;
+                this._listeners[iot_ip].rpc = false;
+                const remainingDevices = Object.keys(this._listeners[iot_ip].devices || {});
                 if (result.result) {
-                    if (self._session_id === result.result.session_id) {
-                        self._onSuccess(iot_ip, result.result);
+                    if (this._session_id === result.result.session_id) {
+                        this._onSuccess(iot_ip, result.result);
                     }
                 } else if (remainingDevices.length > 0) {
-                    self._poll(iot_ip);
+                    this._poll(iot_ip);
                 }
-            }).fail(function (jqXHR, textStatus) {
-                if (textStatus === 'error') {
-                    if (!fallback) {
-                        self._doWarnFail(iot_ip);
-                    }
-                } else {
-                    self._onError();
+            },
+            (e) => {
+                if (e.name === "TimeoutError") {
+                    this._onError();
+                } else if (!fallback) {
+                    this._doWarnFail(iot_ip);
                 }
-            });
+            }
+        );
     }
 
     _onSuccess(iot_ip, result) {
