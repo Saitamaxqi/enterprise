@@ -243,22 +243,9 @@ Source: Opinion on the indexation of the amounts set in Article 1, paragraph 4, 
 
     @api.model
     def _get_invalid_niss_employee_ids(self):
-        # as we do not store if the niss is valid or not it's not possible to fetch all the employees directly
-        # use sql and manually filter the employees
-
-        # return nothing if user has no right to either employee or bank partner
-        if not self.browse().has_access('read') or not self.env.user.has_group('hr.group_hr_user'):
-            return []
-
-        self.env.cr.execute('''
-            SELECT emp.id,
-                   emp.niss
-              FROM hr_employee emp
-              JOIN hr_contract con
-              ON con.id = emp.contract_id
-              AND con.state in ('open', 'close')
-             WHERE emp.company_id IN %s
-               AND emp.employee_type IN ('employee', 'student')
-               AND emp.active=TRUE
-        ''', (tuple(c.id for c in self.env.companies if c.country_id.code == 'BE'),))
-        return [row['id'] for row in self.env.cr.dictfetchall() if not row['niss'] or not self._validate_niss(row['niss'])]
+        res = self.search_read([
+            ('company_id', 'in', self.env.companies.filtered(lambda c: c.country_id.code == 'BE').ids),
+            ('employee_type', 'in', ('employee', 'student')),
+            ('contract_ids.state', 'in', ('open', 'close'))
+        ], ['id', 'niss'])
+        return [row['id'] for row in res if not row['niss'] or not self._validate_niss(row['niss'])]
