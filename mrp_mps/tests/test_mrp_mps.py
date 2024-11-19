@@ -34,6 +34,7 @@ class TestMpsMps(common.TransactionCase):
         """
         super().setUpClass()
 
+        cls.mps_dates_month = cls.env.company._get_date_range()
         cls.table = cls.env['product.product'].create({
             'name': 'Table',
             'is_storable': True,
@@ -237,15 +238,14 @@ class TestMpsMps(common.TransactionCase):
         line is updated.
         """
         self.mps_screw.replenish_trigger = 'manual'
-        mps_dates = self.env.company._get_date_range()
         forecast_screw = self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_screw.id,
-            'date': mps_dates[0][0],
+            'date': self.mps_dates_month[0][0],
             'forecast_qty': 100
         })
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_screw.id,
-            'date': mps_dates[1][0],
+            'date': self.mps_dates_month[1][0],
             'forecast_qty': 100
         })
 
@@ -317,10 +317,10 @@ class TestMpsMps(common.TransactionCase):
         self.screw.seller_ids = [(6, 0, [seller.id])]
 
         self.mps_screw.replenish_trigger = 'manual'
-        mps_dates = self.env.company._get_date_range()
+        mps_dates_week = self.env.company._get_date_range()
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_screw.id,
-            'date': mps_dates[0][0],
+            'date': mps_dates_week[0][0],
             'forecast_qty': 100
         })
 
@@ -345,7 +345,7 @@ class TestMpsMps(common.TransactionCase):
 
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_screw.id,
-            'date': mps_dates[1][0],
+            'date': mps_dates_week[1][0],
             'forecast_qty': 100
         })
 
@@ -379,7 +379,7 @@ class TestMpsMps(common.TransactionCase):
 
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_screw.id,
-            'date': mps_dates[2][0],
+            'date': mps_dates_week[2][0],
             'forecast_qty': 100
         })
         mps_screw = self.mps_screw.get_production_schedule_view_state()[0]
@@ -447,10 +447,9 @@ class TestMpsMps(common.TransactionCase):
         self.bom_table_leg.produce_delay = 10
 
         # Create a forecast demand of 1 for table 4 months from now, on the 1st
-        mps_dates = self.env.company._get_date_range()
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_table.id,
-            'date': mps_dates[3][0],
+            'date': self.mps_dates_month[3][0],
             'forecast_qty': 1
         })
         drawer_forecasts = self.mps_drawer.get_production_schedule_view_state()[0]['forecast_ids']
@@ -469,11 +468,10 @@ class TestMpsMps(common.TransactionCase):
         a production schedule impact the indirect demand on other production
         that have a component as product.
         """
-        mps_dates = self.env.company._get_date_range()
 
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_table.id,
-            'date': mps_dates[0][0],
+            'date': self.mps_dates_month[0][0],
             'forecast_qty': 2
         })
 
@@ -491,7 +489,7 @@ class TestMpsMps(common.TransactionCase):
 
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_wardrobe.id,
-            'date': mps_dates[0][0],
+            'date': self.mps_dates_month[0][0],
             'forecast_qty': 3
         })
 
@@ -509,7 +507,7 @@ class TestMpsMps(common.TransactionCase):
         # for current period.
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_table.id,
-            'date': mps_dates[1][0],
+            'date': self.mps_dates_month[1][0],
             'forecast_qty': 2
         })
         mps_drawer, mps_screw = (self.mps_drawer | self.mps_screw).get_production_schedule_view_state()
@@ -523,7 +521,7 @@ class TestMpsMps(common.TransactionCase):
         # Ensure that a forecast on an intermediate schedule will correctly be added.
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_table_leg.id,
-            'date': mps_dates[1][0],
+            'date': self.mps_dates_month[1][0],
             'forecast_qty': 4
         })
         mps_screw = self.mps_screw.get_production_schedule_view_state()[0]
@@ -585,11 +583,9 @@ class TestMpsMps(common.TransactionCase):
 
         self.mps |= mps_cabinet | mps_wood
 
-        mps_dates = self.env.company._get_date_range()
-
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': mps_cabinet.id,
-            'date': mps_dates[0][0],
+            'date': self.mps_dates_month[0][0],
             'forecast_qty': 2
         })
 
@@ -783,7 +779,6 @@ class TestMpsMps(common.TransactionCase):
         })
 
         self.env.company.manufacturing_period = 'month'
-        mps_dates = self.env.company._get_date_range()
         self.env['mrp.product.forecast'].create({
             'production_schedule_id': self.mps_table.id,
             'date': datetime.today(),
@@ -793,8 +788,8 @@ class TestMpsMps(common.TransactionCase):
         self.env['mrp.production.schedule'].action_cron_replenish()
         purchase_order_line = self.env['purchase.order.line'].search([('product_id', '=', self.screw.id)])
         self.assertTrue(purchase_order_line)
-        self.assertEqual(purchase_order_line.date_planned.date(), mps_dates[0][0])
-        self.assertEqual(purchase_order_line.date_order.date(), mps_dates[0][0] - timedelta(days=3))
+        self.assertEqual(purchase_order_line.date_planned.date(), self.mps_dates_month[0][0])
+        self.assertEqual(purchase_order_line.date_order.date(), self.mps_dates_month[0][0] - timedelta(days=3))
         self.assertEqual(purchase_order_line.product_qty, 20)
         self.assertEqual(purchase_order_line.price_subtotal, 40)
 
@@ -803,11 +798,10 @@ class TestMpsMps(common.TransactionCase):
         when manufacturing_period is 'month' or 'week'.
         """
         self.env.company.manufacturing_period = 'month'
-        mps_dates = self.env.company._get_date_range()
         for delta in (3, 6, 12, 21):
             self.env['mrp.product.forecast'].create({
                 'production_schedule_id': self.mps_table.id,
-                'date': mps_dates[1][0] + timedelta(days=delta),
+                'date': self.mps_dates_month[1][0] + timedelta(days=delta),
                 'forecast_qty': delta
             })
 
@@ -819,7 +813,7 @@ class TestMpsMps(common.TransactionCase):
         forecast_records = self.env['mrp.product.forecast'].search([('production_schedule_id', '=', self.mps_table.id)])
         self.assertEqual(len(forecast_records), 5)
         self.assertEqual(forecast_records.mapped('forecast_qty'), [22, 3, 6, 12, 21])
-        self.assertEqual(forecast_records[0].date, mps_dates[1][0])
+        self.assertEqual(forecast_records[0].date, self.mps_dates_month[1][0])
 
         self.mps_table.set_forecast_qty(1, 84)
         self.assertEqual(forecast_records.mapped('forecast_qty'), [42, 3, 6, 12, 21])
@@ -983,3 +977,302 @@ class TestMpsMps(common.TransactionCase):
         incoming_qty = state['forecast_ids'][0]['incoming_qty']
         self.assertEqual(outgoing_qty, 12, 'outgoing qty is incorrect')
         self.assertEqual(incoming_qty, 12, 'outgoing qty is incorrect')
+
+    def test_forecast_target_qty(self):
+        """ Test that adding a safety stock target does not break indirect demand computation.
+        All periods are in month starting at January for more clarity. """
+        # Base case, set the safety stock target for the schedule of a final product
+        # table stock target = 3
+        # -> January: leg replenish qty == 12, screw replenish qty == 60
+        # -> October: table starting qty == 3
+        self.mps_table.forecast_target_qty = 3
+        mps_table, mps_table_leg, mps_screw = (self.mps_table | self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        table_forecast_10 = mps_table['forecast_ids'][9]
+        leg_forecast_1 = mps_table_leg['forecast_ids'][0]
+        screw_forecast_1 = mps_screw['forecast_ids'][0]
+        self.assertEqual(leg_forecast_1['replenish_qty'], 12)
+        self.assertEqual(screw_forecast_1['replenish_qty'], 60)
+        self.assertEqual(table_forecast_10['starting_inventory_qty'], 3)
+
+        # Manually set the replenish qty of that same schedule
+        # January: table replenish qty = 1
+        # -> January: leg replenish qty == 4, screw replenish qty == 20
+        # -> February: leg replenish qty == 8, screw replenish qty == 40
+        self.mps_table.set_replenish_qty(date_index=0, quantity=1)
+        mps_table_leg, mps_screw = (self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        leg_forecast_1 = mps_table_leg['forecast_ids'][0]
+        screw_forecast_1 = mps_screw['forecast_ids'][0]
+        leg_forecast_2 = mps_table_leg['forecast_ids'][1]
+        screw_forecast_2 = mps_screw['forecast_ids'][1]
+        self.assertEqual(leg_forecast_1['replenish_qty'], 4)
+        self.assertEqual(screw_forecast_1['replenish_qty'], 20)
+        self.assertEqual(leg_forecast_2['replenish_qty'], 8)
+        self.assertEqual(screw_forecast_2['replenish_qty'], 40)
+
+        # Set the forecasted demand of that same intermediate component
+        # January: leg demand qty = 1
+        # -> January: bolt replenish qty == 20, screw replenish qty == 24
+        # -> February: bolt replenish qty == 24
+        self.mps_table_leg.set_forecast_qty(date_index=0, quantity=1)
+        mps_bolt, mps_screw = (self.mps_bolt | self.mps_screw).get_production_schedule_view_state()
+        bolt_forecast_1 = mps_bolt['forecast_ids'][0]
+        bolt_forecast_2 = mps_bolt['forecast_ids'][1]
+        screw_forecast_1 = mps_screw['forecast_ids'][0]
+        self.assertEqual(bolt_forecast_1['replenish_qty'], 20)
+        self.assertEqual(bolt_forecast_2['replenish_qty'], 32)
+        self.assertEqual(screw_forecast_1['replenish_qty'], 24)
+
+        # Manually set the replenish qty of that same intermediate component
+        # January: leg replenish qty = 6
+        # -> February: leg replenish qty == 7, bolt replenish qty == 28
+        self.mps_table_leg.set_replenish_qty(date_index=0, quantity=6)
+        mps_table_leg, mps_bolt = (self.mps_table_leg | self.mps_bolt).get_production_schedule_view_state()
+        leg_forecast_2 = mps_table_leg['forecast_ids'][1]
+        bolt_forecast_2 = mps_bolt['forecast_ids'][1]
+        self.assertEqual(leg_forecast_2['replenish_qty'], 7)
+        self.assertEqual(bolt_forecast_2['replenish_qty'], 28)
+
+        # Set the safety stock target of an intermediate component that needs the previous component
+        # drawer stock target = 5
+        # -> January: drawer replenish qty == 6, screw replenish qty == 48
+        # -> February: leg replenish qty == 17, screw replenish qty == 76
+        # -> September: drawer starting qty == 5
+        self.mps_drawer.forecast_target_qty = 5
+        mps_drawer, mps_table_leg, mps_screw = (self.mps_drawer | self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        drawer_forecast_1 = mps_drawer['forecast_ids'][0]
+        drawer_forecast_9 = mps_drawer['forecast_ids'][8]
+        leg_forecast_2 = mps_table_leg['forecast_ids'][1]
+        screw_forecast_1 = mps_screw['forecast_ids'][0]
+        screw_forecast_2 = mps_screw['forecast_ids'][1]
+        self.assertEqual(drawer_forecast_1['replenish_qty'], 6)
+        self.assertEqual(drawer_forecast_9['starting_inventory_qty'], 5)
+        self.assertEqual(leg_forecast_2['replenish_qty'], 17)
+        self.assertEqual(screw_forecast_1['replenish_qty'], 48)
+        self.assertEqual(screw_forecast_2['replenish_qty'], 76)
+
+    def test_min_max_to_replenish_qty(self):
+        """ Test that setting a minimum and/or maximum qty to replenish like a logical person computes correctly.
+        Meaning that the min to replenish is inferior to the max to replenish.
+        All periods are in month starting at January for more clarity. """
+        self.mps_table_leg.write({'min_to_replenish_qty': 5, 'max_to_replenish_qty': 10})
+
+        # Replenish qty is inferior to min_to_replenish_qty
+        # January: table demand qty = 1
+        # -> January: leg indirect demand == 4, leg replenish qty == 5, screw replenish qty == 24
+        self.mps_table.set_forecast_qty(date_index=0, quantity=1)
+        mps_table_leg, mps_screw = (self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        leg_forecast_1 = mps_table_leg['forecast_ids'][0]
+        screw_forecast_1 = mps_screw['forecast_ids'][0]
+        self.assertEqual(leg_forecast_1['indirect_demand_qty'], 4)
+        self.assertEqual(leg_forecast_1['replenish_qty'], 5)
+        self.assertEqual(screw_forecast_1['replenish_qty'], 24)
+
+        # Replenish qty is between min_to_replenish_qty and max_to_replenish_qty
+        # January: table demand qty = 2
+        # -> January: leg indirect demand == 8, leg replenish qty == 8, screw replenish qty == 40
+        self.mps_table.set_forecast_qty(date_index=0, quantity=2)
+        mps_table_leg, mps_screw = (self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        leg_forecast_1 = mps_table_leg['forecast_ids'][0]
+        screw_forecast_1 = mps_screw['forecast_ids'][0]
+        self.assertEqual(leg_forecast_1['indirect_demand_qty'], 8)
+        self.assertEqual(leg_forecast_1['replenish_qty'], 8)
+        self.assertEqual(screw_forecast_1['replenish_qty'], 40)
+
+        # Replenish qty is superior to max_to_replenish_qty
+        # January: table demand qty = 3
+        # -> January: leg indirect demand == 12, leg replenish qty == 10, screw replenish qty == 52
+        # -> February: leg starting qty == -2, leg replenish qty == 5, screw replenish qty == 20
+        # -> November: leg starting qty == 3
+        self.mps_table.set_forecast_qty(date_index=0, quantity=3)
+        mps_table_leg, mps_screw = (self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        leg_forecast_1 = mps_table_leg['forecast_ids'][0]
+        leg_forecast_2 = mps_table_leg['forecast_ids'][1]
+        leg_forecast_11 = mps_table_leg['forecast_ids'][10]
+        screw_forecast_1 = mps_screw['forecast_ids'][0]
+        screw_forecast_2 = mps_screw['forecast_ids'][1]
+        self.assertEqual(leg_forecast_1['indirect_demand_qty'], 12)
+        self.assertEqual(leg_forecast_1['replenish_qty'], 10)
+        self.assertEqual(leg_forecast_2['starting_inventory_qty'], -2)
+        self.assertEqual(leg_forecast_2['replenish_qty'], 5)
+        self.assertEqual(leg_forecast_11['starting_inventory_qty'], 3)
+        self.assertEqual(screw_forecast_1['replenish_qty'], 52)
+        self.assertEqual(screw_forecast_2['replenish_qty'], 20)
+
+        # Set the min_to_replenish_qty of a product above in the bom hierarchy
+        # drawer min qty = 4
+        # -> January: leg indirect demand == 14, screw replenish qty == 56
+        # -> October: drawer starting qty == 1
+        # -> November: leg starting qty == 1
+        self.mps_drawer.min_to_replenish_qty = 4
+        mps_drawer, mps_table_leg, mps_screw = (self.mps_drawer | self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        drawer_forecast_10 = mps_drawer['forecast_ids'][9]
+        leg_forecast_1 = mps_table_leg['forecast_ids'][0]
+        leg_forecast_11 = mps_table_leg['forecast_ids'][10]
+        screw_forecast_1 = mps_screw['forecast_ids'][0]
+        self.assertEqual(drawer_forecast_10['starting_inventory_qty'], 1)
+        self.assertEqual(leg_forecast_1['indirect_demand_qty'], 14)
+        self.assertEqual(leg_forecast_11['starting_inventory_qty'], 1)
+        self.assertEqual(screw_forecast_1['replenish_qty'], 56)
+
+    def test_min_max_to_replenish_qty_2(self):
+        """ Test that setting a minimum and/or maximum qty to replenish like a crazy person computes correctly.
+        Meaning that the min to replenish is superior to the max to replenish.
+        All periods are in month starting at January for more clarity. """
+        self.mps_table_leg.write({'min_to_replenish_qty': 10, 'max_to_replenish_qty': 5})
+
+        # Replenish qty is inferior to max_to_replenish_qty => apply min_to_replenish_qty
+        # January: table demand qty = 1
+        # -> January: leg indirect demand == 4, leg replenish qty == 10, screw replenish qty == 44
+        # -> June: leg starting qty == 6
+        self.mps_table.set_forecast_qty(date_index=0, quantity=1)
+        mps_table_leg, mps_screw = (self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        leg_forecast_1 = mps_table_leg['forecast_ids'][0]
+        leg_forecast_6 = mps_table_leg['forecast_ids'][5]
+        screw_forecast_1 = mps_screw['forecast_ids'][0]
+        self.assertEqual(leg_forecast_1['indirect_demand_qty'], 4)
+        self.assertEqual(leg_forecast_1['replenish_qty'], 10)
+        self.assertEqual(leg_forecast_6['starting_inventory_qty'], 6)
+        self.assertEqual(screw_forecast_1['replenish_qty'], 44)
+
+        # Replenish qty is superior to max_to_replenish_qty => apply max_to_replenish_qty
+        # January: table demand qty = 2
+        # -> January: leg indirect demand == 8, leg replenish qty == 5, screw replenish qty == 28
+        # -> February: leg starting qty == -3, leg replenish qty == 10, screw replenish qty == 40
+        # -> June: leg starting qty == 7
+        self.mps_table.set_forecast_qty(date_index=0, quantity=2)
+        mps_table_leg, mps_screw = (self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        leg_forecast_1 = mps_table_leg['forecast_ids'][0]
+        leg_forecast_2 = mps_table_leg['forecast_ids'][1]
+        leg_forecast_6 = mps_table_leg['forecast_ids'][5]
+        screw_forecast_1 = mps_screw['forecast_ids'][0]
+        screw_forecast_2 = mps_screw['forecast_ids'][1]
+        self.assertEqual(leg_forecast_1['indirect_demand_qty'], 8)
+        self.assertEqual(leg_forecast_1['replenish_qty'], 5)
+        self.assertEqual(leg_forecast_2['starting_inventory_qty'], -3)
+        self.assertEqual(leg_forecast_2['replenish_qty'], 10)
+        self.assertEqual(leg_forecast_6['starting_inventory_qty'], 7)
+        self.assertEqual(screw_forecast_1['replenish_qty'], 28)
+        self.assertEqual(screw_forecast_2['replenish_qty'], 40)
+
+    def test_min_max_to_replenish_qty_3(self):
+        """ Atypical cases: max == min, max == 0
+        All periods are in month starting at January for more clarity. """
+        self.mps_table_leg.write({'min_to_replenish_qty': 6, 'max_to_replenish_qty': 6})
+
+        # Replenish qty is inferior to min/max_to_replenish_qty
+        # January: table demand qty = 1
+        # -> January: leg indirect demand == 4, leg replenish qty == 6, screw replenish qty == 28
+        # -> August: leg starting qty == 2
+        self.mps_table.set_forecast_qty(date_index=0, quantity=1)
+        mps_table_leg, mps_screw = (self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        leg_forecast_1 = mps_table_leg['forecast_ids'][0]
+        leg_forecast_8 = mps_table_leg['forecast_ids'][7]
+        screw_forecast_1 = mps_screw['forecast_ids'][0]
+        self.assertEqual(leg_forecast_1['indirect_demand_qty'], 4)
+        self.assertEqual(leg_forecast_1['replenish_qty'], 6)
+        self.assertEqual(leg_forecast_8['starting_inventory_qty'], 2)
+        self.assertEqual(screw_forecast_1['replenish_qty'], 28)
+
+        # Replenish qty is superior to min/max_to_replenish_qty
+        # January: table demand qty = 3
+        # -> January: leg indirect demand == 12, leg replenish qty == 6, screw replenish qty == 36
+        # -> February: leg starting qty == -6, leg replenish qty == 6, screw replenish qty == 24
+        # -> August: leg starting qty == 0
+        self.mps_table.set_forecast_qty(date_index=0, quantity=3)
+        mps_table_leg, mps_screw = (self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        leg_forecast_1 = mps_table_leg['forecast_ids'][0]
+        leg_forecast_2 = mps_table_leg['forecast_ids'][1]
+        leg_forecast_8 = mps_table_leg['forecast_ids'][7]
+        screw_forecast_1 = mps_screw['forecast_ids'][0]
+        screw_forecast_2 = mps_screw['forecast_ids'][1]
+        self.assertEqual(leg_forecast_1['indirect_demand_qty'], 12)
+        self.assertEqual(leg_forecast_1['replenish_qty'], 6)
+        self.assertEqual(leg_forecast_2['starting_inventory_qty'], -6)
+        self.assertEqual(leg_forecast_2['replenish_qty'], 6)
+        self.assertEqual(leg_forecast_8['starting_inventory_qty'], 0)
+        self.assertEqual(screw_forecast_1['replenish_qty'], 36)
+        self.assertEqual(screw_forecast_2['replenish_qty'], 24)
+
+        # Set max_to_replenish_qty of table_leg to zero
+        # leg max replenish qty = 0 -> this should set enable_max_replenish to False
+        # -> January: leg indirect demand == 12, leg replenish qty == 12, screw replenish qty == 12
+        # -> August: leg starting qty == -12
+        self.mps_table_leg.max_to_replenish_qty = 0
+        mps_table_leg, mps_screw = (self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        leg_forecast_1 = mps_table_leg['forecast_ids'][0]
+        leg_forecast_8 = mps_table_leg['forecast_ids'][7]
+        screw_forecast_1 = mps_screw['forecast_ids'][0]
+        self.assertEqual(leg_forecast_1['indirect_demand_qty'], 12)
+        self.assertEqual(leg_forecast_1['replenish_qty'], 12)
+        self.assertEqual(leg_forecast_8['starting_inventory_qty'], 0)
+        self.assertEqual(screw_forecast_1['replenish_qty'], 60)
+
+    def test_starting_inventory_qty(self):
+        self.env['stock.quant'].create({
+            'product_id': self.table.id,
+            'inventory_quantity': 5,
+            'location_id': self.warehouse.lot_stock_id.id
+        }).action_apply_inventory()
+
+        self.mps_table.set_forecast_qty(2, 3)
+        mps_table = self.mps_table.get_production_schedule_view_state()[0]
+        table_forecast_1 = mps_table['forecast_ids'][0]
+        table_forecast_3 = mps_table['forecast_ids'][2]
+        table_forecast_5 = mps_table['forecast_ids'][4]
+        self.assertEqual(table_forecast_1['starting_inventory_qty'], 5)
+        self.assertEqual(table_forecast_3['starting_inventory_qty'], 5)
+        self.assertEqual(table_forecast_3['replenish_qty'], 0)
+        self.assertEqual(table_forecast_3['safety_stock_qty'], 2)
+        self.assertEqual(table_forecast_5['starting_inventory_qty'], 2)
+
+        self.mps_table.set_forecast_qty(1, 4)
+        mps_table, mps_table_leg, mps_screw = (self.mps_table | self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        table_forecast_2 = mps_table['forecast_ids'][1]
+        table_forecast_3 = mps_table['forecast_ids'][2]
+        table_forecast_7 = mps_table['forecast_ids'][6]
+        leg_forecast_3 = mps_table_leg['forecast_ids'][2]
+        screw_forecast_3 = mps_screw['forecast_ids'][2]
+        self.assertEqual(table_forecast_2['starting_inventory_qty'], 5)
+        self.assertEqual(table_forecast_2['replenish_qty'], 0)
+        self.assertEqual(table_forecast_2['safety_stock_qty'], 1)
+        self.assertEqual(table_forecast_3['starting_inventory_qty'], 1)
+        self.assertEqual(table_forecast_3['replenish_qty'], 2)
+        self.assertEqual(table_forecast_7['starting_inventory_qty'], 0)
+        self.assertEqual(leg_forecast_3['replenish_qty'], 8)
+        self.assertEqual(screw_forecast_3['replenish_qty'], 40)
+
+    def test_multi_options(self):
+        """ Test applying multiple settings all at once:
+        - table: forecast demand = 5 on the 4th period
+        - drawer: safety stock = 3, max replenish = 8
+        - table leg: safety stock = 4, min replenish = 6, max replenish = 10
+        - bolt: min replenish = 15, max replenish = 30
+        - screw: min replenish = 80, max replenish = 200
+        """
+        self.mps_table.set_forecast_qty(3, 5)
+        self.env.company.manufacturing_period_to_display_month = 7
+        self.mps_drawer.write({'forecast_target_qty': 3, 'enable_max_replenish': True, 'max_to_replenish_qty': 2})
+        self.mps_table_leg.write({'forecast_target_qty': 4, 'min_to_replenish_qty': 6, 'enable_max_replenish': True, 'max_to_replenish_qty': 8})
+        self.mps_bolt.write({'min_to_replenish_qty': 15, 'enable_max_replenish': True, 'max_to_replenish_qty': 30})
+        self.mps_screw.write({'forecast_target_qty': 30, 'min_to_replenish_qty': 80, 'enable_max_replenish': True, 'max_to_replenish_qty': 200})
+        mps_table, mps_drawer, mps_leg, mps_bolt, mps_screw = (self.mps_table | self.mps_drawer | self.mps_table_leg | self.mps_bolt | self.mps_screw).get_production_schedule_view_state()
+
+        self.assertListEqual([f['starting_inventory_qty'] for f in mps_table['forecast_ids']], [0, 0, 0, 0, 0, 0, 0])
+        self.assertListEqual([f['forecast_qty'] for f in mps_table['forecast_ids']], [0, 0, 0, 5, 0, 0, 0])
+        self.assertListEqual([f['replenish_qty'] for f in mps_table['forecast_ids']], [0, 0, 0, 5, 0, 0, 0])
+
+        self.assertListEqual([f['starting_inventory_qty'] for f in mps_drawer['forecast_ids']], [0, 2, 3, 3, 0, 2, 3])
+        self.assertListEqual([f['indirect_demand_qty'] for f in mps_drawer['forecast_ids']], [0, 0, 0, 5, 0, 0, 0])
+        self.assertListEqual([f['replenish_qty'] for f in mps_drawer['forecast_ids']], [2, 1, 0, 2, 2, 1, 0])
+
+        self.assertListEqual([f['starting_inventory_qty'] for f in mps_leg['forecast_ids']], [0, 4, 8, 8, 2, 4, 8])
+        self.assertListEqual([f['indirect_demand_qty'] for f in mps_leg['forecast_ids']], [4, 2, 0, 14, 4, 2, 0])
+        self.assertListEqual([f['replenish_qty'] for f in mps_leg['forecast_ids']], [8, 6, 0, 8, 6, 6, 0])
+
+        self.assertListEqual([f['starting_inventory_qty'] for f in mps_bolt['forecast_ids']], [0, -2, 0, 0, -2, 0, 0])
+        self.assertListEqual([f['indirect_demand_qty'] for f in mps_bolt['forecast_ids']], [32, 24, 0, 32, 24, 24, 0])
+        self.assertListEqual([f['replenish_qty'] for f in mps_bolt['forecast_ids']], [30, 26, 0, 30, 26, 24, 0])
+
+        self.assertListEqual([f['starting_inventory_qty'] for f in mps_screw['forecast_ids']], [0, 40, 92, 92, 52, 100, 72])
+        self.assertListEqual([f['indirect_demand_qty'] for f in mps_screw['forecast_ids']], [40, 28, 0, 40, 32, 28, 0])
+        self.assertListEqual([f['replenish_qty'] for f in mps_screw['forecast_ids']], [80, 80, 0, 0, 80, 0, 0])
