@@ -214,13 +214,11 @@ class PlanningSlot(models.Model):
             slot.is_users_role = (slot.role_id in user_resource_roles) or not user_resource_roles or not slot.role_id
 
     def _search_is_users_role(self, operator, value):
-        if operator not in ('=', '!=') or not isinstance(value, bool):
-            raise NotImplementedError(_("Search operation not supported"))
+        if operator != 'in':
+            return NotImplemented
         user_resource_roles = self.env['resource.resource'].search([('user_id', '=', self.env.user.id)]).role_ids
         if not user_resource_roles:
             return [(1, '=', 1)]
-        if (operator, value) in [('!=', True), ('=', False)]:
-            return [('role_id', 'not in', user_resource_roles.ids)]
         return ['|', ('role_id', 'in', user_resource_roles.ids), ('role_id', '=', False)]
 
     @api.depends('start_datetime', 'end_datetime')
@@ -349,6 +347,8 @@ class PlanningSlot(models.Model):
 
     @api.model
     def _search_overlap_slot_count(self, operator, value):
+        if operator == 'in':
+            return expression.OR(self._search_overlap_slot_count('=', v) for v in value)
         if operator not in ['=', '>'] or not isinstance(value, int) or value != 0:
             raise NotImplementedError(_('Operation not supported, you should always compare overlap_slot_count to 0 value with = or > operator.'))
 
@@ -365,7 +365,7 @@ class PlanningSlot(models.Model):
                    AND S1.allocated_percentage + S2.allocated_percentage > 100
             )
         )""")
-        operator_new = (operator == ">") and "in" or "not in"
+        operator_new = "in" if operator == ">" else "not in"
         return [('id', operator_new, sql)]
 
     @api.depends('start_datetime', 'end_datetime')

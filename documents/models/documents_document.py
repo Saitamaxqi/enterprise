@@ -316,14 +316,9 @@ class DocumentsDocument(models.Model):
             )
 
     def _search_is_company_root_folder(self, operator, value):
-        if operator not in ('=', '!=') or not isinstance(value, (bool, int)):
-            raise NotImplementedError("Unsupported search operator or value")
-
-        return (
-            [('type', '=', 'folder'), ('folder_id', '=', False), ('owner_id', '=', False)]
-            if (operator == '=' and value) or (operator == '!=' and not value) else
-            ['|', '|', ('type', '!=', 'folder'), ('folder_id', '!=', False), ('owner_id', '!=', False)]
-        )
+        if operator != 'in':
+            return NotImplemented
+        return [('type', '=', 'folder'), ('folder_id', '=', False), ('owner_id', '=', False)]
 
     @api.depends('attachment_id', 'url', 'shortcut_document_id')
     def _compute_name_and_preview(self):
@@ -401,19 +396,20 @@ class DocumentsDocument(models.Model):
         return user_permission
 
     def _search_user_permission(self, operator, value):
-        if operator not in ('=', '!='):
-            raise NotImplementedError("Unsupported search operator")
-        if self.env.user._is_public() or value not in {'view', 'edit', 'none'}:
+        if self.env.user._is_public():
             return expression.FALSE_DOMAIN
-
-        if (operator, value) in (("=", "edit"), ("!=", "view")):  # access but no view => edit
-            searched_roles = ['edit']
-        elif (operator, value) in (('=', 'view'), ("!=", "edit")):  # access without edit => view
-            searched_roles = ['view']
-        elif (operator, value) == ("!=", "none"):  # any access
-            searched_roles = ['edit', 'view']
+        searched_roles = {'view', 'edit', 'none'}
+        if operator == 'in':
+            searched_roles.intersection_update(value)
+        elif operator == 'not in':
+            searched_roles.difference_update(value)
         else:
-            return expression.FALSE_DOMAIN  # ("=", "none") = not allowed, so no records
+            return NotImplemented
+
+        searched_roles.discard('none')
+        if not searched_roles:
+            return expression.FALSE_DOMAIN
+        searched_roles = list(searched_roles)
 
         other_company = [('company_id', '!=', False), ('company_id', 'not in', self.env.user.company_ids.ids)]
         allowed_or_no_company = [('company_id', 'in', [False] + self.env.companies.ids)]
@@ -651,11 +647,19 @@ class DocumentsDocument(models.Model):
             document.last_access_date_group = values.get(document.id)
 
     def _search_last_access_date_group(self, operator, operand):
-        if operator != '=':
-            raise NotImplementedError("Unsupported search operator or value")
+        if operator != 'in':
+            return NotImplemented
+        values = set(operand)
+        if False in values:
+            query = SQL("(%s SELECT document_id FROM last_access_date)")
+            domain = [('id', 'not in', query)]
+            if len(values) > 1:
+                values.remove(False)
+                domain += self._search_last_access_date_group(operator, values)
+            return domain
         query = SQL(
-            """(%s SELECT document_id FROM last_access_date WHERE date = %s)""",
-            self._get_last_access_date_group_cte(), operand)
+            """(%s SELECT document_id FROM last_access_date WHERE date IN %s)""",
+            self._get_last_access_date_group_cte(), tuple(values))
         return [('id', 'in', query)]
 
     def _field_to_sql(self, alias, fname, query=None, flush: bool = True) -> SQL:

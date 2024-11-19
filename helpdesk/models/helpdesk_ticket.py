@@ -6,6 +6,7 @@ from collections import defaultdict
 from dateutil.relativedelta import relativedelta
 
 from odoo import api, Command, fields, models, tools, _
+from odoo.fields import Domain
 from odoo.osv import expression
 from odoo.tools import LazyTranslate
 from odoo.addons.web.controllers.utils import clean_action
@@ -239,12 +240,12 @@ class HelpdeskTicket(models.Model):
 
     @api.model
     def _search_sla_fail(self, operator, value):
+        if operator != 'in':
+            return NotImplemented
         datetime_now = fields.Datetime.now()
-        if (value and operator in expression.NEGATIVE_TERM_OPERATORS) or (not value and operator not in expression.NEGATIVE_TERM_OPERATORS):  # is not failed
-            return ['&', ('sla_reached_late', '=', False), '|', ('sla_deadline', '=', False), ('sla_deadline', '>=', datetime_now)]
-        return ['|', ('sla_reached_late', '=', True), ('sla_deadline', '<', datetime_now)]  # is failed
+        return ['|', ('sla_reached_late', '=', True), ('sla_deadline', '<', datetime_now)]
 
-    @api.depends('sla_deadline', 'sla_reached_late')
+    @api.depends('sla_deadline')
     def _compute_sla_success(self):
         now = fields.Datetime.now()
         for ticket in self:
@@ -252,10 +253,10 @@ class HelpdeskTicket(models.Model):
 
     @api.model
     def _search_sla_success(self, operator, value):
+        if operator != 'in':
+            return NotImplemented
         datetime_now = fields.Datetime.now()
-        if (value and operator in expression.NEGATIVE_TERM_OPERATORS) or (not value and operator not in expression.NEGATIVE_TERM_OPERATORS):  # is failed
-            return [('sla_status_ids.reached_datetime', '>', datetime_now), ('sla_reached_late', '!=', False), '|', ('sla_deadline', '!=', False), ('sla_deadline', '<', datetime_now)]
-        return [('sla_status_ids.reached_datetime', '<', datetime_now), ('sla_reached', '=', True), ('sla_reached_late', '=', False), '|', ('sla_deadline', '=', False), ('sla_deadline', '>=', datetime_now)]  # is success
+        return [('sla_deadline', '>', datetime_now)]
 
     @api.depends('team_id')
     def _compute_user_and_stage_ids(self):
@@ -342,19 +343,29 @@ class HelpdeskTicket(models.Model):
 
     @api.model
     def _search_open_hours(self, operator, value):
-        dt = fields.Datetime.now() - relativedelta(hours=value)
+        if operator == 'in':
+            return Domain.OR(self._search_open_hours('=', v) for v in value)
+        if operator == 'not in':
+            return Domain.AND(self._search_open_hours('!=', v) for v in value)
 
-        d1, d2 = False, False
+        dt = fields.Datetime.now() - relativedelta(hours=value)
+        domain_closed = Domain('close_hours', operator, value)
         if operator in ['<', '<=', '>', '>=']:
-            d1 = ['&', ('close_date', '=', False), ('create_date', expression.TERM_OPERATORS_NEGATION[operator], dt)]
-            d2 = ['&', ('close_date', '!=', False), ('close_hours', operator, value)]
+            domain_unclosed = ~Domain('create_date', operator, dt)
         elif operator in ['=', '!=']:
-            subdomain = ['&', ('create_date', '>=', dt.replace(minute=0, second=0, microsecond=0)), ('create_date', '<=', dt.replace(minute=59, second=59, microsecond=99))]
-            if operator in expression.NEGATIVE_TERM_OPERATORS:
-                subdomain = expression.distribute_not(subdomain)
-            d1 = expression.AND([[('close_date', '=', False)], subdomain])
-            d2 = ['&', ('close_date', '!=', False), ('close_hours', operator, value)]
-        return expression.OR([d1, d2])
+            dt = dt.replace(minute=0, second=0, microsecond=0)
+            domain_unclosed = (
+                Domain('create_date', '>=', dt)
+                & Domain('create_date', '<', dt + relativedelta(hours=1))
+            )
+            if operator == '!=':
+                domain_unclosed = ~domain_unclosed
+        else:
+            return NotImplemented
+        return (
+            (Domain('close_date', '=', False) & domain_unclosed)
+            | (Domain('close_date', '!=', False) & domain_closed)
+        )
 
     def _get_partner_email_update(self):
         self.ensure_one()

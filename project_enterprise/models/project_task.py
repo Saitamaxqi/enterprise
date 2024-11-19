@@ -255,8 +255,11 @@ class ProjectTask(models.Model):
 
     @api.model
     def _search_planning_overlap(self, operator, value):
-        if operator not in ['=', '!='] or not isinstance(value, bool):
-            raise NotImplementedError(_('Operation not supported, you should always compare planning_overlap to True or False.'))
+        # search implemented only for 'in' {bool}
+        if operator != 'in':
+            return NotImplemented
+        if not all(isinstance(v, bool) for v in value):
+            return NotImplemented
 
         sql = SQL("""(
             SELECT T1.id
@@ -281,7 +284,7 @@ class ProjectTask(models.Model):
                 AND T2.active = 't'
                 AND T2.state IN ('01_in_progress', '02_changes_requested', '03_approved', '04_waiting_normal')
         )""")
-        operator_new = "in" if ((operator == "=" and value) or (operator == "!=" and not value)) else "not in"
+        operator_new = 'in' if any(value) else 'not in'
         return [('id', operator_new, sql)]
 
     def _compute_user_names(self):
@@ -376,8 +379,11 @@ class ProjectTask(models.Model):
 
     @api.model
     def _search_dependency_warning(self, operator, value):
-        if operator not in ['=', '!='] or not isinstance(value, bool):
-            raise NotImplementedError(_('Operation not supported, you should always compare dependency_warning to True or False.'))
+        # search implemented only for 'in' {bool}
+        if operator != 'in':
+            return NotImplemented
+        if not all(isinstance(v, bool) for v in value):
+            return NotImplemented
 
         sql = SQL("""
             SELECT t1.id
@@ -390,7 +396,7 @@ class ProjectTask(models.Model):
                AND t2.date_deadline IS NOT NULL
                AND t2.date_deadline > t1.planned_date_begin
         """)
-        operator_new = "in" if ((operator == "=" and value) or (operator == "!=" and not value)) else "not in"
+        operator_new = 'in' if any(value) else 'not in'
         return [('id', operator_new, sql)]
 
     @api.depends('planned_date_begin', 'date_deadline')

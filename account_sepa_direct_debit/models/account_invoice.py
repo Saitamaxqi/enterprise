@@ -1,8 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models, _
-
-from odoo.exceptions import UserError
+from odoo import api, fields, models
+from odoo.tools import SQL
 
 
 class AccountMove(models.Model):
@@ -13,19 +12,11 @@ class AccountMove(models.Model):
 
     @api.model
     def _search_sdd_has_usable_mandate(self, operator, value):
-        """ Returns invoice ids for which a mandate exist that can be used to be paid,
-            as domain : [('id', 'in', '[4,24,89]')]
-            SQL is used to minimise footprint and is the same as :
-            res = self.search([]).filtered(lambda rec: rec.sdd_has_usable_mandate is True and not rec.is_outbound())
-            return [('id', domain_operator, [x['id'] for x in res])]
-        """
+        """ Returns invoice ids for which a mandate exist that can be used to be paid."""
+        if operator != 'in':
+            return NotImplemented
 
-        if (operator == '=' and value) or (operator == '!=' and not value):
-            domain_operator = 'in'
-        else:
-            domain_operator = 'not in'
-
-        query = """
+        query = SQL("""(
         SELECT
             move.id
         FROM
@@ -38,11 +29,9 @@ class AccountMove(models.Model):
             mandate.state = 'active' AND
             mandate.start_date <= move.invoice_date AND
             (mandate.end_date IS NULL OR mandate.end_date > move.invoice_date)
-        """
+        )""")
 
-        self._cr.execute(query)
-
-        return [('id', domain_operator, [x['id'] for x in self._cr.dictfetchall()])]
+        return [('id', 'in', query)]
 
     @api.depends('company_id', 'commercial_partner_id', 'invoice_date')
     def _compute_sdd_has_usable_mandate(self):

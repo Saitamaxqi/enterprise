@@ -116,9 +116,9 @@ class AccountAnalyticLine(models.Model):
             line.is_timesheet = bool(line.project_id)
 
     def _search_is_timesheet(self, operator, value):
-        if (operator, value) in [('=', True), ('!=', False)]:
-            return [('project_id', '!=', False)]
-        return [('project_id', '=', False)]
+        if operator != 'in':
+            return NotImplemented
+        return [('project_id', '!=', False)]
 
     @api.depends('validated')
     def _compute_validated_status(self):

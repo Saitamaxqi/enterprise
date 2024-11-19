@@ -32,13 +32,18 @@ class MarketingParticipant(models.Model):
         return [(model.model, model.name) for model in models]
 
     def _search_resource_ref(self, operator, value):
-        ir_models = set([model['model_name'] for model in self.env['marketing.campaign'].search([]).read(['model_name'])])
+        if operator in NEGATIVE_TERM_OPERATORS:
+            return NotImplemented
         ir_model_ids = []
-        for model in ir_models:
-            if model in self.env:
-                ir_model_ids += self.env['marketing.participant'].search(['&', ('model_name', '=', model), ('res_id', 'in', [name[0] for name in self.env[model].name_search(name=value)])]).ids
-        operator = 'not in' if operator in NEGATIVE_TERM_OPERATORS else 'in'
-        return [('id', operator, ir_model_ids)]
+        for [model_name] in self.env['marketing.campaign']._read_group([], ['model_name']):
+            model = self.env.get(model_name)
+            if model is None:
+                continue
+            ir_model_ids += self.env['marketing.participant'].search(
+                ['&', ('model_name', '=', model_name), ('res_id', 'in', [name[0] for name in model.name_search(name=value)])],
+                order='id',
+            ).ids
+        return [('id', 'in', ir_model_ids)]
 
     campaign_id = fields.Many2one(
         'marketing.campaign', string='Campaign',

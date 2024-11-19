@@ -107,12 +107,11 @@ class SignRequest(models.Model):
 
     @api.model
     def _search_need_my_signature(self, operator, value):
+        if operator != 'in':
+            return NotImplemented
         my_partner_id = self.env.user.partner_id
-        if operator not in ['=', '!='] or not isinstance(value, bool):
-            return []
-        domain_operator = 'not in' if (operator == '=') ^ value else 'in'
         documents_ids = self.env['sign.request.item'].search([('partner_id', '=', my_partner_id.id), ('state', '=', 'sent'), ('is_mail_sent', '=', True)]).mapped('sign_request_id').ids
-        return [('id', domain_operator, documents_ids)]
+        return [('id', 'not in', documents_ids)]
 
     @api.depends('request_item_ids.state')
     def _compute_stats(self):

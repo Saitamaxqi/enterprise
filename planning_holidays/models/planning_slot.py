@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
+from odoo.fields import Domain
 
 
 class PlanningSlot(models.Model):
@@ -46,8 +47,8 @@ class PlanningSlot(models.Model):
 
     @api.model
     def _search_is_absent(self, operator, value):
-        if operator not in ['=', '!='] or not isinstance(value, bool):
-            raise NotImplementedError(_('Operation not supported'))
+        if operator not in ('in', 'not in'):
+            return NotImplemented
 
         today = fields.Datetime.today()
         slots = self.search([
@@ -55,7 +56,7 @@ class PlanningSlot(models.Model):
             ('end_datetime', '>', today),  # only fetch the slots containing today in their period or shifts in the future
         ])
         if not slots:
-            return []
+            return Domain.FALSE if operator == 'in' else Domain.TRUE
 
         min_date = min(slots.mapped('start_datetime'))
         date_from = max(min_date, today)
@@ -71,6 +72,4 @@ class PlanningSlot(models.Model):
             period = self.env['hr.leave']._group_leaves(leaves, slot.employee_id, slot.start_datetime, slot.end_datetime)
             if period:
                 slot_ids.append(slot.id)
-        if operator == '!=':
-            value = not value
-        return [('id', 'in' if value else 'not in', slot_ids)]
+        return [('id', operator, slot_ids)]

@@ -98,7 +98,9 @@ class ResCompany(models.Model):
             )
 
     def _search_l10n_ke_oscu_is_active(self, operator, value):
-        domain_true = [
+        if operator != 'in':
+            return NotImplemented
+        return [
             '|',
             ('l10n_ke_server_mode', '=', 'demo'),
             '&', '&', '&',
@@ -107,10 +109,6 @@ class ResCompany(models.Model):
             ('l10n_ke_branch_code', '!=', False),
             ('l10n_ke_oscu_user_agreement', '=', True),
         ]
-        if (operator == '=' and value) or (operator == '!=' and not value):
-            return domain_true
-        elif (operator == '=' and not value) or (operator == '!=' and value):
-            return ['!'] + domain_true
 
     @api.depends('country_code', 'vat')
     def _compute_l10n_ke_oscu_serial_number(self):

@@ -95,14 +95,14 @@ class TestCaseDocumentsBridgeProduct(TransactionCase):
         docs.flush_recordset()
         cases = [
             ([(field_name, 'ilike', 'template')], docs[0:2]),
-            ([(field_name, 'not ilike', 'template')], docs[2]),
+            ([(field_name, 'not ilike', 'template'), (field_name, '!=', False)], docs[2]),
             ([(field_name, '=', 'template_test')], docs[0]),
-            ([(field_name, '!=', 'template_test')], docs[1:]),
+            ([(field_name, '!=', 'template_test'), (field_name, '!=', False)], docs[1:]),
             ([(field_name, '=', record[0].id)], docs[0]),
             ([(field_name, '=', True)], docs),
             ([(field_name, '=', False)], self.env['documents.document'].search([]) - docs),
             ([(field_name, 'in', record.ids)], docs),
-            ([(field_name, 'not in', record.ids)], self.env['documents.document']),
+            ([(field_name, 'not in', record.ids + [False])], self.env['documents.document']),
             (['|', (field_name, 'in', [record[2].id]), (field_name, 'ilike', 'template')], docs),
         ]
         for domain, result in cases:

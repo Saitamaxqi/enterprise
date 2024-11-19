@@ -2,9 +2,11 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import ast
 from collections import defaultdict
+from collections.abc import Iterable
 import logging
 
 from odoo import api, fields, models, _
+from odoo.fields import Domain
 from odoo.tools.misc import format_date
 from datetime import datetime, timedelta
 from odoo.tools import DEFAULT_SERVER_DATE_FORMAT
@@ -71,11 +73,11 @@ class ResPartner(models.Model):
         """
         Compute the search on the field 'followup_status'
         """
-        if isinstance(value, str):
-            value = [value]
-        if operator not in ('in', '=') or not value:
-            return []
-        value = [v for v in value if v in ['in_need_of_action', 'with_overdue_invoices', 'no_action_needed']]
+        if operator != 'in':
+            return NotImplemented
+        value = set(value) & {'in_need_of_action', 'with_overdue_invoices', 'no_action_needed'}
+        if not value:
+            return Domain.FALSE
 
         followup_data = self._query_followup_data(all_partners=True)
 
@@ -86,13 +88,15 @@ class ResPartner(models.Model):
         ])]
 
     def _search_followup_line(self, operator, value):
-        company_domain = [('company_id', 'parent_of', self.env.company.id)]
-        if isinstance(value, str):
-            domain = [('name', operator, value)]
-        elif isinstance(value, (int, list, tuple)):
-            domain = [('id', operator, value)]
+        if isinstance(value, str) or (isinstance(value, Iterable) and all(isinstance(v, str) for v in value)):
+            domain = Domain('name', operator, value)
+        else:
+            domain = Domain('id', operator, value)
+        domain &= Domain('company_id', 'parent_of', self.env.company.id)
 
-        line_ids = set(self.env['account_followup.followup.line'].search(domain+company_domain).ids)
+        line_ids = set(self.env['account_followup.followup.line']._search(domain).get_result_ids())
+        if not line_ids:
+            return Domain.FALSE
 
         followup_data = self._query_followup_data(all_partners=True)
 

@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, models, _
 from odoo import api
 from odoo.exceptions import UserError, ValidationError
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class DocumentsDocument(models.Model):
@@ -28,12 +27,12 @@ class DocumentsDocument(models.Model):
     @api.model
     def _search_display_name(self, operator, value):
         domain = super()._search_display_name(operator, value)
-        if (template_folder_id := self.env.context.get('project_documents_template_folder')) \
-                and [('type', '=', 'folder')] in domain:
-            domain = expression.AND([
-                domain,
-                ['!', ('id', 'child_of', template_folder_id)],
-            ])
+        domain = domain.optimize(self)
+        if (
+            (template_folder_id := self.env.context.get('project_documents_template_folder'))
+            and any((cond.field_expr, cond.operator) == ('type', 'in') and 'folder' in cond.value for cond in domain.iter_conditions())
+        ):
+            domain &= ~Domain('id', 'child_of', template_folder_id)
         return domain
 
     def _project_folder_or_ancestor_in_self(self, project_folder):

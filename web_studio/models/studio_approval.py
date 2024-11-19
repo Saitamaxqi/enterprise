@@ -220,14 +220,10 @@ class StudioApprovalRule(models.Model):
                                             "are forbidden."))
 
     def _search_action_xmlid(self, operator, value):
-        supported_ops = ("=", "in", "!=", "not in")
-        if operator not in supported_ops:
-            raise UserError(_("Unsupported operator '%s' to search action_xmlid", operator))
-
-        is_list = isinstance(value, list)
-        value = value if is_list else [value]
+        if operator not in ('in', 'not in'):
+            return NotImplemented
         action_ids = [self._parse_action_from_button(v) for v in value]
-        return [("action_id", operator, action_ids if is_list else action_ids[0])]
+        return [("action_id", operator, action_ids)]
 
     def default_get(self, fields_list):
         vals = super().default_get(fields_list)

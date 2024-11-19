@@ -208,16 +208,12 @@ class HrContract(models.Model):
 
     @api.model
     def _search_l10n_be_is_below_scale(self, operator, value):
-        if operator not in ['=', '!='] or not isinstance(value, bool):
-            raise NotImplementedError(_('Operation not supported'))
+        if operator != 'in':
+            return NotImplemented
         below_contracts = self.env['hr.contract'].search(
             [('state', 'in', ['draft', 'open'])]
         ).filtered(lambda c: c.company_id.country_id.code == 'BE' and c.l10n_be_is_below_scale)
-
-        if operator == '!=':
-            value = not value
-        return [('id', 'in' if value else 'not in', below_contracts.ids)]
-
+        return [('id', 'in', below_contracts.ids)]
 
     @api.model
     def _benefit_white_list(self):

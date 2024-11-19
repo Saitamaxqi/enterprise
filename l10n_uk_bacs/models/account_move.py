@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
+from odoo.tools import SQL
 
 
 class AccountMove(models.Model):
@@ -12,12 +12,10 @@ class AccountMove(models.Model):
 
     @api.model
     def _search_bacs_has_usable_ddi(self, operator, value):
-        if (operator == '=' and value) or (operator == '!=' and not value):
-            domain_operator = 'in'
-        else:
-            domain_operator = 'not in'
+        if operator != 'in':
+            return NotImplemented
 
-        query = '''
+        rows = self.env.execute_query(SQL("""
         SELECT
             move.id
         FROM
@@ -29,11 +27,8 @@ class AccountMove(models.Model):
             move.move_type IN ('out_invoice', 'in_refund') AND
             ddi.state NOT IN ('draft', 'revoked') AND
             ddi.start_date <= move.invoice_date
-        '''
-
-        self._cr.execute(query)
-
-        return [('id', domain_operator, [x['id'] for x in self._cr.dictfetchall()])]
+        """))
+        return [('id', 'in', [r[0] for r in rows])]
 
     @api.depends('company_id', 'commercial_partner_id', 'invoice_date')
     def _compute_bacs_has_usable_ddi(self):

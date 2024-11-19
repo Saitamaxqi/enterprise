@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import math
+from collections.abc import Collection
 
 from odoo import fields, models, api
 from odoo.osv import expression
@@ -74,24 +75,17 @@ class HelpdeskSlaStatus(models.Model):
 
     @api.model
     def _search_status(self, operator, value):
-        """ Supported operators: '=', 'in' and their negative form. """
-        # constants
+        if operator != 'in':
+            return NotImplemented
         datetime_now = fields.Datetime.now()
-        positive_domain = {
-            'failed': ['|', '&', ('reached_datetime', '=', True), ('deadline', '<=', 'reached_datetime'), '&', ('reached_datetime', '=', False), ('deadline', '<=', fields.Datetime.to_string(datetime_now))],
-            'reached': ['&', ('reached_datetime', '=', True), ('reached_datetime', '<', 'deadline')],
-            'ongoing': ['|', ('deadline', '=', False), '&', ('reached_datetime', '=', False), ('deadline', '>', fields.Datetime.to_string(datetime_now))]
-        }
-        # in/not in case: we treat value as a list of selection item
-        if not isinstance(value, list):
-            value = [value]
-        # transform domains
-        if operator in expression.NEGATIVE_TERM_OPERATORS:
-            # "('status', 'not in', [A, B])" tranformed into "('status', '=', C) OR ('status', '=', D)"
-            domains_to_keep = [dom for key, dom in positive_domain if key not in value]
-            return expression.OR(domains_to_keep)
-        else:
-            return expression.OR(positive_domain[value_item] for value_item in value)
+        domains = []
+        if 'failed' in value:
+            domains.append(['|', '&', ('reached_datetime', '=', True), ('deadline', '<=', 'reached_datetime'), '&', ('reached_datetime', '=', False), ('deadline', '<=', datetime_now)])
+        if 'reached' in value:
+            domains.append(['&', ('reached_datetime', '=', True), ('reached_datetime', '<', 'deadline')])
+        if 'ongoing' in value:
+            domains.append(['|', ('deadline', '=', False), '&', ('reached_datetime', '=', False), ('deadline', '>', datetime_now)])
+        return expression.OR(domains)
 
     @api.depends('status')
     def _compute_color(self):

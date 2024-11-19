@@ -18,7 +18,6 @@ from odoo.tools import _, get_lang, SQL
 from odoo.tools.misc import format_datetime, format_date, partition as tools_partition, unique
 
 _logger = logging.getLogger(__name__)
-ALLOWED_COMPANY_OPERATORS = ['not in', 'in', '=', '!=', 'ilike', 'not ilike', 'like', 'not like']
 
 
 class Data_MergeRecord(models.Model):
@@ -64,7 +63,7 @@ class Data_MergeRecord(models.Model):
             In the second case we either return all the records or no records, depending
             on the (operator, value) pair.
         """
-        if operator not in ALLOWED_COMPANY_OPERATORS:
+        if operator not in ('in', 'ilike', 'like', 'any'):
             raise NotImplementedError()
 
         cr = self._cr
@@ -107,15 +106,10 @@ class Data_MergeRecord(models.Model):
 
         # Whether a domain leaf (False, operator, value) should be considered as True
         false_company_domain_is_true = (
-            (operator in ('not ilike', 'not like')) or
-            (operator in ('=', 'ilike', 'like') and not value) or
-            (operator == '!=' and value) or
+            (operator in ('ilike', 'like') and not value) or
             (
                 isinstance(value, Iterable) and
-                (
-                    (operator == 'in' and False in value) or
-                    (operator == 'not in' and False not in value)
-                )
+                (operator == 'in' and False in value)
             )
         )
 

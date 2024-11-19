@@ -23,15 +23,13 @@ class HrContractHistory(models.Model):
 
     @api.model
     def _search_l10n_be_is_below_scale(self, operator, value):
-        if operator not in ['=', '!='] or not isinstance(value, bool):
-            raise NotImplementedError(_('Operation not supported'))
+        if operator != 'in':
+            return NotImplemented
         below_histories = self.env['hr.contract.history'].search(
             [('state', 'in', ['draft', 'open'])]
         ).filtered(lambda h: h.company_id.country_id.code == 'BE' and h.contract_id.l10n_be_is_below_scale)
 
-        if operator == '!=':
-            value = not value
-        return [('id', 'in' if value else 'not in', below_histories.ids)]
+        return [('id', 'in', below_histories.ids)]
 
     @api.depends('contract_ids')
     def _compute_has_valid_schedule_change_contract(self):

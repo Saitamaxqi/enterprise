@@ -1,6 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, fields, api
+from odoo.fields import Domain
 from odoo.addons.mail.tools.discuss import Store
 
 
@@ -11,6 +12,12 @@ class MailActivity(models.Model):
     approver_id = fields.Many2one("approval.approver", compute="_compute_approver_id")
 
     def _search_approval_request_id(self, operator, value):
+        if Domain.is_negative_operator(operator):
+            return NotImplemented
+        if operator == 'any':
+            operator = 'in'
+            if isinstance(value, Domain):
+                value = self.env['approval.request']._search(value)
         activity_type_approval_id = self.env.ref("approvals.mail_activity_data_approval")
         return [
             [("res_model", "=", "approval.request")],

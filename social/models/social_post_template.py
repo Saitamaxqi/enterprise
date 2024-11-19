@@ -102,6 +102,8 @@ class SocialPostTemplate(models.Model):
                 ), False)
 
     def _search_display_message(self, operator, operand):
+        if operator in expression.NEGATIVE_TERM_OPERATORS:
+            return NotImplemented
         return expression.OR([[
             (field, operator, operand)]
             for field in ('message', *self._message_fields().values())

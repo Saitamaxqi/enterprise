@@ -3,6 +3,7 @@
 from collections import defaultdict
 
 from odoo import _, api, fields, models
+from odoo.fields import Domain
 
 
 class ProjectTask(models.Model):
@@ -96,8 +97,8 @@ class ProjectTask(models.Model):
 
     @api.model
     def _search_is_absent(self, operator, value):
-        if operator not in ['=', '!='] or not isinstance(value, bool):
-            raise NotImplementedError(_('Operation not supported'))
+        if operator not in ('in', 'not in'):
+            return NotImplemented
 
         tasks = self.search([
             ('user_ids.employee_id', '!=', False),
@@ -107,10 +108,10 @@ class ProjectTask(models.Model):
             ('is_closed', '=', False),
         ])
         if not tasks:
-            return []
+            return Domain(operator != 'in')
 
         min_date = min(tasks.mapped('planned_date_begin'))
-        date_from = min_date if min_date > fields.Datetime.today() else fields.Datetime.today()
+        date_from = max(fields.Datetime.today(), min_date)
         mapped_leaves = self.env['hr.leave']._get_leave_interval(
             date_from=date_from,
             date_to=max(tasks.mapped('date_deadline')),
@@ -125,6 +126,4 @@ class ProjectTask(models.Model):
                     period = self.env['hr.leave']._group_leaves(leaves, employee, task.planned_date_begin, task.date_deadline)
                     if period:
                         task_ids.append(task.id)
-        if operator == '!=':
-            value = not value
-        return [('id', 'in' if value else 'not in', task_ids)]
+        return [('id', operator, task_ids)]

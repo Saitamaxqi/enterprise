@@ -91,14 +91,14 @@ class IrModel(models.Model):
             record.abstract = model is not None and model._abstract
 
     def _search_abstract(self, operator, value):
+        if operator != 'in':
+            return NotImplemented
         abstract_models = [
             model._name
             for model in self.env.values()
             if model._abstract
         ]
-        dom_operator = 'in' if (operator, value) in [('=', True), ('!=', False)] else 'not in'
-
-        return [('model', dom_operator, abstract_models)]
+        return [('model', 'in', abstract_models)]
 
     @api.model
     def studio_model_create(self, name, options=()):

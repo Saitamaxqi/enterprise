@@ -33,13 +33,9 @@ class SaleOrderTemplate(models.Model):
 
     @api.model
     def _search_is_subscription(self, operator, value):
-        if operator not in ['=', '!='] or not isinstance(value, bool):
-            raise NotImplementedError(_('Operation not supported'))
-        if (operator == '=' and value) or (operator == '!=' and not value):
-            domain = [('plan_id', '!=', False)]
-        else:
-            domain = [('plan_id', '=', False)]
-        return domain
+        if operator != 'in':
+            return NotImplemented
+        return [('plan_id', '!=', False)]
 
 
 class SaleOrderTemplateLine(models.Model):

@@ -32,16 +32,12 @@ class StockPicking(models.Model):
             picking.quality_check_todo = todo
 
     def _search_quality_check_todo(self, operator, value):
-        if operator not in ['=', '!='] or value not in [True, False]:
-            raise UserError(_('Operation not supported'))
+        if operator != 'in':
+            return NotImplemented
 
-        domain = [('picking_id', '!=', False)]
-        domain = expression.AND([
-            domain,
-            [('quality_state', '=', 'none') if (value and operator == '=') or (not value and operator == '!=') else ('quality_state', '!=', 'none')]
-        ])
-        pick_ids = self.env['quality.check'].search(domain).picking_id.ids
-        return [('id', 'in', pick_ids)]
+        domain = [('picking_id', '!=', False), ('quality_state', '=', 'none')]
+        query_check_picking = self.env['quality.check']._search(domain)
+        return [('id', 'in', query_check_picking.subselect('picking_id'))]
 
     def _compute_quality_alert_count(self):
         for picking in self:

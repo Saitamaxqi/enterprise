@@ -87,9 +87,9 @@ class HrContractSalaryOffer(models.Model):
             offer.display_name = _("Offer for %(recipient)s", recipient=name) if name else ""
 
     def _search_display_name(self, operator, value):
-        if neg := (operator in expression.NEGATIVE_TERM_OPERATORS):
-            operator = expression.TERM_OPERATORS_NEGATION[operator]
-        domain = [
+        if operator in expression.NEGATIVE_TERM_OPERATORS:
+            return NotImplemented
+        return [
             "|",
                 ('applicant_id', 'any', [
                     ('employee_id.name', operator, value),
@@ -100,9 +100,6 @@ class HrContractSalaryOffer(models.Model):
                 ('applicant_id', '=', False),
                 ('employee_contract_id.employee_id.name', operator, value),
         ]
-        if neg:
-            domain = ["!", *domain]
-        return domain
 
     @api.depends('create_date')
     def _compute_offer_create_date(self):

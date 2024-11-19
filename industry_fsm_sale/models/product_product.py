@@ -3,6 +3,7 @@
 from collections import defaultdict
 
 from odoo import _, api, fields, models
+from odoo.fields import Domain
 from odoo.tools import float_round, SQL
 
 
@@ -87,10 +88,14 @@ class ProductProduct(models.Model):
 
     @api.model
     def _search_fsm_quantity(self, operator, value):
+        if operator == 'in':
+            return Domain.OR(self._search_fsm_quantity('=', v) for v in value)
+        if operator == 'not in':
+            return NotImplemented
         if not (isinstance(value, int) or (isinstance(value, bool) and value is False)):
-            raise ValueError(_('Invalid value: %s', value))
-        if operator not in ('=', '!=', '<=', '<', '>', '>=') or (operator == '!=' and value is False):
-            raise ValueError(_('Invalid operator: %s', operator))
+            return NotImplemented
+        if operator not in ('<=', '<', '>', '>='):
+            return NotImplemented
 
         task = self._get_contextual_fsm_task()
         if not task:
@@ -100,7 +105,7 @@ class ProductProduct(models.Model):
             value = 0
             operator = '>='
             op = 'not in'
-        sql = SQL("""(
+        return [('id', op, SQL("""(
             SELECT sol.product_id
               FROM sale_order_line sol
          LEFT JOIN sale_order so
@@ -109,8 +114,7 @@ class ProductProduct(models.Model):
                 ON so.id = task.sale_order_id
              WHERE task.id = %s
                AND sol.product_uom_qty %s %s
-        )""", task.id, SQL(operator), value)
-        return [('id', op, sql)]
+        )""", task.id, SQL(operator), value))]
 
     @api.model
     def _get_contextual_fsm_task(self):

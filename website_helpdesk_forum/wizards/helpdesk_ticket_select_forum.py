@@ -5,6 +5,7 @@ from markupsafe import Markup
 
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
+from odoo.fields import Domain
 
 
 class HelpdeskTicketSelectForumWizard(models.TransientModel):
@@ -96,11 +97,11 @@ class ForumForum(models.Model):
     filter_for_helpdesk_wizard = fields.Boolean(store=False, search='_search_filter_for_helpdesk_wizard')
 
     def _search_filter_for_helpdesk_wizard(self, operator, value):
-        assert operator == '='
-        assert value
-
-        forums = False
+        if operator not in ('in', 'not in'):
+            return NotImplemented
         ticket_id = self.env.context.get('active_id')
-        if ticket_id:
-            forums = self.env['helpdesk.ticket'].browse(ticket_id).team_id.sudo().website_forum_ids
-        return [] if not forums else [('id', 'in', forums.ids)]
+        forums = self.env['helpdesk.ticket'].browse(ticket_id).team_id.sudo().website_forum_ids
+        if not forums:
+            # if not restricted to a forum, return all of them
+            return Domain.TRUE
+        return [('id', operator, forums.ids)]

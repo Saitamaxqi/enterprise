@@ -148,8 +148,8 @@ class MrpEcoApproval(models.Model):
         (self - awaiting_validation_approval).awaiting_my_validation = False
 
     def _search_awaiting_my_validation(self, operator, value):
-        if (operator, value) not in [('=', True), ('!=', False)]:
-            raise NotImplementedError(_('Operation not supported'))
+        if operator != 'in':
+            return NotImplemented
         return [('required_user_ids', 'in', self.env.uid),
                 ('approval_template_id.approval_type', 'in', ('mandatory', 'optional')),
                 ('status', '!=', 'approved'),

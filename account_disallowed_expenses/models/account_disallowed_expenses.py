@@ -52,14 +52,16 @@ class AccountDisallowedExpensesCategory(models.Model):
 
     @api.model
     def _search_display_name(self, operator, value):
+        if operator in expression.NEGATIVE_TERM_OPERATORS:
+            return NotImplemented
+        if operator == 'in':
+            return expression.OR(self._search_display_name('=', v) for v in value)
         if value and isinstance(value, str):
             code_value = value.split(' ')[0]
-            is_negative = operator in expression.NEGATIVE_TERM_OPERATORS
-            positive_operator = expression.TERM_OPERATORS_NEGATION[operator] if is_negative else operator
-            domain = ['|', ('code', '=ilike', f'{code_value}%'), ('name', positive_operator, value)]
-            if is_negative:
-                domain = ['!', *domain]
-            return domain
+            return ['|', ('code', '=ilike', f'{code_value}%'), ('name', operator, value)]
+        if operator == '=':
+            operator = 'in'
+            value = [value]
         return super()._search_display_name(operator, value)
 
     def action_read_category(self):

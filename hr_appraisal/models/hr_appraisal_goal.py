@@ -1,8 +1,7 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import fields, api, models, _
-from odoo.exceptions import UserError
+from odoo.fields import Domain
 from odoo.tools.misc import get_lang
 
 
@@ -41,16 +40,11 @@ class HrAppraisalGoal(models.Model):
             or len(self.employee_autocomplete_ids) > 1
 
     def _search_is_manager(self, operator, value):
-        if operator not in ('=', '!=') or not isinstance(value, bool):
-            raise UserError(_('Operation not supported'))
+        if operator != 'in':
+            return NotImplemented
         if self.env.user.has_group('hr_appraisal.group_hr_appraisal_user'):
-            return [(1, '=', 1)]
-        domain_operator = 'not in' if (operator == '=') ^ value else 'in'
-        return [(
-            'employee_ids',
-            domain_operator,
-            self.env.user.get_employee_autocomplete_ids().ids
-        )]
+            return Domain.TRUE
+        return Domain('employee_ids', 'in', self.env.user.get_employee_autocomplete_ids().ids)
 
     @api.depends('employee_ids')
     def _compute_manager_ids(self):

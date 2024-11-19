@@ -14,8 +14,8 @@ class TimerMixin(models.AbstractModel):
     user_timer_id = fields.One2many('timer.timer', compute='_compute_user_timer_id', search='_search_user_timer_id', export_string_translation=False)
 
     def _search_is_timer_running(self, operator, value):
-        if operator not in ['=', '!='] or not isinstance(value, bool):
-            raise NotImplementedError(_('Operation not supported'))
+        if operator != 'in':
+            return NotImplemented
 
         running_timer_query = self.env['timer.timer']._search([
             ('timer_start', '!=', False),
@@ -23,10 +23,7 @@ class TimerMixin(models.AbstractModel):
             ('res_model', '=', self._name),
         ])
 
-        if operator == '!=':
-            value = not value
-
-        return [('id', 'in' if value else 'not in', running_timer_query.subselect('res_id'))]
+        return [('id', 'in', running_timer_query.subselect('res_id'))]
 
     def _search_user_timer_id(self, operator, value):
         timer_query = self.env['timer.timer']._search([

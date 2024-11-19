@@ -509,8 +509,8 @@ class KnowledgeArticle(models.Model):
             is not member with 'none' access
         """
         KnowledgeArticle = self.env["knowledge.article"]
-        if operator not in ('=', '!=') or not isinstance(value, bool):
-            raise NotImplementedError("Unsupported search operator")
+        if operator not in ('in', 'not in'):
+            return NotImplemented
 
         articles_with_access = {}
         if not self.env.user.share:
@@ -521,7 +521,7 @@ class KnowledgeArticle(models.Model):
         articles_with_member_access = list(set(member_permissions.keys() - set(articles_with_no_member_access)))
 
         # If searching articles for which user has access.
-        if (value and operator == '=') or (not value and operator == '!='):
+        if operator == 'in':
             if self.env.user.share:
                 return [('id', 'in', articles_with_member_access)]
             return ['|',
@@ -559,14 +559,12 @@ class KnowledgeArticle(models.Model):
 
     def _search_user_has_write_access(self, operator, value):
         KnowledgeArticle = self.env["knowledge.article"]
-        if operator not in ('=', '!=') or not isinstance(value, bool):
-            raise NotImplementedError("Unsupported search operator")
+        if operator not in ('in', 'not in'):
+            return NotImplemented
 
         # share is never allowed to write
         if self.env.user.share:
-            if (value and operator == '=') or (not value and operator == '!='):
-                return expression.FALSE_DOMAIN
-            return expression.TRUE_DOMAIN
+            return expression.TRUE_DOMAIN if operator == 'in' else expression.FALSE_DOMAIN
 
         articles_with_access = KnowledgeArticle._get_internal_permission(filter_domain=[('internal_permission', '=', 'write')])
         member_permissions = KnowledgeArticle._get_partner_member_permissions(self.env.user.partner_id)
@@ -574,7 +572,7 @@ class KnowledgeArticle(models.Model):
         articles_with_no_member_access = list(set(member_permissions.keys() - set(articles_with_member_access)))
 
         # If searching articles for which user has write access.
-        if (value and operator == '=') or (not value and operator == '!='):
+        if operator == 'in':
             return ['|',
                         '&', ('id', 'in', list(articles_with_access.keys())), ('id', 'not in', articles_with_no_member_access),
                         ('id', 'in', articles_with_member_access)
@@ -665,17 +663,11 @@ class KnowledgeArticle(models.Model):
             fav_article.user_favorite_sequence = fav_sequence_by_article[fav_article.id]
 
     def _search_is_user_favorite(self, operator, value):
-        if operator not in ('=', '!='):
-            raise NotImplementedError("Unsupported search operation on favorite articles")
-
-        if (value and operator == '=') or (not value and operator == '!='):
-            return [('favorite_ids', 'in', self.env['knowledge.article.favorite'].sudo()._search(
-                [('user_id', '=', self.env.uid)]
-            ))]
-
+        if operator != 'in':
+            return NotImplemented
         # easier than a not in on a 2many field (hint: use sudo because of
         # complicated ACL on favorite based on user access on article)
-        return [('favorite_ids', 'not in', self.env['knowledge.article.favorite'].sudo()._search(
+        return [('favorite_ids', 'in', self.env['knowledge.article.favorite'].sudo()._search(
             [('user_id', '=', self.env.uid)]
         ))]
 
@@ -711,37 +703,23 @@ class KnowledgeArticle(models.Model):
             )
 
     def _search_is_article_visible(self, operator, value):
-        if operator not in ('=', '!='):
-            raise NotImplementedError(_("Unsupported search operation"))
         if self.env.user._is_public():
-            return []
+            return expression.FALSE_DOMAIN
+        if operator != 'in':
+            return NotImplemented
         members_from_partner = self.env['knowledge.article.member']._search(
             [('partner_id', '=', self.env.user.partner_id.id)]
         )
-        if (value and operator == '=') or (not value and operator == '!='):
-            members_domain = [
-                '|',
-                    ('article_member_ids', 'in', members_from_partner),
-                    ('root_article_id.article_member_ids', 'in', members_from_partner)
-            ]
-            if not self.env.user._is_internal():
-                return members_domain
-            return expression.OR([
-                [('is_article_visible_by_everyone', '=', True)],
-                members_domain
-            ])
-
         members_domain = [
-            '&',
-                ('article_member_ids', 'not in', members_from_partner),
-                ('root_article_id.article_member_ids', 'not in', members_from_partner)
+            '|',
+                ('article_member_ids', 'in', members_from_partner),
+                ('root_article_id.article_member_ids', 'in', members_from_partner)
         ]
         if not self.env.user._is_internal():
             return members_domain
-
-        return expression.AND([
-               [('is_article_visible_by_everyone', '=', False)],
-               members_domain
+        return expression.OR([
+            [('is_article_visible_by_everyone', '=', True)],
+            members_domain
         ])
 
     @api.depends('root_article_id.is_article_visible_by_everyone')
@@ -1148,11 +1126,18 @@ class KnowledgeArticle(models.Model):
         are based on display_name / name_search to match records (for example when importing the article
         parent record, without this override it will never match). """
 
+        if operator == 'in':
+            return expression.OR(self._search_display_name('=', v) for v in value)
+        if operator == 'not in':
+            return NotImplemented
         if operator not in ('=', 'ilike') or not isinstance(value, str):
             return super()._search_display_name(operator, value)
 
         article_name, icon = self._extract_icon_from_name(value)
         if not icon:
+            if operator == '=':
+                operator = 'in'
+                value = [value]
             return super()._search_display_name(operator, value)
 
         if icon == self._get_no_icon_placeholder():

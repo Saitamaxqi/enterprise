@@ -34,8 +34,8 @@ class HrApplicant(models.Model):
         search='_search_is_accessible_to_current_user')
 
     def _search_is_accessible_to_current_user(self, operator, value):
-        if not isinstance(value, bool) or operator not in ['=', '!=']:
-            raise UserError(_("Unsupported search on field is_accessible_to_current_user: %(operator)s operator & %(value)s value. Only = and != operator and boolean values are supported.", operator=operator, value=value))
+        if operator not in ('in', 'not in'):
+            return NotImplemented
         if self.env.user.has_group('hr_recruitment.group_hr_recruitment_user'):
             return []
         applications = self.env['hr.applicant'].with_context(active_test=False).search([
@@ -43,8 +43,7 @@ class HrApplicant(models.Model):
                 ('job_id', 'any', [('interviewer_ids', 'in', self.env.user.id)]),
                 ('interviewer_ids', 'in', self.env.user.id),
         ])
-        domain_operator = 'in' if value ^ (operator == '!=') else 'not in'
-        return [('id', domain_operator, applications.ids)]
+        return [('id', operator, applications.ids)]
 
     @api.depends_context('uid')
     def _compute_is_accessible_to_current_user(self):

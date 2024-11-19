@@ -79,12 +79,13 @@ class SaleSubscriptionPlan(models.Model):
         return res
 
     def _search_billing_period_display(self, operator, value):
-        if operator not in ['=', 'in']:
-            raise NotImplementedError
-        plan_ids = self.env['sale.subscription.plan']
-        for plan in self.env['sale.subscription.plan'].search([]):
-            if value in plan.billing_period_display:
-                plan_ids += plan
+        if operator != 'in':
+            return NotImplemented
+        plan_ids = [
+            plan.id
+            for plan in self.env['sale.subscription.plan'].search([])
+            if any(v in plan.billing_period_display for v in value)
+        ]
         return [('id', 'in', plan_ids.ids)]
 
     def _compute_active_subs_count(self):

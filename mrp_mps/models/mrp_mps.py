@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from collections import defaultdict, namedtuple
@@ -6,10 +5,9 @@ from dateutil.relativedelta import relativedelta
 from math import log10
 
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
+from odoo.fields import Domain
 from odoo.tools.date_utils import add, subtract
-from odoo.tools.float_utils import float_round, float_compare
-from odoo.osv.expression import OR, AND, FALSE_DOMAIN
+from odoo.tools.float_utils import float_compare, float_round
 from collections import OrderedDict
 
 
@@ -99,32 +97,39 @@ class MrpProductionSchedule(models.Model):
             mps.enable_max_replenish = bool(mps.max_to_replenish_qty)
 
     def _search_replenish_state(self, operator, value):
+        if operator != 'in':
+            return NotImplemented
+        states = set(self._field['replenish_state'].get_values(self.env))
+        states.add(False)
+        states.intersection_update(value)
+        if not states:
+            return Domain.FALSE
+
         productions_schedules = self.search([])
         productions_schedules_states = productions_schedules.get_production_schedule_view_state()
 
-        def filter_function(f):
-            if not value:
-                return not (f['state'] == 'to_launch' and f['to_replenish'] or \
-                    f['state'] == 'to_relaunch' or f['state'] == 'to_correct')
-            return value == 'to_replenish' and f['state'] == 'to_launch' and f['to_replenish'] or \
-                value in ['to_replenish', 'under_replenishment'] and f['state'] == 'to_relaunch' or \
-                value == 'excessive_replenishment' and f['state'] == 'to_correct'
+        def filter_forecasts(forecasts):
+            forecast_state = set()
+            for f in forecasts:
+                if f['state'] == 'to_launch':
+                    if f['to_replenish']:
+                        forecast_state.add('to_replenish')
+                elif f['state'] == 'to_relaunch':
+                    forecast_state.add('under_replenishment')
+                    forecast_state.add('to_replenish')
+                elif f['state'] == 'to_correct':
+                    forecast_state.add('excessive_replenishment')
 
-        ids = []
-        for state in productions_schedules_states:
-            if value:
-                if any(map(filter_function, state['forecast_ids'])):
-                    ids.append(state['id'])
-            else:
-                if all(map(filter_function, state['forecast_ids'])):
-                    ids.append(state['id'])
+            if not forecast_state:
+                return False in states
+            return states.intersection(forecast_state)
 
-        if operator == '=':
-            operator = 'in'
-        else:
-            operator = 'not in'
-
-        return [('id', operator, ids)]
+        ids = [
+            state['id']
+            for state in productions_schedules_states
+            if filter_forecasts(state['forecast_ids'])
+        ]
+        return Domain('id', 'in', ids)
 
     def action_open_actual_demand_details(self, date_str, date_start_str, date_stop_str):
         """ Open the picking list view for the actual demand for the current
@@ -599,7 +604,7 @@ class MrpProductionSchedule(models.Model):
             return _used_in_bom(products, related_products)
 
         supplying_mps = self.env['mrp.production.schedule'].search(
-            AND([domain, [
+            Domain.AND([domain, [
                 ('warehouse_id', 'in', self.mapped('warehouse_id').ids),
                 ('product_id', 'in', _used_in_bom(self.mapped('product_id'), self.env['product.product']).ids)
             ]]))
@@ -617,7 +622,7 @@ class MrpProductionSchedule(models.Model):
             return _use_boms(components, related_products)
 
         supplied_mps = self.env['mrp.production.schedule'].search(
-            AND([domain, [
+            Domain.AND([domain, [
                 ('warehouse_id', 'in', self.mapped('warehouse_id').ids),
                 ('product_id', 'in', _use_boms(self.mapped('product_id'), self.env['product.product']).ids)
             ]]))
@@ -1002,7 +1007,6 @@ class MrpProductionSchedule(models.Model):
             return [('id', '=', False)]
         location = type == 'incoming' and 'location_dest_id' or 'location_id'
         location_dest = type == 'incoming' and 'location_id' or 'location_dest_id'
-        domain = []
 
         # In case of delivery in multi-steps, the real outgoing move does not exist
         # before confirming the previous moves (pick and/or pack), so we must use
@@ -1038,17 +1042,21 @@ class MrpProductionSchedule(models.Model):
             lead_days, dummy = rules.filtered(lambda r: r.action not in ['buy', 'manufacture'])._get_lead_days(schedule.product_id)
             delay = lead_days['total_delay']
             groupby_delay[delay].append((schedule.product_id, schedule.warehouse_id))
+
+        specific_domains = []
         for delay in groupby_delay:
             products, warehouses = zip(*groupby_delay[delay])
             warehouses = self.env['stock.warehouse'].concat(*warehouses)
             products = self.env['product.product'].concat(*products)
-            specific_domain = [
+            specific_domains.append([
                 (location, 'child_of', warehouses.mapped('view_location_id').ids),
                 ('product_id', 'in', products.ids),
                 ('date', '>=', date_start - relativedelta(days=delay)),
-            ]
-            domain = OR([domain, AND([common_domain, specific_domain])]) if domain else AND([common_domain, specific_domain])
-        return domain
+            ])
+
+        if specific_domains:
+            return Domain(common_domain) & Domain.OR(specific_domains)
+        return Domain.TRUE
 
     @api.model
     def _get_dest_moves_delay(self, move, delay=0):
@@ -1114,30 +1122,32 @@ class MrpProductionSchedule(models.Model):
         :param date_stop: end date of the forecast domain
         """
         if not self:
-            return [('id', '=', False)]
-        domain = FALSE_DOMAIN
-        common_domain = [
-            ('state', 'in', ('draft', 'sent', 'to approve')),
-            ('date_planned', '<=', date_stop)
-        ]
+            return Domain.FALSE
         groupby_delay = defaultdict(list)
         for schedule in self:
             rules = schedule.product_id._get_rules_from_location(schedule.warehouse_id.lot_stock_id)
-            lead_days, dummy = rules._get_lead_days(schedule.product_id)
+            lead_days, _dummy = rules._get_lead_days(schedule.product_id)
             delay = lead_days['total_delay']
             groupby_delay[delay].append((schedule.product_id, schedule.warehouse_id))
+
+        if not groupby_delay:
+            return Domain.FALSE
+        domain = Domain.FALSE
+        common_domain = Domain([
+            ('state', 'in', ('draft', 'sent', 'to approve')),
+            ('date_planned', '<=', date_stop)
+        ])
 
         for delay in groupby_delay:
             products, warehouses = zip(*groupby_delay[delay])
             warehouses = self.env['stock.warehouse'].concat(*warehouses)
             products = self.env['product.product'].concat(*products)
-            specific_domain = [
+            domain |= Domain([
                 ('order_id.picking_type_id.default_location_dest_id', 'child_of', warehouses.mapped('view_location_id').ids),
                 ('product_id', 'in', products.ids),
                 ('date_planned', '>=', date_start - relativedelta(days=delay)),
-            ]
-            domain = OR([domain, AND([common_domain, specific_domain])]) if domain else AND([common_domain, specific_domain])
-        return domain
+            ])
+        return common_domain & domain
 
     def _get_rfq_and_planned_date(self, rfq_domain, order=False):
         purchase_lines = self.env['purchase.order.line'].search(rfq_domain, order=order)

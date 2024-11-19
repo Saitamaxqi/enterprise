@@ -8,8 +8,7 @@ from datetime import date, datetime, timedelta
 from itertools import chain
 
 from odoo import api, models, fields, _
-from odoo.tools import float_round, float_is_zero, date_utils, ormcache
-from odoo.exceptions import UserError
+from odoo.tools import SQL, date_utils, float_is_zero, float_round, ormcache
 
 
 class HrPayslip(models.Model):
@@ -210,11 +209,9 @@ class HrPayslip(models.Model):
             slip.l10n_be_has_eco_vouchers = any(input_line.code == 'ECOVOUCHERS' for input_line in slip.input_line_ids)
 
     def _search_l10n_be_has_eco_vouchers(self, operator, value):
-        if operator not in ['=', '!='] or not isinstance(value, bool):
-            raise UserError(_('Operation not supported'))
-        if operator != '=':
-            value = not value
-        self._cr.execute("""
+        if operator != 'in':
+            return NotImplemented
+        rows = self.env.execute_query(SQL("""
             SELECT id
             FROM hr_payslip payslip
             WHERE EXISTS
@@ -224,8 +221,8 @@ class HrPayslip(models.Model):
                  ON     hpi.input_type_id = hpit.id AND hpit.code = 'ECOVOUCHERS'
                  WHERE  hpi.payslip_id = payslip.id
                  LIMIT  1)
-        """)
-        return [('id', 'in' if value else 'not in', [r[0] for r in self._cr.fetchall()])]
+        """))
+        return [('id', 'in', [r[0] for r in rows])]
 
     @api.depends('struct_id')
     def _compute_contract_domain_ids(self):

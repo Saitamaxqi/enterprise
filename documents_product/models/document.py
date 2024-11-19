@@ -1,8 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models, _
-from odoo.exceptions import ValidationError
-from odoo.osv import expression
+from odoo.fields import Domain
 
 
 class DocumentsDocument(models.Model):
@@ -21,25 +20,34 @@ class DocumentsDocument(models.Model):
 
     @api.model
     def _search_product_template_id(self, operator, value):
-        return self._search_related_product_field(operator, value, self.env['product.template'])
+        return self._search_related_product_field(operator, value, 'product_template_id')
 
     @api.model
     def _search_product_id(self, operator, value):
-        return self._search_related_product_field(operator, value, self.env['product.product'])
+        return self._search_related_product_field(operator, value, 'product_id')
 
     @api.model
-    def _search_related_product_field(self, operator, value, Model):
-        if operator in ('=', '!=') and isinstance(value, bool):
-            if not value:
-                operator = expression.TERM_OPERATORS_NEGATION[operator]
-            return [("res_model", operator, Model._name)]
-        elif operator in ('=', '!=', "in", "not in") and isinstance(value, (int, list)):
-            return expression.AND([[("res_model", "=", Model._name)], [("res_id", operator, value)]])
-        elif operator in ("ilike", "not ilike", "=", "!=") and isinstance(value, str):
+    def _search_related_product_field(self, operator, value, field_name) -> Domain:
+        assert field_name in ('product_template_id', 'product_id')
+        Model = self.env[self._fields[field_name].comodel_name]
+        if operator == 'in':
+            if True in value:
+                # support for True value
+                return Domain(field_name, 'not in', [False]) | Domain(field_name, 'in', value - {True})
+            if False in value:
+                return Domain('res_model', '!=', Model._name) | self._search_related_product_field(operator, value - {False}, field_name)
+            query_model = Model._search(Domain.OR(
+                Domain(Model._rec_name if isinstance(v, str) else 'id', operator, v)
+                for v in value
+                if v
+            ))
+        elif operator == 'any' and isinstance(value, Domain):
+            query_model = Model._search(value)
+        elif operator.endswith('like') and not operator.startswith('not'):
             query_model = Model._search([(Model._rec_name, operator, value)])
-            query_doc = self._search([('res_model', '=', Model._name), ('res_id', 'in', query_model)])
-            return [("id", "in", query_doc)]
-        raise ValidationError(_("Invalid %s search", self.env['ir.model']._get(Model._name).name))
+        else:
+            return NotImplemented
+        return (Domain.FALSE if query_model.is_empty() else Domain('res_id', 'in', query_model)) & Domain('res_model', '=', Model._name)
 
     def create_product_template(self):
         # JUC: WTF? A single product for many documents, and the created

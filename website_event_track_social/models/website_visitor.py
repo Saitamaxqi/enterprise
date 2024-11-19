@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import api, fields, models
+from odoo.exceptions import UserError
 
 
 class WebsiteVisitor(models.Model):
@@ -27,7 +28,7 @@ class WebsiteVisitor(models.Model):
 
     def _search_event_track_push_enabled_ids(self, operator, operand):
         if operator == "not in":
-            raise NotImplementedError("Unsupported 'Not In' operation on track push enabled tracks")
+            raise UserError(self.env._("Unsupported 'Not In' operation on track push enabled tracks"))
 
         track_visitors = self.env['event.track.visitor'].sudo().search([
             ('track_id', operator, operand),

@@ -3,7 +3,7 @@
 
 from odoo import api, fields, models
 from odoo.osv import expression
-from odoo.tools import SQL
+from odoo.tools import OrderedSet, SQL
 
 
 class ProjectProject(models.Model):
@@ -98,26 +98,28 @@ class ProjectProject(models.Model):
         super(ProjectProject, self - fsm_projects)._compute_pricing_type()
 
     def _search_pricing_type(self, operator, value):
-        domain = super()._search_pricing_type(operator, value)
-        if value == 'fixed_rate':
-            fsm_domain = [('is_fsm', operator, False)]
-            if operator == '=':
-                domain = expression.AND([fsm_domain, domain])
-            else:
-                domain = expression.OR([fsm_domain, domain])
-        elif value in ['task_rate', 'employee_rate']:
+        if operator != 'in':
+            # let the parent implementation dispatch the search
+            return super()._search_pricing_type(operator, value)
+        values = set(value)
+        domains = []
+        if 'fixed_rate' in values:
+            values.discard('fixed_rate')
+            domain = super()._search_pricing_type(operator, {'fixed_rate'})
+            domains.append(expression.AND([domain, [('is_fsm', operator, [False])]]))
+        if other_rates := {rate for rate in ('task_rate', 'employee_rate') if rate in values}:
+            values.difference_update(other_rates)
+            domain = super()._search_pricing_type(operator, other_rates)
             fsm_domain = [
                 ('is_fsm', '=', True),
                 ('allow_billable', '=', True),
-                ('sale_line_employee_ids', '!=' if value == 'employee_rate' else '=', False),
             ]
-            if operator == '=':
-                domain = expression.OR([fsm_domain, domain])
-            else:
-                fsm_domain = expression.normalize_domain(fsm_domain)
-                fsm_domain.insert(0, expression.NOT_OPERATOR)
-                domain = expression.AND([expression.distribute_not(fsm_domain), domain])
-        return domain
+            if len(other_rates) == 1:
+                fsm_domain.append(('sale_line_employee_ids', '!=' if 'employee_rate' in other_rates else '=', False))
+            domains.append(expression.OR([domain, fsm_domain]))
+        if values:
+            domains.append(super()._search_pricing_type(operator, values))
+        return expression.OR(domains)
 
     @api.depends('is_fsm')
     def _compute_sale_line_id(self):

@@ -32,15 +32,14 @@ class ProjectProject(models.Model):
             project.has_helpdesk_team = data.get(project.id, False)
 
     def _search_has_helpdesk_team(self, operator, value):
-        if operator not in ['=', '!='] or not isinstance(value, bool):
-            raise NotImplementedError(_('Operation not supported'))
+        if operator != 'in':
+            return NotImplemented
 
         helpdesk_team_ids = self.env['helpdesk.team']._read_group(
             [('use_helpdesk_timesheet', '=', True), ('project_id', '!=', False)],
             [], ['project_id:recordset']
         )[0][0].ids
-        operator_new = "in" if (operator == "=") == bool(value) else "not in"
-        return [('id', operator_new, helpdesk_team_ids)]
+        return [('id', 'in', helpdesk_team_ids)]
 
     def action_open_project_tickets(self):
         action = self.env["ir.actions.actions"]._for_xml_id("helpdesk_timesheet.project_project_action_view_helpdesk_tickets")

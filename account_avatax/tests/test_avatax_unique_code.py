@@ -56,6 +56,8 @@ class TestAvataxUniqueCode(TestAccountAvataxCommon):
         self.assertFalse(self._search_ilike_and_return("Contact"))
         self.assertFalse(self._search_ilike_and_return(f"{str(self.partner_1.id)} {str(self.partner_1.id)}"))
 
-    def test_search_set(self):
-        self.assertRaises(UserError, self.env["res.partner"].search, [("avatax_unique_code", "=", True)])
-        self.assertRaises(UserError, self.env["res.partner"].search, [("avatax_unique_code", "=", False)])
+    def test_search_bool(self):
+        # searching True is not supported
+        self.assertRaises(ValueError, self.env["res.partner"].search, [("avatax_unique_code", "=", True)])
+        # searching False results in a True domain
+        self.assertTrue(self.env["res.partner"]._search([("avatax_unique_code", "=", False)]).is_empty())

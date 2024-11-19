@@ -546,10 +546,10 @@ class SaleOrder(models.Model):
                 order.note_order = order.subscription_id.note_order
 
     def _search_note_order(self, operator, value):
-        if operator not in ['in', '=']:
+        if operator != 'in':
             return NotImplemented
-        ooids = self.search_read([('id', operator, value)], ['origin_order_id', 'id'], load=None)
-        ooids = [v['origin_order_id'] or v['id'] for v in ooids]
+        origin_orders = self.search_fetch([('id', operator, value)], ['origin_order_id'], order='id')
+        ooids = [oo.origin_order_id.id or oo.id for oo in origin_orders]
         return [('origin_order_id', 'in', ooids), ('internal_note', '=', False)]
 
     @api.depends('note_order.internal_note')
