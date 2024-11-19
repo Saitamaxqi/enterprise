@@ -466,7 +466,7 @@ class MrpProductionSchedule(models.Model):
         # Get the schedules that do not depends from other in first position in
         # order to compute the schedule state only once.
         indirect_demand_order = schedules_to_compute._get_indirect_demand_order(indirect_demand_trees)
-        indirect_demand_qty = defaultdict(lambda: defaultdict(float))
+        demand_qty_dict = defaultdict(lambda: defaultdict(float))
         incoming_qty, incoming_qty_done = self._get_incoming_qty(date_range)
         outgoing_qty, outgoing_qty_done = self._get_outgoing_qty(date_range)
         dummy, outgoing_qty_year_minus_1 = self._get_outgoing_qty(date_range_year_minus_1)
@@ -510,7 +510,8 @@ class MrpProductionSchedule(models.Model):
                 key = ((date_start, date_stop), production_schedule.product_id, production_schedule.warehouse_id)
                 key_y_1 = (date_range_year_minus_1[index], *key[1:])
                 key_y_2 = (date_range_year_minus_2[index], *key[1:])
-                existing_forecasts = production_schedule.forecast_ids.filtered(lambda p: p.date >= date_start and p.date <= date_stop)
+                existing_forecasts = production_schedule.forecast_ids.filtered(lambda p: p.date >= date_start and p.date <= date_stop and
+                                                                                         (p.forecast_qty or p.replenish_qty or p.procurement_launched or p.replenish_qty_updated))
                 if production_schedule in self:
                     forecast_values['date_start'] = date_start
                     forecast_values['date_stop'] = date_stop
@@ -519,25 +520,19 @@ class MrpProductionSchedule(models.Model):
                     forecast_values['outgoing_qty_year_minus_1'] = float_round(outgoing_qty_year_minus_1.get(key_y_1, 0.0), precision_rounding=rounding)
                     forecast_values['outgoing_qty_year_minus_2'] = float_round(outgoing_qty_year_minus_2.get(key_y_2, 0.0), precision_rounding=rounding)
 
-                indirect_qty_value = sum(indirect_demand_qty.get(key).values()) if indirect_demand_qty.get(key, False) else 0.0
+                indirect_qty_value = sum(demand_qty_dict.get(key, {0: 0}).values())
                 forecast_values['indirect_demand_qty'] = float_round(indirect_qty_value, precision_rounding=rounding, rounding_method='UP')
-                replenish_qty_updated = False
-                if existing_forecasts:
-                    forecast_values['forecast_qty'] = float_round(sum(existing_forecasts.mapped('forecast_qty')), precision_rounding=rounding)
+                forecast_values['forecast_qty'] = float_round(sum(existing_forecasts.mapped('forecast_qty')), precision_rounding=rounding)  # will be 0 if no existing forecast
+                forecast_values['replenish_qty_updated'] = any(existing_forecasts.mapped('replenish_qty_updated'))  # will be False if no existing forecast
+
+                if forecast_values['replenish_qty_updated']:
                     forecast_values['replenish_qty'] = float_round(sum(existing_forecasts.mapped('replenish_qty')), precision_rounding=rounding)
-
-                    # Check if the to replenish quantity has been manually set or
-                    # if it needs to be computed.
-                    replenish_qty_updated = any(existing_forecasts.mapped('replenish_qty_updated'))
-                    forecast_values['replenish_qty_updated'] = replenish_qty_updated
                 else:
-                    forecast_values['forecast_qty'] = 0.0
-
-                if not replenish_qty_updated:
                     after_forecast_qty = starting_inventory_qty - forecast_values['forecast_qty'] - forecast_values['indirect_demand_qty']
                     replenish_qty = production_schedule._get_replenish_qty(after_forecast_qty=after_forecast_qty, use_max_replenish=use_max_replenish)
                     forecast_values['replenish_qty'] = float_round(replenish_qty, precision_rounding=rounding)
-                    forecast_values['replenish_qty_updated'] = False
+                    for forecast in existing_forecasts:
+                        demand_qty_dict[key][forecast.date] += forecast.forecast_qty
 
                 forecast_values['starting_inventory_qty'] = float_round(starting_inventory_qty, precision_rounding=rounding)
                 forecast_values['safety_stock_qty'] = float_round(starting_inventory_qty - forecast_values['forecast_qty'] - forecast_values['indirect_demand_qty'] + forecast_values['replenish_qty'], precision_rounding=rounding)
@@ -550,19 +545,19 @@ class MrpProductionSchedule(models.Model):
                 # Set the indirect demand qty for children schedules.
                 for (product, ratio) in indirect_ratio_mps[(production_schedule.warehouse_id, production_schedule.product_id)].items():
                     subproduct_indirect_demand = 0
-                    if indirect_demand_qty.get(((date_start, date_stop), production_schedule.product_id, production_schedule.warehouse_id), False):
-                        for (parent_date, parent_quantity) in indirect_demand_qty[((date_start, date_stop), production_schedule.product_id, production_schedule.warehouse_id)].items():
+                    if demand_qty_dict.get(((date_start, date_stop), production_schedule.product_id, production_schedule.warehouse_id), False):
+                        for (parent_date, parent_quantity) in demand_qty_dict[(date_start, date_stop), production_schedule.product_id, production_schedule.warehouse_id].items():
                             related_date = max(subtract(parent_date, days=lead_time_ignore_components), fields.Date.today())
                             index = next(i for i, (dstart, dstop) in enumerate(date_range) if related_date <= dstop)
                             related_key = (date_range[index], product, production_schedule.warehouse_id)
-                            indirect_demand_qty[related_key][related_date] += ratio * parent_quantity
+                            demand_qty_dict[related_key][related_date] += ratio * parent_quantity
                             subproduct_indirect_demand += ratio * parent_quantity
                     if (ratio * forecast_values['replenish_qty']) != subproduct_indirect_demand:
                         parent_date = date_stop if (ratio * forecast_values['replenish_qty']) < subproduct_indirect_demand else date_start
                         related_date = max(subtract(parent_date, days=lead_time_ignore_components), fields.Date.today())
                         index = next(i for i, (dstart, dstop) in enumerate(date_range) if related_date <= dstop)
                         related_key = (date_range[index], product, production_schedule.warehouse_id)
-                        indirect_demand_qty[related_key][related_date] += (ratio * forecast_values['replenish_qty']) - subproduct_indirect_demand
+                        demand_qty_dict[related_key][related_date] += (ratio * forecast_values['replenish_qty']) - subproduct_indirect_demand
 
             if production_schedule in self:
                 # The state is computed after all because it needs the final

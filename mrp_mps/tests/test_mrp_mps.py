@@ -463,6 +463,25 @@ class TestMpsMps(common.TransactionCase):
         self.assertEqual(bolt_forecasts[2]['indirect_demand_qty'], 8)
         self.assertEqual(bolt_forecasts[1]['indirect_demand_qty'], 8)
 
+    @freeze_time('2024-10-01')
+    def test_lead_times_3(self):
+        """ When showing a bigger period type (e.g. year > week), we want to make sure
+        that lead times are applied on the day of the forecast and not the first day
+        of the period. """
+        self.env.company.manufacturing_period = 'month'
+        self.table.write({
+            'route_ids': [Command.set([self.ref('mrp.route_warehouse0_manufacture')])]
+        })
+        self.bom_table.produce_delay = 1
+        self.mps_table.set_forecast_qty(1, 10)
+        self.mps_table.set_forecast_qty(2, 10)
+        self.mps_table.set_forecast_qty(3, 10)
+        self.mps_table.set_forecast_qty(4, 10)
+
+        mps_table, mps_drawer = (self.mps_table | self.mps_drawer).get_production_schedule_view_state(period_scale='year')
+        self.assertListEqual([f['forecast_qty'] for f in mps_table['forecast_ids']], [20, 20, 0])
+        self.assertListEqual([f['indirect_demand_qty'] for f in mps_drawer['forecast_ids']], [30, 10, 0])
+
     def test_indirect_demand(self):
         """ On a multiple BoM relation, ensure that the replenish quantity on
         a production schedule impact the indirect demand on other production
