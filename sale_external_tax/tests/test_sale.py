@@ -23,18 +23,17 @@ class TestSaleExternalTaxesSale(SaleCommon):
             ],
         })
 
-        order.action_confirm()
-        order.action_lock()
-
-        def _get_and_set_external_taxes_on_eligible_records(self):
-            self.order_line.write({'tax_id': [Command.clear()]})
-
+        def _set_external_taxes(self, mapped_taxes, summary):
+            self.order_line.write({'tax_ids': [Command.clear()]})
         def _compute_is_tax_computed_externally(self):
             self.is_tax_computed_externally = True
 
         TaxMixin = self.env.registry['account.external.tax.mixin']
+        SaleOrder = self.env.registry['sale.order']
         with (
-            patch.object(TaxMixin, '_get_and_set_external_taxes_on_eligible_records', _get_and_set_external_taxes_on_eligible_records),
+            patch.object(SaleOrder, '_set_external_taxes', _set_external_taxes),
             patch.object(TaxMixin, '_compute_is_tax_computed_externally', _compute_is_tax_computed_externally),
         ):
+            order.action_confirm()
+            order.action_lock()
             order.action_quotation_send()
