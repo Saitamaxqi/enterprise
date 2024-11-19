@@ -62,7 +62,7 @@
         .o_appraisal_input {
             padding: 0 16px;
         }
-        .o_appraisal_input,.o_appraisal_input * {
+        .o_appraisal_input, .o_appraisal_input > * {
             max-width: 100%;
         }
         .o_height{
@@ -85,6 +85,9 @@
     @include media-breakpoint-down(lg) {
         .o_appraisal_feedback_title {
             flex-direction: column;
+        }
+        .o_appraisal_input .o_we_power_buttons {
+            display: none!important;
         }
     }
     @include media-breakpoint-down(md) {
