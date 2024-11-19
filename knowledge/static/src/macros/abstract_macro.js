@@ -1,7 +1,7 @@
 import { _t } from "@web/core/l10n/translation";
 import { AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { isVisible } from "@web/core/utils/ui";
-import { MacroEngine } from "@web/core/macro";
+import { Macro } from "@web/core/macro";
 
 class KnowledgeMacroError extends Error {}
 
@@ -9,7 +9,7 @@ class KnowledgeMacroError extends Error {}
  * Abstract class for Knowledge macros, that will be used to interact like a
  * tour with a Form view chatter and/or html field.
  */
-export class AbstractMacro {
+export class AbstractMacro extends Macro {
     /**
      * @param {Object} options
      * @param {HTMLElement} options.targetXmlDoc
@@ -17,34 +17,30 @@ export class AbstractMacro {
      * @param {Any} options.data
      * @param {Object} options.services required: action, dialog, ui
      */
-    constructor ({
-        targetXmlDoc,
-        breadcrumbs,
-        data,
-        services
-    }) {
+    constructor({ targetXmlDoc, breadcrumbs, data, services }) {
+        super({
+            name: "restore_recort",
+            steps: [],
+            checkDelay: 16,
+        });
         this.targetXmlDoc = targetXmlDoc;
         this.targetBreadcrumbs = breadcrumbs;
         this.data = data;
-        this.engine = new MacroEngine({ defaultCheckDelay: 16 });
         this.services = services;
-        this.blockUI = { action: function () {
-            if (!this.services.ui.isBlocked) {
-                this.services.ui.block();
-            }
-        }.bind(this) };
-        this.unblockUI = { action: function () {
-            if (this.services.ui.isBlocked) {
-                this.services.ui.unblock();
-            }
-        }.bind(this) };
-        this.onError = this.onError.bind(this);
+        this.steps = this.buildSteps();
     }
-    start() {
+
+    blockUI() {
+        if (!this.services.ui.isBlocked) {
+            this.services.ui.block();
+        }
+    }
+
+    buildSteps() {
         // Build the desired macro action
-        const macroAction = this.macroAction();
-        if (!macroAction || !macroAction.steps || !macroAction.steps.length) {
-            return;
+        const steps = this.getSteps();
+        if (!steps.length) {
+            return [];
         }
         /**
          * Preliminary breadcrumbs macro. It will use the @see breadcrumbsIndex
@@ -52,11 +48,11 @@ export class AbstractMacro {
          * (@see KnowledgeCommandsService ). Once and if the view of the target
          * record is correctly loaded, run the specific macroAction.
          */
-        const startMacro = {
-            name: "restore_record",
-            onError: this.onError,
-            steps: [
-                this.blockUI, {
+        return [
+            {
+                action: () => this.blockUI(),
+            },
+            {
                 // Restore the target Form view through its breadcrumb jsId.
                 trigger: () => {
                     return document.querySelector(`.o_knowledge_header i.oi-chevron-left`);
@@ -72,38 +68,44 @@ export class AbstractMacro {
                         );
                     }
                 },
-            }, {
+            },
+            {
                 // Start the requested macro when the current breadcrumbs
                 // match the target Form view.
                 trigger: () => {
                     const controllerBreadcrumbs = this.services.action.currentController.config.breadcrumbs;
                     if (this.targetBreadcrumbs.at(-1).jsId === controllerBreadcrumbs.at(-1)?.jsId) {
-                        return this.getFirstVisibleElement.bind(this, '.o_breadcrumb .o_last_breadcrumb_item');
+                        return this.getFirstVisibleElement(".o_breadcrumb .o_last_breadcrumb_item");
                     }
                     return null;
                 },
-                action: this.engine.activate.bind(this.engine, macroAction),
-            }],
-        };
-        this.engine.activate(startMacro);
+            },
+            ...steps,
+        ];
     }
+
     /**
      * @param {Error} error
      * @param {Object} step
      * @param {integer} index
      */
     onError(error, step, index) {
-        this.unblockUI.action();
+        this.blockUI();
         if (error instanceof KnowledgeMacroError) {
-            this.services.dialog.add(AlertDialog,{
+            this.services.dialog.add(AlertDialog, {
                 body: error.message,
-                title: _t('Error'),
-                confirmLabel: _t('Close'),
+                title: _t("Error"),
+                confirmLabel: _t("Close"),
             });
         } else {
             console.error(error);
         }
     }
+
+    onTimeout() {
+        throw new KnowledgeMacroError(_t("The operation could not be completed."));
+    }
+
     /**
      * Searches for the first element in the dom matching the selector. The
      * results are filtered with `filter` and the returned element is either
@@ -125,6 +127,23 @@ export class AbstractMacro {
         }
         return null;
     }
+
+    /**
+     * To be overridden by an actual Macro implementation. It should contain
+     * the steps to be executed on the target Form view.
+     *
+     * @returns {Array[Object]}
+     */
+    getSteps() {
+        return [];
+    }
+
+    unblockUI() {
+        if (this.services.ui.isBlocked) {
+            this.services.ui.unblock();
+        }
+    }
+
     /**
      * Validate that the macro is still on the correct Form view by checking
      * that the target breadcrumbs are the same as the current ones. To be used
@@ -138,25 +157,6 @@ export class AbstractMacro {
                 _t('The record that this macro is targeting could not be found.')
             );
         }
-    }
-    /**
-     * To be overridden by an actual Macro implementation. It should contain
-     * the steps to be executed on the target Form view.
-     *
-     * @returns {Object}
-     */
-    macroAction() {
-        return {
-            name: this.constructor.name,
-            onError: this.onError,
-            steps: [],
-            timeout: 10000,
-            onTimeout: () => {
-                throw new KnowledgeMacroError(
-                    _t('The operation could not be completed.')
-                );
-            }
-        };
     }
     /**
      * Handle the case where an item is hidden in a tab of the form view

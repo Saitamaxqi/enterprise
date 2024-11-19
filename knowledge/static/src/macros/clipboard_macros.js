@@ -11,48 +11,61 @@ export class SendAsMessageMacro extends AbstractMacro {
      * @override
      * @returns {Array[Object]}
      */
-    macroAction() {
-        const action = super.macroAction();
+    getSteps() {
         let sendMessageLastClickedEl = null;
-        action.steps.push({
-            // Search for the chatter button to send a message and make sure
-            // that the composer is visible. Search in notebook tabs too.
-            trigger: function() {
-                this.validatePage();
-                const el = this.getFirstVisibleElement('.o-mail-Chatter-sendMessage:not([disabled])');
-                if (el) {
-                    if (el.classList.contains('active')) {
-                        return el;
-                    } else if (el !== sendMessageLastClickedEl) {
-                        el.click();
-                        sendMessageLastClickedEl = el;
+        return [
+            {
+                // Search for the chatter button to send a message and make sure
+                // that the composer is visible. Search in notebook tabs too.
+                trigger: () => {
+                    this.validatePage();
+                    const el = this.getFirstVisibleElement(
+                        ".o-mail-Chatter-sendMessage:not([disabled])"
+                    );
+                    if (el) {
+                        if (el.classList.contains("active")) {
+                            return el;
+                        } else if (el !== sendMessageLastClickedEl) {
+                            el.click();
+                            sendMessageLastClickedEl = el;
+                        }
+                    } else {
+                        this.searchInXmlDocNotebookTab("chatter");
                     }
-                } else {
-                    this.searchInXmlDocNotebookTab('chatter');
-                }
-                return null;
-            }.bind(this),
-            action: () => {},
-        }, {
-            // Open the full composer Form view Dialog.
-            trigger: function() {
-                this.validatePage();
-                return this.getFirstVisibleElement('.o-mail-Composer button[name="open-full-composer"]:not([disabled])');
-            }.bind(this),
-            action: 'click',
-        }, {
-            // Paste the html data inside the message body.
-            trigger: function () {
-                this.validatePage();
-                const dialog = this.getFirstVisibleElement('.o_dialog .o_mail_composer_form');
-                if (dialog) {
-                    return this.getFirstVisibleElement(dialog.querySelector('.o_field_html[name="body"] .odoo-editor-editable'));
-                }
-                return null;
-            }.bind(this),
-            action: pasteElements.bind(this, this.data.dataTransfer),
-        }, this.unblockUI);
-        return action;
+                    return null;
+                },
+                action: () => {},
+            },
+            {
+                // Open the full composer Form view Dialog.
+                trigger: () => {
+                    this.validatePage();
+                    return this.getFirstVisibleElement(
+                        '.o-mail-Composer button[name="open-full-composer"]:not([disabled])'
+                    );
+                },
+                action: "click",
+            },
+            {
+                // Paste the html data inside the message body.
+                trigger: () => {
+                    this.validatePage();
+                    const dialog = this.getFirstVisibleElement(".o_dialog .o_mail_composer_form");
+                    if (dialog) {
+                        return this.getFirstVisibleElement(
+                            dialog.querySelector('.o_field_html[name="body"] .odoo-editor-editable')
+                        );
+                    }
+                    return null;
+                },
+                action: (el) => {
+                    pasteElements(this.data.dataTransfer, el);
+                },
+            },
+            {
+                action: () => this.unblockUI(),
+            },
+        ];
     }
 }
 
@@ -65,48 +78,53 @@ export class UseAsDescriptionMacro extends AbstractMacro {
      * @override
      * @returns {Array[Object]}
      */
-    macroAction() {
-        const action = super.macroAction();
-        action.steps.push({
-            // Ensure that the Form view is editable
-            trigger: function () {
-                return this.getFirstVisibleElement('.o_form_editable');
-            }.bind(this),
-            action: () => {},
-        }, {
-            // Search for the target html field and ensure that it is editable.
-            // Search in notebook tabs too.
-            trigger: function () {
-                this.validatePage();
-                const el = this.getFirstVisibleElement(
-                    `.o_field_html[name="${this.data.fieldName}"]`,
-                    (element) => element.querySelector('.odoo-editor-editable'),
-                );
-                if (el) {
-                    return el;
-                }
-                if (this.data.pageName) {
-                    this.searchInXmlDocNotebookTab(`page[name="${this.data.pageName}"]`);
-                }
-                return null;
-            }.bind(this),
-            action: 'click',
-        }, {
-            // Search for the editable element. Paste the html data inside the
-            // field.
-            trigger: function () {
-                this.validatePage();
-                return this.getFirstVisibleElement(`.o_field_html[name="${this.data.fieldName}"] .odoo-editor-editable`);
-            }.bind(this),
-            action: function (el) {
-                el.addEventListener(
-                    "onHistoryResetFromPeer",
-                    (ev) => pasteElements(this.data.dataTransfer, el),
-                    { once: true }
-                );
-                pasteElements(this.data.dataTransfer, el);
-            }.bind(this),
-        }, this.unblockUI);
-        return action;
+    getSteps() {
+        return [
+            {
+                // Ensure that the Form view is editable
+                trigger: () => this.getFirstVisibleElement(".o_form_editable"),
+                action: () => {},
+            },
+            {
+                // Search for the target html field and ensure that it is editable.
+                // Search in notebook tabs too.
+                trigger: () => {
+                    this.validatePage();
+                    const el = this.getFirstVisibleElement(
+                        `.o_field_html[name="${this.data.fieldName}"]`,
+                        (element) => element.querySelector(".odoo-editor-editable")
+                    );
+                    if (el) {
+                        return el;
+                    }
+                    if (this.data.pageName) {
+                        this.searchInXmlDocNotebookTab(`page[name="${this.data.pageName}"]`);
+                    }
+                    return null;
+                },
+                action: "click",
+            },
+            {
+                // Search for the editable element. Paste the html data inside the
+                // field.
+                trigger: () => {
+                    this.validatePage();
+                    return this.getFirstVisibleElement(
+                        `.o_field_html[name="${this.data.fieldName}"] .odoo-editor-editable`
+                    );
+                },
+                action: (el) => {
+                    el.addEventListener(
+                        "onHistoryResetFromPeer",
+                        (ev) => pasteElements(this.data.dataTransfer, el),
+                        { once: true }
+                    );
+                    pasteElements(this.data.dataTransfer, el);
+                },
+            },
+            {
+                action: () => this.unblockUI(),
+            },
+        ];
     }
 }
