@@ -546,6 +546,18 @@ msgid "Abbreviated Balance Sheet for Associations"
 msgstr "Balance abreviado para asociaciones"
 
 #. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+msgid "Account Code"
+msgstr "Código de cuenta"
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+msgid "Account Name"
+msgstr "Nombre de cuenta"
+
+#. module: l10n_es_reports
 #: model:ir.model,name:l10n_es_reports.model_account_report
 msgid "Accounting Report"
 msgstr "Informe contable"
@@ -824,6 +836,12 @@ msgid "Created on"
 msgstr "Creado el"
 
 #. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+msgid "Credit"
+msgstr "Crédito"
+
+#. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_mod347_manual_partner_data__currency_id
 msgid "Currency"
 msgstr "Moneda"
@@ -869,6 +887,18 @@ msgid "D. Returns of goods previously sent from the TAI"
 msgstr "D. Devoluciones de mercancías previamente enviadas desde el TAI"
 
 #. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+msgid "Date"
+msgstr "Fecha"
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+msgid "Debit"
+msgstr "Débito"
+
+#. module: l10n_es_reports
 #: model:account.report.line,name:l10n_es_reports.mod_349_returns_goods_consignment_refunds
 msgid "D. Rectifications of returned goods previously sent from the TAI"
 msgstr ""
@@ -903,6 +933,12 @@ msgstr ""
 "Define la categoría en la que se incluye esta factura para el informe mod 349"
 
 #. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+msgid "Description"
+msgstr "Descripción"
+
+#. module: l10n_es_reports
 #: model:account.account.tag,name:l10n_es_reports.balance_sheet_11700_account
 msgid "Deudores comerciales no corrientes"
 msgstr ""
@@ -931,6 +967,12 @@ msgstr "Nombre de pantalla"
 
 #. module: l10n_es_reports
 #. odoo-python
+#: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+msgid "Document"
+msgstr "Documento"
+
+#. module: l10n_es_reports
+#. odoo-python
 #: code:addons/l10n_es_reports/models/account_move.py:0
 msgid "E - Supply"
 msgstr "E - Suministro"
@@ -949,6 +991,12 @@ msgstr "E. Entregas intracomunitarias exentas"
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_mod347_manual_partner_data__operation_key__b
 msgid "Entregas de bienes y prestaciones de servicios"
 msgstr ""
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+msgid "Entry"
+msgstr "Entrada"
 
 #. module: l10n_es_reports
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_boe_mod303_export_wizard__exempted_from_mod_390_available
@@ -981,6 +1029,17 @@ msgstr "G - Ingresos a ingresar en el CCT"
 #: model:ir.model.fields.selection,name:l10n_es_reports.selection__l10n_es_reports_aeat_boe_mod303_export_wizard__declaration_type__g
 msgid "G - Tributaria Current Account - Income"
 msgstr "G - Tributaria Cuenta corriente - Ingresos"
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+msgid "General Ledger"
+msgstr "Libro Diario"
+
+#. module: l10n_es_reports
+#: model:ir.model,name:l10n_es_reports.model_account_general_ledger_report_handler
+msgid "General Ledger Custom Handler"
+msgstr ""
 
 #. module: l10n_es_reports
 #: model_terms:ir.ui.view,arch_db:l10n_es_reports.mod111_boe_wizard
@@ -1391,6 +1450,18 @@ msgstr "Última actualización por"
 #: model:ir.model.fields,field_description:l10n_es_reports.field_l10n_es_reports_aeat_mod347_manual_partner_data__write_date
 msgid "Last Updated on"
 msgstr "Última actualización el"
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+msgid "Libro Diario XLSX"
+msgstr ""
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+msgid "Line"
+msgstr "Línea"
 
 #. module: l10n_es_reports
 #. odoo-python
@@ -1875,6 +1946,12 @@ msgid ""
 msgstr ""
 "El número de cuenta IBAN a utilizar para la domiciliación bancaria. Déjelo "
 "vacío si no utiliza la domiciliación bancaria."
+
+#. module: l10n_es_reports
+#. odoo-python
+#: code:addons/l10n_es_reports/models/libro_diario_export.py:0
+msgid "This report export is only available for ES companies."
+msgstr "Esta exportación de informes sólo está disponible para las empresas ES."
 
 #. module: l10n_es_reports
 #: model:account.report.line,name:l10n_es_reports.mod_349_statistics_invoices_total_amount
