@@ -480,6 +480,17 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             'progress': next_progress
         }
 
+    def _get_additional_column_aml_values(self):
+        """
+        Allows customization of additional fields in the partner ledger query.
+
+        This method is intended to be overridden by other modules to add custom fields
+        to the partner ledger query, e.g. SQL("account_move_line.date AS date,").
+        
+        By default, it returns an empty SQL object.
+        """
+        return SQL()
+
     def _get_aml_values(self, options, partner_ids, offset=0, limit=None):
         rslt = {partner_id: [] for partner_id in partner_ids}
 
@@ -496,6 +507,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         queries = []
         journal_name = self.env['account.journal']._field_to_sql('journal', 'name')
         report = self.env.ref('account_reports.partner_ledger_report')
+        additional_columns = self._get_additional_column_aml_values()
         for column_group_key, group_options in report._split_options_per_column_group(options).items():
             query = report._get_report_query(group_options, 'strict_range')
             account_alias = query.left_join(lhs_alias='account_move_line', lhs_column='account_id', rhs_table='account_account', rhs_column='id', link='account_id')
@@ -518,6 +530,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                     account_move_line.currency_id,
                     account_move_line.amount_currency,
                     account_move_line.matching_number,
+                    %(additional_columns)s
                     COALESCE(account_move_line.invoice_date, account_move_line.date) AS invoice_date,
                     %(debit_select)s                                                 AS debit,
                     %(credit_select)s                                                AS credit,
@@ -541,6 +554,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                 WHERE %(search_condition)s AND %(directly_linked_aml_partner_clause)s
                 ORDER BY account_move_line.date, account_move_line.id
                 ''',
+                additional_columns=additional_columns,
                 debit_select=report._currency_table_apply_rate(SQL("account_move_line.debit")),
                 credit_select=report._currency_table_apply_rate(SQL("account_move_line.credit")),
                 balance_select=report._currency_table_apply_rate(SQL("account_move_line.balance")),
@@ -569,6 +583,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                     account_move_line.currency_id,
                     account_move_line.amount_currency,
                     account_move_line.matching_number,
+                    %(additional_columns)s
                     COALESCE(account_move_line.invoice_date, account_move_line.date) AS invoice_date,
                     %(debit_select)s                                                 AS debit,
                     %(credit_select)s                                                AS credit,
@@ -601,6 +616,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
                     AND partial.max_date BETWEEN %(date_from)s AND %(date_to)s
                 ORDER BY account_move_line.date, account_move_line.id
                 ''',
+                additional_columns=additional_columns,
                 debit_select=report._currency_table_apply_rate(SQL("CASE WHEN aml_with_partner.balance > 0 THEN 0 ELSE partial.amount END")),
                 credit_select=report._currency_table_apply_rate(SQL("CASE WHEN aml_with_partner.balance < 0 THEN 0 ELSE partial.amount END")),
                 balance_select=report._currency_table_apply_rate(SQL("-SIGN(aml_with_partner.balance) * partial.amount")),
