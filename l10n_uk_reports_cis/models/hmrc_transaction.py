@@ -42,7 +42,6 @@ class HmrcTransaction(models.Model):
             'transaction': {
                 'mode': self.env['ir.config_parameter'].sudo().get_param("l10n_uk_hmrc.api_mode", 'production'),
                 'class': self._get_transaction_class(),
-                'body_template': "l10n_uk_reports_cis.hmrc_cis_monthly_return_body",
             },
         }
 
@@ -66,7 +65,7 @@ class HmrcTransaction(models.Model):
                     'direct_cost_of_materials': float_repr(subcontractor_return_dict['direct_cost_of_materials'], 2),
                     'total_amount_deducted': float_repr(subcontractor_return_dict['total_amount_deducted'], 2),
                 })
-        xml_data['ir_mark'] = self._generate_ir_mark(xml_data)
+        xml_data['ir_mark'] = self._generate_ir_mark(self._get_request_body_xml_path(), xml_data)
         return xml_data
 
     def _submit_cis_mr_transaction(self, credentials, document_data):
@@ -160,3 +159,12 @@ class HmrcTransaction(models.Model):
         if self.transaction_type == 'cis_monthly_return':
             return 'IR-CIS-CIS300MR'
         super()._get_transaction_class()
+
+    def _get_request_body_xml_path(self):
+        """
+        Returns the xml path of a file containing the template of CIS monthly return request body
+        """
+        if self.transaction_type != 'cis_monthly_return':
+            return super()._get_request_body_xml_path()
+
+        return 'l10n_uk_reports_cis/templates/hmrc_transaction_body_cis.xml'

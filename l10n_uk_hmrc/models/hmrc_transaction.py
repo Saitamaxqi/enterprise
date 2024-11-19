@@ -12,8 +12,6 @@ from odoo import api, fields, models, _
 from odoo.exceptions import RedirectWarning, UserError
 
 TIMEOUT = 10
-TEMPLATE_TRANSACTION_ENGINE_REQUEST = "l10n_uk_hmrc.hmrc_transaction_engine_request"
-TEMPLATE_TRANSACTION_ENGINE_BASE = "l10n_uk_hmrc.hmrc_transaction_engine_base"
 DSP_TEST_ENDPOINT_PREFIX = "https://test-transaction-engine.tax.service.gov.uk"
 DSP_PRODUCTION_ENDPOINT_PREFIX = "https://transaction-engine.tax.service.gov.uk"
 
@@ -85,6 +83,10 @@ class HMRCTransaction(models.Model):
         This should be overidden by any transaction engine implementation to provide a class for the document requests
         :return str: the document class
         """
+        return None
+
+    def _get_request_body_xml_path(self, transaction):
+        """To be overidden by hmrc transaction specifics to allow the rendering of another body"""
         return None
 
     ##################################################################
@@ -236,7 +238,7 @@ class HMRCTransaction(models.Model):
                 'qualifier': 'poll',
                 'function': 'submit',
             }
-            xml_document = self.env['ir.qweb']._render(TEMPLATE_TRANSACTION_ENGINE_REQUEST, {'transaction': transaction_data})
+            xml_document = self.env['ir.qweb']._render('l10n_uk_hmrc/templates/hmrc_transaction_request.xml', values={'transaction': transaction_data})
             transaction._send_poll_request(xml_document)
 
     @api.model
@@ -253,7 +255,7 @@ class HMRCTransaction(models.Model):
                 'qualifier': 'request',
                 'function': 'delete',
             }
-            xml_document = self.env['ir.qweb']._render(TEMPLATE_TRANSACTION_ENGINE_REQUEST, {'transaction': transaction_data})
+            xml_document = self.env['ir.qweb']._render('l10n_uk_hmrc/templates/hmrc_transaction_request.xml', values={'transaction': transaction_data})
             transaction._send_delete_request(xml_document)
 
     ##################################################################
@@ -310,12 +312,12 @@ class HMRCTransaction(models.Model):
     ##################################################################
 
     @api.model
-    def _generate_ir_mark(self, data):
+    def _generate_ir_mark(self, template_name, data):
         """
         An IRMark must be generated from the body of the message to ensure the integrity to HMRC.
         See: https://www.gov.uk/government/publications/hmrc-irmark-for-gateway-protocol-services
         """
-        report_for_ir_mark = self.env['ir.qweb']._render(data['transaction']['body_template'], data)
+        report_for_ir_mark = self.env['ir.qweb']._render(template_name, data)
         report_for_ir_mark = re.sub(r'<IRmark Type="generic">.*<\/IRmark>', '', report_for_ir_mark)
         canonical_xml = ET.canonicalize(report_for_ir_mark)
         # 1.3 "Once the XML is in canonical form a SHA-1 digest must be created from it [...]"
@@ -323,6 +325,12 @@ class HMRCTransaction(models.Model):
         # 1.4. "The SHA-1 hash can then be Base64 and Base32 encoded. [...]"
         return base64.b64encode(hashed_result).decode('utf-8')
 
-    @api.model
     def _generate_xml_document(self, xml_data):
-        return self.env['ir.qweb']._render(TEMPLATE_TRANSACTION_ENGINE_BASE, xml_data)
+        self.ensure_one()
+        return self.env['ir.qweb']._render(
+            'l10n_uk_hmrc/templates/hmrc_transaction_base.xml',
+            values={
+                **xml_data,
+                'record': self,
+            }
+        )

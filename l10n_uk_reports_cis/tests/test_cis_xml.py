@@ -110,6 +110,6 @@ class TestCisXML(AccountTestInvoicingCommon):
         # We need to set specific ids to subcontractors otherwise the irmark will not be the same and therefore be undeterministic
         xml_data['document']['subcontractors'][0]['id'] = 45
         xml_data['document']['subcontractors'][1]['id'] = 46
-        xml_data['ir_mark'] = transaction._generate_ir_mark(xml_data)
+        xml_data['ir_mark'] = transaction._generate_ir_mark(transaction._get_request_body_xml_path(), xml_data)
         report = transaction._generate_xml_document(xml_data)
         self.assertXmlTreeEqual(etree.XML(report), self.get_xml_from_test_file('hmrc_documents/cis_return_request_scenario_3.xml'))

@@ -19,7 +19,6 @@ Construction Industry Scheme for United Kingdom
         'data/mail_template_data.xml',
         'views/res_partner_views.xml',
         'views/account_move_views.xml',
-        'views/template_cis_monthly_return_body.xml',
         'wizard/monthly_return_wizard.xml',
     ],
     'assets': {

@@ -17,8 +17,6 @@ HMRC API for the United Kingdom
         'data/ir_cron.xml',
         'views/res_company_views.xml',
         'views/res_partner_views.xml',
-        'views/template_transaction_engine_base.xml',
-        'views/template_transaction_engine_request.xml',
     ],
     'license': 'OEEL-1',
 }
