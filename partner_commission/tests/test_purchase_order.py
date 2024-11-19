@@ -102,6 +102,13 @@ class TestPurchaseOrder(TestCommissionsSetup):
             line.product_id = self.worker
             line.product_uom_qty = 20
 
+        # add extra note that will be copied to the invoice
+        # (ensure those lines without subscription start/end dates
+        # do not crash the commission generation)
+        with form.order_line.new() as line:
+            line.display_type = 'line_note'
+            line.name = "Extra order note for the customer"
+
         so = form.save()
         so.pricelist_id = self.eur_20
         so.action_confirm()

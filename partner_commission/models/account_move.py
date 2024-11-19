@@ -113,8 +113,8 @@ class AccountMove(models.Model):
                 end_date_list = move.invoice_line_ids.mapped('deferred_end_date')
                 start_date_list = move.invoice_line_ids.mapped('deferred_start_date')
                 if any(start_date_list) and any(end_date_list):
-                    date_to = max(end_date_list)
-                    date_from = min(start_date_list)
+                    date_to = max((ed for ed in end_date_list if ed))
+                    date_from = min((sd for sd in start_date_list if sd))
                     # we calculate the delta according to the whole range to avoid 11 month and 29 days= 11 months
                     delta = relativedelta(date_to + relativedelta(days=1), date_from)
                     n_months = delta.years * 12 + delta.months + delta.days // 30
