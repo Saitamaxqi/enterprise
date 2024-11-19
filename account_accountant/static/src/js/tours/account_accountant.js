@@ -33,28 +33,44 @@
                 content: _t('After the data extraction, check and validate the bill. If no vendor has been found, add one before validating.'),
                 tooltipPosition: 'bottom',
                 run: "click",
-            },
-            {
-                trigger: 'button[data-value="posted"].btn',
-            },
-            {
+            }, {
                 trigger: '.dropdown-item[data-menu-xmlid="account.menu_board_journal_1"]',
                 content: _t('Let’s go back to the dashboard.'),
                 tooltipPosition: 'bottom',
                 run: "click",
             }, {
-                trigger: 'button[name="action_configure_bank_journal"]',
+                trigger: 'a[name="open_action"] span:contains(bank)',
                 content: _t('Connect your bank and get your latest transactions.'),
                 tooltipPosition: 'bottom',
-                run: function () {
-                    // Close the modal
-                    // We can't test bank sync in the tour
-                    document.querySelector('button[name="action_open_reconcile"]').click();
-                }
+                run: "click",
+            }, {
+                trigger: 'button.o-kanban-button-new',
+                content: _t('Create a new transaction.'),
+                run: "click",
+            }, {
+                trigger: "div[name=amount] div input[id=amount_0]",
+                content: _t("Set an amount."),
+                tooltipPosition: "bottom",
+                run: "edit -19250.00",
+            }, {
+                trigger: "div[name=payment_ref] input[id=payment_ref_0]",
+                content: _t("Set the payment reference."),
+                tooltipPosition: "bottom",
+                run: "edit Payment Deco Adict",
+            }, {
+                trigger: "button.o_kanban_edit",
+                content: _t("Confirm the transaction."),
+                tooltipPosition: "bottom",
+                run: "click",
             }, {
                 trigger: '.o_bank_rec_st_line:not(.o_bank_rec_selected_st_line)',
                 content: _t('Click on a fetched bank transaction to start the reconciliation process.'),
                 run: "click",
-            }
+            }, {
+                isActive: ['auto'],
+                trigger: '.dropdown-item[data-menu-xmlid="account.menu_board_journal_1"]',
+                content: _t('Let’s go back to the dashboard.'),
+                run: "click",
+            },
         ]
     });

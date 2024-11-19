@@ -27,6 +27,9 @@ It assigns manager and user access rights to the Administrator for the accountin
     'uninstall_hook': "uninstall_hook",
     'license': 'OEEL-1',
     'assets': {
+        'web.assets_backend': [
+            'accountant/static/src/js/tours/accountant.js',
+        ],
         'web.assets_tests': [
             'accountant/static/tests/tours/*',
         ],
