@@ -686,6 +686,24 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_ar_edi/models/afip_errors.py:0
 msgid ""
+"If the invoice amount is:\n"
+"\t- GREATER than the minimum amount indicated by AFIP then it is necessary to report the contact information. Make sure that the invoice contact has First and Last Name, ID type, document number and AFIP Responsibility Final Consumer. For example:\n"
+"\t\tMario Nuñez\n"
+"\t\tType of Doc: DNI\n"
+"\t\tID number 34.345.954\n"
+"\t\tAFIP Responsibility \"Final Consumer\"\n"
+"\t- LESS than the minimum amount indicated by AFIP then it is optional: You can register the invoice as \"Anonymous Final Consumer\" or with a \"Final Consumer\" with their tax information.\n"
+"* If you want to report the invoice with \"\"Anonymous Final Consumer\" check the contact configuration is:\n"
+"\tID type: Sigd,\n"
+"\tID number: Empty\n"
+"\tAFIP Responsibility \"Final Consumer\""
+msgstr ""
+
+#. module: l10n_ar_edi
+#. odoo-python
+#: code:addons/l10n_ar_edi/models/afip_errors.py:0
+#, python-format
+msgid ""
 "If the invoice is a a FCE, Debit Note or Credit Note it is mandatory to "
 "inform related invoices. You are probably doing an CN/DN and the \"Source\" "
 "field (in the Other Information Tab) is not defined or has a wrong value. "
