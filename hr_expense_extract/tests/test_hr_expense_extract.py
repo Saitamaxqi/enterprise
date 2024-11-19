@@ -232,6 +232,7 @@ class TestExpenseExtractProcess(TestExpenseCommon, TestExtractMixin):
 
     def test_extract_multi_currencies(self):
         """Test that exchange rate is fetched during extraction"""
+        self.env.ref('base.EUR').active = True
         self.env['res.currency.rate'].create({
                 'name': '2022-01-01',
                 'rate': 3,
