@@ -8,9 +8,5 @@
         <record id="account_followup.demo_followup_line2" model="account_followup.followup.line" forcecreate="False">
             <field name="send_letter">False</field>
         </record>
-
-        <record id="account_followup.demo_followup_line3" model="account_followup.followup.line" forcecreate="False">
-            <field name="send_letter">False</field>
-        </record>
     </data>
 </odoo>
