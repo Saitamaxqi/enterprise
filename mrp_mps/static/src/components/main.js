@@ -106,6 +106,10 @@ export class MainComponent extends Component {
         return this.model.data.manufacturing_period;
     }
 
+    get isInDefaultPeriod() {
+        return this.model.data.manufacturing_period === this.model.data.default_period;
+    }
+
     async setScale(scale) {
         await this.model.load(
             this.props.searchDomain,

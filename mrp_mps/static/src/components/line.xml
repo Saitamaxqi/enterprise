@@ -129,17 +129,18 @@
                             t-att-data-date_index="forecast_index"
                             t-attf-class="form-control text-end
                                 o_mrp_mps_input_replenish_qty
-                                {{forecast.state == 'launched' and 'bg-secondary' or
-                                forecast.state == 'to_relaunch' and 'bg-warning-subtle' or
-                                forecast.state == 'to_correct' and 'bg-danger-subtle' or
-                                forecast.to_replenish and 'bg-success-subtle' or
+                                {{(!isReadonly and forecast.state == 'launched') and 'bg-secondary' or
+                                (!isReadonly and forecast.state == 'to_relaunch') and 'bg-warning-subtle' or
+                                (!isReadonly and forecast.state == 'to_correct') and 'bg-danger-subtle' or
+                                (!isReadonly and forecast.to_replenish) and 'bg-success-subtle' or
                                 (forecast.replenish_qty_updated and props.data.replenish_trigger != 'never') and 'bg-info-subtle' or ''
                                 }} {{
                                 forecast.replenish_qty ? '' : 'o_zero_qty'
                                 }}"
                             t-att-value="formatFloat(forecast.replenish_qty)"
                             t-on-change.stop="(ev) => this._onChangeToReplenish(ev, productionSchedule.id)"
-                            t-on-focus="_onFocusInput"/>
+                            t-on-focus="_onFocusInput"
+                            t-att-readonly="isReadonly"/>
                         </div>
                     </th>
                 </t>

@@ -857,8 +857,9 @@ msgstr ""
 #: model:ir.model.fields,help:mrp_mps.field_mrp_production_schedule__max_to_replenish_qty
 msgid ""
 "The maximum replenishment you would like to launch for each period in the "
-"MPS. Note that if the demand is higher than that amount, the remaining "
-"quantity will be transferred to the next period automatically."
+"MPS. This is only applied for the period defined in the settings. Note that "
+"if the demand is higher than that amount, the remaining quantity will be "
+"transferred to the next period automatically."
 msgstr ""
 
 #. module: mrp_mps

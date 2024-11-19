@@ -3,6 +3,13 @@ import { useService, useBus } from "@web/core/utils/hooks";
 import { formatFloat } from "@web/views/fields/formatters";
 import { Component, useRef, onPatched } from "@odoo/owl";
 
+export const SCALE_WEIGHTS = {
+    day: 0,
+    week: 1,
+    month: 2,
+    year: 3,
+};
+
 export default class MpsLineComponent extends Component {
     static template = "mrp_mps.MpsLineComponent";
     static components = {
@@ -48,7 +55,11 @@ export default class MpsLineComponent extends Component {
     }
 
     get forecastToReplenish() {
-        return this.props.data.forecast_ids.find(forecast => forecast.replenish_qty > 0)  && this.props.data.replenish_trigger !== 'never';
+        return this.props.data.forecast_ids.find(forecast => forecast.replenish_qty > 0)  && this.props.data.replenish_trigger !== 'never' && this.model.data.manufacturing_period === this.model.data.default_period;
+    }
+
+    get isReadonly() {
+        return SCALE_WEIGHTS[this.model.data.manufacturing_period] > SCALE_WEIGHTS[this.model.data.default_period];
     }
 
     formatFloat(value) {

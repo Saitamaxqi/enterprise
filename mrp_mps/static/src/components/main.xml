@@ -7,6 +7,7 @@
                 <button
                     type="button"
                     class="btn btn-primary"
+                    t-if="isInDefaultPeriod"
                     t-on-click.stop="_onClickReplenish"
                     t-on-mouseover.stop="_onMouseOverReplenish"
                     t-on-mouseout.stop="_onMouseOutReplenish">Order</button>

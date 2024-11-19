@@ -56,7 +56,7 @@ class MrpProductionSchedule(models.Model):
         help="Unless the demand is 0, Odoo will always at least replenish this quantity.")
     max_to_replenish_qty = fields.Float(
         'Maximum to Replenish',
-        help="The maximum replenishment you would like to launch for each period in the MPS. Note that if the demand is higher than that amount, the remaining quantity will be transferred to the next period automatically.")
+        help="The maximum replenishment you would like to launch for each period in the MPS. This is only applied for the period defined in the settings. Note that if the demand is higher than that amount, the remaining quantity will be transferred to the next period automatically.")
     enable_max_replenish = fields.Boolean(compute='_compute_enable_max_replenish', store=True, readonly=False)
     replenish_trigger = fields.Selection([
         ('manual', "Manual"),
@@ -326,6 +326,7 @@ class MrpProductionSchedule(models.Model):
             'dates': self.env.company._date_range_to_str(period_scale),
             'production_schedule_ids': productions_schedules_states,
             'manufacturing_period': period_scale or self.env.company.manufacturing_period,
+            'default_period': self.env.company.manufacturing_period,
             'manufacturing_period_types': [s[0] for s in self.env.company._fields['manufacturing_period'].selection],
             'company_id': self.env.company.id,
             'groups': company_groups,
@@ -491,6 +492,7 @@ class MrpProductionSchedule(models.Model):
             # Ignore "Days to Supply Components" when set demand for components since it's normally taken care by the
             # components themselves
             lead_time_ignore_components = lead_time - production_schedule.bom_id.days_to_prepare_mo
+            use_max_replenish = production_schedule.enable_max_replenish and (not period_scale or period_scale == self.env.company.manufacturing_period)
             production_schedule_state = production_schedule_states_by_id[production_schedule['id']]
             if production_schedule in self:
                 procurement_date = add(fields.Date.today(), days=lead_time)
@@ -532,7 +534,8 @@ class MrpProductionSchedule(models.Model):
                     forecast_values['forecast_qty'] = 0.0
 
                 if not replenish_qty_updated:
-                    replenish_qty = production_schedule._get_replenish_qty(starting_inventory_qty - forecast_values['forecast_qty'] - forecast_values['indirect_demand_qty'])
+                    after_forecast_qty = starting_inventory_qty - forecast_values['forecast_qty'] - forecast_values['indirect_demand_qty']
+                    replenish_qty = production_schedule._get_replenish_qty(after_forecast_qty=after_forecast_qty, use_max_replenish=use_max_replenish)
                     forecast_values['replenish_qty'] = float_round(replenish_qty, precision_rounding=rounding)
                     forecast_values['replenish_qty_updated'] = False
 
@@ -811,7 +814,7 @@ class MrpProductionSchedule(models.Model):
         rules = self.product_id._get_rules_from_location(self.warehouse_id.lot_stock_id, route_ids=self.route_id)
         return rules._get_lead_days(self.product_id, bom=self.bom_id)[0]['total_delay']
 
-    def _get_replenish_qty(self, after_forecast_qty):
+    def _get_replenish_qty(self, after_forecast_qty, use_max_replenish=False):
         """ Modify the quantity to replenish depending the min/max and targeted
         quantity for safety stock.
 
@@ -822,7 +825,7 @@ class MrpProductionSchedule(models.Model):
         """
         optimal_qty = self.forecast_target_qty - after_forecast_qty
 
-        if self.enable_max_replenish and optimal_qty > self.max_to_replenish_qty:
+        if use_max_replenish and optimal_qty > self.max_to_replenish_qty:
             replenish_qty = self.max_to_replenish_qty
         elif optimal_qty <= 0:
             replenish_qty = 0
