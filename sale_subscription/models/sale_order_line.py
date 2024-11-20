@@ -177,9 +177,25 @@ class SaleOrderLine(models.Model):
                 recurring_monthly_tax_incl = line.recurring_monthly / line.price_subtotal * line.price_total
                 line.amount_to_invoice = recurring_monthly_tax_incl
 
-    @api.depends('invoice_lines.deferred_end_date', 'invoice_lines.move_id.state')
+    @api.depends('invoice_lines.deferred_end_date', 'invoice_lines.move_id.state', 'invoice_lines.subscription_id')
     def _compute_last_invoiced_date(self):
-        relevant_move_lines = self.env['account.move.line']._read_group(
+        # last_invoice_end_date = subscription.invoice_ids.invoice_line_ids.filtered(lambda aml: aml.subscription_id == subscription)._get_max_invoiced_date()
+        result_by_subscription_id = self.env['account.move.line']._read_group(
+            [
+                ('subscription_id', 'in', self.order_id.ids),
+                ('move_id.state', '=', 'posted'),
+                ('move_id.move_type', 'in', ['out_invoice', 'out_refund']),
+                ('deferred_end_date', '!=', False)
+            ],
+            aggregates=['id:recordset'],
+            groupby=['subscription_id']
+        )
+        result_by_order = {}
+        for order, move_lines in result_by_subscription_id:
+            result_by_order[order.id] = move_lines._get_max_invoiced_date()
+        # if the relationship between sale.order.line and account.move.line is available we rely on it to get the most accurate date.
+        # otherwise we fallback on the last invoice of the subscription
+        result_by_sale_line_ids = self.env['account.move.line']._read_group(
             [
                 ('sale_line_ids', 'in', self.ids),
                 ('move_id.state', '=', 'posted'),
@@ -190,8 +206,8 @@ class SaleOrderLine(models.Model):
             groupby=['sale_line_ids']
         )
         self.last_invoiced_date = False
-        for line, move_lines in relevant_move_lines:
-            line.last_invoiced_date = move_lines._get_max_invoiced_date()
+        for line, move_lines in result_by_sale_line_ids:
+            line.last_invoiced_date = move_lines._get_max_invoiced_date() or result_by_order.get(line.order_id.id)
 
     def _get_invoice_lines(self):
         self.ensure_one()
