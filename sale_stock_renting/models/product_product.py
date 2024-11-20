@@ -59,9 +59,10 @@ class ProductProduct(models.Model):
 
     def _get_qty_in_rent_domain(self):
         """Allow precising the warehouse_id to get qty currently in rent."""
-        if self.env.context.get('warehouse_id', False) and isinstance(self.env.context['warehouse_id'], int):
+        warehouse_id = self.env.context.get('warehouse_id', False)
+        if warehouse_id:
             return super()._get_qty_in_rent_domain() + [
-                ('order_id.warehouse_id', '=', self.env.context.get('warehouse_id'))
+                ('order_id.warehouse_id', '=', warehouse_id)
             ]
         else:
             return super()._get_qty_in_rent_domain()
