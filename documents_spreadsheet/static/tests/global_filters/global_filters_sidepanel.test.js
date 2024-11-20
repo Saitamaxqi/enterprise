@@ -370,6 +370,48 @@ test("Can select ID in relation filter", async function () {
     });
 });
 
+test("Cannot select ID in date filter", async function () {
+    await createSpreadsheetFromPivotView({
+        serverData: {
+            models: getBasicData(),
+            views: {
+                "partner,false,pivot": `
+                    <pivot string="Partners">
+                        <field name="foo" type="col"/>
+                        <field name="product_id" type="row"/>
+                        <field name="probability" type="measure"/>
+                    </pivot>`,
+                "partner,false,search": `<search/>`,
+            },
+        },
+    });
+    await openGlobalFilterSidePanel();
+    await clickCreateFilter("date");
+    await contains(".o_model_field_selector_value").click();
+    expect(target.querySelectorAll("[data-name='id']").length).toBe(0);
+});
+
+test("Cannot select ID in text filter", async function () {
+    await createSpreadsheetFromPivotView({
+        serverData: {
+            models: getBasicData(),
+            views: {
+                "partner,false,pivot": `
+                    <pivot string="Partners">
+                        <field name="foo" type="col"/>
+                        <field name="product_id" type="row"/>
+                        <field name="probability" type="measure"/>
+                    </pivot>`,
+                "partner,false,search": `<search/>`,
+            },
+        },
+    });
+    await openGlobalFilterSidePanel();
+    await clickCreateFilter("text");
+    await contains(".o_model_field_selector_value").click();
+    expect(target.querySelectorAll("[data-name='id']").length).toBe(0);
+});
+
 test("Create a new many2many relational global filter", async function () {
     defineModels([Vehicle]);
     const serverData = getBasicServerData();

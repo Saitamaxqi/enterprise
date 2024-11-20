@@ -72,7 +72,7 @@
                                 fieldMatchings="fieldMatchings"
                                 wrongFieldMatchings="wrongFieldMatchings"
                                 selectField.bind="onSelectedField"
-                                filterModelFieldSelectorField.bind="filterModelFieldSelectorField"
+                                filterModelFieldSelectorField="(field, path) => this.filterModelFieldSelectorField(field, path, relationState.relatedModel.technical)"
                             />
                         </Section>
                     </t>
