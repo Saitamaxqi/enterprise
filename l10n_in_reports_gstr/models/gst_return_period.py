@@ -321,12 +321,14 @@ class L10n_InGstReturnPeriod(models.Model):
 
     def open_gst_return_period_form_view(self):
         self.ensure_one()
+        context = {'active_id': self.id, 'active_model': 'l10n_in.gst.return.period'}
         return {
             "name": _("GST Return Period"),
             "res_model": "l10n_in.gst.return.period",
             "view_mode": "form",
             "res_id": self.id,
             "type": "ir.actions.act_window",
+            'context': context,
             "views": [[self.env.ref('l10n_in_reports_gstr.l10n_in_gst_return_period_form_view').id, "form"]],
         }
 
@@ -1897,7 +1899,7 @@ class L10n_InGstReturnPeriod(models.Model):
 
         :returns: a notification action informing the user that the fetch is in progress.
         """
-        if self.company_id.l10n_in_edi_production_env:
+        if self.company_id.sudo().l10n_in_edi_production_env:
             edi_credits = self.env["iap.account"].get_credits(service_name="l10n_in_edi")
             if edi_credits < 3:
                 url = self.env["iap.account"].get_credits_url(service_name="l10n_in_edi")
@@ -1910,11 +1912,7 @@ class L10n_InGstReturnPeriod(models.Model):
                     _("Buy Credits")
                 ))
                 return True
-        context = {
-            'active_id': self.id,
-            'active_model': 'l10n_in.gst.return.period'
-        }
-        self.with_context(context)._check_config(next_gst_action='fetch_irn')
+        self._check_config(next_gst_action='fetch_irn')
         self.irn_status = 'to_download'
         self.message_post(body=_("IRN Processing is running in the background."))
         self.env.ref('l10n_in_reports_gstr.ir_cron_auto_sync_einvoice_irn')._trigger()
