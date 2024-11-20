@@ -101,6 +101,10 @@
     visibility: inherit !important;
 }
 
+.o_sign_field_alignment{
+    margin-top: 0px;
+}
+
 .o_sign_sign_item.o_readonly_mode {
     border:none;
 }
