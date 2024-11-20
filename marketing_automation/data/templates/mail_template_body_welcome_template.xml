@@ -29,7 +29,7 @@
                                             <div class="col-lg-4"></div>
                                             <div class="col-lg-4" style="text-align: center;">
                                                 <a style="text-decoration:none;" target="_blank" t-att-href="db_host">
-                                                    <img border="0" src="/mass_mailing/static/src/img/theme_default/s_default_image_header_logo.png" style="height:auto; max-width:100%;" width="180"/>
+                                                    <img border="0" src="/mass_mailing/static/src/img/theme_default/s_default_image_header_logo.png" width="180" class="img-fluid"/>
                                                     </a>
                                                 </div>
                                                 <div class="col-lg-4" style="text-align: right;"></div>
@@ -44,7 +44,7 @@
                                                 <br/>Your platform is ready for work, it will help you reduce the costs of digital signatures, attract new customers and increase sales.
                                             </p>
                                             <p>
-                                                <img src="/mass_mailing/static/src/img/theme_default/signature.png" style="width:125px; margin-top:8px;margin-bottom:-25px;" alt="Signature"/>
+                                                <img src="/mass_mailing/static/src/img/theme_default/signature.png" style="width:125px; margin-top:8px;margin-bottom:-25px;" alt="Signature" class="img-fluid"/>
                                             </p>
                                             <p>Michael Fletcher
                                                 <br/>
