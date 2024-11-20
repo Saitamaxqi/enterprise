@@ -256,6 +256,11 @@ class HrSalaryAttachment(models.Model):
         if any(assignment.state == 'open' for assignment in self):
             raise UserError(_('You cannot delete a running salary attachment!'))
 
+    @api.ondelete(at_uninstall=False)
+    def _unlink_if_not_linked_in_payslips(self):
+        if any(attachment.payslip_ids for attachment in self):
+            raise UserError(_('You cannot delete a salary attachment that is linked to a payslip!'))
+
     def record_payment(self, total_amount):
         ''' Record a new payment for this attachment, if the total has been reached the attachment will be closed.
 
