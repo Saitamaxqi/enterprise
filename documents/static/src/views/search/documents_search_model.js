@@ -26,11 +26,18 @@ export class DocumentsSearchModel extends SearchModel {
     }
 
     async load(config) {
-        if (this.documentService.initData.documentId && this.documentService.initData.openPreview) {
+        if (this.documentService.initData.documentId) {
             // Make sure target document is found (if accessible).
             config.irFilters.forEach((fil) => {
                 fil.is_default = false;
             });
+            for (const key in config.context) {
+                // logic used in _extractSearchDefaultsFromGlobalContext, here to group with above
+                const searchDefaultMatch = /^search_default_(.*)$/.exec(key);
+                if (searchDefaultMatch) {
+                    delete config.context[key];
+                }
+            }
         }
 
         await super.load(config);
