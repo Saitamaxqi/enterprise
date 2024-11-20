@@ -805,12 +805,13 @@ class DocumentsDocument(models.Model):
             # records that we might need to update
             candidates_domain = [
                 (field, '!=', value),
-                *([] if self.env.su else [('user_permission', '=', 'edit')]),
                 # the update is done only "target -> shortcut",
                 # but not "shortcut -> target"
                 ('shortcut_document_id', '=', False),
                 ('id', 'child_of', self.ids),
             ]
+            candidates_domain = expression.AND([candidates_domain, self._get_access_update_domain()])
+
             candidates = self.env['documents.document']._search(
                 candidates_domain).select('id', 'folder_id', 'shortcut_document_id', field)
             shortcuts_to_check_owner_target_access |= self.search([('shortcut_document_id', 'any', candidates_domain)])
@@ -874,18 +875,18 @@ class DocumentsDocument(models.Model):
 
         # use `_search` to respect access rules and to use `_search_user_permission`
         to_update_domain = [
-            *([] if self.env.su else [('user_permission', '=', 'edit')]),
             ('shortcut_document_id', '=', False),  # update "target -> shortcuts" but not "shortcut -> target"
             ('id', 'child_of', self.ids),
         ]
+        to_update_domain = expression.AND([to_update_domain, self._get_access_update_domain()])
+
         documents = self.env['documents.document']._search(to_update_domain).select('id')
 
         for (role, expiration_date), partners in values_to_update.items():
-            update_fields = []
             if role not in ('edit', 'view'):
                 raise UserError(_("Invalid role."))  # The public method would have returned a more insightful message
-            else:
-                update_fields.append(SQL('role = %(role)s', role=role))
+
+            update_fields = [SQL('role = %(role)s', role=role)]
             if expiration_date is not None:
                 update_fields.append(SQL(
                     'expiration_date = %(expiration_date)s',
@@ -959,6 +960,9 @@ class DocumentsDocument(models.Model):
         self.env['documents.access'].invalidate_model()
 
         shortcuts_to_check_owner_target_access._unlink_shortcut_if_target_inaccessible()
+
+    def _get_access_update_domain(self):
+        return [] if self.env.su else [('user_permission', '=', 'edit')]
 
     def action_see_documents(self):
         if self.type != "folder":
