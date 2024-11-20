@@ -113,6 +113,14 @@ msgstr ""
 #. module: delivery_starshipit
 #. odoo-python
 #: code:addons/delivery_starshipit/models/delivery_carrier.py:0
+#: code:addons/delivery_starshipit/models/delivery_carrier.py:0
+msgid ""
+"Error: %(file_name)s file could not be obtained for order %(order_name)s."
+msgstr ""
+
+#. module: delivery_starshipit
+#. odoo-python
+#: code:addons/delivery_starshipit/models/delivery_carrier.py:0
 msgid "Error: this delivery method is not available for this order."
 msgstr ""
 

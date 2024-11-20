@@ -177,14 +177,23 @@ class DeliveryCarrier(models.Model):
             if self.prod_environment:
                 if not manifested:
                     result = starshipit._manifest_orders([picking.starshipit_parcel_reference])
-                    attachment_id = self.env['ir.attachment'].create({
-                        'name': f'{self._get_delivery_doc_prefix()}-manifest-report-{picking.name.replace("/", "_").lower()}.pdf',
-                        'datas': result['pdf'],
-                        'type': 'binary',
-                        'res_model': picking._name,
-                        'res_id': picking.id,
-                    })
-                    picking.message_post(body=_('Order %s was sent to the carrier.', picking.name), attachment_ids=attachment_id.ids)
+                    # Starshipit API doesn't return a PDF for TNT service
+                    datas = result.get('pdf')
+                    pdf_name = f'{self._get_delivery_doc_prefix()}-manifest-report-{picking.name.replace("/", "_").lower()}.pdf'
+                    if datas:
+                        attachment_id = self.env['ir.attachment'].create({
+                            'name': pdf_name,
+                            'datas': datas,
+                            'type': 'binary',
+                            'res_model': picking._name,
+                            'res_id': picking.id,
+                        })
+                        picking.message_post(body=_('Order %s was sent to the carrier.', picking.name), attachment_ids=attachment_id.ids)
+                    else:
+                        picking.message_post(body=_(
+                            'Error: %(file_name)s file could not be obtained for order %(order_name)s.',
+                            file_name=pdf_name, order_name=picking.name
+                        ))
                 else:
                     picking.message_post(body=_('Order %(order)s was already sent to the carrier during label creation.\n'
                                                 'Manifest number: %(manifest_number)s',
@@ -285,14 +294,23 @@ class DeliveryCarrier(models.Model):
         if self.prod_environment:
             if not manifested:
                 result = starshipit._manifest_orders([picking.starshipit_parcel_reference])
-                attachment_id = self.env['ir.attachment'].create({
-                    'name': f'{self._get_delivery_doc_prefix()}-{picking.name.replace("/", "_").lower()}.pdf',
-                    'datas': result['pdf'],
-                    'type': 'binary',
-                    'res_model': picking._name,
-                    'res_id': picking.id,
-                })
-                picking.message_post(body=_('Return order %s was sent to the carrier.', picking.name), attachment_ids=attachment_id.ids)
+                # Starshipit API doesn't return a PDF for TNT service
+                datas = result.get('pdf')
+                pdf_name = f'{self._get_delivery_doc_prefix()}-{picking.name.replace("/", "_").lower()}.pdf'
+                if datas:
+                    attachment_id = self.env['ir.attachment'].create({
+                        'name': pdf_name,
+                        'datas': datas,
+                        'type': 'binary',
+                        'res_model': picking._name,
+                        'res_id': picking.id,
+                    })
+                    picking.message_post(body=_('Return order %s was sent to the carrier.', picking.name), attachment_ids=attachment_id.ids)
+                else:
+                    picking.message_post(body=_(
+                        'Error: %(file_name)s file could not be obtained for order %(order_name)s.',
+                        file_name=pdf_name, order_name=picking.name
+                    ))
             else:
                 picking.message_post(body=_('Return order %(order)s was already sent to the carrier during label creation.\n'
                                             'Manifest number: %(manifest_number)s',
