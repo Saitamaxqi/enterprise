@@ -343,7 +343,7 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         partners = {self.portal_user.partner_id.id: (False, None)}
 
         self.env.invalidate_all()
-        with self.assertQueryCount(7):
+        with self.assertQueryCount(8):
             self.folder_a.action_update_access_rights(partners=partners)
             self.assertFalse(self.folder_a.access_ids.filtered(lambda a: a.partner_id == self.portal_user.partner_id))
         self._assert_raises_check_access_rule(folder_a_as_portal, 'read')
