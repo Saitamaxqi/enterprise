@@ -94,7 +94,7 @@ class L10nKeHrPayrollNhifReportWizard(models.TransientModel):
         return {
             'name': _('Export NHIF Report into XLSX'),
             'type': 'ir.actions.act_url',
-            'url': '/export/nhif/%s' % (self.id),
+            'url': '/export/old_nhif/%s' % (self.id),
         }
 
 
