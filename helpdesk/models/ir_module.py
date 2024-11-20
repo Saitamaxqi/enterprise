@@ -10,9 +10,11 @@ class IrModuleModule(models.Model):
         modules_field = {module: field for field, module in helpdesk_modules.items()}
         fields_to_reset = [modules_field[name] for name in self.mapped('name') if name in modules_field.keys()]
         if fields_to_reset:
-            self.env['helpdesk.team'].search([]).write({
+            helpdesk_teams = self.env['helpdesk.team'].search([])
+            helpdesk_teams.write({
                 field: False
                 for field in fields_to_reset
             })
+            helpdesk_teams.flush_recordset()
 
         return super().module_uninstall()
