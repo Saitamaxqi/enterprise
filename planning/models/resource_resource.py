@@ -77,3 +77,15 @@ class ResourceResource(models.Model):
     def _onchange_company_id(self):
         if self.resource_type != 'material' or not self.env.context.get('from_planning'):
             super()._onchange_company_id()
+
+    def get_avatar_card_data(self, fields):
+        if self.env.user.has_group('hr.group_hr_user'):
+            fields.append('default_role_id')
+        result = super().get_avatar_card_data(fields)
+        roles_ids = result[0].get('role_ids')
+        if roles_ids:
+            result[0]['role_ids'] = self.env['planning.role'].search_read(
+                domain=[('id', 'in', roles_ids)],
+                fields=['name', 'color'],
+            )
+        return result

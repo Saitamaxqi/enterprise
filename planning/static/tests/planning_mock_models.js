@@ -115,11 +115,11 @@ export class PlanningRole extends models.ServerModel {
 }
 
 export const planningModels = {
+    ...hrModels,
     PlanningSlot,
     PlanningRecurrency,
     ResourceResource,
     PlanningRole,
-    ...hrModels,
 };
 
 export function definePlanningModels() {

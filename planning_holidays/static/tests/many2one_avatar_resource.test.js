@@ -1,6 +1,6 @@
 import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
-import { contains, makeMockServer, mountView } from "@web/../tests/web_test_helpers";
+import { contains, makeMockServer, mountView, onRpc } from "@web/../tests/web_test_helpers";
 import { definePlanningHolidaysModels } from "./planning_holidays_test_helpers";
 
 describe.current.tags("desktop");
@@ -125,7 +125,21 @@ test("many2one_avatar_resource widget in list view with time-off idle", async ()
             user_id: cardenioUserId,
         },
     ]);
-
+    onRpc("has_group", () => false);
+    onRpc("resource.resource", "get_avatar_card_data", (params) => {
+        const resourceIdArray = params.args[0];
+        const resourceId = resourceIdArray[0];
+        const resources = env['resource.resource'].search_read([['id', '=', resourceId]]);
+        const result = resources.map(resource => ({
+            name: resource.name,
+            employee_id: resource.employee_id,
+            user_id: resource.user_id,
+            show_hr_icon_display: resource.show_hr_icon_display,
+            hr_icon_display: resource.hr_icon_display,
+            im_status: resource.im_status,
+        }));
+        return result
+    })
     await mountView({
         type: "list",
         resModel: "planning.slot",
