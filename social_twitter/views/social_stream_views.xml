@@ -8,10 +8,12 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='stream_type_id']" position="after">
                 <field name="twitter_followed_account_search"
-                    invisible="stream_type_type not in ('twitter_follow', 'twitter_likes') or not account_id or id"
-                    required="not id and stream_type_type in ('twitter_follow', 'twitter_likes') and not twitter_followed_account_id"
+                    invisible="stream_type_type != 'twitter_follow' or not account_id or id"
+                    required="not id and stream_type_type == 'twitter_follow' and not twitter_followed_account_id"
                     widget="twitter_users_autocomplete" />
-                <field name="twitter_followed_account_id" invisible="1" />
+                <field name="twitter_account_user_id" invisible="1"/>
+                <field name="twitter_followed_account_id" string="Twitter Account" invisible="stream_type_type != 'twitter_likes'"
+                    domain="[('twitter_id', '=', twitter_account_user_id)]" options="{'no_create': True, 'no_open': True}"/>
                 <field name="twitter_searched_keyword" placeholder="e.g. #odoo"
                     invisible="stream_type_type != 'twitter_keyword' or not account_id"
                     readonly="id"
