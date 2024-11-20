@@ -2278,3 +2278,57 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             # Validate that the subscription is closed and is not marked for closure
             self.assertFalse(subscription.is_closing, "Subscription should not be marked for closure after churn.")
             self.assertEqual(subscription.subscription_state, '6_churn', "Subscription state should be 'churn'.")
+
+    def test_next_billing_details(self):
+        with freeze_time("2024-11-20"):
+            """Test the value displayed on the portal"""
+            context_no_mail = {'no_reset_password': True, 'mail_create_nosubscribe': True, 'mail_create_nolog': True, }
+            self.env.ref('base.MXN').active = True
+            mxn_pricelist = self.env['product.pricelist'].create({
+                'name': 'MXN pricelist',
+                'currency_id': self.env.ref('base.MXN').id,
+            })
+            SubPricing = self.env['sale.subscription.pricing'].with_context(context_no_mail)
+            SubPricing.create({
+                'plan_id': self.plan_month.id,
+                'price': 6,
+                'pricelist_id': mxn_pricelist.id,
+                'product_template_id': self.product.product_tmpl_id.id
+            })
+            SubPricing.create({
+                'plan_id': self.plan_month.id,
+                'price': 600,
+                'pricelist_id': mxn_pricelist.id,
+                'product_template_id': self.product2.product_tmpl_id.id
+            })
+            self.subscription.order_line[0].name = "First recurring product"
+            self.subscription.order_line[1].name = "Second recurring product"
+            self.product5.recurring_invoice = False
+            self.subscription.order_line = [Command.create({
+                'name': "Non recurring line",
+                'product_id': self.product5.id, # non recurring product
+                'product_uom_qty': 1
+            })]
+            self.subscription.action_confirm()
+            details = self.subscription._next_billing_details()
+            self.assertEqual(details["sale_order"], self.subscription, "self is the subscription")
+            self.assertAlmostEqual(details["next_invoice_amount"], 69.3, 2, "The next invoice amount the total amount")
+            self.subscription._create_recurring_invoice()
+            details = self.subscription._next_billing_details()
+            self.assertAlmostEqual(details["next_invoice_amount"], 23.1, 2, "Only the recurring product is invoiced")
+        with freeze_time("2024-12-20"):
+            action = self.subscription.prepare_renewal_order()
+            renewal_so = self.env['sale.order'].browse(action['res_id'])
+            renewal_so.pricelist_id = mxn_pricelist
+            renewal_so.order_line = [Command.create({
+                'name': "Non recurring line",
+                'product_id': self.product5.id, # non recurring product
+                'product_uom_qty': 2
+            })]
+            renewal_so.action_update_prices()
+            renewal_so.action_confirm()
+            details = renewal_so._next_billing_details()
+            self.assertAlmostEqual(details["next_invoice_amount"], 759.0, 2, "Only the recurring product is invoiced")
+            inv = renewal_so._create_recurring_invoice()
+            details = renewal_so._next_billing_details()
+            self.assertAlmostEqual(details["next_invoice_amount"], 666.6, 2, "Only the recurring product is invoiced")

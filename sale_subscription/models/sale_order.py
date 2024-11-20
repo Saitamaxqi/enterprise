@@ -1984,7 +1984,7 @@ class SaleOrder(models.Model):
         return {
             'sale_order': self,
             'display_lines': display_lines,
-            'next_invoice_amount': amount_to_pay.get('total_amount') or 0.0,
+            'next_invoice_amount': amount_to_pay.get('total_amount_currency') or 0.0,
             'tax_totals': tax_totals
         }
 
