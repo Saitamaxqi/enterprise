@@ -79,6 +79,7 @@ class HrPayrollAllocPaidLeave(models.TransientModel):
                AND c.date_start <= %(stop)s
                AND (c.date_end IS NULL OR c.date_end >= %(start)s)
                AND e.active IS TRUE
+               AND e.employee_type = 'employee'
                AND c.company_id IN %(company)s
                    {where_structure}
                    {where_employee_in_department}
