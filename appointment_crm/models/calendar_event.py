@@ -63,7 +63,7 @@ class CalendarEvent(models.Model):
             'partner_id': partner.id,
             'type': 'opportunity',
             'user_id': self.user_id.id,
-            'description': self.description,
+            'description': self._get_attendee_description(),
         }
 
     def _link_with_lead(self, lead):

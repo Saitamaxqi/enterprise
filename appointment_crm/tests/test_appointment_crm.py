@@ -3,6 +3,7 @@
 from datetime import datetime, timedelta
 
 from odoo.tests import users
+from odoo.tools import html2plaintext
 from odoo.addons.crm.tests.common import TestCrmCommon
 from odoo.addons.mail.tests.common import mail_new_test_user
 
@@ -43,7 +44,6 @@ class AppointmentCRMTest(TestCrmCommon):
             'stop': datetime.now() + timedelta(hours=1),
             'allday': False,
             'duration': appointment_type.appointment_duration,
-            'description': "<p>Test</p>",
             'location': appointment_type.location,
             'partner_ids': [(4, pid, False) for pid in partner_ids],
             'appointment_type_id': appointment_type.id,
@@ -72,7 +72,9 @@ class AppointmentCRMTest(TestCrmCommon):
         lead = event.opportunity_id
         self.assertEqual(lead.user_id, event.user_id)
         self.assertEqual(lead.name, event.name)
-        self.assertEqual(lead.description, event.description)
+        self.assertTrue(lead.description)
+        self.assertIn('crm_leads@test.example.com', lead.description, 'Description should contain contact info of the attendee')
+        self.assertEqual(html2plaintext(lead.description), html2plaintext(event._get_attendee_description()))
         self.assertEqual(lead.partner_id, self.contact_1)
         self.assertTrue(lead.activity_ids[0], "Lead should have a next activity")
         self.assertNotIn(self.env.user.partner_id, lead.message_partner_ids)
