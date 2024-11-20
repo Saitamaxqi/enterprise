@@ -5,7 +5,7 @@ import base64
 from datetime import datetime
 
 from .common import SpreadsheetTestCommon, TEST_CONTENT, GIF
-from odoo.exceptions import AccessError
+from odoo.exceptions import AccessError, ValidationError
 from odoo.tests import Form
 from odoo.tests.common import freeze_time, new_test_user
 
@@ -976,3 +976,45 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             }],
             "total": 1,
         })
+
+    def test_company_consistency(self):
+        """
+        A folder can be company-specific. A company can have one spreadsheet
+        folder. Several companies can share the same one. A default folder
+        exists and is used on company creation. This test checks several
+        scenarios to ensure that there isn't any inconsistency between the
+        company of the folders and the companies
+        """
+        folder01 = self.env.ref('documents_spreadsheet.document_spreadsheet_folder')
+        company01 = self.env.company
+
+        # Make sure the setup is as expected
+        folder01.company_id = False
+        company01.document_spreadsheet_folder_id = folder01
+
+        company02 = self.env['res.company'].create({
+            'name': 'Comp02',
+        })
+        self.assertEqual(company02.document_spreadsheet_folder_id, folder01)
+
+        with self.assertRaises(ValidationError):
+            # folder01 is used by both company01 and company02
+            folder01.company_id = company01
+
+        folder02 = folder01.copy()
+        company02.document_spreadsheet_folder_id = folder02
+        folder01.company_id = company01
+
+        company03 = self.env['res.company'].create({
+            'name': 'Comp03',
+        })
+        self.assertTrue(company03)
+        self.assertFalse(company03.document_spreadsheet_folder_id)
+
+        with self.assertRaises(ValidationError):
+            # folder01 belongs to company01
+            company03.document_spreadsheet_folder_id = folder01
+
+        with self.assertRaises(ValidationError):
+            # folder01 is used by company01
+            folder01.company_id = company03

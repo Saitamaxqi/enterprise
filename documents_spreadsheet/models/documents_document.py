@@ -12,7 +12,7 @@ from lxml import etree
 from odoo import _, Command, fields, models, api
 from odoo.exceptions import UserError, AccessError, ValidationError
 from odoo.osv import expression
-from odoo.tools import image_process, consteq
+from odoo.tools import format_list, image_process, consteq
 from odoo.tools.misc import DEFAULT_SERVER_DATE_FORMAT
 
 
@@ -127,6 +127,22 @@ class DocumentsDocument(models.Model):
                 [('handler', 'not in', ('frozen_folder', 'frozen_spreadsheet'))],
             ]),
         ])
+
+    @api.constrains('company_id')
+    def _check_company_id(self):
+        domain = expression.OR([
+            [('document_spreadsheet_folder_id', '=', folder.id), ('id', '!=', folder.company_id.id)]
+            for folder in self
+            if folder.company_id and folder.type == 'folder'
+        ])
+        companies = self.env['res.company'].search(domain)
+        if companies:
+            errors = format_list(self.env, [
+                self.env._("%(folder)s is used by %(company)s", folder=comp.document_spreadsheet_folder_id.display_name, company=comp.display_name)
+                for comp in companies
+            ])
+            raise ValidationError(_("The company for a folder cannot be changed if it is already used as the "
+                                    "spreadsheet workspace for at least one other company: %s", errors))
 
     @api.model_create_multi
     def create(self, vals_list):
