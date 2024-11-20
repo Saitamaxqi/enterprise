@@ -109,11 +109,7 @@ class PlanningSlot(models.Model):
 
     def _gantt_progress_bar(self, field, res_ids, start, stop):
         if field == 'project_id':
-            start, stop = pytz.utc.localize(start), pytz.utc.localize(stop)
-            return dict(
-                self._gantt_progress_bar_project_id(res_ids, start, stop),
-                warning=_("This project isn't expected to have slot during this period."),
-            )
+            return self._gantt_progress_bar_project_id(res_ids, pytz.utc.localize(start), pytz.utc.localize(stop))
         return super()._gantt_progress_bar(field, res_ids, start, stop)
 
     def action_open_timesheets(self):
