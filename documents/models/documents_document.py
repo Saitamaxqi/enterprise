@@ -1621,17 +1621,28 @@ class DocumentsDocument(models.Model):
                 folder = self.env['documents.document'].browse(vals['folder_id'])
                 if not folder.active:
                     raise UserError('It is not possible to create documents in an archived folder.')
+                vals_partners_ids = [val[2]['partner_id'] for val in vals_values['access_ids']]
+                folder_access = [
+                    Command.create({'partner_id': access.partner_id.id, 'role': access.role})
+                    for access in folder.access_ids
+                    if (
+                        access.role
+                        and access.partner_id != owner.partner_id
+                        and access.partner_id.id not in vals_partners_ids
+                    )
+                ]
                 vals_values.update({
                     'access_via_link': folder.access_via_link,
                     'access_internal': folder.access_internal,
                     'access_ids':
                         vals_values['access_ids']
-                        + [
-                            Command.create({'partner_id': access.partner_id.id, 'role': access.role})
-                            for access in folder.access_ids
-                            if access.role and access.partner_id != owner.partner_id
-                        ] + ([Command.create({'partner_id': folder.owner_id.partner_id.id, 'role': 'edit'})]
-                             if folder.owner_id != odoobot and folder.owner_id != owner else []
+                        + folder_access + (
+                             [Command.create({'partner_id': folder.owner_id.partner_id.id, 'role': 'edit'})]
+                             if (
+                                folder.owner_id != odoobot
+                                and folder.owner_id != owner
+                                and folder.owner_id.partner_id.id not in (vals_partners_ids + [a[2]['partner_id'] for a in folder_access])
+                            ) else []
                         ),
                 })
             vals.update((k, v) for k, v in vals_values.items() if k not in old_vals)
