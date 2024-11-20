@@ -522,6 +522,58 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
         tx._post_process()
         self.assertTrue(inv2.payment_state in ['paid', 'in_payment'], "invoice 2  is paid")
 
+    def test_controller_reopen_subscription(self):
+        """ When the payment is performed on subscription, we always create a new invoice
+        """
+        with freeze_time('2024-01-01'):
+            subscription = self.subscription.create({
+                'partner_id': self.partner.id,
+                'company_id': self.company.id,
+                'payment_token_id': self.payment_token.id,
+                'sale_order_template_id': self.subscription_tmpl.id,
+
+            })
+            subscription._onchange_sale_order_template_id()
+            subscription.order_line.price_unit = 10
+            subscription.action_confirm()
+            inv1 = subscription._create_invoices()
+            inv1.button_cancel()
+
+        with freeze_time('2024-01-15'):
+            subscription.set_close()
+
+            data = {'access_token': subscription.access_token,
+                    'landing_route': subscription.get_portal_url(),
+                    'provider_id': self.dummy_provider.id,
+                    'payment_method_id': self.payment_method_id,
+                    'token_id': False,
+                    'amount': subscription.amount_total,
+                    'flow': 'direct',
+                    'subscription_anticipate': True
+            }
+            url = self._build_url("/my/subscriptions/%s/transaction" % subscription.id)
+            self.make_jsonrpc_request(url, data)
+            self.assertEqual(subscription.invoice_count, 2, "subscription_anticipate should for a new invoice creation")
+            inv2 = subscription.invoice_ids - inv1
+            inv2._post()
+            self.env['account.payment.register'] \
+                    .with_context(active_model='account.move', active_ids=inv2.ids) \
+                    .create({
+                    'currency_id': subscription.currency_id.id,
+                    'amount': subscription.amount_total,
+            })._create_payments()
+            tx = subscription.transaction_ids.invoice_ids.transaction_ids
+            tx._set_done()
+            tx._post_process()
+            self.assertTrue(inv2.payment_state in ['paid', 'in_payment'], "invoice 2  is paid")
+            self.assertEqual(subscription.next_invoice_date, datetime.date(2024, 2, 1))
+            self.assertEqual(inv2.line_ids.mapped(lambda aml: (aml.deferred_start_date, aml.deferred_end_date)),
+                             [(datetime.date(2024, 1, 1), datetime.date(2024, 1, 31)),
+                                (datetime.date(2024, 1, 1), datetime.date(2024, 1, 31)),
+                                (False, False),
+                                (False, False)],
+                             )
+
     def test_close_at_date_contract(self):
         """
         Test the closing of a subscription at a specific date.

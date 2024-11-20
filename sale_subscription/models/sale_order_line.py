@@ -350,15 +350,13 @@ class SaleOrderLine(models.Model):
                 # fallback on self.order_id.last_invoice_date to allow invoicing correctly the first period after an upsell.
                 new_period_start = self.last_invoiced_date and self.last_invoiced_date + relativedelta(days=1) or self.order_id.last_invoice_date
                 theoretical_stop = new_period_start and new_period_start + self.order_id.plan_id.billing_period - relativedelta(days=1)
-                new_period_stop = min(date for date in [fields.Date.today(), theoretical_stop, self.order_id.end_date] if date)
+                new_period_stop = min(date for date in [today, theoretical_stop, self.order_id.end_date] if date)
                 return new_period_start, new_period_stop, 1, None
             else:
                 new_period_start = self.order_id.next_invoice_date or max(start_date, first_contract_date)
                 new_period_stop = new_period_start + self.order_id.plan_id.billing_period
 
-        if self.order_id.end_date and new_period_stop > self.order_id.end_date:
-            next_date_1st = self.order_id.end_date + relativedelta(days=1)
-        elif not self.order_id.plan_id.billing_first_day or self.order_id.plan_id.billing_period_unit == 'week':
+        if not self.order_id.plan_id.billing_first_day or self.order_id.plan_id.billing_period_unit == 'week':
             # Never apply billing_first_day for weekly plan.
             return new_period_start, new_period_stop - relativedelta(days=1), 1, None
         elif self.order_id.plan_id.billing_period_unit == 'month':

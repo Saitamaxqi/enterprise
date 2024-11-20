@@ -377,7 +377,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         with freeze_time("2021-03-03"):
             # March
             inv = sub._create_recurring_invoice()
-            self.assertAlmostEqual(inv.amount_untaxed, 84 * 16 / 31, 1)   # 03 to 18 = 16 days (03 and 18 are inclusive)
+            self.assertAlmostEqual(inv.amount_untaxed, 84, 1,  msg="Last period is full too 01 to 01 even if the end_date occurs in the middle of the period")
 
     @mute_logger('odoo.addons.base.models.ir_model', 'odoo.models')
     def test_invoice_on_period_start_service_sale_order(self):
@@ -402,7 +402,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
             sub.plan_id.billing_first_day = True
             sub.action_confirm()
             inv = sub._create_recurring_invoice()
-            self.assertAlmostEqual(inv.amount_untaxed, 84 * 17 / 31, 1)   # 15 to 31 is 17 days (15 and 31 included)
+            self.assertAlmostEqual(inv.amount_untaxed, 84 * 17 / 31, 1, msg="15 to 31 is 17 days (15 and 31 included)")
 
         with freeze_time("2021-02-01"):
             # February
@@ -412,7 +412,7 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
         with freeze_time("2021-03-01"):
             # March
             inv = sub._create_recurring_invoice()
-            self.assertAlmostEqual(inv.amount_untaxed, 84 * 18 / 31, 1)  # 01 to 18 is 18 is 18 days (1 and 18 and inc.)
+            self.assertAlmostEqual(inv.amount_untaxed, 84, 1, msg="Last period is full too 01 to 01 even if the end_date occurs in the middle of the period")
 
     @mute_logger('odoo.models.unlink')
     def test_renewal(self):
