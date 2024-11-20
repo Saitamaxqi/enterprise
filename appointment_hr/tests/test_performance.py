@@ -562,6 +562,15 @@ class OnlineAppointmentPerformance(AppointmentUIPerformanceCase, AppointmenHrPer
 
     def setUp(self):
         super().setUp()
+
+        # When website_sale is installed, rendering the web page
+        # fetches the user's current sales order leading to a loading
+        # of available pricelists for that user.
+        # A fallback mechanism is in place in pricelists (see `_get_partner_pricelist_multi`)
+        # causing the queryCount to go up when a first pricelist is not found.
+        if 'product.pricelist' in self.env:
+            self.env['product.pricelist'].search([]).write({'active': False})
+
         # Flush everything, notably tracking values, as it may impact performances
         self.flush_tracking()
 
@@ -606,7 +615,7 @@ class OnlineAppointmentPerformance(AppointmentUIPerformanceCase, AppointmenHrPer
         t0 = time.time()
         with freeze_time(self.reference_now):
             self.authenticate('staff_user_bxls', 'staff_user_bxls')
-            with self.assertQueryCount(default=51):  # apt_hr 40 / +1 for no-demo
+            with self.assertQueryCount(default=52):  # apt_hr 40 / +1 for no-demo
                 self._test_url_open('/appointment/%i' % self.test_apt_type.id)
         t1 = time.time()
 
