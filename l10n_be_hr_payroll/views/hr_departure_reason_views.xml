@@ -6,7 +6,7 @@
             <field name="inherit_id" ref="hr.hr_departure_reason_view_list"/>
             <field name="arch" type="xml">
                 <field name="name" position="after">
-                    <field name="reason_code" groups="base.group_no_one" />
+                    <field name="l10n_be_reason_code" groups="base.group_no_one"/>
                 </field>
             </field>
         </record>

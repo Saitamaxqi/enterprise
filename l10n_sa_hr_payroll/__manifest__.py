@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     "name": "K.S.A. - Payroll",
@@ -28,6 +27,7 @@ Kingdom of Saudi Arabia Payroll and End of Service rules.
         "wizard/hr_payroll_payment_report_wizard.xml",
         "views/res_bank_views.xml",
         "views/res_config_settings_view.xml",
+        "views/hr_departure_reason_views.xml",
     ],
     "auto_install": ["hr_payroll"],
 }

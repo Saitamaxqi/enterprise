@@ -24,7 +24,7 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
     employee_id = fields.Many2one('hr.employee', string='Employee', default=lambda self: self.env.context.get('active_id'))
     departure_date = fields.Date(string='Departure Date', default=fields.Date.context_today, required=True)
     leaving_type_id = fields.Many2one('hr.departure.reason', string='Departure Reason', required=True)
-    departure_reason_code = fields.Integer(related='leaving_type_id.reason_code')
+    departure_reason_code = fields.Integer(related='leaving_type_id.l10n_be_reason_code')
 
     start_notice_period = fields.Date(
         string='Start Notice Period',
@@ -121,7 +121,7 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
     @api.depends('first_contract', 'leaving_type_id', 'salary_december_2013', 'start_notice_period')
     def _notice_duration(self):
         first_2014 = datetime(2014, 1, 1)
-        departure_reasons = self.env['hr.departure.reason']._get_default_departure_reasons()
+        departure_reasons = self.env['hr.departure.reason']._l10n_be_get_default_departure_reasons_codes_by_name()
         for notice in self:
             if notice._get_years(relativedelta(first_2014, notice.first_contract)) < 0:
                 first_day_since_2014 = notice.first_contract
@@ -130,7 +130,7 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
             period_since_2014 = relativedelta(notice.start_notice_period, first_day_since_2014)
             difference_in_years = notice._get_years(relativedelta(datetime(2013, 12, 31),
                 notice.first_contract))
-            if notice.leaving_type_id.reason_code == departure_reasons['fired']:
+            if notice.leaving_type_id.l10n_be_reason_code == departure_reasons['fired']:
                 # Part I
                 if difference_in_years > 0:
                     notice.salary_visibility = True
@@ -144,12 +144,12 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
                 # Part II
                 notice.notice_duration_week_after_2014 = notice._find_week(
                     period_since_2014.months + period_since_2014.years * 12, 'fired')
-            elif notice.leaving_type_id.reason_code == departure_reasons['resigned']:
+            elif notice.leaving_type_id.l10n_be_reason_code == departure_reasons['resigned']:
                 notice.salary_visibility = False
                 notice.notice_duration_month_before_2014 = 0
                 notice.notice_duration_week_after_2014 = notice._find_week(
                     period_since_2014.months + period_since_2014.years * 12, 'resigned')
-            elif notice.leaving_type_id.reason_code == departure_reasons['retired']:
+            elif notice.leaving_type_id.l10n_be_reason_code == departure_reasons['retired']:
                 notice.salary_visibility = False
                 notice.notice_duration_month_before_2014 = 0
                 notice.notice_duration_week_after_2014 = notice._find_week(

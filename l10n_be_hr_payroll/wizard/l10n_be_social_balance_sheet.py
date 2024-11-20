@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import base64
@@ -324,7 +323,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                     workers_data[contract_type][contract_time] += 1
                     workers_data[contract_type]['fte'] += 1 * calendar.work_time_rate / 100.0
 
-                    reason_code = employee.departure_reason_id.reason_code
+                    reason_code = employee.departure_reason_id.l10n_be_reason_code
                     reason_code = str(reason_code if reason_code in [340, 341, 342, 343] else 343)
                     workers_data[reason_code][contract_time] += 1
                     workers_data[reason_code]['fte'] += 1 * calendar.work_time_rate / 100.0

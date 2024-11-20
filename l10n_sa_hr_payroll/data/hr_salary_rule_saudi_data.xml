@@ -97,15 +97,14 @@ end_date = contract.date_end
 difference = relativedelta(end_date, start_date)
 total_days = difference.years * 360 + difference.months * 30 + difference.days
 compensation = payslip._get_contract_wage()+ contract.l10n_sa_housing_allowance + contract.l10n_sa_transportation_allowance + contract.l10n_sa_other_allowances
-departure_reason_codes = payslip._l10n_sa_departure_reason_codes()
-if employee.departure_reason_id.reason_code in {departure_reason_codes.get('fired'), departure_reason_codes.get('resigned'), departure_reason_codes.get('clause_77'), departure_reason_codes.get('end_of_contract'), departure_reason_codes.get('retired')}:
-    if employee.departure_reason_id.reason_code in [departure_reason_codes.get('fired')]:
+if reason_type := employee.departure_reason_id.l10n_sa_reason_type:
+    if reason_type == 'fired':
         result = 0
-    elif employee.departure_reason_id.reason_code in [departure_reason_codes.get('end_of_contract')]:
+    elif reason_type == 'end_of_contract':
         result = (total_days / 360) * (compensation/2)
-    elif employee.departure_reason_id.reason_code in [departure_reason_codes.get('clause_77')]:
+    elif reason_type == 'clause_77':
         result = compensation
-    elif employee.departure_reason_id.reason_code in [departure_reason_codes.get('resigned'), departure_reason_codes.get('retired')]:
+    elif reason_type in ['resigned', 'retired']:
         if 2 * 360 &lt;= total_days &lt;= 5 * 360:
             result = compensation / 6 * total_days / 360
         elif 5 * 360 &lt; total_days &lt; 10 * 360:
@@ -122,7 +121,7 @@ result = payslip.company_id.currency_id.round(result)
             <field name="code">EOSALLOW</field>
             <field name="sequence">6</field>
             <field name="condition_select">python</field>
-            <field name="condition_python">result = employee.departure_date and employee.departure_reason_id.reason_code == payslip._l10n_sa_departure_reason_codes().get('clause_77')</field>
+            <field name="condition_python">result = employee.departure_date and employee.departure_reason_id.l10n_sa_reason_type == 'clause_77'</field>
             <field name="amount_select">code</field>
             <field name="amount_python_compute">
 compensation = payslip._get_contract_wage()+ contract.l10n_sa_housing_allowance + contract.l10n_sa_transportation_allowance + contract.l10n_sa_other_allowances
