@@ -229,7 +229,8 @@ registry.category("web_tour.tours").add("test_add_component_from_shop_foor", {
         },
         {
             content: "Check that the Wood is visible on the MO",
-            trigger: ".o_mrp_record_line:contains('Super Wood')",
+            trigger:
+                ".o_mrp_display_record:has(.card-header:contains(Lovely MO)) .o_mrp_record_line:contains('Super Wood')",
         },
         {
             content: "Swap to the WO view of the Nuclear Workcenter",
@@ -298,3 +299,67 @@ registry.category("web_tour.tours").add("test_add_component_from_shop_foor", {
         },
     ],
 });
+
+registry
+    .category("web_tour.tours")
+    .add("test_add_component_from_shop_foor_in_multi_step_manufacturing", {
+        steps: () => [
+            {
+                trigger: ".form-check-input[name='Nuclear Workcenter']",
+                run: "click",
+            },
+            {
+                trigger: "button:contains('Confirm')",
+                run: "click",
+            },
+            {
+                content: "Check that we are in the MO view",
+                trigger:
+                    ".o_mrp_display_records:has(.card-header:contains(Lovely MO)) button:contains(Nuclear Workcenter)",
+            },
+            {
+                content: "Add Wood to the MO components",
+                trigger:
+                    ".o_mrp_display_record:has(.card-header:contains(Lovely MO)) .card-footer button.btn-light.py-3",
+                run: "click",
+            },
+            {
+                trigger: ".o_mrp_menu_dialog",
+            },
+            {
+                trigger: "button:contains(Add Component)",
+                run: "click",
+            },
+            {
+                trigger: ".modal-content input.o_searchview_input.o_input",
+                run: "edit Courage",
+            },
+            {
+                trigger: ".dropdown-item:contains(Courage)",
+                run: "click",
+            },
+            {
+                trigger: ".modal-content .o_kanban_record:has(span:contains('Courage'))",
+                run: "click",
+            },
+            {
+                content: "Await for the Component to be added",
+                trigger: ".modal-content input.o_input[type='number']",
+                run: function () {
+                    helper.assert(
+                        document.querySelector(".modal-content input.o_input[type='number']").value,
+                        "1"
+                    );
+                },
+            },
+            {
+                trigger: ".modal-content button.btn-close",
+                run: "click",
+            },
+            {
+                content: "Check that the Wood is visible on the MO",
+                trigger:
+                    ".o_mrp_display_record:has(.card-header:contains(Lovely MO))  .o_mrp_record_line:contains(Courage)",
+            },
+        ],
+    });

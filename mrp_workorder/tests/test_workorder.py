@@ -635,9 +635,10 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
         Check that components added to a WO from the shopfloor are visible
         on both the WO and the MO.
         """
-        self.env.ref('base.group_user').implied_ids += (
-            self.env.ref('mrp.group_mrp_routings')
-        )
+        user_admin = self.env.ref('base.user_admin')
+        user_admin.write({
+            'group_ids': [Command.link(self.ref('mrp.group_mrp_routings'))],
+        })
         mo_form = Form(self.env['mrp.production'])
         mo_form.product_id = self.bom_2.product_id
         mo_form.bom_id = self.bom_2
@@ -663,3 +664,40 @@ class TestShopFloor(HttpCase, TestMrpWorkorderCommon):
         }])
         # Check that the Courage is associated with the operation
         self.assertEqual(mo.workorder_ids, mo.move_raw_ids.filtered(lambda m: m.product_id == self.product_1).workorder_id)
+
+    def test_add_component_from_shop_foor_in_multi_step_manufacturing(self):
+        """
+        Check that components added from the shopfloor in multi step
+        manufacturing generate the associated transfers.
+        """
+        self.env.ref('base.group_user').implied_ids += (
+            self.env.ref('mrp.group_mrp_routings')
+        )
+        warehouse = self.env.ref('stock.warehouse0')
+        # manufacture in 2 steps
+        warehouse.manufacture_steps = "pbm"
+        mo_form = Form(self.env['mrp.production'].with_context(warehouse_id=warehouse.id))
+        mo_form.product_id = self.bom_2.product_id
+        mo_form.bom_id = self.bom_2
+        self.bom_2.bom_line_ids.product_id.is_storable = False
+        self.bom_2.operation_ids.name = "Super Operation"
+        mo_form.product_qty = 1
+        mo = mo_form.save()
+        mo.name = "Lovely MO"
+        mo.action_confirm()
+        pick = mo.picking_ids
+        self.assertEqual(pick.picking_type_id, warehouse.pbm_type_id)
+        pick.button_validate()
+        self.assertEqual(pick.state, 'done')
+        # Put some "Courage" in stock to be added to the MO
+        self.product_1.is_storable = True
+        self.env['stock.quant']._update_available_quantity(self.product_1, mo.warehouse_id.lot_stock_id, quantity=10.0)
+        action = mo.workorder_ids.action_open_mes()
+        url = '/web?#action=%s' % (action['id'])
+        self.start_tour(url, "test_add_component_from_shop_foor_in_multi_step_manufacturing", login='admin')
+        new_pick = mo.picking_ids - pick
+        self.assertEqual(new_pick.picking_type_id, warehouse.pbm_type_id)
+        self.assertRecordValues(new_pick.move_ids, [{
+            'quantity': 1.0,
+            'product_id': self.product_1.id,
+        }])
