@@ -52,7 +52,7 @@
                                     <span t-field="o.employee_id.children"/>
                                 </div>
                                 <div id="employee_private_address" t-if="o.employee_id.private_street and o.employee_id.private_city">
-                                    <strong class="me-2">Private Address:</strong>
+                                    <strong class="me-2">Address:</strong>
                                     <span t-field="o.employee_id.private_street"/>,
                                     <span t-field="o.employee_id.private_street2" t-if="o.employee_id.private_street2" class="ms-2"/><span t-if="o.employee_id.private_street2">,</span>
                                     <span t-field="o.employee_id.private_city" class="ms-2"/>
@@ -98,9 +98,9 @@
                 <table class="table table-sm table-borderless">
                     <thead class="o_black_border">
                         <tr>
-                            <th id="work_days_header_name">Name</th>
-                            <th id="work_days_header_hours" class="text-end">Number of Hours</th>
-                            <th id="work_days_header_days" class="text-end">Number of Days</th>
+                            <th id="work_days_header_name">Earnings</th>
+                            <th id="work_days_header_hours" class="text-end">Hours</th>
+                            <th id="work_days_header_days" class="text-end">Days</th>
                             <th id="work_days_header_amount" class="text-end">Amount</th>
                             <th id="work_days_header_ytd" t-if="o.ytd_computation" class="text-end">YTD</th>
                         </tr>

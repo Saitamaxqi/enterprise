@@ -6,6 +6,13 @@
         <span t-out="('XXX-XX-' + o.employee_id.ssnid[-4:]) if o.employee_id.ssnid else ''"/>
     </div>
 
+    <div id="employee_email" position="replace"/>
+    <div id="employee_marital" position="replace"/>
+    <div id="employee_person_in_charge" position="replace"/>
+    <div id="computed_on" position="replace"/>
+    <div id="contract_start" position="replace"/>
+    <div id="working_schedule" position="replace"/>
+
     <xpath expr="//div[@id='payslip_lines_table']" position="after">
         <div>
             <t t-set="leave_lines" t-value="o._l10n_us_get_leave_lines()"/>
@@ -36,6 +43,26 @@
             </table>
         </div>
     </xpath>
+
+    <th id="work_days_header_hours" position="after">
+        <th class="text-end">Rate</th>
+    </th>
+    <td id="worked_days_hours" position="after">
+        <td class="text-end">
+            <span t-out="worked_days.amount/worked_days.number_of_hours" t-if="o.contract_id.wage_type == 'hourly'"
+                  digits="[42, 2]" t-options='{"widget": "monetary", "display_currency": o.company_id.currency_id}'/>
+        </td>
+    </td>
+    <td id="worked_days_total_hours" position="after">
+        <td/>
+    </td>
+
+    <th id="line_header_amount" position="replace"/>
+    <th id="line_header_quantity" position="replace"/>
+    <th id="line_header_rate" position="replace"/>
+    <td id="payslip_line_amount" position="replace"/>
+    <td id="payslip_line_quantity" position="replace"/>
+    <td id="payslip_line_rate" position="replace"/>
 </template>
 
 <template id="report_payslip_us_lang">
