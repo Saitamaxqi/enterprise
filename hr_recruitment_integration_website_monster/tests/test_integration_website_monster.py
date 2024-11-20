@@ -79,18 +79,6 @@ class TestWebsiteMonsterIntegration(TransactionCase):
         with self.assertRaises(UserError):
             wiz_job_post.action_post_job()
 
-    def test_create_post_no_published(self):
-        wiz_job_post = self.env['hr.recruitment.post.job.wizard'].with_context({'active_model': 'hr.job', 'active_id': self.job2.id}).create({
-            'job_id': self.job2.id,
-            'platform_ids': self.monster_platform.ids,
-            'apply_method': 'redirect',
-            'job_apply_url': 'https://odoo.com',
-            'post_html': 'This is my job description',
-            'campaign_start_date': self.today,
-        })
-        with self.assertRaises(UserError):
-            wiz_job_post.action_post_job()
-
     def test_create_post_no_post_html(self):
         wiz_job_post = self.env['hr.recruitment.post.job.wizard'].with_context({'active_model': 'hr.job', 'active_id': self.job2.id}).create({
             'job_id': self.job2.id,
@@ -344,10 +332,6 @@ class TestMockupWebsiteMonsterIntegration(TestWebsiteMonsterIntegration):
         with self.patch_monster_requests():
             super().test_create_post_no_apply_url()
 
-    def test_create_post_no_published(self):
-        with self.patch_monster_requests():
-            super().test_create_post_no_published()
-    
     def test_create_post_no_post_html(self):
         with self.patch_monster_requests():
             super().test_create_post_no_post_html()

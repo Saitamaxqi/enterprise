@@ -26,7 +26,7 @@ class HrJobPost(models.Model):
     apply_vector = fields.Char(
         string="Contact Point",
         help="The email address, phone number, url to send applications to.")
-    post_html = fields.Html(string="Post", prefetch=False, required=True)
+    post_html = fields.Html(string="Description", prefetch=False, required=True)
     status = fields.Selection([
         ('success', 'Success'),
         ('warning', 'Warning'),
@@ -141,20 +141,25 @@ class HrJobPost(models.Model):
             'tag': 'reload',
         }
 
-    def action_post_job(self):
-        post_wizard = self.env['hr.recruitment.post.job.wizard'].create({
-            'job_id': self.job_id.id,
-            'apply_method': self.apply_method,
-            'post_html': self.post_html,
-        })
 
+    def action_post_job(self):
+        view_name = 'hr_recruitment_post_job_wizard_view_form'
+        if not self.job_id:
+            view_name = 'hr_recruitment_post_job_wizard_view_job_selectable_form'
+        view_id = self.env.ref('hr_recruitment_integration_base.'+ view_name).id
         return {
-            'name': _('Reuse Job Post'),
+            'name': _('Publish on a Job Board'),
             'type': 'ir.actions.act_window',
             'res_model': 'hr.recruitment.post.job.wizard',
-            'res_id': post_wizard.id,
             'view_mode': 'form',
-            'views': [(False, 'form')],
+            'view_id': view_id,
+            'context': {
+                'default_job_id': self.job_id.id if self.job_id else False,
+                'from_global_view': not self.job_id,
+                'default_apply_method': self.apply_method if self.apply_method else 'email',
+                'post_html': self.post_html,
+            },
+            'views': [(view_id, 'form')],
             'target': 'new',
         }
 

@@ -7,11 +7,23 @@
         <field name="arch" type="xml">
             <field name="job_apply_mail" position="replace">
                 <field name="apply_method" widget="radio"/>
+                <div
+                    class="alert alert-warning"
+                    role="alert"
+                    invisible="apply_method != 'redirect' or not job_id or job_is_published">
+                    Your job will be automatically published.
+                </div>
                 <field name="job_apply_mail" invisible="apply_method != 'email'"/>
                 <field name="job_apply_url" invisible="apply_method != 'redirect'"/>
             </field>
+            <field name="post_html" position="attributes">
+                <attribute name="required">0</attribute>
+            </field>
+            <field name="platform_ids" position="attributes">
+                <attribute name="required">0</attribute>
+            </field>
             <xpath expr="//button[@name='action_post_job']" position="after">
-                 <button name="action_generate_post"
+                <button name="action_generate_post"
                         type="object"
                         invisible="post_html"
                         class="btn-primary"

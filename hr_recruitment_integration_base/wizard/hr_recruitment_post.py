@@ -2,7 +2,7 @@
 
 from collections import deque
 
-from odoo import fields, models, _
+from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 
 
@@ -16,30 +16,43 @@ class HrRecruitmentPostJobWizard(models.TransientModel):
         res = super().default_get(fields_list)
         if self.env.context.get('active_model') == 'hr.job':
             res['job_id'] = self.env.context.get('active_id')
-            job = self.env['hr.job'].browse(res['job_id'])
-            if job.alias_id and job.alias_id.alias_full_name:
-                res['job_apply_mail'] = job.alias_id.alias_full_name
-            elif job.user_id and job.user_id.employee_id:
-                res['job_apply_mail'] = job.user_id.work_email
         return res
 
-    campaign_start_date = fields.Date(
-        string="Campaign Start Date", default=fields.Date.today(),
-        help='The date when the campaign will start.', required=True)
+    campaign_start_date = fields.Date(string="Campaign Start Date", default=fields.Date.today(), required=True)
     campaign_end_date = fields.Date(
         string="Campaign End Date",
         help='The date when the campaign will end. If not set, '
         'the campaign will run indefinitely or to the maximum allowed by a platform.')
     job_id = fields.Many2one('hr.job', string="Job")
-    job_apply_mail = fields.Char(string="Email")
+    job_apply_mail = fields.Char(string="Email", compute="_compute_job_apply_mail", store=True, readonly=False)
     apply_method = fields.Selection([
         ('email', 'Send an Email'),
     ], default='email', string="Apply Method")
     platform_ids = fields.Many2many('hr.recruitment.platform', string="Job Board", required=True)
-    post_html = fields.Html(string="Post", required=True)
+    post_html = fields.Html(string="Description", required=True, compute="_compute_post_html", store=True,
+        readonly=False)
     api_data = fields.Json(string="Data")
     post_ids = fields.Many2many('hr.job.post', 'job_id', string="Job Posts")
     company_id = fields.Many2one('res.company', string='Company', required=True, default=lambda self: self.env.company)
+
+    @api.depends('job_id')
+    def _compute_job_apply_mail(self):
+        for post_job_wizard in self:
+            job = post_job_wizard.job_id
+            if job and job.alias_id.alias_full_name:
+                post_job_wizard.job_apply_mail = job.alias_id.alias_full_name
+            elif job and job.user_id and job.user_id.employee_id:
+                post_job_wizard.job_apply_mail = job.user_id.work_email
+            else:
+                post_job_wizard.job_apply_mail = False
+
+    @api.depends('job_id')
+    def _compute_post_html(self):
+        for post_job_wizard in self:
+            if post_job_wizard.job_id:
+                post_job_wizard.post_html = post_job_wizard.job_id.description
+            else:
+                post_job_wizard.post_html = False
 
     def _pospone_posts(self):
         self.ensure_one()
@@ -117,10 +130,18 @@ class HrRecruitmentPostJobWizard(models.TransientModel):
             }
         return {'type': 'ir.actions.act_window_close'}
 
-    def action_post_job(self):
+    def _check_fields_before_posting(self, error_msg=""):
         self.ensure_one()
         if self.campaign_end_date and self.campaign_start_date > self.campaign_end_date:
-            raise UserError(_('Campaign start date can\'t be after campaign end date'))
+            error_msg += _('Campaign start date can\'t be after campaign end date.\n')
+        if self.apply_method == "email" and not self.job_apply_mail:
+            error_msg += _('Email is required if the apply method is \'Send an email\'.\n')
+        if error_msg:
+            raise UserError(error_msg)
+
+    def action_post_job(self):
+        self.ensure_one()
+        self._check_fields_before_posting()
         if self.campaign_start_date > fields.Date.today():
             return self._pospone_posts()
         return self._post_job()

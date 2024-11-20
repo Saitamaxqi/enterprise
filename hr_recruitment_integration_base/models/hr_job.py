@@ -43,3 +43,11 @@ class HrJob(models.Model):
             'view_mode': 'form',
             'target': 'new',
         }
+
+    def action_open_hr_job_post(self):
+        self.ensure_one()
+        if not self.job_post_count:
+            return self.action_post_job()
+        action_dict = self.env.ref('hr_recruitment_integration_base.action_open_hr_job_post')._get_action_dict()
+        action_dict.update({"domain": [('job_id', '=', self.id)]})
+        return action_dict

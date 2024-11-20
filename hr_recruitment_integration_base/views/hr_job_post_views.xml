@@ -93,6 +93,13 @@
         <field name="model">hr.job.post</field>
         <field name="arch" type="xml">
             <kanban>
+                <header>
+                    <button name="action_post_job"
+                        string="Publish on Jobs Board"
+                        type="object"
+                        class="btn-primary"
+                        display="always"/>
+                </header>
                 <templates>
                     <t t-name="card" class="flex-row">
                         <main>
@@ -194,6 +201,14 @@
         <field name="res_model">hr.job.post</field>
         <field name="view_mode">kanban,list,form</field>
         <field name="search_view_id" ref="hr_job_post_view_kanban_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Publish one of our job position to a Jobs Board
+            </p>
+            <a name="%(hr.action_create_job_position)d" class="btn btn-link" type="action">
+                Or you can start with the creation of a new open job position
+            </a>
+        </field>
     </record>
 
     <menuitem
@@ -215,4 +230,4 @@
                 .action_update_job_post()
         </field>
     </record>
-</odoo> 
+</odoo>

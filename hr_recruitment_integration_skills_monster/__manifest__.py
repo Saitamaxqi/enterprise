@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
-    'name': 'Recruitment Integration Skills Monster',
+    'name': 'Job Board - Monster.com (Skills)',
     'version': '1.0',
     'category': 'Human Resources/Recruitment/Integration',
     'summary': 'Manage Monster Job board integrations with skills',
