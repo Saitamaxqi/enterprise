@@ -89,7 +89,7 @@ class TestReports(L10nInTestAccountGstReportsCommon):
         b2b_invoice_gst_and_nil_rated_tax.action_post()
 
         # b2b invoice with special economic zone
-        b2b_sez_invoice_gst_and_nil_rated_tax = b2b_invoice_gst_and_nil_rated_tax.copy(default={'l10n_in_gst_treatment': 'special_economic_zone'})
+        b2b_sez_invoice_gst_and_nil_rated_tax = b2b_invoice_gst_and_nil_rated_tax.copy(default={'l10n_in_gst_treatment': 'special_economic_zone', 'invoice_date': self.test_date})
         b2b_sez_invoice_gst_and_nil_rated_tax.action_post()
 
     def _create_gstr_report(self, company=None, periodicity='monthly', year=None, month=None):
