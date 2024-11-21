@@ -114,6 +114,7 @@ class CustomerPortal(payment_portal.PaymentPortal):
         )
         orders = Order.search(domain, order=order, limit=self._items_per_page, offset=pager['offset'])
         request.session['my_subscriptions_history'] = orders.ids[:100]
+        request.session['current_history'] = 'my_subscriptions_history'
 
         values.update({
             'subscriptions': orders if not order_id else orders.with_context(force_sale_url=True),
@@ -126,6 +127,16 @@ class CustomerPortal(payment_portal.PaymentPortal):
             'filterby': filterby,
         })
         return request.render("sale_subscription.portal_my_subscriptions", values)
+
+    @http.route()
+    def portal_my_quotes(self, **kwargs):
+        request.session['current_history'] = 'my_quotations_history'
+        return super().portal_my_quotes(**kwargs)
+
+    @http.route()
+    def portal_my_orders(self, **kwargs):
+        request.session['current_history'] = 'my_orders_history'
+        return super().portal_my_orders(**kwargs)
 
     @http.route(['/my/subscriptions/<int:order_id>', '/my/subscriptions/<int:order_id>/<access_token>',
                  '/my/subscription/<int:order_id>', '/my/subscription/<int:order_id>/<access_token>'],
@@ -194,8 +205,9 @@ class CustomerPortal(payment_portal.PaymentPortal):
             'format_date': lambda date: format_date(request.env, date),
         }
 
+        history_session_key = request.session.get('current_history', 'my_subscriptions_history')
         portal_page_values = self._get_page_view_values(
-            order_sudo, access_token, portal_page_values, 'my_subscriptions_history', False)
+            order_sudo, access_token, portal_page_values, history_session_key, False)
 
         payment_form_values = {
             'default_token_id': order_sudo.payment_token_id.id,
