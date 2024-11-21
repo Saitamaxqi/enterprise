@@ -11,7 +11,7 @@ import { SpreadsheetAction } from "@documents_spreadsheet/bundle/actions/spreads
 import { expect, getFixture, test } from "@odoo/hoot";
 import { pointerDown } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
-import { Model, constants } from "@odoo/o-spreadsheet";
+import { Model, constants, helpers } from "@odoo/o-spreadsheet";
 import { selectCell, setCellContent } from "@spreadsheet/../tests/helpers/commands";
 import {
     Partner,
@@ -44,6 +44,8 @@ import {
 } from "@web/../tests/web_test_helpers";
 import { user } from "@web/core/user";
 import { WebClient } from "@web/webclient/webclient";
+
+const { sanitizeSheetName } = helpers;
 
 defineDocumentSpreadsheetModels();
 defineDocumentSpreadsheetTestAction();
@@ -1093,6 +1095,31 @@ test("Pivot name is not changed if the name is empty", async () => {
     await waitForDataLoaded(model);
     const pivotId = model.getters.getPivotIds()[0];
     expect(model.getters.getPivotName(pivotId)).toBe("Partners by Foo");
+});
+
+test("Sheet is created when pivot name contains invalid characters", async () => {
+    await spawnPivotViewForSpreadsheet();
+
+    let spreadsheetAction;
+    patchWithCleanup(SpreadsheetAction.prototype, {
+        setup() {
+            super.setup();
+            spreadsheetAction = this;
+        },
+    });
+    await contains(document.body.querySelector(".o_pivot_add_spreadsheet")).click();
+    const pivotName = "Do not keep Unsupported characters: '-:-*-?-\\-[-]-/";
+    await contains(".o_sp_name").edit(pivotName);
+    await contains(".modal-content > .modal-footer > .btn-primary").click();
+    const model = getSpreadsheetActionModel(spreadsheetAction);
+    await waitForDataLoaded(model);
+    const pivotId = model.getters.getPivotIds()[0];
+    expect(model.getters.getPivotName(pivotId)).toBe(pivotName);
+    expect(model.getters.getPivotDisplayName(pivotId)).toBe(`(#1) ${pivotName}`);
+    const sanitizedSheetName = sanitizeSheetName(pivotName);
+    expect(model.getters.getSheetName(model.getters.getActiveSheetId())).toBe(
+        `${sanitizedSheetName} (Pivot #1)`
+    );
 });
 
 test("Check pivot measures with m2o field", async function () {

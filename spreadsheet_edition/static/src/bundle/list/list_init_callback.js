@@ -5,6 +5,8 @@ import { _t } from "@web/core/l10n/translation";
 const { SidePanelStore } = stores;
 
 const uuidGenerator = new helpers.UuidGenerator();
+const {  sanitizeSheetName } = helpers;
+
 
 /**
  * Get the function that have to be executed to insert the given list in the
@@ -38,10 +40,12 @@ export function insertList({ list, threshold, fields, name }) {
     };
     return async (model, stores) => {
         const listId = model.getters.getNextListId();
-        let sheetName = _t("%(list_name)s (List #%(list_id)s)", {
-            list_name: name,
-            list_id: listId,
-        });
+        let sheetName = sanitizeSheetName(
+            _t("%(list_name)s (List #%(list_id)s)", {
+                list_name: name,
+                list_id: listId,
+            })
+        );
         if (!this.isEmptySpreadsheet) {
             const sheetId = uuidGenerator.uuidv4();
             const sheetIdFrom = model.getters.getActiveSheetId();

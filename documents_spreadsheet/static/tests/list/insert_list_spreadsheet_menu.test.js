@@ -16,6 +16,9 @@ import {
     patchWithCleanup,
     toggleActionMenu,
 } from "@web/../tests/web_test_helpers";
+import { helpers } from "@odoo/o-spreadsheet";
+
+const { sanitizeSheetName } = helpers;
 
 defineDocumentSpreadsheetModels();
 describe.current.tags("desktop");
@@ -121,6 +124,30 @@ test("List name can be changed from the dialog", async () => {
     await waitForDataLoaded(model);
     expect(model.getters.getListName("1")).toBe("New name");
     expect(model.getters.getListDisplayName("1")).toBe("(#1) New name");
+});
+
+test("Sheet is created when list name contains invalid characters", async () => {
+    const { env } = await spawnListViewForSpreadsheet();
+
+    let spreadsheetAction;
+    patchWithCleanup(SpreadsheetAction.prototype, {
+    setup() {
+        super.setup();
+        spreadsheetAction = this;
+    },
+    });
+    await invokeInsertListInSpreadsheetDialog(env);
+    const listName = "Do not keep Unsupported characters: '-:-*-?-\\-[-]-/";
+    await contains(".o_sp_name").edit(listName);
+    await contains(".modal button.btn-primary").click();
+    const model = getSpreadsheetActionModel(spreadsheetAction);
+    await waitForDataLoaded(model);
+    expect(model.getters.getListName("1")).toBe(listName);
+    expect(model.getters.getListDisplayName("1")).toBe(`(#1) ${listName}`);
+    const sanitizedSheetName = sanitizeSheetName(listName);
+    expect(model.getters.getSheetName(model.getters.getActiveSheetId())).toBe(
+        `${sanitizedSheetName} (List #1)`
+    );
 });
 
 test("Unsorted List name doesn't contains sorting info", async function () {

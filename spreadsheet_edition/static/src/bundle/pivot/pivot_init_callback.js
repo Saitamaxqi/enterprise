@@ -7,7 +7,7 @@ import { deepCopy } from "@web/core/utils/objects";
 import { _t } from "@web/core/l10n/translation";
 
 const uuidGenerator = new helpers.UuidGenerator();
-const { parseDimension, isDateOrDatetimeField } = helpers;
+const { parseDimension, isDateOrDatetimeField, sanitizeSheetName } = helpers;
 
 const { SidePanelStore } = stores;
 
@@ -79,10 +79,12 @@ export function insertPivot(pivotData) {
         }
         await ds.load();
 
-        let sheetName = _t("%(pivot_name)s (Pivot #%(pivot_id)s)", {
-            pivot_name: pivot.name,
-            pivot_id: model.getters.getPivotFormulaId(pivotId),
-        });
+        let sheetName = sanitizeSheetName(
+            _t("%(pivot_name)s (Pivot #%(pivot_id)s)", {
+                pivot_name: pivot.name,
+                pivot_id: model.getters.getPivotFormulaId(pivotId),
+            })
+        );
         // Add an empty sheet in the case of an existing spreadsheet.
         if (!this.isEmptySpreadsheet) {
             const sheetId = uuidGenerator.uuidv4();
