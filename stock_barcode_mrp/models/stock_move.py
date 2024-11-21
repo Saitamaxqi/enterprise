@@ -13,7 +13,7 @@ class StockMove(models.Model):
         new_move_line_vals = []
         for move in production_moves:
             rounding = self.env['decimal.precision'].precision_get('Product Unit of Measure')
-            if float_compare(move.quantity, move.product_uom_qty, precision_digits=rounding) < 0:
+            if float_compare(move.quantity, 0, precision_digits=rounding) > 0 and float_compare(move.quantity, move.product_uom_qty, precision_digits=rounding) < 0 and move.picked:
                 qty_split = move.product_uom._compute_quantity(move.product_uom_qty - move.quantity, move.product_id.uom_id, rounding_method='HALF-UP')
                 move_line_vals = move._prepare_move_line_vals(quantity=qty_split)
                 move_line_vals['picked'] = False

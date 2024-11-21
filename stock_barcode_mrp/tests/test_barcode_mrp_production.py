@@ -1,5 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
+from odoo import Command
 from odoo.tests import Form, tagged
 from odoo.addons.stock_barcode.tests.test_barcode_client_action import TestBarcodeClientAction
 
@@ -654,45 +655,47 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
         self.assertRecordValues(bo, [{'product_id': product.id, 'product_qty': 2.0}])
 
     def test_backorder_partial_completion_save_sensible_split(self):
-        """ In a production opened in Barcode, create move lines as opposed to moves when having to
-        split incomplete transfer lines.
+        """
+        In a production opened in Barcode, create move lines as opposed to moves when having to
+        split incomplete transfer lines but dont split unassigned.
         """
         self.clean_access_rights()
 
-        self.env['stock.quant']._update_available_quantity(self.component01, self.stock_location, quantity=10)
+        available_comp, unavailable_comp = self.component01, self.product1
+        self.env['stock.quant']._update_available_quantity(available_comp, self.stock_location, quantity=10)
 
         manufacturing_order = self.env['mrp.production'].create({
             'name': 'TBPCSNS mo',
             'product_id': self.final_product.id,
             'product_qty': 10,
-            'move_raw_ids': [(0, 0, {
-                'product_id': self.component01.id,
-                'product_uom_qty': 10,
-                'quantity': 10,
-                'picked': False,
-            })],
+            'move_raw_ids': [
+                Command.create({
+                    'product_id': available_comp.id,
+                    'product_uom_qty': 10,
+                }),
+                Command.create({
+                    'product_id': unavailable_comp.id,
+                    'product_uom_qty': 4,
+                }),
+            ],
         })
         manufacturing_order.action_confirm()
 
         action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
         url = f"/web#action={action_id.id}"
         self.start_tour(url, 'test_backorder_partial_completion_save_sensible_split', login='admin', timeout=180)
-
-        backorder_mo = manufacturing_order.backorder_ids[-1]
+        # Check that the unavailable + unedited component move was unaffected by the split
+        self.assertEqual(manufacturing_order.move_raw_ids.filtered(lambda m: m.product_id == unavailable_comp).mapped('quantity'), [0.00])
+        backorder_mo = manufacturing_order.backorder_ids - manufacturing_order
         self.assertRecordValues(
-            backorder_mo.move_raw_ids,
-            [{
-                'quantity': 5,
-                'product_uom_qty': 5,
-                'picked': False,
-            }]
+            backorder_mo.move_raw_ids.sorted('product_uom_qty'), [
+                {'product_id': unavailable_comp.id, 'product_uom_qty': 2, 'quantity': 0, 'picked': False},
+                {'product_id': available_comp.id, 'product_uom_qty': 5, 'quantity': 5, 'picked': False},
+            ]
         )
         self.assertRecordValues(
             backorder_mo.move_finished_ids,
-            [{
-                'quantity': 5,
-                'product_uom_qty': 5,
-            }]
+            [{'quantity': 5, 'product_uom_qty': 5,}]
         )
 
     def test_barcode_mo_creation_in_mo2(self):
