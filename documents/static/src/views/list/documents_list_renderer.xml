@@ -56,7 +56,7 @@
             <attribute name="t-on-click.stop">(ev) => record.onRecordClick(ev)</attribute>
         </xpath>
         <CheckBox position="replace">
-            <DocumentsListRendererCheckBox disabled="!!props.list.editedRecord or props.list.model.useSampleModel" value="record.selected" onChange.bind="(ev) => record.onRecordClick(ev, {isKeepSelection: true})"/>
+            <DocumentsListRendererCheckBox disabled="!!editedRecord or props.list.model.useSampleModel" value="record.selected" onChange.bind="(ev) => record.onRecordClick(ev, {isKeepSelection: true})"/>
         </CheckBox>
     </t>
 
