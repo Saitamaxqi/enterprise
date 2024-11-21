@@ -522,7 +522,7 @@ class DocumentsDocument(models.Model):
     @api.readonly
     @api.model
     def get_spreadsheets(self, domain=(), offset=0, limit=None):
-        domain = expression.AND([domain, [("handler", "in", ("spreadsheet", "frozen_spreadsheet"))]])
+        domain = expression.AND([domain, [("handler", "=", "spreadsheet")]])
         return {
             "records": self._get_spreadsheets_to_display(domain, offset, limit),
             "total": self.search_count(domain),

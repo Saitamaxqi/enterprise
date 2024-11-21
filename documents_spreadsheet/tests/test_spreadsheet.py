@@ -949,3 +949,30 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
             "folder_id": self.folder.id,
         })
         self.assertFalse(document.spreadsheet_thumbnail_checksum)
+
+    def test_get_only_spreadsheet_documents(self):
+        self.env["documents.document"].search([("handler", "=", "spreadsheet")]).unlink()
+
+        # a spreadsheet
+        spreadsheet = self.create_spreadsheet()
+
+        # a regular document
+        self.env["documents.document"].create({
+            "datas": GIF,
+            "thumbnail": GIF,
+            "folder_id": self.folder.id,
+        })
+
+        # a frozen spreadsheet
+        frozen_spreadsheet = self.create_spreadsheet()
+        frozen_spreadsheet.handler = "frozen_spreadsheet"
+
+        result = self.env["documents.document"].get_spreadsheets()
+        self.assertEqual(result, {
+            "records": [{
+                "id": spreadsheet.id,
+                "display_name": spreadsheet.name,
+                "thumbnail": False
+            }],
+            "total": 1,
+        })
