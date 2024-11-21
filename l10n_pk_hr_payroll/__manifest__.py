@@ -6,6 +6,8 @@
     'description': """
 Pakistan Payroll and End of Service rules
 =========================================
+- Basic salaries calculations.
+- Tax bracket calculations/deductions
     """,
     'depends': ['hr_payroll'],
     'auto_install': ['hr_payroll'],
