@@ -1,7 +1,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name': 'U.A.E. - Payroll with Accounting',
-    'author': 'Odoo PS',
+    'name': 'United Arab Emirates - Payroll with Accounting',
+    'author': 'Odoo S.A.',
     'countries': ['ae'],
     'category': 'Human Resources',
     'description': """

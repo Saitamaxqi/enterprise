@@ -1,13 +1,25 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
-    'name': 'U.A.E. - Payroll',
+    'name': 'United Arab Emirates - Payroll',
+    'author': 'Odoo S.A.',
     'countries': ['ae'],
-    'author': 'Odoo PS',
     'category': 'Human Resources/Payroll',
     'description': """
 United Arab Emirates Payroll and End of Service rules.
 =======================================================
-
+- Basic salary calculations
+- EOS calculations
+- Annual leaves provisions and EOS provisions
+- Social insurance rules for locals
+- Overtime rule for the other inputs case
+- Sick-leaves calculations
+- DEWS calculations
+- EOS calculations for free zones (DMCC)
+- Out of contract calculations
+- Calculation for unused leaves for EOS calculation
+- Additional other input rules for (bonus, commissions, arrears, etc.)
+- Master payroll export
+- WPS
     """,
     'depends': ['hr_payroll', 'hr_work_entry_holidays'],
     'auto_install': ['hr_payroll'],
