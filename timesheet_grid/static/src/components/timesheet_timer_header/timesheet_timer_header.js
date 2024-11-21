@@ -2,7 +2,7 @@ import { Field, getPropertyFieldInfo } from "@web/views/fields/field";
 import { TimesheetDisplayTimer } from "../timesheet_display_timer/timesheet_display_timer";
 import { useService, useAutofocus } from "@web/core/utils/hooks";
 import { user } from "@web/core/user";
-import { Component, onWillStart, onWillUpdateProps, useRef, useExternalListener } from "@odoo/owl";
+import { Component, onWillStart, useRef, useExternalListener } from "@odoo/owl";
 
 export class TimesheetTimerHeader extends Component {
     static template = "timesheet_grid.TimesheetTimerHeader";
@@ -33,7 +33,6 @@ export class TimesheetTimerHeader extends Component {
         this.startButton = useRef("startButton");
         this.stopButton = useRef("stopButton");
         onWillStart(async () => await this.onWillStart());
-        onWillUpdateProps((nextProps) => this.onWillUpdateProps(nextProps));
         useAutofocus({ refName: "startButton" });
         useAutofocus({ refName: "stopButton" });
         useExternalListener(document.body, "click", (ev) => {
@@ -48,12 +47,10 @@ export class TimesheetTimerHeader extends Component {
     }
 
     async onWillStart() {
-        if (this.props.timesheet && this.props.timesheet.data.name === "/") {
-            this._clearTimesheetName();
-        }
         this.isProjectManager = await user.hasGroup('project.group_project_manager');
     }
 
+    // deprecated
     onWillUpdateProps(nextProps) {
         if (nextProps.timesheet && nextProps.timesheet.data.name === "/") {
             this._clearTimesheetName(nextProps.timesheet);
@@ -109,7 +106,7 @@ export class TimesheetTimerHeader extends Component {
     //--------------------------------------------------------------------------
     // Business Methods
     //--------------------------------------------------------------------------
-
+    // deprecated
     _clearTimesheetName(timesheet = null) {
         (timesheet || this.props.timesheet).update({ name: "" }, { silent: true });
     }

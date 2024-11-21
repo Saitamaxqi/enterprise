@@ -100,6 +100,7 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
 
     _records = [
         {
+            name: 'youpi',
             id: 1,
             project_id: 1,
             employee_id: 2,
@@ -108,6 +109,7 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
             display_timer: true,
         },
         {
+            name: 'bop',
             id: 2,
             project_id: 1,
             task_id: 1,
@@ -116,6 +118,7 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
             unit_amount: 25,
         },
         {
+            name: 'Sabaton',
             id: 3,
             project_id: 1,
             task_id: 1,
@@ -124,6 +127,7 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
             unit_amount: 5.5,
         },
         {
+            name: 'chaos',
             id: 4,
             project_id: 2,
             task_id: 3,
@@ -132,6 +136,7 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
             unit_amount: 10,
         },
         {
+            name: 'sakamoto',
             id: 5,
             project_id: 2,
             task_id: 2,
@@ -140,6 +145,7 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
             unit_amount: -3.5,
         },
         {
+            name: 'frieren',
             id: 6,
             project_id: 2,
             task_id: 1,
@@ -163,13 +169,14 @@ export class HRTimesheet extends hrTimesheetModels.HRTimesheet {
             </form>
         `,
         list: `
-            <tree>
+            <list js_class="timesheet_timer_list">
+                <field name="name" />
                 <field name="date" />
                 <field name="project_id" />
                 <field name="task_id" />
                 <field name="selection_field" />
                 <field name="unit_amount" />
-            </tree>
+            </list>
         `,
         kanban: `
             <kanban js_class="timesheet_timer_kanban">
