@@ -649,6 +649,14 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         })
         self.env.company.country_id.address_view_id = self.env.ref('base.view_partner_address_form')
         self.start_tour("/odoo?debug=tests", 'web_studio_test_address_view_id_no_edit', login="admin", timeout=200)
+        studio_view = _get_studio_view(self.testView)
+        assertViewArchEqual(self, studio_view.arch, """
+        <data>
+            <xpath expr="//field[@name='lang']" position="attributes">
+                <attribute name="required">True</attribute>
+            </xpath>
+         </data>
+        """)
 
     def test_custom_selection_field_edit_values(self):
         self.testView.arch = '''

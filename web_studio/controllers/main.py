@@ -424,7 +424,7 @@ class WebStudioController(http.Controller):
                 model.write({'is_mail_activity': True})
 
         try:
-            request.env[res_model].get_view(view_type=view_type)
+            request.env[res_model].with_context(no_address_format=True).get_view(view_type=view_type)
         except UserError:
             return False
         self.edit_action(action_type, action_id, args)
@@ -506,7 +506,7 @@ class WebStudioController(http.Controller):
             context = {}
 
         ViewModel = request.env[view.model]
-        fields_view = ViewModel.with_context(dict(context, studio=True)).get_view(view.id, view.type)
+        fields_view = ViewModel.with_context(dict(context, studio=True, no_address_format=True)).get_view(view.id, view.type)
         view_type = view.type
         models = fields_view['models']
 
@@ -1130,7 +1130,7 @@ Are you sure you want to remove the selection values of those records?""", len(r
     def _operation_buttonbox(self, arch, operation, model=None):
         studio_view_arch = arch  # The actual arch is the studio view arch
         # Get the arch of the form view with inherited views applied
-        arch = request.env[model].get_view(view_type='form')['arch']
+        arch = request.env[model].with_context(studio=True, no_address_format=True).get_view(view_type='form')['arch']
         parser = etree.XMLParser(remove_blank_text=True)
         arch = etree.fromstring(arch, parser=parser)
 
@@ -1306,7 +1306,7 @@ Are you sure you want to remove the selection values of those records?""", len(r
 
     def _operation_avatar_image(self, arch, operation, model):
         studio_view_arch = arch  # The actual arch is the studio view arch
-        arch = request.env[model].get_view(view_type='form')['arch']
+        arch = request.env[model].with_context(studio=True, no_address_format=True).get_view(view_type='form')['arch']
         parser = etree.XMLParser(remove_blank_text=True)
         arch = etree.fromstring(arch, parser=parser)
 
@@ -1561,7 +1561,7 @@ Are you sure you want to remove the selection values of those records?""", len(r
                 'expr': subview_xpath,
                 'position': position
             })
-        view_arch, _ = request.env[model]._get_view(view_type=subview_type)
+        view_arch, _ = request.env[model].with_context(no_address_format=True)._get_view(view_type=subview_type)
         xml_node = self._inline_view_filter_nodes(view_arch)
         xpath_node.insert(0, xml_node)
         studio_view.arch_db = etree.tostring(arch, encoding='utf-8', pretty_print=True)

@@ -770,10 +770,29 @@ registry.category("web_tour.tours").add("web_studio_test_address_view_id_no_edit
             },
         },
         {
-            trigger: ".o_web_studio_leave",
+            trigger: ".o_field_widget[name='lang']",
             run: "click",
         },
-        ...stepNotInStudio(".o_form_view"),
+        {
+            trigger: ".o_web_studio_sidebar input[id='required']",
+            run: "click",
+        },
+        {
+            trigger: ".o_web_studio_snackbar .fa-check",
+        },
+        {
+            trigger: ".o_address_format",
+            run: function () {
+                if (
+                    this.anchor.querySelectorAll("[name=street]").length ||
+                    !this.anchor.querySelectorAll("[name=lang]").length
+                ) {
+                    throw new Error(
+                        "The address view id set on the company country shouldn't be editable"
+                    );
+                }
+            },
+        },
     ],
 });
 
