@@ -2,6 +2,13 @@
 <odoo><data noupdate="1">
 
     <!-- Folders -->
+
+    <record id="document_administrator_folder" model="documents.document" forcecreate="0">
+        <field name="type">folder</field>
+        <field name="access_internal">none</field>
+        <field name="name">Administrator</field>
+    </record>
+
     <record id="document_internal_folder" model="documents.document" forcecreate="0">
         <field name="type">folder</field>
         <field name="access_internal">view</field>
