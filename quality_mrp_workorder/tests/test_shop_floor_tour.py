@@ -6,6 +6,9 @@ from odoo.tests.common import HttpCase, tagged
 class TestShopFloor(HttpCase):
 
     def test_shop_floor_spreadsheet(self):
+        self.env.ref('base.group_user').implied_ids += (
+            self.env.ref('mrp.group_mrp_routings')
+        )
         snow_leopard = self.env['product.product'].create({
             'name': 'Snow leopard',
             'is_storable': True,
