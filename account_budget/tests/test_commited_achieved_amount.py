@@ -48,21 +48,25 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
         self.env['budget.line'].invalidate_model(['achieved_amount', 'committed_amount'])
         self.create_other_category_aal()
 
-        # 3 positive analytic lines with analytic_account_partner_a:
-        # invoice line[0]: 200, invoice line[1]: 400, aal 1: 200
+        # 2 analytic lines with analytic_account_partner_a in an income account:
+        # {invoice line[0]: 200, invoice line[1]: 400}
+        # 1 positive analytic line with analytic_account_partner_a, "other" category and without a fiscal account:
+        # {aal 1: 200}
         # Total Achieved = 800
         self.assertEqual(plan_a_line.achieved_amount, 800.0)
         # Committed should be same as budget type is revenue
         self.assertEqual(plan_a_line.committed_amount, 800.0)
 
-        # 3 positive analytic lines with analytic_account_partner_b:
-        # invoice line[2]: 700, invoice line[3]: 600, aal 2: 200
+        # 2 analytic lines with analytic_account_partner_b in an income account:
+        # {invoice line[2]: 700, invoice line[3]: 600}
+        # 1 positive analytic line with analytic_account_partner_b, "other" category and without a fiscal account:
+        # {aal 2: 200}
         # Total Achieved = 1500
         self.assertEqual(plan_b_line.achieved_amount, 1500.0)
         # Committed should be same as budget type is revenue
         self.assertEqual(plan_b_line.committed_amount, 1500.0)
 
-        # 1 positive analytic line with accounts analytic_account_partner_b and analytic_account_administratif
+        # 1 analytic line with accounts analytic_account_partner_b and analytic_account_administratif
         # invoice line[3]: 600
         self.assertEqual(plan_b_admin_line.achieved_amount, 600.0)
         # Committed should be same as budget type is revenue
@@ -82,31 +86,62 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
         self.env['budget.line'].invalidate_model(['achieved_amount', 'committed_amount'])
         self.create_other_category_aal()
 
-        # 3 negative analytic lines with account analytic_account_partner_a:
-        # Bill line[0]: -100, line[1]: -300, aal 3: -100
+        # 2 analytic lines with account analytic_account_partner_a in an expense account:
+        # Bill line[0]: -100, line[1]: -300
+        # 1 negative analytic line with analytic_account_partner_a, "other" category and without a fiscal account:
+        # {aal 3: -100}
         # Total Achieved = 500
         self.assertEqual(plan_a_line.achieved_amount, 500.0)
 
-        # Product A have 2 PO lines, one for line[0] with 10 order and 1 received and one for line[1] with 10 order and 3 received with account analytic_account_partner_a
-        # Committed = ((order - received) * price) + achieved = ((10-1) + (10-3)) * 100 + 500 = 2100
+        # Product A have 2 PO lines with account analytic_account_partner_a in an expense account:
+        # - one for line[0] with 10 ordered at price 100
+        # - one for line[1] with 10 ordered at price 100
+        # Also, there's 1 negative analytic line with analytic_account_partner_a, "other" category and
+        # without a fiscal account that is not linked to a PO (aal 3: -100)
         self.assertEqual(plan_a_line.committed_amount, 2100.0)
 
-        # 3 negative analytic lines with account analytic_account_partner_b:
-        # Bill line[2]: -600, line[3]: -500, aal 4: -100
+        # 2 analytic lines with account analytic_account_partner_b in an expense account:
+        # Bill line[2]: -600, line[3]: -500
+        # 1 negative analytic line with analytic_account_partner_b, "other" category and without a fiscal account:
+        # {aal 4: -100}
         # Total Achieved = 1200
         self.assertEqual(plan_b_line.achieved_amount, 1200.0)
 
-        # Product B have 2 PO lines, one for line[2] with 10 order and 6 received and one for line[3] with 10 order and 5 received with account analytic_account_partner_b
-        # Committed = ((order - received) * price) + achieved = ((10-6) + (10-5)) * 100 + 1200 = 2100
+        # Product B have 2 PO lines with account analytic_account_partner_b in an expense account:
+        # - one for line[2] with 10 ordered at price 100
+        # - one for line[3] with 10 ordered at price 100
+        # Also, there's 1 negative analytic line with analytic_account_partner_b, "other" category and
+        # without a fiscal account that is not linked to a PO (aal 4: -100)
         self.assertEqual(plan_b_line.committed_amount, 2100.0)
 
-        # 1 negative analytic line with accounts analytic_account_partner_b and analytic_account_administratif
+        # 1 analytic line with accounts analytic_account_partner_b and analytic_account_administratif
+        # in an expense account
         # Bill line[3]: -500,
         self.assertEqual(plan_b_admin_line.achieved_amount, 500.0)
 
-        # Product B have 1 PO line line[3] with 10 order and 5 received with analytic_account_partner_b and analytic_account_administratif
-        # Committed = ((order - received) * price) + achieved = ((10-5) * 100 + 500 = 1000
+        # Product B have 1 PO line line[3] with 10 ordered at price 100 with analytic_account_partner_b
+        # and analytic_account_administratif in an expense account
         self.assertEqual(plan_b_admin_line.committed_amount, 1000.0)
+
+        # A bill should impact the budget even if it is not linked to a PO
+        no_po_bill = self.env['account.move'].create({
+            'move_type': 'in_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': '2019-01-11',
+            'invoice_line_ids': [
+                Command.create({
+                    'product_id': self.product_a.id,
+                    'analytic_distribution': {self.analytic_account_partner_a.id: 100},
+                    'quantity': 3,
+                    'price_unit': 100,
+                    'account_id': self.company_data['default_account_expense'].id,
+                }),
+            ]
+        })
+        no_po_bill.action_post()
+        self.env['budget.line'].invalidate_model(['achieved_amount', 'committed_amount'])
+        self.assertEqual(plan_a_line.achieved_amount, 800.0)
+        self.assertEqual(plan_a_line.committed_amount, 2400.0)
 
     def test_budget_analytic_expense_committed_amount_draft_bill(self):
         """ Test that the committed amount stays correct while a PO has a bill which is still unposted.
@@ -306,3 +341,27 @@ class TestCommittedAchievedAmount(TestAccountBudgetCommon):
 
         budget_expense_line_a = self.budget_analytic_expense.budget_line_ids[0]
         self.assertEqual((budget_expense_line_a.committed_amount, budget_expense_line_a.achieved_amount), (100, 100))
+
+    def test_budget_analytic_expense_with_credit_note(self):
+        """ Test that credit note are taken into account. """
+        plan_a_line, plan_b_line, plan_b_admin_line = self.budget_analytic_expense.budget_line_ids
+        self.assertBudgetLine(plan_a_line, committed=2000, achieved=0)
+        self.assertBudgetLine(plan_b_line, committed=2000, achieved=0)
+        self.assertBudgetLine(plan_b_admin_line, committed=1000, achieved=0)
+        # Create a bill from PO
+        bill = self.purchase_order.invoice_ids
+        bill.write({'invoice_date': '2019-01-10'})
+        bill.action_post()
+        self.assertBudgetLine(plan_a_line, committed=2000, achieved=400)
+        self.assertBudgetLine(plan_b_line, committed=2000, achieved=1100)
+        self.assertBudgetLine(plan_b_admin_line, committed=1000, achieved=500)
+        # Create a credit note
+        reversal_wizard = self.env['account.move.reversal'].with_context(active_model='account.move', active_ids=bill.ids).create({
+            'journal_id': bill.journal_id.id,
+            'date': '2019-01-11'
+        })
+        reversal = reversal_wizard.reverse_moves()
+        self.env['account.move'].browse(reversal['res_id']).action_post()
+        self.assertBudgetLine(plan_a_line, committed=2000, achieved=0)
+        self.assertBudgetLine(plan_b_line, committed=2000, achieved=0)
+        self.assertBudgetLine(plan_b_admin_line, committed=1000, achieved=0)
