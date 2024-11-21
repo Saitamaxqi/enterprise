@@ -12,6 +12,8 @@ _logger = logging.getLogger(__name__)
 @tagged('post_install', '-at_install')
 class TestIndustryFsmUi(HttpCase):
     def test_ui(self):
+        # Disable onboarding tours as they can conflict with our running tours.
+        self.env.ref('base.user_admin').tour_enabled = False
         self.env['res.partner'].create([
             {'name': 'Leroy Philippe', 'email': 'leroy.philou@example.com'},
             {'name': 'Brandon Freeman', 'email': 'brandon.freeman55@example.com'},
