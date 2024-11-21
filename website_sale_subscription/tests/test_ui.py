@@ -61,3 +61,25 @@ class TestUi(HttpCase, TestWebsiteSaleSubscriptionCommon):
         })
 
         self.start_tour(reccuring_product.website_url, 'sale_subscription_product_variants', login='admin')
+
+    def test_website_sale_subscription_product_variant_add_to_cart(self):
+        product_attribute = self.env['product.attribute'].create({'name': 'Color'})
+        product_attribute_val1 = self.env['product.attribute.value'].create({
+            'name': 'Black',
+            'attribute_id': product_attribute.id
+        })
+        product_attribute_val2 = self.env['product.attribute.value'].create({
+            'name': 'White',
+            'attribute_id': product_attribute.id
+        })
+
+        self.product_tmpl_2.attribute_line_ids = [(Command.create({
+            'attribute_id': product_attribute.id,
+            'value_ids': [
+                Command.set([product_attribute_val1.id, product_attribute_val2.id])],
+        }))]
+
+        self.product_tmpl_2.write({
+            'product_subscription_pricing_ids': [Command.set([self.pricing_month.id, self.pricing_year.id])]
+        })
+        self.start_tour(self.product_tmpl_2.website_url, 'sale_subscription_add_to_cart', login='admin')

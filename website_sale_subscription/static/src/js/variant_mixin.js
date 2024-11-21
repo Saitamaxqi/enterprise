@@ -1,8 +1,6 @@
 import VariantMixin from "@website_sale/js/sale_variant_mixin";
-import publicWidget from "@web/legacy/js/public/public_widget";
 import { renderToElement } from "@web/core/utils/render";
 
-import "@website_sale/js/website_sale";
 
 /**
  * Update the renting text when the combination change.
@@ -64,15 +62,19 @@ VariantMixin._onChangeCombinationSubscription = function (ev, $parent, combinati
     }
 };
 
-publicWidget.registry.WebsiteSale.include({
-    /**
-     * Update the renting text when the combination change.
-     * @override
-     */
-    _onChangeCombination: function (){
-        this._super.apply(this, arguments);
-        VariantMixin._onChangeCombinationSubscription.apply(this, arguments);
-    },
-});
+const oldGetOptionalCombinationInfoParam = VariantMixin._getOptionalCombinationInfoParam;
+/**
+ * Add the selected plan to the optional combination info parameters.
+ *
+ * @param {$.Element} $product
+ */
+VariantMixin._getOptionalCombinationInfoParam = function ($product) {
+    const result = oldGetOptionalCombinationInfoParam.apply(this, arguments);
+    Object.assign(result, {
+        'plan_id': $product?.find('.product_price .plan_select').val()
+    });
+
+    return result;
+};
 
 export default VariantMixin;
