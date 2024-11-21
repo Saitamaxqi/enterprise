@@ -343,7 +343,7 @@ patch(PosStore.prototype, {
         const orders = [...orderToCreate, ...orderToUpdate];
 
         if (orders.length === 0) {
-            return [];
+            return super.syncAllOrders(options);
         }
 
         const orderObjectMap = {};

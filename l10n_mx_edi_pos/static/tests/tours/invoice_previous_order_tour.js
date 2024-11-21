@@ -41,7 +41,7 @@ registry.category("web_tour.tours").add("l10n_mx_edi_pos.tour_invoice_previous_o
                 trigger: "div button:contains('New Order')",
                 run: "click",
             },
-            Chrome.clickMenuOption("Orders"),
+            Chrome.clickOrders(),
             {
                 content: "Select dropdown",
                 trigger: "div.filter",
@@ -127,7 +127,7 @@ registry
                     trigger: "div button:contains('New Order')",
                     run: "click",
                 },
-                Chrome.clickMenuOption("Orders"),
+                Chrome.clickOrders(),
                 {
                     content: "Select dropdown",
                     trigger: "div.filter",

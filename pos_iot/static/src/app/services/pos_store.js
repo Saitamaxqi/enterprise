@@ -51,7 +51,7 @@ patch(PosStore.prototype, {
         }
     },
 
-    showScreen() {
+    showScreen(name, props, newOrder = false) {
         if (
             this.mainScreen.component === PaymentScreen &&
             this.getOrder().payment_ids.some(

@@ -9,7 +9,7 @@
             </t>
         </xpath>
         <xpath expr="//button[hasclass('pay-button')]" position="attributes">
-            <attribute name="t-if">!currentOrder?.delivery_identifier</attribute>
+            <attribute name="t-if" add="!currentOrder?.delivery_identifier" separator=" and "/>
         </xpath>
         <xpath expr="//div[hasclass('subpads')]/ActionpadWidget" position="attributes">
             <attribute name="t-if">!currentOrder?.delivery_identifier</attribute>

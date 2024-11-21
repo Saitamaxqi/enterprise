@@ -110,7 +110,7 @@ patch(PosStore.prototype, {
     /**
      * @override
      */
-    addOrderIfEmpty() {
+    addOrderIfEmpty(forceEmpty) {
         if (
             !this.getOrder() ||
             (this.getOrder().delivery_identifier && this.getOrder().state == "paid")
