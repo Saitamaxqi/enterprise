@@ -8,9 +8,9 @@ from odoo.addons.documents.controllers.documents import ShareRoute
 class AccountShareRoute(ShareRoute):
 
     @route()
-    def documents_content(self, access_token, download=False):
+    def documents_content(self, access_token, download=True):
         if str2bool(download):
-            return super().documents_content(access_token)
+            return super().documents_content(access_token, download)
 
         document = self._from_access_token(access_token, skip_log=True)
         is_public = request.env.user._is_public()
