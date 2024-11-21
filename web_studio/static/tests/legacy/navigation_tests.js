@@ -31,6 +31,7 @@ import { StudioClientAction } from "@web_studio/client_action/studio_client_acti
 import { ListEditorRenderer } from "@web_studio/client_action/view_editor/editors/list/list_editor_renderer";
 import { onMounted } from "@odoo/owl";
 import { selectorContains } from "@web_studio/../tests/legacy/client_action/view_editors/view_editor_tests_utils";
+import { redirect } from "@web/core/utils/urls";
 
 // -----------------------------------------------------------------------------
 // Tests
@@ -1139,5 +1140,30 @@ QUnit.module("Studio", (hooks) => {
         ]);
         assert.containsNone(target, ".o_studio");
         assert.containsOnce(target, ".o_kanban_view");
+    });
+
+    QUnit.test("load with active_id active_ids", async (assert) => {
+        serverData.actions[4].context = `{"some_key": active_ids}`;
+        redirect("/odoo/studio?mode=editor&_action=4&_view_type=form&_tab=views&active_id=451")
+        await createEnterpriseWebClient({
+            serverData,
+            mockRPC: (route, args) => {
+                if (args.method === "onchange") {
+                    assert.step("onchange");
+                    assert.deepEqual(args.kwargs.context, {
+                        active_id: 451,
+                        active_ids: [451],
+                        allowed_company_ids: [1],
+                        lang: "en",
+                        some_key: [451],
+                        studio: 1,
+                        tz: "taht",
+                        uid: 7,
+                    });
+                }
+            },
+        });
+        await contains(".o_web_studio_view_renderer .o_form_view");
+        assert.verifySteps(["onchange"]);
     });
 });
