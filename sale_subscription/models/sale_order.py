@@ -634,6 +634,7 @@ class SaleOrder(models.Model):
     def _action_cancel(self):
         to_open_ids = []
         for order in self:
+            related_move = order._get_subscription_invoices()
             if order.subscription_state == '7_upsell':
                 if order.state in ['sale', 'done']:
                     cancel_message_body = _("The upsell %s has been cancelled. Please recheck the quantities as they may have been affected by this cancellation.", order._get_html_link())
@@ -644,7 +645,7 @@ class SaleOrder(models.Model):
                 cancel_message_body = _("The renewal %s has been cancelled.", order._get_html_link())
                 order.subscription_id.message_post(body=cancel_message_body)
             elif (order.subscription_state in SUBSCRIPTION_PROGRESS_STATE + SUBSCRIPTION_DRAFT_STATE
-                  and not any(state in ['draft', 'posted'] for state in order.order_line.invoice_lines.move_id.mapped('state'))):
+                  and not any(state in ['draft', 'posted'] for state in related_move.mapped('state'))):
                 # subscription_id means a renewal because no upsell could enter this condition
                 # When we cancel a quote or a confirmed subscription that was not invoiced, we remove the order logs and
                 # reopen the parent order if the conditions are met.
@@ -2086,3 +2087,21 @@ class SaleOrder(models.Model):
                 end_date -= recurrence
             ratio = (end_date - start_date).days / ((start_date + recurrence) - start_date).days + complete_rec
         return ratio
+
+    def _get_subscription_invoices(self):
+        """
+        Return the invoices linked to an order.
+        get_invoiced will return the invoices linked to all sale.order of the subscription hierarchy:
+         - origin order invoices
+         - upsells invoices
+         - renewals invoices
+        This helper is useful to only get the invoices linked to the current subscription.
+        """
+        self.ensure_one()
+        move = self.env['account.move']
+        if self.subscription_state == '7_upsell':
+            move = self.order_line.invoice_lines.move_id
+        elif self.subscription_state:
+            subscription_move_lines = self.env['account.move.line'].search([('subscription_id', 'in', self.ids)])
+            move = subscription_move_lines.move_id
+        return move

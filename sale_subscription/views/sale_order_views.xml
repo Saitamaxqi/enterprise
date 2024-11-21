@@ -31,7 +31,7 @@
                 <attribute name="invisible">is_subscription or invoice_status != 'no' or state != 'sale'</attribute>
             </button>
             <button name="action_cancel" position="attributes">
-                <attribute name="invisible">not id or state not in ['draft', 'sent', 'sale'] or (is_subscription and invoice_count &gt; 0)</attribute>
+                <attribute name="invisible">not id or state not in ['draft', 'sent', 'sale']</attribute>
             </button>
             <button name="action_cancel" position="before">
                 <button string="Create Alternative" name="create_alternative" type="object"
