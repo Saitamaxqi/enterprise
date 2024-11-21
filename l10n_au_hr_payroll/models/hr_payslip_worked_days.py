@@ -9,7 +9,7 @@ class HrPayslipWorked_Days(models.Model):
     def _compute_amount(self):
         res = super()._compute_amount()
         for wd in self:
-            if not wd.payslip_id.contract_id._is_struct_from_country("AU"):
+            if not wd.payslip_id.contract_id or not wd.payslip_id.contract_id._is_struct_from_country("AU"):
                 continue
             # The complete duration of contract not met (Pay for the hours worked)
             if wd.payslip_id.date_from + wd.payslip_id._get_schedule_timedelta() != wd.payslip_id.date_to:
