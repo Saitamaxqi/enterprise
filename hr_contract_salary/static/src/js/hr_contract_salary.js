@@ -19,11 +19,22 @@ class SelectMenuWrapper extends Component {
     setup() {
         this.state = useState({
             choices: [],
+            groups: [],
             value: this.props.el.value,
             disabled: false,
             required: this.props.el.required,
         });
-        this.state.choices = [...this.props.el.querySelectorAll("option")].filter((x) => x.value);
+
+        let optgroup = [...this.props.el.querySelectorAll("optgroup")]
+        if (optgroup.length){
+            this.state.groups = optgroup.map(x => ({
+                label: x.label,
+                choices: [...x.querySelectorAll("option")],
+            }));
+        } else {
+           this.state.choices = [...this.props.el.querySelectorAll("option")].filter((x) => x.value);
+        }
+
         this.props.el.classList.add("d-none");
     }
 
