@@ -66,7 +66,7 @@ registry.category('web_tour.tours').add('knowledge_article_comments', {
             trigger: '.o_knowledge_comments_popover .o-mail-Composer-send:not([disabled=""])',
             run: "click",
         }, { // Wait for the comment to be fully created
-            trigger: ".note-editable p.o_knowledge_tour_first_paragraph a:not([data-id='undefined'])",
+            trigger: ".note-editable p.o_knowledge_tour_first_paragraph a:not([data-id='undefined']):not(:visible)",
         }, {
             trigger: '.o_knowledge_comment_box[data-thread-id] .o_knowledge_comment_small_ui img',
         }, { // Open the comments panel

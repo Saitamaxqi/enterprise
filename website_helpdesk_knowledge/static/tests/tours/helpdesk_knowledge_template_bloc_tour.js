@@ -25,7 +25,7 @@ registry.category("web_tour.tours").add('helpdesk_pick_template_as_message_from_
 }, { // cancel the message, no need to send it and trigger a backend `write` (see discuss tests for that)
     trigger: 'footer button:contains(Discard)',
     run: 'click'
-}, ...stepUtils.discardForm(),
+}
 ]});
 
 registry.category("web_tour.tours").add('helpdesk_pick_template_as_description_from_knowledge', {

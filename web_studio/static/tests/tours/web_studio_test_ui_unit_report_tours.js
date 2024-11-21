@@ -775,7 +775,7 @@ registry.category("web_tour.tours").add("web_studio.test_edition_without_lang", 
             run: "click",
         },
         {
-            trigger: ".o_web_studio_code_editor_info .o_field_translate",
+            trigger: ".o_web_studio_code_editor_info .o_field_translate:not(:visible)",
             run: "click",
         },
         {

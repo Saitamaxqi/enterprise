@@ -874,7 +874,7 @@ registry.category("web_tour.tours").add("web_studio_test_create_model_with_click
             trigger: ".o_arrow_button_current:contains(In Progress)",
         },
         {
-            trigger: ".o_form_button_save",
+            trigger: ".o_form_button_save:not(:visible)",
             run: "click",
         },
         {
@@ -1833,7 +1833,8 @@ registry.category("web_tour.tours").add("web_studio_test_kanban_menu_ribbon", {
             run: "drag_and_drop(.o_web_studio_hook[data-type='ribbon'])",
         },
         {
-            trigger: ".o_kanban_view .o_kanban_record:first() .o_widget_web_ribbon",
+            trigger:
+                ".o_kanban_view .o_kanban_record:first() .o_widget_web_ribbon .ribbon:contains(demo)",
         },
     ],
 });

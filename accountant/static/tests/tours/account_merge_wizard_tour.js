@@ -52,10 +52,6 @@ registry.category("web_tour.tours").add("account_merge_wizard_tour", {
             run: "click",
         },
         {
-            content: "Wait for modal to close",
-            trigger: ".o-main-components-container:not(:has(.modal-dialog))",
-        },
-        {
             content: "Check that there are now exactly 2 accounts",
             trigger: "tr.o_data_row:contains(2)",
         },
