@@ -42,6 +42,9 @@ export const patchAvatarCardResourcePopover = {
             className: "o_planning_avatar_role_tag",
         }));
     },
+    get hasFooter() {
+        return this.roles?.length > 0 || super.hasFooter;
+    },
 };
 
 export const unpatchAvatarCardResourcePopover = patch(AvatarCardResourcePopover.prototype, patchAvatarCardResourcePopover);

@@ -219,7 +219,7 @@ test("many2one_avatar_resource widget in kanban view", async () => {
         message: "There should not be any avatar for material resource",
     });
     expect(".o_avatar_card_buttons button").toHaveCount(0);
-    expect(".o_avatar_card .o_resource_roles_tags > .o_tag").toHaveCount(2, {
+    expect(".o_avatar_card .o_resource_roles_tags .o_tag").toHaveCount(2, {
         message: "Roles should be listed in the card",
     });
 
@@ -327,7 +327,7 @@ test("Employee avatar in Gantt view", async () => {
         message: "There should not be any avatar for material resource",
     });
     expect(".o_avatar_card_buttons button").toHaveCount(0);
-    expect(".o_avatar_card .o_resource_roles_tags > .o_tag").toHaveCount(2, {
+    expect(".o_avatar_card .o_resource_roles_tags .o_tag").toHaveCount(2, {
         message: "Roles should be listed in the card",
     });
 
