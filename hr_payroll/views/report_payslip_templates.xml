@@ -62,7 +62,7 @@
                             </td>
                             <td id="other_infos">
                                 <div id="wage">
-                                    <strong class="me-2">Contract Wage (<span class="text-capitalize" t-out="o.contract_id.wage_type"/>):</strong>
+                                    <strong class="me-2">Contract Wage (<span class="text-capitalize" t-out="o.contract_id.schedule_pay if o.contract_id.wage_type == 'monthly' else o.contract_id.wage_type"/>):</strong>
                                     <span t-out="o.contract_id._get_contract_wage()" t-options="{'widget': 'monetary', 'display_currency': o.company_id.currency_id}" style="color:#875A7B" class="fw-bold"/>
                                 </div>
                                 <div id="pay_period">
