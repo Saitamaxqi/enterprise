@@ -14,7 +14,7 @@ from odoo.tools import DEFAULT_SERVER_DATETIME_FORMAT as DTF
 from odoo.tools import float_compare, float_is_zero, float_repr, float_round, html_escape
 from odoo.tools.xml_utils import cleanup_xml_node
 from pytz import timezone
-from requests.exceptions import ConnectionError as RConnectionError
+from requests.exceptions import RequestException
 from odoo.tools.zeep import Client
 from odoo.tools.zeep.exceptions import Error as ZeepError
 from odoo.addons.l10n_ec_edi.models.xml_utils import (
@@ -553,7 +553,7 @@ class AccountEdiFormat(models.Model):
                 errors.append(_("No response received."))
         except ZeepError as e:
             errors.append(_("The SRI service failed with the following error: %s", e))
-        except RConnectionError as e:
+        except RequestException as e:
             warnings.append(_("The SRI service failed with the following message: %s", e))
         return response, errors, warnings
 
