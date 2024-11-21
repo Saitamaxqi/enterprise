@@ -38,11 +38,8 @@
                             <div class="d-flex">
                                 <field name="sale_lock_date" placeholder="Not locked"
                                        class="oe_inline"
+                                       decoration-info="exception_needed_fields and 'sale_lock_date' in exception_needed_fields"
                                        options="{'warn_future': true}"/>
-                                <span class="text-muted"
-                                      invisible="min_sale_lock_date_exception_for_me_id or min_sale_lock_date_exception_for_everyone_id">
-                                    <i>to lock invoices</i>
-                                </span>
                                 <span class="text-muted o_form_label"
                                       invisible="not min_sale_lock_date_exception_for_me_id">
                                     For me:
@@ -75,11 +72,8 @@
                             <div class="d-flex">
                                 <field name="purchase_lock_date" placeholder="Not locked"
                                        class="oe_inline"
+                                       decoration-info="exception_needed_fields and 'purchase_lock_date' in exception_needed_fields"
                                        options="{'warn_future': true}"/>
-                                <span class="text-muted"
-                                      invisible="min_purchase_lock_date_exception_for_me_id or min_purchase_lock_date_exception_for_everyone_id">
-                                    <i>to lock bills</i>
-                                </span>
                                 <span class="text-muted o_form_label"
                                       invisible="not min_purchase_lock_date_exception_for_me_id">
                                     For me:
@@ -112,6 +106,7 @@
                             <div class="d-flex">
                                 <field name="tax_lock_date" placeholder="Not locked"
                                        class="oe_inline"
+                                       decoration-info="exception_needed_fields and 'tax_lock_date' in exception_needed_fields"
                                        options="{'warn_future': true}"/>
                                 <span class="text-muted"
                                       invisible="min_tax_lock_date_exception_for_me_id or min_tax_lock_date_exception_for_everyone_id">
@@ -149,6 +144,7 @@
                             <div class="d-flex">
                                 <field name="fiscalyear_lock_date" placeholder="Not locked"
                                        class="oe_inline"
+                                       decoration-info="exception_needed_fields and 'fiscalyear_lock_date' in exception_needed_fields"
                                        options="{'warn_future': true}"/>
                                 <span class="text-muted"
                                       invisible="min_fiscalyear_lock_date_exception_for_me_id or min_fiscalyear_lock_date_exception_for_everyone_id">
@@ -182,21 +178,11 @@
                                     </a>
                                 </span>
                             </div>
-                            <div class="ms-3 mb-3 d-flex"
-                                 colspan="2"
-                                 style="white-space: pre;"
-                                 invisible="not exception_needed">
-                                <span>Exception</span>
-                                <field name="exception_applies_to" class="oe_inline mx-3"/>
-                                <field name="exception_duration" class="oe_inline"/>
-                                <div invisible="exception_applies_to == 'everyone' and exception_duration == 'forever'">
-                                    <field name="exception_reason" placeholder="Reason..." class="oe_inline mx-3"/>
-                                </div>
-                            </div>
                             <label for="hard_lock_date"/>
                             <div class="d-flex">
                                 <field name="hard_lock_date" placeholder="Not locked"
                                        class="oe_inline"
+                                       decoration-info="exception_needed_fields and 'hard_lock_date' in exception_needed_fields"
                                        options="{'warn_future': true}"/>
                                 <span class="text-muted" invisible="hard_lock_date != current_hard_lock_date">
                                     <i>to ensure inalterability</i>
@@ -204,6 +190,17 @@
                                 <span class="text-danger o_form_label" invisible="hard_lock_date == current_hard_lock_date">
                                     <i>This change is irreversible</i>
                                 </span>
+                            </div>
+                            <div class="alert alert-info ps-3 mb-3 d-flex" role="alert"
+                                 colspan="2"
+                                 style="white-space: pre;"
+                                 invisible="not exception_needed_fields">
+                                <span>Exception</span>
+                                <field name="exception_applies_to" class="oe_inline mx-3"/>
+                                <field name="exception_duration" class="oe_inline"/>
+                                <div invisible="exception_applies_to == 'everyone' and exception_duration == 'forever'">
+                                    <field name="exception_reason" placeholder="Reason..." class="oe_inline mx-3"/>
+                                </div>
                             </div>
                         </group>
                     </sheet>

@@ -22,17 +22,16 @@ class AccountChangeLockDate(models.TransientModel):
     )
 
     fiscalyear_lock_date = fields.Date(
-        string='Lock Everyone',
+        string='Lock Everything',
         default=lambda self: self.env.company.fiscalyear_lock_date,
-        help='Prevents Journal Entry creation or modification up to the defined date inclusive for all users. '
-             'As a closed period, all accounting operations are prohibited.',
+        help="Any entry up to and including that date will be postponed to a later time, in accordance with its journal's sequence.",
     )
     fiscalyear_lock_date_for_me = fields.Date(
-        string='Lock Everyone For Me',
+        string='Lock Everything For Me',
         compute='_compute_lock_date_exceptions',
     )
     fiscalyear_lock_date_for_everyone = fields.Date(
-        string='Lock Everyone For Everyone',
+        string='Lock Everything For Everyone',
         compute='_compute_lock_date_exceptions',
     )
     min_fiscalyear_lock_date_exception_for_me_id = fields.Many2one(
@@ -47,8 +46,8 @@ class AccountChangeLockDate(models.TransientModel):
     tax_lock_date = fields.Date(
         string="Lock Tax Return",
         default=lambda self: self.env.company.tax_lock_date,
-        help='Prevents Tax Returns modification up to the defined date inclusive (Journal Entries involving taxes). '
-             'The Tax Return Lock Date is automatically set when the corresponding Journal Entry is posted.',
+        help="Any entry with taxes up to and including that date will be postponed to a later time, in accordance with its journal's sequence. "
+             "The tax lock date is automatically set when the tax closing entry is posted.",
     )
     tax_lock_date_for_me = fields.Date(
         string='Lock Tax Return For Me',
@@ -70,7 +69,7 @@ class AccountChangeLockDate(models.TransientModel):
     sale_lock_date = fields.Date(
         string='Lock Sales',
         default=lambda self: self.env.company.sale_lock_date,
-        help='Prevents creation and modification of entries in sales journals up to the defined date inclusive',
+        help="Any sales entry prior to and including this date will be postponed to a later date, in accordance with its journal's sequence.",
     )
     sale_lock_date_for_me = fields.Date(
         string='Lock Sales For Me',
@@ -92,7 +91,7 @@ class AccountChangeLockDate(models.TransientModel):
     purchase_lock_date = fields.Date(
         string='Lock Purchases',
         default=lambda self: self.env.company.purchase_lock_date,
-        help='Prevents creation and modification of entries in purchase journals up to the defined date inclusive',
+        help="Any purchase entry prior to and including this date will be postponed to a later date, in accordance with its journal's sequence.",
     )
     purchase_lock_date_for_me = fields.Date(
         string='Lock Purchases For Me',
@@ -114,7 +113,8 @@ class AccountChangeLockDate(models.TransientModel):
     hard_lock_date = fields.Date(
         string='Hard Lock',
         default=lambda self: self.env.company.hard_lock_date,
-        help='Like the "Everyone Lock", but no exceptions are possible.',
+        help="Any entry up to and including that date will be postponed to a later time, in accordance with its journal sequence. "
+             "This lock date is irreversible and does not allow any exception.",
     )
     current_hard_lock_date = fields.Date(
         string='Current Hard Lock',
@@ -122,9 +122,13 @@ class AccountChangeLockDate(models.TransientModel):
         readonly=True,
     )
 
-    exception_needed = fields.Boolean(
+    exception_needed = fields.Boolean(  # TODO: remove in master (18.1)
         string='Exception needed',
         compute='_compute_exception_needed',
+    )
+    exception_needed_fields = fields.Char(
+        # String of comma separated values of the field(s) the exception applies to
+        compute='_compute_exception_needed_fields',
     )
     exception_applies_to = fields.Selection(
         string='Exception applies',
@@ -211,8 +215,15 @@ class AccountChangeLockDate(models.TransientModel):
 
     @api.depends(*SOFT_LOCK_DATE_FIELDS)
     def _compute_exception_needed(self):
+        # TODO: remove in master (18.1)
         for wizard in self:
             wizard.exception_needed = bool(wizard._get_changes_needing_exception())
+
+    @api.depends(*SOFT_LOCK_DATE_FIELDS)
+    def _compute_exception_needed_fields(self):
+        for wizard in self:
+            changes_needing_exception = wizard._get_changes_needing_exception()
+            wizard.exception_needed_fields = ','.join(changes_needing_exception)
 
     def _prepare_lock_date_values(self, exception_vals_list=None):
         """
