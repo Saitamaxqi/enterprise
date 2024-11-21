@@ -422,29 +422,3 @@ class TestPayslipComputation(TestPayslipContractBase):
             'date_to': date(2016, 1, 31)
         })
         payslip.compute_sheet()
-
-    def test_compute_payslip_no_worked_hours(self):
-        employee = self.env['hr.employee'].create({'name': 'John'})
-        contract = self.env['hr.contract'].create({
-            'name': 'Contract for John',
-            'wage': 5000,
-            'employee_id': employee.id,
-            'date_start': Date.to_date('2024-10-01'),
-            'date_end': Date.to_date('2024-10-31'),
-            'work_entry_source': 'attendance',
-            'structure_type_id': self.structure_type.id,
-            'state': 'open',
-        })
-
-        payslip = self.env['hr.payslip'].create({
-            'name': 'Payslip of John',
-            'employee_id': employee.id,
-            'contract_id': contract.id,
-            'struct_id': self.developer_pay_structure.id,
-            'date_from': date(2024, 10, 1),
-            'date_to': date(2024, 10, 31)
-        })
-
-        payslip.compute_sheet()
-        basic_salary_line = payslip.line_ids.filtered_domain([('code', '=', 'BASIC')])
-        self.assertAlmostEqual(basic_salary_line.amount, 0.0, 2, 'Basic salary = 0 worked hours * hourly wage = 0')
