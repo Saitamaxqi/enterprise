@@ -63,12 +63,33 @@
                 <Property
                     name="'default_group_by'"
                     type="'selection'"
-                    value="viewEditorModel.studioViewProps.defaultGroupBy or null"
+                    value="viewEditorModel.studioViewProps.defaultGroupBy.length and viewEditorModel.studioViewProps.defaultGroupBy[0]"
                     childProps="defaultGroupBy"
                     onChange.bind="editDefaultGroupBy"
                 >
                     Default Group By
                 </Property>
+                <t t-if="canCustomFoldField">
+                    <Property
+                        name="'group_expand'"
+                        type="'boolean'"
+                        value="state.groupByField.group_expand"
+                        onChange.bind="editGroupExpand"
+                    >
+                        Expand Groups
+                    </Property>
+                </t>
+                <t t-if="canCustomFoldField and state.groupByField.group_expand and state.fieldsForFold.length">
+                    <Property
+                        name="'fold_name'"
+                        type="'selection'"
+                        value="state.foldField.fold_name and state.foldField.fold_name or null"
+                        childProps="foldFields"
+                        onChange.bind="editFoldField"
+                    >
+                        Fold By
+                    </Property>
+                </t>
                 <SidebarViewToolbox onMore="props.openViewInForm" canEditXml="!env.viewEditorModel.isEditingSubview" openDefaultValues="props.openDefaultValues" />
             </t>
             <t t-set-slot="properties">

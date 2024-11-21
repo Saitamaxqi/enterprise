@@ -1,10 +1,12 @@
 import { describe, expect, test } from "@odoo/hoot";
 import { animationFrame, Deferred } from "@odoo/hoot-mock";
+import { queryAllTexts } from "@odoo/hoot-dom";
 import { onMounted } from "@odoo/owl";
 import {
     contains,
     defineModels,
     fields,
+    findComponent,
     models,
     onRpc,
     patchWithCleanup,
@@ -19,6 +21,7 @@ import {
     disableHookAnimation,
     mountViewEditor,
 } from "@web_studio/../tests/view_editor_tests_utils";
+import { KanbanEditorSidebar } from "@web_studio/client_action/view_editor/editors/kanban/kanban_editor_sidebar/kanban_editor_sidebar";
 
 class Coucou extends models.Model {
     display_name = fields.Char();
@@ -624,6 +627,129 @@ test("grouped kanban editor cannot add columns or load more", async () => {
     });
     expect(".o_kanban_load_more").toHaveCount(0);
     expect(".o_kanban_add_column").toHaveCount(0);
+});
+
+test("kanban editor can group by only one field", async () => {
+    await mountViewEditor({
+        type: "kanban",
+        resModel: "coucou",
+        arch: `<kanban default_group_by='m2o,priority'>
+                <templates>
+                    <t t-name='card'>
+                        <field name='display_name'/>
+                    </t>
+                </templates>
+            </kanban>`,
+    });
+    expect(".o_web_studio_property_default_group_by .o_select_menu_toggler_slot").toHaveText("M2o");
+});
+
+test("grouped kanban fold_field can be change for custom model", async () => {
+    expect.assertions(8);
+    class CustomStage extends models.Model {
+        _name = "x_custom_stage";
+
+        boolean_field = fields.Boolean();
+    }
+
+    class Stage extends models.Model {
+        _name = "stage";
+    }
+
+    class Lead extends models.Model {
+        _name = "lead";
+
+        stage_id = fields.Many2one({ relation: "stage" });
+        custom_stage_id = fields.Many2one({ relation: "x_custom_stage" });
+    }
+
+    let nbEditView = 0;
+    onRpc("/web_studio/edit_view", () => {
+        nbEditView++;
+        if (nbEditView === 1) {
+            const newArch = `
+                <kanban default_group_by="stage_id">
+                    <templates>
+                        <t t-name="card">
+                            <h3>Card</h3>
+                        </t>
+                    </templates>
+                </kanban>
+            `;
+            return createMockViewResult("kanban", newArch, Lead);
+        } else if (nbEditView === 2) {
+            const newArch = `
+                <kanban default_group_by="custom_stage_id">
+                    <templates>
+                        <t t-name="card">
+                            <h3>Card</h3>
+                        </t>
+                    </templates>
+                </kanban>
+            `;
+            return createMockViewResult("kanban", newArch, Lead);
+        }
+    });
+
+    onRpc("ir.model.fields", "web_search_read", (params) => {
+        return [];
+    });
+
+    onRpc("ir.model.fields", "write", (params) => {
+        expect(params.args[0][0]).toBe(999);
+        expect(params.args[1]).toEqual({ group_expand: true });
+        return true;
+    });
+
+    defineModels([CustomStage, Stage, Lead]);
+
+    const parentComponent = await mountViewEditor({
+        type: "kanban",
+        resModel: "lead",
+        arch: `
+        <kanban>
+            <templates>
+                <t t-name="card">
+                    <h3>Card</h3>
+                </t>
+            </templates>
+        </kanban>
+    `,
+    });
+
+    await contains(".o_web_studio_property_default_group_by button").click();
+    await contains(".o-dropdown-item:contains('Stage')").click();
+
+    expect("input[name='group_expand']").not.toBeVisible();
+    expect(".o_web_studio_property_fold_name").not.toBeVisible();
+
+    await contains(".o_web_studio_property_default_group_by button").click();
+    await contains(".o-dropdown-item:contains('Custom stage')").click();
+
+    expect("input[name='group_expand']").toBeVisible();
+    expect(".o_web_studio_property_fold_name").not.toBeVisible();
+
+    const kanbanEditor = findComponent(parentComponent, (c) => c instanceof KanbanEditorSidebar);
+    kanbanEditor.state.groupByField = {
+        id: 999,
+    };
+
+    kanbanEditor.state.fieldsForFold = [
+        {
+            label: "Folded1",
+            value: 1,
+        },
+        {
+            label: "Folded2",
+            value: 2,
+        },
+    ];
+    await contains("input[name='group_expand']").check();
+
+    expect(".o_web_studio_property_fold_name").toBeVisible();
+
+    await contains(".o_web_studio_property_fold_name button").click();
+    expect(queryAllTexts(".o-dropdown-item")).toEqual(["Folded1", "Folded2"]);
 });
 
 test("sortby and orderby field in kanban sidebar", async () => {

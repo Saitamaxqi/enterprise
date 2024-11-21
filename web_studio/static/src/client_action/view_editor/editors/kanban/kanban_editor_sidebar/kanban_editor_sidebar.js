@@ -1,4 +1,4 @@
-import { Component, useState } from "@odoo/owl";
+import { Component, onWillStart, useState } from "@odoo/owl";
 import { _t } from "@web/core/l10n/translation";
 import { ViewStructures } from "@web_studio/client_action/view_editor/editors/components/view_structures";
 import { InteractiveEditorSidebar } from "@web_studio/client_action/view_editor/interactive_editor/interactive_editor_sidebar";
@@ -81,6 +81,14 @@ export class KanbanEditorSidebar extends Component {
     }
 
     setup() {
+        this.state = useState({
+            foldField: {
+                id: 0,
+                fold_name: "",
+            },
+            groupByField: {},
+            fieldsForFold: [],
+        });
         this.viewEditorModel = useState(this.env.viewEditorModel);
         this.editArchAttributes = useEditNodeAttributes({ isRoot: true });
         this.propertiesComponents = {
@@ -112,6 +120,10 @@ export class KanbanEditorSidebar extends Component {
                 component: WidgetProperties,
             },
         };
+
+        onWillStart(async () => {
+            await this.getGroupByField();
+        });
     }
 
     get archInfo() {
@@ -133,7 +145,13 @@ export class KanbanEditorSidebar extends Component {
                 (field) => field.store
             ),
             required: false,
-            multiSelect: true,
+        };
+    }
+
+    get foldFields() {
+        return {
+            choices: this.state.fieldsForFold,
+            required: false,
         };
     }
 
@@ -160,6 +178,20 @@ export class KanbanEditorSidebar extends Component {
         ];
     }
 
+    get defaultGroupByIsRelational() {
+        const field = this.viewEditorModel.studioViewProps.defaultGroupBy;
+        return field.length && this.viewEditorModel.fields[field[0]]?.relation;
+    }
+
+    get canCustomFoldField() {
+        const field = this.viewEditorModel.studioViewProps.defaultGroupBy;
+        return (
+            this.defaultGroupByIsRelational &&
+            field.length &&
+            this.viewEditorModel.fields[field[0]].relation.startsWith("x_")
+        );
+    }
+
     setSortBy(value) {
         this.onSortingChanged(value, this.defaultOrder.asc ? "asc" : "desc");
     }
@@ -180,8 +212,33 @@ export class KanbanEditorSidebar extends Component {
         return this.editArchAttributes({ [name]: value });
     }
 
-    editDefaultGroupBy(value) {
-        this.editAttribute(value.join(","), "default_group_by");
+    async editDefaultGroupBy(value) {
+        await this.editAttribute(value, "default_group_by");
+        this.getGroupByField();
+    }
+
+    async editFoldField(value) {
+        await this.viewEditorModel._services.orm.write("ir.model", [this.state.foldField.id], {
+            fold_name: value,
+        });
+        this.state.foldField.fold_name = value;
+    }
+
+    async editGroupExpand(value) {
+        await this.viewEditorModel._services.orm.write(
+            "ir.model.fields",
+            [this.state.groupByField.id],
+            {
+                group_expand: value,
+            }
+        );
+        this.state.groupByField = {
+            ...this.state.groupByField,
+            group_expand: value,
+        };
+        if (value) {
+            this.fetchFieldsForFold();
+        }
     }
 
     editColor(value) {
@@ -202,5 +259,57 @@ export class KanbanEditorSidebar extends Component {
             });
         }
         this.editAttribute(value || "", "highlight_color");
+    }
+
+    async fetchFieldsForFold() {
+        if (this.state.groupByField.relation) {
+            const result = await this.viewEditorModel._services.orm.call(
+                this.state.groupByField.relation,
+                "fields_get"
+            );
+            this.state.fieldsForFold = Object.entries(result)
+                .filter(([_, value]) => value.type === "boolean")
+                .map((e) => ({
+                    label: e[1].string || e[1].name,
+                    value: e[0],
+                }));
+            const resultFold = await this.viewEditorModel._services.orm.webSearchRead(
+                "ir.model",
+                [["model", "=", this.state.groupByField.relation]],
+                {
+                    specification: {
+                        fold_name: {},
+                    },
+                }
+            );
+
+            this.state.foldField = resultFold.length && resultFold.records[0];
+        }
+    }
+
+    /**
+     *
+     * @param {String[]} field
+     */
+    async getGroupByField() {
+        if (this.canCustomFoldField) {
+            const result = await this.viewEditorModel._services.orm.webSearchRead(
+                "ir.model.fields",
+                [
+                    ["name", "=", this.viewEditorModel.studioViewProps.defaultGroupBy[0]],
+                    ["model", "=", this.viewEditorModel.resModel],
+                ],
+                {
+                    specification: {
+                        group_expand: false,
+                        relation: false,
+                    },
+                }
+            );
+            this.state.groupByField = result.length && result.records[0];
+            if (this.state.groupByField.group_expand) {
+                this.fetchFieldsForFold();
+            }
+        }
     }
 }
