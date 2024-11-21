@@ -21,7 +21,7 @@
             <div t-else="" class="pt-2 px-2">
                 <KnowledgeCommentCreatorComposer placeholder.translate="Add a comment..."
                     composer="thread.composer" type="'note'" showFullComposer="false" autofocus="true"
-                    mode="'extended'" allowUpload="false" onPostCallback.bind="onPostCallback"
+                    mode="'extended'" onPostCallback.bind="onPostCallback"
                     onCreateThreadCallback.bind="onCreateThreadCallback"/>
             </div>
         </div>

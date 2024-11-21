@@ -173,12 +173,15 @@ export class KnowledgeCommentsThread extends Component {
                 () => {
                     if (
                         this.editorThread &&
-                        this.editorThread.threadId === "undefined" &&
+                        (this.editorThread.threadId === "undefined" ||
+                            this.commentsState.shouldOpenActiveThread) &&
                         this.targetRef.el &&
-                        this.isActive &&
-                        this.smallUI
+                        this.isActive
                     ) {
-                        this.openPopover();
+                        this.commentsState.shouldOpenActiveThread = false;
+                        if (this.smallUI) {
+                            this.openPopover();
+                        }
                     }
                 },
                 () => [this.targetRef.el, this.isActive, this.smallUI, this.editorThread]
@@ -221,7 +224,7 @@ export class KnowledgeCommentsThread extends Component {
                             }
                             let isEmpty = true;
                             for (const message of this.thread.messages) {
-                                if (message.message_type === "comment" && message.body.toString()) {
+                                if (message.message_type === "comment" && !message.isEmpty) {
                                     isEmpty = false;
                                     break;
                                 }

@@ -25,7 +25,7 @@ export class KnowledgeCommentCreatorComposer extends Composer {
      * @override
      */
     async _sendMessage(value, postData) {
-        this.newThread = await this.commentsService.createThread(value, postData);
+        this.newThread = await this.commentsService.createThreadAndPost(value, postData);
         this.clear();
     }
 }
