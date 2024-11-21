@@ -142,6 +142,17 @@ class ResPartner(models.Model):
         }
         return action
 
+    def action_open_overdue_entries(self):
+        self.ensure_one()
+        return {
+            'type': 'ir.actions.act_window',
+            'name': _("Overdue Invoices"),
+            'res_model': 'account.move',
+            'domain': [('partner_id', '=', self.id)],
+            'view_mode': 'list,form',
+            'context': {'search_default_late': True},
+        }
+
     def action_open_unreconciled_partner(self):
         action_values = self.env["ir.actions.actions"]._for_xml_id("account_accountant.action_move_line_posted_unreconciled")
         domain = ast.literal_eval(action_values['domain'])
