@@ -252,7 +252,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         values['tax_vals_list'] = list(tax_vals_map.values())
 
     @api.model
-    def _saft_fill_report_partner_ledger_values(self, options, values):
+    def _saft_fill_report_partner_ledger_values(self, report, options, values):
         res = {
             'customer_vals_list': [],
             'supplier_vals_list': [],
@@ -275,7 +275,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
             {'id': 'non_trade_payable', 'selected': True},
         ]
         handler = self.env['account.partner.ledger.report.handler']
-        partners_results = handler._query_partners(new_options)
+        partners_results = handler._query_partners(report, new_options)
         partner_vals_list = []
         rslts_array = tuple((partner, res_col_gr[options['single_column_group']]) for partner, res_col_gr in partners_results)
         init_bal_res = handler._get_initial_balance_values(tuple(partner.id for partner, results in rslts_array if partner), options)
@@ -418,5 +418,5 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
         self._saft_fill_report_general_ledger_accounts(report, options, template_values)
         self._saft_fill_report_general_ledger_entries(report, options, template_values)
         self._saft_fill_report_tax_details_values(report, options, template_values)
-        self._saft_fill_report_partner_ledger_values(options, template_values)
+        self._saft_fill_report_partner_ledger_values(report, options, template_values)
         return template_values

@@ -18,9 +18,9 @@
 
                 <button
                     class="btn btn_action"
-                    t-on-click="(ev) => controller.reportAction(ev, 'open_partner_ledger', { line_id: props.line.id })"
+                    t-on-click="(ev) => controller.reportAction(ev, 'open_customer_statement', { line_id: props.line.id })"
                 >
-                    Ledger
+                    Statement
                 </button>
             </t>
         </xpath>

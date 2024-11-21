@@ -382,8 +382,8 @@ Best Regards,
                 body_html = self.with_context(mail=True).get_followup_report_html(options)
 
                 attachment_ids = options.get('attachment_ids', partner._get_invoices_to_print(options).message_main_attachment_id.ids)
-                partner_ledger_report = self.env.ref('account_reports.partner_ledger_report')
-                attachment_ids.append(partner._get_partner_account_report_attachment(partner_ledger_report).id)
+                customer_statement_report = self.env.ref('account_reports.customer_statement_report', raise_if_not_found=False)
+                attachment_ids.append(partner._get_partner_account_report_attachment(customer_statement_report).id)
                 # If the follow-up was executed manually, the author_id will be set to the ID of the current logged-in user.
                 # Otherwise, if the follow-up is automatic, the author_id will be the followup responsible or OdooBot.
                 author_id = options.get('author_id', partner._get_followup_responsible().partner_id.id)

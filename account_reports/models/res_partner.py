@@ -12,10 +12,14 @@ class ResPartner(models.Model):
     def _get_followup_responsible(self):
         return self.env.user
 
-    def open_partner_ledger(self):
-        action = self.env["ir.actions.actions"]._for_xml_id("account_reports.action_account_report_partner_ledger")
+    def open_customer_statement(self):
+        action = self.env["ir.actions.actions"]._for_xml_id("account_reports.action_account_report_customer_statement")
         action['params'] = {
-            'options': {'partner_ids': self.ids, 'unfold_all': len(self.ids) == 1},
+            'options': {
+                'partner_ids': self.ids,
+                'unfold_all': len(self.ids) == 1,
+                'unreconciled': True,
+            },
             'ignore_session': True,
         }
         return action
@@ -53,7 +57,6 @@ class ResPartner(models.Model):
                 'partner_ids': self.ids,
                 'unfold_all': True,
                 'unreconciled': True,
-                'hide_account': True,
                 'all_entries': False,
             })
         attachment_file = report.export_to_pdf(options)

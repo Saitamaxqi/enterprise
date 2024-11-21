@@ -295,10 +295,10 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
         action.get('context', {}).update({'search_default_group_by_account': 0, 'search_default_group_by_partner': 1})
         return action
 
-    def open_partner_ledger(self, options, params):
+    def open_customer_statement(self, options, params):
         report = self.env['account.report'].browse(options['report_id'])
         record_model, record_id = report._get_model_info_from_id(params.get('line_id'))
-        return self.env[record_model].browse(record_id).open_partner_ledger()
+        return self.env[record_model].browse(record_id).open_customer_statement()
 
     def _common_custom_unfold_all_batch_data_generator(self, internal_type, report, options, lines_to_expand_by_function):
         rslt = {} # In the form {full_sub_groupby_key: all_column_group_expression_totals for this groupby computation}

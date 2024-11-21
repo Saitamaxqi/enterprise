@@ -22,6 +22,7 @@ Accounting Reports
         'data/trial_balance.xml',
         'data/sales_report.xml',
         'data/partner_ledger.xml',
+        'data/customer_statement.xml',
         'data/multicurrency_revaluation_report.xml',
         'data/deferred_reports.xml',
         'data/journal_report.xml',

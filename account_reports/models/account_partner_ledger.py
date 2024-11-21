@@ -48,7 +48,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             for column_group_key in options['column_groups']
         }
 
-        partners_results = self._query_partners(options)
+        partners_results = self._query_partners(report, options)
 
         search_filter = options.get('filter_search_bar', '')
         accept_unknown_in_filter = search_filter.lower() in self._get_no_partner_line_label().lower()
@@ -131,22 +131,6 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         if self.env.user.has_group('base.group_multi_currency'):
             options['multi_currency'] = True
 
-        columns_to_hide = []
-        options['hide_account'] = (previous_options or {}).get('hide_account', False)
-        columns_to_hide += ['journal_code', 'account_code', 'matching_number'] if options['hide_account'] else []
-
-        options['hide_debit_credit'] = (previous_options or {}).get('hide_debit_credit', False)
-        columns_to_hide += ['debit', 'credit'] if options['hide_debit_credit'] else ['amount']
-
-        options['columns'] = [col for col in options['columns'] if col['expression_label'] not in columns_to_hide]
-
-        options['buttons'].append({
-            'name': _('Send'),
-            'action': 'action_send_statements',
-            'sequence': 90,
-            'always_show': True,
-        })
-
     def _custom_unfold_all_batch_data_generator(self, report, options, lines_to_expand_by_function):
         partner_ids_to_expand = []
 
@@ -180,27 +164,6 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             'aml_values': self._get_aml_values(options, partner_ids_to_expand) if partner_ids_to_expand else {},
         }
 
-    def _get_report_send_recipients(self, options):
-        partners = options.get('partner_ids', [])
-        if not partners:
-            self._cr.execute(self._get_query_sums(options))
-            partners = [row['groupby'] for row in self._cr.dictfetchall() if row['groupby']]
-        return self.env['res.partner'].browse(partners)
-
-    def action_send_statements(self, options):
-        template = self.env.ref('account_reports.email_template_customer_statement', False)
-        return {
-            'name': _("Send Partner Ledgers"),
-            'type': 'ir.actions.act_window',
-            'views': [[False, 'form']],
-            'res_model': 'account.report.send',
-            'target': 'new',
-            'context': {
-                'default_mail_template_id': template.id if template else False,
-                'default_report_options': options,
-            },
-        }
-
     @api.model
     def action_open_partner(self, options, params):
         dummy, record_id = self.env['account.report']._get_model_info_from_id(params['id'])
@@ -213,7 +176,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
             'target': 'current',
         }
 
-    def _query_partners(self, options):
+    def _query_partners(self, report, options):
         """ Executes the queries and performs all the computation.
         :return:        A list of tuple (partner, column_group_values) sorted by the table's model _order:
                         - partner is a res.parter record.
@@ -234,7 +197,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         company_currency = self.env.company.currency_id
 
         # Execute the queries and dispatch the results.
-        query = self._get_query_sums(options)
+        query = self._get_query_sums(report, options)
 
         groupby_partners = {}
 
@@ -285,7 +248,7 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
 
         return [(partner, groupby_partners[partner.id if partner else None]) for partner in partners]
 
-    def _get_query_sums(self, options) -> SQL:
+    def _get_query_sums(self, report, options) -> SQL:
         """ Construct a query retrieving all the aggregated sums to build the report. It includes:
         - sums for all partners.
         - sums for the initial balances.
@@ -293,7 +256,6 @@ class AccountPartnerLedgerReportHandler(models.AbstractModel):
         :return:                    query as SQL object
         """
         queries = []
-        report = self.env.ref('account_reports.partner_ledger_report')
 
         # Create the currency table.
         for column_group_key, column_group_options in report._split_options_per_column_group(options).items():
