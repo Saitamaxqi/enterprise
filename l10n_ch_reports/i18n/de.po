@@ -152,8 +152,7 @@ msgstr "Material- und Warenaufwand"
 #: model:account.report.line,name:l10n_ch_reports.account_financial_report_line_ch_85
 msgid "Extraordinary, non-recurring or prior-period result"
 msgstr ""
-"Ausserordentlicher, einmaliger oder periodenfremder Ertrag / \n"
-"Aufwand"
+"Ausserordentlicher, einmaliger oder periodenfremder Ertrag / Aufwand"
 
 #. module: l10n_ch_reports
 #: model:account.report.expression,report_line_name:l10n_ch_reports.account_financial_report_line_ch_69_balance
