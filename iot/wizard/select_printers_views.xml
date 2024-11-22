@@ -9,6 +9,9 @@
                 <group>
                     <field name="device_ids" widget="many2many_tags" domain="[('id', 'in', display_device_ids)]" string="Printers"/>
                 </group>
+                <group>
+                    <field name="do_not_ask_again"/>
+                </group>
                 <footer>
                     <button string="Print" class="btn-primary" special="cancel" />
                 </footer>

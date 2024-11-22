@@ -7,7 +7,7 @@ import { _t } from "@web/core/l10n/translation";
 import { setReportIdInBrowserLocalStorage } from "./client_action/delete_local_storage";
 import { handleIoTConnectionFallbacks } from "./iot_report_action";
 
-export class selectPrinterFormController extends FormController {
+export class SelectPrinterFormController extends FormController {
     setup () {
         super.setup();
         this.notification = useService("notification");
@@ -18,16 +18,19 @@ export class selectPrinterFormController extends FormController {
     }
 
     async onClickViewButtonIoT(params) {
-        let selected_devices = this.model.root.evalContextWithVirtualIds.device_ids;
-        if (selected_devices.length > 0) {
+        const deviceOptions = {
+            selectedDevices: this.model.root.evalContextWithVirtualIds.device_ids,
+            skipDialog: this.model.root.evalContextWithVirtualIds.do_not_ask_again,
+        };
+        if (deviceOptions.selectedDevices.length > 0) {
             const args = [
                 this.props.context.report_id,
                 this.props.context.res_ids,
                 this.props.context.data,
                 this.props.context.print_id
             ];
-            setReportIdInBrowserLocalStorage(args[0], selected_devices);
-            await handleIoTConnectionFallbacks(this.env, this.orm, args, selected_devices);
+            setReportIdInBrowserLocalStorage(args[0], deviceOptions);
+            await handleIoTConnectionFallbacks(this.env, this.orm, args, deviceOptions.selectedDevices);
 
             this.onClickViewButton(params);
         } else {
@@ -41,7 +44,7 @@ export class selectPrinterFormController extends FormController {
 
 export const selectPrinterForm = {
     ...formView,
-    Controller: selectPrinterFormController,
+    Controller: SelectPrinterFormController,
 }
 
 registry.category("views").add('select_printers_wizard', selectPrinterForm);

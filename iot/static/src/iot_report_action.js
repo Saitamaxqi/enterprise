@@ -95,18 +95,18 @@ async function iotReportActionHandler(action, options, env) {
         const orm = env.services.orm;
         action.data = action.data || {};
         action.data["device_ids"] = action.device_ids;
-        const args = [action.id, action.context.active_ids, action.data, uuid()];
-        const report_id = action.id;
-        const local_lists = JSON.parse(browser.localStorage.getItem(IOT_REPORT_PREFERENCE_LOCAL_STORAGE_KEY));
+        const reportId = action.id;
+        const deviceSettingsByReport = JSON.parse(browser.localStorage.getItem(IOT_REPORT_PREFERENCE_LOCAL_STORAGE_KEY));
         const onClose = options.onClose;
-        const stored_device_ids = local_lists ? local_lists[report_id] : undefined;
-        if (!stored_device_ids) {
+        const deviceSettings = deviceSettingsByReport?.[reportId];
+        const args = [action.id, action.context.active_ids, action.data, uuid(), deviceSettings?.selectedDevices];
+        if (!deviceSettings || !deviceSettings.skipDialog) {
             // Open IoT devices selection wizard
-            const action_wizard = await orm.call("ir.actions.report", "get_action_wizard", args);
-            await env.services.action.doAction(action_wizard);
+            const actionWizard = await orm.call("ir.actions.report", "get_action_wizard", args);
+            await env.services.action.doAction(actionWizard);
         } else {
             // Try longpolling then websocket
-            await handleIoTConnectionFallbacks(env, orm, args, stored_device_ids);
+            await handleIoTConnectionFallbacks(env, orm, args, deviceSettings.selectedDevices);
 
             // We close here to prevent premature closure if the device selection modal is displayed.
             env.services.action.doAction({ type: "ir.actions.act_window_close" }, { onClose });

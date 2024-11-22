@@ -69,9 +69,10 @@ class IrActionsReport(models.Model):
             "device_ids",
         }
 
-    def get_action_wizard(self, res_ids, data=None, print_id=0):
+    def get_action_wizard(self, res_ids, data=None, print_id=0, selected_device_ids=None):
         wizard = self.env['select.printers.wizard'].create({
-            'display_device_ids' : self.device_ids,
+            'display_device_ids': self.device_ids,
+            'device_ids': selected_device_ids
         })
         return {
                 'name': "Select printers",
