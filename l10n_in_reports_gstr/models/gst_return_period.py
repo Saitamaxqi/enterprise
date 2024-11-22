@@ -6,7 +6,7 @@ import re
 import markupsafe
 
 from babel.dates import get_quarter_names
-from datetime import datetime, timedelta
+from datetime import date, datetime, timedelta
 from dateutil import relativedelta
 from itertools import groupby
 from markupsafe import Markup
@@ -1359,7 +1359,12 @@ class L10n_InGstReturnPeriod(models.Model):
                         ("move_id.debit_origin_id", "=", False),
                         ("move_id.l10n_in_gst_treatment", "in", ("unregistered", "consumer")),
                         ("move_id.l10n_in_state_id", "!=", self.company_id.state_id.id),
+                        "|", "&",
+                        ("date", "<", date(2024, 11, 1)),
                         ("move_id.amount_total", ">", 250000),
+                        "&",
+                        ("date", ">=", date(2024, 11, 1)),
+                        ("move_id.amount_total", ">", 100000),
                         ("tax_tag_ids", "in", gst_tags),
                     ]
                 )
@@ -1374,7 +1379,12 @@ class L10n_InGstReturnPeriod(models.Model):
                         ("move_id.l10n_in_transaction_type", "=", "intra_state"),
                         "&",
                         ("move_id.l10n_in_transaction_type", "=", "inter_state"),
+                        "|", "&",
+                        ("date", "<", date(2024, 11, 1)),
                         ("move_id.amount_total", "<=", 250000),
+                        "&",
+                        ("date", ">=", date(2024, 11, 1)),
+                        ("move_id.amount_total", "<=", 100000),
                     ]
                 )
             case "cdnr":
@@ -1410,7 +1420,12 @@ class L10n_InGstReturnPeriod(models.Model):
                         ("tax_tag_ids", "in", gst_tags),
                         ("move_id.l10n_in_gst_treatment", "in", ["unregistered", "consumer"]),
                         ("move_id.l10n_in_transaction_type", "=", "inter_state"),
+                        "|", "&",
+                        ("date", "<", date(2024, 11, 1)),
                         ("move_id.amount_total", ">", 250000),
+                        "&",
+                        ("date", ">=", date(2024, 11, 1)),
+                        ("move_id.amount_total", ">", 100000),
                     ]
                 )
             case "exp":

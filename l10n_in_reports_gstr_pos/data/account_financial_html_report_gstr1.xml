@@ -18,7 +18,12 @@
         '|',
             ('move_id.l10n_in_transaction_type', '=', 'intra_state'),
         '&amp;',
-            ('move_id.l10n_in_transaction_type', '=', 'inter_state'), ('move_id.amount_total', '&lt;=', 250000)]"/>
+            ('move_id.l10n_in_transaction_type', '=', 'inter_state'),
+        '|',
+        '&amp;',
+            ('date', '&lt;', '2024-11-01'), ('move_id.amount_total', '&lt;=', 250000),
+        '&amp;',
+            ('date', '&gt;=', '2024-11-01'), ('move_id.amount_total', '&lt;=', 100000)]"/>
     </record>
 
     <record id="l10n_in_reports.account_report_gstr1_b2cs_sgst_balance" model="account.report.expression">
@@ -35,7 +40,12 @@
         '|',
             ('move_id.l10n_in_transaction_type', '=', 'intra_state'),
         '&amp;',
-            ('move_id.l10n_in_transaction_type', '=', 'inter_state'), ('move_id.amount_total', '&lt;=', 250000)]"/>
+            ('move_id.l10n_in_transaction_type', '=', 'inter_state'),
+        '|',
+        '&amp;',
+            ('date', '&lt;', '2024-11-01'), ('move_id.amount_total', '&lt;=', 250000),
+        '&amp;',
+            ('date', '&gt;=', '2024-11-01'), ('move_id.amount_total', '&lt;=', 100000)]"/>
     </record>
 
     <record id="l10n_in_reports.account_report_gstr1_b2cs_cgst_balance" model="account.report.expression">
@@ -52,7 +62,12 @@
         '|',
             ('move_id.l10n_in_transaction_type', '=', 'intra_state'),
         '&amp;',
-            ('move_id.l10n_in_transaction_type', '=', 'inter_state'), ('move_id.amount_total', '&lt;=', 250000)]"/>
+            ('move_id.l10n_in_transaction_type', '=', 'inter_state'),
+        '|',
+        '&amp;',
+            ('date', '&lt;', '2024-11-01'), ('move_id.amount_total', '&lt;=', 250000),
+        '&amp;',
+            ('date', '&gt;=', '2024-11-01'), ('move_id.amount_total', '&lt;=', 100000)]"/>
     </record>
 
     <record id="l10n_in_reports.account_report_gstr1_b2cs_igst_balance" model="account.report.expression">
@@ -69,7 +84,12 @@
         '|',
             ('move_id.l10n_in_transaction_type', '=', 'intra_state'),
         '&amp;',
-            ('move_id.l10n_in_transaction_type', '=', 'inter_state'), ('move_id.amount_total', '&lt;=', 250000)]"/>
+            ('move_id.l10n_in_transaction_type', '=', 'inter_state'),
+        '|',
+        '&amp;',
+            ('date', '&lt;', '2024-11-01'), ('move_id.amount_total', '&lt;=', 250000),
+        '&amp;',
+            ('date', '&gt;=', '2024-11-01'), ('move_id.amount_total', '&lt;=', 100000)]"/>
     </record>
 
     <record id="l10n_in_reports.account_report_gstr1_b2cs_cess_balance" model="account.report.expression">
@@ -86,7 +106,12 @@
         '|',
             ('move_id.l10n_in_transaction_type', '=', 'intra_state'),
         '&amp;',
-            ('move_id.l10n_in_transaction_type', '=', 'inter_state'), ('move_id.amount_total', '&lt;=', 250000)]"/>
+            ('move_id.l10n_in_transaction_type', '=', 'inter_state'),
+        '|',
+        '&amp;',
+            ('date', '&lt;', '2024-11-01'), ('move_id.amount_total', '&lt;=', 250000),
+        '&amp;',
+            ('date', '&gt;=', '2024-11-01'), ('move_id.amount_total', '&lt;=', 100000)]"/>
     </record>
 
     <!-- NIL -->
