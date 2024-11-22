@@ -29,11 +29,6 @@ registry.category("web_tour.tours").add("spreadsheet_open_pivot_sheet", {
             run: "click",
         },
         {
-            trigger: `div[title="${SHEETNAME}"]`,
-            content: "Select Test Sheet",
-            run: "click",
-        },
-        {
             trigger: `button.o_switch_view.o_list`,
             content: "Switch to list view",
             run: "click",
@@ -41,7 +36,7 @@ registry.category("web_tour.tours").add("spreadsheet_open_pivot_sheet", {
         {
             trigger: `.o_data_cell:contains("${SHEETNAME}")`,
             content: "Open the sheet",
-            run: "dblclick",
+            run: "click",
         },
         {
             trigger: "div.o_topbar_filter_icon",

@@ -100,11 +100,12 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         this.props.record.onRecordClick(ev, options);
     }
 
+    /**
+     * Upon double-clicking on a document shortcut,
+     * selects targeted file / opens targeted folder.
+     */
     onDoubleClick() {
-        if (
-            this.props.record.data.type !== "folder" &&
-            !this.props.record.data.shortcut_document_id
-        ) {
+        if (!this.props.record.data.shortcut_document_id) {
             return;
         }
         this.props.record.onRecordDoubleClick();
@@ -116,12 +117,8 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         }
         ev.preventDefault();
         const options = {};
-        if (ev.key === "Enter") {
-            if (this.props.record.data.type === "folder") {
-                this.props.record.onRecordDoubleClick();
-            } else {
-                this.props.record.onClickPreview(ev);
-            }
+        if (ev.key === "Enter" && this.props.record.data.type !== "folder") {
+            this.props.record.onClickPreview(ev);
         } else if (ev.key === " ") {
             options.isKeepSelection = true;
         }

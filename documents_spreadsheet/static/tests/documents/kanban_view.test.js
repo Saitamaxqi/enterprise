@@ -122,7 +122,7 @@ test("download frozen spreadsheet", async function () {
         searchViewArch: getEnrichedSearchArch(),
     });
 
-    await contains(".o_kanban_record:contains(My spreadsheet) .o_record_selector").click();
+    await contains(".o_kanban_record:contains(My spreadsheet) .o_record_selector").click({ ctrlKey: true });
     await contains("button:contains(Download)").click();
     await animationFrame();
     expect.verifySteps(["/documents/content/accessTokenMyspreadsheet"]);
@@ -158,7 +158,7 @@ test("share a spreadsheet", async function () {
         searchViewArch: getEnrichedSearchArch(),
     });
     expect(target.querySelector(".spreadsheet_share_dropdown")).toBe(null);
-    await contains(".o_kanban_record:contains(My spreadsheet) .o_record_selector").click();
+    await contains(".o_kanban_record:contains(My spreadsheet) .o_record_selector").click({ ctrlKey: true });
     await contains("button:contains(Share)").click();
 
     await contains(".o_clipboard_button", { timeout: 1500 }).click();
@@ -210,7 +210,7 @@ test("Freeze&Share a spreadsheet", async function () {
         searchViewArch: getEnrichedSearchArch(),
     });
     expect(target.querySelector(".spreadsheet_share_dropdown")).toBe(null);
-    await contains(".o_kanban_record:contains(My spreadsheet) .o_record_selector").click();
+    await contains(".o_kanban_record:contains(My spreadsheet) .o_record_selector").click({ ctrlKey: true });
     await contains("button:contains(Freeze and share)").click();
     await contains(".o_clipboard_button", { timeout: 1500 }).click();
     expect.verifySteps(["spreadsheet_shared", "permission_panel_data", "share url copied"]);
@@ -421,8 +421,8 @@ test("download a frozen spreadsheet document while selecting requested document"
         searchViewArch: getEnrichedSearchArch(),
     });
 
-    await contains(".o_kanban_record:nth-of-type(1) .o_record_selector").click();
-    await contains(".o_kanban_record:nth-of-type(2) .o_record_selector").click();
+    await contains(".o_kanban_record:nth-of-type(1) .o_record_selector").click({ ctrlKey: true });
+    await contains(".o_kanban_record:nth-of-type(2) .o_record_selector").click({ ctrlKey: true });
     await contains("button:contains(Download)").click();
     // The request is ignored and only the spreadsheet is downloaded.
     expect.verifySteps(["/documents/content/accessTokenMyspreadsheet"]);

@@ -77,12 +77,8 @@ export class DocumentsListRenderer extends ListRenderer {
             return;
         }
         const options = {};
-        if (ev.key === "Enter") {
-            if (record.data.type === "folder") {
-                record.onRecordDoubleClick();
-            } else {
-                record.onClickPreview(ev);
-            }
+        if (ev.key === "Enter" && record.data.type !== "folder") {
+            record.onClickPreview(ev);
         } else if (ev.key === " ") {
             options.isKeepSelection = true;
         }
@@ -92,23 +88,34 @@ export class DocumentsListRenderer extends ListRenderer {
     }
 
     /**
-     * There's a custom behavior on cell clicked as we (un)select the row (see record.onRecordClick)
+     * Upon clicking on a record, opens the folder/preview the file.
+     * If ctrl or shift key pressed, selects/unselects the record.
+     * If the column is editable, the record is selected and click
+     * without ctrl or shift pressed, edits the column.
      */
     onCellClicked(record, column, ev) {
-        if (record.selected && this.editableColumns.includes(column.name)) {
+        ev.stopPropagation();
+        const isSelectionKeyPressed = ev.ctrlKey || ev.metaKey || ev.shiftKey;
+        if (record.selected && !isSelectionKeyPressed && this.editableColumns.includes(column.name)) {
             return super.onCellClicked(...arguments);
+        } else if (record.data.type !== "folder" && !isSelectionKeyPressed) {
+            return record.onClickPreview(ev);
         }
+        record.onRecordClick(ev);
     }
     get editableColumns() {
         return ["name", "tag_ids", "partner_id", "owner_id", "company_id"];
     }
 
+    /**
+     * Upon double-clicking on a document shortcut,
+     * selects targeted file / opens targeted folder.
+     */
     onCellDoubleClick(ev) {
+        ev.stopPropagation();
         const row = ev.target.closest(".o_data_row");
         const record = row && this.props.list.records.find((rec) => rec.id === row.dataset.id);
-        if (record.data.type !== "folder") {
-            ev.stopPropagation();
-            record.onClickPreview(ev);
+        if (!record?.data.shortcut_document_id) {
             return;
         }
         record.onRecordDoubleClick();

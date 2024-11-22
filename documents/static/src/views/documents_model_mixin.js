@@ -1,3 +1,4 @@
+import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
 import { _t } from "@web/core/l10n/translation";
 import { user } from '@web/core/user';
 import { useService } from "@web/core/utils/hooks";
@@ -207,12 +208,48 @@ export const DocumentsRecordMixin = (component) => class extends component {
     }
 
     /**
-     * Upon clicking on a record, we want to select it and unselect other records.
+     * Upon clicking on a record, if it is a file or if ctrl/shift is pressed,
+     * we want to select it else we open the folder.
      */
     onRecordClick(ev, options = {}) {
-        const isKeepSelection =
-            options.isKeepSelection !== undefined ? options.isKeepSelection : ev.ctrlKey || ev.metaKey;
-        const isRangeSelection = options.isRangeSelection !== undefined ? options.isRangeSelection : ev.shiftKey;
+        Object.assign(options, {
+            isKeepSelection: options.isKeepSelection ?? (ev.ctrlKey || ev.metaKey),
+            isRangeSelection: options.isRangeSelection ?? ev.shiftKey,
+        });
+        if (
+            this.model.env.searchModel.getSelectedFolderId() === "TRASH" ||
+            this.data.type !== "folder" ||
+            options.isKeepSelection ||
+            options.isRangeSelection
+        ) {
+            this.selectRecord(ev, options);
+        } else if (this.model.root.selection.length > 0) {
+            this.model.dialog.add(ConfirmationDialog, {
+                title: _t("Open folder"),
+                body: _t("Entering this folder will deselect all items. Do you want to proceed?"),
+                confirmLabel: _t("Enter folder"),
+                confirm: () => this.openFolder(),
+                cancel: () => {},
+            });
+        } else {
+            this.openFolder();
+        }
+    }
+
+    openFolder() {
+        const section = this.model.env.searchModel.getSections()[0];
+        const target = this.isShortcut() ? this.shortcutTarget : this;
+        const folderId = target.data.id;
+        this.model.env.searchModel.toggleCategoryValue(section.id, folderId);
+        this.model.originalSelection = [this.shortcutTarget.resId];
+        this.model.env.documentsView.bus.trigger("documents-expand-folder", { folderId: folderId });
+    }
+
+    /**
+     * Selects records upon click if it is a file or ctrl/shift key is pressed.
+     */
+    selectRecord(ev, options = {}) {
+        const { isKeepSelection, isRangeSelection } = options;
 
         const root = this.model.root;
         const anchor = root._documentsAnchor;
@@ -255,21 +292,14 @@ export const DocumentsRecordMixin = (component) => class extends component {
     }
 
     /**
-     * Opens the folder upon double click on record with folder as type.
+     * Upon double-clicking on a document shortcut,
+     * selects targeted file / opens targeted folder.
      */
     onRecordDoubleClick() {
         const section = this.model.env.searchModel.getSections()[0];
-        if (this.shortcutTarget.data.type === "folder" && section.activeValueId === "TRASH") {
-            return this.model.notification.add(
-                _t("You cannot access folders in the trash."),
-                { title: _t("Invalid operation"), type: "warning" }
-            );
-        }
-        const folderId = this.isShortcut()
-            ? this.data.type === "folder"
-                ? this.shortcutTarget.data.id
-                : this.shortcutTarget.data.folder_id[0]
-            : this.data.id;
+        const folderId = this.data.type === "folder"
+            ? this.shortcutTarget.data.id
+            : this.shortcutTarget.data.folder_id[0];
         this.model.env.searchModel.toggleCategoryValue(section.id, folderId);
         this.model.originalSelection = [this.shortcutTarget.resId];
         this.model.env.documentsView.bus.trigger("documents-expand-folder", { folderId: folderId });
@@ -288,7 +318,8 @@ export const DocumentsRecordMixin = (component) => class extends component {
             );
         }
         if (!this.selected) {
-            this.onRecordClick(ev, { isKeepSelection: false, isRangeSelection: false });
+            this.model.root.selection.forEach((rec) => rec.selected = false);
+            this.selected = true;
         }
         const root = this.model.root;
         const foldersById = this.model.env.searchModel.getFolders().reduce((agg, folder) => {
@@ -354,6 +385,7 @@ export const DocumentsRecordMixin = (component) => class extends component {
 
             const action_name = ev.ctrlKey ? "action_create_shortcut" : "action_move_documents";
 
+            this.model.root.selection.forEach((rec) => rec.selected = false);
             await this.model.orm.call("documents.document", action_name, [
                 data.recordIds,
                 this.data.id,
