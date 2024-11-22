@@ -28,14 +28,8 @@ patch(registry.category("web_tour.tours").get("industry_fsm_tour"), {
             },
             {
                 isActive: ["auto"],
-            trigger: 'nav.o_main_navbar, button[name="action_generate_new_template"]',
-            run: async function () {
-                await new Promise((r) => setTimeout(r, 300));
-                const createTemplateBtn = document.querySelector('button[name="action_generate_new_template"]');
-                if (createTemplateBtn) {
-                    createTemplateBtn.click();
-                }
-            },
+            trigger: 'body:not(.modal-open) nav.o_main_navbar, button[name="action_generate_new_template"]',
+            run: "click",
             },
             {
                 isActive: ["auto"],
