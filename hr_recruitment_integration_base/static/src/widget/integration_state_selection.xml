@@ -11,7 +11,7 @@
         </t>
         <t t-else="">
             <div t-att-title="title">
-                <img t-att-class="imgClassNames"/>
+                <i t-att-class="imgClassNames"/>
             </div>
         </t>
     </t>
