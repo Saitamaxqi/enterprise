@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Documents - Belgian Payroll',
     'version': '1.0',
+    'countries': ['be'],
     'category': 'Human Resources/Payroll',
     'summary': 'Store employee 281.10 and 281.45 forms in the Document app',
     'description': """

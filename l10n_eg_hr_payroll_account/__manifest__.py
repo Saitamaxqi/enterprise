@@ -3,6 +3,7 @@
     'name': 'Egypt - Payroll with Accounting',
     'author': 'Odoo',
     'version': '1.0',
+    'countries': ['eg'],
     'category': 'Human Resources',
     'description': """
 Accounting Data for Egypt Payroll Rules.

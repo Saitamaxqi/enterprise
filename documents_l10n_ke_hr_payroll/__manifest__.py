@@ -3,6 +3,7 @@
 {
     'name': 'Documents - Kenyan Payroll',
     'version': '1.0',
+    'countries': ['ke'],
     'category': 'Human Resources/Payroll',
     'summary': 'Store employee tax deduction card forms in the Document app',
     'description': """

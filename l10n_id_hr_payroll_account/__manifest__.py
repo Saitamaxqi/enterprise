@@ -4,6 +4,7 @@
     'name': 'Indonesia - Payroll with Accounting',
     'author': 'Odoo',
     'version': '1.0',
+    'countries': ['id'],
     'category': 'Human Resources',
     'description': """
 Accounting Data for Indonesian Payroll Rules

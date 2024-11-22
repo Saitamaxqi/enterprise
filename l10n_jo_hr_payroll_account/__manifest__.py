@@ -3,6 +3,7 @@
 {
     'name': 'Jordan - Payroll with Accounting',
     'version': '1.0',
+    'countries': ['jo'],
     'category': 'Human Resources',
     'description': """
 Accounting Data for Jordan Payroll Rules

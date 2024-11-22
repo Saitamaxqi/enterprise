@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Switzerland - Payroll with Accounting',
     'icon': '/account/static/description/l10n.png',
+    'countries': ['ch'],
     'author': 'Odoo',
     'version': '1.0',
     'category': 'Human Resources',

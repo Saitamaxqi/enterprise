@@ -4,6 +4,7 @@
     'name': 'Bangladesh - Payroll with Accounting',
     'author': 'Odoo',
     'version': '1.0',
+    'countries': ['bd'],
     'category': 'Human Resources',
     'description': """
 Accounting Data for Bangladesh Payroll Rules

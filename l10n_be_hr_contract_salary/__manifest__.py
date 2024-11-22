@@ -5,6 +5,7 @@
     'name': 'Salary Configurator (Belgium)',
     'category': 'Human Resources',
     'summary': 'Salary Package Configurator',
+    'countries': ['be'],
     'depends': [
         'hr_contract_salary_payroll',
         'l10n_be_hr_payroll_fleet',

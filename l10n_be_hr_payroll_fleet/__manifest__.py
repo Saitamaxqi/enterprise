@@ -1,9 +1,9 @@
-# -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Belgium - Payroll - Fleet',
     'category': 'Human Resources',
+    'countries': ['be'],
     'depends': ['l10n_be_hr_payroll', 'fleet'],
     'version': '1.0',
     'data': [

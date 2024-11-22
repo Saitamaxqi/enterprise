@@ -4,6 +4,7 @@
     'name': 'Pakistan - Payroll with Accounting',
     'author': 'Odoo',
     'version': '1.0',
+    'countries': ['pk'],
     'category': 'Human Resources',
     'description': """
 Accounting Data for Pakistan Payroll Rules

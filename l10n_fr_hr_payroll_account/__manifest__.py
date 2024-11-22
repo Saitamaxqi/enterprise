@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'France - Payroll with Accounting',
     'category': 'Human Resources',
+    'countries': ['fr'],
     'depends': ['l10n_fr_hr_payroll', 'hr_payroll_account', 'l10n_fr_account'],
     'description': """
 Accounting Data for French Payroll Rules.

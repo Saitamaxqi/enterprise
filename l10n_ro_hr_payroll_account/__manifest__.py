@@ -1,9 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Romania - Payroll with Accounting',
     'version': '1.0',
+    'countries': ['ro'],
     'category': 'Human Resources/Payroll',
     'description': """
 Accounting Data for Romania Payroll Rules

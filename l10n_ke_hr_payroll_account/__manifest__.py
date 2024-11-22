@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Kenya - Payroll with Accounting',
     'author': 'Odoo',
     'version': '1.0',
+    'countries': ['ke'],
     'category': 'Human Resources',
     'description': """
 Accounting Data for Kenyan Payroll Rules

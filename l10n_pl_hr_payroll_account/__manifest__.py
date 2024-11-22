@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Poland - Payroll with Accounting',
     'author': 'Odoo',
     'version': '1.0',
+    'countries': ['pl'],
     'category': 'Human Resources',
     'description': """
 Accounting Data for Poland Payroll Rules

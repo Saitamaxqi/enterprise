@@ -1,10 +1,10 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
     'name': 'Documents - Swiss Payroll',
     'icon': '/account/static/description/l10n.png',
     'version': '1.0',
+    'countries': ['ch'],
     'category': 'Human Resources/Payroll',
     'summary': 'Store individual accounts in Documents application',
     'description': """
