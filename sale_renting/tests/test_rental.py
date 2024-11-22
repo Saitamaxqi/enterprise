@@ -236,6 +236,9 @@ class TestRentalCommon(TransactionCase):
 
     def test_no_pickup_nor_return(self):
         partner = self.env['res.partner'].create({'name': 'A partner'})
+        partner.property_product_pricelist = self.env['product.pricelist'].create({
+            'name': 'Test Pricelist'
+        })
 
         recurrence_hour = self.env['sale.temporal.recurrence'].create({'duration': 1.0, 'unit': 'hour'})
         PRICINGS = [
@@ -263,6 +266,9 @@ class TestRentalCommon(TransactionCase):
 
     def test_no_price_update_on_pickup_return_update(self):
         partner = self.env['res.partner'].create({'name': 'A partner'})
+        partner.property_product_pricelist = self.env['product.pricelist'].create({
+            'name': 'Test Pricelist'
+        })
 
         recurrence_hour = self.env['sale.temporal.recurrence'].create({'duration': 1.0, 'unit': 'hour'})
         PRICINGS = [
