@@ -14,7 +14,7 @@ class HelpdeskTicket(models.Model):
 
         # datetime.max is in case one of the merged ticket is in a stage with "sla_id.exclude_stage_ids"
         for status in tickets.mapped('sla_status_ids').grouped('sla_id').values():
-            status_list += min(status, key=lambda s: s.deadline or datetime.datetime.max)
+            status_list += min(status, key=lambda s: s.deadline or datetime.max)
 
         self.env['data_merge.record']._update_foreign_keys(destination, source)
         destination.update({'sla_status_ids': status_list, 'sla_ids': status_list.mapped('sla_id')})
