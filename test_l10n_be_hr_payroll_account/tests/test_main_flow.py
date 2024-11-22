@@ -372,20 +372,6 @@ class TestHR(AccountTestInvoicingCommon):
         undefined_type = work_entries_with_error.filtered(lambda b: not b.work_entry_type_id)
         self.assertTrue(undefined_type)  # some leave types we created earlier are not linked to any work entry type
         undefined_type.write({'work_entry_type_id': work_entry_type_leave.id})
-
-        # Check work_entries conflicting with a leave, approve them as payroll manager
-        conflicting_leave = work_entries_with_error.filtered(lambda b: b.leave_id and b.leave_id.state != 'validate')
-
-        # this user need "group_hr_timesheet_approver" to access timesheets of other user
-        # with additional_groups(self.hr_payroll_user, 'hr_timesheet.group_hr_timesheet_approver'):
-        #     conflicting_leave.mapped('leave_id').with_user(self.hr_payroll_user).action_approve()
-
-        # Reload work_entries (some might have been deleted/created when approving leaves)
-        work_entries = self.env['hr.work.entry'].with_user(self.hr_payroll_user).search([('employee_id', '=', self.user.employee_id.id)])
-
-        # Some work entries are still conflicting (if not completely included in a leave)
-        self.assertFalse(work_entries.with_user(self.hr_payroll_user).action_validate())
-        work_entries.filtered(lambda w: w.state == 'conflict').write({'state': 'cancelled'})
         self.assertTrue(work_entries.with_user(self.hr_payroll_user).action_validate())
 
     def _test_fleet(self):
