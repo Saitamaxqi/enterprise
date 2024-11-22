@@ -7,7 +7,9 @@
         <field name="arch" type="xml">
             <field name="supported_attachment_ids" position="after">
                 <field name="l10n_be_sickness_relapse"
-                    invisible="not l10n_be_sickness_can_relapse"></field>
+                    invisible="not l10n_be_sickness_can_relapse"
+                    groups="hr_holidays.group_hr_holidays_user"
+                    />
             </field>
         </field>
     </record>
