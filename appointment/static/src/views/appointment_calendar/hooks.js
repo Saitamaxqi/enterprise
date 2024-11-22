@@ -29,7 +29,7 @@ export function useAppointmentRendererHook(getFcElements) {
                     if (bgColumn && nowIndicator && ['timeGridWeek', 'timeGridDay'].includes(component.fc.api.view.type)) {
                         const height = nowIndicator.style.top.slice(0, -2);
                         const childEl = document.createElement("div");
-                        childEl.classList.add("o_calendar_slot_selection_now");
+                        childEl.classList.add("o_calendar_slot_selection_now", "position-absolute", "start-0", "end-0");
                         childEl.style.height = `${height}px`;
                         bgColumn.appendChild(childEl);
                     }
