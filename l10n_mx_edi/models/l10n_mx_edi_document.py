@@ -1635,8 +1635,8 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         }
         payload_dict = {
             'rfc': company.vat,
-            'b64Cer': certificate_sudo.pem_certificate,
-            'b64Key': certificate_sudo.private_key_id.pem_key,
+            'b64Cer': certificate_sudo.pem_certificate.decode('UTF-8'),
+            'b64Key': certificate_sudo.private_key_id.pem_key.decode('UTF-8'),
             'password': certificate_sudo.private_key_id.password,
             'uuid': uuid,
             'motivo': cancel_reason,
