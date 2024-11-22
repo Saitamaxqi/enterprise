@@ -23,7 +23,8 @@ export class AppointmentBookingGanttController extends GanttController {
      * @override
      * When creating a new booking using the "New" button, round the start datetime to the next
      * half-hour (e.g. 10:12 => 10:30, 11:34 => 12:00).
-     * The stop datetime is handle by the default_get method on python side which add the appointment type duration.
+     * The stop datetime is set by default to start + 1 hour to override the calendar.event's default_stop, which is currently setting the stop based on now instead of start.
+     * The stop datetime will be updated in the default_get method on python side to match the appointment type duration.
     */
     onAddClicked() {
         const focusDate = this.getCurrentFocusDate();
@@ -32,7 +33,8 @@ export class AppointmentBookingGanttController extends GanttController {
             now.minute > 30
                 ? focusDate.set({ hour: now.hour + 1, minute: 0, second: 0 })
                 : focusDate.set({ hour: now.hour, minute: 30, second: 0 });
-        const context = this.model.getDialogContext({ start, withDefault: true });
+        const stop = start.plus({ hour: 1 });
+        const context = this.model.getDialogContext({ start, stop, withDefault: true });
         this.create(context);
     }
 }
