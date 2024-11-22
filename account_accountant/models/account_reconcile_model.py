@@ -175,18 +175,20 @@ class AccountReconcileModel(models.Model):
         st_line_text_values = self._get_st_line_text_values_for_matching(st_line)
         significant_token_size = 4
         numerical_tokens = []
-        exact_tokens = []
+        exact_tokens = set()  # preventing duplicates
         text_tokens = []
         for text_value in st_line_text_values:
+            split_text = (text_value or '').split()
             # Exact tokens
-            exact_tokens.extend([
-                token for token in (text_value or '').split()
-                if len(token) >= significant_token_size]
+            exact_tokens.add(text_value)
+            exact_tokens.update(
+                token for token in split_text
+                if len(token) >= significant_token_size
             )
             # Text tokens
             tokens = [
                 ''.join(x for x in token if re.match(r'[0-9a-zA-Z\s]', x))
-                for token in (text_value or '').split()
+                for token in split_text
             ]
 
             # Numerical tokens
@@ -205,7 +207,7 @@ class AccountReconcileModel(models.Model):
 
                 numerical_tokens.append(formatted_token)
 
-        return numerical_tokens, exact_tokens, text_tokens
+        return numerical_tokens, list(exact_tokens), text_tokens
 
     def _get_invoice_matching_amls_candidates(self, st_line, partner):
         """ Returns the match candidates for the 'invoice_matching' rule, with respect to the provided parameters.

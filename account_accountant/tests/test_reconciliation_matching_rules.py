@@ -614,6 +614,24 @@ class TestReconciliationMatchingRules(AccountTestInvoicingCommon):
             },
         })
 
+    def test_auto_reconcile_ref_with_spaces(self):
+        space_in_ref_invoice_line = self._create_invoice_line(600, self.partner_3, 'out_invoice', ref="This ref has spaces")
+        space_in_ref_bank_line = self._create_st_line(
+            amount=600.0,
+            date='2020-01-01',
+            payment_ref="This ref has spaces",
+            partner_id= self.partner_3.id,
+        )
+        self.rule_1.auto_reconcile = True
+
+        self._check_statement_matching(self.rule_1, {
+            space_in_ref_bank_line: {
+                'model': self.rule_1,
+                'auto_reconcile': True,
+                'amls': space_in_ref_invoice_line
+            }
+        })
+
     def test_larger_invoice_auto_reconcile(self):
         ''' Test auto reconciliation with an invoice with larger amount than the
         statement line's, for rules without write-offs.'''
