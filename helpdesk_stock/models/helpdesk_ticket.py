@@ -58,8 +58,7 @@ class HelpdeskTicket(models.Model):
         partners_in_sale = dict(zip(order_data.keys(), self.env['res.partner'].browse(order_data.keys())))
 
         for ticket in self:
-            ticket_partners_id = ticket.partner_id.ids + ticket.commercial_partner_id.ids
-            product_ids = set(item for partner_id in ticket_partners_id for item in order_data.get(partner_id, []) + outgoing_product.get(partner_id, []))
+            product_ids = {item for partner_id in suitable_partner_ids for item in order_data.get(partner_id, []) + outgoing_product.get(partner_id, [])}
             ticket.suitable_product_ids = [fields.Command.set(product_ids)]
             ticket.has_partner_picking = any(partner_id in outgoing_product for partner_id in suitable_partner_ids) or any(partner_id in partners_in_sale for partner_id in suitable_partner_ids)
 

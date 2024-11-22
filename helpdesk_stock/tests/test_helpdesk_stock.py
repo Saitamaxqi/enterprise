@@ -179,3 +179,31 @@ class TestHelpdeskStock(common.HelpdeskCommon):
 
         self.assertTrue(ticket.has_partner_picking,
                         "The ticket should have a related delivery order for the commercial partner")
+
+    def test_helpdesk_ticket_product_from_parent_company(self):
+        company_product, employee_1_product, employee_2_product = self.env['product.product'].create([
+            {'name': 'Company Product'},
+            {'name': 'Employee 1 Product'},
+            {'name': 'Employee 2 Product'},
+        ])
+        partners = self.env['res.partner'].create([
+            {'name': 'Company', 'company_type': 'company'},
+            {'name': 'Employee 1', 'company_type': 'person'},
+            {'name': 'Employee 1', 'company_type': 'person'},
+        ])
+        company, employee_1, employee_2 = partners
+        (employee_1 | employee_2).commercial_partner_id = company
+
+        sale_orders = self.env['sale.order'].create([
+            {'partner_id': company.id, 'order_line': [Command.create({'product_id': company_product.id})]},
+            {'partner_id': employee_1.id, 'order_line': [Command.create({'product_id': employee_1_product.id})]},
+            {'partner_id': employee_2.id, 'order_line': [Command.create({'product_id': employee_2_product.id})]},
+        ])
+        sale_orders.action_confirm()
+
+        products = (company_product | employee_1_product | employee_2_product)
+        ticket = self.env['helpdesk.ticket'].create({'name': 'Ticket'})
+
+        for partner in partners:
+            ticket.partner_id = partner
+            self.assertEqual(ticket.suitable_product_ids, products, 'Products from all children of the parent company should be visible')
