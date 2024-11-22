@@ -262,7 +262,8 @@ class TestCurrencyTable(TestAccountReportsCommon):
         self._generate_equity_move(self.company_usd_data, '2020-11-11', 88)
         self._generate_equity_move(self.company_usd_data_2, '2020-11-11', 92)
 
-        self.env.companies = self.company_usd_data['company'] + self.company_usd_data_2['company']
+        companies = self.company_usd_data['company'] + self.company_usd_data_2['company']
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=companies.ids))
         options = self._generate_options(self.report, '2020-01-01', '2020-12-31')
         self.assertLinesValues(
             self.report._get_lines(options),
@@ -359,8 +360,9 @@ class TestCurrencyTable(TestAccountReportsCommon):
         self._generate_equity_move(eur_branch_data, '2020-09-09', 80)
 
         # env.company becomes the USD branch
-        self.env.companies = usd_branch_data['company'] + eur_branch_data['company'] + self.company_usd_data['company'] + self.company_eur_data['company']
-        self.env.company = usd_branch_data['company']
+        companies = usd_branch_data['company'] + eur_branch_data['company'] + self.company_usd_data['company'] + self.company_eur_data['company']
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=companies.ids))
+        self.report = self.report.with_env(self.env)
 
         options = self._generate_options(self.report, '2020-01-01', '2020-12-31')
         self.assertLinesValues(

@@ -71,9 +71,10 @@ class TestLibroDiarioXLSX(TestAccountReportsCommon):
 
     def test_libro_diario_non_es_error(self):
         non_es_company = self.env['res.company'].search([('partner_id.country_code', '!=', 'ES')], limit=1)
-        self.env.company = self.env.companies = non_es_company
+        self.env.user.write({'company_ids': [Command.link(non_es_company.id)]})
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=non_es_company.ids))
 
-        options = self._generate_options(self.report, '2020-12-01', '2020-12-31')
+        options = self._generate_options(self.report.with_env(self.env), '2020-12-01', '2020-12-31')
 
         with self.assertRaisesRegex(
             UserError,

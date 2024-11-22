@@ -28,7 +28,7 @@ class Sign(http.Controller):
         if not current_request_item and sign_request.access_token != token:
             return request.not_found()
         if current_request_item and current_request_item.partner_id.lang:
-            http.request.env.context = dict(http.request.env.context, lang=current_request_item.partner_id.lang)
+            http.request.update_context(lang=current_request_item.partner_id.lang)
 
         sign_item_types = http.request.env['sign.item.type'].sudo().search_read([])
         if not sign_item_types:

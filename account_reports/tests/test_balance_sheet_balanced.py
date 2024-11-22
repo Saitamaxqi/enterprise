@@ -474,11 +474,12 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
                 * accounts_by_aml is a map {aml_id: account_id} for the generated AMLs
         '''
         # Always reset company, as the one used in the previous subtest might not exist anymore
-        self.env.company = self.existing_companies[0]
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.existing_companies[0].ids))
 
         coa_setup_data = {}
         if coa in self.existing_companies.mapped('chart_template'):
-            self.env.company = next(iter(self.existing_companies.filtered(lambda c: c.chart_template == coa)))
+            companies = next(iter(self.existing_companies.filtered(lambda c: c.chart_template == coa)))
+            self.env = self.env(context=dict(self.env.context, allowed_company_ids=companies.ids))
 
             coa_setup_data['counterpart_account'] = self.env['account.account'].search([
                 ('company_ids', '=', self.env.company.id),
@@ -495,7 +496,7 @@ class TestBalanceSheetBalanced(TestAccountReportsCommon):
         else:
             self.__class__.chart_template = coa
             company_data = self.setup_other_company(name='company_3')  # This uses cls.chart_template to load the right CoA
-            self.env.company = company_data['company']
+            self.env = self.env(context=dict(self.env.context, allowed_company_ids=company_data['company'].ids))
 
             coa_setup_data['counterpart_account'] = company_data['default_account_receivable']
             coa_setup_data['income_account'] = company_data['default_account_revenue']

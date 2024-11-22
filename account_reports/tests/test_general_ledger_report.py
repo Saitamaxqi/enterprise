@@ -87,7 +87,9 @@ class TestGeneralLedgerReport(TestAccountReportsCommon, odoo.tests.HttpCase):
         # Deactive all currencies to ensure group_multi_currency is disabled.
         cls.env['res.currency'].search([('name', '!=', 'USD')]).with_context(force_deactivate=True).active = False
 
-        cls.report = cls.env.ref('account_reports.general_ledger_report')
+    @property
+    def report(self):
+        return self.env.ref('account_reports.general_ledger_report')
 
     # -------------------------------------------------------------------------
     # TESTS: General Ledger
@@ -328,7 +330,7 @@ class TestGeneralLedgerReport(TestAccountReportsCommon, odoo.tests.HttpCase):
 
     def test_general_ledger_load_more(self):
         ''' Test unfolding a line to use the load more. '''
-        self.env.companies = self.env.company
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.env.company.ids))
         self.report.load_more_limit = 2
 
         options = self._generate_options(self.report, fields.Date.from_string('2017-01-01'), fields.Date.from_string('2017-12-31'))
@@ -582,7 +584,7 @@ class TestGeneralLedgerReport(TestAccountReportsCommon, odoo.tests.HttpCase):
             any AMLs prior to the report period but after the beginning of the FY are
             displayed in the initial balance for Income and Expense accounts. '''
 
-        self.env.companies = self.env.company
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.env.company.ids))
 
         move_2017 = self.env['account.move'].create({
             'move_type': 'entry',

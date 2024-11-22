@@ -556,7 +556,8 @@ class TestMRPBarcodeClientAction(TestBarcodeClientAction):
             ], limit=1)
         )
 
-        self.env.companies += company2
+        companies = self.env.company + company2
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=companies.ids))
         self.env['stock.picking.type'].search([
             ('code', '=', 'mrp_operation'),
             ('company_id', '=', company2.id),

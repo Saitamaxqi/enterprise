@@ -64,7 +64,7 @@ class BelgiumPartnerVatListingTest(TestAccountReportsCommon):
         return move
 
     def test_simple_invoice(self):
-        self.env.companies = self.env.company
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.env.company.ids))
         options = self._generate_options(self.report, fields.Date.from_string('2022-06-01'), fields.Date.from_string('2022-06-30'))
 
         # Foreign partners invoices should not show
@@ -100,7 +100,7 @@ class BelgiumPartnerVatListingTest(TestAccountReportsCommon):
             The test is also verifying that the XML is correctly generated and that
             the load_more_limit doesn't impact it at all.
         """
-        self.env.companies = self.env.company
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.env.company.ids))
         self.report.load_more_limit = 2
         options = self._generate_options(
             self.report,
@@ -178,7 +178,7 @@ class BelgiumPartnerVatListingTest(TestAccountReportsCommon):
             However, for the XML generation, the logic is a bit different and the
             report should give us one line per vat number instead of per partner.
         """
-        self.env.companies = self.env.company
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.env.company.ids))
         options = self._generate_options(
             self.report,
             '2022-06-01',
@@ -250,7 +250,7 @@ class BelgiumPartnerVatListingTest(TestAccountReportsCommon):
         )
 
     def test_misc_operation(self):
-        self.env.companies = self.env.company
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.env.company.ids))
         options = self._generate_options(self.report, fields.Date.from_string('2022-06-01'), fields.Date.from_string('2022-06-30'))
 
         move_1 = self.create_and_post_account_move('out_invoice', self.partner_b_be.id, '2022-06-01', product_quantity=10, product_price_unit=200)
@@ -272,7 +272,7 @@ class BelgiumPartnerVatListingTest(TestAccountReportsCommon):
         )
 
     def test_invoices_with_refunds(self):
-        self.env.companies = self.env.company
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.env.company.ids))
         options = self._generate_options(self.report, fields.Date.from_string('2022-06-01'), fields.Date.from_string('2022-06-30'))
 
         # Partial refund
@@ -296,7 +296,7 @@ class BelgiumPartnerVatListingTest(TestAccountReportsCommon):
         )
 
     def test_refunds_without_invoices(self):
-        self.env.companies = self.env.company
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.env.company.ids))
         options = self._generate_options(self.report, fields.Date.from_string('2022-06-01'), fields.Date.from_string('2022-06-30'))
 
         self.create_and_post_account_move('out_refund', self.partner_a_be.id, '2022-06-02', product_quantity=10, product_price_unit=100)
@@ -313,7 +313,7 @@ class BelgiumPartnerVatListingTest(TestAccountReportsCommon):
         )
 
     def test_zero_tax(self):
-        self.env.companies = self.env.company
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.env.company.ids))
         options = self._generate_options(self.report, fields.Date.from_string('2022-06-01'), fields.Date.from_string('2022-06-30'))
 
         self.tax_sale_a.amount = 0

@@ -190,7 +190,7 @@ class TestSignController(TestSignControllerCommon):
          }
 
         # Set the environment user as the public user
-        self.env.user = self.public_user
+        self.uid = self.public_user
 
         # Send a request to cancel the sign request item
         self.authenticate(None, None)
@@ -199,7 +199,7 @@ class TestSignController(TestSignControllerCommon):
         self.assertEqual(sign_request.state, 'canceled', "Sign request state should be 'canceled'")
         self.assertEqual(sign_request_item.state, 'canceled', "Sign request item state should be 'canceled'")
 
-        sign_cancel_log = self.env['sign.log'].search([
+        sign_cancel_log = self.env['sign.log'].sudo().search([
             ('sign_request_id', '=', sign_request.id),
             ('action', '=', 'cancel')
         ])

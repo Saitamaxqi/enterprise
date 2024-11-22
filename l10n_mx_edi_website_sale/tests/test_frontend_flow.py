@@ -11,7 +11,7 @@ class TestFrontendFlow(HttpCase, TestMxEdiCommon):
             'company_id': self.env.company.id,
             'company_ids': [(4, self.env.company.id)],
         })
-        self.env.company = self.company_data['company']
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.company_data['company'].ids))
         self.env['product.product'].create({
             'name': 'Test Product',
             'sale_ok': True,

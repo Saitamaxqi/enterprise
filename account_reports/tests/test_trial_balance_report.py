@@ -205,7 +205,8 @@ class TestTrialBalanceReport(TestAccountReportsCommon):
         )
 
     def test_trial_balance_filter_journals(self):
-        self.env.companies = self.env.company
+        self.env = self.env(context=dict(self.env.context, allowed_company_ids=self.env.company.ids))
+        self.report = self.report.with_env(self.env)
 
         options = self._generate_options(self.report, fields.Date.from_string('2017-01-01'), fields.Date.from_string('2017-12-31'))
         options = self._update_multi_selector_filter(options, 'journals', self.company_data['default_journal_sale'].ids)

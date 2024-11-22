@@ -76,6 +76,7 @@ class StockMoveLine(models.Model):
 
     @api.model_create_multi
     def create(self, vals_list):
+        model = self
         for vals in vals_list:
             # To avoid a write on `quantity` at the creation of the record (in the `qty_done`
             # inverse, when the line's move is not created yet), we set the `quantity` directly at
@@ -85,8 +86,9 @@ class StockMoveLine(models.Model):
                 vals['picked'] = vals['qty_done'] > 0
                 del vals['qty_done']
                 # Also delete the default value in the context.
-                self.env.context = frozendict({k: v for k, v in self.env.context.items() if k != 'default_qty_done'})
-        return super().create(vals_list)
+                if 'default_qty_done' in model.env.context:
+                    model = model.with_env(model.env(context={k: v for k, v in self.env.context.items() if k != 'default_qty_done'}))
+        return super(StockMoveLine, model).create(vals_list)
 
     def _get_fields_stock_barcode(self):
         return [

@@ -388,8 +388,8 @@ class TestMultiCurrenciesRevaluationReport(TestAccountReportsCommon):
         )
 
         with self.assertRaises(UserError, msg="No adjustment should be needed"):
-            self.env.context = {**self.env.context, 'multicurrency_revaluation_report_options': {**options, 'unfold_all': False}}
-            self.env['account.multicurrency.revaluation.wizard'].create({
+            env = self.env(context={**self.env.context, 'multicurrency_revaluation_report_options': {**options, 'unfold_all': False}})
+            env['account.multicurrency.revaluation.wizard'].create({
                 'journal_id': self.company_data['default_journal_misc'].id,
                 'expense_provision_account_id': self.company_data['default_account_expense'].id,
                 'income_provision_account_id': self.company_data['default_account_revenue'].id,

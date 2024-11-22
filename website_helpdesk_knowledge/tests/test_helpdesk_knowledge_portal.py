@@ -35,5 +35,5 @@ class TestHelpdeskKnowledgePortalTour(TestHelpdeskPortal):
         })
         self.assertTrue(help_team.use_website_helpdesk_form)
 
-        self.env.user = self.env.ref('base.public_user')
+        self.uid = self.env.ref('base.public_user')
         self.start_tour('/', 'access_helpdesk_article_portal_tour')

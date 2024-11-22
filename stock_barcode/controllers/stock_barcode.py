@@ -140,7 +140,10 @@ class StockBarcodeController(http.Controller):
             ''domains_by_model'': a dict of model_name -> domain
             ''fetch_quant'': Fetch extra quants based on products (used in inventory)
         """
-        request.env.context = {**kwargs.get('context', {}), **request.env.context, 'display_default_code': False}
+        context = kwargs.get('context', {})
+        context.update(request.env.context)
+        context['display_default_code'] = False
+        request.update_env(context=context)
         barcodes_by_model = kwargs.get('barcodes_by_model')
         domains_by_model = kwargs.get('domains_by_model', {})
         universal_domain = domains_by_model.get('all')
