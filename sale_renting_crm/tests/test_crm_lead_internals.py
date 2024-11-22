@@ -36,6 +36,9 @@ class TestLead(crm_common.TestCrmCommon):
     def test_rental_and_sale_fields(self):
         lead = self.env['crm.lead'].browse(self.lead_1.ids)
         recurrence_day = self.env['sale.temporal.recurrence'].sudo().create({'duration': 1, 'unit': 'day'})
+        self.contact_1.property_product_pricelist = self.env['product.pricelist'].sudo().create({
+            'name': 'Test Pricelist',
+        })
         rental_product = self.env['product.product'].sudo().create({
             'extra_daily': 10,
             'extra_hourly': 5,
