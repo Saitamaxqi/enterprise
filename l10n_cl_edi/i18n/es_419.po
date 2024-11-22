@@ -2640,8 +2640,8 @@ msgstr ""
 #. odoo-python
 #: code:addons/l10n_cl_edi/models/account_move.py:0
 #: code:addons/l10n_cl_edi/wizard/account_move_debit.py:0
-msgid "Where it says: %s should say: %s"
-msgstr "Donde dice: %s debería decir: %s"
+msgid "Where it says: %(original_text)s should say: %(corrected_text)s"
+msgstr "Donde dice: %(original_text)s debería decir: %(corrected_text)s"
 
 #. module: l10n_cl_edi
 #. odoo-python
