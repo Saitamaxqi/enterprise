@@ -1208,6 +1208,7 @@ class TestCFDIInvoiceWorkflow(TestMxEdiCommon):
         }
         self.assertRecordValues(invoice.l10n_mx_edi_invoice_document_ids.sorted(), [
             cancel_doc_values,
+            cancel_request_doc_values,
             sent_doc_values,
         ])
         self.assertRecordValues(invoice, [{

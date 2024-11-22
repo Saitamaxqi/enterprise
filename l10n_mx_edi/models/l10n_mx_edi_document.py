@@ -1758,12 +1758,19 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         :param invoice:         An invoice.
         :param document_values: The values to create the document.
         """
+        # Never remove a document that is already recorded in the SAT system.
+        remaining_documents = invoice.l10n_mx_edi_invoice_document_ids\
+            .filtered(lambda doc: (
+                doc.sat_state not in ('valid', 'cancelled', 'skip')
+                or (doc.sat_state == 'cancelled' and doc.state == 'invoice_cancel_requested')
+            ))
+
         if document_values['state'] in ('invoice_sent', 'invoice_cancel', 'invoice_cancel_requested'):
             accept_method_state = f"{document_values['state']}_failed"
         else:
             accept_method_state = document_values['state']
 
-        document = invoice.l10n_mx_edi_invoice_document_ids._create_update_document(
+        document = remaining_documents._create_update_document(
             invoice,
             document_values,
             lambda x: x.state == accept_method_state,
@@ -1782,17 +1789,14 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         if document.state == 'invoice_cancel':
             document_states_to_remove.add('invoice_cancel_requested')
 
-        invoice.l10n_mx_edi_invoice_document_ids \
+        remaining_documents\
             .filtered(lambda x: x != document and x.state in document_states_to_remove) \
             .unlink()
 
         if document.state in ('invoice_sent', 'invoice_cancel', 'invoice_cancel_requested'):
-            invoice.l10n_mx_edi_invoice_document_ids \
-                .filtered(lambda x: (
-                    x != document
-                    and x.sat_state not in ('valid', 'cancelled', 'skip')
-                    and x.attachment_uuid == document.attachment_uuid
-                )) \
+            remaining_documents \
+                .exists() \
+                .filtered(lambda x: x != document and x.attachment_uuid == document.attachment_uuid) \
                 .write({'sat_state': 'skip'})
 
         return document
@@ -1804,12 +1808,16 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         :param payment:         A payment reconciled with some invoices.
         :param document_values: The values to create the document.
         """
+        # Never remove a document that is already recorded in the SAT system.
+        remaining_documents = payment.l10n_mx_edi_payment_document_ids\
+            .filtered(lambda doc: doc.sat_state not in ('valid', 'cancelled', 'skip'))
+
         if document_values['state'] in ('payment_sent', 'payment_sent_pue', 'payment_cancel'):
             accept_method_state = f"{document_values['state']}_failed"
         else:
             accept_method_state = document_values['state']
 
-        document = payment.l10n_mx_edi_payment_document_ids\
+        document = remaining_documents\
             .filtered(lambda x: x.state not in ('payment_sent', 'payment_cancel'))\
             ._create_update_document(
                 payment,
@@ -1817,17 +1825,14 @@ Content-Disposition: form-data; name="xml"; filename="xml"
                 lambda x: x.state in (accept_method_state, 'payment_sent_pue'),
             )
 
-        payment.l10n_mx_edi_payment_document_ids \
+        remaining_documents \
             .filtered(lambda x: x != document and x.state in {'payment_sent_failed', 'payment_cancel_failed'}) \
             .unlink()
 
         if document.state in ('payment_sent', 'payment_cancel'):
-            payment.l10n_mx_edi_payment_document_ids \
-                .filtered(lambda x: (
-                    x != document
-                    and x.sat_state not in ('valid', 'cancelled', 'skip')
-                    and x.attachment_uuid == document.attachment_uuid
-                )) \
+            remaining_documents \
+                .exists() \
+                .filtered(lambda x: x != document and x.attachment_uuid == document.attachment_uuid) \
                 .write({'sat_state': 'skip'})
 
         return document
@@ -1839,18 +1844,22 @@ Content-Disposition: form-data; name="xml"; filename="xml"
         :param invoices:        The related invoices.
         :param document_values: The values to create the document.
         """
+        # Never remove a document that is already recorded in the SAT system.
+        remaining_documents = invoices[0].l10n_mx_edi_invoice_document_ids\
+            .filtered(lambda doc: doc.sat_state not in ('valid', 'cancelled', 'skip'))
+
         if document_values['state'] in ('ginvoice_sent', 'ginvoice_cancel'):
             accept_method_state = f"{document_values['state']}_failed"
         else:
             accept_method_state = document_values['state']
 
-        document = invoices[0].l10n_mx_edi_invoice_document_ids._create_update_document(
+        document = remaining_documents._create_update_document(
             self,
             document_values,
             lambda x: x.state == accept_method_state,
         )
 
-        invoices[0].l10n_mx_edi_invoice_document_ids \
+        remaining_documents \
             .filtered(lambda x: x != document and x.state in {
                 'invoice_sent_failed',
                 'invoice_cancel_failed',
@@ -1860,12 +1869,9 @@ Content-Disposition: form-data; name="xml"; filename="xml"
             .unlink()
 
         if document.state in ('ginvoice_sent', 'ginvoice_cancel'):
-            invoices.l10n_mx_edi_invoice_document_ids \
-                .filtered(lambda x: (
-                    x != document
-                    and x.sat_state not in ('valid', 'cancelled', 'skip')
-                    and x.attachment_uuid == document.attachment_uuid
-                )) \
+            remaining_documents \
+                .exists() \
+                .filtered(lambda x: x != document and x.attachment_uuid == document.attachment_uuid) \
                 .write({'sat_state': 'skip'})
 
         return document
