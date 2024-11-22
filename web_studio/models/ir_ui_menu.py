@@ -77,9 +77,7 @@ class IrUiMenu(models.Model):
         )
         # look for a studio config menu in the submenus
         parent_path = '%s/' % root_id
-        new_context = dict(self._context)
-        new_context.update({'ir.ui.menu.full_list': True})  # allows to create a menu without action
-        config_menu = self.with_context(new_context).search([
+        config_menu = self.with_context(self._context).search([
             ('parent_path', 'like', parent_path), ('is_studio_configuration', '=', True)
         ])
         if not config_menu:

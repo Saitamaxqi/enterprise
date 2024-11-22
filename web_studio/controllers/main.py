@@ -236,7 +236,7 @@ class WebStudioController(http.Controller):
         menu_values.update(self._get_icon_fields(icon))
         menu_values['child_id'] = child_menu_vals
 
-        new_menu = request.env['ir.ui.menu'].with_context(**{'ir.ui.menu.full_list': True, 'studio': True}).create(menu_values)
+        new_menu = request.env['ir.ui.menu'].with_context(studio=True).create(menu_values)
 
         return {
             'menu_id': new_menu.id,

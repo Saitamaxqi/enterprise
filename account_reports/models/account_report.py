@@ -197,7 +197,7 @@ class AccountReport(models.Model):
             .search([('name', '=', self.name), ('tag', '=', 'account_report')])\
             .filtered(lambda act: ast.literal_eval(act.context).get('report_id') == self.id)
         menuitem = self.env['ir.ui.menu']\
-            .with_context({'active_test': False, 'ir.ui.menu.full_list': True})\
+            .with_context({'active_test': False})\
             .search([('action', '=', f'ir.actions.client,{action.id}')])
         return action, menuitem
 
