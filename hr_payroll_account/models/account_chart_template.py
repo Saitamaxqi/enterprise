@@ -93,13 +93,20 @@ class AccountChartTemplate(models.AbstractModel):
 
     def _get_demo_data(self, company):
         demo_data = super()._get_demo_data(company)
-        account_data = demo_data.setdefault('account.account', {})
-        account_data['hr_payslip_account'] = {
-            'name':_("Account Payslip Houserental"),
-            'code': "123456",
-            'account_type': 'liability_payable',
-            'reconcile': True,
-        }
+        if not self.env['account.account'].search_count(
+            [
+                *self.env['account.account']._check_company_domain(company),
+                ('code', '=', "123456"),
+            ],
+            limit=1,
+        ):
+            account_data = demo_data.setdefault('account.account', {})
+            account_data['hr_payslip_account'] = {
+                'name': _("Account Payslip Houserental"),
+                'code': "123456",
+                'account_type': 'liability_payable',
+                'reconcile': True,
+            }
         if self.env.ref('hr_payroll.hr_salary_rule_houserentallowance1', raise_if_not_found=False) and self.ref('hr_payslip_account', raise_if_not_found=False):
             demo_data['hr.salary.rule'] = {
                 'hr_payroll.hr_salary_rule_houserentallowance1': {
