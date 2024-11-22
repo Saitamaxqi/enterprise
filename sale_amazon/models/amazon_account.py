@@ -9,7 +9,7 @@ import dateutil.parser
 from markupsafe import Markup
 from werkzeug import urls
 
-from odoo import _, api, exceptions, fields, models
+from odoo import _, api, exceptions, fields, models, modules
 from odoo.exceptions import UserError, ValidationError
 from odoo.service.model import PG_CONCURRENCY_EXCEPTIONS_TO_RETRY as CONCURRENCY_ERRORS
 
@@ -479,6 +479,9 @@ class AmazonAccount(models.Model):
                         except amazon_utils.AmazonRateLimitError:
                             raise  # Don't treat a rate limit error as a business error.
                         except Exception as error:
+                            if modules.module.current_test:
+                                # we are executing during testing, do not try to rollback
+                                raise
                             amazon_order_ref = order_data['AmazonOrderId']
                             if isinstance(error, CONCURRENCY_ERRORS):
                                 _logger.info(
@@ -587,6 +590,8 @@ class AmazonAccount(models.Model):
 
         # Search for the sales order based on its Amazon order reference.
         amazon_order_ref = order_data['AmazonOrderId']
+        if not isinstance(amazon_order_ref, str):
+            raise TypeError(f"Invalid AmazonOrderId, should be a string: {amazon_order_ref!r}")
         order = self.env['sale.order'].search(
             [('amazon_order_ref', '=', amazon_order_ref)], limit=1
         )

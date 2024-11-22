@@ -187,7 +187,7 @@ class TestAmazon(common.TestAmazonCommon):
                     'LastUpdatedBefore': '2020-01-01T00:00:00Z',
                     'Orders': [common.ORDER_MOCK, dict(
                         common.ORDER_MOCK,
-                        AmazonOrderId={'value': '987654321'},
+                        AmazonOrderId='987654321',
                         LastUpdateDate='2019-01-20T00:00:00Z',
                     )],
                 })
