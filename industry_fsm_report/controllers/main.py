@@ -4,7 +4,6 @@ from odoo.http import request, route
 from odoo.addons.web_studio.controllers import main
 
 class WebStudioController(main.WebStudioController):
-
     @route()
     def edit_view(self, view_id, studio_view_arch, operations=None, model=None, context=None):
         action = super().edit_view(view_id, studio_view_arch, operations, model, context)

@@ -5,13 +5,11 @@ from freezegun import freeze_time
 
 from odoo.tests import tagged, Form
 from odoo.exceptions import ValidationError
-
 from .common import TestHelpdeskTimesheetCommon
 
 
 @tagged('-at_install', 'post_install')
 class TestTimesheet(TestHelpdeskTimesheetCommon):
-
     def test_timesheet_cannot_be_linked_to_task_and_ticket(self):
         """ Test if an exception is raised when we want to link a task and a ticket in a timesheet
 

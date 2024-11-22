@@ -1,14 +1,12 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 from odoo.exceptions import AccessError
 from odoo.tests import Form, new_test_user
-
 from odoo.addons.helpdesk.tests.common import HelpdeskCommon
 from odoo.addons.project.tests.test_project_base import TestProjectCommon
 
 
 class TestTasksTicketsConversion(TestProjectCommon, HelpdeskCommon):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()

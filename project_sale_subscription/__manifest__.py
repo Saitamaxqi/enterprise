@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
-
 
 {
     'name': 'Project Sales Subscription',
@@ -11,10 +9,12 @@
     'depends': ['sale_project', 'sale_subscription'],
     'data': [
         'views/account_analytic_account_views.xml',
-        'views/sale_subscription_views.xml',
+        'views/sale_order_views.xml',
     ],
     'demo': [
-        'demo/subscription_demo.xml',
+        'demo/product_product_demo.xml',
+        'demo/project_task_demo.xml',
+        'demo/sale_order_demo.xml',
     ],
     'assets': {
         'web.assets_backend': [

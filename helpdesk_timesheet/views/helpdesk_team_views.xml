@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-
     <record id="helpdesk_team_view_form_inherit_helpdesk_timesheet" model="ir.ui.view">
         <field name="name">helpdesk.team.form.inherit.timesheet</field>
         <field name="model">helpdesk.team</field>
@@ -27,5 +26,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>

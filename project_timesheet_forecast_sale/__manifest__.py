@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
@@ -14,14 +13,16 @@ In your project plan, you can compare your timesheets and your forecast to bette
     'website': 'https://www.odoo.com/app/project',
     'depends': ['project_timesheet_forecast', 'sale_timesheet', 'sale_project_forecast'],
     'data': [
-        'views/project_forecast_views.xml',
+        'views/planning_slot_views.xml',
         'views/project_project_views.xml',
         'report/planning_analysis_report_views.xml',
-        'report/timesheet_forecast_report_views.xml',
+        'report/project_timesheet_forecast_report_analysis_views.xml',
     ],
     'demo': [
-        'data/product_demo.xml',
-        'data/forecast_demo.xml',
+        'data/planning_role_demo.xml',
+        'data/hr_employee_demo.xml',
+        'data/product_product_demo.xml',
+        'data/sale_order_line_demo.xml',
     ],
     'auto_install': True,
     'license': 'OEEL-1',

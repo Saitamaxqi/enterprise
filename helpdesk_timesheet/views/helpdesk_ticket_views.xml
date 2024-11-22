@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-
     <record id="helpdesk_ticket_view_form_inherit_helpdesk_timesheet" model="ir.ui.view">
         <field name='name'>helpdesk.ticket.form.inherit.timesheet</field>
         <field name="model">helpdesk.ticket</field>
@@ -131,5 +130,13 @@
                 <field name="total_hours_spent" string="Time Spent (Timesheets)" widget="timesheet_uom"/>
             </field>
         </field>
+    </record>
+
+    <record id="project_project_action_view_helpdesk_tickets" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="res_model">helpdesk.ticket</field>
+        <field name="view_mode">list,kanban,form,pivot,graph,activity</field>
+        <field name="context">{'default_project_id': active_id, 'create': False}</field>
+        <field name="domain">[('project_id', '=', active_id)]</field>
     </record>
 </odoo>

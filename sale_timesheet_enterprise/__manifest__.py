@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': "Sales Timesheet: Invoicing",
@@ -15,35 +14,38 @@ linked to an SO, or only the validated timesheets
 
     'depends': ['sale_timesheet', 'timesheet_grid'],
     'data': [
-        'data/sale_timesheet_enterprise_data.xml',
+        'data/hr_employee_tip_data.xml',
+        'data/ir_exports_line_data.xml',
         'security/ir.model.access.csv',
-        'views/account_invoice_views.xml',
+        'views/account_move_views.xml',
         'views/hr_timesheet_tip_views.xml',
         'views/hr_timesheet_views.xml',
         'views/hr_employee_views.xml',
         'views/project_task_views.xml',
-        'views/project_sharing_views.xml',
+        'views/project_sharing_project_task_views.xml',
         'views/res_config_settings_views.xml',
         'views/sale_timesheet_enterprise_menus.xml',
-        'views/project_portal_template.xml',
-        'wizard/sale_make_invoice_advance_views.xml',
-        'report/timesheets_analysis_views.xml',
+        'views/project_portal_project_task_template.xml',
+        'wizard/sale_advance_payment_inv_views.xml',
+        'report/timesheets_analysis_report_views.xml',
     ],
     'demo': [
-        'data/sale_timesheet_enterprise_demo.xml'
+        'data/account_analytic_line_demo.xml',
+        'data/hr_employee_demo.xml',
+        'data/project_task_demo.xml',
     ],
     'auto_install': True,
     'license': 'OEEL-1',
     'assets': {
         'web.assets_backend': [
             'sale_timesheet_enterprise/static/src/**/*',
-            ('remove', 'sale_timesheet_enterprise/static/src/views/pivot/**'),
+            ('remove', 'sale_timesheet_enterprise/static/src/views/timesheet_analysis_pivot/**'),
             ('remove', 'sale_timesheet_enterprise/static/src/views/timer_timesheet_grid/**'),
             ('remove', 'sale_timesheet_enterprise/static/src/views/timesheet_grid/**'),
             ('remove', 'sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_timer_grid/**'),
         ],
         'web.assets_backend_lazy': [
-            'sale_timesheet_enterprise/static/src/views/pivot/**',
+            'sale_timesheet_enterprise/static/src/views/timesheet_analysis_pivot/**',
             'sale_timesheet_enterprise/static/src/views/timer_timesheet_grid/**',
             'sale_timesheet_enterprise/static/src/views/timesheet_grid/**',
             'sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_timer_grid/**',

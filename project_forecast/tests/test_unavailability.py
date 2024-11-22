@@ -1,19 +1,16 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details
 
 from datetime import date, datetime
 import pytz
 
 from odoo import fields
-
 from .common import TestCommonForecast
 
 
 class TestUnavailabilityForForecasts(TestCommonForecast):
-
     @classmethod
     def setUpClass(cls):
-        super(TestUnavailabilityForForecasts, cls).setUpClass()
+        super().setUpClass()
 
         cls.setUpEmployees()
         cls.setUpProjects()

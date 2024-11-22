@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details
 from datetime import datetime
 from freezegun import freeze_time
@@ -6,16 +5,14 @@ from freezegun import freeze_time
 from odoo import fields
 from odoo.tests import tagged
 from odoo.exceptions import UserError
-
 from .common import TestCommonForecast
 
 
 @tagged('-at_install', 'post_install')
 class TestForecastCreationAndEditing(TestCommonForecast):
-
     @classmethod
     def setUpClass(cls):
-        super(TestForecastCreationAndEditing, cls).setUpClass()
+        super().setUpClass()
         cls.classPatch(cls.env.cr, 'now', fields.Datetime.now)
         with freeze_time('2019-1-1'):
             cls.setUpEmployees()

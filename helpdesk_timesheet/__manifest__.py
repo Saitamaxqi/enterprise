@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
@@ -15,11 +14,11 @@
         'security/helpdesk_timesheet_security.xml',
         'views/helpdesk_team_views.xml',
         'views/helpdesk_ticket_views.xml',
-        'views/project_views.xml',
+        'views/project_project_views.xml',
         'views/hr_timesheet_views.xml',
         'wizard/helpdesk_ticket_create_timesheet_views.xml',
         'report/helpdesk_sla_report_analysis_views.xml',
-        'report/helpdesk_ticket_analysis_views.xml',
+        'report/helpdesk_ticket_report_analysis_views.xml',
         'report/report_timesheet_templates.xml',
         'report/timesheets_analysis_report_views.xml',
     ],
@@ -35,7 +34,12 @@
             "helpdesk_timesheet/static/tests/*",
         ],
     },
-    'demo': ['data/helpdesk_timesheet_demo.xml'],
+    'demo': [
+        'data/project_project_demo.xml',
+        'data/helpdesk_team_demo.xml',
+        'data/helpdesk_ticket_demo.xml',
+        'data/account_analytic_line_demo.xml',
+    ],
     'license': 'OEEL-1',
     'post_init_hook': '_helpdesk_timesheet_post_init',
     'uninstall_hook': '_helpdesk_timesheet_uninstall',

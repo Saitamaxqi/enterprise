@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
@@ -8,12 +7,13 @@
     'category': 'Services/Project',
     'depends': ['account_budget', 'project_enterprise'],
     'data': [
-        'views/project_views.xml',
+        'views/project_project_views.xml',
         'views/budget_analytic_views.xml',
         'views/project_update_templates.xml',
     ],
     'demo': [
-        'data/account_budget_demo.xml',
+        'data/budget_analytic_demo.xml',
+        'data/purchase_order_demo.xml',
     ],
     'assets': {
         'web.assets_backend': [

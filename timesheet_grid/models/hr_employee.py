@@ -1,5 +1,5 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+
 from collections import defaultdict
 from datetime import datetime, time, timedelta
 from pytz import timezone, UTC
@@ -189,10 +189,3 @@ class HrEmployee(models.Model):
             employee.id: employee.last_validated_timesheet_date
             for employee in self.sudo()
         }
-
-
-class HrEmployeePublic(models.Model):
-    _inherit = 'hr.employee.public'
-
-    timesheet_manager_id = fields.Many2one('res.users', string='Timesheet',
-        help="User responsible of timesheet validation. Should be Timesheet Manager.")

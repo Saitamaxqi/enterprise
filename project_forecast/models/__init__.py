@@ -1,6 +1,5 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from . import project
-from . import planning_template
-from . import project_forecast
+from . import project_project
+from . import planning_slot_template
+from . import planning_slot

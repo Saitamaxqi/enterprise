@@ -7,7 +7,7 @@ import { PlanningSearchModel } from "../planning_search_model";
 
 const viewRegistry = registry.category("views");
 
-export const PlanningGanttView = {
+export const planningGanttView = {
     ...ganttView,
     SearchModel: PlanningSearchModel,
     Controller: PlanningGanttController,
@@ -16,4 +16,4 @@ export const PlanningGanttView = {
     buttonTemplate: "planning.PlanningGanttView.Buttons",
 };
 
-viewRegistry.add("planning_gantt", PlanningGanttView);
+viewRegistry.add("planning_gantt", planningGanttView);

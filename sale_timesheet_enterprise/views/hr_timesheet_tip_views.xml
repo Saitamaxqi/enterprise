@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
-
     <record id="hr_timesheet_tip_view_tree" model="ir.ui.view">
         <field name="name">hr.timesheet.tip.list</field>
         <field name="model">hr.timesheet.tip</field>
@@ -35,5 +34,4 @@
             </p>
         </field>
     </record>
-
 </odoo>

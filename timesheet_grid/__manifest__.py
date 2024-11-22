@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 # YTI FIXME: This module should be named timesheet_enterprise
 {
@@ -15,18 +14,21 @@
     'data': [
         'data/ir_cron_data.xml',
         'data/mail_template_data.xml',
-        'data/timesheet_grid_data.xml',
-        'data/timesheet_grid_tour.xml',
+        'data/web_tour_data.xml',
         'security/timesheet_security.xml',
         'security/ir.model.access.csv',
-        'views/hr_timesheet_views.xml',
+        'views/account_analytic_line_views.xml',
+        'views/project_task_views.xml',
+        'views/res_users_views.xml',
+        'views/hr_employee.xml',
+        'views/timesheet_grid_menus.xml',
         'views/res_config_settings_views.xml',
         "report/timesheets_analysis_report_views.xml",
-        'wizard/timesheet_merge_wizard_views.xml',
+        'wizard/hr_timesheet_merge_wizard_views.xml',
         'wizard/project_task_create_timesheet_views.xml',
     ],
     'demo': [
-        'data/timesheet_grid_demo.xml',
+        'data/account_analytic_line_demo.xml',
     ],
     'website': ' https://www.odoo.com/app/timesheet',
     'auto_install': ['web_grid', 'hr_timesheet'],

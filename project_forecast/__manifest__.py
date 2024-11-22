@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 {
     'name': "Project Planning",
@@ -10,17 +9,18 @@ Schedule your teams across projects and estimate deadlines more accurately.
     'version': '1.0',
     'depends': ['project', 'planning', 'web_grid'],
     'demo': [
-        'data/project_planning_demo.xml',
-        'data/planning_demo.xml',
+        'data/planning_role_demo.xml',
+        'data/planning_slot_template_demo.xml',
+        'data/planning_slot_demo.xml',
     ],
     'data': [
         'security/project_forecast_security.xml',
-        'views/planning_template_views.xml',
-        'views/planning_templates.xml',
-        'views/planning_views.xml',
-        'views/project_forecast_views.xml',
-        'views/project_views.xml',
-        'report/planning_report_templates.xml',
+        'views/planning_slot_template_views.xml',
+        'views/planning_slot_templates.xml',
+        'views/planning_slot_views.xml',
+        'views/project_project_views.xml',
+        'views/planning_menus.xml',
+        'report/planning_analysis_report_templates.xml',
     ],
     'license': 'OEEL-1',
     'uninstall_hook': '_uninstall_hook',

@@ -1,4 +1,3 @@
-# -*- encoding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
@@ -16,13 +15,16 @@ Better plan your future schedules by considering time effectively spent on old p
 
 """,
     'data': [
-        'report/timesheet_forecast_report_views.xml',
+        'report/planning_analysis_report_views.xml',
+        'report/project_timesheet_forecast_report_analysis_views.xml',
         'security/ir.model.access.csv',
-        'data/project_timesheet_forecast_data.xml',
-        'views/project_forecast_views.xml',
+        'data/ir_filters_data.xml',
+        'views/planning_slot_views.xml',
+        'views/project_timesheet_forecast_menus.xml',
         ],
     'demo': [
-        'demo/project_timesheet_forecast_demo.xml',
+        'data/planning_slot_demo.xml',
+        'data/account_analytic_line_demo.xml',
     ],
     'auto_install': True,
     'license': 'OEEL-1',

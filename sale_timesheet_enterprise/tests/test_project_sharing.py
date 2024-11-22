@@ -5,7 +5,7 @@ from datetime import timedelta
 from odoo import Command, fields
 
 from odoo.addons.project.tests.test_project_sharing import TestProjectSharingCommon
-from odoo.addons.sale_timesheet_enterprise.models.sale import DEFAULT_INVOICED_TIMESHEET
+from odoo.addons.sale_timesheet_enterprise.models.sale_order_line import DEFAULT_INVOICED_TIMESHEET
 
 
 class TestProjectSharing(TestProjectSharingCommon):

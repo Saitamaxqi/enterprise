@@ -1,19 +1,15 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details
 
 from datetime import datetime
-import unittest
 
 from odoo.exceptions import AccessError
-
 from .common import TestCommonForecast
 
 
 class TestForecastAccessRights(TestCommonForecast):
-
     @classmethod
     def setUpClass(cls):
-        super(TestForecastAccessRights, cls).setUpClass()
+        super().setUpClass()
 
         cls.setUpEmployees()
         cls.setUpProjects()

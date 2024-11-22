@@ -2,9 +2,8 @@
 
 from dateutil.relativedelta import relativedelta
 
-from odoo.tests import tagged
 from odoo import fields, Command
-
+from odoo.tests import tagged
 from odoo.addons.project.tests.test_project_profitability import TestProjectProfitabilityCommon
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
 

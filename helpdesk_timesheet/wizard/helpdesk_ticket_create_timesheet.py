@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models
+from odoo import fields, models
 
 
 class HelpdeskTicketCreateTimesheet(models.TransientModel):
@@ -34,4 +34,4 @@ class HelpdeskTicketCreateTimesheet(models.TransientModel):
         return timesheet
 
     def action_delete_timesheet(self):
-         self.ticket_id.user_timer_id.unlink()
+        self.ticket_id.user_timer_id.unlink()

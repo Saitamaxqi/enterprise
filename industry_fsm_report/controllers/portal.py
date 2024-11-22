@@ -5,7 +5,6 @@ from odoo.addons.industry_fsm.controllers.portal import CustomerPortal
 
 
 class CustomerFsmPortal(CustomerPortal):
-
     def _get_worksheet_data(self, task_sudo):
         data = super()._get_worksheet_data(task_sudo)
         worksheet_map = {}

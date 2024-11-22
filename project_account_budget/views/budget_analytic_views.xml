@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-
     <record id="view_budget_analytic_form_dialog" model="ir.ui.view">
         <field name="name">budget.analytic.form.inherit</field>
         <field name="model">budget.analytic</field>
@@ -17,5 +16,4 @@
             </xpath>
         </field>
     </record>
-
 </odoo>

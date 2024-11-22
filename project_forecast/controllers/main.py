@@ -1,13 +1,9 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licens
 
-from odoo import _
 from odoo.addons.planning.controllers.main import ShiftController
-from odoo.http import request
 
 
 class ShiftControllerProject(ShiftController):
-
     def _planning_get(self, planning_token, employee_token, message=False):
         result = super()._planning_get(planning_token, employee_token, message)
         if not result:

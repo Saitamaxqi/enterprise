@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import models, api
@@ -34,7 +33,7 @@ class TimesheetGridMixin(models.AbstractModel):
             records_per_id[record['id']] = {
                 'allocated_hours': convert_hours_to_company_uom(record[self.get_allocated_hours_field()]),
                 'uom': uom_name,
-                'worked_hours': convert_hours_to_company_uom(sum([record[field] for field in self.get_worked_hours_fields()])),
+                'worked_hours': convert_hours_to_company_uom(sum(record[field] for field in self.get_worked_hours_fields())),
             }
         return records_per_id
 

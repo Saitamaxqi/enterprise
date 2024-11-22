@@ -64,6 +64,5 @@
             <field name="view_id" ref="timesheet_grid.timesheet_view_grid_by_employee"/>
             <field name="act_window_id" ref="sale_timesheet.timesheet_action_from_sales_order_item"/>
         </record>
-
     </data>
 </odoo>

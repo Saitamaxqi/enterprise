@@ -2,7 +2,6 @@
 
 import random
 
-
 from odoo import api, fields, models
 
 

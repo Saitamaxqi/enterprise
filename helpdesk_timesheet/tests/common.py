@@ -1,12 +1,9 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo.tests.common import TransactionCase
-
 from odoo.addons.hr_timesheet.tests.test_timesheet import TestCommonTimesheet
 
 
 class TestHelpdeskTimesheetCommon(TestCommonTimesheet):
-
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
