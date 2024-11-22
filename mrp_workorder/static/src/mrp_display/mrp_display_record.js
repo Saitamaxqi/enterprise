@@ -34,6 +34,7 @@ export class MrpDisplayRecord extends Component {
         barcodeTarget: { type: Boolean, optional: true },
         production: { optional: true, type: Object },
         record: Object,
+        removeFromCache: Function,
         isMyWO: { optional: true, type: Boolean },
         selectWorkcenter: { optional: true, type: Function },
         sessionOwner: Object,
@@ -532,7 +533,7 @@ export class MrpDisplayRecord extends Component {
             record: this.props.record,
             params,
             reload: this.env.reload.bind(this),
-            removeFromCache: this.env.searchModel.removeRecordFromCache.bind(this.env.searchModel),
+            removeFromCache: this.props.removeFromCache,
         });
     }
 
@@ -603,7 +604,7 @@ export class MrpDisplayRecord extends Component {
             );
             productions_root.count--;
         } else {
-            this.env.searchModel.removeRecordFromCache(resId);
+            this.props.removeFromCache(resId);
             if (this.quantityProducing < this.quantityToProduce) {
                 // To make sure we see any potentially created backorders
                 await this.env.reload();

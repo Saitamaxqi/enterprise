@@ -34,21 +34,7 @@ export class MrpDisplaySearchModel extends SearchModel {
                 },
             ],
         });
-        this.recordCache = { ids: [] };
         this.workorders = true;
-    }
-
-    removeRecordFromCache(id) {
-        this.recordCache.ids.splice(this.recordCache.ids.indexOf(id), 1);
-    }
-
-    invalidateRecordCache() {
-        this.recordCache.ids = [];
-    }
-
-    async _notify() {
-        this.invalidateRecordCache();
-        await super._notify();
     }
 
     _getFacets() {

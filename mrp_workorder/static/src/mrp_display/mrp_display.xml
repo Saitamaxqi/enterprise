@@ -37,7 +37,7 @@
                                             class="{ 'o_menu_item text-truncate': true, selected: item.isActive }"
                                             checked="item.isActive"
                                             closingMode="'none'"
-                                            onSelected="() => {item.isActive = !item.isActive; this.env.searchModel.invalidateRecordCache();}"
+                                            onSelected="() => {item.isActive = !item.isActive; this.invalidateRecordIdsCache();}"
                                             t-out="item.string"/>
                                 </t>
                             </div>
@@ -73,6 +73,7 @@
                             selectWorkcenter.bind="selectWorkcenter"
                             updateEmployees.bind="useEmployee.getConnectedEmployees"
                             sessionOwner="useEmployee.employees.admin"
+                            removeFromCache.bind="removeRecordIdFromCache"
                             barcodeTarget="barcodeTargetRecord === record.resId"
                             />
                     </t>
@@ -86,6 +87,7 @@
                             selectWorkcenter.bind="selectWorkcenter"
                             updateEmployees.bind="useEmployee.getConnectedEmployees"
                             sessionOwner="useEmployee.employees.admin"
+                            removeFromCache.bind="removeRecordIdFromCache"
                             demoRecord="true"
                             />
                         </t>

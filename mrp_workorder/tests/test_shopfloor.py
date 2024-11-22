@@ -293,6 +293,67 @@ class TestShopFloor(HttpCase):
             {'product_id': product_comp2.id, 'product_uom_qty': 2, 'quantity': 2, 'picked': False},
         ])
 
+    def test_shop_floor_my_wo_filter_with_pin_user(self):
+        """Checks the shown Work Orders (in "My WO" section) are correctly
+        refreshed when selected user uses a PIN code."""
+        warehouse = self.env['stock.warehouse'].search([], limit=1)
+        stock_location = warehouse.lot_stock_id
+        # Create two employees (one with no PIN code and one with a PIN code.)
+        self.env['hr.employee'].create([
+            {'name': 'John Snow'},
+            {'name': 'Queen Elsa', 'pin': '41213'},
+        ])
+        # Create some products and add enough quantity in stock for the components.
+        final_product, comp_1, comp_2 = self.env['product.product'].create([{
+            'name': name,
+            'is_storable': True,
+        } for name in ['Snowman', 'Snowball', 'Carrot']])
+        self.env['stock.quant']._update_available_quantity(comp_1, stock_location, quantity=100)
+        self.env['stock.quant']._update_available_quantity(comp_2, stock_location, quantity=100)
+        # Configure all the needs to create a MO with at least one WO.
+        workcenter = self.env['mrp.workcenter'].create({
+            'name': 'Winter\'s Workshop',
+            'time_start': 10,
+            'time_stop': 5,
+            'time_efficiency': 80,
+        })
+        bom = self.env['mrp.bom'].create({
+            'product_id': final_product.id,
+            'product_tmpl_id': final_product.product_tmpl_id.id,
+            'product_uom_id': final_product.uom_id.id,
+            'product_qty': 1.0,
+            'consumption': 'flexible',
+            'operation_ids': [
+                Command.create({
+                    'name': 'Build the Snowman',
+                    'workcenter_id': workcenter.id,
+                }),
+            ],
+            'bom_line_ids': [
+                Command.create({'product_id': comp_1.id, 'product_qty': 3}),
+                Command.create({'product_id': comp_2.id, 'product_qty': 1}),
+            ]
+        })
+        # Create, confirm and plan two MO.
+        mo_1 = self.env['mrp.production'].create({
+            'product_id': final_product.id,
+            'product_qty': 3,
+            'bom_id': bom.id,
+        })
+        mo_2 = self.env['mrp.production'].create({
+            'product_id': final_product.id,
+            'product_qty': 5,
+            'bom_id': bom.id,
+        })
+        all_mo = mo_1 + mo_2
+        all_mo.action_confirm()
+        all_mo.action_assign()
+        all_mo.button_plan()
+        # Change MO name for easier tracking in the tour.
+        mo_1.name = 'TEST/00001'
+        mo_2.name = 'TEST/00002'
+        self.start_tour('/odoo/shop-floor', 'test_shop_floor_my_wo_filter_with_pin_user', login='admin')
+
     def test_generate_serials_in_shopfloor(self):
         component1 = self.env['product.product'].create({
             'name': 'comp1',
