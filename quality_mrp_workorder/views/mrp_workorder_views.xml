@@ -19,7 +19,7 @@
                 )</attribute>
             </xpath>
             <xpath expr="//button[@name='button_finish']" position="after">
-                <button name="button_finish" type="object" string="Done" class="btn-warning"
+                <button name="button_finish" type="object" title="Done" class="btn-success px-3" icon="fa-check"
                     invisible="(
                         production_state in ('draft', 'done')
                         or working_state == 'blocked'
