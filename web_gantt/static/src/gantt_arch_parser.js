@@ -240,6 +240,17 @@ function getInfoFromRootNode(rootNode) {
         allowedScales.push(...Object.keys(SCALES));
     }
 
+    let defaultScale = attrs.default_scale;
+    if (defaultScale) {
+        if (!allowedScales.includes(defaultScale) && SCALES[defaultScale]) {
+            allowedScales.push(defaultScale);
+        }
+    } else if (allowedScales.includes("month")) {
+        defaultScale = "month";
+    } else {
+        defaultScale = allowedScales[0];
+    }
+
     // Cell precision
     const cellPrecisions = {};
 
@@ -309,7 +320,7 @@ function getInfoFromRootNode(rootNode) {
         dateStartField: attrs.date_start,
         dateStopField: attrs.date_stop,
         defaultRange: attrs.default_range,
-        defaultScale: attrs.default_scale || "month",
+        defaultScale,
         dependencyEnabled,
         dependencyField,
         dependencyInvertedField,

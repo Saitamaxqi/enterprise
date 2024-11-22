@@ -199,6 +199,26 @@ test("default_scale attribute", async () => {
     expect(columnHeaders).toHaveLength(38);
 });
 
+test("default_scale attribute excluded from scales", async () => {
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" default_scale="day" scales="week"/>`,
+    });
+    const { columnHeaders, range } = getGridContent();
+    expect(range).toBe("From: 12/20/2018 to: 12/22/2018");
+    expect(columnHeaders).toHaveLength(38);
+});
+
+test("default_scale omitted, scales provided", async () => {
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" scales="day,week"/>`,
+    });
+    const { columnHeaders, range } = getGridContent();
+    expect(range).toBe("From: 12/20/2018 to: 12/22/2018");
+    expect(columnHeaders).toHaveLength(38);
+});
+
 test("scales attribute", async () => {
     await mountGanttView({
         resModel: "tasks",
