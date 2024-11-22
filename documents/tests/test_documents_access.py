@@ -388,10 +388,23 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         folder_a_a_p.action_update_access_rights(partners={portal_user_2.partner_id.id: (False, None)})
         self.assertFalse(folder_a_a_p.access_ids.filtered(lambda a: a.partner_id == portal_user_2.partner_id))
 
+        # check that the accesses are propagated on the documents even if they are in the trash
+        folder_a_a_p.action_archive()
+        self.folder_a_a.action_update_access_rights(partners={portal_user_2.partner_id.id: ('edit', None)})
+        self.assertEqual(folder_a_a_p.access_ids.filtered(lambda a: a.partner_id == portal_user_2.partner_id).role, 'edit')
+
     def test_action_update_access_rights_internal_propagation(self):
         self.assertEqual(set((self.folder_b + self.document_gif).mapped('access_internal')), {'view'})
         self.folder_b.action_update_access_rights(access_internal='none')
         self.assertEqual(set((self.folder_b + self.document_gif).mapped('access_internal')), {'none'})
+
+        # check that the accesses are propagated on the documents even if they are in the trash
+        self.document_gif.action_archive()
+        self.folder_b.action_update_access_rights(access_internal='edit')
+        self.assertEqual(set((self.folder_b + self.document_gif).mapped('access_internal')), {'edit'})
+
+        self.document_gif.action_update_access_rights(access_internal='view')
+        self.assertEqual((self.folder_b + self.document_gif).mapped('access_internal'), ['edit', 'view'])
 
     def test_action_update_access_rights_link_propagation(self):
         self.assertEqual(set((self.folder_b + self.document_gif).mapped('access_via_link')), {'none'})
