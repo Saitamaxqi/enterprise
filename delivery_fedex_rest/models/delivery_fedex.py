@@ -186,11 +186,11 @@ class ProviderFedex(models.Model):
                 logmessage += Markup("<br/><b>") + _("Required documents:") + Markup("</b> ") + response.get('documents')
 
             attachments = [
-                ('LabelFedex-%s.%s' % (nr, self.fedex_rest_label_file_type), base64.b64decode(label))
+                ('%s-%s.%s' % (self._get_delivery_label_prefix(), nr, self.fedex_rest_label_file_type), base64.b64decode(label))
                 for nr, label in response.get('labels')
             ]
             if response.get('invoice'):
-                attachments.append(('DocumentFedex.pdf', base64.b64decode(response.get('invoice'))))
+                attachments.append(('%s.pdf' % self._get_delivery_doc_prefix(), base64.b64decode(response.get('invoice'))))
 
             for pick in (picking.sale_id.picking_ids if picking.sale_id else picking):
                 pick.message_post(body=logmessage, attachments=attachments)

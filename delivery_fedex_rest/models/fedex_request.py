@@ -1,4 +1,5 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
+import json
 from json import JSONDecodeError
 
 import requests
@@ -7,7 +8,6 @@ from requests import RequestException
 from odoo import _
 from odoo.exceptions import ValidationError, UserError
 from odoo.tools import float_repr
-from odoo.tools.safe_eval import const_eval
 
 TEST_BASE_URL = "https://apis-sandbox.fedex.com"
 PROD_BASE_URL = "https://apis.fedex.com"
@@ -545,7 +545,7 @@ class FedexRequest:
             'return': self.carrier.fedex_rest_extra_data_return_request,
         }.get(request_type) or ''
         try:
-            extra_data = const_eval('{' + extra_data_input + '}')
+            extra_data = json.loads('{' + extra_data_input + '}')
         except SyntaxError:
             raise UserError(_('Invalid syntax for FedEx extra data.')) from None
 

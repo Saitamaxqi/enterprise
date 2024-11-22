@@ -42,7 +42,7 @@
                             <field name="fedex_rest_extra_data_return_request"/>
                         </group>
                     </group>
-                    <group string='Fedex Tutorial' required="delivery_type == 'fedex_rest'">
+                    <group string='Fedex Tutorial' invisible="delivery_type != 'fedex_rest'">
                         <ul>
                             <li>
                                 <b>Go to <a href='https://developer.fedex.com/' target='_blank'>Fedex Developer Website</a> to create a FedEx developer account</b>

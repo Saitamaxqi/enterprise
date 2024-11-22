@@ -604,6 +604,15 @@ resource_name          = delivery_fedex
 replace_edited_strings = false
 keep_translations      = false
 
+[o:odoo:p:odoo-18:r:delivery_fedex_rest]
+file_filter            = delivery_fedex_rest/i18n/<lang>.po
+source_file            = delivery_fedex_rest/i18n/delivery_fedex_rest.pot
+type                   = PO
+minimum_perc           = 0
+resource_name          = delivery_fedex_rest
+replace_edited_strings = false
+keep_translations      = false
+
 [o:odoo:p:odoo-18:r:delivery_iot]
 file_filter            = delivery_iot/i18n/<lang>.po
 source_file            = delivery_iot/i18n/delivery_iot.pot
