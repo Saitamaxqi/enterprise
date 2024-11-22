@@ -367,7 +367,7 @@ export class BankRecKanbanController extends KanbanController {
     /**
     Method called when the user clicks on a card.
     **/
-    async openRecord(record, mode) {
+    async openRecord(record) {
         const currentStLineId = this.bankRecModel ? this.bankRecModel.root.data.st_line_id[0] : null;
         const isSameStLineId = currentStLineId && currentStLineId === record.resId;
         if (isSameStLineId) {

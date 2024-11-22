@@ -30,7 +30,6 @@ patch(Wysiwyg.prototype, {
                         },
                         size: 'md',
                         title: _t("Insert Appointment Link"),
-                        mode: "edit",
                         insertLink: (url) => {
                             this.focus();
                             restoreSelection();

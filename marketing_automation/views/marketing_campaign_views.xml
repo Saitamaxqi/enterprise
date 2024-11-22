@@ -175,11 +175,11 @@
                                             <div class="o_ma_card card">
                                                 <div class="o_ma_title_bar">
                                                     <div class="o_ma_title ps-2 mt-0">
-                                                        <a type="open" t-attf-class="fw-medium mb0 mt0 fs-3 #{read_only_mode and 'o_ma_full' or None}" t-att-title="record.name.raw_value"><field name="name" /></a>
+                                                        <a type="open" t-attf-class="fw-medium mb0 mt0 fs-3 #{!widget.editable and 'o_ma_full' or None}" t-att-title="record.name.raw_value"><field name="name" /></a>
                                                         <div class="o_ma_desc"><field name="activity_type" /></div>
                                                     </div>
                                                     <div class="o_ma_switch">
-                                                        <a t-if="!read_only_mode" type="delete" title="Delete" role="button" class="float-start mt8 fa fa-trash btn btn-link btn-sm" href="#"/>
+                                                        <a t-if="widget.deletable" type="delete" title="Delete" role="button" class="float-start mt8 fa fa-trash btn btn-link btn-sm" href="#"/>
                                                         <span role="img" title="Graph" aria-label="Graph"
                                                              class="o_ma_activity_tab active" data-tab-type="graph">
                                                             <i class="fa fa-pie-chart" />
@@ -226,7 +226,7 @@
                                                     </div>
                                                 </div>
                                                 <field name="domain" widget="domain" options="{'foldable': True, 'model': 'model_name'}" readonly="1" class="o_pane o_pane_filter d-none"/>
-                                                <div t-if="!read_only_mode" class="o_ma_child_activity text-center">
+                                                <div t-if="widget.editable" class="o_ma_child_activity text-center">
                                                     <div class="o_ma_child_activity_title card-footer user-select-none">
                                                         <i class="fa fa-plus-circle" /> Add child activity
                                                     </div>

@@ -20,7 +20,6 @@ export class KnowledgeArticleFormController extends FormController {
     // Open articles in edit mode by default
     static defaultProps = {
         ...FormController.defaultProps,
-        mode: "edit",
     };
     static components = {
         ...FormController.components,

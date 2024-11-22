@@ -1,7 +1,7 @@
 import { ActivityController } from "@mail/views/web/activity/activity_controller";
 
 export class FsmMyTaskActivityController extends ActivityController {
-    openRecord(record, mode) {
+    openRecord(record) {
         if (this.env.isSmall) {
             const resIds = this.model.root.records.map((datapoint) => datapoint.resId);
             return this.action.doAction("industry_fsm.project_task_fsm_mobile_server_action", {
@@ -16,6 +16,6 @@ export class FsmMyTaskActivityController extends ActivityController {
                 },
             });
         }
-        return super.openRecord(record, mode);
+        return super.openRecord(record);
     }
 }

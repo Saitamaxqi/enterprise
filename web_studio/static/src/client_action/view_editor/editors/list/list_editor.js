@@ -110,7 +110,7 @@ const listEditor = {
     props() {
         const props = listView.props(...arguments);
         props.allowSelectors = false;
-        props.editable = false;
+        props.readonly = true;
         props.showButtons = false;
         return props;
     },

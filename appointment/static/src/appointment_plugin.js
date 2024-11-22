@@ -46,7 +46,6 @@ class AppointmentPlugin extends Plugin {
             },
             size: "md",
             title: _t("Insert Appointment Link"),
-            mode: "edit",
             insertLink: (url) =>
                 this.dependencies.link.insertLink(url, _t("Schedule an Appointment")),
         });

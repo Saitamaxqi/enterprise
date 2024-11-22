@@ -1,6 +1,9 @@
 import { _t } from "@web/core/l10n/translation";
 import { Component, onWillUnmount, useEffect, useRef, useSubEnv } from "@odoo/owl";
-import { deleteConfirmationMessage, ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import {
+    deleteConfirmationMessage,
+    ConfirmationDialog,
+} from "@web/core/confirmation_dialog/confirmation_dialog";
 import { FormViewDialog } from "@web/views/view_dialogs/form_view_dialog";
 import { Layout } from "@web/search/layout";
 import { standardViewProps } from "@web/views/standard_view_props";
@@ -159,7 +162,7 @@ export class GanttController extends Component {
                 viewId,
                 resId: props.resId,
                 size: props.size,
-                mode: canEdit ? "edit" : "readonly",
+                readonly: !canEdit,
                 context: props.context,
                 removeRecord,
             },

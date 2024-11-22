@@ -47,7 +47,7 @@ export class DocumentsActivityController extends ActivityController {
      *
      * @override
      */
-    async openRecord(record, mode) {
+    async openRecord(record) {
         for (const record of this.model.root.selection) {
             record.selected = false;
         }
