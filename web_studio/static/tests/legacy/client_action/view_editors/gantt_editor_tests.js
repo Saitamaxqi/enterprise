@@ -1,5 +1,5 @@
 import { browser } from "@web/core/browser/browser";
-import { getFixture, patchWithCleanup } from "@web/../tests/helpers/utils";
+import { click, getFixture, patchWithCleanup } from "@web/../tests/helpers/utils";
 import {
     createMockViewResult,
     createViewEditor,
@@ -89,6 +89,24 @@ QUnit.module(
                 target,
                 ".o_web_studio_property_precision_day .o_select_menu",
                 "Quarter Hour"
+            );
+        });
+
+        QUnit.test("only show allowed scales as default scale", async function (assert) {
+            registry.category("services").add("datetime_picker", datetimePickerService);
+
+            await createViewEditor({
+                serverData,
+                type: "gantt",
+                resModel: "coucou",
+                arch: `<gantt date_start='start' date_stop='stop' scales="day,month"/>`,
+            });
+
+            await click(target, ".o_web_studio_property_default_scale .dropdown-toggle");
+            assert.deepEqual(
+                Array.from(target.querySelectorAll(".o_select_menu_menu .dropdown-item")).map(
+                    (e) => e.textContent
+                )[("Day", "Month")]
             );
         });
     }

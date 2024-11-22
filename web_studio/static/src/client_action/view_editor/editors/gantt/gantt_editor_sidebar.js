@@ -64,6 +64,7 @@ export class GanttEditorSidebar extends Component {
     }
 
     get defaultScalesChoices() {
+        const allowedScales = Object.keys(this.modelParams.scales);
         return [
             { value: "day", label: _t("Day") },
             { value: "week", label: _t("Week") },
@@ -71,7 +72,7 @@ export class GanttEditorSidebar extends Component {
             { value: "month", label: _t("Month") },
             { value: "month_3", label: _t("Month (expanded)") },
             { value: "year", label: _t("Year") },
-        ];
+        ].filter((e) => allowedScales.includes(e.value));
     }
 
     get displayModeChoices() {
