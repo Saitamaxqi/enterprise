@@ -17,6 +17,9 @@ import {
 import { makeTestEnv } from "@web/../tests/helpers/mock_env";
 
 import { setupViewRegistries } from "@web/../tests/views/helpers";
+import { contains } from "@web/../tests/utils";
+import { createEnterpriseWebClient } from "@web_enterprise/../tests/helpers";
+import { registerStudioDependencies } from "./helpers";
 
 QUnit.module("Studio Navbar > AppMenuEditor", (hooks) => {
     const serviceRegistry = registry.category("services");
@@ -65,7 +68,14 @@ QUnit.module("Studio Navbar > AppMenuEditor", (hooks) => {
         serverData.menus = {
             root: { id: "root", children: [1, 2], name: "root", appID: "root" },
             1: { id: 1, children: [], name: "App0", appID: 1 },
-            2: { id: 2, children: [21, 22], name: "App2", appID: 2 },
+            2: {
+                id: 2,
+                children: [21, 22],
+                name: "App2",
+                appID: 2,
+                actionID: 2,
+                xmlid: "test.app2",
+            },
             21: { id: 21, children: [], name: "Menu21", appID: 2 },
             22: { id: 22, children: [221], name: "Menu22", appID: 2 },
             221: { id: 221, children: [], name: "Menu221", appID: 2 },
@@ -304,5 +314,81 @@ QUnit.module("Studio Navbar > AppMenuEditor", (hooks) => {
             "/web/dataset/call_kw/ir.ui.menu/customize",
             "/web/webclient/load_menus",
         ]);
+    });
+
+    QUnit.test("menu editor is updated after editing a menu", async (assert) => {
+        registry.category("services").remove("orm");
+        registerStudioDependencies();
+        serverData.actions = {
+            2: {
+                id: 2,
+                xml_id: "action_2",
+                name: "Partners Action 2",
+                res_model: "partner",
+                type: "ir.actions.act_window",
+                views: [[1, "form"]],
+            },
+        };
+        serverData.models.partner = {
+            partner: {
+                fields: {},
+                records: {},
+            },
+        };
+        serverData.views = {
+            "partner,1,form": "<form />",
+            "partner,false,search": "<search />",
+            "ir.ui.menu,false,form": `<form><field name="name" /></form>`,
+        };
+
+        await createEnterpriseWebClient({
+            serverData,
+            mockRPC: (route, args) => {
+                assert.step(route);
+                if (args.model === "ir.ui.menu" && args.method === "web_save") {
+                    serverData.menus[args.args[0][0]].name = args.args[1].name;
+                }
+            },
+        });
+        await click(target, ".o_app.o_menuitem");
+        await contains(".o_form_view");
+        await click(target, ".o_web_studio_navbar_item button");
+        await contains(".o_web_edit_menu");
+        await click(target, ".o_web_edit_menu");
+        assert.verifySteps([
+            "/web/webclient/load_menus",
+            "/web/action/load",
+            "/web/dataset/call_kw/partner/get_views",
+            "/web/dataset/call_kw/partner/onchange",
+            "/web/dataset/call_kw/partner/get_views",
+            "/web_studio/chatter_allowed",
+            "/web_studio/get_studio_view_arch",
+            "/web/dataset/call_kw/partner/onchange",
+        ]);
+        await click(target.querySelector(".o-web-studio-interactive-list-edit-item"));
+        assert.verifySteps([
+            "/web/dataset/call_kw/ir.ui.menu/get_views",
+            "/web/dataset/call_kw/ir.ui.menu/web_read",
+        ]);
+        assert.strictEqual(
+            target.querySelector('.o_dialog .o_form_view .o_field_widget[name="name"] input').value,
+            "App2"
+        );
+        await editInput(
+            target,
+            '.o_dialog .o_form_view .o_field_widget[name="name"] input',
+            "App2 Modified"
+        );
+        await click(target, ".o_form_button_save");
+        assert.verifySteps([
+            "/web/dataset/call_kw/ir.ui.menu/web_save",
+            "/web/webclient/load_menus",
+        ]);
+        assert.strictEqual(
+            target.querySelector(
+                ".o-web-studio-appmenu-editor .o-web-studio-interactive-list-item-label"
+            ).textContent,
+            "App2 Modified"
+        );
     });
 });

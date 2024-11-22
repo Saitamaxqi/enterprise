@@ -78,6 +78,9 @@ export class Editor extends Component {
         useBus(globalBus, "CLEAR-UNCOMMITTED-CHANGES", (ev) =>
             newBus.trigger("CLEAR-UNCOMMITTED-CHANGES", ev.detail)
         );
+        useBus(globalBus, "MENUS:APP-CHANGED", (ev) =>
+            newBus.trigger("MENUS:APP-CHANGED", ev.detail)
+        );
         newBus.addEventListener("CLEAR-CACHES", () => globalBus.trigger("CLEAR-CACHES"));
 
         useSubEnv({
