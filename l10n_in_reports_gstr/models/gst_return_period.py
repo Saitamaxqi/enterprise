@@ -1658,6 +1658,9 @@ class L10n_InGstReturnPeriod(models.Model):
                             for line in matched_bills.line_ids:
                                 if line.tax_line_id.amount < 0:
                                     amount_total += line.balance * sign
+                            if 'bill_pos' in gstr2b_bill and gstr2b_bill['bill_pos'] != matched_bills.l10n_in_state_id.l10n_in_tin:
+                                place_of_supply = self.env['res.country.state'].search([('l10n_in_tin', '=', gstr2b_bill['bill_pos'])], limit=1)
+                                exception.append(_("The place of supply as GSTR-2B is %s", place_of_supply.name))
                             if 'bill_total' in gstr2b_bill and not (amount_total - tolerance_amount <= gstr2b_bill['bill_total'] <= amount_total + tolerance_amount):
                                 exception.append(_("The total amount as per GSTR-2B is %s", gstr2b_bill['bill_total']))
                             if 'vat' in gstr2b_bill and gstr2b_bill['vat'] != matched_bills.partner_id.vat:
@@ -1823,6 +1826,7 @@ class L10n_InGstReturnPeriod(models.Model):
                                 'bill_value_json': doc_data,
                                 'bill_type': section_code == 'cdnr' and 'credit_note' or 'bill',
                                 'section_code': section_code,
+                                "bill_pos": doc_data.get('pos'),
                             }
                             vals_list.append(vals)
                             if bill_date < self.start_date:

@@ -55,6 +55,8 @@ class TestReports(L10nInTestAccountGstReportsCommon):
 
         cls.overseas_bill = cls.bill_with_conflict_ref = cls._init_inv(move_type='in_invoice', ref='BOE/123', taxes=cls.comp_igst_18, partner=cls.partner_foreign, line_vals={'price_unit': 100000})
 
+        cls.bill_with_conflict_pos = cls._init_inv(move_type='in_invoice', ref='INV/014', taxes=cls.comp_igst_18, partner=cls.partner_b)
+
         cls.report = cls.gstr_report = cls.env['l10n_in.gst.return.period'].create({
             'company_id': cls.default_company.id,
             'periodicity': 'monthly',
@@ -106,6 +108,7 @@ class TestReports(L10nInTestAccountGstReportsCommon):
         self.assertEqual(sez_bill.l10n_in_gstr2b_reconciliation_status, "gstr2_bills_not_in_odoo")
         self.assertEqual(bool(sez_bill.l10n_in_exception), False)
         self.assertEqual(sez_bill.l10n_in_gst_treatment, "special_economic_zone")
+        self.assertEqual(self.bill_with_conflict_pos.l10n_in_gstr2b_reconciliation_status, "partially_matched")
 
     def test_gstr2b_late_reconciliation(self):
         """
