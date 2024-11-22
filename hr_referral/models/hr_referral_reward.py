@@ -67,8 +67,8 @@ class HrReferralReward(models.Model):
 
         return {
             'type': 'ir.actions.client',
-            'tag': 'reload',
-        }
+            'tag': 'soft_reload',
+        }   
 
     def action_get_employee_awarded(self):
         points_ids = self.env['hr.referral.points'].search([('hr_referral_reward_id', 'in', self.ids)]).ids
