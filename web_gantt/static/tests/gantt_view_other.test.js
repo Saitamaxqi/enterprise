@@ -698,6 +698,64 @@ test("A task should always have a title (pill_label='1', scale 'month')", async 
     }
 });
 
+test("A task should always have a title (pill_label='1', scale 'year')", async () => {
+    Tasks._fields.allocated_hours = fields.Float({ string: "Allocated Hours" });
+    Tasks._records = [
+        {
+            id: 1,
+            name: "Task 1",
+            start: "2018-12-15 08:30:00",
+            stop: "2018-12-15 19:30:00", // span only one day
+            allocated_hours: 0,
+        },
+        {
+            id: 2,
+            name: "Task 2",
+            start: "2018-12-16 08:30:00",
+            stop: "2018-12-16 19:30:00", // span only one day
+            allocated_hours: 6,
+        },
+        {
+            id: 3,
+            name: "Task 3",
+            start: "2018-12-16 08:30:00",
+            stop: "2018-12-17 18:30:00", // span two days
+            allocated_hours: 6,
+        },
+        {
+            id: 4,
+            name: "Task 4",
+            start: "2018-12-16 08:30:00",
+            stop: "2019-02-18 19:30:00", // span two months
+            allocated_hours: 6,
+        },
+    ];
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `
+            <gantt date_start="start" date_stop="stop" pill_label="True" default_scale="year">
+                <field name="allocated_hours"/>
+            </gantt>
+        `,
+        context: {
+            default_start_date: "2018-01-01",
+            default_stop_date: "2018-12-31",
+        },
+    });
+    const titleMapping = [
+        { name: "Task 1", title: "12/15 - Task 1" },
+        { name: "Task 2", title: "12/16 - Task 2" },
+        { name: "Task 3", title: "12/16 - 12/17 - Task 3" },
+        { name: "Task 4", title: "12/16 - 2/18 - Task 4" },
+    ];
+    expect(queryAllTexts(".o_gantt_pill")).toEqual(titleMapping.map((e) => e.title));
+    const pills = queryAll(".o_gantt_pill");
+    for (let i = 0; i < pills.length; i++) {
+        await contains(pills[i]).click();
+        expect(".o_popover .popover-header").toHaveText(titleMapping[i].name);
+    }
+});
+
 test("position of no content help in sample mode", async () => {
     patchWithCleanup(GanttController.prototype, {
         setup() {

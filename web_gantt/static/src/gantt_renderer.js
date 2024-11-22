@@ -1326,9 +1326,9 @@ export class GanttRenderer extends Component {
         // Start & End Dates
         if (scaleId === "year" && !spanAccrossDays) {
             labelElements.push(startDate.toLocaleString(yearlessDateFormat));
-        } else if (spanAccrossDays && (
+        } else if (scaleId === "year" || (spanAccrossDays && (
             startDate < this.currentStartDate || this.currentStopDate.endOf("day") < stopDate
-        )) {
+        ))) {
             labelElements.push(startDate.toLocaleString(yearlessDateFormat));
             labelElements.push(stopDate.toLocaleString(yearlessDateFormat));
         }
