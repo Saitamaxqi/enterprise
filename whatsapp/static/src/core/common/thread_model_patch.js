@@ -11,6 +11,9 @@ patch(Thread.prototype, {
         }
         return super.importantCounter;
     },
+    get autoOpenChatWindowOnNewMessage() {
+        return this.channel_type === "whatsapp" || super.autoOpenChatWindowOnNewMessage;
+    },
     get canLeave() {
         return this.channel_type !== "whatsapp" && super.canLeave;
     },
