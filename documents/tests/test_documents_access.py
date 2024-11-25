@@ -1061,3 +1061,19 @@ class TestDocumentsAccess(TransactionCaseDocuments):
             doc_in_context.with_context(
                 active_id=doc.id
             ).with_user(self.internal_user).action_execute_embedded_action(embedded_action.id)
+
+    def test_groupless_embedded_action_availability(self):
+        """ Ensure that an embedded action which should otherwise be visible to a given document
+        record remains visible in the case where it has `groups_ids=[]`.
+        """
+        embedded_action = self.env['ir.embedded.actions'].create({
+            'name': 'public action',
+            'parent_action_id': self.env.ref('documents.document_action').id,
+            'action_id': self.env['ir.actions.actions'].search([
+                ('type', '=', 'ir.actions.server'),
+            ], limit=1).id,
+            'parent_res_model': 'documents.document',
+            'groups_ids': [Command.clear()],
+            'parent_res_id': self.document_txt.folder_id.id,
+        })
+        self.assertIn(embedded_action, self.document_txt.available_embedded_actions_ids)

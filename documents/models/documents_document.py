@@ -539,7 +539,9 @@ class DocumentsDocument(models.Model):
                 ('action_id.type', '=', 'ir.actions.server'),
                 ('parent_res_model', '=', 'documents.document'),
                 ('parent_res_id', 'in', folder_ids),
-                ('groups_ids', 'in', [False] + self.env.user.groups_id.ids),
+                '|',
+                    ('groups_ids', 'any', [('id', 'in', self.env.user.groups_id.ids)]),
+                    ('groups_ids', '=', False),
             ],
             order='sequence',
         )
