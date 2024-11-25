@@ -386,7 +386,7 @@ class SendCloud:
                 message = _('Some packages in your transfer are too heavy for the heaviest available shipping method.')
             message += _("\nTry to distribute your products across your packages so that they weigh less than %(max_weight)s %(unit)s or choose another carrier.", max_weight=user_uom_max_weight, unit=user_weight_uom.name)
             if overweight_products:
-                product_moves = format_list(self.env, overweight_products.mapped('name'))
+                product_moves = format_list(picking.env, overweight_products.mapped('name'))
                 message += _("""\nAdditionally, some individual product(s) are too heavy for the heaviest available shipping method.
                              \nDivide the quantity of the following product(s) across your packages if possible or choose another carrier:\n\t%s""", product_moves)
             raise UserError(message)
