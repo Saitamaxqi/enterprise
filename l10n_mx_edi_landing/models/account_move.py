@@ -1,7 +1,8 @@
 # coding: utf-8
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models
+from odoo import _, models
+from odoo.tools.misc import format_date
 
 
 class AccountMove(models.Model):
@@ -22,5 +23,14 @@ class AccountMove(models.Model):
                 ])
                 if not landed_costs:
                     continue
-                line.l10n_mx_edi_customs_number = ','.join(list(set(landed_costs.mapped('l10n_mx_edi_customs_number'))))
+
+                # keep the customs numbers and dates in the same order
+                customs_data = {(format_date(self.env, lc.date, date_format='yyyy-MM-dd'), lc.l10n_mx_edi_customs_number) for lc in landed_costs}
+                customs_dates, customs_numbers = zip(*customs_data) if customs_data else ([], [])
+
+                line.l10n_mx_edi_customs_number = ','.join(customs_numbers)
+                formatted_dates = ','.join(customs_dates)
+                if formatted_dates:
+                    line.name += '\n' + _('Customs number: %s', formatted_dates)
+
         return super()._post(soft)
