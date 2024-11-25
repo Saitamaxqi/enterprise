@@ -1,21 +1,36 @@
-import base64
-
+from odoo import Command
 from odoo.tests.common import HttpCase, tagged
 
 
 class LoadMenusTests(HttpCase):
 
+    maxDiff = None
+
     def setUp(self):
         super().setUp()
         self.menu = self.env["ir.ui.menu"].create({
-            "name": "test_menu",
+            "name": "root menu (test)",
             "parent_id": False,
         })
+        self.action = self.env["ir.actions.act_window"].create({
+            "name": "action (test)",
+            "res_model": "res.users",
+            "view_ids": [Command.create({"view_mode": "form"})],
+        })
+        self.menu_child = self.env["ir.ui.menu"].create({
+            "name": "child menu (test)",
+            "parent_id": self.menu.id,
+            "action": f"{self.action._name},{self.action.id}",
+        })
 
-        def search(*args, **kwargs):
-            return self.menu
+        menus = self.menu + self.menu_child
 
-        self.patch(type(self.env["ir.ui.menu"]), "search", search)
+        # Patch search to only return these menus
+        origin_search_fetch = self.env.registry["ir.ui.menu"].search_fetch
+        def search_fetch(self, domain, *args, **kwargs):
+            return origin_search_fetch(self, domain + [('id', 'in', menus.ids)], *args, **kwargs)
+
+        self.patch(self.env.registry["ir.ui.menu"], "search_fetch", search_fetch)
         self.authenticate("admin", "admin")
 
     def test_web_icon(self):
@@ -26,36 +41,46 @@ class LoadMenusTests(HttpCase):
 
         expected = {
             str(self.menu.id): {
-                "actionID": False,
-                "actionModel": False,
+                "actionID": self.action.id,
+                "actionModel": "ir.actions.act_window",
                 "actionPath": False,
                 "appID": self.menu.id,
-                "children": [],
+                "children": [self.menu_child.id],
                 "id": self.menu.id,
-                "name": "test_menu",
+                "name": "root menu (test)",
                 "webIcon": False,
                 "webIconData": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8/5+BCQAHBQICJmhD1AAAAABJRU5ErkJggg==",
                 "webIconDataMimetype": "image/png",
-                "xmlid": ""
+                "xmlid": "",
+            },
+            str(self.menu_child.id): {
+                "actionID": self.action.id,
+                "actionModel": "ir.actions.act_window",
+                "actionPath": False,
+                "appID": self.menu.id,
+                "children": [],
+                "id": self.menu_child.id,
+                "name": "child menu (test)",
+                "webIcon": False,
+                "webIconData": False,
+                "webIconDataMimetype": False,
+                "xmlid": "",
             },
             "root": {
                 "actionID": False,
                 "actionModel": False,
                 "actionPath": False,
                 "appID": False,
-                "children": [
-                    self.menu.id
-                ],
+                "backgroundImage": None,
+                "children": [self.menu.id],
                 "id": "root",
                 "name": "root",
                 "webIcon": None,
                 "webIconData": None,
                 "webIconDataMimetype": None,
                 "xmlid": "",
-                "backgroundImage": None,
-            }
+            },
         }
-
         self.assertDictEqual(menu_loaded.json(), expected)
 
 
