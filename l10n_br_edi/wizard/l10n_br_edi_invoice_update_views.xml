@@ -9,7 +9,7 @@
                     <group>
                         <field name="move_id" invisible="1"/>
                         <field name="is_service_invoice" invisible="1"/>
-                        <field name="reason" invisible="is_service_invoice" required="is_service_invoice"/>
+                        <field name="reason" invisible="is_service_invoice" required="not is_service_invoice"/>
                         <field name="send_email" invisible="is_service_invoice"/>
                     </group>
                 </group>

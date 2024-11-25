@@ -27,9 +27,9 @@ class L10n_Br_EdiInvoiceUpdate(models.TransientModel):
         help='Technical field used to hide the "reason" field.',
     )
 
-    @api.constrains("mode", "reason")
+    @api.constrains("move_id", "mode", "reason")
     def _constrains_reason(self):
-        for wizard in self:
+        for wizard in self.filtered(lambda wizard: not wizard.is_service_invoice):
             if wizard.mode == "cancel" and not 15 <= len(wizard.reason or "") <= 255:
                 raise ValidationError(_("The reason must contain at least 15 characters and cannot exceed a maximum of 255 characters."))
 
