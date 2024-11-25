@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="hr.res_users_view_form_profile" />
             <field name="arch" type="xml">
                 <xpath expr="//group[@name='managers']" position="inside">
-                    <field name="timesheet_manager_id" readonly="not can_edit"/>
+                    <field name="timesheet_manager_id" string="Timesheet" readonly="not can_edit"/>
                 </xpath>
                 <xpath expr="//group[@name='managers']" position="attributes">
                     <attribute name="invisible">0</attribute>

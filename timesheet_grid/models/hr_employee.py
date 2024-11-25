@@ -32,7 +32,7 @@ class HrEmployee(models.Model):
         return [('groups_id', 'in', [group.id])] if group else []
 
     timesheet_manager_id = fields.Many2one(
-        'res.users', string='Timesheet',
+        'res.users', string='Timesheet Approver',
         compute='_compute_timesheet_manager', store=True, readonly=False,
         domain=_get_timesheet_manager_id_domain,
         help='Select the user responsible for approving "Timesheet" of this employee.\n'
