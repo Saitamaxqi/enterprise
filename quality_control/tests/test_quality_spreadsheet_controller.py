@@ -56,7 +56,7 @@ class TestQualitySpreadsheet(TestQualityCommon, SpreadsheetTestCase, HttpCase):
         self.assertEqual(action['params']['check_id'], check.id)
         self.assertEqual(action['params']['spreadsheet_id'], spreadsheet.id)
 
-        response = self.url_open('/spreadsheet/data/quality.spreadsheet.template/%s' % spreadsheet.id)
+        response = self.url_open('/spreadsheet/data/quality.check.spreadsheet/%s' % spreadsheet.id)
         data = response.json()
         self.assertEqual(data['quality_check_cell'], 'A1')
 
