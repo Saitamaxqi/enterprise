@@ -237,7 +237,7 @@ msgstr "Het loonschema van de contracten moet ingesteld zijn om te exporteren na
 #: code:addons/l10n_be_hr_payroll_group_s/models/hr_payroll_export_group_s.py:0
 msgid ""
 "The pay schedule of the contracts must be the same to export to Group S."
-msgstr
+msgstr ""
 "Het loonschema van de contracten moet identiek zijn om te exporteren naar Group S."
 
 #. module: l10n_be_hr_payroll_group_s
