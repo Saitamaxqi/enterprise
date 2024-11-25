@@ -13,8 +13,7 @@ class ProjectProject(models.Model):
     use_documents = fields.Boolean("Documents", default=True)
     documents_folder_id = fields.Many2one(
         'documents.document', string="Folder", copy=False, context=lambda env: {
-            'default_folder_id': (env.ref('documents_project.document_project_folder', raise_if_not_found=False)
-                                  or env["documents.document"]).id,
+            'default_folder_id': env.company.documents_project_folder_id.id,
         },
         domain="[('type', '=', 'folder'), ('shortcut_document_id', '=', False), "
                "'|', ('company_id', '=', False), ('company_id', '=', company_id)]",
@@ -62,7 +61,7 @@ class ProjectProject(models.Model):
     def _create_missing_folders(self):
         folders_to_create_vals = []
         projects_with_folder_to_create = []
-        documents_project_folder_id = self.env.ref('documents_project.document_project_folder').id
+        documents_project_folder_id = self.env.company.documents_project_folder_id.id
 
         for project in self:
             if not project.documents_folder_id:

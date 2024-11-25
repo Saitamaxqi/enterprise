@@ -14,7 +14,9 @@ Add the ability to create invoices from the document module.
     'data': [
         'data/documents_document_data.xml',
         'data/ir_actions_server_data.xml',
+        'data/res_company_data.xml',
         'views/project_views.xml',
+        'views/res_config_settings.xml',
     ],
     'demo': [
         'data/ir_actions_server_demo.xml',

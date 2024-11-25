@@ -3,7 +3,7 @@
 
 from odoo import fields, models, _
 from odoo import api
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 from odoo.osv import expression
 
 
@@ -36,27 +36,46 @@ class DocumentsDocument(models.Model):
             ])
         return domain
 
-    def _project_folder_in_self_or_ancestors(self, project_folder):
+    def _project_folder_or_ancestor_in_self(self, project_folder):
         project_folder_ancestors = {int(ancestor_id) for ancestor_id in project_folder.sudo().parent_path.split('/')[:-1]}
         return project_folder_ancestors & set(self.ids)
 
     @api.ondelete(at_uninstall=False)
     def unlink_except_project_folder(self):
+        # custom folders assigned to company.documents_project_folder_id are protected by _unlink_except_company_folders
         project_folder = self.env.ref('documents_project.document_project_folder')
-        if self._project_folder_in_self_or_ancestors(project_folder):
+        if self._project_folder_or_ancestor_in_self(project_folder):
             raise UserError(_('The "%s" workspace is required by the Project application and cannot be deleted.', project_folder.name))
 
-    @api.constrains('company_id')
-    def _check_no_company_on_projects_folder(self):
-        if not self.company_id:
+    @api.constrains('active')
+    def _archive_except_project_folder(self):
+        if all(d.active for d in self):
             return
-        projects_folder = self.env.ref('documents_project.document_project_folder')
-        if projects_folder in self and projects_folder.company_id:
-            raise UserError(_("You cannot set a company on the %s folder.", projects_folder.name))
+        project_base_folder = self.env.ref('documents_project.document_project_folder', raise_if_not_found=False)
+        if project_base_folder and project_base_folder in self and not project_base_folder.active:
+            raise ValidationError(_("You cannot archive the project base folder (%s).", project_base_folder.name))
 
     @api.constrains('company_id')
-    def _check_company_is_projects_company(self):
-        for folder in self.filtered(lambda d: d.type == 'folder'):
+    def _check_company_fits_projects_and_settings(self):
+        folders = self.filtered(lambda d: d.type == 'folder')
+        if not folders:
+            return
+        project_base_folder = self.env.ref('documents_project.document_project_folder', raise_if_not_found=False)
+        if project_base_folder in folders and project_base_folder.company_id:
+            raise ValidationError(_("You cannot set a company on the %s folder.", project_base_folder.name))
+
+        if companies_to_check := self.env['res.company'].search([
+            ('documents_project_folder_id', 'in', folders.ids),
+            ('documents_project_folder_id.company_id', '!=', False)
+        ]):
+            if wrong_companies := companies_to_check.filtered(
+                    lambda c: c.documents_project_folder_id.company_id.id not in {False, c.id}):
+                companies_list = "\n- ".join(f"{company.name}: {company.documents_project_folder_id.name}"
+                                             for company in wrong_companies)
+                raise ValidationError(_("Company Project Folders cannot be linked to another company.%s",
+                                        f'\n- {companies_list}'))
+
+        for folder in folders:
             if folder.project_ids and folder.project_ids.company_id:
                 different_company_projects = folder.project_ids.filtered(lambda p: p.company_id != self.company_id)
                 if not different_company_projects:
@@ -67,7 +86,7 @@ class DocumentsDocument(models.Model):
                 else:
                     lines = [f"- {project.name}" for project in different_company_projects]
                     message = _('This folder should remain in the same company as the following projects to which it is linked:\n%s\n\nPlease update the company of those projects, or leave the company of this workspace empty.', '\n'.join(lines))
-                raise UserError(message)
+                raise ValidationError(message)  # noqa: E8507
 
     def write(self, vals):
         write_result = super().write(vals)
@@ -80,7 +99,7 @@ class DocumentsDocument(models.Model):
         ):
             documents_without_partner.partner_id = partner
         project_folder = self.env.ref('documents_project.document_project_folder')
-        if not vals.get('active', True) and self._project_folder_in_self_or_ancestors(project_folder):
+        if not vals.get('active', True) and self._project_folder_or_ancestor_in_self(project_folder):
             raise UserError(_('The "%s" workspace is required by the Project application and cannot be archived.', project_folder.name))
         return write_result
 

@@ -77,7 +77,7 @@ class TestDocumentsBridgeProject(TestProjectCommon, TransactionCaseDocuments):
         """
         Tests the "Parent Workspace" setting
         """
-        parent_folder = self.env.ref('documents_project.document_project_folder')
+        parent_folder = self.env.company.documents_project_folder_id
         self.assertEqual(self.project_pigs.documents_folder_id.folder_id, parent_folder, "The workspace of the project should be a child of the 'Projects' workspace.")
 
     def test_project_folder_creation(self):
