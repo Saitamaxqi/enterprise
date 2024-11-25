@@ -565,7 +565,7 @@
         <field name="act_window_id" ref="project_task_action_fsm"/>
     </record>
 
-    <record id="project_task_action_fsm_map_view_activity" model="ir.actions.act_window.view">
+    <record id="project_task_action_fsm_view_activity" model="ir.actions.act_window.view">
         <field name="sequence" eval="60"/>
         <field name="view_mode">activity</field>
         <field name="view_id" ref="industry_fsm.project_task_view_activity"/>
