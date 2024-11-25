@@ -1224,6 +1224,9 @@ export default class BarcodePickingModel extends BarcodeModel {
         if (args.destLocation) {
             params.location_dest_id = args.destLocation.id;
         }
+        if (args.srcLocation) {
+            params.location_id = args.srcLocation;
+        }
         return params;
     }
 
@@ -1794,6 +1797,7 @@ export default class BarcodePickingModel extends BarcodeModel {
                         package: quant.package_id,
                         resultPackage: quant.package_id,
                         owner: quant.owner_id,
+                        srcLocation: quant.location_id,
                     });
                     await this._createNewLine({ fieldsParams });
                 }

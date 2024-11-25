@@ -3844,6 +3844,27 @@ registry.category("web_tour.tours").add("test_pack_multiple_location_03", {
     ],
 });
 
+registry.category("web_tour.tours").add('test_pack_source_location', {
+    steps: () => [
+        {
+            trigger: '.o_stock_barcode_main_menu',
+            run: 'scan WHINT',
+        },
+        {
+            trigger: '.o_scan_message.o_scan_product',
+            run: 'scan PACK123666',
+        },
+        {
+            trigger: '.o_barcode_line',
+            run: function() {
+                const line = helper.getLine({ barcode: 'product1' });
+                helper.assertLineSourceLocation(line, "WH/Stock/Section 4");
+            },
+        },
+        ...stepUtils.validateBarcodeOperation(),
+    ],
+});
+
 registry.category("web_tour.tours").add("test_put_in_pack_from_multiple_pages", {
     steps: () => [
         {

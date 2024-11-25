@@ -1579,6 +1579,34 @@ class TestPickingBarcodeClientAction(TestBarcodeClientAction):
         self.start_tour(url, 'test_pack_multiple_location_03', login='admin', timeout=180)
         self.assertFalse(delivery_picking.move_line_ids.package_id)
 
+    def test_pack_source_location(self):
+        """ Put a package in shelf4. Then this test will scan
+        this package, the source location of line should be the same location of the package.
+        """
+        self.clean_access_rights()
+        grp_pack = self.env.ref('stock.group_tracking_lot')
+        grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')
+        self.env.user.write({'groups_id': [Command.link(grp_pack.id), Command.link(grp_multi_loc.id)]})
+        self.picking_type_internal.active = True
+        self.picking_type_internal.show_entire_packs = False
+        action_id = self.env.ref('stock_barcode.stock_barcode_action_main_menu')
+        url = "/web#action=" + str(action_id.id)
+        # Creates a package with a quant in it.
+        pack1 = self.env['stock.quant.package'].create({
+            'name': 'PACK123666',
+        })
+        self.env['stock.quant']._update_available_quantity(
+            product_id=self.product1,
+            location_id=self.shelf4,
+            quantity=5,
+            package_id=pack1,
+        )
+
+        self.assertEqual(self.env['stock.quant']._get_available_quantity(self.product1, self.shelf4, package_id=pack1), 5)
+        self.start_tour(url, 'test_pack_source_location', login='admin', timeout=180)
+        self.assertEqual(self.env['stock.quant']._get_available_quantity(self.product1, self.shelf4, package_id=pack1), 0)
+        self.assertEqual(self.env['stock.quant']._get_available_quantity(self.product1, self.stock_location, package_id=pack1), 5)
+
     def test_put_in_pack_from_multiple_pages(self):
         """ In an internal picking where prod1 and prod2 are reserved in shelf1 and shelf2, processing
         all these products and then hitting put in pack should move them all in the new pack.
