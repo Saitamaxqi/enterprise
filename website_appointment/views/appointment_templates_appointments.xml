@@ -285,15 +285,17 @@
     </template>
 
     <template id='appointment_booking_resource_description' name="Avatars">
+        <t t-set="avatars_max_count" t-value="avatars_max_count or 6"/>
+        <t t-set="booking_count" t-value="len(appointment.staff_user_ids)"/>
         <t t-if="appointment.avatars_display == 'show' and appointment.schedule_based_on == 'users'">
-            <div t-att-class="booking_count == 1 and 'badge d-flex align-items-center py-0 ps-0 text-bg-light fw-normal rounded-pill' or ''">
+            <div t-att-class="booking_count == 1 and 'badge d-flex align-items-center rounded-pill py-0 ps-0 bg-light fw-normal' or ''">
                 <span class="o_appointment_user_avatars d-flex">
-                    <t t-foreach="appointment.staff_user_ids[:5]" t-as="staff_user">
+                    <t t-foreach="appointment.staff_user_ids[:(avatars_max_count - 1)]" t-as="staff_user">
                         <img t-attf-src="/appointment/#{appointment.id}/avatar?user_id=#{staff_user.id}&amp;avatar_size=128" t-att-title="staff_user.name"
                             class="rounded-circle o_appointment_avatar_background o_appointment_user_avatar"/>
                     </t>
-                    <span t-if="booking_count == 6" class="rounded-circle o_appointment_user_avatar d-flex align-items-center justify-content-center bg-light"> +1 </span>
-                    <span t-if="booking_count > 6" class="rounded-circle o_appointment_user_avatar d-flex align-items-center justify-content-center bg-light"> +<t t-out="booking_count - 5"/></span>
+                    <span t-if="booking_count == avatars_max_count" class="o_appointment_user_avatar d-flex align-items-center justify-content-center rounded-circle bg-light"> +1 </span>
+                    <span t-if="booking_count > avatars_max_count" class="o_appointment_user_avatar d-flex align-items-center justify-content-center rounded-circle bg-light"> +<t t-out="booking_count - (avatars_max_count - 1)"/></span>
                 </span>
                 <span t-if="booking_count == 1"><t t-out="appointment.staff_user_ids[0].name"/></span>
             </div>
