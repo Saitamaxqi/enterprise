@@ -128,7 +128,7 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
             record: this.props.record,
             readonly: true,
             embeddedComponents: true,
-        }
+        };
     }
 
     get picInfo() {

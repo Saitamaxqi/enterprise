@@ -21,6 +21,7 @@ export class MrpRegisterProductionDialog extends MrpQualityCheckConfirmationDial
     }
 
     async doActionAndClose(action, saveModel = true, reloadChecks = false) {
+        this.state.disabled = true;
         if (saveModel) {
             await this.props.record.save();
             // Calls `set_qty_producing` because the onchange won't be triggered.
