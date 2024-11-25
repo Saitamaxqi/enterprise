@@ -264,7 +264,9 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
                 # - checks all suggested: incoming email to + cc are included
                 # - for all notified people: expected 'email_to' is them
                 # ------------------------------------------------------------
-                suggested_all = ticket.with_user(self.helpdesk_user)._message_get_suggested_recipients()
+                suggested_all = ticket.with_user(self.helpdesk_user)._message_get_suggested_recipients(
+                    reply_discussion=True, no_create=False,
+                )
                 expected_all = [
                     # ticket creates partners and followers for everyone, hence no suggested people :()
                 ]
@@ -416,7 +418,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
             'partner_name': partner_name,
         })
         ticket.partner_email = formatted_email
-        data = ticket._message_get_suggested_recipients()[0]
+        data = ticket._message_get_suggested_recipients(no_create=True)[0]
         self.assertEqual(data['email'], email)
         self.assertEqual(data['name'], partner_name)
         self.assertDictEqual(data['create_values'], {'company_id': self.helpdesk_manager.company_id.id, 'phone': partner_phone})
