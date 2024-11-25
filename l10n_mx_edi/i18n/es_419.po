@@ -194,6 +194,11 @@ msgstr ""
 
 #. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document
+msgid "<span>Predial Account</span>"
+msgstr "<span>Cuenta Predial</span>"
+
+#. module: l10n_mx_edi
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document
 msgid "<span>Product code</span>"
 msgstr "<span>Código Producto</span>"
 
@@ -230,6 +235,11 @@ msgstr "<strong>Forma de Pago:</strong>"
 msgid "<strong>This document is a printed representation of a CFDI</strong>"
 msgstr ""
 "<strong>Este documento es una representación impresa de un CFDI</strong>"
+
+#. module: l10n_mx_edi
+#: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document
+msgid "<strong>Usage</strong>"
+msgstr "<strong>Uso</strong>"
 
 #. module: l10n_mx_edi
 #: model_terms:ir.ui.view,arch_db:l10n_mx_edi.report_invoice_document
