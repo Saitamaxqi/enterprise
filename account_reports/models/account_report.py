@@ -6836,7 +6836,7 @@ class AccountReportLine(models.Model):
     @api.depends('groupby', 'user_groupby')
     def _compute_display_custom_groupby_warning(self):
         for line in self:
-            line.display_custom_groupby_warning = line.get_external_id() and line.user_groupby != line.groupby
+            line.display_custom_groupby_warning = line.get_external_id()[line.id] and line.user_groupby != line.groupby
 
     @api.constrains('groupby', 'user_groupby')
     def _validate_groupby(self):
