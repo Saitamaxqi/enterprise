@@ -10,7 +10,7 @@ import {
     queryFirst,
     queryText,
 } from "@odoo/hoot-dom";
-import { animationFrame, delay, runAllTimers } from "@odoo/hoot-mock";
+import { advanceTime, animationFrame, delay, runAllTimers } from "@odoo/hoot-mock";
 import { Domain } from "@web/core/domain";
 import {
     clickFieldDropdown,
@@ -664,7 +664,7 @@ test("hr.timesheet (grid)(timer): check that individual and total overtime are p
 
     await hover(columnTotalEl);
     await animationFrame();
-    await animationFrame();
+    await advanceTime(10); // debounce on mouse over event.
     expect(".o_grid_bar_chart_container.o_grid_highlighted .o_grid_bar_chart_overtime").toBeDisplayed({
         message: "The overtime of the total column hovered should be visible",
     });
