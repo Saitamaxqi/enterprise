@@ -16,6 +16,9 @@ class IrUiMenu(models.Model):
                 'account_accountant.menu_account_group',
                 'account_reports.menu_action_account_report_multicurrency_revaluation',
             ]
-            hidden_menu_ids = {self.env.ref(r).sudo().id for r in accounting_menus if self.env.ref(r, raise_if_not_found=False)}
+            hidden_menu_ids = {
+                menu_id for ref_menu in accounting_menus
+                if (menu_id := self.env['ir.model.data']._xmlid_to_res_id(ref_menu))
+            }
             return visible_ids - hidden_menu_ids
         return visible_ids
