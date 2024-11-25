@@ -10,6 +10,10 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
     def setUp(self):
         super().setUp()
 
+        self.env.ref('base.user_admin').write({
+            'email': 'mitchell.admin@example.com',
+        })
+
         self.clean_access_rights()
         grp_lot = self.env.ref('stock.group_production_lot')
         grp_multi_loc = self.env.ref('stock.group_stock_multi_locations')

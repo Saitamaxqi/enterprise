@@ -10,6 +10,13 @@ from odoo.addons.stock_barcode.tests.test_barcode_client_action import TestBarco
 
 @tagged('post_install', '-at_install')
 class TestPickingBarcodeClientAction(TestBarcodeClientAction):
+    @classmethod
+    def setUpClass(cls):
+        super().setUpClass()
+        cls.env.ref('base.user_admin').write({
+            'email': 'mitchell.admin@example.com',
+        })
+
     def test_internal_picking_from_scratch(self):
         """ Opens an empty internal picking and creates following move through the form view:
           - move 2 `self.product1` from shelf1 to shelf2

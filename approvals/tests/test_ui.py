@@ -9,6 +9,9 @@ from odoo.addons.base.tests.common import HttpCaseWithUserDemo
 class TestUi(HttpCaseWithUserDemo):
 
     def test_ui(self):
+        self.env.ref('base.user_admin').write({
+            'email': 'mitchell.admin@example.com',
+        })
         self.env.ref('approvals.approval_category_data_business_trip').write({
             'approver_ids': [(5, 0, 0), (0, 0, {'user_id': self.env.ref('base.user_admin').id})],
         })

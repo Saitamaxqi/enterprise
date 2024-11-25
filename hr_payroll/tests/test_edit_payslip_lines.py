@@ -7,6 +7,9 @@ from odoo.addons.hr_payroll.tests.common import TestPayslipBase
 class TestPayslipLineEdit(TestPayslipBase, HttpCase):
     def test_ui(self):
         """ Test editing payslip line flow"""
+        self.env.ref('base.user_admin').write({
+            'email': 'mitchell.admin@example.com',
+        })
         self.richard_emp.contract_ids[0].state = 'open'
         self.richard_emp.contract_ids[0].wage = 1234
 

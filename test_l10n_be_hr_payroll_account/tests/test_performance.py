@@ -36,7 +36,8 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
             'documents_hr_settings': True,
         })
 
-        admin = cls.env['res.users'].search([('login', '=', 'admin')])
+        admin = cls.env.ref('base.user_admin')
+        admin.email = 'mitchell.admin@example.com'
         admin.company_ids |= cls.company
 
         cls.env.user.tz = 'Europe/Brussels'

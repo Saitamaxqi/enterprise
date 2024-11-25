@@ -13,6 +13,7 @@ class TestUi(HttpCase, TestWebsiteSaleRentingCommon):
     def test_website_sale_renting_ui(self):
         self.env.ref('base.user_admin').write({
             'name': 'Mitchell Admin',
+            'email': 'mitchell.admin@example.com',
             'street': '215 Vine St',
             'phone': '+1 555-555-5555',
             'city': 'Scranton',

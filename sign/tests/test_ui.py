@@ -60,6 +60,7 @@ class TestUi(odoo.tests.HttpCase, SignRequestCommon):
         self.env.ref('base.user_admin').write({
             'name': 'Mitchell Admin',
             'sign_signature': img_content,
+            'email': 'mitchell.admin@example.com',
         })
         self.start_tour("/odoo", 'test_sign_flow_tour', login='admin')
 

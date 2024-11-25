@@ -10,6 +10,9 @@ class TestStudioApprovals(TransactionCase):
     def setUpClass(cls):
         super().setUpClass()
         cls.admin_user = cls.env.ref("base.user_admin")
+        cls.admin_user.write({
+            'email': 'mitchell.admin@example.com',
+        })
         cls.demo_user = cls.env["res.users"].search([("login", "=", "demo")], limit=1)
         if not cls.demo_user:
             cls.demo_user = cls.env["res.users"].create({

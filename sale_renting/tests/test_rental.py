@@ -665,6 +665,10 @@ class TestRentalCommon(TransactionCase):
 class TestUi(HttpCase):
 
     def test_rental_flow(self):
+        self.env.ref('base.user_admin').write({
+            'email': 'mitchell.admin@example.com',
+        })
+
         # somehow, the name_create and onchange of the partner_id
         # in a quotation trigger a re-rendering that loses
         # the focus of some fields, preventing the tour to

@@ -19,6 +19,7 @@ class TestUi(HttpCase, TestWebsiteSaleRentingCommon):
             'company_id': cls.env.company.id,
             'company_ids': [(4, cls.env.company.id)],
             'name': 'Mitchell Admin',
+            'email': 'mitchell.admin@example.com',
             'street': '215 Vine St',
             'phone': '+1 555-555-5555',
             'city': 'Scranton',
