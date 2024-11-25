@@ -14,9 +14,12 @@ class TestWorkorderClientActionCommon(TestMrpWorkorderCommon):
     @classmethod
     def setUpClass(cls):
         super(TestWorkorderClientActionCommon, cls).setUpClass()
-        cls.env.ref('base.user_admin').name = "Mitchell Admin"
-        cls.picking_type_manufacturing = cls.env.ref('stock.warehouse0').manu_type_id
         cls.user_admin = cls.env.ref('base.user_admin')
+        cls.user_admin.write({
+            'name': 'Mitchell Admin',
+            'email': 'mitchell.admin@example.com'
+        })
+        cls.picking_type_manufacturing = cls.env.ref('stock.warehouse0').manu_type_id
         cls.potion = cls.env['product.product'].create({
             'name': 'Magic Potion',
             'is_storable': True})
