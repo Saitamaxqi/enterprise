@@ -489,6 +489,7 @@ class SaleOrderLine(models.Model):
                 'parent_line_id': line.id,
                 'name': line.name + "(*)" if line in description_needed else line.name,
                 'product_id': product.id,
+                'product_uom_id': line.product_uom_id.id,
                 'product_uom_qty': 0 if subscription_state == '7_upsell' else line.product_uom_qty,
                 'price_unit': line.price_unit,
             }))
@@ -532,6 +533,7 @@ class SaleOrderLine(models.Model):
                     'product_id': line.product_id.id,
                     'name': line.name,
                     'product_uom_qty': line.product_uom_qty,
+                    'product_uom_id': line.product_uom_id.id,
                     'price_unit': line.price_unit,
                     'discount': 0,
                     'order_id': subscription.id
