@@ -28,18 +28,21 @@ class RestaurantTable(models.Model):
         return tables
 
     def write(self, vals):
-        table = super().write(vals)
+        res = super().write(vals)
 
-        if not self.active:
-            self.appointment_resource_id.sudo().active = False
-        else:
-            if self.appointment_resource_id:
-                self.appointment_resource_id.sudo().write({
-                    'name': f'{self.floor_id.name} - {self.table_number}',
-                    'capacity': self.seats,
-                })
+        if 'active' in vals:
+            if not vals['active']:
+                self.appointment_resource_id.sudo().active = False
+            else:
+                for table in self:
+                    if not table.appointment_resource_id:
+                        continue
+                    table.appointment_resource_id.sudo().write({
+                        'name': f'{table.floor_id.name} - {table.table_number}',
+                        'capacity': table.seats,
+                    })
 
-        return table
+        return res
 
     def unlink(self):
         for table in self:
