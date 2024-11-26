@@ -78,20 +78,25 @@ export class MapController extends Component {
      *
      * @param {number[]} ids
      */
-    openRecords(ids) {
+    openRecords(ids, newWindow) {
         if (ids.length > 1) {
-            this.action.doAction({
-                type: "ir.actions.act_window",
-                name: this.env.config.getDisplayName() || _t("Untitled"),
-                views: [
-                    [false, "list"],
-                    [false, "form"],
-                ],
-                res_model: this.props.resModel,
-                domain: [["id", "in", ids]],
-            });
+            this.action.doAction(
+                {
+                    type: "ir.actions.act_window",
+                    name: this.env.config.getDisplayName() || _t("Untitled"),
+                    views: [
+                        [false, "list"],
+                        [false, "form"],
+                    ],
+                    res_model: this.props.resModel,
+                    domain: [["id", "in", ids]],
+                },
+                {
+                    newWindow,
+                }
+            );
         } else {
-            this.action.switchView("form", { resId: ids[0] });
+            this.action.switchView("form", { resId: ids[0] }, { newWindow });
         }
     }
 }

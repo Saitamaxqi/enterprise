@@ -2079,6 +2079,37 @@ describe.tags("desktop")("map_view_desktop", () => {
         expect.verifySteps(["switchView"]);
     });
 
+    test("Middle click on open button open record in tab", async () => {
+        mockService("action", {
+            switchView(name, props, options) {
+                expect.step("switchView");
+                expect(name).toBe("form", { message: "The view switched to should be form" });
+                expect(props).toEqual({ resId: 1 }, { message: "Props should be correct" });
+                expect(options).toEqual({ newWindow: true });
+            },
+        });
+        Task._views.form = "<form/>";
+
+        Task._records = TEST_RECORDS.task.oneRecord;
+        Partner._records = TEST_RECORDS.partner.oneLocatedRecord;
+
+        await mountView({
+            config: { views: [[false, "form"]] },
+            type: "map",
+            resModel: "project.task",
+            arch: `<map res_partner="partner_id" routing="1" />`,
+        });
+
+        await contains("div.leaflet-marker-icon").click();
+        expect(
+            "div.leaflet-popup-pane button.btn.btn-primary.o-map-renderer--popup-buttons-open"
+        ).toHaveCount(1, { message: "The button should be present in the dom" });
+        await contains(
+            "div.leaflet-popup-pane button.btn.btn-primary.o-map-renderer--popup-buttons-open"
+        ).click({ ctrlKey: true });
+        expect.verifySteps(["switchView"]);
+    });
+
     test("Test the lack of open button", async () => {
         Task._records = TEST_RECORDS.task.oneRecord;
         Partner._records = TEST_RECORDS.partner.oneLocatedRecord;

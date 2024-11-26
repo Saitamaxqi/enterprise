@@ -3,6 +3,7 @@ import { _t } from "@web/core/l10n/translation";
 
 import { renderToString } from "@web/core/utils/render";
 import { delay } from "@web/core/utils/concurrency";
+import { isMacOS } from "@web/core/browser/feature_detection";
 
 import {
     Component,
@@ -267,8 +268,19 @@ export class MapRenderer extends Component {
             .getElement()
             .querySelector("button.o-map-renderer--popup-buttons-open");
         if (openBtn) {
-            openBtn.onclick = () => {
-                this.props.onMarkerClick(markerInfo.ids);
+            openBtn.onclick = (ev) => {
+                if (ev.button === 0 || ev.button === 1) {
+                    const ctrlKey = isMacOS() ? ev.metaKey : ev.ctrlKey;
+                    const isMiddleClick = (ctrlKey && ev.button === 0) || ev.button === 1;
+                    this.props.onMarkerClick(markerInfo.ids, isMiddleClick);
+                }
+            };
+            openBtn.onauxclick = (ev) => {
+                if (ev.button === 0 || ev.button === 1) {
+                    const ctrlKey = isMacOS() ? ev.metaKey : ev.ctrlKey;
+                    const isMiddleClick = (ctrlKey && ev.button === 0) || ev.button === 1;
+                    this.props.onMarkerClick(markerInfo.ids, isMiddleClick);
+                }
             };
         }
         return popup;
