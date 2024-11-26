@@ -19,4 +19,5 @@ class HrEmployee(models.Model):
         string="PTKP Code",
         default="tk0",
         required=True,
+        groups="hr.group_hr_user",
         help="Employee's tax category that depends on their marital status and number of children")
