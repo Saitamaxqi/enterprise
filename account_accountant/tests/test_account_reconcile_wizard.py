@@ -235,6 +235,30 @@ class TestAccountReconcileWizard(AccountTestInvoicingCommon):
         ]
         self.assertWizardReconcileValues(line_1 + line_2 + line_3, wizard_input_values, expected_values)
 
+    def test_write_off_both_same_foreign_currency_ensure_no_exchange_diff(self):
+        """ Test that if both AMLs have the same foreign currency and rate, the amount in company currency
+            is computed on the write-off in such a way that no exchange diff is created.
+        """
+        foreign_currency = self.setup_other_currency('CAD', rounding=0.01, rates=[('2016-01-01', 1 / 0.225)])
+        new_date = fields.Date.from_string('2017-02-01')
+        line_1 = self.create_line_for_reconciliation(21.38, 95.0, foreign_currency, '2016-01-01')
+        line_2 = self.create_line_for_reconciliation(1.13, 5.0, foreign_currency, '2016-01-01')
+        line_3 = self.create_line_for_reconciliation(1.13, 5.0, foreign_currency, '2016-01-01')
+        wizard_input_values = {
+            'journal_id': self.misc_journal.id,
+            'account_id': self.write_off_account.id,
+            'label': 'Write-Off Test Label',
+            'allow_partials': False,
+            'date': new_date,
+        }
+        expected_values = [
+            {'account_id': self.receivable_account.id, 'name': 'Write-Off Test Label',
+             'balance': -23.64, 'amount_currency': -105.0, 'currency_id': foreign_currency.id},
+            {'account_id': self.write_off_account.id, 'name': 'Write-Off Test Label',
+             'balance': 23.64, 'amount_currency': 105.0, 'currency_id': foreign_currency.id},
+        ]
+        self.assertWizardReconcileValues(line_1 + line_2 + line_3, wizard_input_values, expected_values)
+
     def test_write_off_with_transfer_account_same_currency(self):
         line_1 = self.create_line_for_reconciliation(1000.0, 1000.0, self.company_currency, '2016-01-01')
         line_2 = self.create_line_for_reconciliation(100.0, 100.0, self.company_currency, '2016-01-01', account_1=self.payable_account)

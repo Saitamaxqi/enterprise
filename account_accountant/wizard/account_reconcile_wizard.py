@@ -339,17 +339,51 @@ class AccountReconcileWizard(models.TransientModel):
 
             # Compute write-off amounts
             most_recent_line = max(amls, key=lambda aml: aml.date)
-            if most_recent_line.currency_id == reco_currency:
-                rate = abs(most_recent_line.amount_currency / most_recent_line.balance) if most_recent_line.balance else 0.0
+            if not most_recent_line.amount_currency:
+                rate = rate_lower_bound = rate_upper_bound = 0.0
+            elif most_recent_line.currency_id == reco_currency:
+                rate = abs(most_recent_line.balance / most_recent_line.amount_currency)
+                # By estimating the rate from the most recent line, we are exposing ourselves to an estimation error because
+                # balance is amount_currency * rate, rounded to the nearest precision of the company currency. We now compute
+                # the lower/upper bounds of the estimated rate in order to determine which other AMLs share the same rate.
+                # For AMLs that share the same rate, we will use the existing amount_residual instead of recomputing it
+                # based on the amount_residual_currency and the rate.
+                rate_tolerance = amls.company_currency_id.rounding / 2 / abs(most_recent_line.amount_currency)
+                rate_lower_bound = rate - rate_tolerance
+                rate_upper_bound = rate + rate_tolerance
             else:
-                rate = wizard.reco_currency_id._get_conversion_rate(amls.company_currency_id, reco_currency, amls.company_id, most_recent_line.date)
+                rate = self.env['res.currency']._get_conversion_rate(reco_currency, amls.company_currency_id, amls.company_id, most_recent_line.date)
+                rate_lower_bound = rate_upper_bound = rate
+
+            # If an AML's rate is close enough to the reconciliation rate that it could be the same,
+            # use the `amount_residual` instead of computing `amount_residual_currency / rate` and rounding.
+            # We do this for the case where a single rate is used for all reconciled AMLs so we want to avoid
+            # creating an exchange diff because that would be weird.
+            amls_where_amounts_at_correct_rate = {
+                aml
+                for aml, residual_values in residual_amounts.items()
+                if (
+                    aml.currency_id == reco_currency
+                    and abs(aml.balance) >= aml.company_currency_id.round(abs(aml.amount_currency) * rate_lower_bound)
+                    and abs(aml.balance) <= aml.company_currency_id.round(abs(aml.amount_currency) * rate_upper_bound)
+                )
+            }
 
             wizard.amount_currency = sum(
                 residual_values[wizard.reco_currency_id]['residual']
                 for residual_values in residual_amounts.values()
                 if residual_values
             )
-            wizard.amount = amls.company_currency_id.round(wizard.amount_currency / rate) if rate else 0.0
+            amount_raw = sum(
+                (
+                    residual_values[amls.company_currency_id]['residual']
+                    if aml in amls_where_amounts_at_correct_rate else
+                    residual_values[wizard.reco_currency_id]['residual'] * rate
+                )
+                for aml, residual_values in residual_amounts.items()
+                if residual_values
+            )
+            wizard.amount = amls.company_currency_id.round(amount_raw)
             wizard.force_partials = False
 
     @api.depends('move_line_ids')
