@@ -1020,6 +1020,16 @@ class SaleOrder(models.Model):
             order.subscription_id.with_context(**context).write({'order_line': create_values + update_values})
         return create_values, update_values
 
+    def _get_closing_end_date(self):
+        """
+        Get the end date for a subscription that is being closed.
+        :return: date
+        """
+        self.ensure_one()
+        if self.plan_id.user_closable and self.plan_id.user_closable_options == 'end_of_period' and self.env.context.get("allow_future_end_date"):
+            return self.next_invoice_date - relativedelta(days=1)
+        return fields.Date.context_today(self)
+
     def _set_closed_state(self, renew=False):
         renewal_order = self.subscription_child_ids.filtered(lambda s: s.subscription_state in SUBSCRIPTION_PROGRESS_STATE)
         if renew and renewal_order and self.state == 'sale':
@@ -1041,10 +1051,7 @@ class SaleOrder(models.Model):
             end_of_contract_reason_id = self.env.ref('sale_subscription.close_reason_end_of_contract').id
             close_reason_unknown_id = self.env.ref('sale_subscription.close_reason_unknown').id
         for sub in self:
-            if sub.plan_id.user_closable and sub.plan_id.user_closable_options == 'end_of_period':
-                end_date = sub.next_invoice_date - relativedelta(days=1)
-            else:
-                end_date = today
+            end_date = sub._get_closing_end_date()
             if renew or end_date <= today:
                 sub._set_closed_state(renew)
             values = {'end_date': end_date}

@@ -245,7 +245,7 @@ class CustomerPortal(payment_portal.PaymentPortal):
             if close_reason:
                 if kw.get('closing_text'):
                     order_sudo.message_post(body=_('Closing text: %s', kw.get('closing_text')))
-                order_sudo.set_close(close_reason_id=close_reason.id)
+                order_sudo.with_context(allow_future_end_date=True).set_close(close_reason_id=close_reason.id)
         return request.redirect(f'/my/subscriptions/{order_id}?access_token={access_token}')
 
     @http.route(['/my/subscriptions/<int:order_id>/change_plan'], type='http', methods=["POST"], auth="public", website=True)
