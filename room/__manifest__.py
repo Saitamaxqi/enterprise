@@ -50,7 +50,6 @@
             ('include', 'web._assets_bootstrap_backend'),
             "web/static/src/libs/fontawesome/css/font-awesome.css",
             "web/static/lib/odoo_ui_icons/*",
-            'web/static/src/legacy/scss/ui.scss',
             'web/static/src/scss/base_frontend.scss',
             'web/static/src/core/utils/transitions.scss',
             'web/static/src/core/notifications/notification.scss',
