@@ -6,7 +6,7 @@ import json
 from odoo import api, fields, models, _
 from odoo.exceptions import UserError
 from odoo.osv import expression
-from odoo.tools import format_datetime
+from odoo.tools import format_datetime, OrderedSet
 
 
 class SocialPostTemplate(models.Model):
@@ -111,7 +111,7 @@ class SocialPostTemplate(models.Model):
         """See field 'help' for more information."""
         image_fields = ['image_ids'] + list(self._images_fields().values())
         for post in self:
-            all_image_ids = {image_id for field in image_fields for image_id in post[field].ids}
+            all_image_ids = OrderedSet([image_id for field in image_fields for image_id in post[field].ids])
             post.image_urls = json.dumps([f'/web/image/{image_id}' for image_id in all_image_ids if image_id])
 
     @api.depends('account_ids')

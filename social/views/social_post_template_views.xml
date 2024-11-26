@@ -38,7 +38,8 @@
                                 placeholder="Write a message or upload an image"
                                 invisible="is_split_per_media"/>
                             <field name="image_ids" widget="many2many_binary"
-                                invisible="is_split_per_media"/>
+                                invisible="is_split_per_media"
+                                options="{'accepted_file_extensions': 'image/jpg, image/jpeg, image/jpe, image/png, image/gif, image/webp'}"/>
                         </group>
                         <notebook name="media_customization" invisible="not is_split_per_media"/>
                         <group name="previews_placeholder" class="o_social_post_preview_group m-0"
