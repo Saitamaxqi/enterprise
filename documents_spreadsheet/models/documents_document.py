@@ -118,6 +118,16 @@ class DocumentsDocument(models.Model):
             }) for access in self.access_ids if access.role],
         })
 
+    def _get_access_update_domain(self):
+        """Allow to change the access of the frozen folders / spreadsheets only if we open their share panel."""
+        return expression.AND([
+            super()._get_access_update_domain(),
+            expression.OR([
+                [('id', 'in', self.ids)],
+                [('handler', 'not in', ('frozen_folder', 'frozen_spreadsheet'))],
+            ]),
+        ])
+
     @api.model_create_multi
     def create(self, vals_list):
         vals_list = self._assign_spreadsheet_default_values(vals_list)

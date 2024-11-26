@@ -805,12 +805,13 @@ class DocumentsDocument(models.Model):
             # records that we might need to update
             candidates_domain = [
                 (field, '!=', value),
-                *([] if self.env.su else [('user_permission', '=', 'edit')]),
                 # the update is done only "target -> shortcut",
                 # but not "shortcut -> target"
                 ('shortcut_document_id', '=', False),
                 ('id', 'child_of', self.ids),
             ]
+            candidates_domain = expression.AND([candidates_domain, self._get_access_update_domain()])
+
             candidates = self.env['documents.document']._search(
                 candidates_domain).select('id', 'folder_id', 'shortcut_document_id', field)
             shortcuts_to_check_owner_target_access |= self.search([('shortcut_document_id', 'any', candidates_domain)])
@@ -874,18 +875,18 @@ class DocumentsDocument(models.Model):
 
         # use `_search` to respect access rules and to use `_search_user_permission`
         to_update_domain = [
-            *([] if self.env.su else [('user_permission', '=', 'edit')]),
             ('shortcut_document_id', '=', False),  # update "target -> shortcuts" but not "shortcut -> target"
             ('id', 'child_of', self.ids),
         ]
+        to_update_domain = expression.AND([to_update_domain, self._get_access_update_domain()])
+
         documents = self.env['documents.document']._search(to_update_domain).select('id')
 
         for (role, expiration_date), partners in values_to_update.items():
-            update_fields = []
             if role not in ('edit', 'view'):
                 raise UserError(_("Invalid role."))  # The public method would have returned a more insightful message
-            else:
-                update_fields.append(SQL('role = %(role)s', role=role))
+
+            update_fields = [SQL('role = %(role)s', role=role)]
             if expiration_date is not None:
                 update_fields.append(SQL(
                     'expiration_date = %(expiration_date)s',
@@ -956,8 +957,12 @@ class DocumentsDocument(models.Model):
             'access_ids',
             'user_permission',
         ])
+        self.env['documents.access'].invalidate_model()
 
         shortcuts_to_check_owner_target_access._unlink_shortcut_if_target_inaccessible()
+
+    def _get_access_update_domain(self):
+        return [] if self.env.su else [('user_permission', '=', 'edit')]
 
     def action_see_documents(self):
         if self.type != "folder":
@@ -1621,17 +1626,28 @@ class DocumentsDocument(models.Model):
                 folder = self.env['documents.document'].browse(vals['folder_id'])
                 if not folder.active:
                     raise UserError('It is not possible to create documents in an archived folder.')
+                vals_partners_ids = [val[2]['partner_id'] for val in vals_values['access_ids']]
+                folder_access = [
+                    Command.create({'partner_id': access.partner_id.id, 'role': access.role})
+                    for access in folder.access_ids
+                    if (
+                        access.role
+                        and access.partner_id != owner.partner_id
+                        and access.partner_id.id not in vals_partners_ids
+                    )
+                ]
                 vals_values.update({
                     'access_via_link': folder.access_via_link,
                     'access_internal': folder.access_internal,
                     'access_ids':
                         vals_values['access_ids']
-                        + [
-                            Command.create({'partner_id': access.partner_id.id, 'role': access.role})
-                            for access in folder.access_ids
-                            if access.role and access.partner_id != owner.partner_id
-                        ] + ([Command.create({'partner_id': folder.owner_id.partner_id.id, 'role': 'edit'})]
-                             if folder.owner_id != odoobot and folder.owner_id != owner else []
+                        + folder_access + (
+                             [Command.create({'partner_id': folder.owner_id.partner_id.id, 'role': 'edit'})]
+                             if (
+                                folder.owner_id != odoobot
+                                and folder.owner_id != owner
+                                and folder.owner_id.partner_id.id not in (vals_partners_ids + [a[2]['partner_id'] for a in folder_access])
+                            ) else []
                         ),
                 })
             vals.update((k, v) for k, v in vals_values.items() if k not in old_vals)

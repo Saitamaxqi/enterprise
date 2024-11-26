@@ -69,7 +69,7 @@ class TestDocumentRequest(MailCommon):
         self.assertEqual(access_doc_partner_1.expiration_date,
                          datetime.combine(fields.Date.today() + relativedelta(days=3), datetime.max.time()))
         access_doc_employee = access_by_partner[self.partner_employee]
-        self.assertEqual(access_doc_employee.role, False)
+        self.assertEqual(access_doc_employee.role, 'edit')
         self.assertFalse(access_doc_employee.expiration_date)
 
         # Updating the activity deadline, update the access expiration
@@ -115,7 +115,7 @@ class TestDocumentRequest(MailCommon):
         self.assertEqual(document.access_via_link, 'edit')
         access_by_partner = {a.partner_id: a for a in document.access_ids}
         access_doc_employee = access_by_partner[self.partner_employee]
-        self.assertEqual(access_doc_employee.role, False)
+        self.assertEqual(access_doc_employee.role, 'edit')
         self.assertFalse(access_doc_employee.expiration_date)
 
         # As the requestee has no user, updating the activity deadline should not change any access expiration

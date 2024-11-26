@@ -80,6 +80,46 @@ class SpreadsheetDocuments(SpreadsheetTestCommon):
         document = self.env["documents.document"].browse(spreadsheet_id)
         self.assertEqual(document.folder_id, self.folder)
 
+    def test_action_update_access_rights(self):
+        folder = self.env['documents.document'].create({'name': 'Folder', 'type': 'folder'})
+        frozen_folder, document = self.env['documents.document'].create([
+            {'name': 'Frozen Folder', 'type': 'folder', 'handler': 'frozen_folder', 'folder_id': folder.id},
+            {'name': 'Document', 'folder_id': folder.id},
+        ])
+        frozen_spreadsheet = self.env['documents.document'].create({'name': 'Spreadsheet', 'handler': 'frozen_spreadsheet'})
+        partner = self.env['res.partner'].create({'name': 'Partner'})
+
+        # The update does not propagate on the frozen folders / spreadsheets
+        folder.action_update_access_rights(access_internal='edit', partners={partner: ('edit', None)})
+        self.assertEqual(folder.access_internal, 'edit')
+        self.assertEqual(folder.access_ids.role, 'edit')
+        self.assertEqual(document.access_internal, 'edit')
+        self.assertEqual(document.access_ids.role, 'edit')
+        self.assertEqual(frozen_folder.access_internal, 'none')
+        self.assertFalse(frozen_folder.access_ids.role)
+        self.assertEqual(frozen_spreadsheet.access_internal, 'none')
+        self.assertFalse(frozen_spreadsheet.access_ids.role)
+
+        folder.action_update_access_rights(access_internal='view', partners={partner: ('view', None)})
+        self.assertEqual(folder.access_internal, 'view')
+        self.assertEqual(folder.access_ids.role, 'view')
+        self.assertEqual(document.access_internal, 'view')
+        self.assertEqual(document.access_ids.role, 'view')
+        self.assertEqual(frozen_folder.access_internal, 'none')
+        self.assertFalse(frozen_folder.access_ids.role)
+        self.assertEqual(frozen_spreadsheet.access_internal, 'none')
+        self.assertFalse(frozen_spreadsheet.access_ids.role)
+
+        frozen_folder.action_update_access_rights(access_internal='view', partners={partner: ('view', None)})
+        self.assertEqual(frozen_folder.access_internal, 'view')
+        self.assertEqual(frozen_folder.access_ids.role, 'view')
+        self.assertEqual(frozen_spreadsheet.access_internal, 'none')
+        self.assertFalse(frozen_spreadsheet.access_ids.role)
+
+        frozen_spreadsheet.action_update_access_rights(access_internal='view', partners={partner: ('view', None)})
+        self.assertEqual(frozen_spreadsheet.access_internal, 'view')
+        self.assertEqual(frozen_spreadsheet.access_ids.role, 'view')
+
     def archive_existing_spreadsheet(self):
         """Existing spreadsheet in the database can influence some test results"""
         self.env["documents.document"].search([("handler", "=", "spreadsheet")]).active = False
