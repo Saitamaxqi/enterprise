@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 import datetime
 from datetime import date
@@ -6,13 +5,14 @@ from freezegun import freeze_time
 from unittest.mock import patch
 from dateutil.relativedelta import relativedelta
 
+from odoo import Command, http
+from odoo.tests.common import new_test_user, tagged
+from odoo.tools import mute_logger
+
+from odoo.addons.sale.models.sale_order import SaleOrder
 from odoo.addons.sale_subscription.tests.common_sale_subscription import TestSubscriptionCommon
 from odoo.addons.payment.tests.common import PaymentCommon
 from odoo.addons.payment.tests.http_common import PaymentHttpCommon
-from odoo.tests.common import new_test_user, tagged
-from odoo.tools import mute_logger
-from odoo import Command
-from odoo import http
 
 
 @tagged("post_install", "-at_install", "subscription_controller")
@@ -393,6 +393,69 @@ class TestSubscriptionController(PaymentHttpCommon, PaymentCommon, TestSubscript
                 self.assertEqual(renewal_so.state, 'sale')
                 self.assertEqual(renewal_so.invoice_count, 1, "Only one invoice from previous subscription should be registered")
                 self.assertEqual(renewal_so.next_invoice_date, datetime.date.today() + datetime.timedelta(days=31))
+
+    def test_portal_payment_confirmation_email(self):
+        """Check that payment confirmation emails aren't sent for validation transactions."""
+        def process_notification_data(data):
+            tx = self.env['payment.transaction'].search(
+                [('reference', '=', data['reference'])],
+                limit=1,
+            )
+            tx.token_id = tx.tokenize and self.env['payment.token'].create({
+                'partner_id': self.subscription.partner_id.id,
+                'payment_method_id': self.payment_method_id,
+                'provider_id': self.provider.id,
+                'provider_ref': 'test123',
+            })
+            tx._set_done()
+
+        self.portal_user.email = 'chell@aperture.com'
+        self.subscription.partner_id = self.portal_partner
+        self.subscription.action_confirm()
+
+        subscription_tx_url = f'/my/subscriptions/{self.subscription.id}/transaction'
+        base_tx_route_values = {
+            'access_token': None,
+            'amount': 0.0,
+            'flow': 'direct',
+            'is_validation': False,
+            'landing_route': self.subscription.get_portal_url(),
+            'order_id': self.subscription.id,
+            'payment_method_id': self.payment_method_id,
+            'provider_id': self.provider.id,
+            'token_id': None,
+            'tokenization_requested': False,
+        }
+
+        with patch.object(SaleOrder, '_send_order_notification_mail') as notification_mail_mock:
+            # Log in and save a payment method for a subscription
+            self.authenticate(self.portal_user.login, self.portal_user.login)
+            tx_response = self.make_jsonrpc_request(subscription_tx_url, {
+                **base_tx_route_values,
+                'is_validation': True,
+                'tokenization_requested': True,
+            })
+            process_notification_data(tx_response)
+            self.make_jsonrpc_request('/payment/status/poll', {})
+            self.assertFalse(
+                notification_mail_mock.call_count,
+                "Setting a payment token shouldn't send a payment succeeded email",
+            )
+
+            # Use saved payment method to pay subscription
+            tx_response = self.make_jsonrpc_request(subscription_tx_url, {
+                **base_tx_route_values,
+                'amount': self.subscription.amount_total,
+                'flow': 'token',
+                'token_id': self.subscription.payment_token_id.id,
+            })
+            process_notification_data(tx_response)
+            self.make_jsonrpc_request('/payment/status/poll', {})
+            self.assertEqual(
+                notification_mail_mock.call_count,
+                1,
+                "Paying a subscription should send one payment succeeded email",
+            )
 
     def test_portal_quote_document(self):
         product_document = self.env['product.document'].create({
