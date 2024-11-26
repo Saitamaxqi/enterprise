@@ -297,7 +297,7 @@ class TestReportEditorUIUnit(HttpCase):
 
     @property
     def tour_url(self):
-        return f"/odoo/action-studio?mode=editor&_action={self.testAction.id}&_tab=reports&_report_id={self.report.id}&menu_id={self.testMenu.id}"
+        return f"/odoo/action-{self.testAction.id}/studio?mode=editor&_tab=reports&_report_id={self.report.id}&menu_id={self.testMenu.id}"
 
     def _clear_routing(self):
         self.env.registry.clear_cache('routing')
@@ -940,7 +940,7 @@ class TestReportEditorUIUnit(HttpCase):
 
         self.report.model = dummy.model
         self.report.name = "dummy test"
-        self.start_tour(f"/odoo/action-studio?mode=editor&_action={self.testAction.id}&_tab=reports&menu_id={self.testMenu.id}", "web_studio.test_record_model_differs_from_action", login="admin")
+        self.start_tour(f"/odoo/action-{self.testAction.id}/studio?mode=editor&_tab=reports&menu_id={self.testMenu.id}", "web_studio.test_record_model_differs_from_action", login="admin")
 
     def test_recursive_t_calls(self):
         self.authenticate("admin", "admin")

@@ -29,9 +29,11 @@ import { StudioView } from "@web_studio/client_action/view_editor/studio_view";
 import { ViewEditor } from "@web_studio/client_action/view_editor/view_editor";
 import { StudioClientAction } from "@web_studio/client_action/studio_client_action";
 import { ListEditorRenderer } from "@web_studio/client_action/view_editor/editors/list/list_editor_renderer";
-import { onMounted } from "@odoo/owl";
+import { Component, onMounted, xml } from "@odoo/owl";
 import { selectorContains } from "@web_studio/../tests/legacy/client_action/view_editors/view_editor_tests_utils";
 import { redirect } from "@web/core/utils/urls";
+import { FormEditorRenderer } from "@web_studio/client_action/view_editor/editors/form/form_editor_renderer/form_editor_renderer";
+import { FormEditorCompiler } from "@web_studio/client_action/view_editor/editors/form/form_editor_compiler";
 
 // -----------------------------------------------------------------------------
 // Tests
@@ -321,8 +323,6 @@ QUnit.module("Studio", (hooks) => {
     });
 
     QUnit.test("navigation in Studio with act_window", async function (assert) {
-        assert.expect(26);
-
         const mockRPC = async (route) => {
             assert.step(route);
         };
@@ -375,6 +375,7 @@ QUnit.module("Studio", (hooks) => {
         assert.verifySteps(
             [
                 "/web/action/load",
+                "/web/action/load_breadcrumbs",
                 "/web/dataset/call_kw/pony/get_views",
 
                 "/web_studio/get_studio_view_arch",
@@ -944,13 +945,21 @@ QUnit.module("Studio", (hooks) => {
             // editable (typically, just after the current action has changed).
             assert.expect(5);
 
+            serverData.models.settings = {
+                fields: {},
+                records: [],
+            };
+            serverData.views["settings,1,list"] = `<list><field name="display_name" /></list>`;
+            serverData.views["settings,false,search"] = `<search />`;
+
             const def = makeDeferred();
-            serverData.actions[4].xml_id = false; // make action 4 non editable
+            serverData.actions[4].views = [[false,"list"]]
+            serverData.actions[4].res_model = "settings"; // make action 4 non editable
             const webClient = await createEnterpriseWebClient({ serverData });
             assert.containsOnce(target, ".o_home_menu");
 
             webClient.env.bus.addEventListener("ACTION_MANAGER:UI-UPDATED", () => {
-                assert.containsOnce(target, ".o_kanban_view");
+                assert.containsOnce(target, ".o_list_view");
                 assert.hasClass(target.querySelector(".o_web_studio_navbar_item"), "o_disabled");
                 def.resolve();
             });
@@ -959,7 +968,7 @@ QUnit.module("Studio", (hooks) => {
             await click(target.querySelector(".o_app[data-menu-xmlid=app_1]"));
             await def;
 
-            assert.containsOnce(target, ".o_kanban_view");
+            assert.containsOnce(target, ".o_list_view");
             assert.hasClass(target.querySelector(".o_web_studio_navbar_item"), "o_disabled");
         }
     );
@@ -1000,7 +1009,7 @@ QUnit.module("Studio", (hooks) => {
         serverData.actions[99] = {
             id: 99,
             type: "ir.actions.act_window",
-            res_model: "partner",
+            res_model: "settings",
             views: [[false, "list"]],
             name: "test action",
             groups_id: [],
@@ -1036,7 +1045,27 @@ QUnit.module("Studio", (hooks) => {
         };
         serverData.models.pony.records = [{ id: 1, selection: "1" }];
 
-        serverData.views["pony,false,form"] = `<form><field name="selection" /></form>`;
+        serverData.views["pony,false,form"] = `<form></form>`;
+
+        let dummyclass = "first-pass";
+        class Dummy extends Component {
+            static template = xml`<div class="dummy" t-att-class="classes" />`
+            static props = {};
+            get classes() {
+                return dummyclass;
+            }
+        };
+        patchWithCleanup(FormEditorRenderer, {
+            components: {...FormEditorRenderer.components, Dummy}
+        });
+        patchWithCleanup(FormEditorCompiler.prototype, {
+            compile() {
+                const el = super.compile(...arguments);
+                el.querySelector(".o_form_renderer").append(el.ownerDocument.createElement("Dummy"))
+                return el;
+            }
+        });
+
         let vem;
         patchWithCleanup(ViewEditor.prototype, {
             setup() {
@@ -1071,19 +1100,20 @@ QUnit.module("Studio", (hooks) => {
         await openStudio(target);
         await contains(".o_studio");
 
-        await contains(".o_field_widget[name='selection']", { text: "1" });
+        await contains(".dummy.first-pass");
 
         enableRPCWatch = true;
         await click(target.querySelector(".o_web_studio_leave"));
+        dummyclass = "second-pass";
         vem.viewEditorModel.fields.selection.selection.push(["2", "2"]);
-        await contains(".o_field_widget[name='selection']", { text: "2" });
+        await contains(".dummy.second-pass");
 
         loadActionDef.resolve();
         await loadActionDef;
         await contains("body:not(:has(.o_studio)) .o_form_view");
+        assert.containsNone(target, ".dummy");
 
         assert.verifySteps([
-            "/web/dataset/call_kw/pony/web_read",
             "/web/action/load",
             "/web/dataset/call_kw/pony/get_views",
             "/web/dataset/call_kw/pony/web_read",
@@ -1144,7 +1174,11 @@ QUnit.module("Studio", (hooks) => {
 
     QUnit.test("load with active_id active_ids", async (assert) => {
         serverData.actions[4].context = `{"some_key": active_ids}`;
-        redirect("/odoo/studio?mode=editor&_action=4&_view_type=form&_tab=views&active_id=451")
+        serverData.models.partner.records = [{
+            id: 451,
+            display_name: "Fahrenheit",
+        }];
+        redirect("/odoo/action-4/studio?mode=editor&_view_type=form&_tab=views&active_id=451")
         await createEnterpriseWebClient({
             serverData,
             mockRPC: (route, args) => {

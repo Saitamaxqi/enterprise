@@ -1952,6 +1952,17 @@ QUnit.module(
                 { id: 2, display_name: "Hell Broke Luce", priority: "1", croissant: 5 },
             ];
 
+            serverData.actions = {
+                451: {
+                    id: 451,
+                    type: "ir.actions.act_window",
+                    res_model: "coucou",
+                    views: [[false, "list"]],
+                    context: { search_default_priority: "1" },
+                    xml_id: "somexmlid",
+                    groups_id: [],
+                }
+            };
             serverData.views = {
                 "coucou,false,list": `<list><field name='croissant' sum='Total Croissant'/></list>`,
                 "coucou,false,search": `<search><filter string="Priority" name="priority" domain="[]" context="{'group_by':'priority'}"/></search>`,
@@ -1963,13 +1974,7 @@ QUnit.module(
             });
             const webClient = await createEnterpriseWebClient({ serverData });
 
-            await doAction(webClient, {
-                type: "ir.actions.act_window",
-                res_model: "coucou",
-                views: [[false, "list"]],
-                context: { search_default_priority: "1" },
-                xml_id: "somexmlid",
-            });
+            await doAction(webClient, 451);
 
             assert.containsOnce(
                 target,

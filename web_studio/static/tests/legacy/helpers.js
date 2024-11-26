@@ -9,6 +9,7 @@ import { studioService } from "@web_studio/studio_service";
 import { registerCleanup } from "@web/../tests/helpers/cleanup";
 import { resetViewCompilerCache } from "@web/views/view_compiler";
 import { fakeColorSchemeService } from "@web/../tests/helpers/mock_services";
+import { delay } from "@web/core/utils/concurrency";
 
 export function registerStudioDependencies() {
     const serviceRegistry = registry.category("services");
@@ -50,10 +51,13 @@ export async function openStudio(target, params = {}) {
             throw new Error("We should be editing the first report that showed up");
         }
     }
+    // Give time to the router to update
+    await delay();
 }
 
-export function leaveStudio(target) {
-    return click(target.querySelector(".o_studio_navbar .o_web_studio_leave a"));
+export async function leaveStudio(target) {
+    await click(target.querySelector(".o_studio_navbar .o_web_studio_leave a"));
+    await delay();
 }
 
 export function fillActionFieldsDefaults(action) {

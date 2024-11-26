@@ -19,6 +19,7 @@ import { createEnterpriseWebClient } from "@web_enterprise/../tests/helpers";
 import { registerStudioDependencies } from "@web_studio/../tests/legacy/helpers";
 
 import { Component, EventBus, xml } from "@odoo/owl";
+import { waitFor } from "@odoo/hoot-dom";
 const serviceRegistry = registry.category("services");
 
 const genericHomeMenuProps = {
@@ -128,6 +129,9 @@ QUnit.module("Studio", (hooks) => {
                     open(...args) {
                         bus.trigger("studio:open", args);
                     },
+                    setParams(...args) {
+                        bus.trigger("studio:setParams", args);
+                    }
                 };
             },
         };
@@ -239,8 +243,8 @@ QUnit.module("Studio", (hooks) => {
     QUnit.test("Click on new App", async (assert) => {
         assert.expect(1);
 
-        bus.addEventListener("studio:open", (ev) => {
-            assert.strictEqual(ev.detail[0], MODES.APP_CREATOR);
+        bus.addEventListener("studio:setParams", (ev) => {
+            assert.strictEqual(ev.detail[0].mode, MODES.APP_CREATOR);
         });
         bus.addEventListener("menu:setCurrentMenu", () => {
             throw new Error("should not update the current menu");
@@ -354,6 +358,7 @@ QUnit.module("Studio", (hooks) => {
         assert.verifySteps(["edit_menu_icon"]);
         assert.hasClass(target.querySelector(".o_home_menu .o_app_icon i"), "fa-leaf");
         await click(target, ".o_web_studio_leave");
+        await waitFor(".o_home_menu .o_app_icon i");
         assert.hasClass(target.querySelector(".o_home_menu .o_app_icon i"), "fa-leaf");
     });
 });

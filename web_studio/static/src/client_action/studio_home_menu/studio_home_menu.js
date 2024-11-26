@@ -76,7 +76,7 @@ export class StudioHomeMenu extends HomeMenu {
     async _openMenu(menu) {
         if (menu.isNewAppButton) {
             this.canEditIcons = false;
-            return this.studio.open(this.studio.MODES.APP_CREATOR);
+            return this.studio.setParams({ mode: this.studio.MODES.APP_CREATOR });
         } else {
             try {
                 await this.studio.open(this.studio.MODES.EDITOR, menu.actionID);

@@ -1698,7 +1698,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         self.assertEqual(len(assertable), 2)
 
         action = self.env.ref("base.action_res_users")
-        url = f"/odoo/action-studio?mode=editor&_tab=views&_view_type=list&_action={action.id}&debug=1"
+        url = f"/odoo/action-{action.id}/studio?mode=editor&_tab=views&_view_type=list&debug=1"
         self.start_tour(url, 'web_studio.test_res_users_fake_fields', login="admin")
 
     def test_add_button_xml_id(self):

@@ -66,11 +66,9 @@ QUnit.module("ActionEditor", (hooks) => {
                 assert.strictEqual(args.model, "kikou", "should read fields on the correct model");
             }
         };
-
-        const webClient = await createEnterpriseWebClient({ serverData, mockRPC });
-        await doAction(
-            webClient,
-            {
+        serverData.actions = {
+            451: {
+                id: 451,
                 xml_id: "some.xml_id",
                 type: "ir.actions.act_window",
                 res_model: "kikou",
@@ -79,7 +77,18 @@ QUnit.module("ActionEditor", (hooks) => {
                     [1, "list"],
                     [2, "form"],
                 ],
-            },
+                groups_id: [],
+            }
+        };
+        serverData.views = {
+            "kikou,false,list" : "<list/>",
+            "kikou,false,form": "<form/>",
+            "kikou,false,search": "<search />"
+        };
+        const webClient = await createEnterpriseWebClient({ serverData, mockRPC });
+        await doAction(
+            webClient,
+            451,
             { clearBreadcrumbs: true }
         );
         await openStudio(target, { noEdit: true });
@@ -117,11 +126,9 @@ QUnit.module("ActionEditor", (hooks) => {
                 return false;
             }
         };
-
-        const webClient = await createEnterpriseWebClient({ serverData, mockRPC });
-        await doAction(
-            webClient,
-            {
+        serverData.actions = {
+            451: {
+                id: 451,
                 xml_id: "some.xml_id",
                 type: "ir.actions.act_window",
                 res_model: "kikou",
@@ -130,7 +137,19 @@ QUnit.module("ActionEditor", (hooks) => {
                     [1, "list"],
                     [2, "form"],
                 ],
-            },
+                groups_id: [],
+            }
+        };
+        serverData.views = {
+            "kikou,false,list" : "<list/>",
+            "kikou,false,form": "<form/>",
+            "kikou,false,search": "<search />"
+        };
+
+        const webClient = await createEnterpriseWebClient({ serverData, mockRPC });
+        await doAction(
+            webClient,
+            451,
             { clearBreadcrumbs: true }
         );
         await openStudio(target, { noEdit: true });
