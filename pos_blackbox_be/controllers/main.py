@@ -34,7 +34,7 @@ class GovCertificationController(http.Controller):
             content = p.read_bytes()
             content_hash = hashlib.sha1(content).hexdigest()
             files_data.append({
-                'name': p.relative_to(root),
+                'name': str(p.relative_to(root)),
                 'size_in_bytes': p.stat().st_size,
                 'contents': Markup(content.decode()),
                 'hash': content_hash
