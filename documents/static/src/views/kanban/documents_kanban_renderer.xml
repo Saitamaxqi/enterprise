@@ -21,7 +21,7 @@
                     <t t-if="multipleSelection" t-set="itemsNumber" t-value="targetRecords.length"/>
                 </t>
                 <Chatter t-if="chatterRecord"
-                    has_activities="chatterRecord.res_model === 'documents.document'"
+                    has_activities="!chatterRecord.res_model || chatterRecord.res_model === 'documents.document'"
                     threadId="typeof chatterRecord.id === 'number' and chatterRecord.id"
                     threadModel="'documents.document'"
                     compactHeight="true"

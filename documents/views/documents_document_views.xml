@@ -362,6 +362,7 @@
                 <field name="attachment_id" column_invisible="1"/>
                 <field name="folder_id" column_invisible="1"/>
                 <field name="res_id" column_invisible="1"/>
+                <field name="res_model" column_invisible="1"/>
                 <field name="available_embedded_actions_ids" optional="hide" widget="many2many_tags" groups="base.group_user"/>
                 <field name="shortcut_document_id" column_invisible="1"/>
                 <field name="mimetype" column_invisible="1"/>
