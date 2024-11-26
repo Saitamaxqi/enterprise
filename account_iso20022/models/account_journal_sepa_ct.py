@@ -52,7 +52,7 @@ class AccountJournal(models.Model):
             postal_address = self.get_postal_address(partner_id, payment_method_code)
             if postal_address is not None:
                 PstlAdr = etree.Element("PstlAdr")
-                for node_name, attr, size in [('StrtNm', 'street', 70), ('PstCd', 'zip', 140), ('TwnNm', 'city', 140)]:
+                for node_name, attr, size in [('StrtNm', 'street', 70), ('PstCd', 'zip', 140), ('TwnNm', 'city', 140), ('Ctry', 'country', 2)]:
                     if postal_address[attr]:
                         address_element = etree.SubElement(PstlAdr, node_name)
                         address_element.text = sanitize_communication(postal_address[attr], size)
