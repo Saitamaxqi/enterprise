@@ -47,6 +47,8 @@ test("Expand article.thread opens linked article", async () => {
     await click(".o-mail-DiscussSystray-class .fa-comments");
     await click(".o-mail-NotificationItem");
     await contains(".o-mail-ChatWindow");
+    // dropdown requires an extra delay before click (because handler is registered in useEffect)
+    await contains("[title='Open Actions Menu']");
     await click("[title='Open Actions Menu']");
     await click(".o-dropdown-item", { text: "Open Form View" });
     await waitForSteps(["knowledge_action_called"]);

@@ -39,12 +39,14 @@ test("Clicking on close button closes the softphone.", async () => {
     await contains(".o-voip-Softphone", { count: 0 });
 });
 
+test.tags("focus required");
 test("Search bar is focused after opening the softphone.", async () => {
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
     await contains("input[placeholder='Search']:focus");
 });
 
+test.tags("focus required");
 test("Search bar is focused after unfolding the softphone.", async () => {
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
@@ -70,6 +72,8 @@ test("Clicking on a tab makes it the active tab.", async () => {
 test("Click on the “Numpad button” to open and close the numpad.", async () => {
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
+    // dropdown requires an extra delay before click (because handler is registered in useEffect)
+    await contains("button[title='Open Numpad']");
     await click("button[title='Open Numpad']");
     await contains(".o-voip-Numpad");
     await click("button[title='Close Numpad']");
@@ -136,13 +140,18 @@ test("Using VoIP in prod mode without configuring the server shows an error", as
     await contains(".o-voip-Softphone-error");
 });
 
+test.tags("focus required");
 test("When a call is created, a partner with a corresponding phone number is displayed", async () => {
     const pyEnv = await startServer();
     const phoneNumber = "0456 703 6196";
     pyEnv["res.partner"].create({ name: "Maxime Randonnées", mobile: phoneNumber });
     await start();
     await click(".o_menu_systray button[title='Open Softphone']");
+    // dropdown requires an extra delay before click (because handler is registered in useEffect)
+    await contains("button[title='Open Numpad']");
     await click("button[title='Open Numpad']");
+    // ensure initial focusing is done before inserting text to avoid focus reset
+    await contains("input[placeholder='Enter the number…']:focus");
     await insertText("input[placeholder='Enter the number…']", phoneNumber);
     await triggerHotkey("Enter");
     await advanceTime(5000);
