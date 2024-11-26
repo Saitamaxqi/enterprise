@@ -14,6 +14,7 @@ class TestDocumentDeletion(HttpCase):
             "type": "folder",
             "name": "Folder1",
             "owner_id": self.env.ref('base.user_root').id,
+            "access_internal": "edit",
         })
         document = self.env['documents.document'].create({
             'datas': GIF,
