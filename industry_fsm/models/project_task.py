@@ -40,9 +40,6 @@ class ProjectTask(models.Model):
     display_satisfied_conditions_count = fields.Integer(compute='_compute_display_conditions_count', export_string_translation=False)
     display_mark_as_done_primary = fields.Boolean(compute='_compute_mark_as_done_buttons', export_string_translation=False)
     display_mark_as_done_secondary = fields.Boolean(compute='_compute_mark_as_done_buttons', export_string_translation=False)
-    partner_phone = fields.Char(
-        compute='_compute_partner_phone', inverse='_inverse_partner_phone',
-        string="Contact Number", readonly=False, store=True, copy=False)
     partner_city = fields.Char(related='partner_id.city', readonly=False)
     partner_zip = fields.Char(string='ZIP', related='partner_id.zip')
     partner_street = fields.Char(related='partner_id.street')
@@ -125,19 +122,6 @@ class ProjectTask(models.Model):
                 'display_mark_as_done_primary': primary,
                 'display_mark_as_done_secondary': secondary,
             })
-
-    @api.depends('partner_id.phone', 'partner_id.mobile')
-    def _compute_partner_phone(self):
-        for task in self:
-            task.partner_phone = task.partner_id.mobile or task.partner_id.phone or False
-
-    def _inverse_partner_phone(self):
-        for task in self:
-            if task.partner_id:
-                if task.partner_id.mobile or not task.partner_id.phone:
-                    task.partner_id.mobile = task.partner_phone
-                else:
-                    task.partner_id.phone = task.partner_phone
 
     @api.depends('partner_phone', 'partner_id.phone')
     def _compute_is_task_phone_update(self):
