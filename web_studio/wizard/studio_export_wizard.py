@@ -618,14 +618,14 @@ class StudioExportWizard(models.TransientModel):
                 res_ids = records_data.mapped("res_id")
                 records = real_records.filtered(lambda r: r.id in res_ids)
 
-                for group in ["data", "demo"]:
-                    if group not in fields_by_group:
-                        continue
-
-                    group_fields = fields_by_group[group]
+                for group, group_fields in fields_by_group.items():
                     for field_to_exclude in force_exclude:
                         if field_to_exclude in group_fields:
                             group_fields.remove(field_to_exclude)
+
+                    if not group_fields:
+                        # no fields to export
+                        continue
 
                     path_info = (group, model.replace(".", "_"), suffix)
                     path_count = path_counter[path_info]

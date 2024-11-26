@@ -1,16 +1,10 @@
-import ast
 import base64
-from itertools import starmap
-from lxml import etree as ET
 
 from odoo import Command
-from odoo.addons.web_studio.controllers.export import ir_model_data_getter, generate_module, _clean_dependencies
-from odoo.addons.website.tools import MockRequest
-from odoo.osv import expression
-from odoo.tests.common import TransactionCase, tagged
+from odoo.addons.sale.tests.common import SaleCommon
 
-# ---------------------------------- HELPERS ----------------------------------
-XMLPARSER = ET.XMLParser(remove_blank_text=True, strip_cdata=False, resolve_entities=False)
+from .common_exports import StudioExportCase
+
 IR_MODEL_INFO_FIELD = """<field name="info"><![CDATA[ Main super-class for regular database-persisted Odoo models.
 
     Odoo models are created by inheriting from this class::
@@ -23,158 +17,6 @@ IR_MODEL_INFO_FIELD = """<field name="info"><![CDATA[ Main super-class for regul
     ]]></field>"""
 
 
-def nodes_equal(n1, n2):
-    if n1.tag != n2.tag:
-        return False
-    if n1.text != n2.text:
-        return False
-    if n1.tail != n2.tail:
-        return False
-    if n1.attrib != n2.attrib:
-        return False
-    if len(n1) != len(n2):
-        return False
-    if n1.tag == "field":
-        # compare a tostring version, to check if CDATA sections are preserved
-        n1_str = ET.tostring(n1)
-        n2_str = ET.tostring(n2)
-        if n1_str != n2_str:
-            return False
-    if n1.tag == "record":
-        # n1 and n2 children order doesn't matter, sort them by tagname, attrib['name']
-        n1 = sorted(n1, key=lambda n: (n.tag, n.attrib.get("name")))
-        n2 = sorted(n2, key=lambda n: (n.tag, n.attrib.get("name")))
-    return all(starmap(nodes_equal, zip(n1, n2)))
-
-
-class StudioExportCase(TransactionCase):
-    def setUp(self):
-        super().setUp()
-        self.model_data_getter = ir_model_data_getter(self.env['studio.export.wizard.data'])
-        self._customizations = []
-        self._additional_models = self.env["studio.export.model"]
-        self._additional_models.search([]).unlink()
-        self.TestModel = self.env["test.studio_export.model1"].with_user(2)
-        self.TestModel2 = self.env["test.studio_export.model2"].with_user(2)
-        self.TestModel3 = self.env["test.studio_export.model3"].with_user(2)
-
-    def create_customization(self, _model, **kwargs):
-        Model = self.env[_model].with_context(studio=True)
-        custo = Model.create(kwargs)
-        self._customizations.append(custo)
-        return custo
-
-    def create_export_model(self, _model, **kwargs):
-        IrModel = self.env["ir.model"]
-        vals = {"model_id": IrModel._get_id(_model)}
-        vals.update(kwargs)
-        export_model = self.env["studio.export.model"].create(vals)
-        self._additional_models |= export_model
-        self.addCleanup(export_model.unlink)
-        return export_model
-
-    def get_xmlid(self, record):
-        if self._current_wizard:
-            self.model_data_getter = ir_model_data_getter(self._current_wizard.default_export_data | self._current_wizard.additional_export_data)
-        return self.model_data_getter(record)._xmlid_for_export()
-
-    def studio_export(self):
-        # Get all customization data
-        custo_domains = [
-            [("model", "=", custo._name), ("res_id", "=", custo.id)]
-            for custo in self._customizations
-        ]
-        domain = expression.OR(custo_domains)
-        domain = expression.AND([domain, [("studio", "=", True)]])
-        custo_data = self.env["ir.model.data"].search(domain)
-        custo_data = self.env["studio.export.wizard.data"].create(
-            [
-                {"model": d.model, "res_id": d.res_id, "studio": d.studio}
-                for d in custo_data
-            ]
-        )
-
-        studio_module = self.env["ir.module.module"].get_studio_module()
-        self._current_wizard = self.env["studio.export.wizard"].create(
-            {
-                "default_export_data": [Command.set(custo_data.ids)],
-                "additional_models": [Command.set(self._additional_models.ids)],
-                "include_additional_data": True,
-                "include_demo_data": True,
-            }
-        )
-        export_info = self._current_wizard._get_export_info()
-        content = generate_module(studio_module, export_info)
-        return StudioExportAssertor(export_case=self, content=content)
-
-
-class StudioExportAssertor:
-
-    def __init__(self, export_case, content) -> None:
-        self.export_case = export_case
-        self.exported_cache = {}
-        self.content_iter = iter(content)
-
-    def get_exported(self, name=None):
-        """If name not found (or None) will iterate on all generated files
-
-        Returns:
-            If name is provided, returns the exported file content associated with that name.
-            If name is not provided or not found, returns a dictionary of all exported files.
-        """
-        with MockRequest(self.export_case.env):
-            while name not in self.exported_cache:
-                try:
-                    path, content = next(self.content_iter)
-                except StopIteration:
-                    break
-                if path.endswith(".xml"):
-                    self.exported_cache[path] = ET.fromstring(content, parser=XMLPARSER)
-                elif path.endswith("__manifest__.py"):
-                    self.exported_cache[path] = ast.literal_eval(content.decode("utf-8"))
-                else:
-                    self.exported_cache[path] = content
-
-        return self.exported_cache[name] if name else self.exported_cache
-
-    def assertFileContains(self, path, content):
-        file = self.get_exported(path)
-        self.export_case.assertEqual(file, content)
-
-    def assertFileList(self, *filenames):
-        """You can omit __init__.py and __manifest__.py"""
-        filenames += ("__init__.py", "__manifest__.py")
-        exported = self.get_exported()
-        self.export_case.assertEqual(set(exported.keys()), set(filenames))
-
-    def assertManifest(self, **expected):
-        exported = self.get_exported("__manifest__.py")
-        for key, value in expected.items():
-            if key == "depends":
-                with MockRequest(self.export_case.env):
-                    self.export_case.assertEqual(
-                        _clean_dependencies(set(exported["depends"] + value)),
-                        exported["depends"],
-                    )
-            else:
-                self.export_case.assertEqual(exported[key], value)
-
-    def assertXML(self, path, expected):
-        root = self.get_exported(path)
-        # parse expected then compare with nodes_equal
-        expected = ET.fromstring(expected, parser=XMLPARSER)
-        are_equal = nodes_equal(root, expected)
-        message = "Both XMLs are equal"
-        if not are_equal:
-            tostring_opts = {"encoding": "unicode", "pretty_print": True}
-            expected = ET.tostring(expected, **tostring_opts)
-            actual = ET.tostring(root, **tostring_opts)
-            message = "\nExpected:\n%s\nActual:\n%s" % (expected, actual)
-        self.export_case.assertTrue(are_equal, message)
-
-
-# ----------------------------------- TESTS -----------------------------------
-@tagged("-at_install", "post_install")
 class TestStudioExports(StudioExportCase):
     def test_export_customizations(self):
         custom_model = self.create_customization(
@@ -226,8 +68,8 @@ class TestStudioExports(StudioExportCase):
             {"x_name": "Austenitization", "x_studio_max_temp": 1200}
         )
 
-        export = self.studio_export()
-        export.assertManifest(
+        self.studio_export()
+        self.assertManifest(
             data=[
                 "data/ir_model.xml",
                 "data/ir_model_fields.xml",
@@ -237,14 +79,14 @@ class TestStudioExports(StudioExportCase):
             ],
             depends=["web_studio"],
         )
-        export.assertFileList(
+        self.assertFileList(
             "data/ir_model.xml",
             "data/ir_model_fields.xml",
             "data/ir_ui_view.xml",
             "data/ir_actions_act_window.xml",
             "data/ir_ui_menu.xml",
         )
-        export.assertXML(
+        self.assertXML(
             "data/ir_model.xml",
             f"""<odoo>
             <record id="{self.get_xmlid(custom_model)}" model="ir.model" context="{{'studio': True}}">
@@ -254,7 +96,7 @@ class TestStudioExports(StudioExportCase):
             </record>
             </odoo>""",
         )
-        export.assertXML(
+        self.assertXML(
             "data/ir_model_fields.xml",
             f"""<odoo>
             <record id="{self.get_xmlid(custom_field)}" model="ir.model.fields" context="{{'studio': True}}">
@@ -269,7 +111,7 @@ class TestStudioExports(StudioExportCase):
             </record>
             </odoo>""",
         )
-        export.assertXML(
+        self.assertXML(
             "data/ir_ui_view.xml",
             f"""<odoo>
             <record id="{self.get_xmlid(custom_view)}" model="ir.ui.view" context="{{'studio': True}}">
@@ -288,7 +130,7 @@ class TestStudioExports(StudioExportCase):
             </record>
             </odoo>""",
         )
-        export.assertXML(
+        self.assertXML(
             "data/ir_actions_act_window.xml",
             f"""<odoo>
             <record id="{self.get_xmlid(custom_action)}" model="ir.actions.act_window" context="{{'studio': True}}">
@@ -299,7 +141,7 @@ class TestStudioExports(StudioExportCase):
             </record>
             </odoo>""",
         )
-        export.assertXML(
+        self.assertXML(
             "data/ir_ui_menu.xml",
             f"""<odoo>
             <record id="{self.get_xmlid(custom_menu_1)}" model="ir.ui.menu" context="{{'studio': True}}">
@@ -312,6 +154,24 @@ class TestStudioExports(StudioExportCase):
             </record>
             </odoo>""",
         )
+
+    def test_export_customizations_without_export_model(self):
+        custom_model = self.create_customization(
+            "ir.model", name="Furnace Types", model="x_furnace_types"
+        )
+        self.create_customization(
+            "ir.model.fields",
+            name="x_studio_max_temp",
+            complete_name="Max temperature",
+            ttype="integer",
+            model_id=custom_model.id,
+        )
+        CustomModel = self.env[custom_model.model].with_user(2).sudo()
+        CustomModel.create({"x_name": "Austenitization", "x_studio_max_temp": 1200})
+
+        # Without export model, the custom model data are not exported
+        self.studio_export()
+        self.assertFileList("data/ir_model.xml", "data/ir_model_fields.xml")
 
     def test_export_customizations_with_export_model(self):
         custom_model = self.create_customization(
@@ -329,19 +189,15 @@ class TestStudioExports(StudioExportCase):
             {"x_name": "Austenitization", "x_studio_max_temp": 1200}
         )
 
-        # Without export model, the custom model data are not exported
-        export = self.studio_export()
-        export.assertFileList("data/ir_model.xml", "data/ir_model_fields.xml")
-
         # With the export model, the custom model data is exported
         self.create_export_model(CustomModel._name)
-        export = self.studio_export()
-        export.assertFileList(
+        self.studio_export()
+        self.assertFileList(
             "data/ir_model.xml",
             "data/ir_model_fields.xml",
             "data/x_furnace_types.xml",
         )
-        export.assertXML(
+        self.assertXML(
             "data/x_furnace_types.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(furnace_type)}" model="x_furnace_types">
@@ -351,18 +207,21 @@ class TestStudioExports(StudioExportCase):
             </odoo>""",
         )
 
-    def test_simple_export_model(self):
-        export_model = self.create_export_model(self.TestModel._name)
+    def test_simple_export_model_without_record(self):
+        self.create_export_model(self.TestModel._name)
 
         # Without record, the export_model has no effect
-        export = self.studio_export()
-        export.assertFileList()
+        self.studio_export()
+        self.assertFileList()
+
+    def test_simple_export_model_with_record(self):
+        self.create_export_model(self.TestModel._name)
+        some_record = self.TestModel.create({"name": "Some record"})
 
         # Simple case
-        some_record = self.TestModel.create({"name": "Some record"})
-        export = self.studio_export()
-        export.assertFileList("data/test_studio_export_model1.xml")
-        export.assertXML("data/test_studio_export_model1.xml", f"""
+        self.studio_export()
+        self.assertFileList("data/test_studio_export_model1.xml")
+        self.assertXML("data/test_studio_export_model1.xml", f"""
             <odoo noupdate="1">
                 <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
                     <field name="name">Some record</field>
@@ -370,38 +229,45 @@ class TestStudioExports(StudioExportCase):
             </odoo>
         """)
 
-        # With updatable mode
-        export_model.updatable = True
-        export = self.studio_export()
-        export.assertFileList("data/test_studio_export_model1.xml")
-        export.assertXML("data/test_studio_export_model1.xml", f"""
+    def test_simple_export_model_with_record_updatable(self):
+        self.create_export_model(self.TestModel._name, updatable=True)
+        some_record = self.TestModel.create({"name": "Some record"})
+
+        # Without updatable mode
+        self.studio_export()
+        self.assertFileList("data/test_studio_export_model1.xml")
+        self.assertXML("data/test_studio_export_model1.xml", f"""
             <odoo>
                 <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
                     <field name="name">Some record</field>
                 </record>
             </odoo>
         """)
+
+    def test_simple_export_model_with_record_as_demo(self):
+        self.create_export_model(self.TestModel._name, is_demo_data=True)
+        some_record = self.TestModel.create({"name": "Some record"})
 
         # With is_demo_data mode, with updatable
-        export_model.updatable = True
-        export_model.is_demo_data = True
-        export = self.studio_export()
-        export.assertFileList("demo/test_studio_export_model1.xml")
-        export.assertXML("demo/test_studio_export_model1.xml", f"""
-            <odoo>
+        self.studio_export()
+        self.assertFileList("demo/test_studio_export_model1.xml")
+        self.assertXML("demo/test_studio_export_model1.xml", f"""
+            <odoo noupdate="1">
                 <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
                     <field name="name">Some record</field>
                 </record>
             </odoo>
         """)
 
+    def test_simple_export_model_with_record_as_demo_updatable(self):
+        self.create_export_model(self.TestModel._name, updatable=True, is_demo_data=True)
+        some_record = self.TestModel.create({"name": "Some record"})
+
         # With is_demo_data mode, without updatable
-        export_model.updatable = False
-        export_model.is_demo_data = True
-        export = self.studio_export()
-        export.assertFileList("demo/test_studio_export_model1.xml")
-        export.assertXML("demo/test_studio_export_model1.xml", f"""
-            <odoo noupdate="1">
+        self.studio_export()
+        self.assertFileList("demo/test_studio_export_model1.xml")
+        self.assertXML("demo/test_studio_export_model1.xml", f"""
+            <odoo>
                 <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
                     <field name="name">Some record</field>
                 </record>
@@ -412,9 +278,9 @@ class TestStudioExports(StudioExportCase):
         some_record = self.TestModel.create({"name": "Some record"})
         other_record = self.TestModel.create({"name": "Some other record"})
         self.create_export_model(self.TestModel._name, is_demo_data=True)
-        export = self.studio_export()
-        export.assertFileList("demo/test_studio_export_model1.xml")
-        export.assertXML(
+        self.studio_export()
+        self.assertFileList("demo/test_studio_export_model1.xml")
+        self.assertXML(
             "demo/test_studio_export_model1.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
@@ -426,22 +292,22 @@ class TestStudioExports(StudioExportCase):
             </odoo>""",
         )
 
-    def test_export_model_with_binary_field(self):
+    def test_export_model_with_binary_field_without_include_attachment(self):
         some_record = self.TestModel.create(
             {
                 "name": "Some record",
                 "binary_data": base64.b64encode(b"My binary attachment"),
             }
         )
-        export_model = self.create_export_model(self.TestModel._name)
+        self.create_export_model(self.TestModel._name)
 
         # Without include_attachment
-        export = self.studio_export()
-        export.assertFileList(
+        self.studio_export()
+        self.assertFileList(
             "data/test_studio_export_model1.xml",
             f"static/src/binary/test_studio_export_model1/{some_record.id}-binary_data",
         )
-        export.assertXML(
+        self.assertXML(
             "data/test_studio_export_model1.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
@@ -451,14 +317,22 @@ class TestStudioExports(StudioExportCase):
             </odoo>""",
         )
 
+    def test_export_model_with_binary_field_with_include_attachment(self):
+        some_record = self.TestModel.create(
+            {
+                "name": "Some record",
+                "binary_data": base64.b64encode(b"My binary attachment"),
+            }
+        )
+        self.create_export_model(self.TestModel._name, include_attachment=True)
+
         # With include_attachment we have the same export result
-        export_model.include_attachment = True
-        export = self.studio_export()
-        export.assertFileList(
+        self.studio_export()
+        self.assertFileList(
             "data/test_studio_export_model1.xml",
             f"static/src/binary/test_studio_export_model1/{some_record.id}-binary_data",
         )
-        export.assertXML(
+        self.assertXML(
             "data/test_studio_export_model1.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
@@ -481,17 +355,17 @@ class TestStudioExports(StudioExportCase):
         )
         some_record.attachment_id = attachment
         self.create_export_model(self.TestModel._name, include_attachment=True)
-        export = self.studio_export()
-        export.assertFileList(
+        self.studio_export()
+        self.assertFileList(
             "data/test_studio_export_model1.xml",
             "data/ir_attachment_pre.xml",
             f"static/src/binary/ir_attachment/{attachment.id}-Someattachment",
         )
-        export.assertManifest(
+        self.assertManifest(
             depends=["test_web_studio"],
             data=["data/ir_attachment_pre.xml", "data/test_studio_export_model1.xml"],
         )
-        export.assertXML(
+        self.assertXML(
             "data/ir_attachment_pre.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(attachment)}" model="ir.attachment">
@@ -500,7 +374,7 @@ class TestStudioExports(StudioExportCase):
             </record>
             </odoo>""",
         )
-        export.assertXML(
+        self.assertXML(
             "data/test_studio_export_model1.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
@@ -532,18 +406,18 @@ class TestStudioExports(StudioExportCase):
         )
         some_record.attachment_ids = [Command.set([attachment1.id, attachment2.id])]
         self.create_export_model(self.TestModel._name, include_attachment=True)
-        export = self.studio_export()
-        export.assertFileList(
+        self.studio_export()
+        self.assertFileList(
             "data/test_studio_export_model1.xml",
             "data/ir_attachment_post.xml",
             f"static/src/binary/ir_attachment/{attachment1.id}-Someattachment",
             f"static/src/binary/ir_attachment/{attachment2.id}-Anotherattachment",
         )
-        export.assertManifest(
+        self.assertManifest(
             depends=["test_web_studio"],
             data=["data/test_studio_export_model1.xml", "data/ir_attachment_post.xml"],
         )
-        export.assertXML(
+        self.assertXML(
             "data/ir_attachment_post.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(attachment2)}" model="ir.attachment">
@@ -562,7 +436,7 @@ class TestStudioExports(StudioExportCase):
             </record>
             </odoo>""",
         )
-        export.assertXML(
+        self.assertXML(
             "data/test_studio_export_model1.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
@@ -586,17 +460,17 @@ class TestStudioExports(StudioExportCase):
         self.create_export_model(self.TestModel2._name)
         self.create_export_model(self.TestModel3._name)
 
-        export = self.studio_export()
-        export.assertManifest(
+        self.studio_export()
+        self.assertManifest(
             data=[
                 "data/test_studio_export_model2.xml",
             ],
         )
-        export.assertFileList(
+        self.assertFileList(
             "data/test_studio_export_model2.xml",
         )
 
-        export.assertXML(
+        self.assertXML(
             "data/test_studio_export_model2.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model2_record1)}" model="test.studio_export.model2">
@@ -622,13 +496,13 @@ class TestStudioExports(StudioExportCase):
         self.create_export_model(self.TestModel2._name, is_demo_data=False)
         self.create_export_model(self.TestModel3._name, is_demo_data=True)
 
-        export = self.studio_export()
-        export.assertFileList(
+        self.studio_export()
+        self.assertFileList(
             "data/test_studio_export_model2.xml",
             "demo/test_studio_export_model2.xml",
             "demo/test_studio_export_model3.xml",
         )
-        export.assertXML(
+        self.assertXML(
             "data/test_studio_export_model2.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model2_record)}" model="test.studio_export.model2">
@@ -636,7 +510,7 @@ class TestStudioExports(StudioExportCase):
             </record>
             </odoo>""",
         )
-        export.assertXML(
+        self.assertXML(
             "demo/test_studio_export_model3.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model3_record)}" model="test.studio_export.model3">
@@ -644,7 +518,7 @@ class TestStudioExports(StudioExportCase):
             </record>
             </odoo>""",
         )
-        export.assertXML(
+        self.assertXML(
             "demo/test_studio_export_model2.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model2_record)}" model="test.studio_export.model2">
@@ -670,18 +544,18 @@ class TestStudioExports(StudioExportCase):
         self.create_export_model(self.TestModel2._name)
         self.create_export_model(self.TestModel3._name)
 
-        export = self.studio_export()
-        export.assertManifest(
+        self.studio_export()
+        self.assertManifest(
             data=[
                 "data/test_studio_export_model3.xml",
                 "data/test_studio_export_model2.xml",
             ],
         )
-        export.assertFileList(
+        self.assertFileList(
             "data/test_studio_export_model3.xml",
             "data/test_studio_export_model2.xml",
         )
-        export.assertXML(
+        self.assertXML(
             "data/test_studio_export_model3.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model3_record)}" model="test.studio_export.model3">
@@ -689,7 +563,7 @@ class TestStudioExports(StudioExportCase):
             </record>
             </odoo>""",
         )
-        export.assertXML(
+        self.assertXML(
             "data/test_studio_export_model2.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model2_record)}" model="test.studio_export.model2">
@@ -724,15 +598,15 @@ class TestStudioExports(StudioExportCase):
         self.create_export_model(self.TestModel2._name)
         self.create_export_model(self.TestModel3._name)
 
-        export = self.studio_export()
-        export.assertFileList(
+        self.studio_export()
+        self.assertFileList(
             "warnings.txt",
             "data/test_studio_export_model1.xml",
             "data/test_studio_export_model2.xml",
             "data/test_studio_export_model3.xml",
         )
 
-        export.assertXML(
+        self.assertXML(
             "data/test_studio_export_model1.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model1_record)}" model="test.studio_export.model1">
@@ -741,7 +615,7 @@ class TestStudioExports(StudioExportCase):
             </record>
             </odoo>""",
         )
-        export.assertXML(
+        self.assertXML(
             "data/test_studio_export_model2.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model2_record)}" model="test.studio_export.model2">
@@ -750,7 +624,7 @@ class TestStudioExports(StudioExportCase):
             </record>
             </odoo>""",
         )
-        export.assertXML(
+        self.assertXML(
             "data/test_studio_export_model3.xml",
             f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model3_record)}" model="test.studio_export.model3">
@@ -760,7 +634,7 @@ class TestStudioExports(StudioExportCase):
             </odoo>""",
         )
 
-        export.assertFileContains(
+        self.assertFileContains(
             "warnings.txt",
             f"""Found 1 circular dependencies (you may have to change data loading order to avoid issues when importing):
 (data) {self.TestModel._name} -> {self.TestModel2._name} -> {self.TestModel3._name} -> {self.TestModel._name}
@@ -785,14 +659,14 @@ class TestStudioExports(StudioExportCase):
         })
 
         self.create_export_model("ir.actions.actions", domain=[("id", "in", [window_action.id, url_action.id])])
-        export = self.studio_export()
+        self.studio_export()
 
-        export.assertFileList(
+        self.assertFileList(
             "data/ir_actions_act_window.xml",
             "data/ir_actions_act_url.xml",
         )
 
-        export.assertXML(
+        self.assertXML(
             "data/ir_actions_act_window.xml",
             f"""<odoo>
             <record id="{self.get_xmlid(window_action)}" model="ir.actions.act_window">
@@ -804,7 +678,7 @@ class TestStudioExports(StudioExportCase):
             </odoo>""",
         )
 
-        export.assertXML(
+        self.assertXML(
             "data/ir_actions_act_url.xml",
             f"""<odoo>
             <record id="{self.get_xmlid(url_action)}" model="ir.actions.act_url">
@@ -813,4 +687,67 @@ class TestStudioExports(StudioExportCase):
                 <field name="url"><![CDATA[http://odoo.com]]></field>
             </record>
             </odoo>""",
+        )
+
+
+class TestSpecificStudioExports_SaleOrder(
+    SaleCommon,
+    StudioExportCase
+):
+    def test_export_demo_sale_orders(self):
+        # SPECIFIC: Confirm demo sale orders
+        self.sale_order.action_confirm()
+        self.create_export_model("sale.order", domain=[("id", "in", [self.sale_order.id])], is_demo_data=True)
+        self.create_export_model("sale.order.line", domain=[("order_id", "in", [self.sale_order.id])], is_demo_data=True)
+        self.studio_export()
+        self.assertFileList(
+            "demo/sale_order.xml",
+            "demo/sale_order_line.xml",
+            "demo/sale_order_confirm.xml",
+            "warnings.txt",  # because no products nor partners are exported here, but that's not the point of this test.
+        )
+        evl_attr_value = f"[[ref('{self.get_xmlid(self.sale_order)}')]]"
+        self.assertXML(
+            "demo/sale_order_confirm.xml",
+            f"""<odoo>
+                <!--Update sale order stages-->
+                <function model="sale.order" name="action_confirm" eval="{evl_attr_value}"/>
+            </odoo>""",
+        )
+
+
+class TestSpecificStudioExports_Website(StudioExportCase):
+    def test_apply_theme(self):
+        # SPECIFIC: Apply website theme if needed
+        pass  # test not implemented
+
+    def test_replace_pages_archs(self):
+        # SPECIFIC: replace website pages arch if needed
+        pass  # test not implemented
+
+    def test_unlink_default_main_menu(self):
+        # SPECIFIC: unlink the default main menu from the website if needed
+        website = self.env['website'].get_current_website()
+        menus = self.env['website.menu'].search([('website_id', '=', website.id)])
+
+        if self.get_xmlid(website) != "website.default_website" or not any(r['url'] == '/default-main-menu' for r in menus):
+            # Only written for the default website and on a fresh install
+            self.skipTest("This test is only written for the default website and on a fresh install")
+
+        self.create_export_model("website.menu", domain=[("id", "in", [m.id for m in menus])])
+        self.studio_export()
+        self.assertFileList(
+            "warnings.txt",  # because we do not export all the necessary data for website exports, but that's not the point of this test
+            "data/website_menu.xml",
+        )
+
+        # should have only function to unlink the default main menu
+        nodes = self.get_xml_nodes("data/website_menu.xml", "/odoo/*")
+        self.assertEqual(len(nodes), 1 + len(menus), "has a child for each menu + 1")
+        self.assertEqual([n.tag for n in nodes], ["function"] + ["record"] * len(menus))
+        self.assertXML(
+            nodes[0],
+            """<function model="website.menu" name="unlink">
+                <value model="website.menu" eval="obj().search([('website_id', '=', ref('website.default_website')), ('url', '=', '/default-main-menu')]).id"/>
+            </function>""",
         )
