@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo.addons.pos_restaurant.tests import test_frontend
+from unittest.mock import patch
 import odoo.tests
 
 
@@ -101,3 +102,33 @@ class TestUi(test_frontend.TestFrontendCommon):
         pdis_order1 = self.env['pos_preparation_display.order'].search([('pos_order_id', '=', order1.id)])
         # We only have 3 lines because one of the 4 lines in the order has the skip change option
         self.assertEqual(len(pdis_order1.preparation_display_order_line_ids), 3, "Should have 3 preparation orderlines")
+
+    def test_cancel_order_notifies_display(self):
+        category = self.env['pos.category'].create({'name': 'Food'})
+        self.env['product.product'].create({
+            'name': 'Test Food',
+            'list_price': 10,
+            'taxes_id': False,
+            'available_in_pos': True,
+            'pos_categ_ids': category,
+        })
+
+        pdis = self.env['pos_preparation_display.display'].create({
+            'name': 'Preparation Display (Food only)',
+            'pos_config_ids': [(4, self.pos_config.id)],
+            'category_ids': category,
+        })
+
+        notifications = []
+
+        def _send_load_orders_message(self, sound):
+            notifications.append(self.id)
+
+        # open a session, the /pos/ui controller will redirect to it
+        with patch('odoo.addons.pos_preparation_display.models.preparation_display.Pos_Preparation_DisplayDisplay._send_load_orders_message', new=_send_load_orders_message):
+            self.pos_config.printer_ids.unlink()
+            self.pos_config.with_user(self.pos_user).open_ui()
+            self.start_pos_tour('PreparationDisplayCancelOrderTour')
+
+        # Should receive 2 notifications, 1 placing the order, 1 cancelling it
+        self.assertEqual(notifications.count(pdis.id), 2)

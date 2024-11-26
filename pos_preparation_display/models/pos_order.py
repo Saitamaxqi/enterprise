@@ -36,6 +36,7 @@ class PosOrder(models.Model):
         if cancelled:
             for line in pdis_lines:
                 line.product_cancelled = line.product_quantity
+                category_ids.update(line.product_id.pos_categ_ids.ids)
             return {'change': True, 'sound': False, 'category_ids': category_ids}
 
         # create a dictionary with the key as a tuple of product_id, internal_note and attribute_value_ids

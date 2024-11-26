@@ -113,6 +113,23 @@ registry.category("web_tour.tours").add("PreparationDisplayTourResto2", {
         ].flat(),
 });
 
+registry.category("web_tour.tours").add("PreparationDisplayCancelOrderTour", {
+    steps: () =>
+        [
+            Chrome.startPoS(),
+            Dialog.confirm("Open Register"),
+            FloorScreen.clickTable("5"),
+            ProductScreen.orderBtnIsPresent(),
+            ProductScreen.clickDisplayedProduct("Test Food"),
+            ProductScreen.orderlineIsToOrder("Test Food"),
+            ProductScreen.clickOrderButton(),
+            ProductScreen.orderlinesHaveNoChange(),
+            ProductScreen.clickReview(),
+            ProductScreen.clickControlButton("Cancel Order"),
+            Dialog.confirm(),
+        ].flat(),
+});
+
 registry.category("web_tour.tours").add("PreparationDisplayTourSkipChange", {
     steps: () =>
         [
