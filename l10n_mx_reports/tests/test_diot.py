@@ -184,3 +184,37 @@ class TestDiot(TestAccountReportsCommon):
         self.assertEqual(
             self.env[diot_report.custom_handler_model_name].action_get_dpiva_txt(options)['file_content'].decode(),
             "|1.0|2022|MES|Enero|1|1|||1|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|0|04|85|XAXX010101000|||||||||||||||||||16|")
+
+    def test_diot_report_with_on_invoice_tax(self):
+        date_invoice = '2022-07-01'
+        tax = self.env.ref(f'account.{self.env.company.id}_tax20')
+
+        move = self.env['account.move'].create({
+            'move_type': 'in_invoice',
+            'partner_id': self.partner_a.id,
+            'invoice_date': date_invoice,
+            'date': date_invoice,
+            'invoice_line_ids': [Command.create({
+                'name': f'test {tax.amount}',
+                'quantity': 1,
+                'price_unit': 100,
+                'tax_ids': [Command.set(tax.ids)],
+            })]
+        })
+        move.action_post()
+
+        diot_report = self.env.ref('l10n_mx.diot_report')
+
+        options = self._generate_options(diot_report, fields.Date.from_string('2022-01-01'), fields.Date.from_string('2022-12-31'))
+
+        self.assertLinesValues(
+            diot_report._get_lines(options),
+            [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14],
+            [
+                # pylint: disable=C0326
+                (  "",   "",              "",   "",         "", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 0.0),
+                ("04", "85", "XAXX010101000", "MX",  "Mexican", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 0.0),
+                (  "",   "",              "",   "",         "", 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 100.0, 0.0, 0.0),
+            ],
+            options,
+        )

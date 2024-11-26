@@ -71,10 +71,8 @@ class L10n_MxReportHandler(models.AbstractModel):
         if current_groupby != 'partner_id':
             return []
 
-        cash_basis_journal_ids = self.env.companies.filtered('tax_cash_basis_journal_id').tax_cash_basis_journal_id
         query = report._get_report_query(options, 'strict_range', domain=[
             ('parent_state', '=', 'posted'),
-            ('journal_id', 'in', cash_basis_journal_ids.ids),
         ])
         country_demonym = self.env['res.country']._field_to_sql('country', 'demonym')
         tags = report.line_ids.expression_ids._get_matching_tags()
