@@ -170,7 +170,7 @@
                                 </div>
                             </div>
                             <field name="location" invisible="has_location == 'no'" readonly="request_status != 'new'" required="has_location == 'required'" placeholder="e.g. Brussels" />
-                            <field name="partner_id" invisible="has_partner == 'no'" readonly="request_status != 'new'" required="has_partner == 'required'"/>
+                            <field name="partner_id" invisible="has_partner == 'no'" readonly="request_status != 'new'" required="has_partner == 'required'" context="{'category_id': ''}"/>
                             <field name="company_id" groups="base.group_multi_company"/>
                         </group>
                         <group name="request_details">
