@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from collections import Counter, OrderedDict, defaultdict
+from collections import OrderedDict, defaultdict
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
@@ -592,7 +592,7 @@ class StudioExportWizard(models.TransientModel):
                 export_data_vals
             )
 
-    def _get_export_info(self):
+    def get_export_info(self):
         """
         Gather all the data to export from the wizard and return it in the correct order.
 
@@ -607,7 +607,6 @@ class StudioExportWizard(models.TransientModel):
         export = []
         post_export = []
 
-        path_counter = Counter()
         models_to_export, circular_dependencies = self._get_models_to_export()
         for model, _is_demo, fields_by_group, data, real_records in models_to_export:
 
@@ -627,17 +626,9 @@ class StudioExportWizard(models.TransientModel):
                         # no fields to export
                         continue
 
-                    path_info = (group, model.replace(".", "_"), suffix)
-                    path_count = path_counter[path_info]
-                    path_counter[path_info] += 1
-                    path = "%s/%s%s%s.xml" % (
-                        group,
-                        model.replace(".", "_"),
-                        "" if not path_count else f"_{path_count}",
-                        suffix,
-                    )
+                    path_info = (group, suffix)
                     no_update = model in no_update_models
-                    info.append((model, path, records, group_fields, no_update))
+                    info.append((model, records, group_fields, no_update, path_info))
 
             pre_records = data.filtered("pre")
             post_records = data.filtered("post")

@@ -717,25 +717,16 @@ class TestSpecificStudioExports_SaleOrder(
 
 
 class TestSpecificStudioExports_Website(StudioExportCase):
-    def test_apply_theme(self):
-        # SPECIFIC: Apply website theme if needed
-        pass  # test not implemented
-
-    def test_replace_pages_archs(self):
-        # SPECIFIC: replace website pages arch if needed
-        pass  # test not implemented
-
     def test_unlink_default_main_menu(self):
         # SPECIFIC: unlink the default main menu from the website if needed
         website = self.env['website'].get_current_website()
         menus = self.env['website.menu'].search([('website_id', '=', website.id)])
-
+        self.create_export_model("website.menu", domain=[("id", "in", [m.id for m in menus])])
+        self.studio_export()
         if self.get_xmlid(website) != "website.default_website" or not any(r['url'] == '/default-main-menu' for r in menus):
             # Only written for the default website and on a fresh install
             self.skipTest("This test is only written for the default website and on a fresh install")
 
-        self.create_export_model("website.menu", domain=[("id", "in", [m.id for m in menus])])
-        self.studio_export()
         self.assertFileList(
             "warnings.txt",  # because we do not export all the necessary data for website exports, but that's not the point of this test
             "data/website_menu.xml",

@@ -8,7 +8,7 @@ from odoo.tests.common import TransactionCase
 from odoo.addons.web_studio.wizard.studio_export_wizard import DEFAULT_MODELS_TO_EXPORT, FIELDS_TO_EXPORT, MODELS_WITH_NOUPDATE, RELATIONS_NOT_TO_EXPORT
 from odoo.addons.web_studio.models.studio_export_model import PRESET_MODELS_DEFAULTS, \
     DEFAULT_FIELDS_TO_EXCLUDE, ABSTRACT_MODEL_FIELDS_TO_EXCLUDE, RELATED_MODELS_TO_EXCLUDE
-from odoo.addons.web_studio.controllers.export import XML_FIELDS
+from odoo.addons.web_studio.controllers.export_utils import XML_FIELDS
 from odoo.addons.web_studio.models.ir_model import OPTIONS_WL
 from odoo.exceptions import ValidationError
 from odoo import Command

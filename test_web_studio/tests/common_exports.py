@@ -3,8 +3,7 @@ from itertools import starmap
 
 from lxml import etree as ET
 from odoo import Command
-from odoo.addons.web_studio.controllers.export import ir_model_data_getter, generate_module, _clean_dependencies
-from odoo.addons.website.tools import MockRequest
+from odoo.addons.web_studio.controllers.export_utils import StudioExportSerializer
 from odoo.osv import expression
 from odoo.tests.common import TransactionCase, tagged
 
@@ -42,9 +41,8 @@ class StudioExportCase(TransactionCase):
         self._customizations = []
         self._additional_models = self.env["studio.export.model"]
         self._additional_models.search([]).unlink()
-        self._export_content_iter = None
-        self.get_model_data = ir_model_data_getter(self.env['studio.export.wizard.data'])
-        self.studio_module = self.env["ir.module.module"].get_studio_module()
+        self.exporter = None
+        self._export_iter = None
         self.TestModel = self.env["test.studio_export.model1"].with_user(2)
         self.TestModel2 = self.env["test.studio_export.model2"].with_user(2)
         self.TestModel3 = self.env["test.studio_export.model3"].with_user(2)
@@ -70,10 +68,10 @@ class StudioExportCase(TransactionCase):
         return [nodes] if not isinstance(nodes, list) else nodes
 
     def get_xmlid(self, record):
-        return self.get_model_data(record)._xmlid_for_export()
+        return self.exporter.utils.get_xmlid(record)
 
     def studio_export(self):
-        if self._export_content_iter:
+        if self._export_iter:
             raise RuntimeError("Studio export already in progress: maybe make another test?")
 
         # Prepare the export wizard
@@ -98,33 +96,33 @@ class StudioExportCase(TransactionCase):
                 "include_demo_data": True,
             }
         )
-        export_info = wizard._get_export_info()
+        export_info = wizard.get_export_info()
 
         # Start the export
-        self.get_model_data = ir_model_data_getter(wizard.default_export_data | wizard.additional_export_data)
+        studio_module = self.env["ir.module.module"].get_studio_module()
+        self.exporter = StudioExportSerializer(self.env, studio_module, export_info)
         self._export_cache = {}
-        self._export_content_iter = iter(generate_module(self.studio_module, export_info))
+        self._export_iter = iter(self.exporter.serialize())
 
     def xml_tostring(self, el):
         return ET.tostring(el, encoding="unicode", pretty_print=True)
 
     def _get_exported(self, name=None):
-        if not self._export_content_iter:
+        if not self._export_iter:
             raise RuntimeError("No export has begun, use studio_export() first")
-        with MockRequest(self.env):
-            while name not in self._export_cache:
-                try:
-                    path, content = next(self._export_content_iter)
-                except StopIteration:
-                    break
-                if path.endswith(".xml"):
-                    self._export_cache[path] = ET.fromstring(content, parser=XMLPARSER)
-                elif path.endswith("__manifest__.py"):
-                    self._export_cache[path] = ast.literal_eval(content.decode("utf-8"))
-                else:
-                    self._export_cache[path] = content
+        while name not in self._export_cache:
+            try:
+                path, content = next(self._export_iter)
+            except StopIteration:
+                break
+            if path.endswith(".xml"):
+                self._export_cache[path] = ET.fromstring(content, parser=XMLPARSER)
+            elif path.endswith("__manifest__.py"):
+                self._export_cache[path] = ast.literal_eval(content.decode("utf-8"))
+            else:
+                self._export_cache[path] = content
 
-            return self._export_cache[name] if name else self._export_cache
+        return self._export_cache[name] if name else self._export_cache
 
     def assertFileContains(self, path, content):
         file = self._get_exported(path)
@@ -140,11 +138,10 @@ class StudioExportCase(TransactionCase):
         exported = self._get_exported("__manifest__.py")
         for key, value in expected.items():
             if key == "depends":
-                with MockRequest(self.env):
-                    self.assertEqual(
-                        _clean_dependencies(set(exported["depends"] + value)),
-                        exported["depends"],
-                    )
+                self.assertEqual(
+                    self.exporter.utils.clean_dependencies(set(exported["depends"] + value)),
+                    exported["depends"],
+                )
             else:
                 self.assertEqual(exported[key], value)
 
