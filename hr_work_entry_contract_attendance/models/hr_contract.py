@@ -76,6 +76,7 @@ class HrContract(models.Model):
             ('employee_id', 'in', calendar_based_contracts.employee_id.ids),
             ('check_in', '<=', end_dt),
             ('check_out', '>=', start_dt), #We ignore attendances without check_out date
+            ('overtime_status', '=', 'approved'),
         ])
 
         resource_ids = attendances.employee_id.resource_id.ids
