@@ -74,7 +74,7 @@ class TestBaseImport(AccountTestInvoicingCommon):
                     raise
         return self.env[res_model].create(vals)
 
-    @unittest.skipUnless(can_import("xlrd.xlsx"), "XLRD module not available")
+    @unittest.skipUnless(can_import("xlrd.xlsx") or can_import("openpyxl"), "XLRD module not available")
     def test_account_xlsx_import(self):
         existing_id = self.env["account.account"].with_context(import_file=True).create({"code":"550003", "name": "Existing Account"}).id
 
@@ -89,7 +89,7 @@ class TestBaseImport(AccountTestInvoicingCommon):
         self.assertEqual(existing_account.name, "Bank", "The existing account should have been updated")
         self.assertEqual(existing_account.current_balance, -3500.0, "The balance should have been updated")
 
-    @unittest.skipUnless(can_import('xlrd.xlsx'), "XLRD module not available")
+    @unittest.skipUnless(can_import('xlrd.xlsx') or can_import("openpyxl"), "XLRD module not available")
     def test_account_xlsx_import_fresh_company(self):
         """ Test importing new accounts in a fresh company with nothing but a MISC journal. """
         new_company = self.env['res.company'].create({'name': 'New Test Company'})
@@ -164,7 +164,7 @@ class TestBaseImport(AccountTestInvoicingCommon):
         }])
         self.assertRecordValues(first_account.with_company(company_2.id), [{'code': '100001'}])
 
-    @unittest.skipUnless(can_import("xlrd.xlsx"), "XLRD module not available")
+    @unittest.skipUnless(can_import("xlrd.xlsx") or can_import("openpyxl"), "XLRD module not available")
     def test_account_move_line_xlsx_import(self):
         result = self._create_save_import("account.move.line", self.journal_items_file_content)
 
@@ -175,7 +175,7 @@ class TestBaseImport(AccountTestInvoicingCommon):
         account_move_lines.move_id.action_post()
         self.assertTrue(account_move_lines.full_reconcile_id)
 
-    @unittest.skipUnless(can_import("xlrd.xlsx"), "XLRD module not available")
+    @unittest.skipUnless(can_import("xlrd.xlsx") or can_import("openpyxl"), "XLRD module not available")
     def test_duplicate_journals_import(self):
         existing_journal = self.env["account.journal"].with_context(import_file=True).create({"name": "OD26_18"})
         self.assertEqual(existing_journal.code, 'OD26_')
