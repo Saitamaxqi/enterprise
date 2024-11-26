@@ -26,12 +26,14 @@ test("PIVOT.VALUE.* autocomplete pivot id", async function () {
                     fuzzySearchKey: "1Partner Pivot",
                     htmlContent: [{ color: "#02c39a", value: "1" }],
                     text: "1",
+                    alwaysExpanded: true,
                 },
                 {
                     description: "Partner Pivot",
                     fuzzySearchKey: "2Partner Pivot",
                     htmlContent: [{ color: "#02c39a", value: "2" }],
                     text: "2",
+                    alwaysExpanded: true,
                 },
             ],
             { message: `autocomplete proposals for ${func}` }

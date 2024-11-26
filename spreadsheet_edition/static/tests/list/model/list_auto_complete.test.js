@@ -27,6 +27,7 @@ test("ODOO.LIST id", async function () {
                 fuzzySearchKey: "1List",
                 htmlContent: [{ color: "#02c39a", value: "1" }],
                 text: "1",
+                alwaysExpanded: true,
             },
         ]);
         composer.cancelEdition();
