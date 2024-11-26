@@ -94,6 +94,7 @@ class AccountLoanComputeWizard(models.TransientModel):
             first_payment_date=format_date(self.env, self.first_payment_date, date_format='yyyy-MM-dd') if self.first_payment_date and self.payment_end_of_month == 'at_anniversary' else None,
             payment_end_of_month=self.payment_end_of_month == 'end_of_month',
             compounding_method=self.compounding_method,
+            loan_type='annuity' if self.interest_rate else 'linear',
         )
         if schedule := loan.get_payment_schedule():
             return schedule[1:]  # Skip first line which is always 0 (simply the start of the loan)
@@ -110,7 +111,7 @@ class AccountLoanComputeWizard(models.TransientModel):
                 f"{wizard.currency_id.format(float(payment.loan_balance_amount)):>15}\n"
             )
         for wizard in self:
-            if wizard.loan_amount and wizard.interest_rate and wizard.loan_term and wizard.start_date:
+            if wizard.loan_amount and wizard.loan_term and wizard.start_date:
                 schedule = self._get_loan_payment_schedule()
                 if not schedule:
                     wizard.preview = ''

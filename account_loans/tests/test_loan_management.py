@@ -351,3 +351,11 @@ class TestLoanManagement(AccountTestInvoicingCommon):
             'payment': 554.6,
             'outstanding_balance': 0,
         }])
+
+    def test_loan_zero_interest(self):
+        loan = self.env['account.loan'].create({'name': '0 interest loan', 'date': '2024-01-01', 'amount_borrowed': 24_000})
+        wizard = self.env['account.loan.compute.wizard'].browse(loan.action_open_compute_wizard()['res_id'])
+        wizard.interest_rate = 0
+        wizard.action_save()
+        self.assertEqual(len(loan.line_ids), 12)  # default loan term is 1 year = 12 months
+        self.assertTrue(all(payment == 2000 for payment in loan.line_ids.mapped('payment')))  # 24,000 / 12 months = 2,000/month
