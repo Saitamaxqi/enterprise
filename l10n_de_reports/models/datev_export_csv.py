@@ -386,7 +386,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                 array[9] = datetime.strftime(aml.move_id.date, '%-d%m')
                 array[10] = receipt1[-36:]
                 array[11] = receipt2
-                array[13] = aml.name or ref
+                array[13] = (aml.name or ref).replace('\n', ' ')
                 if m.message_main_attachment_id:
                     array[19] = f'"BEDI ""{m._l10n_de_datev_get_guid()}"""'
                 lines.append(array)
