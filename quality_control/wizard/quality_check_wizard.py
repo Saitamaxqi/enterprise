@@ -16,7 +16,7 @@ class QualityCheckWizard(models.TransientModel):
     nb_checks = fields.Integer(compute='_compute_nb_checks')
     position_current_check = fields.Integer(compute='_compute_position')
     is_last_check = fields.Boolean(compute='_compute_position')
-    failure_location_id = fields.Many2one('stock.location')
+    failure_location_id = fields.Many2one('stock.location', compute='_compute_failure_location_id', store=True, readonly=False)
     qty_failed = fields.Float()
 
     # fields linked to the current_check_id
@@ -49,6 +49,12 @@ class QualityCheckWizard(models.TransientModel):
     def _compute_nb_checks(self):
         for wz in self:
             wz.nb_checks = len(wz.check_ids)
+
+    @api.depends('potential_failure_location_ids')
+    def _compute_failure_location_id(self):
+        for wz in self:
+            if len(wz.potential_failure_location_ids) == 1:
+                wz.failure_location_id = wz.potential_failure_location_ids
 
     @api.depends('current_check_id', 'check_ids')
     def _compute_position(self):
