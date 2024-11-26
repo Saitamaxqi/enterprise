@@ -57,7 +57,7 @@
         <field name="model">fleet.vehicle.model</field>
         <field name="inherit_id" ref="fleet.fleet_vehicle_model_view_form"/>
         <field name="arch" type="xml">
-            <xpath expr="//group[@name='group_engine']" position="after">
+            <xpath expr="//group[@name='group_engine']" position="before">
                 <group string="Salary">
                     <field name="can_be_requested"/>
                     <label for="default_car_value"/>
