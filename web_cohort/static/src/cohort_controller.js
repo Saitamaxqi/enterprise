@@ -40,7 +40,7 @@ export class CohortController extends Component {
     /**
      * @param {Object} row
      */
-    onRowClicked(row) {
+    onRowClicked(row, newWindow) {
         if (row.value === undefined || this.model.metaData.disableLinking) {
             return;
         }
@@ -55,15 +55,18 @@ export class CohortController extends Component {
             return [context[`${viewType}_view_id`] || views[viewType] || false, viewType];
         }
         const actionViews = [getView("list"), getView("form")];
-        this.actionService.doAction({
-            type: "ir.actions.act_window",
-            name: this.model.metaData.title,
-            res_model: this.model.metaData.resModel,
-            views: actionViews,
-            view_mode: "list",
-            target: "current",
-            context: context,
-            domain: domain,
-        });
+        this.actionService.doAction(
+            {
+                type: "ir.actions.act_window",
+                name: this.model.metaData.title,
+                res_model: this.model.metaData.resModel,
+                views: actionViews,
+                view_mode: "list",
+                target: "current",
+                context: context,
+                domain: domain,
+            },
+            { newWindow }
+        );
     }
 }

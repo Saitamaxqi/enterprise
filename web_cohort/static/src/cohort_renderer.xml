@@ -62,7 +62,7 @@
                         <tbody>
                             <tr t-foreach="data.rows" t-as="row" t-key="row.date"
                                 class="o_cohort_row_clickable"
-                                t-on-click.stop="() => props.onRowClicked(row)"
+                                t-custom-click.stop="(ev, isMiddleClick) => props.onRowClicked(row, isMiddleClick)"
                             >
                                 <td class="o_cohort_value text-center align-middle p-0">
                                     <t t-esc="row.date" />

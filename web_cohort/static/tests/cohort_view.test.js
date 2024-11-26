@@ -745,3 +745,61 @@ test("Scale: scale default is fetched from localStorage", async (assert) => {
     expect(".scale_button_selection").toHaveText("Year");
     expect.verifySteps(["scale_year"]);
 });
+
+test("when middle clicked on cell open records in new window ", async () => {
+    patchWithCleanup(browser, {
+        open: (url) => {
+            expect.step(`opened in new window: ${url}`);
+        },
+    });
+    patchWithCleanup(browser.sessionStorage, {
+        setItem(key, value) {
+            expect.step(`set ${key}-${value}`);
+            super.setItem(key, value);
+        },
+        getItem(key) {
+            const res = super.getItem(key);
+            expect.step(`get ${key}-${res}`);
+            return res;
+        },
+    });
+    Subscription._views = {
+        cohort: `
+                <cohort string="Subscriptions" date_start="start" date_stop="stop" measure="__count" interval="week" />`,
+        "list,my_list_view": `
+                <list>
+                    <field name="start"/>
+                    <field name="stop"/>
+                </list>`,
+        "form,my_form_view": `
+                <form>
+                    <field name="start"/>
+                    <field name="stop"/>
+                </form>`,
+        search: `<search></search>`,
+    };
+
+    await mountWithCleanup(WebClient);
+
+    await getService("action").doAction({
+        id: 22,
+        name: "Subscriptions",
+        res_model: "subscription",
+        type: "ir.actions.act_window",
+        views: [
+            [false, "cohort"],
+            ["my_list_view", "list"],
+            ["my_form_view", "form"],
+        ],
+    });
+
+    await contains("td.o_cohort_value").click({ ctrlKey: true });
+    expect.verifySteps([
+        "get current_action-null",
+        'set current_action-{"id":22,"name":"Subscriptions","res_model":"subscription","type":"ir.actions.act_window","views":[[false,"cohort"],["my_list_view","list"],["my_form_view","form"]]}',
+        'get current_action-{"id":22,"name":"Subscriptions","res_model":"subscription","type":"ir.actions.act_window","views":[[false,"cohort"],["my_list_view","list"],["my_form_view","form"]]}',
+        'set current_action-{"type":"ir.actions.act_window","name":"Subscriptions","res_model":"subscription","views":[["my_list_view","list"],["my_form_view","form"]],"view_mode":"list","target":"current","context":{"lang":"en","tz":"taht","uid":7,"allowed_company_ids":[1]},"domain":[["start",">=","2017-07-10"],["start","<","2017-07-17"]]}',
+        "opened in new window: /odoo/action-22/m-subscription",
+        'set current_action-{"id":22,"name":"Subscriptions","res_model":"subscription","type":"ir.actions.act_window","views":[[false,"cohort"],["my_list_view","list"],["my_form_view","form"]]}',
+    ]);
+});

@@ -27,7 +27,7 @@
                     </t>
                     <t t-else="" t-call="web.NoContentHelper"/>
                 </t>
-                <t t-component="props.Renderer" class="'o_renderer'" model="model" onRowClicked="(row) => this.onRowClicked(row)"/>
+                <t t-component="props.Renderer" class="'o_renderer'" model="model" onRowClicked="(row, middleClick) => this.onRowClicked(row, middleClick)"/>
             </Layout>
         </div>
     </t>
