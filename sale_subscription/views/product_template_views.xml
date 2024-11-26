@@ -23,7 +23,7 @@
                 <attribute name="class">page_sales</attribute>
             </page>
             <div name="options" position="inside">
-                <span class="d-inline-block">
+                <span class="d-inline-flex">
                     <field name="recurring_invoice"/>
                     <label for="recurring_invoice" string="Subscriptions"/>
                 </span>

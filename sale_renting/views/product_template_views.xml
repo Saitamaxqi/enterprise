@@ -36,7 +36,7 @@
                 </page>
             </page>
             <xpath expr="//div[@name='options']" position='inside'>
-                <span class="d-inline-block">
+                <span class="d-inline-flex">
                     <field name="rent_ok"/>
                     <label for="rent_ok"/>
                 </span>
