@@ -15,9 +15,9 @@ patch(SocialPostFormatterMixinBase, {
         value = super._formatPost(...arguments);
         if (this._getMediaType() === 'linkedin') {
             value = value.replace(SocialPostFormatterRegex.REGEX_HASHTAG,
-                `$1<a href='https://www.linkedin.com/feed/hashtag/$2' target='_blank'>#$2</a>`);
+                `$1<a href='https://www.linkedin.com/feed/hashtag/?keywords=$2' target='_blank'>#$2</a>`);
             value = value.replace(LINKEDIN_HASHTAG_REGEX,
-                `<a href='https://www.linkedin.com/feed/hashtag/$1' target='_blank'>#$1</a>`);
+                `<a href='https://www.linkedin.com/feed/hashtag/?keywords=$1' target='_blank'>#$1</a>`);
         }
         return value;
     }

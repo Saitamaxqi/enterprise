@@ -60,8 +60,8 @@ QUnit.module('Social Formatter Regex', {}, () => {
         assert.equal(finalMessage, [
             "Hello, check this out:",
             "<a href='https://www.odoo.com' class='text-truncate' target='_blank' rel='noreferrer noopener'>https://www.odoo.com</a>",
-            "<a href='https://www.linkedin.com/feed/hashtag/crazydeals' target='_blank'>#crazydeals</a>",
-            "<a href='https://www.linkedin.com/feed/hashtag/odoo' target='_blank'>#odoo</a>",
+            "<a href='https://www.linkedin.com/feed/hashtag/?keywords=crazydeals' target='_blank'>#crazydeals</a>",
+            "<a href='https://www.linkedin.com/feed/hashtag/?keywords=odoo' target='_blank'>#odoo</a>",
         ].join(' '));
     });
 
