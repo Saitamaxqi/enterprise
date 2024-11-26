@@ -29,11 +29,13 @@ def _l10n_be_reports_post_init(env):
             asset_group = env['account.asset.group'].create({
                 'name': 'Odoo BE Office',
             })
-            journal = env['account.journal'].create({
-                'name': 'Journal Loan Demo BE',
-                'type': 'general',
-                'code': 'LOAN',
-            })
+            journal = env['account.journal'].search([('code','=', 'LOAN')], limit = 1)
+            if not journal:
+                journal = env['account.journal'].create({
+                    'name': 'Journal Loan Demo BE',
+                    'type': 'general',
+                    'code': 'LOAN',
+                })
             for i, file_type in enumerate(['csv', 'xlsx']):
                 _account_loans_import_loan_demo(
                     env,
