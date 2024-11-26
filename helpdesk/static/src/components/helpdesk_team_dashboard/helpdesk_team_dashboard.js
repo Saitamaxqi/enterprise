@@ -46,7 +46,7 @@ export class HelpdeskTeamDashboard extends Component {
     /**
      * @param {MouseEvent} e
      */
-    async onActionClicked(e) {
+    async onActionClicked(e, newWindow) {
         if (this.showDemo) {
             return;
         }
@@ -57,25 +57,35 @@ export class HelpdeskTeamDashboard extends Component {
         const buttonContext = action.getAttribute('context') || '';
 
         if (action.getAttribute('name').includes('helpdesk.')) {
-            return await this.action.doActionButton({
-                resModel: 'helpdesk.ticket',
-                name: 'create_action',
-                args: JSON.stringify([actionRef, title, searchViewRef]),
-                context: '',
-                buttonContext,
-                type: 'object',
-            });
-        } else {
-            if (['action_view_rating_today', 'action_view_rating_7days'].includes(actionRef)) {
-                return this.action.doActionButton({
-                    resModel: 'helpdesk.team',
-                    name: actionRef,
+            return await this.action.doActionButton(
+                {
+                    resModel: 'helpdesk.ticket',
+                    name: 'create_action',
+                    args: JSON.stringify([actionRef, title, searchViewRef]),
                     context: '',
                     buttonContext,
                     type: 'object',
-                });
+                },
+                {
+                    newWindow,
+                }
+            );
+        } else {
+            if (['action_view_rating_today', 'action_view_rating_7days'].includes(actionRef)) {
+                return this.action.doActionButton(
+                    {
+                        resModel: 'helpdesk.team',
+                        name: actionRef,
+                        context: '',
+                        buttonContext,
+                        type: 'object',
+                    },
+                    {
+                        newWindow,
+                    }
+                );
             }
-            return this.action.doAction(actionRef);
+            return this.action.doAction(actionRef, { newWindow });
         }
     }
 

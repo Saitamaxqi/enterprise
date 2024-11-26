@@ -25,7 +25,7 @@
                                 <a name="helpdesk.helpdesk_my_ticket_action_no_create"
                                    title="My Tickets"
                                    data-hotkey="t"
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    t-attf-class="btn w-100 h-100 p-2 border-0 text-capitalize fw-normal {{state.dashboardValues.my_all.count > 0 ? 'btn-primary': 'btn-light bg-100'}} {{showDemo ? 'o_cursor_default' : ''}}"
                                 >
                                     <span class="d-block mb-0 fs-2" t-out="state.dashboardValues.my_all.count"/>
@@ -36,7 +36,7 @@
                                 <a name="helpdesk.helpdesk_my_ticket_action_no_create"
                                    title="My Tickets"
                                    context="{'search_default_high_priority': True}"
-                                   data-hotkey="p" t-on-click="onActionClicked"
+                                   data-hotkey="p" t-custom-click="onActionClicked"
                                    t-attf-class="position-relative btn w-100 h-100 p-2 border-0 text-capitalize fw-normal {{state.dashboardValues.my_high.count > 0 ? 'btn-primary': 'btn-light bg-100'}} {{showDemo ? 'o_cursor_default' : ''}}"
                                 >
                                     <span class="d-block mb-0 fs-2" t-out="state.dashboardValues.my_high.count"/>
@@ -57,7 +57,7 @@
                                    t-attf-class="position-relative btn w-100 h-100 p-2 border-0 text-capitalize fw-normal {{state.dashboardValues.my_urgent.count > 0 ? 'btn-primary': 'btn-light bg-100'}} {{showDemo ? 'o_cursor_default' : ''}}"
                                    title="My Tickets"
                                    context="{'search_default_urgent_priority': True}"
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    data-hotkey="o"
                                 >
                                     <span class="d-block mb-0 fs-2" t-out="state.dashboardValues.my_urgent.count"/>
@@ -81,7 +81,7 @@
                                 <a name="helpdesk.helpdesk_ticket_action_dashboard"
                                    t-attf-class="btn btn-light align-items-center d-flex w-100 h-100 p-0 border-0 bg-100 fw-normal align-middle {{showDemo ? 'o_cursor_default' : ''}}"
                                    title="Tickets Analysis"
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    data-hotkey="a"
                                 >
                                     <div class="w-100 p-2" t-out="formatTime(state.dashboardValues.my_all.hours)"/>
@@ -91,7 +91,7 @@
                                 <a name="helpdesk.helpdesk_ticket_action_dashboard"
                                    t-attf-class="btn btn-light align-items-center d-flex w-100 h-100 p-0 border-0 bg-100 fw-normal {{showDemo ? 'o_cursor_default' : ''}}"
                                    title="Tickets Analysis"
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    context="{'search_default_high_priority': True}"
                                    data-hotkey="b"
                                 >
@@ -103,7 +103,7 @@
                                    t-attf-class="btn btn-light align-items-center d-flex w-100 h-100 bg-100 p-0 border-0 fw-normal {{showDemo ? 'o_cursor_default' : ''}}"
                                    title="Tickets Analysis"
                                    context="{'search_default_urgent_priority': True}"
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    data-hotkey="y"
                                 >
                                     <div class="w-100 p-2" t-out="formatTime(state.dashboardValues.my_urgent.hours)"/>
@@ -116,7 +116,7 @@
                                 <a name="helpdesk.helpdesk_ticket_action_sla"
                                    title="My Tickets"
                                    t-attf-class="btn align-items-center d-flex w-100 h-100 p-0 border-0 fw-normal {{state.dashboardValues.my_all.failed ? 'btn-warning' : 'btn-light bg-100'}} {{showDemo ? 'o_cursor_default' : ''}}"
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    data-hotkey="d"
                                 >
                                     <div class="w-100 p-2" t-out="state.dashboardValues.my_all.failed"/>
@@ -126,7 +126,7 @@
                                 <a name="helpdesk.helpdesk_ticket_action_sla"
                                    t-attf-class="btn align-items-center d-flex w-100 h-100 p-0 border-0 fw-normal {{state.dashboardValues.my_high.failed ? 'btn-warning' : 'btn-light bg-100'}} {{showDemo ? 'o_cursor_default' : ''}}"
                                    title="My Tickets"
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    context="{'search_default_high_priority': True}"
                                    data-hotkey="e"
                                 >
@@ -137,7 +137,7 @@
                                 <a name="helpdesk.helpdesk_ticket_action_sla"
                                    t-attf-class="btn align-items-center d-flex w-100 h-100 p-0 border-0 fw-normal {{state.dashboardValues.my_urgent.failed ? 'btn-warning' : 'btn-light bg-100'}} {{showDemo ? 'o_cursor_default' : ''}}"
                                    title="My Tickets"
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    context="{'search_default_urgent_priority': True}"
                                    data-hotkey="f"
                                 >
@@ -165,7 +165,7 @@
                                 <a name="helpdesk.helpdesk_ticket_action_close_analysis"
                                    t-attf-class="btn w-100 h-100 p-0 border-0 text-capitalize fw-normal {{state.dashboardValues.today.count >= state.dashboardValues.helpdesk_target_closed ? 'btn-success': 'btn-light bg-100'}} {{showDemo ? 'o_cursor_default' : ''}}"
                                    title="My Tickets"
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    data-hotkey="i"
                                 >
                                     <div class="p-2">
@@ -180,7 +180,7 @@
                                 <a name="helpdesk.helpdesk_ticket_action_success"
                                    title="Percentage of tickets that were closed without failing any SLAs."
                                    t-attf-class="btn w-100 h-100 p-0 border-0 text-capitalize fw-normal {{(state.dashboardValues.helpdesk_target_success &lt;= state.dashboardValues.today.success) ? 'btn-success': 'btn-light bg-100' }} {{showDemo ? 'o_cursor_default' : ''}}"
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    data-action-title="My Tickets"
                                    data-hotkey="k"
                                 >
@@ -197,7 +197,7 @@
                                    t-attf-class="btn w-100 h-100 p-0 border-0 text-capitalize fw-normal {{(state.dashboardValues.helpdesk_target_rating &lt;= state.dashboardValues.today.rating) ? 'btn-success': 'btn-light bg-100'}} {{showDemo ? 'o_cursor_default' : ''}}"
                                    title="Today's Average Rating"
                                    type="object"
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    data-hotkey="j"
                                 >
                                     <div class="p-2">
@@ -212,7 +212,7 @@
                             <td t-attf-class="{{demoClass}} p-0">
                                 <a name="helpdesk.helpdesk_ticket_action_7days_tickets"
                                    data-hotkey="l"
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    title="Tickets"
                                    t-attf-class="btn align-items-center d-flex w-100 h-100 p-0 border-0 fw-normal {{state.dashboardValues['7days'].count >= state.dashboardValues.helpdesk_target_closed ? 'btn-success': state.dashboardValues['7days'].count &lt;= 0 ? 'btn-light bg-100' : 'btn-warning'}} {{showDemo ? 'o_cursor_default' : ''}}"
                                 >
@@ -224,7 +224,7 @@
                                 <a name="helpdesk.helpdesk_ticket_action_7days_success"
                                    t-attf-class="btn align-items-center d-flex w-100 h-100 p-0 border-0 fw-normal {{(state.dashboardValues.helpdesk_target_success &lt;= state.dashboardValues['7days'].success) ? 'btn-success': state.dashboardValues['7days'].success &lt;= 0 ? 'btn-light bg-100' :  'btn-warning' }} {{showDemo ? 'o_cursor_default' : ''}}"
                                    title="Percentage of tickets that were closed without failing any SLAs."
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    data-action-title="Tickets"
                                    data-hotkey="n"
                                 >
@@ -236,7 +236,7 @@
                                 <a name="action_view_rating_7days"
                                    t-attf-class="btn align-items-center d-flex w-100 h-100 p-0 border-0 fw-normal {{(state.dashboardValues.helpdesk_target_rating &lt;= state.dashboardValues['7days'].rating) ? 'btn-success': state.dashboardValues['7days'].rating &lt;= 0 ? 'btn-light bg-100' : 'btn-warning'}} {{showDemo ? 'o_cursor_default' : ''}}"
                                    title="Average Rating for the Past 7 Days"
-                                   t-on-click="onActionClicked"
+                                   t-custom-click="onActionClicked"
                                    data-hotkey="m"
                                 >
                                     <div class="w-100 p-2" t-out="success_rate_rating"/>
