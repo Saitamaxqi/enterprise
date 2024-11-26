@@ -1164,7 +1164,7 @@ class L10n_InGstReturnPeriod(models.Model):
         self.env.ref("l10n_in_reports_gstr.ir_cron_to_send_gstr1_data")._trigger()
 
     def _cron_send_gstr1_data(self, job_count=None):
-        gstr1_sending = self.search([("gstr1_status", "=", "sending")])
+        gstr1_sending = self.search([("gstr1_status", "=", "sending"), ("gstr1_blocking_level", "!=", "error")])
         process_gstr1 = gstr1_sending[:job_count] if job_count else gstr1_sending
         for return_period in process_gstr1:
             return_period.send_gstr1()
