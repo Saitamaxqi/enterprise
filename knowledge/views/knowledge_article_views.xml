@@ -39,7 +39,7 @@
                     <widget name="knowledge_topbar"/>
                     <!-- Invisible Article Warning Banner-->
                     <div class="alert alert-info text-center mb-0" role="alert" groups="base.group_user"
-                         invisible="not id or internal_permission == 'none' or is_article_visible_by_everyone or is_article_visible">
+                         invisible="not id or category != 'workspace' or is_article_visible">
                         <field name="user_has_access_parent_path" invisible="1"/>
                         This article is only displayed to its members.
                         <a invisible="not user_has_access_parent_path" role="button" type="object" name="action_join" class="text-decoration-underline oe_link alert-link">

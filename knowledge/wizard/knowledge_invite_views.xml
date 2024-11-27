@@ -20,11 +20,11 @@
                             options="{'no_quick_create': True}"
                             context="{'show_email': True, 'form_view_ref': 'base.view_partner_simple_form'}"/>
                     </group>
-                    <field name="message" class="border" placeholder="Extra Comment" invisible="permission == 'none'"/>
+                    <field name="message" placeholder="Extra Comment" invisible="permission == 'none'"/>
                 </sheet>
                 <footer>
                     <button string="Invite" type="object" name="action_invite_members" class="btn-primary"/>
-                    <button string="Cancel" special="cancel" class="btn-secondary"/>
+                    <button string="Discard" special="cancel" class="btn-secondary"/>
                 </footer>
             </form>
         </field>

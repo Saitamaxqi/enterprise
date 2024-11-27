@@ -1,24 +1,25 @@
 import { browser } from "@web/core/browser/browser";
 import { formatDateTime } from '@web/core/l10n/dates';
 import { rpc } from "@web/core/network/rpc";
-import { registry } from '@web/core/registry';
+import { usePopover } from "@web/core/popover/popover_hook";
+import { useRecordObserver } from "@web/model/relational_model/utils";
+import { registry } from "@web/core/registry";
 import { standardWidgetProps } from '@web/views/widgets/standard_widget_props';
 import { user } from "@web/core/user";
 import { useService } from "@web/core/utils/hooks";
 import { useOpenChat } from "@mail/core/web/open_chat_hook";
-import { utils as uiUtils } from "@web/core/ui/ui_service";
 import { _t } from "@web/core/l10n/translation";
-
-import { Component, onWillStart, useEffect, useRef, useState } from '@odoo/owl';
 
 import { getRandomIcon } from '@knowledge/js/knowledge_utils';
 import KnowledgeHierarchy from '@knowledge/components/hierarchy/hierarchy';
 import MoveArticleDialog from '@knowledge/components/move_article_dialog/move_article_dialog';
-import PermissionPanel from '@knowledge/components/permission_panel/permission_panel';
+import { PermissionPanel } from '@knowledge/components/permission_panel/permission_panel';
 import { KnowledgeFormStatusIndicator } from "@knowledge/components/form_status_indicator/form_status_indicator";
 import { KNOWLEDGE_READONLY_EMBEDDINGS } from "@knowledge/editor/embedded_components/embedding_sets";
 import { READONLY_MAIN_EMBEDDINGS } from "@html_editor/others/embedded_components/embedding_sets";
 import { HistoryDialog } from "@html_editor/components/history_dialog/history_dialog";
+
+import { Component, onWillStart, reactive, useEffect, useRef, useState } from "@odoo/owl";
 
 class KnowledgeTopbar extends Component {
     static template = "knowledge.KnowledgeTopbar";
@@ -28,7 +29,6 @@ class KnowledgeTopbar extends Component {
     static components = {
         KnowledgeHierarchy,
         KnowledgeFormStatusIndicator,
-        PermissionPanel,
     };
 
     setup() {
@@ -37,18 +37,25 @@ class KnowledgeTopbar extends Component {
         this.dialog = useService('dialog');
         this.notification = useService('notification');
         this.orm = useService('orm');
-        this.uiService = useService('ui');
+        this.uiService = useService("ui");
 
-        this.buttonSharePanel = useRef('sharePanel_button');
+        this.permissionPopover = usePopover(PermissionPanel, {
+            closeOnClickAway: true,
+            env: this.env,
+            arrow: false,
+            onClose: () => (this.state.shareBtnIsActive = false),
+            position: "bottom-end",
+        });
+
         this.optionsBtn = useRef('optionsBtn');
 
         this.formatDateTime = formatDateTime;
 
         this.state = useState({
+            addingProperty: false,
             displayChatter: false,
             displayPropertyPanel: !this.articlePropertiesIsEmpty,
-            addingProperty: false,
-            displaySharePanel: false,
+            shareBtnIsActive: false,
         });
         this.commentsService = useService("knowledge.comments");
         this.commentsState = useState(this.commentsService.getCommentsState());
@@ -70,46 +77,10 @@ class KnowledgeTopbar extends Component {
             }
         }, () => [this.optionsBtn.el]);
 
-
-        useEffect(() => {
-            // When opening an article via the sidebar (or when moving one),
-            // display the properties panel if the article has properties and we are not on mobile.
-            if (!uiUtils.isSmall() && !this.articlePropertiesIsEmpty) {
-                this.addProperties();
-            } else if (this.articlePropertiesIsEmpty && this.state.displayPropertyPanel) {
-                // We close the panel if the opened article has no properties and the panel was open.
-                this.toggleProperties();
-            }
-            this.state.addingProperty = false;
-        }, () => [this.props.record.resId, this.articlePropertiesIsEmpty]);
-
-        useEffect((shareBtn) => {
-            if (shareBtn) {
-                shareBtn.addEventListener(
-                    // Prevent hiding the dropdown when the invite modal is shown
-                    'hide.bs.dropdown', (ev) => {
-                        if (this.uiService.activeElement !== document) {
-                            ev.preventDefault();
-                        }
-                });
-                shareBtn.addEventListener(
-                    'shown.bs.dropdown',
-                    () => this.state.displaySharePanel = true
-                );
-                shareBtn.addEventListener(
-                    'hidden.bs.dropdown',
-                    () => this.state.displaySharePanel = false
-                );
-            }
-        }, () => [this.buttonSharePanel.el]);
-    }
-
-    get addFavoriteLabel(){
-        return _t("Add to favorites");
-    }
-
-    get removeFavoriteLabel(){
-        return _t("Remove from favorites");
+        this.reactiveRecordWrapper = reactive({ record: this.props.record });
+        useRecordObserver((record) => {
+            this.reactiveRecordWrapper.record = record;
+        });
     }
 
     get chatterButtonTitle() {
@@ -291,6 +262,20 @@ class KnowledgeTopbar extends Component {
         }
     }
 
+    togglePermissionPanel(event) {
+        if (this.permissionPopover.isOpen) {
+            this.permissionPopover.close();
+        } else {
+            if (this.props.record.dirty) {
+                this.props.record.save();
+            }
+            this.permissionPopover.open(event.currentTarget, {
+                reactiveRecordWrapper: this.reactiveRecordWrapper,
+            });
+            this.state.shareBtnIsActive = true;
+        }
+    }
+
     async unarchiveArticle() {
         await this.orm.call('knowledge.article', 'action_unarchive', [this.props.record.resId]);
         await this.props.record.load();
@@ -353,6 +338,19 @@ export const knowledgeTopbar = {
         { name: "create_uid", type: "many2one", relation: "res.users" },
         { name: "html_field_history_metadata", type: "jsonb" },
         { name: "last_edition_uid", type: "many2one", relation: "res.users" },
+        { name: "active", type: "boolean" },
+        { name: "article_properties", type: "jsonb" },
+        { name: "cover_image_id", type: "many2one", relation: "knowledge.cover" },
+        { name: "full_width", type: "boolean" },
+        { name: "icon", type: "char" },
+        { name: "inherited_permission", type: "char"},
+        { name: "inherited_permission_parent_id", type: "many2one", relation: "knowledge.article"},
+        { name: "is_article_item", type: "boolean" },
+        { name: "is_locked", type: "boolean" },
+        { name: "is_desynchronized", type: "boolean"},
+        { name: "is_user_favorite", type: "boolean" },
+        { name: "name", type: "char" },
+        { name: "parent_id", type: "char" },
         { name: "parent_path", type: "char" },
         { name: "root_article_id", type: "many2one", relation: "knowledge.article" },
         { name: "is_listed_in_templates_gallery", type: "boolean" },

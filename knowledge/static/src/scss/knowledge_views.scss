@@ -214,29 +214,7 @@
             filter: brightness(75%);
         }
     }
-    .dropdown-menu.o_knowledge_share_panel {
-        width: 420px;
-        overflow-x: hidden;
-        overflow-y: auto;
-        right: 0;
-        .form-switch .form-check-input {
-            margin-left: 0;
-            cursor: pointer;
-        }
-        .o_knowledge_share_panel_image,
-        .o_knowledge_share_panel_icon {
-            width: 30px;
-            height: 30px;
-        }
-        .o_knowledge_share_panel_image {
-            object-fit: cover;
-        }
-        .o_knowledge_share_panel_invite .form-control {
-            color: $gray-400 !important;
-        }
-    }
-    .dropdown-menu.o_knowledge_more_options_panel,
-    .dropdown-menu.o_knowledge_share_panel {
+    .dropdown-menu.o_knowledge_more_options_panel {
         max-width: 100vw;
     }
 

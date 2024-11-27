@@ -46,6 +46,7 @@ export class KnowledgeArticleFormController extends FormController {
             ensureArticleName: this.ensureArticleName.bind(this),
             openArticle: this.openArticle.bind(this),
             renameArticle: this.renameArticle.bind(this),
+            sendArticleToTrash: this.sendArticleToTrash.bind(this),
             toggleAsideMobile: this.toggleAsideMobile.bind(this),
             topbarMountedPromise: this.topbarMountedPromise,
             save: this.save.bind(this),
@@ -234,8 +235,10 @@ export class KnowledgeArticleFormController extends FormController {
                 ),
                 confirmLabel: _t("Close"),
             });
+            return false;
         }
         this.toggleAsideMobile(false);
+        return true;
     }
 
     /*
@@ -253,6 +256,14 @@ export class KnowledgeArticleFormController extends FormController {
             name = title;
         }
         return this.model.root.update({ name });
+    }
+
+    async sendArticleToTrash() {
+        await this.orm.call("knowledge.article", "action_send_to_trash", [this.resId]);
+        await this.actionService.doAction(
+            await this.orm.call("knowledge.article", "action_redirect_to_parent", [this.resId]),
+            { stackPosition: "replaceCurrentAction" },
+        );
     }
 
     /**

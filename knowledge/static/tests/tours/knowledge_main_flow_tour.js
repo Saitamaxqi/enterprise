@@ -138,7 +138,7 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
         },
         {
             content: "click on 'Invite'",
-            trigger: '.o_knowledge_share_panel .btn:contains("Invite")',
+            trigger: '.o_knowledge_permission_panel .btn:contains("Invite")',
             run: "click",
         },
         {
@@ -176,19 +176,15 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
             trigger: "body:not(:has(.modal:contains(invite people)))",
         },
         {
+            trigger: ".o_knowledge_permission_panel_members span:contains('micheline@knowledge.com')",
+        },
+        {
     // add to favorite
     trigger: '.o_knowledge_toggle_favorite',
     run: "click",
 }, {
     // check article was correctly added into favorites
     trigger: 'section[data-section="favorites"] .o_article .o_article_name:contains("My Workspace Article")',
-}, {
-    // open the share dropdown
-    trigger: '.o_knowledge_header .btn:contains("Share")',
-    run: "click",
-}, {
-    // open the share dropdown
-    trigger: '.o_member_email:contains("micheline@knowledge.com")',
 }, {
     // go back to private article
     trigger: 'section[data-section="private"] .o_article .o_article_name:contains("My Private Article")',

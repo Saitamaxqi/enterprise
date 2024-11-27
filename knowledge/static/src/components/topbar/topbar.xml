@@ -16,15 +16,10 @@
             </div>
             <!-- Buttons -->
             <div class="d-flex gap-1 flex-md-nowrap mx-auto justify-content-end">
-                <div class="o-dropdown dropdown" t-if="props.record.resId and props.record.data.active">
-                    <a t-ref="sharePanel_button" role="button" class="btn btn-light btn-share dropdown-toggle o-no-caret" id="dropdown_share_panel" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-hotkey="shift+s">
-                        <t t-if="isInternalUser">Share</t>
-                        <t t-else="">Members</t>
-                    </a>
-                    <div role="menu" t-on-click.stop="" aria-labelledby="dropdown_share_panel" t-attf-class="o_knowledge_share_panel dropdown-menu user-select-none">
-                        <PermissionPanel t-if="state.displaySharePanel and props.record.resId and props.record.data.active" record="props.record"/>
-                    </div>
-                </div>
+                <button t-if="props.record.resId and props.record.data.active" t-attf-class="btn btn-light #{state.shareBtnIsActive ? 'show' : ''}" t-on-click="togglePermissionPanel" data-hotkey="shift+s">
+                    <t t-if="isInternalUser">Share</t>
+                    <t t-else="">Members</t>
+                </button>
                 <a t-ref="btn_chatter" t-if="props.record.resId and isInternalUser" role="button"
                     t-attf-class="btn btn-light btn-chatter #{state.displayChatter ? 'active' : ''}" data-hotkey="d" t-on-click="toggleChatter"
                     t-att-title="chatterButtonTitle">

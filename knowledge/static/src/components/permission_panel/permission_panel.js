@@ -1,342 +1,345 @@
-import { user } from "@web/core/user";
-import { rpc } from "@web/core/network/rpc";
-import { ConfirmationDialog, AlertDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { ConfirmationDialog } from "@web/core/confirmation_dialog/confirmation_dialog";
+import { Dropdown } from "@web/core/dropdown/dropdown";
+import { DropdownItem } from "@web/core/dropdown/dropdown_item";
 import { _t } from "@web/core/l10n/translation";
-import { useService } from '@web/core/utils/hooks';
-import { Component, onWillStart, useEffect, useState} from "@odoo/owl";
+import { user } from "@web/core/user";
+import { useService } from "@web/core/utils/hooks";
 
-const permissionLevel = {'none': 0, 'read': 1, 'write': 2}
-const restrictMessage = _t("Are you sure you want to restrict access to this article? "
-+ "This means it will no longer inherit access rights from its parents.");
-const loseWriteMessage = _t('Are you sure you want to remove your own "Write" access?');
+import { Component, onWillStart, useState } from "@odoo/owl";
+
+class Member {
+    constructor(data) {
+        Object.assign(this, data);
+    }
+
+    get avatarUrl() {
+        return `/web/image?model=res.partner&field=avatar_128&id=${this.partner_id}`;
+    }
+
+    get basedOnName() {
+        return `${this.based_on_icon || "📄"} ${this.based_on_name || _t("Untitled")}`;
+    }
+
+    get canWrite() {
+        return this.permission === "write";
+    }
+
+    get id() {
+        return this.member_id;
+    }
+
+    get isCurrentUser() {
+        return this.partner_id === user.partnerId;
+    }
+
+    get isRemovable() {
+        return !(this.based_on && this.permission === "none");
+    }
+}
 
 export class PermissionPanel extends Component {
     static template = "knowledge.PermissionPanel";
     static props = {
-        record: Object,
+        reactiveRecordWrapper: Object,
+        close: Function,
     };
+    static components = { Dropdown, DropdownItem };
 
-    /**
-     * @override
-     */
-    setup () {
-        this.actionService = useService('action');
-        this.dialog = useService('dialog');
-        this.orm = useService('orm');
-        /** @type {import("models").Store} */
+    setup() {
+        this.orm = useService("orm");
+        this.state = useState({ members: {}, isArticleLoaded: true });
+        this.actionService = useService("action");
+        this.dialog = useService("dialog");
         this.mailStore = useService("mail.store");
-
-        this.state = useState({
-            loading: true,
-            partner_id: user.partnerId
-        });
-        onWillStart(async () => {
-            this.isInternalUser = await user.hasGroup('base.group_user');
-        });
-        useEffect(() => {
-            this.loadPanel();
-        }, () => [this.props.record.resId]);
+        this.userIsAdmin = user.isAdmin;
+        onWillStart(async () => (this.userIsInternal = await user.hasGroup("base.group_user")));
+        onWillStart(async () => await this.loadMembers());
     }
 
-    async loadPanel () {
-        Object.assign(this.state, {
-            ...await this.loadData(),
-            loading: false
-        });
+    get record() {
+        return this.props.reactiveRecordWrapper.record;
     }
 
-    /**
-     * @returns {Object}
-     */
-    loadData () {
-        return rpc("/knowledge/get_article_permission_panel_data",
-            {
-                article_id: this.props.record.resId
-            }
+    get hasUniqueWriter() {
+        return (
+            this.data.inherited_permission !== "write" &&
+            this.members.filter((member) => member.permission === "write").length === 1
         );
     }
 
-    /**
-     * @returns {Array[Array]}
-     */
-    getInternalPermissionOptions () {
-        return this.state.internal_permission_options;
+    get inheritedPermissionParent() {
+        return {
+            id: this.data.inherited_permission_parent_id[0],
+            name: this.data.inherited_permission_parent_id[1] || _t("Untitled"),
+        };
+    }
+
+    get isRootArticle() {
+        return !this.data.parent_id;
+    }
+
+    get parentArticle() {
+        return {
+            id: this.data.parent_id[0],
+            name: this.data.parent_id[1],
+        };
+    }
+
+    get visibility() {
+        return this.data.is_article_visible_by_everyone ? "everyone" : "members";
+    }
+
+    get data() {
+        return this.props.reactiveRecordWrapper.record.data;
+    }
+
+    get members() {
+        return this.state.members;
+    }
+
+    get permissionLevel() {
+        return { none: 0, read: 1, write: 2 };
+    }
+
+    get permissions() {
+        return { none: _t("No Access"), read: _t("Can Read"), write: _t("Can Edit") };
+    }
+
+    get userCanEdit() {
+        return this.data.user_can_write;
+    }
+
+    get visibilities() {
+        return { everyone: _t("Everyone"), members: _t("Members") };
+    }
+
+    async loadMembers(articleId = this.record.resId) {
+        this.state.members = (
+            await this.orm.call("knowledge.article", "get_permission_panel_members", [articleId])
+        ).map((memberVals) => new Member(memberVals));
+    }
+
+    async load() {
+        await Promise.all([this.loadMembers(), this.record.load()]);
     }
 
     /**
-     * @param {Proxy} member
-     * @returns {Boolean}
+     * @param {String} permission
      */
-    isLoggedUser (member) {
-        return member.partner_id === user.partnerId;
+    async setInternalPermission(permission) {
+        await this.orm.call("knowledge.article", "set_internal_permission", [
+            this.record.resId,
+            permission,
+        ]);
+        await this.load();
     }
 
-    _onInviteMembersClick () {
-        this.env._saveIfDirty();
-        this.actionService.doAction('knowledge.knowledge_invite_action_from_article', {
-            additionalContext: {active_id: this.props.record.resId},
-            onClose: async () => {
-                // Update panel content
-                await this.loadPanel();
-                // Reload record
-                this.env.model.root.load();
+    async removeArticleMember(member) {
+        await this.orm.call("knowledge.article", "remove_member", [this.record.resId, member.id]);
+        await this.load();
+    }
 
-            }
+    async restore() {
+        await this.orm.call("knowledge.article", "restore_article_access", [this.record.resId]);
+        await this.load();
+    }
+
+    /**
+     * @param {String} visibility
+     */
+    async setInternalVisibility(visibility) {
+        await this.orm.call("knowledge.article", "set_is_article_visible_by_everyone", [
+            this.record.resId,
+            visibility === "everyone",
+        ]);
+        await this.load();
+    }
+
+    async setMemberPermission(member, permission) {
+        await this.orm.call("knowledge.article", "set_member_permission", [
+            this.record.resId,
+            member.id,
+            permission,
+        ]);
+        await this.load();
+    }
+
+    openInviteDialog() {
+        this.actionService.doAction("knowledge.knowledge_invite_action_from_article", {
+            additionalContext: { active_id: this.record.resId },
+            onClose: async () => await this.load(),
         });
     }
 
     /**
-     * Callback function called when the internal permission of the article changes.
-     * @param {Event} event
+     * @param {Member} member
      */
-    _onChangeInternalPermission (event) {
-        const select = event.target;
-        const index = this.state.members.findIndex(current => {
-            return current.partner_id === user.partnerId;
-        });
-        const newPermission = select.value;
-        const oldPermission = this.state.internal_permission;
-        const willRestrict = this.state.based_on && permissionLevel[newPermission] < permissionLevel[oldPermission]
-                                && permissionLevel[newPermission] < permissionLevel[this.state.parent_permission];
-        const willLoseAccess = select.value === 'none' && (index >= 0 && this.state.members[index].permission === 'none');
-        const confirm = async () => {
-            const res = await rpc('/knowledge/article/set_internal_permission',
-                {
-                    article_id: this.props.record.resId,
-                    permission: newPermission,
-                }
-            );
-            if (this._onChangedPermission(res, willLoseAccess)) {
-                this.loadPanel();
-            }
-        };
-
-        if (!willLoseAccess && !willRestrict) {
-            confirm();
+    onMemberClick(member) {
+        if (member.partner_share) {
             return;
         }
-
-        const discard = () => {
-            select.value = oldPermission;
-            this.loadPanel();
-        };
-        const loseAccessMessage = _t('Are you sure you want to set the internal permission to "none"? If you do, you will no longer have access to the article.');
-        const confirmLabel = willLoseAccess ? _t('Lose Access') : _t('Restrict Access');
-        const confirmTitle = willLoseAccess ? false : _t('Restrict Access');
-        this._showConfirmDialog(willLoseAccess ? loseAccessMessage : restrictMessage, confirmTitle, { confirmLabel, confirm, cancel: discard });
+        this.mailStore.openChat({ partnerId: member.partner_id });
     }
 
     /**
-     * Callback function called when the permission of a user changes.
-     * @param {Event} event
-     * @param {Proxy} member
+     * @param {number} resId
      */
-    async _onChangeMemberPermission (event, member) {
-        const index = this.state.members.indexOf(member);
-        if (index < 0) {
-            return;
-        }
-        const select = event.target;
-        const newPermission = select.value;
-        const oldPermission = member.permission;
-        const willLoseAccess = this.isLoggedUser(member) && newPermission === 'none';
-        const willRestrict = this.state.based_on && permissionLevel[newPermission] < permissionLevel[oldPermission];
-        const willLoseWrite = this.isLoggedUser(member) && newPermission !== 'write' && oldPermission === 'write';
-        const willGainWrite = this.isLoggedUser(member) && newPermission === 'write' && oldPermission !== 'write';
-        const confirm = async () => {
-            const res = await rpc('/knowledge/article/set_member_permission',
-                {
-                    article_id: this.props.record.resId,
-                    permission: newPermission,
-                    member_id: member.based_on ? false : member.id,
-                    inherited_member_id: member.based_on ? member.id: false,
-                }
-            );
-            const reloadArticleId = willLoseWrite && !willLoseAccess ? this.props.record.resId : false;
-            if (this._onChangedPermission(res, willLoseAccess || willLoseWrite, reloadArticleId)) {
-                this.loadPanel();
-            }
-        };
-
-        if (!willLoseAccess && !willRestrict && !willLoseWrite) {
-            await confirm();
-            if (willGainWrite) {
-                // Reload article when admin gives himself write access
-                this.env.model.root.load();
-            }
-            return;
-        }
-
-        const discard = () => {
-            select.value = this.state.members[index].permission;
-            this.loadPanel();
-        };
-        const loseAccessMessage = _t('Are you sure you want to set your permission to "none"? If you do, you will no longer have access to the article.');
-        const message = willLoseAccess ? loseAccessMessage : willLoseWrite ? loseWriteMessage : restrictMessage ;
-        const title = willLoseAccess ? _t('Leave Article') : _t('Change Permission');
-        const confirmLabel = willLoseAccess ? _t('Lose Access') : this.isLoggedUser(member) ? _t('Restrict own access') : _t('Restrict Access');
-        this._showConfirmDialog(message, title, { confirmLabel, confirm, cancel: discard } );
+    async openArticle(resId) {
+        // Permission panel needs to stay open while switching articles.
+        this.state.isArticleLoaded = false;
+        await this.env.openArticle(resId);
+        await this.loadMembers(resId);
+        this.state.isArticleLoaded = true;
     }
 
-    /**
-     * Callback function called when a member is removed.
-     * @param {Event} event
-     * @param {Proxy} member
-     */
-    _onRemoveMember (event, member) {
-        if (!this.state.members.includes(member)) {
-            return;
-        }
-
-        const willRestrict = member.based_on ? true : false;
-        const willLoseAccess = this.isLoggedUser(member) && member.permission !== "none";
-        const confirm = async () => {
-            const res = await rpc('/knowledge/article/remove_member',
-                {
-                    article_id: this.props.record.resId,
-                    member_id: member.based_on ? false : member.id,
-                    inherited_member_id: member.based_on ? member.id: false,
-                }
-            );
-            if (this._onChangedPermission(res, willLoseAccess)) {
-                this.loadPanel();
-            }
-        };
-
-        if (!willLoseAccess && !willRestrict) {
-            confirm();
-            return;
-        }
-
-        const discard = () => {
-            this.loadPanel();
-        };
-
-        let message = restrictMessage;
-        let title = _t('Restrict Access');
-        let confirmLabel = title;
-        if (this.isLoggedUser(member) && this.state.category === 'private') {
-            message = _t('Are you sure you want to leave your private Article? As you are its last member, it will be moved to the Trash.');
-            title = _t('Leave Private Article');
-            confirmLabel = _t('Move to Trash');
-        } else if (willLoseAccess) {
-            message = _t('Are you sure you want to remove your member? By leaving an article, you may lose access to it.');
-            title = _t('Leave Article');
-            confirmLabel = _t('Leave');
-        }
-
-        this._showConfirmDialog(message, title, { confirmLabel, confirm, cancel: discard });
-    }
-
-    /**
-     * Callback function called when user clicks on 'Restore' button.
-     * @param {Event} event
-     */
-    _onRestore (event) {
-        const articleId = this.props.record.resId;
-        const confirm = async () => {
-            const res = await this.orm.call(
-                'knowledge.article',
-                'restore_article_access',
-                [[articleId]],
-            );
-            if (res) {
-                if (this._onChangedPermission({success: res})) {
-                    this.loadPanel();
-                }
-            }
-        };
-
-        const message = _t('Are you sure you want to restore access? This means this article will now inherit any access set on its parent articles.');
-        const title = _t('Restore Access');
-        const confirmLabel = _t('Restore Access');
-        this._showConfirmDialog(message, title, { confirmLabel, confirm });
-    }
-
-    /**
-     * @param {Event} event
-     * @param {Proxy} member
-     */
-    async _onMemberAvatarClick (event, member) {
-        if (!member.partner_share) {
-            const partnerRead = await this.orm.read(
-                'res.partner',
-                [member.partner_id],
-                ['user_ids'],
-            );
-            const userIds = partnerRead && partnerRead.length === 1 ? partnerRead[0]['user_ids'] : false;
-            const userId = userIds && userIds.length === 1 ? userIds[0] : false;
-
-            if (userId) {
-                this.mailStore.openChat({ userId });
-            }
-        }
-    }
-
-  /**
-    * This method is called before each permission change rpc when the user needs to confirm the change as them
-    * would lose them access to the article if them do confirm.
-    * @param {str} message
-    * @param {function} confirm
-    * @param {function} discard
-    * @param {str} confirmLabel
-    */
-    _showConfirmDialog (message, title, options) {
-        options = options || {};
-        if (!options.cancel) {
-            options.cancel = this.loadPanel.bind(this);
-        }
+    async restoreArticle() {
         this.dialog.add(ConfirmationDialog, {
-            title: title || _t("Confirmation"),
-            body: message,
-            ...options
+            body: _t(
+                "Are you sure you want to restore access? This means this article will now inherit any access set on its parent articles."
+            ),
+            cancel: () => {},
+            cancelLabel: _t("Discard"),
+            confirm: async () => {
+                await this.restore();
+            },
+            confirmLabel: _t("Restore Access"),
+            title: _t("Restore Access"),
         });
     }
 
-  /**
-    * This method is called after each permission change rpc.
-    * It will check if a reloading of the article tree or a complete reload is needed in function
-    * of the new article state (if change of category or if user lost their own access to the current article).
-    * return True if the caller should continue after executing this method, and False, if caller should stop.
-    * @param {Dict} result
-    * @param {Boolean} lostAccess
-    */
-    async _onChangedPermission (result, reloadAll, reloadArticleId) {
-        if (result.error) {
-            this.dialog.add(AlertDialog, {
-                title: _t("Error"),
-                body: result.error,
-            });
-        } else if (reloadAll && reloadArticleId) {  // Lose write access
-            if (await this.props.record.isDirty()) {
-                await this.props.record.save({ reload: false });
-            }
-            await this.env.model.root.load();
-            return false;
-        } else if (reloadAll) {  // Lose access -> Hard Reload
-            window.location.replace('/knowledge/home');
-        } else if (result.new_category) {
-            if (await this.props.record.isDirty()) {
-                await this.props.record.save();
-            }
-            await this.env.model.root.load();
+    /**
+     * @param {Member} member
+     * @param {String} permission
+     */
+    async selectMemberPermission(member, permission) {
+        if (permission === member.permission) {
+            return;
         }
-        return true;
+        if (member.isCurrentUser && !this.userIsAdmin) {
+            if (permission === "none") {
+                // setting own permission to none, user will leave the article
+                this.dialog.add(ConfirmationDialog, {
+                    cancel: () => {},
+                    cancelLabel: _t("Discard"),
+                    confirm: async () => {
+                        await this.setMemberPermission(member, permission);
+                        await this.actionService.doAction(
+                            "knowledge.ir_actions_server_knowledge_home_page"
+                        );
+                    },
+                    confirmLabel: _t("Lose Access"),
+                    title: _t("Leave Article"),
+                    body: _t(
+                        'Are you sure you want to set your permission to "No Access"? If you do, you will no longer have access to the article.'
+                    ),
+                });
+            } else {
+                // downgrading own permission from write to read
+                this.dialog.add(ConfirmationDialog, {
+                    cancel: () => {},
+                    cancelLabel: _t("Discard"),
+                    confirm: async () => {
+                        await this.setMemberPermission(member, permission);
+                    },
+                    confirmLabel: _t("Restrict own access"),
+                    title: _t("Change Permission"),
+                    body: _t('Are you sure you want to remove your own "Write" access?'),
+                });
+            }
+        } else if (member.based_on) {
+            // we are desyncing the article from its parent.
+            this.dialog.add(ConfirmationDialog, {
+                cancel: () => {},
+                cancelLabel: _t("Discard"),
+                confirm: async () => {
+                    await this.setMemberPermission(member, permission);
+                },
+                confirmLabel: _t("Restrict Access"),
+                title: _t("Change Permission"),
+                body: _t(
+                    "Are you sure you want to change the permission? This means it will no longer inherit access rights from its parent articles."
+                ),
+            });
+        } else {
+            // changing permission of non-inherited member or admin upgrading own permission
+            await this.setMemberPermission(member, permission);
+        }
     }
 
-    async _onChangeVisibility (event) {
-        const input = event.target;
-        const articleId = this.props.record.resId;
-        await this.orm.call(
-            'knowledge.article',
-            'set_is_article_visible_by_everyone',
-            [articleId, input.value === 'everyone']
-        );
-        if (await this.props.record.isDirty()) {
-            await this.props.record.save();
+    async removeMember(member) {
+        if (member.isCurrentUser && member.permission !== "none") {
+            if (this.data.category === "private") {
+                // leaving private article, article will be sent to trash
+                this.dialog.add(ConfirmationDialog, {
+                    title: _t("Leave Private Article"),
+                    body: _t(
+                        "Are you sure you want to leave your private Article? As you are its last member, it will be moved to the Trash."
+                    ),
+                    cancel: () => {},
+                    cancelLabel: _t("Discard"),
+                    confirm: () => this.env.sendArticleToTrash(),
+                    confirmLabel: _t("Move to Trash"),
+                });
+            } else {
+                this.dialog.add(ConfirmationDialog, {
+                    title: _t("Leave Article"),
+                    body: _t(
+                        "Are you sure you want to leave this article? That means losing your personal access to it."
+                    ),
+                    cancel: () => {},
+                    cancelLabel: _t("Discard"),
+                    confirm: async () => {
+                        await this.removeArticleMember(member);
+                    },
+                    confirmLabel: _t("Leave Article"),
+                });
+            }
+        } else if (member.based_on) {
+            // removing inherited member permission, this will desync the article from its parent
+            this.dialog.add(ConfirmationDialog, {
+                title: _t("Restrict Access"),
+                body: _t(
+                    "Are you sure you want to restrict access to this article? This means that it will no longer inherit access rights from its parents."
+                ),
+                confirm: async () => {
+                    await this.removeArticleMember(member);
+                },
+                confirmLabel: _t("Restrict Access"),
+            });
+        } else {
+            await this.removeArticleMember(member);
         }
-        await this.props.record.load();
+    }
+
+    async selectInternalPermission(permission) {
+        if (permission === this.data.inherited_permission) {
+            return;
+        }
+        if (
+            this.data.inherited_permission_parent_id &&
+            this.permissionLevel[permission] < this.permissionLevel[this.data.inherited_permission]
+        ) {
+            this.dialog.add(ConfirmationDialog, {
+                cancel: () => {},
+                cancelLabel: _t("Discard"),
+                confirm: async () => {
+                    await this.setInternalPermission(permission);
+                },
+                title: _t("Restrict Access"),
+                confirmLabel: _t("Restrict Access"),
+                body: _t(
+                    "Are you sure you want to restrict access to this article? This means it will no longer inherit access rights from its parents."
+                ),
+            });
+        } else {
+            await this.setInternalPermission(permission);
+        }
+    }
+
+    async selectInternalVisibility(visibility) {
+        if (visibility === this.visibility) {
+            return;
+        }
+        await this.setInternalVisibility(visibility);
     }
 }
-
-export default PermissionPanel;

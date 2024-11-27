@@ -179,7 +179,7 @@ class TestKnowledgeArticleSequence(KnowledgeCommon):
         article_root_noise = self.article_root_noise.with_env(self.env)
 
         #making 1st article readonly
-        article_root_noise[0]._set_internal_permission('read')
+        article_root_noise[0].set_internal_permission('read')
 
         self.assertEqual(article_root_noise[0].sequence, 1)
         self.assertEqual(article_root_noise[1].sequence, 3)

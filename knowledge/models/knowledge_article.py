@@ -1723,6 +1723,23 @@ class KnowledgeArticle(models.Model):
     # PERMISSIONS / MEMBERS MANAGEMENT
     # ------------------------------------------------------------
 
+    def get_permission_panel_members(self):
+        self.ensure_one()
+        member_permissions = list(self._get_article_member_permissions(additional_fields={
+            'res.partner': [
+                ('name', 'name'), ('email', 'email'), ('partner_share', 'partner_share'), ('id', 'partner_id'),
+            ],
+            'knowledge.article': [
+                ('icon', 'based_on_icon'),
+                ('name', 'based_on_name'),
+            ],
+        })[self.id].values())
+        return sorted(
+            member_permissions,
+            key=lambda member: '' if member['partner_id'] == self.env.user.partner_id.id else member['name']
+        )  # our own permission, if it exists, should appear first in the panel so we
+        # use the smallest key possible for it: the empty string ''
+
     def restore_article_access(self):
         """ Resets permissions based on ancestors. It removes all members except
         members on the articles that are not on any ancestor or that have higher
@@ -1784,7 +1801,7 @@ class KnowledgeArticle(models.Model):
 
         return True
 
-    def _set_internal_permission(self, permission):
+    def set_internal_permission(self, permission):
         """ Set the internal permission of the article.
 
         Special cases:
@@ -1798,6 +1815,8 @@ class KnowledgeArticle(models.Model):
         :param str permission: internal permission to set, one of 'none', 'read'
           or 'write';
         """
+        if not self.env.user._is_internal():
+            raise AccessError(_("Only internal users are allowed to alter internal permission."))
         self.ensure_one()
         if self.user_has_write_access and permission != "write":
             self._add_members(self.env.user.partner_id, 'write')
@@ -1825,7 +1844,7 @@ class KnowledgeArticle(models.Model):
             })
         return self.write(values)
 
-    def _set_member_permission(self, member, permission, is_based_on=False):
+    def set_member_permission(self, member_id, permission):
         """ Sets the given permission to the given member.
 
         If the member has rights based on membership: simply update it.
@@ -1843,8 +1862,10 @@ class KnowledgeArticle(models.Model):
         :param <knowledge.article.member> member: member whose permission
           is to be updated. Can be a member of 'self' or one of its ancestors;
         :param str permission: new permission, one of 'none', 'read' or 'write';
-        :param bool is_based_on: whether rights are inherited or through membership;
         """
+        member = self.env['knowledge.article.member'].browse(member_id)
+        if not member.exists():
+            raise UserError(_("The membership you are trying to edit has been deleted"))
         self.ensure_one()
         if not self.env.su and not self.user_can_write:
             raise AccessError(
@@ -1853,7 +1874,8 @@ class KnowledgeArticle(models.Model):
         elif not self.env.su and not self.env.user._is_internal():
             raise AccessError(_("Only internal users are allowed to alter memberships."))
 
-        if is_based_on:
+        # member is inherited
+        if member.article_id != self:
             downgrade = ARTICLE_PERMISSION_LEVEL[member.permission] > ARTICLE_PERMISSION_LEVEL[permission]
             if downgrade:
                 # sudo to write on members
@@ -1882,7 +1904,7 @@ class KnowledgeArticle(models.Model):
         if (not is_article_visible_by_everyone) and not self.env.user.partner_id in self.article_member_ids.partner_id:
             self._add_members(self.env.user.partner_id, self.internal_permission)
 
-    def _remove_member(self, member):
+    def remove_member(self, member_id):
         """ Removes a member from the article. If the member was based on a
         parent article, the current article will be desynchronized form its parent.
         We also ensure the partner to remove is removed after the desynchronization
@@ -1897,22 +1919,25 @@ class KnowledgeArticle(models.Model):
           * when removing someone else: write access is required on the article
             (explicitly checked);
 
-        :param <knowledge.article.member> member: member to remove
+        :param int member: member's id to remove
         """
         self.ensure_one()
-        if not member:
-            raise ValueError(_('Trying to remove wrong member.'))
-
         if not self.env.su and not self.env.user._is_internal():
             raise AccessError(_("Only internal users are allowed to remove memberships."))
+
+        member = self.env['knowledge.article.member'].browse(member_id)
+        if not member.exists():
+            raise UserError(_("The selected member does not exist or has already been deleted."))
 
         # belongs to current article members
         current_membership = self.article_member_ids.filtered(lambda m: m == member)
 
-        # Archive private article if remove self member.
+        # Send private article to trash if leaving it
+        # (note: admin could be member with access none on a private article and leave the article,
+        # should not send the article to the trash in that case)
         remove_self = member.partner_id == self.env.user.partner_id
-        if remove_self and self.category == 'private' and current_membership:
-            self.action_archive()
+        if remove_self and self.category == 'private' and current_membership and len(self.article_member_ids) == 1:
+            self.action_send_to_trash()
             return
 
         # If user doesn't gain higher access when removing own member,
@@ -2404,7 +2429,10 @@ class KnowledgeArticle(models.Model):
 
         Please note that these additional fields are not sanitized, the caller
         has the responsibility to check that user can access those fields and
-        that no injection is possible. """
+        that no injection is possible.
+        If add_empty_member is set to True, an empty member will be added to
+        the results for each article that has no member.
+        """
         self.env['res.partner'].flush_model()
         self.env['knowledge.article'].flush_model()
         self.env['knowledge.article.member'].flush_model()
@@ -2535,16 +2563,6 @@ class KnowledgeArticle(models.Model):
                 }
             }
 
-        # add empty member for each article that doesn't have any.
-        empty_member = {
-            'based_on': False, 'member_id': False, 'permission': None,
-            **{
-                field_alias: False
-                for model, fields_list in additional_fields.items()
-                for field, field_alias in fields_list
-            }}
-        for article in self.filtered(lambda a: a.id not in article_members):
-            article_members[article.id][None] = empty_member
         return article_members
 
     # ------------------------------------------------------------
