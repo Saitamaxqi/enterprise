@@ -376,6 +376,7 @@ function useDocumentsViewFilePreviewer({
             );
         };
         if (isPdfSplit) {
+            setPreviewStore({}); // Close preview
             openPdfSplitter(documents);
             return;
         }
@@ -415,6 +416,7 @@ function useDocumentsViewFilePreviewer({
         );
         documentService.documentList = {
             documents: documentsRecords || [],
+            folderId: env.searchModel.getSelectedFolderId(),
             initialRecordSelectionLength: documents.length,
             pdfManagerOpenCallback: (documents) => {
                 openPdfSplitter(documents);

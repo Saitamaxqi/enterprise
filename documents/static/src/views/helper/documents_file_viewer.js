@@ -1,5 +1,6 @@
 import { FileViewer } from "@documents/attachments/document_file_viewer";
 import { Component, useEffect, useRef, useState } from "@odoo/owl";
+import { useBus, useService } from "@web/core/utils/hooks";
 
 export class DocumentsFileViewer extends Component {
     static template = "documents.DocumentsFileViewer";
@@ -12,9 +13,14 @@ export class DocumentsFileViewer extends Component {
     ];
 
     setup() {
+        this.documentService = useService("document.document");
         this.root = useRef("root");
         this.state = useState({
             topOffset: 0,
+            isChatterVisible: this.documentService.isChatterVisible(),
+        });
+        useBus(this.env.documentsView.bus, "documents-toggle-chatter", (event) => {
+            this.state.isChatterVisible = !this.state.isChatterVisible;
         });
 
         const onKeydown = this.onIframeKeydown.bind(this);
@@ -58,6 +64,10 @@ export class DocumentsFileViewer extends Component {
 
     get parentRoot() {
         return this.props.parentRoot;
+    }
+
+    get isChatterVisible() {
+        return this.state.isChatterVisible && !this.env.isSmall;
     }
 
     onGlobalKeydown(ev) {

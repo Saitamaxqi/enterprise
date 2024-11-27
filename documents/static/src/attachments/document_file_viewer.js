@@ -1,14 +1,32 @@
-import { useService } from "@web/core/utils/hooks";
+import { DocumentsAction } from "@documents/views/action/documents_action";
+import { useBus, useService } from "@web/core/utils/hooks";
 import { FileViewer as WebFileViewer } from "@web/core/file_viewer/file_viewer";
-import { onWillUpdateProps } from "@odoo/owl";
+import { onWillUpdateProps, reactive, useState } from "@odoo/owl";
 
 export class FileViewer extends WebFileViewer {
     static template = "documents.FileViewer";
+    static components = {
+        DocumentsAction,
+    };
+
     setup() {
         super.setup();
         /** @type {import("@documents/core/document_service").DocumentService} */
         this.documentService = useService("document.document");
         this.onSelectDocument = this.documentService.documentList?.onSelectDocument;
+        this.previewed = reactive(
+            { document: this.documentService.documentList.documents[this.state.index] },
+            () => {
+                this.documentService.setPreviewedDocument(this.previewed.document);
+            }
+        );
+        this.folderId = this.documentService.documentList?.folderId;
+        this.documentsState = useState({
+            isChatterVisible: this.documentService.isChatterVisible(),
+        });
+        useBus(this.env.documentsView.bus, "documents-toggle-chatter", (event) => {
+            this.documentsState.isChatterVisible = !this.documentsState.isChatterVisible;
+        });
         onWillUpdateProps((nextProps) => {
             const indexOfFileToPreview = nextProps.startIndex;
             if (
@@ -17,48 +35,31 @@ export class FileViewer extends WebFileViewer {
             ) {
                 this.activateFile(indexOfFileToPreview);
             }
-            this.documentService.setPreviewedDocument(
-                this.documentService.documentList.documents[nextProps.startIndex]
-            );
+            this.previewed.document =
+                this.documentService.documentList.documents[nextProps.startIndex];
         });
     }
-    get hasSplitPdf() {
-        if (this.documentService.documentList?.initialRecordSelectionLength === 1) {
-            return this.documentService.documentList.selectedDocument.attachment.isPdf;
-        }
-        return this.documentService.documentList?.documents.every(
-            (document) => document.attachment.isPdf
+
+    get isChatterButtonVisible() {
+        return (
+            this.documentService.userIsInternal &&
+            !this.env.isSmall
         );
     }
-    get withDownload() {
-        if (this.documentService.documentList?.initialRecordSelectionLength === 1) {
-            return this.documentService.documentList.selectedDocument.attachment.isUrlYoutube;
-        }
-        return this.documentService.documentList?.documents.every(
-            (document) => document.attachment.isUrlYoutube
-        );
+
+    async toggleChatter() {
+        await this.env.documentsView.bus.trigger("documents-toggle-chatter");
     }
-    onClickPdfSplit() {
-        this.close();
-        if (this.documentService.documentList?.initialRecordSelectionLength === 1) {
-            return this.documentService.documentList?.pdfManagerOpenCallback([
-                this.documentService.documentList.selectedDocument.record,
-            ]);
-        }
-        return this.documentService.documentList?.pdfManagerOpenCallback(
-            this.documentService.documentList.documents.map((document) => document.record)
-        );
-    }
+
     close() {
         this.documentService.documentList?.onDeleteCallback();
-        this.documentService.setPreviewedDocument(null);
+        this.previewed.document = null;
         super.close();
     }
+
     next() {
         super.next();
-        this.documentService.setPreviewedDocument(
-            this.documentService.documentList.documents[this.state.index]
-        );
+        this.previewed.document = this.documentService.documentList.documents[this.state.index];
 
         if (this.onSelectDocument) {
             const documentList = this.documentService.documentList;
@@ -78,11 +79,10 @@ export class FileViewer extends WebFileViewer {
             this.onSelectDocument(documentList.selectedDocument.record);
         }
     }
+
     previous() {
         super.previous();
-        this.documentService.setPreviewedDocument(
-            this.documentService.documentList.documents[this.state.index]
-        );
+        this.previewed.document = this.documentService.documentList.documents[this.state.index];
 
         if (this.onSelectDocument) {
             const documentList = this.documentService.documentList;
