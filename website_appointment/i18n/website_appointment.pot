@@ -294,6 +294,12 @@ msgid ""
 msgstr ""
 
 #. module: website_appointment
+#. odoo-javascript
+#: code:addons/website_appointment/static/src/js/appointment_frontend/appointment_form.js:0
+msgid "Error"
+msgstr ""
+
+#. module: website_appointment
 #: model_terms:ir.ui.view,arch_db:website_appointment.s_dynamic_snippet_options_template
 msgid "Filter On"
 msgstr ""

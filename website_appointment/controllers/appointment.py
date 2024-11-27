@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import http
+from odoo import _, http
 from odoo.http import request
 
 from odoo.addons.base.models.ir_qweb import keep_query
 from odoo.addons.appointment.controllers.appointment import AppointmentController
+from odoo.exceptions import UserError
 from odoo.osv import expression
 
 
@@ -62,6 +63,14 @@ class WebsiteAppointment(AppointmentController):
                     **kwargs
                 )
             )
+
+    # ----------------------------------------------------------------
+    # APPOINTMENT SUBMISSION : RECAPTCHA CHECK
+    # ---------------------------------------------------------------- 
+    @http.route()
+    def appointment_form_submit(self, *args, **kwargs):
+        request.env['ir.http']._verify_request_recaptcha_token('appointment_form_submission')
+        return super().appointment_form_submit(*args, **kwargs)
 
     # ----------------------------------------------------------------
     # APPOINTMENT TYPE PAGE VIEW : WITH NEW OPERATOR SELECTION VIEW
