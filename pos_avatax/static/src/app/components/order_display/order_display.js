@@ -5,6 +5,7 @@ patch(OrderDisplay, {
     props: {
         ...OrderDisplay.props,
         refreshAvatax: { type: Function, optional: true },
+        isAvataxConfig: { type: Boolean, optional: true },
     },
 });
 
