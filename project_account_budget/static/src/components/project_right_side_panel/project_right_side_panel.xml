@@ -47,7 +47,7 @@
                                 </td>
                                 <td class="text-end align-middle" t-att-class="budget_item.allocated === 0 ? 'text-500' : ''"><t t-out="formatMonetary(budget_item.allocated)"/></td>
                                 <td class="text-end align-middle" t-att-class="budget_item.spent === 0 ? 'text-500' : ''"><t t-out="formatMonetary(budget_item.spent)"/></td>
-                                <t t-set="budget_remaining" t-value="budget_item.allocated - budget_item.spent"/>
+                                <t t-set="budget_remaining" t-value="budget_item.spent - budget_item.allocated"/>
                                 <td class="text-end align-middle" t-attf-class="text-bold text-{{ budget_item.progress &gt;= 0.25 ? 'success' : budget_item.progress &gt;= 0 ? 'warning' : 'danger' }}">
                                     <t t-out="formatMonetary(budget_remaining)"/>
                                     <t t-if="budget_item.allocated"> (<t t-out="Math.abs(budget_item.spent / budget_item.allocated * 100).toFixed()"/>%)</t>
@@ -58,7 +58,7 @@
                                     <td><span class="ms-3"><small t-out="budget.name"/></span></td>
                                     <td class="text-end align-middle" t-att-class="budget.allocated === 0 ? 'text-500' : ''"><small t-out="formatMonetary(budget.allocated)"/></td>
                                     <td class="text-end align-middle" t-att-class="budget.spent === 0 ? 'text-500' : ''"><small t-out="formatMonetary(budget.spent)"/></td>
-                                    <t t-set="budget_remaining" t-value="budget.allocated - budget.spent"/>
+                                    <t t-set="budget_remaining" t-value="budget.spent - budget.allocated"/>
                                     <td class="text-end align-middle" t-attf-class="text-bold text-{{ budget.progress &gt;= 0.25 ? 'success' : budget.progress &gt;= 0 ? 'warning' : 'danger' }}">
                                         <small t-out="formatMonetary(budget_remaining)"/>
                                         <t t-if="budget.allocated"> (<small t-out="Math.abs(budget.spent / budget.allocated * 100).toFixed()"/>%)</t>
