@@ -393,7 +393,6 @@ class UPSRequest:
                     'Service': {
                         'Code': service_type,
                     },
-                    'ReferenceNumber': shipment_info.get('reference_number'),
                     'NumOfPiecesInShipment': int(shipment_info.get('total_qty')) if service_type == '96' else None,
                     'ShipmentServiceOptions': shipment_service_options if shipment_service_options else None,
                     'ShipmentRatingOptions': {
@@ -405,6 +404,16 @@ class UPSRequest:
                 },
             },
         }
+
+        # Include ReferenceNumber only if the shipment is not US/US or PR/PR
+        if not (
+            (ship_from.country_id.code == 'US' and ship_to.country_id.code == 'US') or
+            (ship_from.country_id.code == 'PR' and ship_to.country_id.code == 'PR')
+        ):
+            request['ShipmentRequest']['Shipment']['ReferenceNumber'] = {
+                'Value': shipment_info.get('reference_number')
+            }
+
         # Shipments from US to CA or PR require extra info
         if ship_from.country_id.code == 'US' and ship_to.country_id.code in ['CA', 'PR']:
             request['ShipmentRequest']['Shipment']['InvoiceLineTotal'] = {
