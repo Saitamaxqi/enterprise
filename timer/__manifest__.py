@@ -24,7 +24,7 @@ It adds a timer to a view for time recording purpose
         'web.assets_backend': [
             'timer/static/src/**/*',
         ],
-        'web.qunit_suite_tests': [
+        'web.assets_unit_tests': [
             'timer/static/tests/**/*',
         ],
     },
