@@ -107,10 +107,10 @@ class AccountJournal(models.Model):
         # Article 1411bis
         if self.env.context.get('l10n_be_hr_payroll_sepa_salary_payment'):
             RmtInf = super()._get_RmtInf(payment_method_code, payment)
-            Ustrd = etree.SubElement(RmtInf, "Ustrd")
-            Ustrd.text = sanitize_communication(payment['memo'])
-            if self.env.context.get('l10n_be_hr_payroll_sepa_salary_payment'):
-                Ustrd.text = f"/A/ {Ustrd.text}"
+            if (Ustrd := RmtInf.find("Ustrd")) is None:
+                Ustrd = etree.SubElement(RmtInf, "Ustrd")
+            memo = sanitize_communication(payment['memo'])
+            Ustrd.text = f"/A/ {memo}"
             return RmtInf
         return super()._get_RmtInf(payment_method_code, payment)
 
