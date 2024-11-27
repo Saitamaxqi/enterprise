@@ -1,3 +1,6 @@
+import { assert, fail } from "@stock/../tests/tours/tour_helper";
+export { assert, fail };
+
 /**
  * Returns the line for the given index and ensure the line is an HTMLElement (fails otherwise).
  *
@@ -39,10 +42,6 @@ export function _prepareSelector(selector, description) {
     selector += barcode ? `[data-barcode="${barcode}"]` : "";
     description.selector = selector;
     return selector;
-}
-
-export function fail(errorMessage) {
-    throw new Error(errorMessage);
 }
 
 /**
@@ -111,12 +110,6 @@ export function triggerKeydown(eventKey, shiftkey = false) {
     document
         .querySelector(".o_barcode_client_action")
         .dispatchEvent(new window.KeyboardEvent("keydown", params));
-}
-
-export function assert(current, expected, info) {
-    if (current !== expected) {
-        fail(`${info}: "${current}" instead of "${expected}".`);
-    }
 }
 
 /**

@@ -1,5 +1,5 @@
 import { registry } from "@web/core/registry";
-import helper from "./tour_helper_mrp_workorder";
+import { assert } from "@stock/../tests/tours/tour_helper";
 
 registry.category("web_tour.tours").add("test_shop_floor", {
     steps: () => [
@@ -300,7 +300,7 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
                 const selectionButtons = document.querySelectorAll(
                     ".o_control_panel_actions button.text-nowrap"
                 );
-                helper.assert(selectionButtons.length, 3, "Three WC buttons should be visible");
+                assert(selectionButtons.length, 3, "Three WC buttons should be visible");
             },
         },
         // Exit the Shop Floor and re-open it.
@@ -325,7 +325,7 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
                 const selectedWC = document.querySelector(
                     ".o_control_panel_actions button:first-child.active"
                 );
-                helper.assert(selectedWC.innerText.includes("Preparation Table 1"), true);
+                assert(selectedWC.innerText.includes("Preparation Table 1"), true);
             },
         },
         // Unselect WCs then re-select them to change the order ("All MO" will be first.)
@@ -350,7 +350,7 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
                 const firstButton = document.querySelector(
                     ".o_control_panel_actions button:first-child"
                 );
-                helper.assert(firstButton.innerText.includes("All MO"), true);
+                assert(firstButton.innerText.includes("All MO"), true);
             },
         },
 
@@ -363,7 +363,7 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
                 const selectedWC = document.querySelector(
                     ".o_control_panel_actions button:first-child.active"
                 );
-                helper.assert(selectedWC.innerText.includes("All MO"), true);
+                assert(selectedWC.innerText.includes("All MO"), true);
             },
         },
         // Check the MO is visible now but won't be once "Preparation Table 2" will be selected.
@@ -383,7 +383,7 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
                 const selectedWC = document.querySelector(
                     ".o_control_panel_actions button:first-child.active"
                 );
-                helper.assert(selectedWC.innerText.includes("Preparation Table 2"), true);
+                assert(selectedWC.innerText.includes("Preparation Table 2"), true);
             },
         },
         // Exit the Shop Floor and open it from a WO form view.
@@ -400,11 +400,11 @@ registry.category("web_tour.tours").add("test_shop_floor_auto_select_workcenter"
                 const selectedWC = document.querySelector(
                     ".o_control_panel_actions button:first-child.active"
                 );
-                helper.assert(selectedWC.innerText.includes("Furnace"), true);
+                assert(selectedWC.innerText.includes("Furnace"), true);
                 const selectionButtons = document.querySelectorAll(
                     ".o_control_panel_actions button.text-nowrap"
                 );
-                helper.assert(selectionButtons.length, 1, "Only one WC buttons should be visible");
+                assert(selectionButtons.length, 1, "Only one WC buttons should be visible");
             },
         },
     ],
