@@ -619,3 +619,30 @@ class TestSubscriptionUpsell(TestSubscriptionCommon):
             ))
             upsell_order_line_note = upsell_so.order_line.filtered(lambda l: l.display_type == 'subscription_discount').name
             self.assertEqual(expected_line_name, upsell_order_line_note)
+
+    def test_copy_follower_on_upsell_or_renew_order_from_parent(self):
+        """
+        Test that followers from parent sale order are getting copied to the renew or upsell order.
+        """
+        with freeze_time("2024-11-01"):
+            self.subscription.action_confirm()
+            self.env['sale.order']._cron_recurring_create_invoice()
+
+        with freeze_time("2024-11-10"):
+            action = self.subscription.prepare_renewal_order()
+            renewal_so = self.env['sale.order'].browse(action['res_id'])
+            renewal_so.action_confirm()
+            renewal_so._create_invoices()
+            renewal_so.order_line.invoice_lines.move_id._post()
+            self.assertIn(
+                self.subscription.message_follower_ids.partner_id.id, renewal_so.message_follower_ids.partner_id.ids,
+                "Parent order's followers should be copied into renew order.")
+            # add a new follower in the renew order
+            renewal_so.message_subscribe(self.partner.ids)
+
+            # create a upsell order from renewal order
+            action = renewal_so.prepare_upsell_order()
+            upsell_so = self.env['sale.order'].browse(action['res_id'])
+            self.assertEqual(
+                renewal_so.message_follower_ids.partner_id.ids, upsell_so.message_follower_ids.partner_id.ids,
+                "Parent order's followers should be copied into upsell order.")

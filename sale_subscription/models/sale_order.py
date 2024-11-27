@@ -955,6 +955,7 @@ class SaleOrder(models.Model):
                                     "Please, update directly the %s contract or invoice it first.", self.name))
         values = self._prepare_upsell_renew_order_values(subscription_state)
         order = self.env['sale.order'].create(values)
+        self._subscribe_followers_to_new_order(order)
         self.subscription_child_ids = [Command.link(order.id)]
         order.message_post(body=message_body)
         if subscription_state == '7_upsell':
@@ -2142,3 +2143,15 @@ class SaleOrder(models.Model):
             subscription_move_lines = self.env['account.move.line'].search([('subscription_id', 'in', self.ids)])
             move = subscription_move_lines.move_id
         return move
+
+    def _subscribe_followers_to_new_order(self, order):
+        """
+        Subscribe followers of the subscription to the new order.
+        :param order: the new order
+        """
+        for follower in self.message_follower_ids:
+            if follower.partner_id not in order.message_follower_ids.partner_id:
+                order.message_subscribe(
+                    partner_ids=follower.partner_id.ids,
+                    subtype_ids=follower.subtype_ids.ids
+                )
