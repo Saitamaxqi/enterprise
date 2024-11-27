@@ -76,12 +76,12 @@ class AccountLoanComputeWizard(models.TransientModel):
             raise ValidationError(_("Interest Rate must be between 0 and 100"))
         if self.loan_term < 0:
             raise ValidationError(_("Loan Term must be positive"))
-        if self.first_payment_date and self.start_date + relativedelta(years=self.loan_term) < self.first_payment_date:
+        if self.first_payment_date and self.start_date and self.start_date + relativedelta(years=self.loan_term) < self.first_payment_date:
             raise ValidationError(_("The First Payment Date must be before the end of the loan."))
 
     @api.onchange('start_date')
     def _onchange_start_date(self):
-        self.first_payment_date = self.start_date.replace(day=1) + relativedelta(months=1)  # first day of next month
+        self.first_payment_date = self.start_date and self.start_date.replace(day=1) + relativedelta(months=1)  # first day of next month
 
     # Compute
     def _get_loan_payment_schedule(self):
