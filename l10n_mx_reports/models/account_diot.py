@@ -107,18 +107,23 @@ class L10n_MxReportHandler(models.AbstractModel):
                raw_results.partner_nationality AS partner_nationality
             FROM raw_results
             GROUP BY
-                raw_results.grouping_key,
-                raw_results.third_party_code,
-                raw_results.operation_type_code,
-                raw_results.partner_vat_number,
-                raw_results.country_code,
-                raw_results.partner_nationality
+                %(groupby_sql)s
+            ORDER BY
+                %(groupby_sql)s
             %(tail_query)s
             """,
             country_demonym=country_demonym,
             table_references=query.from_clause,
             tags=tuple(tags.ids),
             search_condition=query.where_clause,
+            groupby_sql=SQL("""
+                raw_results.grouping_key,
+                raw_results.third_party_code,
+                raw_results.operation_type_code,
+                raw_results.partner_vat_number,
+                raw_results.country_code,
+                raw_results.partner_nationality
+            """),
             tail_query=tail_query,
         ))
 

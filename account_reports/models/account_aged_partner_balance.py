@@ -247,6 +247,9 @@ class AccountAgedPartnerBalanceReportHandler(models.AbstractModel):
             HAVING
                 ROUND(SUM(%(having_debit)s), %(currency_precision)s) != 0
                 OR ROUND(SUM(%(having_credit)s), %(currency_precision)s) != 0
+
+            ORDER BY %(groupby_clause)s
+
             %(tail_query)s
             """,
             account_code=account_code,

@@ -360,6 +360,7 @@ class AccountMulticurrencyRevaluationReportHandler(models.AbstractModel):
             ) subquery
 
             GROUP BY grouping_key
+            ORDER BY grouping_key
             %(tail_query)s
             """,
             custom_currency_table_query=custom_currency_table_query,
