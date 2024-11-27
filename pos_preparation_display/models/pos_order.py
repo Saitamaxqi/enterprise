@@ -1,6 +1,7 @@
 import json
 
 from odoo import models, api
+from functools import reduce
 
 
 class PosOrder(models.Model):
@@ -31,6 +32,16 @@ class PosOrder(models.Model):
         pdis_ticket = False
         quantity_data = {}
         category_ids = set()
+        lopc_lines = {}   # last_order_preparation_change lines
+        if self.last_order_preparation_change:
+            lopc = json.loads(self.last_order_preparation_change)
+            lopc_lines = lopc.get('lines', {})
+
+        unmerged_lines = reduce(
+            lambda acc, line: {**acc, line["uuid"]: line["order_id"]},
+            self.env["pos.order.line"].search_read([("uuid", "in", pdis_lines.mapped("pos_order_line_uuid"))], ["uuid", "order_id"], load=False),
+            {}
+        )
 
         # If cancelled flag, we flag all lines as cancelled
         if cancelled:
@@ -43,6 +54,11 @@ class PosOrder(models.Model):
         for pdis_line in pdis_lines:
             key = (pdis_line.product_id.id, pdis_line.internal_note or '', json.dumps(pdis_line.attribute_value_ids.ids), pdis_line.pos_order_line_uuid)
             line_qty = pdis_line.product_quantity - pdis_line.product_cancelled
+            # Ensure that when an orderline is merged to another table (e.g., from Table 1 to Table 2), sent to the kitchen,
+            # and later unmerged back to its original table, it is not canceled if the order is sent to the kitchen again from Table 2.
+            unmerged_line_order_id = unmerged_lines.get(pdis_line.pos_order_line_uuid)
+            if unmerged_line_order_id and unmerged_line_order_id != self.id:
+                continue
             if not quantity_data.get(key):
                 quantity_data[key] = {
                     'attribute_value_ids': pdis_line.attribute_value_ids.ids,
@@ -59,17 +75,19 @@ class PosOrder(models.Model):
             line_note = line.note or ""
             key = (line.product_id.id, line_note, json.dumps(line.attribute_value_ids.ids), line.uuid)
 
+            # Prevents quantity increase when an orderline is transferred to another table but was originally ordered in a previous table.
+            transferred_qty = lopc_lines.get(line.uuid + ' - ' + (line.note or ''), {}).get("transferredQty", 0)
             if not quantity_data.get(key):
                 quantity_data[key] = {
                     'attribute_value_ids': line.attribute_value_ids.ids,
                     'note': line_note or '',
                     'product_id': line.product_id.id,
                     'display': 0,
-                    'order': line.qty,
+                    'order': line.qty - transferred_qty,
                     'uuid': line.uuid,
                 }
             else:
-                quantity_data[key]['order'] += line.qty
+                quantity_data[key]['order'] += line.qty - transferred_qty
 
         # Update quantity_data with note_history
         if note_history:
