@@ -3,13 +3,19 @@ import {
     defineDocumentSpreadsheetModels,
     getBasicPermissionPanelData,
 } from "@documents_spreadsheet/../tests/helpers/data";
+import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import { mockActionService } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import { XLSX_MIME_TYPES } from "@documents_spreadsheet/helpers";
 import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
 import { animationFrame } from "@odoo/hoot-mock";
 import { Model } from "@odoo/o-spreadsheet";
-import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
-import { contains, mountView, onRpc, patchWithCleanup } from "@web/../tests/web_test_helpers";
+import {
+    contains,
+    mountView,
+    onRpc,
+    patchWithCleanup,
+    preloadBundle,
+} from "@web/../tests/web_test_helpers";
 import { loadBundle } from "@web/core/assets";
 import { browser } from "@web/core/browser/browser";
 import { download } from "@web/core/network/download";
@@ -19,6 +25,7 @@ import { getEnrichedSearchArch } from "../helpers/document_helpers";
 
 describe.current.tags("desktop");
 defineDocumentSpreadsheetModels();
+preloadBundle("spreadsheet.o_spreadsheet");
 
 let target;
 

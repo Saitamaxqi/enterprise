@@ -6,9 +6,10 @@ import { selectCell } from "@spreadsheet/../tests/helpers/commands";
 import { getActionMenu } from "@spreadsheet/../tests/helpers/ui";
 import { defineTestSpreadsheetEditionModels } from "@test_spreadsheet_edition/../tests/helpers/data";
 import { createThread, setupWithThreads } from "@test_spreadsheet_edition/../tests/helpers/helpers";
-import { contains } from "@web/../tests/web_test_helpers";
+import { contains, preloadBundle } from "@web/../tests/web_test_helpers";
 
 defineTestSpreadsheetEditionModels();
+preloadBundle("web.assets_emoji");
 
 const { topbarMenuRegistry } = registries;
 const { HoveredCellStore } = stores;
