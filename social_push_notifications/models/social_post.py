@@ -23,7 +23,7 @@ class SocialPost(models.Model):
 
         super()._action_post()
 
-        if 'push_notifications' in self.account_ids.mapped('media_type') and self.post_method == 'now':
+        if 'push_notifications' in self.account_ids.mapped('media_type') and any(post_method == 'now' for post_method in self.mapped('post_method')):
             # trigger CRON job ASAP so that push notifications are sent
             cron = self.env.ref('social.ir_cron_post_scheduled')
             cron._trigger(at=fields.Datetime.now())
