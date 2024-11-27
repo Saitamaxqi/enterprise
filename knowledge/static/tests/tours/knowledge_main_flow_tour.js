@@ -8,7 +8,10 @@
  * - Favorite 2 different articles and invert their order in the favorite section
  */
 
-import { dragAndDropArticle, endKnowledgeTour, makeVisible } from '@knowledge/../tests/tours/knowledge_tour_utils';
+import {
+    dragAndDropArticle,
+    endKnowledgeTour,
+} from "@knowledge/../tests/tours/knowledge_tour_utils";
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
 
@@ -37,16 +40,10 @@ registry.category("web_tour.tours").add('knowledge_main_flow_tour', {
 }, {
     trigger: '.note-editable.odoo-editor-editable h1',
     run: "editor My Private Article",  // modify the article content
-}, {
+},
+{
     trigger: 'section[data-section="workspace"]',
-    run: () => {
-        // force the create button to be visible (it's only visible on hover)
-        makeVisible('section[data-section="workspace"] .o_section_create');
-    },
-}, {
-    // create an article in the "Workspace" section
-    trigger: 'section[data-section="workspace"] .o_section_create',
-    run: "click",
+    run: "hover && click section[data-section=workspace] .o_section_create",
 },
 {
     trigger:

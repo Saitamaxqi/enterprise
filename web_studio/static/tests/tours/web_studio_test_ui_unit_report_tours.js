@@ -1429,7 +1429,6 @@ registry.category("web_tour.tours").add("web_studio.test_edit_main_and_in_t_call
         },
         {
             trigger: ".o-web-studio-save-report:not(.btn-primary)",
-            run() {},
         },
     ],
 });

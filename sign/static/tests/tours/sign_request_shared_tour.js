@@ -96,7 +96,6 @@ registry.category("web_tour.tours").add("sign_resend_expired_link_tour", {
         {
             trigger: ".btn.btn-primary",
             content: "Click to resend the url",
-            run() {},
         },
     ],
 });

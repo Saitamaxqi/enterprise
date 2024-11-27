@@ -89,7 +89,6 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
         {
             content: "Wait for annotation created",
             trigger: "tr:nth-child(8) .btn_annotation .fa-commenting",
-            run: () => {},
         },
         {
             content: "Close annotation",
@@ -232,7 +231,6 @@ registry.category("web_tour.tours").add("account_reports_annotations", {
         {
             content: "Verify that we still have one element",
             trigger: ".annotation_popover tr:nth-child(3):contains('Add a line')",
-            run: () => {},
         },
         {
             content: "Modify the date of an annotation to a further period",

@@ -1,7 +1,6 @@
 import {
     changeInternalPermission,
     dragAndDropArticle,
-    makeVisible,
 } from "@knowledge/../tests/tours/knowledge_tour_utils";
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
@@ -24,13 +23,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 {
     // Force the create button to be visible (it's only visible on hover)
     trigger: 'section[data-section="workspace"]',
-    run: () => {
-        makeVisible('section[data-section="workspace"] .o_section_create');
-    },
-}, {
-    // Create an article in the "Workspace" section
-    trigger: 'section[data-section="workspace"] .o_section_create',
-    run: "click",
+    run: "hover && click section[data-section=workspace] .o_section_create",
 }, {
     // Check that the article is created inside the Workspace
     trigger: 'section[data-section="workspace"] .o_article .o_article_name:contains("Untitled")',
@@ -50,13 +43,7 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 {
     // Force the create button to be visible (it's only visible on hover)
     trigger: 'section[data-section="private"]',
-    run: () => {
-        makeVisible('section[data-section="private"] .o_section_create');
-    },
-}, {
-    // Create an article in the "Private" section
-    trigger: 'section[data-section="private"] .o_section_create',
-    run: "click",
+    run: "hover && click section[data-section=private] .o_section_create",
 }, {
     // Check that the article is created inside the private section
     trigger: 'section[data-section="private"] .o_article .o_article_name:contains("Untitled")',
@@ -70,12 +57,13 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
             trigger: '.o_article_active:contains("Private Article")',
         },
         {
-    // Check that the shared section does not exists
-    trigger: '.o_knowledge_tree:not(:has(section[data-section="shared"]))',
-}, {
-    // First create a private one
-    trigger: 'section[data-section="private"] .o_section_create',
-    run: "click",
+            content: "Check that the shared section does not exists",
+            trigger: '.o_knowledge_tree:not(:has(section[data-section="shared"]))',
+        },
+        {
+            content: "First create a private one",
+            trigger: "section[data-section=private]",
+            run: "hover && click section[data-section=private] .o_section_create",
         },
         {
             trigger: '.o_article_active:contains("Untitled")',
@@ -565,16 +553,9 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
             run: "click",
         },
         {
-            content: "Make remove member button visible",
+            content: "Make remove member button visible and click on the delete member button",
             trigger: ".o_knowledge_share_panel:not(:has(.fa-spin))",
-            run() {
-                makeVisible(".o_knowledge_share_panel .o_delete.o_remove");
-            },
-        },
-        {
-            content: "Click on the delete member button",
-            trigger: ".o_knowledge_share_panel .o_delete.o_remove",
-            run: "click",
+            run: "hover && click .o_knowledge_share_panel .o_delete.o_remove",
         },
         {
             content: "Confirm restriction",
@@ -640,17 +621,12 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
     trigger: 'section[data-section="shared"] .o_article:contains("Shared Article")',
 },
 // Remove member of shared article
-{
-    // Make remove member button visible
-    trigger: '.o_knowledge_share_panel:not(:has(.fa-spin))',
-    run: () => {
-        makeVisible(".o_knowledge_share_panel .o_delete.o_remove");
-    },
-}, {
-    // Remove member
-    trigger: '.o_knowledge_share_panel .o_delete.o_remove',
-    run: "click",
-}, {
+        {
+            content: "Make remove member button visible and click on the delete member button",
+            trigger: ".o_knowledge_share_panel:not(:has(.fa-spin))",
+            run: "hover && click .o_knowledge_share_panel .o_delete.o_remove",
+        },
+        {
     // Check that article moved to private
     trigger: 'section[data-section="private"] .o_article:contains("Shared Article")',
     run: "click",
@@ -818,15 +794,12 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 }, {
     // Check that the articles have been reordered
     trigger: '.o_section[data-section="private"] .o_article:contains("Private Article") + .o_article:contains("Private Child 2")',
-    run: () => {
-        makeVisible('section[data-section="private"] .o_section_create');
-    },
 },
 // Drag and drop root above child
-{
-    // Create a new article
-    trigger: 'section[data-section="private"] .o_section_create',
-    run: "click",
+        {
+            content: "Create a new article",
+            trigger: "section[data-section=private]",
+            run: "hover && click section[data-section=private] .o_section_create",
         },
         {
             trigger: '.o_article_active:contains("Untitled")',
@@ -948,14 +921,9 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 },
 // Resequence shared articles
 {
-    trigger: 'section[data-section="private"]',
-    run: () => {
-        makeVisible('section[data-section="private"] .o_section_create');
-    },
-}, {
-    // Create a new shared article
-    trigger: 'section[data-section="private"] .o_section_create',
-    run: "click",
+            content: "Create a new shared article",
+            trigger: "section[data-section=private]",
+            run: "hover && click  section[data-section=private] .o_section_create",
         },
         {
             trigger: '.o_article_active:contains("Untitled")',
@@ -1000,15 +968,12 @@ registry.category("web_tour.tours").add('knowledge_sidebar_tour', {
 }, {
     // Check that the articles have been resequenced
     trigger: 'section[data-section="shared"] .o_article:contains("Shared 2") + .o_article:contains("Shared Article")',
-    run: () => {
-        makeVisible('section[data-section="private"] .o_section_create');
-    },
 },
 // Drag and drop article above shared child
-{
-    // Create a new article
-    trigger: 'section[data-section="private"] .o_section_create',
-    run: "click",
+        {
+            content: "Create a new article",
+            trigger: "section[data-section=private]",
+            run: "hover && click section[data-section=private] .o_section_create",
         },
         {
             trigger: '.o_article_active:contains("Untitled")',

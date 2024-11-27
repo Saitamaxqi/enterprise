@@ -953,7 +953,6 @@ registry.category("web_tour.tours").add('account_accountant_bank_rec_widget_reco
         {
             content: "check that we're back on the dashboard",
             trigger: 'a:contains("Customer Invoices")',
-            run() {},
         },
     ],
 });

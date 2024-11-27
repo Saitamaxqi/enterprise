@@ -121,7 +121,6 @@ registry.category("web_tour.tours").add("website_availability_update", {
         },
         {
             trigger: 'span[name="renting_warning_message"]',
-            run: () => {},
         },
     ],
 });
