@@ -345,7 +345,7 @@ class SpreadsheetMixinTest(SpreadsheetTestCase):
         spreadsheet = self.env["spreadsheet.test"].create({})
         spreadsheet.spreadsheet_snapshot = False
         spreadsheet.spreadsheet_data = False
-        self.assertEqual(spreadsheet.current_revision_uuid, False)
+        self.assertEqual(spreadsheet.current_revision_uuid, "START_REVISION")
 
     def test_last_revision_is_server_revision_id(self):
         spreadsheet = self.env["spreadsheet.test"].create({})
