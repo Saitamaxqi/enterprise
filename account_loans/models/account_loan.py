@@ -202,7 +202,7 @@ class AccountLoan(models.Model):
             reclassification_moves_values = []
             reclassification_reversed_moves_values = []
             for i, line in enumerate(loan.line_ids):
-                if loan.skip_until_date and line.date > loan.skip_until_date:
+                if loan.skip_until_date and line.date < loan.skip_until_date:
                     continue
 
                 # Principal and interest (to match with the bank statement)

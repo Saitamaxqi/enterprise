@@ -33,13 +33,14 @@ class TestLoanManagement(AccountTestInvoicingCommon):
             ('id', '!=', cls.company.account_journal_early_pay_discount_loss_account_id.id),
         ], limit=1)
 
-    def create_loan(self, name, date, duration, amount_borrowed, interest, validate=False):
+    def create_loan(self, name, date, duration, amount_borrowed, interest, validate=False, skip_until_date=False):
         loan = self.env['account.loan'].create({
             'name': name,
             'date': date,
             'duration': duration,
             'amount_borrowed': amount_borrowed,
             'interest': interest,
+            'skip_until_date': skip_until_date,
             'journal_id': self.loan_journal.id,
             'long_term_account_id': self.long_term_account.id,
             'short_term_account_id': self.short_term_account.id,
@@ -359,3 +360,12 @@ class TestLoanManagement(AccountTestInvoicingCommon):
         wizard.action_save()
         self.assertEqual(len(loan.line_ids), 12)  # default loan term is 1 year = 12 months
         self.assertTrue(all(payment == 2000 for payment in loan.line_ids.mapped('payment')))  # 24,000 / 12 months = 2,000/month
+    
+    @freeze_time('2024-07-31')
+    def test_loan_skip_until_date(self):
+        """Test the skip_until_date field"""
+        loan = self.create_loan('Odoomobile Loan 🚗', '2024-01-01', 12, 24_000, 2_400, validate=True, skip_until_date='2024-05-15')
+
+        self.assertEqual(loan.state, 'running')
+        self.assertTrue(loan.line_ids.generated_move_ids)
+        self.assertEqual(loan.outstanding_balance, 20_000) # = 24_000 - (2_000 * 2 months (June -> July))
