@@ -37,7 +37,7 @@ class DiscussChannel(WhatsAppCommon):
         ])
 
     def test_gc_whatsapp_inactive(self):
-        for test_record, delay_days, mark_read in ((self.test_channel_wa, 2, True), (self.test_channel_wa2, 15, False)):  # 2 days - 15 days
+        for test_record, delay_days, mark_read in ((self.test_channel_wa, 2, True), (self.test_channel_wa2, 6, False)):  # 2 days - 6 days
             with self.subTest(test_record=test_record):
                 test_record.channel_pin(pinned=True)
                 member_of_operator = self.env["discuss.channel.member"].search(
