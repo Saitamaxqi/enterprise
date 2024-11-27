@@ -1296,6 +1296,22 @@ registry.category("web_tour.tours").add("test_setting_group_lines_by_product", {
     ],
 });
 
+registry
+    .category("web_tour.tours")
+    .add("test_setting_group_lines_by_product_when_tracking_is_off", {
+        steps: () => [
+            { trigger: ".o_barcode_line button.o_toggle_sublines", run: "click" },
+            {
+                trigger: ".o_sublines > .o_barcode_line",
+                run: () => {
+                    helper.assertLinesCount(1);
+                    helper.assertSublinesCount(2);
+                    helper.assertLineProduct(0, "product1");
+                },
+            },
+        ],
+    });
+
 registry.category("web_tour.tours").add("test_split_line_on_exit_for_batch", {
     steps: () => [
         // Opens the batch and check its lines.

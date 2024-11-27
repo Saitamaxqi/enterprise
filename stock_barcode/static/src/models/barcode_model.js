@@ -50,6 +50,7 @@ export default class BarcodeModel extends EventBus {
         this.actionMutex = new Mutex();
         this.config = data.data.config || {};
         this.groups = data.groups;
+        this.groupingLinesEnabled = this.groups.group_production_lot;
 
         this.packageTypes = [];
         if (this.groups.group_tracking_lot) {
@@ -204,7 +205,7 @@ export default class BarcodeModel extends EventBus {
      * @returns
      */
     get groupedLines() {
-        if (!this.groups.group_production_lot) {
+        if (!this.groupingLinesEnabled) {
             return this._sortLine(this.pageLines);
         }
 

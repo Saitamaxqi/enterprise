@@ -13,6 +13,7 @@ export default class BarcodePickingBatchModel extends BarcodePickingModel {
 
     setData(data) {
         super.setData(...arguments);
+        this.groupingLinesEnabled = this.groupingLinesEnabled || this.config.group_lines_by_product;
         // In case it's a new batch, we must display the pickings selector first.
         if (this.record.state === "draft" && this.record.picking_ids.length === 0) {
             this.selectedPickings = [];

@@ -829,6 +829,38 @@ class TestBarcodeBatchClientAction(TestBarcodeClientAction):
         url = self._get_batch_client_action_url(batch_receipts.id)
         self.start_tour(url, 'test_setting_group_lines_by_product', login='admin', timeout=180)
 
+    def test_setting_group_lines_by_product_when_tracking_is_off(self):
+        """ This test ensures lines are grouped by product in batch if the option is enabled even if
+        tracking setting is off (used to define if lines should be grouped or not.)"""
+        self.clean_access_rights()
+        self.picking_type_in.group_lines_by_product = True
+        # Explicitly remove the tracking group access right.
+        group_lot = self.env.ref('stock.group_production_lot')
+        group_user = self.env.ref('base.group_user')
+        group_user.write({'implied_ids': [Command.unlink(group_lot.id)]})
+        self.env.user.write({'groups_id': [Command.unlink(group_lot.id)]})
+
+        receipt_1 = self.env['stock.picking'].create({
+            'picking_type_id': self.picking_type_in.id,
+            'move_ids': [Command.create({
+                'name': "Billy Joel",
+                'product_id': self.product1.id,
+                'product_uom_qty': 3,
+                'location_id': self.picking_type_in.default_location_src_id.id,
+                'location_dest_id': self.picking_type_in.default_location_dest_id.id,
+            })],
+        })
+        receipt_2 = receipt_1.copy()
+        (receipt_1 | receipt_2).action_confirm()
+
+        batch_receipt = self.env['stock.picking.batch'].create({
+            'picking_ids': [Command.link(receipt_1.id), Command.link(receipt_2.id)],
+        })
+        batch_receipt.action_confirm()
+
+        url = self._get_batch_client_action_url(batch_receipt.id)
+        self.start_tour(url, 'test_setting_group_lines_by_product_when_tracking_is_off', login='admin')
+
     def test_split_line_on_exit_for_batch(self):
         """ Ensures that exit an unfinished batch will split the uncompleted move lines to have one
         move line with all picked quantity and one move line with the remaining quantity."""
