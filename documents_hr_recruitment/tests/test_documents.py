@@ -52,7 +52,7 @@ class TestCaseDocumentsBridgeRecruitment(TransactionCaseDocumentsHr):
             'name': 'Applicant Partner',
         })
         applicant = self.env['hr.applicant'].create({
-            'candidate_id': self.env['hr.candidate'].create({'partner_id': partner.id}).id,
+            'candidate_id': self.env['hr.candidate'].create({'partner_id': partner.id, 'company_id': self.company.id}).id,
             'company_id': self.company.id,
         })
         attachment = self.env['ir.attachment'].create({
