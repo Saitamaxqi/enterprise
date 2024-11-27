@@ -3,7 +3,7 @@
 
 import requests
 
-from odoo import _, models, fields
+from odoo import _, models, fields, tools
 from odoo.exceptions import UserError
 from werkzeug.urls import url_encode, url_join
 
@@ -67,8 +67,10 @@ class SocialMedia(models.Model):
 
         iap_add_accounts_url = requests.get(url_join(social_iap_endpoint, 'api/social/facebook/1/add_accounts'),
             params={
+                'db_uuid': self.env['ir.config_parameter'].sudo().get_param('database.uuid'),
                 'returning_url': url_join(self.get_base_url(), 'social_facebook/callback'),
-                'db_uuid': self.env['ir.config_parameter'].sudo().get_param('database.uuid')
+                'client_host_url': self.get_base_url(),
+                'deletion_shared_secret': self._get_social_facebook_deletion_shared_secret(),
             },
             timeout=5
         ).text
@@ -81,3 +83,7 @@ class SocialMedia(models.Model):
             'url': iap_add_accounts_url,
             'target': 'self'
         }
+
+    def _get_social_facebook_deletion_shared_secret(self):
+        """Shared secret between the database and IAP, derived from the database secret."""
+        return tools.hmac(self.env(su=True), 'social_facebook-deletion_shared_secret', None)

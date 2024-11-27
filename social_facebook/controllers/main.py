@@ -6,14 +6,16 @@ import json
 import logging
 import requests
 import urllib.parse
-import werkzeug
+
+from werkzeug.exceptions import Forbidden
+from werkzeug.urls import url_join
 
 from odoo import http, _
 from odoo.http import request
+from odoo.tools import consteq
 from odoo.addons.auth_oauth.controllers.main import fragment_to_query_string
 from odoo.addons.social.controllers.main import SocialController
 from odoo.addons.social.controllers.main import SocialValidationException
-from werkzeug.urls import url_join
 
 _logger = logging.getLogger(__name__)
 
@@ -108,6 +110,32 @@ class SocialFacebookController(SocialController):
     # ========================================================
     # MISC / UTILITY
     # ========================================================
+
+    @http.route(['/social_facebook/deletion_callback'], type='http', auth='none', methods=['POST'], csrf=False)
+    def social_facebook_deletion_callback(self, secret, facebook_page_identifiers):
+        """Callback that IAP will hit, when a user asked to remove his data from Facebook.
+
+        That request is initiated from the user's Facebook page settings.
+
+        > https://developers.facebook.com/docs/development/create-an-app/app-dashboard/data-deletion-callback
+        """
+        if (
+            not facebook_page_identifiers
+            or not secret
+            or not consteq(secret, request.env['social.media']._get_social_facebook_deletion_shared_secret())
+        ):
+            raise Forbidden()
+
+        accounts = request.env['social.account'].sudo().with_context(active_test=False).search(
+            [('facebook_account_id', 'in', json.loads(facebook_page_identifiers))])
+        _logger.info(
+            'The following Social Facebook Accounts were requested to be deleted by the end user: %r',
+            ', '.join(accounts.mapped('name')),
+        )
+        request.env['social.post'].sudo().search([('account_ids', 'in', accounts.ids)]).unlink()
+        request.env['social.post.template'].sudo().search([('account_ids', 'in', accounts.ids)]).unlink()
+        accounts.unlink()
+        return 'OK'
 
     @http.route(['/social_facebook/redirect_to_profile/<int:account_id>/<facebook_user_id>'], type='http', auth='user')
     def social_facebook_redirect_to_profile(self, account_id, facebook_user_id, name=''):
