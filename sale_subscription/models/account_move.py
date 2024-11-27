@@ -26,7 +26,12 @@ class AccountMove(models.Model):
             for aml in move.invoice_line_ids:
                 if not aml.subscription_id or aml.is_downpayment:
                     continue
-                all_subscription_ids.add(aml.subscription_id.id)
+                # check if the sale order linked to the invoice is an upsell
+                # Upsells don't update the next_invoice_date. Historical data could be unaligned and they could mess up periods.
+                sale_order = aml.sale_line_ids.order_id
+                upsell_so = sale_order.filtered(lambda so: so.subscription_state == '7_upsell')
+                subscription = aml.subscription_id - upsell_so.subscription_id
+                all_subscription_ids.add(subscription.id)
         all_subscriptions = self.env['sale.order'].browse(all_subscription_ids)
         for subscription in all_subscriptions:
             # Invoice validation will increment the next invoice date

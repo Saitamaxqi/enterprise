@@ -3684,12 +3684,18 @@ class TestSubscription(TestSubscriptionCommon, MockEmail):
     def test_upsell_total_qty(self):
         self.subscription.action_confirm()
         self.subscription._create_recurring_invoice()
+        next_invoice_date = self.subscription.next_invoice_date
         action = self.subscription.prepare_upsell_order()
         upsell_so = self.env['sale.order'].browse(action['res_id'])
         upsell_so.order_line.filtered(lambda l: not l.display_type).product_uom_qty = 2
         upsell_so.action_confirm()
         for line in upsell_so.order_line.filtered(lambda l: not l.display_type):
             self.assertEqual(line.upsell_total, 3)
+        invoice = upsell_so._create_invoices()
+        # simulate wrong historical data
+        invoice.invoice_line_ids.filtered('deferred_end_date').deferred_end_date = next_invoice_date + relativedelta(days=5)
+        invoice._post()
+        self.assertEqual(self.subscription.next_invoice_date, next_invoice_date, "The next Invoice date should not be updated by an upsell")
 
     def test_sale_subscription_upsell_does_not_copy_non_recurring_products(self):
         nr_product = self.env['product.template'].create({
