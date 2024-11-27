@@ -85,6 +85,7 @@ export class DocumentsMemberInvite extends Component {
             domain: domain,
             specification: this._getPartnersSpecification(),
             limit: limit,
+            count_limit: 1, // we don't need the number of records, skip the search_count
         });
         return partners.records;
     }
