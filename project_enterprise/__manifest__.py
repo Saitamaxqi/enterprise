@@ -52,9 +52,6 @@ Bridge module for project and enterprise
         'web.assets_unit_tests': [
             'project_enterprise/static/tests/*',
         ],
-        'web.qunit_suite_tests': [
-            'project_enterprise/static/tests/legacy/**/*',
-        ],
         'project.webclient': [
             'web_enterprise/static/src/webclient/**/*.scss',
 

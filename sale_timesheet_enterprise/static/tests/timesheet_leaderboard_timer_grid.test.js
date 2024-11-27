@@ -3,6 +3,7 @@ import { queryAllTexts, queryAll, queryOne } from "@odoo/hoot-dom";
 import { mockDate, animationFrame } from "@odoo/hoot-mock";
 
 import {
+    defineModels,
     mountView,
     contains,
     onRpc,
@@ -13,9 +14,12 @@ import { browser } from "@web/core/browser/browser";
 import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
 import { defineTimesheetModels } from "@timesheet_grid/../tests/hr_timesheet_models";
 
+import { SaleOrderLine } from "@sale_project/../tests/project_task_model";
+
 let rankingData;
 
 defineTimesheetModels();
+defineModels([SaleOrderLine]);
 
 async function initAndOpenView(showIndicator = true, showLeaderboard = true) {
     onRpc("get_timesheet_ranking_data", async (request) => {
