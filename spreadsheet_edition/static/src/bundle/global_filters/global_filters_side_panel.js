@@ -55,6 +55,10 @@ export class GlobalFiltersSidePanel extends Component {
         this.env.openSidePanel("RELATION_FILTER_SIDE_PANEL");
     }
 
+    newBoolean() {
+        this.env.openSidePanel("BOOLEAN_FILTERS_SIDE_PANEL");
+    }
+
     /**
      * @param {string} id
      */
@@ -72,6 +76,9 @@ export class GlobalFiltersSidePanel extends Component {
                 break;
             case "relation":
                 this.env.openSidePanel("RELATION_FILTER_SIDE_PANEL", { id });
+                break;
+            case "boolean":
+                this.env.openSidePanel("BOOLEAN_FILTERS_SIDE_PANEL", { id });
                 break;
         }
     }

@@ -61,6 +61,7 @@ const FILTER_CREATION_SELECTORS = {
     text: ".o_global_filter_new_text",
     date: ".o_global_filter_new_time",
     relation: ".o_global_filter_new_relation",
+    boolean: ".o_global_filter_new_boolean",
 };
 
 class Vehicle extends models.Model {
@@ -131,10 +132,11 @@ test("Simple display", async function () {
     expect(".o_spreadsheet_global_filters_side_panel").toHaveCount(1);
 
     const buttons = target.querySelectorAll(".o_spreadsheet_global_filters_side_panel .o-button");
-    expect(buttons.length).toBe(3);
+    expect(buttons.length).toBe(4);
     expect(buttons[0]).toHaveClass("o_global_filter_new_time");
     expect(buttons[1]).toHaveClass("o_global_filter_new_relation");
     expect(buttons[2]).toHaveClass("o_global_filter_new_text");
+    expect(buttons[3]).toHaveClass("o_global_filter_new_boolean");
 });
 
 test("Display with an existing 'Date' global filter", async function () {
@@ -191,6 +193,23 @@ test("List display name is displayed in field matching", async function () {
     await contains(".o_side_panel_filter_icon.fa-cog").click();
     const name = target.querySelector(".o_spreadsheet_field_matching .fw-medium").innerText;
     expect(name).toBe("Hello");
+});
+
+test("Create a new boolean global filter", async function () {
+    const { model } = await createSpreadsheetFromPivotView();
+    await openGlobalFilterSidePanel();
+    await clickCreateFilter("boolean");
+    await editGlobalFilterLabel("My Label");
+    await selectFieldMatching("active");
+    expect(".o_filter_field_offset").toHaveCount(0, {
+        message: "No offset for text filter",
+    });
+    await saveGlobalFilter();
+
+    expect(".o_spreadsheet_global_filters_side_panel").toHaveCount(1);
+
+    const [globalFilter] = model.getters.getGlobalFilters();
+    expect(globalFilter.label).toBe("My Label");
 });
 
 test("Create a new text global filter", async function () {
