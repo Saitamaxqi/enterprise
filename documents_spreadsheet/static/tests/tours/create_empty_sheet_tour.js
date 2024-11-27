@@ -1,5 +1,6 @@
 import { registry } from "@web/core/registry";
 import { stepUtils } from "@web_tour/tour_service/tour_utils";
+const SHEET_NAME = "Res Partner Test Spreadsheet";
 
 registry.category("web_tour.tours").add("spreadsheet_create_empty_sheet", {
     steps: () => [
@@ -47,6 +48,63 @@ registry.category("web_tour.tours").add("spreadsheet_create_empty_sheet", {
         {
             trigger: ".o_document_spreadsheet:first",
             content: "Reopen the sheet",
+            run: "click",
+        },
+        {
+            trigger: ".o-sp-breadcrumb",
+            content: "Wait for the spreadsheet to be properly unloaded",
+            run: "click",
+        },
+    ],
+});
+
+registry.category("web_tour.tours").add("spreadsheet_create_list_view", {
+    steps: () => [
+        stepUtils.showAppsMenuItem(),
+        {
+            trigger: '.o_app[data-menu-xmlid="base.menu_management"]',
+            content: "Open apps menu",
+            run: "click",
+        },
+        {
+            trigger: "button.o_switch_view.o_list",
+            content: "Switch to list view",
+            run: "click",
+        },
+        {
+            trigger: ".o_list_view",
+        },
+        {
+            trigger: ".o_control_panel .o_cp_action_menus .dropdown-toggle",
+            content: "Open the cog menu",
+            run: "click",
+        },
+        {
+            trigger: ".dropdown-menu .dropdown-toggle:contains(Spreadsheet)",
+            run: "hover",
+        },
+        {
+            trigger: ".o_insert_list_spreadsheet_menu",
+            content: "Insert in spreadsheet",
+            run: "click",
+        },
+        {
+            trigger: `.o-spreadsheet-grid-item-name:contains(${SHEET_NAME})`,
+            content: "verify that the existing spreadsheet names are displayed",
+        },
+        {
+            trigger: ".modal-footer .btn-primary",
+            content: "Confirm",
+            run: "click",
+        },
+        {
+            trigger: ".o-topbar-topleft .o-topbar-menu[data-id='data']",
+            content: "Open Data menu",
+            run: "click",
+        },
+        {
+            trigger: ".o-menu-item[data-name='item_list_1']",
+            content: "Open List Side Panel",
             run: "click",
         },
         {

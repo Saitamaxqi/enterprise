@@ -102,7 +102,7 @@ export class TemplateDialog extends Component {
         const { domain, context } = this.model;
         const { records, length } = await this.keepLast.add(
             this.orm.webSearchRead("spreadsheet.template", domain, {
-                specification: { name: {} },
+                specification: { display_name: {} },
                 domain,
                 context,
                 offset,
@@ -164,7 +164,7 @@ export class TemplateDialog extends Component {
     }
 
     /**
-     * Returns whether or not templateId is currently selected.
+     * Returns whether templateId is currently selected or not.
      * @private
      * @param {number | null} templateId
      * @returns {boolean}

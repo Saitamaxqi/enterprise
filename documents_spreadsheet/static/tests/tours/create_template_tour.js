@@ -48,6 +48,25 @@ registry.category("web_tour.tours").add("documents_spreadsheet_create_template_t
             run: "click",
         },
         {
+            trigger: ".btn.btn-primary.dropdown-toggle[data-hotkey='c']",
+            content: "new dropdown",
+            run: "click",
+        },
+        {
+            trigger: ".btn.btn-link.o_documents_kanban_spreadsheet",
+            content: "Spreadsheet",
+            run: "click",
+        },
+        {
+            trigger: `.o-spreadsheet-grid-item-name:contains(${TEMPLATE_NAME})`,
+            content: "verify that the template name is displayed",
+        },
+        {
+            trigger: "button.btn-close",
+            content: "close the popup",
+            run: "click",
+        },
+        {
             trigger: 'button[data-menu-xmlid="documents.Config"]',
             content: "Open Configuration menu",
             run: "click",
