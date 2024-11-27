@@ -506,7 +506,7 @@ class TestReportEngines(TestAccountReportsCommon):
                 ('test_line_9',        8600.0),
                 ('10.20.0 10.20.0',   10000.0),
                 ('101001 101001',     -2000.0),
-                ('101002 101002',      -300.0),
+                ('101002 101002',         0.0),
                 ('101003 101003',       600.0),
                 ('test_line_10',       8600.0),
                 ('10.20.0 10.20.0',   10000.0),
@@ -1787,3 +1787,49 @@ class TestReportEngines(TestAccountReportsCommon):
             expected_amls = move.line_ids.filtered(lambda x: x.partner_id == expected_partner)
             audit_result_amls = move.line_ids.filtered_domain(action_dict['domain'])
             self.assertEqual(audit_result_amls, expected_amls, f"Wrong audit result for partner {expected_partner.name}: {audit_result_amls}")
+
+    def test_account_codes_load_more_limit_groupby(self):
+        """ The account_codes engine performs an additional groupby in its SQL query. This tests makes sure this does not break the behavior
+        of the load_more_limit when grouping.
+        """
+        partner_a, partner_b, partner_c = self.env['res.partner'].create([
+            {'name': 'Partner A'},
+            {'name': 'Partner B'},
+            {'name': 'Partner C'},
+        ])
+
+        report = self._create_report(
+            [
+                self._prepare_test_report_line(
+                    self._prepare_test_expression_account_codes('1'),
+                    groupby='partner_id',
+                ),
+            ],
+            load_more_limit=2,
+        )
+
+        move = self._create_test_account_moves([
+            self._prepare_test_account_move_line(10, account_code='11', partner_id=partner_a.id),
+            self._prepare_test_account_move_line(20, account_code='11', partner_id=partner_a.id),
+            self._prepare_test_account_move_line(25, account_code='12', partner_id=partner_a.id),
+            self._prepare_test_account_move_line(30, account_code='11'),
+            self._prepare_test_account_move_line(40, account_code='11'),
+            self._prepare_test_account_move_line(50, account_code='12', partner_id=partner_b.id),
+            self._prepare_test_account_move_line(60, account_code='13', partner_id=partner_c.id),
+            self._prepare_test_account_move_line(-210, account_code='2'),
+        ])
+
+        options = self._generate_options(report, '2020-01-01', '2020-01-01', default_options={'unfold_all': True})
+
+        self.assertLinesValues(
+            # pylint: disable=bad-whitespace
+            report._get_lines(options),
+            [   0,                               1],
+            [
+                ('test_line_1',              235.0),
+                ('Partner A',                 55.0),
+                ('Partner B',                 50.0),
+                ('Load more...',                ''),
+            ],
+            options,
+        )

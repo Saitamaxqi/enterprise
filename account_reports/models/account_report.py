@@ -3839,9 +3839,28 @@ class AccountReport(models.Model):
         # Run main query
         query = self._get_report_query(options, date_scope)
 
-        extra_groupby_sql = SQL(", %s", SQL.identifier('account_move_line', current_groupby)) if current_groupby else SQL()
-        extra_select_sql = SQL(", %s AS grouping_key", SQL.identifier('account_move_line', current_groupby)) if current_groupby else SQL()
+        current_groupby_aml_sql = SQL.identifier('account_move_line', current_groupby) if current_groupby else SQL()
         tail_query = self._get_engine_query_tail(offset, limit)
+        if current_groupby_aml_sql and tail_query:
+            tail_query_additional_groupby_where_sql = SQL(
+                """
+                AND %(current_groupby_aml_sql)s IN (
+                    SELECT DISTINCT %(current_groupby_aml_sql)s
+                    FROM account_move_line
+                    WHERE %(search_condition)s
+                    ORDER BY %(current_groupby_aml_sql)s
+                    %(tail_query)s
+                )
+                """,
+                current_groupby_aml_sql=current_groupby_aml_sql,
+                search_condition=query.where_clause,
+                tail_query=tail_query,
+            )
+        else:
+            tail_query_additional_groupby_where_sql = SQL()
+
+        extra_groupby_sql =  SQL(", %s", current_groupby_aml_sql) if current_groupby_aml_sql else SQL()
+        extra_select_sql = SQL(", %s AS grouping_key", current_groupby_aml_sql) if current_groupby_aml_sql else SQL()
 
         query = SQL(
             """
@@ -3853,6 +3872,7 @@ class AccountReport(models.Model):
             FROM %(table_references)s
             %(currency_table_join)s
             WHERE %(search_condition)s
+            %(tail_query_additional_groupby_where_sql)s
             GROUP BY account_move_line.account_id%(extra_groupby_sql)s
             %(order_by_sql)s
             %(tail_query)s
@@ -3863,8 +3883,9 @@ class AccountReport(models.Model):
             currency_table_join=self._currency_table_aml_join(options),
             search_condition=query.where_clause,
             extra_groupby_sql=extra_groupby_sql,
+            tail_query_additional_groupby_where_sql=tail_query_additional_groupby_where_sql,
             order_by_sql=SQL('ORDER BY %s', SQL.identifier('account_move_line', current_groupby)) if current_groupby else SQL(),
-            tail_query=tail_query,
+            tail_query=tail_query if not tail_query_additional_groupby_where_sql else SQL(),
         )
         self._cr.execute(query)
 
@@ -3884,6 +3905,7 @@ class AccountReport(models.Model):
         for formula, prefix_details in prefix_details_by_formula.items():
             rslt_key = (formula, formulas_dict[formula])
             rslt_destination = rslt.setdefault(rslt_key, [] if current_groupby else {'result': 0, 'has_sublines': False})
+            rslt_groups_by_grouping_keys = {}
             for multiplicator, prefix_key, balance_character in prefix_details:
                 res_by_account_id = res_by_prefix_account_id.get(prefix_key, {})
 
@@ -3899,12 +3921,19 @@ class AccountReport(models.Model):
                                 **group_val,
                                 'result': multiplicator * group_val['result'],
                             }
-
-                            if current_groupby:
-                                rslt_destination.append((group_key, rslt_group))
-                            else:
+                            if not current_groupby:
                                 rslt_destination['result'] += rslt_group['result']
                                 rslt_destination['has_sublines'] = rslt_destination['has_sublines'] or rslt_group['has_sublines']
+                            elif group_key in rslt_groups_by_grouping_keys:
+                                # Will happen if the same grouping key is used on move lines with different accounts.
+                                # This comes from the GROUPBY in the SQL query, which uses both grouping key and account.
+                                # When this happens, we want to aggregate the results of each grouping key, to avoid duplicates in the end result.
+                                already_treated_rslt_group = rslt_groups_by_grouping_keys[group_key]
+                                already_treated_rslt_group['has_sublines'] = already_treated_rslt_group['has_sublines'] or rslt_group['has_sublines']
+                                already_treated_rslt_group['result'] += rslt_group['result']
+                            else:
+                                rslt_groups_by_grouping_keys[group_key] = rslt_group
+                                rslt_destination.append((group_key, rslt_group))
 
         return rslt
 
