@@ -1009,3 +1009,12 @@ test("consolidation and unavailabilities", async () => {
         "--Gantt__DayOffToday-background-color",
     ]);
 });
+
+test("default_range not in scales", async () => {
+    await mountGanttView({
+        resModel: "tasks",
+        arch: `<gantt date_start="start" date_stop="stop" scales="month" default_range="year"/>`,
+    });
+    const { range } = getGridContent();
+    expect(range).toBe("2018");
+});

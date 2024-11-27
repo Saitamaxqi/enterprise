@@ -88,7 +88,7 @@ export class GanttRendererControls extends Component {
             case "day":
                 return formatDate(focusDate);
             default:
-                return this.model.metaData.scales[rangeId].groupHeaderFormatter(
+                return this.model.metaData.ranges[rangeId].groupHeaderFormatter(
                     focusDate,
                     this.env
                 );

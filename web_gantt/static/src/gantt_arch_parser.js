@@ -289,8 +289,10 @@ function getInfoFromRootNode(rootNode) {
     const ranges = {};
     for (const rangeId in RANGES) {
         const referenceRange = RANGES[rangeId];
+        const { groupHeaderFormatter } = SCALES[referenceRange.scaleId];
         ranges[rangeId] = {
             ...referenceRange,
+            groupHeaderFormatter,
             id: rangeId,
             scaleId: getPreferedScaleId(referenceRange.scaleId, scales),
             description: referenceRange.description.toString(),
