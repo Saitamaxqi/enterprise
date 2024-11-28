@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-01-30 12:50+0000\n"
-"PO-Revision-Date: 2025-01-30 12:50+0000\n"
+"POT-Creation-Date: 2025-01-30 12:51+0000\n"
+"PO-Revision-Date: 2025-01-30 12:51+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,128 +18,130 @@ msgstr ""
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__partner_id
 msgid "Account Holder"
-msgstr ""
+msgstr "Titulaire du compte"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__amount
 msgid "Amount"
-msgstr ""
+msgstr "Montant"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model,name:l10n_be_reports_post_wizard.model_l10n_be_reports_periodic_vat_xml_export
 msgid "Belgian Periodic VAT Report Export Wizard"
-msgstr ""
+msgstr "Assistant d'exportation de déclarations périodiques à la TVA en Belgique"
+
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model,name:l10n_be_reports_post_wizard.model_l10n_be_tax_report_handler
 msgid "Belgian Tax Report Custom Prorata Handler"
-msgstr ""
+msgstr "Gestionnaire personnalisé de prorata pour la déclaration fiscale belge"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__communication
 msgid "Communication"
-msgstr ""
+msgstr "Communication"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__company_currency_id
 msgid "Company Currency"
-msgstr ""
+msgstr "Devise de l'entreprise"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Créé par"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Créé le"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Nom d'affichage"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__acc_number
 msgid "IBAN"
-msgstr ""
+msgstr "IBAN"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model,name:l10n_be_reports_post_wizard.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Pièce comptable"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Dernière mise à jour par"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Dernière mise à jour le"
 
 #. module: l10n_be_reports_post_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports_post_wizard.l10n_be_vat_pay_wizard_form
 msgid "Mark Paid"
-msgstr ""
+msgstr "Marquer comme payé"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__move_id
 msgid "Move"
-msgstr ""
+msgstr "Mouvement"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__partner_bank_id
 msgid "Partner Bank"
-msgstr ""
+msgstr "Banque partenaire"
 
 #. module: l10n_be_reports_post_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports_post_wizard.l10n_be_vat_pay_wizard_form
 msgid "Pay Later"
-msgstr ""
+msgstr "Payer plus tard"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model,name:l10n_be_reports_post_wizard.model_l10n_be_vat_pay_wizard
 msgid "Payment instructions for VAT"
-msgstr ""
+msgstr "Instructions de paiement pour la TVA"
 
 #. module: l10n_be_reports_post_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports_post_wizard.view_account_financial_report_export
 msgid "Post Tax Entry"
-msgstr ""
+msgstr "Comptabiliser l'écriture fiscale"
 
 #. module: l10n_be_reports_post_wizard
 #. odoo-python
 #: code:addons/l10n_be_reports_post_wizard/models/account_move.py:0
 msgid "Post a tax report entry"
-msgstr ""
+msgstr "Comptabiliser une écriture de déclaration fiscale"
 
 #. module: l10n_be_reports_post_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports_post_wizard.view_account_financial_report_export
 msgid ""
 "Posting this entry will generate an XML export; please choose option(s)"
 msgstr ""
+"Comptabiliser cette écriture générera une exportation XML ; veuillez choisir une ou plusieurs options"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__qr_code
 msgid "Qr Code"
-msgstr ""
+msgstr "Code QR"
 
 #. module: l10n_be_reports_post_wizard
 #. odoo-python
 #: code:addons/l10n_be_reports_post_wizard/wizard/vat_pay_wizard.py:0
 msgid "Scan me with your banking app."
-msgstr ""
+msgstr "Scannez-moi avec votre application bancaire."
 
 #. module: l10n_be_reports_post_wizard
 #. odoo-python
 #: code:addons/l10n_be_reports_post_wizard/models/account_move.py:0
 msgid "VAT Payment"
-msgstr ""
+msgstr "Paiement de la TVA"

@@ -1,6 +1,8 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, models, fields
+from markupsafe import Markup
+
+from odoo import api, models, fields, _
 
 
 class L10n_BeVatPayWizard(models.TransientModel):
@@ -47,9 +49,13 @@ class L10n_BeVatPayWizard(models.TransientModel):
                     debtor_partner=wizard.partner_id,
                 )
                 if b64_qr:
-                    qr_html = f'''
-                        <img class="float-end" src="{b64_qr}"/>
-                    '''
+                    txt = _('Scan me with your banking app.')
+                    qr_html = Markup("""
+                        <div class="text-center">
+                            <img src="{b64_qr}"/>
+                            <p><strong>{txt}</strong></p>
+                        </div>
+                    """).format(b64_qr=b64_qr, txt=txt)
             wizard.qr_code = qr_html
 
     def mark_paid(self):

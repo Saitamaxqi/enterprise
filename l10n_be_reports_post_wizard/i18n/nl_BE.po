@@ -18,128 +18,129 @@ msgstr ""
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__partner_id
 msgid "Account Holder"
-msgstr ""
+msgstr "Rekeninghouder"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__amount
 msgid "Amount"
-msgstr ""
+msgstr "Bedrag"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model,name:l10n_be_reports_post_wizard.model_l10n_be_reports_periodic_vat_xml_export
 msgid "Belgian Periodic VAT Report Export Wizard"
-msgstr ""
+msgstr "Belgische periodieke btw-aangifte exportassistent"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model,name:l10n_be_reports_post_wizard.model_l10n_be_tax_report_handler
 msgid "Belgian Tax Report Custom Prorata Handler"
-msgstr ""
+msgstr "Aangepaste prorata-verwerker voor Belgische belastingaangifte"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__communication
 msgid "Communication"
-msgstr ""
+msgstr "Communicatie"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__company_currency_id
 msgid "Company Currency"
-msgstr ""
+msgstr "Bedrijfsvaluta"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__create_uid
 msgid "Created by"
-msgstr ""
+msgstr "Aangemaakt door"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__create_date
 msgid "Created on"
-msgstr ""
+msgstr "Aangemaakt op"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__display_name
 msgid "Display Name"
-msgstr ""
+msgstr "Weergavenaam"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__acc_number
 msgid "IBAN"
-msgstr ""
+msgstr "IBAN"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__id
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model,name:l10n_be_reports_post_wizard.model_account_move
 msgid "Journal Entry"
-msgstr ""
+msgstr "Boekingsstuk"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__write_uid
 msgid "Last Updated by"
-msgstr ""
+msgstr "Laatst bijgewerkt door"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__write_date
 msgid "Last Updated on"
-msgstr ""
+msgstr "Laatst bijgewerkt op"
 
 #. module: l10n_be_reports_post_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports_post_wizard.l10n_be_vat_pay_wizard_form
 msgid "Mark Paid"
-msgstr ""
+msgstr "Als betaald markeren"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__move_id
 msgid "Move"
-msgstr ""
+msgstr "Boekingsregel"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__partner_bank_id
 msgid "Partner Bank"
-msgstr ""
+msgstr "Partnerbank"
 
 #. module: l10n_be_reports_post_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports_post_wizard.l10n_be_vat_pay_wizard_form
 msgid "Pay Later"
-msgstr ""
+msgstr "Later betalen"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model,name:l10n_be_reports_post_wizard.model_l10n_be_vat_pay_wizard
 msgid "Payment instructions for VAT"
-msgstr ""
+msgstr "Betalingsinstructies voor btw"
 
 #. module: l10n_be_reports_post_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports_post_wizard.view_account_financial_report_export
 msgid "Post Tax Entry"
-msgstr ""
+msgstr "Belastingboeking verwerken"
 
 #. module: l10n_be_reports_post_wizard
 #. odoo-python
 #: code:addons/l10n_be_reports_post_wizard/models/account_move.py:0
 msgid "Post a tax report entry"
-msgstr ""
+msgstr "Een belastingaangifteboeking verwerken"
 
 #. module: l10n_be_reports_post_wizard
 #: model_terms:ir.ui.view,arch_db:l10n_be_reports_post_wizard.view_account_financial_report_export
 msgid ""
 "Posting this entry will generate an XML export; please choose option(s)"
 msgstr ""
+"Het verwerken van deze boeking genereert een XML-export; kies optie(s)"
 
 #. module: l10n_be_reports_post_wizard
 #: model:ir.model.fields,field_description:l10n_be_reports_post_wizard.field_l10n_be_vat_pay_wizard__qr_code
 msgid "Qr Code"
-msgstr ""
+msgstr "QR-code"
 
 #. module: l10n_be_reports_post_wizard
 #. odoo-python
 #: code:addons/l10n_be_reports_post_wizard/wizard/vat_pay_wizard.py:0
 msgid "Scan me with your banking app."
-msgstr ""
+msgstr "Scan mij met uw bankapp."
 
 #. module: l10n_be_reports_post_wizard
 #. odoo-python
 #: code:addons/l10n_be_reports_post_wizard/models/account_move.py:0
 msgid "VAT Payment"
-msgstr ""
+msgstr "Btw-betaling"
