@@ -33,6 +33,10 @@
             (0, 0, {'weekday': weekday, 'start_hour': 12, 'end_hour': 14.50})
             for weekday in ('3', '6', '7')
         ]"/>
+        <field name="image_1920" type="base64" file="appointment/static/src/img/appointment_4.jpg"/>
+        <field name="message_intro" type="html">
+            <p>Reserve your table at our bistro and enjoy a delightful dining experience at your convenience.</p>
+        </field>
     </record>
 
     <record id="appointment_type_restaurant_table_question_allergies" model="appointment.question">
