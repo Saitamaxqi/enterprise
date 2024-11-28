@@ -358,3 +358,12 @@ class TestDianMoves(TestCoDianCommon):
         )
         xml = self.env['account.edi.xml.ubl_dian']._export_invoice(credit_note)[0]
         self._assert_document_dian(xml, 'l10n_co_dian/tests/attachments/support_document_credit_note.xml')
+
+    def test_dian_invoicing_access_rights(self):
+        self.user.groups_id = [Command.unlink(self.env.ref('base.group_system').id)]
+        invoice = self._create_move()
+        xml = self.env['account.edi.xml.ubl_dian']._export_invoice(invoice)[0]
+        self.env.invalidate_all()  # certificates are available in cache, we still need to test the access through `_build_and_send_request`
+        self.env['l10n_co_dian.document']._create_document(xml, invoice, state='invoice_accepted')
+        self._mock_get_status_zip(invoice, 'GetStatusZip_pending.xml')
+        self.assertEqual(invoice.l10n_co_dian_state, 'invoice_pending')

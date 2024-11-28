@@ -1,10 +1,11 @@
 from freezegun import freeze_time
 
 import random
+import requests
 from base64 import b64encode
 from contextlib import contextmanager
 from datetime import datetime, date
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 import uuid
 
 from odoo import Command
@@ -181,6 +182,12 @@ class TestCoDianCommon(AccountTestInvoicingCommon):
         with patch(f'{self.utils_path}._uuid1', lambda: uuid.UUID(int=rnd.getrandbits(128))):
             yield
 
+    def _mocked_request(self, response_file, status_code):
+        mock_response = Mock(spec=requests.Response)
+        mock_response.status_code = status_code
+        mock_response.text = self._read_file(f'l10n_co_dian/tests/responses/{response_file}')
+        return mock_response
+
     def _mocked_response(self, response_file, status_code):
         return {
             'response': self._read_file(f'l10n_co_dian/tests/responses/{response_file}'),
@@ -201,5 +208,9 @@ class TestCoDianCommon(AccountTestInvoicingCommon):
                 .action_send_and_print()
 
     def _mock_get_status_zip(self, move, response_file, response_code=200):
-        with patch(f'{self.utils_path}._build_and_send_request', return_value=self._mocked_response(response_file, response_code)):
+        with patch.object(requests, 'post', return_value=self._mocked_request(response_file, response_code)):
             move.l10n_co_dian_document_ids._get_status_zip()
+
+    def _mock_button_l10n_co_dian_fetch_numbering_range(self, journal, response_file, response_code=200):
+        with patch.object(requests, 'post', return_value=self._mocked_request(response_file, response_code)):
+            return journal.button_l10n_co_dian_fetch_numbering_range()

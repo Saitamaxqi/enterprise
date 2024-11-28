@@ -4,6 +4,7 @@ from lxml import etree
 import re
 from unittest.mock import patch, Mock
 
+from odoo import Command
 from odoo.tests import tagged, freeze_time
 from odoo.addons.l10n_co_dian import xml_utils
 from .common import TestCoDianCommon
@@ -178,3 +179,13 @@ class TestDianMisc(TestCoDianCommon):
             xml, error = self.invoice.l10n_co_dian_document_ids._get_attached_document()
         self.assertEqual(error, "")
         self._assert_document_dian(xml, "l10n_co_dian/tests/attachments/attached_document.xml")
+
+    def test_account_manager_update_journal(self):
+        """
+        This test serves both purposes of checking the DIAN configuration reload
+        and making sure an account manager has all access needed in this flow
+        """
+        self.user.groups_id = [Command.unlink(self.env.ref('base.group_system').id)]
+        journal = self.support_document_journal
+        message = self._mock_button_l10n_co_dian_fetch_numbering_range(journal=journal, response_file='GetNumberingRange_journal.xml')
+        self.assertEqual(message['params']['message'], 'The journal values were successfully updated.')
