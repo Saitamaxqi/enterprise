@@ -113,11 +113,15 @@ class BankRecWidget(models.Model):
         for dynamic_filter in dynamic_filters:
             dynamic_filter['domain'] = str(dynamic_filter['domain'])
 
-        results['batch_payments'] = {
-            'domain': [],
-            'dynamic_filters': dynamic_filters,
-            'context': context,
-        }
+        if self.env['account.batch.payment'].search_count(
+            [('journal_id', '=', journal.id), ('state', '!=', 'reconciled')],
+            limit=1,
+        ):
+            results['batch_payments'] = {
+                'domain': [('state', '!=', 'reconciled')],
+                'dynamic_filters': dynamic_filters,
+                'context': context,
+            }
         return results
 
     # -------------------------------------------------------------------------

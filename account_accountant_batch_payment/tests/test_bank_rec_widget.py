@@ -237,6 +237,28 @@ class TestBankRecWidgetWithoutEntry(CommonAccountingInstalled, TestBankRecWidget
             {'balance':   5000.0, 'amount_currency':   5000.0, 'amount_residual':   4345.0},
         ])
 
+    def test_batch_payment_data(self):
+        invoice = self.init_invoice('out_invoice', partner=self.partner_a, amounts=[1000.0], post=True)
+        invoice_payment = self.env['account.payment.register'].create({
+            'payment_date': '2019-01-01',
+            'payment_method_line_id': self.payment_method_line.id,
+            'line_ids': [Command.set(invoice.line_ids.filtered(lambda l: l.display_type == 'payment_term').ids)],
+        })._create_payments()
+        batch = self.env['account.batch.payment'].create({
+            'journal_id': self.company_data['default_journal_bank'].id,
+            'payment_ids': [Command.set(invoice_payment.ids)],
+            'payment_method_id': self.payment_method_line.payment_method_id.id,
+        })
+        st_line = self._create_st_line(1000.0, payment_ref=batch.name, partner_id=self.partner_a.id)
+        wizard = self.env['bank.rec.widget'].with_context(default_st_line_id=st_line.id).new({})
+        # test batch payment data is passed if batch payment is available for reco
+        views_data = wizard._prepare_embedded_views_data()
+        self.assertTrue(views_data.get('batch_payments'))
+        # test no batch payment data is passed if no batch payment available for reco
+        batch.unlink()
+        views_data = wizard._prepare_embedded_views_data()
+        self.assertFalse(views_data.get('batch_payments'))
+
 
 @tagged('post_install', '-at_install')
 class TestBankRecWidgetWithoutEntryInvoicingOnly(CommonInvoicingOnly, TestBankRecWidgetWithoutEntry):

@@ -16,7 +16,7 @@
             <t t-set-slot="batch_payments_tab"
                name="'batch_payments_tab'"
                title.translate="Batch Payments"
-               isVisible="['valid', 'invalid'].includes(data.state)">
+               isVisible="['valid', 'invalid'].includes(data.state) and this.notebookBatchPaymentsVisible">
                 <t t-call="account_accountant_batch_payment.BankRecRecordNotebookBatchPayments"/>
             </t>
         </xpath>

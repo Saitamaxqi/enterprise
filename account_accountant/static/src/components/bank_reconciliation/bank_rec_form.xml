@@ -35,7 +35,7 @@
                     class="btn btn-secondary"
                     t-if="!data.st_line_checked"
                     t-on-click="(ev) => this.actionSetAsChecked()">
-                <span>Set as Checked</span>
+                <span>Mark as Checked</span>
             </button>
         </div>
     </t>

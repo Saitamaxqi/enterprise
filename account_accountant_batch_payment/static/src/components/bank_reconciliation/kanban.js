@@ -42,6 +42,10 @@ patch(BankRecKanbanController.prototype, {
         return super.getBankRecLineInvalidFields(line);
     },
 
+    get notebookBatchPaymentsVisible() {
+        return this.state.bankRecEmbeddedViewsData.batch_payments;
+    },
+
     // -----------------------------------------------------------------------------
     // RPC
     // -----------------------------------------------------------------------------
