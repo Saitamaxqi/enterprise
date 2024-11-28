@@ -88,7 +88,8 @@ class _KanbanEditorRecord extends KanbanRecord {
         return !value;
     }
     get dropdownXpath() {
-        const compiledTemplateMenu = this.props.templates[this.constructor.KANBAN_MENU_ATTRIBUTE];
+        const compiledTemplateMenu =
+            this.props.archInfo.templateDocs[this.constructor.KANBAN_MENU_ATTRIBUTE];
         return computeXpath(compiledTemplateMenu, "kanban");
     }
 }
