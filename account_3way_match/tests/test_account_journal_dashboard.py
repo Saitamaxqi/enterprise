@@ -154,8 +154,8 @@ class AccountJournalDashboard3WayWatchTest(TestAccountJournalDashboardCommon):
         self.assertEqual(dashboard_data['number_draft'], 0)
         self.assertIn('0.00', dashboard_data['sum_draft'])
 
-        self.assertEqual(dashboard_data['number_waiting'], 1)
-        self.assertIn('81.72', dashboard_data['sum_waiting'])
+        self.assertEqual(dashboard_data['number_waiting'], 2)
+        self.assertIn('68.42', dashboard_data['sum_waiting'])
 
         # Check partial on refund
         payment = self.env['account.payment'].create({
@@ -174,12 +174,12 @@ class AccountJournalDashboard3WayWatchTest(TestAccountJournalDashboardCommon):
         self.assertEqual(dashboard_data['number_draft'], 0)
         self.assertIn('0.00', dashboard_data['sum_draft'])
 
-        self.assertEqual(dashboard_data['number_waiting'], 1)
-        self.assertIn('81.72', dashboard_data['sum_waiting'])
+        self.assertEqual(dashboard_data['number_waiting'], 2)
+        self.assertIn('68.42', dashboard_data['sum_waiting'])
 
         dashboard_data = journal._get_journal_dashboard_data_batched()[journal.id]
-        self.assertEqual(dashboard_data['number_late'], 1)
-        self.assertIn('81.72', dashboard_data['sum_late'])
+        self.assertEqual(dashboard_data['number_late'], 2)
+        self.assertIn('68.42', dashboard_data['sum_late'])
 
     def test_sale_purchase_journal_for_multi_currency_sale(self):
         currency = self.other_currency
