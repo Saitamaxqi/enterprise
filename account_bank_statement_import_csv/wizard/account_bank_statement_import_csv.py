@@ -116,7 +116,7 @@ class Base_ImportImport(models.TransientModel):
                 remove_index.append(index_balance)
             # Remove added field debit/credit/balance
             for index in sorted(remove_index, reverse=True):
-                line.remove(line[index])
+                del line[index]
             if line[import_fields.index('amount')]:
                 ret_data.append(line)
 

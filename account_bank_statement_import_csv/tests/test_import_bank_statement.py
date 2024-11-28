@@ -79,6 +79,18 @@ class TestAccountBankStatementImportCSV(AccountTestInvoicingCommon):
             {'date': fields.Date.from_string('2015-02-05'), 'amount': 9518.40,  'payment_ref': 'ACH CREDIT"MERCHE-SOLUTIONS-MERCH DEP'},
         ])
 
+    def test_csv_file_import_with_missing_values(self):
+        self._import_file('account_bank_statement_import_csv/test_csv_file/test_csv_missing_values.csv', ['transaction_type', 'ref', 'payment_ref', 'debit', 'credit'])
+
+        imported_statement = self.env['account.bank.statement'].search([('company_id', '=', self.env.company.id)])
+
+        self.assertEqual(len(imported_statement.line_ids), 2)
+
+        self.assertRecordValues(imported_statement.line_ids.sorted(lambda line: line.amount), [
+            {'transaction_type': 'TRANSFER', 'ref': 'bank_ref_1', 'payment_ref': 'bank_statement_line_1', 'sequence': 0, 'amount': 1000.0},
+            {'transaction_type': 'TRANSFER', 'ref': False, 'payment_ref': 'bank_statement_line_2', 'sequence': 1, 'amount': 3500.0},
+        ])
+
     def test_csv_file_import_non_ordered(self):
         with self.assertRaises(UserError):
             self._import_file('account_bank_statement_import_csv/test_csv_file/test_csv_non_sorted.csv')
