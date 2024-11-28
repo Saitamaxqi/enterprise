@@ -4,3 +4,4 @@
 from . import room_booking
 from . import room_office
 from . import room_room
+from . import ir_http
