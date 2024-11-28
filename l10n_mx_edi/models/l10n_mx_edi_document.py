@@ -1996,6 +1996,15 @@ Content-Disposition: form-data; name="xml"; filename="xml"
 
         cfdi_infos = self.env['l10n_mx_edi.document']._decode_cfdi_attachment(cfdi)
         cfdi_infos['cfdi_node'].attrib['Sello'] = certificate_sudo._sign(cfdi_infos['cadena'], formatting='base64')
+
+        # -- clean schema locations --
+        xsi_ns = cfdi_infos['cfdi_node'].nsmap['xsi']
+        schema_locations = cfdi_infos['cfdi_node'].attrib[f"{{{xsi_ns}}}schemaLocation"].split()
+        schema_parts = {ns: location for ns, location in zip(schema_locations[::2], schema_locations[1::2]) if ns in cfdi_infos['cfdi_node'].nsmap.values()}
+        for ns in cfdi_infos['cfdi_node'].nsmap:
+            if ns != 'xsi' and not cfdi_infos['cfdi_node'].xpath(f'//{ns}:*', namespaces=cfdi_infos['cfdi_node'].nsmap):
+                schema_parts.pop(cfdi_infos['cfdi_node'].nsmap[ns])
+        cfdi_infos['cfdi_node'].attrib[f'{{{xsi_ns}}}schemaLocation'] = ' '.join(f"{ns} {location}" for ns, location in schema_parts.items())
         cfdi_str = self.env['l10n_mx_edi.document']._convert_xml_to_attachment_data(cfdi_infos['cfdi_node'])
 
         # == Check credentials ==
