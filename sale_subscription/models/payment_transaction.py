@@ -225,4 +225,4 @@ class PaymentTransaction(models.Model):
         subscriptions = self.sale_order_ids.filtered('is_subscription')
         draft_invoices = subscriptions.order_line.invoice_lines.move_id.filtered(lambda am: am.state == 'draft')
         if draft_invoices:
-            draft_invoices.state = 'cancel'
+            draft_invoices.button_cancel()

@@ -405,6 +405,10 @@ class PaymentPortal(payment_portal.PaymentPortal):
                 amount = amount or amount_to_invoice
 
             if subscription_anticipate or amount >= order_sudo.amount_to_invoice and not invoice_to_pay:
+                # TODO MASTER: don't create the invoice here, let the post process of transaction create it
+                order_sudo.order_line.invoice_lines.move_id.filtered(
+                    lambda r: r.move_type in ('out_invoice', 'out_refund') and r.state == 'draft'
+                ).button_cancel()
                 invoice_to_pay = order_sudo.with_context(lang=partner_sudo.lang)._create_invoices(final=True)
             recurring_amount = sum(order_sudo.order_line.filtered(lambda l: l.recurring_invoice).mapped('price_total'))
             tokenize = order_sudo.currency_id.compare_amounts(amount, recurring_amount) >= 0
