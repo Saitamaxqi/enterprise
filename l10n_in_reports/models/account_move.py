@@ -154,7 +154,8 @@ class AccountMove(models.Model):
                 )
                 continue
             attachment = self.env['ir.attachment'].create({
-                'name': f'{move.l10n_in_irn_number}.json',
+                # Limit the name to 45 characters to avoid exceeding the limit on e-invoice portal
+                'name': f'{move.l10n_in_irn_number[:45]}.json',
                 'mimetype': JSON_MIMETYPE,
                 'raw': json.dumps(gov_json_data),
                 'res_model': 'account.move',
@@ -261,6 +262,7 @@ class AccountMove(models.Model):
         seller_details = content['SellerDtls']
         item_list = content['ItemList']
         value_details = content['ValDtls']
+        trans_details = content['TranDtls']
         move_vals = {
             'l10n_in_irn_number': content.get('Irn'),
             'move_type': MOVE_TYPE_MAPPING.get(bill_details.get('Typ'), 'in_invoice'),
@@ -284,6 +286,8 @@ class AccountMove(models.Model):
         move_vals['ref'] = bill_details.get('No')
         igst_tag_ids = self.env.ref('l10n_in.tax_tag_igst').ids
         gst_tag_ids = (self.env.ref('l10n_in.tax_tag_cgst') + self.env.ref('l10n_in.tax_tag_sgst')).ids
+        igst_rc_tag_ids = self.env.ref('l10n_in.tax_tag_igst_rc').ids
+        gst_rc_tag_ids = (self.env.ref('l10n_in.tax_tag_sgst_rc') + self.env.ref('l10n_in.tax_tag_cgst_rc')).ids
         uom_map = {
             irn_uom: self.env['ir.model.data']._xmlid_to_res_id(xmlid)
             for irn_uom, xmlid in UOM_REF_MAP.items()
@@ -291,25 +295,47 @@ class AccountMove(models.Model):
 
         other_charges = value_details.get('OthChrg', 0)
         cess_charges = 0
+        not_mapped_tax_values = {}
+        is_rcm_invoice = 1 if trans_details.get('RegRev') == "Y" else 0
         for item in item_list:
             line_dict = {}
-            if 'GstRt' in item:
-                tag_ids = igst_tag_ids if item.get('IgstAmt') else gst_tag_ids
-                taxes = _get_tax(item['GstRt'], tag_ids)
-                if taxes:
-                    line_dict['tax_ids'] = [Command.link(taxes.id)]
+            gst_rate = item.get('GstRt')
 
-            line_dict['discount'] = (item.get('Discount', 0.0) / item.get('TotAmt', 1.0)) * 100.0 if item.get('TotAmt') else 0.0
+            if gst_rate:
+                is_igst = bool(item.get('IgstAmt'))
+                if is_rcm_invoice:
+                    tax_tag_ids = igst_rc_tag_ids if is_igst else gst_rc_tag_ids
+                else:
+                    tax_tag_ids = igst_tag_ids if is_igst else gst_tag_ids
+
+                applicable_tax = _get_tax(gst_rate, tax_tag_ids)
+                if applicable_tax:
+                    line_dict['tax_ids'] = [Command.link(applicable_tax.id)]
+                else:
+                    tax_key_base = (gst_rate, "IGST" if is_igst else "GST")
+                    tax_amount = item.get('IgstAmt', 0) if is_igst else item.get('CgstAmt', 0) + item.get('SgstAmt', 0)
+                    not_mapped_tax_values.setdefault(tax_key_base, 0)
+                    not_mapped_tax_values[tax_key_base] += tax_amount
+                    if is_rcm_invoice:
+                        tax_key_rcm = tax_key_base + ("RC",)
+                        not_mapped_tax_values.setdefault(tax_key_rcm, 0)
+                        not_mapped_tax_values[tax_key_rcm] -= tax_amount
             line_dict['product_uom_id'] = uom_map.get(item.get('Unit'))
+            quantity = item.get('Qty') or 1
+            price_unit = item.get('UnitPrice')
+            if price_unit:
+                line_dict['discount'] = (item.get('Discount', 0.0) / item.get('TotAmt', 1.0)) * 100.0 if item.get('TotAmt') else 0.0
+            else:
+                # For service-type products where UnitPrice might be 0,
+                # calculate and replace it with AssAmt divided by quantity to ensure accurate unit pricing and proper handling.
+                price_unit = item.get('AssAmt', 0) / quantity
             move_vals['invoice_line_ids'].append(
                 Command.create({
                     **line_dict,
                     'name': item.get('PrdDesc'),
                     'l10n_in_hsn_code': item.get('HsnCd'),
-                    # For service-type products where the quantity might be 0, therefore,
-                    # replace 0 with 1 to ensure proper handling.
-                    'quantity': item.get('Qty') or 1,
-                    'price_unit': item.get('UnitPrice'),
+                    'quantity': quantity,
+                    'price_unit': price_unit,
                 })
             )
             other_charges += item.get('OthChrg', 0)
@@ -329,6 +355,13 @@ class AccountMove(models.Model):
             move_vals['invoice_line_ids'].append(Command.create({
                 'name': _("CESS Charges"),
                 'price_unit': cess_charges,
+            }))
+        # Create invoice lines for the grouped tax values
+        for tax_group, tax_amount in not_mapped_tax_values.items():
+            line_name = f"{tax_group[0]}% ({tax_group[1]}){' - Reverse Charge' if is_rcm_invoice else ''}"
+            move_vals['invoice_line_ids'].append(Command.create({
+                'name': line_name,
+                'price_unit': tax_amount,
             }))
         # Create rounding value line
         if (rounding_amount := value_details.get('RndOffAmt')):

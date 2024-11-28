@@ -2016,18 +2016,32 @@ class L10n_InGstReturnPeriod(models.Model):
         """
         def extract_token_from_error(response):
             """
-            Extracts a token from a specific error message if present.
-            :returns: The extracted token or `False` if not found.
+            Extracts a file token from a specific error message if the error code matches.
+            Handles specific errors and performs appropriate actions.
+            :param response: The JSON response containing error details.
+            :returns:
+                - The extracted token as a string if `EINV30130` is found.
+                - A dictionary with `error_code` if `EINV30109` is found (indicates retry).
+                - `False` if no relevant error is found.
             """
-            handle_error_code = 'EINV30130'  # Specific error code to handle
             errors = response.get('error', [])
             if isinstance(errors, dict):
                 errors['code'] = errors.pop('error_cd', None)
             for error in list(errors):
-                if error.get('code', '') == handle_error_code:
+                error_code = error.get('code', '')
+                # Handle `EINV30130`: Extract file token from the error message
+                if error_code == 'EINV30130':
                     token_match = re.search(r'token\s([a-f0-9]+)(?=.*The link is valid till 1 day)', error.get('message', ''))
                     if token_match:
                         return token_match.group(1)
+                # Handle `EINV30109`: File generation in progress, schedule a retry
+                elif error_code == 'EINV30109':
+                    # Dynamically activate and schedule a retry for the cron job after 10 minutes
+                    self.env.ref("l10n_in_reports.ir_cron_auto_sync_einvoice_irn")._trigger(
+                        fields.Datetime.now() + timedelta(minutes=10)
+                    )
+                    self.message_post(body=_("File generation is in progress on the GST portal. Auto retry in 10 minutes."))
+                    return 'EINV30109_file_under_process'
             return False
 
         # Retrieve file token
@@ -2038,6 +2052,8 @@ class L10n_InGstReturnPeriod(models.Model):
         )
         if (file_token := file_token_response.get('data', {}).get('token')) is None:
             file_token = extract_token_from_error(file_token_response)
+        if file_token == 'EINV30109_file_under_process':
+            return False
         if not file_token:
             raise IrnException(file_token_response.get('error', {}))
         # Retrieve encryption keys and URLs for the e-invoice files
@@ -2186,7 +2202,8 @@ class L10n_InGstReturnPeriod(models.Model):
                     if gov_json_data:
                         # Create an attachment for the fetched data and update the bill
                         attachment = self.env['ir.attachment'].create({
-                            'name': '%s.json' % irn_number,
+                            # Limit the name to 45 characters to avoid exceeding the limit on e-invoice portal
+                            'name': f'{irn_number[:45]}.json',
                             'mimetype': 'application/json',
                             'raw': json.dumps(gov_json_data),
                             'res_model': 'account.move',
