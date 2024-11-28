@@ -962,9 +962,8 @@ class TestDocumentsAccess(TransactionCaseDocuments):
         folder_a_shortcut = self.folder_a.action_create_shortcut()
         with self.assertRaises(ValidationError):
             self.env['documents.document'].create({'type': 'folder', 'folder_id': folder_a_shortcut.id})
-        with self.assertRaises(UserError):
-            self.folder_b.folder_id = folder_a_shortcut
-        # Note that the result of moving into a shortcut is tested in `test_action_move_documents`
+        self.folder_b.folder_id = folder_a_shortcut
+        self.assertEqual(self.folder_b.folder_id, self.folder_a, "The shortcut's target should have been used")
 
     def test_portal_cant_own_root_documents(self):
         self.assertFalse(self.folder_a.folder_id)

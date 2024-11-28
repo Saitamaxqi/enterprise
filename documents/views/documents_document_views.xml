@@ -199,7 +199,9 @@
                         <group>
                             <field name="datas" string="File" filename="name" invisible="type in ['url', 'folder']" readonly="is_locked"/>
                             <field name="url" invisible="type != 'url'" readonly="is_locked"/>
-                            <field name="folder_id" readonly="True" widget="documents_folder_many2one"/>
+                            <field name="folder_id" widget="documents_folder_many2one"
+                                domain="[('type', '=', 'folder'), ('shortcut_document_id', '=', False)]"
+                                options="{'no_create_edit': True, 'no_create': True}"/>
                             <field name="owner_id" widget="many2one_avatar_user" readonly="is_locked"/>
                             <field name="partner_id" widget="many2one_avatar_user"/>
                             <field name="tag_ids" widget="many2many_tags"
@@ -262,7 +264,9 @@
                             <field name="owner_id" readonly="not context.get('editable')"/>
                             <field name="partner_id" readonly="not context.get('editable')"/>
                             <field name="file_size" readonly="True" invisible="type == 'folder'"/>
-                            <field name="folder_id" readonly="True" widget="documents_folder_many2one"/>
+                            <field name="folder_id" widget="documents_folder_many2one"
+                                domain="[('type', '=', 'folder'), ('shortcut_document_id', '=', False)]"
+                                options="{'no_create_edit': True, 'no_create': True}"/>
                             <field name="write_date" readonly="True"/>
                             <field name="create_date" readonly="True"/>
                             <field name="tag_ids" readonly="not context.get('editable')" widget="many2many_tags"

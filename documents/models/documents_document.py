@@ -624,35 +624,7 @@ class DocumentsDocument(models.Model):
 
         :param int|bool folder_id: new parent folder id
         """
-        target_folder = self.browse(folder_id)
-        if target_folder.shortcut_document_id:
-            return self.action_move_documents(target_folder.shortcut_document_id.id)
-
-        documents_to_move = self.filtered(lambda d: d.folder_id != target_folder and d != target_folder)
-        if not documents_to_move:
-            return
-
-        try:
-            (documents_to_move | target_folder).check_access('write')
-        except UserError:
-            raise AccessError(_("You are not allowed to perform this operation."))
-        if target_folder and (cyclic_move := documents_to_move.filtered(
-                lambda d: target_folder.parent_path.startswith(d.parent_path))):
-            raise UserError(_(
-                "Impossible to move the following items as this would create a recursive hierarchy:\n"
-                "- %(documents)s", documents='\n- '.join(cyclic_move.mapped('name'))
-            ))
-        documents_to_move.folder_id = target_folder
-
-        if target_folder and (documents_to_sync := documents_to_move.filtered(lambda d: not d.shortcut_document_id)):
-            documents_to_sync.sudo().action_update_access_rights(
-                access_internal=target_folder.access_internal,
-                access_via_link=target_folder.access_via_link,
-                is_access_via_link_hidden=target_folder.is_access_via_link_hidden,
-                # Simply add partners of destination
-                partners={access.partner_id: (access.role, access.expiration_date)
-                          for access in target_folder.access_ids},
-            )
+        self.folder_id = self.browse(folder_id)
 
     def action_change_owner(self, new_user_id):
         if not self.env.user._is_admin() and not self.env.user.has_group('documents.group_documents_system'):
@@ -1713,16 +1685,27 @@ class DocumentsDocument(models.Model):
             shortcuts_to_check_owner_target_access |= targets_changing_owner.shortcut_ids.filtered(
                 lambda d: d.owner_id == d.shortcut_document_id.owner_id)
 
+        new_parent_folder, documents_to_move = self.browse(), self.browse()
+
         if folder_id := vals.get('folder_id'):
-            folder = self.env['documents.document'].browse(folder_id)
-            if not self.env.su and folder.user_permission != 'edit':
+            new_parent_folder = self.browse(folder_id)
+            if not self.env.su and new_parent_folder.user_permission != 'edit':
                 raise AccessError(_("You can't access that folder_id."))
             if not self.env.su and any(doc.folder_id and doc.folder_id.user_permission != 'edit' for doc in self):
                 raise AccessError(_("You can't move documents out of folders you cannot edit."))
-            if folder.type != 'folder' or folder.shortcut_document_id:
+            if new_parent_folder.type != 'folder':
                 raise UserError(_("Invalid folder id"))
-            if any(not d.active or not folder.active or d.folder_id and not d.folder_id.active for d in self):
+            if new_parent_folder.shortcut_document_id:
+                return self.write(vals | {'folder_id': new_parent_folder.shortcut_document_id.id})
+
+            if any(not d.active or not new_parent_folder.active or d.folder_id and not d.folder_id.active for d in self):
                 raise UserError(_("It is not possible to move archived documents or documents to archived folders."))
+
+            documents_to_move = self.filtered(lambda d: d.folder_id != new_parent_folder)
+            if not self.env.su and any(
+                    d.user_permission != 'edit' or d.folder_id and d.folder_id.user_permission != 'edit'
+                    for d in documents_to_move):
+                raise AccessError(_("You are not allowed to move (some of) these documents."))
 
         if vals.get('active') is False:
             if self.env.user.share:
@@ -1820,6 +1803,16 @@ class DocumentsDocument(models.Model):
 
         if shortcuts_to_check_owner_target_access:
             shortcuts_to_check_owner_target_access._unlink_shortcut_if_target_inaccessible()
+
+        if new_parent_folder and (documents_to_sync := documents_to_move.filtered(lambda d: not d.shortcut_document_id)):
+            documents_to_sync.sudo().action_update_access_rights(
+                access_internal=new_parent_folder.access_internal,
+                access_via_link=new_parent_folder.access_via_link,
+                is_access_via_link_hidden=new_parent_folder.is_access_via_link_hidden,
+                # Simply add partners of destination
+                partners={access.partner_id: (access.role, access.expiration_date)
+                          for access in new_parent_folder.access_ids},
+            )
 
         return write_result
 
