@@ -2,7 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from odoo import Command, fields
-from odoo.tests import common
+from odoo.tests import common, Form
 from odoo.exceptions import UserError
 
 
@@ -188,3 +188,15 @@ class TestRequest(common.TransactionCase):
         approvals.unlink()
         self.assertFalse(product_line.exists())
         self.assertFalse(approvals.exists())
+
+    def test_request_with_automated_sequence(self):
+        approval_category = self.env['approval.category'].create({
+            'name': 'Test Category',
+            'automated_sequence': True,
+            'sequence_code': '1234',
+        })
+        
+        request_form = Form(self.env['approval.request'])
+        request_form.category_id = approval_category
+        approval_request = request_form.save()
+        self.assertEqual( approval_request.name, '123400001')
