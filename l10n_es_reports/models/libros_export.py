@@ -160,7 +160,7 @@ class AccountGenericTaxReportHandler(models.AbstractModel):
         }
         if (not partner.country_id or partner.country_id.code == 'ES') and partner.vat:
             common_line_vals['partner_nif_id'] = partner.vat[2:] if partner.vat.startswith('ES') else partner.vat
-        elif partner.vat and partner.country_id in self.env.ref('base.europe').country_ids:
+        elif partner.vat and 'EU' in partner.country_id.country_group_codes:
             common_line_vals['partner_nif_id'] = partner.vat
             common_line_vals['partner_nif_type'] = "02"
         elif partner.vat:

@@ -371,7 +371,7 @@ class SendCloud:
         from_country, to_country = from_partner_id.country_id.code, to_partner_id.country_id.code
         self._validate_partner_details(to_partner_id)
         shipping_weight = int(carrier_id.sendcloud_convert_weight(picking.shipping_weight, grams=True))
-        to_europe = to_partner_id.country_id.code in to_partner_id.env.ref('base.europe').country_ids.mapped('code')
+        to_europe = to_partner_id.country_id and 'EU' in to_partner_id.country_id.country_group_codes
         use_multicollo = carrier_id.sendcloud_use_batch_shipping and to_europe
         single_shipping = len(delivery_packages) == 1 or (use_multicollo and len(delivery_packages) <= 20)
         #Avg weight for multiple packages in single shipping, sendcloud multiplies it with number of packages

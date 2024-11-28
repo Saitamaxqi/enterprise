@@ -45,7 +45,8 @@
                             <setting name="module_hr_payroll_account" string="Payroll Entries" help="Post payroll slips in accounting">
                                 <field name="module_hr_payroll_account"/>
                             </setting>
-                            <setting name="module_hr_payroll_account_iso20022" invisible="not module_hr_payroll_account" string="Payroll SEPA" help="Create SEPA payment">
+                            <setting name="module_hr_payroll_account_iso20022" string="Payroll SEPA" help="Create SEPA payment"
+                                invisible="'SEPA' not in company_country_group_codes or not module_hr_payroll_account">
                                 <field name="module_hr_payroll_account_iso20022"/>
                             </setting>
                         </block>

@@ -182,7 +182,7 @@ class AccountMove(models.Model):
                 to_usd_rate = 0.0
 
             # Misc.
-            if customer.country_id in self.env.ref('base.europe').country_ids:
+            if customer.country_id and 'EU' in customer.country_id.country_group_codes:
                 ext_trade_values['numero_exportador_confiable'] = self.company_id.l10n_mx_edi_num_exporter
             else:
                 ext_trade_values['numero_exportador_confiable'] = None

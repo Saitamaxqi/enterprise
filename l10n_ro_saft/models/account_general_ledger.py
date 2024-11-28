@@ -308,7 +308,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                     # Alternatively, we can get the CUI from the VAT number by removing the 'RO' prefix.
                     cui = partner.company_registry or vat_number
                     return '00' + stdnum.ro.cui.compact(cui)
-                elif partner.country_id in partner.env.ref('base.europe').country_ids:
+                elif partner.country_id and 'EU' in partner.country_id.country_group_codes:
                     return '01' + vat_country.upper() + vat_number
                 else:
                     return '02' + vat_country.upper() + vat_number
@@ -318,7 +318,7 @@ class AccountGeneralLedgerReportHandler(models.AbstractModel):
                     return stdnum.ro.cnp.compact(partner.company_registry)
                 elif partner.country_code == 'RO' or not partner.country_code:
                     return '04' + partner.country_code + str(partner.id)
-                elif partner.country_id in partner.env.ref('base.europe').country_ids:
+                elif partner.country_id and 'EU' in partner.country_id.country_group_codes:
                     return '05' + partner.country_code + str(partner.id)
                 else:
                     return '06' + partner.country_code + str(partner.id)
