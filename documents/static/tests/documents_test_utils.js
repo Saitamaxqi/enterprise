@@ -1,6 +1,5 @@
 import { registry } from "@web/core/registry";
 import { makeView } from "@web/../tests/views/helpers";
-import { start } from "@mail/../tests/helpers/test_utils";
 
 // Services
 import { busParametersService } from "@bus/bus_parameters_service";
@@ -33,6 +32,7 @@ export async function createFolderView(params) {
 }
 
 export async function createDocumentsViewWithMessaging(params) {
+    // NOT EXPECTED TO WORK - SUITE MUST BE CONVERTED TO HOOT
     const serverData = params.serverData || {};
     serverData.views = serverData.views || {};
     const searchArchs = {};
@@ -41,7 +41,7 @@ export async function createDocumentsViewWithMessaging(params) {
         searchArchs[`${modelName},false,search`] = getEnrichedSearchArch(serverData.views[`${modelName},false,search`]);
     };
     Object.assign(serverData.views, searchArchs);
-    return start(params);
+    return createDocumentsView(params);
 }
 
 /**

@@ -99,12 +99,18 @@ App to upload and manage your documents.
         ],
         'web.assets_unit_tests': [
             'documents/static/tests/error_dialog_patch.test.js',
+            "documents/static/tests/documents_systray_activity_menu.test.js",
+            "documents/static/tests/documents_test_helpers.js",
+            "documents/static/tests/mock_server/**/*",
         ],
         'web.qunit_suite_tests': [
             'documents/static/tests/**/*',
             ('remove', 'documents/static/tests/helpers/**/*'),
             ('remove', 'documents/static/tests/tours/*'),
             ('remove', 'documents/static/tests/error_dialog_patch.test.js'),
+            ("remove", "documents/static/tests/documents_systray_activity_menu.test.js"),
+            ("remove", "documents/static/tests/documents_test_helpers.js"),
+            ("remove", "documents/static/tests/mock_server/**/*"),
         ],
     }
 }
