@@ -655,10 +655,28 @@ class DocumentsDocument(models.Model):
             )
 
     def action_change_owner(self, new_user_id):
-        if not self.env.user._is_admin() and not self.env.user.has_group('documents.group_documents_manager'):
+        if not self.env.user._is_admin() and not self.env.user.has_group('documents.group_documents_system'):
             if any(document.owner_id != self.env.user for document in self):
                 raise AccessError(_("You are not allowed to change ownerships of documents you do not own."))
         self.owner_id = new_user_id
+
+    def action_set_as_company_root(self):
+        """Set documents as company_root, give editor role to current owner without propagation to children"""
+        odoobot = self.env.ref('base.user_root')
+        docs_per_owner = self.filtered(lambda d: d.owner_id != odoobot).grouped('owner_id')
+        existing_access = self.env['documents.access'].sudo().search(expression.OR([
+            [('partner_id', '=', owner.partner_id.id), ('document_id', 'in', documents.ids)]
+            for owner, documents in docs_per_owner.items()
+        ]))
+        existing_access.role = 'edit'
+        existing_access_values = {(a.partner_id, a.document_id) for a in existing_access}
+        self.env['documents.access'].sudo().create([
+            {'partner_id': owner.partner_id.id, 'document_id': documents.id, 'role': 'edit'}
+            for owner, documents in docs_per_owner.items()
+            for document in documents
+            if (owner.partner_id, document) not in existing_access_values
+        ])
+        self.write({'owner_id': odoobot.id, 'folder_id': False})
 
     def action_create_shortcut(self, location_folder_id=None):
         """Create a shortcut to self in a specific folder or as sibling

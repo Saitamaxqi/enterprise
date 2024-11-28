@@ -567,31 +567,70 @@ class TestDocumentsAccess(TransactionCaseDocuments):
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_pin_folder_folder_id(self):
         """Check that non-admins cannot (un-)pin company root folders."""
-
-        def set_company_root(document, pin=True):
-            if pin:
-                document.write({'owner_id': self.env.ref('base.user_root').id, 'folder_id': False})
-            else:
-                document.owner_id = self.env.user
-
         odoobot = self.env.ref('base.user_root')
         self.assertFalse(self.folder_a.folder_id)
-        self.folder_a.owner_id = odoobot
-        set_company_root(self.folder_a)
-        self.folder_a.action_update_access_rights(partners={self.internal_user.partner_id.id: ('edit', False)})
+
+        self.folder_a.owner_id = self.document_manager
+        self.folder_a.action_update_access_rights(
+            access_internal='none',
+            partners={self.internal_user.partner_id.id: ('edit', False)}
+        )
+        children_access_before = [access_ids.filtered(lambda a: a.role)
+                                  for access_ids in self.folder_a.children_ids.mapped(lambda f: f.access_ids)]
+        for child_access_before in children_access_before:
+            self.assertFalse(self.document_manager.partner_id & child_access_before.partner_id)
+
+        # managers pins from their drive
+        self.folder_a.with_user(self.document_manager).action_set_as_company_root()
+        self.assertEqual(
+            (self.document_manager | self.internal_user).partner_id,
+            self.folder_a.access_ids.filtered(lambda a: a.role).partner_id)
+        # Manager access was not added on children
+        self.assertEqual(
+            [access_ids.filtered(lambda a: a.role)
+             for access_ids in self.folder_a.children_ids.mapped(lambda f: f.access_ids)],
+            children_access_before)
+
+        # internal user cannot write on pinned folders
         self._assert_raises_check_access_rule(self.folder_a.with_user(self.internal_user), 'write')
-        self.folder_b.owner_id = odoobot
-        set_company_root(self.folder_a)
-        set_company_root(self.folder_a.with_user(self.document_manager), False)
-        self.folder_a.with_user(self.document_manager).folder_id = self.folder_b
+
+        self.folder_b.folder_id = False
+        self.assertEqual(self.folder_b.owner_id, self.doc_user)
+        self.folder_b.action_update_access_rights(
+            access_internal='edit',
+            partners={self.internal_user.partner_id.id: ('edit', False)}
+        )
+        children_access_before = [access_ids.filtered(lambda a: a.role)
+                                  for access_ids in self.folder_b.children_ids.mapped(lambda f: f.access_ids)]
+        for child_access_before in children_access_before:
+            self.assertFalse(self.doc_user.partner_id & child_access_before.partner_id)
+
+        # managers can pin accessible folders (here in other user's drive)
+        self.folder_b.with_user(self.document_manager).action_set_as_company_root()
+        # previous owner is added as member
+        self.assertEqual(
+            (self.doc_user | self.internal_user).partner_id,
+            self.folder_b.access_ids.filtered(lambda a: a.role).partner_id)
+
+        # Previous owner access was not added on children
+        self.assertEqual(
+            [access_ids.filtered(lambda a: a.role)
+             for access_ids in self.folder_b.children_ids.mapped(lambda f: f.access_ids)],
+            children_access_before)
+
+        # set_as_company_root changed owner_id
+        self.assertEqual((self.folder_a | self.folder_b).owner_id, odoobot)
+
+        # Normal user cannot pin
+        self.folder_a.with_user(self.document_manager).owner_id = self.internal_user
         self.folder_a.with_user(self.internal_user).check_access('write')
         with self.assertRaises(AccessError):
-            set_company_root(self.folder_a.with_user(self.internal_user))
+            self.folder_a.with_user(self.internal_user).action_set_as_company_root()
 
-        # with SUDO, a normal user can unpin a folder
-        set_company_root(self.folder_a.with_user(self.internal_user).sudo(), False)
-        # manager can do what they want with an odoobot folder
-        set_company_root(self.folder_a.with_user(self.document_manager))
+        # with SUDO, a normal user can pin a folder
+        self.folder_a.with_user(self.internal_user).sudo().action_set_as_company_root()
+        # with SUDO, a normal user can move a pinned a folder
+        self.folder_a.with_user(self.internal_user).sudo().owner_id = self.internal_user
 
     @mute_logger('odoo.addons.base.models.ir_rule')
     def test_unlink_with_children(self):
