@@ -1723,7 +1723,7 @@ class AccountMove(models.Model):
     def _l10n_mx_edi_cfdi_invoice_retry_send(self):
         """ Retry generating the PDF and CFDI for the current invoice. """
         self.ensure_one()
-        self.env['account.move.send']._generate_and_send_invoices(self.id, sending_methods=['manual'], extra_edis={'mx_cfdi'})
+        self.env['account.move.send']._generate_and_send_invoices(self, sending_methods=['manual'], extra_edis={'mx_cfdi'})
 
     def _l10n_mx_edi_cfdi_invoice_try_send(self):
         """ Try to generate and send the CFDI for the current invoice. """
