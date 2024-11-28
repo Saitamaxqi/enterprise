@@ -102,14 +102,9 @@ App to upload and manage your documents.
         ],
         'web.qunit_suite_tests': [
             'documents/static/tests/**/*',
-            ('remove', 'documents/static/tests/**/*mobile_tests.js'),
             ('remove', 'documents/static/tests/helpers/**/*'),
             ('remove', 'documents/static/tests/tours/*'),
             ('remove', 'documents/static/tests/error_dialog_patch.test.js'),
-        ],
-        'web.qunit_mobile_suite_tests': [
-            'documents/static/tests/documents_test_utils.js',
-            'documents/static/tests/documents_kanban_mobile_tests.js',
         ],
     }
 }
