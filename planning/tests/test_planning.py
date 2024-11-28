@@ -829,6 +829,34 @@ class TestPlanning(TestCommonPlanning, MockEmail):
             else:
                 self.assertFalse(self.slot.resource_id.id in result['progress_bars']['resource_id'])
 
+    def test_allocated_hours_open_shift(self):
+        """ Ensure that the allocated hours for an open shift are correctly computed based on the
+        company calendar. """
+        self.employee_joseph.user_id = self.env.user.id
+        PlanningSlot = self.env["planning.slot"]
+
+        # Create a slot NOT during the employee working hours
+        slot = PlanningSlot.create({
+            'start_datetime': datetime(2019, 5, 1, 8, 0),
+            'end_datetime': datetime(2019, 5, 1, 17, 0),
+        })
+        self.assertEqual(
+            slot.allocated_hours,
+            8.0,
+            "The allocated hours should be 8.0 for the open shift based on the company calendar",
+        )
+
+        # Create a slot during the employee working hours
+        slot = PlanningSlot.create({
+            'start_datetime': datetime(2019, 5, 2, 8, 0),
+            'end_datetime': datetime(2019, 5, 2, 17, 0),
+        })
+        self.assertEqual(
+            slot.allocated_hours,
+            8.0,
+            "The allocated hours should be 8.0 for the open shift based on the company calendar",
+        )
+
     def test_planning_slot_default_datetime(self):
         """ This test ensures that when selecting the datetime in Gantt view, the default hours are set correctly """
         self.resource_joseph.tz = 'Europe/Brussels'
