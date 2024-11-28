@@ -6,7 +6,9 @@ patch(ReceiptScreen.prototype, {
     setup() {
         super.setup(...arguments);
         onMounted(async () => {
-            if (this.pos.config.company_id.country_id.code === "IT") {
+            const order = this.pos.getOrder();
+            if (this.pos.config.company_id.country_id.code === "IT" && !order.nb_print) {
+                //make sure we only print the first time around
                 await this.printReceipt();
                 if (this.pos.config.it_fiscal_cash_drawer) {
                     await this.pos.fiscalPrinter.openCashDrawer();
@@ -31,6 +33,8 @@ patch(ReceiptScreen.prototype, {
                 it_fiscal_receipt_number: result.addInfo.fiscalReceiptNumber,
                 it_fiscal_receipt_date: result.addInfo.fiscalReceiptDate,
                 it_z_rep_number: result.addInfo.zRepNumber,
+                //update the number of times the order got printed, handling undefined
+                nb_print: order.nb_print ? order.nb_print + 1 : 1,
             });
             return true;
         }
