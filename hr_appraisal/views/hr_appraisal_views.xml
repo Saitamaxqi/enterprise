@@ -76,7 +76,7 @@
                         <field name="date_close" readonly="state in ['done', 'cancel']"/>
                         <field name="previous_appraisal_date" invisible="previous_appraisal_date == False"/>
                         <field name="next_appraisal_date" placeholder="Ongoing"/>
-                        <field name="appraisal_template_id" readonly="state != 'new' or (uid not in manager_user_ids and not is_manager and employee_user_id != uid)"/>
+                        <field name="appraisal_template_id" readonly="state != 'new' or (uid not in manager_user_ids and not is_manager and employee_user_id != uid)" options="{'no_edit': True, 'no_create': True}"/>
                     </group>
                     <group>
                         <field name="job_id"/>
