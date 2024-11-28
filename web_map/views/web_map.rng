@@ -13,6 +13,9 @@
                 <attribute name="default_order"/>
             </optional>
             <optional>
+                <attribute name="default_group_by"/>
+            </optional>
+            <optional>
                 <attribute name="allow_resequence"/>
             </optional>
             <optional>

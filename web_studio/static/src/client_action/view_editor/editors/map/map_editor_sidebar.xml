@@ -70,6 +70,16 @@
                     Allow Resequencing
                 </Property>
 
+                <Property
+                    name="'default_group_by'"
+                    type="'selection'"
+                    value="viewEditorModel.studioViewProps.defaultGroupBy"
+                    onChange.bind="editDefaultGroupBy"
+                    childProps="{ choices: defaultGroupbyChoices, required: false, multiSelect: true }"
+                >
+                    Default Group By
+                </Property>
+
                 <SidebarViewToolbox onMore="props.openViewInForm"
                     canEditXml="!viewEditorModel.isEditingSubview"
                     openDefaultValues="props.openDefaultValues" />

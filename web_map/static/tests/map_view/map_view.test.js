@@ -2298,6 +2298,26 @@ describe("map_view_desktop", () => {
 
         expect(".o-map-renderer--pin-list-group-header").toHaveText("0");
     });
+
+    test("Map view with default_group_by", async () => {
+        Task._records = TEST_RECORDS.task.threeRecords;
+        Partner._records = TEST_RECORDS.partner.twoRecordsAddressCoordinates;
+        await mountView({
+            type: "map",
+            resModel: "project.task",
+            arch: `<map default_group_by="partner_id" res_partner="partner_id" />`,
+        });
+        expect(".o-map-renderer--pin-list-group-header").toHaveCount(2, {
+            message: "Should have 2 groups",
+        });
+        expect(queryAllTexts(".o-map-renderer--pin-list-group-header")).toEqual(["Bar", "Foo"]);
+        expect(".o-map-renderer--pin-list-details").toHaveCount(2);
+        expect(".o-map-renderer--pin-list-details li").toHaveCount(3);
+        expect(queryAllTexts(".o-map-renderer--pin-list-details")).toEqual([
+            "FooProject\nFooBarProject",
+            "BarProject",
+        ]);
+    });
 });
 
 describe.tags("mobile");
