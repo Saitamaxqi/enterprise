@@ -9,7 +9,9 @@
             </t>
             <div class="o_quality_check_body d-flex w-100">
                 <div class="o_instruction w-75">
-                    <div t-out="props.body"/>
+                    <div class="o_field_widget o_field_html">
+                        <HtmlField t-props="htmlInfo"/>
+                    </div>
                 </div>
                 <div t-if="recordData.additional_note" t-out="recordData.additional_note"/>
             </div>

@@ -6,6 +6,7 @@ import { Many2OneField } from "@web/views/fields/many2one/many2one_field";
 import { TabletImageField } from "@quality/tablet_image_field/tablet_image_field";
 import { useService, useBus } from "@web/core/utils/hooks";
 import { useState } from "@odoo/owl";
+import { HtmlField } from "@html_editor/fields/html_field";
 
 export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
     static props = {
@@ -25,6 +26,7 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
         FloatField,
         Many2OneField,
         TabletImageField,
+        HtmlField,
     };
 
     setup() {
@@ -116,6 +118,15 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
     get note() {
         const note = this.recordData.note;
         return note && note !== "<p><br></p>" && note !== "false" ? note : undefined;
+    }
+
+    get htmlInfo() {
+        return {
+            name: "note",
+            record: this.props.record,
+            readonly: true,
+            embeddedComponents: true,
+        }
     }
 
     get picInfo() {
