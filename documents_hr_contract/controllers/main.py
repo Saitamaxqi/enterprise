@@ -43,7 +43,7 @@ class SignContract(Sign):
             })
 
         contract = request.env['hr.contract'].sudo().with_context(active_test=False).search([
-            ('sign_request_ids', 'in', request_item.sign_request_id.ids)])
+            ('sign_request_ids', 'in', request_item.sign_request_id.ids)], order="date_start desc", limit=1)
         if contract:
             sign_request_folder = contract._get_sign_request_folder()
             if sign_request_folder and contract.company_id.documents_hr_settings:
