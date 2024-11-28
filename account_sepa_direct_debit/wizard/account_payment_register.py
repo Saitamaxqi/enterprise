@@ -29,7 +29,7 @@ class AccountPaymentRegister(models.TransientModel):
                 ('state', '=', 'active'),
                 ('start_date', '<=', self.payment_date),
                 '|', ('end_date', '=', False), ('end_date', '>=', self.payment_date),
-                ('partner_id', 'in', moves_to_pay.partner_id.ids),
+                ('partner_id', 'in', moves_to_pay.partner_id.commercial_partner_id.ids),
                 *self.env['sdd.mandate']._check_company_domain(moves_to_pay.company_id),
             ],
             groupby=['partner_id'],
