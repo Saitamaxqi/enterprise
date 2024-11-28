@@ -150,7 +150,7 @@
                             invisible="validated or not user_can_validate" context="{'use_notification': False}" data-hotkey="q"/>
                         <button string="Reset to draft" name="action_invalidate_timesheet" type="object" class="btn btn-secondary"
                             invisible="not validated or not user_can_validate" context="{'use_notification': False}" data-hotkey="r"/>
-                        <field name="validated_status" widget="statusbar"/>
+                        <field name="validated_status" widget="statusbar" groups="!base.group_portal"/>
                     </header>
                 </xpath>
             </field>
