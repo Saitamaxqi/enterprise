@@ -21,17 +21,15 @@ patch(InstallKiosk.prototype, {
                 "get_available_iot_box_ids",
                 [this.props.action.context.active_id]
             );
-            this.state.tags = available_iot_box_ids.map((iot_box) => {
-                return {
-                    id: iot_box.id,
-                    text: iot_box.name,
-                    ip_url: iot_box.ip_url,
-                    onClick: () => this.actionOpenKioskIot(null, iot_box),
-                    onDelete: () => {
-                        this.state.tags = this.state.tags.filter((tag) => tag.id !== iot_box.id);
-                    },
-                };
-            });
+            this.state.tags = available_iot_box_ids.map((iot_box) => ({
+                id: iot_box.id,
+                text: iot_box.name,
+                ip_url: iot_box.ip_url,
+                onClick: () => this.actionOpenKioskIot(null, iot_box),
+                onDelete: () => {
+                    this.state.tags = this.state.tags.filter((tag) => tag.id !== iot_box.id);
+                },
+            }));
         });
     },
     async actionOpenKioskIot(_, iotBox = undefined) {

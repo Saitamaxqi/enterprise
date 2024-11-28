@@ -37,12 +37,8 @@ patch(PosOrder.prototype, {
             originalOrderDate: deserializeDateTime(order.creation_date).toFormat(
                 "HH:mm dd/MM/yyyy"
             ),
-            productLines: order.lines.filter((orderline) => {
-                return orderline.product_type !== "service";
-            }),
-            serviceLines: order.lines.filter((orderline) => {
-                return orderline.product_type === "service";
-            }),
+            productLines: order.lines.filter((orderline) => orderline.product_type !== "service"),
+            serviceLines: order.lines.filter((orderline) => orderline.product_type === "service"),
         };
         return result;
     },

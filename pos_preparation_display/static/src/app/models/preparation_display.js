@@ -56,8 +56,8 @@ export class PreparationDisplay extends Reactive {
 
         this.stages.forEach((stage) => (stage.orderCount = 0));
         ordersToDisplay = Object.values(this.orders)
-            .filter((order) => {
-                return order.orderlines.find((orderline) => {
+            .filter((order) =>
+                order.orderlines.find((orderline) => {
                     // the order must be in selected categories or products (if set) and must be flag as displayed.
                     if (!this.checkOrderlineVisibility(orderline) || !order.displayed) {
                         return;
@@ -68,8 +68,8 @@ export class PreparationDisplay extends Reactive {
                     }
                     // second filter, if a stage is selected the order must be in.
                     return !this.selectedStageId || order.stageId === this.selectedStageId;
-                });
-            })
+                })
+            )
             .sort((a, b) => {
                 const stageA = stages.get(a.stageId);
                 const stageB = stages.get(b.stageId);
