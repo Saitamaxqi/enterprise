@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <ul>
-                        <li>Scan a <b>product</b> to locate it</li>
+                        <li>Scan a <b>product</b> or its <b>packaging</b> to locate it</li>
                         <li t-if="packagesEnabled &amp;&amp; trackingEnabled">Scan a <b>tracking number</b> or a <b>package</b> to open it</li>
                         <li t-elif="trackingEnabled">Scan a <b>tracking number</b> to open it</li>
                         <li t-elif="packagesEnabled">Scan a <b>package</b> to open it</li>

@@ -273,19 +273,24 @@ class StockBarcodeController(http.Controller):
         """ If barcode represent a product, open a list/kanban view to show all
         the locations of this product.
         """
-        result = request.env['product.product'].search_read([
-            ('barcode', '=', barcode),
-        ], ['id', 'display_name'], limit=1)
+        if result := request.env['product.product'].search_read(
+                [('barcode', '=', barcode)],
+                ['id', 'display_name'], limit=1):
+            product_id, product_display_name = result[0]['id'], result[0]['display_name']
+        elif result := request.env['product.packaging'].search_read(
+                [('barcode', '=', barcode)],
+                ['product_id'], limit=1):
+            product_id, product_display_name = result[0]['product_id']
         if result:
             tree_view_id = request.env.ref('stock.view_stock_quant_tree').id
             kanban_view_id = request.env.ref('stock_barcode.stock_quant_barcode_kanban_2').id
             return {
                 'action': {
-                    'name': result[0]['display_name'],
+                    'name': product_display_name,
                     'res_model': 'stock.quant',
                     'views': [(tree_view_id, 'list'), (kanban_view_id, 'kanban')],
                     'type': 'ir.actions.act_window',
-                    'domain': [('product_id', '=', result[0]['id'])],
+                    'domain': [('product_id', '=', product_id)],
                     'context': {
                         'search_default_internal_loc': True,
                     },
