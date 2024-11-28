@@ -55,9 +55,19 @@ class Pos_Preparation_DisplayOrderline(models.Model):
             'done': False
         })
 
+        category_ids = set()
         for record in self:
             record.todo = True
             record.preparation_display_order_id = new_order.id
+            category_ids.update(record.product_id.pos_categ_ids.ids)
 
-        preparation_display._send_load_orders_message()
+        preparation_displays = self.env['pos_preparation_display.display'].search([
+            '&',
+            '|', ('pos_config_ids', '=', False),
+            ('pos_config_ids', 'in', [order.pos_config_id.id]),
+            '|', ('category_ids', 'in', list(category_ids)),
+            ('category_ids', '=', False)])
+
+        for p_dis in preparation_displays:
+            p_dis._send_load_orders_message()
         return new_order.id
