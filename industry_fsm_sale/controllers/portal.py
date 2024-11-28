@@ -92,7 +92,5 @@ class CustomerPortal(SaleCustomerPortal, AccountCustomerPortal):
 
     def _prepare_project_sharing_session_info(self, project):
         session_info = super()._prepare_project_sharing_session_info(project)
-        session_info['action_context'].update({
-            'is_fsm': project.is_fsm,
-        })
+        session_info['user_context']['is_fsm'] = project.is_fsm
         return session_info
