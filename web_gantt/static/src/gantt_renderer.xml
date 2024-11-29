@@ -97,7 +97,7 @@
                 class="o_connector_creator position-absolute"
                 t-attf-class="o_connector_creator_{{ alignment.vertical }} o_connector_creator_{{ alignment.horizontal }}"
             >
-                <div class="o_connector_creator_bullet position-absolute rounded-circle" />
+                <div class="o_connector_creator_bullet position-absolute z-n1 rounded-circle" />
             </div>
         </div>
     </t>

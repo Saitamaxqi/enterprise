@@ -243,6 +243,10 @@
 		min-height: var(--Gantt__Pill-height);
 		@include o-gantt-zindex(pill);
 
+        &.highlight, &.o_connector_creator_lock {
+            @include o-gantt-zindex(pill-interact);
+        }
+
 		// Group pills
 		&.o_gantt_group_pill {
 			pointer-events: none;
@@ -532,11 +536,22 @@
 	.o_connector_creator {
 		height: $o-connector-creator-size;
 		width: $o-connector-creator-size;
+
+        &::before {
+            @include o-position-absolute(0, 0, 0, 0);
+            z-index: -1;
+            border: inherit;
+            border-width: $border-width * 3;
+            border-color: var(--Gantt__Day-background-color);
+            transform: translate(var(--Gantt__Connector-creator-x, $border-width * 2), var(--Gantt__Connector-creator-y, $border-width * -2));
+            content: "";
+        }
 	}
 
 	.o_connector_creator_bullet {
 		height: $o-connector-creator-bullet-diameter;
 		width: $o-connector-creator-bullet-diameter;
+		outline: $border-width solid var(--Gantt__Day-background-color);
 	}
 
 	.o_connector_creator_top {
@@ -548,6 +563,9 @@
 	}
 
 	.o_connector_creator_right {
+		--Gantt__Connector-creator-x: #{$border-width * -2};
+		--Gantt__Connector-creator-y: #{$border-width * 2};
+
 		/*rtl:ignore*/
 		right: $o-connector-creator-size;
 
