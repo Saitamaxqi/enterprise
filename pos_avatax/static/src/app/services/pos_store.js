@@ -31,7 +31,7 @@ patch(PosStore.prototype, {
                 this.models.replaceDataByKey(modelKey, { [model]: records });
             }
 
-            this.models.loadData(modelToAdd);
+            this.models.loadData(this.models, modelToAdd);
         } catch {
             this.dialog.add(AlertDialog, {
                 title: _t("Error while loading Avatax taxes"),
