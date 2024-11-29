@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 
+from odoo.addons.hr_recruitment.tests.test_recruitment_interviewer import TestRecruitmentInterviewer
 from odoo.addons.documents_hr.tests.test_documents_hr_common import TransactionCaseDocumentsHr
 from odoo.tests.common import tagged
 
 
 @tagged('post_install', '-at_install')
-class TestCaseDocumentsBridgeRecruitment(TransactionCaseDocumentsHr):
+class TestCaseDocumentsBridgeRecruitment(TransactionCaseDocumentsHr, TestRecruitmentInterviewer):
 
     @classmethod
     def setUpClass(cls):
@@ -86,3 +87,39 @@ class TestCaseDocumentsBridgeRecruitment(TransactionCaseDocumentsHr):
         applicant = self.env['hr.candidate'].search([('id', '=', document.res_id)])
         self.assertTrue(applicant.exists(), 'Candidate has been created.')
         self.assertTrue(action)
+
+    def test_applicant_attachments_access_rights(self):
+        """
+        Changing the interviewer or the user of an applicant should update the access rights of the documents
+        """
+        partner = self.env['res.partner'].create({
+            'name': 'Applicant Partner',
+        })
+        applicant = self.env['hr.applicant'].create({
+            'candidate_id': self.env['hr.candidate'].create({'partner_id': partner.id, 'company_id': self.company.id}).id,
+            'company_id': self.company.id,
+        })
+        attachment = self.env['ir.attachment'].create({
+            'datas': self.TEXT,
+            'name': 'fileTextTwo.txt',
+            'mimetype': 'text/plain',
+            'res_model': applicant._name,
+            'res_id': applicant.id,
+        })
+
+        applicant_document = self.env['documents.document'].search([('attachment_id', '=', attachment.id)])
+        doc_access_internal = applicant_document.access_internal
+        doc_access_via_link = applicant_document.access_via_link
+        doc_access_internal_link = applicant_document.is_access_via_link_hidden
+
+        applicant.interviewer_ids = self.interviewer_user
+        applicant.user_id = self.manager_user
+        self.assertEqual(len(applicant_document.access_ids), 2, "The 2 partners should have access of the document")
+        self.assertEqual(applicant_document.access_ids.mapped('role'), ['view', 'view'], "The 2 partners should have view access of the document")
+        self.assertEqual(doc_access_internal, applicant_document.access_internal, "The access_internal should not have changed")
+        self.assertEqual(doc_access_via_link, applicant_document.access_via_link, "The access_via_link should not have changed")
+        self.assertEqual(doc_access_internal_link, applicant_document.is_access_via_link_hidden, "The access_internal_link should not have changed")
+
+        applicant.interviewer_ids = self.env['res.users']
+        unassigned_partner_access_id = applicant_document.access_ids.filtered(lambda p: p.partner_id == applicant.interviewer_ids.partner_id)
+        self.assertEqual(unassigned_partner_access_id.role, False, "The partner should not have access of the document")

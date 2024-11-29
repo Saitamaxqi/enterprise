@@ -8,6 +8,15 @@ class HrApplicant(models.Model):
     _name = 'hr.applicant'
     _inherit = ['hr.applicant', 'documents.mixin']
 
+    def _get_document_access_ids(self):
+        access_ids = [
+            (interviewer.partner_id, ('view', False))
+            for interviewer in self.interviewer_ids
+        ]
+        if self.user_id and self.user_id not in self.interviewer_ids:
+            access_ids.append((self.user_id.partner_id, ('view', False)))
+        return access_ids
+
     def _get_document_tags(self):
         return self.company_id.recruitment_tag_ids
 
@@ -42,3 +51,31 @@ class HrApplicant(models.Model):
                 'default_res_id': self.ids[0],
             },
         }
+
+    def write(self, vals):
+        old_users = self.interviewer_ids | self.user_id
+        res = super().write(vals)
+        applicant_documents = self.env['documents.document'].search([
+            ('res_model', '=', 'hr.applicant'),
+            ('attachment_id', 'in', self.attachment_ids.ids),
+        ])
+        if not applicant_documents:
+            return res
+        new_users = self.interviewer_ids | self.user_id
+        added_records = new_users - old_users
+        removed_records = old_users - new_users
+        partners_access = {
+            record.partner_id.id: ('view', False) for record in added_records
+        }
+        partners_access.update({
+            record.partner_id.id: (False, False) for record in removed_records
+        })
+        if partners_access:
+            for document in applicant_documents:
+                document.sudo().action_update_access_rights(
+                    access_internal=document.access_internal,
+                    access_via_link=document.access_via_link,
+                    is_access_via_link_hidden=document.is_access_via_link_hidden,
+                    partners=partners_access,
+                )
+        return res
