@@ -18,13 +18,13 @@ class HrPayslip(models.Model):
 
         payment_vals = {
             'id': self.id,
-            'name': self.number,
+            'name': str(self.id),
             'payment_date': payment_date,
             'amount': self.net_wage,
             'journal_id': journal_id.id,
             'currency_id': journal_id.currency_id.id,
             'payment_type': 'outbound',
-            'memo': self.number,
+            'memo': str(self.id),
             'partner_id': self.employee_id.work_contact_id.id,
             'partner_bank_id': self.employee_id.bank_account_id.id,
         }

@@ -163,7 +163,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(day=1, days=-1)).strftime('%Y-%m-%d')"/>
         <field name="employee_id" ref="hr_employee_camelia_foster"/>
         <field name="struct_id" ref="l10n_ma_hr_payroll.hr_payroll_salary_ma_structure_base"/>
-        <field name="number">SLIP12</field>
         <field name="payslip_run_id" ref="hr_payslip_batch_morocco"/>
         <field name="company_id" ref="base.demo_company_ma"/>
     </record>

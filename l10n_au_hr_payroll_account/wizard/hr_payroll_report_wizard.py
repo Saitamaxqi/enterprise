@@ -21,12 +21,12 @@ class HrPayrollPaymentReportWizard(models.TransientModel):
             'aba_description': 'PAYROLL',
             'self_balancing_reference': 'PAYROLL %s' % aba_date,
             'payments_data': [{
-                'name': payslip.number,
+                'name': str(payslip.id),
                 'amount': payslip.net_wage,
                 'bank_account': payslip.employee_id.bank_account_id,
                 'account_holder': payslip.employee_id,
                 'transaction_code': "53",  # PAYROLL
-                'reference': payslip.number,
+                'reference': str(payslip.id),
             } for payslip in payslip_batch.slip_ids]
         }
         file_data = self.env['account.batch.payment']._create_aba_document(self.journal_id, aba_values).encode()

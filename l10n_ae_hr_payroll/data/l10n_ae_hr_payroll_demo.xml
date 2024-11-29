@@ -56,7 +56,6 @@
         <field name="date_to" eval="time.strftime('%Y-6-30')"/>
         <field name="employee_id" ref="l10n_ae_hr_payroll.demo_user_ae"/>
         <field name="struct_id" ref="l10n_ae_hr_payroll.uae_employee_payroll_structure"/>
-        <field name="number">SLIP001</field>
         <field name="company_id" ref="base.demo_company_ae"/>
     </record>
     <record id="l10n_ae_input_salary_arrears" model="hr.payslip.input">

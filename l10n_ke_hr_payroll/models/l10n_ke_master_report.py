@@ -101,7 +101,7 @@ class L10n_KeMasterReport(models.Model):
         line_values = payslips._get_line_values(LINE_CODES, compute_sum=True)
         payslips_data = {}
         for payslip in payslips:
-            payslip_no = payslip.number
+            payslip_no = str(payslip.id)
             payslips_data[payslip_no] = {
                 'payroll_number': payslip.employee_id.registration_number or '',
                 'employee_name': payslip.employee_id.name,

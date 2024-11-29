@@ -26,17 +26,11 @@ class HrPayslip(models.Model):
             lang = slip.employee_id.lang or self.env.user.lang
             payslip_name = slip.struct_id.payslip_name or _('Salary Slip')
             date = format_date(self.env, slip.date_from, date_format="MMMM y", lang_code=lang)
-            if slip.number:
-                slip.name = '%(payslip_name)s - %(slip_ref)s - %(dates)s' % {
-                    'slip_ref': slip.number,
-                    'payslip_name': payslip_name,
-                    'dates': date
-                }
-            else:
-                slip.name = '%(payslip_name)s - %(dates)s' % {
-                    'payslip_name': payslip_name,
-                    'dates': date
-                }
+            slip.name = '%(payslip_name)s - %(slip_ref)s - %(dates)s' % {
+                'slip_ref': slip.id,
+                'payslip_name': payslip_name,
+                'dates': date
+            }
 
     def _get_data_files_to_update(self):
         # Note: file order should be maintained

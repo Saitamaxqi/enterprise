@@ -131,7 +131,6 @@ class TestPayrollExpense(TestExpenseCommon, TestHrPayrollAccountCommon):
     def create_payslip(self, vals=None):
         return self.env['hr.payslip'].create({
             'name': 'Payslip',
-            'number': 'PAYSLIPTEST01',
             'employee_id': self.expense_employee.id,
             'struct_id': self.expense_hr_structure.id,
             'contract_id': self.expense_contract.id,

@@ -36,7 +36,6 @@
                 <group class="o_label_nowrap mb-4" string="Payslip current year">
                     <field name="payslip_n_ids" nolabel="1" colspan="2">
                         <list>
-                            <field name="number" readonly="state not in ['draft', 'verify']"/>
                             <field name="payslip_run_id" readonly="state not in ['draft', 'verify']"/>
                             <field name="date_from" readonly="state in ['cancel', 'done', 'paid']"/>
                             <field name="date_to" readonly="state in ['cancel', 'done', 'paid']"/>
@@ -54,7 +53,6 @@
                 <group class="o_label_nowrap" string="Payslip previous year">
                     <field name="payslip_n1_ids" nolabel="1" colspan="2">
                         <list>
-                            <field name="number" readonly="state not in ['draft', 'verify']"/>
                             <field name="payslip_run_id" readonly="state not in ['draft', 'verify']"/>
                             <field name="date_from" readonly="state in ['cancel', 'done', 'paid']"/>
                             <field name="date_to" readonly="state in ['cancel', 'done', 'paid']"/>

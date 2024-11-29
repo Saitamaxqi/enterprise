@@ -46,8 +46,6 @@ class HrPayslip(models.Model):
     name = fields.Char(
         string='Payslip Name', required=True,
         compute='_compute_name', store=True, readonly=False)
-    number = fields.Char(
-        string='Reference', copy=False)
     employee_id = fields.Many2one(
         'hr.employee', string='Employee', required=True,
         domain="['|', ('company_id', '=', False), ('company_id', '=', company_id), '|', ('active', '=', True), ('active', '=', False)]")
@@ -579,9 +577,7 @@ class HrPayslip(models.Model):
         self.env.flush_all()
         today = fields.Date.today()
         for payslip in payslips:
-            number = payslip.number or self.env['ir.sequence'].next_by_code('salary.slip')
             payslip.write({
-                'number': number,
                 'state': 'verify',
                 'compute_date': today
             })

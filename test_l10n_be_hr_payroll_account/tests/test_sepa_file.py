@@ -101,4 +101,4 @@ class TestSEPAFile(AccountTestInvoicingCommon):
         sepa_file_content = base64.b64decode(payslip_run.payment_report).decode()
         self.assertTrue("<InstrPrty>HIGH</InstrPrty>" in sepa_file_content)
         self.assertTrue("<Cd>SALA</Cd>" in sepa_file_content)
-        self.assertTrue("<Ustrd>/A/ SLIP" in sepa_file_content)
+        self.assertTrue("<Ustrd>/A/ " in sepa_file_content)

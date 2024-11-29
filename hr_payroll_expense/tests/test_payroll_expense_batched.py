@@ -53,7 +53,6 @@ class TestPayrollExpenseBatched(TestPayrollExpense):
             payslips_vals.append(
                 {
                     'name': f"Payslip for {employee_vals['name']}",
-                    'number': f'PAYSLIPTEST{idx:0>2}',
                     'employee_id': new_employee.id,
                     'struct_id': cls.expense_hr_structure.id,
                     'contract_id': new_contract.id,

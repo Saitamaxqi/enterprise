@@ -85,7 +85,7 @@ class L10nKeHrPayrollNhifReportWizard(models.TransientModel):
                     'employee_identification_id': payslip.employee_id.identification_id,
                     'nhif_number': payslip.employee_id.l10n_ke_nhif_number,
                     'nhif_amount': nhif_amount,
-                    'payslip_number': payslip.number,
+                    'payslip_number': str(payslip.id),
                 }))
             wizard.line_ids = result
 

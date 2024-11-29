@@ -77,7 +77,6 @@
         <field name="date_to" eval="time.strftime('%Y-6-30')"/>
         <field name="employee_id" ref="hr.employee_admin"/>
         <field name="struct_id" ref="hr_payroll.structure_002"/>
-        <field name="number">SLIP601</field>
         <field name="payslip_run_id" ref="hr_payslip_batch"/>
         <field name="company_id" ref="base.main_company"/>
     </record>
@@ -90,7 +89,6 @@
         <field name="date_to" eval="time.strftime('%Y-6-30')"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
         <field name="struct_id" ref="hr_payroll.structure_002"/>
-        <field name="number">SLIP602</field>
         <field name="payslip_run_id" ref="hr_payslip_batch"/>
         <field name="company_id" ref="base.main_company"/>
     </record>
@@ -113,7 +111,6 @@
         <field name="date_to" eval="time.strftime('%Y-5-31')"/>
         <field name="employee_id" ref="hr.employee_admin"/>
         <field name="struct_id" ref="hr_payroll.structure_002"/>
-        <field name="number">SLIP501</field>
         <field name="payslip_run_id" ref="hr_payslip_batch_may"/>
         <field name="company_id" ref="base.main_company"/>
     </record>
@@ -126,7 +123,6 @@
         <field name="date_to" eval="time.strftime('%Y-5-31')"/>
         <field name="employee_id" ref="hr.employee_qdp"/>
         <field name="struct_id" ref="hr_payroll.structure_002"/>
-        <field name="number">SLIP502</field>
         <field name="payslip_run_id" ref="hr_payslip_batch_may"/>
         <field name="company_id" ref="base.main_company"/>
     </record>
@@ -160,7 +156,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=2, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP661</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
     </record>
@@ -172,7 +167,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=3, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP662</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
     </record>
@@ -184,7 +178,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=4, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP663</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
     </record>
@@ -196,7 +189,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=5, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP664</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
     </record>
@@ -208,7 +200,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=6, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP665</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
     </record>
@@ -220,7 +211,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=7, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP666</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
     </record>
@@ -232,7 +222,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=8, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP667</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
     </record>
@@ -244,7 +233,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=9, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP668</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
     </record>
@@ -256,7 +244,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=10, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP669</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
     </record>
@@ -268,7 +255,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=11, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP670</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
     </record>
@@ -280,7 +266,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=-1, month=12, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP671</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
     </record>
@@ -292,7 +277,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=0, month=1, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP672</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
     </record>
@@ -304,7 +288,6 @@
         <field name="date_to" eval="(DateTime.today() + relativedelta(years=0, month=1, day=1, days=-1))"/>
         <field name="employee_id" ref="l10n_be_hr_contract_salary.hr_employee_laurie_poiret"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_thirteen_month"/>
-        <field name="number">SLIP674</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
     </record>
@@ -2384,7 +2367,6 @@
         <field name="date_to" eval="time.strftime('2019-01-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/001</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2402,7 +2384,6 @@
         <field name="date_to" eval="time.strftime('2019-02-28')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/002</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2415,7 +2396,6 @@
         <field name="date_to" eval="time.strftime('2019-03-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/003</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2428,7 +2408,6 @@
         <field name="date_to" eval="time.strftime('2019-04-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/004</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2441,7 +2420,6 @@
         <field name="date_to" eval="time.strftime('2019-04-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_structure_warrant"/>
-        <field name="number">SLIP/NOLUCK/WARRANT/2019</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2454,7 +2432,6 @@
         <field name="date_to" eval="time.strftime('2019-05-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/005</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2467,7 +2444,6 @@
         <field name="date_to" eval="time.strftime('2019-06-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/006</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2480,7 +2456,6 @@
         <field name="date_to" eval="time.strftime('2019-06-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_double_holiday"/>
-        <field name="number">SLIP/NOLUCK/DOUBLE/2019</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2493,7 +2468,6 @@
         <field name="date_to" eval="time.strftime('2019-07-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/007</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2511,7 +2485,6 @@
         <field name="date_to" eval="time.strftime('2019-08-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/008</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2524,7 +2497,6 @@
         <field name="date_to" eval="time.strftime('2019-09-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/009</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2537,7 +2509,6 @@
         <field name="date_to" eval="time.strftime('2019-10-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/010</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2555,7 +2526,6 @@
         <field name="date_to" eval="time.strftime('2019-11-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/011</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2568,7 +2538,6 @@
         <field name="date_to" eval="time.strftime('2019-12-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/012</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2581,7 +2550,6 @@
         <field name="date_to" eval="time.strftime('2019-12-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_thirteen_month"/>
-        <field name="number">SLIP/NOLUCK/13TH/2019</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2594,7 +2562,6 @@
         <field name="date_to" eval="time.strftime('2020-01-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/013</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2612,7 +2579,6 @@
         <field name="date_to" eval="time.strftime('2020-02-29')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/014</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2625,7 +2591,6 @@
         <field name="date_to" eval="time.strftime('2020-03-31')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/015</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>
@@ -2691,7 +2656,6 @@
             ('employee_id', '=', ref('test_l10n_be_hr_payroll_account.hr_employee_joseph_noluck'))
         ]).ids"/>
         <value eval="{
-            'number': 'SLIP/NOLUCK/TERMINATION',
             'payslip_run_id': ref('test_l10n_be_hr_payroll_account.hr_payslip_batch_joseph_no_luck')
         }"/>
     </function>
@@ -2717,7 +2681,6 @@
         <field name="date_to" eval="time.strftime('2020-04-30')"/>
         <field name="employee_id" ref="hr_employee_joseph_noluck"/>
         <field name="struct_id" ref="l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_salary"/>
-        <field name="number">SLIP/NOLUCK/016</field>
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="journal_id" model="account.journal" search="[('type', '=', 'general')]"/>
         <field name="payslip_run_id" ref="hr_payslip_batch_joseph_no_luck"/>

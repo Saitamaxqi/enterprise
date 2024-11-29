@@ -119,7 +119,6 @@ class TestHrPayrollAccountCommon(TestPayslipContractBase):
             'contract_id': cls.hr_contract_john.id,
             'journal_id': cls.account_journal.id,
             'name': 'Test Payslip John',
-            'number': 'PAYSLIPTEST01',
         })
 
         cls.hr_contract_mark = cls.env['hr.contract'].create({

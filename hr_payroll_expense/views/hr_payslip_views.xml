@@ -10,7 +10,7 @@
                     <field string="Expenses" name="expenses_count" widget="statinfo"/>
                 </button>
             </div>
-            <field name="number" position="after">
+            <field name="country_id" position="after">
                 <field name="expense_sheet_ids" invisible="1" readonly="state in ['cancel', 'done']"/>
             </field>
         </field>

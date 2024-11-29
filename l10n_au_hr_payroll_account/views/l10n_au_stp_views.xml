@@ -87,7 +87,6 @@
                             <field name="payslip_ids" readonly="state == 'sent'">
                                 <list no_create="1">
                                     <field name="company_id" column_invisible="1"/>
-                                    <field name="number"/>
                                     <field name="name"/>
                                     <field name="date_from"/>
                                     <field name="date_to"/>
@@ -149,7 +148,7 @@
                     filter_domain="['|', ('payslip_ids.employee_id', 'ilike', self), ('l10n_au_stp_emp.employee_id', 'ilike', self)]"/>
                 <field name="payslip_batch_id"/>
                 <field name="payslip_ids"
-                    filter_domain="['|', ('payslip_ids.number', 'ilike', self), ('payslip_ids.name', 'ilike', self)]"/>
+                    filter_domain="['|', ('payslip_ids.id', 'ilike', self), ('payslip_ids.name', 'ilike', self)]"/>
                 <filter name="todo" string="To Do" domain="[('state', '!=', 'sent')]"/>
                 <filter name="sent" string="Submitted" domain="[('state', '=', 'sent')]"/>
                 <group expand="0" string="Group By">

@@ -83,7 +83,7 @@ class L10nKeHrPayrollNssfReportWizard(models.TransientModel):
                             'employee_identification_id': payslip.employee_id.identification_id,
                             'employee_kra_pin': payslip.employee_id.l10n_ke_kra_pin,
                             'employee_nssf_number': payslip.employee_id.l10n_ke_nssf_number,
-                            'payslip_number': payslip.number,
+                            'payslip_number': str(payslip.id),
                             'payslip_nssf_code': nssf_code,
                             'payslip_nssf_amount_employee': line.amount,
                             'payslip_nssf_amount_employer': line.amount,

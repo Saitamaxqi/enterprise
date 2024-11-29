@@ -55,7 +55,7 @@
                     <td><strong>Identification No</strong></td>
                     <td><span t-field="o.employee_id.identification_id"/></td>
                     <td><strong>Reference</strong></td>
-                    <td><span t-field="o.number"/></td>
+                    <td><span t-field="o.id"/></td>
                 </tr>
             </table>
 
@@ -227,7 +227,7 @@
                 </tr>
                 <tr>
                     <td><strong>Reference</strong></td>
-                    <td><span t-field="o.number">0987</span></td>
+                    <td><span t-field="o.id">0987</span></td>
                 </tr>
             </table>
 

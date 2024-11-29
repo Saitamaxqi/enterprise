@@ -11,7 +11,6 @@
                 </header>
                 <field name="company_id" column_invisible="True"/>
                 <field name="currency_id" column_invisible="True"/>
-                <field name="number" decoration-bf="1" readonly="state not in ['draft', 'verify']"/>
                 <field name="employee_id" widget="many2one_avatar_user" readonly="state not in ['draft', 'verify']"/>
                 <field name="payslip_run_id" readonly="state not in ['draft', 'verify']"/>
                 <field name="struct_id" optional="hide" readonly="state in ['cancel', 'done', 'paid']"/>
@@ -94,7 +93,6 @@
                         <h1 class="d-flex flex-row align-items-center">
                             <field name="employee_id" placeholder="Employee" readonly="state not in ['draft', 'verify']" options="{'no_create': True}"/>
                         </h1>
-                        <h2 invisible="state == 'draft'"><field name="number" readonly="state not in ['draft', 'verify']"/></h2>
                     </div>
                     <div class="o_employee_avatar mw-25 m-0 p-0">
                         <field name="image_1920" widget='image' class="oe_avatar m-0" options='{"zoom": true, "preview_image":"avatar_128"}'/>
@@ -272,7 +270,7 @@
             <search string="Search Payslips">
                 <field name="employee_id"/>
                 <field name="employee_id" string="Employee Code" filter_domain="[('employee_id.registration_number', 'ilike', self)]"/>
-                <field name="name" string="Payslips" filter_domain="['|', ('name', 'ilike', self), ('number', 'ilike', self)]"/>
+                <field name="name" string="Payslips" filter_domain="[('name', 'ilike', self)]"/>
                 <field name="date_from"/>
                 <field name="contract_id"/>
                 <field name="payslip_run_id"/>

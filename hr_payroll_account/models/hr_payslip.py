@@ -83,7 +83,7 @@ class HrPayslip(models.Model):
                     }
 
                     for slip in slip_mapped_data[journal_id][slip_date]:
-                        move_dict['narration'] += plaintext2html(slip.number or '' + ' - ' + slip.employee_id.name or '')
+                        move_dict['narration'] += plaintext2html(f'{slip.id or ""} - {slip.employee_id.name or ""}')
                         move_dict['narration'] += Markup('<br/>')
                         slip_lines = slip._prepare_slip_lines(date, line_ids)
                         line_ids.extend(slip_lines)
