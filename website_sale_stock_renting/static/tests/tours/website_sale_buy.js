@@ -28,9 +28,9 @@ registry.category("web_tour.tours").add('shop_buy_rental_stock_product', {
             trigger: 'input[name=renting_start_date]',
             run: "click",
         },
-        { // ensures only one day is selected
+        { // Select the first day of the next month, this ensures that the daterange is always valid.
             content:  "Select Date field",
-            trigger:  ".o_date_picker .o_selected",
+            trigger:  ".o_date_picker:nth-child(2) > .o_date_item_cell",
             run: "click",
         },
         {
