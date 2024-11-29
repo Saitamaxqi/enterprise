@@ -58,3 +58,24 @@ class TestInvoices(AccountTestInvoicingCommon):
         vendor_bill = self.env['account.move'].browse(vendor_bill_action['res_id'])
 
         self.assertRecordValues(vendor_bill, [{'suspense_statement_line_id': st_line.id}])
+
+        folder_test = self.env['documents.document'].create({'name': 'Test Bills','type':'folder'})
+        self.env.user.company_id.documents_account_settings = True
+
+        invoice = self.init_invoice("in_invoice", amounts=[1000], post=True)
+        setting = self.env['documents.account.folder.setting'].create({
+            'folder_id': folder_test.id,
+            'journal_id': invoice.journal_id.id,
+        })
+
+        test_partner = self.env['res.partner'].create({'name':'test Azure'})
+        document = self.env['documents.document'].create({
+            'datas': base64.b64encode(bytes("test_suspense_statement_line_id", 'utf-8')),
+            'name': 'file.txt',
+            'mimetype': 'text/plain',
+            'partner_id':test_partner.id,
+        })
+
+        document.account_create_account_move('in_invoice')
+
+        self.assertTrue(document.partner_id.id,test_partner.id)

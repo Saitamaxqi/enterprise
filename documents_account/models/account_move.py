@@ -90,14 +90,14 @@ class AccountMove(models.Model):
                 [('journal_id', '=', self.journal_id.id),
                  ('company_id', '=', self.company_id.id)], limit=1)
             if setting:
+                Documents_sudo = self.env['documents.document'].sudo()
+                doc_sudo = Documents_sudo.search([('attachment_id', '=', attachment_id)], limit=1)
                 values = {
                     'folder_id': setting.folder_id.id,
-                    'partner_id': self.partner_id.id,
+                    'partner_id': self.partner_id.id or doc_sudo.partner_id.id,
                     'owner_id': self.create_uid.id,
                     'tag_ids': [(4, tag.id) for tag in setting.tag_ids],
                 }
-                Documents_sudo = self.env['documents.document'].sudo()
-                doc_sudo = Documents_sudo.search([('attachment_id', '=', attachment_id)], limit=1)
                 if doc_sudo:
                     doc_sudo.write(values)
                 else:
