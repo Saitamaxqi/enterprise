@@ -122,8 +122,12 @@
                        decoration-danger="subscription_state in ['6_churn']"/>
                 <div name="subscription_quotation_pill" class="float-end badge rounded-pill fw-bold text-bg-info"
                      invisible="subscription_state != '1_draft' or state not in ['draft', 'sent']">Subscription Quotation</div>
-                <div name="subscription_to_renew" class="float-end badge rounded-pill fw-bold text-bg-warning"
-                     invisible="not display_late">To Renew</div>
+                <div name="late_pill" invisible="not display_late">
+                    <div name="subscription_to_renew" class="float-end badge rounded-pill fw-bold text-bg-warning"
+                        invisible="not payment_token_id and require_payment">To Renew</div>
+                    <div name="subscription_waiting_payment" class="float-end badge rounded-pill fw-bold text-bg-warning"
+                        invisible="payment_token_id or not require_payment">Waiting customer payment</div>
+                </div>
                 <div name="subscription_closing_pill"
                      class="o_field_badge float-end fs-6 mx-1"
                      invisible="subscription_state != '3_progress' or not end_date or end_date &gt; next_invoice_date">
