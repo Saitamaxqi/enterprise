@@ -20,12 +20,12 @@
                         invisible="subscription_state != '4_paused'"/>
             </button>
             <button id="create_invoice" position="attributes">
-                <attribute name="invisible">(not is_subscription and invoice_status != 'to invoice') or (is_subscription and (state != 'sale' or next_invoice_date &gt; current_date))</attribute>
+                <attribute name="invisible">(not is_subscription and invoice_status != 'to invoice') or (is_subscription and (state != 'sale' or (next_invoice_date &gt; current_date and invoice_status != 'to invoice')))</attribute>
             </button>
             <button id="create_invoice" position="after">
                 <button id="create_invoice_sub" name="%(sale.action_view_sale_advance_payment_inv)d" string="Create Invoice"
                     type="action" class="btn-secondary" data-hotkey="q"
-                    invisible="(not is_subscription or state != 'sale') or (is_subscription and next_invoice_date &lt;= current_date)"/>
+                    invisible="(not is_subscription or state != 'sale') or (is_subscription and (invoice_status == 'to invoice') or (next_invoice_date &lt;= current_date))"/>
             </button>
             <button id="create_invoice_percentage" position="attributes">
                 <attribute name="invisible">is_subscription or invoice_status != 'no' or state != 'sale'</attribute>
