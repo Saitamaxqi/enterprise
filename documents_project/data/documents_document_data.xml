@@ -7,6 +7,7 @@
             <field name="type">folder</field>
             <field name="access_via_link">view</field>
             <field name="is_pinned_folder">True</field>
+            <field name="access_internal">view</field>
         </record>
     </data>
 </odoo>
