@@ -33,6 +33,78 @@ class TestTaskGanttView(TestProjectCommon):
                 'user_ids': False,
             },
         ])
+        cls.env['project.task'].create([
+            {
+                'name': 'Task 1',
+                'project_id': cls.project_gantt_test_1.id,
+                'partner_id': cls.partner_1.id,
+                'planned_date_begin': Datetime.to_datetime('2023-01-02'),
+                'date_deadline': Datetime.to_datetime('2023-01-03'),
+            }, {
+                'name': 'Task 2',
+                'project_id': cls.project_gantt_test_2.id,
+                'partner_id': cls.partner_2.id,
+                'planned_date_begin': Datetime.to_datetime('2023-01-05'),
+                'date_deadline': Datetime.to_datetime('2023-01-06'),
+            },
+        ])
+
+    def test_group_expand_project_ids(self):
+        """
+        Validate that a project with tasks planned in the last or current period
+        is displayed in the Gantt view.
+        Case 1: Default domain
+        - Ensure `self.project_gantt_test_1` is displayed in the Gantt view as its tasks
+          fall within the domain (2023-01-01 to 2023-01-04).
+        - Ensure `self.project_gantt_test_2` is not displayed as its tasks fall outside
+          the domain.
+        Case 2: Explicit filter
+        - Ensure `project_test` is displayed in the Gantt view when explicitly filtered
+          using the domain (`project_id` contains 'Project Test').
+        """
+        project_test = self.env['project.project'].create({'name': 'Project Test'})
+        domain = [
+            ('planned_date_begin', '>=', Datetime.to_datetime('2023-01-01')),
+            ('date_deadline', '<=', Datetime.to_datetime('2023-01-04')),
+        ]
+        Task = self.env['project.task'].with_context({
+            'gantt_start_date': Datetime.to_datetime('2023-02-01'),
+            'gantt_scale': 'week',
+        })
+        gantt_projects_data = Task._group_expand_project_ids(None, domain)
+        self.assertTrue(self.project_gantt_test_1 in gantt_projects_data, 'Project 1 should be displayed in the Gantt view')
+        self.assertFalse(self.project_gantt_test_2 in gantt_projects_data, 'Project 2 should not be displayed in the Gantt view')
+        gantt_projects_data = Task._group_expand_project_ids(
+            None,
+            [('project_id', 'ilike', 'Project Test'), ('project_id', '!=', False)] + domain,
+        )
+        self.assertTrue(project_test in gantt_projects_data, 'Project Test should be displayed in the Gantt view')
+
+    def test_group_expand_partner_ids(self):
+        """
+        Validate that a partner with tasks planned in the last or current period
+        is displayed in the Gantt view.
+
+        The test checks:
+        Case 1: In the first call:
+        - Partner 1 has tasks planned within the period and should be displayed.
+        - Partner 2 has tasks planned outside the period and should not be displayed.
+        Case 2: In the second call (with a partner_id filter applied):
+        - Partner 3, who has no tasks but matches the name filter, should still be displayed.
+        """
+        Task = self.env['project.task'].with_context({
+            'gantt_start_date': Datetime.to_datetime('2023-02-01'),
+            'gantt_scale': 'week',
+        })
+        domain = [
+            ('planned_date_begin', '>=', Datetime.to_datetime('2023-01-01')),
+            ('date_deadline', '<=', Datetime.to_datetime('2023-01-04')),
+        ]
+        gantt_partners_data = Task._group_expand_partner_ids(None, domain)
+        self.assertTrue(self.partner_1 in gantt_partners_data, 'Partner 1 should be displayed in the Gantt view')
+        self.assertFalse(self.partner_2 in gantt_partners_data, 'Partner 2 should be displayed in the Gantt view')
+        gantt_partners_data = Task._group_expand_partner_ids(None, [('partner_id', 'ilike', 'Poilboeuf')] + domain)
+        self.assertEqual(self.partner_3, gantt_partners_data,'Partner 3 should be displayed in the Gantt view')
 
     def test_empty_line_task_last_period(self):
         """ In the gantt view of the tasks of a project, there should be an empty

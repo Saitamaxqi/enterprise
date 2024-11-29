@@ -1,11 +1,58 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details
 
 from odoo.tests import tagged
+from odoo.fields import Datetime
 from odoo.addons.industry_fsm.tests.common import TestIndustryFsmCommon
 
 
 @tagged('post_install', '-at_install')
 class TestProjectTask(TestIndustryFsmCommon):
+    def test_group_expand_worksheet_template_ids(self):
+        """
+        Validate that a worksheet template with tasks planned in the last or current period
+        is displayed in the Gantt view.
+        Case 1: Default domain
+        - Ensure `worksheet1` is displayed as its task falls within the domain
+          (2023-01-02 to 2023-01-03).
+        - Ensure `worksheet2` is not displayed as its task falls outside the domain
+          (2023-01-05 to 2023-01-06).
+        Case 2: Explicit filter
+        - Ensure `worksheet2` is displayed when explicitly filtered using the domain
+          ('worksheet_template_id', 'ilike', 'Worksheet 2').
+        """
+        worksheet1, worksheet2 = self.env['worksheet.template'].create([
+            {'name': 'Worksheet 1', 'res_model': 'project.task'},
+            {'name': 'Worksheet 2', 'res_model': 'project.task'},
+        ])
+        self.task.write({
+            'worksheet_template_id': worksheet1.id,
+            'planned_date_begin': Datetime.to_datetime('2023-01-02'),
+            'date_deadline': Datetime.to_datetime('2023-01-03'),
+        })
+        self.second_task.write({
+            'worksheet_template_id': worksheet2.id,
+            'planned_date_begin': Datetime.to_datetime('2023-01-05'),
+            'date_deadline': Datetime.to_datetime('2023-01-06'),
+        })
+        domain = [
+            ('planned_date_begin', '>=', Datetime.to_datetime('2023-01-01')),
+            ('date_deadline', '<=', Datetime.to_datetime('2023-01-04')),
+        ]
+        Task = self.env['project.task'].with_context({
+            'gantt_start_date': Datetime.to_datetime('2023-02-01'),
+            'gantt_scale': 'week',
+        })
+
+        displayed_worksheets = Task._group_expand_worksheet_template_id(None, domain)
+
+        self.assertTrue(worksheet1 in displayed_worksheets, 'Worksheet 1 should be displayed in the Gantt view')
+        self.assertFalse(worksheet2 in displayed_worksheets, 'Worksheet 2 should not be displayed in the Gantt view')
+        displayed_worksheets = Task._group_expand_worksheet_template_id(
+            None,
+            [('worksheet_template_id', 'ilike', 'Worksheet 2')] + domain,
+        )
+        self.assertTrue(worksheet2 in displayed_worksheets, 'Worksheet 2 should be displayed in the Gantt view')
+
     def test_action_send_report(self):
         action = self.task.action_send_report()
         self.assertEqual(action['type'], 'ir.actions.client')
