@@ -1153,8 +1153,10 @@ class L10n_Mx_EdiDocument(models.Model):
                 results[key] = results[key] or 0.0
                 results[key] += tax_values[key]
 
+        currency = cfdi_lines[0]['currency_id']
+
         self._add_base_cfdi_values(cfdi_values)
-        self._add_currency_cfdi_values(cfdi_values, cfdi_values['company'].currency_id)
+        self._add_currency_cfdi_values(cfdi_values, currency)
         self._add_document_origin_cfdi_values(cfdi_values, origin)
         self._add_customer_cfdi_values(cfdi_values, to_public=True)
         self._add_tax_objected_cfdi_values(cfdi_values, cfdi_lines)
@@ -1175,12 +1177,20 @@ class L10n_Mx_EdiDocument(models.Model):
         else:
             periodicity_month = month
 
+        rates = []
+        if currency.name != 'MXN':
+            parents = set()
+            for line in cfdi_lines:
+                if line['rate'] and line['document_name'] not in parents:
+                    parents.add(line['document_name'])
+                    rates.append(1 / line['rate'])
+
         cfdi_values.update({
             'sequence': sequence,
             'folio': folio,
             'serie': serie,
             'fecha': cfdi_date.strftime(CFDI_DATE_FORMAT),
-            'tipo_cambio': None,
+            'tipo_cambio': sum(rates) / len(rates) if rates else None,
             'information_global': {
                 'periodicidad': periodicity,
                 'meses': str(periodicity_month).rjust(2, '0'),

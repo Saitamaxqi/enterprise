@@ -171,8 +171,8 @@ class PosOrder(models.Model):
 
         if len(orders.company_id) != 1:
             raise UserError(_("You can only process orders sharing the same company."))
-        if any(order.currency_id != order.company_id.currency_id for order in self):
-            raise UserError(_("You can't process orders having a foreign currency."))
+        if len(self.currency_id) != 1:
+            raise UserError(_("You can only process orders sharing the same currency."))
 
         if not origin:
             failed_orders = orders.filtered(lambda x: (

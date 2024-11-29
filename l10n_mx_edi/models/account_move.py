@@ -307,8 +307,8 @@ class AccountMove(models.Model):
             raise UserError(_("Invoices %s are not posted.", invoices_str))
         if len(self.company_id) != 1 or len(self.journal_id) != 1:
             raise UserError(_("You can only process invoices sharing the same company and journal."))
-        if any(inv.currency_id != inv.company_currency_id for inv in self):
-            raise UserError(_("You can't process invoices having a foreign currency."))
+        if len(self.currency_id) != 1:
+            raise UserError(_("You can only process invoices sharing the same currency."))
 
         refunds = self.reversal_move_ids
         invoices = self | refunds

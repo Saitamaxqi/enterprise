@@ -670,6 +670,19 @@ class TestCFDIInvoice(TestMxEdiCommon):
                     .action_send_and_print()
             self._assert_invoice_cfdi(refund, 'test_global_invoice_then_refund_2')
 
+    def test_global_invoice_foreign_currency(self):
+        with self.mx_external_setup(self.frozen_today):
+            usd = self.setup_other_currency('USD', rates=[(self.frozen_today, 1 / 17.0398)])
+            invoice1 = self._create_invoice(currency_id=usd.id, l10n_mx_edi_cfdi_to_public=True)
+            invoice2 = self._create_invoice(l10n_mx_edi_cfdi_to_public=True)
+            invoices = invoice1 + invoice2
+
+            with self.with_mocked_pac_sign_success():
+                self.assertRaisesRegex(UserError, "You can only process invoices sharing the same currency.", invoices._l10n_mx_edi_cfdi_global_invoice_try_send)
+                invoice1._l10n_mx_edi_cfdi_global_invoice_try_send()
+                invoice2._l10n_mx_edi_cfdi_global_invoice_try_send()
+            self._assert_global_invoice_cfdi_from_invoices(invoice1, "test_global_invoice_foreign_currency")
+
     def test_invoice_send_and_print_fallback_pdf(self):
         # Trigger an error when generating the CFDI
         self.product.unspsc_code_id = False

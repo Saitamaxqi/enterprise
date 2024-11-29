@@ -2016,7 +2016,7 @@ msgstr ""
 #. module: l10n_mx_edi
 #. odoo-python
 #: code:addons/l10n_mx_edi/models/account_move.py:0
-msgid "You can't process invoices having a foreign currency."
+msgid "You can only process invoices sharing the same currency."
 msgstr ""
 
 #. module: l10n_mx_edi

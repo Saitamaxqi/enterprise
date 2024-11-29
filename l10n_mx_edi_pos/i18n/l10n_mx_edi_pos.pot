@@ -441,7 +441,7 @@ msgstr ""
 #. module: l10n_mx_edi_pos
 #. odoo-python
 #: code:addons/l10n_mx_edi_pos/models/pos_order.py:0
-msgid "You can't process orders having a foreign currency."
+msgid "You can only process orders sharing the same currency."
 msgstr ""
 
 #. module: l10n_mx_edi_pos
