@@ -75,6 +75,8 @@ export function useSpreadsheetThumbnail() {
         }
         const type = "image/webp";
         const quality = 0;
-        return canvasResizer.toDataURL(type, quality).replace(`data:${type};base64,`, "");
+        const dataUrl = canvasResizer.toDataURL(type, quality);
+        const regexp = new RegExp("^data:image/.*;base64,");
+        return dataUrl.replace(regexp, "");
     };
 }
