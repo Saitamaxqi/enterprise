@@ -178,30 +178,42 @@ class AccountMove(models.Model):
             # Generate next activity
             self.company_id._generate_tax_closing_reminder_activity(self.tax_closing_report_id, self.date + relativedelta(days=1), self.fiscal_position_id if self.fiscal_position_id.foreign_vat else None)
 
-        self._close_tax_period_send_report_activity()
+        self._close_tax_period_create_activities()
 
-    def _close_tax_period_send_report_activity(self):
-        activity_type_xml_id = 'account_reports.mail_activity_type_tax_report_to_be_sent'
-        mat_send_tax_report = self.env.ref(activity_type_xml_id)
+    def _close_tax_period_create_activities(self):
+        mat_to_send_xml_id = 'account_reports.mail_activity_type_tax_report_to_be_sent'
+        mat_to_send = self.env.ref(mat_to_send_xml_id)
 
-        act_user = mat_send_tax_report.default_user_id
+        mat_to_pay_xml_id = 'account_reports.mail_activity_type_tax_report_to_pay'
+        mat_to_pay = self.env.ref(mat_to_pay_xml_id, raise_if_not_found=False)
+
+        act_user = mat_to_send.default_user_id
         if act_user and not (self.company_id in act_user.company_ids and act_user.has_group('account.group_account_manager')):
             act_user = self.env['res.users']
 
-        moves_without_activity = self.filtered_domain([
+        moves_without_send_activity = self.filtered_domain([
             '|',
             ('activity_ids', '=', False),
-            ('activity_ids.activity_type_id', '!=', mat_send_tax_report.id)]
-        )
-        for move in moves_without_activity:
+            ('activity_ids', 'not any', [('activity_type_id.id', '=', mat_to_send.id)]),
+        ])
+
+        for move in moves_without_send_activity:
             period_start, period_end = move.company_id._get_tax_closing_period_boundaries(move.date, move.tax_closing_report_id)
             period_desc = move.company_id._get_tax_closing_move_description(move.company_id._get_tax_periodicity(move.tax_closing_report_id), period_start, period_end, move.fiscal_position_id, move.tax_closing_report_id)
             move.with_context(mail_activity_quick_update=True).activity_schedule(
-                act_type_xmlid=activity_type_xml_id,
+                act_type_xmlid=mat_to_send_xml_id,
                 summary=_("Send tax report: %s", period_desc),
                 date_deadline=fields.Date.context_today(move),
                 user_id=act_user.id or self.env.user.id,
             )
+
+            if mat_to_pay and mat_to_pay not in move.activity_ids.activity_type_id and move._get_tax_to_pay_on_closing() > 0:
+                move.with_context(mail_activity_quick_update=True).activity_schedule(
+                    act_type_xmlid=mat_to_pay_xml_id,
+                    summary=_("Pay tax: %s", period_desc),
+                    date_deadline=fields.Date.context_today(move),
+                    user_id=act_user.id or self.env.user.id,
+                )
 
     def refresh_tax_entry(self):
         for move in self.filtered(lambda m: m.tax_closing_report_id and m.state == 'draft'):

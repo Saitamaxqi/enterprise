@@ -49,6 +49,10 @@ class TestAccountReportsTaxReminder(TestAccountReportsCommon):
             'activity_type_id': act_type_report_to_send.id,
             'summary': f'Send tax report: {self.tax_return_move.date.strftime("%B %Y")}',
             'date_deadline': fields.Date.context_today(self.env.user),
+        }, {
+            'activity_type_id': act_type_tax_to_pay.id,
+            'summary': f'Pay tax: {self.tax_return_move.date.strftime("%B %Y")}',
+            'date_deadline': fields.Date.context_today(self.env.user),
         }])
 
         # Posting tax return again should not create another activity
@@ -59,19 +63,6 @@ class TestAccountReportsTaxReminder(TestAccountReportsCommon):
             self.tax_return_move.action_post()
         after = len(self.tax_return_move.activity_ids)
         self.assertEqual(before, after, "resetting to draft and posting again shouldn't create a new activity")
-        self.assertRecordValues(self.tax_return_move.activity_ids, [{
-            'activity_type_id': act_type_report_to_send.id,
-            'summary': f'Send tax report: {self.tax_return_move.date.strftime("%B %Y")}',
-            'date_deadline': fields.Date.context_today(self.env.user),
-        }])
-
-        # Setting the activity to done should trigger the payment activity
-        self.tax_return_move.activity_ids.action_done()
-        self.assertRecordValues(self.tax_return_move.activity_ids, [{
-            'activity_type_id': act_type_tax_to_pay.id,
-            'summary': f'Pay tax: {self.tax_return_move.date.strftime("%B %Y")}',
-            'date_deadline': fields.Date.context_today(self.env.user),
-        }])
 
         # 0.0 tax returns create a send tax report activity but shouldn't trigger the payment activity
         options = self._generate_options(self.report, '2024-09-01', '2024-09-30')
