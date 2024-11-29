@@ -929,6 +929,13 @@ class HrPayslip(models.Model):
                             localdict['inputs'][rule.code] = multi_line_rule
                             amount, qty, rate = rule._compute_rule(localdict)
                             tot_rule = payslip._get_payslip_line_total(amount, qty, rate, rule)
+
+                            result_rules_dict[rule.code]['total'] += tot_rule
+                            result_rules_dict[rule.code]['amount'] += tot_rule
+                            result_rules_dict[rule.code]['quantity'] = 1
+                            result_rules_dict[rule.code]['rate'] = 100
+                            rules_dict[rule.code] = rule
+
                             localdict = rule.category_id._sum_salary_rule_category(localdict,
                                                                                    tot_rule)
                             rule_name = payslip._get_rule_name(localdict, rule, employee_lang)
