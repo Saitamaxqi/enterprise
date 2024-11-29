@@ -814,7 +814,6 @@ class SaleOrder(models.Model):
             end_of_contract_reason_id = self.env.ref('sale_subscription.close_reason_end_of_contract')
             close_reason_id = renew_close_reason_id if parent.subscription_state != "6_churn" else end_of_contract_reason_id
             parent.set_close(close_reason_id=close_reason_id.id, renew=True)
-            parent.update({'end_date': parent.next_invoice_date})
             # This can create hole that are not taken into account by progress_sub upselling, it's an assumed choice over more upselling complexity
             start_date = renew.start_date or parent.next_invoice_date
             renew.write({'date_order': today, 'start_date': start_date})
@@ -1019,15 +1018,18 @@ class SaleOrder(models.Model):
             order.subscription_id.with_context(**context).write({'order_line': create_values + update_values})
         return create_values, update_values
 
-    def _get_closing_end_date(self):
+    def _get_closing_end_date(self, renew=False):
         """
         Get the end date for a subscription that is being closed.
         :return: date
         """
         self.ensure_one()
+        end_date = fields.Date.context_today(self)
         if self.plan_id.user_closable and self.plan_id.user_closable_options == 'end_of_period' and self.env.context.get("allow_future_end_date"):
-            return self.next_invoice_date - relativedelta(days=1)
-        return fields.Date.context_today(self)
+            end_date = self.next_invoice_date - relativedelta(days=1)
+        elif renew:
+            end_date = self.next_invoice_date
+        return end_date
 
     def _set_closed_state(self, renew=False):
         renewal_order = self.subscription_child_ids.filtered(lambda s: s.subscription_state in SUBSCRIPTION_PROGRESS_STATE)
@@ -1050,7 +1052,7 @@ class SaleOrder(models.Model):
             end_of_contract_reason_id = self.env.ref('sale_subscription.close_reason_end_of_contract').id
             close_reason_unknown_id = self.env.ref('sale_subscription.close_reason_unknown').id
         for sub in self:
-            end_date = sub._get_closing_end_date()
+            end_date = sub._get_closing_end_date(renew=renew)
             if renew or end_date <= today:
                 sub._set_closed_state(renew)
             values = {'end_date': end_date}
