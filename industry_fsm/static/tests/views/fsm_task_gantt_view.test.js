@@ -43,7 +43,8 @@ beforeEach(() => {
     };
 });
 
-test.tags("desktop")("fsm task gantt view", async () => {
+test.tags("desktop");
+test("fsm task gantt view", async () => {
     const now = luxon.DateTime.now();
 
     await mountView({
@@ -67,7 +68,8 @@ test.tags("desktop")("fsm task gantt view", async () => {
     );
 });
 
-test.tags("mobile")("test custom action for edit gantt popover button", async () => {
+test.tags("mobile");
+test("test custom action for edit gantt popover button", async () => {
     const doActionStep = "doAction";
     mockActionService(doActionStep);
 

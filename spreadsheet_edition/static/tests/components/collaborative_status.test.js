@@ -1,4 +1,4 @@
-import { describe, expect, getFixture, test } from "@odoo/hoot";
+import { describe, expect, test } from "@odoo/hoot";
 import { defineSpreadsheetModels } from "@spreadsheet/../tests/helpers/data";
 import { makeMockEnv, mountWithCleanup } from "@web/../tests/web_test_helpers";
 
@@ -22,11 +22,9 @@ test("not synchronized", async function () {
     });
     await mountCollaborativeStatusComponent();
 
-    const fixture = getFixture();
-
-    expect(fixture.querySelector(".o_spreadsheet_sync_status")).toHaveText("Saving");
-    expect(fixture.querySelector(".o_spreadsheet_number_users")).toHaveText("1");
-    expect(fixture.querySelector(".o_spreadsheet_number_users i.fa")).toHaveClass("fa-user");
+    expect(".o_spreadsheet_sync_status").toHaveText("Saving");
+    expect(".o_spreadsheet_number_users").toHaveText("1");
+    expect(".o_spreadsheet_number_users i.fa").toHaveClass("fa-user");
 });
 
 test("synchronized", async function () {
@@ -40,9 +38,7 @@ test("synchronized", async function () {
     });
     await mountCollaborativeStatusComponent();
 
-    const fixture = getFixture();
-
-    expect(fixture.querySelector(".o_spreadsheet_sync_status")).toHaveText("Saved");
+    expect(".o_spreadsheet_sync_status").toHaveText("Saved");
 });
 
 test("more than one user", async function () {
@@ -59,8 +55,6 @@ test("more than one user", async function () {
     });
     await mountCollaborativeStatusComponent();
 
-    const fixture = getFixture();
-
-    expect(fixture.querySelector(".o_spreadsheet_number_users")).toHaveText("2");
-    expect(fixture.querySelector(".o_spreadsheet_number_users i.fa")).toHaveClass("fa-users");
+    expect(".o_spreadsheet_number_users").toHaveText("2");
+    expect(".o_spreadsheet_number_users i.fa").toHaveClass("fa-users");
 });

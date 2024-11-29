@@ -25,8 +25,8 @@ test("deferred updates", async () => {
     expect(store.isDirty).toBe(false);
     store.update({ columns: [{ fieldName: "bar" }] });
     expect(store.isDirty).toBe(true);
-    expect(store.definition.columns[0].fieldName).toEqual("bar");
-    expect(store.definition.rows[0].fieldName).toEqual("foo");
+    expect(store.definition.columns[0].fieldName).toBe("bar");
+    expect(store.definition.rows[0].fieldName).toBe("foo");
     let definition = JSON.parse(JSON.stringify(model.getters.getPivotCoreDefinition(pivotId)));
     expect(definition.columns).toEqual([{ fieldName: "product_id" }], {
         message: "updates are defered",
@@ -73,7 +73,7 @@ test("remove row then add col", async () => {
     store.update({ columns: [{ fieldName: "bar" }] });
     expect(store.definition.rows).toEqual([]);
     expect(store.definition.columns.length).toBe(1);
-    expect(store.definition.columns[0].fieldName).toEqual("bar");
+    expect(store.definition.columns[0].fieldName).toBe("bar");
 });
 
 test("non-groupable fields are filtered", async () => {

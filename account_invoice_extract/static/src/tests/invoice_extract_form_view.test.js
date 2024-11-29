@@ -55,32 +55,32 @@ test("basic", async () => {
         res_id: accountMoveId1,
     });
     onRpc("account.move", "get_boxes", () => {
-        return Promise.resolve(createBoxesData());
+        return createBoxesData();
     });
     onRpc("account.move", "get_partner_create_data", () => {
-        return Promise.resolve({});
+        return {};
     });
     onRpc("account.move", "set_user_selected_box", (args) => {
         const boxId = args.args[1];
         switch (boxId) {
             case 1:
-                return Promise.resolve(resPartnerId1);
+                return resPartnerId1;
             case 2:
-                return Promise.resolve(false);
+                return false;
             case 4:
-                return Promise.resolve("some invoice_id");
+                return "some invoice_id";
             case 7:
-                return Promise.resolve(false);
+                return false;
             case 8:
-                return Promise.resolve(resPartnerId1);
+                return resPartnerId1;
             case 10:
-                return Promise.resolve(123);
+                return 123;
             case 12:
-                return Promise.resolve("2022-01-01 00:00:00");
+                return "2022-01-01 00:00:00";
             case 14:
-                return Promise.resolve("2022-01-15 00:00:00");
+                return "2022-01-15 00:00:00";
             case 16:
-                return Promise.resolve(resCurrencyId2);
+                return resCurrencyId2;
         }
     });
     await start();

@@ -261,7 +261,8 @@ describe("basic flow with home menu", () => {
         expect(".o_breadcrumb .active").toHaveText("First record");
     });
 
-    test.tags("desktop")("4 -- push a third action in the breadcrumb", async () => {
+    test.tags("desktop");
+    test("4 -- push a third action in the breadcrumb", async () => {
         Partner._views["form,false"] = `
             <form>
                 <field name="display_name"/>
@@ -312,7 +313,8 @@ describe("basic flow with home menu", () => {
         expect(".o_form_view").not.toBeVisible();
     });
 
-    test.tags("desktop")("6 -- back to underlying action with many breadcrumbs", async () => {
+    test.tags("desktop");
+    test("6 -- back to underlying action with many breadcrumbs", async () => {
         Partner._views["form,false"] = `
             <form>
                 <field name="display_name"/>
@@ -382,7 +384,8 @@ test("restore the newly created record in form view", async () => {
     expect(".o_breadcrumb .active").toHaveText("red right hand");
 });
 
-test.tags("desktop")("fast clicking on restore (implementation detail)", async () => {
+test.tags("desktop");
+test("fast clicking on restore (implementation detail)", async () => {
     expect.assertions(8);
 
     let doVeryFastClick = false;

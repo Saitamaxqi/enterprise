@@ -1,7 +1,7 @@
 import { expect, test } from "@odoo/hoot";
-import { queryOne } from "@odoo/hoot-dom";
-import { serializeDateTime } from "@web/core/l10n/dates";
+import { advanceTime, queryOne } from "@odoo/hoot-dom";
 import { mountView, onRpc } from "@web/../tests/web_test_helpers";
+import { serializeDateTime } from "@web/core/l10n/dates";
 
 import { defineTimesheetModels, HRTimesheet } from "./hr_timesheet_models";
 
@@ -10,11 +10,7 @@ const now = DateTime.now();
 
 defineTimesheetModels();
 
-onRpc(({ method }) => {
-    if (method === "get_server_time") {
-        return Promise.resolve(serializeDateTime(now));
-    }
-});
+onRpc("get_server_time", () => serializeDateTime(now));
 
 async function _testTimer(expectedRunning) {
     HRTimesheet._views["form,false"] = HRTimesheet._views["form,false"].replace(
@@ -22,9 +18,9 @@ async function _testTimer(expectedRunning) {
         '<field name="timer_start" widget="timer_start_field"/>'
     );
 
-    const [ record ] = HRTimesheet._records;
-    record.timer_start = serializeDateTime(now.minus({ days: 1}));
-    record.timer_pause = !expectedRunning && serializeDateTime(now.minus({ hours: 1})) ;
+    const [record] = HRTimesheet._records;
+    record.timer_start = serializeDateTime(now.minus({ days: 1 }));
+    record.timer_pause = !expectedRunning && serializeDateTime(now.minus({ hours: 1 }));
     await mountView({
         type: "form",
         resModel: "account.analytic.line",
@@ -33,7 +29,7 @@ async function _testTimer(expectedRunning) {
 
     const timerStartInput = queryOne('div[name="timer_start"] span');
     const originalValue = timerStartInput.innerText;
-    await new Promise(resolve => setTimeout(resolve, 2000));
+    await advanceTime(2000);
     const currentValue = timerStartInput.innerText;
     if (expectedRunning) {
         expect(originalValue).not.toBe(currentValue, {

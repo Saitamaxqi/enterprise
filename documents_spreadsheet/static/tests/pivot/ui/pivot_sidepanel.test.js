@@ -93,7 +93,6 @@ test("Removing the measure removes the sortedColumn", async function () {
     await animationFrame();
     expect(model.getters.getPivot(pivotId).definition.sortedColumn).not.toBe(undefined);
 
-
     await contains(".pivot-measure .fa-trash").click();
     expect(model.getters.getPivot(pivotId).definition.sortedColumn).toBe(undefined);
 });
@@ -404,11 +403,10 @@ test("add column dimension", async function () {
             },
         },
     });
-    const fixture = getFixture();
     env.openSidePanel("PivotSidePanel", { pivotId });
     await animationFrame();
     await contains(".add-dimension.o-button").click();
-    await contains(fixture.querySelectorAll(".o-popover .o-autocomplete-value")[0]).click();
+    await contains(".o-popover .o-autocomplete-value").click();
     await contains(".pivot-defer-update .o-checkbox").click();
     const definition = JSON.parse(JSON.stringify(model.getters.getPivotCoreDefinition(pivotId)));
     expect(definition.columns).toEqual([{ fieldName: "bar", order: "asc" }]);
@@ -428,11 +426,10 @@ test("add row dimension", async function () {
             },
         },
     });
-    const fixture = getFixture();
     env.openSidePanel("PivotSidePanel", { pivotId });
     await animationFrame();
-    await contains(fixture.querySelectorAll(".add-dimension.o-button")[1]).click();
-    await contains(fixture.querySelectorAll(".o-popover .o-autocomplete-value")[0]).click();
+    await contains(".add-dimension.o-button:eq(1)").click();
+    await contains(".o-popover .o-autocomplete-value").click();
     await contains(".pivot-defer-update .o-checkbox").click();
     const definition = JSON.parse(JSON.stringify(model.getters.getPivotCoreDefinition(pivotId)));
     expect(definition.columns).toEqual([]);

@@ -2148,7 +2148,8 @@ test("date fields: pill columns", async () => {
     ]);
 });
 
-test.tags("desktop")("date fields: resize a pill", async () => {
+test.tags("desktop");
+test("date fields: resize a pill", async () => {
     expect.assertions(4);
     Tasks._fields.start = fields.Date();
     Tasks._fields.stop = fields.Date();

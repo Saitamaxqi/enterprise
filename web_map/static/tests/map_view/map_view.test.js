@@ -253,7 +253,7 @@ beforeEach(() => {
         COORDINATE_FETCH_DELAY: 0,
     });
     patchWithCleanup(MapModel.prototype, {
-        _fetchCoordinatesFromAddressMB(metaData, data, record) {
+        async _fetchCoordinatesFromAddressMB(metaData, data, record) {
             if (metaData.mapBoxToken !== MAP_BOX_TOKEN) {
                 return Promise.reject({ status: 401 });
             }
@@ -267,24 +267,24 @@ beforeEach(() => {
             const failResponse = { features: [] };
             switch (record.contact_address_complete) {
                 case "Cfezfezfefes":
-                    return Promise.resolve(failResponse);
+                    return failResponse;
                 case "":
-                    return Promise.resolve(failResponse);
+                    return failResponse;
             }
-            return Promise.resolve(successResponse);
+            return successResponse;
         },
-        _fetchCoordinatesFromAddressOSM(metaData, data, record) {
+        async _fetchCoordinatesFromAddressOSM(metaData, data, record) {
             const coordinates = [];
             coordinates[0] = { lat: "10.0", lon: "10.5" };
             switch (record.contact_address_complete) {
                 case "Cfezfezfefes":
-                    return Promise.resolve([]);
+                    return [];
                 case "":
-                    return Promise.resolve([]);
+                    return [];
             }
-            return Promise.resolve(coordinates);
+            return coordinates;
         },
-        _fetchRoute(metaData, data) {
+        async _fetchRoute(metaData, data) {
             if (metaData.mapBoxToken !== MAP_BOX_TOKEN) {
                 return Promise.reject({ status: 401 });
             }
@@ -300,7 +300,7 @@ beforeEach(() => {
             }
             const routes = [];
             routes[0] = { legs };
-            return Promise.resolve({ routes });
+            return { routes };
         },
         _notifyFetchedCoordinate(metaData, data) {
             // do not notify in tests as coords fetching is " synchronous "
@@ -312,7 +312,8 @@ beforeEach(() => {
     });
 });
 
-describe.tags("desktop")("map_view_desktop", () => {
+describe.tags("desktop");
+describe("map_view_desktop", () => {
     //--------------------------------------------------------------------------
     // Testing data fetching
     //--------------------------------------------------------------------------
@@ -1008,7 +1009,7 @@ describe.tags("desktop")("map_view_desktop", () => {
         Task._records = TEST_RECORDS.task.twoRecords;
         Partner._records = TEST_RECORDS.partner.twoRecordsAddressNoCoordinates;
         onRpc("project.task", "web_search_read", ({ kwargs }) => {
-            expect(kwargs.order).toEqual("name ASC", {
+            expect(kwargs.order).toBe("name ASC", {
                 message: "The sorting order should be on the field name in a ascendant way",
             });
         });
@@ -2287,7 +2288,8 @@ describe.tags("desktop")("map_view_desktop", () => {
     });
 });
 
-describe.tags("mobile")("map_view_mobile", () => {
+describe.tags("mobile");
+describe("map_view_mobile", () => {
     test("use pin list container on mobile", async () => {
         await mountView({
             type: "map",

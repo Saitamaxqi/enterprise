@@ -41,8 +41,7 @@ test("No locale icon if user locale matched spreadsheet locale", async function 
         { pure: true }
     );
     await createSpreadsheet();
-    const icon = document.querySelector(".o-spreadsheet-topbar .fa-globe");
-    expect(icon).toBe(null);
+    expect(".o-spreadsheet-topbar .fa-globe").not.toHaveCount();
 });
 
 test("No locale icon if no user locale is given", async function () {
@@ -59,29 +58,24 @@ test("No locale icon if no user locale is given", async function () {
         { pure: true }
     );
     await createSpreadsheet();
-    const icon = document.querySelector(".o-spreadsheet-topbar .fa-globe");
-    expect(icon).toBe(null);
+    expect(".o-spreadsheet-topbar .fa-globe").not.toHaveCount();
 });
 
 test("Different locales between user and spreadsheet: display icon as info", async function () {
     onRpc(
         "/spreadsheet/data/*",
-        () => {
-            return {
-                name: "Untitled spreadsheet",
-                user_locale: fr_FR,
-                data: {
-                    settings: { locale: en_US },
-                },
-            };
-        },
+        () => ({
+            name: "Untitled spreadsheet",
+            user_locale: fr_FR,
+            data: {
+                settungs: { locale: en_US },
+            },
+        }),
         { pure: true }
     );
     await createSpreadsheet();
-    const icon = document.querySelector(".o-spreadsheet-topbar .fa-globe");
-    expect(icon).not.toBe(null);
-    expect(icon.classList.contains("text-info")).toBe(true);
-    expect(icon.title).toBe(
+    expect(".o-spreadsheet-topbar .fa-globe.text-info").toHaveProperty(
+        "title",
         "Difference between user locale (fr_FR) and spreadsheet locale (en_US). This spreadsheet is using the formats below:\n" +
             "- dates: m/d/yyyy\n" +
             "- numbers: 1,234,567.89"
@@ -103,8 +97,7 @@ test("no warning with different locale codes but same formats", async function (
         { pure: true }
     );
     await createSpreadsheet();
-    const icon = document.querySelector(".o-spreadsheet-topbar .fa-globe");
-    expect(icon).toBe(null);
+    expect(".o-spreadsheet-topbar .fa-globe").not.toHaveCount();
 });
 
 test("changing spreadsheet locale to user locale: remove icon", async function () {
@@ -122,9 +115,8 @@ test("changing spreadsheet locale to user locale: remove icon", async function (
         { pure: true }
     );
     const { model } = await createSpreadsheet();
-    const icon = document.querySelector(".o-spreadsheet-topbar .fa-globe");
-    expect(icon).not.toBe(null);
+    expect(".o-spreadsheet-topbar .fa-globe").toHaveCount(1);
     model.dispatch("UPDATE_LOCALE", { locale: en_US });
     await animationFrame();
-    expect(document.querySelector(".o-spreadsheet-topbar .fa-globe")).toBe(null);
+    expect(".o-spreadsheet-topbar .fa-globe").not.toHaveCount();
 });

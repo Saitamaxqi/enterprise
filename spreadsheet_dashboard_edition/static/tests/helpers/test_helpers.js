@@ -22,7 +22,7 @@ import { DashboardEditAction } from "../../src/bundle/action/dashboard_edit_acti
  */
 
 /**
- * @param {SpreadsheetTestParams} params
+ * @param {SpreadsheetTestParams} [params]
  */
 export async function createDashboardEditAction(params) {
     /** @type {any} */
@@ -35,15 +35,15 @@ export async function createDashboardEditAction(params) {
             spreadsheetAction = this;
         },
     });
-    const serverData = params.serverData || getDashboardBasicServerData();
-    let spreadsheetId = params.spreadsheetId;
+    const serverData = params?.serverData || getDashboardBasicServerData();
+    let spreadsheetId = params?.spreadsheetId;
     if (!spreadsheetId) {
         spreadsheetId = createNewDashboard(serverData);
     }
     await prepareWebClientForSpreadsheet();
     await makeSpreadsheetMockEnv({
         serverData,
-        mockRPC: params.mockRPC,
+        mockRPC: params?.mockRPC,
     });
     await mountWithCleanup(WebClient);
     await getService("action").doAction({

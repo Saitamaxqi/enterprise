@@ -6,7 +6,8 @@ import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
 
 defineTimesheetModels();
 
-test.tags("desktop")("hr.timesheet (list)(timer): basics", async () => {
+test.tags("desktop");
+test("hr.timesheet (list)(timer): basics", async () => {
     patchSession();
     HRTimesheet._records = [
         { id: 1, name: 'yop' },

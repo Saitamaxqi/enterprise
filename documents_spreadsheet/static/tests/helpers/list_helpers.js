@@ -1,9 +1,8 @@
+import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import { SpreadsheetAction } from "@documents_spreadsheet/bundle/actions/spreadsheet_action";
-import { getFixture } from "@odoo/hoot";
 import { waitFor } from "@odoo/hoot-dom";
 import { animationFrame } from "@odoo/hoot-mock";
 import { getBasicServerData } from "@spreadsheet/../tests/helpers/data";
-import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import { waitForDataLoaded } from "@spreadsheet/helpers/model";
 import {
     getSpreadsheetActionEnv,
@@ -82,12 +81,12 @@ export async function spawnListViewForSpreadsheet(params = {}) {
  * @param {object} [params.serverData] Data to be injected in the mock server
  * @param {function} [params.mockRPC] Mock rpc function
  * @param {object[]} [params.orderBy] orderBy argument
- * @param {(fixture: HTMLElement) => Promise<void>} [params.actions] orderBy argument
+ * @param {() => Promise<void>} [params.actions] orderBy argument
  * @param {object} [params.additionalContext] additional action context
  * @param {number} [params.linesNumber]
  * @param {string} [params.actionXmlId] xmlId of the action to load the list view from - model and domain will be ignored
  *
- * @returns {Promise<{model: Model, webClient: object, env: object, fixture: Element}>}
+ * @returns {Promise<{ model: Model, webClient: object, env: object }>}
  */
 export async function createSpreadsheetFromListView(params = {}) {
     const def = new Deferred();
@@ -109,9 +108,8 @@ export async function createSpreadsheetFromListView(params = {}) {
         additionalContext: params.additionalContext,
         actionXmlId: params.actionXmlId,
     });
-    const fixture = getFixture();
     if (params.actions) {
-        await params.actions(fixture);
+        await params.actions();
     }
     /** Put the current list in a new spreadsheet */
     await invokeInsertListInSpreadsheetDialog(webClient.env);
@@ -123,7 +121,6 @@ export async function createSpreadsheetFromListView(params = {}) {
     await waitForDataLoaded(model);
     await animationFrame();
     return {
-        fixture,
         webClient,
         model,
         env: getSpreadsheetActionEnv(spreadsheetAction),

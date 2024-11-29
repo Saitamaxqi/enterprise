@@ -78,8 +78,7 @@ test("Display notification for new spreadsheet creation based on action response
     expect.verifySteps(["action_open_new_spreadsheet"]);
 
     await animationFrame(); // Wait for the notification to be displayed
-    const notification = document.querySelector(".o_notification_content");
-    expect(notification.textContent).toBe("New spreadsheet created in Documents");
+    expect(".o_notification_content").toHaveText("New spreadsheet created in Documents");
 });
 
 test("Action action_download_spreadsheet is correctly fired with topbar menu", async function () {

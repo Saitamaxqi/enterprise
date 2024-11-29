@@ -37,13 +37,9 @@ beforeEach(() => {
             </templates>
         </kanban>
     `;
-    HRTimesheet._views["grid,false"] = HRTimesheet._views["grid,false"].replace(
-        'js_class="timesheet_grid"',
-        'js_class="timer_timesheet_grid"',
-    ).replace(
-        'widget="float_time"',
-        'widget="timesheet_uom"',
-    );
+    HRTimesheet._views["grid,false"] = HRTimesheet._views["grid,false"]
+        .replace('js_class="timesheet_grid"', 'js_class="timer_timesheet_grid"')
+        .replace('widget="float_time"', 'widget="timesheet_uom"');
 });
 describe.current.tags("desktop");
 
@@ -52,7 +48,10 @@ test("hr.timesheet (kanban)(timer): switch view with GroupBy and start the timer
     await getService("action").doAction({
         res_model: "account.analytic.line",
         type: "ir.actions.act_window",
-        views: [[false, "grid"], [false, "kanban"]],
+        views: [
+            [false, "grid"],
+            [false, "kanban"],
+        ],
         context: { group_by: ["project_id", "task_id"] },
     });
 
@@ -72,7 +71,7 @@ test("hr.timesheet (kanban)(timer): start timer, set fields and switch view", as
             return {
                 step_timer: 30,
                 id: 4,
-            }
+            };
         } else if (method === "action_start_new_timesheet_timer") {
             timerRunning = true;
             return { id: 4 };
@@ -82,7 +81,10 @@ test("hr.timesheet (kanban)(timer): start timer, set fields and switch view", as
     await getService("action").doAction({
         res_model: "account.analytic.line",
         type: "ir.actions.act_window",
-        views: [[false, "kanban"], [false, "grid"]],
+        views: [
+            [false, "kanban"],
+            [false, "grid"],
+        ],
     });
 
     await click(".btn_start_timer");
@@ -104,7 +106,7 @@ test("hr.timesheet (kanban)(timer): unlink timesheet through timesheet_uom_timer
     HRTimesheet._records[0].is_timer_running = true;
     HRTimesheet._views["kanban,false"] = HRTimesheet._views["kanban,false"].replace(
         '<field name="unit_amount"/>',
-        '<field name="unit_amount" widget="timesheet_uom_timer"/><field name="is_timer_running" invisible="1"/>',
+        '<field name="unit_amount" widget="timesheet_uom_timer"/><field name="is_timer_running" invisible="1"/>'
     );
     onRpc(({ method }) => {
         if (method === "get_running_timer") {
@@ -152,7 +154,7 @@ test("Timer should not start when adding new record", async () => {
         } else if (method === "get_daily_working_hours") {
             return {};
         } else if (method === "get_server_time") {
-            return Promise.resolve(serializeDateTime(now));
+            return serializeDateTime(now);
         } else if (method === "get_create_edit_project_ids") {
             return [];
         }
@@ -174,7 +176,10 @@ test("Timer should not start when adding new record", async () => {
     await getService("action").doAction({
         res_model: "account.analytic.line",
         type: "ir.actions.act_window",
-        views: [[false, "list"], [false, "kanban"]],
+        views: [
+            [false, "list"],
+            [false, "kanban"],
+        ],
     });
 
     await click(".o_list_button_add");

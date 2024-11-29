@@ -6,16 +6,14 @@ import { mountView, onRpc } from "@web/../tests/web_test_helpers";
 import { HRTimesheet, defineTimesheetModels } from "./hr_timesheet_models";
 
 defineTimesheetModels();
-onRpc(({ method }) => {
-    if (method === "action_validate_timesheet") {
-        expect.step("action_validate_timesheet");
-        return Promise.resolve({
-            params: {
-                type: "danger",
-                message: "dummy message",
-            },
-        });
-    }
+onRpc("action_validate_timesheet", ({ method }) => {
+    expect.step("action_validate_timesheet");
+    return {
+        params: {
+            type: "danger",
+            message: "dummy message",
+        },
+    };
 });
 describe.current.tags("desktop");
 

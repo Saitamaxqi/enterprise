@@ -103,7 +103,8 @@ test("empty form editor", async () => {
     expect(".o_web_studio_form_view_editor .o_web_studio_hook").toHaveCount(0);
 });
 
-test.tags("desktop")("Form editor view buttons can be set to invisible", async () => {
+test.tags("desktop");
+test("Form editor view buttons can be set to invisible", async () => {
     onRpc("/web_studio/edit_view", async (request) => {
         const { params } = await request.json();
         expect(params.operations[0].target.xpath_info).toEqual([
@@ -635,7 +636,8 @@ test("field selection when editing a suboption", async () => {
     expect(".o_web_studio_property_suboption .o_select_menu").toHaveCount(1);
 });
 
-test.tags("desktop")("'class' attribute is editable in the sidebar with a tooltip", async () => {
+test.tags("desktop");
+test("'class' attribute is editable in the sidebar with a tooltip", async () => {
     const arch = `<form>
         <header>
             <button string="Test" type="object" class="oe_highlight"/>
@@ -674,7 +676,8 @@ test.tags("desktop")("'class' attribute is editable in the sidebar with a toolti
     );
 });
 
-test.tags("desktop")("the name of the selected element is displayed in the sidebar", async () => {
+test.tags("desktop");
+test("the name of the selected element is displayed in the sidebar", async () => {
     await mountViewEditor({
         type: "form",
         resModel: "coucou",
@@ -858,7 +861,7 @@ test("CharField can edit its placeholder_field option", async () => {
 });
 
 test("form editor - chatter edition", async () => {
-    onRpc("/web_studio/get_email_alias", () => Promise.resolve({ email_alias: "coucou" }));
+    onRpc("/web_studio/get_email_alias", () => ({ email_alias: "coucou" }));
     await mountViewEditor({
         type: "form",
         resModel: "coucou",
@@ -911,7 +914,8 @@ test("disable creation(no_create options) in many2many_avatar_user and many2many
     expect.verifySteps(["edit_view"]);
 });
 
-test.tags("desktop")("edit one2many form view (2 level) and check chatter allowed", async () => {
+test.tags("desktop");
+test("edit one2many form view (2 level) and check chatter allowed", async () => {
     Product._views = { "list,2": /*xml*/ `<list><field name='display_name'/></list>` };
     Partner._views = { "list,false": /*xml*/ `<list><field name='display_name'/></list>` };
     Coucou._views = {
@@ -1026,7 +1030,8 @@ test.tags("desktop")("edit one2many form view (2 level) and check chatter allowe
     expect(".o_web_studio_new_button_dialog .o-autocomplete--input").toHaveValue("Partner");
 });
 
-test.tags("desktop")("edit one2many list view that uses parent key [REQUIRE FOCUS]", async () => {
+test.tags("desktop");
+test("edit one2many list view that uses parent key [REQUIRE FOCUS]", async () => {
     Product._views = { "list,2": /*xml*/ `<list><field name='display_name'/></list>` };
     Coucou._views = {
         "form,1": /*xml*/ `
@@ -1103,7 +1108,8 @@ test.tags("desktop")("edit one2many list view that uses parent key [REQUIRE FOCU
     expect.verifySteps(["edit_view"]);
 });
 
-test.tags("desktop")("move a field in one2many list", async () => {
+test.tags("desktop");
+test("move a field in one2many list", async () => {
     Coucou._views = {
         "form,1": /*xml*/ `
             <form>
@@ -1194,7 +1200,8 @@ test.tags("desktop")("move a field in one2many list", async () => {
     expect.verifySteps(["edit_view"]);
 });
 
-test.tags("desktop")("One2Many list editor column_invisible in attrs ", async () => {
+test.tags("desktop");
+test("One2Many list editor column_invisible in attrs ", async () => {
     Coucou._views = {
         "form,1": /*xml*/ `
             <form>
@@ -1244,7 +1251,8 @@ test.tags("desktop")("One2Many list editor column_invisible in attrs ", async ()
     expect.verifySteps(["edit_view"]);
 });
 
-test.tags("desktop")("One2Many form datapoint doesn't contain the parent datapoint", async () => {
+test.tags("desktop");
+test("One2Many form datapoint doesn't contain the parent datapoint", async () => {
     /*
      * OPW-2125214
      * When editing a child o2m form with studio, the fields_get method tries to load

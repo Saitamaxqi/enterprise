@@ -222,10 +222,10 @@ test("graph view with custom chart type and order", async function () {
     await toggleMenuItem("Count");
     await insertInSpreadsheetAndClickLink(target);
     const action = getCurrentAction(webClient);
-    expect(action.context.graph_mode).toEqual("pie", {
+    expect(action.context.graph_mode).toBe("pie", {
         message: "It should be a pie chart",
     });
-    expect(action.context.graph_measure).toEqual("__count", {
+    expect(action.context.graph_measure).toBe("__count", {
         message: "It should have the custom measures",
     });
     expect(".fa-pie-chart.active").toHaveCount(1);

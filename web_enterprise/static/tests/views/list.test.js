@@ -48,7 +48,7 @@ test("add custom field button with other optional columns - studio not installed
     onRpc("search_read", ({ model }) => {
         if (model === "ir.module.module") {
             expect.step("studio_module_id");
-            return Promise.resolve([{ id: 42 }]);
+            return [{ id: 42 }];
         }
     });
     onRpc("button_immediate_install", ({ model, args }) => {
@@ -104,7 +104,7 @@ test("add custom field button without other optional columns - studio not instal
     onRpc("search_read", ({ model }) => {
         if (model === "ir.module.module") {
             expect.step("studio_module_id");
-            return Promise.resolve([{ id: 42 }]);
+            return [{ id: 42 }];
         }
     });
     onRpc("button_immediate_install", ({ model, args }) => {

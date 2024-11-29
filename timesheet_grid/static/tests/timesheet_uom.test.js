@@ -60,7 +60,8 @@ test("hr.timesheet (grid): timesheet_uom widget should be float_factor if uom is
     });
 });
 
-test.tags("desktop")("hr.timesheet (grid): clicking on the magnifying glass shouldn't toggle the cell", async () => {
+test.tags("desktop");
+test("hr.timesheet (grid): clicking on the magnifying glass shouldn't toggle the cell", async () => {
     patchWithCleanup(session.user_companies.allowed_companies[1], { timesheet_uom_id: 2 });
     const cell = await mountViewAndGetCell();
 

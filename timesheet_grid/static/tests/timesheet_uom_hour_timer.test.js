@@ -10,28 +10,32 @@ defineTimesheetModels();
 beforeEach(() => {
     patchSession();
     HRTimesheet._fields.is_timer_running = fields.Boolean();
-    HRTimesheet._records = [{
-        id: 1,
-        unit_amount: 1,
-        timer_start: false,
-        timer_pause: false,
-        display_timer: false,
-        is_timer_running: false,
-    }, {
-        id: 2,
-        unit_amount: 1,
-        timer_start: "2017-01-24 00:00:00",
-        timer_pause: "2017-01-24 23:00:00",
-        display_timer: true,
-        is_timer_running: false,
-    }, {
-        id: 3,
-        unit_amount: 1,
-        timer_start: "2017-01-24 00:00:00",
-        timer_pause: false,
-        display_timer: true,
-        is_timer_running: true,
-    }];
+    HRTimesheet._records = [
+        {
+            id: 1,
+            unit_amount: 1,
+            timer_start: false,
+            timer_pause: false,
+            display_timer: false,
+            is_timer_running: false,
+        },
+        {
+            id: 2,
+            unit_amount: 1,
+            timer_start: "2017-01-24 00:00:00",
+            timer_pause: "2017-01-24 23:00:00",
+            display_timer: true,
+            is_timer_running: false,
+        },
+        {
+            id: 3,
+            unit_amount: 1,
+            timer_start: "2017-01-24 00:00:00",
+            timer_pause: false,
+            display_timer: true,
+            is_timer_running: true,
+        },
+    ];
 });
 const mountViewArgs = {
     type: "list",
@@ -52,7 +56,7 @@ const mountViewArgs = {
 };
 const iconPath = 'div[name="unit_amount"] button i';
 function getNthRowPath(n) {
-    return`.o_list_table .o_data_row:nth-of-type(${n})`;
+    return `.o_list_table .o_data_row:nth-of-type(${n})`;
 }
 
 test("hr.timesheet (list)(timer): button is displayed when display_timer is true", async () => {
@@ -90,11 +94,9 @@ test("hr.timesheet (list)(timer): icon is corresponding to is_timer_running", as
 });
 
 test("hr.timesheet (list)(timer): correct rpc calls are performed (click play)", async () => {
-    onRpc(({ method }) => {
-        if (method === "action_timer_start") {
-            expect.step("action_timer_start");
-            return Promise.resolve(true);
-        }
+    onRpc("action_timer_start", ({ method }) => {
+        expect.step(method);
+        return true;
     });
 
     await mountView(mountViewArgs);
@@ -102,15 +104,13 @@ test("hr.timesheet (list)(timer): correct rpc calls are performed (click play)",
     expect(secondRowIconPath).toHaveClass("fa-play");
     await click(secondRowIconPath);
     await animationFrame();
-    expect.verifySteps([ "action_timer_start" ]);
+    expect.verifySteps(["action_timer_start"]);
 });
 
 test("hr.timesheet (list)(timer): correct rpc calls are performed (click stop)", async () => {
-    onRpc(({ method }) => {
-        if (method === "action_timer_stop") {
-            expect.step("action_timer_stop");
-            return Promise.resolve(true);
-        }
+    onRpc("action_timer_stop", ({ method }) => {
+        expect.step(method);
+        return true;
     });
 
     await mountView(mountViewArgs);
@@ -118,5 +118,5 @@ test("hr.timesheet (list)(timer): correct rpc calls are performed (click stop)",
     expect(thirdRowIconPath).toHaveClass("fa-stop");
     await click(thirdRowIconPath);
     await animationFrame();
-    expect.verifySteps([ "action_timer_stop" ]);
+    expect.verifySteps(["action_timer_stop"]);
 });

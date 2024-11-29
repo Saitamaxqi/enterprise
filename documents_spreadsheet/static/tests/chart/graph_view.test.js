@@ -176,7 +176,7 @@ test("graph with a contextual domain", async () => {
     const chartId = model.getters.getFigures(sheetId)[0].id;
 
     const chart = model.getters.getChartDefinition(chartId);
-    expect(chart.searchParams.domain).toEqual('[("foo", "=", uid)]');
+    expect(chart.searchParams.domain).toBe('[("foo", "=", uid)]');
     expect(model.exportData().sheets[0].figures[0].data.searchParams.domain).toEqual(
         '[("foo", "=", uid)]',
         { message: "domain is exported with the dynamic value" }

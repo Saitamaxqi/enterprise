@@ -17,7 +17,7 @@ const BASE64_PNG_HEADER = "iVBORw0KGg";
 
 test("EmployeeProfileFormView should call native updateAccount method when saving record", async () => {
     patchWithCleanup(mobileNativeMethods, {
-        updateAccount(options) {
+        async updateAccount(options) {
             const { avatar, name, username } = options;
             expect.step("should call updateAccount");
             expect(avatar.startsWith(BASE64_PNG_HEADER)).toBe(true, {
@@ -25,7 +25,6 @@ test("EmployeeProfileFormView should call native updateAccount method when savin
             });
             expect(name).toBe("Marc Demo");
             expect(username).toBe("demo");
-            return Promise.resolve();
         },
     });
     patchWithCleanup(user, { login: "demo", name: "Marc Demo" });

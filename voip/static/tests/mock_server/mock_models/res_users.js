@@ -1,10 +1,12 @@
-import { fields } from "@web/../tests/web_test_helpers";
 import { mailModels } from "@mail/../tests/mail_test_helpers";
-import { VoipProvider } from "./voip_provider";
+import { fields } from "@web/../tests/web_test_helpers";
 
 export class ResUsers extends mailModels.ResUsers {
-    voip_provider_id = fields.Generic({
-        default: () => VoipProvider._records[0].id,
+    voip_provider_id = fields.Many2one({
+        relation: "voip.provider",
+        default() {
+            return this.env["voip.provider"][0].id;
+        },
     });
 
     /** @override */

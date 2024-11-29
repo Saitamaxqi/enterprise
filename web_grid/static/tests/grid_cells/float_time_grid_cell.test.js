@@ -40,7 +40,8 @@ class Foo extends models.Model {
 
 defineModels([Grid, Foo]);
 
-test.tags("desktop")("FloatTimeGridCell in grid view", async () => {
+test.tags("desktop");
+test("FloatTimeGridCell in grid view", async () => {
     mockDate("2023-03-20 00:00:00");
     onRpc("grid_unavailability", () => {
         return {};

@@ -126,7 +126,7 @@ test("property fields are not exported", async () => {
     });
     Partner._fields.partner_properties = propertyField;
     const { model } = await createSpreadsheetFromListView({
-        actions: async (fixture) => {
+        actions: async () => {
             // display the property which is an optional column
             await contains(".o_optional_columns_dropdown_toggle").click();
             await contains(".o-dropdown--menu input[type='checkbox']").click();
@@ -289,14 +289,13 @@ test("Undo a list insertion closes the side panel", async function () {
     const [listId] = model.getters.getListIds();
     env.openSidePanel("LIST_PROPERTIES_PANEL", { listId });
     await animationFrame();
-    const fixture = getFixture();
     const titleSelector = ".o-sidePanelTitle";
     expect(titleSelector).toHaveText("List #1");
 
     model.dispatch("REQUEST_UNDO");
     model.dispatch("REQUEST_UNDO");
     await animationFrame();
-    expect(fixture.querySelector(titleSelector)).toBe(null);
+    expect(titleSelector).toHaveCount(0);
 });
 
 test("Add list in an existing spreadsheet", async () => {
@@ -318,7 +317,7 @@ test("Add list in an existing spreadsheet", async () => {
     await callback(model, env.__spreadsheet_stores__);
     expect(model.getters.getSheetIds().length).toBe(3);
     expect(model.getters.getSheetIds()[0]).toEqual(activeSheetId);
-    expect(model.getters.getSheetIds()[1]).toEqual("42");
+    expect(model.getters.getSheetIds()[1]).toBe("42");
     expect(".o-listing-details-side-panel").toHaveCount(1);
 });
 
@@ -367,8 +366,7 @@ test("Validates input and shows error message when input is invalid", async func
     await contains(".modal-body input").edit("");
     await contains(".modal-content > .modal-footer > .btn-primary").click();
 
-    await contains(".modal-body span.text-danger", { count: 1 });
-    expect(".modal-body span.text-danger").toHaveText("Please enter a valid number.");
+    expect(".modal-body span.text-danger:only").toHaveText("Please enter a valid number.");
 });
 
 test("Re-insert a list with a selected number of records", async function () {
@@ -768,7 +766,7 @@ test("list with a contextual domain", async () => {
     expect(model.getters.getListDefinition(listId).domain).toEqual(
         '[("date", "=", context_today())]'
     );
-    expect(model.exportData().lists[listId].domain).toEqual('[("date", "=", context_today())]', {
+    expect(model.exportData().lists[listId].domain).toBe('[("date", "=", context_today())]', {
         message: "domain is exported with the dynamic value",
     });
     expect.verifySteps([
@@ -1023,15 +1021,12 @@ test("Sorting from the list is displayed in the properties panel", async functio
     const [listId] = model.getters.getListIds();
     env.openSidePanel("LIST_PROPERTIES_PANEL", { listId });
     await animationFrame();
-    const fixture = getFixture();
-    const sortingRuleCards = fixture.querySelectorAll(".o_sorting_rule_column");
-    expect(sortingRuleCards[0].innerText).toBe("Bar");
-    expect(sortingRuleCards[1].innerText).toBe("Foo");
-    const selectOrderDropdowns = fixture.querySelectorAll(".o-select-order");
+    expect(".o_sorting_rule_column:eq(0)").toHaveText("Bar");
+    expect(".o_sorting_rule_column:eq(1)").toHaveText("Foo");
     /** Bar should be descending */
-    expect(selectOrderDropdowns[0].value).toBe("false");
+    expect(".o-select-order:eq(0)").toHaveValue("false");
     /** Foo should be ascending */
-    expect(selectOrderDropdowns[1].value).toBe("true");
+    expect(".o-select-order:eq(1)").toHaveValue("true");
 });
 
 test("Opening the sidepanel of a list while the panel of another list is open updates the side panel", async function () {
@@ -1077,7 +1072,7 @@ test("Duplicate a list from the side panel", async function () {
 test("List export from an action with an xml ID", async function () {
     const actionXmlId = "spreadsheet.partner_action";
     const { model } = await createSpreadsheetFromListView({ actionXmlId });
-    expect(model.getters.getListDefinition("1").actionXmlId).toEqual("spreadsheet.partner_action");
+    expect(model.getters.getListDefinition("1").actionXmlId).toBe("spreadsheet.partner_action");
 });
 
 test("List cells are highlighted when their side panel is open", async function () {

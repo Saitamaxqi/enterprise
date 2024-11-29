@@ -176,7 +176,8 @@ onRpc("grid_unavailability", () => {
 });
 onRpc("has_group", () => true);
 
-describe.tags("desktop")("grid_view_desktop", () => {
+describe.tags("desktop");
+describe("grid_view_desktop", () => {
     test("basic empty grid view", async () => {
         await mountView({
             type: "grid",
@@ -1944,7 +1945,8 @@ describe.tags("desktop")("grid_view_desktop", () => {
         expect.verifySteps(["scale_year"]);
     });
 });
-describe.tags("mobile")("grid_view_mobile", () => {
+describe.tags("mobile");
+describe("grid_view_mobile", () => {
     test("basic empty grid view in mobile", async () => {
         await mountView({
             type: "grid",

@@ -1,8 +1,9 @@
 import {
+    DocumentsDocument,
     defineDocumentSpreadsheetModels,
     defineDocumentSpreadsheetTestAction,
-    DocumentsDocument,
 } from "@documents_spreadsheet/../tests/helpers/data";
+import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import {
     createSpreadsheetFromPivotView,
     spawnPivotViewForSpreadsheet,
@@ -24,7 +25,6 @@ import {
     getCellValue,
     getEvaluatedCell,
 } from "@spreadsheet/../tests/helpers/getters";
-import { makeDocumentsSpreadsheetMockEnv } from "@documents_spreadsheet/../tests/helpers/model";
 import { getZoneOfInsertedDataSource } from "@spreadsheet/../tests/helpers/pivot";
 import { waitForDataLoaded } from "@spreadsheet/helpers/model";
 import {
@@ -239,7 +239,7 @@ test("groupby date field without interval defaults to month", async () => {
     expect(getEvaluatedCell(model, "B5").formattedValue).toBe("");
 
     setCellContent(model, "B4", '=PIVOT.VALUE(1,"probability:avg","date","10/2016","foo",1)');
-    expect(getEvaluatedCell(model, "B4").formattedValue).toEqual("11.00");
+    expect(getEvaluatedCell(model, "B4").formattedValue).toBe("11.00");
 });
 
 test("pivot with one level of group bys", async () => {
@@ -685,10 +685,10 @@ test("pivot with a contextual domain", async () => {
         },
     });
     const domain = model.getters.getPivotCoreDefinition(pivotId).domain;
-    expect(domain).toEqual('[("foo", "=", uid)]', {
+    expect(domain).toBe('[("foo", "=", uid)]', {
         message: "It should have the raw domain string",
     });
-    expect(model.exportData().pivots[pivotId].domain).toEqual('[("foo", "=", uid)]', {
+    expect(model.exportData().pivots[pivotId].domain).toBe('[("foo", "=", uid)]', {
         message: "domain is exported with the dynamic value",
     });
     expect.verifySteps(["read_group", "read_group"]);
@@ -1134,7 +1134,6 @@ test("Pivot export from an action with an xml ID", async function () {
 });
 
 test("Test Autofill component", async function () {
-    const fixture = getFixture();
     const { model } = await createSpreadsheetFromPivotView();
     selectCell(model, "A3");
     setCellContent(model, "B3", "");
@@ -1144,7 +1143,7 @@ test("Test Autofill component", async function () {
     // does not react well to the events
     model.dispatch("AUTOFILL_SELECT", { col: 1, row: 2 });
     await animationFrame();
-    expect(fixture.querySelector(".o-autofill-nextvalue")).toHaveText("1");
+    expect(".o-autofill-nextvalue:first").toHaveText("1");
     expect(getCellContent(model, "B2")).toBe(
         `=PIVOT.HEADER(1,"foo",1,"measure","probability:avg")`
     );
@@ -1159,7 +1158,7 @@ test("Inserted pivot is inserted with a table", async function () {
 
     expect(tables.length).toBe(1);
     expect(tables[0].range.zone).toEqual(pivotZone);
-    expect(tables[0].type).toEqual("static");
+    expect(tables[0].type).toBe("static");
     expect(tables[0].config).toEqual({ ...PIVOT_TABLE_CONFIG, numberOfHeaders: 1 });
 });
 
@@ -1186,6 +1185,6 @@ test("The table has the correct number of headers when inserting a pivot", async
     const pivotZone = getZoneOfInsertedDataSource(model, "pivot", pivotId);
 
     expect(tables[0].range.zone).toEqual(pivotZone);
-    expect(tables[0].type).toEqual("static");
+    expect(tables[0].type).toBe("static");
     expect(tables[0].config.numberOfHeaders).toBe(3);
 });

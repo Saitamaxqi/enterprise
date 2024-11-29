@@ -15,7 +15,7 @@ defineAppointmentModels();
 
 beforeEach(function () {
     mockDate("2022-01-05 00:00:00");
-    onRpc("check_synchronization_status", () => Promise.resolve({}));
+    onRpc("check_synchronization_status", () => ({}));
 });
 
 onRpc("/appointment/appointment_type/get_staff_user_appointment_types", function () {
@@ -29,22 +29,16 @@ onRpc("/appointment/appointment_type/get_staff_user_appointment_types", function
         "name",
     ]);
 
-    return Promise.resolve({
+    return {
         appointment_types_info: appointment_types_info,
-    });
+    };
 });
 
-onRpc("/web/dataset/call_kw/res.partner/get_attendee_detail", async () => {
-    return Promise.resolve([]);
-});
+onRpc("/web/dataset/call_kw/res.partner/get_attendee_detail", () => []);
 
-onRpc("/web/dataset/call_kw/res.users/has_group", async (route) => {
-    return Promise.resolve(true);
-});
+onRpc("/web/dataset/call_kw/res.users/has_group", () => true);
 
-onRpc("/calendar/check_credentials", async () => {
-    return Promise.resolve({});
-});
+onRpc("/calendar/check_credentials", () => ({}));
 
 onRpc("/web/dataset/call_kw/calendar.event/get_default_duration", () => {
     return 1;

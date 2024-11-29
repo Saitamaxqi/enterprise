@@ -7,7 +7,7 @@ import {
     patchUiSize,
     SIZES,
     start,
-    startServer
+    startServer,
 } from "@mail/../tests/mail_test_helpers";
 import { beforeEach, test } from "@odoo/hoot";
 import { asyncStep, onRpc, serverState, waitForSteps } from "@web/../tests/web_test_helpers";
@@ -24,11 +24,11 @@ const ROUTES_TO_IGNORE = [
 const openPreparedView = async (size) => {
     patchUiSize({ size: size });
     onRpcBefore((route, args) => {
-        if (ROUTES_TO_IGNORE.includes(route)) {
+        if (
+            ROUTES_TO_IGNORE.includes(route) ||
+            route.includes("/web/static/lib/pdfjs/web/viewer.html")
+        ) {
             return;
-        }
-        if (route.includes("/web/static/lib/pdfjs/web/viewer.html")) {
-            return Promise.resolve();
         }
         asyncStep(`${route} - ${JSON.stringify(args)}`);
     });

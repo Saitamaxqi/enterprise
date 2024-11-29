@@ -1,7 +1,7 @@
 import {
+    defineDocumentSpreadsheetModels,
     DocumentsDocument,
     getBasicPermissionPanelData,
-    defineDocumentSpreadsheetModels,
 } from "@documents_spreadsheet/../tests/helpers/data";
 import { createSpreadsheetFromPivotView } from "@documents_spreadsheet/../tests/helpers/pivot_helpers";
 import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
@@ -233,9 +233,6 @@ test("toggle favorite", async function () {
                     message: "It should write the correct document",
                 });
                 return true;
-            }
-            if (route.includes("dispatch_spreadsheet_message")) {
-                return Promise.resolve();
             }
         },
     });

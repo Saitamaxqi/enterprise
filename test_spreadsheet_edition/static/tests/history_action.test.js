@@ -1,4 +1,4 @@
-import { expect, getFixture, test } from "@odoo/hoot";
+import { expect, test } from "@odoo/hoot";
 import { animationFrame, mockTimeZone } from "@odoo/hoot-mock";
 import { helpers, registries } from "@odoo/o-spreadsheet";
 import { defineTestSpreadsheetEditionModels } from "@test_spreadsheet_edition/../tests/helpers/data";
@@ -9,6 +9,7 @@ defineTestSpreadsheetEditionModels();
 
 const { topbarMenuRegistry } = registries;
 
+const revisionSelector = ".o-sidePanel .o-version-history-item";
 const uuidGenerator = new helpers.UuidGenerator();
 
 function createRevision(revisions, type, payload) {
@@ -113,12 +114,12 @@ test("load from snapshot when missing revisions", async function () {
     expect.verifySteps(["fromSnapshot-false"]);
 
     let dialog = document.querySelector(".o_dialog");
-    expect(dialog !== null).toBe(true, { message: "Dialog to reload with snapshot opened" });
+    expect(dialog).not.toBe(null, { message: "Dialog to reload with snapshot opened" });
     await contains(dialog.querySelector("button.btn-primary")).click();
     expect.verifySteps(["fromSnapshot-true"]);
     await animationFrame();
     dialog = document.querySelector(".o_dialog");
-    expect(dialog !== null).toBe(true, { message: "Dialog to warn user of corrupted data" });
+    expect(dialog).not.toBe(null, { message: "Dialog to warn user of corrupted data" });
     await contains(dialog.querySelector("button.btn-primary")).click();
     expect.verifySteps(["editAction-spreadsheet.test"]);
 });
@@ -148,45 +149,44 @@ test("Side panel content", async function () {
             }
         },
     });
-    const revisions = document.querySelectorAll(".o-sidePanel .o-version-history-item");
-    expect(revisions.length).toBe(4, { message: "3 revisions provided + initial state" });
+    expect(revisionSelector).toHaveCount(4, {
+        message: "3 revisions provided + initial state",
+    });
 
     // Revision info
-    expect(revisions[0].querySelector(".o-sp-badge").textContent).toBe(
-        "Current"
-    );
-    expect(revisions[1].querySelector(".o-version-history-timestamp").textContent).toBe(
+    expect(`${revisionSelector}:eq(0) .o-sp-badge`).toHaveText("Current");
+    expect(`${revisionSelector}:eq(1) .o-version-history-timestamp`).toHaveText(
         "Sep 9, 2023, 2:00 PM",
         { message: "if the revision has a name" }
     );
-    expect(revisions[2].querySelector(".o-version-history-timestamp")).toBe(null, {
+    expect(`${revisionSelector}:eq(2) .o-version-history-timestamp`).toHaveCount(0, {
         message: "if the revision has no name",
     });
 
     // Revision name
-    expect(revisions[0].querySelector(".o-version-history-item-text input")).toHaveValue(
+    expect(`${revisionSelector}:eq(0) .o-version-history-item-text input`).toHaveValue(
         "revision 3",
         { message: "if the revision has a name" }
     );
-    expect(revisions[1].querySelector(".o-version-history-item-text input")).toHaveValue(
+    expect(`${revisionSelector}:eq(1) .o-version-history-item-text input`).toHaveValue(
         "revision 2",
         { message: "if the revision has a name" }
     );
-    expect(revisions[2].querySelector(".o-version-history-item-text input")).toHaveValue(
+    expect(`${revisionSelector}:eq(2) .o-version-history-item-text input`).toHaveValue(
         "Sep 9, 2023, 2:00 PM",
         { message: "if the revision does not have a name" }
     );
 
     // contributors
-    expect(revisions[0].querySelector(".o-version-history-item-text input")).toHaveValue(
+    expect(`${revisionSelector}:eq(0) .o-version-history-item-text input`).toHaveValue(
         "revision 3",
         { message: "if the revision has a name" }
     );
-    expect(revisions[1].querySelector(".o-version-history-item-text input")).toHaveValue(
+    expect(`${revisionSelector}:eq(1) .o-version-history-item-text input`).toHaveValue(
         "revision 2",
         { message: "if the revision has a name" }
     );
-    expect(revisions[2].querySelector(".o-version-history-item-text input")).toHaveValue(
+    expect(`${revisionSelector}:eq(2) .o-version-history-item-text input`).toHaveValue(
         "Sep 9, 2023, 2:00 PM",
         { message: "if the revision does not have a name" }
     );
@@ -208,9 +208,8 @@ test("Clicking on initial state resets the data without any revisions", async fu
         },
     });
     expect(model.getters.getSheetIds().length).toBe(3);
-    const revisions = document.querySelectorAll(".o-sidePanel .o-version-history-item");
     // rollback to before the first revision. i.e. undo all changes
-    await contains([...revisions].at(-1)).click();
+    await contains(`${revisionSelector}:last`).click();
     expect(model.getters.getSheetIds().length).toBe(1);
 });
 
@@ -230,9 +229,8 @@ test("Side panel click loads the old version", async function () {
         },
     });
     expect(model.getters.getSheetIds().length).toBe(3);
-    const revisions = document.querySelectorAll(".o-sidePanel .o-version-history-item");
     // rollback to the before last revision. i.e. undo a CREATE_SHEET
-    await contains([...revisions].at(-2)).click();
+    await contains(`${revisionSelector}:eq(-2)`).click();
     expect(model.getters.getSheetIds().length).toBe(2);
 });
 
@@ -280,13 +278,11 @@ test("Load more revisions", async function () {
             }
         },
     });
-    const revisions = document.querySelectorAll(".o-sidePanel .o-version-history-item");
-    expect(revisions.length).toBe(50, { message: "the first 50 revisions are loaded" });
+    expect(revisionSelector).toHaveCount(50, { message: "the first 50 revisions are loaded" });
     const loadMore = document.querySelector(".o-sidePanel .o-version-history-load-more");
-    expect(loadMore !== null).toBe(true, { message: "Load more button is visible" });
+    expect(loadMore).not.toBe(null, { message: "Load more button is visible" });
     await contains(loadMore).click();
-    const newRevisions = document.querySelectorAll(".o-sidePanel .o-version-history-item");
-    expect(newRevisions.length).toBe(76, {
+    expect(revisionSelector).toHaveCount(76, {
         message: "the first 50 revisions are loaded + the initial state",
     });
 });
@@ -324,9 +320,8 @@ test("Side panel > make copy", async function () {
         },
     });
 
-    const revisions = document.querySelectorAll(".o-sidePanel .o-version-history-item");
-    await contains(revisions[1]).click();
-    await contains(revisions[1].querySelector(".o-version-history-menu")).click();
+    await contains(`${revisionSelector}:eq(1)`).click();
+    await contains(`${revisionSelector}:eq(1) .o-version-history-menu`).click();
 
     const menuItems = document.querySelectorAll(".o-menu .o-menu-item");
     await contains(menuItems[1]).click();
@@ -385,16 +380,11 @@ test("Side panel > restore revision and confirm", async function () {
             }
         },
     });
-    const fixture = getFixture();
-    const revisions = fixture.querySelectorAll(".o-sidePanel .o-version-history-item");
-    await contains(revisions[1]).click();
-    await contains(revisions[1].querySelector(".o-version-history-menu")).click();
+    await contains(`${revisionSelector}:eq(1)`).click();
+    await contains(`${revisionSelector}:eq(1) .o-version-history-menu`).click();
+    await contains(".o-menu .o-menu-item:eq(2)").click();
+    await contains(".o_dialog .btn-primary").click();
 
-    const menuItems = fixture.querySelectorAll(".o-menu .o-menu-item");
-    await contains(menuItems[2]).click();
-
-    let dialog = document.querySelector(".o_dialog");
-    await contains(dialog.querySelector(".btn-primary")).click();
     expect.verifySteps(["restored"]);
 });
 
@@ -418,16 +408,11 @@ test("Side panel > restore revision and cancel", async function () {
             }
         },
     });
-    const fixture = getFixture();
-    const revisions = fixture.querySelectorAll(".o-sidePanel .o-version-history-item");
-    await contains(revisions[1]).click();
-    await contains(revisions[1].querySelector(".o-version-history-menu")).click();
+    await contains(`${revisionSelector}:eq(1)`).click();
+    await contains(`${revisionSelector}:eq(1) .o-version-history-menu`).click();
+    await contains(".o-menu .o-menu-item:eq(2)").click();
+    await contains(".o_dialog footer .btn:eq(2)").click();
 
-    const menuItems = fixture.querySelectorAll(".o-menu .o-menu-item");
-    await contains(menuItems[2]).click();
-
-    const buttons = document.querySelectorAll(".o_dialog footer .btn");
-    await contains(buttons[2]).click();
     expect(".o_dialog").toHaveCount(0);
 });
 
@@ -458,16 +443,11 @@ test("Side panel > restore revision but copy instead", async function () {
             }
         },
     });
-    const fixture = getFixture();
-    const revisions = fixture.querySelectorAll(".o-sidePanel .o-version-history-item");
-    await contains(revisions[1]).click();
-    await contains(revisions[1].querySelector(".o-version-history-menu")).click();
+    await contains(`${revisionSelector}:eq(1)`).click();
+    await contains(`${revisionSelector}:eq(1) .o-version-history-menu`).click();
+    await contains(".o-menu .o-menu-item:eq(2)").click();
+    await contains(".o_dialog footer .btn:eq(1)").click();
 
-    const menuItems = fixture.querySelectorAll(".o-menu .o-menu-item");
-    await contains(menuItems[2]).click();
-
-    const buttons = document.querySelectorAll(".o_dialog footer .btn");
-    await contains(buttons[1]).click();
     expect.verifySteps(["forking"]);
 });
 

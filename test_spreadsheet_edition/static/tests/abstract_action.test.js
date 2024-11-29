@@ -1,17 +1,29 @@
 import { expect, test } from "@odoo/hoot";
-import { click } from "@odoo/hoot-dom";
-import { animationFrame } from "@odoo/hoot-mock";
+import { animationFrame, rightClick, waitFor } from "@odoo/hoot-dom";
 import { EventBus } from "@odoo/owl";
 
-import { registries, helpers } from "@odoo/o-spreadsheet";
+import { helpers, registries } from "@odoo/o-spreadsheet";
 import { WebClient } from "@web/webclient/webclient";
 
-import { contains, mountWithCleanup, mockService, getService, onRpc } from "@web/../tests/web_test_helpers";
-import { createSpreadsheetTestAction } from "@test_spreadsheet_edition/../tests/helpers/helpers";
-import { defineTestSpreadsheetEditionModels, SpreadsheetTest } from "@test_spreadsheet_edition/../tests/helpers/data";
-import { insertPivot } from "@spreadsheet_edition/../tests/helpers/collaborative_helpers";
-import { setCellContent, addGlobalFilter, setGlobalFilterValue } from "@spreadsheet/../tests/helpers/commands";
+import {
+    addGlobalFilter,
+    setCellContent,
+    setGlobalFilterValue,
+} from "@spreadsheet/../tests/helpers/commands";
 import { doMenuAction } from "@spreadsheet/../tests/helpers/ui";
+import { insertPivot } from "@spreadsheet_edition/../tests/helpers/collaborative_helpers";
+import {
+    defineTestSpreadsheetEditionModels,
+    SpreadsheetTest,
+} from "@test_spreadsheet_edition/../tests/helpers/data";
+import { createSpreadsheetTestAction } from "@test_spreadsheet_edition/../tests/helpers/helpers";
+import {
+    contains,
+    getService,
+    mockService,
+    mountWithCleanup,
+    onRpc,
+} from "@web/../tests/web_test_helpers";
 
 const { cellMenuRegistry } = registries;
 const { toZone } = helpers;
@@ -19,18 +31,22 @@ const { toZone } = helpers;
 defineTestSpreadsheetEditionModels();
 
 test("custom colors in color picker", async function () {
-    onRpc("/spreadsheet/data/*", () => {
-        return {
-            data: {},
-            name: "test",
-            company_colors: ["#875A7B", "not a valid color"],
-        };
-    }, { pure: true })
+    onRpc(
+        "/spreadsheet/data/*",
+        () => {
+            return {
+                data: {},
+                name: "test",
+                company_colors: ["#875A7B", "not a valid color"],
+            };
+        },
+        { pure: true }
+    );
     const { model } = await createSpreadsheetTestAction("spreadsheet_test_action");
     expect(model.getters.getCustomColors()).toEqual(["#875A7B"]);
 });
 
-test("preserve global filters when navigating through breadcrumb", async function (assert) {
+test("preserve global filters when navigating through breadcrumb", async function () {
     const { model, env } = await createSpreadsheetTestAction("spreadsheet_test_action");
     await insertPivot(model);
     setCellContent(model, "A1", '=PIVOT.VALUE(1, "probability")');
@@ -52,7 +68,7 @@ test("preserve global filters when navigating through breadcrumb", async functio
     expect(".o_multi_record_selector").toHaveText("xphone");
 });
 
-test("receives collaborative messages when action is restored", async function (assert) {
+test("receives collaborative messages when action is restored", async function () {
     const mockBusService = {
         _bus: new EventBus(),
         subscribe(eventName, handler) {
@@ -68,12 +84,14 @@ test("receives collaborative messages when action is restored", async function (
     };
     mockService("bus_service", mockBusService);
     const spreadsheetData = {
-        sheets: [{
-            id: "sheet1",
-            cells: {
-                A1: '=PIVOT.VALUE(1, "probability:sum")',
-            }
-        }],
+        sheets: [
+            {
+                id: "sheet1",
+                cells: {
+                    A1: '=PIVOT.VALUE(1, "probability:sum")',
+                },
+            },
+        ],
         pivots: {
             1: {
                 type: "ODOO",
@@ -86,11 +104,13 @@ test("receives collaborative messages when action is restored", async function (
         },
     };
     const spreadsheetId = 1;
-    SpreadsheetTest._records = [{
-        id: spreadsheetId,
-        name: "my test spreadsheet",
-        spreadsheet_data: JSON.stringify(spreadsheetData),
-    }]
+    SpreadsheetTest._records = [
+        {
+            id: spreadsheetId,
+            name: "my test spreadsheet",
+            spreadsheet_data: JSON.stringify(spreadsheetData),
+        },
+    ];
     await mountWithCleanup(WebClient);
     await getService("action").doAction({
         type: "ir.actions.client",
@@ -101,10 +121,10 @@ test("receives collaborative messages when action is restored", async function (
         },
     });
     await animationFrame();
-    await click(".o-grid-overlay", { button: 2, position: "top-left" });
+    await rightClick(".o-grid-overlay", { position: "top-left" });
     await animationFrame();
     await contains('.o-menu-item[data-name="pivot_see_records"]').click();
-    await contains('.o_list_renderer');
+    await waitFor(".o_list_renderer");
     const revisionWebSocketMessage = {
         id: spreadsheetId,
         type: "REMOTE_REVISION",
@@ -114,13 +134,13 @@ test("receives collaborative messages when action is restored", async function (
         clientId: "raoul",
         commands: [
             {
-                "type": "SET_FORMATTING",
-                "sheetId": "sheet1",
-                "target": [toZone("A1")],
-                "style": { "bold": true },
-            }
-        ]
-    }
+                type: "SET_FORMATTING",
+                sheetId: "sheet1",
+                target: [toZone("A1")],
+                style: { bold: true },
+            },
+        ],
+    };
     // simulate a collaborative revision by pushing the revision
     // to the websocket bus.
     getService("bus_service").notify({
@@ -129,6 +149,6 @@ test("receives collaborative messages when action is restored", async function (
         payload: revisionWebSocketMessage,
     });
     await animationFrame();
-    await contains('.o_back_button').click();
+    await contains(".o_back_button").click();
     expect('.o-menu-item-button[title="Bold (Ctrl+B)"]').toHaveClass("active");
 });

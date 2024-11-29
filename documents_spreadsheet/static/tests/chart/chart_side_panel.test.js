@@ -1,17 +1,17 @@
-import { patchWithCleanup, contains, onRpc, makeServerError } from "@web/../tests/web_test_helpers";
-import { animationFrame } from "@odoo/hoot-mock";
-import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
-import { expect, test, beforeEach, getFixture, describe } from "@odoo/hoot";
-import { createBasicChart } from "@spreadsheet/../tests/helpers/commands";
-import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
 import {
     createSpreadsheetFromGraphView,
     openChartSidePanel,
 } from "@documents_spreadsheet/../tests/helpers/chart_helpers";
-import { GraphRenderer } from "@web/views/graph/graph_renderer";
-import { patchGraphSpreadsheet } from "@spreadsheet_edition/assets/graph_view/graph_view";
+import { defineDocumentSpreadsheetModels } from "@documents_spreadsheet/../tests/helpers/data";
+import { createSpreadsheet } from "@documents_spreadsheet/../tests/helpers/spreadsheet_test_utils";
+import { beforeEach, describe, expect, getFixture, test } from "@odoo/hoot";
+import { animationFrame } from "@odoo/hoot-mock";
 import { registries } from "@odoo/o-spreadsheet";
+import { createBasicChart } from "@spreadsheet/../tests/helpers/commands";
+import { patchGraphSpreadsheet } from "@spreadsheet_edition/assets/graph_view/graph_view";
 import * as dsHelpers from "@web/../tests/core/tree_editor/condition_tree_editor_test_helpers";
+import { contains, makeServerError, onRpc, patchWithCleanup } from "@web/../tests/web_test_helpers";
+import { GraphRenderer } from "@web/views/graph/graph_renderer";
 
 defineDocumentSpreadsheetModels();
 describe.current.tags("desktop");
@@ -257,7 +257,7 @@ describe("trend line", () => {
             display: true,
         });
         const runtime = model.getters.getChartRuntime(chartId);
-        expect(runtime.chartJsConfig.data.datasets.length).toEqual(2);
+        expect(runtime.chartJsConfig.data.datasets.length).toBe(2);
     });
 
     test("Can change trend type", async function () {
@@ -280,7 +280,7 @@ describe("trend line", () => {
 
         await contains(".trend-type-selector").select("logarithmic");
         definition = model.getters.getChartDefinition(chartId);
-        expect(definition.dataSets[0].trend?.type).toEqual("logarithmic");
+        expect(definition.dataSets[0].trend?.type).toBe("logarithmic");
     });
 
     test("Can change polynomial degree", async function () {
@@ -334,7 +334,7 @@ describe("trend line", () => {
 
         await contains(".trend-order-input").select("1");
         definition = model.getters.getChartDefinition(chartId);
-        expect(definition.dataSets[0].trend?.order).toEqual(1);
+        expect(definition.dataSets[0].trend?.order).toBe(1);
     });
 });
 
