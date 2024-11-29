@@ -6,7 +6,7 @@
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
-                <field name="l10n_ke_customs_import_ids" invisible="1"/>
+                <field name="l10n_ke_customs_import_ids" invisible="1" groups="account.group_account_invoice"/>
                 <button type="object"
                         name="action_view_l10n_ke_edi_customs_import"
                         class="oe_stat_button"
