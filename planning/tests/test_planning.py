@@ -597,6 +597,22 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         slots.write({'resource_id': self.resource_bert.id})
         self.assertEqual(slots.resource_id, self.resource_bert)
 
+    def test_write_without_resource(self):
+        slot = self.env['planning.slot'].create(
+            {'start_datetime': datetime(2024, 5, 10, 8, 0), 'end_datetime': datetime(2024, 5, 10, 17, 0)}
+        )
+        slot.write({
+            'repeat' : True,
+            'recurrence_update': 'all',
+            'start_datetime': datetime(2024, 5, 10, 9, 0),
+            'end_datetime': datetime(2024, 5, 10, 18, 0),
+        })
+        self.assertRecordValues(slot, [{
+            'repeat': True,
+            'start_datetime': datetime(2024, 5, 10, 9, 0),
+            'end_datetime': datetime(2024, 5, 10, 18, 0),
+        }])
+
     def test_compute_company_planning_slot(self):
         self.assertEqual(self.slot.company_id, self.env.company, "The slot's company should be the current one.")
         company = self.env['res.company'].create({"name": "Test company"})

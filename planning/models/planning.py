@@ -842,7 +842,7 @@ class PlanningSlot(models.Model):
             else:
                 recurrence_slots = self.search([('recurrency_id', 'in', self.recurrency_id.ids)])
                 datetime_keys = values.keys() & {'start_datetime', 'end_datetime'}
-                if datetime_keys:
+                if datetime_keys and recurrence_slots:
                     slot = recurrence_slots[-1]
                     values["repeat_type"] = slot.repeat_type    # this is to ensure that the subsequent slots are recreated
                     values.update({
