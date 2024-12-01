@@ -7,6 +7,7 @@ from odoo.tests import tagged
 from odoo.addons.account_reports.tests.common import TestAccountReportsCommon
 
 from freezegun import freeze_time
+from unittest.mock import patch
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install')
@@ -553,4 +554,43 @@ class BelgiumPartnerVatListingTest(TestAccountReportsCommon):
         self.assertXmlTreeEqual(
             self.get_xml_tree_from_string(self.env[self.report._get_custom_handler_model()].partner_vat_listing_export_to_xml(options)['file_content']),
             self.get_xml_tree_from_string(expected_xml)
+        )
+
+    @freeze_time('2025-11-18')
+    def test_generate_partner_vat_listing_activity(self):
+        invoice = self.env['account.move'].create({
+            'partner_id': self.partner_a.id,
+            'move_type': 'out_invoice',
+            'invoice_date': fields.Date.today(),
+            'invoice_line_ids': [
+                Command.create({
+                    'name': 'Goods',
+                    'price_unit': 5000,
+                    'quantity': 1,
+                })
+            ],
+        })
+        invoice.action_post()
+
+        report =  self.env.ref('l10n_be.tax_report_vat')
+
+        closing_entry = (
+            self.env['account.generic.tax.report.handler']
+            .with_context({'override_tax_closing_warning': True})
+            ._get_periodic_vat_entries(
+                report.get_options({'date': {'mode': 'range', 'filter': 'this_month'}})
+            )
+        )
+
+        action = closing_entry.action_post()
+
+        with patch.object(self.env.registry['account.move'], '_get_vat_report_attachments', autospec=True, side_effect=lambda *args, **kwargs: []):
+            closing_entry.with_context(action.get('context') | {'l10n_be_reports_generation_options': {'client_nihil': True}}).action_post()
+
+        self.assertEqual(
+            self.env['mail.activity'].search_count([
+                ('res_id', '=', closing_entry.id),
+                ('activity_type_id', '=', self.env.ref('l10n_be_reports.partner_vat_listing_report_activity').id)
+            ]),
+            1
         )

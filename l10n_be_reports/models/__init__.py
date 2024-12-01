@@ -10,3 +10,5 @@ from . import res_partner
 from . import res_company
 from . import account_325_form
 from . import account_281_50_form
+from . import mail_activity_type
+from . import account_move
