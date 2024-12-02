@@ -36,12 +36,15 @@ class DocumentsDocument(models.Model):
             ])
         return domain
 
+    def _project_folder_in_self_or_ancestors(self, project_folder):
+        project_folder_ancestors = {int(ancestor_id) for ancestor_id in project_folder.parent_path.split('/')[:-1]}
+        return project_folder_ancestors & set(self.ids)
+
     @api.ondelete(at_uninstall=False)
     def unlink_except_project_folder(self):
         project_folder = self.env.ref('documents_project.document_project_folder')
-        project_folder_ancestors = {int(ancestor_id) for ancestor_id in project_folder.sudo().parent_path.split('/')[:-1]}
-        if project_folder_ancestors & set(self.ids):
-            raise UserError(_('The "%s" folder is required by the Project application and cannot be deleted.', project_folder.name))
+        if self._project_folder_in_self_or_ancestors(project_folder):
+            raise UserError(_('The "%s" workspace is required by the Project application and cannot be deleted.', project_folder.name))
 
     @api.constrains('company_id')
     def _check_no_company_on_projects_folder(self):
@@ -76,6 +79,9 @@ class DocumentsDocument(models.Model):
             and (partner := folder_values.get('partner_id'))
         ):
             documents_without_partner.partner_id = partner
+        project_folder = self.env.ref('documents_project.document_project_folder')
+        if not vals.get('active', True) and self._project_folder_in_self_or_ancestors(project_folder):
+            raise UserError(_('The "%s" workspace is required by the Project application and cannot be archived.', project_folder.name))
         return write_result
 
     def _get_link_to_project_values(self):
