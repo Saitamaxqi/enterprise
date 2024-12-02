@@ -15,11 +15,11 @@
     </template>
 
     <template id="products_item" inherit_id="website_sale.products_item">
-        <xpath expr="//span[@itemprop='priceCurrency']" position="after">
+        <t name="product_base_price" position="after">
             <span t-if="template_price_vals.get('is_subscription') and template_price_vals['is_plan_possible']" class="h6">
                 <span class="o_subscription_unit" t-esc="template_price_vals['temporal_unit_display']"/>
             </span>
-        </xpath>
+        </t>
     </template>
 
     <template id="subscription_product_price" inherit_id="website_sale.product_price" name="Subscription Product Price">

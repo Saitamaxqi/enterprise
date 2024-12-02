@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <template id="rental_products_price" inherit_id="website_sale.product_price" name="Rental Product Price">
-        <xpath expr="//div[@itemprop='offers']" position="attributes">
+        <div name="product_price" position="attributes">
             <attribute name="t-attf-class" separator=" " add="{{'o_hidden' if combination_info.get('is_rental') else ''}}"/>
-        </xpath>
+        </div>
         <xpath expr="//span[hasclass('oe_price')]" position="after">
             <t t-if="combination_info.get('is_rental')">
                 <input type="hidden" name="is_rental" t-att-value="combination_info['is_rental']"/>
@@ -23,13 +23,13 @@
         <xpath expr="//span[hasclass('oe_price')]" position="attributes">
             <attribute name="t-if">not combination_info.get('is_rental')</attribute>
         </xpath>
-        <xpath expr="//span[@itemprop='listPrice']" position="attributes">
+        <span name="product_list_price" position="attributes">
             <attribute name="t-if">not combination_info.get('is_rental')</attribute>
-        </xpath>
+        </span>
         <div name="product_list_price_container" position="attributes">
             <attribute name="t-if">not combination_info.get('is_rental')</attribute>
         </div>
-        <xpath expr="//div[@itemprop='offers']" position="after">
+        <div name="product_price" position="after">
             <div t-if="combination_info.get('is_rental')" class="d-inline-block mt-2 mb-3">
                 <div class="h3">
                     <span
@@ -50,7 +50,7 @@
                     </span>
                 </div>
             </div>
-            </xpath>
+        </div>
     </template>
 
     <template id="rental_pricing_table" name="Rental Pricing Table">
@@ -209,14 +209,14 @@
             <span t-if="product.rent_ok and template_price_vals['rental_duration']
                 and (not website.prevent_zero_price_sale or template_price_vals['price_reduce'])" class="h6">from</span>
         </xpath>
-        <xpath expr="//span[@itemprop='priceCurrency']" position="after">
+        <t name="product_base_price" position="after">
             <span t-if="product.rent_ok and template_price_vals['rental_duration']
                 and (not website.prevent_zero_price_sale or template_price_vals['price_reduce'])" class="h6">
                 <span>per</span>
                 <span t-if="template_price_vals['rental_duration'] > 1" t-esc="template_price_vals['rental_duration']"/>
                 <span t-esc="template_price_vals['rental_unit']"/>
             </span>
-        </xpath>
+        </t>
     </template>
 
     <template id="rental_search_result_price">
