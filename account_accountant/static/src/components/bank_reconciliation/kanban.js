@@ -1127,7 +1127,7 @@ export class BankRecKanbanController extends KanbanController {
 
         let clickedColumn = null;
         const target = ev.target.tagName === "TD" ? ev.target : ev.target.closest("td");
-        if (target.attributes && target.attributes.field) {
+        if (target?.attributes && target.attributes.field) {
             clickedColumn = target.attributes.field.value;
         }
 
