@@ -1670,6 +1670,78 @@ describe("grid_view_desktop", () => {
         });
     });
 
+    test("range step should correctly be taken into account to load data", async () => {
+        expect.assertions(8 + 7);
+
+        let rangeStep = "day";
+        onRpc("web_read_group", (args) => {
+            expect(args.kwargs.groupby).toEqual([`date:${rangeStep}`, "project_id", "task_id"]);
+        });
+        await mountView({
+            type: "grid",
+            resModel: "analytic.line",
+            arch: `
+                <grid display_empty="1">
+                    <field name="project_id" type="row"/>
+                    <field name="task_id" type="row"/>
+                    <field name="date" type="col">
+                        <range name="day" string="Day" span="day" step="day"/>
+                        <range name="day2" string="Day2" span="day" step="month"/>
+                        <range name="week" string="Week" span="week" step="day"/>
+                        <range name="week2" string="Week2" span="week" step="month"/>
+                        <range name="month" string="Month" span="month" step="day"/>
+                        <range name="month2" string="Month2" span="month" step="month"/>
+                        <range name="year" string="Year" span="year" step="day"/>
+                        <range name="year2" string="Year2" span="year" step="month"/>
+                    </field>
+                    <field name="unit_amount" type="measure"/>
+                </grid>
+            `,
+        });
+        await contains(".scale_button_selection").click();
+        rangeStep = "month";
+        await contains(".o-dropdown--menu .o_scale_button_day2").click();
+        expect(".o_view_scale_selector button.scale_button_selection").toHaveText("Day2", {
+            message: "The active range should be Day2",
+        });
+        await contains(".scale_button_selection").click();
+        rangeStep = "day";
+        await contains(".o-dropdown--menu .o_scale_button_week").click();
+        expect(".o_view_scale_selector button.scale_button_selection").toHaveText("Week", {
+            message: "The active range should be Week",
+        });
+        await contains(".scale_button_selection").click();
+        rangeStep = "month";
+        await contains(".o-dropdown--menu .o_scale_button_week2").click();
+        expect(".o_view_scale_selector button.scale_button_selection").toHaveText("Week2", {
+            message: "The active range should be Week2",
+        });
+        await contains(".scale_button_selection").click();
+        rangeStep = "day";
+        await contains(".o-dropdown--menu .o_scale_button_month").click();
+        expect(".o_view_scale_selector button.scale_button_selection").toHaveText("Month", {
+            message: "The active range should be Month",
+        });
+        await contains(".scale_button_selection").click();
+        rangeStep = "month";
+        await contains(".o-dropdown--menu .o_scale_button_month2").click();
+        expect(".o_view_scale_selector button.scale_button_selection").toHaveText("Month2", {
+            message: "The active range should be Month2",
+        });
+        await contains(".scale_button_selection").click();
+        rangeStep = "day";
+        await contains(".o-dropdown--menu .o_scale_button_year").click();
+        expect(".o_view_scale_selector button.scale_button_selection").toHaveText("Year", {
+            message: "The active range should be year",
+        });
+        await contains(".scale_button_selection").click();
+        rangeStep = "month";
+        await contains(".o-dropdown--menu .o_scale_button_year2").click();
+        expect(".o_view_scale_selector button.scale_button_selection").toHaveText("Year2", {
+            message: "The active range should be year2",
+        });
+    });
+
     test("display notification when the update of the grid cell cannot be done", async () => {
         onRpc("grid_update_cell", () => {
             expect.step("grid_update_cell");

@@ -434,9 +434,11 @@ export class GridDataPoint {
     }
 
     get columnGroupByFieldName() {
-        return this.columnFieldIsDate
-            ? this.navigationInfo.range.name === 'year' ? `${this.columnFieldName}:month` : `${this.columnFieldName}:day`
-            : this.columnFieldName;
+        let columnGroupByFieldName = this.columnFieldName;
+        if (this.columnFieldIsDate) {
+            columnGroupByFieldName += `:${this.navigationInfo.range.step}`;
+        }
+        return columnGroupByFieldName;
     }
 
     get readonlyField() {
