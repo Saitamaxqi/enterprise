@@ -571,6 +571,9 @@ class CAMT:
     _get_credit_debit_indicator = partial(_generic_get,
         xpath='ns:CdtDbtInd/text()')
 
+    _get_charges_credit_debit_indicator = partial(_generic_get,
+        xpath='ns:Chrgs/ns:Rcrd/ns:CdtDbtInd/text()')
+
     _get_transaction_date = partial(_generic_get,
         xpath=('ns:ValDt/ns:Dt/text()'
             '| ns:BookgDt/ns:Dt/text()'
@@ -656,7 +659,8 @@ class CAMT:
             for entry in entries:
                 charges = get_value_and_currency_name(entry, CAMT._charges_getters, target_currency=target_currency)[0]
                 if charges:
-                    return charges
+                    sign = -1 if CAMT._get_charges_credit_debit_indicator(entry, namespaces=namespaces) == "DBIT" else 1
+                    return sign * charges
             return None
 
         entry_details = nodes[0]
