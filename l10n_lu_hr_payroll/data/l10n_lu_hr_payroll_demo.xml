@@ -38,6 +38,7 @@
         <field name="company_id" ref="base.demo_company_lu"/>
         <field name="image_1920" type="base64" file="l10n_lu_hr_payroll/static/img/hr_employee_tom_schmit.jpg"/>
         <field name="gender">male</field>
+        <field name="identification_id">8752321365496</field>
     </record>
 
     <record id="res_partner_frida_poirish" model="res.partner">
@@ -175,6 +176,7 @@
         <field name="gender">female</field>
         <field name="l10n_lu_tax_id_number">35135122</field>
         <field name="l10n_lu_tax_credit_cip">True</field>
+        <field name="identification_id">8752027361236</field>
     </record>
 
     <record id="hr_contract_cdi_simone_jambon" model="hr.contract">
