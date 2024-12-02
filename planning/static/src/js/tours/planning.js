@@ -93,6 +93,7 @@ registry.category("web_tour.tours").add('planning_tour', {
         trigger: ".o_gantt_renderer_controls button i.fa-arrow-right",
         content: markup(_t("Now that this week is ready, let's get started on <b>next week's schedule</b>.")),
         tooltipPosition: "bottom",
+        run: "click",
     }, {
         trigger: ".o_control_panel .dropdown-toggle",
         content: markup(_t("Plan your shifts in one click by <b>copying the schedule from the previous week</b>. Open the menu to access this option.")),
