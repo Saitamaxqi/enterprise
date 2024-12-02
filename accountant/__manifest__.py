@@ -18,6 +18,7 @@ It assigns manager and user access rights to the Administrator for the accountin
         'data/account_accountant_data.xml',
         'security/accounting_security.xml',
         'views/res_config_settings.xml',
+        'views/partner_views.xml',
     ],
     'demo': ['demo/account_accountant_demo.xml'],
     'installable': True,

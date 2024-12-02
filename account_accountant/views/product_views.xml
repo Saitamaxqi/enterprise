@@ -8,12 +8,6 @@
                 <xpath expr="//group[@name='accounting_entries']" position="attributes">
                     <attribute name="groups">account.group_account_manager</attribute>
                 </xpath>
-                <xpath expr="//page[@name='accounting_disabled']" position="attributes">
-                    <attribute name="string">Accounting</attribute>
-                </xpath>
-                <xpath expr="//page[@name='accounting']" position="attributes">
-                    <attribute name="string">Accounting</attribute>
-                </xpath>
             </field>
         </record>
 
