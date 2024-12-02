@@ -7,7 +7,7 @@
             <attribute name="className">'o_bank_rec_main_div overflow-auto'</attribute>
         </xpath>
         <xpath expr="//t[@t-component='props.Renderer']" position="after">
-            <div class="o_bank_rec_right_div">
+            <div t-if="!this.ui.isSmall" class="o_bank_rec_right_div">
                 <t t-if="state.bankRecStLineId and this.bankRecModel">
                     <t t-call="account_accountant.BankRecRecordForm"/>
                 </t>

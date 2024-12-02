@@ -428,9 +428,9 @@ class BankRecWidgetLine(models.Model):
 
             if is_fully_reconciled:
                 lines = [
-                    _("The invoice %(display_name_html)s with an open amount of %(open_amount)s will be entirely paid by the transaction.")
+                    _("%(display_name_html)s will be entirely paid by the transaction.")
                     if is_invoice else
-                    _("%(display_name_html)s with an open amount of %(open_amount)s will be fully reconciled by the transaction.")
+                    _("%(display_name_html)s will be fully reconciled by the transaction.")
                 ]
                 partial_amounts = wizard._lines_check_partial_amount(line)
                 if partial_amounts:
@@ -444,12 +444,12 @@ class BankRecWidgetLine(models.Model):
             else:
                 if is_invoice:
                     lines = [
-                        _("The invoice %(display_name_html)s with an open amount of %(open_amount)s will be reduced by %(amount)s."),
+                        _("%(display_name_html)s will be reduced by %(amount)s."),
                         _("You might want to set the invoice as %(btn_start)sfully paid%(btn_end)s."),
                     ]
                 else:
                     lines = [
-                        _("%(display_name_html)s with an open amount of %(open_amount)s will be reduced by %(amount)s."),
+                        _("%(display_name_html)s will be reduced by %(amount)s."),
                         _("You might want to %(btn_start)sfully reconcile%(btn_end)s the document."),
                     ]
                 line.suggestion_amount_currency = line.source_amount_currency

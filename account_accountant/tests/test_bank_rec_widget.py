@@ -364,7 +364,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         wizard._js_action_mount_line_in_edit(line.index)
         self.assert_form_extra_text_value(
             wizard,
-            r".+open amount of 9,000.000.+ reduced by 6,000.000.+ set the invoice as fully paid .",
+            r".+ reduced by 6,000.000.+ set the invoice as fully paid .",
         )
         self.assertRecordValues(line, [{
             'suggestion_amount_currency': -9000.0,
@@ -386,7 +386,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         wizard._js_action_mount_line_in_edit(line.index)
         self.assert_form_extra_text_value(
             wizard,
-            r".+open amount of 9,000.000.+ paid .+ record a partial payment .",
+            r".+ paid .+ record a partial payment .",
         )
         self.assertRecordValues(line, [{
             'suggestion_amount_currency': -6000.0,
@@ -852,7 +852,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         wizard._js_action_mount_line_in_edit(line.index)
         self.assert_form_extra_text_value(
             wizard,
-            r".+open amount of 9,600.000.+ reduced by 4,800.000.+ set the invoice as fully paid .",
+            r".+ reduced by 4,800.000.+ set the invoice as fully paid .",
         )
         self.assertRecordValues(line, [{
             'suggestion_amount_currency': -9600.0,
@@ -874,7 +874,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         wizard._js_action_mount_line_in_edit(line.index)
         self.assert_form_extra_text_value(
             wizard,
-            r".+open amount of 9,600.000.+ paid .+ record a partial payment .",
+            r".+ paid .+ record a partial payment .",
         )
         self.assertRecordValues(line, [{
             'suggestion_amount_currency': -4800.0,
@@ -991,7 +991,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         wizard._js_action_mount_line_in_edit(line.index)
         self.assert_form_extra_text_value(
             wizard,
-            r".+open amount of 7,200.000.+ reduced by 4,800.000.+ set the invoice as fully paid .",
+            r".+ reduced by 4,800.000.+ set the invoice as fully paid .",
         )
         self.assertRecordValues(line, [{
             'suggestion_amount_currency': -7200.0,
@@ -1013,7 +1013,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         wizard._js_action_mount_line_in_edit(line.index)
         self.assert_form_extra_text_value(
             wizard,
-            r".+open amount of 7,200.000.+ paid .+ record a partial payment .",
+            r".+ paid .+ record a partial payment .",
         )
         self.assertRecordValues(line, [{
             'suggestion_amount_currency': -4800.0,
@@ -1107,7 +1107,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         wizard._js_action_mount_line_in_edit(line.index)
         self.assert_form_extra_text_value(
             wizard,
-            r".+open amount of 32,400.000.+ reduced by 21,600.000.+ set the invoice as fully paid .",
+            r".+ reduced by 21,600.000.+ set the invoice as fully paid .",
         )
         self.assertRecordValues(line, [{
             'suggestion_amount_currency': -32400.0,
@@ -1128,7 +1128,7 @@ class TestBankRecWidget(TestBankRecWidgetCommon):
         wizard._js_action_mount_line_in_edit(line.index)
         self.assert_form_extra_text_value(
             wizard,
-            r".+open amount of 32,400.000.+ paid .+ record a partial payment .",
+            r".+ paid .+ record a partial payment .",
         )
         self.assertRecordValues(line, [{
             'suggestion_amount_currency': -21600.0,

@@ -46,7 +46,7 @@
         }
 
         .o_bank_rec_st_line{
-            margin: 0px var(--KanbanRecord-margin-h) (-$border-width) !important;
+            margin: 0;
             align-items: center;
 
             &:hover {
@@ -67,6 +67,10 @@
                 border: 0;
                 z-index: 2;
                 background-color: transparent;
+
+                @media only screen and (max-width:650px) {
+                    display: none;
+                }
 
                 .btn-sm {
                     position: relative;

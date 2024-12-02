@@ -14,7 +14,7 @@
     </t>
 
     <t t-name="account_accountant_fleet.BankRecRecordNotebookManualOperations" t-inherit="account_accountant.BankRecRecordNotebookManualOperations" t-inherit-mode="extension">
-        <xpath expr="//div[@name='suggestion']" position="before">
+        <xpath expr="//div[@name='bank_account']" position="after">
             <div name="vehicle"
                  t-if="line.data.flag !== 'liquidity'"
                  class="o_wrap_field d-flex d-sm-contents flex-column mb-3 mb-sm-0">
