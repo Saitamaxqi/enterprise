@@ -387,7 +387,7 @@ class ResPartner(models.Model):
         self.env['account.move.line'].flush_model()
         self.env['res.partner'].flush_model()
         self.env['account_followup.followup.line'].flush_model()
-        ResPartner = self.env['res.partner'].with_company(self.env.company.root_id.id)
+        ResPartner = self.env['res.partner']
         return f"""
             SELECT partner.id as partner_id,
                    ful.id as followup_line_id,
