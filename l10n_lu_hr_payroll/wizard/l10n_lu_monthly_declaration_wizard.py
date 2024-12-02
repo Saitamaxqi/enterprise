@@ -87,7 +87,7 @@ class L10nLuMonthlyDeclarationWizard(models.TransientModel):
 
     @api.depends('batch_ids')
     def _compute_situational_unemployment_ids(self):
-        situational_unemp = self.env.ref('l10n_lu_hr_payroll.work_entry_type_situational_unemployment')
+        situational_unemp = self.env.ref('hr_work_entry.l10n_lu_work_entry_type_situational_unemployment')
         for wizard in self:
             regular_payslips = wizard.batch_ids.slip_ids.filtered(lambda p: p.struct_id == p.struct_type_id.default_struct_id)
             unemp_payslips = regular_payslips.worked_days_line_ids.filtered(

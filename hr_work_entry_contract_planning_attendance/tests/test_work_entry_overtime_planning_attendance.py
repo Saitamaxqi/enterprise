@@ -32,7 +32,7 @@ class HrWorkEntryContractTest(HttpCase, TransactionCase):
             'state': 'published',
         })
         cls.attendance_type = cls.env.ref('hr_work_entry.work_entry_type_attendance')
-        cls.overtime_type = cls.env.ref('hr_work_entry.overtime_work_entry_type')
+        cls.overtime_type = cls.env.ref('hr_work_entry.work_entry_type_overtime')
 
     def test_overtime_work_entry_by_planning(self):
         self.env['hr.attendance'].create({

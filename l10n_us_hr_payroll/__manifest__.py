@@ -37,7 +37,6 @@ United States Payroll Rules.
         'data/res_partner_data.xml',
         'data/hr_payslip_input_type_data.xml',
         'data/hr_salary_rule_data.xml',
-        'data/hr_work_entry_type_data.xml',
         'views/report_payslip_templates.xml',
         'views/hr_contract_views.xml',
         'views/hr_employee_views.xml',

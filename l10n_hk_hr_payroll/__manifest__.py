@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
@@ -29,7 +28,6 @@ Hong Kong Payroll Rules.
         "data/hr_payslip_input_type_data.xml",
         "data/hr_salary_rule_category_data.xml",
         "data/hr_rule_parameters_data.xml",
-        "data/hr_leave_type_data.xml",
         "data/ir_cron_data.xml",
         'data/ir_default_data.xml',
         'data/ir_sequence_data.xml',

@@ -18,7 +18,7 @@ class HrLeave(models.Model):
 
     @api.constrains('date_from', 'date_to', 'holiday_status_id')
     def _check_work_interruption(self):
-        work_interruption = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_interruption_of_work_lt', raise_if_not_found=False)
+        work_interruption = self.env.ref('hr_holidays.l10n_ch_swissdec_interruption_of_work_lt', raise_if_not_found=False)
         for leave in self:
             if leave.holiday_status_id and leave.holiday_status_id.id == work_interruption.id:
                 if leave.date_from.day != 1 or leave.date_to.day != (datetime.date(leave.date_to.year, leave.date_to.month, 1) + relativedelta(months=1, days=-1)).day:
@@ -29,12 +29,12 @@ class HrLeave(models.Model):
         """
         Swiss Override, we never want to let a payroll impacting leave be placed on validated payslips even for a super user or time off officer
         """
-        payroll_impacting_leave_types = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_unpaid_lt', raise_if_not_found=False) + \
-                                        self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_illness_lt', raise_if_not_found=False) + \
-                                        self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_accident_lt', raise_if_not_found=False) + \
-                                        self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_maternity_lt', raise_if_not_found=False) + \
-                                        self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_military_lt', raise_if_not_found=False) + \
-                                        self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_interruption_of_work_lt', raise_if_not_found=False)
+        payroll_impacting_leave_types = self.env.ref('hr_holidays.l10n_ch_swissdec_unpaid_lt', raise_if_not_found=False) + \
+                                        self.env.ref('hr_holidays.l10n_ch_swissdec_illness_lt', raise_if_not_found=False) + \
+                                        self.env.ref('hr_holidays.l10n_ch_swissdec_accident_lt', raise_if_not_found=False) + \
+                                        self.env.ref('hr_holidays.l10n_ch_swissdec_maternity_lt', raise_if_not_found=False) + \
+                                        self.env.ref('hr_holidays.l10n_ch_swissdec_military_lt', raise_if_not_found=False) + \
+                                        self.env.ref('hr_holidays.l10n_ch_swissdec_interruption_of_work_lt', raise_if_not_found=False)
 
 
         all_payslips = self.env['hr.payslip'].sudo().search([
@@ -56,6 +56,6 @@ class HrLeave(models.Model):
 
     @api.depends('holiday_status_id')
     def _compute_l10n_ch_swissdec_work_interruption(self):
-        work_interruption_leave = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_interruption_of_work_lt', raise_if_not_found=False).id
+        work_interruption_leave = self.env.ref('hr_holidays.l10n_ch_swissdec_interruption_of_work_lt', raise_if_not_found=False).id
         for leave in self:
             leave.l10n_ch_swissdec_work_interruption = leave.holiday_status_id.id == work_interruption_leave

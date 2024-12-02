@@ -58,7 +58,7 @@ class HrContract(models.Model):
             return interval[2].work_entry_type_id
         if including_holiday_rcleaves:
             return self._get_leave_work_entry_type_dates(including_holiday_rcleaves[0], interval_start, interval_stop, self.employee_id)
-        return self.env.ref('hr_work_entry_contract.work_entry_type_leave')
+        return self.env.ref('hr_work_entry.work_entry_type_leave')
 
     def _get_fields_that_recompute_payslip(self):
         return super()._get_fields_that_recompute_payslip() + ['l10n_hk_internet']

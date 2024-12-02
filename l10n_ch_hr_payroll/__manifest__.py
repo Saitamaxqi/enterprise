@@ -26,7 +26,6 @@ Switzerland Payroll Rules.
         'data/hr_salary_rule_category_data.xml',
         'data/hr_payroll_structure_type_data.xml',
         'data/report_paperformat_data.xml',
-        'data/hr_work_entry_type_data.xml',
         'views/hr_payroll_report.xml',
         'data/hr_payroll_structure_data.xml',
         'data/hr_rule_parameters_data.xml',

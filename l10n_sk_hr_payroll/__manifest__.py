@@ -29,8 +29,6 @@ Slovak Payroll Rules.
         'data/hr_payroll_structure_data.xml',
         'data/hr_salary_rule_data.xml',
         'views/report_payslip_templates.xml',
-        'data/hr_work_entry_type_data.xml',
-        'data/hr_leave_type_data.xml',
     ],
     'demo': [
         'data/l10n_sk_hr_payroll_demo.xml',

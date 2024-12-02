@@ -83,8 +83,8 @@ class TestPaymentInLieuOfNotice(TestL10NHkHrPayrollAccountCommon):
 
     def test_unpaid_and_non_full_pay_leave(self):
         leaves_to_create = [
-            (datetime(2023, 2, 21), datetime(2023, 2, 22), self.env.ref('l10n_hk_hr_payroll.holiday_type_hk_unpaid_leave')),
-            (datetime(2023, 3, 13), datetime(2023, 3, 15), self.env.ref('l10n_hk_hr_payroll.holiday_type_hk_sick_leave_80')),
+            (datetime(2023, 2, 21), datetime(2023, 2, 22), self.env.ref('hr_holidays.l10n_hk_leave_type_unpaid_leave')),
+            (datetime(2023, 3, 13), datetime(2023, 3, 15), self.env.ref('hr_holidays.l10n_hk_leave_type_sick_leave_80')),
         ]
         for date_from, date_to, leave_type in leaves_to_create:
             self._generate_leave(date_from, date_to, leave_type)

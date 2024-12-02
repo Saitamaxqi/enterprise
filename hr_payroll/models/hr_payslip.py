@@ -712,7 +712,7 @@ class HrPayslip(models.Model):
                 out_hours += out_time['hours']
 
             if out_days or out_hours:
-                work_entry_type = self.env.ref('hr_payroll.hr_work_entry_type_out_of_contract')
+                work_entry_type = self.env.ref('hr_work_entry.hr_work_entry_type_out_of_contract')
                 res.append({
                     'sequence': work_entry_type.sequence,
                     'work_entry_type_id': work_entry_type.id,

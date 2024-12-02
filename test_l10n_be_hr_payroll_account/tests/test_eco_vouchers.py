@@ -107,7 +107,7 @@ class TestEcoVouchers(AccountTestInvoicingCommon):
             'standard_calendar_id': full_time_calendar.id,
             'time_credit': True,
             'work_time_rate': 0.6,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'state': 'open',
             'wage': 1000,
         })
@@ -119,7 +119,7 @@ class TestEcoVouchers(AccountTestInvoicingCommon):
             'request_unit': 'hour',
             'unpaid': True,
             'company_id': self.env.company.id,
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_unpaid_leave').id,
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_unpaid_leave').id,
         })
 
         unpaid_leave_2019 = self.env['hr.leave'].create({

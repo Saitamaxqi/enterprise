@@ -17,7 +17,7 @@ class TestPeriodDuplicationHolidays(TestPeriodDuplication):
         self.env.user.tz = 'UTC'
         self.env['hr.leave'].create({
             'name': 'Time Off',
-            'holiday_status_id': self.env.ref('hr_holidays.holiday_status_sl').id,
+            'holiday_status_id': self.env.ref('hr_holidays.leave_type_sick_time_off').id,
             'request_date_from': dt + relativedelta(weeks=1),
             'request_date_to': dt + relativedelta(weeks=1, days=1),
             'employee_id': self.employee_joseph.id,

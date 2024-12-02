@@ -12,7 +12,7 @@ class HrWorkEntry(models.Model):
     @api.model_create_multi
     def create(self, vals_list):
         res = super().create(vals_list)
-        partial_sick_work_entry_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_part_sick')
+        partial_sick_work_entry_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_part_sick')
         leaves = self.env['hr.leave']
         for work_entry in res:
             if work_entry.work_entry_type_id == partial_sick_work_entry_type and work_entry.leave_id:

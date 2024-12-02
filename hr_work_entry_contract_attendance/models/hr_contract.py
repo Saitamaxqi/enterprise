@@ -134,10 +134,10 @@ class HrContract(models.Model):
         self.ensure_one()
         if self.work_entry_source == 'attendance': # The overtimes are only in the case of a contract based on the calendar
             return super()._get_interval_work_entry_type(interval)
-        if 'overtime_work_entry_type_id' in interval[2] and interval[2].overtime_work_entry_type_id[:1]:
-            return interval[2].overtime_work_entry_type_id[:1]
+        if 'work_entry_type_overtime_id' in interval[2] and interval[2].work_entry_type_overtime_id[:1]:
+            return interval[2].work_entry_type_overtime_id[:1]
         if isinstance(interval[2], self.env['hr.attendance'].__class__):
-            return self.env.ref('hr_work_entry.overtime_work_entry_type')
+            return self.env.ref('hr_work_entry.work_entry_type_overtime')
         return super()._get_interval_work_entry_type(interval)
 
     def _get_valid_leave_intervals(self, attendances, interval):

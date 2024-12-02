@@ -7,8 +7,8 @@
         <field name="type_id" ref="l10n_lu_hr_payroll.structure_type_employee_lux"/>
         <field name="report_id" ref="l10n_lu_hr_payroll.action_report_payslip_lux"/>
         <field name="unpaid_work_entry_type_ids" eval="[
-            (4, ref('hr_work_entry_contract.work_entry_type_unpaid_leave')),
-            (4, ref('l10n_lu_hr_payroll.work_entry_type_situational_unemployment')),
+            (4, ref('hr_work_entry.work_entry_type_unpaid_leave')),
+            (4, ref('hr_work_entry.l10n_lu_work_entry_type_situational_unemployment')),
         ]"/>
         <field name="rule_ids" eval="[]"/>
     </record>

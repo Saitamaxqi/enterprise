@@ -16,8 +16,6 @@
     'auto_install': ['hr_payroll'],
     'data': [
         "data/resource_calendar_data.xml",
-        "data/hr_work_entry_type_data.xml",
-        "data/hr_leave_type_data.xml",
         "data/hr_payroll_structure_type_data.xml",
         "data/hr_payroll_structure_data.xml",
         "data/hr_payslip_input_type_data.xml",

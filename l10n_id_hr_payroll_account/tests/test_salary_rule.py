@@ -76,7 +76,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         ]
 
         for date_from, date_to in unpaid_leaves_to_create:
-            self._generate_leave(date_from, date_to, self.env.ref('hr_holidays.holiday_status_unpaid'))
+            self._generate_leave(date_from, date_to, self.env.ref('hr_holidays.leave_type_unpaid'))
 
         payslip = self._generate_payslip(date(2024, 6, 1), date(2024, 6, 30))
 

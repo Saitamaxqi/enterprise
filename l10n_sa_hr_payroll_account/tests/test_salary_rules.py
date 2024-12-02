@@ -188,7 +188,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'contract_id': self.contract.id,
             'date_start': datetime(2024, 1, 1, 18, 0, tzinfo=timezone(self.tz)).astimezone(tz=UTC).replace(tzinfo=None),
             'date_stop': datetime(2024, 1, 1, 22, 0, tzinfo=timezone(self.tz)).astimezone(tz=UTC).replace(tzinfo=None),
-            'work_entry_type_id': self.env.ref('hr_work_entry.overtime_work_entry_type').id,
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_overtime').id,
         })
         work_entry.action_validate()
         payslip.compute_sheet()

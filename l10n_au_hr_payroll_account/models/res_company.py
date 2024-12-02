@@ -54,27 +54,27 @@ class ResCompany(models.Model):
                             "ytd_amount": 0,
                         }),
                         (0, 0, {
-                            "res_id": self.env.ref("l10n_au_hr_payroll.l10n_au_work_entry_type_overtime_regular").id,
+                            "res_id": self.env.ref("hr_work_entry.l10n_au_work_entry_type_overtime_regular").id,
                             "res_model": "hr.work.entry.type",
                             "ytd_amount": 0,
                         }),
                         (0, 0, {
-                            "res_id": self.env.ref("l10n_au_hr_payroll.l10n_au_work_entry_type_other").id,
+                            "res_id": self.env.ref("hr_work_entry.l10n_au_work_entry_type_other").id,
                             "res_model": "hr.work.entry.type",
                             "ytd_amount": 0,
                         }),
                         (0, 0, {
-                            "res_id": self.env.ref("l10n_au_hr_payroll.l10n_au_work_entry_type_parental").id,
+                            "res_id": self.env.ref("hr_work_entry.l10n_au_work_entry_type_parental").id,
                             "res_model": "hr.work.entry.type",
                             "ytd_amount": 0,
                         }),
                         (0, 0, {
-                            "res_id": self.env.ref("l10n_au_hr_payroll.l10n_au_work_entry_type_compensation").id,
+                            "res_id": self.env.ref("hr_work_entry.l10n_au_work_entry_type_compensation").id,
                             "res_model": "hr.work.entry.type",
                             "ytd_amount": 0,
                         }),
                         (0, 0, {
-                            "res_id": self.env.ref("l10n_au_hr_payroll.l10n_au_work_entry_type_defence").id,
+                            "res_id": self.env.ref("hr_work_entry.l10n_au_work_entry_type_defence").id,
                             "res_model": "hr.work.entry.type",
                             "ytd_amount": 0,
                         }),

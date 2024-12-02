@@ -111,7 +111,7 @@ class TestLuMonthlyDeclaration(TestLuPayrollCommon):
         self.env['hr.leave'].create({
             'name': 'such bad weather no work',
             'employee_id': madison_employee.id,
-            'holiday_status_id': self.env.ref('l10n_lu_hr_payroll.holiday_status_situational_unemployment').id,
+            'holiday_status_id': self.env.ref('hr_holidays.l10n_lu_leave_type_situational_unemployment').id,
             'request_date_from': '2022-03-09',
             'request_date_to': '2022-03-09',
         })

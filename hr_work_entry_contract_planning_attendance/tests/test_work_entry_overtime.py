@@ -18,7 +18,7 @@ class TestPayslipOvertime(HrWorkEntryAttendanceCommon):
             'work_entry_source': "planning",
         })
         cls.attendance_type = cls.env.ref('hr_work_entry.work_entry_type_attendance')
-        cls.overtime_type = cls.env.ref('hr_work_entry.overtime_work_entry_type')
+        cls.overtime_type = cls.env.ref('hr_work_entry.work_entry_type_overtime')
         cls.work_entry_type_public_type_off = cls.env['hr.work.entry.type'].create({
             'name': 'Public Time Off',
             'code': 'PUBLIC',

@@ -179,13 +179,13 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
         cls.sick_time_off_type = cls.env['hr.leave.type'].create({
             'name': 'Sick Time Off',
             'requires_allocation': 'no',
-            'work_entry_type_id': cls.env.ref('hr_work_entry_contract.work_entry_type_sick_leave').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_sick_leave').id,
         })
 
         cls.long_term_sick_time_off_type = cls.env['hr.leave.type'].create({
             'name': 'Sick Time Off',
             'requires_allocation': 'no',
-            'work_entry_type_id': cls.env.ref('l10n_be_hr_payroll.work_entry_type_long_sick').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_long_sick').id,
         })
 
         # Public Holiday (global)
@@ -197,11 +197,11 @@ class TestPayslipValidation(AccountTestInvoicingCommon):
             'date_to': datetime(2020, 9, 22, 23, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': cls.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
 
         # Everyone takes a legal leave the same day
-        legal_leave = cls.env.ref('hr_work_entry_contract.work_entry_type_legal_leave')
+        legal_leave = cls.env.ref('hr_work_entry.work_entry_type_legal_leave')
         cls.env['resource.calendar.leaves'].create([{
             'name': "Legal Leave %i" % i,
             'calendar_id': cls.resource_calendar_38_hours_per_week.id,

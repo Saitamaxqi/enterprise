@@ -26,8 +26,8 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
                 (0, 0, {'name': 'Wednesday Morning', 'dayofweek': '2', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
                 (0, 0, {'name': 'Thursday Morning', 'dayofweek': '3', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
                 (0, 0, {'name': 'Friday Morning', 'dayofweek': '4', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning'}),
-                (0, 0, {'name': 'Saturday Morning', 'dayofweek': '5', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': cls.env.ref('l10n_hk_hr_payroll.work_entry_type_weekend').id}),
-                (0, 0, {'name': 'Sunday Morning', 'dayofweek': '6', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': cls.env.ref('l10n_hk_hr_payroll.work_entry_type_weekend').id}),
+                (0, 0, {'name': 'Saturday Morning', 'dayofweek': '5', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_hk_work_entry_type_weekend').id}),
+                (0, 0, {'name': 'Sunday Morning', 'dayofweek': '6', 'hour_from': 8, 'hour_to': 12, 'day_period': 'morning', 'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_hk_work_entry_type_weekend').id}),
             ]
         })
 
@@ -47,8 +47,8 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
 
     def test_001_b_moving_daily_wage_computation(self):
         leaves_to_create = [
-            (datetime(2023, 3, 7), datetime(2023, 3, 7), self.env.ref('l10n_hk_hr_payroll.holiday_type_hk_unpaid_leave')),
-            (datetime(2023, 4, 11), datetime(2023, 4, 11), self.env.ref('l10n_hk_hr_payroll.holiday_type_hk_annual_leave')),
+            (datetime(2023, 3, 7), datetime(2023, 3, 7), self.env.ref('hr_holidays.l10n_hk_leave_type_unpaid_leave')),
+            (datetime(2023, 4, 11), datetime(2023, 4, 11), self.env.ref('hr_holidays.l10n_hk_leave_type_annual_leave')),
         ]
         for date_from, date_to, leave_type in leaves_to_create:
             self._generate_leave(date_from, date_to, leave_type)
@@ -90,8 +90,8 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
 
     def test_001_c_maternity_leave_payslip(self):
         leaves_to_create = [
-            (datetime(2023, 3, 7), datetime(2023, 3, 13), self.env.ref('l10n_hk_hr_payroll.holiday_type_hk_maternity_leave')),
-            (datetime(2023, 3, 14), datetime(2023, 4, 11), self.env.ref('l10n_hk_hr_payroll.holiday_type_hk_maternity_leave_80')),
+            (datetime(2023, 3, 7), datetime(2023, 3, 13), self.env.ref('hr_holidays.l10n_hk_leave_type_maternity_leave')),
+            (datetime(2023, 3, 14), datetime(2023, 4, 11), self.env.ref('hr_holidays.l10n_hk_leave_type_maternity_leave_80')),
         ]
         for date_from, date_to, leave_type in leaves_to_create:
             self._generate_leave(date_from, date_to, leave_type)
@@ -181,9 +181,10 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
         self.contract.write({
             'date_start': date(2023, 1, 10),
         })
-        self._generate_leave(datetime(2023, 1, 18),
-                             datetime(2023, 1, 20),
-                             self.env.ref('l10n_hk_hr_payroll.holiday_type_hk_unpaid_leave'))
+        self._generate_leave(
+            datetime(2023, 1, 18),
+            datetime(2023, 1, 20),
+            self.env.ref('hr_holidays.l10n_hk_leave_type_unpaid_leave'))
         payslip = self._generate_payslip(date(2023, 1, 1), date(2023, 1, 31))
 
         self.assertEqual(len(payslip.worked_days_line_ids), 4)

@@ -1,4 +1,3 @@
-# -*- coding:utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 {
@@ -135,7 +134,7 @@ Prerequisites:
         'views/hr_payslip_views.xml',
         'views/hr_payslip_run_views.xml',
     ],
-    'demo':[
+    'demo': [
         'data/l10n_be_hr_payroll_demo.xml'
     ],
     'assets': {

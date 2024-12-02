@@ -19,14 +19,14 @@ class TestPayrollUnusedLeaves(TestPayrollCommon):
             'company_id': cls.australian_company.id,
             'l10n_au_leave_type': 'long_service',
             'leave_validation_type': 'no_validation',
-            'work_entry_type_id': cls.env.ref('l10n_au_hr_payroll.l10n_au_work_entry_long_service_leave').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_au_work_entry_type_long_service_leave').id,
         })
         cls.annual = cls.env['hr.leave.type'].create({
             'name': 'Annual Leave',
             'company_id': cls.australian_company.id,
             'l10n_au_leave_type': 'annual',
             'leave_validation_type': 'no_validation',
-            'work_entry_type_id': cls.env.ref('l10n_au_hr_payroll.l10n_au_work_entry_paid_time_off').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_au_work_entry_type_paid_time_off').id,
         })
 
     # Unused leaves tests

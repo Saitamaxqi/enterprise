@@ -229,7 +229,8 @@
         </record>
 
         <!-- Work entries -->
-        <record id="hr_work_entry_contract.work_entry_type_long_leave" model="hr.work.entry.type">
+        <record id="hr_work_entry.work_entry_type_long_leave" model="hr.work.entry.type">
+            <field name="is_leave">True</field>
             <field name="round_days">FULL</field>
             <field name="round_days_type">DOWN</field>
         </record>

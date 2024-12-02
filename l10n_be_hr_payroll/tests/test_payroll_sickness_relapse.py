@@ -12,7 +12,7 @@ class TestPayrollSicknessRelapse(TestPayrollCommon):
     def setUpClass(cls):
         super().setUpClass()
 
-        cls.sick_time_off_type = cls.env.ref("hr_holidays.holiday_status_sl")
+        cls.sick_time_off_type = cls.env.ref("hr_holidays.leave_type_sick_time_off")
 
     def test_sickness_relapse_visibility(self):
         """

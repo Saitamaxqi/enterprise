@@ -127,8 +127,8 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
             # ONSS takes into account the hours or days not worked but assimilated (64) to working days
             # to determine the employee benefits.
             attendances = self.env.ref('hr_work_entry.work_entry_type_attendance') \
-                        + self.env.ref('l10n_be_hr_payroll.work_entry_type_training') \
-                        + self.env.ref('l10n_be_hr_payroll.work_entry_type_additional_paid')
+                + self.env.ref('hr_work_entry.l10n_be_work_entry_type_training') \
+                + self.env.ref('hr_work_entry.l10n_be_work_entry_type_additional_paid')
             workers_data = collections.defaultdict(lambda: dict(full=0, part=0, fte=0))
 
             for payslip in payslips:
@@ -341,7 +341,7 @@ class L10nBeSocialBalanceSheet(models.TransientModel):
                 report_data[code] = workers_data[code]
 
             # SECTION 580: Trainings
-            training_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_training')
+            training_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_training')
             training_code = training_type.code
             training_payslips = payslips.filtered(lambda p: training_code in p.worked_days_line_ids.mapped('work_entry_type_id.code'))
             male_payslips = training_payslips.filtered(lambda p: p.employee_id.gender == 'male')

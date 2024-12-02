@@ -12,9 +12,9 @@ class HrContract(models.Model):
         Removes extra hours from attendance work data and add a new entry for extra hours
         """
         attendance_contracts = self.filtered(lambda c: c.work_entry_source == 'attendance' and c.wage_type == 'hourly')
-        overtime_work_entry_type = self.env.ref('hr_work_entry.overtime_work_entry_type', False)
+        work_entry_type_overtime = self.env.ref('hr_work_entry.work_entry_type_overtime', False)
         default_work_entry_type = self.structure_type_id.default_work_entry_type_id
-        if not attendance_contracts or not overtime_work_entry_type or len(default_work_entry_type) != 1:
+        if not attendance_contracts or not work_entry_type_overtime or len(default_work_entry_type) != 1:
             return
         overtime_hours = self.env['hr.attendance.overtime']._read_group(
             [('employee_id', 'in', self.employee_id.ids),
@@ -24,4 +24,4 @@ class HrContract(models.Model):
         if not overtime_hours or overtime_hours < 0:
             return
         work_data[default_work_entry_type.id] -= overtime_hours
-        work_data[overtime_work_entry_type.id] = overtime_hours
+        work_data[work_entry_type_overtime.id] = overtime_hours

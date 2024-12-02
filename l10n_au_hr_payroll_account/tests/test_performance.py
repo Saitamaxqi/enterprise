@@ -134,11 +134,11 @@ class TestPerformance(AccountTestInvoicingCommon):
             'date_to': datetime(2023, 8, 15, 23, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': cls.env.ref('l10n_au_hr_payroll.l10n_au_work_entry_type_other').id
+            'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_au_work_entry_type_other').id
         }])
 
         # Everyone takes a legal leave the same day
-        legal_leave = cls.env.ref('hr_work_entry_contract.work_entry_type_legal_leave')
+        legal_leave = cls.env.ref('hr_work_entry.work_entry_type_legal_leave')
         cls.env['resource.calendar.leaves'].create([{
             'name': "Legal Leave %i" % i,
             'calendar_id': cls.resource_calendar_40_hours_per_week.id,

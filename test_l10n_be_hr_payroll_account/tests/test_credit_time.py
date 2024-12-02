@@ -114,7 +114,7 @@ class TestCreditTime(AccountTestInvoicingCommon):
 
         wizard = self.env['l10n_be.hr.payroll.schedule.change.wizard'].with_context(allowed_company_ids=self.env.company.ids).new({
             'contract_id': self.original_contract.id,
-            'absence_work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'absence_work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'date_start': datetime.date(2020, 3, 5),
             'date_end': datetime.date(2020, 4, 30),
             'resource_calendar_id': new_calendar.id,
@@ -247,7 +247,7 @@ class TestCreditTime(AccountTestInvoicingCommon):
 
         wizard = self.env['l10n_be.hr.payroll.schedule.change.wizard'].with_context(allowed_company_ids=self.env.company.ids).new({
             'contract_id': self.original_contract.id,
-            'absence_work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'absence_work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'date_start': datetime.date(2020, 3, 5),
             'date_end': datetime.date(2020, 4, 30),
             'resource_calendar_id': new_calendar.id,
@@ -278,7 +278,7 @@ class TestCreditTime(AccountTestInvoicingCommon):
         self.assertEqual(work_entries_1.mapped('work_entry_type_id'), self.env.ref('hr_work_entry.work_entry_type_attendance'))
         self.assertEqual(len(work_entries_2), 38) # 5-6 (2), 9-13 (5), 16-20 (5), 23-27 (5), 30-31 (2) March Morning - Afternoon
         attendance_we = work_entries_2.filtered(lambda w: w.work_entry_type_id == self.env.ref('hr_work_entry.work_entry_type_attendance'))
-        credit_time_we = work_entries_2.filtered(lambda w: w.work_entry_type_id == self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time'))
+        credit_time_we = work_entries_2.filtered(lambda w: w.work_entry_type_id == self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time'))
         self.assertEqual(len(credit_time_we), 6) # 11,18,25 Morning - Afternoon
         self.assertEqual(len(attendance_we), 32) # Remaining days
 

@@ -98,7 +98,7 @@ class HrPayslipEmployeeDepatureHolidayAttests(models.TransientModel):
                 record.payslip_n_ids = [(4, p._origin.id) for p in payslip_n_ids]
                 record.payslip_n1_ids = [(4, p._origin.id) for p in payslip_n1_ids]
 
-                work_entry_type_legal_leave = self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave')
+                work_entry_type_legal_leave = self.env.ref('hr_work_entry.work_entry_type_legal_leave')
 
                 time_off_n_ids = self.env['hr.leave'].search([
                     ('employee_id', '=', record.employee_id.id),

@@ -274,7 +274,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
                 'hour_from': hour_from,
                 'hour_to': hour_to,
                 'day_period': day_period,
-                'work_entry_type_id': cls.env.ref('l10n_be_hr_payroll.work_entry_type_partial_incapacity').id
+                'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_partial_incapacity').id
             }) for dayofweek, hour_from, hour_to, day_period in [
                 ("0", 13.8, 17.6, "afternoon"),
                 ("1", 13.8, 17.6, "afternoon"),
@@ -514,13 +514,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         cls.sick_time_off_type = cls.env['hr.leave.type'].create({
             'name': 'Sick Time Off',
             'requires_allocation': 'no',
-            'work_entry_type_id': cls.env.ref('hr_work_entry_contract.work_entry_type_sick_leave').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_sick_leave').id,
         })
 
         cls.long_term_sick_time_off_type = cls.env['hr.leave.type'].create({
             'name': 'Sick Time Off',
             'requires_allocation': 'no',
-            'work_entry_type_id': cls.env.ref('l10n_be_hr_payroll.work_entry_type_long_sick').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_long_sick').id,
         })
 
         cls.paid_time_off_type_2019 = cls.env['hr.leave.type'].create({
@@ -530,7 +530,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'allocation_validation_type': 'hr',
             'leave_validation_type': 'both',
             'company_id': cls.env.company.id,
-            'work_entry_type_id': cls.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_legal_leave').id,
         })
 
         cls.paid_time_off_type_2020 = cls.env['hr.leave.type'].create({
@@ -540,7 +540,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'allocation_validation_type': 'hr',
             'leave_validation_type': 'both',
             'company_id': cls.env.company.id,
-            'work_entry_type_id': cls.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_legal_leave').id,
         })
 
         cls.unpaid_time_off_type = cls.env['hr.leave.type'].create({
@@ -550,7 +550,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'request_unit': 'hour',
             'unpaid': True,
             'company_id': cls.env.company.id,
-            'work_entry_type_id': cls.env.ref('hr_work_entry_contract.work_entry_type_unpaid_leave').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.work_entry_type_unpaid_leave').id,
         })
 
         cls.european_time_off_type = cls.env['hr.leave.type'].create({
@@ -559,7 +559,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'leave_validation_type': 'both',
             'request_unit': 'half_day',
             'company_id': cls.env.company.id,
-            'work_entry_type_id': cls.env.ref('l10n_be_hr_payroll.work_entry_type_european').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_european').id,
         })
 
         cls.economic_unemployment_time_off_type = cls.env['hr.leave.type'].create({
@@ -568,7 +568,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'leave_validation_type': 'both',
             'request_unit': 'half_day',
             'company_id': cls.env.company.id,
-            'work_entry_type_id': cls.env.ref('l10n_be_hr_payroll.work_entry_type_economic_unemployment').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_economic_unemployment').id,
         })
 
         cls.leave_type_small_unemployment = cls.env['hr.leave.type'].create({
@@ -576,13 +576,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'request_unit': 'hour',
             'requires_allocation': 'no',
             'company_id': cls.env.company.id,
-            'work_entry_type_id': cls.env.ref('l10n_be_hr_payroll.work_entry_type_small_unemployment').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_small_unemployment').id,
         })
 
         cls.extra_legal_time_off_type = cls.env['hr.leave.type'].create({
             'name': 'Extra-Legal Time Off',
             'requires_allocation': 'no',
-            'work_entry_type_id': cls.env.ref('l10n_be_hr_payroll.work_entry_type_extra_legal').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_be_work_entry_type_extra_legal').id,
         })
 
     @classmethod
@@ -1020,7 +1020,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 14, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_phc').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_phc').id
         }])
 
         payslip = self._generate_payslip(self.date_from, self.date_to)
@@ -1045,7 +1045,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'standard_calendar_id': self.resource_calendar_38_hours_per_week,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
             'date_start': datetime.date(2020, 9, 16),
@@ -1079,7 +1079,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2020, 9, 22, 16, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
 
         payslip = self._generate_payslip(self.date_from, self.date_to)
@@ -1111,21 +1111,21 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime.strptime('2020-11-11 07:00:00', '%Y-%m-%d %H:%M:%S'),
             'date_to': datetime.datetime.strptime('2020-11-11 18:00:00', '%Y-%m-%d %H:%M:%S'),
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id,
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id,
             'time_type': 'leave',
         }, {
             'name': 'Noel',
             'date_from': datetime.datetime.strptime('2020-12-25 07:00:00', '%Y-%m-%d %H:%M:%S'),
             'date_to': datetime.datetime.strptime('2020-12-25 18:00:00', '%Y-%m-%d %H:%M:%S'),
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id,
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id,
             'time_type': 'leave',
         }, {
             'name': 'Nouvel An',
             'date_from': datetime.datetime.strptime('2021-01-01 07:00:00', '%Y-%m-%d %H:%M:%S'),
             'date_to': datetime.datetime.strptime('2021-01-01 18:00:00', '%Y-%m-%d %H:%M:%S'),
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id,
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id,
             'time_type': 'leave',
         }])
 
@@ -1197,7 +1197,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 14, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
 
@@ -1223,9 +1223,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 14, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_phc').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_phc').id
         }])
-        public_compensation_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_phc')
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
 
@@ -1250,7 +1249,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 15, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }, {
             'name': "Absence",
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
@@ -1259,7 +1258,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 16, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 16, 10, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -1296,7 +1295,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'wage_on_signature': 2120.0,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
 
@@ -1321,7 +1320,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 15, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }, {
             'name': "Absence",
             'calendar_id': self.resource_calendar_4_5_wednesday_off.id,
@@ -1330,7 +1329,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 17, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 18, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         self.contract.write({
@@ -1342,7 +1341,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'wage_on_signature': 2120.0,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -1369,7 +1368,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 15, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_unpaid_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_unpaid_leave').id
         }])
 
         self.contract.write({
@@ -1381,7 +1380,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'wage_on_signature': 2120.0,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -1408,7 +1407,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 15, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_sick_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_sick_leave').id
         }])
 
         self.contract.write({
@@ -1420,7 +1419,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'wage_on_signature': 2120.0,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -1449,7 +1448,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'ip': False,
             'time_credit': True,
             'work_time_rate': 0,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -1498,7 +1497,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 14, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         self.contract.write({
@@ -1539,7 +1538,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 16, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 16, 9, 48, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }, {
             'name': "Absence",
             'calendar_id': self.resource_calendar_half_time.id,
@@ -1548,7 +1547,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 21, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 21, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_unpaid_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_unpaid_leave').id
         }])
 
         self.contract.write({
@@ -1595,13 +1594,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2020, 10, 6, 16, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
 
         maternity_time_off = self.env['hr.leave'].new({
             'name': 'Maternity Time Off : 15 weeks',
             'employee_id': self.employee.id,
-            'holiday_status_id': self.env.ref('l10n_be_hr_payroll.holiday_type_maternity').id,
+            'holiday_status_id': self.env.ref('hr_holidays.l10n_be_leave_type_maternity').id,
             'request_date_from': datetime.date(2020, 9, 10),
             'request_date_to': datetime.date(2020, 12, 24),
             'request_hour_from': 7,
@@ -1692,7 +1691,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 8, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 8, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -1718,7 +1717,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 8, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 9, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_unpaid_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_unpaid_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -1744,7 +1743,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 15, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_unpaid_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_unpaid_leave').id
         }, {
             'name': "Absence",
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
@@ -1753,7 +1752,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 16, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 16, 10, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_unpaid_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_unpaid_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -1789,7 +1788,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 14, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_unpredictable').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_unpredictable').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -1851,7 +1850,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 2, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 3, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_sick_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_sick_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -1933,8 +1932,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         work_entries = self.employee.contract_id.generate_work_entries(datetime.date(2020, 9, 1), datetime.date(2020, 10, 31))
 
         attendance = self.env.ref('hr_work_entry.work_entry_type_attendance')
-        sick_work_entry_type = self.env.ref('hr_work_entry_contract.work_entry_type_sick_leave')
-        partial_sick_work_entry_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_part_sick')
+        sick_work_entry_type = self.env.ref('hr_work_entry.work_entry_type_sick_leave')
+        partial_sick_work_entry_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_part_sick')
 
         work_entries_expected_results = {
             (1, 9): sick_work_entry_type,
@@ -2058,7 +2057,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         work_entries = self.employee.contract_id.generate_work_entries(datetime.date(2020, 9, 1), datetime.date(2020, 10, 31))
 
         attendance = self.env.ref('hr_work_entry.work_entry_type_attendance')
-        sick_work_entry_type = self.env.ref('hr_work_entry_contract.work_entry_type_sick_leave')
+        sick_work_entry_type = self.env.ref('hr_work_entry.work_entry_type_sick_leave')
 
         work_entries_expected_results = {
             (1, 9): sick_work_entry_type,
@@ -2161,8 +2160,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         work_entries = self.employee.contract_id.generate_work_entries(datetime.date(2020, 9, 1), datetime.date(2020, 10, 31))
 
         attendance = self.env.ref('hr_work_entry.work_entry_type_attendance')
-        sick_work_entry_type = self.env.ref('hr_work_entry_contract.work_entry_type_sick_leave')
-        partial_sick_work_entry_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_part_sick')
+        sick_work_entry_type = self.env.ref('hr_work_entry.work_entry_type_sick_leave')
+        partial_sick_work_entry_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_part_sick')
 
         work_entries_expected_results = {
             (1, 9): sick_work_entry_type,
@@ -2283,7 +2282,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'wage_on_signature': 2120.0,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         sick_leave_1 = self.env['hr.leave'].new({
@@ -2317,9 +2316,9 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         work_entries = self.employee.contract_id.generate_work_entries(datetime.date(2020, 9, 1), datetime.date(2020, 10, 31))
 
         attendance = self.env.ref('hr_work_entry.work_entry_type_attendance')
-        sick_work_entry_type = self.env.ref('hr_work_entry_contract.work_entry_type_sick_leave')
-        partial_sick_work_entry_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_part_sick')
-        credit_time_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time')
+        sick_work_entry_type = self.env.ref('hr_work_entry.work_entry_type_sick_leave')
+        partial_sick_work_entry_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_part_sick')
+        credit_time_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time')
 
         work_entries_expected_results = {
             (1, 9): sick_work_entry_type,
@@ -2423,7 +2422,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'wage_on_signature': 2120.0,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         sick_leave_1 = self.env['hr.leave'].new({
@@ -2457,8 +2456,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         work_entries = self.employee.contract_id.generate_work_entries(datetime.date(2020, 9, 1), datetime.date(2020, 10, 31))
 
         attendance = self.env.ref('hr_work_entry.work_entry_type_attendance')
-        sick_work_entry_type = self.env.ref('hr_work_entry_contract.work_entry_type_sick_leave')
-        credit_time_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time')
+        sick_work_entry_type = self.env.ref('hr_work_entry.work_entry_type_sick_leave')
+        credit_time_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time')
 
         work_entries_expected_results = {
             (1, 9): sick_work_entry_type,
@@ -2556,7 +2555,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'wage_on_signature': 2120.0,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         sick_leave = self.env['hr.leave'].new({
@@ -2576,9 +2575,9 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         work_entries = self.employee.contract_id.generate_work_entries(datetime.date(2020, 9, 1), datetime.date(2020, 10, 31))
 
         attendance = self.env.ref('hr_work_entry.work_entry_type_attendance')
-        sick_work_entry_type = self.env.ref('hr_work_entry_contract.work_entry_type_sick_leave')
-        partial_sick_work_entry_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_part_sick')
-        credit_time_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time')
+        sick_work_entry_type = self.env.ref('hr_work_entry.work_entry_type_sick_leave')
+        partial_sick_work_entry_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_part_sick')
+        credit_time_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time')
 
         work_entries_expected_results = {
             (1, 9): sick_work_entry_type,
@@ -2707,7 +2706,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 14, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_small_unemployment').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_small_unemployment').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -2733,7 +2732,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 14, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 18, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_small_unemployment').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_small_unemployment').id
         }, {
             'name': "Absence",
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
@@ -2742,7 +2741,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 9, 21, 6, 0, 0),
             'date_to': datetime.datetime(2020, 9, 22, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_small_unemployment').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_small_unemployment').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
@@ -2769,7 +2768,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'wage_on_signature': 0.0,
             'time_credit': True,
             'work_time_rate': 0,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
         payslip = self._generate_payslip(datetime.date(2020, 9, 1), datetime.date(2020, 9, 30))
 
@@ -2791,7 +2790,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2020, 5, 4, 16, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }, {
             'name': "Absence",
             'calendar_id': self.resource_calendar_4_5_thurday_off.id,
@@ -2800,7 +2799,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2020, 5, 5, 16, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }, {
             'name': "Absence",
             'calendar_id': self.resource_calendar_4_5_thurday_off.id,
@@ -2809,7 +2808,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 5, 6, 6, 0, 0),
             'date_to': datetime.datetime(2020, 5, 6, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_training_time_off').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_training_time_off').id
         }])
 
         self.car.write({
@@ -2844,7 +2843,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'ip_wage_rate': 25.0,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2020, 5, 1), datetime.date(2020, 5, 31))
@@ -2872,7 +2871,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2020, 5, 4, 16, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }, {
             'name': "Absence",
             'calendar_id': self.resource_calendar_4_5_thurday_off.id,
@@ -2881,7 +2880,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2020, 5, 5, 16, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }, {
             'name': "Absence",
             'calendar_id': self.resource_calendar_4_5_thurday_off.id,
@@ -2890,7 +2889,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2020, 5, 6, 6, 0, 0),
             'date_to': datetime.datetime(2020, 5, 6, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_training_time_off').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_training_time_off').id
         }])
 
         self.car.write({
@@ -2925,7 +2924,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'ip_wage_rate': 25.0,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2020, 5, 1), datetime.date(2020, 5, 31))
@@ -2953,7 +2952,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2020, 9, 23, 16, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
 
         self.contract.commission_on_target = 1000
@@ -3055,7 +3054,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'distance_home_work': 75,
         }])
 
-        second_contract = self.env['hr.contract'].create([{
+        self.env['hr.contract'].create([{
             'name': "Contract For Payslip Test",
             'employee_id': second_employee.id,
             'resource_calendar_id': self.resource_calendar_38_hours_per_week.id,
@@ -3222,7 +3221,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2020, 3, 17, 18, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
 
         long_term_sick = self.env['hr.leave'].new({
@@ -3316,7 +3315,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2021, 1, 11, 7, 0, 0),
             'date_to': datetime.datetime(2021, 1, 11, 15, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_sick_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_sick_leave').id
         }])
         payslip = self._generate_payslip(datetime.date(2021, 1, 1), datetime.date(2021, 1, 31))
 
@@ -3340,7 +3339,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         maternity_time_off = self.env['hr.leave'].new({
             'name': 'Maternity Time Off : 2 days',
             'employee_id': self.employee.id,
-            'holiday_status_id': self.env.ref('l10n_be_hr_payroll.holiday_type_maternity').id,
+            'holiday_status_id': self.env.ref('hr_holidays.l10n_be_leave_type_maternity').id,
             'request_date_from': datetime.date(2020, 12, 31),
             'request_date_to': datetime.date(2021, 1, 1),
             'request_hour_from': 7,
@@ -3358,7 +3357,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2021, 1, 1, 18, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         })
 
         payslip = self._generate_payslip(datetime.date(2021, 1, 1), datetime.date(2021, 1, 31))
@@ -3381,7 +3380,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2021, 1, 4, 7, 0, 0),
             'date_to': datetime.datetime(2021, 1, 4, 15, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_extra_legal').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_extra_legal').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2021, 1, 1), datetime.date(2021, 1, 31))
@@ -3410,7 +3409,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_end': datetime.date(2021, 2, 28),
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         payslip = self._generate_payslip(datetime.date(2021, 1, 1), datetime.date(2021, 1, 31))
@@ -3434,7 +3433,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_end': datetime.date(2021, 2, 28),
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'representation_fees': 400,
         })
 
@@ -3493,7 +3492,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2021, 3, 1, 7, 0, 0),
             'date_to': datetime.datetime(2021, 3, 1, 11, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_sick_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_sick_leave').id
         }])
 
         self.contract.write({
@@ -3576,7 +3575,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         self._generate_departure_data()
         self.march_2019.state = 'verify'
         worked_days = self.march_2019.worked_days_line_ids.filtered(lambda wd: wd.code == 'LEAVE90')
-        worked_days.work_entry_type_id = self.env.ref("l10n_be_hr_payroll.work_entry_type_european")
+        worked_days.work_entry_type_id = self.env.ref("hr_work_entry.l10n_be_work_entry_type_european")
         worked_days._compute_amount()
         self.march_2019.state = 'done'
         # - Holiday Pay N
@@ -3666,7 +3665,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2021, 4, 5, 17, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
 
         self.env['resource.calendar.leaves'].create([{
@@ -3677,7 +3676,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2021, 4, 12, 7, 0, 0),
             'date_to': datetime.datetime(2021, 4, 12, 10, 48, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_extra_legal').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_extra_legal').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2021, 4, 1), datetime.date(2021, 4, 30))
@@ -3772,7 +3771,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'standard_calendar_id': self.resource_calendar_38_hours_per_week,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
             'transport_mode_car': False,
@@ -3801,7 +3800,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'standard_calendar_id': self.resource_calendar_38_hours_per_week,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
             'wage': 2120.0,
             'wage_on_signature': 2120.0,
             'transport_mode_car': False,
@@ -4318,7 +4317,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2021, 5, 12, 21, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }, {
             'name': "Absence",
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
@@ -4327,7 +4326,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2021, 5, 26, 21, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
 
         economic_unemployment = self.env['hr.leave'].create({
@@ -4406,7 +4405,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2021, 5, 12, 21, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }, {
             'name': "Absence",
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
@@ -4415,12 +4414,12 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2021, 5, 17, 21, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
 
         maternity = self.env['hr.leave'].create({
             'name': 'Legal Time Off 2020',
-            'holiday_status_id': self.env.ref('l10n_be_hr_payroll.holiday_type_maternity').id,
+            'holiday_status_id': self.env.ref('hr_holidays.l10n_be_leave_type_maternity').id,
             'request_date_from': datetime.date(2021, 4, 17),
             'request_date_to': datetime.date(2021, 5, 31),
             'employee_id': self.employee.id,
@@ -4492,7 +4491,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'ip': False,
             'time_credit': True,
             'work_time_rate': 0,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         self.env['resource.calendar.leaves'].create([{
@@ -4503,12 +4502,12 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2021, 5, 4, 21, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
 
         maternity = self.env['hr.leave'].create({
             'name': 'Legal Time Off 2020',
-            'holiday_status_id': self.env.ref('l10n_be_hr_payroll.holiday_type_maternity').id,
+            'holiday_status_id': self.env.ref('hr_holidays.l10n_be_leave_type_maternity').id,
             'request_date_from': '2021-5-1',
             'request_date_to': '2021-5-31',
             'employee_id': self.employee.id,
@@ -4546,7 +4545,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'ip': False,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         self.env['resource.calendar.leaves'].create([{
@@ -4557,12 +4556,12 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2021, 5, 4, 21, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
 
         maternity = self.env['hr.leave'].create({
             'name': 'Legal Time Off 2020',
-            'holiday_status_id': self.env.ref('l10n_be_hr_payroll.holiday_type_maternity').id,
+            'holiday_status_id': self.env.ref('hr_holidays.l10n_be_leave_type_maternity').id,
             'request_date_from': datetime.date(2021, 5, 1),
             'request_date_to': datetime.date(2021, 5, 31),
             'employee_id': self.employee.id,
@@ -4603,7 +4602,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'ip': False,
             'time_credit': True,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_credit_time').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_credit_time').id,
         })
 
         self.env['resource.calendar.leaves'].create([{
@@ -4614,7 +4613,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2021, 5, 4, 21, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }, {
             'name': "Absence",
             'calendar_id': self.resource_calendar_4_5_wednesday_off.id,
@@ -4623,7 +4622,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2021, 5, 13, 21, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }, {
             'name': "Absence",
             'calendar_id': self.resource_calendar_4_5_wednesday_off.id,
@@ -4632,12 +4631,12 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2021, 5, 17, 21, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
 
         maternity = self.env['hr.leave'].create({
             'name': 'Legal Time Off 2020',
-            'holiday_status_id': self.env.ref('l10n_be_hr_payroll.holiday_type_maternity').id,
+            'holiday_status_id': self.env.ref('hr_holidays.l10n_be_leave_type_maternity').id,
             'request_date_from': datetime.date(2021, 5, 1),
             'request_date_to': datetime.date(2021, 5, 31),
             'employee_id': self.employee.id,
@@ -4955,7 +4954,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'time_credit': True,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'work_time_rate': 0,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_parental_time_off').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'wage_on_signature': 2821.00,
             'wage': 2821.00,
             'resource_calendar_id': self.resource_calendar_0_hours_per_week.id,
@@ -4983,7 +4982,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'time_credit': True,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_parental_time_off').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'company_id': self.env.company.id,
             'date_generated_from': datetime.datetime(2022, 9, 1, 0, 0, 0),
             'date_generated_to': datetime.datetime(2022, 9, 1, 0, 0, 0),
@@ -5107,7 +5106,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'standard_calendar_id': self.resource_calendar_38_hours_per_week,
             'time_credit': True,
             'work_time_rate': 90,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_parental_time_off').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'representation_fees': 399,
         })
         payslip = self._generate_payslip(datetime.date(2022, 5, 1), datetime.date(2022, 5, 31))
@@ -5125,7 +5124,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'standard_calendar_id': self.resource_calendar_38_hours_per_week,
             'time_credit': True,
             'work_time_rate': 90,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_parental_time_off').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'representation_fees': 399,
         })
         payslip = self._generate_payslip(datetime.date(2022, 5, 1), datetime.date(2022, 5, 31))
@@ -5144,10 +5143,10 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         # Sick 2 weeks (7 - 20 May)
         # Sick 4 week (21 May - 17 June)
 
-        bank_holiday = self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday')
+        bank_holiday = self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday')
         attendance = self.env.ref('hr_work_entry.work_entry_type_attendance')
-        sick_work_entry_type = self.env.ref('hr_work_entry_contract.work_entry_type_sick_leave')
-        partial_sick_work_entry_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_part_sick')
+        sick_work_entry_type = self.env.ref('hr_work_entry.work_entry_type_sick_leave')
+        partial_sick_work_entry_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_part_sick')
 
         self.env['resource.calendar.leaves'].create([{
             'name': "Easter Monday",
@@ -5413,7 +5412,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         strike_leave = self.env['hr.leave'].new({
             'name': 'Strike Day',
             'employee_id': self.employee.id,
-            'holiday_status_id': self.env.ref('l10n_be_hr_payroll.holiday_type_strike').id,
+            'holiday_status_id': self.env.ref('hr_holidays.l10n_be_leave_type_strike').id,
             'request_date_from': datetime.date(2022, 5, 17),
             'request_date_to': datetime.date(2022, 5, 17),
             'request_hour_from': 7,
@@ -5474,7 +5473,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'time_credit': True,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'work_time_rate': 0,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_parental_time_off').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'resource_calendar_id': self.resource_calendar_0_hours_per_week.id,
             'date_start': datetime.date(2021, 1, 1),
         })
@@ -5564,7 +5563,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 7, 22, 6, 0, 0), # utc + 2
             'date_to': datetime.datetime(2022, 7, 22, 10, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }, {
             'name': "Legal Leave Whole Day",
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
@@ -5573,7 +5572,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 7, 20, 6, 0, 0),
             'date_to': datetime.datetime(2022, 7, 20, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2022, 7, 1), datetime.date(2022, 7, 31))
@@ -5600,7 +5599,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 7, 22, 6, 0, 0), # utc + 2
             'date_to': datetime.datetime(2022, 7, 22, 10, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }, {
             'name': "Legal Leave Whole Day",
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
@@ -5609,7 +5608,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 7, 20, 6, 0, 0),
             'date_to': datetime.datetime(2022, 7, 20, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2022, 7, 1), datetime.date(2022, 7, 31))
@@ -5635,7 +5634,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 7, 18, 6, 0, 0),
             'date_to': datetime.datetime(2022, 7, 22, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2022, 7, 1), datetime.date(2022, 7, 31))
@@ -5663,7 +5662,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 9, 19, 6, 0, 0),
             'date_to': datetime.datetime(2022, 9, 20, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         self.env['resource.calendar.leaves'].create([{
@@ -5674,7 +5673,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 10, 12, 6, 0, 0),
             'date_to': datetime.datetime(2022, 10, 13, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         self.env['resource.calendar.leaves'].create([{
@@ -5685,7 +5684,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 11, 8, 6, 0, 0),
             'date_to': datetime.datetime(2022, 11, 11, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2022, 9, 1), datetime.date(2022, 9, 30))
@@ -5729,7 +5728,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 7, 22, 6, 0, 0), # utc + 2
             'date_to': datetime.datetime(2022, 7, 22, 10, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }, {
             'name': "Legal Leave Whole Day",
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
@@ -5738,7 +5737,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 7, 20, 6, 0, 0),
             'date_to': datetime.datetime(2022, 7, 20, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2022, 7, 1), datetime.date(2022, 7, 31))
@@ -5766,7 +5765,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 7, 22, 6, 0, 0), # utc + 2
             'date_to': datetime.datetime(2022, 7, 22, 10, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }, {
             'name': "Legal Leave Whole Day",
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
@@ -5775,7 +5774,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 7, 20, 6, 0, 0),
             'date_to': datetime.datetime(2022, 7, 20, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2022, 7, 1), datetime.date(2022, 7, 31))
@@ -5801,7 +5800,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 7, 18, 6, 0, 0),
             'date_to': datetime.datetime(2022, 7, 22, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2022, 7, 1), datetime.date(2022, 7, 31))
@@ -5829,7 +5828,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 9, 19, 6, 0, 0),
             'date_to': datetime.datetime(2022, 9, 20, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         self.env['resource.calendar.leaves'].create([{
@@ -5840,7 +5839,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 10, 12, 6, 0, 0),
             'date_to': datetime.datetime(2022, 10, 13, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         self.env['resource.calendar.leaves'].create([{
@@ -5851,7 +5850,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2022, 11, 8, 6, 0, 0),
             'date_to': datetime.datetime(2022, 11, 11, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2022, 9, 1), datetime.date(2022, 9, 30))
@@ -6046,7 +6045,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2018, 11, 9, 18),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         })
 
         self.contract.generate_work_entries(datetime.date(2018, 11, 1), datetime.date(2018, 11, 30))
@@ -6114,7 +6113,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2019, 5, 7, 20),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }, {
             'name': "Bank Holiday Day 2",
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
@@ -6123,7 +6122,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2019, 5, 6, 20),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
 
         self.contract.generate_work_entries(datetime.date(2019, 5, 1), datetime.date(2019, 5, 31))
@@ -6275,7 +6274,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2019, 1, 1, 20),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         })
 
         self.contract.generate_work_entries(datetime.date(2019, 1, 1), datetime.date(2019, 1, 31))
@@ -6392,7 +6391,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2024, 2, 11, 6, 0, 0),
             'date_to': datetime.datetime(2024, 2, 15, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2024, 2, 1), datetime.date(2024, 2, 29))
@@ -6411,7 +6410,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2024, 7, 14, 6, 0, 0),
             'date_to': datetime.datetime(2024, 7, 18, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2024, 7, 1), datetime.date(2024, 7, 31))
@@ -6442,7 +6441,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2024, 1, 11, 6, 0, 0),
             'date_to': datetime.datetime(2024, 1, 12, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2024, 1, 1), datetime.date(2024, 1, 31))
@@ -6462,7 +6461,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2024, 2, 6, 6, 0, 0),
             'date_to': datetime.datetime(2024, 2, 7, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2024, 2, 1), datetime.date(2024, 2, 29))
@@ -6482,7 +6481,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2024, 3, 18, 6, 0, 0),
             'date_to': datetime.datetime(2024, 3, 21, 19, 0, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2024, 3, 1), datetime.date(2024, 3, 31))
@@ -6524,21 +6523,21 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2023, 8, 7, 2),
             'date_to': datetime.datetime(2023, 8, 7, 22),
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id,
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id,
             'time_type': 'leave',
         }, {
             'name': 'Public Time Off 2',
             'date_from': datetime.datetime(2023, 8, 8, 2),
             'date_to': datetime.datetime(2023, 8, 8, 22),
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id,
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id,
             'time_type': 'leave',
         }, {
             'name': 'Public Time Off 3',
             'date_from': datetime.datetime(2023, 8, 9, 2),
             'date_to': datetime.datetime(2023, 8, 9, 22),
             'calendar_id': self.resource_calendar_38_hours_per_week.id,
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id,
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id,
             'time_type': 'leave',
         }])
 
@@ -6564,7 +6563,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'time_credit': True,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'work_time_rate': 80,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_parental_time_off').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'resource_calendar_id': self.resource_calendar_4_5_friday_off.id,
             'date_start': datetime.date(2023, 4, 1),
             'date_end': datetime.date(2023, 8, 13),
@@ -6610,7 +6609,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_to': datetime.datetime(2023, 8, 15, 20, 0, 0),
             'resource_id': False,
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday').id
         }])
 
         # Paid Time Off
@@ -6622,7 +6621,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'date_from': datetime.datetime(2023, 8, 14, 6, 0, 0),
             'date_to': datetime.datetime(2023, 8, 14, 14, 36, 0),
             'time_type': "leave",
-            'work_entry_type_id': self.env.ref('hr_work_entry_contract.work_entry_type_legal_leave').id
+            'work_entry_type_id': self.env.ref('hr_work_entry.work_entry_type_legal_leave').id
         }])
 
         payslip = self._generate_payslip(datetime.date(2023, 8, 1), datetime.date(2023, 8, 31), contract_id=contract_2.id)
@@ -6643,7 +6642,7 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'name': "Full Time Parental Time Off", 'time_credit': True,
             'standard_calendar_id': self.resource_calendar_38_hours_per_week.id,
             'work_time_rate': 0,
-            'time_credit_type_id': self.env.ref('l10n_be_hr_payroll.work_entry_type_parental_time_off').id,
+            'time_credit_type_id': self.env.ref('hr_work_entry.l10n_be_work_entry_type_parental_time_off').id,
             'resource_calendar_id': self.resource_calendar_0_hours_per_week.id,
             'date_start': datetime.date(2023, 10, 1),
             'date_end': datetime.date(2023, 10, 10),

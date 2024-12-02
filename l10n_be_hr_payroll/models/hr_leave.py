@@ -21,9 +21,9 @@ class HrLeave(models.Model):
             and leave.date_from
         )
 
-        sick_work_entry_type = self.env.ref("hr_work_entry_contract.work_entry_type_sick_leave")
-        partial_sick_work_entry_type = self.env.ref("l10n_be_hr_payroll.work_entry_type_part_sick")
-        long_sick_work_entry_type = self.env.ref("l10n_be_hr_payroll.work_entry_type_long_sick")
+        sick_work_entry_type = self.env.ref("hr_work_entry.work_entry_type_sick_leave")
+        partial_sick_work_entry_type = self.env.ref("hr_work_entry.l10n_be_work_entry_type_part_sick")
+        long_sick_work_entry_type = self.env.ref("hr_work_entry.l10n_be_work_entry_type_long_sick")
         sick_work_entry_types = (
             sick_work_entry_type
             + partial_sick_work_entry_type

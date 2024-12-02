@@ -20,7 +20,7 @@
         <field name="company_ids" eval="[(4, ref('base.demo_company_be'))]"/>
     </record>
 
-    <record id="holiday_type_european" model="hr.leave.type">
+    <record id="hr_holidays.l10n_be_leave_type_european" model="hr.leave.type">
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="country_id" ref="base.be"/>
     </record>
@@ -31,7 +31,7 @@
         <field name="company_id" ref="base.demo_company_be"/>
         <field name="date_from" eval="time.strftime('%Y-03-01 05:00:00')"/>
         <field name="date_to" eval="time.strftime('%Y-03-01 17:00:00')"/>
-        <field name="work_entry_type_id" ref="hr_work_entry_contract.work_entry_type_legal_leave"/>
+        <field name="work_entry_type_id" ref="hr_work_entry.work_entry_type_legal_leave"/>
     </record>
 
     <!-- Mandatory day -->

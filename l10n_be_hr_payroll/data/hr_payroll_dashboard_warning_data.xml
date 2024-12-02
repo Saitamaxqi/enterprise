@@ -80,9 +80,9 @@ if invalid_addresses:
             <field name="country_id" ref="base.be"/>
             <field name="evaluation_code">
 belgian_companies = self.env.companies.filtered(lambda c: c.country_id.code == 'BE')
-sick_work_entry_type = self.env.ref('hr_work_entry_contract.work_entry_type_sick_leave')
-partial_sick_work_entry_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_part_sick')
-long_sick_work_entry_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_long_sick')
+sick_work_entry_type = self.env.ref('hr_work_entry.work_entry_type_sick_leave')
+partial_sick_work_entry_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_part_sick')
+long_sick_work_entry_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_long_sick')
 sick_work_entry_types = sick_work_entry_type + partial_sick_work_entry_type + long_sick_work_entry_type
 
 sick_more_than_30days_leave = self.env['hr.leave'].search([

@@ -84,8 +84,8 @@ class HrPayslip(models.Model):
         if len(contracts) == 1:
             return contracts
         credit_time_work_entry_type_ids = [
-            self.env['ir.model.data']._xmlid_to_res_model_res_id('l10n_be_hr_payroll.work_entry_type_credit_time')[1],
-            self.env['ir.model.data']._xmlid_to_res_model_res_id('l10n_be_hr_payroll.work_entry_type_parental_time_off')[1],
+            self.env['ir.model.data']._xmlid_to_res_model_res_id('hr_work_entry.l10n_be_work_entry_type_credit_time')[1],
+            self.env['ir.model.data']._xmlid_to_res_model_res_id('hr_work_entry.l10n_be_work_entry_type_parental_time_off')[1],
         ]
         unpaid_work_entry_types = self.struct_id.unpaid_work_entry_type_ids.ids + credit_time_work_entry_type_ids
         for contract in contracts:
@@ -298,7 +298,7 @@ class HrPayslip(models.Model):
             # If the contract is followed by another one (eg. after an appraisal)
             if self.contract_id.employee_id.contract_ids.filtered(lambda c: c.state in ['open', 'close'] and c.date_start > self.contract_id.date_end):
                 return res
-            public_holiday_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday')
+            public_holiday_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday')
             public_leaves = self.contract_id.resource_calendar_id.global_leave_ids.filtered(
                 lambda l: l.work_entry_type_id == public_holiday_type)
             # If less than 15 days under contract, the public holidays is not reimbursed
@@ -320,11 +320,11 @@ class HrPayslip(models.Model):
         # Handle loss on commissions
         if self._get_last_year_average_variable_revenues():
             we_types_ids = (
-                self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday') + self.env.ref('l10n_be_hr_payroll.work_entry_type_small_unemployment')
+                self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday') + self.env.ref('hr_work_entry.l10n_be_work_entry_type_small_unemployment')
             ).ids
             # if self.worked_days_line_ids.filtered(lambda wd: wd.code in ['LEAVE205', 'LEAVE500']):
             if any(line_vals['work_entry_type_id'] in we_types_ids for line_vals in res):
-                we_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_simple_holiday_pay_variable_salary')
+                we_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_simple_holiday_pay_variable_salary')
                 res.append({
                     'sequence': we_type.sequence,
                     'work_entry_type_id': we_type.id,
@@ -632,6 +632,7 @@ class HrPayslip(models.Model):
     def _get_be_termination_withholding_rate(self, localdict):
         # See: https://www.securex.eu/lex-go.nsf/vwReferencesByCategory_fr/52DA120D5DCDAE78C12584E000721081?OpenDocument
         self.ensure_one()
+
         def find_rates(x, rates):
             for low, high, rate in rates:
                 if low <= x <= high:

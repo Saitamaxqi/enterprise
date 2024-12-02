@@ -437,7 +437,7 @@ class TestPayrollCommon(TransactionCase):
             'company_id': cls.australian_company.id,
             'l10n_au_leave_type': 'annual',
             'leave_validation_type': 'no_validation',
-            'work_entry_type_id': cls.env.ref('l10n_au_hr_payroll.l10n_au_work_entry_paid_time_off').id,
+            'work_entry_type_id': cls.env.ref('hr_work_entry.l10n_au_work_entry_type_paid_time_off').id,
         })
 
     def create_employee_and_contract(self, wage, contract_info=False):
@@ -537,13 +537,14 @@ class TestPayrollCommon(TransactionCase):
 
         # 2) Verify the workdays
         if self.default_payroll_structure.use_worked_day_lines:
-            for expected_worked_day, payslip_workday in izip_longest(expected_worked_days, payslip.worked_days_line_ids):
+            for payslip_workday in payslip.worked_days_line_ids:
+                expected_worked_day = list(
+                    filter(lambda ewd: ewd[0] == payslip_workday.work_entry_type_id.id, expected_worked_days)
+                )[0]
                 assert expected_worked_day and payslip_workday, (
                         "%s worked day lines expected in the test, but %s were found in the payslip."
                         % (len(expected_worked_days), len(payslip.worked_days_line_ids)))
-
                 expected_entry_type_id, expected_day, expected_hour, expected_amount = expected_worked_day
-                self.assertEqual(expected_entry_type_id, payslip_workday.work_entry_type_id.id)
                 self.assertAlmostEqual(expected_day, payslip_workday.number_of_days, 0)
                 self.assertAlmostEqual(expected_hour, payslip_workday.number_of_hours, 0)
                 self.assertAlmostEqual(expected_amount, payslip_workday.amount, 0)

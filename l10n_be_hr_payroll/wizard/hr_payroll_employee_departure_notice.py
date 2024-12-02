@@ -86,7 +86,7 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
 
     @api.depends('departure_date', 'notice_respect', 'departure_reason_code')
     def _compute_start_notice_period(self):
-        public_holiday_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday')
+        public_holiday_type = self.env.ref('hr_work_entry.l10n_be_work_entry_type_bank_holiday')
         for notice in self:
             if notice.notice_respect == 'without' or notice.departure_reason_code in (350, 351):
                 notice.start_notice_period = notice.departure_date

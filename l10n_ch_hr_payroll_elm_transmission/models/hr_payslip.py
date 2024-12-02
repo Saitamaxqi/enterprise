@@ -79,12 +79,12 @@ class HrPayslip(models.Model):
         return (overlap_end - overlap_start).days + 1
 
     def _get_payroll_impacting_swissdec(self):
-        return self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_unpaid_lt', raise_if_not_found=False) + \
-                                        self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_illness_lt', raise_if_not_found=False) + \
-                                        self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_accident_lt', raise_if_not_found=False) + \
-                                        self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_maternity_lt', raise_if_not_found=False) + \
-                                        self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_military_lt', raise_if_not_found=False) + \
-                                        self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_interruption_of_work_lt', raise_if_not_found=False)
+        return self.env.ref('hr_holidays.l10n_ch_swissdec_unpaid_lt', raise_if_not_found=False) + \
+                                        self.env.ref('hr_holidays.l10n_ch_swissdec_illness_lt', raise_if_not_found=False) + \
+                                        self.env.ref('hr_holidays.l10n_ch_swissdec_accident_lt', raise_if_not_found=False) + \
+                                        self.env.ref('hr_holidays.l10n_ch_swissdec_maternity_lt', raise_if_not_found=False) + \
+                                        self.env.ref('hr_holidays.l10n_ch_swissdec_military_lt', raise_if_not_found=False) + \
+                                        self.env.ref('hr_holidays.l10n_ch_swissdec_interruption_of_work_lt', raise_if_not_found=False)
 
     @api.depends('employee_id', 'contract_id', 'struct_id', 'date_from', 'date_to')
     def _compute_l10n_ch_swiss_wage_ids(self):
@@ -115,17 +115,17 @@ class HrPayslip(models.Model):
             grouped_one_time_wages_dict[contract][date_y.year][date_m.month] += wage
 
 
-        monthly_work_entry = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_monthly_wt', raise_if_not_found=False)
-        hourly_work_entry = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_hourly_wt', raise_if_not_found=False)
-        lesson_work_entry = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_lesson_wt', raise_if_not_found=False)
-        overtime_work_entry = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_overtime_wt', raise_if_not_found=False)
-        overtime_125_work_entry = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_overtime_125_wt', raise_if_not_found=False)
+        monthly_work_entry = self.env.ref('hr_work_entry.l10n_ch_swissdec_monthly_wt', raise_if_not_found=False)
+        hourly_work_entry = self.env.ref('hr_work_entry.l10n_ch_swissdec_hourly_wt', raise_if_not_found=False)
+        lesson_work_entry = self.env.ref('hr_work_entry.l10n_ch_swissdec_lesson_wt', raise_if_not_found=False)
+        overtime_work_entry = self.env.ref('hr_work_entry.l10n_ch_swissdec_overtime_wt', raise_if_not_found=False)
+        overtime_125_work_entry = self.env.ref('hr_work_entry.l10n_ch_swissdec_overtime_125_wt', raise_if_not_found=False)
 
         mapped_hourly_absence = {
-            "CH_ACCIDENT": self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_accident_wt_hourly', raise_if_not_found=False),
-            "CH_ILLNESS": self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_illness_wt_hourly', raise_if_not_found=False),
-            "CH_MATERNITY": self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_maternity_wt_hourly', raise_if_not_found=False),
-            "CH_MILITARY": self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_military_wt_hourly', raise_if_not_found=False),
+            "CH_ACCIDENT": self.env.ref('hr_work_entry.l10n_ch_swissdec_accident_wt_hourly', raise_if_not_found=False),
+            "CH_ILLNESS": self.env.ref('hr_work_entry.l10n_ch_swissdec_illness_wt_hourly', raise_if_not_found=False),
+            "CH_MATERNITY": self.env.ref('hr_work_entry.l10n_ch_swissdec_maternity_wt_hourly', raise_if_not_found=False),
+            "CH_MILITARY": self.env.ref('hr_work_entry.l10n_ch_swissdec_military_wt_hourly', raise_if_not_found=False),
         }
 
 
@@ -496,7 +496,7 @@ class HrPayslip(models.Model):
         if not swiss_slips:
             return super()._compute_input_line_ids()
         payroll_impacting_leave_types = self._get_payroll_impacting_swissdec()
-        work_interruption_type = self.env.ref('l10n_ch_hr_payroll_elm_transmission.l10n_ch_swissdec_interruption_of_work_lt',raise_if_not_found=False)
+        work_interruption_type = self.env.ref('hr_holidays.l10n_ch_swissdec_interruption_of_work_lt',raise_if_not_found=False)
         swiss_slips.update({'input_line_ids': [(5, 0, 0)]})
         leaves_grouped_by_employee = dict(self.env['hr.leave']._read_group(
             domain=[('employee_id', 'in', swiss_slips.mapped('employee_id').ids),
