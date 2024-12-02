@@ -9,25 +9,21 @@
         <field name="use_default_to" eval="True"/>
         <field name="description">Send this email when you want to schedule an interview with a candidate</field>
         <field name="body_html" type="html">
-<table border="0" cellpadding="0" cellspacing="0" width="590" style="min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;">
-    <tr>
-        <td valign="top">
-            <h2>Hello,</h2>
-            <div style="font-size: 13px;">
-                Thanks for your application and interest in <t t-out="object.company_id.name or ''">YourCompany</t>.<br/>
-                <br/>
-                I would like to organize a phone interview with you, it should last about 30 min.
-                We'll go through your resume and motivations to join the <t t-out="object.company_id.name or ''">YourCompany</t> team.
-                You can book a slot in our agenda by cliking on the button below.<br/>
-            </div>
-            <br/>
-            <a t-att-href="env['ir.config_parameter'].sudo().get_param('web.base.url') + '/book/interview'"
-                style="background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;">Schedule my interview</a><br/>
-            <br/>
-            Best regards,
-        </td>
-    </tr>
-</table>
+<div style="margin: 0px; padding: 0px;">
+    <h2>Hello,</h2>
+    <div style="font-size: 13px;">
+        Thanks for your application and interest in <t t-out="object.company_id.name or ''">YourCompany</t>.<br/>
+        <br/>
+        I would like to organize a phone interview with you, it should last about 30 min.
+        We'll go through your resume and motivations to join the <t t-out="object.company_id.name or ''">YourCompany</t> team.
+        You can book a slot in our agenda by cliking on the button below.<br/>
+    </div>
+    <br/>
+    <a t-att-href="env['ir.config_parameter'].sudo().get_param('web.base.url') + '/book/interview'"
+        style="background-color: #875a7b; text-decoration: none; color: #fff; padding: 8px 16px 8px 16px; border-radius: 5px;">Schedule my interview</a><br/>
+    <br/>
+    Best regards,
+</div>
         </field>
         <field name="auto_delete" eval="True"/>
         <field name="lang">{{ object.partner_id.lang or '' }}</field>
