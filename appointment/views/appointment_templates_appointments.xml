@@ -230,6 +230,8 @@
                             <t t-set="isDate" t-value="True"/>
                             <t t-set="staff_user" t-value="user_selected"/>
                             <t t-set="resource" t-value="resource_selected"/>
+                            <t t-set="selectionPossible"
+                               t-value="appointment_type.assign_method != 'time_auto_assign' and len(users_possible or resources_possible) > 1"/>
                         </t>
                     </div>
                 </div>
@@ -357,9 +359,7 @@
 
     <!-- Section in details column that gives information about which operator the customer will meet or which ressource he selected. -->
     <template id="appointment_meeting_user" name="Meeting user">
-        <t t-set="is_chosen_user_assign_method" t-value="appointment_type.assign_method != 'time_auto_assign'"/>
-        <t t-set="based_on_users" t-value="appointment_type.schedule_based_on == 'users'"/>
-        <t t-if="(based_on_users and (len(users_possible) == 1 or is_chosen_user_assign_method or appointment_type.category not in ['punctual', 'recurring']) and (appointment_type.avatars_display == 'show' and isDate or isDetails)) or (not based_on_users and resource)">
+        <t t-if="isDetails or (isDate and not selectionPossible) or appointment_type.category not in ['punctual', 'recurring']">
             <div class="mt-3 pt-3 border-top">
                 <small class="text-uppercase text-muted">
                     <t t-if="staff_user">Operator</t>

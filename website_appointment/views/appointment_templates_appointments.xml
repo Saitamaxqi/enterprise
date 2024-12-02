@@ -51,6 +51,11 @@
                 <i class="fa fa-long-arrow-left me-2"/>All Appointments
             </a>
         </xpath>
+        <xpath expr="//t[@t-set='selectionPossible']" position="after">
+            <!-- Selection is no longer possible if a selection screen was shown beforehand -->
+            <t t-set="selectionPossible"
+               t-value="selectionPossible and not (appointment_type.assign_method == 'resource_time' and appointment_type.avatars_display == 'show')"/>
+        </xpath>
     </template>
 
     <record id="appointment.appointment_info" model="ir.ui.view">
