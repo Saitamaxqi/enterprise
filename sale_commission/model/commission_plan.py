@@ -22,7 +22,7 @@ class SaleCommissionPlan(models.Model):
     name = fields.Char("Name", required=True)
 
     date_from = fields.Date("From", required=True, default=lambda self: fields.Date.today() + relativedelta(day=1, month=1), tracking=True)
-    date_to = fields.Date("To", required=True, default=lambda self: fields.Date.today() + relativedelta(years=1, day=1, month=1), tracking=True)
+    date_to = fields.Date("To", required=True, default=lambda self: fields.Date.today() + relativedelta(years=1, day=1, month=1) - relativedelta(days=1), tracking=True)
     periodicity = fields.Selection([('month', "Monthly"), ('quarter', "Quarterly"), ('year', "Yearly")], required=True, default='quarter', tracking=True)
 
     commission_amount = fields.Monetary("On Target Commission", help='OTC', currency_field='currency_id', default=1000)
@@ -71,7 +71,7 @@ CREATE INDEX IF NOT EXISTS account_move_invoice_user_id_date_idx ON account_move
     @api.model
     def _date2name(self, dt, periodicity):
         if periodicity == 'month':
-            return dt.strftime('%Y %B')
+            return dt.strftime('%b %Y')
         elif periodicity == 'quarter':
             return f'{dt.year} Q{(dt.month // 3) + 1}'
         elif periodicity == 'year':
@@ -89,7 +89,11 @@ CREATE INDEX IF NOT EXISTS account_move_invoice_user_id_date_idx ON account_move
                 date_from = date_from - relativedelta(days=1) + timedelta
             elif plan.periodicity == 'quarter':
                 timedelta = relativedelta(months=3, day=1)
-                start_date = date_from + relativedelta(month=(date_from.month // 3) * 3 + 1, day=1)
+                r_delta = relativedelta(month=(date_from.month // 3) * 3 + 1, day=1)
+                if r_delta.month >12:
+                     d1 = r_delta.month - 12
+                     r_delta = relativedelta(year=1, day=1) + relativedelta(month=d1, day=1)
+                start_date = date_from + r_delta
                 while start_date < date_from:
                     start_date += timedelta
                 date_from = start_date
@@ -98,7 +102,6 @@ CREATE INDEX IF NOT EXISTS account_move_invoice_user_id_date_idx ON account_move
                 date_from = date_from - relativedelta(days=1) + timedelta
 
             targets = [Command.clear()]
-
             while date_from + timedelta - relativedelta(days=1) <= plan.date_to:
                 targets += [Command.create({
                     'name': self._date2name(date_from, plan.periodicity),

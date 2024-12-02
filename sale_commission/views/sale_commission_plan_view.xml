@@ -44,9 +44,10 @@
                         <group>
                             <label for="date_from" string="Effective Period"/>
                             <div class="d-inline-flex">
-                                <field name="date_from" string="Date" widget="daterange" options="{'end_date_field': 'date_to'}" readonly="state != 'draft'"/>
+                                <field name="date_from" string="Date" widget="daterange" options="{'end_date_field': 'date_to'}" readonly="state != 'draft'" force_save="1"/>
                             </div>
-                            <field name="periodicity" string="Payment Frequency" readonly="state != 'draft'"/>
+                            <!-- arj todo: payment frequency quid ? -->
+                            <field name="periodicity" string="Target Frequency" readonly="state != 'draft'" force_save="1"/>
                         </group>
                     </group>
                     <notebook name="main_book">
@@ -112,9 +113,9 @@
                                         <create string="Add a new Sales Person"/>
                                     </control>
                                     <field name="user_id"/>
-                                    <field name="date_from" optional="visible"/>
-                                    <field name="date_to" optional="visible"/>
-                                    <field name="other_plans" widget="many2many_tags"/>
+                                    <field name="date_from" required="True"/>
+                                    <field name="date_to"/>
+                                    <field name="other_plans" widget="many2many_tags" readonly="True"/>
                                 </list>
                             </field>
                             <button string="Add Multiple Salespersons" type="action" name="%(sale_commission.sale_subscription_change_customer_wizard_action)d" groups="base.group_no_one"/>

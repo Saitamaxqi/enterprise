@@ -22,9 +22,8 @@
         <field name="model">sale.commission.achievement.report</field>
         <field name="arch" type="xml">
             <pivot>
-                <field name="plan_id" type="row"/>
-                <field name="user_id" type="row"/>
-                <field name="target_id" type="col"/>
+                <field name="target_id" type="row"/>
+                <field name="achieved" type="col"/>
                 <field name="achieved" type="measure"/>
             </pivot>
         </field>
@@ -35,8 +34,9 @@
         <field name="model">sale.commission.achievement.report</field>
         <field name="arch" type="xml">
             <graph>
+                <field name="plan_id" type="row"/>
+                <field name="user_id" type="row"/>
                 <field name="target_id" type="col"/>
-                <field name="currency_id"/>
                 <field name="achieved" type="measure"/>
             </graph>
         </field>

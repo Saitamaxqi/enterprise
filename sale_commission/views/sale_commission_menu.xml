@@ -13,25 +13,11 @@
             sequence="10"/>
 
     <menuitem
-            action="sale_commission_action_my_forecast"
-            id="sale_commission_my_forecast"
-            parent="menu_sale_commission"
-            groups="sale_commission.group_commission_forecast"
-            sequence="20"/>
-
-    <menuitem
             action="sale_commission_action_report"
             id="sale_commission_plan_report_menu"
             parent="menu_sale_commission"
             groups="sales_team.group_sale_manager"
             sequence="30"/>
-
-    <menuitem
-            action="sale_commission_action_forecast"
-            id="sale_commission_forecast"
-            parent="menu_sale_commission"
-            groups="sale_commission.group_commission_forecast"
-            sequence="35"/>
 
     <menuitem
             action="sale_achievement_action_report"

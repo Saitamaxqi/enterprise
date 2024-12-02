@@ -23,6 +23,7 @@ class SaleCommissionReport(models.Model):
     payment_date = fields.Date("Payment Date", readonly=True)
     forecast_id = fields.Many2one('sale.commission.plan.target.forecast', 'fc')
     forecast = fields.Monetary("Forecast", readonly=True, currency_field='currency_id')
+    date_to = fields.Date(related='target_id.date_to')
 
     def action_achievement_detail(self):
         self.ensure_one()
