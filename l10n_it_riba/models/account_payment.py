@@ -1,4 +1,5 @@
 from odoo import _, api, models
+from odoo.addons.base_iban.models.res_partner_bank import get_iban_part
 
 
 def spaced_join(*args):
@@ -50,11 +51,11 @@ class AccountPayment(models.Model):
                     'section_number': section_number,
                     'payment_date': payment.date,
                     'amount': int(payment.amount * 100),
-                    'creditor_abi': creditor_bank_account.get_iban_part("bank"),
-                    'creditor_cab': creditor_bank_account.get_iban_part("branch"),
-                    'creditor_ccn': creditor_bank_account.get_iban_part("account"),
-                    'debitor_abi': debitor_bank_account.get_iban_part("bank"),
-                    'debitor_cab': debitor_bank_account.get_iban_part("branch"),
+                    'creditor_abi': get_iban_part(creditor_bank_account.acc_number, "bank"),
+                    'creditor_cab': get_iban_part(creditor_bank_account.acc_number, "branch"),
+                    'creditor_ccn': get_iban_part(creditor_bank_account.acc_number, "account"),
+                    'debitor_abi': get_iban_part(debitor_bank_account.acc_number, "bank"),
+                    'debitor_cab': get_iban_part(debitor_bank_account.acc_number, "branch"),
                     'creditor_sia_code': payment.company_id.l10n_it_sia_code,
                     'debitor_code': partner.ref or partner.name,
                 }, {

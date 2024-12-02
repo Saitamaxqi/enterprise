@@ -3,6 +3,7 @@ import base64
 from odoo import _, fields, models
 from odoo.exceptions import UserError
 from odoo.addons.l10n_it_riba.tools.riba import file_export
+from odoo.addons.base_iban.models.res_partner_bank import get_iban_part
 
 
 class AccountBatchPayment(models.Model):
@@ -50,7 +51,7 @@ class AccountBatchPayment(models.Model):
 
         common = {
             'creditor_sia_code': creditor.l10n_it_sia_code,
-            'creditor_abi': creditor_bank_account.get_iban_part("bank"),
+            'creditor_abi': get_iban_part(creditor_bank_account.acc_number, "bank"),
             'support_name': self.name,
         }
 

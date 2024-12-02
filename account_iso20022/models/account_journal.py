@@ -9,6 +9,7 @@ from odoo import _, api, fields, models
 from odoo.exceptions import UserError, ValidationError
 from odoo.tools import float_repr, float_round
 
+from odoo.addons.base_iban.models.res_partner_bank import get_iban_part
 import odoo.addons.account.tools.structured_reference as sr
 from odoo.addons.account_batch_payment.models.sepa_mapping import sanitize_communication
 from odoo.addons.account_iso20022.models.account_payment import ISO20022_CHARGE_BEARER_SELECTION, ISO20022_PRIORITY_SELECTION, ISO20022_PRIORITY_HELP
@@ -489,9 +490,7 @@ class AccountJournal(models.Model):
             or len(iban) < 9
         ):
             return False
-        iid_start_index = 4
-        iid_end_index = 8
-        iid = iban[iid_start_index: iid_end_index + 1]
+        iid = get_iban_part(iban, 'bank')
         return re.match(r'\d+', iid) \
             and 30000 <= int(iid) <= 31999  # Those values for iid are reserved for QR-IBANs only
 

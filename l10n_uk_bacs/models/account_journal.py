@@ -4,7 +4,7 @@
 from odoo import models, _
 
 from odoo.exceptions import UserError
-
+from odoo.addons.base_iban.models.res_partner_bank import get_iban_part
 from odoo.tools.misc import remove_accents
 
 import itertools
@@ -136,8 +136,8 @@ class AccountJournal(models.Model):
             for payment in payments_in_date:
                 partner_name = format_communication(payment['partner_name'])[:18].ljust(18)
                 partner_bank_iban = payment['partner_bank_iban']
-                partner_sort_code = partner_bank_iban[8:14]
-                partner_account_number = partner_bank_iban[14:]
+                partner_sort_code = get_iban_part(partner_bank_iban, 'branch')
+                partner_account_number = get_iban_part(partner_bank_iban, 'account')
                 payment_reference = format_communication(payment['ref'])[:18].ljust(18)
 
                 amount = payment['amount']
@@ -224,8 +224,8 @@ class AccountJournal(models.Model):
                     raise UserError(_("The BACS Direct Debit Instruction associated to the payment has been revoked and cannot be used anymore."))
                 partner_bank_iban = ddi.partner_bank_id.sanitized_acc_number
 
-                partner_sort_code = partner_bank_iban[8:14]
-                partner_account_number = partner_bank_iban[14:]
+                partner_sort_code = get_iban_part(partner_bank_iban, 'bank')
+                partner_account_number = get_iban_part(partner_bank_iban, 'account')
                 partner_name = format_communication(partner_name)[:18].ljust(18)
 
                 payment_reference = format_communication(payment['ref'])[:18].ljust(18)
