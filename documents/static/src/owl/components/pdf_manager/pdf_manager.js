@@ -741,7 +741,7 @@ export class PdfManager extends Component {
             : Math.min(canvas.width / viewPort.width, canvas.height / viewPort.height);
         await page.render({
             canvasContext: canvas.getContext("2d"),
-            viewport: page.getViewport({ scale, rotation: isLandscape ? 270 : 0 }),
+            viewport: page.getViewport({ scale, rotation: isLandscape ? 270 : viewPort.rotation }),
         }).promise;
         return canvas;
     }
