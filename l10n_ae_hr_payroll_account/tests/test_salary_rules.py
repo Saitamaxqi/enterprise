@@ -33,15 +33,19 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_payslip_2(self):
         payslip = self._generate_payslip(date(2024, 1, 1), date(2024, 1, 31))
-        self._add_other_inputs(payslip, {
-            'l10n_ae_hr_payroll.input_salary_arrears': 1000.0,
-            'l10n_ae_hr_payroll.input_other_earnings': 2000.0,
-            'l10n_ae_hr_payroll.input_salary_deduction': 500.0,
-            'l10n_ae_hr_payroll.input_other_deduction': 200.0,
-            'l10n_ae_hr_payroll.l10n_ae_input_overtime_allowance': 300,
-            'l10n_ae_hr_payroll.input_bonus_earnings': 400,
-            'l10n_ae_hr_payroll.l10n_ae_input_other_allowance': 600,
-            'l10n_ae_hr_payroll.input_airfare_allowance_earnings': 700,
-        })
+        other_inputs_to_add = [
+            (self.env.ref('l10n_ae_hr_payroll.input_salary_arrears'), 1000),
+            (self.env.ref('l10n_ae_hr_payroll.input_other_earnings'), 2000),
+            (self.env.ref('l10n_ae_hr_payroll.input_salary_deduction'), 500),
+            (self.env.ref('l10n_ae_hr_payroll.input_other_deduction'), 200),
+            (self.env.ref('l10n_ae_hr_payroll.l10n_ae_input_overtime_allowance'), 300),
+            (self.env.ref('l10n_ae_hr_payroll.input_bonus_earnings'), 400),
+            (self.env.ref('l10n_ae_hr_payroll.l10n_ae_input_other_allowance'), 600),
+            (self.env.ref('l10n_ae_hr_payroll.input_airfare_allowance_earnings'), 700),
+        ]
+        for other_input, amount in other_inputs_to_add:
+            self._add_other_input(payslip, other_input, amount)
+        payslip.compute_sheet()
+
         payslip_results = {'BASIC': 40000.0, 'HOUALLOW': 400.0, 'TRAALLOW': 220.0, 'OTALLOW': 100.0, 'SALARY_ARREARS': 1000.0, 'OTHER_EARNINGS': 2000.0, 'SALARY_DEDUCTIONS': -500.0, 'OTHER_DEDUCTIONS': -200.0, 'OVERTIMEALLOWINP': 300.0, 'BONUS': 400.0, 'OTALLOWINP': 600.0, 'AIRFARE_ALLOWANCE': 700.0, 'EOSP': 3333.33, 'ALP': 3393.33, 'GROSS': 45720.0, 'SICC': 5090.0, 'SIEC': -2036.0, 'DEWS': -3332.0, 'NET': 39652.0}
         self._validate_payslip(payslip, payslip_results)

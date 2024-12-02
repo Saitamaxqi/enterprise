@@ -143,7 +143,7 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
             'employee_id': cls.employee.id,
             'request_date_from': date_from,
             'request_date_to': date_to,
-            'holiday_status_id': cls.env.ref(holiday_status_id).id,
+            'holiday_status_id': holiday_status_id.id,
         }).action_validate()
 
     def _validate_payslip(self, payslip, results, skip_lines=False):
@@ -238,17 +238,9 @@ class TestPayslipValidationCommon(AccountTestInvoicingCommon):
                         error.append('%s - %s - %s' % (line.account_id.code, move_type, line[move_type]))
         self.assertEqual(len(error), 0, '\n' + '\n'.join(error))
 
-    def _add_other_inputs(self, payslip, other_inputs):
-        """
-        Add all the other inputs to the payslip
-        :param payslip: a payslip
-        :param other_inputs: dict of other inputs xml_id: value
-        :return:
-        """
-        for other_input, amount in other_inputs.items():
-            self.env['hr.payslip.input'].create({
-                'payslip_id': payslip.id,
-                'input_type_id': self.env.ref(other_input).id,
-                'amount': amount,
-            })
-        payslip.compute_sheet()
+    def _add_other_input(self, payslip_id, other_input_id, amount):
+        self.env['hr.payslip.input'].create({
+            'payslip_id': payslip_id.id,
+            'input_type_id': other_input_id.id,
+            'amount': amount,
+        })

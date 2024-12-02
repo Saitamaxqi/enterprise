@@ -47,11 +47,11 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
 
     def test_001_b_moving_daily_wage_computation(self):
         leaves_to_create = [
-            (datetime(2023, 3, 7), datetime(2023, 3, 7), 'l10n_hk_hr_payroll.holiday_type_hk_unpaid_leave'),
-            (datetime(2023, 4, 11), datetime(2023, 4, 11), 'l10n_hk_hr_payroll.holiday_type_hk_annual_leave'),
+            (datetime(2023, 3, 7), datetime(2023, 3, 7), self.env.ref('l10n_hk_hr_payroll.holiday_type_hk_unpaid_leave')),
+            (datetime(2023, 4, 11), datetime(2023, 4, 11), self.env.ref('l10n_hk_hr_payroll.holiday_type_hk_annual_leave')),
         ]
-        for leave in leaves_to_create:
-            self._generate_leave(leave[0], leave[1], leave[2])
+        for date_from, date_to, leave_type in leaves_to_create:
+            self._generate_leave(date_from, date_to, leave_type)
         results = {
             1: {
                 'moving_daily_wage': 0,
@@ -90,11 +90,11 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
 
     def test_001_c_maternity_leave_payslip(self):
         leaves_to_create = [
-            (datetime(2023, 3, 7), datetime(2023, 3, 13), 'l10n_hk_hr_payroll.holiday_type_hk_maternity_leave'),
-            (datetime(2023, 3, 14), datetime(2023, 4, 11), 'l10n_hk_hr_payroll.holiday_type_hk_maternity_leave_80'),
+            (datetime(2023, 3, 7), datetime(2023, 3, 13), self.env.ref('l10n_hk_hr_payroll.holiday_type_hk_maternity_leave')),
+            (datetime(2023, 3, 14), datetime(2023, 4, 11), self.env.ref('l10n_hk_hr_payroll.holiday_type_hk_maternity_leave_80')),
         ]
-        for leave in leaves_to_create:
-            self._generate_leave(leave[0], leave[1], leave[2])
+        for date_from, date_to, leave_type in leaves_to_create:
+            self._generate_leave(date_from, date_to, leave_type)
         results = {
             3: {'BASIC': 26952.4, 'ALW.INT': 200.0, '713_GROSS': 27152.4, 'MPF_GROSS': 27152.4, 'EEMC': -1357.62, 'ERMC': -1357.62, 'GROSS': 28510.02, 'NET': 25794.78, 'MEA': 25794.78},
             4: {'BASIC': 22158.1, 'ALW.INT': 200.0, '713_GROSS': 22358.1, 'MPF_GROSS': 22358.1, 'EEMC': -1117.91, 'ERMC': -1117.91, 'GROSS': 23476.01, 'NET': 21240.2, 'MEA': 21240.2}
@@ -181,7 +181,9 @@ class TestSalaryRules(TestL10NHkHrPayrollAccountCommon):
         self.contract.write({
             'date_start': date(2023, 1, 10),
         })
-        self._generate_leave(datetime(2023, 1, 18), datetime(2023, 1, 20), 'l10n_hk_hr_payroll.holiday_type_hk_unpaid_leave')
+        self._generate_leave(datetime(2023, 1, 18),
+                             datetime(2023, 1, 20),
+                             self.env.ref('l10n_hk_hr_payroll.holiday_type_hk_unpaid_leave'))
         payslip = self._generate_payslip(date(2023, 1, 1), date(2023, 1, 31))
 
         self.assertEqual(len(payslip.worked_days_line_ids), 4)

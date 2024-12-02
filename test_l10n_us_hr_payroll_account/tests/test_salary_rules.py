@@ -77,7 +77,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         })
 
         payslip = self._generate_payslip(datetime.date(2023, 1, 1), datetime.date(2023, 1, 15))
-        self._add_other_inputs(payslip, {'l10n_us_hr_payroll.input_commission': 3365.60})
+        self._add_other_input(payslip, self.env.ref('l10n_us_hr_payroll.input_commission'), 3365.60)
+        payslip.compute_sheet()
 
         self.assertEqual(len(payslip.worked_days_line_ids), 1)
         self.assertEqual(len(payslip.input_line_ids), 1)
@@ -219,7 +220,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         })
 
         payslip = self._generate_payslip(datetime.date(2023, 4, 1), datetime.date(2023, 4, 15))
-        self._add_other_inputs(payslip, {'l10n_us_hr_payroll.input_commission': 864.29})
+        self._add_other_input(payslip, self.env.ref('l10n_us_hr_payroll.input_commission'), 864.29)
+        payslip.compute_sheet()
 
         payslip_results = {'BASIC': 3416.68, 'COMMISSION': 864.29, 'GROSS': 4280.97, '401K': -256.86, 'DENTAL': -2.48, 'MEDICAL': -62.01, 'VISION': -0.49, 'TAXABLE': 3959.13, 'FIT': -548.53, 'MEDICARE': -61.13, 'MEDICAREADD': 0, 'SST': -261.39, 'CAINCOMETAX': -234.0, 'CASDITAX': -37.94, 'COMPANYFUTA': 252.96, 'COMPANYMEDICARE': 61.13, 'COMPANYSOCIAL': 261.39, 'COMPANYSUI': 71.67, 'COMPANYCAETT': 4.22, 'NET': 2816.14}
         self._validate_payslip(payslip, payslip_results)
@@ -237,7 +239,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         })
 
         payslip = self._generate_payslip(datetime.date(2023, 4, 1), datetime.date(2023, 4, 15))
-        self._add_other_inputs(payslip, {'l10n_us_hr_payroll.input_commission': 3365.60})
+        self._add_other_input(payslip, self.env.ref('l10n_us_hr_payroll.input_commission'), 3365.60)
+        payslip.compute_sheet()
 
         payslip_results = {'BASIC': 2398.68, 'COMMISSION': 3365.6, 'GROSS': 5764.28, 'DENTAL': -3.69, 'MEDICAL': -42.87, 'VISION': -0.49, 'MEDICALFSA': -22.73, 'TAXABLE': 5694.5, 'FIT': -953.18, 'MEDICARE': -82.57, 'MEDICAREADD': 0, 'SST': -353.06, 'CAINCOMETAX': -411.53, 'CASDITAX': -51.25, 'ROTH401K': -461.14, 'COMPANYFUTA': 341.67, 'COMPANYMEDICARE': 82.57, 'COMPANYSOCIAL': 353.06, 'COMPANYSUI': 96.81, 'COMPANYCAETT': 5.69, 'NET': 3381.77}
         self._validate_payslip(payslip, payslip_results)
@@ -658,10 +661,13 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         })
 
         payslip = self._generate_payslip(datetime.date(2023, 4, 1), datetime.date(2023, 4, 15))
-        self._add_other_inputs(payslip, {
-            'l10n_us_hr_payroll.input_tips': 500,
-            'l10n_us_hr_payroll.input_allocated_tips': 300,
-        })
+        other_inputs_to_add = [
+            (self.env.ref('l10n_us_hr_payroll.input_tips'), 500),
+            (self.env.ref('l10n_us_hr_payroll.input_allocated_tips'), 300),
+        ]
+        for other_input, amount in other_inputs_to_add:
+            self._add_other_input(payslip, other_input, amount)
+        payslip.compute_sheet()
 
         payslip_results = {'BASIC': 3416.68, 'TIPS': 500.0, 'GROSS': 3916.68, 'TAXABLE': 3916.68, 'FIT': -539.19, 'MEDICARE': -56.79, 'MEDICAREADD': 0, 'SST': -242.83, 'CAINCOMETAX': -229.65, 'CASDITAX': -35.25, 'COMPANYFUTA': 235.0, 'COMPANYMEDICARE': 56.79, 'COMPANYSOCIAL': 242.83, 'COMPANYSUI': 66.58, 'COMPANYCAETT': 3.92, 'ALLOCATEDTIPS': 300.0, 'NET': 3112.96}
         self._validate_payslip(payslip, payslip_results)

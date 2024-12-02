@@ -3545,26 +3545,26 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         payslip_results = {'BASIC2': 41344.0, 'YEAREND_BONUS': 3200.0, 'RESIDENCE': 0.0, 'EXPATRIATE': 0.0, 'MEAL_VOUCHER': 1399.21, 'ECO_VOUCHER': 250.0, 'VARIABLE_SALARY': 6000.0, 'PAY_VARIABLE_SALARY': 920.4, 'BENEFIT_IN_KIND': 0.0, 'ADVANTAGE_ANY_KIND': 116.28, 'ATN.CAR': 1693.71, 'AMBULATORY_INSURANCE': 0.0, 'HOSPITAL_INSURANCE': 0.0, 'GROUP_INSURANCE': 0.0, 'STOCK_OPTION': 1500.0, 'SPECIFIC RULES': 0.0, 'OTHER': 0.0, 'ANNUAL_SALARY_REVALUED': 56423.61, 'ND_MONTH': 0.0, 'ND_WEEK': 9765.62, 'ND_DAY': 0.0, 'TOTALFEES': 9765.62, 'ONSSEMPLOYERBASIC': 2443.36, 'ONSSEMPLOYERCPAE': 22.46, 'ONSSEMPLOYERFFE': 12.7, 'ONSSEMPLOYERMFFE': 9.77, 'ONSSEMPLOYERRESTREINT': 165.04, 'ONSSEMPLOYERUNEMP': 9.77, 'OUTPLACEMENT': 0.0, 'ONSSEMPLOYER': 2663.09, 'UNREASONABLE_DISMISSAL': 0.0, 'NON_RESPECT_MOTIVATION': 0.0, 'EMPLOYERCOST': 12428.71, 'BASIC': 9765.62, 'ONSS': -1276.37, 'ONSSTOTAL': 1276.37, 'GROSS': 8489.26, 'P.P': -3694.88, 'PPTOTAL': 3694.88, 'REMUNERATION': 9765.62, 'NET': 4794.38}
         self._validate_payslip(self.termination_fees, payslip_results)
 
-        self._add_other_inputs(self.holiday_pay_2020, {
-            'hr_payroll.input_reimbursement': 50,
-            'hr_payroll.input_deduction': 20,
-            'hr_payroll.input_attachment_salary': 10,
-            'hr_payroll.input_assignment_salary': 10,
-            'hr_payroll.input_child_support': 10,
-        })
+        other_inputs_to_add = [
+            (self.env.ref('hr_payroll.input_reimbursement'), 50),
+            (self.env.ref('hr_payroll.input_deduction'), 20),
+            (self.env.ref('hr_payroll.input_attachment_salary'), 10),
+            (self.env.ref('hr_payroll.input_assignment_salary'), 10),
+            (self.env.ref('hr_payroll.input_child_support'), 10),
+        ]
+        for other_input, amount in other_inputs_to_add:
+            self._add_other_input(self.holiday_pay_2020, other_input, amount)
+        self.holiday_pay_2020.compute_sheet()
+
         self.assertEqual(len(self.holiday_pay_2020.worked_days_line_ids), 0)
         self.assertEqual(len(self.holiday_pay_2020.input_line_ids), 11)
         self.assertEqual(len(self.holiday_pay_2020.line_ids), 24)
         payslip_results = {'PAY_SIMPLE': 1137.92, 'DOUBLE_BASIC': 1008.85, 'PAY DOUBLE': 1008.85, 'PAY DOUBLE COMPLEMENTARY': 129.07, 'BASIC': 2275.84, 'ONSS1': -148.73, 'ONSS2': -131.86, 'ONSSTOTAL': 280.58, 'GROSS': 1995.26, 'PROF_TAX': -725.08, 'PPTOTAL': 725.08, 'ASSIG_SALARY': -10.0, 'ATTACH_SALARY': -10.0, 'CHILD_SUPPORT': -10.0, 'DEDUCTION': -20.0, 'REIMBURSEMENT': 50.0, 'NET': 1270.18, 'ONSSEMPLOYERBASIC': 284.71, 'ONSSEMPLOYERCPAE': 2.62, 'ONSSEMPLOYERFFE': 1.48, 'ONSSEMPLOYERMFFE': 1.14, 'ONSSEMPLOYERRESTREINT': 19.23, 'ONSSEMPLOYERUNEMP': 1.14, 'ONSSEMPLOYER': 310.31}
         self._validate_payslip(self.holiday_pay_2020, payslip_results)
 
-        self._add_other_inputs(self.holiday_pay_2019, {
-            'hr_payroll.input_reimbursement': 50,
-            'hr_payroll.input_deduction': 20,
-            'hr_payroll.input_attachment_salary': 10,
-            'hr_payroll.input_assignment_salary': 10,
-            'hr_payroll.input_child_support': 10,
-        })
+        for other_input, amount in other_inputs_to_add:
+            self._add_other_input(self.holiday_pay_2019, other_input, amount)
+        self.holiday_pay_2019.compute_sheet()
 
         self.assertEqual(len(self.holiday_pay_2019.worked_days_line_ids), 0)
         self.assertEqual(len(self.holiday_pay_2019.input_line_ids), 11)
@@ -4183,14 +4183,17 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'struct_id': self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_departure_n1_holidays').id,
             'company_id': self.env.company.id,
         })
-        self._add_other_inputs(termination_payslip, {
-            'l10n_be_hr_payroll.cp200_other_input_gross_ref': 43608.44,
-            'l10n_be_hr_payroll.cp200_other_input_allocation': 20.0,
-            'l10n_be_hr_payroll.cp200_other_input_time_off_taken': 5.0,
-            'l10n_be_hr_payroll.cp200_other_input_annual_taxable_amount': 15000.0,
-            'l10n_be_hr_payroll.cp200_other_input_european_leave': 0.0,
-            'l10n_be_hr_payroll.cp200_other_input_european_leave_days': 0.0,
-        })
+        other_inputs_to_add = [
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_gross_ref'), 43608.44),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_allocation'), 20.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_time_off_taken'), 5.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_annual_taxable_amount'), 15000.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_european_leave'), 0.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_european_leave_days'), 0.0),
+        ]
+        for other_input, amount in other_inputs_to_add:
+            self._add_other_input(termination_payslip, other_input, amount)
+        termination_payslip.compute_sheet()
 
         self.assertEqual(len(termination_payslip.worked_days_line_ids), 0)
         self.assertEqual(len(termination_payslip.input_line_ids), 6)
@@ -4213,14 +4216,17 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'struct_id': self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_departure_n1_holidays').id,
             'company_id': self.env.company.id,
         })
-        self._add_other_inputs(termination_payslip, {
-            'l10n_be_hr_payroll.cp200_other_input_gross_ref': 43608.44,
-            'l10n_be_hr_payroll.cp200_other_input_allocation': 20.0,
-            'l10n_be_hr_payroll.cp200_other_input_time_off_taken': 5.0,
-            'l10n_be_hr_payroll.cp200_other_input_annual_taxable_amount': 18000.0,
-            'l10n_be_hr_payroll.cp200_other_input_european_leave': 0.0,
-            'l10n_be_hr_payroll.cp200_other_input_european_leave_days': 0.0,
-        })
+        other_inputs_to_add = [
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_gross_ref'), 43608.44),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_allocation'), 20.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_time_off_taken'), 5.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_annual_taxable_amount'), 18000.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_european_leave'), 0.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_european_leave_days'), 0.0),
+        ]
+        for other_input, amount in other_inputs_to_add:
+            self._add_other_input(termination_payslip, other_input, amount)
+        termination_payslip.compute_sheet()
 
         self.assertEqual(len(termination_payslip.worked_days_line_ids), 0)
         self.assertEqual(len(termination_payslip.input_line_ids), 6)
@@ -4241,19 +4247,22 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'struct_id': self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_departure_n1_holidays').id,
             'company_id': self.env.company.id,
         })
-        self._add_other_inputs(termination_payslip, {
-            'l10n_be_hr_payroll.cp200_other_input_gross_ref': 43608.44,
-            'l10n_be_hr_payroll.cp200_other_input_allocation': 20.0,
-            'l10n_be_hr_payroll.cp200_other_input_time_off_taken': 5.0,
-            'l10n_be_hr_payroll.cp200_other_input_annual_taxable_amount': 18000.0,
-            'l10n_be_hr_payroll.cp200_other_input_european_leave': 0.0,
-            'l10n_be_hr_payroll.cp200_other_input_european_leave_days': 0.0,
-            'l10n_be_hr_payroll.cp200_other_input_double_pay_already_paid': 10.0,
-            'l10n_be_hr_payroll.cp200_other_input_complementary_double_pay_already_paid': 10.0,
-            'l10n_be_hr_payroll.cp200_other_input_simple_pay_december': 20.0,
-            'l10n_be_hr_payroll.cp200_other_input_double_pay_december': 20.0,
-            'l10n_be_hr_payroll.cp200_other_input_complementary_double_pay_december': 20.0,
-        })
+        other_inputs_to_add = [
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_gross_ref'), 43608.44),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_allocation'), 20.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_time_off_taken'), 5.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_annual_taxable_amount'), 18000.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_european_leave'), 0.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_european_leave_days'), 0.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_double_pay_already_paid'), 10.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_complementary_double_pay_already_paid'), 10.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_simple_pay_december'), 20.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_double_pay_december'), 20.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_complementary_double_pay_december'), 20.0),
+        ]
+        for other_input, amount in other_inputs_to_add:
+            self._add_other_input(termination_payslip, other_input, amount)
+        termination_payslip.compute_sheet()
 
         self.assertEqual(len(termination_payslip.worked_days_line_ids), 0)
         self.assertEqual(len(termination_payslip.input_line_ids), 11)
@@ -4275,14 +4284,17 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'struct_id': self.env.ref('l10n_be_hr_payroll.hr_payroll_structure_cp200_employee_departure_n1_holidays').id,
             'company_id': self.env.company.id,
         })
-        self._add_other_inputs(termination_payslip, {
-            'l10n_be_hr_payroll.cp200_other_input_gross_ref': 43608.44,
-            'l10n_be_hr_payroll.cp200_other_input_allocation': 20.0,
-            'l10n_be_hr_payroll.cp200_other_input_time_off_taken': 5.0,
-            'l10n_be_hr_payroll.cp200_other_input_annual_taxable_amount': 25000.0,
-            'l10n_be_hr_payroll.cp200_other_input_european_leave': 0.0,
-            'l10n_be_hr_payroll.cp200_other_input_european_leave_days': 0.0,
-        })
+        other_inputs_to_add = [
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_gross_ref'), 43608.44),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_allocation'), 20.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_time_off_taken'), 5.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_annual_taxable_amount'), 25000.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_european_leave'), 0.0),
+            (self.env.ref('l10n_be_hr_payroll.cp200_other_input_european_leave_days'), 0.0),
+        ]
+        for other_input, amount in other_inputs_to_add:
+            self._add_other_input(termination_payslip, other_input, amount)
+        termination_payslip.compute_sheet()
 
         self.assertEqual(len(termination_payslip.worked_days_line_ids), 0)
         self.assertEqual(len(termination_payslip.input_line_ids), 6)
@@ -5055,7 +5067,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_company_car_cycle_capped(self):
         payslip = self._generate_payslip(datetime.date(2022, 5, 1), datetime.date(2022, 5, 31))
-        self._add_other_inputs(payslip, {'l10n_be_hr_payroll.cp200_input_cycle_transportation': 2})
+        self._add_other_input(payslip, self.env.ref('l10n_be_hr_payroll.cp200_input_cycle_transportation'), 2)
+        payslip.compute_sheet()
         self.assertEqual(len(payslip.worked_days_line_ids), 1)
         self.assertEqual(len(payslip.input_line_ids), 1)
         self.assertEqual(len(payslip.line_ids), 33)
@@ -5066,7 +5079,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
     def test_company_car_cycle_uncapped(self):
         self.employee.distance_home_work = 5
         payslip = self._generate_payslip(datetime.date(2022, 5, 1), datetime.date(2022, 5, 31))
-        self._add_other_inputs(payslip, {'l10n_be_hr_payroll.cp200_input_cycle_transportation': 2})
+        self._add_other_input(payslip, self.env.ref('l10n_be_hr_payroll.cp200_input_cycle_transportation'), 2)
+        payslip.compute_sheet()
         self.assertEqual(len(payslip.worked_days_line_ids), 1)
         self.assertEqual(len(payslip.input_line_ids), 1)
         self.assertEqual(len(payslip.line_ids), 33)
@@ -5433,7 +5447,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         })
 
         payslip = self._generate_payslip(datetime.date(2021, 12, 1), datetime.date(2021, 12, 31))
-        self._add_other_inputs(payslip, {'l10n_be_hr_payroll.input_fixed_commission': 300})
+        self._add_other_input(payslip, self.env.ref('l10n_be_hr_payroll.input_fixed_commission'), 300)
+        payslip.compute_sheet()
         payslip.action_payslip_done()
 
         double_payslip = self.env['hr.payslip'].create({
@@ -5529,7 +5544,8 @@ class TestPayslipValidation(TestPayslipValidationCommon):
             'transport_mode_private_car': True,
         })
         payslip = self._generate_payslip(datetime.date(2022, 7, 1), datetime.date(2022, 7, 31))
-        self._add_other_inputs(payslip, {'l10n_be_hr_payroll.cp200_input_cycle_transportation': 2})
+        self._add_other_input(payslip, self.env.ref('l10n_be_hr_payroll.cp200_input_cycle_transportation'), 2)
+        payslip.compute_sheet()
 
         payslip_results = {'BASIC': 2650.0, 'ATN.INT': 5.0, 'ATN.MOB': 4.0, 'SALARY': 2659.0, 'ONSS': -347.53, 'EmpBonus.1': 43.75, 'ONSSTOTAL': 303.78, 'GROSSIP': 2355.22, 'IP.PART': -662.5, 'GROSS': 1692.72, 'P.P': -169.01, 'P.P.DED': 14.5, 'PPTOTAL': 154.51, 'ATN.INT.2': -5.0, 'ATN.MOB.2': -4.0, 'M.ONSS': -15.39, 'MEAL_V_EMP': -22.89, 'CAR.PRIV': 93.04, 'CYCLE': 16.0, 'REP.FEES': 150.0, 'IP': 662.5, 'IP.DED': -49.69, 'NET': 2362.78, 'REMUNERATION': 1987.5, 'ONSSEMPLOYERBASIC': 665.55, 'ONSSEMPLOYERCPAE': 6.12, 'ONSSEMPLOYERFFE': 1.86, 'ONSSEMPLOYERMFFE': 2.66, 'ONSSEMPLOYERRESTREINT': 44.94, 'ONSSEMPLOYERUNEMP': 2.66, 'ONSSEMPLOYER': 723.78}
         self._validate_payslip(payslip, payslip_results)

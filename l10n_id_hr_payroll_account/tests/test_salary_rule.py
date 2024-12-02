@@ -65,18 +65,18 @@ class TestPayslipValidation(TestPayslipValidationCommon):
         """ Unpaid leave of 7 days (3) """
         self.contract.wage = 6e6
 
-        leaves_to_create = [
-            (datetime(2024, 6, 6), datetime(2024, 6, 6), 'hr_holidays.holiday_status_unpaid'),
-            (datetime(2024, 6, 7), datetime(2024, 6, 7), 'hr_holidays.holiday_status_unpaid'),
-            (datetime(2024, 6, 10), datetime(2024, 6, 10), 'hr_holidays.holiday_status_unpaid'),
-            (datetime(2024, 6, 11), datetime(2024, 6, 11), 'hr_holidays.holiday_status_unpaid'),
-            (datetime(2024, 6, 12), datetime(2024, 6, 12), 'hr_holidays.holiday_status_unpaid'),
-            (datetime(2024, 6, 13), datetime(2024, 6, 13), 'hr_holidays.holiday_status_unpaid'),
-            (datetime(2024, 6, 14), datetime(2024, 6, 14), 'hr_holidays.holiday_status_unpaid'),
+        unpaid_leaves_to_create = [
+            (datetime(2024, 6, 6), datetime(2024, 6, 6)),
+            (datetime(2024, 6, 7), datetime(2024, 6, 7)),
+            (datetime(2024, 6, 10), datetime(2024, 6, 10)),
+            (datetime(2024, 6, 11), datetime(2024, 6, 11)),
+            (datetime(2024, 6, 12), datetime(2024, 6, 12)),
+            (datetime(2024, 6, 13), datetime(2024, 6, 13)),
+            (datetime(2024, 6, 14), datetime(2024, 6, 14)),
         ]
 
-        for leave in leaves_to_create:
-            self._generate_leave(leave[0], leave[1], leave[2])
+        for date_from, date_to in unpaid_leaves_to_create:
+            self._generate_leave(date_from, date_to, self.env.ref('hr_holidays.holiday_status_unpaid'))
 
         payslip = self._generate_payslip(date(2024, 6, 1), date(2024, 6, 30))
 

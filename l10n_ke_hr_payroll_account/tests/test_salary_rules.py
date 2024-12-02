@@ -29,12 +29,16 @@ class TestPayslipValidation(TestPayslipValidationCommon):
 
     def test_payslip_2(self):
         payslip = self._generate_payslip(date(2024, 1, 1), date(2024, 1, 31))
-        self._add_other_inputs(payslip, {
-            'l10n_ke_hr_payroll.input_fixed_bonus': 2000.0,
-            'l10n_ke_hr_payroll.input_fixed_commission': 10000.0,
-            'l10n_ke_hr_payroll.input_helb': 3000.0,
-            'l10n_ke_hr_payroll.input_fringe_benefit': 4000.0,
-            'l10n_ke_hr_payroll.input_fixed_non_cash': 2500.0,
-        })
+        other_inputs_to_add = [
+            (self.env.ref('l10n_ke_hr_payroll.input_fixed_bonus'), 2000.0),
+            (self.env.ref('l10n_ke_hr_payroll.input_fixed_commission'), 10000.0),
+            (self.env.ref('l10n_ke_hr_payroll.input_helb'), 3000.0),
+            (self.env.ref('l10n_ke_hr_payroll.input_fringe_benefit'), 4000.0),
+            (self.env.ref('l10n_ke_hr_payroll.input_fixed_non_cash'), 2500.0),
+        ]
+        for other_input, amount in other_inputs_to_add:
+            self._add_other_input(payslip, other_input, amount)
+        payslip.compute_sheet()
+
         payslip_results = {'BASIC': 100000.0, 'BONUS': 2000.0, 'COMMISSION': 10000.0, 'GROSS': 112000.0, 'NSSF_EMPLOYEE_TIER_1': 360.0, 'NSSF_EMPLOYEE_TIER_2': 720.0, 'GROSS_TAXABLE': 110920.0, 'INCOME_TAX': 28059.35, 'NHIF_AMOUNT_HIDDEN': 1700.0, 'NHIF_RELIEF': -255.0, 'AHL_AMOUNT': 1500.0, 'INSURANCE_RELIEF': -255.0, 'PERS_RELIEF': -2400.0, 'PAYE': 25404.35, 'NSSF_AMOUNT': 1080.0, 'NHIF_AMOUNT': 1700.0, 'STATUTORY_DED': 29684.35, 'HELB': 3000.0, 'OTHER_DED': 3000.0, 'FRINGE_BENEFIT': 4000.0, 'TOTAL_DED': 32684.35, 'NITA': 50.0, 'NSSF_EMP': 1080.0, 'AHL_AMOUNT_EMP': 1500.0, 'NON_CASH_BENEFIT': 2500.0, 'NET': 81815.65}
         self._validate_payslip(payslip, payslip_results)
