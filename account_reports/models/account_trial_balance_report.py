@@ -142,6 +142,13 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         for function, side in self._get_column_group_creation_data(report, options, previous_options):
             function(report, options, previous_options, default_group_vals, left_side if side == 'left' else right_side)
 
+        # Update options
+        options['column_headers'][0] = left_side['column_headers'] + options['column_headers'][0] + right_side['column_headers']
+        options['column_groups'].update(left_side['column_groups'])
+        options['column_groups'].update(right_side['column_groups'])
+        options['columns'] = left_side['columns'] + options['columns'] + right_side['columns']
+        options['ignore_totals_below_sections'] = True  # So that GL does not compute them
+
         # All the periods displayed between initial and end balance need to use the same rates, so we manually change the period key.
         # account.report will then compute the currency table periods accordingly
         middle_periods_period_key = '_trial_balance_middle_periods'
@@ -149,13 +156,6 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
             col_group_date = col_group['forced_options'].get('date')
             if col_group_date:
                 col_group_date['currency_table_period_key'] = middle_periods_period_key
-
-        # Update options
-        options['column_headers'][0] = left_side['column_headers'] + options['column_headers'][0] + right_side['column_headers']
-        options['column_groups'].update(left_side['column_groups'])
-        options['column_groups'].update(right_side['column_groups'])
-        options['columns'] = left_side['columns'] + options['columns'] + right_side['columns']
-        options['ignore_totals_below_sections'] = True  # So that GL does not compute them
 
         report._init_options_order_column(options, previous_options)
 
@@ -174,7 +174,8 @@ class AccountTrialBalanceReportHandler(models.AbstractModel):
         initial_balance_options = self.env['account.general.ledger.report.handler']._get_options_initial_balance(options)
         initial_forced_options = {
             'date': initial_balance_options['date'],
-            'include_current_year_in_unaff_earnings': initial_balance_options['include_current_year_in_unaff_earnings']
+            'include_current_year_in_unaff_earnings': initial_balance_options['include_current_year_in_unaff_earnings'],
+            'no_impact_on_currency_table': True,
         }
 
         self._create_and_append_column_group(

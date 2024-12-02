@@ -207,9 +207,9 @@ class TestTrialBalanceReport(TestAccountReportsCommon):
                 ('400010 Product Sales',                0.0,            0.0,            0.0,            200.0,          0.0,            200.0),
                 ('600000 Expenses',                     0.0,            0.0,            0.0,            21000.0,        0.0,            21000.0),
                 ('600010 Expenses',                     0.0,            0.0,            200.0,          0.0,            200.0,          0.0),
-                ('999989 Undistributed Profits/Losses', 0.0,            33.33,          0.0,            0.0,            0.0,            33.33),
+                ('999989 Undistributed Profits/Losses', 0.0,            50.0,           0.0,            0.0,            0.0,            50.0),
                 ('999999 Undistributed Profits/Losses', 0.0,            100.0,          0.0,            0.0,            0.0,            100.0),
-                ('Total',                               133.33,         133.33,         21200.0,        21200.0,        21333.33,        21333.33),
+                ('Total',                               133.33,         150.0,          21200.0,        21200.0,        21333.33,       21350.0),
             ],
             options,
         )
@@ -311,9 +311,9 @@ class TestTrialBalanceReport(TestAccountReportsCommon):
                 ('400010 Product Sales',                0.0,             0.0,             0.0,             200.0,           0.0,             200.0),
                 ('600000 Expenses',                     0.0,             0.0,             0.0,             21000.0,         0.0,             21000.0),
                 ('600010 Expenses',                     0.0,             0.0,             200.0,           0.0,             200.0,           0.0),
-                ('999989 Undistributed Profits/Losses', 0.0,             33.33,            0.0,             0.0,            0.0,             33.33),
+                ('999989 Undistributed Profits/Losses', 0.0,             50.0,            0.0,             0.0,             0.0,             50.0),
                 ('999999 Undistributed Profits/Losses', 0.0,             100.0,           0.0,             0.0,             0.0,             100.0),
-                ('Total',                               133.33,          133.33,           21200.0,         21200.0,        21333.33,        21333.33),
+                ('Total',                               133.33,          150.0,           21200.0,         21200.0,         21333.33,        21350.0),
             ],
             options,
         )

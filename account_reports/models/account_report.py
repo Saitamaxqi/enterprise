@@ -1342,6 +1342,12 @@ class AccountReport(models.Model):
 
         periods = {}
         for col_group in options['column_groups'].values():
+            if col_group['forced_options'].get('no_impact_on_currency_table'):
+                # This key is used to ignore the colum group in the creation of the periods list for
+                # the currency table. This way, its dates won't influence. It's useful for groups corresponding
+                # to an initial balance of some sorts, like on the Trial Balance.
+                continue
+
             col_group_date = col_group['forced_options'].get('date', options['date'])
 
             col_group_date_from = col_group_date['date_from'] if col_group_date['mode'] == 'range' else None
