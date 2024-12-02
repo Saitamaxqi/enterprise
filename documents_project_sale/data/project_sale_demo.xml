@@ -35,8 +35,6 @@
             <field name="name">plan.jpg</field>
             <field name="datas" type="base64" file="documents_project_sale/data/files/plan.jpg"/>
             <field name="folder_id" model="documents.document" eval="obj().search([('name', '=', 'Plans')], order='id desc', limit=1)"/>
-            <field name="res_model">project.project</field>
-            <field name="res_id" ref="project_project_renovation_architect"/>
             <field name="owner_id" ref="base.user_admin"/>
             <field name="partner_id" ref="base.res_partner_2"/>
             <field name="tag_ids" eval="[Command.link(ref('documents_folder_tag_in_use'))]"/>
@@ -46,8 +44,6 @@
             <field name="name">welcome.jpg</field>
             <field name="datas" type="base64" file="documents_project_sale/data/files/welcome.jpg"/>
             <field name="folder_id" ref="documents_renovations_projects"/>
-            <field name="res_model">project.task</field>
-            <field name="res_id" ref="project_task_visit_customer"/>
             <field name="partner_id" ref="base.res_partner_2"/>
             <field name="tag_ids" eval="[Command.link(ref('documents_folder_tag_unsorted'))]"/>
         </record>

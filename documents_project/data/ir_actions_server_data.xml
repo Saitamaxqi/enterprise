@@ -93,30 +93,6 @@
             <field name="resource_ref" ref="documents.documents_tag_deprecated"/>
         </record>
 
-        <!-- Create a Task -->
-        <record id="ir_actions_server_create_a_task_code" model="ir.actions.server" forcecreate="0">
-            <field name="name">Create a Task</field>
-            <field name="model_id" ref="documents.model_documents_document"/>
-            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
-            <field name="state">code</field>
-            <field name="code">action = records.action_create_project_task()</field>
-        </record>
-
-        <record id="ir_actions_server_create_project_task" model="ir.actions.server" forcecreate="0">
-            <field name="name">Create a Task</field>
-            <field name="sequence">3</field>
-            <field name="model_id" ref="documents.model_documents_document"/>
-            <field name="groups_id" eval="[Command.link(ref('base.group_user'))]"/>
-            <field name="usage">ir_actions_server</field>
-            <field name="state">multi</field>
-            <field name="child_ids" eval="[
-                ref('documents_project.ir_actions_server_create_a_task_code'),
-                ref('documents.ir_actions_server_remove_tags'),
-                ref('documents_project.ir_actions_server_tag_add_to_validate'),
-                ref('documents.ir_actions_server_create_activity'),
-            ]"/>
-        </record>
-
         <!-- Deprecate -->
         <record id="ir_actions_server_deprecate_code" model="ir.actions.server" forcecreate="0">
             <field name="name">Deprecate - Check conditions</field>

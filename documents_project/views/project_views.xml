@@ -38,35 +38,6 @@
         </field>
     </record>
 
-    <record id="action_view_documents_project_task" model="ir.actions.act_window">
-        <field name="name">Documents</field>
-        <field name="res_model">documents.document</field>
-        <field name="view_mode">kanban,list,form</field>
-        <field name="domain">[
-            '|', ('type', '=', 'folder'),
-                 '&amp;', ('res_model', '=', 'project.task'), ('res_id', '=', active_id)
-        ]</field>
-        <field name="context">{'default_res_model': 'project.task', 'default_res_id': active_id}</field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Upload <span class="fw-normal">a file or </span>drag <span class="fw-normal">it here.</span>
-            </p>
-        </field>
-    </record>
-
-    <record id="action_view_documents_project_project" model="ir.actions.act_window">
-        <field name="name">Documents</field>
-        <field name="res_model">documents.document</field>
-        <field name="view_mode">kanban,list</field>
-        <field name="domain">[('project_id', '=', active_id)]</field>
-        <field name="context"></field>
-        <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">
-                Upload <span class="fw-normal">a file or </span>drag <span class="fw-normal">it here.</span>
-            </p>
-        </field>
-    </record>
-
     <record id="project_embedded_action_documents" model="ir.embedded.actions">
         <field name="name">Documents</field>
         <field name="parent_res_model">project.project</field>
@@ -85,36 +56,6 @@
         <field name="action_id" eval="False"/>
         <field name="python_method">action_view_documents_project</field>
         <field name="domain">[('use_documents', '=', True)]</field>
-    </record>
-
-    <record id="view_task_form2_document_inherit" model="ir.ui.view">
-        <field name="name">project.task.form.inherit</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.view_task_form2"/>
-        <field name="arch" type="xml">
-            <xpath expr="//div[@name='button_box']" position="inside">
-                <field name="project_use_documents" invisible="1"/>
-                <button class="oe_stat_button" name="action_view_documents_project_task"
-                    type="object" icon="fa-file-text-o" invisible="not project_use_documents or not id" context="{'default_partner_id': partner_id}">
-                    <field string="Documents" name="document_count" widget="statinfo"/>
-                </button>
-            </xpath>
-        </field>
-    </record>
-
-    <record id="project_sharing_project_task_view_form_inherit" model="ir.ui.view">
-        <field name="name">project.sharing.project.task.view.form.inherit</field>
-        <field name="model">project.task</field>
-        <field name="inherit_id" ref="project.project_sharing_project_task_view_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//div[@name='button_box']" position="inside">
-                <button class="oe_stat_button" name="action_open_documents_portal" type="object"
-                    icon="fa-file-text-o"
-                    invisible="not project_use_documents or folder_user_permission == 'none'">
-                    <field string="Documents" name="document_count" widget="statinfo"/>
-                </button>
-            </xpath>
-        </field>
     </record>
 
     <record id="project_view_kanban_inherit_documents" model="ir.ui.view">
