@@ -6,7 +6,7 @@ from odoo.addons.mail.tests.common import mail_new_test_user
 from odoo.tests import tagged
 
 
-@tagged('appointment_ui', '-at_install', 'post_install')
+@tagged('appointment_ui', '-at_install', 'post_install', 'mail_tools')
 class WebsiteAppointmentUITest(AppointmentCommon):
 
     @classmethod

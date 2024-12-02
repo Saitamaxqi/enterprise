@@ -843,6 +843,7 @@ class HelpdeskTicket(models.Model):
             if not email_key and len(self) > 1:
                 continue
             email_keys_to_values.setdefault(email_key, {}).update({
+                'company_id': ticket.company_id.id,
                 'name': ticket.partner_name or tools.parse_contact_from_email(ticket.partner_email)[0] or ticket.partner_email,
                 'phone': ticket.partner_phone,
             })
@@ -860,11 +861,8 @@ class HelpdeskTicket(models.Model):
     def message_new(self, msg, custom_values=None):
         values = dict(custom_values or {}, partner_email=msg.get('from'), partner_name=msg.get('from'), partner_id=msg.get('author_id'))
         ticket = super(HelpdeskTicket, self.with_context(mail_notify_author=True)).message_new(msg, custom_values=values)
-        thread_context = self.env['mail.thread']
-        if ticket.company_id:
-            thread_context = thread_context.with_context(default_company_id=ticket.company_id)
-        partner_ids = [x.id for x in thread_context._mail_find_partner_from_emails(ticket._ticket_email_split(msg), records=ticket, force_create=True) if x]
-        customer_ids = [p.id for p in thread_context._mail_find_partner_from_emails(tools.email_split(values['partner_email']), records=ticket, force_create=True) if p]
+        partner_ids = ticket._partner_find_from_emails_single(ticket._ticket_email_split(msg)).ids
+        customer_ids = ticket._partner_find_from_emails_single(tools.email_split(values['partner_email'])).ids
         partner_ids += customer_ids
         if customer_ids and not values.get('partner_id'):
             ticket.partner_id = customer_ids[0]
@@ -873,9 +871,9 @@ class HelpdeskTicket(models.Model):
         return ticket
 
     def message_update(self, msg, update_vals=None):
-        partner_ids = [x.id for x in self.env['mail.thread']._mail_find_partner_from_emails(self._ticket_email_split(msg), records=self) if x]
-        if partner_ids:
-            self.message_subscribe(partner_ids)
+        for ticket in self:
+            if partners := ticket._partner_find_from_emails_single(ticket._ticket_email_split(msg), no_create=True):
+                self.message_subscribe(partners.ids)
         return super().message_update(msg, update_vals=update_vals)
 
     def _message_compute_subject(self):

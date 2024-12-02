@@ -149,8 +149,7 @@ class HrContractSignDocumentWizard(models.TransientModel):
                         'type': 'danger',
                     }
                 }
-            partner_by_employee[employee] = self.env['mail.thread']._mail_find_partner_from_emails([email_used], records=self, force_create=True)[0]
-
+            partner_by_employee[employee] = employee._partner_find_from_emails_single([email_used])
 
         sign_request = self.env['sign.request']
         if not self.browse().has_access('create'):

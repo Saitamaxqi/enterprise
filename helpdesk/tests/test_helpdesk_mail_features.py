@@ -409,7 +409,7 @@ class TestHelpdeskMailFeatures(HelpdeskCommon, MailCommon):
         data = ticket._message_get_suggested_recipients()[0]
         self.assertEqual(data['email'], email)
         self.assertEqual(data['name'], partner_name)
-        self.assertDictEqual(data['create_values'], {'phone': partner_phone})
+        self.assertDictEqual(data['create_values'], {'company_id': self.helpdesk_manager.company_id.id, 'phone': partner_phone})
 
     def test_ticket_create_ticket_email_cc(self):
         ''' Make sure creating a ticket with an email_cc field creates a follower. '''
