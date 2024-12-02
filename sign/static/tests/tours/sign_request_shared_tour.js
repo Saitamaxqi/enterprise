@@ -87,6 +87,7 @@ registry.category("web_tour.tours").add("shared_sign_request_tour", {
         {
             content: "Download Document",
             trigger: "button.btn.btn-primary",
+            run: "click",
         },
     ],
 });
@@ -94,8 +95,12 @@ registry.category("web_tour.tours").add("shared_sign_request_tour", {
 registry.category("web_tour.tours").add("sign_resend_expired_link_tour", {
     steps: () => [
         {
+            trigger: "a:contains(Send a new link)",
+        },
+        {
             trigger: ".btn.btn-primary",
             content: "Click to resend the url",
+            run: "click",
         },
     ],
 });
