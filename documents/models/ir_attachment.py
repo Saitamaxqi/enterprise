@@ -2,10 +2,13 @@
 
 import base64
 import io
+import logging
+from collections import defaultdict
 
 from odoo import models, api, fields
-from odoo.tools.pdf import PdfFileWriter, PdfFileReader
+from odoo.tools.pdf import OdooPdfFileReader, OdooPdfFileWriter
 
+_logger = logging.getLogger(__name__)
 
 class IrAttachment(models.Model):
     _inherit = 'ir.attachment'
@@ -28,13 +31,27 @@ class IrAttachment(models.Model):
         :returns: the new PDF attachments
         """
         vals_list = []
-        pdf_from_files = [PdfFileReader(open_file, strict=False) for open_file in open_files]
+        pdf_from_files = [OdooPdfFileReader(open_file, strict=False) for open_file in open_files]
+        
         for new_file in new_files:
-            output = PdfFileWriter()
+            output = OdooPdfFileWriter()
+            used_pages_by_pdf = defaultdict(set)
             for page in new_file['new_pages']:
-                input_pdf = pdf_from_files[int(page['old_file_index'])]
+                file_index = int(page['old_file_index'])
                 page_index = page['old_page_number'] - 1
+                input_pdf = pdf_from_files[file_index]
                 output.addPage(input_pdf.getPage(page_index))
+                used_pages_by_pdf[file_index].add(page_index)
+                if len(used_pages_by_pdf[file_index]) != input_pdf.getNumPages():
+                    continue
+                try:
+                    for fname, fcontent in input_pdf.getAttachments():
+                        output.addAttachment(name=fname, data=fcontent)
+                except Exception:  # noqa: BLE001
+                    _logger.warning(
+                        'Impossible to add (all) attachments from pdf at index %i',
+                        file_index, exc_info=True,
+                    )
             with io.BytesIO() as stream:
                 output.write(stream)
                 vals_list.append({

@@ -2,6 +2,7 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 from . import test_attachment_access
+from . import test_attachment_split
 from . import test_controllers
 from . import test_documents_access
 from . import test_documents_common
