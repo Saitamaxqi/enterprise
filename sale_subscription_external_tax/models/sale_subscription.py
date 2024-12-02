@@ -38,3 +38,23 @@ class SaleOrder(models.Model):
         customers know what they will be charged. Or it will be the current date for new or churned subscriptions
         without a next invoice date."""
         return (self.next_invoice_date or fields.Date.context_today(self)) if self.is_subscription else super()._get_date_for_external_taxes()
+
+    def _next_billing_details(self):
+        """
+        Override to re-compute taxes for exempted customers in portal view.
+        """
+        res = super()._next_billing_details()
+
+        if self.is_tax_computed_externally:
+            amount_total = 0
+            amount_untaxed = 0
+            amount_tax = 0
+            for line in res.get('display_lines', []):
+                amount_total += line.price_total
+                amount_untaxed += line.price_subtotal
+                amount_tax += line.price_tax
+
+            res['tax_totals'] = self._get_external_tax_totals(amount_total, amount_untaxed, amount_tax)
+            res['next_invoice_amount'] = self.currency_id.round(sum(self._get_invoiceable_lines().mapped('price_total')))
+
+        return res

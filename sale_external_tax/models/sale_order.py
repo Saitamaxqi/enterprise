@@ -6,6 +6,30 @@ class SaleOrder(models.Model):
     _name = 'sale.order'
     _inherit = ['account.external.tax.mixin', 'sale.order']
 
+    def _get_external_tax_totals(self, amount_total, amount_untaxed, amount_tax):
+        tax_totals = self.tax_totals
+        subtotal = tax_totals['subtotals'] and tax_totals['subtotals'][0] or {}
+        tax_totals['same_tax_base'] = True
+        tax_totals['total_amount_currency'] = amount_total
+        tax_totals['base_amount_currency'] = amount_untaxed
+        tax_totals['tax_amount_currency'] = amount_tax
+        tax_totals['subtotals'] = [
+            {
+                **subtotal,
+                'base_amount_currency': tax_totals['base_amount_currency'],
+                'tax_amount_currency': tax_totals['tax_amount_currency'],
+                'tax_groups': [],
+            }
+        ]
+        if subtotal.get('tax_groups'):
+            tax_group = subtotal['tax_groups'][0]
+            tax_totals['subtotals'][0]['tax_groups'].append({
+                **tax_group,
+                'base_amount_currency': tax_totals['base_amount_currency'],
+                'tax_amount_currency': tax_totals['tax_amount_currency'],
+            })
+        return tax_totals
+
     def _compute_tax_totals(self):
         """This overrides the standard values which come from
         account.tax. The percentage (amount field) on account.tax
@@ -17,28 +41,7 @@ class SaleOrder(models.Model):
         """
         super()._compute_tax_totals()
         for order in self.filtered('is_tax_computed_externally'):
-            tax_totals = order.tax_totals
-            subtotal = tax_totals['subtotals'] and tax_totals['subtotals'][0] or {}
-            tax_totals['same_tax_base'] = True
-            tax_totals['total_amount_currency'] = order.amount_total
-            tax_totals['base_amount_currency'] = order.amount_untaxed
-            tax_totals['tax_amount_currency'] = order.amount_tax
-            tax_totals['subtotals'] = [
-                {
-                    **subtotal,
-                    'base_amount_currency': tax_totals['base_amount_currency'],
-                    'tax_amount_currency': tax_totals['tax_amount_currency'],
-                    'tax_groups': [],
-                }
-            ]
-            if subtotal.get('tax_groups'):
-                tax_group = subtotal['tax_groups'][0]
-                tax_totals['subtotals'][0]['tax_groups'].append({
-                    **tax_group,
-                    'base_amount_currency': tax_totals['base_amount_currency'],
-                    'tax_amount_currency': tax_totals['tax_amount_currency'],
-                })
-            order.tax_totals = tax_totals
+            order.tax_totals = order._get_external_tax_totals(order.amount_total, order.amount_untaxed, order.amount_tax)
 
     def _compute_amounts(self):
         """ This overrides the standard values for orders using external tax calculation. The round_globally option

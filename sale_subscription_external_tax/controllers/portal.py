@@ -6,11 +6,6 @@ from odoo.addons.sale_subscription.controllers.portal import CustomerPortal
 class CustomerPortalExternalTaxes(CustomerPortal):
     @http.route()
     def subscription(self, order_id, access_token=None, message='', report_type=None, download=False, **kw):
-        res = super().subscription(order_id, access_token=access_token, message=message,
-                                   report_type=report_type, download=download, **kw)
-        if 'sale_order' not in res.qcontext:
-            return res
-
-        order = res.qcontext['sale_order']
-        order.with_company(order.company_id)._get_and_set_external_taxes_on_eligible_records()
-        return res
+        order_sudo, _ = self._get_subscription(access_token, order_id)
+        order_sudo.with_company(order_sudo.company_id)._get_and_set_external_taxes_on_eligible_records()
+        return super().subscription(order_id, access_token=access_token, message=message, report_type=report_type, download=download, **kw)
