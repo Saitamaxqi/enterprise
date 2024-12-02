@@ -10,9 +10,6 @@ patch(PosOrder.prototype, {
             this.voucher_number = vals.voucher_number || "";
         }
     },
-    doNotAllowRefundAndSales() {
-        return this.isChileanCompany() || super.doNotAllowRefundAndSales(...arguments);
-    },
     isChileanCompany() {
         return this.company.country_id?.code == "CL";
     },

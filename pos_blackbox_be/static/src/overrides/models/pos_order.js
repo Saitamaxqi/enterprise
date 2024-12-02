@@ -4,9 +4,6 @@ import { PosOrder } from "@point_of_sale/app/models/pos_order";
 import { patch } from "@web/core/utils/patch";
 
 patch(PosOrder.prototype, {
-    doNotAllowRefundAndSales() {
-        return this.useBlackBoxBe() || super.doNotAllowRefundAndSales();
-    },
     useBlackBoxBe() {
         return this.config.iface_fiscal_data_module;
     },
