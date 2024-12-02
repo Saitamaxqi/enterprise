@@ -18,7 +18,9 @@ class StockWarehouse(models.Model):
 
     def _create_or_update_route(self):
         warehouse_rental_route = self.env.ref('sale_stock_renting.route_rental')
-        if not self.env.user.has_group('sale_stock_renting.group_rental_stock_picking'):
+        if not self.env['res.groups']._is_feature_enabled(
+            'sale_stock_renting.group_rental_stock_picking'
+        ):
             return super()._create_or_update_route()
         warehouse_rental_route.active = True
         rental_rules = self.env['stock.rule'].with_context(active_test=False).search([

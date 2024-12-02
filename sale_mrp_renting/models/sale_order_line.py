@@ -9,7 +9,7 @@ class SaleOrderLine(models.Model):
 
     def _get_qty_procurement(self, previous_product_uom_qty=False):
         qty = super()._get_qty_procurement(previous_product_uom_qty)
-        if self.is_rental and self.env.user.has_group('sale_stock_renting.group_rental_stock_picking') and 'phantom' in self.product_id.bom_ids.mapped('type'):
+        if self.is_rental and self.env['res.groups']._is_feature_enabled('sale_stock_renting.group_rental_stock_picking') and 'phantom' in self.product_id.bom_ids.mapped('type'):
             bom = self.env['mrp.bom']._bom_find(self.product_id, bom_type='phantom')[self.product_id]
             outgoing_moves = self.move_ids.filtered(lambda m: m.location_dest_id == m.company_id.rental_loc_id and m.state != 'cancel' and not m.scrapped and m.product_id in bom.bom_line_ids.product_id)
             filters = {

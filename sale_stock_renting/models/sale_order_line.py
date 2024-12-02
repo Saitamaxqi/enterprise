@@ -28,7 +28,7 @@ class SaleOrderLine(models.Model):
         # A lot is available if it is not currently in the stock AND it will be back in stock
         # before the start of rental period.
         self.available_reserved_lots = True
-        if not self.env.user.has_group('sale_stock_renting.group_rental_stock_picking'):
+        if not self._are_rental_pickings_enabled():
             return
         lines_to_check = self.filtered(lambda l: l.is_rental and l.reserved_lot_ids and l.product_template_id.tracking == 'serial')
 
@@ -155,7 +155,10 @@ class SaleOrderLine(models.Model):
 
         When quantity/lots are decreased/removed, we decrease the quantity in the stock moves made by previous corresponding write call.
         """
-        if not any(key in vals for key in ['qty_delivered', 'pickedup_lot_ids', 'qty_returned', 'returned_lot_ids']) or self.env.user.has_group('sale_stock_renting.group_rental_stock_picking'):
+        if (
+            not any(key in vals for key in ['qty_delivered', 'pickedup_lot_ids', 'qty_returned', 'returned_lot_ids'])
+            or self._are_rental_pickings_enabled()
+        ):
             # If nothing to catch for rental: usual write behavior
             return super().write(vals)
 
@@ -468,9 +471,6 @@ class SaleOrderLine(models.Model):
         key_dates = sorted(set(rented_quantities.keys()) | set(mandatory_dates))
         return rented_quantities, key_dates
 
+    @api.model
     def _are_rental_pickings_enabled(self):
-        if self and self.order_id.create_uid:
-            return self[0].order_id.create_uid.has_group(
-                'sale_stock_renting.group_rental_stock_picking'
-            )
-        return self.env.user.has_group('sale_stock_renting.group_rental_stock_picking')
+        return self.env['res.groups']._is_feature_enabled('sale_stock_renting.group_rental_stock_picking')
