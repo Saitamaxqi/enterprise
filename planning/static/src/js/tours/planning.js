@@ -61,6 +61,7 @@ registry.category("web_tour.tours").add('planning_tour', {
         tooltipPosition: "bottom",
         run: "drag_and_drop .o_gantt_cell:nth-child(6)",
     }, {
+        isActive: ["mobile"],
         trigger: ".o_control_panel .dropdown-toggle",
         content: _t("Share the schedule with your team by publishing and sending it. Open the menu to access this option."),
         tooltipPosition: "bottom",
