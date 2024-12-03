@@ -125,6 +125,7 @@ class AccountMove(models.Model):
         moves = super().create(vals_list)
         for move in moves:
             if not move.l10n_es_reports_mod349_invoice_type:
+                move = move.with_context(skip_is_manually_modified=True)
                 move.l10n_es_reports_mod349_invoice_type = move.with_context(
                     move_type=move.move_type)._default_mod_349_invoice_type()
         return moves
