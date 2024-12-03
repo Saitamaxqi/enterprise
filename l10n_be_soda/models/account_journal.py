@@ -58,7 +58,8 @@ class AccountJournal(models.Model):
         for attachment in attachments:
             parsed_attachment = etree.parse(io.BytesIO(attachment.raw))
             # The document VAT number must match the journal's company's VAT number
-            journal_company_vat = self.company_id.company_registry or self.company_id.vat and re.search(r'\d+', self.company_id.vat).group()
+            journal_company_vat = self.company_id.vat or self.company_id.company_registry
+            journal_company_vat = journal_company_vat and re.sub("[^0-9]", "", journal_company_vat)
             parsed_ent_num = parsed_attachment.find('.//EntNum')
             ent_num = parsed_ent_num.text and re.search(r'\d+', parsed_ent_num.text).group()
             if ent_num != journal_company_vat:

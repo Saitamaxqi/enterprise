@@ -17,7 +17,7 @@ class TestSodaFile(AccountTestInvoicingCommon, MailCommon):
     @AccountTestInvoicingCommon.setup_country('be')
     def setUpClass(cls):
         super().setUpClass()
-        cls.env.company.vat = 'BE0477472701'
+        cls.env.company.vat = 'BE047.747.2701'
         cls.misc_journal = cls.env['account.journal'].create({
             'name': 'Miscellaneous',
             'code': 'smis',
