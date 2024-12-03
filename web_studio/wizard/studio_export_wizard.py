@@ -412,7 +412,10 @@ class StudioExportWizard(models.TransientModel):
     _description = "Studio Export Wizard"
 
     def _default_studio_export_data(self):
-        data = self.env["ir.model.data"].search([("studio", "=", True)])
+        data = self.env["ir.model.data"].search([
+            ("studio", "=", True),
+            ("model", "in", DEFAULT_MODELS_TO_EXPORT),
+        ])
         return self.env["studio.export.wizard.data"].create(
             [{"model": d.model, "res_id": d.res_id, "studio": d.studio} for d in data]
         )
