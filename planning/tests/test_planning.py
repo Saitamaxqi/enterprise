@@ -782,3 +782,29 @@ class TestPlanning(TestCommonPlanning, MockEmail):
         self.assertEqual(self.slot.allocated_hours, 8)
         slot2 = self.slot.copy({'resource_id': self.resource_bert.id})
         self.assertEqual(slot2.allocated_hours, 4, "The allocated hours should have been recomputed with the new resource after copying the shift.")
+
+    def test_planning_expand_resource(self):
+        """
+            When planning_expand_resource = True and there are slots assigned to the resource in the previous or next period,
+            the resource is also displayed in the gantt view with value = 0.
+        """
+        self.employee_bert.resource_calendar_id = self.flex_50h_calendar
+        self.slot.resource_id = self.employee_bert.resource_id
+        group_by = ['resource_id']
+
+        planned_dates = [
+            ('2019-07-01 00:00:00', '2019-07-31 23:59:59'),
+            ('2019-08-01 00:00:00', '2019-08-31 23:59:59')
+        ]
+        for case, (start_date, stop_date) in enumerate(planned_dates):
+            result = self.env['planning.slot'].with_context(planning_expand_resource=True).get_gantt_data([
+                '&',
+                ['start_datetime', '<', stop_date],
+                ['end_datetime', '>', start_date],
+            ], group_by, {'display_name': {}}, unavailability_fields=group_by, progress_bar_fields=group_by, start_date=start_date, stop_date = stop_date,scale='month')
+
+            if case == 0:
+                self.assertTrue(self.slot.resource_id.id in result['progress_bars']['resource_id'], "Resource has slots in the previous month")
+                self.assertEqual(result['progress_bars']['resource_id'][self.slot.resource_id.id]['value'], 0.0)
+            else:
+                self.assertFalse(self.slot.resource_id.id in result['progress_bars']['resource_id'])
