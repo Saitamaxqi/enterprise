@@ -157,8 +157,20 @@
                         <element name="range">
                             <attribute name="name"/>
                             <attribute name="string"/>
-                            <attribute name="span"/>
-                            <attribute name="step"/>
+                            <attribute name="span">
+                                <choice>
+                                    <value>day</value>
+                                    <value>week</value>
+                                    <value>month</value>
+                                    <value>year</value>
+                                </choice>
+                            </attribute>
+                            <attribute name="step">
+                                <choice>
+                                    <value>day</value>
+                                    <value>month</value>
+                                </choice>
+                            </attribute>
                             <optional><attribute name="default"/></optional>
                             <optional><attribute name="hotkey"/></optional>
                         </element>
