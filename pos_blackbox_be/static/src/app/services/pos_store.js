@@ -234,14 +234,4 @@ patch(PosStore.prototype, {
             return super.cashierHasPriceControlRights();
         }
     },
-    getReceiptHeaderData(order) {
-        const result = super.getReceiptHeaderData(...arguments);
-        result.useBlackBoxBe = this.useBlackBoxBe();
-        result.posIdentifier = this.config.name;
-        if (order && this.useBlackBoxBe()) {
-            result.receipt_type = order.receipt_type;
-            result.blackboxDate = order.blackbox_date;
-        }
-        return result;
-    },
 });

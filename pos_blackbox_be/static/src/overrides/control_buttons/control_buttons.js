@@ -101,8 +101,7 @@ patch(ControlButtons.prototype, {
 
         await this.pos.pushSingleOrder(order);
         await this.printer.print(OrderReceipt, {
-            data: this.pos.orderExportForPrinting(order),
-            formatCurrency: this.env.utils.formatCurrency,
+            order: order,
         });
 
         if (this.pos.config.module_pos_restaurant) {

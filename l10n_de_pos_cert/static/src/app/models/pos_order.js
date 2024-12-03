@@ -29,6 +29,34 @@ patch(PosOrder.prototype, {
                 vals.l10n_de_fiskaly_client_serial_number || false;
         }
     },
+    get tss() {
+        if (this.isCountryGermanyAndFiskaly()) {
+            if (this.isTransactionFinished()) {
+                return {
+                    transaction_number: this.l10n_de_fiskaly_transaction_number,
+                    time_start: this.l10n_de_fiskaly_time_start,
+                    time_end: this.l10n_de_fiskaly_time_end,
+                    certificate_serial: this.l10n_de_fiskaly_certificate_serial,
+                    timestamp_format: this.l10n_de_fiskaly_timestamp_format,
+                    signature_value: this.l10n_de_fiskaly_signature_value,
+                    signature_algorithm: this.l10n_de_fiskaly_signature_algorithm,
+                    signature_public_key: this.l10n_de_fiskaly_signature_public_key,
+                    client_serial_number: this.l10n_de_fiskaly_client_serial_number,
+                    erstBestellung: this.getOrderlines()[0].getProduct().display_name,
+                };
+            } else {
+                return {
+                    tss_issue: true,
+                };
+            }
+        } else if (this.isCountryGermany() && !this.getTssId()) {
+            return {
+                test_environment: true,
+            };
+        }
+
+        return false;
+    },
     isCountryGermanyAndFiskaly() {
         return this.isCountryGermany() && !!this.getTssId();
     },
@@ -54,31 +82,6 @@ patch(PosOrder.prototype, {
     },
     isTransactionFinished() {
         return this.transactionState === "finished" || this.l10n_de_fiskaly_time_start;
-    },
-    // @Override
-    exportForPrinting(baseUrl, headerData) {
-        const receipt = super.exportForPrinting(...arguments);
-        if (this.isCountryGermanyAndFiskaly()) {
-            if (this.isTransactionFinished()) {
-                receipt["tss"] = {
-                    transaction_number: this.l10n_de_fiskaly_transaction_number,
-                    time_start: this.l10n_de_fiskaly_time_start,
-                    time_end: this.l10n_de_fiskaly_time_end,
-                    certificate_serial: this.l10n_de_fiskaly_certificate_serial,
-                    timestamp_format: this.l10n_de_fiskaly_timestamp_format,
-                    signature_value: this.l10n_de_fiskaly_signature_value,
-                    signature_algorithm: this.l10n_de_fiskaly_signature_algorithm,
-                    signature_public_key: this.l10n_de_fiskaly_signature_public_key,
-                    client_serial_number: this.l10n_de_fiskaly_client_serial_number,
-                    erstBestellung: this.getOrderlines()[0].getProduct().display_name,
-                };
-            } else {
-                receipt["tss_issue"] = true;
-            }
-        } else if (this.isCountryGermany() && !this.getTssId()) {
-            receipt["test_environment"] = true;
-        }
-        return receipt;
     },
     /*
      *  Return an array of { 'payment_type': ..., 'amount': ...}

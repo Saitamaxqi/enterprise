@@ -1,8 +1,5 @@
 import { PosStore } from "@point_of_sale/app/services/pos_store";
 import { patch } from "@web/core/utils/patch";
-import { pick } from "@web/core/utils/objects";
-import { formatDateTime } from "@web/core/l10n/dates";
-import { parseUTCString } from "@point_of_sale/utils";
 
 patch(PosStore.prototype, {
     // @Override
@@ -41,33 +38,5 @@ patch(PosStore.prototype, {
             order.partner_id = this.session._consumidor_final_anonimo_id;
         }
         return order;
-    },
-    getReceiptHeaderData(order) {
-        const result = super.getReceiptHeaderData(...arguments);
-        if (!this.isChileanCompany() || !order) {
-            return result;
-        }
-        result.company.cl_vat = this.company.vat;
-        result.l10n_cl_sii_regional_office =
-            this.session._l10n_cl_sii_regional_office_selection[
-                order.company_id.l10n_cl_sii_regional_office
-            ];
-        result.l10n_latam_document_type = order.account_move?.l10n_latam_document_type_id.name;
-        result.l10n_latam_document_number = order.account_move?.l10n_latam_document_number;
-        result.date = formatDateTime(parseUTCString(order.date_order));
-        result.partner = order.isFactura()
-            ? pick(
-                  order.getPartner(),
-                  "name",
-                  "vat",
-                  "street",
-                  "street2",
-                  "city",
-                  "l10n_cl_activity_description",
-                  "phone"
-              )
-            : false;
-
-        return result;
     },
 });

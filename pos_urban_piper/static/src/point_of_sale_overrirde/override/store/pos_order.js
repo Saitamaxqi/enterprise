@@ -14,11 +14,4 @@ patch(PosOrder.prototype, {
     getOrderStatus() {
         return this.delivery_status ? this.delivery_status : "";
     },
-
-    exportForPrinting(baseUrl, headerData) {
-        const data = super.exportForPrinting(baseUrl, headerData);
-        data.headerData.deliveryId = this.delivery_identifier;
-        data.headerData.deliveryChannel = this.delivery_provider_id?.name;
-        return data;
-    },
 });

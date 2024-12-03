@@ -91,22 +91,4 @@ patch(PosStore.prototype, {
             this.config.id,
         ]);
     },
-    getReceiptHeaderData(order) {
-        const result = super.getReceiptHeaderData(...arguments);
-        result.posIdentifier = this.config.name;
-        if (order && this.useBlackBoxSweden()) {
-            result.receipt_type = order.receipt_type;
-            result.blackboxDate = order.blackbox_date;
-            result.isReprint = order.isReprint;
-            result.orderSequence = order.sequence_number;
-            if (order.isReprint) {
-                result.type = "COPY";
-            } else if (order.isProfo) {
-                result.type = "PRO FORMA";
-            } else {
-                result.type = (order.amount_total < 0 ? "return" : "") + "receipt";
-            }
-        }
-        return result;
-    },
 });
