@@ -54,37 +54,7 @@
 .o_referral_kanban_view .o_kanban_renderer {
     position: initial;
 
-    // ---------- Kanban Record, fill image design ----------
-    // Records with images that compensate record's padding
-    // filling all the available space
-    .o_kanban_record_has_image_fill {
-        display: flex;
-
-        .o_kanban_image_fill_top {
-            position: relative;
-            margin: $o-kanban-inside-vgutter $o-kanban-inside-hgutter ;
-            margin-bottom: $o-kanban-inside-hgutter;
-            flex: 1 0 $o-kanban-image-fill-width;
-            min-height: 95px;
-            background: {
-                size: cover;
-                position: center;
-                repeat: no-repeat;
-            };
-
-            &.o_kanban_image_full {
-                background-size: contain;
-            }
-
-            img {
-                display: block;
-                margin: 0 auto;
-                max-width: 100%;
-            }
-        }
-    }
-
-    .o_kanban_referral_top_right{
+    .o_kanban_referral_top_right {
         @include o-position-absolute($top: 0, $right: 0);
         margin-top: 1px;
         margin-right: 1px;
