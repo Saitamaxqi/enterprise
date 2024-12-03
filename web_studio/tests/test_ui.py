@@ -2026,7 +2026,7 @@ class TestStudioUIUnit(odoo.tests.HttpCase):
         """)
 
     def test_use_action_domain(self):
-        self.env["res.partner"].search([['employee', '=', True]]).action_archive()
+        self.env["res.partner"].search([]).write({'employee': False})
         self.env["res.partner"].create({
             "name": "Michel",
             "employee": True,
