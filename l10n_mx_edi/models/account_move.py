@@ -1757,9 +1757,7 @@ class AccountMove(models.Model):
         """
         self.ensure_one()
 
-        self \
-            .with_context(no_new_invoice=True) \
-            .message_post(body=_("The CFDI document has been successfully cancelled."))
+        self.message_post(body=_("The CFDI document has been successfully cancelled."))
 
         cfdi_values = self.env['l10n_mx_edi.document']._get_company_cfdi_values(self.company_id)
         if cfdi_values['root_company'].l10n_mx_edi_pac_test_env:
@@ -1847,9 +1845,7 @@ class AccountMove(models.Model):
                 cfdi_str = append_values['cfdi']
 
             document = self._l10n_mx_edi_cfdi_invoice_document_sent(cfdi_filename, cfdi_str)
-            self \
-                .with_context(no_new_invoice=True) \
-                .message_post(
+            self.message_post(
                     body=_("The CFDI document was successfully created and signed by the government."),
                     attachment_ids=document.attachment_id.ids,
                 )
@@ -2430,9 +2426,7 @@ class AccountMove(models.Model):
 
             # Chatters.
             for invoice in self:
-                invoice \
-                    .with_context(no_new_invoice=True) \
-                    .message_post(
+                invoice.message_post(
                     body=_("The Global CFDI document was successfully created and signed by the government."),
                     attachment_ids=document.attachment_id.ids,
                 )
@@ -2457,9 +2451,7 @@ class AccountMove(models.Model):
         """
 
         for record in self:
-            record \
-                .with_context(no_new_invoice=True) \
-                .message_post(body=_("The Global CFDI document has been successfully cancelled."))
+            record.message_post(body=_("The Global CFDI document has been successfully cancelled."))
 
     def _l10n_mx_edi_cfdi_global_invoice_try_cancel(self, document, cancel_reason):
         """ Create a CFDI global invoice for multiple invoices.
@@ -2685,10 +2677,9 @@ class AccountMove(models.Model):
 
     def _l10n_mx_edi_import_cfdi_invoice(self, invoice, file_data, new=False):
         with invoice._get_edi_creation() as invoice:
-            invoice.ensure_one()
             if invoice.l10n_mx_edi_cfdi_attachment_id:
                 # invoice is already associated with a CFDI document, do nothing
-                return False
+                return
             tree = file_data['xml_tree']
             # handle payments
             if tree.findall('.//{*}Pagos'):
@@ -2701,26 +2692,37 @@ class AccountMove(models.Model):
                 move_type = 'in_' + move_type
             else:
                 return
-            invoice.move_type = move_type
-            if not invoice.invoice_line_ids:
-                # don't fill the invoice if it already has lines, simply give it the cfdi info
+
+            # don't fill the invoice if it already has lines, simply give it the cfdi info
+            if invoice.state == 'draft' and not invoice.invoice_line_ids:
+                invoice.move_type = move_type
                 invoice._l10n_mx_edi_import_cfdi_fill_invoice(tree)
+
             # create the document
             self.env['l10n_mx_edi.document'].create({
                 'move_id': invoice.id,
                 'invoice_ids': [Command.set(invoice.ids)],
                 'state': 'invoice_sent' if invoice.is_sale_document() else 'invoice_received',
                 'sat_state': 'not_defined',
-                'attachment_id': file_data['attachment'].id,
+                'attachment_id': file_data['origin_attachment'].id,
                 'datetime': fields.Datetime.now(),
             })
-            return True
+
+    def _get_import_file_type(self, file_data):
+        """ Identify CFDIs. """
+        # EXTENDS 'account'
+        if file_data['xml_tree'] is not None and file_data['xml_tree'].prefix == 'cfdi':
+            return 'l10n_mx.cfdi'
+        return super()._get_import_file_type(file_data)
 
     def _get_edi_decoder(self, file_data, new=False):
         # EXTENDS 'account'
-        if file_data.get('is_cfdi', False):
-            return self._l10n_mx_edi_import_cfdi_invoice
-        return super()._get_edi_decoder(file_data, new=new)
+        if file_data['import_file_type'] == 'l10n_mx.cfdi':
+            return {
+                'priority': 20,
+                'decoder': self._l10n_mx_edi_import_cfdi_invoice,
+            }
+        return super()._get_edi_decoder(file_data, new)
 
     def _get_invoice_legal_documents(self, filetype, allow_fallback=False):
         # EXTENDS account

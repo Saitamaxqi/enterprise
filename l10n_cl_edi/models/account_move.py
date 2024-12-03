@@ -4,6 +4,7 @@ import logging
 import re
 
 from collections import namedtuple
+import contextlib
 from datetime import datetime
 from io import BytesIO
 
@@ -12,7 +13,7 @@ from markupsafe import Markup
 from psycopg2 import OperationalError
 
 
-from odoo import fields, models
+from odoo import fields, models, Command
 from odoo.addons.l10n_cl_edi.models.l10n_cl_edi_util import UnexpectedXMLResponse, InvalidToken
 from odoo.exceptions import LockError, UserError, ValidationError
 from odoo.tools.misc import formatLang
@@ -166,7 +167,7 @@ services reception has been received as well.
                     'type': 'binary',
                 })
                 move.sudo().l10n_cl_sii_send_file = attachment.id
-                move.with_context(no_new_invoice=True).message_post(
+                move.message_post(
                     body=_('DTE has been created%s', msg_demo),
                     attachment_ids=attachment.ids)
         return res
@@ -496,7 +497,7 @@ services reception has been received as well.
             raise UserError(_('Please assign a partner before sending the acknowledgement'))
         try:
             self._l10n_cl_send_receipt_acknowledgment()
-        except Exception as error:
+        except UserError as error:
             self.message_post(body=str(error))
 
     def _l10n_cl_send_receipt_acknowledgment(self):
@@ -507,7 +508,7 @@ services reception has been received as well.
         attch_name = 'DTE_{}.xml'.format(self.l10n_latam_document_number)
         dte_attachment = self.sudo().l10n_cl_dte_file
         if not dte_attachment:
-            raise Exception(_('DTE attachment not found => %s') % attch_name)
+            raise UserError(_('DTE attachment not found => %s') % attch_name)
         xml_dte = base64.b64decode(dte_attachment.datas).decode('utf-8')
         xml_content = etree.fromstring(xml_dte)
         response_id = self.env['ir.sequence'].browse(self.env.ref('l10n_cl_edi.response_sequence').id).next_by_id()
@@ -527,8 +528,8 @@ services reception has been received as well.
             '<?xml version="1.0" encoding="ISO-8859-1" ?>', '')
         try:
             digital_signature_sudo = self.company_id.sudo()._get_digital_signature(user_id=self.env.user.id)
-        except Exception:
-            raise Exception(_('There is no signature available to send acknowledge or acceptation of this DTE. '
+        except UserError:
+            raise UserError(_('There is no signature available to send acknowledge or acceptation of this DTE. '
                               'Please setup your digital signature'))
         xml_ack = self._sign_full_xml(xml_ack_template, digital_signature_sudo, str(response_id),
                                       'env_resp', self.l10n_latam_document_type_id._is_doc_type_voucher())
@@ -540,7 +541,7 @@ services reception has been received as well.
             'datas': base64.b64encode(bytes(xml_ack, 'utf-8')),
         })
         self.env.ref('l10n_cl_edi.email_template_receipt_ack').send_mail(self.id, force_send=True, email_values={
-            'attachment_ids': attachment})
+            'attachment_ids': attachment.ids})
         self.l10n_cl_dte_acceptation_status = 'ack_sent'
 
     def _l10n_cl_action_response(self, status_type):
@@ -661,7 +662,7 @@ services reception has been received as well.
             'type': 'binary',
             'datas': base64.b64encode(dte_signed.encode('ISO-8859-1', 'replace'))
         })
-        self.with_context(no_new_invoice=True).message_post(
+        self.message_post(
             body=_('Partner DTE has been generated'),
             attachment_ids=[dte_partner_attachment.id])
         return dte_partner_attachment
@@ -911,8 +912,9 @@ services reception has been received as well.
 
     def _l10n_cl_get_set_dte_id(self, xml_content):
         set_dte = xml_content.find('.//ns0:SetDTE', namespaces={'ns0': 'http://www.sii.cl/SiiDte'})
-        set_dte_attrb = set_dte and set_dte.attrib or {}
-        return set_dte_attrb.get('ID', '')
+        if set_dte is None:
+            return ''
+        return set_dte.attrib.get('ID')
 
     def _l10n_cl_get_report_base_filename(self):
         return _("%s COPY", self._get_report_base_filename())
@@ -973,125 +975,383 @@ services reception has been received as well.
             record.with_context(cron_skip_connection_errs=True).l10n_cl_send_dte_to_sii()
             self.env.cr.commit()
 
+    # ------------------------------------------------------------
+    # IMPORT
+    # ------------------------------------------------------------
+
+    def _get_import_file_type(self, file_data):
+        """ Identify DTE files. """
+        # EXTENDS 'account'
+        if file_data['xml_tree'] is not None and file_data['xml_tree'].xpath('//ns0:DTE', namespaces=XML_NAMESPACES):
+            return 'l10n_cl.dte'
+
+        return super()._get_import_file_type(file_data)
+
+    def _unwrap_attachment(self, file_data, recurse=True):
+        """ Divide a DTE into constituent invoices and create a new attachment for each invoice after the first. """
+        # EXTENDS 'account'
+        if file_data['import_file_type'] != 'l10n_cl.dte':
+            return super()._unwrap_attachment(file_data, recurse)
+
+        embedded = self._split_xml_into_new_attachments(file_data, tag='DTE')
+        if embedded and recurse:
+            embedded.extend(self._unwrap_attachments(embedded, recurse=True))
+        return embedded
+
     def _get_edi_decoder(self, file_data, new=True):
         # EXTENDS 'account'
-        if (
-            self.country_code == 'CL'
-            and new
-            and file_data['type'] == 'xml'
-            and etree.fromstring(file_data['content']).xpath('//ns0:DTE', namespaces=XML_NAMESPACES)
-        ):
-            return self._l10n_cl_process_attachment_content
+        if file_data['import_file_type'] == 'l10n_cl.dte':
+            return {
+                'priority': 20,
+                'decoder': self._l10n_cl_import_dte,
+            }
         return super()._get_edi_decoder(file_data, new=new)
 
-    def _l10n_cl_process_attachment_content(self, invoice, file_data, new=True):
-        """
-        A modification of the fetchmail method chain to be used for manual vendor bill uploads
-        """
-        origin_type = self.env['fetchmail.server']._get_xml_origin_type(etree.fromstring(file_data['content']))
+    def _l10n_cl_import_dte(self, invoice, file_data, new):
+        if invoice.invoice_line_ids:
+            return invoice._reason_cannot_decode_has_invoice_lines()
+
+        xml_tree = file_data['xml_tree']
+        invoice.l10n_cl_dte_file = file_data['attachment']
+        invoice.l10n_cl_dte_acceptation_status = 'received'
+
+        vals = {}
+        messages = []
+
+        origin_type = self.env['fetchmail.server']._get_xml_origin_type(xml_tree)
         if origin_type == 'not_classified':
-            invoice.message_post(body=_('Failed to determine origin type of the attached document, attempting to process as a vendor bill'))
-        for move in self._l10n_cl_create_document_from_attachment(file_data['content'], file_data['attachment'], self.company_id, invoice):
-            if move.partner_id:
-                try:
-                    move._l10n_cl_send_receipt_acknowledgment()
-                except Exception as error:
-                    move.message_post(body=str(error))
+            messages.append(_('Failed to determine origin type of the attached document, attempting to process as a vendor bill'))
 
-    def _l10n_cl_create_document_from_attachment(self, att_content, att_name, company_id, invoice):
+        invoice._l10n_cl_fill_partner_vals_from_xml(xml_tree, vals, messages)
+        invoice._l10n_cl_fill_document_number_vals_from_xml(xml_tree, vals, messages)
+        invoice._l10n_cl_fill_document_vals_from_xml(xml_tree, vals, messages)
+        invoice._l10n_cl_fill_lines_vals_from_xml(xml_tree, vals, messages)
+        invoice._l10n_cl_fill_references_vals_from_xml(xml_tree, vals, messages)
+
+        invoice.message_post(body=Markup('<br/>').join(messages))
+        invoice.write(vals)
+
+        invoice._l10n_cl_adjust_manual_taxes_from_xml(xml_tree)
+        invoice._l10n_cl_check_total_amount_from_xml(xml_tree)
+
+    def _l10n_cl_fill_partner_vals_from_xml(self, xml_tree, vals, messages):
+        partner_vat = (
+            xml_tree.findtext('.//ns0:RUTEmisor', namespaces=XML_NAMESPACES).upper() or
+            xml_tree.findtext('.//ns0:RutEmisor', namespaces=XML_NAMESPACES).upper()
+        )
+        if partner_vat and (partner := self.env['res.partner'].search(
+            [
+                ("vat", "=", partner_vat),
+                *self.env['res.partner']._check_company_domain(self.company_id.id),
+            ],
+            limit=1,
+        )):
+            vals['partner_id'] = partner.id
+            return
+
+        partner_name = xml_tree.findtext('.//ns0:RznSoc', namespaces=XML_NAMESPACES)
+        partner_street = xml_tree.findtext('.//ns0:DirOrigen', namespaces=XML_NAMESPACES)
+
+        if partner_name and partner_vat and partner_street:
+            with contextlib.suppress(ValidationError):
+                vals['partner_id'] = self.env['res.partner'].create({
+                    'name': partner_name,
+                    'vat': partner_vat,
+                    'street': partner_street,
+                    'country_id': self.env.ref('base.cl').id,
+                    'l10n_latam_identification_type_id': self.env.ref('l10n_cl.it_RUT').id,
+                    'l10n_cl_sii_taxpayer_type': '1'
+                }).id
+                return
+
+        vals['narration'] = partner_vat
+
+        msg = Markup(
+            '%(explanation)s<br/>'
+            '<li><b>%(name_l)s</b>: %(name)s</li>'
+            '<li><b>%(rut_l)s</b>: %(rut)s</li>'
+            '<li><b>%(address_l)s</b>: %(address)s</li>'
+        ) % {
+            'explanation': _('Vendor not found: You can generate this vendor manually with the following information:'),
+            'name_l': _("Name"), 'name': partner_name or '',
+            'rut_l': _("RUT"), 'rut': partner_vat or '',
+            'address_l': _("Address"), 'address': partner_street or ''
+        }
+        messages.append(msg)
+
+    def _l10n_cl_fill_document_number_vals_from_xml(self, xml_tree, vals, messages):
+        document_number = xml_tree.findtext('.//ns0:Folio', namespaces=XML_NAMESPACES)
+        document_type_code = xml_tree.findtext('.//ns0:TipoDTE', namespaces=XML_NAMESPACES)
+        document_type = self.env['l10n_latam.document.type'].search(
+            [('code', '=', document_type_code), ('country_id.code', '=', 'CL')], limit=1,
+        )
+        if not document_type:
+            messages.append(_('Document type %s not found.', document_type_code))
+        if document_type.internal_type not in ['invoice', 'debit_note', 'credit_note']:
+            messages.append(_('The document type %s is not a vendor bill.', document_type_code))
+
+        if vals.get('partner_id'):
+            duplicate_domain = [('partner_id', '=', vals['partner_id'])]
+        else:
+            duplicate_domain = [
+                ('partner_id', '=', False),
+                ('narration', '=', vals['narration']),
+            ]
+        if self.search([
+            *duplicate_domain,
+            ('move_type', 'in', ['in_invoice', 'in_refund']),
+            ('name', 'ilike', document_number),
+            ('l10n_latam_document_type_id', '=', document_type.id),
+            *self.env['account.move']._check_company_domain(self.company_id.id),
+        ]).filtered(lambda m: m.l10n_latam_document_number.lstrip('0') == document_number.lstrip('0')):
+            messages.append('E-invoice already exist: %s', document_number)
+
+        vals['l10n_latam_document_type_id'] = document_type
+        vals['l10n_latam_document_number'] = document_number
+
+    def _l10n_cl_fill_document_vals_from_xml(self, xml_tree, vals, messages):
+        invoice_date = xml_tree.findtext('.//ns0:FchEmis', namespaces=XML_NAMESPACES)
+        if invoice_date is not None:
+            vals['invoice_date'] = fields.Date.from_string(invoice_date)
+
+        vals['date'] = fields.Date.context_today(
+            self.with_context(tz='America/Santiago')
+        )
+
+        invoice_date_due = xml_tree.findtext('.//ns0:FchVenc', namespaces=XML_NAMESPACES)
+        if invoice_date_due is not None:
+            vals['invoice_date_due'] = fields.Date.from_string(invoice_date_due)
+
+        currency_name = xml_tree.findtext('.//ns0:Moneda', namespaces=XML_NAMESPACES) or 'CLP'
+        if currency := self.env['res.currency'].with_context(active_test=False).search([('name', '=', currency_name)]):
+            vals['currency_id'] = currency
+
+    def _l10n_cl_fill_lines_vals_from_xml(self, xml_tree, vals, messages):
+        vals['invoice_line_ids'] = [
+            Command.create(line_vals)
+            for line_vals in self._l10n_cl_get_lines_vals_from_xml(xml_tree, vals, messages)
+        ]
+
+    def _l10n_cl_get_lines_vals_from_xml(self, xml_tree, vals, messages):
         """
-        A modification of the fetchmail method chain to be used for manual vendor bill uploads
+        This parse DTE invoice detail lines and tries to match lines with existing products.
+        If no products are found, it puts only the description of the products in the draft invoice lines
         """
-        moves = []
-        xml_content = etree.fromstring(att_content)
-        cl_country_id = self.env.ref('base.cl').id
-        cl_id_type_id = self.env.ref('l10n_cl.it_RUT').id
-        for dte_xml in xml_content.xpath('//ns0:DTE', namespaces=XML_NAMESPACES):
-            document_number = self.env['fetchmail.server']._get_document_number(dte_xml)
-            document_type_code = self.env['fetchmail.server']._get_document_type_from_xml(dte_xml)
-            xml_total_amount = float(dte_xml.findtext('.//ns0:MntTotal', namespaces=XML_NAMESPACES))
-            document_type = self.env['l10n_latam.document.type'].search(
-                [('code', '=', document_type_code), ('country_id.code', '=', 'CL')], limit=1)
-            if not document_type:
-                _logger.info('DTE has been discarded! Document type %s not found', document_type_code)
-                continue
-            if document_type and document_type.internal_type not in ['invoice', 'debit_note', 'credit_note']:
-                _logger.info('DTE has been discarded! The document type %s is not a vendor bill', document_type_code)
-                continue
-
-            issuer_vat = self.env['fetchmail.server']._get_dte_issuer_vat(dte_xml)
-            partner = self.env['fetchmail.server']._get_partner(issuer_vat, company_id.id)
-            if partner and self.env['fetchmail.server']._check_document_number_exists(partner.id, document_number, document_type, company_id.id) \
-                    or (not partner and self.env['fetchmail.server']._check_document_number_exists_no_partner(document_number, document_type,
-                                                                                      company_id.id, issuer_vat)):
-                _logger.info('E-invoice already exist: %s', document_number)
-                continue
-
-            partner_dict = {
-                'name': self.env['fetchmail.server']._get_dte_partner_name(xml_content),
-                'vat': self.env['fetchmail.server']._get_dte_issuer_vat(xml_content),
-                'street': self.env['fetchmail.server']._get_dte_issuer_address(xml_content),
-                'country_id': cl_country_id,
-                'l10n_latam_identification_type_id': cl_id_type_id,
-                'l10n_cl_sii_taxpayer_type': '1'
+        gross_amount = xml_tree.findtext('.//ns0:MntBruto', namespaces=XML_NAMESPACES) is not None
+        use_default_tax = xml_tree.findtext('.//ns0:TasaIVA', namespaces=XML_NAMESPACES) is not None
+        default_purchase_tax = self.env['account.chart.template'].ref('OTAX_19')
+        currency = vals['currency_id']
+        lines_vals_list = []
+        for dte_line in xml_tree.findall('.//ns0:Detalle', namespaces=XML_NAMESPACES):
+            product_code = dte_line.findtext('.//ns0:VlrCodigo', namespaces=XML_NAMESPACES)
+            product_name = dte_line.findtext('.//ns0:NmbItem', namespaces=XML_NAMESPACES)
+            product = self._l10n_cl_get_vendor_product(product_code, product_name, self.company_id, vals.get('partner_id'))
+            # the QtyItem tag is not mandatory in certain cases (case 2 in documentation).
+            # Should be set to 1 if not present.
+            # See http://www.sii.cl/factura_electronica/formato_dte.pdf row 15 and row 22 of tag table
+            quantity = float(dte_line.findtext('.//ns0:QtyItem', default=1, namespaces=XML_NAMESPACES))
+            # in the same case, PrcItem is not mandatory if QtyItem is not present, but MontoItem IS mandatory
+            # this happens whenever QtyItem is not present in the invoice.
+            # See http://www.sii.cl/factura_electronica/formato_dte.pdf row 38 of tag table.
+            qty1 = quantity or 1
+            price_unit = float(dte_line.findtext('.//ns0:MontoItem', default=0, namespaces=XML_NAMESPACES)) / qty1
+            # See http://www.sii.cl/factura_electronica/formato_dte.pdf,
+            # where MontoItem is defined as (price_unit * quantity ) - discount + surcharge
+            # The amount present in "MontoItem" contains
+            # the value with discount or surcharge applied, so we don't need to calculate it, just dividing this amount
+            # by the quantity we get the price unit we should use in Odoo.
+            line_vals = {
+                'product_id': product.id,
+                'name': product.name if product else dte_line.findtext('.//ns0:NmbItem', namespaces=XML_NAMESPACES),
+                'quantity': quantity,
+                'price_unit': price_unit,
+                'tax_ids': [],
             }
-            if not partner and partner_dict['name'] and partner_dict['vat'] and partner_dict['street']:
-                try:
-                    partner = self.env['res.partner'].create(partner_dict)
-                    _logger.info('Partner %s automatically generated from vendor bill', partner.name)
-                except ValidationError:
-                    _logger.info('Partner could not be automatically generated from vendor bill')
+            if (xml_tree.findtext('.//ns0:TasaIVA', namespaces=XML_NAMESPACES) is not None and
+                    dte_line.findtext('.//ns0:IndExe', namespaces=XML_NAMESPACES) is None):
+                taxes = self._l10n_cl_get_default_tax(product) or default_purchase_tax
+                withholding_tax_codes = [int(element.text) for element in dte_line.findall('.//ns0:CodImpAdic', namespaces=XML_NAMESPACES)]
+                withholding_taxes = self.env['account.tax'].search([
+                    *self.env['account.tax']._check_company_domain(self.company_id),
+                    ('type_tax_use', '=', 'purchase'),
+                    ('l10n_cl_sii_code', 'in', withholding_tax_codes)
+                ])
+                line_vals['tax_ids'] = [Command.set(taxes.ids + withholding_taxes.ids)]
+            if gross_amount:
+                # in case the tag MntBruto is included in the IdDoc section, and there are not
+                # additional taxes (withholdings)
+                # even if the company has not selected its default tax value, we deduct it
+                # from the price unit, gathering the value rate of the l10n_cl default purchase tax
+                line_vals['price_unit'] = default_purchase_tax.with_context(
+                 force_price_include=True).compute_all(price_unit, currency)['total_excluded']
+            lines_vals_list.append(line_vals)
 
-            msgs = []
-            try:
-                invoice_form = self.env['fetchmail.server']._l10n_cl_fill_invoice_form(
-                    company_id.id, partner, dte_xml, document_number, document_type, invoice)
+        for desc_rcg_global in xml_tree.findall('.//ns0:DscRcgGlobal', namespaces=XML_NAMESPACES):
+            line_type = desc_rcg_global.findtext('.//ns0:TpoMov', namespaces=XML_NAMESPACES)
+            price_type = desc_rcg_global.findtext('.//ns0:TpoValor', namespaces=XML_NAMESPACES)
+            discount_surcharge_value = (desc_rcg_global.findtext('.//ns0:ValorDROtrMnda', namespaces=XML_NAMESPACES) or
+                        desc_rcg_global.findtext('.//ns0:ValorDR', namespaces=XML_NAMESPACES))
+            line_vals = {
+                'name': 'DESCUENTO' if line_type == 'D' else 'RECARGO',
+                'quantity': 1,
+                'tax_ids': [],
+            }
+            amount_dr = float(discount_surcharge_value)
+            percent_dr = amount_dr / 100
+            # The price unit of a discount line should be negative while surcharge should be positive
+            price_unit_multiplier = 1 if line_type == 'D' else -1
+            if price_type == '%':
+                inde_exe_dr = desc_rcg_global.findtext('.//ns0:IndExeDR', namespaces=XML_NAMESPACES)
+                if inde_exe_dr is None:  # Applied to items with tax
+                    dte_amount_tag = (xml_tree.findtext('.//ns0:MntNetoOtrMnda', namespaces=XML_NAMESPACES) or
+                                      xml_tree.findtext('.//ns0:MntNeto', namespaces=XML_NAMESPACES))
+                    dte_amount = int(dte_amount_tag or 0)
+                    # as MntNeto value is calculated after discount
+                    # we need to calculate back the amount before discount in order to apply the percentage
+                    # and know the amount of the discount.
+                    dte_amount_before_discount = dte_amount / (1 - percent_dr)
+                    line_vals['price_unit'] = - price_unit_multiplier * dte_amount_before_discount * percent_dr
+                    if use_default_tax:
+                        line_vals['tax_ids'] = [Command.link(default_purchase_tax.id)]
+                elif inde_exe_dr == '2':  # Applied to items not billable
+                    dte_amount_tag = xml_tree.findtext('.//ns0:MontoNF', namespaces=XML_NAMESPACES)
+                    dte_amount = dte_amount_tag is not None and int(dte_amount_tag) or 0
+                    line_vals['price_unit'] = round(
+                        dte_amount - (int(dte_amount) / (1 - amount_dr / 100))) * price_unit_multiplier
+                elif inde_exe_dr == '1':  # Applied to items without taxes
+                    dte_amount_tag = (xml_tree.findtext('.//ns0:MntExeOtrMnda', namespaces=XML_NAMESPACES) or
+                                      xml_tree.findtext('.//ns0:MntExe', namespaces=XML_NAMESPACES))
+                    dte_amount = dte_amount_tag is not None and int(dte_amount_tag) or 0
+                    line_vals['price_unit'] = round(
+                        dte_amount - (int(dte_amount) / (1 - amount_dr / 100))) * price_unit_multiplier
+            else:
+                if gross_amount:
+                    amount_dr = default_purchase_tax.with_context(force_price_include=True).compute_all(
+                        amount_dr, currency)['total_excluded']
+                line_vals['price_unit'] = amount_dr * -1 * price_unit_multiplier
+                if use_default_tax and desc_rcg_global.findtext('.//ns0:IndExeDR', namespaces=XML_NAMESPACES) not in ['1', '2']:
+                    line_vals['tax_ids'] = [Command.link(default_purchase_tax.id)]
 
-            except Exception as error:
-                _logger.info(error)
-                msgs.append(str(error))
-                invoice.partner_id = partner
-                invoice.l10n_latam_document_type_id = document_type
-                invoice.l10n_latam_document_number = document_number
+            lines_vals_list.append(line_vals)
+        return lines_vals_list
 
-            if not partner:
-                invoice_form.narration = issuer_vat or ''
-            move = invoice_form
+    def _l10n_cl_get_default_tax(self, product):
+        return product.taxes_id.filtered(lambda tax: tax.company_id == self.company_id and tax.type_tax_use == 'purchase')
 
-            self.env['fetchmail.server']._l10n_cl_adjust_manual_taxes(move, dte_xml)
-            dte_attachment = self.env['ir.attachment'].create({
-                'name': 'DTE_{}.xml'.format(document_number),
-                'res_model': move._name,
-                'res_id': move.id,
-                'type': 'binary',
-                'datas': base64.b64encode(etree.tostring(dte_xml))
-            })
-            move.l10n_cl_dte_file = dte_attachment.id
+    def _l10n_cl_get_vendor_product(self, product_code, product_name, company_id, partner_id):
+        """
+        This tries to match products specified in the vendor bill with current products in database.
+        Criteria to attempt a match with existent products:
+        1) check if product_code in the supplier info is present (if partner_id is established)
+        2) if (1) fails, check if product supplier info name is present (if partner_id is established)
+        3) if (1) and (2) fail, check product default_code
+        4) if 3 previous criteria fail, check product name, and return false if fails
+        """
+        if partner_id:
+            supplier_info_domain = [
+                *self.env['product.supplierinfo']._check_company_domain(company_id),
+                ('partner_id', '=', partner_id),
+            ]
+            if product_code:
+                # 1st criteria
+                supplier_info_domain.append(('product_code', '=', product_code))
+            else:
+                # 2nd criteria
+                supplier_info_domain.append(('product_name', '=', product_name))
+            supplier_info = self.env['product.supplierinfo'].sudo().search(supplier_info_domain, limit=1)
+            if supplier_info:
+                return supplier_info.product_id
+        # 3rd criteria
+        if product_code:
+            product = self.env['product.product'].sudo().search([
+                *self.env['product.product']._check_company_domain(company_id),
+                '|', ('default_code', '=', product_code), ('barcode', '=', product_code),
+            ], limit=1)
+            if product:
+                return product
+        # 4th criteria
+        return self.env['product.product'].sudo().search([
+            *self.env['product.product']._check_company_domain(company_id),
+            ('name', 'ilike', product_name),
+        ], limit=1)
 
-            for msg in msgs:
-                move.with_context(no_new_invoice=True).message_post(body=msg)
+    def _l10n_cl_fill_references_vals_from_xml(self, xml_tree, vals, messages):
+        vals['l10n_cl_reference_ids'] = [
+            Command.create(reference_line)
+            for reference_line in self._l10n_cl_get_invoice_references_from_xml(xml_tree)
+        ]
 
-            msg = _('Vendor Bill DTE has been generated for the following vendor:') if partner else \
-                  _('Vendor not found: You can generate this vendor manually with the following information:')
-            msg += Markup('<br/>')
-            move.with_context(no_new_invoice=True).message_post(
-                body=msg + Markup("<li><b>%(name_l)s</b>: %(name)s</li><li><b>%(rut_l)s</b>: %(rut)s</li><li><b>%(address_l)s</b>: %(address)s</li>") % {
-                    'name_l': _("Name"), 'name': partner_dict['name'] or '',
-                    'rut_l': _("RUT"), 'rut': partner_dict['vat'] or '',
-                    'address_l': _("Address"), 'address': partner_dict['street'] or ''},
-                attachment_ids=[dte_attachment.id])
+    def _l10n_cl_get_invoice_references_from_xml(self, xml_tree):
+        invoice_reference_ids = []
+        for reference in xml_tree.findall('.//ns0:Referencia', namespaces=XML_NAMESPACES):
+            new_reference = {
+                'origin_doc_number': reference.findtext('.//ns0:FolioRef', namespaces=XML_NAMESPACES),
+                'reference_doc_code': reference.findtext('.//ns0:CodRef', namespaces=XML_NAMESPACES),
+                'reason': reference.findtext('.//ns0:RazonRef', namespaces=XML_NAMESPACES),
+                'date': reference.findtext('.//ns0:FchRef', namespaces=XML_NAMESPACES),
+            }
+            if reference_doc_type_code := reference.findtext('.//ns0:TpoDocRef', namespaces=XML_NAMESPACES):
+                if reference_doc_type := self.env['l10n_latam.document.type'].search(
+                    [('code', '=', reference_doc_type_code)], limit=1
+                ):
+                    new_reference['l10n_cl_reference_doc_type_id'] = reference_doc_type.id
+                else:
+                    new_reference['reason'] = '%s: %s' % (reference_doc_type_code, new_reference['reason'])
+            invoice_reference_ids.append(new_reference)
+        return invoice_reference_ids
 
-            if not move.currency_id.is_zero(move.amount_total - xml_total_amount):
-                move.message_post(
-                    body=Markup("<strong> %s </strong> %s") % (
-                            _("Warning:"),
-                            _("The total amount of the DTE\'s XML is %(xml_amount)s and the total amount calculated by Odoo is %(move_amount)s. Typically this is caused by additional lines in the detail or by unidentified taxes, please check if a manual correction is needed.",
-                                xml_amount=formatLang(self.env, xml_total_amount, currency_obj=move.currency_id),
-                                move_amount=formatLang(self.env, move.amount_total, currency_obj=move.currency_id)
-                            )
+    def _l10n_cl_adjust_manual_taxes_from_xml(self, xml_tree):
+        """
+        This method adjusts values on automatically created tax lines for taxes with manually read amounts from the imported XML
+        It should work for other properly setup taxes read from the <ImptoReten> section when their codes are added to the list
+        """
+        if xml_tree.findtext('.//ns0:ImptoReten', namespaces=XML_NAMESPACES) is not None:
+            manual_tax_lines = self._l10n_cl_get_manual_taxes_from_xml(xml_tree)
+        else:
+            return
+        line_ids_command = []
+        processed_sii_codes = set()
+        for sii_code in manual_tax_lines:
+            sii_code_lines = self.line_ids.filtered(lambda aml: aml.tax_line_id.l10n_cl_sii_code == sii_code)
+            if len(sii_code_lines) != 1:
+                # Found more than one tax line corresponding to a manual import SII code, ignoring
+                processed_sii_codes.add(sii_code)
+        sign = -1 if self.is_inbound() else 1
+        delta_payment_term = 0.0
+        for line in self.line_ids:
+            sii_code = line.tax_line_id.l10n_cl_sii_code
+            if sii_code in (35, 28) and sii_code not in processed_sii_codes:
+                processed_sii_codes.add(sii_code)
+                new_amount_currency = sign * manual_tax_lines[sii_code]
+                delta = new_amount_currency - line.amount_currency
+                delta_payment_term -= delta
+                line_ids_command.append(Command.update(line.id, {'amount_currency': new_amount_currency}))
+        payment_term = self.line_ids.filtered(lambda aml: aml.display_type == 'payment_term')[:1]
+        if not payment_term or not processed_sii_codes:
+            return
+        line_ids_command.append(Command.update(payment_term.id, {'amount_currency': payment_term.amount_currency + delta_payment_term}))
+        self.line_ids = line_ids_command
+
+    def _l10n_cl_get_manual_taxes_from_xml(self, xml_tree):
+        """
+        Get information for lines of manually-read taxes from the values listed in ImptoReten elements
+        """
+        tipo_list = [int(element.text) for element in xml_tree.findall('.//ns0:TipoImp', namespaces=XML_NAMESPACES)]
+        monto_list = [float(element.text) for element in xml_tree.findall('.//ns0:MontoImp', namespaces=XML_NAMESPACES)]
+        manual_tax_lines = {}
+        for tipo, monto in zip(tipo_list, monto_list):
+            manual_tax_lines[tipo] = monto
+        return manual_tax_lines
+
+    def _l10n_cl_check_total_amount_from_xml(self, xml_tree):
+        xml_total_amount = float(xml_tree.findtext('.//ns0:MntTotal', namespaces=XML_NAMESPACES))
+        if self.currency_id.compare_amounts(self.amount_total, xml_total_amount) != 0:
+            self.message_post(
+                body=Markup("<strong> %s </strong> %s") % (
+                        _("Warning:"),
+                        _("The total amount of the DTE\'s XML is %(xml_amount)s and the total amount calculated by Odoo is %(move_amount)s. Typically this is caused by additional lines in the detail or by unidentified taxes, please check if a manual correction is needed.",
+                            xml_amount=formatLang(self.env, xml_total_amount, currency_obj=self.currency_id),
+                            move_amount=formatLang(self.env, self.amount_total, currency_obj=self.currency_id)
                         )
                     )
-            move.l10n_cl_dte_acceptation_status = 'received'
-            moves.append(move)
-            _logger.info('Draft move with id: %s has been filled from DTE %s', move.id, att_name)
-        return moves
+                )

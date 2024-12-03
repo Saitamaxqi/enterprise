@@ -62,7 +62,7 @@ class L10n_Nl_ReportsSbrStatusService(models.Model):
                             italic_start=Markup("<i>"),
                             italic_end=Markup("</i>"),
                         )
-                        process.closing_entry_id.with_context(no_new_invoice=True).message_post(subject=subject, body=body, author_id=self.env.ref('base.partner_root').id, subtype_id=self.env.ref('mail.mt_comment').id)
+                        process.closing_entry_id.message_post(subject=subject, body=body, author_id=self.env.ref('base.partner_root').id, subtype_id=self.env.ref('mail.mt_comment').id)
                 except ConnectionError:
                     # In case the server or the connection is not accessible at the moment,
                     # we'll just skip this process and trigger a new cron for later
@@ -88,7 +88,7 @@ class L10n_Nl_ReportsSbrStatusService(models.Model):
                             italic_start=Markup("<i>"),
                             italic_end=Markup("</i>"),
                         )
-                        process.closing_entry_id.with_context(no_new_invoice=True).message_post(subject=subject, body=body, author_id=self.env.ref('base.partner_root').id, subtype_id=self.env.ref('mail.mt_comment').id)
+                        process.closing_entry_id.message_post(subject=subject, body=body, author_id=self.env.ref('base.partner_root').id, subtype_id=self.env.ref('mail.mt_comment').id)
                     break
                 if status.statuscode == '500':
                     # See "Statussenflow - Aanleverproces Belastingdienst": https://aansluiten.procesinfrastructuur.nl/site/binaries/content/assets/documentatie/statussen-en-foutcodes/illustraties/statussenflow-sbr-bd-aanleveren-wus12.png
@@ -101,7 +101,7 @@ class L10n_Nl_ReportsSbrStatusService(models.Model):
                             report_name=process.report_name,
                             id=process.kenmerk,
                         )
-                        process.closing_entry_id.with_context(no_new_invoice=True).message_post(subject=subject, body=body, author_id=self.env.ref('base.partner_root').id, subtype_id=self.env.ref('mail.mt_comment').id)
+                        process.closing_entry_id.message_post(subject=subject, body=body, author_id=self.env.ref('base.partner_root').id, subtype_id=self.env.ref('mail.mt_comment').id)
                     break
 
         if ongoing_processes:

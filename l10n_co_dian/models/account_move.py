@@ -153,13 +153,17 @@ class AccountMove(models.Model):
             return 'l10n_co_dian.report_vendor_document'
         return super()._get_name_invoice_report()
 
-    @api.model
-    def _get_ubl_cii_builder_from_xml_tree(self, tree):
-        # EXTENDS account_edi_ubl_cii
-        ubl_profile = tree.findtext('{*}ProfileID')
-        if ubl_profile and ubl_profile.startswith('DIAN 2.1'):
-            return self.env['account.edi.xml.ubl_dian']
-        return super()._get_ubl_cii_builder_from_xml_tree(tree)
+    def _get_import_file_type(self, file_data):
+        """ Identify DIAN UBL files. """
+        # EXTENDS 'account'
+        if (
+            file_data['xml_tree'] is not None
+            and (ubl_profile := file_data['xml_tree'].findtext('{*}ProfileID'))
+            and ubl_profile.startswith('DIAN 2.1:')
+        ):
+            return 'account.edi.xml.ubl_dian'
+
+        return super()._get_import_file_type(file_data)
 
     @api.model
     def _get_mail_template(self):
@@ -284,7 +288,7 @@ class AccountMove(models.Model):
         self.l10n_co_dian_document_ids.filtered(lambda doc: doc.state == 'invoice_rejected').unlink()
         document = self.env['l10n_co_dian.document']._send_to_dian(xml=xml, move=self)
         if document.state == 'invoice_accepted':
-            self.with_context(no_new_invoice=True).message_post(
+            self.message_post(
                 body=_(
                     "The %s was accepted by the DIAN.",
                     dict(document.move_id._fields['move_type'].selection)[document.move_id.move_type],

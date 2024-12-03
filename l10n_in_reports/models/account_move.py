@@ -143,7 +143,7 @@ class AccountMove(models.Model):
                 lambda a: a.mimetype == JSON_MIMETYPE and self._is_l10n_in_irn_json(a.raw)
             )[:1]
             if attachment:
-                move._extend_with_attachments(attachment)
+                move._extend_with_attachments(move._to_files_data(attachment))
                 continue
             try:
                 # Retrieve IRN details if no valid attachment is found
@@ -165,7 +165,7 @@ class AccountMove(models.Model):
                 'res_model': 'account.move',
                 'res_id': move.id,
             })
-            move._extend_with_attachments(attachment, new=True)
+            move._extend_with_attachments(move._to_files_data(attachment), new=True)
             if gov_json_data.get('Status') == STATUS_CANCELLED and move.state != 'cancel':
                 move.message_post(body=_("This bill has been marked as canceled based on the e-invoice status."))
                 move.button_cancel()
@@ -210,11 +210,21 @@ class AccountMove(models.Model):
                 'Irn', 'AckNo', 'AckDt', 'SignedInvoice', 'Status',
             ))
 
+    def _get_import_file_type(self, file_data):
+        """ Identify IRN JSON files. """
+        # EXTENDS 'account'
+        if self._is_l10n_in_irn_json(file_data['raw']):
+            return 'l10n_in.irn'
+        return super()._get_import_file_type(file_data)
+
     def _get_edi_decoder(self, file_data, new=False):
         # EXTENDS 'account'
-        if file_data['type'] == 'binary' and self._is_l10n_in_irn_json(file_data['content']):
-            return self._l10n_in_irn_import_invoice
-        return super()._get_edi_decoder(file_data, new=new)
+        if file_data['import_file_type'] == 'l10n_in.irn':
+            return {
+                'priority': 20,
+                'decoder': self._l10n_in_irn_import_invoice,
+            }
+        return super()._get_edi_decoder(file_data, new)
 
     def _l10n_in_irn_import_invoice(self, invoice, data, is_new):
         """ Import invoice details from IRN data and update the corresponding invoice.
@@ -227,12 +237,15 @@ class AccountMove(models.Model):
 
         :returns: True if the import was successful, False if it fails.
         """
+        if invoice.invoice_line_ids:
+            return invoice._reason_cannot_decode_has_invoice_lines()
+
         try:
             # Load content from the data
-            attachment_content = json.loads(data['content'])
+            attachment_content = json.loads(data['raw'])
             signed_invoice = attachment_content['SignedInvoice']
         except (json.JSONDecodeError, KeyError):
-            return False
+            return
         # Decode the signed invoice using JWT
         try:
             decoded_data = jwt.decode(signed_invoice, options={'verify_signature': False})
@@ -240,10 +253,10 @@ class AccountMove(models.Model):
         except (json.JSONDecodeError, jwt.exceptions.DecodeError):
             # Post a message on the invoice regarding the failure
             invoice.message_post(body=_("Failed to decode signed invoice."))
-            return False
+            return
         # Update the invoice with decoded data
         with self._get_edi_creation() as self:
-            return self._l10n_in_update_bill_with_irn_details(decoded_invoice_data)
+            self._l10n_in_update_bill_with_irn_details(decoded_invoice_data)
 
     def _l10n_in_update_bill_with_irn_details(self, content):
         """ Update the invoice with details retrieved from IRN.

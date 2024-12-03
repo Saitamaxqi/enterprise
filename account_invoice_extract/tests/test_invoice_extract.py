@@ -7,6 +7,7 @@ import textwrap
 from odoo import fields
 
 from odoo.addons.account.tests.common import AccountTestInvoicingCommon
+from odoo.addons.account.tests.test_account_incoming_supplier_invoice import TestAccountInvoiceImportMixin
 from odoo.addons.iap_extract.tests.test_extract_mixin import TestExtractMixin
 from odoo.addons.mail.tests.common import MailCase
 from odoo.tests import tagged
@@ -16,7 +17,7 @@ from ..models.account_invoice import OCR_VERSION
 
 
 @tagged('post_install', '-at_install')
-class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCase):
+class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, TestAccountInvoiceImportMixin, MailCase):
 
     @classmethod
     def setUpClass(cls):
@@ -633,8 +634,8 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCase)
         self.env.company.extract_in_invoice_digitalization_mode = 'auto_send'
         invoice = self.env['account.move'].create({'move_type': 'in_invoice', 'extract_state': 'no_extract_requested'})
         test_attachment = self.env['ir.attachment'].create({
-            'name': "an attachment",
-            'datas': base64.b64encode(b'My attachment'),
+            'name': "attachment.pdf",
+            'raw': b'My attachment',
         })
 
         expected_parse_params = {
@@ -660,7 +661,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCase)
             extract_response=self.parse_success_response(),
             assert_params=expected_parse_params,
         ):
-            invoice.message_post(attachment_ids=[test_attachment.id])
+            invoice.message_post(message_type='comment', attachment_ids=test_attachment.ids)
 
         self.assertEqual(invoice.extract_state, 'waiting_extraction')
         self.assertEqual(invoice.extract_document_uuid, 'some_token')
@@ -704,30 +705,28 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCase)
         # test that when multiple pdf attachments are posted and the option is enabled each one is split
         # into a separate move
         self.env.company.extract_in_invoice_digitalization_mode = 'auto_send'
-        invoice = self.env['account.move'].create({'move_type': 'in_invoice', 'extract_state': 'no_extract_requested'})
         with file_open('base/tests/minimal.pdf', 'rb') as file:
             pdf_bytes = file.read()
-        test_attachments = self.env['ir.attachment'].create([{
-            'name': 'Attachment 1',
-            'datas': base64.b64encode(pdf_bytes),
-            'mimetype': 'application/pdf',
-        }, {
-            'name': 'Attachment 2',
-            'datas': base64.b64encode(pdf_bytes),
-            'mimetype': 'application/pdf',
-        }])
+        attachments_vals = [
+            {
+                'name': 'Attachment 1',
+                'raw': pdf_bytes,
+                'mimetype': 'application/pdf',
+            },
+            {
+                'name': 'Attachment 2',
+                'raw': pdf_bytes,
+                'mimetype': 'application/pdf',
+            },
+        ]
 
         with self._mock_iap_extract(
             extract_response=self.parse_success_response(),
         ):
-            invoice.with_context(from_alias=True, default_move_type='in_invoice', default_journal_id=invoice.journal_id.id).message_post(attachment_ids=test_attachments.ids)
-
-        new_invoice_id = invoice.id + 1
-        invoices = invoice
-        invoices |= self.env['account.move'].search([('id', '=', new_invoice_id)])
+            attachments, _messages, invoices = self._upload_and_import_attachments(origin='mail_alias', attachments_vals=attachments_vals)
 
         self.assertEqual(len(invoices), 2, "Two separate bills should have been created")
-        for inv, att in zip(invoices, test_attachments):
+        for inv, att in zip(invoices, attachments):
             self.assertEqual(inv.extract_state, 'waiting_extraction')
             self.assertEqual(inv.extract_document_uuid, 'some_token')
             self.assertEqual(inv.message_main_attachment_id, att)
@@ -736,7 +735,7 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCase)
         # test that a customer invoice is automatically sent to the OCR server when uploaded and the option is enabled
         self.env.company.extract_out_invoice_digitalization_mode = 'auto_send'
         test_attachment = self.env['ir.attachment'].create({
-            'name': "an attachment",
+            'name': "attachment.pdf",
             'datas': base64.b64encode(b'My attachment'),
         })
         with self._mock_iap_extract(extract_response=self.parse_success_response()):
@@ -1013,14 +1012,15 @@ class TestInvoiceExtract(AccountTestInvoicingCommon, TestExtractMixin, MailCase)
         self.assertEqual(bill.state, "posted")
 
     def test_invoice_ocr_note_author(self):
-        invoice = self.env['account.move'].create({'move_type': 'in_invoice', 'extract_state': 'waiting_extraction'})
+        invoice = self.env['account.move'].create({'move_type': 'in_invoice', 'extract_state': 'no_extract_requested'})
+        self.env.cr.flush()
         attachment = self.env['ir.attachment'].create({
             'name': 'test_attachment.png',
             'res_model': 'account.move',
             'raw': b'My invoice',
         })
         with self._mock_iap_extract(extract_response=self.parse_success_response()):
-            invoice.message_post(attachment_ids=[attachment.id])
+            invoice.message_post(message_type='comment', attachment_ids=attachment.ids)
 
         with self._mock_iap_extract(extract_response=self.get_result_success_response()):
             invoice.check_all_status()

@@ -7,14 +7,14 @@ from lxml import etree
 
 from odoo import fields
 from odoo.tests import Form, tagged
-from odoo.tools import misc
+from odoo.tools import file_open
 from .common import TestL10nClEdiCommon, _check_with_xsd_patch, _is_valid_certificate
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install', 'l10n_cl_fetchmail')
 @patch('odoo.tools.xml_utils._check_with_xsd', _check_with_xsd_patch)
 @patch('odoo.addons.certificate.models.certificate.CertificateCertificate._compute_is_valid', _is_valid_certificate)
-class TestFetchmailServer(TestL10nClEdiCommon):
+class TestClFetchmailServer(TestL10nClEdiCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -31,8 +31,8 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         sale_journal.write({'l10n_cl_point_of_sale_type': 'online', 'l10n_latam_use_documents': True})
 
     def test_get_dte_recipient_company_incoming_supplier_document(self):
-        incoming_supplier_dte = misc.file_open(os.path.join(
-            'l10n_cl_edi', 'tests', 'fetchmail_dtes', 'incoming_supplier_dte.xml')).read()
+        with file_open('l10n_cl_edi/tests/fetchmail_dtes/incoming_supplier_dte.xml', 'rb') as f:
+            incoming_supplier_dte = f.read()
         xml_content = etree.fromstring(incoming_supplier_dte)
         self.assertEqual(
             self.env['fetchmail.server']._get_dte_recipient_company(xml_content, 'incoming_supplier_document'),
@@ -40,8 +40,8 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         )
 
     def test_get_dte_recipient_company_incoming_sii_dte_result(self):
-        incoming_sii_dte_result = misc.file_open(os.path.join(
-            'l10n_cl_edi', 'tests', 'fetchmail_dtes', 'incoming_sii_dte_result.xml')).read()
+        with file_open('l10n_cl_edi/tests/fetchmail_dtes/incoming_sii_dte_result.xml', 'rb') as f:
+            incoming_sii_dte_result = f.read()
         xml_content = etree.fromstring(incoming_sii_dte_result)
         self.assertEqual(
             self.env['fetchmail.server']._get_dte_recipient_company(xml_content, 'incoming_sii_dte_result'),
@@ -49,8 +49,8 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         )
 
     def test_get_dte_recipient_company_incoming_acknowledge(self):
-        incoming_acknowledge = misc.file_open(os.path.join(
-            'l10n_cl_edi', 'tests', 'fetchmail_dtes', 'incoming_acknowledge.xml')).read()
+        with file_open('l10n_cl_edi/tests/fetchmail_dtes/incoming_acknowledge.xml', 'rb') as f:
+            incoming_acknowledge = f.read()
         xml_content = etree.fromstring(incoming_acknowledge)
         self.assertEqual(
             self.env['fetchmail.server']._get_dte_recipient_company(xml_content, 'incoming_acknowledge'),
@@ -58,8 +58,8 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         )
 
     def test_get_dte_recipient_company_incoming_commercial_accept(self):
-        incoming_commercial_accept = misc.file_open(os.path.join(
-            'l10n_cl_edi', 'tests', 'fetchmail_dtes', 'incoming_commercial_accept.xml')).read()
+        with file_open('l10n_cl_edi/tests/fetchmail_dtes/incoming_commercial_accept.xml', 'rb') as f:
+            incoming_commercial_accept = f.read()
         xml_content = etree.fromstring(incoming_commercial_accept)
         self.assertEqual(
             self.env['fetchmail.server']._get_dte_recipient_company(xml_content, 'incoming_commercial_accept'),
@@ -67,8 +67,8 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         )
 
     def test_get_dte_recipient_company_incoming_commercial_reject(self):
-        incoming_commercial_reject = misc.file_open(os.path.join(
-            'l10n_cl_edi', 'tests', 'fetchmail_dtes', 'incoming_commercial_reject.xml')).read()
+        with file_open('l10n_cl_edi/tests/fetchmail_dtes/incoming_commercial_reject.xml', 'rb') as f:
+            incoming_commercial_reject = f.read()
         xml_content = etree.fromstring(incoming_commercial_reject)
         self.assertEqual(
             self.env['fetchmail.server']._get_dte_recipient_company(xml_content, 'incoming_commercial_reject'),
@@ -80,9 +80,12 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         """DTE with unknown partner but known products"""
         att_name = 'incoming_invoice_33.xml'
         from_address = 'incoming_dte@test.com'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', filter_ext=('.xml',)).read()
-        moves = self.env['fetchmail.server']._create_document_from_attachment(
-            att_content, att_name, from_address, self.company_data['company'].id)
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
+        moves = self.env['fetchmail.server']._process_incoming_supplier_document(
+            file_data, from_address, self.company_data['company'].id
+        )
 
         self.assertEqual(len(moves), 1)
 
@@ -108,9 +111,11 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         """DTE with discounts """
         att_name = 'incoming_invoice_33_with_discount.xml'
         from_address = 'incoming_dte@test.com'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', filter_ext=('.xml',)).read()
-        moves = self.env['fetchmail.server']._create_document_from_attachment(
-            att_content, att_name, from_address, self.company_data['company'].id)
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
+        moves = self.env['fetchmail.server']._process_incoming_supplier_document(
+            file_data, from_address, self.company_data['company'].id)
 
         self.assertEqual(len(moves), 1)
 
@@ -136,11 +141,13 @@ class TestFetchmailServer(TestL10nClEdiCommon):
     def test_create_invoice_33_from_attachment_with_discount_tax_incl(self, context_today):
         """DTE with discounts tax included"""
         att_name = 'incoming_invoice_33_with_discount_tax_incl.xml'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', filter_ext=('.xml',)).read()
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
 
         # Process the XML file
-        moves = self.env['fetchmail.server']._create_document_from_attachment(
-            att_content, att_name, 'incoming_dte@test.com', self.company_data['company'].id)
+        moves = self.env['fetchmail.server']._process_incoming_supplier_document(
+            file_data, 'incoming_dte@test.com', self.company_data['company'].id)
 
         # Retrieve the created invoice
         move = moves[0]
@@ -192,7 +199,9 @@ class TestFetchmailServer(TestL10nClEdiCommon):
 
         att_name = 'incoming_invoice_33.xml'
         from_address = 'incoming_dte@test.com'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', filter_ext=('.xml',)).read()
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
 
         # Sudo to run like when OdooBot does the fetching. If we use a normal user,
         # `_get_invoice_form` will override `allowed_company_ids` in the context,
@@ -200,8 +209,8 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         # access both company 1 (which is associated with the invoice) and company 2
         # (which is associated with the partner we just created) to trigger the
         # issue
-        moves = self.env['fetchmail.server'].sudo()._create_document_from_attachment(
-            att_content, att_name, from_address, self.company_data['company'].id)
+        moves = self.env['fetchmail.server'].sudo()._process_incoming_supplier_document(
+            file_data, from_address, self.company_data['company'].id)
 
         self.assertEqual(len(moves), 1)
         move = moves[0]
@@ -236,7 +245,9 @@ class TestFetchmailServer(TestL10nClEdiCommon):
 
         att_name = 'incoming_invoice_33.xml'
         from_address = 'incoming_dte@test.com'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', filter_ext=('.xml',)).read()
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
 
         # Sudo to run like when OdooBot does the fetching. If we use a normal user,
         # `_get_invoice_form` will override `allowed_company_ids` in the context,
@@ -244,8 +255,9 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         # access both company 1 (which is associated with the invoice and
         # one of the partners we created) and company 2 (which is associated with
         # the other partner we created) to trigger the issue
-        moves = self.env['fetchmail.server'].sudo()._create_document_from_attachment(
-            att_content, att_name, from_address, self.company_data['company'].id)
+        moves = self.env['fetchmail.server'].sudo()._process_incoming_supplier_document(
+            file_data, from_address, self.company_data['company'].id
+        )
 
         self.assertEqual(len(moves), 1)
         move = moves[0]
@@ -256,9 +268,12 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         """Include Invoice Reference"""
         att_name = 'incoming_invoice_34.xml'
         from_address = 'incoming_dte@test.com'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', filter_ext=('.xml',)).read()
-        moves = self.env['fetchmail.server']._create_document_from_attachment(
-            att_content, att_name, from_address, self.company_data['company'].id)
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
+        moves = self.env['fetchmail.server']._process_incoming_supplier_document(
+            file_data, from_address, self.company_data['company'].id
+        )
 
         self.assertEqual(len(moves), 1)
 
@@ -286,9 +301,12 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         """Include Invoice Reference"""
         att_name = 'incoming_invoice_33_with_holding_taxes.xml'
         from_address = 'incoming_dte@test.com'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', filter_ext=('.xml',)).read()
-        moves = self.env['fetchmail.server']._create_document_from_attachment(
-            att_content, att_name, from_address, self.company_data['company'].id)
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
+        moves = self.env['fetchmail.server']._process_incoming_supplier_document(
+            file_data, from_address, self.company_data['company'].id
+        )
 
         self.assertEqual(len(moves), 1)
 
@@ -310,9 +328,12 @@ class TestFetchmailServer(TestL10nClEdiCommon):
     def test_create_invoice_34_unknown_product_from_attachment(self):
         att_name = 'incoming_invoice_34_unknown_product.xml'
         from_address = 'incoming_dte@test.com'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', filter_ext=('.xml',)).read()
-        moves = self.env['fetchmail.server']._create_document_from_attachment(
-            att_content, att_name, from_address, self.company_data['company'].id)
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
+        moves = self.env['fetchmail.server']._process_incoming_supplier_document(
+            file_data, from_address, self.company_data['company'].id
+        )
 
         self.assertEqual(len(moves), 1)
 
@@ -333,38 +354,19 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         self.assertEqual(move.invoice_line_ids.name, 'Unknown Product')
         self.assertEqual(move.invoice_line_ids.price_unit, 32980.0)
 
-    @patch('odoo.addons.l10n_cl_edi.models.fetchmail_server.FetchmailServer._get_dte_lines')
-    def test_create_invoice_33_from_attachment_get_lines_exception(self, get_dte_lines):
-        get_dte_lines.return_value = Exception
-
-        att_name = 'incoming_invoice_33.xml'
-        from_address = 'incoming_dte@test.com'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', filter_ext=('.xml',)).read()
-        moves = self.env['fetchmail.server']._create_document_from_attachment(
-            att_content, att_name, from_address, self.company_data['company'].id)
-
-        self.assertEqual(len(moves), 1)
-
-        move = moves[0]
-        self.assertEqual(move.name, 'FAC 000001')
-        self.assertEqual(move.partner_id, self.env['res.partner'])
-        self.assertEqual(move.journal_id.type, 'purchase')
-        self.assertEqual(move.l10n_latam_document_number, '000001')
-        self.assertEqual(move.l10n_latam_document_type_id.code, '33')
-        self.assertEqual(move.l10n_cl_dte_acceptation_status, 'received')
-        self.assertEqual(move.company_id, self.company_data['company'])
-        self.assertEqual(move.currency_id.name, 'CLP')
-
     def test_process_incoming_customer_claim_move_not_found(self):
         att_name = 'incoming_acknowledge.xml'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', filter_ext=('.xml',)).read()
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
         l10n_latam_document_type = self.env['l10n_latam.document.type'].search([
             ('code', '=', '34'),
             ('country_id.code', '=', 'CL')
         ])
         with patch('logging.Logger.warning') as logger:
             self.env['fetchmail.server']._process_incoming_customer_claim(
-                self.company_data['company'].id, att_content, att_name, origin_type='incoming_acknowledge')
+                self.company_data['company'].id, file_data, origin_type='incoming_acknowledge'
+            )
             logger.assert_called_with(
                 'Move not found with partner: %s, document_number: %s, l10n_latam_document_type: %s, company_id: %s',
                     self.partner_sii.id, '254', l10n_latam_document_type.id, self.company_data['company'].id)
@@ -390,10 +392,12 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         move.name = 'FNA 000254'
 
         att_name = 'incoming_acknowledge.xml'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', filter_ext=('.xml',)).read()
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
 
         self.env['fetchmail.server']._process_incoming_customer_claim(
-            self.company_data['company'].id, att_content, att_name, origin_type='incoming_acknowledge')
+            self.company_data['company'].id, file_data, origin_type='incoming_acknowledge')
 
         self.assertEqual(move.l10n_cl_dte_acceptation_status, 'received')
 
@@ -421,10 +425,12 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         move.l10n_cl_dte_status = 'accepted'
 
         att_name = 'incoming_commercial_accept.xml'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', filter_ext=('.xml',)).read()
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
 
         self.env['fetchmail.server']._process_incoming_customer_claim(
-            self.company_data['company'].id, att_content, att_name, origin_type='incoming_commercial_accept')
+            self.company_data['company'].id, file_data, origin_type='incoming_commercial_accept')
 
         self.assertEqual(move.l10n_cl_dte_acceptation_status, 'accepted')
 
@@ -453,9 +459,11 @@ class TestFetchmailServer(TestL10nClEdiCommon):
         move.l10n_cl_dte_status = 'accepted'
 
         att_name = 'incoming_commercial_reject.xml'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', filter_ext=('.xml',)).read()
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
 
         self.env['fetchmail.server']._process_incoming_customer_claim(
-            self.company_data['company'].id, att_content, att_name, origin_type='incoming_commercial_reject')
+            self.company_data['company'].id, file_data, origin_type='incoming_commercial_reject')
 
         self.assertEqual(move.l10n_cl_dte_acceptation_status, 'claimed')

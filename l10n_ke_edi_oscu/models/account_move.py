@@ -8,7 +8,7 @@ from collections import defaultdict
 from zoneinfo import ZoneInfo
 from psycopg2.errors import LockNotAvailable
 
-from odoo import _, api, Command, fields, models, modules, tools
+from odoo import _, api, Command, fields, models
 from odoo.exceptions import UserError
 from odoo.addons.base.models.ir_qweb_fields import Markup
 from odoo.tools.float_utils import json_float_round, float_compare
@@ -288,7 +288,7 @@ class AccountMove(models.Model):
         if not self.l10n_ke_oscu_attachment_id:
             return {}
 
-        if not self._is_vendor_bill_json(self.l10n_ke_oscu_attachment_id.raw):
+        if not self._l10n_ke_oscu_is_vendor_bill_json(self.l10n_ke_oscu_attachment_id.raw):
             return {}
 
         file_content = json.loads(self.l10n_ke_oscu_attachment_id.raw)
@@ -563,19 +563,13 @@ class AccountMove(models.Model):
                     'res_field': 'l10n_ke_oscu_attachment_file',
                 })
                 move.invalidate_recordset(fnames=['l10n_ke_oscu_attachment_id', 'l10n_ke_oscu_attachment_file'])
-                move.with_context(
-                    account_predictive_bills_disable_prediction=True,
-                    no_new_invoice=True,
-                ).message_post(attachment_ids=attachment.ids)
+                move.message_post(attachment_ids=attachment.ids)
                 moves |= move
 
             company.l10n_ke_oscu_last_fetch_purchase_date = fields.Datetime.now()
 
         for move in moves:
-            move._extend_with_attachments(move.l10n_ke_oscu_attachment_id, new=True)
-            # Avoid losing all our progress if the cron times-out
-            if not modules.module.current_test:
-                self.env.cr.commit()
+            move._extend_with_attachments(move._to_files_data(move.l10n_ke_oscu_attachment_id), new=True)
 
         return moves
 
@@ -590,17 +584,27 @@ class AccountMove(models.Model):
         )
 
     @api.model
-    def _is_vendor_bill_json(self, file_content):
+    def _l10n_ke_oscu_is_vendor_bill_json(self, file_content):
         """ Determine whether the given file content is a vendor bill JSON retrieved from eTIMS. """
         with contextlib.suppress(json.JSONDecodeError, UnicodeDecodeError):
             content = json.loads(file_content)
             return all(key in content for key in ('spplrTin', 'spplrNm', 'spplrBhfId', 'spplrInvcNo'))
 
+    def _get_import_file_type(self, file_data):
+        """ Identify eTIMS vendor bills. """
+        # EXTENDS 'account'
+        if self._l10n_ke_oscu_is_vendor_bill_json(file_data['raw']):
+            return 'l10n_ke.etims'
+        return super()._get_import_file_type(file_data)
+
     def _get_edi_decoder(self, file_data, new=False):
         # EXTENDS 'account'
-        if file_data['type'] == 'binary' and self._is_vendor_bill_json(file_data['content']):
-            return self._l10n_ke_oscu_import_invoice
-        return super()._get_edi_decoder(file_data, new=new)
+        if file_data['import_file_type'] == 'l10n_ke.etims':
+            return {
+                'priority': 20,
+                'decoder': self._l10n_ke_oscu_import_invoice,
+            }
+        return super()._get_edi_decoder(file_data, new)
 
     def _l10n_ke_oscu_import_invoice(self, invoice, data, is_new):
         """ Decodes the json content from eTIMS into an Odoo move.
@@ -612,8 +616,11 @@ class AccountMove(models.Model):
         :param boolean is_new:  whether the vendor bill is newly created or to be updated
         :returns:               the imported vendor bill
         """
+        if invoice.invoice_line_ids:
+            return invoice._reason_cannot_decode_has_invoice_lines()
+
         with self._get_edi_creation() as self:
-            content = json.loads(data['content'])
+            content = json.loads(data['raw'])
             message_to_log = []
 
             self.move_type = {
@@ -678,7 +685,6 @@ class AccountMove(models.Model):
             message = Markup("<br/>").join(message_to_log)
             # for message in message_to_log:
             self.sudo().message_post(body=message)
-            return True
 
     # === Report generation === #
     def _get_name_invoice_report(self):

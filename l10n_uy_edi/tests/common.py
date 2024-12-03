@@ -227,7 +227,7 @@ class TestUyEdi(AccountTestInvoicingCommon):
             expected_xml.find(".//cfe:Referencia/cfe:Referencia/cfe:NroCFERef", namespace).text = ref_number
         self.assertXmlTreeEqual(expected_xml, result_xml)
 
-    def _mock_upload_document_on_journal(self, journal, filename):
+    def _mock_attachment_upload(self, journal, filename):
         filename =  filename + ".xml"
         content = misc.file_open("l10n_uy_edi/tests/sobres_from_uruware/" + filename, mode="rb").read()
         attachment = self.env['ir.attachment'].create({
@@ -235,5 +235,4 @@ class TestUyEdi(AccountTestInvoicingCommon):
             'name': filename,
         })
         with patch(f"{self.utils_path}._create_pdf_vendor_bill", return_value=None):
-            action_vals = journal.create_document_from_attachment(attachment.ids)
-        return self.env['account.move'].browse(action_vals['res_id'])
+            return self.env['account.move']._create_records_from_attachments(attachment)

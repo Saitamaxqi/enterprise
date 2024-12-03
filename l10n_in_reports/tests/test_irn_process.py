@@ -57,7 +57,7 @@ class TestIrnProcess(L10nInTestAccountReportsCommon):
             'res_model': 'account.move',
             'res_id': move.id,
         })
-        move._extend_with_attachments(attachment, new=True)
+        move._extend_with_attachments(move._to_files_data(attachment), new=True)
 
         self.assertInvoiceValues(move, [
             {'name': 'Customizable Desk', 'quantity': 1.0, 'tax_ids': self.purchase_igst_18.ids, 'credit': 0.0, 'debit': 500.0, 'amount_currency': 500.0},
@@ -96,7 +96,7 @@ class TestIrnProcess(L10nInTestAccountReportsCommon):
             'res_model': 'account.move',
             'res_id': move.id,
         })
-        move._extend_with_attachments(attachment, new=True)
+        move._extend_with_attachments(move._to_files_data(attachment), new=True)
 
         self.assertInvoiceValues(move, [
             {'name': 'Customizable Desk', 'quantity': 1.0, 'tax_ids': self.purchase_igst_18_rc.ids, 'credit': 0.0, 'debit': 500.0, 'amount_currency': 500.0},
@@ -136,7 +136,7 @@ class TestIrnProcess(L10nInTestAccountReportsCommon):
             'res_model': 'account.move',
             'res_id': move.id,
         })
-        move._extend_with_attachments(attachment, new=True)
+        move._extend_with_attachments(move._to_files_data(attachment), new=True)
 
         self.assertInvoiceValues(move, [
             {'name': '10.0% (IGST)', 'quantity': 1.0, 'tax_ids': [], 'credit': 0.0, 'debit': 50.0, 'amount_currency': 50.0},

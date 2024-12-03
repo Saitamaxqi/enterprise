@@ -1015,7 +1015,7 @@ class TestCFDIInvoice(TestMxEdiCommon):
             'l10n_mx_edi_cfdi_uuid': None,
         }])
         # post message with the cfdi invoice attached
-        bill.message_post(attachment_ids=attachment.ids)
+        bill.message_post(message_type='comment', attachment_ids=attachment.ids)
         # check that the uuid is now set and the cfdi attachment is linked but the invoice lines did not change
         self.assertRecordValues(bill, [{
             'l10n_mx_edi_cfdi_attachment_id': attachment.id,

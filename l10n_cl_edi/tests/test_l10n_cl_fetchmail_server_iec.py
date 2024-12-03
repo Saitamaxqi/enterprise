@@ -1,15 +1,14 @@
+from lxml import etree
 from unittest.mock import patch
 
-import os
-
 from odoo.tests import tagged
-from odoo.tools import misc
+from odoo.tools import file_open
 from .common import _check_with_xsd_patch, TestL10nClEdiCommon
 
 
 @tagged('post_install_l10n', 'post_install', '-at_install', 'l10n_cl_fetchmail_iec')
 @patch('odoo.tools.xml_utils._check_with_xsd', _check_with_xsd_patch)
-class TestFetchmailServerIec(TestL10nClEdiCommon):
+class TestClFetchmailServerIec(TestL10nClEdiCommon):
     @classmethod
     def setUpClass(cls):
         super().setUpClass()
@@ -22,8 +21,10 @@ class TestFetchmailServerIec(TestL10nClEdiCommon):
         """Test recognition of specific fuel taxes on fetchmail import: gasoline only"""
         att_name = 'incoming_invoice_iec_35.xml'
         from_address = 'incoming_dte@test.com'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes_iec/{att_name}', filter_ext=('.xml',)).read()
-        moves = self.env['fetchmail.server']._create_document_from_attachment(att_content, att_name, from_address, self.company_data['company'].id)
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes_iec/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
+        moves = self.env['fetchmail.server']._process_incoming_supplier_document(file_data, from_address, self.env.company.id)
 
         self.assertEqual(len(moves), 1)
 
@@ -48,8 +49,10 @@ class TestFetchmailServerIec(TestL10nClEdiCommon):
         """Test recognition of specific fuel taxes on fetchmail import: diesel only"""
         att_name = 'incoming_invoice_iec_28.xml'
         from_address = 'incoming_dte@test.com'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes_iec/{att_name}', filter_ext=('.xml',)).read()
-        moves = self.env['fetchmail.server']._create_document_from_attachment(att_content, att_name, from_address, self.company_data['company'].id)
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes_iec/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
+        moves = self.env['fetchmail.server']._process_incoming_supplier_document(file_data, from_address, self.env.company.id)
 
         self.assertEqual(len(moves), 1)
 
@@ -74,8 +77,10 @@ class TestFetchmailServerIec(TestL10nClEdiCommon):
         """Test recognition of specific fuel taxes on fetchmail import: gasoline and diesel"""
         att_name = 'incoming_invoice_iec_35_28.xml'
         from_address = 'incoming_dte@test.com'
-        att_content = misc.file_open(f'l10n_cl_edi/tests/fetchmail_dtes_iec/{att_name}', filter_ext=('.xml',)).read()
-        moves = self.env['fetchmail.server']._create_document_from_attachment(att_content, att_name, from_address, self.company_data['company'].id)
+        with file_open(f'l10n_cl_edi/tests/fetchmail_dtes_iec/{att_name}', 'rb', filter_ext=('.xml',)) as f:
+            content = f.read()
+            file_data = {'name': att_name, 'raw': content, 'xml_tree': etree.fromstring(content)}
+        moves = self.env['fetchmail.server']._process_incoming_supplier_document(file_data, from_address, self.env.company.id)
 
         self.assertEqual(len(moves), 1)
 

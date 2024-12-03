@@ -581,7 +581,7 @@ class AccountEdiFormat(models.Model):
                 message = _("Testing environment is active, care that those documents are not synced with SUNAT!")
             else:
                 message = _("The EDI document was successfully created and signed by the government.")
-            invoice.with_context(no_new_invoice=True).message_post(
+            invoice.message_post(
                 body=message,
                 attachment_ids=res['attachment'].ids,
             )
@@ -1028,7 +1028,7 @@ class AccountEdiFormat(models.Model):
                 'mimetype': 'application/xml',
             })
             for invoice in invoices:
-                invoice.with_context(no_new_invoice=True).message_post(
+                invoice.message_post(
                     body=message,
                     attachment_ids=void_attachment.ids,
                 )
@@ -1061,7 +1061,7 @@ class AccountEdiFormat(models.Model):
                 'datas': base64.encodebytes(res['cdr']),
                 'mimetype': 'application/xml',
             })
-            invoice.with_context(no_new_invoice=True).message_post(
+            invoice.message_post(
                 body=message,
                 attachment_ids=cdr_void_attachment.ids,
             )

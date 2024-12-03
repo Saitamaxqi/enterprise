@@ -73,7 +73,7 @@ class SodaImportWizard(models.TransientModel):
                 }
                 move = self.env['account.move'].create(move_vals)
                 attachment = self.env['ir.attachment'].browse(soda_file['attachment_id'])
-                move.with_context(no_new_invoice=True).message_post(attachment_ids=[attachment.id])
+                move.message_post(attachment_ids=attachment.ids)
                 attachment.write({'res_model': 'account.move', 'res_id': move.id})
             else:
                 move = existing_move

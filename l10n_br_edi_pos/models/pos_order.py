@@ -812,7 +812,7 @@ class PosOrder(models.Model):
                     order.l10n_br_edi_series = status.get("serial")
 
                     order._l10n_br_edi_log_taxes()
-                    order.with_context(no_new_invoice=True).message_post(
+                    order.message_post(
                         body=message,
                         attachment_ids=order._l10n_br_edi_attachments_from_response(
                             response, save_avalara_pdf=save_avalara_pdf

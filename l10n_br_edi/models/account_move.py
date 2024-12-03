@@ -2,7 +2,6 @@
 import json
 import logging
 
-from lxml import etree
 from markupsafe import Markup
 from stdnum.br.cnpj import format as format_cnpj
 from stdnum.br.cpf import format as format_cpf
@@ -346,7 +345,7 @@ class AccountMove(models.Model):
         if error := self._l10n_br_get_error_from_response(response):
             self.l10n_br_last_edi_status = "error"
             self.l10n_br_edi_error = error
-            self.with_context(no_new_invoice=True).message_post(body=_("E-invoice was not accepted:\n%s", error))
+            self.message_post(body=_("E-invoice was not accepted:\n%s", error))
             return
 
         status = response.get("status", {})
@@ -381,7 +380,7 @@ class AccountMove(models.Model):
         else:
             message = _("Unknown E-invoice status code %(code)s: %(description)s", code=response_code, description=status.get("desc"))
 
-        self.with_context(no_new_invoice=True).message_post(
+        self.message_post(
             body=message, attachment_ids=attachments.ids, subtype_xmlid=subtype_xmlid
         )
 
@@ -446,7 +445,7 @@ class AccountMove(models.Model):
             else:
                 invoice.l10n_br_last_edi_status = "pending" if invoice.l10n_br_is_service_transaction else "accepted"
                 invoice.l10n_br_access_key = response["key"]
-                invoice.with_context(no_new_invoice=True).message_post(
+                invoice.message_post(
                     body=_("E-invoice submitted successfully."),
                     attachment_ids=invoice._l10n_br_edi_attachments_from_response(response).ids,
                 )
@@ -519,7 +518,7 @@ class AccountMove(models.Model):
             line = ", ".join(f"{key}: {value}" for key, value in tax.items())
             pretty_informative_taxes += Markup("<li>%s</li>") % line
 
-        self.with_context(no_new_invoice=True).message_post(
+        self.message_post(
             body=Markup("%s<ul>%s</ul>")
             % (_("Informative taxes:"), pretty_informative_taxes or Markup("<li>%s</li>") % _("N/A"))
         )
@@ -703,6 +702,9 @@ class AccountMove(models.Model):
             self.env.ref("l10n_br_edi.ir_cron_l10n_br_edi_check_status")._trigger()
 
     def _l10n_br_edi_import_invoice(self, invoice, data, is_new):
+        if invoice.invoice_line_ids:
+            return invoice._reason_cannot_decode_has_invoice_lines()
+
         namespaces = {'nfe': 'http://www.portalfiscal.inf.br/nfe'}
 
         def get_xml_text(tree, xpath):
@@ -838,11 +840,7 @@ class AccountMove(models.Model):
 
             return vals
 
-        try:
-            tree = etree.fromstring(data['content'])
-        except (etree.ParseError, ValueError) as e:
-            _logger.info("XML parsing of %s failed: %s", data['filename'], e)
-            return
+        tree = data['xml_tree']
 
         # emit is required in leiauteNFe_v4.00.xsd
         vendor = get_partner_id('.//nfe:emit', create_if_not_found=True)
@@ -859,12 +857,20 @@ class AccountMove(models.Model):
             'l10n_br_edi_freight_model': get_freight_model(),
         })
 
+    def _get_import_file_type(self, file_data):
+        """ Identify NFe files. """
+        # EXTENDS 'account'
+
+        if b"<nfeProc " in file_data['raw'] and b"<NFe " in file_data['raw']:
+            return 'l10n_br.nfe'
+
+        return super()._get_import_file_type(file_data)
+
     def _get_edi_decoder(self, file_data, new=False):
         # EXTENDS 'account'
-        def is_nfe(content):
-            return b"<nfeProc " in content and b"<NFe " in content
-
-        if file_data['type'] == 'xml' and is_nfe(file_data['content']):
-            return self._l10n_br_edi_import_invoice
-
-        return super()._get_edi_decoder(file_data, new=new)
+        if file_data['import_file_type'] == 'l10n_br.nfe':
+            return {
+                'priority': 20,
+                'decoder': self._l10n_br_edi_import_invoice,
+            }
+        return super()._get_edi_decoder(file_data, new)

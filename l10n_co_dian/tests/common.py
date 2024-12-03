@@ -187,7 +187,7 @@ class TestCoDianCommon(AccountTestInvoicingCommon):
             'res_id': invoice.id,
             'res_model': 'account.move',
         })
-        invoice.message_post(attachment_ids=[attachment.id])
+        invoice.message_post(message_type='comment', attachment_ids=[attachment.id])
 
     def _assert_imported_invoice_from_file(self, subfolder, filename, invoice_vals):
         """ Create an empty account.move, update the xml file, and then check the invoice values. """

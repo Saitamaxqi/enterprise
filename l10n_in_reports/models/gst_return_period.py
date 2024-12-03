@@ -2303,7 +2303,7 @@ class L10n_InGstReturnPeriod(models.Model):
                     # Update the existing bill with the IRN number
                     bill_already_exists.l10n_in_irn_number = irn_number
                     msg = _("This bill was found in the GST portal while retrieving the list of IRNs.")
-                    bill_already_exists.with_context(no_new_invoice=True).message_post(body=msg)
+                    bill_already_exists.message_post(body=msg)
 
             if not bill_already_exists:
                 # Create a new bill if no match is found
@@ -2339,17 +2339,14 @@ class L10n_InGstReturnPeriod(models.Model):
                             'res_model': 'account.move',
                             'res_id': created_move.id,
                         })
-                        created_move._extend_with_attachments(attachment, new=True)
                         msg = _("This bill was created from the GST portal because no existing invoice matched the provided details.")
-                        created_move.with_context(account_predictive_bills_disable_prediction=True, no_new_invoice=True).message_post(body=msg)
+                        created_move.message_post(body=msg)
+                        created_move._extend_with_attachments(created_move._to_files_data(attachment), new=True)
 
                         # Cancel the created bill if the IRN status indicates cancellation
                         if bill.get('irn_status') == 'CNL' and created_move.state != 'cancel':
                             created_move.message_post(body=_("This bill has been marked as canceled based on the e-invoice status."))
                             created_move.button_cancel()
-
-                if not modules.module.current_test:
-                    self.env.cr.commit()
             else:
                 # Cancel the existing bill if the IRN status indicates cancellation
                 if bill.get('irn_status') == 'CNL' and bill_already_exists.state != 'cancel':

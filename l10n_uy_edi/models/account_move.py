@@ -810,7 +810,7 @@ class AccountMove(models.Model):
                     attachments = move._l10n_uy_edi_update_xml_and_pdf_file(response)
 
             if edi_doc.state in ["received", "accepted", "rejected"]:
-                move.with_context(no_new_invoice=True).message_post(
+                move.message_post(
                     body=msg,
                     attachment_ids=attachments.ids if attachments else False,
                 )
@@ -918,26 +918,41 @@ class AccountMove(models.Model):
             move.message_post(body=error)
             _logger.warning(error)
 
+    def _get_import_file_type(self, file_data):
+        """ Identify Uruguayan EDI files. """
+        # EXTENDS 'account'
+        if (
+            file_data['xml_tree'] is not None
+            and b"EnvioCFE_entreEmpresas>" in file_data['raw']
+            and b"CantCFE>" in file_data['raw']
+            and b"CdgDGISucur>" in file_data['raw']
+        ):
+            return 'l10n_uy_edi'
+
+        return super()._get_import_file_type(file_data)
+
+    def _unwrap_attachment(self, file_data, recurse=True):
+        """ Divide a CFEEnvio file into constituent CFEs and create a new attachment for each CFE after the first. """
+        # EXTENDS 'account'
+        if file_data['import_file_type'] != 'l10n_uy_edi':
+            return super()._unwrap_attachment(file_data, recurse)
+
+        embedded = self._split_xml_into_new_attachments(file_data, tag='{*}CFE_Adenda')
+        if embedded and recurse:
+            embedded.extend(self._unwrap_attachments(embedded, recurse=True))
+        return embedded
+
     def _get_edi_decoder(self, file_data, new=False):
         """ User can upload xml files. The xml file must belong to the journal`s company`s. """
         # EXTENDS 'account'
-        if (
-            self.country_code == 'UY'
-            and file_data['type'] == 'xml'
-            and b"EnvioCFE_entreEmpresas>" in file_data['content']
-            and b"CantCFE>" in file_data['content']
-            and b"CdgDGISucur>" in file_data['content']
-        ):
-            xml_tree = file_data['xml_tree']
-            rut_receptor = xml_tree.findtext(".//{*}RutReceptor") or xml_tree.findtext(".//{*}DocRecep")
-            rzn_soc_recep = xml_tree.findtext(".//{*}RznSocRecep")
-            if int(xml_tree.findtext('.//{*}CantCFE')) > 1:
-                self.message_post(body=
-                    _("The Uruguayan xml you are trying to upload contains more than one CFE and up to now it is "
-                      "processed only the first one existing in the xml file."
-                    ))
-            return self._l10n_uy_edi_complete_cfe_from_xml(self, xml_tree)
-        return super()._get_edi_decoder(file_data, new=new)
+        if file_data['import_file_type'] == 'l10n_uy_edi':
+            def decoder(invoice, file_data, new=False):
+                self._l10n_uy_edi_complete_cfe_from_xml(invoice, file_data['xml_tree'])
+            return {
+                'priority': 20,
+                'decoder': decoder,
+            }
+        return super()._get_edi_decoder(file_data, new)
 
     def _l10n_uy_edi_complete_cfe_from_xml(self, move, xml_tree, l10n_uy_idreq=False):
         """ Here the vendor bills are completed and synchronized through the Uruware notification request or from
@@ -946,7 +961,7 @@ class AccountMove(models.Model):
         difference between the move total amount in Odoo and the move total amount in the XML, then a message is posted
         in the document informing that situation.
         :param move: The account.move record
-        :param xml_tree: The xml_tree from the file obtained from the synchronization.
+        :param file_data: The file obtained from the synchronization.
         :param l10n_uy_idreq: the id from the response_600 when the document is
         created by 'UY: Create vendor bills (sync from Uruware)' cron. """
         latam_document = self._l10n_uy_edi_get_cfe_document_type(xml_tree)

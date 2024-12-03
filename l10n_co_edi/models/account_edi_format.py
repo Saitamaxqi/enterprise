@@ -485,7 +485,7 @@ class AccountEdiFormat(models.Model):
             invoice.l10n_co_edi_transaction = response['transactionId']
 
             # == Chatter ==
-            invoice.with_context(no_new_invoice=True).message_post(
+            invoice.message_post(
                 body=_('Electronic invoice submission succeeded. Message from Carvajal:') + Markup('<br/>)' + response['message']),
                 attachment_ids=attachment.ids,
             )
@@ -521,7 +521,7 @@ class AccountEdiFormat(models.Model):
                 })
 
             # == Chatter ==
-            invoice.with_context(no_new_invoice=True).message_post(body=response['message'], attachments=response['attachments'])
+            invoice.message_post(body=response['message'], attachments=response['attachments'])
         elif response.get('blocking_level') == 'error':
             invoice.l10n_co_edi_transaction = False
 

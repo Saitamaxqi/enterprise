@@ -981,16 +981,31 @@ class AccountMove(models.Model):
                 _("Please ensure all the taxes in reimbursement lines use the same tax support. Creating reimbursement lines with multiple tax supports is not allowed.\n"
                     "Tax supports in reimbursements: %s", ', '.join(taxsupports_used)))
 
-    def _get_edi_decoder(self, file_data: dict, new=False) -> Callable:
+    def _get_import_file_type(self, file_data):
+        """ Identify EC Factura Electrónica files. """
+        # EXTENDS 'account'
+        xml_tree = file_data['xml_tree']
+        if xml_tree is not None and (
+            xml_tree.tag == 'factura' and xml_tree.attrib.get('id') == 'comprobante'
+            or (factura_node := xml_tree.find('.//factura')) is not None and factura_node.attrib.get('id') == 'comprobante'
+        ):
+            return 'l10n_ec.factura'
+        return super()._get_import_file_type(file_data)
+
+    def _get_edi_decoder(self, file_data: dict, new=False):
         # EXTENDS 'account'
         self.ensure_one()
-        if self.country_code == 'EC' and self.move_type == 'in_invoice' and file_data.get('xml_tree') is not None:
-            factura_node = file_data['xml_tree'] if file_data['xml_tree'].tag == 'factura' else file_data['xml_tree'].find('.//factura')
-            if factura_node is not None and factura_node.attrib.get('id') == 'comprobante':
-                return self._l10n_ec_edi_import_bill
+        if file_data['import_file_type'] == 'l10n_ec.factura':
+            return {
+                'priority': 20,
+                'decoder': self._l10n_ec_edi_import_bill,
+            }
         return super()._get_edi_decoder(file_data, new=new)
 
     def _l10n_ec_edi_import_bill(self, bill, file_data: dict, new: bool = False) -> bool | None:
+        if bill.invoice_line_ids:
+            return bill._reason_cannot_decode_has_invoice_lines()
+
         with bill._get_edi_creation() as bill:
             tree = file_data.get('xml_tree')
             if tree is None:
@@ -1032,7 +1047,6 @@ class AccountMove(models.Model):
 
             self._l10n_ec_edi_import_bill_fill_move_line(tree.findall('.//detalles//detalle'), bill)
             bill.write(bill_vals)
-            return True
 
     def _l10n_ec_edi_import_bill_fill_move_line(self, line_nodes, bill) -> None:
         def _get_tax_group_ec_type_from_code(code, code_percentage, amount) -> str:

@@ -870,18 +870,34 @@ class AccountMove(models.Model):
 
     @api.model
     def _import_invoice_ocr(self, invoice, file_data, new=False):
+        if invoice.invoice_line_ids:
+            return invoice._reason_cannot_decode_has_invoice_lines()
+
+        if not invoice._needs_auto_extract(new):
+            return invoice.env._("Automatic OCR does not apply to this document.")
+
         with invoice._get_edi_creation() as invoice:
             invoice._message_set_main_attachment_id(file_data['attachment'], force=True, filter_xml=False)
             invoice._send_batch_for_digitization()
-        return True
+
+    def _get_import_file_type(self, file_data):
+        """ Set priority on PDF, JPG and PNG files (those are the formats supported by the OCR). """
+        # EXTENDS 'account'
+        if 'jpeg' in file_data['mimetype'] or file_data['name'].endswith(('.jpg', '.jpeg')):
+            return 'jpg'
+        if 'png' in file_data['mimetype'] or file_data['name'].endswith('.png'):
+            return 'png'
+
+        return super()._get_import_file_type(file_data)
 
     def _get_edi_decoder(self, file_data, new=False):
         # EXTENDS 'account'
-        self.ensure_one()
-        decoder = super()._get_edi_decoder(file_data, new=new)
-        if not decoder and file_data['type'] in ('pdf', 'binary') and self._needs_auto_extract(new_document=new):
-            return self._import_invoice_ocr
-        return super()._get_edi_decoder(file_data, new=new)
+        if file_data['import_file_type'] in {'pdf', 'jpg', 'png'} and file_data['attachment']:
+            return {
+                'decoder': self._import_invoice_ocr,
+                'priority': 10 if file_data['import_file_type'] == 'pdf' else 5,
+            }
+        return super()._get_edi_decoder(file_data, new)
 
     @api.model
     def _get_view(self, view_id=None, view_type='form', **options):

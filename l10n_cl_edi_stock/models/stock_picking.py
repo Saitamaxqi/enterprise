@@ -500,7 +500,7 @@ class StockPicking(models.Model):
             'type': 'binary',
             'datas': base64.b64encode(dte_signed.encode('ISO-8859-1', 'replace'))
         })
-        self.with_context(no_new_invoice=True).message_post(
+        self.message_post(
             body=_('Partner DTE has been generated'),
             attachment_ids=[dte_partner_attachment.id])
         return dte_partner_attachment

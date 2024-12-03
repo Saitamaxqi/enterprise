@@ -1930,12 +1930,13 @@ class SaleOrder(models.Model):
                 invoice.message_subscribe(invoice.line_ids.subscription_id.user_id.partner_id.ids)
 
     def validate_and_send_invoice(self, invoice):
-        email_context = {**self.env.context.copy(), **{
+        email_context = {
+            **self.env.context.copy(),
             'total_amount': invoice.amount_total,
             'email_to': invoice.partner_id.email,
             'code': ', '.join(subscription.client_order_ref or subscription.name for subscription in self),
             'currency': invoice.currency_id.name,
-            'no_new_invoice': True}}
+        }
         auto_commit = not (config['test_enable'] or modules.module.current_test)
         self._subscription_commit_cursor(auto_commit)
         if self.plan_id.invoice_mail_template_id:

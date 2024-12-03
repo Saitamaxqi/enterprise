@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from odoo import Command
+from odoo import Command, fields
 from odoo.tests.common import tagged
 from odoo.tools import misc
 from lxml import etree
@@ -305,7 +305,7 @@ class TestManual(common.TestUyEdi):
     def test_170_uploaded_vendor_bill_with_global_fixed_discount(self):
         """ Simulate upload xml document with global discount fixed line on vendor bill journal and test if it was
         created correctly. """
-        new_bill = self._mock_upload_document_on_journal(
+        new_bill = self._mock_attachment_upload(
             journal=self.company_data['default_journal_purchase'],
             filename='vendor_bill_with_global_fixed_discount',
         )
@@ -320,7 +320,7 @@ class TestManual(common.TestUyEdi):
     def test_180_uploaded_vendor_bill_with_line_fixed_discount(self):
         """ Simulate upload xml document with discount fixed line on vendor bill journal and test if it was created
         correctly. """
-        new_bill = self._mock_upload_document_on_journal(
+        new_bill = self._mock_attachment_upload(
             journal=self.company_data['default_journal_purchase'],
             filename='vendor_bill_with_line_fixed_discount',
         )
@@ -363,3 +363,22 @@ class TestManual(common.TestUyEdi):
         # Test narration exceeding the maximum allowed lines (dedicated page required)
         assert_narration_extra_params(invoice, 'A' * (line_length * max_lines + 10), True)  # 6 lines and 10 chars
         assert_narration_extra_params(invoice, 'A\nA\nA' + 'A' * line_length * 4, True)  # 7 lines
+
+    def test_200_uploaded_vendor_bill_with_two_bills(self):
+        new_bills = self._mock_attachment_upload(
+            journal=self.company_data['default_journal_purchase'],
+            filename='sobre_with_2_vendor_bills',
+        )
+
+        self.assertRecordValues(new_bills, [
+            {
+                'name': 'e-FC A6310618',
+                'invoice_date': fields.Date.to_date('2024-10-03'),
+                'invoice_partner_display_name': 'BANCO ITAU URUGUAY S.A.',
+            },
+            {
+                'name': 'e-FC A6310619',
+                'invoice_date': fields.Date.to_date('2024-10-03'),
+                'invoice_partner_display_name': 'BANCO ITAU URUGUAY S.A.',
+            },
+        ])

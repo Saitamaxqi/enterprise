@@ -446,7 +446,7 @@ class StockPicking(models.Model):
                 'mimetype': 'application/xml',
                 'description': f"Ecuadorian electronic document generated for document {picking.display_name}."
             })
-            picking.with_context(no_new_invoice=True).message_post(
+            picking.message_post(
                 body=escape(
                     _(
                         "Electronic document authorized.{}Authorization num:{}%(authorization_num)s{}Authorization date:{}%(authorization_date)s",
@@ -474,7 +474,7 @@ class StockPicking(models.Model):
             'mimetype': 'application/xml',
             'description': f"Ecuadorian electronic document generated for document {picking.display_name}."
         })
-        picking.with_context(no_new_invoice=True).message_post(
+        picking.message_post(
             body=escape(
                 _(
                     "{}This is a DEMO response, which means this document was not sent to the SRI.{}If you want your document to be processed by the SRI, please set an {}Electronic Certificate File{} in the settings.{}Demo electronic document.{}Authorization num:{}%(authorization_num)s{}Authorization date:{}%(authorization_date)s",
