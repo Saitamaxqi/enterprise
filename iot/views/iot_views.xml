@@ -18,7 +18,6 @@
                 <header groups="base.group_no_one">
                     <widget name="iot_download_logs"/>
                     <widget name="iot_restart_odoo_or_reboot" btn_name="Restart Odoo" action="restart_odoo"/>
-                    <widget name="iot_restart_odoo_or_reboot" btn_name="Reboot IoT Box" action="reboot_iot_box"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
