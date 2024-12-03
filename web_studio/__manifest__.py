@@ -117,9 +117,6 @@ Note: Only the admin user is allowed to make those customizations.
             ('include', 'web_studio.studio_assets_minimal'),
             'web_studio/static/tests/legacy/**/*.js',
         ],
-        'web.qunit_mobile_suite_tests': [
-            'web_studio/static/tests/legacy/views/disable_patch.js',
-        ],
         'web.assets_unit_tests': [
             ('include', 'web_studio.studio_assets_minimal'),
             'web_studio/static/tests/**/*',

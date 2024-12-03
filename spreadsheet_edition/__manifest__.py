@@ -39,9 +39,6 @@
         'web.qunit_suite_tests': [
             'spreadsheet_edition/static/tests/legacy/**/*',
         ],
-        'web.qunit_mobile_suite_tests': [
-            'spreadsheet_edition/static/tests/legacy/disable_patch.js',
-        ],
         'web.assets_unit_tests': [
             'spreadsheet_edition/static/tests/**/*',
             ('remove', 'spreadsheet_edition/static/tests/legacy/**/*'),  # to remove when all legacy tests are ported
