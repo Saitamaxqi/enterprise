@@ -20,8 +20,8 @@ class SaleCommissionReport(models.Model):
     commission = fields.Monetary("Commission", readonly=True, currency_field='currency_id')
     currency_id = fields.Many2one('res.currency', "Currency", readonly=True)
     company_id = fields.Many2one('res.company', string='Company', readonly=True)
-    payment_date = fields.Date("Payment Date", readonly=True)
     forecast_id = fields.Many2one('sale.commission.plan.target.forecast', 'fc')
+    payment_date = fields.Date("Payment Date", readonly=True)
     forecast = fields.Monetary("Forecast", readonly=True, currency_field='currency_id')
     date_to = fields.Date(related='target_id.date_to')
 
@@ -33,7 +33,7 @@ class SaleCommissionReport(models.Model):
             "name": _('Commission Detail: %(name)s', name=self.target_id.name),
             "views": [[self.env.ref('sale_commission.sale_achievement_report_view_list').id, "list"]],
             "context": {'commission_user_ids': self.user_id.ids, 'commission_team_ids': self.team_id.ids},
-            "domain": [('target_id', '=', self.target_id.id), ('user_id', '=', self.user_id.id), ('team_id', '=', self.team_id.id)],
+            "domain": [('plan_id', '=', self.plan_id.id), ('user_id', '=', self.user_id.id), ('team_id', '=', self.team_id.id)], # FP TODO: add date filter based on context
         }
 
     def write(self, values):
@@ -54,6 +54,13 @@ class SaleCommissionReport(models.Model):
             self.env.cache._set_field_cache(self, self._fields.get('forecast')).update(dict.fromkeys(self.ids, amount))
         return True
 
+    def _get_date_range(self):
+        if self.env.context.get('group_quarter'):
+            return "date_trunc('quarter', a.payment_date)"
+        elif self.env.context.get('group_year'):
+            return "date_trunc('year', a.payment_date)"
+        return "a.payment_date"
+
     @property
     def _table_query(self):
         users = self.env.context.get('commission_user_ids', [])
@@ -66,13 +73,13 @@ class SaleCommissionReport(models.Model):
 WITH {self.env['sale.commission.achievement.report']._commission_lines_query(users=users, teams=teams)},
 achievement AS (
     SELECT
-        ROW_NUMBER() OVER (ORDER BY MAX(era.date_to) DESC, cl.user_id) AS id,
+        ROW_NUMBER() OVER (ORDER BY MAX(era.date_to) DESC, u.user_id) AS id,
         era.id AS target_id,
-        cl.plan_id AS plan_id,
-        cl.user_id AS user_id,
+        era.plan_id AS plan_id,
+        u.user_id AS user_id,
         MIN(cl.team_id) AS team_id,
         cl.company_id AS company_id,
-        GREATEST(SUM(achieved), 0) AS achieved,
+        SUM(achieved) AS achieved,
         CASE
             WHEN MAX(era.amount) > 0 THEN GREATEST(SUM(achieved), 0) / MAX(era.amount)
             ELSE 0
@@ -82,17 +89,22 @@ achievement AS (
         MAX(era.date_to) AS payment_date,
         MAX(scpf.id) AS forecast_id,
         MAX(scpf.amount) AS forecast
-    FROM commission_lines cl
-    JOIN sale_commission_plan_target era
+        FROM sale_commission_plan_target era
+        LEFT JOIN sale_commission_plan_user u
+            ON u.plan_id=era.plan_id
+            AND COALESCE(u.date_from, era.date_from)<era.date_to
+            AND COALESCE(u.date_to, era.date_to)>era.date_from
+        LEFT JOIN commission_lines cl
         ON cl.plan_id = era.plan_id
         AND cl.date >= era.date_from
         AND cl.date <= era.date_to
+        AND cl.user_id = u.user_id
     LEFT JOIN sale_commission_plan_target_forecast scpf
-        ON (scpf.target_id = era.id AND cl.user_id = scpf.user_id)
+        ON (scpf.target_id = era.id AND u.user_id = scpf.user_id)
     GROUP BY
         era.id,
-        cl.plan_id,
-        cl.user_id,
+        era.plan_id,
+        u.user_id,
         cl.company_id,
         cl.currency_id
 ), target_com AS (
@@ -107,30 +119,35 @@ achievement AS (
     WHERE scp.type = 'target'
 ), achievement_target AS (
     SELECT
-        a.id,
-        a.target_id,
+        min(a.id) as id,
+        min(a.target_id) as target_id,
         a.plan_id,
         a.user_id,
         a.team_id,
         a.company_id,
-        a.payment_date,
         a.currency_id,
-        a.achieved,
-        a.achieved_rate,
-        a.amount AS target_amount,
-        a.forecast,
-        a.forecast_id,
-        CASE
-            WHEN tc.before IS NULL THEN a.achieved
-            WHEN tc.rate_high IS NULL THEN tc.before
-            ELSE tc.before + (tc.amount - tc.before) * (a.achieved_rate - tc.rate_low) / (tc.rate_high - tc.rate_low)
-        END AS commission
+        min(a.forecast_id) as forecast_id,
+        {self._get_date_range()} as payment_date,
+        sum(a.achieved) as achieved,
+        case WHEN sum(a.amount) > 0 THEN sum(a.achieved) / sum(a.amount) ELSE NULL END as achieved_rate,
+        sum(a.amount) AS target_amount,
+        sum(a.forecast) as forecast,
+        count(1) as ct
     FROM achievement a
+    group by
+        a.plan_id, a.user_id, a.team_id, a.company_id, a.currency_id, {self._get_date_range()}
+)
+SELECT
+    a.*,
+    CASE
+        WHEN tc.before IS NULL THEN a.achieved
+        WHEN tc.rate_high IS NULL THEN tc.before * a.ct
+        ELSE (tc.before + (tc.amount - tc.before) * (a.achieved_rate - tc.rate_low) / (tc.rate_high - tc.rate_low)) * a.ct
+    END AS commission
+ FROM achievement_target a
     LEFT JOIN target_com tc ON (
         tc.plan_id = a.plan_id AND
         tc.rate_low <= a.achieved_rate AND
         (tc.rate_high IS NULL OR tc.rate_high > a.achieved_rate)
     )
-)
-SELECT * FROM achievement_target
 """

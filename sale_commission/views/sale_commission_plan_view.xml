@@ -46,7 +46,6 @@
                             <div class="d-inline-flex">
                                 <field name="date_from" string="Date" widget="daterange" options="{'end_date_field': 'date_to'}" readonly="state != 'draft'" force_save="1"/>
                             </div>
-                            <!-- arj todo: payment frequency quid ? -->
                             <field name="periodicity" string="Target Frequency" readonly="state != 'draft'" force_save="1"/>
                         </group>
                     </group>

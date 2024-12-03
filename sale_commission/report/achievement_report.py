@@ -106,8 +106,8 @@ achievement_commission_lines AS (
     WHERE scp.active
       AND scp.state = 'approved'
       AND sca.type = scpa.type
-      AND CASE WHEN scp.user_type = 'person'
-            THEN sca.user_id = scpu.user_id
+      AND CASE
+            WHEN scp.user_type = 'person' THEN sca.user_id = scpu.user_id
             ELSE sca.team_id = scp.team_id
       END
     {'AND sca.user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}
@@ -156,7 +156,7 @@ invoices_rules AS (
     JOIN product_template pt
       ON pp.product_tmpl_id = pt.id
     WHERE aml.display_type = 'product'
-      AND am.move_type = 'out_invoice'
+      AND am.move_type in ('out_invoice', 'out_refund')
       AND rules.team_rule
       AND am.team_id = rules.team_id
     {'AND am.team_id in (%s)' % ','.join(str(i) for i in teams.ids) if teams else ''}
@@ -186,7 +186,7 @@ invoices_rules AS (
     JOIN product_template pt
       ON pp.product_tmpl_id = pt.id
     WHERE aml.display_type = 'product'
-      AND am.move_type = 'out_invoice'
+      AND am.move_type in ('out_invoice', 'out_refund')
       AND NOT rules.team_rule
       AND am.invoice_user_id = rules.user_id
     {'AND am.invoice_user_id in (%s)' % ','.join(str(i) for i in users.ids) if users else ''}

@@ -8,8 +8,8 @@
                 <field name="user_id"/>
                 <field name="team_id" optional="hide"/>
                 <field name="plan_id" optional="hide"/>
-                <field name="target_id"/>
-                <field name="forecast" readonly="0" groups="sale_commission.group_commission_forecast"/>
+                <field name="payment_date"/>
+                <field name="forecast" readonly="0" optional="hide"/>
                 <field name="target_amount" invisible="target_amount == 0"/>
                 <field name="achieved"/>
                 <field name="achieved_rate" widget="percentage" optional="hide" invisible="target_amount == 0"/>
@@ -25,7 +25,7 @@
         <field name="model">sale.commission.report</field>
         <field name="arch" type="xml">
             <graph>
-                <field name="target_id" type="col"/>
+                <field name="payment_date" type="col"/>
                 <field name="plan_id"/>
                 <field name="commission" type="measure"/>
             </graph>
@@ -37,9 +37,12 @@
         <field name="model">sale.commission.report</field>
         <field name="arch" type="xml">
             <pivot>
-                <field name="target_id" type="row"/>
+                <field name="plan_id" type="row"/>
+                <field name="user_id" type="row"/>
+                <field name="payment_date" type="col"/>
+                <field name="commission" type="measure"/>
                 <field name="achieved" type="measure"/>
-                <field name="forecast" type="measure" groups="sale_commission.group_commission_forecast"/>
+                <field name="forecast" type="measure"/>
                 <field name="achieved_rate" type="measure"/>
                 <field name="target_amount" type="measure"/>
             </pivot>
@@ -54,18 +57,18 @@
                 <field name="user_id"/>
                 <field name="team_id"/>
                 <field name="plan_id" groups="sales_team.group_sale_manager"/>
-                <field name="target_id"/>
                 <field name="company_id"/>
                 <filter string="My Commissions" name="my"
                             domain="[('user_id', '=', uid)]"/>
-                <filter string="Current Period" name="current"
-                        domain="[('target_id.date_from', '&lt;', context_today().strftime('%Y-%m-%d')), ('target_id.date_to', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
                 <filter string="Active Plans" name="active_plans"
                         domain="[('plan_id.date_from', '&lt;', context_today().strftime('%Y-%m-%d')), ('plan_id.date_to', '&gt;', context_today().strftime('%Y-%m-%d'))]"/>
+                <separator/>
+                <filter string="By Quarter" name="quarter" context="{'group_quarter':'1'}"/>
                 <group expand="1" string="Group By">
                     <filter string="Salesperson" name="group_by_salesperson" context="{'group_by':'user_id'}"/>
                     <filter string="Sales Team" name="group_by_salesteam" context="{'group_by':'team_id'}"/>
                     <filter string="Period" name="group_by_date_to" context="{'group_by': 'date_to:month'}"/>
+                    <filter string="Payment Date" name="group_by_payment_date" context="{'group_by':'payment_date'}"/>
                     <filter string="Commission Plan" name="group_by_plan" context="{'group_by':'plan_id'}" groups="sales_team.group_sale_manager"/>
                     <filter string="Company" name="group_by_company" context="{'group_by':'company_id'}" groups="base.group_multi_company"/>
                 </group>
@@ -109,7 +112,7 @@
         <field name="name">My Commissions</field>
         <field name="res_model">sale.commission.report</field>
         <field name="view_mode">list,graph,pivot</field>
-        <field name="context">{'commission_user_ids': uid, 'search_default_active_plans': 1, 'search_default_group_by_date_to': 1}</field>
+        <field name="context">{'commission_user_ids': uid, 'search_default_active_plans': 1}</field>
         <field name="domain">[('user_id', '=', uid)]</field>
         <field name="search_view_id" eval='sale_commission_report_view_search'/>
         <field name="help" type="html">
