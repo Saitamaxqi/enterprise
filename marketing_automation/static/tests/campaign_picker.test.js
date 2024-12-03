@@ -64,7 +64,30 @@ const marketingCampaignViews = {
     `,
     form: `
         <form js_class="marketing_campaign_form_view">
-            <field name="name"/>
+            <sheet>
+                <group>
+                    <field name="name"/>
+                </group>
+                <div>
+                    <field name="marketing_activity_ids" widget="hierarchy_kanban" mode="kanban" class="o_ma_hierarchy_container o_ma_campaign_hierarchy">
+                        <kanban>
+                            <field name="parent_id"/>
+                            <templates>
+                                <div t-name="card">
+                                    <div class="o_ma_body position-relative" t-att-data-record-id="record.id.raw_value">
+                                        <field name="name" class="o_title"/>
+                                        <div class="o_ma_card card">
+                                            <div class="o_ma_switch">
+                                                <a type="delete" title="Delete" role="button" class="float-start mt8 fa fa-trash btn btn-link btn-sm" href="#"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </templates>
+                        </kanban>
+                    </field>
+                </div>
+            </sheet>
         </form>
         `,
     search: `<search></search>`,
@@ -72,18 +95,55 @@ const marketingCampaignViews = {
 
 class MarketingCampaign extends models.Model {
     name = fields.Char();
+    marketing_activity_ids = fields.One2many({ relation: "marketing.activity" });
     _name = "marketing.campaign";
     _records = [
         {
             id: 1,
             name: "welcome",
         },
+        {
+            id: 2,
+            name: 'Campaign',
+            marketing_activity_ids: [1, 2, 3, 4, 5, 6],
+        }
     ];
 
     _views = Object.assign({}, marketingCampaignViews);
 }
 
-defineModels([MarketingCampaign]);
+class MarketingActivity extends models.Model {
+    name = fields.Char();
+    parent_id = fields.Many2one({ relation: "marketing.activity" });
+    _name = "marketing.activity";
+    _records = [
+        {
+            id: 1,
+            name: "Parent 1",
+        }, {
+            id: 2,
+            name: "Parent 1 > Child 1",
+            parent_id: 1,
+        }, {
+            id: 3,
+            name: 'Parent 2',
+        }, {
+            id: 4,
+            name: 'Parent 2 > Child 1',
+            parent_id: 3,
+        }, {
+            id: 5,
+            name: 'Parent 2 > Child 2',
+            parent_id: 3,
+        }, {
+            id: 6,
+            name: 'Parent 2 > Child 2 > Child 1',
+            parent_id: 5,
+        }
+    ];
+}
+
+defineModels([MarketingCampaign, MarketingActivity]);
 defineMailModels();
 
 defineActions([
@@ -124,6 +184,35 @@ onRpc("get_action_marketing_campaign_from_template", (request) => {
         res_model: "marketing.campaign",
         views: [[false, "form"]],
     };
+});
+
+test("Marketing Campaign Form - Remove activity", async function() {
+    await mountView({
+        resModel: "marketing.campaign",
+        type: "form",
+        arch: marketingCampaignViews.form,
+        resId: 2,
+    });
+    // Check that only one grandchildren is displayed 
+    expect('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body_wrapper > .o_ma_body').toHaveCount(1);
+    await click(queryOne('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body_wrapper > .o_ma_body .fa-trash'));
+    await animationFrame();
+    // Check that the grandchildren activity is removed
+    expect('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body_wrapper > .o_ma_body').toHaveCount(0);
+    // Check that we have two parent activities
+    expect('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body').toHaveCount(2);
+    // Check that we have 3 children activities
+    expect('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body').toHaveCount(3);
+    // Delete the first parent
+    await click(queryAll('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body .fa-trash')[0]);
+    await animationFrame();
+    queryOne("div.modal.o_technical_modal"); // ensure confirmation modal has been opened
+    await click(queryOne("button:contains('Delete')")); // confirm the deletion
+    await animationFrame();
+    // Check that a single parent remains
+    expect('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body').toHaveCount(1);
+    // Check that we still have 2 children activities (1 child remove with the parent)
+    expect('.o_ma_hierarchy_container .o_kanban_renderer > .o_kanban_record:not(.o_kanban_ghost):not(:empty) > .o_ma_body_wrapper > .o_ma_body').toHaveCount(2);
 });
 
 /**

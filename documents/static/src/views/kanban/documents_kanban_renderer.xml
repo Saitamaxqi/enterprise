@@ -47,7 +47,7 @@
                         <t t-set="group" t-as="group.group"/>
                         <KanbanRecord
                             archInfo="props.archInfo"
-                            groupByField="props.list.groupByField"
+                            selection="props.list.selection"
                             record="record"
                         />
                     </div>
@@ -56,7 +56,7 @@
                         <t t-set="group" t-as="group.group"/>
                         <KanbanRecord
                             archInfo="props.archInfo"
-                            groupByField="props.list.groupByField"
+                            selection="props.list.selection"
                             record="record"
                         />
                     </div>
@@ -67,7 +67,7 @@
                 <t t-foreach="getFolderRecords()" t-as="folderRecord" t-key="folderRecord.key">
                     <KanbanRecord
                         archInfo="props.archInfo"
-                        groupByField="props.list.groupByField"
+                        selection="props.list.selection"
                         record="folderRecord.record"
                     />
                 </t>

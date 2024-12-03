@@ -15,6 +15,7 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         ...KanbanRecord.defaultProps,
         Compiler: DocumentsKanbanCompiler,
     };
+    static props = [...KanbanRecord.props, "selection?"];
     static template = xml`
         <div
             role="article"
@@ -129,9 +130,9 @@ export class DocumentsKanbanRecord extends KanbanRecord {
         if (this.props.record.data.type !== "folder") {
             return;
         }
-        const isInvalidFolder = this.props.list.selection
-            .map((r) => r.data.id)
-            .includes(this.props.record.data.id);
+        const isInvalidFolder = this.props.selection
+            ?.map((r) => r.data.id)
+            ?.includes(this.props.record.data.id);
         this.drag.state = isInvalidFolder ? "invalid" : "hover";
         const icon = this.rootRef.el.querySelector(".fa-folder-o");
         icon?.classList.remove("fa-folder-o");
@@ -141,7 +142,7 @@ export class DocumentsKanbanRecord extends KanbanRecord {
     onDragOver(ev) {
         const isInvalidTarget =
             this.props.record.data.type !== "folder" ||
-            this.props.list.selection.map((r) => r.data.id).includes(this.props.record.data.id);
+            this.props.selection?.map((r) => r.data.id)?.includes(this.props.record.data.id);
         const dropEffect = isInvalidTarget ? "none" : ev.ctrlKey ? "link" : "move";
         ev.dataTransfer.dropEffect = dropEffect;
     }
