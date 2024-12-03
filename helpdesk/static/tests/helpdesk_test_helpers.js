@@ -8,11 +8,13 @@ import { HelpdeskSla } from "./mock_server/mock_models/helpdesk_sla";
 import { HelpdeskSlaStatus } from "./mock_server/mock_models/helpdesk_sla_status";
 
 export function defineHelpdeskModels() {
-    defineModels(helpdeskModels);
+    defineModels({
+        ...mailModels,
+        ...helpdeskModels,
+    });
 }
 
 export const helpdeskModels = {
-    ...mailModels,
     HelpdeskStage,
     HelpdeskSla,
     HelpdeskSlaStatus,

@@ -11,9 +11,10 @@ import {
     onRpc,
 } from "@web/../tests/web_test_helpers";
 
-import { defineHelpdeskModels, helpdeskModels } from "@helpdesk/../tests/helpdesk_test_helpers";
+import { mailModels } from "@mail/../tests/mail_test_helpers";
+import { defineHelpdeskModels } from "@helpdesk/../tests/helpdesk_test_helpers";
 
-const { ResPartner, ResUsers } = helpdeskModels;
+const { ResPartner, ResUsers } = mailModels;
 
 describe.current.tags("desktop");
 defineHelpdeskModels();

@@ -17,18 +17,21 @@ export class HelpdeskTicket extends models.Model {
 
     _records = [
         {
+            id: 1,
             name: "Ticket 1",
             team_id: 1,
             stage_id: 1,
             sla_status_ids: [1, 2, 3],
         },
         {
+            id: 2,
             name: "Ticket 2",
             team_id: 1,
             stage_id: 2,
             sla_status_ids: [1, 2],
         },
         {
+            id: 3,
             name: "Ticket 3",
             team_id: 2,
             stage_id: 2,

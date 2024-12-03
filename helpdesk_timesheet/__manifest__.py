@@ -30,7 +30,7 @@
         'web.assets_backend_lazy': [
             'helpdesk_timesheet/static/src/views/**',
         ],
-        'web.qunit_suite_tests': [
+        'web.assets_unit_tests': [
             "helpdesk_timesheet/static/tests/*",
         ],
     },
