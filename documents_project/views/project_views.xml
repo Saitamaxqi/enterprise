@@ -19,7 +19,9 @@
                                 <label for="documents_folder_id" class="fw-bold"/>
                             </div>
                             <div class="col-9 ps-0">
-                                <field name="documents_folder_id" class="ps-3 w-100" context="{'documents_project': True, 'default_company_id': company_id, 'privacy_visibility': privacy_visibility}"/>
+                                <field name="documents_folder_id" class="ps-3 w-100" widget="documents_folder_many2one"
+                                    context="{'documents_project': True, 'default_company_id': company_id,
+                                              'privacy_visibility': privacy_visibility, 'default_type': 'folder'}"/>
                             </div>
                         </div>
                         <div class="row" invisible="not documents_folder_id">
