@@ -2,24 +2,15 @@ import { expect, test, beforeEach, describe } from "@odoo/hoot";
 import { queryAllTexts, queryAll, queryOne } from "@odoo/hoot-dom";
 import { mockDate, animationFrame } from "@odoo/hoot-mock";
 
-import {
-    defineModels,
-    mountView,
-    contains,
-    onRpc,
-    patchWithCleanup,
-} from "@web/../tests/web_test_helpers";
+import { mountView, contains, onRpc, patchWithCleanup } from "@web/../tests/web_test_helpers";
 import { browser } from "@web/core/browser/browser";
 
 import { patchSession } from "@hr_timesheet/../tests/hr_timesheet_models";
-import { defineTimesheetModels } from "@timesheet_grid/../tests/hr_timesheet_models";
-
-import { SaleOrderLine } from "@sale_project/../tests/project_task_model";
+import { defineTimesheetModels } from "./sale_timesheet_models";
 
 let rankingData;
 
 defineTimesheetModels();
-defineModels([SaleOrderLine]);
 
 async function initAndOpenView(showIndicator = true, showLeaderboard = true) {
     onRpc("get_timesheet_ranking_data", async (request) => {
@@ -38,12 +29,6 @@ async function initAndOpenView(showIndicator = true, showLeaderboard = true) {
                 },
             ];
         }
-    });
-    onRpc("get_billable_time_target", (request) => {
-        if (request.model == "hr.employee") {
-            return [{ billable_time_target: 150 }];
-        }
-        return [{}];
     });
     await mountView({
         resModel: "account.analytic.line",

@@ -51,10 +51,7 @@ linked to an SO, or only the validated timesheets
             'sale_timesheet_enterprise/static/src/views/timesheet_leaderboard_timer_grid/**',
         ],
         'web.assets_unit_tests': [
-            'sale_timesheet_enterprise/static/tests/**.test.js',
-        ],
-        'web.qunit_suite_tests': [
-            'sale_timesheet_enterprise/static/tests/legacy/**/*.js',
+            'sale_timesheet_enterprise/static/tests/**/*',
         ],
     }
 }
