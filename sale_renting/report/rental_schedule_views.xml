@@ -76,7 +76,10 @@
                         </div>
                         <div>
                             <strong>Status — </strong>
-                            <t t-if="late">
+                            <t t-if="state == 'cancel'">
+                                Cancelled
+                            </t>
+                            <t t-elif="late">
                                 Late
                                 <t t-if="report_line_status == 'reserved'">
                                     Pickup
