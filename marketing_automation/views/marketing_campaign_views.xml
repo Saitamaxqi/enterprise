@@ -175,7 +175,7 @@
                                             <div class="o_ma_card card">
                                                 <div class="o_ma_title_bar">
                                                     <div class="o_ma_title ps-2 mt-0">
-                                                        <a type="edit" t-attf-class="fw-medium mb0 mt0 fs-3 #{read_only_mode and 'o_ma_full' or None}" t-att-title="record.name.raw_value"><field name="name" /></a>
+                                                        <a type="open" t-attf-class="fw-medium mb0 mt0 fs-3 #{read_only_mode and 'o_ma_full' or None}" t-att-title="record.name.raw_value"><field name="name" /></a>
                                                         <div class="o_ma_desc"><field name="activity_type" /></div>
                                                     </div>
                                                     <div class="o_ma_switch">
