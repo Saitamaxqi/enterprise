@@ -136,7 +136,7 @@ export class AccountReportController {
         if (!this.reportInformationMap[cacheKey]) {
             this.reportInformationMap[cacheKey] = this.orm.call(
                 "account.report",
-                "get_report_information",
+                options.readonly_query ? "get_report_information_readonly" : "get_report_information",
                 [
                     reportToDisplayId,
                     options,
@@ -478,9 +478,10 @@ export class AccountReportController {
     }
 
     async unfoldNewLine(lineIndex) {
+        const options = await this.options;
         const newLines = await this.orm.call(
             "account.report",
-            "get_expanded_lines",
+            options.readonly_query ? "get_expanded_lines_readonly" : "get_expanded_lines",
             [
                 this.options['report_id'],
                 this.options,

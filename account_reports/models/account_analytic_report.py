@@ -46,6 +46,10 @@ class AccountReport(models.AbstractModel):
 
         self._create_column_analytic(options)
 
+    def _init_options_readonly_query(self, options, previous_options):
+        super()._init_options_readonly_query(options, previous_options)
+        options['readonly_query'] = options['readonly_query'] and not options.get('analytic_groupby_option')
+
     def _create_column_analytic(self, options):
         """ Creates the analytic columns for each plan or account in the filters.
         This will duplicate all previous columns and adding the analytic accounts in the domain of the added columns.

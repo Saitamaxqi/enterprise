@@ -1876,19 +1876,28 @@ class AccountReport(models.Model):
             ]
             options['show_all_accounts'] = previous_options.get('show_all_accounts') or False
 
-    # OPTIONS: LOADING CALL
-
     ####################################################
-
+    # OPTIONS: LOADING CALL
+    ####################################################
     def _init_options_loading_call(self, options, previous_options):
         """ Used by the js to know if it needs to reload the options (to not overwrite new options from the js) """
         options['loading_call_number'] = previous_options.get('loading_call_number') or 0
         return options
 
     ####################################################
+    # OPTIONS: READONLY QUERY
+    ####################################################
+    def _init_options_readonly_query(self, options, previous_options):
+        options['readonly_query'] = (
+            options['currency_table']['type'] == 'monocurrency'
+            and not any(budget_opt['selected'] for budget_opt in options.get('budgets', []))
+        )
+
+    ####################################################
     # OPTIONS: CORE
     ####################################################
 
+    @api.readonly
     def get_options(self, previous_options):
         self.ensure_one()
 
@@ -1989,6 +1998,7 @@ class AccountReport(models.Model):
             self._init_options_custom: 1050,
             self._init_options_currency_table: 1055,
             self._init_options_section_buttons: 1060,
+            self._init_options_readonly_query: 1070,
         }
 
     def _get_options_domain(self, options, date_scope):
@@ -5138,6 +5148,13 @@ class AccountReport(models.Model):
             }
         }
 
+    @api.readonly
+    def get_report_information_readonly(self, options):
+        """ Readonly version of get_report_information, to be called from RPC when options['readonly_query'] is True,
+        to better spread the load on servers when possible.
+        """
+        return self.get_report_information(options)
+
     def _get_json_friendly_column_group_totals(self, all_column_groups_expression_totals):
         # Convert all_column_groups_expression_totals to a json-friendly form (its keys are records)
         json_friendly_column_group_totals = {}
@@ -5230,6 +5247,13 @@ class AccountReport(models.Model):
 
         self._format_column_values(options, lines)
         return lines
+
+    @api.readonly
+    def get_expanded_lines_readonly(self, options, line_dict_id, groupby, expand_function_name, progress, offset, horizontal_split_side):
+        """ Readonly version of get_expanded_lines_readonly, to be called from RPC when options['readonly_query'] is True,
+        to better spread the load on servers when possible.
+        """
+        return self.get_expanded_lines(options, line_dict_id, groupby, expand_function_name, progress, offset, horizontal_split_side)
 
     def _expand_unfoldable_line(self, expand_function_name, line_dict_id, groupby, options, progress, offset, horizontal_split_side, unfold_all_batch_data=None):
         if not expand_function_name:

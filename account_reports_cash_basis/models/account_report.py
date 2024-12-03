@@ -22,6 +22,10 @@ class AccountReport(models.Model):
         if self.filter_cash_basis:
             options['report_cash_basis'] = previous_options.get('report_cash_basis', False)
 
+    def _init_options_readonly_query(self, options, previous_options):
+        super()._init_options_readonly_query(options, previous_options)
+        options['readonly_query'] = options['readonly_query'] and not options.get('report_cash_basis')
+
     @api.model
     def _prepare_lines_for_cash_basis(self):
         """Prepare the cash_basis_temp_account_move_line substitute.
