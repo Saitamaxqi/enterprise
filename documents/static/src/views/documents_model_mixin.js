@@ -32,6 +32,9 @@ export const DocumentsModelMixin = (component) =>
             if (selection && selection.length > 0) {
                 this.originalSelection = selection.map((rec) => rec.resId);
             }
+            for (let arg of arguments) {
+                arg.context['skip_res_field_check'] = true;
+            }
             const res = await super.load(...arguments);
             if (this.config.resModel !== "documents.document") {
                 return res;
