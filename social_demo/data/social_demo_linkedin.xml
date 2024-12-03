@@ -36,7 +36,7 @@
         <field name="linkedin_comments_count">94</field>
         <field name="linkedin_likes_count">4584</field>
         <field name="author_name">My Company Page</field>
-        <field name="twitter_profile_image_url" eval="'/web/image/res.partner/%s/image_128' % ref('social_demo.res_partner_1')" />
+        <field name="twitter_profile_image_url" eval="'/web/image/res.partner/%s/image_128' % ref('base.res_partner_1')" />
         <field name="message">Our new product has been released 🎉 Check it out!</field>
         <field name="published_date" eval="time.strftime('%Y-%m-%d 08:00:00')"/>
         <field name="linkedin_author_urn">XX:XX:odoo</field>
@@ -49,7 +49,7 @@
         <field name="linkedin_comments_count">87</field>
         <field name="linkedin_likes_count">7489</field>
         <field name="author_name">My Company Page</field>
-        <field name="twitter_profile_image_url" eval="'/web/image/res.partner/%s/image_128' % ref('social_demo.res_partner_1')" />
+        <field name="twitter_profile_image_url" eval="'/web/image/res.partner/%s/image_128' % ref('base.res_partner_1')" />
         <field name="message">Our company wishes a happy new year to everyone on LinkedIn!</field>
         <field name="published_date" eval="time.strftime('%Y-01-01 00:01:00')"/>
         <field name="linkedin_author_urn">XX:XX:odoo</field>
@@ -61,7 +61,7 @@
         <field name="linkedin_comments_count">77</field>
         <field name="linkedin_likes_count">1325</field>
         <field name="author_name">My Company Page</field>
-        <field name="twitter_profile_image_url" eval="'/web/image/res.partner/%s/image_128' % ref('social_demo.res_partner_1')" />
+        <field name="twitter_profile_image_url" eval="'/web/image/res.partner/%s/image_128' % ref('base.res_partner_1')" />
         <field name="message">Get 20% out of your purchases on https://mycompany.com/shop
 Better run to our website while it lasts 🏃</field>
         <field name="published_date" eval="time.strftime('%Y-%m-%d 08:00:00')"/>
@@ -84,17 +84,17 @@ https://www.youtube.com/watch?v=kmt-oVAB6hU</field>
     </record>
 
     <record id="social_stream_post_linkedin_image_1" model="social.stream.post.image">
-        <field name="image_url" eval="'/web/image/product.product/%s/image_512' % ref('social_demo.product_product_4')"></field>
+        <field name="image_url" eval="'/web/image/product.product/%s/image_512' % ref('product.product_product_4')"></field>
         <field name="stream_post_id" ref="social_stream_post_linkedin_3" />
     </record>
 
     <record id="social_stream_post_linkedin_image_2" model="social.stream.post.image">
-        <field name="image_url" eval="'/web/image/product.product/%s/image_512' % ref('social_demo.product_product_4b')"></field>
+        <field name="image_url" eval="'/web/image/product.product/%s/image_512' % ref('product.product_product_4b')"></field>
         <field name="stream_post_id" ref="social_stream_post_linkedin_3" />
     </record>
 
     <record id="social_stream_post_linkedin_image_3" model="social.stream.post.image">
-        <field name="image_url" eval="'/web/image/product.product/%s/image_512' % ref('social_demo.product_product_4c')"></field>
+        <field name="image_url" eval="'/web/image/product.product/%s/image_512' % ref('product.product_product_4c')"></field>
         <field name="stream_post_id" ref="social_stream_post_linkedin_3" />
     </record>
 

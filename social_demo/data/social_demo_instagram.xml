@@ -25,11 +25,11 @@
         <field name="message">Get 20% out of your purchases on https://mycompany.com/shop
     Better run to our website while it lasts 🏃</field>
         <field name="published_date" eval="time.strftime('%Y-%m-%d 09:00:00')"/>
-        <field name="twitter_profile_image_url" eval="'/web/image/res.partner/%s/image_128' % ref('social_demo.res_partner_1')" />
+        <field name="twitter_profile_image_url" eval="'/web/image/res.partner/%s/image_128' % ref('base.res_partner_1')" />
     </record>
 
     <record id="social_stream_post_instagram_image_1" model="social.stream.post.image">
-        <field name="image_url" eval="'/web/image/product.product/%s/image_512' % ref('social_demo.product_product_4')"></field>
+        <field name="image_url" eval="'/web/image/product.product/%s/image_512' % ref('product.product_product_4')"></field>
         <field name="stream_post_id" ref="social_stream_post_instagram_1" />
     </record>
 </data>
