@@ -1451,7 +1451,7 @@ class BankRecWidget(models.Model):
             st_line_ctx.partner_bank_id = st_line._find_or_create_bank_account() or st_line.partner_bank_id
 
         # Refresh analytic lines.
-        move.line_ids.analytic_line_ids.with_context(force_analytic_line_delete=True).unlink()
+        move.line_ids.analytic_line_ids.unlink()
         move.line_ids.with_context(validate_analytic=True)._create_analytic_lines()
 
     @contextmanager
