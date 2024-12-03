@@ -16,6 +16,8 @@ import { AppMenuEditor } from "@web_studio/client_action/editor/app_menu_editor/
 import { NewModelItem } from "@web_studio/client_action/editor/new_model_item/new_model_item";
 import { StudioNavbar } from "@web_studio/client_action/navbar/navbar";
 import { leaveStudio, openStudio, registerStudioDependencies } from "./helpers";
+import { contains } from "@web/../tests/utils";
+import { Deferred } from "@web/core/utils/concurrency";
 
 const serviceRegistry = registry.category("services");
 let target;
@@ -394,5 +396,27 @@ QUnit.module("Studio > navbar coordination", (hooks) => {
             2
         );
         assert.containsOnce(target, ".o_studio .o_menu_sections .o_menu_sections_more");
+    });
+
+    QUnit.test("concurrency: open studio while loading the views", async (assert) => {
+        const def = new Deferred();
+        const mockRPC = async (route, args) => {
+            if (args.method === "get_views") {
+                await def;
+            }
+        };
+        serverData.menus[1].actionID = 1;
+        serverData.actions[1].xml_id = "action_xml_id";
+        await createEnterpriseWebClient({ serverData, mockRPC });
+        assert.containsOnce(target, ".o_web_studio_navbar_item button:not(.o_disabled)");
+
+        await click(target.querySelector(".o_app[data-menu-xmlid=menu_1]"));
+        assert.containsOnce(target, ".o_web_studio_navbar_item.o_disabled");
+
+        await openStudio(target);
+        def.resolve();
+        await contains(".o_kanban_view");
+        assert.containsOnce(target, ".o_web_studio_navbar_item button:not(.o_disabled)");
+        assert.containsNone(target, ".o_web_studio_editor_manager");
     });
 });
