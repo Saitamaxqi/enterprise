@@ -575,3 +575,15 @@ class TestCaseDocuments(TransactionCaseDocuments):
         shortcut_1 = self.document_txt.action_create_shortcut(location_folder_id=self.folder_b.id)
         shortcut_2 = shortcut_1.action_create_shortcut(location_folder_id=False)
         self.assertEqual(shortcut_2.folder_id.id, False)
+
+    def test_document_upload_from_chatter(self):
+        folder = self.env['documents.document'].create([
+            {'type': 'folder', 'name': 'folder', 'access_internal': 'view'}
+        ])
+        attachment = self.env['ir.attachment'].create({
+            'datas': GIF,
+            'name': 'TestAttachment.gif',
+            'res_model': 'documents.document',
+            'res_id':folder.id
+        })
+        self.assertNotEqual(attachment.name, folder.name,'the folder name should not change')

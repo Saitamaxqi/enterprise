@@ -53,8 +53,9 @@ class IrAttachment(models.Model):
         """
         # Special case for documents
         if vals.get('res_model') == 'documents.document' and vals.get('res_id'):
-            document = self.env['documents.document'].browse(vals['res_id'])
-            if document.exists() and not document.attachment_id:
+            document = self.env['documents.document'].search_fetch(
+                [('id', '=', vals['res_id'])], [])
+            if document and not document.attachment_id and document.type == 'binary':
                 document.attachment_id = self[0].id
             return False
 
