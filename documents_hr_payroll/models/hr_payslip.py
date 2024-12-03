@@ -23,6 +23,9 @@ class HrPayslip(models.Model):
     def _check_create_documents(self):
         return self.company_id.documents_hr_settings and super()._check_create_documents()
 
+    def _get_email_template(self):
+        return super()._get_email_template() if self._check_create_documents() else None
+
     @api.model
     def _cron_generate_pdf(self, batch_size=False):
         is_rescheduled = super()._cron_generate_pdf(batch_size=batch_size)
