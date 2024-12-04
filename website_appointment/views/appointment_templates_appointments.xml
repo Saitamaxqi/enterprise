@@ -187,42 +187,39 @@
 
     <!-- Top bar -->
     <template id="website_calendar_index_topbar" name="Topbar">
-        <nav class="pt-5 pb-4 d-print-none">
-            <div class="container">
-                <div class="d-flex flex-wrap align-items-center justify-content-between w-100" t-if="appointment_types">
-                    <h4>Choose your appointment</h4>
-                    <div class="d-flex w-100 w-md-auto">
-                        <t t-call="website.website_search_box_input">
-                            <t t-set="_form_classes" t-valuef="w-100 w-md-auto"/>
-                            <t t-set="_classes" t-valuef="#{_classes}"/>
-                            <t t-set="_input_classes" t-valuef="bg-light"/>
-                            <t t-set="_submit_classes" t-valuef="btn-light"/>
-                            <t t-set="search_type" t-valuef="appointments"/>
-                            <t t-set="action" t-valuef="/appointment"/>
-                            <t t-set="display_description" t-valuef="true"/>
-                            <t t-set="display_detail" t-valuef="false"/>
-                            <t t-set="display_image" t-valuef="false"/>
-                            <t t-set="placeholder">Search...</t>
-                            <t t-set="search" t-value="current_search"/>
-                            <t t-foreach="searches" t-as="search">
-                                <input t-if="item != 'search' and item_value != 'all'" type="hidden"
-                                    t-att-name="item" t-att-value="item_value"/>
-                            </t>
-                            <input type="hidden" name="filter_appointment_type_ids" t-att-value="filter_appointment_type_ids"/>
-                            <input type="hidden" name="filter_staff_user_ids" t-att-value="filter_staff_user_ids"/>
-                            <input type="hidden" name="filter_resource_ids" t-att-value="filter_resource_ids"/>
-                            <input type="hidden" name="invite_token" t-att-value="invite_token"/>
-                            <t t-out="0"/>
+        <div class="container">
+            <section class="d-flex d-print-none align-items-center justify-content-lg-end flex-wrap gap-2 mt-4 mb-3" t-if="appointment_types">
+                <h2 class="me-auto mb-0 h4">Choose your appointment</h2>
+                <div class="d-flex w-100 w-lg-25">
+                    <t t-call="website.website_search_box_input">
+                        <t t-set="_form_classes" t-valuef="flex-grow-1"/>
+                        <t t-set="_classes" t-valuef="#{_classes}"/>
+                        <t t-set="_input_classes" t-valuef="bg-light"/>
+                        <t t-set="_submit_classes" t-valuef="btn-light"/>
+                        <t t-set="search_type" t-valuef="appointments"/>
+                        <t t-set="action" t-valuef="/appointment"/>
+                        <t t-set="display_description" t-valuef="true"/>
+                        <t t-set="display_detail" t-valuef="false"/>
+                        <t t-set="placeholder">Search...</t>
+                        <t t-set="search" t-value="current_search"/>
+                        <t t-foreach="searches" t-as="search">
+                            <input t-if="item != 'search' and item_value != 'all'" type="hidden"
+                                t-att-name="item" t-att-value="item_value"/>
                         </t>
-                    </div>
+                        <input type="hidden" name="filter_appointment_type_ids" t-att-value="filter_appointment_type_ids"/>
+                        <input type="hidden" name="filter_staff_user_ids" t-att-value="filter_staff_user_ids"/>
+                        <input type="hidden" name="filter_resource_ids" t-att-value="filter_resource_ids"/>
+                        <input type="hidden" name="invite_token" t-att-value="invite_token"/>
+                        <t t-out="0"/>
+                    </t>
                 </div>
-            </div>
-        </nav>
+            </section>
+        </div>
     </template>
 
     <template id="appointments_cards" name="Appointments Cards">
         <div t-if="not appointment_types" class="col-12 o_appointment_not_found">
-            <div class="alert alert-info text-center d-none" groups="appointment.group_appointment_manager">
+            <div class="alert alert-info text-center d-none mt-4" groups="appointment.group_appointment_manager">
                 <p class="m-0">Use the top button '<b>+ New</b>' to create an appointment type.</p>
             </div>
             <div class="o_appointment_svg mx-auto text-center py-3 w-75">
