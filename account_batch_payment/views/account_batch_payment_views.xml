@@ -159,18 +159,18 @@ if records:
                     <field name="currency_id"/>
                     <templates>
                         <t t-name="card">
-                            <div class="row mb4 fw-bold">
-                                <field name="name" class="col-6" readonly="state != 'draft'"/>
-                                <div class="col-6 text-end">
-                                    <i class="fa fa-clock-o" aria-label="Date" role="img" title="Date"/> <field name="date"/>
-                                </div>
+                            <div class="d-flex align-items-baseline mb-2">
+                                <field name="name" class="fw-bolder fs-5 me-2" readonly="state != 'draft'"/>
+                                <field name="amount" widget="monetary" class="fw-bolder ms-auto flex-shrink-0"/>
                             </div>
-                            <div class="row">
-                                <field name="amount" class="col-6" widget='monetary'/>
-                                <div class="col-6">
-                                    <field name="state" class="float-end" widget="label_selection" options="{'classes': {'new': 'default', 'sent': 'default', 'reconciled': 'success'}}"/>
+                             <footer class="align-items-end">
+                                <div class="d-flex flex-wrap gap-1 text-muted text-nowrap">
+                                    <field name="date"/>
+                                    <field name="activity_ids" widget="kanban_activity"/>
                                 </div>
-                            </div>
+                                <field name="state" class="ms-auto" widget="label_selection"
+                                       options="{'classes': {'new': 'default', 'sent': 'default', 'reconciled': 'success'}}"/>
+                            </footer>
                         </t>
                     </templates>
                 </kanban>
