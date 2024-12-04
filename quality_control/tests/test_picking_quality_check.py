@@ -964,3 +964,50 @@ class TestQualityCheck(TestQualityCommon):
         self.assertEqual(len(backorder.check_ids), 1)
         backorder.check_ids.do_pass()
         self.assertTrue(backorder.check_ids.quality_state, 'pass')
+
+    def test_quality_check_with_scrapped_moves(self):
+        """
+        Test that a quality check is not created for scrapped moves.
+        """
+        self.env['quality.point'].create({
+            'picking_type_ids': [Command.link(self.picking_type_id)],
+            'test_type_id': self.env.ref('quality_control.test_type_measure').id,
+            'measure_on': 'operation',
+        })
+        self.product_3.is_storable = True
+        # Create incoming shipment.
+        picking_in = self.env['stock.picking'].create({
+            'picking_type_id': self.picking_type_id,
+            'partner_id': self.partner_id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id,
+        })
+        self.env['stock.move'].create({
+            'name': self.product_3.name,
+            'product_id': self.product_3.id,
+            'product_uom_qty': 2,
+            'product_uom': self.product_3.uom_id.id,
+            'picking_id': picking_in.id,
+            'location_id': self.location_id,
+            'location_dest_id': self.location_dest_id,
+        })
+        # Confirm incoming shipment.
+        picking_in.action_confirm()
+        # Check Quality Check for incoming shipment is created
+        self.assertEqual(len(picking_in.check_ids), 1)
+        # open the wizard to do the checks
+        action = picking_in.check_ids.action_open_quality_check_wizard()
+        wizard = Form(self.env[action['res_model']].with_context(action['context'])).save()
+        self.assertEqual(len(wizard.check_ids), 1)
+        wizard.do_fail()
+        self.assertEqual(picking_in.check_ids.quality_state, 'fail')
+
+        scrap = self.env['stock.scrap'].create({
+            'picking_id': picking_in.id,
+            'product_id': self.product_3.id,
+            'product_uom_id': self.product_3.uom_id.id,
+            'scrap_qty': 5.0,
+        })
+        scrap.do_scrap()
+        self.assertEqual(len(picking_in.move_ids), 2)
+        self.assertEqual(len(picking_in.check_ids), 1)
