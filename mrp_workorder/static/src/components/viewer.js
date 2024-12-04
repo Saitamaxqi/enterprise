@@ -1,4 +1,4 @@
-import { getGoogleSlideUrl } from "@mrp/views/fields/google_slides_viewer";
+import { getGoogleSlideUrl } from "@web/views/fields/google_slide_viewer/google_slide_viewer";
 import { _t } from "@web/core/l10n/translation";
 import { useService } from "@web/core/utils/hooks";
 import { url } from "@web/core/utils/urls";

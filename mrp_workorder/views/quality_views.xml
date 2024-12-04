@@ -25,7 +25,7 @@
             </field>
             <xpath expr="//field[@name='note']" position="after">
                 <field name="worksheet_document" help="Upload your PDF file." widget="pdf_viewer" invisible="source_document == 'operation'"/>
-                <field name="worksheet_url" placeholder="Google Slide Link" widget="embed_viewer" invisible="source_document == 'operation'"/>
+                <field name="worksheet_url" placeholder="Google Slide Link" widget="google_slide_viewer" invisible="source_document == 'operation'"/>
             </xpath>
         </field>
     </record>
