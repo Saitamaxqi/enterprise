@@ -46,18 +46,28 @@ registry.category("web_tour.tours").add("helpdesk_tour", {
             trigger: ".o_form_editable",
         },
         {
+    isActive: ["manual"],
+    trigger: ".o_field_widget[name='partner_id']",
+    content: markup(_t('Select the <b>customer</b> of your ticket.')),
+    tooltipPosition: "top",
+    run: "click",
+        },
+        {
+    isActive: ["auto"],
     trigger: 'div[name=partner_id] input',
-    content: _t('Select the <b>customer</b> of your ticket.'),
+    content: markup(_t('Select the <b>customer</b> of your ticket.')),
     tooltipPosition: 'top',
-            run: "edit Deco",
+            run: "edit Admin",
         },
         {
             isActive: ["auto"],
             trigger: ".o_form_editable",
         },
         {
-    trigger: 'a.dropdown-item:contains(Deco)',
+    isActive: ["auto"],
+    trigger: ".ui-autocomplete > li > a:not(:has(i.fa))",
             run: "click",
+            tooltipPosition: 'right',
         },
         {
             isActive: ["auto"],
@@ -74,7 +84,7 @@ registry.category("web_tour.tours").add("helpdesk_tour", {
             trigger: ".o_form_view",
         },
         {
-    trigger: 'span:contains(SAP is bad, paid by Odoo)',
+    trigger: '.o_kanban_record',
     content: _t('Open the ticket.'),
     tooltipPosition: 'bottom',
             run: "click",
