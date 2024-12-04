@@ -8,8 +8,14 @@ from odoo import fields, models
 class HrEmployee(models.Model):
     _inherit = "hr.employee"
 
-    l10n_ae_annual_leave_days_taken = fields.Float(string="Annual Leave Days Taken", compute="_compute_l10n_ae_annual_leave_days")
-    l10n_ae_annual_leave_days_total = fields.Float(string="Annual Leave Days Total", compute="_compute_l10n_ae_annual_leave_days")
+    l10n_ae_annual_leave_days_taken = fields.Float(
+        string="Annual Leave Days Taken",
+        groups="hr.group_hr_user",
+        compute="_compute_l10n_ae_annual_leave_days")
+    l10n_ae_annual_leave_days_total = fields.Float(
+        string="Annual Leave Days Total",
+        groups="hr.group_hr_user",
+        compute="_compute_l10n_ae_annual_leave_days")
 
     def _l10n_ae_get_worked_years(self):
         self.ensure_one()
