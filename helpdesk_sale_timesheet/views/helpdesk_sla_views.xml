@@ -16,7 +16,7 @@
                 <label for="product_ids" invisible="not use_helpdesk_sale_timesheet"/>
                 <div invisible="not use_helpdesk_sale_timesheet">
                     <field name="product_ids" widget="many2many_tags"
-                        options="{'no_create_edit': True, 'no_create': True, 'color_field': 'color', 'no_edit_color': True}"
+                        options="{'no_create_edit': True, 'no_create': True, 'color_field': 'color', 'no_edit_color': True, 'edit_tags': True}"
                         groups="sales_team.group_sale_salesman"/>
                 </div>
             </xpath>

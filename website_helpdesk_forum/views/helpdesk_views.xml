@@ -29,7 +29,7 @@
             <xpath expr="//field[@name='use_website_helpdesk_forum']" position="after">
                 <div class="mt16" invisible="not use_website_helpdesk_forum">
                     <label for="website_forum_ids"/>
-                    <field name="website_forum_ids" widget="many2many_tags"/>
+                    <field name="website_forum_ids" widget="many2many_tags" options="{'edit_tags': True}"/>
                 </div>
             </xpath>
         </field>
