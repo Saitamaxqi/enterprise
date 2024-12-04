@@ -149,6 +149,24 @@ class L10n_InReportHandler(models.AbstractModel):
         ).ids
         return 'l10n_in_reports.out_of_fiscal_year_reversed_moves_warning', out_of_fiscal_year_reversed_moves
 
+    @api.model
+    def _get_invalid_tds_tcs_moves(self, options, report):
+        AccountMove = self.env['account.move']
+        domain = [
+            ('date', '>=', options['date']['date_from']),
+            ('date', '<=', options['date']['date_to']),
+            ('state', '=', 'posted'),
+            ('commercial_partner_id.l10n_in_pan', '=', False),
+        ]
+        invalid_move_ids = []
+        if report.id == self.env.ref("l10n_in.tds_report").id:
+            domain += [('invoice_line_ids.tax_ids.l10n_in_tds_tax_type', '=', 'purchase')]
+            invalid_move_ids = AccountMove.search(domain).l10n_in_withholding_ref_move_id.ids
+        if report.id == self.env.ref("l10n_in.tcs_report").id:
+            domain += [('invoice_line_ids.tax_ids.l10n_in_section_id.tax_source_type', '=', 'tcs')]
+            invalid_move_ids = AccountMove.search(domain).ids
+        return 'l10n_in_reports.missing_pan_tds_tcs_warning', invalid_move_ids
+
     def _dynamic_lines_generator(self, report, options, all_column_groups_expression_totals, warnings=None):
         if warnings is not None:
             hsn_base_line_expression = self.env.ref('l10n_in_reports.account_report_gstr1_hsn_taxable_amount_balance')
@@ -171,7 +189,8 @@ class L10n_InReportHandler(models.AbstractModel):
                 self._get_invalid_service_hsn_products(aml_domain),
                 self._get_invalid_goods_hsn_products(aml_domain),
                 self._get_invalid_uqc_codes(aml_domain),
-                self._get_out_of_fiscal_year_reversed_moves(options)
+                self._get_out_of_fiscal_year_reversed_moves(options),
+                self._get_invalid_tds_tcs_moves(options, report),
             ]
 
             for warning_template_ref, wrong_data in all_checks:
@@ -220,3 +239,7 @@ class L10n_InReportHandler(models.AbstractModel):
     @api.model
     def open_out_of_fiscal_year_reversed_moves(self, options, params):
         return self._l10n_in_open_action(_('Credit Notes'), 'account.move', [(False, 'list'), (False, 'form')], params)
+
+    @api.model
+    def open_missing_pan_tds_tcs_moves(self, options, params):
+        return self._l10n_in_open_action(_('Journal Entries'), 'account.move', [(False, 'list'), (False, 'form')], params)

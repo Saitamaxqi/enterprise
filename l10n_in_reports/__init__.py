@@ -1,4 +1,5 @@
 from . import models
+from . import wizard
 
 
 def _l10n_in_reports_post_init(env):
