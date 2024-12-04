@@ -8,7 +8,7 @@ from math import log10
 from odoo import api, fields, models, _
 from odoo.exceptions import ValidationError
 from odoo.tools.date_utils import add, subtract
-from odoo.tools.float_utils import float_round
+from odoo.tools.float_utils import float_round, float_compare
 from odoo.osv.expression import OR, AND, FALSE_DOMAIN
 from collections import OrderedDict
 
@@ -550,11 +550,10 @@ class MrpProductionSchedule(models.Model):
                             related_date = max(subtract(parent_date, days=lead_time_ignore_components), fields.Date.today())
                             index = next(i for i, (dstart, dstop) in enumerate(date_range) if related_date <= dstop)
                             related_key = (date_range[index], product, production_schedule.warehouse_id)
-                            demand_qty_dict[related_key][related_date] += ratio * parent_quantity
-                            subproduct_indirect_demand += ratio * parent_quantity
-                    if (ratio * forecast_values['replenish_qty']) != subproduct_indirect_demand:
-                        parent_date = date_stop if (ratio * forecast_values['replenish_qty']) < subproduct_indirect_demand else date_start
-                        related_date = max(subtract(parent_date, days=lead_time_ignore_components), fields.Date.today())
+                            demand_qty_dict[related_key][related_date] += ratio * (parent_quantity - forecast_values['starting_inventory_qty'])
+                            subproduct_indirect_demand += ratio * (parent_quantity - forecast_values['starting_inventory_qty'])
+                    if float_compare((ratio * forecast_values['replenish_qty']), subproduct_indirect_demand, precision_rounding=rounding) != 0:
+                        related_date = max(subtract(date_start, days=lead_time_ignore_components), fields.Date.today())
                         index = next(i for i, (dstart, dstop) in enumerate(date_range) if related_date <= dstop)
                         related_key = (date_range[index], product, production_schedule.warehouse_id)
                         demand_qty_dict[related_key][related_date] += (ratio * forecast_values['replenish_qty']) - subproduct_indirect_demand

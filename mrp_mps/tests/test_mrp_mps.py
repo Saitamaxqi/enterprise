@@ -482,6 +482,20 @@ class TestMpsMps(common.TransactionCase):
         self.assertListEqual([f['forecast_qty'] for f in mps_table['forecast_ids']], [20, 20, 0])
         self.assertListEqual([f['indirect_demand_qty'] for f in mps_drawer['forecast_ids']], [30, 10, 0])
 
+    def test_lead_times_4(self):
+        """ If the top product has a lead time and a max replenish, ensure that the
+        indirect demand of the component is correctly distributed across multiple
+        period if applicable."""
+        self.env.company.manufacturing_period = 'month'
+        self.table.write({
+            'route_ids': [Command.set([self.ref('mrp.route_warehouse0_manufacture')])]
+        })
+        self.bom_table.produce_delay = 1
+        self.mps_table.write({'max_to_replenish_qty': 10, 'enable_max_replenish': True})
+        self.mps_table.set_forecast_qty(1, 40)
+        mps_drawer = self.mps_drawer.get_production_schedule_view_state()[0]
+        self.assertListEqual([f['indirect_demand_qty'] for f in mps_drawer['forecast_ids'][:5]],[10, 10, 10, 10, 0])
+
     def test_indirect_demand(self):
         """ On a multiple BoM relation, ensure that the replenish quantity on
         a production schedule impact the indirect demand on other production
@@ -1226,6 +1240,7 @@ class TestMpsMps(common.TransactionCase):
         self.assertEqual(leg_forecast_8['starting_inventory_qty'], 0)
         self.assertEqual(screw_forecast_1['replenish_qty'], 60)
 
+    @freeze_time('2025-01-01')
     def test_starting_inventory_qty(self):
         self.env['stock.quant'].create({
             'product_id': self.table.id,
@@ -1259,6 +1274,47 @@ class TestMpsMps(common.TransactionCase):
         self.assertEqual(table_forecast_7['starting_inventory_qty'], 0)
         self.assertEqual(leg_forecast_3['replenish_qty'], 8)
         self.assertEqual(screw_forecast_3['replenish_qty'], 40)
+
+        # test with lead times
+        self.bom_table.produce_delay = 1
+        self.table.write({'route_ids': [Command.set([self.ref('mrp.route_warehouse0_manufacture')])]})
+        mps_table, mps_table_leg, mps_screw = (self.mps_table | self.mps_table_leg | self.mps_screw).get_production_schedule_view_state()
+        table_forecast_7 = mps_table['forecast_ids'][6]
+        leg_forecast_2 = mps_table_leg['forecast_ids'][1]
+        screw_forecast_2 = mps_screw['forecast_ids'][1]
+        self.assertEqual(table_forecast_7['starting_inventory_qty'], 0)
+        self.assertEqual(leg_forecast_2['replenish_qty'], 8)
+        self.assertEqual(screw_forecast_2['replenish_qty'], 40)
+
+        # test with lead times and period switches
+        # Switch period type to week
+        mps_table_leg, mps_screw = (self.mps_table_leg | self.mps_screw).get_production_schedule_view_state(period_scale='week')
+        leg_forecast_8 = mps_table_leg['forecast_ids'][7] # 3rd week of February 2025
+        leg_forecast_9 = mps_table_leg['forecast_ids'][8] # last week of February 2025
+        screw_forecast_9 = mps_screw['forecast_ids'][8] # last week of February 2025
+        self.assertEqual(leg_forecast_8['indirect_demand_qty'], 0)
+        self.assertEqual(leg_forecast_9['indirect_demand_qty'], 8)
+        self.assertEqual(screw_forecast_9['indirect_demand_qty'], 40)
+
+        # While in week view, set new forecasted demand
+        self.mps_table.set_forecast_qty(8, 0, period_scale='week') # last week of February 2025 (ends on March 2nd), set to 0
+        self.mps_table.set_forecast_qty(9, 3, period_scale='week') # first FULL week of March 2025, set to 3
+        mps_table_leg, mps_screw = (self.mps_table_leg | self.mps_screw).get_production_schedule_view_state(period_scale='week')
+        leg_forecast_9 = mps_table_leg['forecast_ids'][8] # last week of February 2025
+        screw_forecast_9 = mps_screw['forecast_ids'][8] # last week of February 2025
+        self.assertEqual(leg_forecast_9['indirect_demand_qty'], 8)
+        self.assertEqual(screw_forecast_9['indirect_demand_qty'], 40)
+
+        # Switch period type back to month
+        # The indirect demand should be on the same month as the forecasted
+        # demand because the previous week is still part of the same month.
+        mps_table_leg, mps_screw = (self.mps_table_leg | self.mps_screw).get_production_schedule_view_state(period_scale='month')
+        leg_forecast_2 = mps_table_leg['forecast_ids'][1] # February 2025
+        leg_forecast_3 = mps_table_leg['forecast_ids'][2] # March 2025
+        screw_forecast_3 = mps_screw['forecast_ids'][2] # March 2025
+        self.assertEqual(leg_forecast_2['indirect_demand_qty'], 0)
+        self.assertEqual(leg_forecast_3['indirect_demand_qty'], 8)
+        self.assertEqual(screw_forecast_3['indirect_demand_qty'], 40)
 
     def test_multi_options(self):
         """ Test applying multiple settings all at once:
