@@ -50,7 +50,7 @@ export class DocumentsKanbanController extends KanbanController {
     documentsViewHelpers() {
         return {
             getSelectedDocumentsElements: () =>
-                this.root.el.querySelectorAll(".o_kanban_record.o_record_selected"),
+                this.root?.el?.querySelectorAll(".o_kanban_record.o_record_selected") || [],
             setPreviewStore: (previewStore) => {
                 this.documentStates.previewStore = previewStore;
             },

@@ -376,7 +376,7 @@ function useDocumentsViewFilePreviewer({
                 if (elements.length) {
                     elements[0].focus();
                 }
-                if (component.root.el) {
+                if (component.root?.el) {
                     component.root.el
                         .querySelector(".o_documents_view")
                         .classList.remove("overflow-hidden");

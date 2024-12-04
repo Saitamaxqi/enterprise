@@ -29,9 +29,9 @@ export class DocumentsListController extends ListController {
     documentsViewHelpers() {
         return {
             getSelectedDocumentsElements: () =>
-                this.root.el.querySelectorAll(
+                this.root?.el?.querySelectorAll(
                     ".o_data_row.o_data_row_selected .o_list_record_selector"
-                ),
+                ) || [],
             setPreviewStore: (previewStore) => {
                 this.documentStates.previewStore = previewStore;
             },
