@@ -47,7 +47,7 @@ function isStudioEditable(action) {
         // home_menu is somehow customizable (app creator)
         return action.tag === "menu" ? true : false;
     }
-    if (action.type === "ir.actions.act_window" && action.xml_id) {
+    if (action.type === "ir.actions.act_window") {
         if (action.res_model.indexOf("settings") > -1 && action.res_model.indexOf("x_") !== 0) {
             return false; // settings views aren't editable; but x_settings is
         }
@@ -247,7 +247,19 @@ export const studioService = {
                         );
                     }
                 } else {
-                    actionStack = [{ action: action.path || action.id }];
+                    let toLoad;
+                    const resIds = getResIds(action.res_id);
+                    if (action.id) {
+                        toLoad = { action: action.path || action.id };
+                    } else {
+                        toLoad = {
+                            displayName: action.name,
+                            model: action.res_model,
+                            resId: resIds[0] || "new",
+                        };
+                    }
+                    actionStack = [toLoad];
+                    controllerState = { resIds, resId: resIds[0] };
                 }
 
                 if (!isStudioEditable(action)) {

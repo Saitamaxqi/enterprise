@@ -34,6 +34,8 @@ import { selectorContains } from "@web_studio/../tests/legacy/client_action/view
 import { redirect } from "@web/core/utils/urls";
 import { FormEditorRenderer } from "@web_studio/client_action/view_editor/editors/form/form_editor_renderer/form_editor_renderer";
 import { FormEditorCompiler } from "@web_studio/client_action/view_editor/editors/form/form_editor_compiler";
+import { browser } from "@web/core/browser/browser";
+import { delay } from "@web/core/utils/concurrency";
 
 // -----------------------------------------------------------------------------
 // Tests
@@ -1199,5 +1201,74 @@ QUnit.module("Studio", (hooks) => {
         });
         await contains(".o_web_studio_view_renderer .o_form_view");
         assert.verifySteps(["onchange"]);
+    });
+
+    QUnit.test("can edit ir.actions.act_window without id", async (assert) => {
+        serverData.models.partner.fields.m2o = {
+            type: "many2one",
+            relation: "pony",
+        };
+        serverData.models.partner.records = [
+            {
+                id: 1,
+                m2o: 1,
+            },
+        ];
+        serverData.models.pony.records = [
+            {
+                id: 1,
+                name: "maggot brain",
+            },
+        ];
+        serverData.views["partner,false,form"] = `<form><field name="m2o"/></form>`;
+        await createEnterpriseWebClient({
+            serverData,
+            mockRPC: (route, args) => {
+                if (args.model === "pony" && args.method === "get_formview_action") {
+                    return {
+                        type: "ir.actions.act_window",
+                        res_model: "pony",
+                        target: "current",
+                        views: [[false, "form"]],
+                        res_id: args.args[0][0],
+                    };
+                }
+            },
+        });
+        await click(target, "[data-menu-xmlid='app_1']");
+        await contains(".o_kanban_view");
+        await click(target, ".o_kanban_record:not(.o_kanban_ghost)");
+        await contains(".o_form_view");
+        await click(target, ".o_field_many2one_selection .o_external_button");
+        await contains(".o_last_breadcrumb_item", { text: "maggot brain" });
+        // wait macrotask for the router to flush
+        await delay();
+        await click(target, ".o_web_studio_navbar_item button");
+        await contains(".o_web_studio_view_renderer .o_form_view");
+        await contains(".o_field_widget[name='name']", { text: "maggot brain" });
+        assert.strictEqual(browser.location.pathname, "/odoo/action-4/1/m-pony/1/studio");
+        assert.strictEqual(browser.location.search, "?mode=editor&_tab=views&_view_type=form");
+
+        // Enter actionEditor: it should be essentially disabled, with only
+        // the form view thumbnail that is clickable
+        await click(target.querySelector(".o_menu_sections li a"));
+        await contains(".o_web_studio_action_editor");
+        assert.containsNone(target, ".o_web_studio_sidebar");
+        assert.containsOnce(
+            target,
+            ".o_web_studio_thumbnail_item:not(.disabled.pe-none):has(img[data-alt='View Form'])"
+        );
+        assert.containsN(target, ".o_web_studio_thumbnail_item.pe-none", 10);
+
+        await click(target, ".o_web_studio_leave");
+        await contains(".o_form_view .o_field_widget[name='name'] input", {
+            value: "maggot brain",
+        });
+        assert.strictEqual(
+            target.querySelector(".o_breadcrumb").textContent,
+            "Partners Action 4Unnamedmaggot brain"
+        );
+        assert.strictEqual(browser.location.pathname, "/odoo/action-4/1/m-pony/1");
+        assert.strictEqual(browser.location.search, "");
     });
 });

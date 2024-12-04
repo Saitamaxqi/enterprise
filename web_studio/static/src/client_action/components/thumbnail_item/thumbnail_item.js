@@ -5,6 +5,7 @@ export class ThumbnailItem extends Component {
     static defaultProps = {
         showMoreMenu: true,
         onClick: () => {},
+        canClick: true,
     };
     static template = "web_studio.ThumbnailItem";
     static props = {
@@ -12,6 +13,7 @@ export class ThumbnailItem extends Component {
         showMoreMenu: { type: Boolean, optional: true },
         icon: { type: Object },
         onClick: { type: Function, optional: true },
+        canClick: { type: Boolean, optional: true },
         slots: true,
     };
     static components = { Dropdown };

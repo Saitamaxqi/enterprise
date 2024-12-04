@@ -2,7 +2,7 @@
 <templates>
 
 <t t-name="web_studio.ThumbnailItem">
-    <div t-attf-class="o_web_studio_thumbnail_item shadow position-relative d-flex flex-column justify-content-center align-items-center bg-light border rounded-2 {{ this.props.className || '' }}" t-on-click="this.props.onClick">
+    <div t-attf-class="o_web_studio_thumbnail_item shadow position-relative d-flex flex-column justify-content-center align-items-center bg-light border rounded-2 {{ this.props.className || '' }} {{ !this.props.canClick ? 'pe-none' : '' }}" t-on-click="this.props.onClick">
         <div class="o_web_studio_thumbnail w-100 cursor-pointer d-flex justify-content-center align-items-center">
             <img class="m-auto" t-att-src="this.props.icon.src" t-att-alt="this.props.icon.alt"/>
         </div>
@@ -12,7 +12,7 @@
             </span>
             <t t-if="hasDropdown">
                 <Dropdown>
-                    <button class="o_web_studio_more cursor-pointer p-0 rounded border-0 bg-light">
+                    <button class="o_web_studio_more cursor-pointer p-0 rounded border-0 bg-light pe-auto">
                         <i class="fa fa-ellipsis-v"/>
                     </button>
                     <t t-set-slot="content">
