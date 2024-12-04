@@ -88,7 +88,7 @@ class HrPayslipEmployeeDepatureNotice(models.TransientModel):
     def _compute_start_notice_period(self):
         public_holiday_type = self.env.ref('l10n_be_hr_payroll.work_entry_type_bank_holiday')
         for notice in self:
-            if notice.notice_respect == 'without':
+            if notice.notice_respect == 'without' or notice.departure_reason_code in (350, 351):
                 notice.start_notice_period = notice.departure_date
             elif notice.departure_reason_code == 342:
                 # We can only take the next monday that has at least 3 calendar days (Monday to Saturday except public
