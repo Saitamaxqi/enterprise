@@ -100,7 +100,7 @@ export class CohortRenderer extends Component {
             // FIXME: [SAD/JPP] some data seems to be missing from the export in master. (check the python)
             await download({
                 url: "/web/cohort/export",
-                data: { data: JSON.stringify(data) },
+                data: { data: new Blob([JSON.stringify(data)], { type: "application/json" }) },
             });
         } finally {
             this.env.services.ui.unblock();

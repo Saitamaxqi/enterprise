@@ -370,8 +370,8 @@ test("export cohort", async () => {
     expect.assertions(6);
 
     patchWithCleanup(download, {
-        _download: (options) => {
-            const data = JSON.parse(options.data.data);
+        _download: async (options) => {
+            const data = JSON.parse(await options.data.data.text());
             expect(options.url).toBe("/web/cohort/export");
             expect(data.interval_string).toBe("Day");
             expect(data.measure_string).toBe("Count");

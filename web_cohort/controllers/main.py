@@ -4,6 +4,8 @@
 import io
 import json
 
+from werkzeug.datastructures import FileStorage
+
 from odoo import http, _
 from odoo.http import content_disposition, request
 from odoo.tools import osutil
@@ -14,7 +16,7 @@ class WebCohort(http.Controller):
 
     @http.route('/web/cohort/export', type='http', auth='user')
     def export_xls(self, data, **kw):
-        result = json.loads(data)
+        result = json.load(data) if isinstance(data, FileStorage) else json.loads(data)
 
         output = io.BytesIO()
         workbook = xlsxwriter.Workbook(output, {'in_memory': True})
