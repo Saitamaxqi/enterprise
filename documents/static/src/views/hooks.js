@@ -503,10 +503,12 @@ function useDocumentsViewFileUpload() {
         const { upload } = ev.detail;
         const xhr = upload.xhr;
         if (xhr.status !== 200) {
-            handleUploadError(_t("status code: %(status)s, message: %(message)s", {
-                status: xhr.status,
-                message: xhr.response,
-            }));
+            handleUploadError({
+                error: _t("status code: %(status)s, message: %(message)s", {
+                    status: xhr.status,
+                    message: xhr.response,
+                })
+            });
             return
         }
         // Depending on the controller called, the response is different:
