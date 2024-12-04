@@ -568,7 +568,7 @@ const embedKanbanEditArticleSteps = [{ // Create a new article using quick creat
  * See '_toInline' knowledge override in html_field.js
  */
 
-const composeBody = '.modal-dialog:contains(Compose Email) [name="body"]';
+const composeBody = ".modal-dialog:contains(Compose Email) [name=body]";
 const articleCommandComposerSteps = [{ // open the chatter
     trigger: '.btn-chatter',
     run: "click",
@@ -581,16 +581,16 @@ const articleCommandComposerSteps = [{ // open the chatter
 }, ...appendArticleLink(`${composeBody}`, 'EditorCommandsArticle'), { // wait for the block to appear in the editor
     trigger: `${composeBody} .o_knowledge_article_link:contains("EditorCommandsArticle")`,
 }, ...appendArticleLink(`${composeBody}`, 'LinkedArticle', `.o_knowledge_article_link:contains("EditorCommandsArticle")`), { // wait for the block to appear in the editor, after the previous one
-    trigger: `${composeBody} .odoo-editor-editable > p > a:nth-child(2).o_knowledge_article_link:contains("LinkedArticle")[contenteditable="false"]`,
+    trigger: `${composeBody} .odoo-editor-editable a:nth-child(2).o_knowledge_article_link:contains("LinkedArticle")[contenteditable="false"]`,
 }, { // verify that the first block is still there and contenteditable=false
-    trigger: `${composeBody} .odoo-editor-editable > p > a:nth-child(1).o_knowledge_article_link:contains("EditorCommandsArticle")[contenteditable="false"]`,
+    trigger: `${composeBody} .odoo-editor-editable a:nth-child(1).o_knowledge_article_link:contains("EditorCommandsArticle")[contenteditable="false"]`,
 }, { // send the message
     trigger: '.o_mail_send',
     run: "click",
 }, {
-    trigger: '.o_widget_knowledge_chatter_panel .o-mail-Thread .o-mail-Message-body > p > a:nth-child(1).o_knowledge_article_link:contains("EditorCommandsArticle")',
+    trigger: '.o_widget_knowledge_chatter_panel .o-mail-Thread .o-mail-Message-body a:nth-child(1).o_knowledge_article_link:contains("EditorCommandsArticle")',
 }, {
-    trigger: '.o_widget_knowledge_chatter_panel .o-mail-Thread .o-mail-Message-body > p > a:nth-child(2).o_knowledge_article_link:contains("LinkedArticle")',
+    trigger: '.o_widget_knowledge_chatter_panel .o-mail-Thread .o-mail-Message-body a:nth-child(2).o_knowledge_article_link:contains("LinkedArticle")',
 }, { // close the chatter
     trigger: '.btn-chatter',
     run: 'click',
