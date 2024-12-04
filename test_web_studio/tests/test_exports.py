@@ -343,7 +343,7 @@ class TestStudioExports(StudioExportCase):
         )
         export.assertXML(
             "data/x_furnace_types.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(furnace_type)}" model="x_furnace_types">
                 <field name="x_studio_max_temp">1200</field>
                 <field name="x_name">Austenitization</field>
@@ -363,19 +363,19 @@ class TestStudioExports(StudioExportCase):
         export = self.studio_export()
         export.assertFileList("data/test_studio_export_model1.xml")
         export.assertXML("data/test_studio_export_model1.xml", f"""
-            <odoo>
+            <odoo noupdate="1">
                 <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
                     <field name="name">Some record</field>
                 </record>
             </odoo>
         """)
 
-        # Without updatable mode
-        export_model.updatable = False
+        # With updatable mode
+        export_model.updatable = True
         export = self.studio_export()
         export.assertFileList("data/test_studio_export_model1.xml")
         export.assertXML("data/test_studio_export_model1.xml", f"""
-            <odoo noupdate="1">
+            <odoo>
                 <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
                     <field name="name">Some record</field>
                 </record>
@@ -416,7 +416,7 @@ class TestStudioExports(StudioExportCase):
         export.assertFileList("demo/test_studio_export_model1.xml")
         export.assertXML(
             "demo/test_studio_export_model1.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
                 <field name="name">Some record</field>
             </record>
@@ -443,7 +443,7 @@ class TestStudioExports(StudioExportCase):
         )
         export.assertXML(
             "data/test_studio_export_model1.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
                 <field name="name">Some record</field>
                 <field name="binary_data" type="base64" file="studio_customization/static/src/binary/test_studio_export_model1/{some_record.id}-binary_data"/>
@@ -460,7 +460,7 @@ class TestStudioExports(StudioExportCase):
         )
         export.assertXML(
             "data/test_studio_export_model1.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
                 <field name="name">Some record</field>
                 <field name="binary_data" type="base64" file="studio_customization/static/src/binary/test_studio_export_model1/{some_record.id}-binary_data"/>
@@ -502,7 +502,7 @@ class TestStudioExports(StudioExportCase):
         )
         export.assertXML(
             "data/test_studio_export_model1.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
                 <field name="name">Some record</field>
                 <field name="attachment_id" ref="{self.get_xmlid(attachment)}"/>
@@ -564,7 +564,7 @@ class TestStudioExports(StudioExportCase):
         )
         export.assertXML(
             "data/test_studio_export_model1.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(some_record)}" model="test.studio_export.model1">
                 <field name="name">Some record</field>
             </record>
@@ -598,7 +598,7 @@ class TestStudioExports(StudioExportCase):
 
         export.assertXML(
             "data/test_studio_export_model2.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model2_record1)}" model="test.studio_export.model2">
                 <field name="name">Some Record</field>
             </record>
@@ -630,7 +630,7 @@ class TestStudioExports(StudioExportCase):
         )
         export.assertXML(
             "data/test_studio_export_model2.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model2_record)}" model="test.studio_export.model2">
                 <field name="name">Some other record</field>
             </record>
@@ -638,7 +638,7 @@ class TestStudioExports(StudioExportCase):
         )
         export.assertXML(
             "demo/test_studio_export_model3.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model3_record)}" model="test.studio_export.model3">
                 <field name="name">Some record</field>
             </record>
@@ -646,7 +646,7 @@ class TestStudioExports(StudioExportCase):
         )
         export.assertXML(
             "demo/test_studio_export_model2.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model2_record)}" model="test.studio_export.model2">
                 <field name="model3_id" ref="{self.get_xmlid(model3_record)}"/>
             </record>
@@ -683,7 +683,7 @@ class TestStudioExports(StudioExportCase):
         )
         export.assertXML(
             "data/test_studio_export_model3.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model3_record)}" model="test.studio_export.model3">
                 <field name="name">Some record</field>
             </record>
@@ -691,7 +691,7 @@ class TestStudioExports(StudioExportCase):
         )
         export.assertXML(
             "data/test_studio_export_model2.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model2_record)}" model="test.studio_export.model2">
                 <field name="name">Some other record</field>
                 <field name="model3_id" ref="{self.get_xmlid(model3_record)}"/>
@@ -734,7 +734,7 @@ class TestStudioExports(StudioExportCase):
 
         export.assertXML(
             "data/test_studio_export_model1.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model1_record)}" model="test.studio_export.model1">
                 <field name="name">Record 1</field>
                 <field name="model2_id" ref="{self.get_xmlid(model2_record)}"/>
@@ -743,7 +743,7 @@ class TestStudioExports(StudioExportCase):
         )
         export.assertXML(
             "data/test_studio_export_model2.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model2_record)}" model="test.studio_export.model2">
                 <field name="name">Record 2</field>
                 <field name="model3_id" ref="{self.get_xmlid(model3_record)}"/>
@@ -752,7 +752,7 @@ class TestStudioExports(StudioExportCase):
         )
         export.assertXML(
             "data/test_studio_export_model3.xml",
-            f"""<odoo>
+            f"""<odoo noupdate="1">
             <record id="{self.get_xmlid(model3_record)}" model="test.studio_export.model3">
                 <field name="name">Record 3</field>
                 <field name="model1_id" ref="{self.get_xmlid(model1_record)}"/>
