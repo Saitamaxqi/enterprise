@@ -17,3 +17,4 @@ from . import res_company
 from . import bank_rec_widget
 from . import bank_rec_widget_line
 from . import ir_ui_menu
+from . import res_currency
