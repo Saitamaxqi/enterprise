@@ -52,6 +52,7 @@
 
                 <MntTotal t-out="format_float(totals_detail['MntTotal'], 2, valid_zero=1)"/>
                 <CantLinDet t-out="totals_detail['CantLinDet']"/>
+                <MontoNF t-out="format_float(totals_detail['MontoNF'], 2)"></MontoNF>
                 <MntPagar t-out="format_float(totals_detail['MntPagar'], 2, valid_zero=1)"/>
             </Totales>
         </Encabezado>
@@ -69,6 +70,16 @@
                 <MontoItem t-out="format_float(item_line['MontoItem'], 2, valid_zero=1)"/>
             </Item>
         </Detalle>
+        <DscRcgGlobal t-if="global_discounts">
+            <DRG_Item t-foreach="global_discounts" t-as="discount">
+                <NroLinDR t-out="discount['NroLinDR']"/>
+                <TpoMovDR t-out="discount['TpoMovDR']"/>
+                <TpoDR t-out="discount['TpoDR']"/>
+                <GlosaDR t-out="discount['GlosaDR']"/>
+                <ValorDR t-out="format_float(discount['ValorDR'], 2)"/>
+                <IndFactDR t-out="discount['IndFactDR']"/>
+            </DRG_Item>
+        </DscRcgGlobal>
         <Referencia t-if="referencia_lines">
             <Referencia t-foreach="referencia_lines" t-as="referencia">
                 <NroLinRef t-out="referencia['NroLinRef']"/>

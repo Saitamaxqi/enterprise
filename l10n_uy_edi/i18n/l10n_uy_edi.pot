@@ -4,10 +4,10 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: Odoo Server 17.0+e\n"
+"Project-Id-Version: Odoo Server 18.0+e\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-02-10 15:20+0000\n"
-"PO-Revision-Date: 2025-02-10 15:20+0000\n"
+"POT-Creation-Date: 2025-02-24 20:42+0000\n"
+"PO-Revision-Date: 2025-02-24 20:42+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid ""
 "\n"
 "\n"
@@ -40,7 +39,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid ""
 "%(dtype)s is not an Uruguayan Identification Type or a Generic one (VAT, "
 "Passport, or Foreign ID). You need to select a valid ID to be able to "
@@ -50,14 +48,12 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_addenda.py:0
-#, python-format
 msgid "%(name)s (%(type)s)"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_addenda.py:0
-#, python-format
 msgid "%(name)s (Mandatory Disclosure - %(type)s)"
 msgstr ""
 
@@ -91,7 +87,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_addenda_ids
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move__l10n_uy_edi_addenda_ids
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_payment__l10n_uy_edi_addenda_ids
 msgid "Addenda & Disclosure"
 msgstr ""
 
@@ -109,7 +104,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_addenda_ids
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_addenda_ids
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_addenda_ids
 msgid ""
 "Addendas and Mandatory Disclosure to add on the CFE. They can be added "
 "either to the issuer, receiver, or CFE document's additional information "
@@ -125,10 +119,9 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid ""
-"All lines should have a VAT tax (only one per line). Check line '%s' (Id "
-"Invoice: %s)"
+"All lines should have a VAT tax (only one per line). Check line "
+"'%(line_name)s' (Id Invoice: %(move_id)s)"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -149,7 +142,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_company.py:0
-#, python-format
 msgid "Branch Code should be only numbers"
 msgstr ""
 
@@ -186,7 +178,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_cfe_state
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move__l10n_uy_edi_cfe_state
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_payment__l10n_uy_edi_cfe_state
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__state
 msgid "CFE Status"
 msgstr ""
@@ -194,13 +185,18 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-#, python-format
 msgid "CODE %(code)s: %(msg)s"
 msgstr ""
 
 #. module: l10n_uy_edi
 #: model_terms:ir.ui.view,arch_db:l10n_uy_edi.res_config_settings_view_form_inherit_l10n_uy_edi
 msgid "Check Credentials"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move_send.py:0
+msgid "Check Invoice(s)"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -248,7 +244,8 @@ msgid "Content"
 msgstr ""
 
 #. module: l10n_uy_edi
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move_send__l10n_uy_edi_checkbox_cfe
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move_send.py:0
 msgid "Create CFE"
 msgstr ""
 
@@ -290,6 +287,19 @@ msgid "Demo"
 msgstr ""
 
 #. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid "Discount"
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid ""
+"Discount with Tax %s can only exist if match with regular line with same tax"
+msgstr ""
+
+#. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_addenda__display_name
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__display_name
 msgid "Display Name"
@@ -325,6 +335,21 @@ msgid "Download Preview XML"
 msgstr ""
 
 #. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid ""
+"Downpayment invoices should not have any taxes, please remove any taxes from"
+" the downpayment line to continue."
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
+msgid ""
+"Downpayment lines should not have any taxes, please remove then to continue"
+msgstr ""
+
+#. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_res_company__l10n_uy_edi_ucfe_env
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_res_config_settings__l10n_uy_edi_ucfe_env
 msgid "EDI environment"
@@ -333,7 +358,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-#, python-format
 msgid "EMPTY response"
 msgstr ""
 
@@ -355,78 +379,68 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
-#, python-format
 msgid "Error connection to Odoo IAP to create Uruware account"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
-#, python-format
 msgid "Error creating the Uruware account. Please contact support: "
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid "Error getting the PDF file: %s"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-#, python-format
 msgid "Error processing the response %(exp_rep)s"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
-#: code:addons/l10n_uy_edi/wizards/account_move_send.py:0
-#, python-format
+#: code:addons/l10n_uy_edi/models/account_move_send.py:0
 msgid "Errors occurred while creating the EDI document (CFE):"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
-#: code:addons/l10n_uy_edi/wizards/account_move_send.py:0
-#, python-format
+#: code:addons/l10n_uy_edi/models/account_move_send.py:0
 msgid "Errors when submitting the e-invoice:"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
-#, python-format
 msgid "Everything is ok"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid ""
-"Export CFE can only have 0%% vat taxes. Check line '%s' (Id Invoice: %s)"
+"Export CFE can only have 0%% vat taxes. Check line '%(line_name)s' (Id "
+"Invoice: %(move_id)s)"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-#, python-format
 msgid "Fault Error - %(msg)s"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid "For e-Ticket and related DN and CN you can only report up to 700 lines"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid "For this type of CFE you can only report up to 200 lines"
 msgstr ""
 
@@ -459,14 +473,12 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid "INV"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-#, python-format
 msgid ""
 "Incomplete Data to connect to Uruware on company %(company)s: Please "
 "complete the UCFE data to test the connection: %(missing)s"
@@ -476,7 +488,6 @@ msgstr ""
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_journal_type
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_journal__l10n_uy_edi_type
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move__l10n_uy_edi_journal_type
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_payment__l10n_uy_edi_journal_type
 msgid "Invoicing Type"
 msgstr ""
 
@@ -513,7 +524,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_cfe_uuid
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move__l10n_uy_edi_cfe_uuid
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_payment__l10n_uy_edi_cfe_uuid
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__uuid
 msgid "Key or UUID CFE"
 msgstr ""
@@ -521,13 +531,7 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_is_needed
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move__l10n_uy_edi_is_needed
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_payment__l10n_uy_edi_is_needed
 msgid "L10N Uy Edi Is Needed"
-msgstr ""
-
-#. module: l10n_uy_edi
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move_send__l10n_uy_edi_show_checkbox_cfe
-msgid "L10N Uy Edi Show Checkbox Cfe"
 msgstr ""
 
 #. module: l10n_uy_edi
@@ -545,7 +549,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
-#, python-format
 msgid ""
 "Make sure you have a valid enterprise contract in this database. If it is "
 "new, it might take some time for the system to recognize your contract. "
@@ -569,7 +572,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
-#, python-format
 msgid ""
 "More than 5 registrations have been made within 24 hours in this database. "
 "Please try again later."
@@ -598,14 +600,12 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-#, python-format
 msgid "No response"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-#, python-format
 msgid ""
 "Not able to check credentials, first complete your company data:\n"
 "\t- %(errors)s"
@@ -614,7 +614,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid ""
 "Not valid Currency Rate, need to be greater than 0 to be accepted by DGI "
 "(%(used_rate)s)"
@@ -623,14 +622,12 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid "Not valid Uruguayan tax, only VAT taxes are supported (%(taxes_name)s)"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid ""
 "Only can get the legal representation of the CFE for customer electronic "
 "invoices"
@@ -659,14 +656,12 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
-#, python-format
 msgid "Please configure your company RUT first"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid "Problem with Receiver identification number: %(exp_msg)s"
 msgstr ""
 
@@ -678,7 +673,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid ""
 "Product/Service Detail type Disclosure can only be added on invoice lines"
 msgstr ""
@@ -701,7 +695,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-#, python-format
 msgid "Response Error - Code: %(code)s %(msg)s"
 msgstr ""
 
@@ -713,7 +706,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_cfe_sale_mode
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move__l10n_uy_edi_cfe_sale_mode
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_payment__l10n_uy_edi_cfe_sale_mode
 msgid "Sales Modality"
 msgstr ""
 
@@ -725,49 +717,42 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_company.py:0
-#, python-format
 msgid "Set a valid RUT in your company"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_company.py:0
-#, python-format
 msgid "Set your company House Code"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_company.py:0
-#, python-format
 msgid "Set your company RUT"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_company.py:0
-#, python-format
 msgid "Set your company address (street and/or street2)"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_company.py:0
-#, python-format
 msgid "Set your company city"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_company.py:0
-#, python-format
 msgid "Set your company state"
 msgstr ""
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_cfe_state
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_cfe_state
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_cfe_state
 #: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_document__state
 msgid "State of the electronic document"
 msgstr ""
@@ -785,7 +770,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
-#, python-format
 msgid ""
 "The account creating request has been successfully sent. The credentials "
 "will be sent to %s. Please check your email for more instructions"
@@ -794,35 +778,30 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid "The currency does not exist on DGI currencies table %s"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid "The electronic invoice was created successfully"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid "The partner of the CFE needs to have an Identification Type"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-#, python-format
 msgid "There was a problem with the connection with Uruware: %s"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid ""
 "This CFE has been generated in DEMO Mode. It is considered as accepted and "
 "it won\"t be sent to DGI."
@@ -831,7 +810,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid "This CFE is not implemented yet %(doc_name)s"
 msgstr ""
 
@@ -840,8 +818,6 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_cfe_transport_route
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_cfe_sale_mode
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_cfe_transport_route
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_cfe_sale_mode
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_cfe_transport_route
 msgid "This field is used in the XML to create an Export e-Invoice"
 msgstr ""
 
@@ -857,7 +833,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid ""
 "To create the CFE document first complete your company data (%(company_name)s):\n"
 "\t- %(errors)s"
@@ -866,7 +841,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid ""
 "To report an export invoice you must fill the next fields. You can indicate this value in the Other Information tab:  \n"
 "\t * %s"
@@ -875,14 +849,12 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid "To validate a DN/CN the original document should be informed"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid ""
 "To validate a DN/CN the original document should be informed and it should "
 "be electronic"
@@ -891,7 +863,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_cfe_transport_route
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move__l10n_uy_edi_cfe_transport_route
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_payment__l10n_uy_edi_cfe_transport_route
 msgid "Transportation Route"
 msgstr ""
 
@@ -905,7 +876,6 @@ msgstr ""
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_journal_type
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_journal__l10n_uy_edi_type
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_journal_type
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_journal_type
 msgid ""
 "Type of journals that can be used for Uruguayan companies:\n"
 "* Electronic: To generate electronic documents via web service to DGI directly from Odoo\n"
@@ -934,7 +904,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_cfe_uuid
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_cfe_uuid
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_cfe_uuid
 #: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_document__uuid
 msgid ""
 "Unique identification per CFE in UCFE: concatenation of the model name "
@@ -950,14 +919,12 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_document_id
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move__l10n_uy_edi_document_id
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_payment__l10n_uy_edi_document_id
 msgid "Uruguay E-Invoice CFE"
 msgstr ""
 
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_error
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move__l10n_uy_edi_error
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_payment__l10n_uy_edi_error
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_l10n_uy_edi_document__message
 msgid "Uruguay E-Invoice Error"
 msgstr ""
@@ -965,7 +932,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_xml_attachment_id
 #: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move__l10n_uy_edi_xml_attachment_id
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_payment__l10n_uy_edi_xml_attachment_id
 msgid "Uruguay E-Invoice XML"
 msgstr ""
 
@@ -975,31 +941,14 @@ msgid "Uruguay Localization"
 msgstr ""
 
 #. module: l10n_uy_edi
-#: model:ir.model.fields,field_description:l10n_uy_edi.field_account_move_send__l10n_uy_edi_warning
-msgid "Uruguay: Warning"
-msgstr ""
-
-#. module: l10n_uy_edi
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_xml_attachment_id
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_xml_attachment_id
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_xml_attachment_id
 msgid "Uruguay: the most recent e-invoice XML returned by Uruware."
 msgstr ""
 
 #. module: l10n_uy_edi
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_move_send__l10n_uy_edi_checkbox_cfe
-msgid "Uruguay: used to determine whether to submit this e-invoice."
-msgstr ""
-
-#. module: l10n_uy_edi
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_move_send__l10n_uy_edi_warning
-msgid "Uruguay: used to display warnings in the wizard before sending."
-msgstr ""
-
-#. module: l10n_uy_edi
 #. odoo-python
-#: code:addons/l10n_uy_edi/wizards/account_move_send.py:0
-#, python-format
+#: code:addons/l10n_uy_edi/models/account_move_send.py:0
 msgid ""
 "Uruguayan e-invoicing was enabled but the following invoices cannot be e-invoiced:\n"
 "%s\n"
@@ -1020,14 +969,12 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-#, python-format
 msgid "Uruware Inbox URL"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-#, python-format
 msgid "Uruware Query URL"
 msgstr ""
 
@@ -1040,7 +987,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-#, python-format
 msgid "Uruware Username"
 msgstr ""
 
@@ -1051,6 +997,12 @@ msgid "Uruware WS Password"
 msgstr ""
 
 #. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move_send.py:0
+msgid "View Invoice(s)"
+msgstr ""
+
+#. module: l10n_uy_edi
 #: model:ir.model.fields.selection,name:l10n_uy_edi.selection__l10n_uy_edi_document__state__received
 msgid "Waiting response from DGI"
 msgstr ""
@@ -1058,7 +1010,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/l10n_uy_edi_document.py:0
-#, python-format
 msgid ""
 "We cannot generate the CFE because the field length is not valid.\n"
 "Check if disclosure/addenda are being applied.\n"
@@ -1071,7 +1022,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
-#, python-format
 msgid ""
 "You can't send another request within 24 hours. You will be able to send "
 "again in %(hours)s hours, %(minutes)s minutes, and %(seconds)s seconds."
@@ -1080,14 +1030,20 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid "You cannot combine included and not included taxes on the same invoice"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
+msgid ""
+"You cannot create lines with negative quantities (except for down payments "
+"deducts)."
+msgstr ""
+
+#. module: l10n_uy_edi
+#. odoo-python
+#: code:addons/l10n_uy_edi/models/account_move.py:0
 msgid ""
 "You need to fill in the receiver details: address, city, province, country "
 "and ID number"
@@ -1096,14 +1052,12 @@ msgstr ""
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/account_move.py:0
-#, python-format
 msgid "You need to have UYI rate before validating invoices"
 msgstr ""
 
 #. module: l10n_uy_edi
 #. odoo-python
 #: code:addons/l10n_uy_edi/models/res_config_settings.py:0
-#, python-format
 msgid "Your database is valid, but an error happened on our side. "
 msgstr ""
 
@@ -1118,7 +1072,6 @@ msgstr ""
 #. module: l10n_uy_edi
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_bank_statement_line__l10n_uy_edi_error
 #: model:ir.model.fields,help:l10n_uy_edi.field_account_move__l10n_uy_edi_error
-#: model:ir.model.fields,help:l10n_uy_edi.field_account_payment__l10n_uy_edi_error
 #: model:ir.model.fields,help:l10n_uy_edi.field_l10n_uy_edi_document__message
 msgid "error details for CFEs in the 'error' state."
 msgstr ""

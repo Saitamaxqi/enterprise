@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 from odoo import Command
 from odoo.tests.common import tagged
 
@@ -199,3 +201,100 @@ class TestManual(common.TestUyEdi):
         self.assertEqual(move.l10n_latam_document_type_id, self.env.ref('l10n_uy.dc_e_ticket'), "The document type is not being set correctly.")
         move.partner_id = self.env.ref('l10n_uy.partner_dgi').id
         self.assertEqual(move.l10n_latam_document_type_id, dc_e_inv, "The expected document should be e-invoice")
+
+    def test_130_entrega_gratuita(self):
+        """ Create e-Invoice with line with discount 100% and it should work """
+        invoice = self._create_move(
+            partner_id=self.partner_local.id,
+            l10n_latam_document_type_id=self.env.ref("l10n_uy.dc_e_inv").id,
+            invoice_line_ids=[Command.create({
+                "product_id": self.service_vat_22.id,
+                "price_unit": 100.0,
+                "discount": 100.0,
+            })],
+        )
+        self.assertEqual(invoice.l10n_latam_document_type_id.code, "111", "Not an e-invoice")
+        invoice.action_post()
+        self._send_and_print(invoice)
+        self._check_cfe(invoice, "e-FC", "130_entrega_gratuita")
+
+    def test_140_global_discount(self):
+        """ Create e-Invoice with line with discount 100% and it should work """
+        discount = self.env["product.product"].create({
+            "name": "Discount Product",
+            "list_price": 10,
+            "standard_price": 10,
+            "type": "service",
+        })
+        discount_list = [
+            {"product_id": discount.id, "price_unit": -5.0, "tax_ids": self.tax_22},  # w/product
+            {"product_id": discount.id, "name": "", "price_unit": -2.0, "tax_ids": self.tax_22},  # w/product & wo/label
+            {"name": "Discount only Label", "price_unit": -20.0, "tax_ids": self.tax_0},  # wo product but w/label
+            {"price_unit": -10.0, "tax_ids": self.tax_10},  # wo product or label
+        ]
+        invoice = self._create_move(
+            ref="test_140_global_discount",
+            partner_id=self.partner_local.id,
+            l10n_latam_document_type_id=self.env.ref("l10n_uy.dc_e_inv").id,
+            invoice_line_ids=[
+                Command.create({"product_id": self.service_vat_22.id, "price_unit": 100.0, "tax_ids": self.tax_22}),
+                Command.create({"product_id": self.service_vat_22.id, "price_unit": 100.0, "tax_ids": self.tax_10}),
+                Command.create({"product_id": self.service_vat_22.id, "price_unit": 100.0, "tax_ids": self.tax_0}),
+                ] + [Command.create(item) for item in discount_list]  # Discounts
+            )
+        self.assertEqual(invoice.l10n_latam_document_type_id.code, "111", "Not an e-invoice")
+        invoice.action_post()
+        self._send_and_print(invoice)
+        self._check_cfe(invoice, "e-FC", "140_global_discount")
+
+    def test_150_global_donwpayment(self):
+        """ Create e-Invoice that is a down payment
+        invoice_ind = 6 if self._is_downpayment() else invoice_ind
+        """
+        down_payment = self.env["product.product"].create({
+            "name": "Down Payment",
+            "list_price": 10,
+            "standard_price": 10,
+            "type": "service",
+        })
+        invoice = self._create_move(
+            ref="test_150_global_donwpayment",
+            partner_id=self.partner_local.id,
+            l10n_latam_document_type_id=self.env.ref("l10n_uy.dc_e_inv").id,
+            invoice_line_ids=[
+                Command.create({"product_id": down_payment.id, "price_unit": 2000.0, "tax_ids": []}),
+            ])
+        self.assertEqual(invoice.l10n_latam_document_type_id.code, "111", "Not an e-invoice")
+        invoice.action_post()
+
+        with patch("odoo.addons.account.models.account_move.AccountMove._is_downpayment", return_value=True), \
+             patch("odoo.addons.sale.models.account_move.AccountMove._is_downpayment", return_value=True):
+            self._send_and_print(invoice)
+        self._check_cfe(invoice, "e-FC", "150_global_donwpayment")
+
+    def test_160_deduct_global_donwpayment(self):
+        """ Create e-Invoice that is a down payment
+        invoice_ind = 7 if line.quantity < 0 else invoice_ind
+        """
+        down_payment = self.env["product.product"].create({
+            "name": "Down Payment",
+            "list_price": 10,
+            "standard_price": 10,
+            "type": "service",
+        })
+        invoice = self._create_move(
+            ref="test_160_deduct_global_donwpayment",
+            partner_id=self.partner_local.id,
+            l10n_latam_document_type_id=self.env.ref("l10n_uy.dc_e_inv").id,
+            invoice_line_ids=[
+                Command.create({"product_id": self.service_vat_22.id, "price_unit": 10000.0, "tax_ids": self.tax_22}),
+                Command.create({"product_id": down_payment.id, "quantity": -1.0, "price_unit": 2000.0, "tax_ids": False}),
+            ])
+        self.assertEqual(invoice.l10n_latam_document_type_id.code, "111", "Not an e-invoice")
+        invoice.action_post()
+
+        url = "odoo.addons.%s.models.account_move_line.AccountMoveLine._get_downpayment_lines"
+        result_value = invoice.invoice_line_ids.filtered(lambda x: x.quantity < 0.0)
+        with patch(url % "account", return_value=result_value), patch(url % "sale", return_value=result_value):
+            self._send_and_print(invoice)
+        self._check_cfe(invoice, "e-FC", "160_deduct_global_donwpayment")

@@ -264,25 +264,17 @@ class AccountMove(models.Model):
         # NOTE: all amounts to be reported must be in the currency of the receipt not in Uruguayan pesos,
         # that is why we use price_subtotal instead of another field
 
-        for k, base_line in enumerate(tax_details['base_lines'], start=1):
+        k = 1
+        for base_line in tax_details['base_lines']:
             line = base_line['record']
-            values = next(iter(tax_details['tax_details_per_record'][line]['tax_details'].values()))
-            tax_included = values['_tax_price_include']
+            if line.price_unit <= 0:
+                continue
 
-            # B4 IndFact
-            if self._l10n_uy_edi_is_expo_cfe():
-                invoice_ind = 10  # Exportación y asimiladas
-            else:
-                ind_code = {
-                    0.0: 1,   # 1: Exento de IVA
-                    10.0: 2,  # 2: Gravado a Tasa Mínima
-                    22.0: 3,  # 3: Gravado a Tasa Básica
-                }
-                # IMPORTANT: By the moment, this is working for one VAT tax per move lines
-                invoice_ind = ind_code.get(line.tax_ids.amount)
-            if line.discount == 100 and (line.price_total if tax_included else line.price_subtotal) == 0:
-                # Entrega Gratuita - We made this in separate if because expo invoices can also have entrega gratuita
-                invoice_ind = 5
+            tax_info = tax_details['tax_details_per_record'][line]['tax_details'].values()
+            values = next(iter(tax_info)) if tax_info else False
+            tax_included = values['_tax_price_include'] if tax_info else False
+
+            invoice_ind = self._get_invoice_indicator(line, tax_details)
 
             item_description = self._l10n_uy_edi_get_line_desc(line)
             nom_item = (line.product_id.display_name or item_description or "-")[:80]
@@ -291,20 +283,21 @@ class AccountMove(models.Model):
                 "IndFact": invoice_ind,  # B4
                 "NomItem": nom_item,  # B7
                 "DscItem": item_description if item_description and item_description != nom_item else None,  # B8
-                "Cantidad": line.quantity,  # B9
+                "Cantidad": abs(line.quantity) if invoice_ind == 7 else line.quantity,  # B9
                 "UniMed": line.product_uom_id.name[:4] if line.product_uom_id else "N/A",  # B10
                 "PrecioUnitario": line.price_unit,  # B11
                 "DescuentoPct": line.discount,  # B12
                 "DescuentoMonto":  # B13
-                    (line.quantity * line.price_unit - (line.price_total if tax_included else line.price_subtotal))
-                    if line.discount else None,
-                "MontoItem": line.price_total if tax_included else line.price_subtotal,  # B24
+                (abs(line.quantity) * line.price_unit - (line.price_total if tax_included else line.price_subtotal))
+                if line.discount else None,
+                "MontoItem": abs(line.price_total) if tax_included else abs(line.price_subtotal),  # B24
             }
 
             if invoice_ind == 5:
                 temp.update({}.fromkeys(['PrecioUnitario', 'DescuentoMonto', 'DescuentoPct'], 0.0))
 
             res.append(temp)
+            k += 1
         return res
 
     def _l10n_uy_edi_cfe_C_totals(self, tax_details):
@@ -320,21 +313,51 @@ class AccountMove(models.Model):
             neto[grouping_key['_tax_amount']] = tax_dict['base_amount_currency']
             base[grouping_key['_tax_amount']] = tax_dict['tax_amount_currency']
 
+        nf_amount = sum(
+            self.invoice_line_ids.filtered(lambda x: x.move_id._is_downpayment() or x.quantity < 0).mapped('price_subtotal')
+        )
         res = {
             "TpoMoneda": currency_name,  # A110
             "TpoCambio": None if currency_name == "UYU" else self._l10n_uy_edi_get_used_rate(),  # A111
             "MntExpoyAsim": self.amount_total if expo_doc else None,  # A113
             "MntNoGrv": neto[0.0] if not expo_doc else None,  # A112
             "MntNetoIvaTasaMin": neto[10.0] if not expo_doc else None,  # A116
-            "IVATasaMin": 10 if not expo_doc and neto[10.0] else None,  # A119
+            "IVATasaMin": 10 if not expo_doc and neto[10.0] or self._is_downpayment() else None,  # A119
             "MntNetoIVATasaBasica": neto[22.0] if not expo_doc else None,  # A117
-            "IVATasaBasica": 22 if not expo_doc and neto[22.0] else None,  # A120
+            "IVATasaBasica": 22 if not expo_doc and neto[22.0] or self._is_downpayment() else None,  # A120
             "MntIVATasaMin": base[10.0] if not expo_doc else None,  # A121
             "MntIVATasaBasica": base[22.0] if not expo_doc else None,  # A122
-            "MntTotal": self.amount_total,  # A124
-            "CantLinDet": len(self.invoice_line_ids.filtered(lambda x: x.display_type == "product")),  # A126
+            "MntTotal": self.amount_total - nf_amount if nf_amount else self.amount_total,  # A124
+            "CantLinDet": len(self.invoice_line_ids.filtered(lambda x: x.display_type == "product" and x.price_unit > 0 or x.move_id._is_downpayment())),  # A126
+            "MontoNF": nf_amount or None,
             "MntPagar": self.amount_total,  # A130
         }
+        return res
+
+    def _l10n_uy_edi_cfe_D_global_discount(self, tax_details):
+        """XML Section D (Descuntos y recargos)
+        Filter global discount lines. This section is used to specify discounts or surcharges that apply to the total
+        document amount, without the need to detail them item by item.
+        :return:  list of the prepare data of each line we are going to inform for the CFE """
+        self.ensure_one()
+        res = []
+        for k, line in enumerate(self.invoice_line_ids.filtered(lambda line: line.price_unit < 0), 1):
+
+            invoice_ind = self._get_invoice_indicator(line, tax_details)
+
+            glosa_dr = line.product_id.display_name or line.name or _('Discount')
+            if line.product_id.display_name and line.name and line.name.startswith(line.product_id.display_name):
+                glosa_dr = line.name
+
+            res.append({
+                "NroLinDR": k,  # D1
+                "TpoMovDR": "D",  # D2
+                "TpoDR": 1,  # D3
+                "GlosaDR": glosa_dr[:50],  # D5
+                "ValorDR": abs(line.price_unit),  # D6
+                "IndFactDR": invoice_ind,  # D7
+            })
+
         return res
 
     def _l10n_uy_edi_cfe_F_reference(self):
@@ -352,6 +375,31 @@ class AccountMove(models.Model):
                 })
         return res
 
+    def _get_invoice_indicator(self, line, tax_details):
+        # B4 IndFact
+        if self._l10n_uy_edi_is_expo_cfe():
+            invoice_ind = 10  # Exportación y asimiladas
+        elif self._is_downpayment():
+            invoice_ind = 6
+        elif line.quantity < 0:
+            invoice_ind = 7  # Discount
+        else:
+            ind_code = {
+                0.0: 1,   # 1: Exento de IVA
+                10.0: 2,  # 2: Gravado a Tasa Mínima
+                22.0: 3,  # 3: Gravado a Tasa Básica
+            }
+            # IMPORTANT: By the moment, this is working for one VAT tax per move lines
+            invoice_ind = ind_code.get(line.tax_ids.amount)
+
+        tax_included = set(line.tax_ids.mapped("price_include"))
+
+        # We made this in separate if because expo invoices can also have entrega gratuita
+        if line.discount == 100 and (line.price_total if tax_included else line.price_subtotal) == 0:
+            invoice_ind = 5  # Entrega Gratuita
+
+        return invoice_ind
+
     def _l10n_uy_edi_check_move(self):
         """ Need to fullfil next conditions:
 
@@ -360,6 +408,7 @@ class AccountMove(models.Model):
         * Check that domestic CFE always has a vat tax per line
         * Check that Doc type is set and is a valid one
         * Check that the Partner address info is set if required for the doc type
+        * Check if discounts with X tax then should be another line not discount that share the same tax
 
         return: an error list if the minimal conditions to be a valid CFE does not fulfill """
         self.ensure_one()
@@ -450,7 +499,9 @@ class AccountMove(models.Model):
                     " \n\t * %s", "\n\t * ".join(missing_expo_fields)))
 
         # Check lines
-        for line in lines:
+        # When I create an invoice with Anticipo directly, the line is not downpayment so we have an error -
+        # All lines should have a VAT tax -
+        for line in lines.filtered(lambda x: not x.move_id._is_downpayment() and x.quantity > 0):
             errors += edi_model._check_field_size("B8_DscItem", self._l10n_uy_edi_get_line_desc(line), 1000)
             # We check that there is one and o nly one vat tax per line
             vat_taxes = line.tax_ids.filtered(lambda x: x.l10n_uy_tax_category == "vat")
@@ -474,6 +525,29 @@ class AccountMove(models.Model):
         tax_included = set(taxes.mapped("price_include"))
         if tax_included and len(tax_included) != 1:
             errors.append(_("You cannot combine included and not included taxes on the same invoice"))
+
+        # Downpayments invoices or deduct downlapyment lines should not have taxes
+        if self._is_downpayment() and self.invoice_line_ids.tax_ids:
+            errors.append(_("Downpayment invoices should not have any taxes, please remove any taxes from"
+                            " the downpayment line to continue."))
+        deduct_dp_lines = self.invoice_line_ids.filtered(lambda l: l.quantity < 0 and l._get_downpayment_lines())
+        if deduct_dp_lines.filtered(lambda l: l.tax_ids):
+            errors.append(_("Downpayment lines should not have any taxes, please remove then to continue"))
+
+        # Discount line have regular lines that match with the same tax
+        total_field = 'price_total' if tax_included else 'price_subtotal'
+        discount_lines = (self.invoice_line_ids - deduct_dp_lines).filtered(lambda l: l[total_field] < 0.0)
+        for dline in discount_lines:
+            discount_tax = dline.tax_ids
+            if not self.line_ids.filtered(lambda l: l.id != dline.id).\
+               tax_ids.filtered(lambda t: t.id == discount_tax.id):
+                errors.append(_('Discount with Tax %s can only exist if match with regular line with same tax',
+                                discount_tax.name))
+
+        # Do not let negative quantities, only can be done if line is a donwpayment deduct
+        negative_lines = self.line_ids.filtered(lambda l: l.quantity < 0 and not l._get_downpayment_lines())
+        if negative_lines:
+            errors.append(_("You cannot create lines with negative quantities (except for down payments deducts)."))
 
         # Check the receiver info depending on the doc type
         edi_model = self.env["l10n_uy_edi.document"]
@@ -635,7 +709,7 @@ class AccountMove(models.Model):
             return self.currency_id._convert(
                 1.0, self.company_id.currency_id, self.company_id, self.date or fields.Date.today(), round=False)
         # We need to use abs to avoid error on Credit Notes (amount_total_signed is negative)
-        return abs(self.amount_total_signed) / self.amount_total
+        return abs(self.amount_total_signed) / self.amount_total if self.amount_total else 0.0
 
     def _l10n_uy_edi_get_xml_content(self):
         """ Create the CFE xml structure and validate it
@@ -659,6 +733,7 @@ class AccountMove(models.Model):
             "receptor": self._l10n_uy_edi_cfe_A_receptor(),
             "item_detail": self._l10n_uy_edi_cfe_B_details(tax_details),
             "totals_detail": self._l10n_uy_edi_cfe_C_totals(tax_details),
+            "global_discounts": self._l10n_uy_edi_cfe_D_global_discount(tax_details),
             "referencia_lines": self._l10n_uy_edi_cfe_F_reference(),
             "format_float": format_float,
         })
