@@ -66,8 +66,8 @@
             </Account>
             <Account>
                 <AccountID>___ignore___</AccountID>
-                <AccountDescription>Other payables - long-term (copy)</AccountDescription>
-                <StandardAccountID>7191</StandardAccountID>
+                <AccountDescription>Suppliers of goods and services (copy)</AccountDescription>
+                <StandardAccountID>7441</StandardAccountID>
                 <AccountType>Liability</AccountType>
                 <OpeningDebitBalance>0.00</OpeningDebitBalance>
                 <ClosingCreditBalance>10000.00</ClosingCreditBalance>
