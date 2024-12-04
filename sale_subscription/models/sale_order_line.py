@@ -238,10 +238,15 @@ class SaleOrderLine(models.Model):
             # We invoice in the future. Regular line are based on next invoice date value to be resilient
             # on missing link between sale order line and acount move lines
             # warning this is not working if the recurrence is updated without renewal
-            last_period_start = self.order_id.next_invoice_date and self.order_id.next_invoice_date - self.order_id.plan_id.billing_period
-            deferred_start_date = self.last_invoiced_date or last_period_start
+            if not self.order_id.next_invoice_date:
+                return False, False
             next_invoice_date = self.order_id.next_invoice_date
-            deferred_end_date = self.last_invoiced_date or next_invoice_date and next_invoice_date - relativedelta(days=1)
+            if self.last_invoiced_date:
+                deferred_start_date = self.last_invoiced_date
+                deferred_end_date = self.last_invoiced_date + self.order_id.plan_id.billing_period - relativedelta(days=1)
+            else:
+                deferred_start_date = next_invoice_date - self.order_id.plan_id.billing_period
+                deferred_end_date = next_invoice_date - relativedelta(days=1)
         return deferred_start_date, deferred_end_date
 
     def _get_subscription_qty_invoiced(self, last_invoiced_date=None, next_invoice_date=None):
@@ -392,10 +397,21 @@ class SaleOrderLine(models.Model):
                 start_to_next = _("%(start)s to %(next)s", start=format_start, next=format_next)
                 description += f"\n{duration} {start_to_next}"
 
-            qty_to_invoice = self._get_subscription_qty_to_invoice(last_invoiced_date=new_period_start, next_invoice_date=new_period_stop)
+            if self.order_id.subscription_state != '7_upsell':
+                line_to_invoice = self._is_subscription_line_to_invoice()
+                if line_to_invoice:
+                    if self._is_postpaid_line():
+                        qty_to_invoice = self.qty_delivered
+                    else:
+                        qty_to_invoice = self.product_uom_qty
+                else:
+                    qty_to_invoice = 0
+            else:
+                # upsell
+                qty_to_invoice = self.qty_to_invoice
             res.update({
                 'name': description,
-                'quantity': qty_to_invoice.get(self.id, 0.0),
+                'quantity': qty_to_invoice,
                 'deferred_start_date': new_period_start,
                 'deferred_end_date': new_period_stop,
                 'subscription_id': parent_order_id,
@@ -436,6 +452,37 @@ class SaleOrderLine(models.Model):
         else:
             # We don't invoice line past their SO's end_date
             return not self.order_id.end_date or (self.order_id.next_invoice_date and self.order_id.next_invoice_date < self.order_id.end_date)
+
+    def _is_subscription_line_to_invoice(self):
+        """ Should this line be invoiced ?
+        """
+        self.ensure_one()
+        date_from = self.env.context.get('invoiceable_date_from', fields.Date.today())
+        automatic_invoice = self.env.context.get('recurring_automatic')
+        line_to_invoice = False
+        line_condition = self._get_recurring_invoiceable_condition(automatic_invoice, date_from)
+        if self.order_id.subscription_state == '7_upsell':
+            # super()._get_invoiceable_lines  will select everything needed for upsells
+            line_to_invoice = False
+        elif self.display_type or not self.recurring_invoice:
+            # Avoid invoicing section/notes or lines starting in the future or not starting at all
+            line_to_invoice = False
+        elif line_condition:
+            if(
+                self.product_id.invoice_policy == 'order'
+                and self.order_id.subscription_state != '5_renewed'
+            ):
+                # Invoice due lines
+                line_to_invoice = True
+            elif (
+                self._is_postpaid_line()
+                and not float_is_zero(
+                    self.qty_delivered,
+                    precision_rounding=self.product_id.uom_id.rounding,
+                )
+            ):
+                line_to_invoice = True
+        return line_to_invoice
 
     ####################
     # Business Methods #

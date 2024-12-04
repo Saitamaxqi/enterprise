@@ -1187,32 +1187,12 @@ class SaleOrder(models.Model):
             if line.state != 'sale':
                 continue
 
-            line_condition = line._get_recurring_invoiceable_condition(automatic_invoice, date_from)
             line_to_invoice = False
             if line in res:
                 # Line was already marked as to be invoiced
                 line_to_invoice = True
-            elif line.order_id.subscription_state == '7_upsell':
-                # Super() already select everything that is needed for upsells
-                line_to_invoice = False
-            elif line.display_type or not line.recurring_invoice:
-                # Avoid invoicing section/notes or lines starting in the future or not starting at all
-                line_to_invoice = False
-            elif line_condition:
-                if(
-                    line.product_id.invoice_policy == 'order'
-                    and line.order_id.subscription_state != '5_renewed'
-                ):
-                    # Invoice due lines
-                    line_to_invoice = True
-                elif (
-                    line._is_postpaid_line()
-                    and not float_is_zero(
-                        line.qty_delivered,
-                        precision_rounding=line.product_id.uom_id.rounding,
-                    )
-                ):
-                    line_to_invoice = True
+            else:
+                line_to_invoice = line._is_subscription_line_to_invoice()
 
             if line_to_invoice:
                 if line.is_downpayment:
