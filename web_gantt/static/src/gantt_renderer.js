@@ -1044,16 +1044,17 @@ export class GanttRenderer extends Component {
         const { cellTime, time } = scale;
         const { record } = this.pills[pill.dataset.pillId];
         const params = this.getScheduleParams(pill);
+        const isCopyMode = this.interaction.dragAction === "copy";
 
         params.start =
-            diff && dateAddFixedOffset(record[dateStartField], { [time]: cellTime * diff });
+            (diff || isCopyMode) && dateAddFixedOffset(record[dateStartField], { [time]: cellTime * diff });
         params.stop =
-            diff && dateAddFixedOffset(record[dateStopField], { [time]: cellTime * diff });
+            (diff || isCopyMode) && dateAddFixedOffset(record[dateStopField], { [time]: cellTime * diff });
         params.rowId = rowId;
 
         const schedule = this.model.getSchedule(params);
 
-        if (this.interaction.dragAction === "copy") {
+        if (isCopyMode) {
             await this.model.copy(record.id, schedule, this.openPlanDialogCallback);
         } else {
             await this.model.reschedule(record.id, schedule, this.openPlanDialogCallback);

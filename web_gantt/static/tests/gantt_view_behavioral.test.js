@@ -1290,6 +1290,32 @@ test("copy a pill in another row", async () => {
     ]);
 });
 
+test("copy a pill in another row, but in the same column", async () => {
+    expect.assertions(2);
+    onRpc("copy", ({ args, kwargs }) => {
+        expect(args[0]).toEqual([7], { message: "should copy the correct record" });
+        expect(kwargs.default).toEqual(
+            {
+                start: "2018-12-20 12:30:12",
+                stop: "2018-12-20 18:29:59",
+                project_id: 1,
+            },
+            { message: "the dates should be copied explicitely" }
+        );
+    });
+
+    await mountGanttView({
+        resModel: "tasks",
+        arch: '<gantt date_start="start" date_stop="stop" />',
+        groupBy: ["project_id"],
+    });
+
+    await keyDown("Control");
+    const { drop } = await dragPill("Task 7");
+    await drop({ column: "20 December 2018", part: 2 });
+    await keyUp("Control");
+});
+
 test("move a pill in another row in multi-level grouped", async () => {
     onRpc("write", ({ args }) => {
         expect(args).toEqual([[7], { project_id: 1 }], {
