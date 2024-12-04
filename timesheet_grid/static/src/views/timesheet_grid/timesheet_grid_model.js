@@ -1,22 +1,30 @@
 import { serializeDate } from "@web/core/l10n/dates";
-import { GridDataPoint, GridModel } from "@web_grid/views/grid_model";
+import { GridModel } from "@web_grid/views/grid_model";
 import { Domain } from "@web/core/domain";
 
-export class TimesheetGridDataPoint extends GridDataPoint {
-    async load() {
-        this.unavailabilityDaysPerEmployeeId = {};
-        await super.load();
+export class TimesheetGridModel extends GridModel {
+    get workingHoursData() {
+        return this.data.workingHours;
+    }
+
+    get employeeField() {
+        return this.fieldsInfo.employee_id;
+    }
+
+    async loadData(metaData) {
+        await super.loadData(metaData);
+        metaData.data.unavailabilityDaysPerEmployeeId = {};
         if (!this.orm.isSample) {
-            await Promise.all(this.timesheetWorkingHoursPromises);
+            await Promise.all(this.getTimesheetWorkingHoursPromises(metaData));
         }
     }
 
-    _sortGridRows(data) {
-        const orderFieldArray = this.rowFields.map((rowField) => this.fieldsInfo[rowField.name]);
-        if (this.sectionField) {
-            orderFieldArray.unshift(this.fieldsInfo[this.sectionField.name]);
+    _sortGridRows({ rowFields, sectionField }, dataFetched) {
+        const orderFieldArray = rowFields.map((rowField) => this.fieldsInfo[rowField.name]);
+        if (sectionField) {
+            orderFieldArray.unshift(this.fieldsInfo[sectionField.name]);
         }
-        data.groups = data.groups.sort((firstRow, secondRow) => {
+        dataFetched.groups = dataFetched.groups.sort((firstRow, secondRow) => {
             for (const orderField of orderFieldArray) {
                 const fieldName = orderField.name;
                 let firstRowFieldData = firstRow[fieldName];
@@ -46,59 +54,64 @@ export class TimesheetGridDataPoint extends GridDataPoint {
                 return firstRowFieldData
                     .toLowerCase()
                     .localeCompare(secondRowFieldData.toLowerCase());
-                }
+            }
             return 0;
         });
     }
 
-    async fetchData() {
-        const data = await super.fetchData();
-        this._sortGridRows(data);
-        return data;
+    async fetchData(metaData) {
+        const dataFetched = await super.fetchData(metaData);
+        this._sortGridRows(metaData, dataFetched);
+        return dataFetched;
     }
 
-    get timesheetWorkingHoursPromises() {
+    getTimesheetWorkingHoursPromises(metaData) {
         const result = [
-            this._fetchWorkingHoursData("task_id"),
-            this._fetchWorkingHoursData("project_id"),
-            this._fetchAllTimesheetM2OAvatarData(),
+            this._fetchWorkingHoursData(metaData, "task_id"),
+            this._fetchWorkingHoursData(metaData, "project_id"),
+            this._fetchAllTimesheetM2OAvatarData(metaData),
         ];
 
-        if (this.sectionField?.name === this.fieldsInfo.employee_id.name) {
-            result.push(this._fetchDailyWorkingHours());
+        if (metaData.sectionField?.name === this.employeeField.name) {
+            result.push(this._fetchDailyWorkingHours(metaData));
         }
 
         return result;
     }
 
-    async _fetchDailyWorkingHours() {
-        const field = this.fieldsInfo.employee_id;
-        const employeeIds = this._getFieldValuesInSectionAndRows(field);
+    async _fetchDailyWorkingHours({ data, sectionField, rowFields }) {
+        const employeeIds = this._getFieldValuesInSectionAndRows(
+            this.employeeField,
+            sectionField,
+            rowFields,
+            data
+        );
 
         if (!employeeIds.length) {
             return;
         }
 
-        this.data.workingHours.dailyPerEmployee = await this.orm.call(
-            field.relation,
+        data.workingHours.dailyPerEmployee = await this.orm.call(
+            this.employeeField.relation,
             "get_daily_working_hours",
             [
                 employeeIds,
                 serializeDate(this.navigationInfo.periodStart),
                 serializeDate(this.navigationInfo.periodEnd),
-            ],
+            ]
         );
     }
 
-    async _initialiseData() {
-        await super._initialiseData();
-        this.data.workingHours = {};
+    async _getInitialData(metaData) {
+        const initialData = await super._getInitialData(metaData);
+        initialData.data.workingHours = {};
+        return initialData;
     }
 
-    _getFavoriteTaskDomain() {
+    _getFavoriteTaskDomain(searchParams) {
         return [
             ["project_id", "!=", false],
-            ["user_ids", "in", this.searchParams.context.uid],
+            ["user_ids", "in", searchParams.context.uid],
             ["allow_timesheets", "=", true],
             ["planned_date_begin", "<=", serializeDate(this.navigationInfo.periodEnd)],
             ["date_deadline", ">=", serializeDate(this.navigationInfo.periodStart)],
@@ -119,33 +132,36 @@ export class TimesheetGridDataPoint extends GridDataPoint {
     /**
      * @override
      */
-    _fetchAdditionalData() {
-        const additionalGroups = super._fetchAdditionalData();
-        if (!this.searchParams.context.group_expand || this.navigationInfo.periodEnd <= this.model.today) {
-            return additionalGroups;
+    _fetchAdditionalData(metaData) {
+        const additionalPromises = super._fetchAdditionalData(metaData);
+        const { searchParams, sectionField, rowFields } = metaData;
+
+        if (!searchParams.context.group_expand || this.navigationInfo.periodEnd <= this.today) {
+            return additionalPromises;
         }
 
-        const previouslyTimesheetedDomain = this._getPreviousWeekTimesheetDomain();
-
-        const previouslyWeekTimesheet = this.orm
+        const previousWeekTimesheetPromise = this.orm
             .webReadGroup(
                 this.resModel,
-                Domain.and([this.searchParams.domain, previouslyTimesheetedDomain]).toList({}),
-                this.groupByFields,
+                Domain.and([searchParams.domain, this._getPreviousWeekTimesheetDomain()]).toList({}),
+                this._getGroupByFields(metaData),
                 this.aggregates,
             )
-            .then((readGroupResults) => {
+            .then((additionalDataFetched) => {
                 const additionalData = {};
-                this._sortGridRows(readGroupResults);
-                for (const readGroupResult of readGroupResults.groups) {
+                this._sortGridRows(metaData, additionalDataFetched);
+                for (const readGroupResult of additionalDataFetched.groups) {
                     let sectionKey = false;
                     let sectionValue = null;
-                    if (this.sectionField) {
-                        sectionKey = this._generateSectionKey(readGroupResult);
-                        sectionValue = readGroupResult[this.sectionField.name];
+                    if (sectionField) {
+                        sectionKey = this._generateSectionKey(readGroupResult, sectionField);
+                        sectionValue = readGroupResult[sectionField.name];
                     }
-                    const rowKey = this._generateRowKey(readGroupResult);
-                    const { domain, values } = this._generateRowDomainAndValues(readGroupResult);
+                    const rowKey = this._generateRowKey(readGroupResult, metaData);
+                    const { domain, values } = this._generateRowDomainAndValues(
+                        readGroupResult,
+                        rowFields
+                    );
                     if (!(sectionKey in additionalData)) {
                         additionalData[sectionKey] = {
                             value: sectionValue,
@@ -162,31 +178,35 @@ export class TimesheetGridDataPoint extends GridDataPoint {
                 return additionalData;
             });
 
-        additionalGroups.push(previouslyWeekTimesheet);
-        return additionalGroups;
+        additionalPromises.push(previousWeekTimesheetPromise);
+        return additionalPromises;
     }
 
-    _fetchUnavailabilityDays(args = {}) {
+    _fetchUnavailabilityDays(metaData, args = {}) {
+        const { data, sectionField, rowFields } = metaData;
+        const employeeField = this.employeeField.name;
         const employeeIds = [];
         let groupByEmployee = false;
         if (this.columnFieldIsDate) {
-            if (this.sectionField && this.sectionField.name === "employee_id") {
+            if (sectionField && sectionField.name === employeeField) {
                 groupByEmployee = true;
-                for (const section of this.sectionsArray) {
-                    if (section.value) {
-                        employeeIds.push(section.value[0]);
+                for (const section of Object.values(data.sections)) {
+                    const sectionValue = section.valuePerFieldName[sectionField.name];
+                    if (sectionValue) {
+                        employeeIds.push(sectionValue[0]);
                     }
                 }
-            } else if (this.rowFields.some((r) => r.name === "employee_id")) {
+            } else if (rowFields.some((r) => r.name === employeeField)) {
                 groupByEmployee = true;
-                for (const row of this.rowsArray) {
-                    if (row.valuePerFieldName && row.valuePerFieldName.employee_id) {
-                        employeeIds.push(row.valuePerFieldName.employee_id[0]);
+                for (const row of Object.values(data.rows)) {
+                    const fieldValue = row.valuePerFieldName?.employee_id;
+                    if (fieldValue) {
+                        employeeIds.push(fieldValue[0]);
                     }
                 }
             }
         }
-        return super._fetchUnavailabilityDays({
+        return super._fetchUnavailabilityDays(metaData, {
             res_ids: employeeIds,
             groupby: groupByEmployee ? "employee_id" : "",
         });
@@ -200,10 +220,11 @@ export class TimesheetGridDataPoint extends GridDataPoint {
      *
      * @override
      */
-    _postFetchAdditionalData() {
-        const additionalGroups = super._postFetchAdditionalData();
+    _postFetchAdditionalData(metaData) {
+        const additionalGroups = super._postFetchAdditionalData(metaData);
+        const { data, searchParams, rowFields, sectionField } = metaData;
 
-        if (!this.searchParams.context.group_expand) {
+        if (!searchParams.context.group_expand) {
             return additionalGroups;
         }
 
@@ -224,7 +245,7 @@ export class TimesheetGridDataPoint extends GridDataPoint {
         let isTaskIdInDomainFields = false;
         let previousOperator = "&";
         let searchParamsDomain = [];
-        for (const domainLeaf of new Domain(this.searchParams.domain).toList({})) {
+        for (const domainLeaf of new Domain(searchParams.domain).toList({})) {
             if (domainLeaf.length === 3) {
                 const [fieldName, operator, value] = domainLeaf;
                 if (fieldName === "project_id") {
@@ -249,16 +270,14 @@ export class TimesheetGridDataPoint extends GridDataPoint {
          */
         const fieldsToConsider = ["project_id", "task_id"];
         const isProjectOrTaskAsSectionField =
-            this.sectionField && fieldsToConsider.includes(this.sectionField.name);
-        const isProjectOrTaskInRows = this.rowFields.some((field) =>
+            sectionField && fieldsToConsider.includes(sectionField.name);
+        const isProjectOrTaskInRows = rowFields.some((field) =>
             fieldsToConsider.includes(field.name)
         );
-        if (
-            !(this.rowFields.some((field) => field.name === 'task_id') || (
-                (isProjectOrTaskAsSectionField || isProjectOrTaskInRows) &&
-                (isProjectIdInDomainFields || isTaskIdInDomainFields)
-            ))
-        ) {
+        if (!(rowFields.some((field) => field.name === 'task_id') || (
+            (isProjectOrTaskAsSectionField || isProjectOrTaskInRows) &&
+            (isProjectIdInDomainFields || isTaskIdInDomainFields)
+        ))) {
             return additionalGroups;
         }
 
@@ -286,15 +305,11 @@ export class TimesheetGridDataPoint extends GridDataPoint {
             }
             return "id";
         };
-        const getFieldDomain = (expectedFieldName, fieldName, operator, value) => {
-            return [
-                fieldName === expectedFieldName
-                    ? getIdOrName(fieldName, operator, value)
-                    : fieldName,
-                operator,
-                value,
-            ];
-        };
+        const getFieldDomain = (expectedFieldName, fieldName, operator, value) => [
+            fieldName === expectedFieldName ? getIdOrName(fieldName, operator, value) : fieldName,
+            operator,
+            value,
+        ];
         previousOperator = "&";
         for (const domainLeaf of neutralizedDomain.toList({})) {
             if (domainLeaf.length === 3) {
@@ -337,8 +352,8 @@ export class TimesheetGridDataPoint extends GridDataPoint {
          * If 'project_id' and 'task_id' is used as a section, populate an array of ids that will be used in the
          * queries in order to limit the queried data.
          */
-        if (this.sectionField && fieldsToConsider.includes(this.sectionField.name)) {
-            for (const sectionInfo of Object.values(this.data.sections)) {
+        if (sectionField && fieldsToConsider.includes(sectionField.name)) {
+            for (const sectionInfo of Object.values(data.sections)) {
                 if (!sectionInfo.isFake) {
                     domainIds.push(sectionInfo.value[0]);
                 }
@@ -354,12 +369,12 @@ export class TimesheetGridDataPoint extends GridDataPoint {
             for (const record of records) {
                 let sectionKey = false;
                 let sectionValue = null;
-                if (this.sectionField) {
-                    sectionKey = this._generateSectionKey(record);
-                    sectionValue = record[this.sectionField.name];
+                if (sectionField) {
+                    sectionKey = this._generateSectionKey(record, sectionField);
+                    sectionValue = record[sectionField.name];
                 }
-                const rowKey = this._generateRowKey(record);
-                const { domain, values } = this._generateRowDomainAndValues(record);
+                const rowKey = this._generateRowKey(record, metaData);
+                const { domain, values } = this._generateRowDomainAndValues(record, rowFields);
                 if (!(sectionKey in additionalData)) {
                     additionalData[sectionKey] = {
                         value: sectionValue,
@@ -378,23 +393,23 @@ export class TimesheetGridDataPoint extends GridDataPoint {
         };
 
         if (isProjectIdInDomainFields) {
-            if (this.sectionField && this.sectionField.name === "project_id") {
+            if (sectionField && sectionField.name === "project_id") {
                 projectDomain = Domain.and([
                     projectDomain,
                     [["id", "in", domainIds]],
                     [["allow_timesheets", "=", true]],
                 ]);
             }
-            if (!this.sectionField || this.sectionField.name === "project_id") {
+            if (!sectionField || sectionField.name === "project_id") {
                 additionalGroups.push(
                     this.orm
                         .webSearchRead("project.project", projectDomain.toList({}), {
                             specification: { display_name: {} },
                         })
                         .then((data) => {
-                            const timesheet_data = data.records.map((r) => {
-                                return { project_id: [r.id, r.display_name] };
-                            });
+                            const timesheet_data = data.records.map((r) => ({
+                                project_id: [r.id, r.display_name],
+                            }));
                             return prepareAdditionalData(timesheet_data);
                         })
                 );
@@ -413,47 +428,43 @@ export class TimesheetGridDataPoint extends GridDataPoint {
                         limit: limit,
                     })
                     .then((data) => {
-                        const records = data.records.map(({ id, display_name, project_id }) => {
-                            return {
-                                task_id: [id, display_name],
-                                project_id: project_id && [project_id.id, project_id.display_name],
-                            };
-                        });
+                        const records = data.records.map(({ id, display_name, project_id }) => ({
+                            task_id: [id, display_name],
+                            project_id: project_id && [project_id.id, project_id.display_name],
+                        }));
                         return prepareAdditionalData(records);
                     })
             );
         };
         if (isProjectIdInDomainFields || isTaskIdInDomainFields) {
-            if (this.sectionField?.name === "task_id") {
+            if (sectionField?.name === "task_id") {
                 taskDomain = Domain.and([
                     taskDomain,
                     [["id", "in", domainIds]],
                     [["allow_timesheets", "=", true]],
                 ]);
             }
-            if (!this.sectionField || isProjectOrTaskAsSectionField) {
+            if (!sectionField || isProjectOrTaskAsSectionField) {
                 addTaskData(taskDomain, 15);
             }
-        } else if (this.navigationInfo.periodEnd > this.model.today && !this.sectionField) {
-            addTaskData(Domain.and([
-                taskDomain,
-                this._getFavoriteTaskDomain(),
-            ]), 5);
+        } else if (this.navigationInfo.periodEnd > this.today && !sectionField) {
+            addTaskData(Domain.and([taskDomain, this._getFavoriteTaskDomain(searchParams)]), 5);
         }
 
         return additionalGroups;
     }
 
-    _getFieldValuesInSectionAndRows(field) {
+    _getFieldValuesInSectionAndRows(field, sectionField, rowFields, data) {
         const fieldName = field.name;
         const isMany2oneField = field.type === "many2one";
         const values = new Set();
-        if (this.sectionField && this.sectionField.name === fieldName) {
-            for (const section of this.sectionsArray) {
-                values.add(section.value && isMany2oneField ? section.value[0] : section.value);
+        if (sectionField && sectionField.name === fieldName) {
+            for (const section of Object.values(data.sections)) {
+                const sectionValue = section.valuePerFieldName[sectionField.name];
+                values.add(sectionValue && isMany2oneField ? sectionValue[0] : sectionValue);
             }
-        } else if (this.rowFields.some((row) => row.name === fieldName)) {
-            for (const row of this.rowsArray) {
+        } else if (rowFields.some((row) => row.name === fieldName)) {
+            for (const row of Object.values(data.rows)) {
                 if (!row.isSection) {
                     const value =
                         row.valuePerFieldName[fieldName] && isMany2oneField
@@ -466,37 +477,46 @@ export class TimesheetGridDataPoint extends GridDataPoint {
         return [...values];
     }
 
-    async _fetchWorkingHoursData(fieldName) {
+    async _fetchWorkingHoursData({ data, sectionField, rowFields }, fieldName) {
         const field = this.fieldsInfo[fieldName];
         if (!field) {
             return [];
         }
-        const fieldValues = this._getFieldValuesInSectionAndRows(field);
+        const fieldValues = this._getFieldValuesInSectionAndRows(
+            field,
+            sectionField,
+            rowFields,
+            data
+        );
         if (!fieldValues.length) {
             return fieldValues;
         }
         const result = await this.orm.call(field.relation, "get_planned_and_worked_hours", [
             fieldValues,
         ]);
-        this.data.workingHours[fieldName] = result;
+        data.workingHours[fieldName] = result;
     }
 
-    async _fetchAllTimesheetM2OAvatarData() {
-        const field = this.fieldsInfo.employee_id;
+    async _fetchAllTimesheetM2OAvatarData({ data, sectionField, rowFields }) {
         if (
-            !field ||
-            this.navigationInfo.contains(this.model.today) ||
-            this.navigationInfo.periodStart.startOf("day") > this.model.today.startOf("day")
+            !this.employeeField ||
+            this.navigationInfo.contains(this.today) ||
+            this.navigationInfo.periodStart.startOf("day") > this.today.startOf("day")
         ) {
             return {};
         }
-        const fieldValues = this._getFieldValuesInSectionAndRows(field);
+        const fieldValues = this._getFieldValuesInSectionAndRows(
+            this.employeeField,
+            sectionField,
+            rowFields,
+            data
+        );
         const nonEmptyValues = fieldValues.filter((v) => v !== false);
         if (!nonEmptyValues.length) {
             return {};
         }
         const result = await this.orm.call(
-            field.relation,
+            this.employeeField.relation,
             "get_timesheet_and_working_hours_for_employees",
             [
                 nonEmptyValues,
@@ -504,18 +524,6 @@ export class TimesheetGridDataPoint extends GridDataPoint {
                 serializeDate(this.navigationInfo.periodEnd),
             ]
         );
-        this.data.workingHours.employee_id = result;
-    }
-}
-
-export class TimesheetGridModel extends GridModel {
-    static DataPoint = TimesheetGridDataPoint;
-
-    get workingHoursData() {
-        return this.data.workingHours;
-    }
-
-    get unavailabilityDaysPerEmployeeId() {
-        return this._dataPoint?.unavailabilityDaysPerEmployeeId || {};
+        data.workingHours.employee_id = result;
     }
 }

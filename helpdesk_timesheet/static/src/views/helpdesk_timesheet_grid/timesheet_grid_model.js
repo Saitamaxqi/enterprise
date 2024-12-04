@@ -1,8 +1,8 @@
 import { Domain } from "@web/core/domain";
 import { patch } from "@web/core/utils/patch";
-import { TimesheetGridDataPoint } from "@timesheet_grid/views/timesheet_grid/timesheet_grid_model";
+import { TimesheetGridModel } from "@timesheet_grid/views/timesheet_grid/timesheet_grid_model";
 
-patch(TimesheetGridDataPoint.prototype, {
+patch(TimesheetGridModel.prototype, {
     /**
      * @override
      */

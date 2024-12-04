@@ -1,14 +1,5 @@
 import { serializeDate, deserializeDate } from "@web/core/l10n/dates";
-import { GridNavigationInfo, GridModel, GridDataPoint } from "@web_grid/views/grid_model";
-
-export class AnalyticLineGridDataPoint extends GridDataPoint {
-    async _initialiseData() {
-        if (this.navigationInfo.range.span === "year") {
-            await this.navigationInfo.fetchPeriod();
-        }
-        await super._initialiseData();
-    }
-}
+import { GridNavigationInfo, GridModel } from "@web_grid/views/grid_model";
 
 export class AnalyticLineGridNavigationInfo extends GridNavigationInfo {
     get periodStart() {
@@ -37,6 +28,12 @@ export class AnalyticLineGridNavigationInfo extends GridNavigationInfo {
 }
 
 export class AnalyticLineGridModel extends GridModel {
-    static DataPoint = AnalyticLineGridDataPoint;
     static NavigationInfo = AnalyticLineGridNavigationInfo;
+
+    async loadData(metaData) {
+        if (this.navigationInfo.range.span === "year") {
+            await this.navigationInfo.fetchPeriod();
+        }
+        return await super.loadData(metaData);
+    }
 }

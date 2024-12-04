@@ -1,11 +1,11 @@
 import { serializeDate } from "@web/core/l10n/dates";
 import { GridRow } from "@web_grid/views/grid_model";
-import { TimesheetGridDataPoint, TimesheetGridModel } from "../timesheet_grid/timesheet_grid_model";
+import { TimesheetGridModel } from "../timesheet_grid/timesheet_grid_model";
 import { user } from "@web/core/user";
 
 export class TimerGridRow extends GridRow {
-    constructor(domain, valuePerFieldName, model, section, isAdditionalRow = false) {
-        super(domain, valuePerFieldName, model, section, isAdditionalRow);
+    constructor(data, domain, valuePerFieldName, model, section, isAdditionalRow = false) {
+        super(data, domain, valuePerFieldName, model, section, isAdditionalRow);
         this.timerRunning = false;
     }
 
@@ -33,9 +33,9 @@ export class TimerGridRow extends GridRow {
 
     get timeData() {
         return {
-            'project_id': this.valuePerFieldName?.project_id?.[0],
-            'task_id': this.valuePerFieldName?.task_id?.[0],
-        }
+            project_id: this.valuePerFieldName?.project_id?.[0],
+            task_id: this.valuePerFieldName?.task_id?.[0],
+        };
     }
 
     async addTime() {
@@ -43,123 +43,9 @@ export class TimerGridRow extends GridRow {
     }
 }
 
-export class TimerTimesheetGridDataPoint extends TimesheetGridDataPoint {
-    constructor(model, params) {
-        super(model, params);
-        this.showTimerButtons =
-            this.model.showTimer &&
-            !this.sectionField &&
-            this.rowFields.length &&
-            this.rowFields.some((rowField) => rowField.name === "project_id");
-    }
-
-    get timesheetWorkingHoursPromises() {
-        const promises = super.timesheetWorkingHoursPromises;
-        promises.push(this.fetchDailyWorkingHours());
-        return promises;
-    }
-
-    async fetchDailyWorkingHours() {
-        const dailyWorkingHours = await this.orm.call(
-            "res.users",
-            "get_daily_working_hours",
-            [
-                user.userId,
-                serializeDate(this.navigationInfo.periodStart),
-                serializeDate(this.navigationInfo.periodEnd),
-            ],
-        );
-        this.data.workingHours.daily = dailyWorkingHours;
-    }
-
-    _getAdditionalPromises() {
-        const promises = super._getAdditionalPromises();
-        promises.push(this._getRunningTimer());
-        return promises;
-    }
-
-    async _initialiseData() {
-        await super._initialiseData();
-        this.data.workingHours.daily = {};
-        this.data.rowPerKeyBinding = {};
-        this.data.keyBindingPerRowId = {};
-        this.data.stepTimer = 0;
-        this.timerButtonIndex = 0;
-    }
-
-    _itemsPostProcess(item) {
-        super._itemsPostProcess(item);
-        if (!item.isSection && this.showTimerButtons) {
-            if (this.timerButtonIndex < 26) {
-                const timerButtonKey = String.fromCharCode(65 + this.timerButtonIndex++);
-                this.data.rowPerKeyBinding[timerButtonKey] = item;
-                this.data.keyBindingPerRowId[item.id] = timerButtonKey;
-            }
-        }
-    }
-
-    _updateTimer(timerData) {
-        if (!this.data.timer) {
-            this.data.timer = timerData;
-        } else {
-            for (const [key, value] of Object.entries(timerData)) {
-                this.data.timer[key] = value;
-            }
-        }
-        if (!timerData.row && this.data.timer.id) {
-            // if the id linked to the timer changed then search the row associated
-            this._searchRowWithTimer();
-        }
-    }
-
-    _searchRowWithTimer() {
-        let rowKey = `${this.sectionField ? this.data.timer[this.sectionField.name] : "false"}@|@`;
-        for (const row of this.rowFields) {
-            let value = this.data.timer[row.name];
-            if (!value && this.fieldsInfo[row.name].type) {
-                value = false;
-            }
-            rowKey += `${value}\\|/`;
-        }
-        if (rowKey in this.data.rowsKeyToIdMapping) {
-            const row = this.data.rows[this.data.rowsKeyToIdMapping[rowKey]];
-            row.timerRunning = true;
-            if (this.data.timer.row) {
-                this.data.timer.row.timerRunning = false;
-            }
-            this.data.timer.row = row;
-            row.timerRunning = true;
-        } else if (this.data.timer.row) {
-            this.data.timer.row.timerRunning = false;
-            delete this.data.timer.row;
-        }
-    }
-
-    async _getRunningTimer() {
-        if (!this.model.showTimer) {
-            return;
-        }
-        const { step_timer: stepTimer, ...timesheetWithTimerData } = await this.orm.call(
-            this.resModel,
-            "get_running_timer"
-        );
-        if (timesheetWithTimerData.id || timesheetWithTimerData.other_company) {
-            this._updateTimer(timesheetWithTimerData);
-        } else if (this.data.timer) {
-            // remove running timer since there is no longer.
-            if ("row" in this.data.timer) {
-                this.data.timer.row.timerRunning = false;
-            }
-            delete this.data.timer;
-        }
-        this.data.stepTimer = stepTimer;
-    }
-}
-
 export class TimerTimesheetGridModel extends TimesheetGridModel {
     static services = [...TimesheetGridModel.services, "timesheet_uom"];
     static Row = TimerGridRow;
-    static DataPoint = TimerTimesheetGridDataPoint;
 
     setup(params, services) {
         super.setup(params, services);
@@ -171,12 +57,119 @@ export class TimerTimesheetGridModel extends TimesheetGridModel {
         return this.timesheetUOMService.timesheetWidget === "float_time";
     }
 
-    get showTimerButtons() {
-        return this._dataPoint.showTimerButtons;
+    getTimesheetWorkingHoursPromises(metaData) {
+        const promises = super.getTimesheetWorkingHoursPromises(metaData);
+        promises.push(this.fetchDailyWorkingHours(metaData));
+        return promises;
     }
 
     _setTimerData(timerData) {
-        this._dataPoint._updateTimer(timerData);
+        const { rowFields, sectionField, data } = this;
+        this._updateTimer(timerData, { rowFields, sectionField, data });
+    }
+
+    async fetchDailyWorkingHours({ data }) {
+        const { periodStart, periodEnd } = this.navigationInfo;
+        const dailyWorkingHours = await this.orm.call("res.users", "get_daily_working_hours", [
+            user.userId,
+            serializeDate(periodStart),
+            serializeDate(periodEnd),
+        ]);
+        data.workingHours.daily = dailyWorkingHours;
+    }
+
+    _getAdditionalPromises(metaData) {
+        const promises = super._getAdditionalPromises(metaData);
+        promises.push(this._getRunningTimer(metaData));
+        return promises;
+    }
+
+    async _getInitialData(metaData) {
+        const { sectionField, rowFields } = metaData;
+        const initialData = await super._getInitialData(metaData);
+        const { data } = initialData;
+        data.workingHours.daily = {};
+        data.rowPerKeyBinding = {};
+        data.keyBindingPerRowId = {};
+        data.stepTimer = 0;
+        initialData.timerButtonIndex = 0;
+        initialData.showTimerButtons =
+            this.showTimer &&
+            !sectionField &&
+            rowFields.length &&
+            rowFields.some((rowField) => rowField.name === "project_id");
+        return initialData;
+    }
+
+    _itemsPostProcess(item, metaData) {
+        super._itemsPostProcess(item, metaData);
+        const { data, showTimerButtons } = metaData;
+        if (!item.isSection && showTimerButtons) {
+            if (metaData.timerButtonIndex < 26) {
+                const timerButtonKey = String.fromCharCode(65 + metaData.timerButtonIndex++);
+                data.rowPerKeyBinding[timerButtonKey] = item;
+                data.keyBindingPerRowId[item.id] = timerButtonKey;
+            }
+        }
+    }
+
+    _updateTimer(timerData, metaData) {
+        const { data } = metaData
+        if (!data.timer) {
+            data.timer = timerData;
+        } else {
+            for (const [key, value] of Object.entries(timerData)) {
+                data.timer[key] = value;
+            }
+        }
+        if (!timerData.row && data.timer.id) {
+            // if the id linked to the timer changed then search the row associated
+            this._searchRowWithTimer(metaData);
+        }
+    }
+
+    _searchRowWithTimer({ sectionField, rowFields, data }) {
+        let rowKey = `${sectionField ? data.timer[sectionField.name] : "false"}@|@`;
+        for (const row of rowFields) {
+            let value = data.timer[row.name];
+            if (!value && this.fieldsInfo[row.name].type) {
+                value = false;
+            }
+            rowKey += `${value}\\|/`;
+        }
+        if (rowKey in data.rowsKeyToIdMapping) {
+            const row = data.rows[data.rowsKeyToIdMapping[rowKey]];
+            row.timerRunning = true;
+            if (data.timer.row) {
+                data.timer.row.timerRunning = false;
+            }
+            data.timer.row = row;
+            row.timerRunning = true;
+        } else if (data.timer.row) {
+            data.timer.row.timerRunning = false;
+            delete data.timer.row;
+        }
+    }
+
+    async _getRunningTimer(metaData) {
+        const { data } = metaData;
+        if (!this.showTimer) {
+            return;
+        }
+        const { step_timer: stepTimer, ...timesheetWithTimerData } = await this.orm.call(
+            this.resModel,
+            "get_running_timer"
+        );
+        if (timesheetWithTimerData.id || timesheetWithTimerData.other_company) {
+            this._updateTimer(timesheetWithTimerData, metaData);
+        } else if (data.timer) {
+            // remove running timer since there is no longer.
+            if ("row" in data.timer) {
+                data.timer.row.timerRunning = false;
+            }
+            delete data.timer;
+        }
+        data.stepTimer = stepTimer;
     }
 
     async startTimer(vals = {}, row = undefined) {
@@ -218,10 +211,10 @@ export class TimerTimesheetGridModel extends TimesheetGridModel {
             if (column) {
                 if (this.data.timer.row){
                     const newValue = this.data.timer.row.cells[column.id].value + value;
-                    this.data.timer.row.updateCell(column, newValue);
+                    this.data.timer.row.updateCell(column, newValue, this.data);
                     this.data.timer.row.timerRunning = false;
                 } else {
-                    await this.fetchData(this.searchParams);
+                    await this.reload(this.searchParams);
                 }
             }
         }
@@ -238,11 +231,8 @@ export class TimerTimesheetGridModel extends TimesheetGridModel {
 
     async addTime(data) {
         const timesheetId = this.data.timer && this.data.timer.id;
-        await this.orm.call(this.resModel, "action_add_time_to_timesheet", [
-            timesheetId,
-            data,
-        ]);
-        await this.fetchData();
+        await this.orm.call(this.resModel, "action_add_time_to_timesheet", [timesheetId, data]);
+        await this.reload();
     }
 
     async fetchTimerHeaderFields(fieldNames) {

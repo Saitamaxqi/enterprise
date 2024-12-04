@@ -121,11 +121,11 @@
         </xpath>
         <xpath expr="//div[hasclass('o_grid_bar_chart_total_title')]/span" position="attributes">
             <attribute name="t-att-class">{
-                'text-success' : column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] lt 0.00001
-                    and column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] gt -0.00001,
-                'text-danger' : (column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] lt -0.00001)
+                'text-success' : column.grandTotal - column.model.data.workingHours.daily[column.value] lt 0.00001
+                    and column.grandTotal - column.model.data.workingHours.daily[column.value] gt -0.00001,
+                'text-danger' : (column.grandTotal - column.model.data.workingHours.daily[column.value] lt -0.00001)
                     or (getUnavailableClass(column) === 'o_grid_unavailable' and column.grandTotal gt 0),
-                'text-warning' : column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] gt 0.00001,
+                'text-warning' : column.grandTotal - column.model.data.workingHours.daily[column.value] gt 0.00001,
             }</attribute>
         </xpath>
     </t>
@@ -145,8 +145,8 @@
             <attribute name="t-attf-class">{{ showTimerButton ? 'o_grid_with_row_timer' : '' }}</attribute>
         </xpath>
         <xpath expr="//div[hasclass('o_grid_bar_chart_total_pill')]" position="after">
-            <span t-if="column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] gt 0.00001
-                    or column.grandTotal - column._dataPoint.data.workingHours.daily[column.value] lt -0.00001"
+            <span t-if="column.grandTotal - column.model.data.workingHours.daily[column.value] gt 0.00001
+                    or column.grandTotal - column.model.data.workingHours.daily[column.value] lt -0.00001"
                    class="o_grid_bar_chart_overtime position-absolute top-50 start-50 translate-middle px-2 rounded-pill bg-white fw-bolder transition-base"
                    t-att-class="getDailyOvertime(column) &lt; 0 ? 'text-danger':'text-warning'"
                    title="Daily overtime"> <t t-esc="formatDailyOvertime(column)"/>

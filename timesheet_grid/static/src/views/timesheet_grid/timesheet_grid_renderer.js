@@ -59,16 +59,23 @@ export class TimesheetGridRenderer extends GridRenderer {
 
     async _getLastValidatedTimesheetDate(props = this.props) {
         this.lastValidationDatePerEmployee = {};
-        if (props.sectionField?.name === 'employee_id') {
-            const employeeIds = props.model._dataPoint._getFieldValuesInSectionAndRows(props.model.fieldsInfo.employee_id);
+        const { sectionField, rowFields, employeeField, data } = props.model;
+        if (sectionField?.name === employeeField.name) {
+            const employeeIds = props.model._getFieldValuesInSectionAndRows(
+                employeeField,
+                sectionField,
+                rowFields,
+                data
+            );
             if (employeeIds.length) {
                 const result = await props.model.orm.call(
                     "hr.employee",
                     "get_last_validated_timesheet_date",
                     [employeeIds],
                 );
-                for (const [employee_id, last_validated_timesheet_date] of Object.entries(result)) {
-                    this.lastValidationDatePerEmployee[employee_id] = last_validated_timesheet_date && deserializeDate(last_validated_timesheet_date);
+                for (const [employeeId, lastValidatedTimesheetDate] of Object.entries(result)) {
+                    this.lastValidationDatePerEmployee[employeeId] =
+                        lastValidatedTimesheetDate && deserializeDate(lastValidatedTimesheetDate);
                 }
             }
         }

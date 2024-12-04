@@ -165,7 +165,7 @@ export class GridController extends Component {
     async afterExecuteActionButton() {}
 
     async reload() {
-        await this.model.fetchData();
+        await this.model.reload();
     }
 
     async onRecordSaved(record) {
@@ -173,9 +173,11 @@ export class GridController extends Component {
     }
 
     get columns() {
-        return this.state.isWeekendVisible || this.state.activeRangeName === "day" ? this.model.columnsArray : this.model.columnsArray.filter(column => {
-            return DateTime.fromISO(column.value).weekday < 6;
-        });
+        return this.state.isWeekendVisible || this.state.activeRangeName === "day"
+            ? this.model.columnsArray
+            : this.model.columnsArray.filter(
+                  (column) => DateTime.fromISO(column.value).weekday < 6
+              );
     }
 
     toggleWeekendVisibility() {
