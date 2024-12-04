@@ -1301,6 +1301,10 @@ class SaleOrder(models.Model):
         # This method allow a hook after invoicing
         self.order_line._reset_subscription_quantity_post_invoice()
 
+    def _handle_post_invoice_hook_exception(self):
+        # Method to overwrite to handle SaleOrderLine._reset_subscription_quantity_post_invoice exceptions.
+        return
+
     def _handle_subscription_payment_failure(self, invoice, transaction):
         current_date = fields.Date.today()
         reminder_mail_template = self.env.ref('sale_subscription.email_payment_reminder', raise_if_not_found=False)
@@ -1569,6 +1573,7 @@ class SaleOrder(models.Model):
                 self._subscription_rollback_cursor(auto_commit)
         self._subscription_commit_cursor(auto_commit)
         self._process_invoices_to_send(self.env['account.move'].browse(move_to_send_ids))
+        self._subscription_commit_cursor(auto_commit)
         # There is still some subscriptions to process. Then, make sure the CRON will be triggered again asap.
         if need_cron_trigger:
             self._subscription_launch_cron_parallel(batch_size)
@@ -1577,7 +1582,15 @@ class SaleOrder(models.Model):
                 invoice_sub = self.filtered('is_subscription')
             else:
                 invoice_sub = self.search([('is_invoice_cron', '=', True)])
-            invoice_sub._post_invoice_hook()
+
+            try:
+                invoice_sub._post_invoice_hook()
+                self._subscription_commit_cursor(auto_commit)
+            except Exception as e:
+                self._subscription_rollback_cursor(auto_commit)
+                _logger.exception("Error during post invoice action: %s", e)
+                invoice_sub._handle_post_invoice_hook_exception()
+
             failing_subscriptions = self.search([('is_batch', '=', True)])
             (failing_subscriptions | invoice_sub).write({'is_batch': False, 'is_invoice_cron': False})
             self._subscription_commit_cursor(auto_commit)

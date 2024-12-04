@@ -24,6 +24,7 @@ Features:
     'data': [
         'views/product_template_views.xml',
         'views/sale_order_views.xml',
+        'data/sale_subscription_stock_data.xml',
     ],
     'demo': [
         'data/sale_subscription_stock_demo.xml',

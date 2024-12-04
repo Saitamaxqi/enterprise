@@ -16,6 +16,21 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: sale_subscription_stock
+#. odoo-python
+#: code:addons/sale_subscription_stock/models/sale_order.py:0
+msgid ""
+"A system error prevented the automatic creation of delivery orders for this "
+"subscription. To ensure your delivery is processed, please trigger it "
+"manually by using the \"Subscription: Generate delivery\" action."
+msgstr ""
+
+#. module: sale_subscription_stock
+#. odoo-python
+#: code:addons/sale_subscription_stock/models/sale_order.py:0
+msgid "Delivery creation failed"
+msgstr ""
+
+#. module: sale_subscription_stock
 #: model:product.template,name:sale_subscription_stock.product_recurring_detergent_product_template
 msgid "Detergent (SUB)"
 msgstr ""
@@ -61,6 +76,11 @@ msgstr ""
 #. module: sale_subscription_stock
 #: model:ir.model,name:sale_subscription_stock.model_stock_forecasted_product_product
 msgid "Stock Replenishment Report"
+msgstr ""
+
+#. module: sale_subscription_stock
+#: model:ir.actions.server,name:sale_subscription_stock.action_compute_price_bom_product
+msgid "Subscription: Generate delivery"
 msgstr ""
 
 #. module: sale_subscription_stock
