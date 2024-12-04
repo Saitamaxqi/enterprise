@@ -124,7 +124,7 @@
                         <button class="btn btn-secondary o_dropdown_title dropdown-toggle" type="button"
                             data-bs-toggle="dropdown" aria-expanded="false"
                             t-if="!!selectionCount">
-                            + <t t-out="lastEmbeddedActions.length"/>
+                            More
                         </button>
                         <ul class="dropdown-menu">
                             <li t-foreach="lastEmbeddedActions" t-as="action" t-key="action.id"

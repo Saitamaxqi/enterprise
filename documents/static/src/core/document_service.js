@@ -174,6 +174,25 @@ export class DocumentService {
         });
     }
 
+    async goToServerActionsView() {
+        const userHasAccessRight = await user.checkAccessRight("ir.actions.server", "create");
+        if (!userHasAccessRight) {
+            return this.notification.add(
+                _t("Contact your Administrator to get access if needed."),
+                {
+                    title: _t("Access to Server Actions"),
+                    type: "info",
+                }
+            );
+        }
+
+        return await this.action.doActionButton({
+            name: "action_open_documents_server_action_view",
+            type: "object",
+            resModel: "ir.actions.server",
+        });
+    }
+
     async createShortcut(documentIds) {
         if (documentIds.length !== 1) {
             this.notificationService.add(_t("Shortcuts can only be created one at a time."), {
