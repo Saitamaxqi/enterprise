@@ -64,6 +64,12 @@ class TestDeliveryFedex(TransactionCase):
     def setUp(self):
         super().setUp()
 
+        self.env.ref('base.group_user').write({'implied_ids': [
+            (4, self.env.ref('base.group_multi_currency').id),
+        ]})
+        self.env.company.currency_id = self.env.ref('base.USD').id
+        self.env['product.pricelist'].search([]).currency_id = self.env.ref('base.USD').id
+
         self.iPadMini = self.env['product.product'].create({
             'name': 'Ipad Mini',
             'weight': 0.01,
