@@ -87,7 +87,7 @@ export class MrpQualityCheckConfirmationDialog extends ConfirmationDialog {
     async openWorksheet() {
         const res = await this.props.record.model.orm.call(
             this.props.record.resModel,
-            "action_fill_sheet",
+            "action_quality_worksheet",
             [this.props.record.resId]
         );
         await this.action.doAction(res);

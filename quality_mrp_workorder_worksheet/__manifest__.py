@@ -16,6 +16,11 @@ Create customizable quality worksheet for workorder.
     "demo": [
         'data/mrp_workorder_demo.xml',
     ],
+    'assets': {
+        'web.assets_tests': [
+            'quality_mrp_workorder_worksheet/static/tests/tours/**/*',
+        ],
+    },
     'auto_install': True,
     'license': 'OEEL-1',
 }
