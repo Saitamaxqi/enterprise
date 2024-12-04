@@ -553,7 +553,7 @@ export class PdfManager extends Component {
         }
         try {
             const documentIds = await this._sendChanges();
-            this.props.onProcessDocuments({ documentIds, actionId, exit });
+            await this.props.onProcessDocuments({ documentIds, actionId, exit });
             this._displayNumberCreatedDocuments(documentIds.length);
             if (!exit) {
                 this._embeddedActionApplied = true;
@@ -1258,7 +1258,7 @@ export class PdfManager extends Component {
     /**
      * @public
      */
-    onArchive() {
+    async onArchive() {
         let pagesToDelete = this.selectedPageIds;
         if (pagesToDelete.length === 0 && !this.state.focusedPage && !this.state.viewedPage) {
             this._displayErrorNotification(_t("No document has been selected"));
@@ -1295,13 +1295,13 @@ export class PdfManager extends Component {
                     this._removePage(pageId, { fromFile: true });
                 }
                 if (this.state.numberOfPages === 0) {
-                    this.props.onProcessDocuments({ isForcingDelete: true });
+                    await this.props.onProcessDocuments({ isForcingDelete: true });
                     await this.props.close();
                 }
                 this._displayNumberDeletedPages(pagesToDelete.length);
                 this.state.focusedPage = nextFocusedPageId;
                 if (this.state.viewedPage && nextFocusedPageId) {
-                    this.onClickPage(nextFocusedPageId);
+                    await this.onClickPage(nextFocusedPageId);
                 } else {
                     this.state.viewedPage = undefined;
                 }

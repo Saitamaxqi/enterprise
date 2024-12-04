@@ -290,13 +290,18 @@ function useDocumentsViewFilePreviewer({
                 {
                     documents: documents.map((doc) => doc.data),
                     embeddedActions,
-                    onProcessDocuments: ({ documentIds, actionId, exit, isForcingDelete }) => {
+                    onProcessDocuments: async ({
+                        documentIds,
+                        actionId,
+                        exit,
+                        isForcingDelete,
+                    }) => {
                         forceDelete = isForcingDelete;
                         if (documentIds && documentIds.length) {
                             newDocumentIds = [...new Set(newDocumentIds.concat(documentIds))];
                         }
                         if (actionId) {
-                            component.embeddedAction(documentIds, actionId, !exit);
+                            await component.embeddedAction(documentIds, actionId, !exit);
                         }
                     },
                 },

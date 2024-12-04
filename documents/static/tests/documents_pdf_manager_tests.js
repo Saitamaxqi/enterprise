@@ -26,7 +26,7 @@ async function mountSetup(PdfManager, target, env) {
                 { id: 1, name: "action1"},
                 { id: 2, name: "action2"},
             ],
-            onProcessDocuments: () => {},
+            onProcessDocuments: async () => {},
             close: () => {},
         },
     });
