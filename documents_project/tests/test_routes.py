@@ -102,6 +102,7 @@ class TestDocumentsProjectRoutes(HttpCase, TestProjectCommon):
         self.assertEqual(res.status_code, 303, "must not access an unshared project")
 
         # Access project, but not documents
+        self.project_pigs.privacy_visibility = "portal"
         self.project_pigs._portal_ensure_token()
         self.project_pigs._add_collaborators(self.user_portal.partner_id)
         res = project_url_open('/documents')
