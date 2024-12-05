@@ -8,7 +8,6 @@ import markupsafe
 from babel.dates import get_quarter_names
 from datetime import date, datetime, timedelta
 from dateutil import relativedelta
-from itertools import groupby
 from markupsafe import Markup
 
 from odoo import _, api, Command, fields, models, tools
@@ -555,14 +554,6 @@ class L10n_InGstReturnPeriod(models.Model):
         return hsn_json
 
     def _get_gstr1_json(self):
-        def _group_aml(group_by_field, journal_items):
-            values = {}
-            journal_items = journal_items.sorted(lambda l: l.mapped(group_by_field))
-            for groupby_key, grouped_items in groupby(journal_items, lambda l: l.mapped(group_by_field)):
-                values.setdefault(groupby_key, AccountMoveLine)
-                for grouped_item in grouped_items:
-                    values[groupby_key] += grouped_item
-            return values
 
         def is_einvoice_skippable(move_id):
             # Check if the skip e-invoice condition is met for a given move_id.
@@ -604,7 +595,7 @@ class L10n_InGstReturnPeriod(models.Model):
             }]
             """
             b2b_json = []
-            for partner, items in _group_aml('move_id.commercial_partner_id', journal_items).items():
+            for partner, items in journal_items.grouped(lambda l: l.move_id.commercial_partner_id).items():
                 inv_json_list = []
                 for move_id in items.mapped('move_id'):
                     if is_einvoice_skippable(move_id):
@@ -684,7 +675,7 @@ class L10n_InGstReturnPeriod(models.Model):
             }]
             """
             b2cl_json = []
-            for state_id, items in _group_aml('move_id.l10n_in_state_id', journal_items).items():
+            for state_id, items in journal_items.grouped(lambda l: l.move_id.l10n_in_state_id).items():
                 inv_json_list = []
                 for move_id in items.mapped('move_id'):
                     lines_json = {}
@@ -792,7 +783,7 @@ class L10n_InGstReturnPeriod(models.Model):
             }]
             """
             cdnr_json = []
-            for partner, items in _group_aml('move_id.commercial_partner_id', journal_items).items():
+            for partner, items in journal_items.grouped(lambda l: l.move_id.commercial_partner_id).items():
                 inv_json_list = []
                 for move_id in items.mapped('move_id'):
                     if is_einvoice_skippable(move_id):
