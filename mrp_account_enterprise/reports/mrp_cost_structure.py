@@ -65,8 +65,14 @@ class ReportMrp_Account_EnterpriseMrp_Cost_Structure(models.AbstractModel):
                 total_cost_components += cost
             raw_material_moves = list(raw_material_moves.values())
             # Get the cost of scrapped materials
-            scraps = StockMove.search([('production_id', 'in', mos.ids), ('scrapped', '=', True), ('state', '=', 'done')])
 
+            scraps = StockMove.search([
+                '|',
+                ('production_id', 'in', mos.ids),
+                ('raw_material_production_id', 'in', mos.ids),
+                ('scrapped', '=', True),
+                ('state', '=', 'done')
+            ])
             # Get the byproducts and their total + avg per uom cost share amounts
             total_cost_by_product = defaultdict(float)
             qty_by_byproduct = defaultdict(float)
@@ -94,7 +100,11 @@ class ReportMrp_Account_EnterpriseMrp_Cost_Structure(models.AbstractModel):
                 total_cost_by_product[product] += total_cost_by_mo[m.id] * cost_share
                 component_cost_by_product[product] += component_cost_by_mo[m.id] * cost_share
                 operation_cost_by_product[product] += operation_cost_by_mo[m.id] * cost_share
-                mo_qty += sum(m.move_finished_ids.filtered(lambda mo: mo.state == 'done' and mo.product_id == product).mapped('quantity'))
+                mo_qty = 0
+                for move in m.move_finished_ids:
+                    if move.state != 'done' or move.product_id != product:
+                        continue
+                    mo_qty += move.product_uom._compute_quantity(move.quantity, m.product_id.uom_id)
             res.append({
                 'product': product,
                 'mo_qty': mo_qty,
